@@ -120,7 +120,7 @@ Just make sure you test if the file exists, otherwise this will trigger warnings
 
 * SpoonDirectory::create
 
-   Before:
+  Before:
 	```
 	SpoonDirectory::create(...);
 	```
@@ -136,7 +136,7 @@ Just make sure you test if the file exists, otherwise this will trigger warnings
 
 * SpoonFileException
 
-   Before:
+  Before:
 	```
 	SpoonFileException(...)
 	```
@@ -183,3 +183,14 @@ http://symfony.com/doc/master/components/finder.html
 	}
 	```
 
+### Shorthand functions
+
+* Getting services from the dependency injection container can now be done with less code. 
+
+In models, you can use `FrontendModel::get('database')` instead off `FrontendModel::getcontainer()->get('database')`
+
+In actions, you shoud use `$this->get('database')` instead off FrontendModel::getcontainer()->get('database')` to avoid static functions.
+
+* The get function in the FrontendBreadcrumb class was changed to getItems so the FrontendModel::get function didn't get overwritten.
+
+use `$this->breadcrumb->getItems()` instead off `$this->breadcrumb->get()`

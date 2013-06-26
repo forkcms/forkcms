@@ -64,7 +64,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		foreach($this->modules as $module)
 		{
 			// get the ids of the items linked to the tag
-			$otherIds = (array) FrontendModel::getContainer()->get('database')->getColumn(
+			$otherIds = (array) $this->get('database')->getColumn(
 				'SELECT other_id
 				 FROM modules_tags
 				 WHERE module = ? AND tag_id = ?',
