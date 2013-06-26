@@ -1,9 +1,15 @@
-3.6.1 (2013-06-25)
+3.6.1 (2013-06-26)
 --
 Improvements:
+
 * Form-builder: Reply-to checkbox added
 * Blog: hide navigation when there are no items to show.
+* Profiles: a user can now upload his avatar in Frontend and we can also integrate the avatar in a Backend DataGrid. Fallback for avatar is Gravatar.
 * Speed enhancements
+
+Bugfixes:
+
+* Output should be last command in ajax requests
 
 3.6.0 (2013-06-18)
 --

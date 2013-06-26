@@ -29,6 +29,15 @@ class ProfilesInstaller extends ModuleInstaller
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
+		// general settings
+		$this->setSetting('profiles', 'allow_gravatar', true);
+
+		// add folders
+		SpoonDirectory::create(PATH_WWW . '/frontend/files/profiles/avatars/source/');
+		SpoonDirectory::create(PATH_WWW . '/frontend/files/profiles/avatars/240x240/');
+		SpoonDirectory::create(PATH_WWW . '/frontend/files/profiles/avatars/64x64/');
+		SpoonDirectory::create(PATH_WWW . '/frontend/files/profiles/avatars/32x32/');
+
 		// module rights
 		$this->setModuleRights(1, 'profiles');
 
