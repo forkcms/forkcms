@@ -246,6 +246,7 @@ jsBackend.ckeditor =
 
 		// templates
 		templates_files: [],
+		templates_replaceContent: false,
 
 		// custom vars
 		editorType: 'default',
