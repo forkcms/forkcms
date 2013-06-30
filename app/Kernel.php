@@ -185,7 +185,7 @@ abstract class Kernel implements KernelInterface
 	{
 		// This is also where symfony loads and stores the names of the active bundles
 
-		/**
+		/*
 		 * Debug status and environment are params of the Kernel constructor, and
 		 * are set via a separate front controller.
 		 *
@@ -211,6 +211,8 @@ abstract class Kernel implements KernelInterface
 
 	/**
 	 * This will load a cached version of the service container, or build one from scratch.
+	 * 
+	 * @return object 
 	 */
 	protected function initializeContainer()
 	{
@@ -227,6 +229,8 @@ abstract class Kernel implements KernelInterface
 
 		$this->container = new $class();
 		$this->container->set('kernel', $this);
+		
+		return $this;
 	}
 
 	/**
@@ -235,7 +239,7 @@ abstract class Kernel implements KernelInterface
 	 */
 	public function getContainerLoader(ContainerInterface $container)
 	{
-		/**
+		/*
 		 * The FileLocator used here is one from HttpKernel, so it understands Kernel context
 		 * and automatically looks for the right path.
 		 */
