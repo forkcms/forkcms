@@ -299,6 +299,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 
 			// parse form
 			$this->frm->parse($this->tpl);
+			$this->tpl->assign('formToken', $this->frm->getToken());
 
 			// assign form error
 			$this->tpl->assign('error', ($this->frm->getErrors() != '' ? $this->frm->getErrors() : false));
