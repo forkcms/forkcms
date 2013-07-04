@@ -72,10 +72,10 @@ class BackendMeta
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
 		// check if URL is available from the reference
-		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
+		if(!BackendModel::getContainer()->has('url')) throw new BackendException('URL should be available in the reference.');
 
 		// get BackendURL instance
-		$this->URL = Spoon::get('url');
+		$this->URL = BackendModel::getContainer()->get('url');
 
 		// should we use meta-custom
 		$this->custom = (bool) $custom;

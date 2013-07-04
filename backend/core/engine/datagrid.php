@@ -439,7 +439,10 @@ class BackendDataGrid extends SpoonDataGrid
 	private function setSortingOptions()
 	{
 		// default URL
-		if(Spoon::exists('url')) $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+		if(BackendModel::getContainer()->get('url'))
+		{
+			$this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+		}
 
 		// sorting labels
 		$this->setSortingLabels(BL::lbl('SortAscending'), BL::lbl('SortedAscending'), BL::lbl('SortDescending'), BL::lbl('SortedDescending'));

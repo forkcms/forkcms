@@ -559,7 +559,7 @@ class FormBuilderHelper
 		{
 			// init
 			$frm = new BackendForm('tmp', '');
-			$tpl = (Spoon::exists('template') ? Spoon::get('template') : new BackendTemplate());
+			$tpl = (BackendModel::getContainer()->has('template') ? BackendModel::getContainer()->get('template') : new BackendTemplate());
 			$fieldHTML = '';
 			$fieldName = 'field' . $field['id'];
 			$values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);

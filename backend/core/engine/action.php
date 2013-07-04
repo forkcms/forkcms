@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  *
@@ -32,11 +34,15 @@ class BackendAction extends BackendBaseObject
 
 	/**
 	 * You have to specify the action and module so we know what to do with this instance
+	 *
+	 * @param KernelInterface $kernel
 	 */
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
+		parent::__construct($kernel);
+
 		// grab stuff from the reference and store them in this object (for later/easy use)
-		$this->tpl = Spoon::get('template');
+		$this->tpl = $this->getContainer()->get('template');
 	}
 
 	/**
@@ -73,11 +79,10 @@ class BackendAction extends BackendBaseObject
 		$this->tpl->assign('workingLanguages', $workingLanguages);
 
 		// create action-object
-		$object = new $actionClassName();
+		$object = new $actionClassName($this->getKernel());
 		$this->getContainer()->get('logger')->info(
 			"Executing backend action '{$object->getAction()}' for module '{$object->getModule()}'."
 		);
-		$object->setKernel($this->getKernel());
 		$object->execute();
 		return $object->getContent();
 	}
@@ -114,7 +119,7 @@ class BackendAction extends BackendBaseObject
 		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 
 		// set action
 		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';

@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will handle the incoming URL.
  *
@@ -14,7 +16,7 @@
  * @author 	Davy Hellemans <davy.hellemans@netlash.com>
  * @author 	Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendURL
+class FrontendURL extends KernelLoader
 {
 	/**
 	 * The pages
@@ -44,10 +46,15 @@ class FrontendURL
 	 */
 	private $queryString;
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
-		// add ourselves to the reference so other classes can retrieve us
-		Spoon::set('url', $this);
+		parent::__construct($kernel);
+
+		// add ourself to the reference so other classes can retrieve us
+		$this->getContainer()->set('url', $this);
 
 		// if there is a trailing slash we permanent redirect to the page without slash
 		if(mb_strlen($_SERVER['REQUEST_URI']) != 1 && mb_substr($_SERVER['REQUEST_URI'], -1) == '/') SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);

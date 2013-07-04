@@ -175,7 +175,7 @@ class BackendAuthentication
 		);
 
 		// grab the URL from the reference
-		$URL = Spoon::get('url');
+		$URL = BackendModel::getContainer()->get('url');
 
 		$action = ($action !== null) ? (string) $action : $URL->getAction();
 		$module = ($module !== null) ? (string) $module : $URL->getModule();

@@ -44,10 +44,10 @@ class BackendTemplate extends SpoonTemplate
 		parent::__construct();
 
 		// get URL instance
-		if(Spoon::exists('url')) $this->URL = Spoon::get('url');
+		if(FrontendModel::getContainer()->has('url')) $this->URL = FrontendModel::getContainer()->get('url');
 
 		// store in reference so we can access it from everywhere
-		if($addToReference) Spoon::set('template', $this);
+		if($addToReference) FrontendModel::getContainer()->set('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(BACKEND_CACHE_PATH . '/cached_templates');
@@ -258,7 +258,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseLabels()
 	{
 		// grab the current module
-		if(Spoon::exists('url')) $currentModule = Spoon::get('url')->getModule();
+		if(BackendModel::getContainer()->has('url')) $currentModule = BackendModel::getContainer()->get('url')->getModule();
 		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
@@ -514,7 +514,7 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		return Spoon::get('navigation')->getNavigation(1, 1);
+		return BackendModel::getContainer()->get('navigation')->getNavigation(1, 1);
 	}
 
 	/**
@@ -532,7 +532,7 @@ class BackendTemplateModifiers
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
 		// return navigation
-		return Spoon::get('navigation')->getNavigation($startDepth, $endDepth);
+		return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth);
 	}
 
 	/**

@@ -93,7 +93,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 					if(!$present) continue;
 
 					// create instance
-					$instance = new $className();
+					$instance = new $className($this->getKernel());
 
 					// has rights
 					if(!$instance->isAllowed()) continue;

@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will be used to manage the breadcrumb
  *
@@ -24,14 +26,14 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	private $items = array();
 
 	/**
-	 * Default constructor
+	 * @param KernelInterface $kernel
 	 */
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
-		// add into the reference
-		Spoon::set('breadcrumb', $this);
+		// store in reference
+		$this->getContainer()->set('breadcrumb', $this);
 
 		// get more information for the homepage
 		$homeInfo = FrontendNavigation::getPageInfo(1);

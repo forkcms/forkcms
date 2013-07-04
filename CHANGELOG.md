@@ -1,3 +1,10 @@
+3.7.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3_7.md for more info.
+
+
 3.6.1 (2013-06-26)
 --
 Improvements:
@@ -10,6 +17,7 @@ Improvements:
 Bugfixes:
 
 * Output should be last command in ajax requests
+
 
 3.6.0 (2013-06-18)
 --

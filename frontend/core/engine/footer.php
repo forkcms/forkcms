@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  *
@@ -14,12 +16,14 @@
  */
 class FrontendFooter extends FrontendBaseObject
 {
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
-		// store in reference
-		Spoon::set('footer', $this);
+		$this->getContainer()->set('footer', $this);
 	}
 
 	/**

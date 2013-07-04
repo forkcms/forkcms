@@ -147,6 +147,12 @@ class ApplicationRouting
 		$chunks = explode('/', $queryString);
 		$apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
 
+		// validate
+		if(!file_exists(__DIR__ . '/../api/' . $apiVersion . '/init.php'))
+		{
+			throw new Exception('This version of the API does not exists.');
+		}
+
 		require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
 		$init = new APIInit($this->kernel);
 		$init->initialize($app);

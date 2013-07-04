@@ -121,7 +121,7 @@ class BackendModel extends BaseModel
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
 		// grab the URL from the reference
-		$URL = Spoon::get('url');
+		$URL = BackendModel::getContainer()->get('url');
 
 		$action = ($action !== null) ? (string) $action : $URL->getAction();
 		$module = ($module !== null) ? (string) $module : $URL->getModule();

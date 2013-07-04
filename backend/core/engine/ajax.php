@@ -54,7 +54,7 @@ class BackendAJAX extends BackendBaseObject implements ApplicationInterface
 		try
 		{
 			// create URL instance, since the template modifiers need this object
-			$URL = new BackendURL();
+			$URL = new BackendURL($this->getKernel());
 			$URL->setModule($module);
 
 			$this->setModule($module);
