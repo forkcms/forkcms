@@ -40,7 +40,7 @@ class FrontendURL extends KernelLoader
 	private $host;
 
 	/**
-	 * The querystring
+	 * The query string
 	 *
 	 * @var	string
 	 */
@@ -159,7 +159,7 @@ class FrontendURL extends KernelLoader
 	}
 
 	/**
-	 * Get the querystring
+	 * Get the query string
 	 *
 	 * @return string
 	 */
@@ -169,11 +169,11 @@ class FrontendURL extends KernelLoader
 	}
 
 	/**
-	 * Process the querystring
+	 * Process the query string
 	 */
 	private function processQueryString()
 	{
-		// store the querystring local, so we don't alter it.
+		// store the query string local, so we don't alter it.
 		$queryString = $this->getQueryString();
 
 		// fix GET-parameters
@@ -185,7 +185,7 @@ class FrontendURL extends KernelLoader
 			// get key-value pairs
 			$get = explode('&', $getChunks[1]);
 
-			// remove from querystring
+			// remove from query string
 			$queryString = str_replace('?' . $getChunks[1], '', $this->getQueryString());
 
 			// loop pairs
@@ -303,7 +303,7 @@ class FrontendURL extends KernelLoader
 		// define the language
 		define('FRONTEND_LANGUAGE', $language);
 
-		// sets the localefile
+		// sets the locale file
 		FrontendLanguage::setLocale($language);
 
 		// list of pageIds & their full URL
@@ -323,7 +323,7 @@ class FrontendURL extends KernelLoader
 			$URL = implode('/', $chunks);
 		}
 
-		// remove language from querystring
+		// remove language from query string
 		if(SITE_MULTILANGUAGE) $queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
@@ -446,9 +446,9 @@ class FrontendURL extends KernelLoader
 	}
 
 	/**
-	 * Set the querystring
+	 * Set the query string
 	 *
-	 * @param string $queryString The full querystring.
+	 * @param string $queryString The full query string.
 	 */
 	private function setQueryString($queryString)
 	{
@@ -460,7 +460,7 @@ class FrontendURL extends KernelLoader
 			// strip GET from the queryString
 			list($queryString) = explode('?', $queryString, 2);
 
-			// readd
+			// re-add
 			$queryString = $queryString . '?' . http_build_query($_GET);
 		}
 

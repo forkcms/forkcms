@@ -47,7 +47,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function cleanupDatabase()
 	{
-		BackendModel::getContainer()->get('database')->delete(
+		$this->get('database')->delete(
 			'analytics_pages',
 			'date_viewed < ?',
 			array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))

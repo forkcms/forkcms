@@ -15,6 +15,11 @@
 class FrontendSearchWidgetForm extends FrontendBaseWidget
 {
 	/**
+	 * @var FrontendForm
+	 */
+	private $frm;
+
+	/**
 	 * Execute the extra
 	 */
 	public function execute()

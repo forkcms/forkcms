@@ -19,7 +19,7 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 	 *
 	 * @var	array
 	 */
-	private $items;
+	private $navigation;
 
 	/**
 	 * Execute the extra

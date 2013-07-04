@@ -379,7 +379,7 @@ class BackendMailmotorModel
 		$path = BACKEND_CACHE_PATH . '/mailmotor/' . $filename;
 
 		// fetch the addresses by group
-		$records = self::getAddressesByGroupID($id);
+		$records = self::getAddressesByGroupID(array($id));
 
 		// fetch the group fields
 		$groupFields = array_flip(self::getCustomFields($id));
@@ -731,7 +731,7 @@ class BackendMailmotorModel
 	/**
 	 * Get all campaigns in key/value format for id/name
 	 *
-	 * @return int
+	 * @return array
 	 */
 	public static function getCampaignsAsPairs()
 	{
@@ -1266,7 +1266,7 @@ class BackendMailmotorModel
 	/**
 	 * Get all subscriptions for a given e-mail address
 	 *
-	 * @param string $email The emailaddress to get the subscriptions for.
+	 * @param string $email The email address to get the subscriptions for.
 	 * @return array
 	 */
 	public static function getSubscriptions($email)
@@ -1550,7 +1550,7 @@ class BackendMailmotorModel
 	/**
 	 * Checks if a given e-mail address is subscribed in our database
 	 *
-	 * @param string $email The emailaddress to check.
+	 * @param string $email The email address to check.
 	 * @param int[optional] $groupId The id of the group.
 	 * @return bool
 	 */
@@ -1674,7 +1674,7 @@ class BackendMailmotorModel
 	/**
 	 * Updates the groups for a given email address
 	 *
-	 * @param string $email The emailaddress to update.
+	 * @param string $email The email address to update.
 	 * @param mixed $groupIds The ids of the groups.
 	 * @return null|bool
 	 */

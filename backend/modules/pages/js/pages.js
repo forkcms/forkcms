@@ -690,7 +690,7 @@ jsBackend.pages.template =
 		});
 
 		// init var
-		newDefaults = new Array();
+		newDefaults = [];
 
 		// check if this default block has been changed
 		if(current != old || (typeof initDefaults != 'undefined' && initDefaults))

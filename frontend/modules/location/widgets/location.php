@@ -55,7 +55,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 			$this->settings['center']['lng'] = $this->item['lng'];
 		}
 
-		// no center point given yet, use the first occurence
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $this->item['lat'];

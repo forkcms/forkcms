@@ -10,7 +10,7 @@
 /**
  * This is our extended version of SpoonDataGrid
  * This class will handle a lot of stuff for you, for example:
- * 	- it will set debugmode
+ * 	- it will set debug mode
  *	- it will set the compile-directory
  * 	- ...
  *
@@ -252,7 +252,6 @@ class BackendDataGrid extends SpoonDataGrid
 	{
 		$column = (string) $column;
 		$message = (string) $message;
-		$custom = (string) $custom;
 		$title = ($title !== null) ? (string) $title : null;
 		$uniqueId = (string) $uniqueId;
 

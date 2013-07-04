@@ -67,7 +67,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$action = (string) $action;
 		$module = (string) $module;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-		$querystring = '';
+		$queryString = '';
 
 		// add at least one parameter
 		if(empty($parameters)) $parameters['token'] = 'true';
@@ -79,23 +79,23 @@ class FrontendNavigation extends FrontendBaseObject
 		foreach($parameters as $key => $value)
 		{
 			// first element
-			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			if($i == 1) $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			else $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
 		}
 
 		// build the URL and return it
-		return '/private/' . $language . '/' . $module . '/' . $action . $querystring;
+		return '/private/' . $language . '/' . $module . '/' . $action . $queryString;
 	}
 
 	/**
 	 * Get the first child for a given parent
 	 *
-	 * @param int $pageId The pageID wherefor we should retrieve the first child.
+	 * @param int $pageId The pageID wherefore we should retrieve the first child.
 	 * @return mixed
 	 */
 	public static function getFirstChildId($pageId)
@@ -123,7 +123,7 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
-	 * Get all footerlinks
+	 * Get all footer links
 	 *
 	 * @return array
 	 */
@@ -163,7 +163,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get the page-keys
 	 *
-	 * @param string[optional] $language The language wherefor the navigation should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefore the navigation should be loaded, if not provided we will load the language that was provided in the URL.
 	 * @return array
 	 */
 	public static function getKeys($language = null)
@@ -207,7 +207,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get the navigation-items
 	 *
-	 * @param string[optional] $language The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefore the keys should be loaded, if not provided we will load the language that was provided in the URL.
 	 * @return array
 	 */
 	public static function getNavigation($language = null)
@@ -418,7 +418,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get URL for a given pageId
 	 *
-	 * @param int $pageId The pageID wherefor you want the URL.
+	 * @param int $pageId The pageID wherefore you want the URL.
 	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 * @return string
 	 */

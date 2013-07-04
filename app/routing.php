@@ -119,6 +119,8 @@ class ApplicationRouting
 				}
 				else $applicationClass = 'frontend';
 				break;
+			default:
+				throw new Exception('Unknown application. (' . $applicationName . ')');
 		}
 
 		/**
@@ -238,7 +240,7 @@ class ApplicationRouting
 	}
 
 	/**
-	 * Process the querystring to define the application
+	 * Process the query string to define the application
 	 */
 	private function processQueryString()
 	{
@@ -258,7 +260,10 @@ class ApplicationRouting
 		}
 
 		// no application
-		else $application = self::DEFAULT_APPLICATION;
+		else {
+			$application = self::DEFAULT_APPLICATION;
+			$proposedApplication = $application;
+		}
 
 		// define APP
 		if(!defined('APPLICATION')) define('APPLICATION', $application);

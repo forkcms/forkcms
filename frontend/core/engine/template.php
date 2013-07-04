@@ -541,13 +541,11 @@ class FrontendTemplateModifiers
 	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
 	{
 		// redefine
-		$var = (string) $var;
-		$pageId = (int) $pageId;
 		$field = (string) $field;
 		$language = ($language !== null) ? (string) $language : null;
 
 		// get page
-		$page = FrontendNavigation::getPageInfo($pageId);
+		$page = FrontendNavigation::getPageInfo((int) $pageId);
 
 		// validate
 		if(empty($page)) return '';
@@ -567,9 +565,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function getPath($var, $file)
 	{
-		// trick codesniffer
-		$var = (string) $var;
-
 		return FrontendTheme::getPath($file);
 	}
 
@@ -645,13 +640,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
-		// redefine
-		$var = (string) $var;
-		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURL($pageId, $language);
+		return FrontendNavigation::getURL((int) $pageId, $language);
 	}
 
 	/**
@@ -666,14 +656,9 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
-		// redefine
-		$var = (string) $var;
-		$module = (string) $module;
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURLForBlock($module, $action, $language);
+		return FrontendNavigation::getURLForBlock((string) $module, $action, $language);
 	}
 
 	/**
@@ -687,12 +672,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForExtraId($var, $extraId, $language = null)
 	{
-		$var = (string) $var;
-		$extraId = (int) $extraId;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURLForExtraId($extraId, $language);
+		return FrontendNavigation::getURLForExtraId((int) $extraId, $language);
 	}
 
 	/**
@@ -716,7 +697,7 @@ class FrontendTemplateModifiers
 				// encase content in highlight_string
 				$content = str_replace($match, highlight_string($match, true), $var);
 
-				// replace highlighted code tags in match
+				// replace highlighted code tags in match   @todo    shouldn't this be $var =
 				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
 			}
 		}
@@ -795,7 +776,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		$var = (string) $var;
 		$min = (int) $min;
 		$max = (int) $max;
 
@@ -803,7 +783,7 @@ class FrontendTemplateModifiers
 	}
 
 	/**
-	 * Convert a multiline string into a string without newlines so it can be handles by JS
+	 * Convert a multi line string into a string without newlines so it can be handles by JS
 	 * syntax: {$var|stripnewlines}
 	 *
 	 * @param string $var The variable that should be processed.
@@ -884,7 +864,7 @@ class FrontendTemplateModifiers
 		$setting = (string) $setting;
 
 		// validate
-		if($userId === 0) throw new FrontendException('Invalid userid');
+		if($userId === 0) throw new FrontendException('Invalid user id');
 
 		// get user
 		$user = FrontendUser::getBackendUser($userId);

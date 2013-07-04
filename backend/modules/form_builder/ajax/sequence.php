@@ -8,7 +8,7 @@
  */
 
 /**
- * Resequence the fields via ajax.
+ * Re-sequence the fields via ajax.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
@@ -27,22 +27,26 @@ class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 
 		// invalid form id
 		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
-
-		// list id
-		$ids = (array) explode('|', rtrim($newIdSequence, '|'));
-
-		// loop id's and set new sequence
-		foreach($ids as $i => $id)
+		
+		// validated
+		else
 		{
-			$id = (int) $id;
-
-			// get field
-			$field = BackendFormBuilderModel::getField($id);
-
-			// from this form and not a submit button
-			if(!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
+			// list id
+			$ids = (array) explode('|', rtrim($newIdSequence, '|'));
+	
+			// loop id's and set new sequence
+			foreach($ids as $i => $id)
+			{
+				$id = (int) $id;
+	
+				// get field
+				$field = BackendFormBuilderModel::getField($id);
+	
+				// from this form and not a submit button
+				if(!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
+			}
+	
+			$this->output(self::OK, null, 'sequence updated');
 		}
-
-		$this->output(self::OK, null, 'sequence updated');
 	}
 }

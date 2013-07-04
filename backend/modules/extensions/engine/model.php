@@ -116,7 +116,6 @@ class BackendExtensionsModel
 
 				// set values
 				$title = SpoonFilter::ucfirst($value);
-				$type = '';
 
 				// start cell
 				$html .= '<td';
@@ -402,7 +401,7 @@ class BackendExtensionsModel
 		$itemsToRemove = array();
 
 		// loop extras
-		foreach($extras as $id => $row)
+		foreach($extras as $row)
 		{
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
@@ -677,7 +676,7 @@ class BackendExtensionsModel
 		$i = 0;
 
 		// loop templates to unserialize the data
-		foreach($templates as $key => &$row)
+		foreach($templates as &$row)
 		{
 			// unserialize
 			$row['data'] = unserialize($row['data']);

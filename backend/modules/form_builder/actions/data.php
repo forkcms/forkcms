@@ -29,6 +29,11 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	private $id;
 
 	/**
+	 * @var array
+	 */
+	private $record;
+
+	/**
 	 * Builds the query for this datagrid
 	 *
 	 * @return array An array with two arguments containing the query and its parameters.

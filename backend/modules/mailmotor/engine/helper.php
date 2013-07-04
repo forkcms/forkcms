@@ -356,33 +356,17 @@ class BackendMailmotorCMHelper
 	 */
 	public static function getCustomFields($groupId)
 	{
-		// get CM ID for this group
 		$listId = self::getCampaignMonitorID('list', $groupId);
-
-		// get the custom fields from CM
 		$cmFields = self::getCM()->getCustomFields($listId);
-
-		// reserve new fields array
-		$newFields = array();
-
-		// fields found
 		if(!empty($cmFields))
 		{
-			// get the custom fields from our database
 			$fields = BackendMailmotorModel::getCustomFields($groupId);
-
-			// loop the fields
 			foreach($cmFields as $field)
 			{
-				// check if the field exists already. If not; add it
 				if(!in_array($field['name'], $fields)) $fields[] = $field['name'];
 			}
-
-			// update the fields
 			BackendMailmotorModel::updateCustomFields($fields, $groupId);
 		}
-
-		// return the results
 		return (array) $fields;
 	}
 
@@ -853,9 +837,6 @@ class BackendMailmotorCMHelper
 	 */
 	public static function sendMailing($item)
 	{
-		// get db
-		$db = BackendModel::getContainer()->get('database');
-
 		// fetch the CM IDs for each group if this field is not set yet
 		if(!isset($item['group_cm_ids'])) $item['group_cm_ids'] = self::getCampaignMonitorIDsForGroups($item['groups']);
 
@@ -960,13 +941,7 @@ class BackendMailmotorCMHelper
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{
-		// get objects
-		$cm = self::getCM();
-
-		// set group ID
 		$groupId = !empty($groupId) ? $groupId : BackendMailmotorModel::getDefaultGroupID();
-
-		// get group CM ID
 		$groupCMId = self::getCampaignMonitorID('list', $groupId);
 
 		// group exists

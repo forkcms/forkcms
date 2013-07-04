@@ -234,7 +234,7 @@ class BackendURL extends BackendBaseObject
 					require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
 
 					// loop the navigation to find the first allowed module
-					foreach($navigation as $key => $value)
+					foreach($navigation as $value)
 					{
 						// split up chunks
 						list($module, $action) = explode('/', $value['url']);

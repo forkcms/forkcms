@@ -49,7 +49,7 @@
 	//<![CDATA[
 		window.onload = function()
 		{
-			if(typeof excludedCheckboxesData != undefined) var excludedCheckboxesData = new Array();
+			if(typeof excludedCheckboxesData != undefined) var excludedCheckboxesData = [];
 			excludedCheckboxesData['{$excludedCheckboxesData.id}'] = {$excludedCheckboxesData.JSON};
 
 			// loop and remove elements
@@ -64,7 +64,7 @@
 	//<![CDATA[
 		window.onload = function()
 		{
-			if(typeof checkedCheckboxesData != undefined) var checkedCheckboxesData = new Array();
+			if(typeof checkedCheckboxesData != undefined) var checkedCheckboxesData = [];
 			checkedCheckboxesData['{$checkedCheckboxesData.id}'] = {$checkedCheckboxesData.JSON};
 
 			// loop and remove elements

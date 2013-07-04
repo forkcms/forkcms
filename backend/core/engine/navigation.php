@@ -505,16 +505,14 @@ class BackendNavigation extends BackendBaseObject
 	 */
 	private function getSelectedKeys()
 	{
+		$keys = array();
 		foreach($this->navigation as $key => $value)
 		{
-			// get the keys
 			$keys = $this->compareURL($value, $key, array());
 
 			// stop when we found something
 			if(!empty($keys)) break;
 		}
-
-		// return the selected keys
 		return $keys;
 	}
 }

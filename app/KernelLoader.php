@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.
  *
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class KernelLoader
 {
@@ -30,6 +31,17 @@ class KernelLoader
 	}
 
 	/**
+	 * Gets a service by id.
+	 * 
+	 * @param string $id The service id
+	 * @return object The service
+	 */
+	public function get($reference)
+	{
+		return $this->getKernel()->getContainer()->get($reference);
+	}
+
+	/**
 	 * @return ContainerInterface
 	 */
 	public function getContainer()
@@ -43,6 +55,17 @@ class KernelLoader
 	public function getKernel()
 	{
 		return $this->kernel;
+	}
+
+	/**
+	 * Returns true if the service id is defined.
+	 *
+	 * @param string $id The service id
+	 * @return Boolean true if the service id is defined, false otherwise
+	 */
+	public static function has($reference)
+	{
+		return $this->getKernel()->getContainer()->has($reference);
 	}
 
 	/**

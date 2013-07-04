@@ -68,7 +68,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		var variables = new Array();
+		var variables = [];
 		variables['email'] = '{$address.email}';
 	//]]>
 </script>

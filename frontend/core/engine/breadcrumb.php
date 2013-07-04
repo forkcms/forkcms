@@ -131,7 +131,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 *
 	 * @return array
 	 */
-	public function get()
+	public function getItems()
 	{
 		return $this->items;
 	}

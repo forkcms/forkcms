@@ -27,7 +27,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	private $action;
 
 	/**
-	 * The configfile
+	 * The config file
 	 *
 	 * @var	FrontendBaseConfig
 	 */
@@ -90,7 +90,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		$this->setAction($action);
 		if($data !== null) $this->setData($data);
 
-		// load the configfile for the required module
+		// load the config file for the required module
 		$this->loadConfig();
 
 		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
@@ -99,24 +99,24 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 	/**
 	 * Execute the action
-	 * We will build the classname, require the class and call the execute method.
+	 * We will build the class name, require the class and call the execute method.
 	 */
 	public function execute()
 	{
 		// build action-class-name
 		$actionClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_' . $this->getAction());
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
+		// require the config file, we know it is there because we validated it before (possible actions are defined by existence off the file).
 		require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/actions/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
+		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
 		$this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$this->object->execute();
@@ -258,7 +258,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!is_file($frontendModulePath . '/config.php')) {
-			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
 		}
 
 		// build config-object-name
@@ -269,7 +269,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) {
-			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+			throw new FrontendException('The config file is present, but the class name should be: ' . $configClassName . '.');
 		}
 
 		// create config-object, the constructor will do some magic
@@ -344,7 +344,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	private $action;
 
 	/**
-	 * The configfile
+	 * The config file
 	 *
 	 * @var	FrontendBaseConfig
 	 */
@@ -393,13 +393,13 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$this->setAction($action);
 		if($data !== null) $this->setData($data);
 
-		// load the configfile for the required module
+		// load the config file for the required module
 		$this->loadConfig();
 	}
 
 	/**
 	 * Execute the action
-	 * We will build the classname, require the class and call the execute method.
+	 * We will build the class name, require the class and call the execute method.
 	 */
 	public function execute()
 	{
@@ -410,19 +410,19 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// when including a widget from the template modifier, this wasn't checked yet
-		if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) throw new FrontendException('The actionfile is not present');
+		if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) throw new FrontendException('The action file is not present');
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
 		require_once $frontendModulePath . '/widgets/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
+		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
 		$this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$this->output = $this->object->execute();
@@ -504,7 +504,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!is_file($frontendModulePath . '/config.php'))
 		{
-			throw new FrontendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
 		}
 
 		// build config-object-name
@@ -515,7 +515,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) {
-			throw new FrontendException('The config file is present, but the classname should be: ' . $configClassName . '.');
+			throw new FrontendException('The config file is present, but the class name should be: ' . $configClassName . '.');
 		}
 
 		// create config-object, the constructor will do some magic

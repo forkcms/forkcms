@@ -306,7 +306,7 @@ jsBackend.formBuilder.fields =
 			{
 				// init var
 				var rowIds = $(this).sortable('toArray');
-				var newIdSequence = new Array();
+				var newIdSequence = [];
 
 				// loop rowIds
 				for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);
@@ -391,6 +391,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxId').val(data.data.field.id);
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								if(data.data.field.settings.reply_to) $('#textboxReplyTo').prop('checked', true);
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -1160,7 +1161,7 @@ jsBackend.formBuilder.fields =
 	},
 
 	/**
-	 * Handle textbox save
+	 * Handle text box save
 	 */
 	saveTextbox: function()
 	{
@@ -1169,6 +1170,7 @@ jsBackend.formBuilder.fields =
 		var type = 'textbox';
 		var label = $('#textboxLabel').val();
 		var value = $('#textboxValue').val();
+		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
 		var validation = $('#textboxValidation').val();
@@ -1185,6 +1187,7 @@ jsBackend.formBuilder.fields =
 				type: type,
 				label: label,
 				default_values: value,
+				reply_to: replyTo,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,

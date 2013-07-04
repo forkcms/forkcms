@@ -28,8 +28,8 @@ class FrontendMailer
 	 * @param string[optional] $toName The to-name for the email.
 	 * @param string[optional] $fromEmail The from-address for the mail.
 	 * @param string[optional] $fromName The from-name for the mail.
-	 * @param string[optional] $replyToEmail The replyto-address for the mail.
-	 * @param string[optional] $replyToName The replyto-name for the mail.
+	 * @param string[optional] $replyToEmail The reply to-address for the mail.
+	 * @param string[optional] $replyToName The reply to-name for the mail.
 	 * @param bool[optional] $queue Should the mail be queued?
 	 * @param int[optional] $sendOn When should the email be send, only used when $queue is true.
 	 * @param bool[optional] $isRawHTML If this is true $template will be handled as raw HTML, so no parsing of $variables is done.

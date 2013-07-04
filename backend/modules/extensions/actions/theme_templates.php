@@ -24,6 +24,11 @@ class BackendExtensionsThemeTemplates extends BackendBaseActionEdit
 	private $availableThemes;
 
 	/**
+	 * @var BackendDataGridDB
+	 */
+	private $dataGrid;
+
+	/**
 	 * The current selected theme
 	 *
 	 * @var	string
