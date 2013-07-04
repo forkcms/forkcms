@@ -1,3 +1,10 @@
+3.6.2 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
+
+
 3.6.1 (2013-06-26)
 --
 Improvements:
@@ -10,6 +17,7 @@ Improvements:
 Bugfixes:
 
 * Output should be last command in ajax requests
+
 
 3.6.0 (2013-06-18)
 --
