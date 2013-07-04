@@ -7,7 +7,11 @@
 			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
 
 			{option:fields}
-				<form id="{$formName}" method="post" action="{$formAction}">
+				<form {option:hidUtf8}accept-charset="UTF-8" {/option:hidUtf8}id="{$formName}" method="post" action="{$formAction}">
+					{option:formToken}
+						<input type="hidden" name="form_token" id="formToken{$formName|ucfirst}" value="{$formToken}" />
+					{/option:formToken}
+
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
