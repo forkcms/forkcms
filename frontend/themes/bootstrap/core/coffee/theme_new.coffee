@@ -60,7 +60,6 @@ class DefaultTheme extends Theme
     $(@).addClass('loading disabled')
     
   scrollToTop: (e) ->
-    console.log "Hu?"
     $('html, body').stop().animate(scrollTop: 0, 600)
     false
     

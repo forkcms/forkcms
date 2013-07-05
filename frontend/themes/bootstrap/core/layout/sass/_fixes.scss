@@ -51,3 +51,7 @@ abbr[title],
 abbr[data-original-title] {
 	border-bottom: none;
 }
+
+#cookieBar {
+  @include box-sizing(border-box);
+}

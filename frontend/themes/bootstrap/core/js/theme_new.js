@@ -130,7 +130,6 @@
     };
 
     DefaultTheme.prototype.scrollToTop = function(e) {
-      console.log("Hu?");
       $('html, body').stop().animate({
         scrollTop: 0
       }, 600);
