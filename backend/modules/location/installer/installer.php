@@ -62,6 +62,6 @@ class LocationInstaller extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Location', 'location/settings');
 
 		// add extra's
-		$this->insertExtra('location', 'block', 'Location', null, 'a:1:{s:3:"url";s:37:"/private/nl/location/index?token=true";}', 'N');
+		$this->insertExtra('location', 'block', 'Location', null, 'a:1:{s:3:"url";s:34:"/private/location/index?token=true";}', 'N');
 	}
 }
