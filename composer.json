@@ -16,6 +16,6 @@
         "symfony/yaml": "2.2.*",
 		"spoon/library": "1.3.*",
 	    "sumocoders/sumo-fork-class": "dev-master",
-	    "errbit/errbit-php": "@dev"
+	    "flippa-official/errbit-php": "@dev"
     }
 }
