@@ -46,6 +46,5 @@ $sumo = new SumoCoders\SumoForkClass\SumoForkClass();
 $sumo->setContainer($kernel->getContainer());
 $sumo->init();
 
-$request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();

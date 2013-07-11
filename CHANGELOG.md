@@ -33,9 +33,6 @@ Improvements:
 
 Bugfixes:
 
-* Security: prevent csfr
-* Core: jQuery-plugins should escape data when using the raw data.
-* Security: prevent CSRF
 * Core: jQuery-plugins should escape data when using the raw data.
 * Security: prevent CSRF.
 * Mailmotor: fixed linking your account.
@@ -52,8 +49,6 @@ Improvements:
 * Symfony: upgrade components to 2.2.
 * Core: isInstalledModule() added in BackendModel.
 * Core: use remote html5-shiv.
-* Core: mailer supports SSL/TLS from now on. Thx to Gertjan Meire.
-* Core: deleteThumbnails() added in BackendModel. Thx to John Poelman.
 * Core: mailer supports SSL/TLS from now on.
 * Analytics: better grouping for Google Analytics profiles.
 * Core: deleteThumbnails() added in BackendModel.
