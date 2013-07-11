@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  *
@@ -68,7 +70,13 @@ class BackendAJAXAction extends BackendBaseObject
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
-			throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			if(BackendModel::getContainer()->getParameter('kernel.debug')) {
+				throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			} else {
+				$response = new Response('', 404);
+				$response->send();
+				exit;   // I know this line shouldn't be here
+			}
 		}
 
 		// build config-object-name
