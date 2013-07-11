@@ -28,20 +28,30 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		$typeOfDrop = SpoonFilter::getPostValue('type', null, '');
 		$tree = SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
 
+		// init validation
+		$errors = array();
+
 		// validate
-		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($droppedOn === -1) $this->output(self::BAD_REQUEST, null, 'no dropped_on provided');
-		if($typeOfDrop == '') $this->output(self::BAD_REQUEST, null, 'no type provided');
-		if($tree == '') $this->output(self::BAD_REQUEST, null, 'no tree provided');
-
-		// get page
-		$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
-
-		// build cache
-		BackendPagesModel::buildCache(BL::getWorkingLanguage());
-
-		// output
-		if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
-		else $this->output(self::ERROR, null, 'page not moved');
+		if($id === 0) $errors[] = 'no id provided';
+		if($droppedOn === -1) $errors[] = 'no dropped_on provided';
+		if($typeOfDrop == '') $errors[] = 'no type provided';
+		if($tree == '') $errors[] = 'no tree provided';
+		
+		// got errors
+		if(!empty($errors)) $this->output(self::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
+		
+		// validated
+		else
+		{
+			// get page
+			$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
+	
+			// build cache
+			BackendPagesModel::buildCache(BL::getWorkingLanguage());
+	
+			// output
+			if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
+			else $this->output(self::ERROR, null, 'page not moved');
+		}
 	}
 }

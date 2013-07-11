@@ -15,11 +15,21 @@
 class BackendLocaleIndex extends BackendBaseActionIndex
 {
 	/**
+	 * @var BackendDataGridArray
+	 */
+	private $dgActions, $dgErrors, $dgLabels, $dgMessages;
+
+	/**
 	 * Filter variables
 	 *
 	 * @var	array
 	 */
 	private $filter;
+
+	/**
+	 * @var string
+	 */
+	private $filterQuery;
 
 	/**
 	 * Is God?

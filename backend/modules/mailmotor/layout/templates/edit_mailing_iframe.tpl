@@ -19,7 +19,7 @@
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
 	<script type="text/javascript" src="/backend/core/js/backend.js"></script>
 	<script type="text/javascript" src="/backend/core/js/utils.js"></script>
-	<script type="text/javascript" src="/backend/mailmotor/js/mailmotor.js"></script>
+	<script type="text/javascript" src="/backend/modules/mailmotor/js/mailmotor.js"></script>
 	<script type="text/javascript" src="/backend/core/js/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="/backend/core/js/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript" src="/backend/core/js/ckfinder/ckfinder.js"></script>
@@ -38,7 +38,7 @@
 				{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage|addslashes}");{/option:errorMessage}
 			});
 
-			var variables = new Array();
+			var variables = [];
 			variables =
 			{
 				mailingId: '{$mailing.id}',

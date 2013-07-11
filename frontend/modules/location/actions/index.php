@@ -11,7 +11,7 @@
  * This is the index-action, it has an overview of locations.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendLocationIndex extends FrontendBaseBlock
@@ -51,7 +51,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurence
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

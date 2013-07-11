@@ -29,30 +29,44 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 
 		// validate mailing ID
 		if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'Provide a valid mailing ID');
-		if($sendOnDate == '' || $sendOnTime == '') $this->output(self::BAD_REQUEST, null, 'Provide a valid send date date provided');
-
-		// record is empty
-		if(!BackendMailmotorModel::existsMailing($mailingId)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
-
-		// reverse the date and make it a proper
-		$explodedDate = explode('/', $sendOnDate);
-		$sendOnDate = $explodedDate[2] . '-' . $explodedDate[1] . '-' . $explodedDate[0];
-
-		// calc full send timestamp
-		$sendTimestamp = strtotime($sendOnDate . ' ' . $sendOnTime);
-
-		// build data
-		$item['id'] = $mailingId;
-		$item['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $sendTimestamp);
-		$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-
-		// update mailing
-		BackendMailmotorModel::updateMailing($item);
-
-		// trigger event
-		BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step4', array('item' => $item));
-
-		// output
-		$this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime));
+		
+		// validated mailing ID
+		else
+		{
+			// validate date & time
+			if($sendOnDate == '' || $sendOnTime == '') $this->output(self::BAD_REQUEST, null, 'Provide a valid send date date provided');
+			
+			// validated date & time
+			else
+			{
+				// record is empty
+				if(!BackendMailmotorModel::existsMailing($mailingId)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
+		
+				// record is filled
+				else
+				{
+					// reverse the date and make it a proper
+					$explodedDate = explode('/', $sendOnDate);
+					$sendOnDate = $explodedDate[2] . '-' . $explodedDate[1] . '-' . $explodedDate[0];
+			
+					// calc full send timestamp
+					$sendTimestamp = strtotime($sendOnDate . ' ' . $sendOnTime);
+			
+					// build data
+					$item['id'] = $mailingId;
+					$item['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $sendTimestamp);
+					$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+			
+					// update mailing
+					BackendMailmotorModel::updateMailing($item);
+			
+					// trigger event
+					BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step4', array('item' => $item));
+			
+					// output
+					$this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime));
+				}
+			}
+		}
 	}
 }

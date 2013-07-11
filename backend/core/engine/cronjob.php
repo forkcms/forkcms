@@ -23,11 +23,6 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 	private $cronjob;
 
 	/**
-	 * @var	int
-	 */
-	private $id;
-
-	/**
 	 * @var	string
 	 */
 	private $language;
@@ -56,7 +51,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		if($this->getModule() == 'core')
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
+			if(!is_file(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
@@ -72,7 +67,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		else
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
+			if(!is_file(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
@@ -192,14 +187,10 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 		if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
 		else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
 
-		// does this module exist?
-		$actions = SpoonFile::getList($path);
-		if(!in_array($action . '.php', $actions))
+		// check if file exists
+		if(!is_file($path . '/' . $action . '.php'))
 		{
-			// set correct headers
 			SpoonHTTP::setHeadersByCode(403);
-
-			// throw exception
 			throw new BackendException('Action not allowed.');
 		}
 
@@ -240,8 +231,7 @@ class BackendCronjob extends BackendBaseObject implements ApplicationInterface
 	public function setModule($module)
 	{
 		// does this module exist?
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH);
-		$modules[] = 'core';
+		$modules = BackendModel::getModulesOnFilesystem();
 		if(!in_array($module, $modules))
 		{
 			// set correct headers

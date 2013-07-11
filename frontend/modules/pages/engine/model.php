@@ -100,7 +100,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 		// get db
 		$db = FrontendModel::getContainer()->get('database');
 
-		// define ids's to ignore
+		// define ids to ignore
 		$ignore = array(404);
 
 		// get items

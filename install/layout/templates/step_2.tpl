@@ -72,8 +72,8 @@
 
 				<h4><span class="{$extensionMBString}">{$extensionMBString}</span> mb_string</h4>
 				<p>
-					mbstring provides multibyte specific string functions that help you deal with multibyte encodings in PHP. In addition to
-					that, mbstring handles character encoding conversion between the possible encoding pairs. mbstring is designed to handle Unicode-based
+					mb_string provides multibyte specific string functions that help you deal with multibyte encodings in PHP. In addition to
+					that, mb_string handles character encoding conversion between the possible encoding pairs. mb_string is designed to handle Unicode-based
 					encodings. More information can be found on: <a href="http://php.net/mb_string">http://php.net/mb_string</a>.
 				</p>
 
@@ -129,14 +129,14 @@
 				<h4><span class="{$functionSimplexmlImportDom}">{$functionSimplexmlImportDom}</span> simplexml_import_dom</h4>
 				<p>simplexml_import_dom() must be available, install and enable the SimpleXML extension.</p>
 
-				<h3>Webserver</h3>
+				<h3>Web server</h3>
 				<h4><span class="{$modRewrite}">{$modRewrite}</span> mod_rewrite</h4>
 				<p>
 					Fork CMS will not be able to run if mod_rewrite can not be applied. Please make sure that the .htaccess file is present (the file
 					starts with a dot, so it may be hidden on your filesystem), being read (AllowOverride directive) and the mod_rewrite module is
-					enabled in Apache. If you are installing Fork CMS on another webserver than Apache, make sure you have manually configured your
-					webserver to properly rewrite urls. More information can be found in our
-					<a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and webservers">knowledge base</a>.
+					enabled in Apache. If you are installing Fork CMS on another web server than Apache, make sure you have manually configured your
+					web server to properly rewrite urls. More information can be found in our
+					<a href="http://www.fork-cms.com/knowledge-base/detail/fork-cms-and-webservers" title="Fork CMS and web servers">knowledge base</a>.
 					If you are certain that your server is well configured, you may proceed the installation despite this warning.
 				</p>
 
@@ -167,11 +167,17 @@
 
 				<h4><span class="{$fileSystemInstaller}">{$fileSystemInstaller}</span> {$PATH_WWW}/install/cache/</h4>
 				<p>This location must be writable for the installer.</p>
+
+				<h4><span class="{$fileSystemAppCache}">{$fileSystemAppCache}</span> {$PATH_WWW}/app/cache/</h4>
+				<p>In this location the global cache will be stored.</p>
 				
+				<h4><span class="{$fileSystemAppLogs}">{$fileSystemAppLogs}</span> {$PATH_WWW}/app/logs/</h4>
+				<p>In this location the global logs will be stored.</p>
+
 				<h4><span class="{$fileSystemAppConfig}">{$fileSystemAppConfig}</span> {$PATH_WWW}/app/config/</h4>
 				<p>In this location the global configuration will be stored.</p>
 
-				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/parameters.base.yml</h4>
+				<h4><span class="{$fileSystemParameters}">{$fileSystemParameters}</span> {$PATH_LIBRARY}/../app/config/parameters.yml.dist</h4>
 				<p>This file is used to create the global configuration file.</p>
 
 				<h4><span class="{$fileSystemPathLibrary}">{$fileSystemPathLibrary}</span> {$PATH_LIBRARY}</h4>

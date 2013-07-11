@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
@@ -34,6 +36,7 @@ class BackendContentBlocksModel
 	 *
 	 * @param string $from 	The language code to copy the content blocks from.
 	 * @param string $to 	The language code we want to copy the content blocks to.
+	 * @return array
 	 */
 	public static function copy($from, $to)
 	{
@@ -220,20 +223,25 @@ class BackendContentBlocksModel
 	 */
 	public static function getTemplates()
 	{
-		// fetch templates available in core
-		$templates = SpoonFile::getList(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets', '/.*?\.tpl/');
+		$templates = array();
+		$finder = new Finder();
+		$finder->name('*.tpl');
+		$finder->in(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
 
-		// fetch current active theme
+		// if there is a custom theme we should include the templates there also
 		$theme = BackendModel::getModuleSetting('core', 'theme', 'core');
+		if($theme != 'core') {
+			$path = FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets';
+			if(is_dir($path)) {
+				$finder->in($path);
+			}
+		}
 
-		// fetch theme templates if a theme is selected
-		if($theme != 'core') $templates = array_merge($templates, SpoonFile::getList(FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets', '/.*?\.tpl/'));
+		foreach ($finder->files() as $file) {
+			$templates[] = $file->getBasename();
+		}
 
-		// no duplicates (core templates will be overridden by theme templates) and sort alphabetically
-		$templates = array_unique($templates);
-		sort($templates);
-
-		return $templates;
+		return array_unique($templates);
 	}
 
 	/**

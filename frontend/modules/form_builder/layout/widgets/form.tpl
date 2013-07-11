@@ -7,7 +7,11 @@
 			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
 
 			{option:fields}
-				<form id="{$formName}" method="post" action="{$formAction}">
+				<form {option:hidUtf8}accept-charset="UTF-8" {/option:hidUtf8}id="{$formName}" method="post" action="{$formAction}">
+					{option:formToken}
+						<input type="hidden" name="form_token" id="formToken{$formName|ucfirst}" value="{$formToken}" />
+					{/option:formToken}
+
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
@@ -18,7 +22,7 @@
 							</div>
 						{/option:fields.plaintext}
 
-						{* Input fields, textarea's and dropdowns *}
+						{* Input fields, textareas and drop downs *}
 						{option:fields.simple}
 							<p{option:fields.error} class="errorArea"{/option:fields.error}>
 								<label for="{$fields.name}">
@@ -29,7 +33,7 @@
 							</p>
 						{/option:fields.simple}
 
-						{* Radiobuttons and checkboxes *}
+						{* Radio buttons and checkboxes *}
 						{option:fields.multiple}
 							<div class="inputList{option:fields.error} errorArea{/option:fields.error}">
 								<p class="label">

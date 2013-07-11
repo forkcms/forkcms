@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
  *
@@ -100,7 +103,7 @@ class BackendPagesModel
 		$navigation = array();
 
 		// loop levels
-		foreach($levels as $level => $pages)
+		foreach($levels as $pages)
 		{
 			// loop all items on this level
 			foreach($pages as $pageID => $page)
@@ -244,8 +247,10 @@ class BackendPagesModel
 		// end file
 		$keysString .= "\n" . '?>';
 
+		$fs = new Filesystem();
+
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
 
 		// write the navigation-file
 		$navigationString = '<?php' . "\n\n";
@@ -330,7 +335,7 @@ class BackendPagesModel
 		$navigationString .= '?>';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
 
 		// get the order
 		foreach(array_keys($navigation) as $type)
@@ -412,7 +417,7 @@ class BackendPagesModel
 		$editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
 		// write the file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
+		$fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
 
 		// trigger an event
 		BackendModel::triggerEvent('pages', 'after_recreated_cache');
@@ -860,7 +865,9 @@ class BackendPagesModel
 	public static function getFullURL($id)
 	{
 		// generate the cache files if needed
-		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$keys = array();
@@ -1036,7 +1043,7 @@ class BackendPagesModel
 		$return = array();
 
 		// loop levels
-		foreach($levels as $level => $pages)
+		foreach($levels as $pages)
 		{
 			// loop all items on this level
 			foreach($pages as $pageID => $page)
@@ -1069,7 +1076,7 @@ class BackendPagesModel
 			ksort($sequences['pages']);
 
 			// loop to add the titles in the correct order
-			foreach($sequences['pages'] as $URL => $id)
+			foreach($sequences['pages'] as $id)
 			{
 				if(isset($titles[$id])) $return[$id] = $titles[$id];
 			}
@@ -1077,7 +1084,7 @@ class BackendPagesModel
 
 		if(isset($sequences['footer']))
 		{
-			foreach($sequences['footer'] as $URL => $id)
+			foreach($sequences['footer'] as $id)
 			{
 				if(isset($titles[$id])) $return[$id] = $titles[$id];
 			}
@@ -1185,7 +1192,9 @@ class BackendPagesModel
 	public static function getTreeHTML()
 	{
 		// check if the cached file exists, if not we generated it
-		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) self::buildCache(BL::getWorkingLanguage());
+		if(!is_file(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+			self::buildCache(BL::getWorkingLanguage());
+		}
 
 		// init var
 		$navigation = array();
@@ -1338,7 +1347,7 @@ class BackendPagesModel
 		$URL = (string) $URL;
 		$parentIds = array((int) $parentId);
 
-		// 0, 1, 2, 3, 4 are all toplevels, so we should place them on the same level
+		// 0, 1, 2, 3, 4 are all top levels, so we should place them on the same level
 		if($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) $parentIds = array(0, 1, 2, 3, 4);
 
 		// get db
@@ -1390,13 +1399,13 @@ class BackendPagesModel
 		// get info about parent page
 		$parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
 
-		// does the parent have extra's?
+		// does the parent have extras?
 		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
 			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
 
-			// get all onsite action
+			// get all on-site action
 			$actions = FrontendLanguage::getActions();
 
 			// if the new URL conflicts with an action we should rebuild the URL
@@ -1411,7 +1420,7 @@ class BackendPagesModel
 		}
 
 		// check if folder exists
-		if(SpoonDirectory::exists(PATH_WWW . '/' . $fullURL))
+		if(is_dir(PATH_WWW . '/' . $fullURL) || is_file(PATH_WWW . '/' . $fullURL))
 		{
 			// add a number
 			$URL = BackendModel::addNumber($URL);
@@ -1420,7 +1429,7 @@ class BackendPagesModel
 			return self::getURL($URL, $id, $parentId, $isAction);
 		}
 
-		// check if it is an appliation
+		// check if it is an application
 		if(in_array(trim($fullURL, '/'), array_keys(ApplicationRouting::getRoutes())))
 		{
 			// add a number

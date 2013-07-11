@@ -262,18 +262,8 @@ class BackendTemplate extends SpoonTemplate
 		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
-		// init vars
-		$realErrors = array();
-		$realLabels = array();
-		$realMessages = array();
-
-		// get all errors
 		$errors = BackendLanguage::getErrors();
-
-		// get all labels
 		$labels = BackendLanguage::getLabels();
-
-		// get all messages
 		$messages = BackendLanguage::getMessages();
 
 		// set the begin state
@@ -524,7 +514,6 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		$var = (string) $var; // @todo what is this doing here?
 		return Spoon::get('navigation')->getNavigation(1, 1);
 	}
 
@@ -539,7 +528,6 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
 	{
-		$var = (string) $var;
 		$startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
@@ -559,12 +547,8 @@ class BackendTemplateModifiers
 	 */
 	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
-		// redefine
-		$var = (string) $var;
 		$action = ($action !== null) ? (string) $action : null;
 		$module = ($module !== null) ? (string) $module : null;
-
-		// build the url
 		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
 	}
 
@@ -579,7 +563,6 @@ class BackendTemplateModifiers
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		$var = (string) $var;
 		return rand((int) $min, (int) $max);
 	}
 

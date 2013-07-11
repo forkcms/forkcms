@@ -10,7 +10,7 @@
 /**
  * This is the DeleteFeedback action, it will display a form to create a new item
  *
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendFaqDeleteFeedback extends BackendBaseActionDelete
 {

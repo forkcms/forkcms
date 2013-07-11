@@ -87,6 +87,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$this->tpl->assign('hasError', true);
 			}
 
+			$this->getContainer()->get('logger')->info(
+				"Trying to authenticate user '{$txtEmail->getValue()}'."
+			);
+
 			// invalid form-token?
 			if($this->frm->getToken() != $this->frm->getField('form_token')->getValue())
 			{
@@ -103,6 +107,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// try to login the user
 				if(!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue()))
 				{
+					$this->getContainer()->get('logger')->info(
+						"Failed authenticating user '{$txtEmail->getValue()}'."
+					);
+
 					// add error
 					$this->frm->addError('invalid login');
 
@@ -148,6 +156,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				// too many attempts
 				$this->frm->addEditor('too many attempts');
 
+				$this->getContainer()->get('logger')->info(
+					"Too many login attempts for user '{$txtEmail->getValue()}'."
+				);
+
 				// show error
 				$this->tpl->assign('hasTooManyAttemps', true);
 				$this->tpl->assign('hasError', false);
@@ -182,6 +194,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 						if(BackendAuthentication::isAllowedModule($module)) break;
 					}
 				}
+
+				$this->getContainer()->get('logger')->info(
+					"Successfully authenticated user '{$txtEmail->getValue()}'."
+				);
 
 				// redirect to the correct URL (URL the user was looking for or fallback)
 				$this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));

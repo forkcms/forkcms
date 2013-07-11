@@ -53,11 +53,8 @@ class InstallerStep2 extends InstallerStep
 	 */
 	public static function checkRequirements()
 	{
-		// define step
-		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6', '7'))) ? (int) $_GET['step'] : 1;
-
 		// define constants
-		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
+		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants();
 
 		/*
 		 * At first we're going to check to see if the PHP version meets the minimum requirements
@@ -117,8 +114,10 @@ class InstallerStep2 extends InstallerStep
 		self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_WARNING);
 		self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemAppCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/cache/'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemAppLogs', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/logs/'), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemAppConfig', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/app/config/'), self::STATUS_ERROR);
-		self::checkRequirement('fileSystemParameters', defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/parameters.base.yml') && is_readable(PATH_LIBRARY . '/parameters.base.yml'), self::STATUS_ERROR);
+		self::checkRequirement('fileSystemParameters', defined('PATH_LIBRARY') && file_exists(PATH_WWW . '/app/config/parameters.yml.dist') && is_readable(PATH_WWW . '/app/config/parameters.yml.dist'), self::STATUS_ERROR);
 		self::checkRequirement('fileSystemPathLibrary', defined('PATH_LIBRARY') && PATH_LIBRARY != '', self::STATUS_ERROR);
 
 		/*
@@ -135,7 +134,7 @@ class InstallerStep2 extends InstallerStep
 	 *
 	 * @param int $step The step wherefore the constant should be defined.
 	 */
-	private static function defineConstants($step)
+	private static function defineConstants()
 	{
 		// define constants
 		if(!defined('PATH_WWW'))

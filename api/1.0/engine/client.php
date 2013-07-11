@@ -75,7 +75,7 @@ class APIClient extends API
 			$className = 'Backend' . SpoonFilter::toCamelCase($module) . 'API';
 			$methods = get_class_methods($className);
 
-			// we will need the parameters + PHPDoc to generate our textfields
+			// we will need the parameters + PHPDoc to generate our text fields
 			foreach($methods as $key => $method)
 			{
 				$methods[$key] = array(
@@ -113,7 +113,6 @@ class APIClient extends API
 		 */
 		preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $PHPDoc, $matches);
 		if(array_key_exists(0, $matches) && empty($matches[0])) return;
-		$phpdoc = array();
 
 		// we have to build up a custom stack of parameters
 		foreach($matches[0] as $i => $row)

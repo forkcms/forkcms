@@ -202,11 +202,11 @@
 				var c = new Array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
 
 				// the number-mapping
-				var n = new Array();
+				var n = [];
 				n['a'] = 4; n['b'] = 8; n['e'] = 3; n['g'] = 6; n['l'] = 1; n['o'] = 0; n['s'] = 5; n['t'] = 7; n['z'] = 2;
 
 				// the special chars-mapping
-				var s = new Array();
+				var s = [];
 				s['a'] = '@'; s['i'] = '!'; s['c'] = 'ç'; s['s'] = '$'; s['g'] = '&'; s['h'] = '#'; s['l'] = '|'; s['x'] = '%';
 
 				// init vars
@@ -1435,7 +1435,7 @@
 				remove($(this).data('id'));
 			});
 
-			// bind keypress on inputfields (we need to rebuild so new values are saved)
+			// bind keypress on input fields (we need to rebuild so new values are saved)
 			$('.inputField-' + id).live('keyup', function(e)
 			{
 				// clear elements

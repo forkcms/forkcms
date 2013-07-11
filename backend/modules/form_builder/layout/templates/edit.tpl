@@ -179,6 +179,14 @@
 							{$txtTextboxValue}
 						</p>
 					</div>
+					<div class="options">
+						<p class="p0">
+							<label for="textboxReplyTo">{$lblReplyTo|ucfirst}</label>
+							{$chkTextboxReplyTo}
+							<abbr class="help">(?)</abbr>
+							<span class="tooltip" style="display: none;">{$msgHelpReplyTo}</span>
+						</p>
+					</div>
 					<div class="validation options">
 						<p class="p0">
 							<label for="textboxRequired">{$lblRequiredField|ucfirst}</label>

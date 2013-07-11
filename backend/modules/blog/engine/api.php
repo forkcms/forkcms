@@ -47,9 +47,7 @@ class BackendBlogAPI
 		if(API::authorize() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
-			if($status !== null) $status = (string) $status;
 			$limit = (int) $limit;
-			$offset = (int) $offset;
 
 			// validate
 			if($limit > 10000)
@@ -68,7 +66,7 @@ class BackendBlogAPI
 				 GROUP BY i.id
 				 ORDER BY i.id DESC
 				 LIMIT ?, ?',
-				array('active', $offset, $limit)
+				array('active', (int) $offset, $limit)
 			);
 
 			$totalCount = (int) BackendModel::getContainer()->get('database')->getVar(
@@ -178,6 +176,7 @@ class BackendBlogAPI
 	 * @param string[optional] $authorName The new author for the comment.
 	 * @param string[optional] $authorEmail The new email for the comment.
 	 * @param string[optional] $authorWebsite The new website for the comment.
+	 * @return null|bool
 	 */
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{

@@ -6,7 +6,7 @@
 		</div>
 	{/option:plaintext}
 
-	{* Textbox, textarea, dropdown *}
+	{* Text box, textarea, dropdown *}
 	{option:simple}
 		<div class="fieldWrapper horizontal">
 			<label for="field{$id}">
@@ -16,7 +16,7 @@
 		</div>
 	{/option:simple}
 
-	{* Radiobutton, checkbox *}
+	{* Radio button, checkbox *}
 	{option:multiple}
 		<div class="fieldWrapper horizontal">
 			<p class="label">{$label}{option:required}<abbr title="{$lblRequiredField}">*</abbr>{/option:required}</p>

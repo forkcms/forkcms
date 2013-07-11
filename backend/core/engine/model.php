@@ -1,13 +1,16 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../../../app/BaseModel.php';
 
@@ -266,17 +269,14 @@ class BackendModel extends BaseModel
 	 */
 	public static function deleteThumbnails($path, $thumbnail)
 	{
-		// get folder listing
-		$folders = self::getThumbnailFolders($path);
+		// if there is no image provided we can't do anything
+		if($thumbnail == '') return;
 
-		// loop folders
-		foreach($folders as $folder)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->directories()->in($path) as $directory)
 		{
-			// delete file but check for existence at first
-			if(SpoonFile::exists($folder['path'] . '/' . $thumbnail))
-			{
-				SpoonFile::delete($folder['path'] . '/' . $thumbnail);
-			}
+			$fs->remove($directory->getRealPath() . '/' . $thumbnail);
 		}
 	}
 
@@ -368,17 +368,17 @@ class BackendModel extends BaseModel
 	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
-	public static function generateThumbnails($path, $sourcefile)
+	public static function generateThumbnails($path, $sourceFile)
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($sourcefile);
+		$filename = basename($sourceFile);
 
 		// loop folders
 		foreach($folders as $folder)
 		{
 			// generate the thumbnail
-			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
 			$thumbnail->setAllowEnlargement(true);
 
 			// if the width & height are specified we should ignore the aspect ratio
@@ -521,7 +521,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -558,6 +558,25 @@ class BackendModel extends BaseModel
 		}
 
 		return self::$modules;
+	}
+
+	/**
+	 * Get the modules that are available on the filesystem
+	 *
+	 * @param bool[optional] $includeCore   Should core be included as a module?
+	 * @return array
+	 */
+	public static function getModulesOnFilesystem($includeCore = true)
+	{
+		if($includeCore) $return = array('core');
+		else $return = array();
+		$finder = new Finder();
+		foreach($finder->directories()->in(PATH_WWW . '/backend/modules')->depth('==0') as $folder)
+		{
+			$return[] = $folder->getBasename();
+		}
+
+		return $return;
 	}
 
 	/**
@@ -656,7 +675,7 @@ class BackendModel extends BaseModel
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -703,30 +722,24 @@ class BackendModel extends BaseModel
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
-		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
-
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
-
 		$return = array();
+		$finder = new Finder();
+		$finder->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $finder->name('source');
 
-		foreach($folders as $folder)
-		{
-			$item = array();
-			$chunks = explode('x', $folder, 2);
-
-			// skip invalid items
+		foreach($finder->directories()->in($path) as $directory) {
+			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 
-			$item['dirname'] = $folder;
-			$item['path'] = $path . '/' . $folder;
+			$item = array();
+			$item['dirname'] = $directory->getBasename();
+			$item['path'] = $directory->getRealPath();
 			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
-			if($folder == 'source')
-			{
+
+			if($item['dirname'] == 'source') {
 				$item['width'] = null;
 				$item['height'] = null;
-			}
-			else
-			{
+			} else {
 				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
 				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
 			}
@@ -934,18 +947,17 @@ class BackendModel extends BaseModel
 	 */
 	public static function imageDelete($module, $filename, $subDirectory = '', $fileSizes = null)
 	{
-		// get fileSizes var from model
 		if(empty($fileSizes))
 		{
 			$model = get_class_vars('Backend' . SpoonFilter::toCamelCase($module) . 'Model');
 			$fileSizes = $model['fileSizes'];
 		}
 
-		// loop all directories
-		foreach(array_keys($fileSizes) as $sizeDir) SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
-
-		// delete original
-		SpoonFile::delete(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+		$fs = new Filesystem();
+		foreach(array_keys($fileSizes) as $sizeDir) {
+			$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+		}
+		$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
 	}
 
 	/**
@@ -998,23 +1010,27 @@ class BackendModel extends BaseModel
 		// get cache path
 		$path = FRONTEND_CACHE_PATH . '/cached_templates';
 
-		// build regular expression
-		if($module !== null)
+		if(is_dir($path))
 		{
-			if($language === null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
-			else $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
-		}
-		else
-		{
-			if($language === null) $regexp = '/(.*)_cache\.tpl/i';
-			else $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
-		}
+			// build regular expression
+			if($module !== null)
+			{
+				if($language === null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+				else $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
+			}
+			else
+			{
+				if($language === null) $regexp = '/(.*)_cache\.tpl/i';
+				else $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
+			}
 
-		// get files to delete
-		$files = SpoonFile::getList($path, $regexp);
-
-		// delete files
-		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
+			$finder = new Finder();
+			$fs = new Filesystem();
+			foreach($finder->files()->name($regexp)->in($path) as $file)
+			{
+				$fs->remove($file->getRealPath());
+			}
+		}
 	}
 
 	/**
@@ -1143,7 +1159,7 @@ class BackendModel extends BaseModel
 				// check if the error should not be ignored
 				if(strpos($e->getMessage(), 'Operation timed out') === false && strpos($e->getMessage(), 'Invalid headers') === false)
 				{
-					// in debugmode we want to see the exceptions
+					// in debug mode we want to see the exceptions
 					if(SPOON_DEBUG) throw $e;
 				}
 
@@ -1185,11 +1201,13 @@ class BackendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = new Filesystem();
+
 		// is the queue already running?
-		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(BACKEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
-			$pid = trim(SpoonFile::getContent(BACKEND_CACHE_PATH . '/hooks/pid'));
+			$pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/hooks/pid'));
 
 			// running on windows?
 			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
@@ -1201,7 +1219,7 @@ class BackendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1218,7 +1236,7 @@ class BackendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1229,10 +1247,10 @@ class BackendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -1299,7 +1317,7 @@ class BackendModel extends BaseModel
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+			return $akismet->submitHam($userIp, $userAgent, $content, $author, $email, $url, $permalink, $type, $referrer, $others);
 		}
 
 		// catch exceptions
@@ -1347,7 +1365,7 @@ class BackendModel extends BaseModel
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+			return $akismet->submitSpam($userIp, $userAgent, $content, $author, $email, $url, $permalink, $type, $referrer, $others);
 		}
 
 		// catch exceptions
@@ -1413,10 +1431,8 @@ class BackendModel extends BaseModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', PATH_WWW . '/backend/cache/logs/events');
-
-		// logging when we are in debugmode
-		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
+		$log = self::getContainer()->get('logger');
+		$log->info('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
 		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
@@ -1445,8 +1461,7 @@ class BackendModel extends BaseModel
 				// add
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
-				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
+				$log->info('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
 			}
 
 			// start processing

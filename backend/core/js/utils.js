@@ -6,7 +6,6 @@
  */
 var utils =
 {
-	// datamembers
 	debug: false
 }
 
@@ -50,7 +49,7 @@ utils.cookies =
 	isEnabled: function()
 	{
 		// try to grab the property
-		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
+		var cookiesEnabled = !!(navigator.cookieEnabled);
 
 		// unknown property?
 		if(typeof navigator.cookieEnabled == 'undefined' && !cookiesEnabled)
@@ -85,11 +84,11 @@ utils.cookies =
 		// fallback
 		return null;
 	},
-	
+
 	setCookie: function(name, value, days)
 	{
 		if(typeof days == 'undefined') days = 7;
-		
+
 		var expireDate = new Date();
 		expireDate.setDate(expireDate.getDate() + days);
 		document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/';
@@ -309,15 +308,15 @@ utils.string =
 
 	/**
 	 * Ucfirst a string
-	 * 
+	 *
 	 * @return	string
 	 * @param	string value
-	 */ 
+	 */
 	ucfirst: function(value)
 	{
 		return value.charAt(0).toUpperCase() + value.slice(1);
 	},
-	
+
 	/**
 	 * PHP-like urlencode
 	 *

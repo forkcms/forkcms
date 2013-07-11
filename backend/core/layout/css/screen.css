@@ -5,7 +5,7 @@
 	Media:      screen, projection
 	Copyright:  Netlash <http://www.netlash.com>
 	authors:    Johan Ronsse <johan@netlash.com>
-	            Yoni De Beuele <yoni@netlash.com>
+	            Yoni De Beule <yoni@netlash.com>
 */
 
 @import url("imports/typography.css");
@@ -31,7 +31,7 @@
 	/* DataGrid related */
 	@import url("imports/datagrid.css");
 	@import url("imports/datafilter.css");
-	
+
 	/* Standalone */
 	@import url("imports/general_purpose_classes.css");
 	@import url("imports/clearfix.css");

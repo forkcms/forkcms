@@ -1,13 +1,16 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
 
 require_once __DIR__ . '/../../../app/BaseModel.php';
 
@@ -77,41 +80,30 @@ class FrontendModel extends BaseModel
 	/**
 	 * Add parameters to an URL
 	 *
-	 * @param string $URL The URL to append the parameters too.
+	 * @param string $url The URL to append the parameters too.
 	 * @param array $parameters The parameters as key-value-pairs.
 	 * @return string
 	 */
-	public static function addURLParameters($URL, array $parameters)
+	public static function addURLParameters($url, array $parameters)
 	{
-		// redefine
-		$URL = (string) $URL;
+		$url = (string) $url;
 
-		// no parameters means no appending
-		if(empty($parameters)) return $URL;
+		if(empty($parameters)) return $url;
 
-		// split to remove the hash
-		$chunks = explode('#', $URL, 2);
-
-		// init var
+		$chunks = explode('#', $url, 2);
 		$hash = '';
-
 		if(isset($chunks[1]))
 		{
-			// reset URL
-			$URL = $chunks[0];
-
-			// store has
+			$url = $chunks[0];
 			$hash = '#' . $chunks[1];
 		}
 
-		// build querystring
+		// build query string
 		$queryString = http_build_query($parameters, null, '&amp;');
+		if(mb_strpos($url, '?') !== false) $url .= '&' . $queryString . $hash;
+		else $url .= '?' . $queryString . $hash;
 
-		// already GET parameters?
-		if(mb_strpos($URL, '?') !== false) return $URL .= '&' . $queryString . $hash;
-
-		// no GET-parameters defined before
-		else return $URL .= '?' . $queryString . $hash;
+		return $url;
 	}
 
 	/**
@@ -218,24 +210,24 @@ class FrontendModel extends BaseModel
 	/**
 	 * Generate thumbnails based on the folders in the path
 	 * Use
-	 *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
-	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
-	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+	 *  - 128x128 as folder name to generate an image where the width will be 128px and the height will be 128px
+	 *  - 128x as folder name to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as folder name to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
 	 *
 	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
-	public static function generateThumbnails($path, $sourcefile)
+	public static function generateThumbnails($path, $sourceFile)
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($sourcefile);
+		$filename = basename($sourceFile);
 
 		// loop folders
 		foreach($folders as $folder)
 		{
 			// generate the thumbnail
-			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
 			$thumbnail->setAllowEnlargement(true);
 
 			// if the width & height are specified we should ignore the aspect ratio
@@ -267,7 +259,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get a module setting
 	 *
-	 * @param string $module The module wherefor a setting has to be retrieved.
+	 * @param string $module The module wherefore a setting has to be retrieved.
 	 * @param string $name The name of the setting to be retrieved.
 	 * @param mixed[optional] $defaultValue A value that will be stored if the setting isn't present.
 	 * @return mixed
@@ -302,7 +294,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get all module settings at once
 	 *
-	 * @param string $module The module wherefor all settings has to be retrieved.
+	 * @param string $module The module wherefore all settings has to be retrieved.
 	 * @return array
 	 */
 	public static function getModuleSettings($module)
@@ -332,7 +324,7 @@ class FrontendModel extends BaseModel
 	/**
 	 * Get all data for a page
 	 *
-	 * @param int $pageId The pageId wherefor the data will be retrieved.
+	 * @param int $pageId The pageId wherefore the data will be retrieved.
 	 * @return array
 	 */
 	public static function getPage($pageId)
@@ -368,9 +360,6 @@ class FrontendModel extends BaseModel
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 		if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
-
-		// determine amount of blocks needed
-		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
 		$blocks = (array) $db->getRecords(
@@ -474,30 +463,26 @@ class FrontendModel extends BaseModel
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
-		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
-
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
-
 		$return = array();
+		$fs = new Filesystem();
+		if(!$fs->exists($path)) return $return;
+		$finder = new Finder();
+		$finder->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $finder->name('source');
 
-		foreach($folders as $folder)
-		{
-			$item = array();
-			$chunks = explode('x', $folder, 2);
-
-			// skip invalid items
+		foreach($finder->directories()->in($path) as $directory) {
+			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 
-			$item['dirname'] = $folder;
-			$item['path'] = $path . '/' . $folder;
-			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($item['path'], strlen(PATH_WWW));
-			if($folder == 'source')
-			{
+			$item = array();
+			$item['dirname'] = $directory->getBasename();
+			$item['path'] = $directory->getRealPath();
+			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+
+			if($item['dirname'] == 'source') {
 				$item['width'] = null;
 				$item['height'] = null;
-			}
-			else
-			{
+			} else {
 				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
 				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
 			}
@@ -587,9 +572,9 @@ class FrontendModel extends BaseModel
 	 *
 	 * @param string $content The content that was submitted.
 	 * @param string $permaLink The permanent location of the entry the comment was submitted to.
-	 * @param string[optional] $author Commenters name.
-	 * @param string[optional] $email Commenters email address.
-	 * @param string[optional] $URL Commenters URL.
+	 * @param string[optional] $author Commenter's name.
+	 * @param string[optional] $email Commenter's email address.
+	 * @param string[optional] $URL Commenter's URL.
 	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @return bool|string Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 */
@@ -624,9 +609,6 @@ class FrontendModel extends BaseModel
 			// return unknown status
 			return 'unknown';
 		}
-
-		// when everything fails
-		return false;
 	}
 
 	/**
@@ -731,9 +713,9 @@ class FrontendModel extends BaseModel
 	}
 
 	/**
-	 * Store a modulesetting
+	 * Store a module setting
 	 *
-	 * @param string $module The module wherefor a setting has to be stored.
+	 * @param string $module The module wherefore a setting has to be stored.
 	 * @param string $name The name of the setting.
 	 * @param mixed $value The value (will be serialized so make sure the type is correct).
 	 */
@@ -760,11 +742,12 @@ class FrontendModel extends BaseModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = new Filesystem();
 		// is the queue already running?
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
-			$pid = trim(SpoonFile::getContent(FRONTEND_CACHE_PATH . '/hooks/pid'));
+			$pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/hooks/pid'));
 
 			// running on windows?
 			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
@@ -776,7 +759,7 @@ class FrontendModel extends BaseModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -793,7 +776,7 @@ class FrontendModel extends BaseModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -804,10 +787,10 @@ class FrontendModel extends BaseModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -893,10 +876,8 @@ class FrontendModel extends BaseModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', PATH_WWW . '/frontend/cache/logs/events');
-
-		// logging when we are in debugmode
-		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
+		$log = self::getContainer()->get('logger');
+		$log->info('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
 		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
@@ -925,8 +906,7 @@ class FrontendModel extends BaseModel
 				// add
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
-				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
+				$log->info('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
 			}
 
 			// start processing
