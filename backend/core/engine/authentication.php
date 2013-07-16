@@ -163,9 +163,6 @@ class BackendAuthentication
 	 */
 	public static function isAllowedAction($action = null, $module = null)
 	{
-		// GOD's rule them all!
-		if(self::getUser()->isGod()) return true;
-
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(
 			'dashboard' => array('index' => 7),
@@ -183,14 +180,14 @@ class BackendAuthentication
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;
 
+		// get modules
+		$modules = BackendModel::getModules();
+
 		// we will cache everything
 		if(empty(self::$allowedActions))
 		{
 			// init var
 			$db = BackendModel::getContainer()->get('database');
-
-			// get modules
-			$modules = BackendModel::getModules();
 
 			// add always allowed
 			foreach($alwaysAllowed as $allowedModule => $actions) $modules[] = $allowedModule;
@@ -215,6 +212,9 @@ class BackendAuthentication
 			}
 		}
 
+		// module exists and God user is enough to be allowed
+		if(in_array($module, $modules) && self::getUser()->isGod()) return true;
+
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))
 		{
@@ -234,17 +234,15 @@ class BackendAuthentication
 	 */
 	public static function isAllowedModule($module)
 	{
-		// GOD's rule them all!
-		if(self::isLoggedIn() && self::getUser()->isGod()) return true;
-
-		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
+		$modules = BackendModel::getModules();
 		$alwaysAllowed = array('core', 'error', 'authentication');
-
-		// redefine
 		$module = (string) $module;
 
-		// is this module a module that doesn't require authentication?
+		// is this module a module that doesn't require user level authentication?
 		if(in_array($module, $alwaysAllowed)) return true;
+
+		// module is active and God user, good enough
+		if(in_array($module, $modules) && self::getUser()->isGod()) return true;
 
 		// do we already know something?
 		if(empty(self::$allowedModules))
