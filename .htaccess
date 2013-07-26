@@ -13,6 +13,9 @@ FileETag MTime Size
 
 	# forbidden folders
 	RewriteRule .*\.gitignore - [F]
+	RewriteRule composer.json - [F]
+	RewriteRule composer.lock - [F]
+	RewriteRule .*.md - [F]
 	RewriteRule frontend/cache/cached_templates - [F]
 	RewriteRule frontend/cache/compiled_templates - [F]
 	RewriteRule frontend/cache/config - [F]
