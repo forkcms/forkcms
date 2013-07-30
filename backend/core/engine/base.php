@@ -9,6 +9,7 @@
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -171,13 +172,17 @@ class BackendBaseAction extends BackendBaseObject
 	/**
 	 * The constructor will set some properties. It populates the parameter array with urldecoded
 	 * values for easy-use.
+	 *
+	 * @param KernelInterface $kernel
 	 */
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
+		parent::__construct($kernel);
+
 		// get objects from the reference so they are accessible from the action-object
-		$this->tpl = Spoon::get('template');
-		$this->URL = Spoon::get('url');
-		$this->header = Spoon::get('header');
+		$this->tpl = $this->getContainer()->get('template');
+		$this->URL = $this->getContainer()->get('url');
+		$this->header = $this->getContainer()->get('header');
 
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($this->URL->getModule());
@@ -624,10 +629,13 @@ class BackendBaseConfig extends BackendBaseObject
 	protected $possibleAJAXActions = array();
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The module wherefore this is the configuration-file.
 	 */
-	public function __construct($module)
+	public function __construct(KernelInterface $kernel, $module)
 	{
+		parent::__construct($kernel);
+
 		$this->setModule($module);
 
 		// read the possible actions based on the files
@@ -872,7 +880,7 @@ class BackendBaseCronjob extends BackendBaseObject
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBaseWidget
+class BackendBaseWidget extends KernelLoader
 {
 	/**
 	 * The column wherein the widget should be shown
@@ -919,11 +927,15 @@ class BackendBaseWidget
 	/**
 	 * The constructor will set some properties, it populates the parameter array with urldecoded
 	 * values for ease of use.
+	 *
+	 * @param KernelInterface $kernel
 	 */
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
-		$this->tpl = Spoon::get('template');
-		$this->header = Spoon::get('header');
+		parent::__construct($kernel);
+
+		$this->tpl = $this->getContainer()->get('template');
+		$this->header = $this->getContainer()->get('header');
 	}
 
 	/**

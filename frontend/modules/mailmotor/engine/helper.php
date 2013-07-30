@@ -68,7 +68,7 @@ class FrontendMailmotorCMHelper
 	public static function getCM($listId = null)
 	{
 		// campaignmonitor reference exists
-		if(!Spoon::exists('campaignmonitor'))
+		if(!FrontendModel::getContainer()->has('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
 			if(!file_exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
@@ -89,7 +89,7 @@ class FrontendMailmotorCMHelper
 			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
 
 			// set CampaignMonitor object reference
-			Spoon::set('campaignmonitor', $cm);
+			FrontendModel::getContainer()->set('campaignmonitor', $cm);
 
 			// get the default list ID
 			$listId = (!empty($listId)) ? $listId : self::getDefaultListID();
@@ -99,7 +99,7 @@ class FrontendMailmotorCMHelper
 		}
 
 		// return the CampaignMonitor object
-		return Spoon::get('campaignmonitor');
+		return FrontendModel::getContainer()->get('campaignmonitor');
 	}
 
 	/**

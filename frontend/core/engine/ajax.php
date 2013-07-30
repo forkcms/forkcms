@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -82,13 +83,13 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 			$this->setAction($action);
 			$this->setLanguage($language);
 
-			$this->ajaxAction = new FrontendAJAXAction($this->getAction(), $this->getModule());
+			$this->ajaxAction = new FrontendAJAXAction($this->getKernel(), $this->getAction(), $this->getModule());
 			$this->output = $this->ajaxAction->execute();
 		}
 
 		catch(Exception $e)
 		{
-			$this->ajaxAction = new FrontendBaseAJAXAction('', '');
+			$this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
 			$this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
 			$this->output = $this->ajaxAction->execute();
 		}
@@ -188,7 +189,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 		if(!in_array($value, $possibleModules))
 		{
 			// create fake action
-			$fakeAction = new FrontendBaseAJAXAction('', '');
+			$fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
 
 			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Module not correct.');
@@ -230,11 +231,14 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 	protected $module;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $action The action that should be executed.
 	 * @param string $module The module that wherein the action is available.
 	 */
-	public function __construct($action, $module)
+	public function __construct(KernelInterface $kernel, $action, $module)
 	{
+		parent::__construct($kernel, $action, $module);
+
 		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
@@ -266,7 +270,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule());
+		$object = new $actionClassName($this->getKernel(), $this->getAction(), $this->getModule());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
@@ -329,7 +333,7 @@ class FrontendAJAXAction extends FrontendBaseAJAXAction
 		}
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 	}
 
 	/**

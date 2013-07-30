@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will handle all stuff related to blocks
  *
@@ -74,13 +76,14 @@ class FrontendBlockExtra extends FrontendBaseObject
 	protected $templatePath = '';
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The module to load.
 	 * @param string $action The action to load.
 	 * @param mixed[optional] $data The data that was passed from the database.
 	 */
-	public function __construct($module, $action, $data = null)
+	public function __construct(KernelInterface $kernel, $module, $action, $data = null)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
 		// set properties
 		$this->setModule($module);
@@ -110,8 +113,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
-		$this->object->setKernel($this->getKernel());
+		$this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
@@ -271,7 +273,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		}
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 	}
 
 	/**
@@ -377,13 +379,14 @@ class FrontendBlockWidget extends FrontendBaseObject
 	private $output;
 
 	/**
+	 * @param KernelInterface $kernel
 	 * @param string $module The module to load.
 	 * @param string $action The action to load.
 	 * @param mixed[optional] $data The data that was passed from the database.
 	 */
-	public function __construct($module, $action, $data = null)
+	public function __construct(KernelInterface $kernel, $module, $action, $data = null)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
 		// set properties
 		$this->setModule($module);
@@ -416,8 +419,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
 
 		// create action-object
-		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
-		$this->object->setKernel($this->getKernel());
+		$this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
 		// validate if the execute-method is callable
 		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
@@ -517,7 +519,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		}
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName($this->getModule());
+		$this->config = new $configClassName($this->getKernel(), $this->getModule());
 	}
 
 	/**

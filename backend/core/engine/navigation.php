@@ -9,6 +9,7 @@
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will be used to build the navigation
@@ -18,7 +19,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendNavigation
+class BackendNavigation extends BackendBaseObject
 {
 	/**
 	 * The navigation array, will be used to build the navigation
@@ -32,15 +33,16 @@ class BackendNavigation
 	 *
 	 * @var	BackendURL
 	 */
-	private $URL;
+	protected $URL;
 
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
-		// store in reference so we can access it from everywhere
-		Spoon::set('navigation', $this);
+		parent::__construct($kernel);
 
-		// grab from the reference
-		$this->URL = Spoon::get('url');
+		// store for later use throughout the application
+		$this->getContainer()->set('navigation', $this);
+
+		$this->URL = $this->getContainer()->get('url');
 
 		// check if navigation cache file exists
 		if(!is_file(BACKEND_CACHE_PATH . '/navigation/navigation.php'))

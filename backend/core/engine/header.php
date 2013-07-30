@@ -1,6 +1,7 @@
 <?php
 
 use \MatthiasMullie\Minify;
+use \Symfony\Component\HttpKernel\KernelInterface;
 
 /*
  * This file is part of Fork CMS.
@@ -16,7 +17,7 @@ use \MatthiasMullie\Minify;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendHeader
+class BackendHeader extends BackendBaseObject
 {
 	/**
 	 * All added CSS-files
@@ -53,14 +54,15 @@ class BackendHeader
 	 */
 	private $URL;
 
-	public function __construct()
+	public function __construct(KernelInterface $kernel)
 	{
-		// store in reference so we can access it from everywhere
-		Spoon::set('header', $this);
+		parent::__construct($kernel);
+
+		$this->getContainer()->set('header', $this);
 
 		// grab from the reference
-		$this->URL = Spoon::get('url');
-		$this->tpl = Spoon::get('template');
+		$this->URL = $this->getContainer()->get('url');
+		$this->tpl = $this->getContainer()->get('template');
 	}
 
 	/**

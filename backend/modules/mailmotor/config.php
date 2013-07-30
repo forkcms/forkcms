@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use \Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This is the configuration-object for the mailmotor module
  *
@@ -31,14 +33,15 @@ class BackendMailmotorConfig extends BackendBaseConfig
 	/**
 	 * Check if all required settings have been set
 	 *
+	 * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
 	 * @param string $module The module.
 	 */
-	public function __construct($module)
+	public function __construct(KernelInterface $kernel, $module)
 	{
-		parent::__construct($module);
+		parent::__construct($kernel, $module);
 
 		$this->loadEngineFiles();
-		$url = Spoon::exists('url') ? Spoon::get('url') : null;
+		$url = $this->getContainer()->has('url') ? $this->getContainer()->get('url') : null;
 
 		// do the client ID check if we're not in the settings page
 		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'link_account', 'load_client_info')))

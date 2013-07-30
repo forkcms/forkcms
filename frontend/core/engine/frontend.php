@@ -39,12 +39,11 @@ class Frontend extends KernelLoader implements ApplicationInterface
 	public function initialize()
 	{
 		$this->initializeFacebook();
-		new FrontendURL();
+		new FrontendURL($this->getKernel());
 		new FrontendTemplate();
 
 		// Load the rest of the page.
-		$this->page = new FrontendPage();
-		$this->page->setKernel($this->getKernel());
+		$this->page = new FrontendPage($this->getKernel());
 		$this->page->load();
 	}
 
@@ -72,7 +71,7 @@ class Frontend extends KernelLoader implements ApplicationInterface
 			$facebook->getSignedRequest();
 
 			// store in reference
-			Spoon::set('facebook', $facebook);
+			$this->getContainer()->set('facebook', $facebook);
 
 			// trigger event
 			FrontendModel::triggerEvent('core', 'after_facebook_initialization');

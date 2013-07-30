@@ -341,7 +341,7 @@ class FrontendProfilesModel
 	public static function parse()
 	{
 		// get the template
-		$tpl = Spoon::get('template');
+		$tpl = FrontendModel::getContainer()->get('template');
 
 		// logged in
 		if(FrontendProfilesAuthentication::isLoggedIn())

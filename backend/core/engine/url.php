@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This class will handle the incoming URL.
  *
@@ -28,10 +30,15 @@ class BackendURL extends BackendBaseObject
 	 */
 	private $queryString;
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
+		parent::__construct($kernel);
+
 		// add to registry
-		Spoon::set('url', $this);
+		$this->getContainer()->set('url', $this);
 
 		$this->setQueryString($_SERVER['REQUEST_URI']);
 		$this->setHost($_SERVER['HTTP_HOST']);
@@ -173,7 +180,7 @@ class BackendURL extends BackendBaseObject
 			}
 
 			// create config-object, the constructor will do some magic
-			$config = new $configClassName($module);
+			$config = new $configClassName($this->getKernel(), $module);
 
 			// set action
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';

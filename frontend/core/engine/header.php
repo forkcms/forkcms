@@ -8,6 +8,7 @@
  */
 
 use \MatthiasMullie\Minify;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -76,12 +77,15 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	private $pageTitle;
 
-	public function __construct()
+	/**
+	 * @param KernelInterface $kernel
+	 */
+	public function __construct(KernelInterface $kernel)
 	{
-		parent::__construct();
+		parent::__construct($kernel);
 
 		// store in reference
-		Spoon::set('header', $this);
+		$this->getContainer()->set('header', $this);
 
 		// add some default CSS files
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css', false);
@@ -638,7 +642,7 @@ class FrontendHeader extends FrontendBaseObject
 									</script>';
 					break;
 				case 'universal_analytics':
-					$url = Spoon::get('url');
+					$url = $this->getContainer()->get('url');
 					$trackingCode = '<script>
 										(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
 										(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

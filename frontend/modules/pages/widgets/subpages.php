@@ -53,7 +53,7 @@ class FrontendPagesWidgetSubpages extends FrontendBaseWidget
 	private function loadData()
 	{
 		// get the current page id
-		$pageId = Spoon::get('page')->getId();
+		$pageId = $this->getContainer()->get('page')->getId();
 
 		// fetch the items
 		$this->items = FrontendPagesModel::getSubpages($pageId);
