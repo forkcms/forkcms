@@ -172,8 +172,8 @@ class BackendUsersModel
 	public static function getCSVLineEndings()
 	{
 		return array(
-			array('\n' => '\n'),
-			array('\r\n' => '\r\n')
+			'\n' => '\n',
+			'\r\n' => '\r\n'
 		);
 	}
 
@@ -185,8 +185,8 @@ class BackendUsersModel
 	public static function getCSVSplitCharacters()
 	{
 		return array(
-			array(';' => ';'),
-			array(',' => ',')
+			';' => ';',
+			',' => ','
 		);
 	}
 

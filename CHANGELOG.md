@@ -12,6 +12,7 @@ Bugfixes:
 * Output should be last command in ajax requests.
 * Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
 * Authentication: do not allow God users to access uninstalled modules.
+* Users: do not wrap delimiters in an array.
 
 
 3.6.0 (2013-06-18)
