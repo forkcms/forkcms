@@ -614,7 +614,7 @@ class FrontendHeader extends FrontendBaseObject
 				case 'classic_analytics':
 					$trackingCode = '<script>
 										var _gaq = _gaq || [];
-										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
 										(function() {
@@ -627,7 +627,7 @@ class FrontendHeader extends FrontendBaseObject
 				case 'display_advertising':
 					$trackingCode = '<script>
 										var _gaq = _gaq || [];
-										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
 										(function() {
