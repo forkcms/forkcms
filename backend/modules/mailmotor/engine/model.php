@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
@@ -375,7 +379,7 @@ class BackendMailmotorModel
 		$path = BACKEND_CACHE_PATH . '/mailmotor/' . $filename;
 
 		// fetch the addresses by group
-		$records = self::getAddressesByGroupID($id);
+		$records = self::getAddressesByGroupID(array($id));
 
 		// fetch the group fields
 		$groupFields = array_flip(self::getCustomFields($id));
@@ -727,7 +731,7 @@ class BackendMailmotorModel
 	/**
 	 * Get all campaigns in key/value format for id/name
 	 *
-	 * @return int
+	 * @return array
 	 */
 	public static function getCampaignsAsPairs()
 	{
@@ -1262,7 +1266,7 @@ class BackendMailmotorModel
 	/**
 	 * Get all subscriptions for a given e-mail address
 	 *
-	 * @param string $email The emailaddress to get the subscriptions for.
+	 * @param string $email The email address to get the subscriptions for.
 	 * @return array
 	 */
 	public static function getSubscriptions($email)
@@ -1286,16 +1290,15 @@ class BackendMailmotorModel
 	{
 		// set the path to the template folders for this language
 		$path = BACKEND_MODULE_PATH . '/templates/' . $language;
+		$fs = new Filesystem();
 
 		// load all templates in the 'templates' folder for this language
-		$templates = SpoonDirectory::getList($path, false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($templates) || !in_array($name, $templates)) return array();
-
-		// load all templates in the 'templates' folder for this language
-		if(!SpoonFile::exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
-		if(!SpoonFile::exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		if(!$fs->exists($path . '/' . $name . '/template.tpl')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+		}
+		if(!$fs->exists($path . '/' . $name . '/css/screen.css')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		}
 
 		// set template data
 		$record = array();
@@ -1307,8 +1310,12 @@ class BackendMailmotorModel
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
 
 		// check if the template file actually exists
-		if(SpoonFile::exists($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
-		if(SpoonFile::exists($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
+		if($fs->exists($record['path_content'])) {
+			$record['content'] = file_get_contents($record['path_content']);
+		}
+		if($fs->exists($record['path_css'])) {
+			$record['css'] = file_get_contents($record['path_css']);
+		}
 
 		return $record;
 	}
@@ -1321,22 +1328,17 @@ class BackendMailmotorModel
 	 */
 	public static function getTemplatesForCheckboxes($language)
 	{
-		// load all templates in the 'templates' folder for this language
-		$records = SpoonDirectory::getList(BACKEND_MODULE_PATH . '/templates/' . $language . '/', false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($records)) return array();
-
-		// loop and complete the records
-		foreach($records as $key => $record)
+		$records = array();
+		$finder = new Finder();
+		$finder->depth(0);
+		foreach($finder->directories()->in(BACKEND_MODULE_PATH . '/templates/' . $language) as $directory)
 		{
-			// add additional values
-			$records[$record]['language'] = $language;
-			$records[$record]['value'] = $record;
-			$records[$record]['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($record, array('-', '_')));
+			$item = array();
+			$item['language'] = $language;
+			$item['value'] = $directory->getBaseName();
+			$item['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_')));
 
-			// unset the key
-			unset($records[$key]);
+			$records[$item['value']] = $item;
 		}
 
 		return (array) $records;
@@ -1548,7 +1550,7 @@ class BackendMailmotorModel
 	/**
 	 * Checks if a given e-mail address is subscribed in our database
 	 *
-	 * @param string $email The emailaddress to check.
+	 * @param string $email The email address to check.
 	 * @param int[optional] $groupId The id of the group.
 	 * @return bool
 	 */
@@ -1672,8 +1674,9 @@ class BackendMailmotorModel
 	/**
 	 * Updates the groups for a given email address
 	 *
-	 * @param string $email The emailaddress to update.
+	 * @param string $email The email address to update.
 	 * @param mixed $groupIds The ids of the groups.
+	 * @return null|bool
 	 */
 	public static function updateGroups($email, $groupIds)
 	{
@@ -1705,6 +1708,7 @@ class BackendMailmotorModel
 	 *
 	 * @param int $mailingId The id of the mailing.
 	 * @param array $groupIds A list of group-ids.
+	 * @return null|bool
 	 */
 	public static function updateGroupsForMailing($mailingId, $groupIds)
 	{

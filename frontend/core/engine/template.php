@@ -51,6 +51,7 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @param string $path The path to the template, excluding the template filename.
 	 * @param  string $template The filename of the template within the path.
+	 * @return bool
 	 */
 	public function compile($path, $template)
 	{
@@ -58,7 +59,7 @@ class FrontendTemplate extends SpoonTemplate
 		if(realpath($template) === false) $template = $path . '/' . $template;
 
 		// source file does not exist
-		if(!SpoonFile::exists($template)) return false;
+		if(!is_file($template)) return false;
 
 		// create object
 		$compiler = new FrontendTemplateCompiler($template, $this->variables);
@@ -124,13 +125,15 @@ class FrontendTemplate extends SpoonTemplate
 		$template = (string) $template;
 
 		// validate name
-		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
+		if(trim($template) == '' || !is_file($template)) {
+			throw new SpoonTemplateException('Please provide an existing template.');
+		}
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory . '/' . $compileName))
+		if($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName))
 		{
 			// create compiler
 			$compiler = new FrontendTemplateCompiler((string) $template, $this->variables);
@@ -535,13 +538,11 @@ class FrontendTemplateModifiers
 	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
 	{
 		// redefine
-		$var = (string) $var;
-		$pageId = (int) $pageId;
 		$field = (string) $field;
 		$language = ($language !== null) ? (string) $language : null;
 
 		// get page
-		$page = FrontendNavigation::getPageInfo($pageId);
+		$page = FrontendNavigation::getPageInfo((int) $pageId);
 
 		// validate
 		if(empty($page)) return '';
@@ -561,9 +562,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function getPath($var, $file)
 	{
-		// trick codesniffer
-		$var = (string) $var;
-
 		return FrontendTheme::getPath($file);
 	}
 
@@ -595,7 +593,7 @@ class FrontendTemplateModifiers
 
 		// split URL into chunks
 		$chunks = (array) explode('/', $pageInfo['full_url']);
-		
+
 		// remove language chunk
 		$chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks,2) : (array) array_slice($chunks,1);
 		if( count($chunks) == 0 ) $chunks[0] = '';
@@ -639,13 +637,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
-		// redefine
-		$var = (string) $var;
-		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURL($pageId, $language);
+		return FrontendNavigation::getURL((int) $pageId, $language);
 	}
 
 	/**
@@ -660,14 +653,9 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
-		// redefine
-		$var = (string) $var;
-		$module = (string) $module;
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURLForBlock($module, $action, $language);
+		return FrontendNavigation::getURLForBlock((string) $module, $action, $language);
 	}
 
 	/**
@@ -681,12 +669,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForExtraId($var, $extraId, $language = null)
 	{
-		$var = (string) $var;
-		$extraId = (int) $extraId;
 		$language = ($language !== null) ? (string) $language : null;
-
-		// return url
-		return FrontendNavigation::getURLForExtraId($extraId, $language);
+		return FrontendNavigation::getURLForExtraId((int) $extraId, $language);
 	}
 
 	/**
@@ -710,7 +694,7 @@ class FrontendTemplateModifiers
 				// encase content in highlight_string
 				$content = str_replace($match, highlight_string($match, true), $var);
 
-				// replace highlighted code tags in match
+				// replace highlighted code tags in match   @todo    shouldn't this be $var =
 				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
 			}
 		}
@@ -725,6 +709,7 @@ class FrontendTemplateModifiers
 	 * @param string $module The module whose module we want to execute.
 	 * @param string $action The action to execute.
 	 * @param string $id The widget id (saved in data-column).
+	 * @return string|null
 	 */
 	public static function parseWidget($var, $module, $action, $id = null)
 	{
@@ -788,7 +773,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		$var = (string) $var;
 		$min = (int) $min;
 		$max = (int) $max;
 
@@ -796,7 +780,7 @@ class FrontendTemplateModifiers
 	}
 
 	/**
-	 * Convert a multiline string into a string without newlines so it can be handles by JS
+	 * Convert a multi line string into a string without newlines so it can be handles by JS
 	 * syntax: {$var|stripnewlines}
 	 *
 	 * @param string $var The variable that should be processed.
@@ -836,8 +820,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		// remove special chars
-		$var = htmlspecialchars_decode($var, ENT_QUOTES);
+		// remove special chars, all of them, also the ones that shouldn't be there.
+		$var = SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
 
 		// remove HTML
 		$var = strip_tags($var);
@@ -877,7 +861,7 @@ class FrontendTemplateModifiers
 		$setting = (string) $setting;
 
 		// validate
-		if($userId === 0) throw new FrontendException('Invalid userid');
+		if($userId === 0) throw new FrontendException('Invalid user id');
 
 		// get user
 		$user = FrontendUser::getBackendUser($userId);

@@ -159,7 +159,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
 		list($query, $parameters) = $this->buildQuery();
 
 		// get the data
-		$records = (array) BackendModel::getContainer()->get('database')->getRecords($query, $parameters);
+		$records = (array) $this->get('database')->getRecords($query, $parameters);
 		$data = array();
 
 		// reformat data

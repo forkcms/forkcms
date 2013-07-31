@@ -6,7 +6,6 @@
  */
 var jsFrontend =
 {
-	// datamembers
 	debug: false,
 	current: {},
 
@@ -191,7 +190,7 @@ jsFrontend.forms =
 		});
 	},
 
-	// initialize the datefields
+	// initialize the date fields
 	datefields: function()
 	{
 		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
@@ -234,7 +233,7 @@ jsFrontend.forms =
 				}).datepicker('setDate', value);
 			});
 
-			// datefields that have a certain startdate
+			// date fields that have a certain start date
 			$inputDatefieldFrom.each(function()
 			{
 				// get data
@@ -248,7 +247,7 @@ jsFrontend.forms =
 				}).datepicker('setDate', value);
 			});
 
-			// datefields that have a certain enddate
+			// date fields that have a certain enddate
 			$inputDatefieldTill.each(function()
 			{
 				// get data
@@ -264,7 +263,7 @@ jsFrontend.forms =
 				}).datepicker('setDate', value);
 			});
 
-			// datefields that have a certain range
+			// date fields that have a certain range
 			$inputDatefieldRange.each(function()
 			{
 				// get data
@@ -466,13 +465,13 @@ jsFrontend.search =
 	// init, something like a constructor
 	init: function()
 	{
-		// autosuggest (search widget)
+		// auto suggest (search widget)
 		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(55);
 
 		// autocomplete (search results page: autocomplete based on known search terms)
 		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete();
 
-		// livesuggest (search results page: live feed of matches)
+		// live suggest (search results page: live feed of matches)
 		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
 	},
 
@@ -537,7 +536,7 @@ jsFrontend.search =
 		});
 	},
 
-	// autosuggest (search widget)
+	// auto suggest (search widget)
 	autosuggest: function(length)
 	{
 		// set default values
@@ -627,7 +626,7 @@ jsFrontend.search =
 			// make sure we're allowed to do the call (= previous call is no longer processing)
 			if(allowCall)
 			{
-				// temporarely allow no more calls
+				// temporarily allow no more calls
 				allowCall = false;
 
 				// fade out
@@ -723,7 +722,7 @@ jsFrontend.twitter =
 {
 	init: function()
 	{
-		// if GA is integrated and a tweetbutton is used
+		// if GA is integrated and a tweet button is used
 		if(typeof _gaq == 'object' && typeof twttr == 'object')
 		{
 			// bind event, so we can track the tweets

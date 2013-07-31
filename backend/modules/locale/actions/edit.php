@@ -24,6 +24,11 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	private $filter;
 
 	/**
+	 * @var string
+	 */
+	private $filterQuery;
+
+	/**
 	 * Execute the action
 	 */
 	public function execute()

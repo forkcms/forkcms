@@ -26,7 +26,7 @@
 			<ul class="inputList noPadding">
 				<li>
 					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>
-					<span class="helpTxt">(Leave this checkbox unticked for better security and performance)</span>
+					<span class="helpTxt">(Leave this checkbox unchecked for better security and performance)</span>
 				</li>
 				<li>
 					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>

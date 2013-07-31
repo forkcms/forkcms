@@ -27,14 +27,22 @@ class BackendFormBuilderAjaxGetField extends BackendBaseAJAXAction
 
 		// invalid form id
 		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
-
-		// invalid fieldId
-		if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
-
-		// get field
-		$field = BackendFormBuilderModel::getField($fieldId);
-
-		// success output
-		$this->output(self::OK, array('field' => $field));
+		
+		// validated form
+		else
+		{
+			// invalid fieldId
+			if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
+	
+			// validated field
+			else
+			{
+				// get field
+				$field = BackendFormBuilderModel::getField($fieldId);
+		
+				// success output
+				$this->output(self::OK, array('field' => $field));
+			}
+		}
 	}
 }

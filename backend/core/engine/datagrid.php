@@ -10,14 +10,14 @@
 /**
  * This is our extended version of SpoonDataGrid
  * This class will handle a lot of stuff for you, for example:
- * 	- it will set debugmode
+ * 	- it will set debug mode
  *	- it will set the compile-directory
  * 	- ...
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendDataGrid extends SpoonDataGrid
 {
@@ -252,7 +252,6 @@ class BackendDataGrid extends SpoonDataGrid
 	{
 		$column = (string) $column;
 		$message = (string) $message;
-		$custom = (string) $custom;
 		$title = ($title !== null) ? (string) $title : null;
 		$uniqueId = (string) $uniqueId;
 
@@ -853,6 +852,7 @@ class BackendDataGridFunctions
 	 * @param string $type The type of column. This is given since some columns can have different meanings than others.
 	 * @param string $value
 	 * @param array $attributes
+	 * @return array
 	 */
 	public static function greyOut($type, $value, array $attributes = array())
 	{

@@ -1,13 +1,15 @@
 <?php
 
-use \MatthiasMullie\Minify;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \MatthiasMullie\Minify;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
@@ -68,7 +70,7 @@ class FrontendHeader extends FrontendBaseObject
 	private $metaCustom = '';
 
 	/**
-	 * Pagetitle
+	 * Page title
 	 *
 	 * @var	string
 	 */
@@ -309,7 +311,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(substr($image, 0, 7) != SITE_PROTOCOL . '://')
 		{
 			// check if image exists
-			if(!SpoonFile::exists(PATH_WWW . $image)) return;
+			if(!is_file(PATH_WWW . $image)) return;
 
 			// convert to absolute path
 			$image = SITE_URL . $image;
@@ -326,7 +328,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Sort function for CSS-files
 	 *
-	 * @param $cssFiles The css files to sort.
+	 * @param array $cssFiles The css files to sort.
 	 * @return array
 	 */
 	private function cssSort($cssFiles)
@@ -373,7 +375,7 @@ class FrontendHeader extends FrontendBaseObject
 	/**
 	 * Extract images from content that can be added add Open Graph image
 	 *
-	 * @param string $content The content (wherefrom to extract the images).
+	 * @param string $content The content (where from to extract the images).
 	 */
 	public function extractOpenGraphImages($content)
 	{
@@ -395,7 +397,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getCSSFiles()
 	{
-		// sort the cssfiles
+		// sort the css files
 		$this->cssFiles = $this->cssSort($this->cssFiles);
 
 		// fetch files
@@ -460,7 +462,7 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
-	 * Get the pagetitle
+	 * Get the page title
 	 *
 	 * @return string
 	 */
@@ -483,12 +485,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
@@ -513,12 +516,13 @@ class FrontendHeader extends FrontendBaseObject
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		$fs = new Filesystem();
+		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// create directory if it does not exist
-			if(!SpoonDirectory::exists(dirname($finalPath)))
+			if(!$fs->exists(dirname($finalPath)))
 			{
-				SpoonDirectory::create(dirname($finalPath));
+				$fs->mkdir(dirname($finalPath));
 			}
 
 			// minify the file
@@ -540,7 +544,7 @@ class FrontendHeader extends FrontendBaseObject
 		// parse SEO
 		$this->parseSeo();
 
-		// in debugmode we don't want our pages to be indexed.
+		// in debug mode we don't want our pages to be indexed.
 		if(SPOON_DEBUG) $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
 
 		// parse meta tags
@@ -597,32 +601,73 @@ class FrontendHeader extends FrontendBaseObject
 		$siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
-		$trackingUrl = FrontendModel::getModuleSetting('analytics', 'tracking_url', '//google-analytics.com/ga.js');
+		$type = FrontendModel::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
-		if($webPropertyId != '' && strpos($siteHTMLHeader, $webPropertyId) === false && strpos($siteHTMLFooter, $webPropertyId) === false)
-		{
-			// build GA-tracking code
-			$trackingCode = '<script>
-								var _gaq = [[\'_setAccount\', \'' . $webPropertyId . '\'],
-											[\'_setDomainName\', \'none\'],
-											[\'_trackPageview\'],
-											[\'_trackPageLoadTime\']];
-							';
-			if(!CommonCookie::hasAllowedCookies()) {
-				$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+		if(
+			$webPropertyId != '' &&
+			strpos($siteHTMLHeader, $webPropertyId) === false &&
+			strpos($siteHTMLFooter, $webPropertyId) === false
+		) {
+			switch($type)
+			{
+				case 'classic_analytics':
+					$trackingCode = '<script>
+										var _gaq = _gaq || [];
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setDomainName\', \'none\']);
+										_gaq.push([\'_trackPageview\']);
+									';
+					if(!CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+					}
+					$trackingCode .= '
+										(function() {
+											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+											ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
+											var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+										})();
+									</script>';
+					break;
+				case 'display_advertising':
+					$trackingCode = '<script>
+										var _gaq = _gaq || [];
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setDomainName\', \'none\']);
+										_gaq.push([\'_trackPageview\']);
+									';
+					if(!CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+					}
+					$trackingCode .= '
+										(function() {
+											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
+											ga.src = (\'https:\' == document.location.protocol ? \'https://\' : \'http://\') + \'stats.g.doubleclick.net/dc.js\';
+											var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
+										})();
+									</script>';
+					break;
+				case 'universal_analytics':
+					$url = Spoon::get('url');
+					$trackingCode = '<script>
+										(function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
+										(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+										m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+										})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
+										ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
+									';
+
+					if(!CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
+					} else {
+						$trackingCode .= 'ga(\'send\', \'pageview\');';
+					}
+					$trackingCode .= '</script>';
+					break;
+				default:
+					throw new Exception('Unknown type. (' . $type . ')');
 			}
 
-			$trackingCode .= '
-								(function(d, t) {
-									var g = d.createElement(t), s = d.getElementsByTagName(t)[0];
-									g.async = true;
-									g.src = \'' . $trackingUrl . '\';
-									s.parentNode.insertBefore(g, s);
-								}(document, \'script\'));
-							</script>';
-
-			// add to the header
 			$siteHTMLHeader .= "\n" . $trackingCode;
 		}
 
@@ -726,16 +771,16 @@ class FrontendHeader extends FrontendBaseObject
 			// loop the JS-files
 			foreach($existingJSFiles as $file)
 			{
-				// some files shouldn't be uncachable
+				// some files shouldn't be uncacheable
 				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $file = array('file' => $file['file']);
 
-				// make the file uncachable
+				// make the file uncacheable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
 					if(substr($file['file'], 0, 11) == '/frontend/js') $file = array('file' => $file['file'] . '&amp;m=' . time());
 
-					// add lastmodified time
+					// add last modified time
 					else
 					{
 						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
@@ -882,10 +927,10 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 	/**
-	 * Set the pagetitle
+	 * Set the page title
 	 *
-	 * @param string $value The pagetitle to be set or to be prepended.
-	 * @param bool[optional] $overwrite Should the existing pagetitle be overwritten?
+	 * @param string $value The page title to be set or to be prepended.
+	 * @param bool[optional] $overwrite Should the existing page title be overwritten?
 	 */
 	public function setPageTitle($value, $overwrite = false)
 	{
@@ -904,10 +949,10 @@ class FrontendHeader extends FrontendBaseObject
 			// value isn't empty
 			else
 			{
-				// if the current pagetitle is empty we should add the sitetitle
+				// if the current page title is empty we should add the site title
 				if($this->pageTitle == '') $this->pageTitle = $value . ' -  ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
-				// prepend the value to the current pagetitle
+				// prepend the value to the current page title
 				else $this->pageTitle = $value . ' - ' . $this->pageTitle;
 			}
 		}

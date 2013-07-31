@@ -18,7 +18,7 @@ To install the dependencies, you can run the command below in the document-root:
 
 ## Bugs
 
-If you encounter any bugs, please post a bug report to the [bugtracker](http://bugtracker.fork-cms.com).
+If you encounter any bugs, please create an issue on [Github](https://github.com/forkcms/forkcms/issues).
 If you're stuck or would like to discuss Fork CMS, check out the [forum](http://forum.fork-cms.com)!
 
 ## Discussion
@@ -28,3 +28,7 @@ If you're stuck or would like to discuss Fork CMS, check out the [forum](http://
 
 
 _The Fork CMS team_
+
+---
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forkcms/forkcms/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

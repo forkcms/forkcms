@@ -10,7 +10,7 @@
 /**
  * This is an ajax handler
  *
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationAjaxUpdateMarker extends BackendBaseAJAXAction
 {
@@ -26,18 +26,24 @@ class BackendLocationAjaxUpdateMarker extends BackendBaseAJAXAction
 		$lat = SpoonFilter::getPostValue('lat', null, null, 'float');
 		$lng = SpoonFilter::getPostValue('lng', null, null, 'float');
 
+		// validate id
 		if($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
 
-		$updateData = array(
-			'id' => $itemId,
-			'lat' => $lat,
-			'lng' => $lng,
-			'language' => BL::getWorkingLanguage()
-		);
-
-		BackendLocationModel::update($updateData);
-
-		// output
-		$this->output(self::OK);
+		// validated
+		else
+		{
+			//update
+			$updateData = array(
+				'id' => $itemId,
+				'lat' => $lat,
+				'lng' => $lng,
+				'language' => BL::getWorkingLanguage()
+			);
+	
+			BackendLocationModel::update($updateData);
+	
+			// output
+			$this->output(self::OK);
+		}
 	}
 }

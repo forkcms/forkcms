@@ -5,6 +5,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 {
@@ -158,7 +159,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $ddm->parse();
 				}
 
-				// radiobutton
+				// radio button
 				elseif($field['type'] == 'radiobutton')
 				{
 					// reset
@@ -190,7 +191,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $chk->parse();
 				}
 
-				// textbox
+				// text box
 				elseif($field['type'] == 'textbox')
 				{
 					// create element
@@ -298,6 +299,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 
 			// parse form
 			$this->frm->parse($this->tpl);
+			$this->tpl->assign('formToken', $this->frm->getToken());
 
 			// assign form error
 			$this->tpl->assign('error', ($this->frm->getErrors() != '' ? $this->frm->getErrors() : false));
@@ -333,7 +335,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 			// validate fields
 			foreach($this->item['fields'] as $field)
 			{
-				// fieldname
+				// field name
 				$fieldName = 'field' . $field['id'];
 
 				// skip
@@ -414,8 +416,8 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 				// notify the admin
 				FrontendFormBuilderModel::notifyAdmin(
 					array(
-					     'form_id' => $this->item['id'],
-					     'entry_id' => $dataId
+						'form_id' => $this->item['id'],
+						'entry_id' => $dataId
 					)
 				);
 
@@ -427,11 +429,26 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
+					// check if we have a replyTo email set
+					$replyTo = null;
+					foreach($this->item['fields'] as $field)
+					{
+						if(array_key_exists('reply_to', $field['settings']) && $field['settings']['reply_to'] === true)
+						{
+							$email = $this->frm->getField('field' . $field['id'])->getValue();
+							if(SpoonFilter::isEmail($email)) $replyTo = $email;
+						}
+					}
+
 					// loop recipients
 					foreach($this->item['email'] as $address)
 					{
 						// add email
-						FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $address, $this->item['name']);
+						FrontendMailer::addEmail(
+							sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+							FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+							$variables, $address, $this->item['name'], null, null, $replyTo
+						);
 					}
 				}
 

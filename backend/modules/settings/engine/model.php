@@ -33,7 +33,7 @@ class BackendSettingsModel
 			$class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// model file exists
-			if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
+			if(is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
 			{
 				// require class
 				require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';

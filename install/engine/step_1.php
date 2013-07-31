@@ -22,39 +22,11 @@ class InstallerStep1 extends InstallerStep
 	public function execute()
 	{
 		// init vars
-		$possiblePaths = array();
 		$variables = array();
 
 		// head
 		$variables['head'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/head.tpl');
 		$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
-		$hasError = false;
-
-		// was the form submitted?
-		if(isset($_GET['spoon_location']))
-		{
-			// empty path
-			if($_GET['spoon_location'] == '') $hasError = true;
-
-			else
-			{
-				// cleanup the path
-				$temporaryPath = realpath(rtrim($_GET['spoon_location'], '/'));
-
-				if(file_exists($temporaryPath . '/spoon/spoon.php'))
-				{
-					// store in session
-					$_SESSION['path_library'] = $temporaryPath;
-
-					// redirect to step 2
-					header('Location: index.php?step=2');
-					exit;
-				}
-
-				// add error
-				else $hasError = true;
-			}
-		}
 
 		// this should be the path
 		$path = realpath(dirname(__FILE__) . '/../../library');

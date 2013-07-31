@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the locale module
  *
@@ -101,8 +105,11 @@ class BackendLocaleModel
 		$value .= "\n";
 		$value .= '?>';
 
-		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+			$value
+		);
 
 		// get months
 		$monthsLong = SpoonLocale::getMonths($language, false);
@@ -118,15 +125,17 @@ class BackendLocaleModel
 		foreach($daysLong as $key => $value) $json['loc']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
 		foreach($daysShort as $key => $value) $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
 
-		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+			json_encode($json)
+		);
 	}
 
 	/**
 	 * Build a query for the URL based on the filter
 	 *
 	 * @param array $filter The filter.
-	 * @return array
+	 * @return string
 	 */
 	public static function buildURLQueryByFilter($filter)
 	{
@@ -371,7 +380,6 @@ class BackendLocaleModel
 	 */
 	public static function getNonExistingBackendLocale($language)
 	{
-		$tree = self::getTree(BACKEND_PATH);
 		$modules = BackendModel::getModules();
 
 		// search fo the error module
@@ -390,14 +398,20 @@ class BackendLocaleModel
 		$lbl = (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM modules_extras');
 		foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
-		// loop files
-		foreach($tree as $file)
-		{
+		$finder = new Finder();
+		$finder->notPath('cache')
+			->notPath('core/js/ckeditor')
+			->notPath('core/js/ckfinder')
+			->name('*.php')
+			->name('*.tpl')
+			->name('*.js');
+
+		foreach($finder->files()->in(BACKEND_PATH) as $file) {
 			// grab content
-			$content = SpoonFile::getContent($file);
+			$content = $file->getContents();
 
 			// process based on extension
-			switch(SpoonFile::getExtension($file))
+			switch($file->getExtension())
 			{
 				// javascript file
 				case 'js':
@@ -436,7 +450,7 @@ class BackendLocaleModel
 							if(!isset($used[$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file->getRealPath();
 						}
 					}
 					break;
@@ -547,7 +561,9 @@ class BackendLocaleModel
 							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+								$used[$type][$match]['files'][] = $file->getRealPath();
+							}
 						}
 					}
 					break;
@@ -589,7 +605,9 @@ class BackendLocaleModel
 							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+								$used[$type][$match]['files'][] = $file->getRealPath();
+							}
 						}
 					}
 					break;
@@ -713,7 +731,16 @@ class BackendLocaleModel
 							foreach($data['module_specific'] as $module)
 							{
 								// if the message isn't found add it to the list
-								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) {
+									$nonExisting['backend' . $key . $type . $module] = array(
+										'language' => $language,
+										'application' => 'backend',
+										'module' => $module,
+										'type' => $type,
+										'name' => $key,
+										'used_in' => serialize($data['files'])
+									);
+								}
 							}
 						}
 
@@ -769,18 +796,20 @@ class BackendLocaleModel
 	 */
 	public static function getNonExistingFrontendLocale($language)
 	{
-		// get files to process
-		$tree = self::getTree(FRONTEND_PATH);
 		$used = array();
+		$finder = new Finder();
+		$finder->notPath('cache')
+			->name('*.php')
+			->name('*.tpl')
+			->name('*.js');
 
 		// loop files
-		foreach($tree as $file)
-		{
+		foreach ($finder->files()->in(FRONTEND_PATH) as $file) {
 			// grab content
-			$content = SpoonFile::getContent($file);
+			$content = $file->getContents();
 
 			// process the file based on extension
-			switch(SpoonFile::getExtension($file))
+			switch($file->getExtension())
 			{
 				// javascript file
 				case 'js':
@@ -802,7 +831,9 @@ class BackendLocaleModel
 							if(!isset($used[$match])) $used[$type][$match] = array('files' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+								$used[$type][$match]['files'][] = $file->getRealPath();
+							}
 						}
 					}
 					break;
@@ -832,7 +863,9 @@ class BackendLocaleModel
 							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+								$used[$type][$match]['files'][] = $file->getRealPath();
+							}
 						}
 					}
 					break;
@@ -857,7 +890,9 @@ class BackendLocaleModel
 							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
 
 							// add file
-							if(!in_array($file, $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file;
+							if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+								$used[$type][$match]['files'][] = $file->getRealPath();
+							}
 						}
 					}
 					break;
@@ -1000,60 +1035,6 @@ class BackendLocaleModel
 		}
 
 		return $dataGridTranslations;
-	}
-
-	/**
-	 * Get the filetree
-	 *
-	 * @param string $path The path to get the filetree for.
-	 * @param array[optional] $tree An array to hold the results.
-	 * @return array
-	 */
-	private static function getTree($path, array $tree = array())
-	{
-		// paths that should be ignored
-		$ignore = array(
-			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckeditor',
-			BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/ckfinder',
-			FRONTEND_CACHE_PATH
-		);
-
-		// get modules
-		$modules = BackendModel::getModules();
-
-		// get the folder listing
-		$items = SpoonDirectory::getList($path, true, array('.svn', '.git'));
-
-		// already in the modules?
-		if(substr_count($path, '/modules/') > 0)
-		{
-			// get last chunk
-			$start = strpos($path, '/modules') + 9;
-			$end = strpos($path, '/', $start + 1);
-
-			if($end === false) $moduleName = substr($path, $start);
-			else $moduleName = substr($path, $start, ($end - $start));
-
-			// don't go any deeper
-			if(!in_array($moduleName, $modules)) return $tree;
-		}
-
-		foreach($items as $item)
-		{
-			// if the path should be ignored, skip it
-			if(in_array($path . '/' . $item, $ignore)) continue;
-
-			// if the item is a directory we should index it also (recursive)
-			if(is_dir($path . '/' . $item)) $tree = self::getTree($path . '/' . $item, $tree);
-
-			else
-			{
-				// if the file has an extension that has to be processed add it into the tree
-				if(in_array(SpoonFile::getExtension($item), array('js', 'php', 'tpl'))) $tree[] = $path . '/' . $item;
-			}
-		}
-
-		return $tree;
 	}
 
 	/**

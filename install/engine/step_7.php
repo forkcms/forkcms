@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * Step 7 of the Fork installer
  *
@@ -18,13 +22,6 @@
  */
 class InstallerStep7 extends InstallerStep
 {
-	/**
-	 * Database connection, needed for installation
-	 *
-	 * @var	SpoonDatabases
-	 */
-	private $db;
-
 	/**
 	 * Build the language files
 	 *
@@ -95,39 +92,10 @@ class InstallerStep7 extends InstallerStep
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php', $value);
-	}
-
-	/**
-	 * Writes a config file to app/config/parameters.yml.
-	 */
-	private function createYAMLConfig()
-	{
-		// these variables should be parsed inside the config file(s).
-		$variables = $this->getConfigurationVariables();
-
-		// map the config templates to their destination filename
-		$yamlFiles = array(
-			PATH_LIBRARY . '/parameters.base.yml' => PATH_WWW . '/app/config/parameters.yml',
-		);
-
-		foreach($yamlFiles as $sourceFilename => $destinationFilename)
-		{
-			$yamlContent = SpoonFile::getContent($sourceFilename);
-			$yamlContent = str_replace(
-				array_keys($variables),
-				array_values($variables),
-				$yamlContent
-			);
-
-			// write app/config/parameters.yml
-			SpoonFile::setContent($destinationFilename, $yamlContent);
-		}
-
-		// we already went through AppKernel once. Now that our config files are
-		// available, we can register our container configuration.
-		$this->getKernel()->registerContainerConfiguration(
-			$this->getKernel()->getContainerLoader($this->getKernel()->getContainer())
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php',
+			$value
 		);
 	}
 
@@ -182,44 +150,14 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function deleteCachedData()
 	{
-		// init some vars
-		$foldersToLoop = array('/backend/cache', '/frontend/cache');
-		$foldersToIgnore = array('/backend/cache/navigation');
-		$filesToIgnore = array('.gitignore');
-		$filesToDelete = array();
-
-		// loop folders
-		foreach($foldersToLoop as $folder)
-		{
-			// get folderlisting
-			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
-
-			// loop folders
-			foreach($subfolders as $subfolder)
-			{
-				// not in ignore list?
-				if(!in_array($folder . '/' . $subfolder, $foldersToIgnore))
-				{
-					// get the filelisting
-					$files = (array) SpoonFile::getList(PATH_WWW . $folder . '/' . $subfolder);
-
-					// loop the files
-					foreach($files as $file)
-					{
-						if(!in_array($file, $filesToIgnore))
-						{
-							$filesToDelete[] = PATH_WWW . $folder . '/' . $subfolder . '/' . $file;
-						}
-					}
-				}
-			}
-		}
-
-		// delete cached files
-		if(!empty($filesToDelete))
-		{
-			// loop files and delete them
-			foreach($filesToDelete as $file) SpoonFile::delete($file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->in(PATH_WWW . '/backend/cache')
+			        ->in(PATH_WWW . '/frontend/cache')
+		        as $file
+		) {
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -237,9 +175,6 @@ class InstallerStep7 extends InstallerStep
 		// delete cached data
 		$this->deleteCachedData();
 
-		// create configuration files
-		$this->createYAMLConfig();
-
 		// define paths
 		$this->definePaths();
 
@@ -250,38 +185,17 @@ class InstallerStep7 extends InstallerStep
 		$this->createLocaleFiles();
 
 		// already installed
-		SpoonFile::setContent(dirname(__FILE__) . '/../cache/installed.txt', date('Y-m-d H:i:s'));
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			dirname(__FILE__) . '/../cache/installed.txt',
+			date('Y-m-d H:i:s')
+		);
 
 		// show success message
 		$this->showSuccess();
 
 		// clear session
 		SpoonSession::destroy();
-	}
-
-	/**
-	 * @return array A list of variables that should be parsed into the configuration file(s).
-	 */
-	protected function getConfigurationVariables()
-	{
-		return array(
-			'<debug-mode>'				=> SpoonSession::get('debug_mode') ? 'true' : 'false',
-			'<debug-email>'				=> SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email'),
-			'<database-name>'			=> SpoonSession::get('db_database'),
-			'<database-host>'			=> addslashes(SpoonSession::get('db_hostname')),
-			'<database-user>'			=> addslashes(SpoonSession::get('db_username')),
-			'<database-password>'		=> addslashes(SpoonSession::get('db_password')),
-			'<database-port>'			=> (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306,
-			'<site-protocol>'			=> isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : 'http',
-			'<site-domain>'				=> (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
-			'<site-default-title>'		=> 'Fork CMS',
-			'<site-multilanguage>'		=> SpoonSession::get('multiple_languages') ? 'true' : 'false',
-			'<site-default-language>'	=> SpoonSession::get('default_language'),
-			'<path-www>'				=> PATH_WWW,
-			'<path-library>'			=> PATH_LIBRARY,
-			'<action-group-tag>'		=> '@actiongroup',
-			'<action-rights-level>'		=> 7
-		);
 	}
 
 	/**
@@ -344,7 +258,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($modules as $module)
 		{
 			// install exists
-			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
+			if(is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')

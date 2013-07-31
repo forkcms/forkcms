@@ -15,11 +15,21 @@
 class BackendFormBuilderDataDetails extends BackendBaseActionIndex
 {
 	/**
+	 * @var array
+	 */
+	private $data, $record;
+
+	/**
 	 * Filter variables
 	 *
 	 * @var	array
 	 */
 	private $filter;
+
+	/**
+	 * @var int
+	 */
+	private $id;
 
 	/**
 	 * Execute the action

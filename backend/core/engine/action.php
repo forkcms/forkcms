@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
- * This class is the real code, it creates an action, loads the configfile, ...
+ * This class is the real code, it creates an action, loads the config file, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
@@ -74,6 +76,9 @@ class BackendAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName();
+		$this->getContainer()->get('logger')->info(
+			"Executing backend action '{$object->getAction()}' for module '{$object->getModule()}'."
+		);
 		$object->setKernel($this->getKernel());
 		$object->execute();
 		return $object->getContent();
@@ -97,7 +102,15 @@ class BackendAction extends BackendBaseObject
 		}
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
+			if(BackendModel::getContainer()->getParameter('kernel.debug')) {
+				throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			} else {
+				$response = new Response('', 404);
+				$response->send();
+				exit;   // I know this line shouldn't be here
+			}
+		}
 
 		// build config-object-name
 		$configClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
@@ -115,7 +128,7 @@ class BackendAction extends BackendBaseObject
 		$action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'index';
 
 		// require the model if it exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
+		if(is_file(BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php'))
 		{
 			require_once BACKEND_MODULES_PATH . '/' . $this->config->getModule() . '/engine/model.php';
 		}

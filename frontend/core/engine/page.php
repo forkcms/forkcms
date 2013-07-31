@@ -103,7 +103,7 @@ class FrontendPage extends FrontendBaseObject
 		// new footer instance
 		$this->footer = new FrontendFooter();
 
-		// get pagecontent
+		// get page content
 		$this->getPageContent();
 
 		// process page
@@ -216,7 +216,7 @@ class FrontendPage extends FrontendBaseObject
 		$redirect = true;
 
 		// loop blocks, if all are empty we should redirect to the first child
-		foreach($this->record['positions'] as $position => $blocks)
+		foreach($this->record['positions'] as $blocks)
 		{
 			// loop blocks in position
 			foreach($blocks as $block)
@@ -253,7 +253,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Get the content of the page
 	 *
-	 * @var	array
+	 * @return	array
 	 */
 	public function getRecord()
 	{
@@ -261,7 +261,7 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
-	 * Fetch the statuscode for the current page.
+	 * Fetch the status code for the current page.
 	 *
 	 * @return int
 	 */
@@ -324,7 +324,7 @@ class FrontendPage extends FrontendBaseObject
 				// loop all blocks in this position
 				foreach($blocks as $i => $block)
 				{
-					// check for extra's that need to be reparsed
+					// check for extras that need to be reparsed
 					if(isset($block['extra']))
 					{
 						// fetch extra-specific variables
@@ -368,6 +368,10 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
+			$this->getContainer()->get('logger')->info(
+				"Executing frontend action '{$extra->getAction()}' for module '{$extra->getModule()}'."
+			);
+
 			// all extras extend FrontendBaseObject, which extends KernelLoader
 			$extra->setKernel($this->getKernel());
 			$extra->execute();
@@ -415,9 +419,6 @@ class FrontendPage extends FrontendBaseObject
 			// loop blocks in position
 			foreach($blocks as $index => &$block)
 			{
-				// build templateVariable
-				$templateVariable = 'block' . ($index + 1);
-
 				// an extra
 				if($block['extra_id'] !== null)
 				{

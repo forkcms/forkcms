@@ -21,8 +21,6 @@ class BackendAnalyticsAPI
 	 */
 	private static function checkSettings()
 	{
-		$warnings = array();
-
 		// analytics session token
 		if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 		{

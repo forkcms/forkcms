@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This class will store the language-dependant content for the frontend.
  *
@@ -110,8 +113,13 @@ class FrontendLanguage
 		$value .= "\n";
 		$value .= '?>';
 
+		$fs = new Filesystem();
+
 		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+			$value
+		);
 
 		// get months
 		$monthsLong = SpoonLocale::getMonths($language, false);
@@ -128,7 +136,10 @@ class FrontendLanguage
 		foreach($daysShort as $key => $value) $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
 
 		// store
-		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json', json_encode($json));
+		$fs->dumpFile(
+			constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+			json_encode($json)
+		);
 	}
 
 	/**
@@ -354,8 +365,8 @@ class FrontendLanguage
 		if(!$force && !in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
 
 		// validate file, generate it if needed
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
+		if(!is_file(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
+		if(!is_file(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
 
 		// init vars
 		$act = array();

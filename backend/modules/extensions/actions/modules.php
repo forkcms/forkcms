@@ -4,7 +4,7 @@
  * This is the modules-action, it will display the overview of modules.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendExtensionsModules extends BackendBaseActionIndex
 {

@@ -13,11 +13,11 @@
  * 		2. if the title-attribute is used this value will be used in favor of the OpenGraph-title-tag.
  * 		3. if the data-title-attribute is set this value will be used, OpenGraph and title-attribute will be ignored.
  * 		4. as a fallback the value of the title-tag is used.
- * - The description (used by: delicious, linkedin, netlog, twitter)
+ * - The description (used by: Delicious, LinkedIn, Netlog, Twitter)
  * 		1. if the OpenGraph-description-tag is provided, that value will be used.
  * 		2. if the data-description-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. no description will be used.
- * - The image (used by: netlog)
+ * - The image (used by: Netlog)
  * 		1. if the OpenGraph-image tag is available the value of this tag will be used.
  * 		2. if the data-image-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. the default image if there is one provided.
@@ -27,7 +27,7 @@
  * - debug			if debug is enabled a warning will be logged to the console if og-parameters aren't available, possible values are: true, false.
  * - default_image	the image that will be used by default.
  * - sequence		an array containing the names of the share-items in the wanted sequence.
- * - isDropdown		will the plugin be used as a dropdownmenu? If so we will hide it by default an show on click/hover.
+ * - isDropdown		will the plugin be used as a drop-down-menu? If so we will hide it by default an show on click/hover.
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -46,8 +46,8 @@
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
 			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
-			isDropdown: true,
-		}
+			isDropdown: true
+		};
 		var settings =
 		{
 			delicious: { name: 'delicious', show: true, label: 'Delicious'},
@@ -107,7 +107,7 @@
 					// based on the type we should generate the correct markup
 					switch(options[options.sequence[i]].name)
 					{
-						// delicious
+						// Delicious
 						case 'delicious':
 							// build url
 							var url = 'http://delicious.com/save?url=' + encodeURIComponent(link);
@@ -123,7 +123,7 @@
 									'</li>' + "\n";
 						break;
 
-						// digg
+						// Digg
 						case 'digg':
 							// build url
 							var url = 'http://digg.com/submit?url=' + encodeURIComponent(link);
@@ -138,7 +138,7 @@
 									'</li>' + "\n";
 						break;
 
-						// facebook?
+						// Facebook?
 						case 'facebook':
 							// check for OG-data.
 							if(options.debug && $('meta[property^="og"]').length == 0) console.log('You should provide OpenGraph data.');
@@ -160,7 +160,7 @@
 							html += '</li>';
 						break;
 
-						// linkedin
+						// LinkedIn
 						case 'linkedin':
 							if(!linkedInLoaded)
 							{
@@ -194,7 +194,7 @@
 									'</li>' + "\n";
 						break;
 
-						// netlog?
+						// Netlog?
 						case 'netlog':
 							// build url
 							var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + encodeURIComponent(link);
@@ -212,7 +212,7 @@
 									'</li>' + "\n";
 						break;
 
-						// twitter
+						// Twitter
 						case 'twitter':
 							if(!twitterLoaded)
 							{

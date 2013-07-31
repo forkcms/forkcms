@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * This cronjob will fetch the requested data
  *
@@ -26,15 +30,14 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function cleanupCache()
 	{
-		$files = SpoonFile::getList($this->cachePath);
-		foreach($files as $file)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()->in($this->cachePath) as $file)
 		{
-			$fileinfo = SpoonFile::getInfo($this->cachePath . '/' . $file);
-
 			// delete file if more than 1 week old
-			if($fileinfo['modification_date'] < strtotime('-1 week'))
+			if($file->getMTime() < strtotime('-1 week'))
 			{
-				SpoonFile::delete($this->cachePath . '/' . $file);
+				$fs->remove($file->getRealPath());
 			}
 		}
 	}
@@ -44,7 +47,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function cleanupDatabase()
 	{
-		BackendModel::getContainer()->get('database')->delete(
+		$this->get('database')->delete(
 			'analytics_pages',
 			'date_viewed < ?',
 			array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))
@@ -88,19 +91,20 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		{
 			// init vars
 			$filename = $this->cachePath . '/' . $page . ($pageId != '' ? '_' . $pageId : '') . '_' . $identifier . '.txt';
+			$fs = new Filesystem();
 
 			// is everything still set?
 			if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED')
 			{
 				// create temporary file to indicate we're getting data
-				SpoonFile::setContent($filename, 'busy1');
+				$fs->dumpFile($filename, 'busy1');
 			}
 
 			// no longer authorized
 			else
 			{
 				// set status in cache
-				SpoonFile::setContent($filename, 'unauthorized');
+				$fs->dumpFile($filename, 'unauthorized');
 				return;
 			}
 		}
@@ -155,6 +159,8 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	 */
 	private function getData($startTimestamp, $endTimestamp, $force = false, $page = 'all', $pageId = null, $filename = null)
 	{
+		$fs = new Filesystem();
+
 		try
 		{
 			// get data from cache
@@ -288,11 +294,11 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		catch(Exception $e)
 		{
 			// set file content to indicate something went wrong if needed
-			if(isset($filename)) SpoonFile::setContent($filename, 'error');
+			if(isset($filename)) $fs->dumpFile($filename, 'error');
 			else throw new SpoonException('Something went wrong while getting data.');
 		}
 
 		// remove temporary file if needed
-		if(isset($filename)) SpoonFile::setContent($filename, 'done');
+		if(isset($filename)) $fs->dumpFile($filename, 'done');
 	}
 }

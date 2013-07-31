@@ -48,7 +48,7 @@ class FrontendRSS extends SpoonFeedRSS
 			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 			// theme rss image exists
-			if(SpoonFile::exists(PATH_WWW . '/frontend/themes/' . $theme . '/core/images/rss_image.png'))
+			if(is_file(PATH_WWW . '/frontend/themes/' . $theme . '/core/images/rss_image.png'))
 			{
 				// set rss image
 				$this->setImage(SITE_URL . '/frontend/themes/' . $theme . '/core/images/rss_image.png', $title, $link);
@@ -167,7 +167,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		// remove special chars
 		$author = (string) SpoonFilter::htmlspecialcharsDecode($author);
 
-		// add fake-emailaddress
+		// add fake email address
 		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
 
 		// set author

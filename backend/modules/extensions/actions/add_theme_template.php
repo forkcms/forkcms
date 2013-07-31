@@ -85,9 +85,6 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('add');
 
-		// init var
-		$maximumPositions = 30;
-
 		// create elements
 		$this->frm->addDropdown('theme', $this->availableThemes, $this->selectedTheme);
 		$this->frm->addText('label');

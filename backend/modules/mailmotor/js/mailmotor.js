@@ -335,6 +335,7 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 				var textareaValue = $iframe[0].contentWindow.getEditorContent();
+				console.log('called save_content');
 
 				// make the call
 				$.ajax(
@@ -354,11 +355,8 @@ jsBackend.mailmotor.step3 =
 							// direct the user to step 4
 							window.location = document.location.pathname +'?token=true&id='+ variables.mailingId +'&step=4';
 						}
-						else
-						{
-							jsBackend.messages.add('error', data.message);
-						}
 					}
+					// we do not need to handle errors here. These are catched by jsBackend and displayed.
 				});
 			});
 		});
@@ -531,17 +529,7 @@ jsBackend.mailmotor.step4 =
 					// redirect to index with a proper message
 					window.location = '/private/'+ jsBackend.current.language +'/'+ jsBackend.current.module +'/index?report=mailing-sent';
 				}
-				else
-				{
-					// unload spinner
-					buttonPane.removeClass('loading');
-
-					// destroy the dialog
-					$confirmBox.dialog('close');
-
-					// show message
-					jsBackend.messages.add('error', data.message);
-				}
+				// we do not need to handle errors here. These are catched by jsBackend and displayed.
 			}
 		});
 	}

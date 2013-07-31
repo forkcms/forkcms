@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is our extended version of SpoonForm
  *
@@ -238,7 +241,7 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('ckfinder/ckfinder.js', 'core', false);
 
 		// add the internal link lists-file
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
+		if(is_file(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js'))
 		{
 			$timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js');
 			$this->header->addJS('/frontend/cache/navigation/editor_link_list_' . BL::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, true, false);
@@ -319,17 +322,17 @@ class BackendForm extends SpoonForm
 	 * @param bool[optional] $HTML Will the field contain HTML?
 	 * @return SpoonFormPassword
 	 */
-	public function addPassword($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	public function addPassword($name, $value = null, $maxLength = null, $class = null, $classError = null, $HTML = false)
 	{
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
-		$maxlength = ($maxlength !== null) ? (int) $maxlength : null;
+		$maxLength = ($maxLength !== null) ? (int) $maxLength : null;
 		$class = ($class !== null) ? (string) $class : 'inputText inputPassword';
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
 		$HTML = (bool) $HTML;
 
 		// create and return a password field
-		return parent::addPassword($name, $value, $maxlength, $class, $classError, $HTML);
+		return parent::addPassword($name, $value, $maxLength, $class, $classError, $HTML);
 	}
 
 	/**
@@ -365,17 +368,17 @@ class BackendForm extends SpoonForm
 	 * @param bool[optional] $HTML Will this element contain HTML?
 	 * @return SpoonFormText
 	 */
-	public function addText($name, $value = null, $maxlength = 255, $class = null, $classError = null, $HTML = false)
+	public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
 	{
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
-		$maxlength = ($maxlength !== null) ? (int) $maxlength : null;
+		$maxLength = ($maxLength !== null) ? (int) $maxLength : null;
 		$class = ($class !== null) ? (string) $class : 'inputText';
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError';
 		$HTML = (bool) $HTML;
 
 		// create and return a textfield
-		return parent::addText($name, $value, $maxlength, $class, $classError, $HTML);
+		return parent::addText($name, $value, $maxLength, $class, $classError, $HTML);
 	}
 
 	/**
@@ -562,7 +565,7 @@ class BackendFormDate extends SpoonFormDate
  * This is our extended version of SpoonFormFile
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
 class BackendFormImage extends SpoonFormImage
@@ -586,10 +589,8 @@ class BackendFormImage extends SpoonFormImage
 	 */
 	public function generateThumbnails($path, $filename)
 	{
-		// create folder if needed
-		if(!SpoonDirectory::exists($path . '/source')) SpoonDirectory::create($path . '/source');
-
-		// move the source file
+		$fs = new Filesystem();
+		if(!$fs->exists($path . '/source')) $fs->mkdir($path . '/source');
 		$this->moveFile($path . '/source/' . $filename);
 
 		// generate the thumbnails
