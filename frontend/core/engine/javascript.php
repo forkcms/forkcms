@@ -65,7 +65,7 @@ class FrontendJavascript
 		else $file = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
 
 		// output the template
-		$tpl->display(FrontendTheme::getPath($file), true);
+		$tpl->display(FrontendTheme::getPath($file));
 	}
 
 	/**
