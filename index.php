@@ -31,7 +31,7 @@ if(
 	// check .htaccess
 	if(!file_exists('.htaccess') && !isset($_GET['skiphtaccess']))
 	{
-		echo 'Your install is missing the .htaccess file. Make sure you show hidden files while uploading Fork CMS. <a href="?skiphtaccess">Skip .htaccess check</a>';
+		echo 'Your install is missing the .htaccess file. Make sure you show hidden files while uploading Fork CMS. Read the article about <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a> for further information. <a href="?skiphtaccess">Skip .htaccess check</a>';
 		exit;
 	}
 
