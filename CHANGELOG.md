@@ -3,6 +3,8 @@
 Improvements:
 
 * Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3_7.md for more info.
+* Don't throw exceptions in production mode on non-existing files.
+* Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
 
 
 3.6.1 (2013-06-26)
@@ -16,7 +18,12 @@ Improvements:
 
 Bugfixes:
 
-* Output should be last command in ajax requests
+* Output should be last command in ajax requests.
+* Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
+* Authentication: do not allow God users to access uninstalled modules.
+* Analytics: Tracking code wasn't set.
+* Users: do not wrap delimiters in an array.
+
 
 
 3.6.0 (2013-06-18)

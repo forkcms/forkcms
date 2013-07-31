@@ -1,6 +1,8 @@
 {include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
+	{include:core/layout/templates/cookies.tpl}
+
 	<div id="container">
 		<header id="header">
 			{* Logo *}

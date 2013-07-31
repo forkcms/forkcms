@@ -618,9 +618,14 @@ class FrontendHeader extends FrontendBaseObject
 				case 'classic_analytics':
 					$trackingCode = '<script>
 										var _gaq = _gaq || [];
-										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
+									';
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+					}
+					$trackingCode .= '
 										(function() {
 											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
 											ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
@@ -631,9 +636,14 @@ class FrontendHeader extends FrontendBaseObject
 				case 'display_advertising':
 					$trackingCode = '<script>
 										var _gaq = _gaq || [];
-										_gaq.push([\'_setAccount\', \'_setAccount\', \'' . $webPropertyId . '\']);
+										_gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
+									';
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
+					}
+					$trackingCode .= '
 										(function() {
 											var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
 											ga.src = (\'https:\' == document.location.protocol ? \'https://\' : \'http://\') + \'stats.g.doubleclick.net/dc.js\';
@@ -649,8 +659,14 @@ class FrontendHeader extends FrontendBaseObject
 										m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
 										})(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
 										ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
-										ga(\'send\', \'pageview\');
-									</script>';
+									';
+
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
+						$trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
+					} else {
+						$trackingCode .= 'ga(\'send\', \'pageview\');';
+					}
+					$trackingCode .= '</script>';
 					break;
 				default:
 					throw new Exception('Unknown type. (' . $type . ')');

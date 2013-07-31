@@ -17,6 +17,8 @@ var jsFrontend =
 		// init stuff
 		jsFrontend.initAjax();
 
+		jsFrontend.cookieBar.init();
+
 		// init controls
 		jsFrontend.controls.init();
 
@@ -69,6 +71,37 @@ jsFrontend.controls =
 	bindTargetBlank: function()
 	{
 		$('a.targetBlank').attr('target', '_blank');
+	}
+}
+
+/**
+ * Handles the cookieBar
+ */
+jsFrontend.cookieBar =
+{
+	init: function()
+	{
+		// if there is no cookiebar we shouldn't do anything
+		if($('#cookieBar').length == 0) return;
+
+		$cookieBar = $('#cookieBar');
+
+		// @remark: as you can see we use PHP-serialized values so we can use them in PHP too.
+		// hide the cookieBar if needed
+		if(utils.cookies.readCookie('cookie_bar_hide') == 'b%3A1%3B') {
+			$cookieBar.hide();
+		}
+
+		$cookieBar.on('click', '#cookieBarAgree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.hide();
+		});
+		$cookieBar.on('click', '#cookieBarDisagree', function(e) {
+			utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
+			utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
+			$cookieBar.hide();
+		});
 	}
 }
 
