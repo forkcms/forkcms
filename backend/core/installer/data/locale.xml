@@ -2002,7 +2002,7 @@
       </item>
       <item type="message" name="CookiesWarning">
         <translation language="nl"><![CDATA[Om de gebruikerservaring van deze site te verbeteren gebruikt deze website <a href="/disclaimer">cookies</a>.]]></translation>
-        <translation language="en"><![CDATA[To improve the userexpierence on this site we use cookies <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="en"><![CDATA[To improve the userexpierence on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
       </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
