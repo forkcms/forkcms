@@ -1,8 +1,9 @@
-3.6.2 (xxxx-xx-xx)
+3.7.0 (xxxx-xx-xx)
 --
 Improvements:
 
 * Don't throw exceptions in production mode on non-existing files.
+* Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
 
 Bugfixes:
 

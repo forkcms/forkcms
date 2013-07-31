@@ -59,4 +59,24 @@ class CommonCookie extends SpoonCookie
 		// problem occurred
 		return ($cookie === false) ? false : true;
 	}
+
+	/**
+	 * Has the visitor allowed cookies?
+	 *
+	 * @return bool
+	 */
+	public static function hasAllowedCookies()
+	{
+		return (self::exists('cookie_bar_agree') && self::get('cookie_bar_agree'));
+	}
+
+	/**
+	 * Has the cookiebar been hidden by the visitor
+	 *
+	 * @return bool
+	 */
+	public static function hasHiddenCookieBar()
+	{
+		return (self::exists('cookie_bar_hide') && self::get('cookie_bar_hide'));
+	}
 }

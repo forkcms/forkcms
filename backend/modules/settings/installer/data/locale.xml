@@ -44,6 +44,10 @@
         <translation language="lt"><![CDATA[app slaptas žodis]]></translation>
         <translation language="tr"><![CDATA[app secret]]></translation>
       </item>
+      <item type="label" name="Cookies">
+        <translation language="nl"><![CDATA[cookies]]></translation>
+        <translation language="en"><![CDATA[cookies]]></translation>
+      </item>
       <item type="label" name="LicenseKey">
         <translation language="nl"><![CDATA[Licentie key]]></translation>
         <translation language="en"><![CDATA[License key]]></translation>
@@ -114,7 +118,7 @@
         <translation language="it"><![CDATA[Codici di accesso per servizi web.]]></translation>
         <translation language="ru"><![CDATA[Код доступа к сервисам.]]></translation>
         <translation language="zh"><![CDATA[网站服务器的接入码（API Key）。]]></translation>
-        <translation language="hu"><![CDATA[Webszolgáltatások hozzáférési kódja.]]></translation>
+        <translation language="hu"><![CDATA[Webszolgáltatások hozzáférési kódja.]]></translation>Show
         <translation language="fr"><![CDATA[Codes d'accès pour webservices.]]></translation>
         <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
         <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
@@ -134,6 +138,10 @@
         <translation language="de"><![CDATA[Stelle die maximale Breite (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
         <translation language="es"><![CDATA[Configura el ancho máximo (en pixeles) en que puede abrirse CKFinder.]]></translation>
         <translation language="hu"><![CDATA[A maximum szélesség (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
+      </item>
+      <item type="message" name="HelpCookies">
+        <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht, met deze Cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>
+        <translation language="en"><![CDATA[In Europe there are several laws for using cookies, with this Cookie-bar you fullfill the most strict law.]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
@@ -376,6 +384,10 @@
         <translation language="fr"><![CDATA[ajouter le code <code>rel="nofollow"</code> sur les liens à l'intérieur des commentaires]]></translation>
         <translation language="de"><![CDATA[füge <code>rel="nofollow"</code> bei Links in Kommentaren ein]]></translation>
         <translation language="es"><![CDATA[agregar <code>rel="nofollow"</code> en los enlaces dentro de un comentario]]></translation>
+      </item>
+      <item type="message" name="ShowCookieBar">
+        <translation language="nl"><![CDATA[toon de cookie balk]]></translation>
+        <translation language="en"><![CDATA[show the cookie bar]]></translation>
       </item>
       <item type="message" name="TestMessage">
         <translation language="nl"><![CDATA[dit is een test]]></translation>

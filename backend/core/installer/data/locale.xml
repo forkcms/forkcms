@@ -605,6 +605,14 @@
         <translation language="tr"><![CDATA[geçmiş]]></translation>
         <translation language="el"><![CDATA[ιστορικό]]></translation>
       </item>
+      <item type="label" name="IAgree">
+        <translation language="nl"><![CDATA[ik ga akkoord]]></translation>
+      	<translation language="en"><![CDATA[I agree]]></translation>
+      </item>
+      <item type="label" name="IDisagree">
+        <translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
+      	<translation language="en"><![CDATA[I disagree]]></translation>
+      </item>
       <item type="label" name="In">
         <translation language="nl"><![CDATA[in]]></translation>
         <translation language="en"><![CDATA[in]]></translation>
@@ -1991,6 +1999,10 @@
         <translation language="uk"><![CDATA[Зворотній зв'язок]]></translation>
         <translation language="sv"><![CDATA[E-post via kontaktformulär.]]></translation>
         <translation language="pl"><![CDATA[E-mail poprzez formularz kontaktowy.]]></translation>
+      </item>
+      <item type="message" name="CookiesWarning">
+        <translation language="nl"><![CDATA[Om de gebruikerservaring van deze site te verbeteren gebruikt deze website <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="en"><![CDATA[To improve the userexpierence on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
       </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
