@@ -133,6 +133,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		// api keys are not required for every module
 		if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getModuleSetting('core', 'akismet_key', null));
 		if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getModuleSetting('core', 'google_maps_key', null));
+
+		// cookies
+		$this->frm->addCheckbox('show_cookie_bar', BackendModel::getModuleSetting('core', 'show_cookie_bar', false));
 	}
 
 	/**
@@ -289,6 +292,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// save domains
 				BackendModel::setModuleSetting('core', 'site_domains', $siteDomains);
+
+				BackendModel::setModuleSetting('core', 'show_cookie_bar', $this->frm->getField('show_cookie_bar')->getChecked());
 
 				// assign report
 				$this->tpl->assign('report', true);

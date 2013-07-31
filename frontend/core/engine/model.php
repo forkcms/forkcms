@@ -560,7 +560,7 @@ class FrontendModel extends BaseModel
 		// get/init tracking identifier
 		self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
 
-		if(CommonCookie::hasAllowedCookies()) {
+		if(!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
 			CommonCookie::set('track', self::$visitorId, 86400 * 365);
 		}
 

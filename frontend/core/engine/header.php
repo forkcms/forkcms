@@ -618,7 +618,7 @@ class FrontendHeader extends FrontendBaseObject
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
 									';
-					if(!CommonCookie::hasAllowedCookies()) {
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
 						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
 					}
 					$trackingCode .= '
@@ -636,7 +636,7 @@ class FrontendHeader extends FrontendBaseObject
 										_gaq.push([\'_setDomainName\', \'none\']);
 										_gaq.push([\'_trackPageview\']);
 									';
-					if(!CommonCookie::hasAllowedCookies()) {
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
 						$trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
 					}
 					$trackingCode .= '
@@ -657,7 +657,7 @@ class FrontendHeader extends FrontendBaseObject
 										ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
 									';
 
-					if(!CommonCookie::hasAllowedCookies()) {
+					if(FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) && !CommonCookie::hasAllowedCookies()) {
 						$trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
 					} else {
 						$trackingCode .= 'ga(\'send\', \'pageview\');';
