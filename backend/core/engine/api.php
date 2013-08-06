@@ -22,7 +22,7 @@ class BackendCoreAPI
 	 */
 	public static function appleAdddevice($token, $email)
 	{
-		if(API::authorize()) // @todo refactor to eg isAuthorized (looks strange now)
+		if(API::isAuthorized())
 		{
 			$token = str_replace(' ', '', (string) $token);
 
@@ -79,7 +79,7 @@ class BackendCoreAPI
 	 */
 	public static function appleRemovedevice($token, $email)
 	{
-		if(API::authorize())
+		if(API::isAuthorized())
 		{
 			// redefine
 			$token = str_replace(' ', '', (string) $token);
@@ -168,7 +168,7 @@ class BackendCoreAPI
 	 */
 	public static function getInfo()
 	{
-		if(API::authorize())
+		if(API::isAuthorized())
 		{
 			$info = array();
 
@@ -206,7 +206,7 @@ class BackendCoreAPI
 	 */
 	public static function microsoftAdddevice($uri, $email)
 	{
-		if(API::authorize())
+		if(API::isAuthorized())
 		{
 			// redefine
 			$uri = (string) $uri;
@@ -264,7 +264,7 @@ class BackendCoreAPI
 	 */
 	public static function microsoftRemovedevice($uri, $email)
 	{
-		if(API::authorize())
+		if(API::isAuthorized())
 		{
 			// redefine
 			$uri = (string) $uri;
