@@ -3,6 +3,7 @@
 Improvements:
 
 * Don't throw exceptions in production mode on non-existing files.
+* Better event tracking.
 
 Bugfixes:
 
