@@ -1,4 +1,16 @@
-3.6.1 (2013-08-20)
+3.6.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Don't throw exceptions in production mode on non-existing files.
+* Better event tracking.
+
+Bugfixes:
+
+* Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
+
+
+3.6.1 (2013-06-26)
 --
 Improvements:
 
