@@ -91,6 +91,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['language'] = $this->record['language'];
 				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['extra_id'] = $this->record['extra_id'];
 				$item['meta_id'] = $this->meta->save(true);
 
 				// update the item
