@@ -58,3 +58,17 @@ $this->getContainer()->has(<name>);
 FrontendModel::getContainer()->has(<name>);
 BackendModel::getContainer()->has(<name>);
 ```
+
+* Using the API
+
+ The function to check if a user is authorized with the API has been renamed.
+
+ Before:
+ ```
+ API::authorize()
+ ```
+
+ After:
+ ```
+ API::isAuthorized()
+ ```
