@@ -295,7 +295,7 @@ class API extends KernelLoader implements ApplicationInterface
 	 *
 	 * @return bool
 	 */
-	public static function authorize()
+	public static function isAuthorized()
 	{
 		// grab data
 		$email = SpoonFilter::getGetValue('email', null, '');
