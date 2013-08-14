@@ -22,7 +22,7 @@ class BackendFormBuilderAPI
 	public static function entriesDelete($id)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('POST'))
+		if(API::isAuthorized() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			if(!is_array($id)) $id = (array) explode(',', $id);
@@ -42,7 +42,7 @@ class BackendFormBuilderAPI
 	 */
 	public static function entriesGet($id, $limit = 30, $offset = 0)
 	{
-		if(API::authorize() && API::isValidRequestMethod('GET'))
+		if(API::isAuthorized() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
 			$id = (int) $id;
@@ -144,7 +144,7 @@ class BackendFormBuilderAPI
 	 */
 	public static function entriesGetById($id)
 	{
-		if(API::authorize() && API::isValidRequestMethod('GET'))
+		if(API::isAuthorized() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
 			$id = (int) $id;
@@ -217,7 +217,7 @@ class BackendFormBuilderAPI
 	 */
 	public static function getAll($limit = 30, $offset = 0)
 	{
-		if(API::authorize() && API::isValidRequestMethod('GET'))
+		if(API::isAuthorized() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
 			$limit = (int) $limit;
