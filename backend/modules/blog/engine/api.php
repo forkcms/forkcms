@@ -23,7 +23,7 @@ class BackendBlogAPI
 	public static function commentsDelete($id)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('POST'))
+		if(API::isAuthorized() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			if(!is_array($id)) $id = (array) explode(',', $id);
@@ -44,7 +44,7 @@ class BackendBlogAPI
 	public static function commentsGet($status = null, $limit = 30, $offset = 0)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('GET'))
+		if(API::isAuthorized() && API::isValidRequestMethod('GET'))
 		{
 			// redefine
 			$limit = (int) $limit;
@@ -126,7 +126,7 @@ class BackendBlogAPI
 	public static function commentsGetById($id)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('GET'))
+		if(API::isAuthorized() && API::isValidRequestMethod('GET'))
 		{
 			// get comment
 			$comment = (array) BackendBlogModel::getComment($id);
@@ -181,7 +181,7 @@ class BackendBlogAPI
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('POST'))
+		if(API::isAuthorized() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			$id = (int) $id;
@@ -224,7 +224,7 @@ class BackendBlogAPI
 	public static function commentsUpdateStatus($id, $status)
 	{
 		// authorize
-		if(API::authorize() && API::isValidRequestMethod('POST'))
+		if(API::isAuthorized() && API::isValidRequestMethod('POST'))
 		{
 			// redefine
 			if(!is_array($id)) $id = (array) explode(',', $id);
