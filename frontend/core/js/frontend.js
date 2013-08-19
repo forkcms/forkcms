@@ -677,14 +677,14 @@ jsFrontend.statistics =
 				var pageView = '/Outbound Links/' + link;
 
 				// set mailto
-				if( link.match(/^mailto\:/) )
+				if(link.match(/^mailto\:/))
 				{
 					type = 'Mailto';
 					pageView = '/Mailto/' + link.substring(7);
 				}
 
 				// set anchor
-				if( link.match(/^\#/) ) 
+				if(link.match(/^\#/))
 				{
 					type = 'Anchors';
 					pageView = '/Anchor/' + link.substring(1);
