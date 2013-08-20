@@ -1,15 +1,4 @@
-3.6.2 (xxxx-xx-xx)
---
-Improvements:
-
-* Don't throw exceptions in production mode on non-existing files.
-
-Bugfixes:
-
-* Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
-
-
-3.6.1 (2013-06-26)
+3.6.1 (2013-08-20)
 --
 Improvements:
 
@@ -17,6 +6,9 @@ Improvements:
 * Blog: hide navigation when there are no items to show.
 * Profiles: a user can now upload his avatar in Frontend and we can also integrate the avatar in a Backend DataGrid. Fallback for avatar is Gravatar.
 * Speed enhancements
+* Don't throw exceptions in production mode on non-existing files.
+* Check if .htaccess file is properly uploaded
+* Do not expose composer and markdown files to the outside.
 
 Bugfixes:
 
@@ -25,7 +17,7 @@ Bugfixes:
 * Authentication: do not allow God users to access uninstalled modules.
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
-
+* Duplicated header 'content-type' fixed
 
 3.6.0 (2013-06-18)
 --
