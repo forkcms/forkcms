@@ -28,3 +28,7 @@ If you're stuck or would like to discuss Fork CMS, check out the [forum](http://
 
 
 _The Fork CMS team_
+
+---
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/forkcms/forkcms/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
