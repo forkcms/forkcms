@@ -443,10 +443,12 @@ class BackendModel extends BaseModel
 		$extraIdPlaceHolders = array_fill(0, count($ids), '?');
 
 		// get extras
-		return (array) $db->getRecords('SELECT i.*
-										FROM modules_extras AS i
-										WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
-										$ids);
+		return (array) $db->getRecords(
+			'SELECT i.*
+			 FROM modules_extras AS i
+			 WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
+			$ids
+		);
 	}
 
 	/**
@@ -467,9 +469,10 @@ class BackendModel extends BaseModel
 		$result = array();
 
 		// init query
-		$query = 'SELECT i.id, i.data
-				 FROM modules_extras AS i
-				 WHERE i.module = ? AND i.data != ?';
+		$query =
+			'SELECT i.id, i.data
+			 FROM modules_extras AS i
+			 WHERE i.module = ? AND i.data != ?';
 
 		// init parameters
 		$parameters = array($module, 'NULL');
