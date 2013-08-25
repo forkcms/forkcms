@@ -204,13 +204,13 @@ class FrontendFaqModel implements FrontendTagsInterface
 				 ORDER BY i.sequence ASC',
 				array(FRONTEND_LANGUAGE, (int) $id)
 		);
-		
+
 		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
 
 		foreach($items as &$item) {
 			$item['full_url'] = $link . '/' . $item['url'];
 		}
-		
+
 		return $items;
 	}
 
