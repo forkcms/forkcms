@@ -130,7 +130,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// do we want to disconnect the account?
 			if($this->getParameter('disconnect', 'bool', false) === true)
 			{
-				Spoon::dump('test');
 				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_access_token', null);
