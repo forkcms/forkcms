@@ -45,9 +45,17 @@ class CampaignMonitor
 	/**
 	 * The API key for the logged-in user
 	 *
+	 * @todo Lowie: can proably be removed
 	 * @var	string
 	 */
 	private $apiKey;
+
+	/**
+	 * The access token for the logged-in user
+	 *
+	 * @var	string
+	 */
+	private $accessToken;
 
 
 	/**
@@ -80,14 +88,6 @@ class CampaignMonitor
 	 * @var string
 	 */
 	private $listId;
-
-
-	/**
-	 * The password for an authenticating user
-	 *
-	 * @var	string
-	 */
-	private $password;
 
 
 	/**
@@ -131,42 +131,26 @@ class CampaignMonitor
 
 
 	/**
-	 * The username for an authenticating user
-	 *
-	 * @var	string
-	 */
-	private $username;
-
-
-	/**
 	 * Class constructor
 	 *
 	 * @return	void
-	 * @param	string $URL						The base URL of your CreateSend site. e.g. http://example.createsend.com/.
-	 * @param	string $username				The username you use to login to Campaign Monitor.
-	 * @param	string $password				The password you use to login to Campaign Monitor.
-     * @param	int[optional] $timeOut			The default timeout
-	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
-	 * @param	string[optional] $listId		The default list ID to use throughout the class.
+	 * @param string $clientId The client ID.
+	 * @param string $accessToken The access token
+     * @param int[optional] $timeOut The default timeout
+	 * @param string[optional] $clientId The default client ID to use throughout the class.
+	 * @param string[optional] $listId The default list ID to use throughout the class.
 	 */
-	public function __construct($URL, $username, $password, $timeOut = 60, $clientId = null, $listId = null)
+	public function __construct($clientId, $accessToken, $timeOut = 60, $listId = null)
 	{
 		// check input
-		if(empty($username) || empty($password)) throw new CampaignMonitorException('No username or password set.', 105);
+		if(empty($clientId) || empty($accessToken)) throw new CampaignMonitorException('No client ID or access token set.', 105);
 
 		// set username/password and call timeout
-		$this->setUsername($username);
-		$this->setPassword($password);
+		$this->setClientId($clientId);
+		$this->setAccessToken($accessToken);
 		$this->setTimeOut($timeOut);
 
-		// get the API key
-		$apiKey = $this->getAPIKey($URL, $this->getUsername(), $this->getPassword());
-
-		// set api key and password
-		$this->setAPIKey($apiKey);
-
 		// set any IDs we need throughout the class
-		$this->setClientId($clientId);
 		$this->setListId($listId);
 	}
 
@@ -527,18 +511,18 @@ class CampaignMonitor
 		// allowed methods
 		$allowedMethods = array('GET', 'POST', 'DELETE', 'PUT');
 
-		// add HTTP authentication. The call to retrieve the apikey works slightly different
-		switch($url)
-		{
-			case 'apikey':
-				$options[CURLOPT_USERPWD] = $this->username .':'. $this->password;
-				$options[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
-			break;
-
-			default:
-				$options[CURLOPT_USERPWD] = $this->apiKey .':'. md5(sha1(time()));
-				$options[CURLOPT_HTTPAUTH] = CURLAUTH_ANY;
-		}
+//		// add HTTP authentication. The call to retrieve the apikey works slightly different
+//		switch($url)
+//		{
+//			case 'apikey':
+//				$options[CURLOPT_USERPWD] = $this->username .':'. $this->password;
+//				$options[CURLOPT_HTTPAUTH] = CURLAUTH_BASIC;
+//			break;
+//
+//			default:
+//				$options[CURLOPT_USERPWD] = $this->apiKey .':'. md5(sha1(time()));
+//				$options[CURLOPT_HTTPAUTH] = CURLAUTH_ANY;
+//		}
 
 		// redefine
 		$url = (string) $url .'.'. $this->responseFormat;
@@ -551,6 +535,7 @@ class CampaignMonitor
 
 		// set the expect header to avoid connection fails
 		$headers = array();
+		$headers[] = 'Authorization: Bearer ' . $this->accessToken;
 		$headers[] = 'Expect:';
 
 		// based on the method, we should handle the parameters in a different way
@@ -739,7 +724,19 @@ class CampaignMonitor
 
 
 	/**
+	 * Get the access token
+	 *
+	 * @return string
+	 */
+	public function getAccessToken()
+	{
+		return (string) $this->accessToken;
+	}
+
+
+	/**
 	 * Returns the API key for the logged-in user
+	 * @todo Lowie: can probably be removed
 	 *
 	 * @return	string
 	 * @param	string $URL			The base URL of your CreateSend site. e.g. http://example.createsend.com/
@@ -1874,12 +1871,25 @@ class CampaignMonitor
 	/**
 	 * Set API key
 	 *
+	 * @todo Lowie: proably remove
 	 * @return	void
 	 * @param	string $key
 	 */
 	private function setAPIKey($key)
 	{
 		$this->apiKey = (string) $key;
+	}
+
+
+	/**
+	 * Set access token
+	 *
+	 * @return	void
+	 * @param	string $token
+	 */
+	private function setAccessToken($token)
+	{
+		$this->accessToken = (string) $token;
 	}
 
 

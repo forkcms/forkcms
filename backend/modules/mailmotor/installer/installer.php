@@ -217,8 +217,8 @@ class MailmotorInstaller extends ModuleInstaller
 
 		// pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
 		$this->setSetting('mailmotor', 'cm_url', '');
-		$this->setSetting('mailmotor', 'cm_username', '');
-		$this->setSetting('mailmotor', 'cm_password', '');
+		$this->setSetting('mailmotor', 'cm_client_id', '');
+		$this->setSetting('mailmotor', 'cm_client_secret', '');
 		$this->setSetting('mailmotor', 'cm_client_company_name', $from['name']);
 		$this->setSetting('mailmotor', 'cm_client_contact_email', $from['email']);
 		$this->setSetting('mailmotor', 'cm_client_contact_name', $from['name']);

@@ -834,6 +834,10 @@
         <translation language="de"><![CDATA[Verbindung zum CampaignMonitor-Konto entfernen.]]></translation>
         <translation language="es"><![CDATA[Desvincular cuenta CampaignMonitor]]></translation>
       </item>
+      <item type="message" name="ConfirmUnlinkCMAccount">
+        <translation language="en"><![CDATA[Are you sure you want to unlink your CampaignMonitor account?]]></translation>
+        <translation language="nl"><![CDATA[Ben je zeker dat je je CampaignMonitor account wilt onkoppelen?]]></translation>
+      </item>
       <item type="message" name="Unlinked">
         <translation language="en"><![CDATA[The CampaignMonitor account has been unlinked.]]></translation>
         <translation language="nl"><![CDATA[De CampaignMonitor account is ontkoppeld.]]></translation>

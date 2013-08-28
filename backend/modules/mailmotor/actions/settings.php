@@ -85,6 +85,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		$this->processAuthenticationCallback();
 		$this->getData();
 		$this->loadAccountForm();
 		$this->loadClientForm();
@@ -121,15 +122,31 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->frmAccount = new BackendForm('settingsAccount');
 
 		// add fields for campaignmonitor API
-		$this->frmAccount->addText('url', $this->settings['cm_url']);
-		$this->frmAccount->addText('username', $this->settings['cm_username']);
-		$this->frmAccount->addPassword('password', $this->settings['cm_password']);
+		$this->frmAccount->addText('client_id');
+		$this->frmAccount->addText('client_secret');
 
 		if($this->accountLinked)
 		{
-			$this->frmAccount->getField('url')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('username')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('password')->setAttributes(array('disabled' => 'disabled'));
+			// do we want to disconnect the account?
+			if($this->getParameter('disconnect', 'bool', false) === true)
+			{
+				Spoon::dump('test');
+				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_access_token', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_refresh_token', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_expires_in', null);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
+
+				// redirect to the settings page
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
+			}
+
+
+			$this->frmAccount->getField('client_id')->setAttributes(array('disabled' => 'disabled'));
+			$this->frmAccount->getField('client_secret')->setAttributes(array('disabled' => 'disabled'));
 		}
 	}
 
@@ -229,6 +246,19 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	}
 
 	/**
+	 * Process the authorization parameters we got from the campaign monitor callback after authorization
+	 */
+	public function processAuthenticationCallback()
+	{
+		// process code if given
+		$code = $this->getParameter('code');
+		if($code != null)
+		{
+			BackendMailmotorCMHelper::getAccessToken($code);
+		}
+	}
+
+	/**
 	 * Updates a client record.
 	 *
 	 * @param array $record The client record to update.
@@ -237,9 +267,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	private function updateClient($record)
 	{
 		// get the account settings
-		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
+		$clientId = BackendModel::getModuleSetting($this->getModule(), 'cm_client_id');
+		$accessToken = BackendModel::getModuleSetting($this->getModule(), 'cm_access_token');
 
 		// try and update the client info
 		try
@@ -248,7 +277,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10, $this->clientID);
+			$cm = new CampaignMonitor($clientId, $accessToken, 10);
 
 			// update the client
 			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
@@ -268,21 +297,19 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// form is submitted
 		if($this->frmAccount->isSubmitted())
 		{
+			$fields = $this->frmAccount->getFields();
+			$fields['client_id']->isFilled(BL::err('FieldIsRequired'));
+			$fields['client_secret']->isFilled(BL::err('FieldIsRequired'));
+
 			// form is validated
 			if($this->frmAccount->isCorrect())
 			{
-				// unlink the account and client ID
 				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_url', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_username', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_password', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $fields['client_id']->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_secret', $fields['client_secret']->getValue());
 
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
-
-				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
+				// start the authorization precess
+				BackendMailmotorCMHelper::authorize($fields['client_id']->getValue());
 			}
 		}
 	}

@@ -111,18 +111,27 @@
 					<span class="helpTxt">{$msgHelpCMURL}</span>
 				</p>
 				<p>
-					<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtUsername} {$txtUsernameError}
+					<label for="clientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtClientId} {$txtClientIdError}
 				</p>
 				<p>
-					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtPassword} {$txtPasswordError}
+					<label for="clientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtClientSecret} {$txtClientSecretError}
 				</p>
 				<div class="buttonHolder">
-					{option:!account}<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>{/option:!account}
+					{option:!account}
+						{*<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>*}
+						<input id="linkAccount" class="inputButton button mainButton" type="submit" name="linkAccount" value="{$msgLinkCMAccount}" />
+					{/option:!account}
 					{option:account}
-					<a id="unlinkAccount" href="#" class="askConfirmation submitButton button inputButton"><span>{$msgUnlinkCMAccount}</span></a>
-					{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
+						<a id="unlinkAccount" href="{$var|geturl:'settings'}&amp;disconnect=true" data-message-id="confirmUnlinkAccount" class="askConfirmation button"><span>{$msgUnlinkCMAccount}</span></a>
+						{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
+
+						<div id="confirmUnlinkAccount" title="{$msgUnlinkCMAccount}?" style="display: none;">
+							<p>
+								{$msgConfirmUnlinkCMAccount}
+							</p>
+						</div>
 					{/option:account}
 				</div>
 			</div>

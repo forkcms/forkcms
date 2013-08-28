@@ -11,9 +11,39 @@
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Lowie Benoot <lowie.benoot@wijs.be>
  */
 class BackendMailmotorCMHelper
 {
+	const OAUTH_BASE_URL = 'https://api.createsend.com/oauth';
+
+	/**
+	 * Redirect to the oAuth2 authentication endpoint based on the given client id.
+	 *
+	 * @param string $clientId
+	 */
+	public static function authorize($clientId)
+	{
+		$parameters = array(
+			'client_id' => $clientId,
+			'redirect_uri' => SITE_URL . BackendModel::createURLForAction('settings', 'mailmotor'),
+			'scope' => implode(',', array(
+				'ViewReports',
+				'ManageLists',
+				'CreateCampaigns',
+				'ImportSubscribers',
+				'SendCampaigns',
+				'ViewSubscribersInReports',
+				'ManageTemplates'
+			))
+		);
+
+		// redirect to the campaign monitor authentication page
+		BackendModel::redirect(
+			self::OAUTH_BASE_URL . '?' . http_build_query($parameters)
+		);
+    }
+
 	/**
 	 * Checks if a valid CM account is set up
 	 *
@@ -134,6 +164,58 @@ class BackendMailmotorCMHelper
 			}
 		}
 	}
+
+	/**
+	 * Get an acess token from the Campaign Monitor API.
+	 *
+	 * @param string $code
+	 */
+	public static function getAccessToken($code)
+	{
+		$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+		$clientSecret = BackendModel::getModuleSetting('mailmotor', 'cm_client_secret');
+
+		// client id and secret in settings?
+		if($clientId != '' && $clientSecret != '')
+		{
+			$parameters = array(
+				'grant_type' => 'authorization_code',
+				'client_id' => $clientId,
+				'client_secret' => $clientSecret,
+				'code' => $code,
+				'redirect_uri' => SITE_URL . BackendModel::createURLForAction('settings', 'mailmotor'),
+			);
+
+			// create curl call
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, self::OAUTH_BASE_URL . '/token');
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+			// get response from curl
+			$response = json_decode(curl_exec($ch), true);
+
+			// get the variables we need
+			if(isset($response['access_token']) && isset($response['expires_in']) && isset($response['refresh_token']))
+			{
+				BackendModel::setModuleSetting('mailmotor', 'cm_access_token', (string) $response['access_token']);
+				BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (string) $response['expires_in']);
+				BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
+				BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
+
+				BackendModel::redirect(
+					BackendModel::createURLForAction('settings', 'mailmotor') . '#tabSettingsAccount'
+				);
+			}
+		}
+
+		// redirect to error
+		BackendModel::redirect(
+			BackendModel::createURLForAction('settings', 'mailmotor') . '&error=could-not-connect#tabSettingsAccount'
+		);
+    }
 
 	/**
 	 * Deletes one or more mailings
@@ -316,13 +398,12 @@ class BackendMailmotorCMHelper
 			// require CampaignMonitor class
 			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
-			// set login data
-			$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-			$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-			$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+			// get login data
+			$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+			$accessToken = BackendModel::getModuleSetting('mailmotor', 'cm_access_token');
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 60, self::getClientId());
+			$cm = new CampaignMonitor($clientId, $accessToken, 60);
 
 			// set CampaignMonitor object reference
 			Spoon::set('campaignmonitor', $cm);
