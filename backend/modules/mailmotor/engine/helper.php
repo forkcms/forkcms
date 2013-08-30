@@ -206,14 +206,14 @@ class BackendMailmotorCMHelper
 				BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
 
 				BackendModel::redirect(
-					BackendModel::createURLForAction('settings', 'mailmotor') . '#tabSettingsAccount'
+					BackendModel::createURLForAction('settings', 'mailmotor') . '#tabSettingsClient'
 				);
 			}
 		}
 
 		// redirect to error
 		BackendModel::redirect(
-			BackendModel::createURLForAction('settings', 'mailmotor') . '&error=could-not-connect#tabSettingsClient'
+			BackendModel::createURLForAction('settings', 'mailmotor') . '&error=could-not-connect#tabSettingsAccount'
 		);
     }
 
