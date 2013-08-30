@@ -106,7 +106,7 @@
 				</div>
 				<div class="options">
 					<p>
-						<label for="appClientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						<label for="appClientId">{$lblClientID|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtAppClientId} {$txtAppClientIdError}
 					</p>
 					<p>
