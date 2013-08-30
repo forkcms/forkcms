@@ -842,6 +842,10 @@
         <translation language="en"><![CDATA[Your data will be removed (not in CampaignMonitor itself).]]></translation>
         <translation language="nl"><![CDATA[Je data zal verwijderd worden (niet in CampaignMonitor zelf).]]></translation>
       </item>
+      <item type="message" name="ChangeCMClientInfo">
+        <translation language="en"><![CDATA[You can change the client by unlinking your CampaignMonitor account and linking it again.]]></translation>
+        <translation language="nl"><![CDATA[Je kan de client veranderen door je CampaignMonitor account te onkoppelen opnieuw te koppelen.]]></translation>
+      </item>
       <item type="message" name="Unlinked">
         <translation language="en"><![CDATA[The CampaignMonitor account has been unlinked.]]></translation>
         <translation language="nl"><![CDATA[De CampaignMonitor account is ontkoppeld.]]></translation>

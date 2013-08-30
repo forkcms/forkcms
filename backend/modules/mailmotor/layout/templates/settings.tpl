@@ -151,6 +151,7 @@
 					<label for="clientId">{$lblClient|ucfirst}</label>
 					{$ddmClientId}
 				</p>
+				{option:clientId}<span class="helpTxt">{$msgChangeCMClientInfo}</span>{/option:clientId}
 				{option:!clientId}<p class="formError"><strong>{$msgNoClientID}</strong></p>{/option:!clientId}
 			</div>
 
