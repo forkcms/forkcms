@@ -100,38 +100,40 @@
 
 	<div id="tabSettingsAccount">
 		{form:settingsAccount}
-		<div class="box horizontal" id="accountBox">
-			<div class="heading">
-				<h3>CampaignMonitor - Account</h3>
-			</div>
-			<div class="options">
-				<p>
-					<label for="appClientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtAppClientId} {$txtAppClientIdError}
-				</p>
-				<p>
-					<label for="appClientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtAppClientSecret} {$txtAppClientSecretError}
-				</p>
-				<div class="buttonHolder">
-					{option:!account}
-						{*<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>*}
-						<input id="linkAccount" class="inputButton button mainButton" type="submit" name="linkAccount" value="{$msgLinkCMAccount}" />
-					{/option:!account}
-					{option:account}
-						<a id="unlinkAccount" href="{$var|geturl:'settings'}&amp;disconnect=true" data-message-id="confirmUnlinkAccount" class="askConfirmation button"><span>{$msgUnlinkCMAccount}</span></a>
-						{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
-
-						<div id="confirmUnlinkAccount" title="{$msgUnlinkCMAccount}?" style="display: none;">
-							<p>
-								{$msgConfirmUnlinkCMAccount}
-							</p>
-						</div>
-					{/option:account}
+			<div class="box horizontal" id="accountBox">
+				<div class="heading">
+					<h3>CampaignMonitor - Account</h3>
+				</div>
+				<div class="options">
+					<p>
+						<label for="appClientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtAppClientId} {$txtAppClientIdError}
+					</p>
+					<p>
+						<label for="appClientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtAppClientSecret} {$txtAppClientSecretError}
+					</p>
+					<div class="buttonHolder">
+						{option:!account}
+							<input id="linkAccount" class="inputButton button mainButton" type="submit" name="linkAccount" value="{$msgLinkCMAccount}" />
+						{/option:!account}
+					</div>
 				</div>
 			</div>
-		</div>
 		{/form:settingsAccount}
+
+		{option:account}
+			<div class="buttonHolder">
+				<a id="unlinkAccount" href="{$var|geturl:'settings'}&amp;disconnect=true" data-message-id="confirmUnlinkAccount" class="askConfirmation button"><span>{$msgUnlinkCMAccount}</span></a>
+				{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
+			</div>
+
+			<div id="confirmUnlinkAccount" title="{$msgUnlinkCMAccount}?" style="display: none;">
+				<p>
+					{$msgConfirmUnlinkCMAccount}
+				</p>
+			</div>
+		{/option:account}
 	</div>
 
 	{option:account}

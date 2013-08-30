@@ -90,7 +90,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->loadAccountForm();
 		$this->loadClientForm();
 		$this->loadGeneralForm();
-		$this->validateAccountForm();
+		if(isset($this->frmAccount)) $this->validateAccountForm();
 		$this->validateClientForm();
 		$this->validateGeneralForm();
 		$this->parse();
@@ -118,13 +118,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function loadAccountForm()
 	{
-		// init account settings form
-		$this->frmAccount = new BackendForm('settingsAccount');
-
-		// add fields for campaignmonitor API
-		$this->frmAccount->addText('app_client_id');
-		$this->frmAccount->addText('app_client_secret');
-
+		// account already linked?
 		if($this->accountLinked)
 		{
 			// do we want to disconnect the account?
@@ -144,9 +138,17 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
 			}
+		}
 
-			$this->frmAccount->getField('app_client_id')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('app_client_secret')->setAttributes(array('disabled' => 'disabled'));
+		// no account connected yet
+		else
+		{
+			// init account settings form
+			$this->frmAccount = new BackendForm('settingsAccount');
+
+			// add fields for campaignmonitor API
+			$this->frmAccount->addText('app_client_id');
+			$this->frmAccount->addText('app_client_secret');
 		}
 	}
 
@@ -240,7 +242,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
 
 		// add all forms to template
-		$this->frmAccount->parse($this->tpl);
+		if(isset($this->frmAccount)) $this->frmAccount->parse($this->tpl);
 		$this->frmClient->parse($this->tpl);
 		$this->frmGeneral->parse($this->tpl);
 	}
@@ -294,7 +296,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function validateAccountForm()
 	{
-		// form is submitted
+		// form exists and is submitted
 		if($this->frmAccount->isSubmitted())
 		{
 			$fields = $this->frmAccount->getFields();
