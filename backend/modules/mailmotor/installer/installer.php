@@ -125,7 +125,6 @@ class MailmotorInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'mailmotor', 'import_addresses');
 		$this->setActionRights(1, 'mailmotor', 'import_groups');
 		$this->setActionRights(1, 'mailmotor', 'index');
-		$this->setActionRights(1, 'mailmotor', 'link_account');
 		$this->setActionRights(1, 'mailmotor', 'load_client_info');
 		$this->setActionRights(1, 'mailmotor', 'mass_address_action');
 		$this->setActionRights(1, 'mailmotor', 'mass_campaign_action');

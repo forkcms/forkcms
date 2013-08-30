@@ -41,7 +41,7 @@ class BackendMailmotorConfig extends BackendBaseConfig
 		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
-		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'link_account', 'load_client_info')))
+		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'load_client_info')))
 		{
 			$this->checkForAccount();
 			$this->checkForClientID();
