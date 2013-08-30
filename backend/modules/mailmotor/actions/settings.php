@@ -50,11 +50,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function createClient($record)
 	{
-		// get the account settings
-		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
-
 		// create a client
 		try
 		{
@@ -62,7 +57,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10);
+			$cm = BackendMailmotorCMHelper::getCM();
 
 			// create client
 			$clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
@@ -275,7 +270,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($appClientId, $accessToken, 10);
+			$cm = BackendMailmotorCMHelper::getCM();
 
 			// update the client
 			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']], $this->clientID);
