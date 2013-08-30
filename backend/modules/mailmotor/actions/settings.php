@@ -168,11 +168,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 			// add field for client ID
 			$this->frmClient->addDropdown('client_id', $clients, $this->clientID);
-		}
 
-		// account was made
-		if($this->accountLinked)
-		{
 			// fetch CM countries
 			$countries = BackendMailmotorCMHelper::getCountriesAsPairs();
 
@@ -183,6 +179,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$this->frmClient->addText('company_name', $this->settings['cm_client_company_name']);
 			$this->frmClient->addDropdown('countries', $countries, $this->settings['cm_client_country']);
 			$this->frmClient->addDropdown('timezones', $timezones, $this->settings['cm_client_timezone']);
+
+			// disable the client dropdown if a client has already been linked
+			if(!empty($this->settings['cm_client_id']))
+			{
+				$this->frmClient->getField('client_id')->setAttributes(array('disabled' => 'disabled'));
+			}
 		}
 
 		// sender info
@@ -343,41 +345,41 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					// attempt to create the client
 					$this->createClient($client);
 
-					// store the client info in our database
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
-					// trigger event
-					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
 					// redirect to a custom success message
-					$this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
+					$redirectURL = BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue();
 				}
 
 				// client ID was already set
 				else
 				{
-					// overwrite the client ID
-					$this->clientID = $this->frmClient->getField('client_id')->getValue();
+					if(empty($this->settings['cm_client_id']))
+					{
+						// overwrite the client ID
+						$this->clientID = $this->frmClient->getField('client_id')->getValue();
+
+						// update the client ID in settings
+						BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
+					}
 
 					// update the client record
 					$this->updateClient($client);
 
-					// store the client info in our database
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
 					// update the client ID in settings
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
 
-					// trigger event
-					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
 					// redirect to the settings page
-					$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
+					$redirectURL = BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient';
 				}
+
+				// store the client info in our database
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
+
+				$this->redirect($redirectURL);
 			}
 		}
 	}
