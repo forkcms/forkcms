@@ -18,14 +18,14 @@ class BackendMailmotorCMHelper
 	const OAUTH_BASE_URL = 'https://api.createsend.com/oauth';
 
 	/**
-	 * Redirect to the oAuth2 authentication endpoint based on the given client id.
+	 * Redirect to the oAuth2 authentication endpoint based on the given app client id.
 	 *
-	 * @param string $clientId
+	 * @param string $appClientId
 	 */
-	public static function authorize($clientId)
+	public static function authorize($appClientId)
 	{
 		$parameters = array(
-			'client_id' => $clientId,
+			'client_id' => $appClientId,
 			'redirect_uri' => SITE_URL . BackendModel::createURLForAction('settings', 'mailmotor'),
 			'scope' => implode(',', array(
 				'ViewReports',
@@ -172,16 +172,16 @@ class BackendMailmotorCMHelper
 	 */
 	public static function getAccessToken($code)
 	{
-		$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
-		$clientSecret = BackendModel::getModuleSetting('mailmotor', 'cm_client_secret');
+		$appClientId = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_id');
+		$appClientSecret = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_secret');
 
 		// client id and secret in settings?
-		if($clientId != '' && $clientSecret != '')
+		if($appClientId != '' && $appClientSecret != '')
 		{
 			$parameters = array(
 				'grant_type' => 'authorization_code',
-				'client_id' => $clientId,
-				'client_secret' => $clientSecret,
+				'client_id' => $appClientId,
+				'client_secret' => $appClientSecret,
 				'code' => $code,
 				'redirect_uri' => SITE_URL . BackendModel::createURLForAction('settings', 'mailmotor'),
 			);
@@ -398,12 +398,13 @@ class BackendMailmotorCMHelper
 			// require CampaignMonitor class
 			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
-			// get login data
-			$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+			// get campaign monitor data
+			$appClientId = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_id');
 			$accessToken = BackendModel::getModuleSetting('mailmotor', 'cm_access_token');
+			$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($clientId, $accessToken, 60);
+			$cm = new CampaignMonitor($appClientId, $accessToken, 60, $clientId);
 
 			// set CampaignMonitor object reference
 			Spoon::set('campaignmonitor', $cm);

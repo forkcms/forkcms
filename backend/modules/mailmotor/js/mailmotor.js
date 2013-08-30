@@ -10,8 +10,8 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.charts.init();
 		jsBackend.mailmotor.chartPieChart.init();
 		jsBackend.mailmotor.changeGroup.init();
-//		jsBackend.mailmotor.linkAccount.init();
-		jsBackend.mailmotor.resizing.init();
+		jsBackend.mailmotor.linkAccount.init();
+//		jsBackend.mailmotor.resizing.init();
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
 		jsBackend.mailmotor.templateSelection.init();

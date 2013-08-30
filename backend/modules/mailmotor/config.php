@@ -157,12 +157,12 @@ class BackendMailmotorConfig extends BackendBaseConfig
 	 */
 	private function checkForSettings()
 	{
-		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
-		$clientID = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+		$appClientId = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_id');
+		$appClientSecret = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_secret');
+		$accessToken = BackendModel::getModuleSetting('mailmotor', 'cm_access_token');
+		$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
 
-		return (!empty($url) && !empty($username) && !empty($password) && !empty($clientID));
+		return (!empty($appClientId) && !empty($appClientSecret) && !empty($accessToken) && !empty($clientId));
 	}
 
 	/**

@@ -122,8 +122,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$this->frmAccount = new BackendForm('settingsAccount');
 
 		// add fields for campaignmonitor API
-		$this->frmAccount->addText('client_id');
-		$this->frmAccount->addText('client_secret');
+		$this->frmAccount->addText('app_client_id');
+		$this->frmAccount->addText('app_client_secret');
 
 		if($this->accountLinked)
 		{
@@ -131,10 +131,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			if($this->getParameter('disconnect', 'bool', false) === true)
 			{
 				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_secret', null);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_access_token', null);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_refresh_token', null);
 				BackendModel::setModuleSetting($this->getModule(), 'cm_expires_in', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
@@ -143,9 +145,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
 			}
 
-
-			$this->frmAccount->getField('client_id')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('client_secret')->setAttributes(array('disabled' => 'disabled'));
+			$this->frmAccount->getField('app_client_id')->setAttributes(array('disabled' => 'disabled'));
+			$this->frmAccount->getField('app_client_secret')->setAttributes(array('disabled' => 'disabled'));
 		}
 	}
 
@@ -266,7 +267,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	private function updateClient($record)
 	{
 		// get the account settings
-		$clientId = BackendModel::getModuleSetting($this->getModule(), 'cm_client_id');
+		$appClientId = BackendModel::getModuleSetting($this->getModule(), 'cm_app_client_id');
 		$accessToken = BackendModel::getModuleSetting($this->getModule(), 'cm_access_token');
 
 		// try and update the client info
@@ -276,10 +277,10 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($clientId, $accessToken, 10);
+			$cm = new CampaignMonitor($appClientId, $accessToken, 10);
 
 			// update the client
-			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
+			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']], $this->clientID);
 		}
 		catch(Exception $e)
 		{
@@ -297,18 +298,18 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		if($this->frmAccount->isSubmitted())
 		{
 			$fields = $this->frmAccount->getFields();
-			$fields['client_id']->isFilled(BL::err('FieldIsRequired'));
-			$fields['client_secret']->isFilled(BL::err('FieldIsRequired'));
+			$fields['app_client_id']->isFilled(BL::err('FieldIsRequired'));
+			$fields['app_client_secret']->isFilled(BL::err('FieldIsRequired'));
 
 			// form is validated
 			if($this->frmAccount->isCorrect())
 			{
 				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $fields['client_id']->getValue());
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_secret', $fields['client_secret']->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_id', $fields['app_client_id']->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_secret', $fields['app_client_secret']->getValue());
 
 				// start the authorization precess
-				BackendMailmotorCMHelper::authorize($fields['client_id']->getValue());
+				BackendMailmotorCMHelper::authorize($fields['app_client_id']->getValue());
 			}
 		}
 	}

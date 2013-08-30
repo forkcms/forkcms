@@ -50,6 +50,7 @@ class CampaignMonitor
 	 */
 	private $apiKey;
 
+
 	/**
 	 * The access token for the logged-in user
 	 *
@@ -57,6 +58,13 @@ class CampaignMonitor
 	 */
 	private $accessToken;
 
+
+	/**
+	 * The campaign monitor app client ID
+	 *
+	 * @var	string
+	 */
+	private $appClientId;
 
 	/**
 	 * Default campaign ID
@@ -134,23 +142,22 @@ class CampaignMonitor
 	 * Class constructor
 	 *
 	 * @return	void
-	 * @param string $clientId The client ID.
+	 * @param string $appClient The campaign monitor app client ID.
 	 * @param string $accessToken The access token
      * @param int[optional] $timeOut The default timeout
 	 * @param string[optional] $clientId The default client ID to use throughout the class.
 	 * @param string[optional] $listId The default list ID to use throughout the class.
 	 */
-	public function __construct($clientId, $accessToken, $timeOut = 60, $listId = null)
+	public function __construct($appClientId, $accessToken, $timeOut = 60, $clientId = null, $listId = null)
 	{
 		// check input
-		if(empty($clientId) || empty($accessToken)) throw new CampaignMonitorException('No client ID or access token set.', 105);
+		if(empty($appClientId) || empty($accessToken)) throw new CampaignMonitorException('No client ID or access token set.', 105);
 
-		// set username/password and call timeout
-		$this->setClientId($clientId);
+		// set variables
+		$this->setAppClientId($appClientId);
 		$this->setAccessToken($accessToken);
 		$this->setTimeOut($timeOut);
-
-		// set any IDs we need throughout the class
+		$this->setClientId($clientId);
 		$this->setListId($listId);
 	}
 
@@ -1890,6 +1897,18 @@ class CampaignMonitor
 	private function setAccessToken($token)
 	{
 		$this->accessToken = (string) $token;
+	}
+
+
+	/**
+	 * Set access token
+	 *
+	 * @return	void
+	 * @param	string $token
+	 */
+	private function setAppClientId($appClientId)
+	{
+		$this->appClientId = (string) $appClientId;
 	}
 
 

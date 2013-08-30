@@ -106,17 +106,12 @@
 			</div>
 			<div class="options">
 				<p>
-					<label for="url">{$lblURL|uppercase}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtUrl} {$txtUrlError}
-					<span class="helpTxt">{$msgHelpCMURL}</span>
+					<label for="appClientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtAppClientId} {$txtAppClientIdError}
 				</p>
 				<p>
-					<label for="clientId">{$lblClientId|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtClientId} {$txtClientIdError}
-				</p>
-				<p>
-					<label for="clientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtClientSecret} {$txtClientSecretError}
+					<label for="appClientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+					{$txtAppClientSecret} {$txtAppClientSecretError}
 				</p>
 				<div class="buttonHolder">
 					{option:!account}
