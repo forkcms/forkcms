@@ -80,13 +80,13 @@ class FrontendMailmotorCMHelper
 			// require CampaignMonitor class
 			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
-			// set login data
-			$url = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
-			$username = FrontendModel::getModuleSetting('mailmotor', 'cm_username');
-			$password = FrontendModel::getModuleSetting('mailmotor', 'cm_password');
+			// get campaign monitor data
+			$appClientId = FrontendModel::getModuleSetting('mailmotor', 'cm_app_client_id');
+			$accessToken = FrontendModel::getModuleSetting('mailmotor', 'cm_access_token');
+			$clientId = self::getClientID();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
+			$cm = new CampaignMonitor($appClientId, $accessToken, 5, $clientId);
 
 			// set CampaignMonitor object reference
 			Spoon::set('campaignmonitor', $cm);
