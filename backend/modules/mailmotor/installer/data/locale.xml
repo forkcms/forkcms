@@ -1063,6 +1063,10 @@
         <translation language="uk"><![CDATA[ID клієнта]]></translation>
         <translation language="lt"><![CDATA[kliento ID]]></translation>
       </item>
+      <item type="label" name="ClientSecret">
+        <translation language="en"><![CDATA[client secret]]></translation>
+        <translation language="nl"><![CDATA[client secret]]></translation>
+      </item>
       <item type="label" name="CompanyName">
         <translation language="en"><![CDATA[company name]]></translation>
         <translation language="nl"><![CDATA[bedrijfsnaam]]></translation>
