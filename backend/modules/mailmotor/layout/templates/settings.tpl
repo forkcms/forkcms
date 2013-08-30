@@ -132,6 +132,9 @@
 				<p>
 					{$msgConfirmUnlinkCMAccount}
 				</p>
+				<p>
+					<strong>{$msgConfirmUnlinkCMAccountDataWarning}</strong>
+				</p>
 			</div>
 		{/option:account}
 	</div>
