@@ -213,7 +213,7 @@ class BackendMailmotorCMHelper
 
 		// redirect to error
 		BackendModel::redirect(
-			BackendModel::createURLForAction('settings', 'mailmotor') . '&error=could-not-connect#tabSettingsAccount'
+			BackendModel::createURLForAction('settings', 'mailmotor') . '&error=could-not-connect#tabSettingsClient'
 		);
     }
 
