@@ -1614,6 +1614,34 @@ class BackendMailmotorModel
 	}
 
 	/**
+	 * Unlinks the mailmotor account. It removes all settings and content.
+	 */
+	public static function unlinkAccount()
+	{
+		$db = BackendModel::getContainer()->get('database');
+
+		// delete settings
+		BackendModel::setModuleSetting('mailmotor', 'cm_account', false);
+		BackendModel::setModuleSetting('mailmotor', 'cm_app_client_id', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_app_client_secret', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_access_token', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_client_id', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_groups_set', null);
+		BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', null);
+
+		// delete data
+		$db->execute('TRUNCATE mailmotor_addresses');
+		$db->execute('TRUNCATE mailmotor_addresses_groups');
+		$db->execute('TRUNCATE mailmotor_campaignmonitor_ids');
+		$db->execute('TRUNCATE mailmotor_campaigns');
+		$db->execute('TRUNCATE mailmotor_groups');
+		$db->execute('TRUNCATE mailmotor_mailings');
+		$db->execute('TRUNCATE mailmotor_mailings_groups');
+	}
+
+	/**
 	 * Updates a campaign
 	 *
 	 * @param array $item The data to update for the campaign.

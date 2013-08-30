@@ -124,13 +124,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// do we want to disconnect the account?
 			if($this->getParameter('disconnect', 'bool', false) === true)
 			{
-				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_id', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_secret', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_access_token', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_refresh_token', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_expires_in', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+				BackendMailmotorModel::unlinkAccount();
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
