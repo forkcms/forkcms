@@ -4,6 +4,8 @@ Improvements:
 
 * Don't throw exceptions in production mode on non-existing files.
 * Better event tracking.
+* Added Greek as supported language
+* Several language updates
 
 Bugfixes:
 
@@ -30,6 +32,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 3.6.0 (2013-06-18)
 --
