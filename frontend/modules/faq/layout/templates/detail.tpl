@@ -12,7 +12,7 @@
 				<ul>
 					<li>
 						{* Category*}
-						{$lblIn|ucfirst} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>
+						{$lblInTheCategory|ucfirst} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>
                         {option:!item.tags}.{/option:!item.tags}
 
 						{* Tags*}
