@@ -21,5 +21,20 @@ class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 	{
 		parent::execute();
 		$this->loadTemplate();
+		$this->loadForm();
+	}
+
+	/**
+	 * Load the form
+	 */
+	private function loadForm()
+	{
+		$this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
+		$this->frm->setAction(
+			FrontendNavigation::getURLForBlock('mailmotor', 'subscribe')
+		);
+		$this->frm->addText('email')
+			->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->parse($this->tpl);
 	}
 }
