@@ -276,7 +276,11 @@ class BackendModel extends BaseModel
 		$fs = new Filesystem();
 		foreach($finder->directories()->in($path) as $directory)
 		{
-			$fs->remove($directory->getRealPath() . '/' . $thumbnail);
+			$fileName = $directory->getRealPath() . '/' . $thumbnail;
+			if(is_file($fileName))
+			{
+				$fs->remove($fileName);
+			}
 		}
 	}
 
@@ -955,9 +959,17 @@ class BackendModel extends BaseModel
 
 		$fs = new Filesystem();
 		foreach(array_keys($fileSizes) as $sizeDir) {
-			$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename);
+			$fileName = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+			if(is_file($fileName))
+			{
+				$fs->remove($fileName);
+			}
 		}
-		$fs->remove(FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename);
+		$fileName = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+		if(is_file($fileName))
+		{
+			$fs->remove($fileName);
+		}
 	}
 
 	/**

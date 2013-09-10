@@ -80,7 +80,11 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			elseif($status == 'unauthorized')
 			{
 				// remove file
-				$fs->remove($filename);
+				
+				if(is_file($filename))
+				{
+					$fs->remove($filename);
+				}
 
 				// remove all parameters from the module settings
 				BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
@@ -98,7 +102,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			elseif($status == 'done')
 			{
 				// remove file
-				$fs->remove($filename);
+				if(is_file($filename))
+				{
+					$fs->remove($filename);
+				}
 
 				// return status
 				$this->output(self::OK, array('status' => 'done'), 'Data retrieved.');
@@ -113,7 +120,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 				// file's been missing for more than ten cycles - just stop here
 				if($counter > 10)
 				{
-					$fs->remove($filename);
+					if(is_file($filename))
+					{
+						$fs->remove($filename);
+					}
 					$this->output(self::ERROR, array('status' => 'missing'), 'Error while retrieving data - file was never created.');
 				}
 
@@ -127,7 +137,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			/* FALLBACK - SOMETHING WENT WRONG */
 			else
 			{
-				$fs->remove($filename);
+				if(is_file($filename))
+				{
+					$fs->remove($filename);
+				}
 				$this->output(self::ERROR, array('status' => 'error', 'a' => ($status == 'done')), 'Error while retrieving data.');
 			}
 		}
