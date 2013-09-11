@@ -959,16 +959,16 @@ class BackendModel extends BaseModel
 
 		$fs = new Filesystem();
 		foreach(array_keys($fileSizes) as $sizeDir) {
-			$fileName = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
-			if(is_file($fileName))
+			$fullPath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+			if(is_file($fullPath))
 			{
-				$fs->remove($fileName);
+				$fs->remove($fullPath);
 			}
 		}
-		$fileName = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
-		if(is_file($fileName))
+		$fullPath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+		if(is_file($fullPath))
 		{
-			$fs->remove($fileName);
+			$fs->remove($fullPath);
 		}
 	}
 
