@@ -99,6 +99,9 @@ class FaqInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'settings');
 
 		$faqId = $this->insertExtra('faq', 'block', 'Faq');
+
+		// Register widgets
+		// Category faq widgets will be added on the fly
 		$this->insertExtra('faq', 'widget', 'MostReadQuestions', 'most_read');
 		$this->insertExtra('faq', 'widget', 'AskOwnQuestion', 'own_question');
 
