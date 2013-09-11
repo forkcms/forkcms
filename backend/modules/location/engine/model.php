@@ -144,6 +144,7 @@ class BackendLocationModel
 	{
 		$db = BackendModel::getContainer()->get('database');
 		$item['created_on'] = BackendModel::getUTCDate();
+		$item['edited_on'] = BackendModel::getUTCDate();
 
 		// build extra
 		$extra = array(
