@@ -1,4 +1,4 @@
-3.6.2 (xxxx-xx-xx)
+3.6.2 (2013-09-11)
 --
 Improvements:
 
@@ -10,6 +10,12 @@ Improvements:
 Bugfixes:
 
 * Mailmotor: invalid HTTP status codes were used causing the AppKernel to throw exceptions.
+* Locale: Added Greek as supported language
+* Locale: Several language updates
+* Analytics: Better event tracking
+* FAQ: Category questions widget added
+* Mailmotor: Subscribe widget uses form token
+* Location: Creating a new location gave an exception
 
 
 3.6.1 (2013-06-26)
