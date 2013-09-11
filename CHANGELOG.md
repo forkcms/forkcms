@@ -1,12 +1,16 @@
-3.6.2 (xxxx-xx-xx)
+3.6.2 (2013-09-11)
 --
 Improvements:
 
-* Added Greek as supported language
-* Several language updates
+* Locale: Added Greek as supported language
+* Locale: Several language updates
 * Analytics: Better event tracking
+* FAQ: Category questions widget added
+* Mailmotor: Subscribe widget uses form token
 
 Bugfixes:
+
+* Location: Creating a new location gave an exception
 
 
 3.6.1 (2013-08-20)
