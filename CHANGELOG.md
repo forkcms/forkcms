@@ -4,6 +4,7 @@ Improvements:
 
 * Added Greek as supported language
 * Several language updates
+* Analytics: Better event tracking
 
 Bugfixes:
 
