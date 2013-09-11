@@ -1,3 +1,13 @@
+3.6.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Added Greek as supported language
+* Several language updates
+
+Bugfixes:
+
+
 3.6.1 (2013-08-20)
 --
 Improvements:
@@ -18,6 +28,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 3.6.0 (2013-06-18)
 --
