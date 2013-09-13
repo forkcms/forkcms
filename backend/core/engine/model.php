@@ -613,8 +613,11 @@ class BackendModel extends BaseModel
 	 * @param string[optional] $module You can get all settings for a module.
 	 * @return array
 	 */
-	public static function getModuleSettings($module = false)
+	public static function getModuleSettings($module = null)
 	{
+		// redefine
+		$module = ((bool) $module) ? (string) $module : false;
+
 		// are the values available
 		if(empty(self::$moduleSettings))
 		{
