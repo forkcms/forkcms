@@ -617,9 +617,10 @@ class BackendModel extends BaseModel
 	/**
 	 * Get all module settings at once
 	 *
+	 * @param string[optional] $module You can get all settings for a module.
 	 * @return array
 	 */
-	public static function getModuleSettings()
+	public static function getModuleSettings($module = false)
 	{
 		// are the values available
 		if(empty(self::$moduleSettings))
@@ -644,7 +645,7 @@ class BackendModel extends BaseModel
 			}
 		}
 
-		return self::$moduleSettings;
+		return ($module) ? ((isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array()) : self::$moduleSettings;
 	}
 
 	/**
