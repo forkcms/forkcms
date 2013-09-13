@@ -596,22 +596,15 @@ class BackendModel extends BaseModel
 	 */
 	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
+		// redefine
 		$module = (string) $module;
 		$key = (string) $key;
 
-		// are the values available
-		if(empty(self::$moduleSettings))
-		{
-			self::getModuleSettings();
-		}
+		// define settings
+		$settings = self::getModuleSettings($module);
 
-		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$moduleSettings[$module][$key]))
-		{
-			return $defaultValue;
-		}
-
-		return self::$moduleSettings[$module][$key];
+		// return if exists, otherwise return default value
+		return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
 	}
 
 	/**
