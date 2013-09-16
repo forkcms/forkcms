@@ -120,10 +120,12 @@
 								<label for="userId">{$lblAuthor|ucfirst}</label>
 								{$ddmUserId} {$ddmUserIdError}
 							</div>
-							<div class="options">
-								<label for="tags">{$lblTags|ucfirst}</label>
-								{$txtTags} {$txtTagsError}
-							</div>
+							{option:showTagsIndex}
+								<div class="options">
+									<label for="tags">{$lblTags|ucfirst}</label>
+									{$txtTags} {$txtTagsError}
+								</div>
+							{/option:showTagsIndex}
 						</div>
 
 					</td>
