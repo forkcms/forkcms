@@ -122,7 +122,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 		// fetch the creationdate for the addresses
 		foreach($this->emails as &$email)
 		{
-			$address = self::getAddress($email);
+			$address = BackendMailmotorModel::getAddress($email);
 			$email = array(
 				'email' => $email,
 				'created_on' => strtotime($address['created_on'])
