@@ -119,6 +119,16 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 	 */
 	private function exportAddresses()
 	{
+		// fetch the creationdate for the addresses
+		foreach($this->emails as &$email)
+		{
+			$address = self::getAddress($email);
+			$email = array(
+				'email' => $email,
+				'created_on' => strtotime($address['created_on'])
+			);
+		}
+
 		// export the addresses
 		BackendMailmotorModel::exportAddresses($this->emails);
 	}
