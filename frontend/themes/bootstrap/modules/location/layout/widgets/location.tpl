@@ -26,7 +26,7 @@
 						</label>
 						<div class="input-append">
 							{* @remark: do not remove the id *}
-							<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="inputText" />
+							<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="form-control" />
 							{* @remark: do not remove the id *}
 							<span id="locationSearchError{$widgetLocationItem.id}" class="error" style="display: none;">
 								<span class="help-inline">{$errFieldIsRequired|ucfirst}</span>
