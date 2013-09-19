@@ -65,6 +65,9 @@ class CommonUri
 		// convert "--" to "-"
 		$value = preg_replace('/\-+/', '-', $value);
 
+		// convert "-." to "." when using a file extension
+		$value = preg_replace('/\-./', '.', $value);
+
 		// trim - signs
 		return trim($value, '-');
 	}
