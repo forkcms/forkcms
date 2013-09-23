@@ -117,7 +117,7 @@ class BackendFaqModel
 	{
 		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
-		 	 FROM faq_questions AS i
+			 FROM faq_questions AS i
 			 WHERE i.id = ? AND i.language = ?
 			 LIMIT 1',
 			 array((int) $id, BL::getWorkingLanguage()));
