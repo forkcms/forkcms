@@ -1,5 +1,5 @@
 <div id="error">
 <p>This page doesn't exist or is not accessible at this time.</p>
 <a href="/">Go to home</a>
-<h2>404</2>
+<h2>404</h2>
 </div>
