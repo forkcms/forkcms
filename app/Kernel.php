@@ -26,6 +26,7 @@ use Symfony\Component\HttpKernel\DependencyInjection\AddClassesToCachePass;
 use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\TerminableInterface;
 
 /**
  * The Kernel provides a proper way to load an environment and DI container.
@@ -34,7 +35,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-abstract class Kernel implements KernelInterface
+abstract class Kernel implements KernelInterface, TerminableInterface
 {
 	/**
 	 * @var array
@@ -518,6 +519,22 @@ abstract class Kernel implements KernelInterface
 		define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
 		define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
 	}
+
+	/**
+     * {@inheritdoc}
+     *
+     * @api
+     */
+    public function terminate(Request $request, Response $response)
+    {
+        if (false === $this->booted) {
+            return;
+        }
+
+        if ($this->getHttpKernel() instanceof TerminableInterface) {
+            $this->getHttpKernel()->terminate($request, $response);
+        }
+    }
 
 	/**
 	 * Handles a request to convert into a response.
