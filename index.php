@@ -45,4 +45,3 @@ $kernel = new AppKernel();
 $response = $kernel->handle($request);
 if($response->getCharset() === null && $kernel->getContainer() != null) $response->setCharset($kernel->getContainer()->getParameter('kernel.charset'));
 $response->send();
-$kernel->terminate($request, $response);
