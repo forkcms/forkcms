@@ -61,7 +61,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		// load the settings from the general settings
 		if(empty($this->settings))
 		{
-			$settings = BackendModel::getModuleSettings('location');
+			$this->settings = BackendModel::getModuleSettings('location');
 
 			$this->settings['center']['lat'] = $firstMarker['lat'];
 			$this->settings['center']['lng'] = $firstMarker['lng'];
