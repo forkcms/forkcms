@@ -668,7 +668,9 @@ jsFrontend.statistics =
 			// bind on all links that don't have the class noTracking
 			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
-				e.preventDefault();
+				// only simulate direct links
+				var hasTarget = (typeof $(this).attr('target') != 'undefined');
+				if(!hasTarget) e.preventDefault();
 
 				var link = $(this).attr('href');
 
@@ -694,7 +696,7 @@ jsFrontend.statistics =
 				_gaq.push(['_trackEvent', type, pageView]);
 
 				// set time out
-				setTimeout(function() { document.location.href = link; }, 100);
+				if(!hasTarget) setTimeout(function() { document.location.href = link; }, 100);
 			});
 		}
 	}
