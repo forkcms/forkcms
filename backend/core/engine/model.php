@@ -641,7 +641,15 @@ class BackendModel extends BaseModel
 			}
 		}
 
-		return ($module) ? ((isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array()) : self::$moduleSettings;
+		// you want module settings
+		if($module)
+		{
+			// return module settings if there are some, if not return empty array
+			return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
+		}
+
+		// else return all settings
+		else return self::$moduleSettings;
 	}
 
 	/**
