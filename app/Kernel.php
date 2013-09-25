@@ -521,20 +521,20 @@ abstract class Kernel implements KernelInterface, TerminableInterface
 	}
 
 	/**
-     * {@inheritdoc}
-     *
-     * @api
-     */
-    public function terminate(Request $request, Response $response)
-    {
-        if (false === $this->booted) {
-            return;
-        }
+	 * {@inheritdoc}
+	 *
+	 * @api
+	 */
+	public function terminate(Request $request, Response $response)
+	{
+		if (false === $this->booted) {
+			return;
+		}
 
-        if ($this->getHttpKernel() instanceof TerminableInterface) {
-            $this->getHttpKernel()->terminate($request, $response);
-        }
-    }
+		if ($this->getHttpKernel() instanceof TerminableInterface) {
+			$this->getHttpKernel()->terminate($request, $response);
+		}
+	}
 
 	/**
 	 * Handles a request to convert into a response.
