@@ -1,3 +1,18 @@
+3.6.3 (2013-09-25)
+--
+Improvements:
+
+* Simplified getting backend settings
+* Only show tagbox when users has rights
+* Terminal event triggered after response
+* Composer: Readme suggests using the optimise option now
+
+Bugfixes:
+
+* Google Tracking: Don't ignore target on outbound links
+* Mailmotor: Export of selected addresses fixed
+
+
 3.6.2 (2013-09-11)
 --
 Improvements:
