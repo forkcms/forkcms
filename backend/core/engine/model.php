@@ -596,31 +596,28 @@ class BackendModel extends BaseModel
 	 */
 	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
+		// redefine
 		$module = (string) $module;
 		$key = (string) $key;
 
-		// are the values available
-		if(empty(self::$moduleSettings))
-		{
-			self::getModuleSettings();
-		}
+		// define settings
+		$settings = self::getModuleSettings($module);
 
-		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$moduleSettings[$module][$key]))
-		{
-			return $defaultValue;
-		}
-
-		return self::$moduleSettings[$module][$key];
+		// return if exists, otherwise return default value
+		return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
 	}
 
 	/**
 	 * Get all module settings at once
 	 *
+	 * @param string[optional] $module You can get all settings for a module.
 	 * @return array
 	 */
-	public static function getModuleSettings()
+	public static function getModuleSettings($module = null)
 	{
+		// redefine
+		$module = ((bool) $module) ? (string) $module : false;
+
 		// are the values available
 		if(empty(self::$moduleSettings))
 		{
@@ -644,7 +641,15 @@ class BackendModel extends BaseModel
 			}
 		}
 
-		return self::$moduleSettings;
+		// you want module settings
+		if($module)
+		{
+			// return module settings if there are some, if not return empty array
+			return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
+		}
+
+		// else return all settings
+		else return self::$moduleSettings;
 	}
 
 	/**
