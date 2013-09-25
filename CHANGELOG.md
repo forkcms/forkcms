@@ -1,3 +1,10 @@
+3.6.4 (2013-09-25)
+--
+Bugfixes:
+
+* Couldn't use terminate function not yet.
+
+
 3.6.3 (2013-09-25)
 --
 Improvements:
