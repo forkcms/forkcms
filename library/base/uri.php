@@ -61,8 +61,14 @@ class CommonUri
 		$value = SpoonFilter::htmlentities($value, $charset);
 		$value = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $value);
 
-		// clean leftovers
-		$value = preg_replace('/%.+;/', '-', $value);
+		/**
+		 * we need to clean leftovers by using urlencode
+		 * so we can remove special characters like ‘ | ’ | “ |  ”
+		 */
+		$value = preg_replace('/%.+%3B/', '-', urlencode($value));
+
+		// this cleans remaining letter accents for mozilla, f.e.: %CC%81, %CC%A7, %CC%80
+		$value = preg_replace('/%CC%[a-zA-Z0-9]./', '', $value);
 
 		// convert "--" to "-"
 		$value = preg_replace('/\-+/', '-', $value);
