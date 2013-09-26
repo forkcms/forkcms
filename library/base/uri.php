@@ -62,6 +62,9 @@ class CommonUri
 		$value = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $value);
 		$value = preg_replace('/%.+;/i', '-', $value);
 
+		// clean leftovers
+		$value = preg_replace('/%.+;/', '-', $value);
+
 		// convert "--" to "-"
 		$value = preg_replace('/\-+/', '-', $value);
 
