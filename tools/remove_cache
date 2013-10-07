@@ -2,25 +2,28 @@
 #
 # This script will remove all cache-files.
 #
-# @version	1.1.1
+# @version	1.1.2
+# @author	Yohann Bianchi <nstCactus@gmail.com>
 # @author	Johan Ronsse <johan@netlash.com>
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
-rm -f `find ../frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/minified_css/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/minified_js/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+SCRIPT_PATH="`dirname \"$0\"`"
 
-rm -f `find ../backend/cache/analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/minified_css/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/minified_js/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../frontend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ../app/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+
+rm -f `find ${SCRIPT_PATH}/../app/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
 echo 'All done! Cache files removed.'
