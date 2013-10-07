@@ -391,7 +391,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxId').val(data.data.field.id);
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
-								if(data.data.field.settings.reply_to) $('#textboxReplyTo').prop('checked', true);
+								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to === true) $('#textboxReplyTo').prop('checked', true);
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox

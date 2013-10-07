@@ -142,7 +142,10 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
 						if($label != '') $settings['label'] = SpoonFilter::htmlspecialchars($label);
 						if($values != '') $settings['values'] = $values;
 						if($defaultValues != '') $settings['default_values'] = $defaultValues;
-				
+
+						// reply-to, only for textboxes
+						if($type == 'textbox') $settings['reply_to'] = $replyTo == 'Y' ? true : false;
+
 						// build array
 						$field = array();
 						$field['form_id'] = $formId;
