@@ -33,7 +33,7 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 		{
 			// get tags
 			$tags = BackendTagsModel::getStartsWith($term);
-	
+
 			// output
 			$this->output(self::OK, $tags);
 		}
