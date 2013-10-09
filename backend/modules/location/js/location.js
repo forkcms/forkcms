@@ -3,6 +3,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsBackend.location =
 {
