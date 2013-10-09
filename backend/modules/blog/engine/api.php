@@ -23,7 +23,7 @@ class BackendBlogAPI
     public static function commentsDelete($id)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('POST')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('POST')) {
             // redefine
             if(!is_array($id)) $id = (array) explode(',', $id);
 
@@ -43,13 +43,13 @@ class BackendBlogAPI
     public static function commentsGet($status = null, $limit = 30, $offset = 0)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('GET')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET')) {
             // redefine
             $limit = (int) $limit;
 
             // validate
             if($limit > 10000) {
-                return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+                return Api::output(Api::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
             }
 
             // get comments
@@ -122,7 +122,7 @@ class BackendBlogAPI
     public static function commentsGetById($id)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('GET')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET')) {
             // get comment
             $comment = (array) BackendBlogModel::getComment($id);
 
@@ -176,7 +176,7 @@ class BackendBlogAPI
     public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('POST')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('POST')) {
             // redefine
             $id = (int) $id;
             if($status !== null) $status = (string) $status;
@@ -187,7 +187,7 @@ class BackendBlogAPI
 
             // validate
             if($status === null && $text === null && $authorName === null && $authorEmail === null && $authorWebsite === null) {
-                return API::output(API::ERROR, array('message' => 'No data provided.'));
+                return Api::output(Api::ERROR, array('message' => 'No data provided.'));
             }
 
             // update
@@ -216,7 +216,7 @@ class BackendBlogAPI
     public static function commentsUpdateStatus($id, $status)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('POST')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('POST')) {
             // redefine
             if(!is_array($id)) $id = (array) explode(',', $id);
             $status = (string) $status;

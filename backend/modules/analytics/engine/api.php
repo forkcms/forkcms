@@ -23,12 +23,12 @@ class BackendAnalyticsAPI
     {
         // analytics session token
         if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') {
-            API::output(API::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 
         // analytics table id (only show this error if no other exist)
         if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '') {
-            API::output(API::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 
         return true;
@@ -42,7 +42,7 @@ class BackendAnalyticsAPI
     public static function keywordsGetData()
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentKeywords();
 
             $return = array('data' => null);
@@ -67,7 +67,7 @@ class BackendAnalyticsAPI
     public static function referrersGetData()
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentReferrers();
 
             $return = array('data' => null);
@@ -93,7 +93,7 @@ class BackendAnalyticsAPI
     public static function visitorsGetData()
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
             $startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
             $endTimestamp = mktime(0, 0, 0);
 

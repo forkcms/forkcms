@@ -80,7 +80,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
         $this->frm->addText('ckfinder_image_max_width', BackendModel::getModuleSetting('core', 'ckfinder_image_max_width', 1600));
         $this->frm->addText('ckfinder_image_max_height', BackendModel::getModuleSetting('core', 'ckfinder_image_max_height', 1200));
 
-        // api keys
+        // Api keys
         $this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
         $this->frm->addText('fork_api_private_key', BackendModel::getModuleSetting('core', 'fork_api_private_key', null));
 
@@ -128,7 +128,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
         $this->frm->addMultiCheckbox('active_languages', $activeLanguages, BackendModel::getModuleSetting('core', 'active_languages', array(SITE_MULTILANGUAGE)));
         $this->frm->addMultiCheckbox('redirect_languages', $redirectLanguages, BackendModel::getModuleSetting('core', 'redirect_languages', array(SITE_MULTILANGUAGE)));
 
-        // api keys are not required for every module
+        // Api keys are not required for every module
         if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getModuleSetting('core', 'akismet_key', null));
         if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getModuleSetting('core', 'google_maps_key', null));
 
@@ -238,7 +238,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
                 BackendModel::setModuleSetting('core', 'ckfinder_image_max_width', ($this->frm->getField('ckfinder_image_max_width')->isFilled()) ? $this->frm->getField('ckfinder_image_max_width')->getValue() : 1600);
                 BackendModel::setModuleSetting('core', 'ckfinder_image_max_height', ($this->frm->getField('ckfinder_image_max_height')->isFilled()) ? $this->frm->getField('ckfinder_image_max_height')->getValue() : 1200);
 
-                // api keys
+                // Api keys
                 BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
                 BackendModel::setModuleSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
                 if($this->needsAkismet) BackendModel::setModuleSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());

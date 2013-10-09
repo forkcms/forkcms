@@ -980,7 +980,7 @@ class CoreInstaller extends ModuleInstaller
         }
 
         /*
-         * We're going to try to install the settings for the api.
+         * We're going to try to install the settings for the Api.
          */
         require_once PATH_LIBRARY . '/external/fork_api.php';
 
@@ -991,7 +991,7 @@ class CoreInstaller extends ModuleInstaller
             // get the keys
             $keys = $api->coreRequestKeys($this->getVariable('site_domain'), $this->getVariable('api_email'));
 
-            // api settings
+            // Api settings
             $this->setSetting('core', 'fork_api_public_key', $keys['public']);
             $this->setSetting('core', 'fork_api_private_key', $keys['private']);
 

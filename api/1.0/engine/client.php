@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class APIClient extends API
+class ApiClient extends Api
 {
     /**
      * @var SpoonTemplate
@@ -48,9 +48,7 @@ class APIClient extends API
     {
         $content = $this->tpl->getContent(__DIR__ . '/../client/layout/templates/index.tpl');
 
-        return new Response(
-            $content, 200
-        );
+        return new Response($content, 200);
     }
 
     /**
@@ -61,30 +59,32 @@ class APIClient extends API
     {
         $modules = BackendModel::getModules();
 
-        foreach($modules as &$module) {
+        foreach ($modules as &$module) {
             /*
              * check if the api.php file exists for this module, and load it so our methods are
              * accessible by the Reflection API.
              */
             $moduleAPIFile = BACKEND_MODULES_PATH . '/' . $module . '/engine/api.php';
-            if(!file_exists($moduleAPIFile)) continue;
+            if (!file_exists($moduleAPIFile)) {
+                continue;
+            }
             require_once $moduleAPIFile;
 
             // class names of the API file are always based on the name o/t module
             $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'API';
-            $methods = get_class_methods($className);
+            $methods   = get_class_methods($className);
 
             // we will need the parameters + PHPDoc to generate our text fields
-            foreach($methods as $key => $method) {
+            foreach ($methods as $key => $method) {
                 $methods[$key] = array(
-                    'name' => $method,
+                    'name'       => $method,
                     'parameters' => $this->loadParameters($className, $method)
                 );
             }
 
             // properly format so an iteration can do the work for us
             $this->modules[] = array(
-                'name' => $module,
+                'name'    => $module,
                 'methods' => $methods
             );
         }
@@ -100,9 +100,9 @@ class APIClient extends API
     protected function loadParameters($className, $method)
     {
         // dig for data on the chosen method, in the chosen class
-        $parameters = array();
+        $parameters       = array();
         $reflectionMethod = new ReflectionMethod($className, $method);
-        $PHPDoc = $reflectionMethod->getDocComment();
+        $PHPDoc           = $reflectionMethod->getDocComment();
 
         /*
          * This regex filters out all parameters, along with their PHPDoc. We use this instead
@@ -110,18 +110,22 @@ class APIClient extends API
          * that, rather shamefully, do not contain PHPDoc.
          */
         preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $PHPDoc, $matches);
-        if(array_key_exists(0, $matches) && empty($matches[0])) return;
+        if (array_key_exists(0, $matches) && empty($matches[0])) {
+            return;
+        }
 
         // we have to build up a custom stack of parameters
-        foreach($matches[0] as $i => $row) {
+        foreach ($matches[0] as $i => $row) {
             $name = $matches[2][$i];
 
-            if($name === 'language') continue;
+            if ($name === 'language') {
+                continue;
+            }
 
             $parameters[] = array(
-                'name' => $name,
-                'label' => $name . '-' . rand(1, 99999),
-                'optional' => (substr_count($matches[2][$i], '[optional]') > 0),
+                'name'        => $name,
+                'label'       => $name . '-' . rand(1, 99999),
+                'optional'    => (substr_count($matches[2][$i], '[optional]') > 0),
                 'description' => $matches[3][$i]
             );
         }

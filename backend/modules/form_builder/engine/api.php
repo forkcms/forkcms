@@ -22,7 +22,7 @@ class BackendFormBuilderAPI
     public static function entriesDelete($id)
     {
         // authorize
-        if(API::isAuthorized() && API::isValidRequestMethod('POST')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('POST')) {
             // redefine
             if(!is_array($id)) $id = (array) explode(',', $id);
 
@@ -41,7 +41,7 @@ class BackendFormBuilderAPI
      */
     public static function entriesGet($id, $limit = 30, $offset = 0)
     {
-        if(API::isAuthorized() && API::isValidRequestMethod('GET')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET')) {
             // redefine
             $id = (int) $id;
             $limit = (int) $limit;
@@ -49,7 +49,7 @@ class BackendFormBuilderAPI
 
             // validate
             if($limit > 10000) {
-                return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+                return Api::output(Api::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
             }
 
             $dataIDs = (array) BackendModel::getContainer()->get('database')->getColumn(
@@ -135,7 +135,7 @@ class BackendFormBuilderAPI
      */
     public static function entriesGetById($id)
     {
-        if(API::isAuthorized() && API::isValidRequestMethod('GET')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET')) {
             // redefine
             $id = (int) $id;
 
@@ -149,7 +149,7 @@ class BackendFormBuilderAPI
 
             // any entries?
             if(empty($entries)) {
-                return API::output(API::ERROR, array('message' => 'Not found.'));
+                return Api::output(Api::ERROR, array('message' => 'Not found.'));
             }
 
             $return = array('entry' => null);
@@ -202,14 +202,14 @@ class BackendFormBuilderAPI
      */
     public static function getAll($limit = 30, $offset = 0)
     {
-        if(API::isAuthorized() && API::isValidRequestMethod('GET')) {
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET')) {
             // redefine
             $limit = (int) $limit;
             $offset = (int) $offset;
 
             // validate
             if($limit > 10000) {
-                return API::output(API::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
+                return Api::output(Api::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
             }
 
             $forms = (array) BackendModel::getContainer()->get('database')->getRecords(
