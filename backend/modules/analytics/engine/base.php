@@ -14,48 +14,48 @@
  */
 class BackendAnalyticsBase extends BackendBaseActionIndex
 {
-	/**
-	 * The selected page
-	 *
-	 * @var	string
-	 */
-	protected $pagePath = null;
+    /**
+     * The selected page
+     *
+     * @var	string
+     */
+    protected $pagePath = null;
 
-	/**
-	 * The start and end timestamp of the collected data
-	 *
-	 * @var	int
-	 */
-	protected $startTimestamp, $endTimestamp;
+    /**
+     * The start and end timestamp of the collected data
+     *
+     * @var	int
+     */
+    protected $startTimestamp, $endTimestamp;
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->header->addJS('highcharts.js', 'core', false);
-		$this->setDates();
-	}
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->header->addJS('highcharts.js', 'core', false);
+        $this->setDates();
+    }
 
-	/**
-	 * Parse this page
-	 */
-	protected function parse()
-	{
-		// period picker
-		if(isset($this->pagePath)) BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
-		else BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
-	}
+    /**
+     * Parse this page
+     */
+    protected function parse()
+    {
+        // period picker
+        if(isset($this->pagePath)) BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
+        else BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
+    }
 
-	/**
-	 * Set start and end timestamp needed to collect analytics data
-	 */
-	private function setDates()
-	{
-		BackendAnalyticsHelper::setDates();
+    /**
+     * Set start and end timestamp needed to collect analytics data
+     */
+    private function setDates()
+    {
+        BackendAnalyticsHelper::setDates();
 
-		$this->startTimestamp = SpoonSession::get('analytics_start_timestamp');
-		$this->endTimestamp = SpoonSession::get('analytics_end_timestamp');
-	}
+        $this->startTimestamp = SpoonSession::get('analytics_start_timestamp');
+        $this->endTimestamp = SpoonSession::get('analytics_end_timestamp');
+    }
 }

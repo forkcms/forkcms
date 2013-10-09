@@ -14,52 +14,50 @@
  */
 class FrontendSearchAjaxSave extends FrontendBaseAJAXAction
 {
-	/**
-	 * @var array
-	 */
-	private $statistics;
+    /**
+     * @var array
+     */
+    private $statistics;
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$searchTerm = SpoonFilter::getPostValue('term', null, '');
-		$term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
+        // get parameters
+        $searchTerm = SpoonFilter::getPostValue('term', null, '');
+        $term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
 
-		// validate search term
-		if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        // validate search term
+        if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 
-		// validated search term
-		else
-		{
-			// previous search result
-			$previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
-			SpoonSession::set('searchTerm', '');
-	
-			// save this term?
-			if($previousTerm != $term)
-			{
-				// format data
-				$this->statistics = array();
-				$this->statistics['term'] = $term;
-				$this->statistics['language'] = FRONTEND_LANGUAGE;
-				$this->statistics['time'] = FrontendModel::getUTCDate();
-				$this->statistics['data'] = serialize(array('server' => $_SERVER));
-				$this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
-	
-				// save data
-				FrontendSearchModel::save($this->statistics);
-			}
-	
-			// save current search term in cookie
-			SpoonSession::set('searchTerm', $term);
-	
-			// output
-			$this->output(self::OK);
-		}
-	}
+        // validated search term
+        else {
+            // previous search result
+            $previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
+            SpoonSession::set('searchTerm', '');
+
+            // save this term?
+            if($previousTerm != $term) {
+                // format data
+                $this->statistics = array();
+                $this->statistics['term'] = $term;
+                $this->statistics['language'] = FRONTEND_LANGUAGE;
+                $this->statistics['time'] = FrontendModel::getUTCDate();
+                $this->statistics['data'] = serialize(array('server' => $_SERVER));
+                $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
+
+                // save data
+                FrontendSearchModel::save($this->statistics);
+            }
+
+            // save current search term in cookie
+            SpoonSession::set('searchTerm', $term);
+
+            // output
+            $this->output(self::OK);
+        }
+    }
 }

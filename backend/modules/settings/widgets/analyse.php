@@ -15,26 +15,26 @@
  */
 class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 {
-	/**
-	 * Execute the widget
-	 */
-	public function execute()
-	{
-		$this->setColumn('left');
-		$this->setPosition(1);
-		$this->parse();
-		$this->display();
-	}
+    /**
+     * Execute the widget
+     */
+    public function execute()
+    {
+        $this->setColumn('left');
+        $this->setPosition(1);
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Parse into template
-	 */
-	private function parse()
-	{
-		// init vars
-		$warnings = BackendSettingsModel::getWarnings();
+    /**
+     * Parse into template
+     */
+    private function parse()
+    {
+        // init vars
+        $warnings = BackendSettingsModel::getWarnings();
 
-		// assign warnings
-		if(!empty($warnings)) $this->tpl->assign('warnings', $warnings);
-	}
+        // assign warnings
+        if(!empty($warnings)) $this->tpl->assign('warnings', $warnings);
+    }
 }

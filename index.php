@@ -8,10 +8,9 @@
  */
 
 // vendors not installed
-if(!is_dir(__DIR__ . '/vendor'))
-{
-	echo 'Your install is missing some dependencies. If you have composer installed you should run: <code>composer install</code>. If you don\'t have composer installed you really should, see http://getcomposer.org for more information';
-	exit;
+if(!is_dir(__DIR__ . '/vendor')) {
+    echo 'Your install is missing some dependencies. If you have composer installed you should run: <code>composer install</code>. If you don\'t have composer installed you really should, see http://getcomposer.org for more information';
+    exit;
 }
 
 require_once __DIR__ . '/autoload.php';
@@ -22,14 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
 $installer = dirname(__FILE__) . '/install/cache';
 $request = Request::createFromGlobals();
 if(
-	file_exists($installer) &&
-	is_dir($installer) &&
-	!file_exists($installer . '/installed.txt') &&
-	substr($request->getRequestURI(), 0, 8) != '/install'
+    file_exists($installer) &&
+    is_dir($installer) &&
+    !file_exists($installer . '/installed.txt') &&
+    substr($request->getRequestURI(), 0, 8) != '/install'
 )
 {
-	header('Location: /install');
-	exit;
+    header('Location: /install');
+    exit;
 }
 
 require_once __DIR__ . '/app/AppKernel.php';

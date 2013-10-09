@@ -7,73 +7,73 @@
  */
 class FrontendMailmotorIndex extends FrontendBaseBlock
 {
-	const MAILINGS_PAGING_LIMIT = 10;
+    const MAILINGS_PAGING_LIMIT = 10;
 
-	/**
-	 * The data grid object
-	 *
-	 * @var	SpoonDataGrid
-	 */
-	private $dataGrid;
+    /**
+     * The data grid object
+     *
+     * @var	SpoonDataGrid
+     */
+    private $dataGrid;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->tpl->assign('hideContentTitle', true);
-		$this->loadTemplate();
-		$this->loadDataGrid();
-		$this->parseDataGrid();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->tpl->assign('hideContentTitle', true);
+        $this->loadTemplate();
+        $this->loadDataGrid();
+        $this->parseDataGrid();
 
-	}
+    }
 
-	/**
-	 * Load the data grid
-	 */
-	private function loadDataGrid()
-	{
-		// create a new source-object
-		$source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get('database'), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
+    /**
+     * Load the data grid
+     */
+    private function loadDataGrid()
+    {
+        // create a new source-object
+        $source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get('database'), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
-		// create data grid
-		$this->dataGrid = new SpoonDataGrid($source);
-		$this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
+        // create data grid
+        $this->dataGrid = new SpoonDataGrid($source);
+        $this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
-		// set hidden columns
-		$this->dataGrid->setColumnsHidden(array('id', 'status'));
+        // set hidden columns
+        $this->dataGrid->setColumnsHidden(array('id', 'status'));
 
-		// set headers values
-		$headers['name'] = SpoonFilter::ucfirst(FL::lbl('Name'));
-		$headers['send_on'] = SpoonFilter::ucfirst(FL::lbl('Sent'));
+        // set headers values
+        $headers['name'] = SpoonFilter::ucfirst(FL::lbl('Name'));
+        $headers['send_on'] = SpoonFilter::ucfirst(FL::lbl('Sent'));
 
-		// set headers
-		$this->dataGrid->setHeaderLabels($headers);
+        // set headers
+        $this->dataGrid->setHeaderLabels($headers);
 
-		// sorting columns
-		$this->dataGrid->setSortingColumns(array('name', 'send_on'), 'name');
-		$this->dataGrid->setSortParameter('desc');
+        // sorting columns
+        $this->dataGrid->setSortingColumns(array('name', 'send_on'), 'name');
+        $this->dataGrid->setSortParameter('desc');
 
-		// set column URLs
-		$this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
+        // set column URLs
+        $this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
 
-		// set column functions
-		$this->dataGrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);
+        // set column functions
+        $this->dataGrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);
 
-		// add styles
-		$this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
+        // add styles
+        $this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
-		// set paging limit
-		$this->dataGrid->setPagingLimit(self::MAILINGS_PAGING_LIMIT);
-	}
+        // set paging limit
+        $this->dataGrid->setPagingLimit(self::MAILINGS_PAGING_LIMIT);
+    }
 
-	/**
-	 * parse the data grid
-	 */
-	private function parseDataGrid()
-	{
-		// parse the data grid in the template
-		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
-	}
+    /**
+     * parse the data grid
+     */
+    private function parseDataGrid()
+    {
+        // parse the data grid in the template
+        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+    }
 }

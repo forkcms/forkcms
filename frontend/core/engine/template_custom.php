@@ -14,27 +14,27 @@
  */
 class FrontendTemplateCustom
 {
-	/**
-	 * Template instance
-	 *
-	 * @var	FrontendTemplate
-	 */
-	private $tpl;
+    /**
+     * Template instance
+     *
+     * @var	FrontendTemplate
+     */
+    private $tpl;
 
-	/**
-	 * @param FrontendTemplate $tpl The template instance.
-	 */
-	public function __construct($tpl)
-	{
-		$this->tpl = $tpl;
-		$this->parse();
-	}
+    /**
+     * @param FrontendTemplate $tpl The template instance.
+     */
+    public function __construct($tpl)
+    {
+        $this->tpl = $tpl;
+        $this->parse();
+    }
 
-	/**
-	 * Parse the custom stuff
-	 */
-	private function parse()
-	{
-		// insert your custom stuff here...
-	}
+    /**
+     * Parse the custom stuff
+     */
+    private function parse()
+    {
+        // insert your custom stuff here...
+    }
 }

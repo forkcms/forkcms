@@ -16,59 +16,58 @@
  */
 class InstallerStep1 extends InstallerStep
 {
-	/**
-	 * Execute this step
-	 */
-	public function execute()
-	{
-		// init vars
-		$variables = array();
+    /**
+     * Execute this step
+     */
+    public function execute()
+    {
+        // init vars
+        $variables = array();
 
-		// head
-		$variables['head'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/head.tpl');
-		$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
+        // head
+        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/head.tpl');
+        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
 
-		// this should be the path
-		$path = realpath(dirname(__FILE__) . '/../../library');
-		$spoonFolder = realpath($path . '/../vendor/spoon/library');
+        // this should be the path
+        $path = realpath(dirname(__FILE__) . '/../../library');
+        $spoonFolder = realpath($path . '/../vendor/spoon/library');
 
-		// just one found? add it into the session
-		if(file_exists($spoonFolder . '/spoon/spoon.php'))
-		{
-			$_SESSION['path_library'] = $path;
+        // just one found? add it into the session
+        if(file_exists($spoonFolder . '/spoon/spoon.php')) {
+            $_SESSION['path_library'] = $path;
 
-			// redirect to step 2
-			header('Location: index.php?step=2');
-			exit;
-		}
+            // redirect to step 2
+            header('Location: index.php?step=2');
+            exit;
+        }
 
-		// template contents
-		$tpl = file_get_contents('layout/templates/step_1.tpl');
+        // template contents
+        $tpl = file_get_contents('layout/templates/step_1.tpl');
 
-		// build the search & replace array
-		$search = array_keys($variables);
-		$replace = array_values($variables);
+        // build the search & replace array
+        $search = array_keys($variables);
+        $replace = array_values($variables);
 
-		// loop search values
-		foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
+        // loop search values
+        foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
 
-		// build output
-		$output = str_replace($search, $replace, $tpl);
+        // build output
+        $output = str_replace($search, $replace, $tpl);
 
-		// show output
-		echo $output;
+        // show output
+        echo $output;
 
-		// stop the script
-		exit;
-	}
+        // stop the script
+        exit;
+    }
 
-	/**
-	 * This step is always allowed.
-	 *
-	 * @return bool
-	 */
-	public static function isAllowed()
-	{
-		return true;
-	}
+    /**
+     * This step is always allowed.
+     *
+     * @return bool
+     */
+    public static function isAllowed()
+    {
+        return true;
+    }
 }

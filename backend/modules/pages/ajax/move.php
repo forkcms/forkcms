@@ -14,44 +14,43 @@
  */
 class BackendPagesAjaxMove extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// call parent
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // call parent
+        parent::execute();
 
-		// get parameters
-		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
-		$droppedOn = SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
-		$typeOfDrop = SpoonFilter::getPostValue('type', null, '');
-		$tree = SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
+        // get parameters
+        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
+        $droppedOn = SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
+        $typeOfDrop = SpoonFilter::getPostValue('type', null, '');
+        $tree = SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
 
-		// init validation
-		$errors = array();
+        // init validation
+        $errors = array();
 
-		// validate
-		if($id === 0) $errors[] = 'no id provided';
-		if($droppedOn === -1) $errors[] = 'no dropped_on provided';
-		if($typeOfDrop == '') $errors[] = 'no type provided';
-		if($tree == '') $errors[] = 'no tree provided';
-		
-		// got errors
-		if(!empty($errors)) $this->output(self::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
-		
-		// validated
-		else
-		{
-			// get page
-			$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
-	
-			// build cache
-			BackendPagesModel::buildCache(BL::getWorkingLanguage());
-	
-			// output
-			if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
-			else $this->output(self::ERROR, null, 'page not moved');
-		}
-	}
+        // validate
+        if($id === 0) $errors[] = 'no id provided';
+        if($droppedOn === -1) $errors[] = 'no dropped_on provided';
+        if($typeOfDrop == '') $errors[] = 'no type provided';
+        if($tree == '') $errors[] = 'no tree provided';
+
+        // got errors
+        if(!empty($errors)) $this->output(self::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
+
+        // validated
+        else {
+            // get page
+            $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
+
+            // build cache
+            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+
+            // output
+            if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
+            else $this->output(self::ERROR, null, 'page not moved');
+        }
+    }
 }

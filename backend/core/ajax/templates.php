@@ -17,97 +17,91 @@ use Symfony\Component\Filesystem\Exception\IOException;
  */
 class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // call parent, this will probably add some general CSS/JS or other required files
+        parent::execute();
 
-		// init vars
-		$templates = array();
-		$theme = BackendModel::getModuleSetting('core', 'theme');
-		$files[] = BACKEND_PATH . '/core/layout/editor_templates/templates.js';
-		$themePath = FRONTEND_PATH . '/themes/' . $theme . '/core/layout/editor_templates/templates.js';
+        // init vars
+        $templates = array();
+        $theme = BackendModel::getModuleSetting('core', 'theme');
+        $files[] = BACKEND_PATH . '/core/layout/editor_templates/templates.js';
+        $themePath = FRONTEND_PATH . '/themes/' . $theme . '/core/layout/editor_templates/templates.js';
 
-		if(is_file($themePath)) $files[] = $themePath;
+        if(is_file($themePath)) $files[] = $themePath;
 
-		// loop all files
-		foreach($files as $file)
-		{
-			// process file
-			$templates = array_merge($templates, $this->processFile($file));
-		}
+        // loop all files
+        foreach($files as $file) {
+            // process file
+            $templates = array_merge($templates, $this->processFile($file));
+        }
 
-		// set headers
-		SpoonHTTP::setHeaders('Content-type: text/javascript');
+        // set headers
+        SpoonHTTP::setHeaders('Content-type: text/javascript');
 
-		// output the templates
-		if(!empty($templates))
-		{
-			echo 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n";
-			echo json_encode($templates) . "\n";
-			echo '});';
-		}
-		exit;
-	}
+        // output the templates
+        if(!empty($templates)) {
+            echo 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n";
+            echo json_encode($templates) . "\n";
+            echo '});';
+        }
+        exit;
+    }
 
-	/**
-	 * Process the content of the file.
-	 *
-	 * @param string $file The file to process.
-	 * @return boolean|array
-	 */
-	private function processFile($file)
-	{
-		$fs = new Filesystem();
+    /**
+     * Process the content of the file.
+     *
+     * @param string $file The file to process.
+     * @return boolean|array
+     */
+    private function processFile($file)
+    {
+        $fs = new Filesystem();
 
-		// if the files doesn't exists we can stop here and just return an empty string
-		if(!$fs->exists($file)) return array();
+        // if the files doesn't exists we can stop here and just return an empty string
+        if(!$fs->exists($file)) return array();
 
-		// fetch content from file
-		$content = file_get_contents($file);
-		$json = @json_decode($content, true);
+        // fetch content from file
+        $content = file_get_contents($file);
+        $json = @json_decode($content, true);
 
-		// skip invalid JSON
-		if($json === false || $json === null) return array();
+        // skip invalid JSON
+        if($json === false || $json === null) return array();
 
-		$return = array();
+        $return = array();
 
-		// loop templates
-		foreach($json as $template)
-		{
-			// skip items without a title
-			if(!isset($template['title'])) continue;
+        // loop templates
+        foreach($json as $template) {
+            // skip items without a title
+            if(!isset($template['title'])) continue;
 
-			if(isset($template['file']))
-			{
-				if($fs->exists(PATH_WWW . $template['file']))
-				{
-					$template['html'] = file_get_contents(PATH_WWW . $template['file']);
-				}
-			}
+            if(isset($template['file'])) {
+                if($fs->exists(PATH_WWW . $template['file'])) {
+                    $template['html'] = file_get_contents(PATH_WWW . $template['file']);
+                }
+            }
 
-			// skip items without HTML
-			if(!isset($template['html'])) continue;
+            // skip items without HTML
+            if(!isset($template['html'])) continue;
 
-			$image = '';
-			if(isset($template['image']))
-			{
-				// we have to remove the first slash, because that is set in the wrapper. Otherwise the images don't work
-				$image = ltrim($template['image'], '/');
-			}
+            $image = '';
+            if(isset($template['image'])) {
+                // we have to remove the first slash, because that is set in the wrapper. Otherwise the images don't work
+                $image = ltrim($template['image'], '/');
+            }
 
-			$temp['title'] = $template['title'];
-			$temp['description'] = (isset($template['description'])) ? $template['description'] : '';
-			$temp['image'] = $image;
-			$temp['html'] = $template['html'];
+            $temp['title'] = $template['title'];
+            $temp['description'] = (isset($template['description'])) ? $template['description'] : '';
+            $temp['image'] = $image;
+            $temp['html'] = $template['html'];
 
-			// add the template
-			$return[] = $temp;
-		}
+            // add the template
+            $return[] = $temp;
+        }
 
-		return $return;
-	}
+        return $return;
+    }
 }
