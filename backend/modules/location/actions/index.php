@@ -101,7 +101,8 @@ class BackendLocationIndex extends BackendBaseActionIndex
 			'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
 			'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
 			'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-			'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+			'TERRAIN' => BL::lbl('Terrain', $this->getModule()),
+			'STREET_VIEW' => BL::lbl('StreetView', $this->getModule())
 		);
 
 		$zoomLevels = array_combine(
