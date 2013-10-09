@@ -8,13 +8,13 @@ CREATE TABLE IF NOT EXISTS `profiles` (
   `registered_on` datetime NOT NULL,
   `last_login` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `profiles_groups` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `profiles_groups_rights` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `profiles_groups_rights` (
   `expires_on` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `profile_id__group__id__expires_on` (`profile_id`,`group_id`,`expires_on`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `profiles_sessions` (
   `session_id` varchar(255) NOT NULL,
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `profiles_sessions` (
   `date` datetime NOT NULL,
   PRIMARY KEY (`session_id`,`profile_id`),
   KEY `fk_profiles_sessions_profiles1` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS `profiles_settings` (
   `profile_id` int(11) NOT NULL,
@@ -41,4 +41,4 @@ CREATE TABLE IF NOT EXISTS `profiles_settings` (
   `value` text NOT NULL,
   PRIMARY KEY (`name`,`profile_id`),
   KEY `fk_profiles_settings_profiles1` (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

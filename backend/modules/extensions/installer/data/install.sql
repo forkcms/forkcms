@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `modules_extras` (
  `hidden` enum('N','Y') NOT NULL default 'N' COMMENT 'Should the extra be shown in the backend?',
  `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible extras' AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible extras' AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `themes_templates` (
@@ -19,4 +19,4 @@ CREATE TABLE IF NOT EXISTS `themes_templates` (
  `active` enum('N','Y') NOT NULL default 'Y' COMMENT 'Is this template active (as in: will it be used).',
  `data` text COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=1 ;

@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `analytics_keywords` (
  `entrances` int(11) NOT NULL,
  `date` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
  `end_date` datetime NOT NULL,
  `updated_on` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `analytics_pages` (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `analytics_pages` (
  `page` varchar(255) NOT NULL,
  `date_viewed` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `analytics_referrers` (
@@ -34,4 +34,4 @@ CREATE TABLE IF NOT EXISTS `analytics_referrers` (
  `entrances` int(11) NOT NULL,
  `date` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

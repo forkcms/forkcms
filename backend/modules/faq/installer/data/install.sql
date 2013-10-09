@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `faq_categories` (
  `title` varchar(255) NOT NULL,
  `sequence` int(11) NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 
 CREATE TABLE IF NOT EXISTS `faq_questions` (
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `faq_questions` (
   `sequence` int(11) NOT NULL,
   PRIMARY KEY  (`id`),
   KEY `fk_faq_questions_faq_categories` (`hidden`,`language`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
+)  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ;
 
 CREATE TABLE `faq_feedback` (
   `id` int(11) unsigned NOT NULL auto_increment,
@@ -35,4 +35,4 @@ CREATE TABLE `faq_feedback` (
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

@@ -2,7 +2,7 @@ CREATE TABLE IF NOT EXISTS `users_groups` (
  `group_id` int(11) NOT NULL,
  `user_id` int(11) NOT NULL,
  PRIMARY KEY (`group_id`,`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `users` (
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `users` (
  `deleted` enum('N','Y') NOT NULL default 'N' COMMENT 'is the user deleted?',
  `is_god` enum('N','Y') NOT NULL default 'N',
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users' AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users' AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `users_sessions` (
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `users_sessions` (
  `date` datetime NOT NULL,
  PRIMARY KEY (`id`),
  KEY `idx_session_id_secret_key` (`session_id`(100),`secret_key`(100))
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `users_settings` (
@@ -32,4 +32,4 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
  `name` varchar(255) NOT NULL COMMENT 'name of the setting',
  `value` text NOT NULL COMMENT 'serialized value',
  PRIMARY KEY (`user_id`,`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
