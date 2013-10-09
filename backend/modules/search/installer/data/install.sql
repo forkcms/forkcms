@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
  `active` enum('N','Y') NOT NULL default 'N',
  PRIMARY KEY (`module`,`other_id`,`field`,`language`),
  FULLTEXT KEY `value` (`value`)
-) DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
+) ENGINE=Aria DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
 
 
 CREATE TABLE IF NOT EXISTS `search_modules` (
