@@ -38,6 +38,13 @@ jsBackend.location =
 		}
 	},
 
+	/**
+	 * Add marker to the map
+	 *
+	 * @param object map
+	 * @param object bounds
+	 * @param object object
+	 */
 	addMarker: function(map, bounds, object)
 	{
 		position = new google.maps.LatLng(object.lat, object.lng);
@@ -73,6 +80,9 @@ jsBackend.location =
 		});
 	},
 
+	/**
+	 * Get map data
+	 */
 	getMapData: function()
 	{
 		// get the live data
@@ -91,8 +101,6 @@ jsBackend.location =
 		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
 		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
 	},
-	
-	// this will refresh the page and display a certain message
 	refreshPage: function(message)
 	{
 		var currLocation = window.location;
@@ -102,7 +110,10 @@ jsBackend.location =
 		// cleanly redirect so we can display a message
 		window.location = reloadLocation;
 	},
-	
+
+	/**
+	 * Save live data will save the setting in database
+	 */
 	saveLiveData: function()
 	{
 		$.ajax(
@@ -138,29 +149,39 @@ jsBackend.location =
 			}
 		});
 	},
-	
-	// this will set the terrain type of the map to the dropdown
+
+	/**
+	 * Set dropdown terrain will set the terrain type of the map to the dropdown
+	 */
 	setDropdownTerrain: function()
 	{
 		jsBackend.location.getMapData();
 		$('#mapType').val(jsBackend.location.type.toUpperCase());
 	},
 
-	// this will set the zoom level of the map to the dropdown
+	/**
+	 * Set dropdown zoom will set the zoom level of the map to the dropdown
+	 */
 	setDropdownZoom: function()
 	{
 		jsBackend.location.getMapData();
 		$('#zoomLevel').val(jsBackend.location.zoomLevel);
 	},
 
-	// this will set the terrain type of the map to the dropdown
+	/**
+	 * Set map terrain will set the terrain type of the map to the dropdown
+	 */
 	setMapTerrain: function()
 	{
 		jsBackend.location.type = $('#mapType').val();
 		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
 	},
 
-	// this will set the zoom level of the map to the dropdown
+	/**
+	 * Set map zoom will set the zoom level of the map to the dropdown
+	 *
+	 * @param int zoomlevel
+	 */
 	setMapZoom: function(zoomlevel)
 	{
 		jsBackend.location.zoomLevel = zoomlevel;
@@ -170,6 +191,9 @@ jsBackend.location =
 		else jsBackend.location.map.setZoom(parseInt(zoomlevel));
 	},
 
+	/**
+	 * Show map
+	 */
 	showMap: function()
 	{
 		// create boundaries
@@ -195,8 +219,12 @@ jsBackend.location =
 
 		jsBackend.location.setMapZoom(mapOptions.zoom);
 	},
-	
-	// this will re-set the position of a marker
+
+	/**
+	 * Update marker will re-set the position of a marker
+	 *
+	 * @param object marker
+	 */
 	updateMarker: function(marker)
 	{
 		jsBackend.location.getMapData();
