@@ -26,17 +26,17 @@
 		</div>
 	</div>
 	<div id="main" class="container">
-		<div class="row-fluid">
-			<div class="span12">
+		<div class="row">
+			<div class="col-xs-12">
 				{* Main position *}
-				<div class="row-fluid">
+				<div class="row">
 					<div id="errorIcon">
 						<img src="{$THEME_URL}/apple-touch-icon-precomposed.png" class="img-circle">
 					</div>
 				</div>
 				{iteration:positionMain}
-					<div class="row-fluid">
-						<div class="span12">
+					<div class="row">
+						<div class="col-xs-12">
 							{option:positionMain.blockIsHTML}
 								{$positionMain.blockContent}
 							{/option:positionMain.blockIsHTML}

@@ -46,8 +46,8 @@
 	{/iteration:jsFiles}
 
 	{* Theme specific Javascript *}
-	<script src="{$THEME_URL}/core/js/bootstrap.js?m={$LAST_MODIFIED_TIME}"></script>
-	<script src="{$THEME_URL}/core/js/theme.js?m={$LAST_MODIFIED_TIME}"></script>
+	<script src="{$THEME_URL}/core/js/lib.js?m={$LAST_MODIFIED_TIME}"></script>
+	<script src="{$THEME_URL}/core/js/theme_new.js?m={$LAST_MODIFIED_TIME}"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 
 	{* Site wide HTML *}

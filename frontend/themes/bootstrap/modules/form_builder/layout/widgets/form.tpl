@@ -1,7 +1,7 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
-<section class="row-fluid" id="formbuilder{$formName|camelcase}">
-	<div class="span12">
+<section class="row" id="formbuilder{$formName|camelcase}">
+	<div class="col-xs-12">
 		{option:successMessage}<div class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
 		{option:formBuilderError}<div class="alert alert-error" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
 
@@ -15,8 +15,8 @@
 					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
-						<div class="row-fluid" id="field{$fields.name|camelcase}">
-							<div class="span12">
+						<div class="row" id="field{$fields.name|camelcase}">
+							<div class="col-xs-12">
 								{* Headings and paragraphs *}
 								{option:fields.plaintext}
 									<div class="content">
@@ -26,24 +26,22 @@
 
 								{* Input fields, textarea's and dropdowns *}
 								{option:fields.simple}
-									<div class="control-group{option:fields.error} error{/option:fields.error}">
+									<div class="form-group{option:fields.error} has-error{/option:fields.error}">
 										<label class="control-label" for="{$fields.name}">
 											{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 										</label>
-										<div class="controls">
-											{$fields.html}
-											{option:fields.error}<span class="formError help-inline">{$fields.error}</span>{/option:fields.error}
-										</div>
+										{$fields.html}
+										{option:fields.error}<span class="formError help-inline">{$fields.error}</span>{/option:fields.error}
 									</div>
 								{/option:fields.simple}
 
 								{* Radiobuttons and checkboxes *}
 								{option:fields.multiple}
-									<div class="control-group{option:fields.error} error{/option:fields.error}">
+									<div class="form-group{option:fields.error} has-error{/option:fields.error}">
 										<p class="control-label">
 											{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 										</p>
-										<div class="controls">
+										<div class="checkbox">
 											{iteration:fields.html}
 												<label class="checkbox" for="{$fields.html.id}">
 													{$fields.html.field} {$fields.html.label}
@@ -56,8 +54,8 @@
 							</div>
 						</div>
 					{/iteration:fields}
-					<div class="row-fluid">
-						<div class="span12">
+					<div class="row">
+						<div class="col-xs-12">
 							<div class="form-actions">
 								<input type="submit" value="{$submitValue}" name="submit" class="inputSubmit btn btn-primary" />
 							</div>

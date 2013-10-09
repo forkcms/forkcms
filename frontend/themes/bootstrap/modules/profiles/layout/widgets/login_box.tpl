@@ -19,26 +19,26 @@
 			<div class="bd content">
 				{form:login}
 					<fieldset class="form-horizontal">
-						<div class="control-group{option:txtEmailError} error{/option:txtEmailError}">
-							<label class="control-label" for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							<div class="controls">
+						<div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
+							<label class="control-label col-sm-2" for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<div class="col-sm-6">
 								{$txtEmail}{$txtEmailError}
 							</div>
 						</div>
-						<div class="control-group{option:txtPasswordError} error{/option:txtPasswordError}">
-							<label class="control-label" for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							<div class="controls">
+						<div class="form-group{option:txtPasswordError} has-error{/option:txtPasswordError}">
+							<label class="control-label col-sm-2" for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<div class="col-sm-6">
 								{$txtPassword}{$txtPasswordError}
 							</div>
 						</div>
-						<div class="control-group">
-							<div class="controls">
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-6">
 								<label for="remember">{$chkRemember} {$lblRememberMe|ucfirst}</label>
 								{$chkRememberError}
 							</div>
 						</div>
-						<div class="control-group">
-							<div class="controls">
+						<div class="form-group">
+							<div class="col-sm-offset-2 col-sm-6">
 								<input class="btn" type="submit" value="{$lblLogin|ucfirst}" />
 								<small><a href="{$var|geturlforblock:'profiles':'forgot_password'}" title="{$msgForgotPassword}">{$msgForgotPassword}</a></small>
 							</div>

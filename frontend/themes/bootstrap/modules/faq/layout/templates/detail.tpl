@@ -15,7 +15,7 @@
 					{option:item.tags}
 						<span class="hideText">{$lblWith} {$lblThe} </span>{$lblTags}:
 						{iteration:item.tags}
-							<a class="tag" href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>
+							<a class="label label-default" href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>
 						{/iteration:item.tags}
 					{/option:item.tags}
             {/option:settings.allow_multiple_categories}
@@ -44,16 +44,16 @@
 				{option:success}<div class="alert alert-success" role="alert">{$msgFeedbackSuccess}</div>{/option:success}
 				{option:spam}<div class="alert alert-error" role="alert">{$errFeedbackSpam}</div>{/option:spam}
 				{form:feedback}
-					<div class="row-fluid">
-						<div class="span12 well">
+					<div class="row">
+						<div class="col-xs-12 well">
 							{$hidQuestionId}
 							<div class="options form-inline">
-								<div class="span3">
+								<div class="col-md-3">
 									{$msgFeedback|ucfirst}
 								</div>
-								<div class="span9">
+								<div class="col-md-9">
 									{iteration:useful}
-										<div class="span2">
+										<div class="col-md-2">
 											<label for="{$useful.id}">{$useful.rbtUseful} {$useful.label|ucfirst}</label>
 										</div>
 									{/iteration:useful}
@@ -61,13 +61,11 @@
 							</div>
 
 							<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
-								<div class="control-group{option:txtMessageError} error{/option:txtMessageError}">
+								<div class="form-group{option:txtMessageError} has-error{/option:txtMessageError}">
 									<label class="control-label" for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 										{$txtMessage} {$txtMessageError}
 								</div>
-								<div class="controls pull-right">
-									<input class="btn" type="submit" name="comment" value="{$lblSend|ucfirst}" />
-								</div>
+								<input class="btn btn-default" type="submit" name="comment" value="{$lblSend|ucfirst}" />
 							</div>
 						</div>
 					</div>

@@ -5,15 +5,12 @@
 
 	{option:!subscribeHideForm}
 		{form:subscribe}
-			<div class="control-group{option:txtEmailError} error{/option:txtEmailError}">
-				<label class="control-label" for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<div class="controls">
-					{$txtEmail} {$txtEmailError}
-				</div>
-			</div>
-
-			<div class="form-actions">
-				<input class="btn-primary btn" type="submit" name="send" value="{$lblSend|ucfirst}" />
+		  <label class="control-label" for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			<div class="input-group{option:txtEmailError} error{/option:txtEmailError}">
+				{$txtEmail} {$txtEmailError}
+				<div class="input-group-btn">
+  				<input class="btn-primary btn" type="submit" name="send" value="{$lblSend|ucfirst}" />
+  			</div>
 			</div>
 		{/form:subscribe}
 	{/option:!subscribeHideForm}

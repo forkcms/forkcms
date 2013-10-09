@@ -10,12 +10,12 @@
 		<meta itemprop="interactionCount" content="UserComments:{$commentsCount}">
 		<meta itemprop="author" content="{$item.user_id|usersetting:'nickname'}">
 		<header role="banner">
-		    <div class="row-fluid title">
-		    	<div class="span10">
+		    <div class="row title">
+		    	<div class="col-md-10">
 		    		<h1 itemprop="name">{$item.title}</h1>
 		    	</div>
 				{option:item.allow_comments}
-					<div class="span2 commentCount">
+					<div class="col-md-2 commentCount">
 						{option:comments}
 							<i class="icon-comment"></i>
 							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
@@ -24,19 +24,19 @@
 					</div>
 				{/option:item.allow_comments}
 		    </div>
-		    <div class="row-fluid muted meta" role="contentinfo">
-		    	<div class="span6">
+		    <div class="row muted meta" role="contentinfo">
+		    	<div class="col-md-6">
 		    		<span class="hideText">{$msgWrittenBy|ucfirst|sprintf:''} </span>{$item.user_id|usersetting:'nickname'}
 		    		<span class="hideText">{$lblOn}</span> <time itemprop="datePublished" datetime="{$item.publish_on|date:'Y-m-d\TH:i:s'}">{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</time>
 		    	</div>
 
-		    	<div class="span6 metaExtra" role="contentinfo">
+		    	<div class="col-md-6 metaExtra" role="contentinfo">
 		    		<span class="hideText">{$lblInThe} </span>{$lblCategory|ucfirst}: <a itemprop="articleSection" href="{$item.category_full_url}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 		    		{option:item.tags}
 		    		    <span class="hideText">{$lblWithThe}</span> {$lblTags|ucfirst}:
 		    		    <span itemprop="keywords">
 		    		    	{iteration:item.tags}
-		    		    		<a class="tag" href="{$item.tags.full_url}" rel="tag">{$item.tags.name}</a>{option:!item.tags.last}<span class="hideText">,</span> {/option:!item.tags.last}
+		    		    		<a class="label" href="{$item.tags.full_url}" rel="tag">{$item.tags.name}</a>{option:!item.tags.last}<span class="hideText">,</span> {/option:!item.tags.last}
 		    		    	{/iteration:item.tags}
 		    		    </span>
 		    		{/option:item.tags}
@@ -45,12 +45,12 @@
 		</header>
 
 		<div class="articleBody" itemprop="articleBody">
-		    {option:item.image}<img class="img-polaroid span4 pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
+		    {option:item.image}<img class="img-polaroid col-md-4 img-responsive pull-right" src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 		    {$item.text}
 		</div>
 		<footer role="contentinfo">
-		    <div class="row-fluid social">
-		    	<div class="span12 well">
+		    <div class="row social">
+		    	<div class="col-xs-12 well">
 		    		<div class="shareButton">
 		    			{$lblShare|ucfirst}:
 		    		</div>
@@ -89,14 +89,14 @@
 		{option:comments}
 			{iteration:comments}
 			    {* Do not alter the id! It is used as an anchor *}
-			    <div id="comment-{$comments.id}" class="comment row-fluid {option:comments.last}lastChild{/option:comments.last}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
-			    	<div class="span1 avatar">
+			    <div id="comment-{$comments.id}" class="comment row {option:comments.last}lastChild{/option:comments.last}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+			    	<div class="col-sm-1 avatar">
 			    		<meta itemprop="discusses" content="{$item.title}" />
 			    		{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
 			    			<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar img-circle" data-gravatar-id="{$comments.gravatar_id}" />
 			    		{option:comments.website}</a>{/option:comments.website}
 			    	</div>
-			    	<div class="span7">
+			    	<div class="col-sm-7">
 			    		<div class="meta" itemscope itemtype="http://schema.org/Person">
 			    			{option:comments.website}<a href="{$comments.website}" itemprop="url">{/option:comments.website}
 			    				<span itemprop="creator name">{$comments.author}</span>{option:comments.website}</a>{/option:comments.website}
@@ -121,8 +121,8 @@
 			    {option:commentIsSpam}<div class="alert alert-error" role="alert">{$msgBlogCommentIsSpam}</div>{/option:commentIsSpam}
 			    {option:commentIsAdded}<div class="alert alert-success" role="alert">{$msgBlogCommentIsAdded}</div>{/option:commentIsAdded}
 			    {form:commentsForm}
-			    	<div class="row-fluid">
-			    		<div class="span7">
+			    	<div class="row">
+			    		<div class="col-sm-7">
 			    			<div class="control-group {option:txtMessageError}error{/option:txtMessageError}">
 			    				<label class="control-label" for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			    				<div class="controls">
@@ -130,7 +130,7 @@
 			    				</div>
 			    			</div>
 			    		</div>
-			    		<div class="span5 authorInfo">
+			    		<div class="col-sm-5 authorInfo">
 			    			<div class="control-group {option:txtAuthorError}error{/option:txtAuthorError}">
 			    				<label class="control-label" for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			    				<div class="controls">

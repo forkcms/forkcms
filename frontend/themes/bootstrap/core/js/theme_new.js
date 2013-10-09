@@ -103,7 +103,7 @@
       }
     });
 
-    DefaultTheme.onDomReady(['cookieBar', 'removeImageHeight']);
+    DefaultTheme.onDomReady(['cookieBar', 'removeImageHeight', 'initCarouselWithSwipe']);
 
     DefaultTheme.prototype.cookieBar = function() {
       if (utils.cookies.readCookie('cookie_bar_hide') === 'b%3A1%3B') {
@@ -153,6 +153,15 @@
     DefaultTheme.prototype.removeImageHeight = function() {
       return $('img').css({
         height: 'auto'
+      });
+    };
+
+    DefaultTheme.prototype.initCarouselWithSwipe = function() {
+      $('.carousel').on('swipeleft', function(e) {
+        return $(e.currentTarget).carousel('next');
+      });
+      return $('.carousel').on('swiperight', function(e) {
+        return $(e.currentTarget).carousel('prev');
       });
     };
 

@@ -5,14 +5,14 @@
 	<section id="forgotPasswordForm" class="profiles">
 		<div class="bd">
 			{form:forgotPassword}
-				<fieldset class="control-group {option:txtEmailError} error{/option:txtEmailError}">
-					<p class="form-inline">
-						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtEmail}
-						<input class="btn btn-primary" type="submit" value="{$lblSend|ucfirst}" />
-						{$txtEmailError}
-					</p>
-				</fieldset>
+			  <label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<div class="input-group {option:txtEmailError} has-error{/option:txtEmailError}">
+					{$txtEmail}
+					<span class="input-group-btn">
+  					<input class="btn btn-primary" type="submit" value="{$lblSend|ucfirst}" />
+					</span>
+				</div>
+				{$txtEmailError}
 			{/form:forgotPassword}
 		</div>
 	</section>

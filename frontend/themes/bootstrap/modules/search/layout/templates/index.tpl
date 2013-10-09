@@ -3,14 +3,16 @@
 	- {$searchResults}: contains an array with all items, each element contains data about the item
 	- {$searchTerm}: the term that has been searched for
 *}
-<section id="searchIndex" class="form-inline search" role="search">
+<section id="searchIndex" class="search" role="search">
 	{form:search}
-		<div class="input-append control-group well{option:txtQError} error{/option:txtQError}">
-			<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>&nbsp;</label>
+	  <label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>&nbsp;</label>
+		<div class="input-group well{option:txtQError} error{/option:txtQError}">
 			{$txtQ}
-			<input id="submit" class="btn btn-primary" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
-			{$txtQError}
+			<span class="input-group-btn">
+			  <input id="submit" class="btn btn-primary" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
+			</span>
 		</div>
+		{$txtQError}
 	{/form:search}
 </section>
 

@@ -19,12 +19,12 @@
 
 		{option:widgetLocationSettings.directions}
 			<aside id="locationSearch{$widgetLocationItem.id}" role="complementary">
-				<form method="get" action="#" class="form-horizontal">
-					<div class="control-group">
+				<form method="get" action="#">
+					<div class="form-group">
 						<label class="control-label" for="locationSearchAddress{$widgetLocationItem.id}">
 							{$lblStart|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>&nbsp;
 						</label>
-						<div class="input-append">
+						<div class="input-group">
 							{* @remark: do not remove the id *}
 							<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="form-control" />
 							{* @remark: do not remove the id *}
@@ -32,7 +32,9 @@
 								<span class="help-inline">{$errFieldIsRequired|ucfirst}</span>
 							</span>
 							{* @remark: do not remove the id *}
-							<input type="submit" id="locationSearchRequest{$widgetLocationItem.id}" name="locationSearchRequest" class="btn btn-primary" value="{$lblShowDirections|ucfirst}" />
+							<span class="input-group-btn">
+  							<input type="submit" id="locationSearchRequest{$widgetLocationItem.id}" name="locationSearchRequest" class="btn btn-primary" value="{$lblShowDirections|ucfirst}" />
+							</span>
 						</div>
 					</div>
 				</form>

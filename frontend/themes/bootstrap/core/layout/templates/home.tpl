@@ -3,49 +3,46 @@
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	{include:core/layout/templates/notifications.tpl}
 
-	<div class="navbar-wrapper">
-		<div class="navbar navbar-inverse">
-			<div class="navbar-inner">
-				<div class="container">
-					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</a>
-					<h1>
-						<a class="brand" itemprop="name" href="/">{$siteTitle}</a>
-					</h1>
-					<div class="nav-collapse collapse">
-						{$var|getnavigation:'page':0:1}
-						{iteration:positionTop}
-							{$positionTop.blockContent}
-						{/iteration:positionTop}
-						{include:core/layout/templates/languages.tpl}
-						{* @todo {include:core/layout/templates/languages.tpl} *}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <h1>
+        <a href="/" class="navbar-brand">{$siteTitle}</a>
+      </h1>
+    </div>
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      {$var|getnavigation:'page':0:1}
+      {iteration:positionTop}
+				{$positionTop.blockContent}
+			{/iteration:positionTop}
+			{include:core/layout/templates/languages.tpl}
+    </div>
+  </nav>
 
 	{option:positionSlideshow}
 		<div id="myCarousel" class="carousel slide">
 			<div class="carousel-inner">
 				{* Slideshow position *}
 				{iteration:positionSlideshow}
-					{$positionSlideshow.blockContent}
+				  <div class="item{option:positionSlideshow.first} active{/option:positionSlideshow.first}">
+  					{$positionSlideshow.blockContent}
+    			</div>
 				{/iteration:positionSlideshow}
 			</div>
 
-			<a class="left carousel-control" rel="previous" href="#myCarousel" data-slide="prev">&lsaquo;<span class="hideText"> {$lblPrevious}</span></a>
-			<a class="right carousel-control" rel="next" href="#myCarousel" data-slide="next"><span class="hideText">{$lblNext} </span>&rsaquo;</a>
+			<a class="left carousel-control" data-no-scroll rel="previous" href="#myCarousel" data-slide="prev"><span class="icon-prev"></span><span class="hideText"> {$lblPrevious}</span></a>
+			<a class="right carousel-control" data-no-scroll rel="next" href="#myCarousel" data-slide="next"><span class="hideText">{$lblNext} </span><span class="icon-next"></span></a>
 		</div>
 	{/option:positionSlideshow}
 
 	<div id="main" class="container">
 
 		{option:positionFeatures}
-			<div class="row">
+			<div class="row marketing">
 				{iteration:positionFeatures}
 					{option:positionFeatures.blockIsHTML}
 						{$positionFeatures.blockContent}

@@ -15,8 +15,8 @@
 		</ul>
 		<footer role="contentinfo">
 		    <p class="btn-group">
-		    	<a class="btn" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
-		    	<a class="btn" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
+		    	<a class="btn btn-default" href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
+		    	<a class="btn btn-default" href="{$widgetBlogRecentArticlesFullRssLink}">{$lblRSSFeed|ucfirst}</a>
 		    </p>
 		</footer>
 	</section>

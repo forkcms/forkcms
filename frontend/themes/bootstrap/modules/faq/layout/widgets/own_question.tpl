@@ -12,27 +12,19 @@
 		{option:ownQuestionsuccess}<div class="alert alert-success" role="alert">{$msgOwnQuestionSuccess}</div>{/option:ownQuestionsuccess}
 
 		{form:own_question}
-			<div class="control-group{option:txtNameError} error{/option:txtNameError}">
+			<div class="form-group{option:txtNameError} has-error{/option:txtNameError}">
 				<label class="control-label" for="name">{$lblYourName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<div class="controls">
-					{$txtName} {$txtNameError}
-				</div>
+				{$txtName} {$txtNameError}
 			</div>
-			<div class="control-group{option:txtEmailError} error{/option:txtEmailError}">
+			<div class="form-group{option:txtEmailError} has-error{/option:txtEmailError}">
 				<label class="control-label" for="email">{$lblYourEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<div class="controls">
-					{$txtEmail} {$txtEmailError}
-				</div>
+				{$txtEmail} {$txtEmailError}
 			</div>
-			<div class="bigInput control-group{option:txtMessageError} error{/option:txtMessageError}">
+			<div class="bigInput form-group{option:txtMessageError} has-error{/option:txtMessageError}">
 				<label class="control-label" for="message">{$lblYourQuestion|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<div class="controls">
-					{$txtMessage} {$txtMessageError}
-				</div>
+				{$txtMessage} {$txtMessageError}
 			</div>
-			<p>
-				<input class="btn" type="submit" name="send" value="{$lblSend|ucfirst}" />
-			</p>
+			<input class="btn btn-default" type="submit" name="send" value="{$lblSend|ucfirst}" />
 		{/form:own_question}
 	</section>
 {/option:widgetFaqOwnQuestion}

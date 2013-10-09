@@ -1,7 +1,9 @@
-<section id="searchFormWidget" class="navbar-form pull-right form-inline search" role="search">
+<section id="searchFormWidget" class="navbar-form pull-right navbar-left search" role="search">
 	{form:search}
 		<label for="qWidget" class="hide">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-		{$txtQWidget}
-		<input id="submit" class="btn" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
+		<div class="form-group">
+  		{$txtQWidget}
+		</div>
+		<input id="submit" class="btn btn-default" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
 	{/form:search}
 </section>

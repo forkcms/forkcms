@@ -1,7 +1,8 @@
-$LOAD_PATH << "/Users/mathias/Sites/dev/compass-twitter-bootstrap/lib"
+#$LOAD_PATH << "/Users/mathias/Sites/dev/compass-twitter-bootstrap/lib"
 
 # Require any additional compass plugins here.
-require 'compass_twitter_bootstrap'
+# uncomment next line when compass_twitter_bootstrap is updated to 3.0
+# require 'compass_twitter_bootstrap'
 require 'compass_sumo'
 
 # Set this to the root of your project when deployed:

@@ -38,6 +38,7 @@ class DefaultTheme extends Theme
   @onDomReady [
     'cookieBar'
     'removeImageHeight'
+    'initCarouselWithSwipe'
   ]
   
   cookieBar: ->
@@ -82,6 +83,12 @@ class DefaultTheme extends Theme
   
   removeImageHeight: ->
     $('img').css(height: 'auto')
+    
+  initCarouselWithSwipe: ->
+    $('.carousel').on 'swipeleft', (e)->
+      $(e.currentTarget).carousel('next')
+    $('.carousel').on 'swiperight', (e)->
+      $(e.currentTarget).carousel('prev')
 
 class SpecificTheme extends DefaultTheme
   @events

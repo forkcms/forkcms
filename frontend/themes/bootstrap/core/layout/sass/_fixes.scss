@@ -1,9 +1,19 @@
 .navbar {
+  margin-bottom: 0;
+
 	h1 {
 		/* Main title needs to be h1-tag. This fix is for text logo */
 		margin: 0;
 		line-height: 1;
 	}
+	
+	.navbar-brand {
+  	border: none;
+	}
+}
+
+.breadcrumb {
+  margin-top: 20px;
 }
 
 a {
@@ -26,6 +36,8 @@ a {
 	}
 }
 
+
+
 .nav {
 	a {
 		border: none;
@@ -44,7 +56,7 @@ h1, h2, h3, h4 {
 }
 
 .formError {
-	@extend .help-inline;
+	@extend .help-inline !optional;
 }
 
 abbr[title],
@@ -54,4 +66,8 @@ abbr[data-original-title] {
 
 #cookieBar {
   @include box-sizing(border-box);
+}
+
+.carousel-control {
+  border: none;
 }

@@ -2,8 +2,8 @@
 	@include squish-text;
 }
 
-.tag {
-	@extend .label;
+.label {
+	//@extend .label;
 	border-bottom: none;
 }
 
