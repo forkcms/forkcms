@@ -1,3 +1,12 @@
+3.6.5 (2013-10-09)
+--
+Bugfixes:
+
+* Form builder: Reply-To field flag was not saved
+* Tags: Auto completing has to take language into account
+* Pages: During page copy, the tags were not created in the target language.
+
+
 3.6.4 (2013-09-25)
 --
 Bugfixes:
