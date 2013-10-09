@@ -57,13 +57,13 @@ class BackendFaqModel
 			$db->delete('meta', 'id = ?', array($item['meta_id']));
 			$db->delete('faq_categories', 'id = ?', array((int) $id));
 			$db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
-			
+
 			// build extra
 			$extra = array('id' => $item['extra_id'],
 					'module' => 'faq',
 					'type' => 'widget',
 					'action' => 'category_list');
-			
+
 			// delete extra
 			$db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
@@ -468,7 +468,7 @@ class BackendFaqModel
 				'id' => $item['id'],
 				'extra_label' => 'Category: ' . $item['title'],
 				'language' => $item['language'],
-				'edit_url' => BackendModel::createURLForAction('edit', 'faq', $item['language']) . '&id=' . $item['id'])
+				'edit_url' => BackendModel::createURLForAction('edit_category', 'faq', $item['language']) . '&id=' . $item['id'])
 		);
 
 		$db->update(
@@ -515,7 +515,7 @@ class BackendFaqModel
 						'id' => $item['id'],
 						'extra_label' => 'Category: ' . $item['title'],
 						'language' => $item['language'],
-						'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+						'edit_url' => BackendModel::createURLForAction('edit_category') . '&id=' . $item['id'])
 				),
 				'hidden' => 'N');
 

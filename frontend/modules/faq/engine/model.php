@@ -124,6 +124,24 @@ class FrontendFaqModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * Get a category by id
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getCategoryById($id)
+	{
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
+			'SELECT i.*, m.url
+			 FROM faq_categories AS i
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 WHERE i.id = ? AND i.language = ?
+			 ORDER BY i.sequence',
+			array((int) $id, FRONTEND_LANGUAGE)
+		);
+	}
+
+	/**
 	 * Fetch the list of tags for a list of items
 	 *
 	 * @param array $ids
@@ -187,10 +205,10 @@ class FrontendFaqModel implements FrontendTagsInterface
 
 		return $items;
 	}
-	
+
 	/**
 	 * Get the all questions for selected category
-	 * 
+	 *
 	 * @param int $id
 	 * @return array
 	 */
