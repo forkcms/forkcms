@@ -465,7 +465,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	{
 		// when we use parseWidget in our template and give an 'id'
 		// we should actually get that data from database
-		if(!is_array($this->data) && $this->data != null)
+		if(!is_array($this->data) && $this->data != null && Spoon::exists('parseWidget'))
 		{
 			// unserialize data
 			$data = unserialize($this->data);	
