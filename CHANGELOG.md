@@ -1,3 +1,10 @@
+3.6.6 (xxxx-xx-xx)
+--
+Improvements:
+
+* Template: {$var|parsewidget:'module':'action':'id'} now listens to the id and gets the data from the database.
+
+
 3.6.5 (2013-10-09)
 --
 Bugfixes:

@@ -14,6 +14,7 @@
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class FrontendBlockExtra extends FrontendBaseObject
 {
@@ -462,6 +463,25 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	public function getData()
 	{
+		// when we use parseWidget in our template and give an 'id'
+		// we should actually get that data from database
+		if(!is_array($this->data) && $this->data != null)
+		{
+			// unserialize data
+			$data = unserialize($this->data);	
+
+			// we have don't have an id	
+			if(!isset($data['id'])) return $this->data;
+
+			// we should get the unserialized data we don't have yet
+			$this->data = (string) FrontendModel::getDB()->getVar(
+				'SELECT i.data
+				 FROM modules_extras AS i
+				 WHERE i.module = ? AND i.action = ? AND i.id = ?',
+				array($this->getModule(), $this->getAction(), $data['id'])
+			);
+		}
+
 		return $this->data;
 	}
 
