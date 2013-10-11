@@ -513,7 +513,7 @@ class BackendLocaleModel
 										$count = 0;
 
 										// replace
-										$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+										$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 										// validate
 										if($count == 1)
@@ -655,7 +655,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
@@ -703,7 +703,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
@@ -760,7 +760,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
