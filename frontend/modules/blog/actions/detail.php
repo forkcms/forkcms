@@ -201,8 +201,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		{
 			$this->header->addLink(
 				array(
-				     'rel' => 'prev',
-				     'href' => SITE_URL . $navigation['previous']['url'],
+					'rel' => 'prev',
+					'href' => SITE_URL . $navigation['previous']['url'],
 				)
 			);
 		}
@@ -210,8 +210,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		{
 			$this->header->addLink(
 				array(
-				     'rel' => 'next',
-				     'href' => SITE_URL . $navigation['next']['url'],
+					'rel' => 'next',
+					'href' => SITE_URL . $navigation['next']['url'],
 				)
 			);
 		}
