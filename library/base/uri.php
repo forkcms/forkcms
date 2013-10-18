@@ -77,8 +77,8 @@ class CommonUri
 		// convert "-." to "." when using a file extension
 		$value = preg_replace('/\-\./', '.', $value);
 
-		// trim - signs
-		return trim($value, '-');
+		// trim '.' and '-' signs
+		return trim($value, '.-');
 	}
 
 	/**
@@ -90,6 +90,17 @@ class CommonUri
 	 */
 	public static function getUrl($value, $charset = null)
 	{
-		return SpoonFilter::urlise($value, $charset);
+		// get clean filename
+		$value = self::getFilename($value, $charset);
+
+		// define reserved characters
+		$reservedCharacters = array(
+			'.', '_'
+		);
+
+		// remove reserved characters
+		$value = str_replace($reservedCharacters, '-', $value);
+
+		return $value;
 	}
 }
