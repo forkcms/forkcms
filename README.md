@@ -1,6 +1,7 @@
 # README
 
-This is a fork of https://github.com/forkcms/forkcms, modified to work with MariaDB, using the TokuDB (or XtraDB) & Aria engines
+This is a fork of https://github.com/forkcms/forkcms, modified to work with other Engines.
+Like MariaDB, using the TokuDB (or XtraDB) & Aria engines
 
 ## Installation
 
