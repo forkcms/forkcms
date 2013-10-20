@@ -1,5 +1,7 @@
 # README
 
+This is a fork of https://github.com/forkcms/forkcms, modified to work with MariaDB, using the TokuDB & Aria engines.
+
 ## Installation
 
 1. Upload all of the content into your document root
