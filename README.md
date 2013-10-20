@@ -1,9 +1,10 @@
 # README
 
-This is a fork of https://github.com/forkcms/forkcms, modified to work with MariaDB, using the TokuDB & Aria engines.
+This is a fork of https://github.com/forkcms/forkcms, modified to work with MariaDB, using the TokuDB (or XtraDB) & Aria engines
 
 ## Installation
 
+0. Make sure to set default-storage-engine in my.cnf (ex. default-storage-engine=TokuDB, also set tokudb_row_format is using TokuDB).
 1. Upload all of the content into your document root
 3. Browse to your website
 4. Follow the steps on-screen
