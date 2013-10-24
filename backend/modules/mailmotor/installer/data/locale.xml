@@ -2,6 +2,10 @@
 <locale>
   <backend>
     <mailmotor>
+      <item type="message" name="AccessTokenExpirationWarning">
+        <translation language="en"><![CDATA[You CampaignMonitor access token will expire soon (%1$s).]]></translation>
+        <translation language="nl"><![CDATA[Uw CampaignMonitor access token zal binnenkort vervallen (%1$s).]]></translation>
+      </item>
       <item type="message" name="AccountLinked">
         <translation language="en"><![CDATA[Your CampaignMonitor account is now linked to Fork.]]></translation>
         <translation language="nl"><![CDATA[Uw CampaignMonitor account is met succes gekoppeld aan Fork.]]></translation>
