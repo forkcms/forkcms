@@ -204,6 +204,11 @@ class BackendMailmotorCMHelper
 				BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
+				BackendModel::setModuleSetting(
+					'mailmotor',
+					'cm_expires_on',
+					time() + (int) $response['expires_in']
+				);
 
 				BackendModel::redirect(
 					BackendModel::createURLForAction('settings', 'mailmotor') . '#tabSettingsClient'
@@ -900,7 +905,7 @@ class BackendMailmotorCMHelper
 	{
 		$parameters = array(
 			'grant_type' => 'refresh_token',
-			'refresh_token' => BackendModel::getModuleSetting('mailmotor', 'cm_refresh_token') . 'x'
+			'refresh_token' => BackendModel::getModuleSetting('mailmotor', 'cm_refresh_token')
 		);
 
 		// create curl call
@@ -928,7 +933,7 @@ class BackendMailmotorCMHelper
 			// should we return an error?
 			if($returnError)
 			{
-				return $message;
+				return array('error' => $message);
 			}
 			else
 			{
@@ -944,6 +949,11 @@ class BackendMailmotorCMHelper
 			BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
 			BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
 			BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
+			BackendModel::setModuleSetting(
+				'mailmotor',
+				'cm_expires_on',
+				time() + (int) $response['expires_in']
+			);
 
 			return true;
 		}

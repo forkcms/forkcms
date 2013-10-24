@@ -827,6 +827,10 @@
         <translation language="hu"><![CDATA[nyelv sablonja]]></translation>
         <translation language="es"><![CDATA[idioma de la plantilla]]></translation>
       </item>
+      <item type="message" name="TokenRefreshed">
+        <translation language="en"><![CDATA[Your token was successfully refreshed.]]></translation>
+        <translation language="nl"><![CDATA[Uw token werd met success vernieuwd.]]></translation>
+      </item>
       <item type="message" name="UnlinkCMAccount">
         <translation language="en"><![CDATA[Unlink CampaignMonitor account]]></translation>
         <translation language="nl"><![CDATA[Ontkoppel CampaignMonitor account]]></translation>
@@ -1427,6 +1431,10 @@
       <item type="label" name="RedirectURI">
         <translation language="en"><![CDATA[redirect URI]]></translation>
         <translation language="nl"><![CDATA[redirect URI]]></translation>
+      </item>
+      <item type="label" name="RefreshToken">
+        <translation language="en"><![CDATA[request new access token]]></translation>
+        <translation language="nl"><![CDATA[vraag nieuwe access token aan]]></translation>
       </item>
       <item type="label" name="ReplyTo">
         <translation language="en"><![CDATA[reply-to address]]></translation>
@@ -2225,6 +2233,10 @@
         <translation language="hu"><![CDATA[Az aktív felhasználó (%1$s) fizetési adatai nincsenek megadva a CampaignMonitor-ban.]]></translation>
         <translation language="es"><![CDATA[Los detalles de pago del usuario actiano (%1$s) no han sido configurado aun en el CampaignMonitor backend.]]></translation>
         <translation language="lt"><![CDATA[Dar nėra sukurta mokėjimo informacija apie narį (%1$s) CampaignMonitor sistemoje.]]></translation>
+      </item>
+      <item type="error" name="RefreshTokenFailed">
+        <translation language="en"><![CDATA[Something went wrong while requesting a new token (%1$s)]]></translation>
+        <translation language="nl"><![CDATA[Er is iets fout gegegaan bij het aanvragen van een nieuwe token (%1$s)]]></translation>
       </item>
       <item type="error" name="TemplateDoesNotExist">
         <translation language="en"><![CDATA[This template does not exist]]></translation>

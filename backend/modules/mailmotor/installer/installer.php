@@ -139,6 +139,7 @@ class MailmotorInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'mailmotor', 'statistics_bounces');
 		$this->setActionRights(1, 'mailmotor', 'statistics_campaign');
 		$this->setActionRights(1, 'mailmotor', 'statistics_link');
+		$this->setActionRights(1, 'mailmotor', 'refresh_token');
 	}
 
 	/**
