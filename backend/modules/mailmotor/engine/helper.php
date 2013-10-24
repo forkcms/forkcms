@@ -201,7 +201,6 @@ class BackendMailmotorCMHelper
 			if(isset($response['access_token']) && isset($response['expires_in']) && isset($response['refresh_token']))
 			{
 				BackendModel::setModuleSetting('mailmotor', 'cm_access_token', (string) $response['access_token']);
-				BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
 				BackendModel::setModuleSetting(
@@ -946,7 +945,6 @@ class BackendMailmotorCMHelper
 		else
 		{
 			BackendModel::setModuleSetting('mailmotor', 'cm_access_token', (string) $response['access_token']);
-			BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
 			BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
 			BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
 			BackendModel::setModuleSetting(
