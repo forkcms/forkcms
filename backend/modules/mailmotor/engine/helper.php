@@ -201,7 +201,7 @@ class BackendMailmotorCMHelper
 			if(isset($response['access_token']) && isset($response['expires_in']) && isset($response['refresh_token']))
 			{
 				BackendModel::setModuleSetting('mailmotor', 'cm_access_token', (string) $response['access_token']);
-				BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (string) $response['expires_in']);
+				BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
 				BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
 
@@ -888,6 +888,65 @@ class BackendMailmotorCMHelper
 
 		// return the campaign CM ID
 		return $campaignID;
+	}
+
+	/**
+	 * Refresh the campaign monitor access token.
+	 *
+	 * @param bool[optional] $returnError Should we return an error or throw an exception if something goes wrong?
+	 * @return bool|string
+	 */
+	public static function refreshAccessToken($returnError = false)
+	{
+		$parameters = array(
+			'grant_type' => 'refresh_token',
+			'refresh_token' => BackendModel::getModuleSetting('mailmotor', 'cm_refresh_token') . 'x'
+		);
+
+		// create curl call
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, BackendMailmotorCMHelper::OAUTH_BASE_URL . '/token');
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/x-www-form-urlencoded'));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POST, true);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($parameters));
+
+		// get response from curl
+		$response = json_decode(curl_exec($ch), true);
+
+		// error?
+		if(isset($response['error']))
+		{
+			$message = $response['error'];
+
+			// add error description if available
+			if(isset($response['error_description']))
+			{
+				$message .= ': ' . $response['error_description'];
+			}
+
+			// should we return an error?
+			if($returnError)
+			{
+				return $message;
+			}
+			else
+			{
+				// throw exception
+				throw new BackendException($message);
+			}
+		}
+
+		// no error, save the new values
+		else
+		{
+			BackendModel::setModuleSetting('mailmotor', 'cm_access_token', (string) $response['access_token']);
+			BackendModel::setModuleSetting('mailmotor', 'cm_expires_in', (int) $response['expires_in']);
+			BackendModel::setModuleSetting('mailmotor', 'cm_refresh_token', (string) $response['refresh_token']);
+			BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
+
+			return true;
+		}
 	}
 
 	/**

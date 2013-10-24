@@ -50,4 +50,7 @@
 		<event application="frontend" name="after_subscribe"><![CDATA[Triggered when someone subscribes.]]></event>
 		<event application="frontend" name="after_unsubscribe"><![CDATA[Triggered when someone unsubscribes.]]></event>
 	</events>
+	<cronjobs>
+		<cronjob minute="37" hour="0" day-of-month="*" month="*" day-of-week="*" action="refresh_token"><![CDATA[Refreshes the CampaignMonitor access token.]]></cronjob>
+	</cronjobs>
 </module>
