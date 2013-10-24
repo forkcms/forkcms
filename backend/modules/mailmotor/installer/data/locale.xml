@@ -154,6 +154,10 @@
         <translation language="hu"><![CDATA[A(z) “%1$s” kliens összekapcsolva a Fork-kal.]]></translation>
         <translation language="es"><![CDATA[El cliente &ldquo;%1$s&rdquo; está vinculada ahora a Fork.]]></translation>
       </item>
+      <item type="message" name="CMAppSettings">
+        <translation language="en"><![CDATA[Use the following settings in your CampaignMonitor app]]></translation>
+        <translation language="nl"><![CDATA[Gebruik deze instellingen in je CampaignMonitor app]]></translation>
+      </item>
       <item type="message" name="CreateGroupByAddresses">
         <translation language="en"><![CDATA[Create a new group with the addresses below.]]></translation>
         <translation language="nl"><![CDATA[Maak een nieuwe doelgroep aan met onderstaande e-mailadressen]]></translation>
@@ -1119,6 +1123,10 @@
         <translation language="uk"><![CDATA[Власні поля]]></translation>
         <translation language="lt"><![CDATA[konfigūruojamas laukelis]]></translation>
       </item>
+      <item type="label" name="Domain">
+        <translation language="en"><![CDATA[domain]]></translation>
+        <translation language="nl"><![CDATA[domein]]></translation>
+      </item>
       <item type="label" name="EditCampaign">
         <translation language="en"><![CDATA[edit campaign]]></translation>
         <translation language="nl"><![CDATA[campagne bewerken]]></translation>
@@ -1415,6 +1423,10 @@
         <translation language="hu"><![CDATA[csoportok]]></translation>
         <translation language="es"><![CDATA[grupos]]></translation>
         <translation language="uk"><![CDATA[Групи]]></translation>
+      </item>
+      <item type="label" name="RedirectURI">
+        <translation language="en"><![CDATA[redirect URI]]></translation>
+        <translation language="nl"><![CDATA[redirect URI]]></translation>
       </item>
       <item type="label" name="ReplyTo">
         <translation language="en"><![CDATA[reply-to address]]></translation>

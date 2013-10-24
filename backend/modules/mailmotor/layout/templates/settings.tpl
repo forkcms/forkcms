@@ -104,6 +104,15 @@
 				<div class="heading">
 					<h3>CampaignMonitor - Account</h3>
 				</div>
+				<div class="options longHelpTxt">
+					<p>
+						{$msgCMAppSettings}:
+					</p>
+					<ul>
+						<li><strong>{$lblDomain|ucfirst}:</strong> {$SITE_URL}</li>
+						<li><strong>{$lblRedirectURI|ucfirst}:</strong> {$SITE_URL}{$redirectURI}</strong></li>
+					</ul>
+				</div>
 				<div class="options">
 					<p>
 						<label for="appClientId">{$lblClientID|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>

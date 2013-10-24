@@ -232,8 +232,17 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// parse god status
 		$this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
 
-		// add all forms to template
-		if(isset($this->frmAccount)) $this->frmAccount->parse($this->tpl);
+		if(isset($this->frmAccount))
+		{
+			$this->frmAccount->parse($this->tpl);
+
+			/**
+			 * Assign the redirect URI.
+			 * Not using BackendModel::createURLForAction because we don't want a token
+			 * to be added.
+			 */
+			$this->tpl->assign('redirectURI', '/private/' . BL::getWorkingLanguage() . '/mailmotor/settings');
+		}
 		$this->frmClient->parse($this->tpl);
 		$this->frmGeneral->parse($this->tpl);
 	}
