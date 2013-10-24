@@ -586,7 +586,19 @@ class BackendPagesModel
 			$tags = BackendTagsModel::getTags('pages', $id, 'string', $from);
 
 			// save tags
-			if($tags != '') BackendTagsModel::saveTags($page['id'], $tags, 'pages');
+			if($tags != '')
+			{
+				$saveWorkingLanguage = BL::getWorkingLanguage();
+
+				// If we don't set the working language to the target language,
+				// BackendTagsModel::getURL() will use the current working
+				// language, possibly causing unnecessary '-2' suffixes in
+				// tags.url
+				BL::setWorkingLanguage($to);
+
+				BackendTagsModel::saveTags($page['id'], $tags, 'pages', $to);
+				BL::setWorkingLanguage($saveWorkingLanguage);
+			}
 		}
 
 		// build cache

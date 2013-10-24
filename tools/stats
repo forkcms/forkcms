@@ -10,12 +10,6 @@
 mkdir -p reports
 
 # tell user
-echo "* Running PHP Code Sniffer (will take a while)"
-
-# run PHP Code Sniffer
-phpcs --standard=./codesniffer/Fork --ignore=../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --extensions=php --report=xml ../ > ./reports/phpcs.xml
-
-# tell user
 echo "* Running PHP Mess Detection (will take a while)"
 
 # run PHP Mess Detection

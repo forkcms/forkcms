@@ -97,11 +97,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function getData()
 	{
-		// fetch the mailmotor settings
-		$settings = BackendModel::getModuleSettings();
-
-		// store mailmotor settings
-		$this->settings = $settings['mailmotor'];
+		// define mailmotor settings
+		$this->settings = BackendModel::getModuleSettings('mailmotor');
 
 		// check if an account was linked already and/or client ID was set
 		$this->accountLinked = BackendMailmotorCMHelper::checkAccount();

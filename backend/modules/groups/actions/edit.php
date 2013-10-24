@@ -634,17 +634,17 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 								else
 								{
 									// assign module if not yet present
-								 	if(!isset($userSequences[$user['id']][$widget['module']])) $userSequences[$user['id']][$widget['module']] = array();
+									if(!isset($userSequences[$user['id']][$widget['module']])) $userSequences[$user['id']][$widget['module']] = array();
 
-								 	// add widget
-								 	$userSequences[$user['id']][$widget['module']] += array(
-								 		$widget['widget'] => array(
-								 			'column' => $instance->getColumn(),
-								 			'position' => (int) $instance->getPosition(),
-								 			'hidden' => false,
-								 			'present' => true
-								 		)
-								 	);
+									// add widget
+									$userSequences[$user['id']][$widget['module']] += array(
+										$widget['widget'] => array(
+											'column' => $instance->getColumn(),
+											'position' => (int) $instance->getPosition(),
+											'hidden' => false,
+											'present' => true
+										)
+									);
 								}
 							}
 						}

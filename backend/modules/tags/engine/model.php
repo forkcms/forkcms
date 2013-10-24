@@ -88,16 +88,21 @@ class BackendTagsModel
 	 * Get tags that start with the given string
 	 *
 	 * @param string $term The searchstring.
+	 * @param string[optional] $language The language to use, if not provided
+	 *                         use the working language.
 	 * @return array
 	 */
-	public static function getStartsWith($term)
+	public static function getStartsWith($term, $language = null)
 	{
+		$language = ($language != null)
+			? (string) $language
+			: BackendLanguage::getWorkingLanguage();
 		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.tag AS name, i.tag AS value
 			 FROM tags AS i
-			 WHERE i.tag LIKE ?
+			 WHERE i.language = ? AND i.tag LIKE ?
 			 ORDER BY i.tag ASC',
-			array((string) $term . '%')
+			array($language, (string) $term . '%')
 		);
 	}
 
@@ -107,7 +112,7 @@ class BackendTagsModel
 	 * @param string $module The module wherein will be searched.
 	 * @param int $otherId The id of the record.
 	 * @param string[optional] $type The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
-	 * @param string[optional] $language The language to use, of not provided the working language will be used.
+	 * @param string[optional] $language The language to use, if not provided the working language will be used.
 	 * @return mixed
 	 */
 	public static function getTags($module, $otherId, $type = 'string', $language = null)

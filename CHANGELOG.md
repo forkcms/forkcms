@@ -1,3 +1,49 @@
+3.6.5 (2013-10-09)
+--
+Bugfixes:
+
+* Form builder: Reply-To field flag was not saved
+* Tags: Auto completing has to take language into account
+* Pages: During page copy, the tags were not created in the target language.
+
+
+3.6.4 (2013-09-25)
+--
+Bugfixes:
+
+* Couldn't use terminate function not yet.
+
+
+3.6.3 (2013-09-25)
+--
+Improvements:
+
+* Simplified getting backend settings
+* Only show tagbox when users has rights
+* Terminal event triggered after response
+* Composer: Readme suggests using the optimise option now
+
+Bugfixes:
+
+* Google Tracking: Don't ignore target on outbound links
+* Mailmotor: Export of selected addresses fixed
+
+
+3.6.2 (2013-09-11)
+--
+Improvements:
+
+* Locale: Added Greek as supported language
+* Locale: Several language updates
+* Analytics: Better event tracking
+* FAQ: Category questions widget added
+* Mailmotor: Subscribe widget uses form token
+
+Bugfixes:
+
+* Location: Creating a new location gave an exception
+
+
 3.6.1 (2013-08-20)
 --
 Improvements:
@@ -18,6 +64,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 3.6.0 (2013-06-18)
 --

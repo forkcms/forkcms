@@ -12,11 +12,15 @@
         <translation language="hu"><![CDATA[A címet nem lehet átalakítani koordinátákká.]]></translation>
         <translation language="fr"><![CDATA[L'adresse n'a pas pu être convertie en coordonnées.]]></translation>
         <translation language="es"><![CDATA[La dirección no pudo ser convertida en coordenadas.]]></translation>
+        <translation language="el"><![CDATA[Δεν έγινε δυνατό η διεύθυνση να μετατραπεί σε συντεταγμένες.]]></translation>
       </item>
       <item type="label" name="AddToMap">
         <translation language="nl"><![CDATA[aan kaart toevoegen]]></translation>
         <translation language="en"><![CDATA[add to map]]></translation>
         <translation language="ru"><![CDATA[добавить на карту]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη στο χάρτη]]></translation>
+        <translation language="zh"><![CDATA[添加到地图]]></translation>
+        <translation language="de"><![CDATA[der Karte hinzufügen]]></translation>
       </item>
       <item type="label" name="Auto">
         <translation language="nl"><![CDATA[automatisch]]></translation>
@@ -30,6 +34,7 @@
         <translation language="es"><![CDATA[automático]]></translation>
         <translation language="uk"><![CDATA[Автоматично]]></translation>
         <translation language="lt"><![CDATA[automatinis]]></translation>
+        <translation language="el"><![CDATA[Αυτόματα]]></translation>
       </item>
       <item type="label" name="Hybrid">
         <translation language="nl"><![CDATA[hybride]]></translation>
@@ -43,6 +48,7 @@
         <translation language="es"><![CDATA[híbrido]]></translation>
         <translation language="uk"><![CDATA[Гібрид]]></translation>
         <translation language="lt"><![CDATA[hibridas]]></translation>
+        <translation language="el"><![CDATA[Υβριδικός]]></translation>
       </item>
       <item type="label" name="Map">
         <translation language="nl"><![CDATA[kaart]]></translation>
@@ -55,6 +61,7 @@
         <translation language="hu"><![CDATA[térkép]]></translation>
         <translation language="es"><![CDATA[mapa]]></translation>
         <translation language="uk"><![CDATA[Мапа]]></translation>
+        <translation language="el"><![CDATA[Χάρτης]]></translation>
       </item>
       <item type="label" name="MapType">
         <translation language="nl"><![CDATA[kaarttype]]></translation>
@@ -67,6 +74,7 @@
         <translation language="hu"><![CDATA[térkép típusa]]></translation>
         <translation language="es"><![CDATA[tipo de mapa]]></translation>
         <translation language="uk"><![CDATA[Тип]]></translation>
+        <translation language="el"><![CDATA[Τύπος χάρτη]]></translation>
       </item>
       <item type="label" name="Roadmap">
         <translation language="nl"><![CDATA[wegenkaart]]></translation>
@@ -79,6 +87,7 @@
         <translation language="hu"><![CDATA[road map]]></translation>
         <translation language="es"><![CDATA[mapa de calles]]></translation>
         <translation language="uk"><![CDATA[Мапа шляхів]]></translation>
+        <translation language="el"><![CDATA[Οδικός χάρτης]]></translation>
       </item>
       <item type="label" name="Satellite">
         <translation language="nl"><![CDATA[satelliet]]></translation>
@@ -91,6 +100,7 @@
         <translation language="hu"><![CDATA[satellite]]></translation>
         <translation language="es"><![CDATA[satélite]]></translation>
         <translation language="uk"><![CDATA[Супутник]]></translation>
+        <translation language="el"><![CDATA[Δορυφορικός]]></translation>
       </item>
       <item type="label" name="Terrain">
         <translation language="nl"><![CDATA[terrein]]></translation>
@@ -103,11 +113,15 @@
         <translation language="hu"><![CDATA[terrain]]></translation>
         <translation language="es"><![CDATA[terreno]]></translation>
         <translation language="uk"><![CDATA[Місцевість]]></translation>
+        <translation language="el"><![CDATA[Έδαφος]]></translation>
       </item>
       <item type="label" name="UpdateMap">
         <translation language="nl"><![CDATA[kaart aanpassen]]></translation>
         <translation language="en"><![CDATA[update map]]></translation>
         <translation language="ru"><![CDATA[обновить карту]]></translation>
+        <translation language="el"><![CDATA[Ενημέρωση χάρτη]]></translation>
+        <translation language="zh"><![CDATA[更新地图]]></translation>
+        <translation language="de"><![CDATA[Karte updaten]]></translation>
       </item>
       <item type="label" name="ZoomLevel">
         <translation language="nl"><![CDATA[zoom niveau]]></translation>
@@ -120,41 +134,60 @@
         <translation language="hu"><![CDATA[nagyítási szint]]></translation>
         <translation language="es"><![CDATA[nivel de zoom]]></translation>
         <translation language="uk"><![CDATA[Ступінь наближення]]></translation>
+        <translation language="el"><![CDATA[Επίπεδο ζουμ]]></translation>
       </item>
       <item type="message" name="HeightHelp">
         <translation language="nl"><![CDATA[minimum %1$spx]]></translation>
         <translation language="en"><![CDATA[Minimum %1$spx]]></translation>
         <translation language="ru"><![CDATA[Минимум %1$spx]]></translation>
+        <translation language="el"><![CDATA[Κατ' ελάχιστο %1$spx]]></translation>
+        <translation language="zh"><![CDATA[最小 %1$spx]]></translation>
+        <translation language="de"><![CDATA[Mindestens %1$spx]]></translation>
       </item>
       <item type="message" name="MapSaved">
         <translation language="nl"><![CDATA[De map is opgeslagen.]]></translation>
         <translation language="en"><![CDATA[The map is saved.]]></translation>
         <translation language="ru"><![CDATA[Карта сохранена.]]></translation>
-      </item>
-      <item type="message" name="ShowMapUrl">
-        <translation language="nl"><![CDATA[Toon de link naar Google Maps]]></translation>
-        <translation language="en"><![CDATA[Show the link to Google Maps]]></translation>
-        <translation language="ru"><![CDATA[Показать ссылку в Google Maps]]></translation>
+        <translation language="el"><![CDATA[Ο χάρτης αποθηκεύτηκε.]]></translation>
+        <translation language="zh"><![CDATA[地图已保存]]></translation>
+        <translation language="de"><![CDATA[Die Karte wurde gespeichert.]]></translation>
       </item>
       <item type="message" name="ShowDirections">
         <translation language="nl"><![CDATA[Toon de routebeschrijving]]></translation>
         <translation language="en"><![CDATA[Show directions]]></translation>
         <translation language="ru"><![CDATA[Показать направления]]></translation>
+        <translation language="el"><![CDATA[Εμφάνιση κατευθύνσεων]]></translation>
+        <translation language="zh"><![CDATA[显示方向]]></translation>
+        <translation language="de"><![CDATA[Routenplanung anzeigen]]></translation>
+      </item>
+      <item type="message" name="ShowMapUrl">
+        <translation language="nl"><![CDATA[Toon de link naar Google Maps]]></translation>
+        <translation language="en"><![CDATA[Show the link to Google Maps]]></translation>
+        <translation language="ru"><![CDATA[Показать ссылку в Google Maps]]></translation>
+        <translation language="el"><![CDATA[Εμφάνιση συνδέσμου  προς το Google Maps]]></translation>
+        <translation language="zh"><![CDATA[显示谷歌地图链接]]></translation>
+        <translation language="de"><![CDATA[Link zu Google Maps anzeigen]]></translation>
       </item>
       <item type="message" name="ShowMarkerOverview">
         <translation language="nl"><![CDATA[Toon de plaatsaanduiding op de grote kaart]]></translation>
         <translation language="en"><![CDATA[Show the marker on the large map]]></translation>
         <translation language="ru"><![CDATA[Показать маркер на большой карте]]></translation>
+        <translation language="el"><![CDATA[Εμφάνισε το σημάδι στον μεγάλο χάρτη]]></translation>
+        <translation language="zh"><![CDATA[在大地图上显示标记]]></translation>
+        <translation language="de"><![CDATA[Marker auf großer Karte anzeigen]]></translation>
       </item>
       <item type="message" name="WidthHelp">
         <translation language="nl"><![CDATA[minimum %1$spx en maximum %2$spx]]></translation>
         <translation language="en"><![CDATA[Minimum %1$spx and maximum %2$spx]]></translation>
         <translation language="ru"><![CDATA[Минимум %1$spx и максимум %2$spx]]></translation>
+        <translation language="el"><![CDATA[Ελάχιστο %1$spx και μέγιστο %2$spx]]></translation>
+        <translation language="zh"><![CDATA[最小 %1$spx，最大 %1$spx]]></translation>
+        <translation language="de"><![CDATA[Mindestens %1$spx und maximal %2$spx]]></translation>
       </item>
     </location>
   </backend>
   <frontend>
-  	<core>
+    <core>
       <item type="label" name="ViewLargeMap">
         <translation language="nl"><![CDATA[Grote kaart weergeven]]></translation>
         <translation language="en"><![CDATA[Display large map]]></translation>
