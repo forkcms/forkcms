@@ -33,10 +33,12 @@ class FrontendRSS extends SpoonFeedRSS
 		// call the parent
 		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title))), $description, $items);
 
+		$siteTitle = SpoonFilter::htmlspecialcharsDecode(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE));
+
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
-		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . SpoonFilter::htmlspecialcharsDecode(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE)));
-		$this->setGenerator(SITE_RSS_GENERATOR);
+		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . $siteTitle);
+		$this->setGenerator($siteTitle);
 		$this->setImage(SITE_URL . FRONTEND_CORE_URL . '/layout/images/rss_image.png', $title, $link);
 
 		// theme was set
@@ -46,7 +48,7 @@ class FrontendRSS extends SpoonFeedRSS
 			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 			// theme rss image exists
-			if(SpoonFile::exists(PATH_WWW . '/frontend/themes/' . $theme . '/core/images/rss_image.png'))
+			if(is_file(PATH_WWW . '/frontend/themes/' . $theme . '/core/images/rss_image.png'))
 			{
 				// set rss image
 				$this->setImage(SITE_URL . '/frontend/themes/' . $theme . '/core/images/rss_image.png', $title, $link);
@@ -167,6 +169,8 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 		// add fake-emailaddress
 		if(!SpoonFilter::isEmail($author)) $author = CommonUri::getUrl($author) . '@example.com (' . $author . ')';
+		// add fake email address
+		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
 
 		// set author
 		parent::setAuthor($author);
