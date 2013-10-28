@@ -5,6 +5,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 {
@@ -151,11 +152,14 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// empty default element
 					$ddm->setDefaultElement('');
 
+					// add required attribute
+					if($item['required']) $ddm->setAttribute('required', null);
+
 					// get content
 					$item['html'] = $ddm->parse();
 				}
 
-				// radiobutton
+				// radio button
 				elseif($field['type'] == 'radiobutton')
 				{
 					// reset
@@ -187,11 +191,15 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$item['html'] = $chk->parse();
 				}
 
-				// textbox
+				// text box
 				elseif($field['type'] == 'textbox')
 				{
 					// create element
 					$txt = $this->frm->addText($item['name'], $defaultValues);
+
+					// add required attribute
+					if($item['required']) $txt->setAttribute('required', null);
+					if(isset($field['validations']['email'])) $txt->setAttribute('type', 'email');
 
 					// get content
 					$item['html'] = $txt->parse();
@@ -203,6 +211,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					// create element
 					$txt = $this->frm->addTextarea($item['name'], $defaultValues);
 					$txt->setAttribute('cols', 30);
+
+					// add required attribute
+					if($item['required']) $txt->setAttribute('required', null);
 
 					// get content
 					$item['html'] = $txt->parse();
@@ -243,8 +254,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	private function parse()
 	{
 		// form name
-		$this->tpl->assign('formName', 'form' . $this->item['id']);
-		$this->tpl->assign('formAction', $this->createAction());
+		$formName = 'form' . $this->item['id'];
+		$this->tpl->assign('formName', $formName);
+		$this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
 
 		// got fields
 		if(!empty($this->fieldsHTML))
@@ -287,6 +299,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 
 			// parse form
 			$this->frm->parse($this->tpl);
+			$this->tpl->assign('formToken', $this->frm->getToken());
 
 			// assign form error
 			$this->tpl->assign('error', ($this->frm->getErrors() != '' ? $this->frm->getErrors() : false));
@@ -322,7 +335,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 			// validate fields
 			foreach($this->item['fields'] as $field)
 			{
-				// fieldname
+				// field name
 				$fieldName = 'field' . $field['id'];
 
 				// skip
@@ -400,6 +413,14 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					FrontendFormBuilderModel::insertDataField($fieldData);
 				}
 
+				// notify the admin
+				FrontendFormBuilderModel::notifyAdmin(
+					array(
+						'form_id' => $this->item['id'],
+						'entry_id' => $dataId
+					)
+				);
+
 				// need to send mail
 				if($this->item['method'] == 'database_email')
 				{
@@ -408,18 +429,33 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
+					// check if we have a replyTo email set
+					$replyTo = null;
+					foreach($this->item['fields'] as $field)
+					{
+						if(array_key_exists('reply_to', $field['settings']) && $field['settings']['reply_to'] === true)
+						{
+							$email = $this->frm->getField('field' . $field['id'])->getValue();
+							if(SpoonFilter::isEmail($email)) $replyTo = $email;
+						}
+					}
+
 					// loop recipients
 					foreach($this->item['email'] as $address)
 					{
 						// add email
-						FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $address, $this->item['name']);
+						FrontendMailer::addEmail(
+							sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+							FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+							$variables, $address, $this->item['name'], null, null, $replyTo
+						);
 					}
 				}
 
 				// trigger event
 				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data, 'fields' => $fields, 'visitorId' => FrontendModel::getVisitorId()));
 
-				// store timestamp in session so we can block excesive usage
+				// store timestamp in session so we can block excessive usage
 				SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
 				// redirect

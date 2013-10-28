@@ -46,12 +46,16 @@ class FrontendTheme
 				$themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme . '/'), $file);
 
 				// check if this template exists
-				if(SpoonFile::exists(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) $file = $themeTemplate;
+				if(is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
+					$file = $themeTemplate;
+				}
 			}
 		}
 
 		// check if the file exists
-		if(!SpoonFile::exists(PATH_WWW . str_replace(PATH_WWW, '', $file))) throw new FrontendException('The template (' . $file . ') doesn\'t exists.');
+		if(!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
+			throw new FrontendException('The template (' . $file . ') does not exists.');
+		}
 
 		// return template path
 		return $file;
@@ -64,7 +68,7 @@ class FrontendTheme
 	 */
 	public static function getTheme()
 	{
-		// theme nama has not yet been saved, fetch and save it
+		// theme name has not yet been saved, fetch and save it
 		if(!self::$theme) self::$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 		// return theme name

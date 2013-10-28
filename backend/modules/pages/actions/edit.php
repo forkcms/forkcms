@@ -13,7 +13,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendPagesEdit extends BackendBaseActionEdit
 {
@@ -183,7 +183,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('edit'))
 		{
-			// set colum URLs
+			// set column URLs
 			$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
 
 			// add use column
@@ -374,7 +374,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// check if this action is allowed
 		if(BackendAuthentication::isAllowedAction('edit'))
 		{
-			// set colum URLs
+			// set column URLs
 			$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
 
 			// add use column

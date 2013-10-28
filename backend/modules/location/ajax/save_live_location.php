@@ -10,7 +10,7 @@
 /**
  * This is an ajax handler that will set a new position for a certain map
  *
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 {
@@ -21,8 +21,7 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 	{
 		parent::execute();
 
-		$generalSettings = BackendModel::getModuleSettings();
-		$generalSettings = $generalSettings['location'];
+		$generalSettings = BackendModel::getModuleSettings('location');
 
 		// get parameters
 		$itemId = SpoonFilter::getPostValue('id', null, null, 'int');

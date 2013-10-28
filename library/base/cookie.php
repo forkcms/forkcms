@@ -20,11 +20,11 @@ class CommonCookie extends SpoonCookie
 	 * @param string $key	A name for the cookie.
 	 * @param mixed $value	The value to be stored. Keep in mind that they will be serialized.
 	 * @param int[optional] $time	The number of seconds that this cookie will be available, 30 days is the default.
-	 * @param string[optional] $path	The path on the server in which the cookie will be availabe. Use / for the entire domain, /foo if you just want it to be available in /foo.
+	 * @param string[optional] $path	The path on the server in which the cookie will be available. Use / for the entire domain, /foo if you just want it to be available in /foo.
 	 * @param string[optional] $domain	The domain that the cookie is available on. Use .example.com to make it available on all subdomains of example.com.
 	 * @param bool[optional] $secure	Should the cookie be transmitted over a HTTPS-connection? If true, make sure you use a secure connection, otherwise the cookie won't be set.
 	 * @param bool[optional] $httpOnly	Should the cookie only be available through HTTP-protocol? If true, the cookie can't be accessed by Javascript, ...
-	 * @return bool	If set with succes, returns true otherwise false.
+	 * @return bool	If set with success, returns true otherwise false.
 	 */
 	public static function set($key, $value, $time = 2592000, $path = '/', $domain = null, $secure = null, $httpOnly = true)
 	{
@@ -56,7 +56,7 @@ class CommonCookie extends SpoonCookie
 		// set cookie
 		$cookie = setcookie($key, $value, $time, $path, $domain, $secure, $httpOnly);
 
-		// problem occured
+		// problem occurred
 		return ($cookie === false) ? false : true;
 	}
 }

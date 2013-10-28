@@ -24,7 +24,7 @@
 /*
 	Pages add/edit
 	:empty is too hard for IE7 to handle, though the padding placed inside this
-	empty element is neccessary for the sortable to work.
+	empty element is necessary for the sortable to work.
  */
 
 #templateVisualLarge .linkedBlocks,

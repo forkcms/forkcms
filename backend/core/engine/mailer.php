@@ -127,7 +127,7 @@ class BackendMailer
 			foreach($attachments as $attachment)
 			{
 				// only add existing files
-				if(SpoonFile::exists($attachment)) $email['attachments'][] = $attachment;
+				if(is_file($attachment)) $email['attachments'][] = $attachment;
 			}
 
 			// serialize :)
@@ -142,7 +142,7 @@ class BackendMailer
 		}
 
 		// insert the email into the database
-		$id = BackendModel::getDB(true)->insert('emails', $email);
+		$id = BackendModel::getContainer()->get('database')->insert('emails', $email);
 
 		// trigger event
 		BackendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
@@ -161,7 +161,7 @@ class BackendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT e.id
 			 FROM emails AS e
 			 WHERE e.send_on < ? OR e.send_on IS NULL',
@@ -173,7 +173,7 @@ class BackendMailer
 	 * Returns the content from a given template
 	 *
 	 * @param string $template The template to use.
-	 * @param array[optional] $variables The variabled to assign.
+	 * @param array[optional] $variables The variables to assign.
 	 * @return string
 	 */
 	private static function getTemplateContent($template, $variables = null)
@@ -215,7 +215,7 @@ class BackendMailer
 	public static function send($id)
 	{
 		$id = (int) $id;
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get record
 		$emailRecord = (array) $db->getRecord(
@@ -240,6 +240,13 @@ class BackendMailer
 			$SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port', 25);
 			$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
+
+			// set security if needed
+			$secureLayer = BackendModel::getModuleSetting('core','smtp_secure_layer');
+			if(in_array($secureLayer, array('ssl', 'tls')))
+			{
+				$email->setSMTPSecurity($secureLayer);
+			}
 
 			// set server and connect with SMTP
 			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);

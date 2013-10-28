@@ -99,7 +99,6 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		$this->frm = new FrontendForm('updateSettings', null, null, 'updateSettingsForm');
 
 		// create & add elements
-		$this->frm->addImage('avatar');
 		$this->frm->addText('display_name', $this->profile->getDisplayName());
 		$this->frm->addText('first_name', $this->profile->getSetting('first_name'));
 		$this->frm->addText('last_name', $this->profile->getSetting('last_name'));
@@ -111,7 +110,7 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 		$this->frm->addDropdown('month', $months, $birthMonth);
 		$this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
 
-		// set default elements dropdowns
+		// set default elements drop-downs
 		$this->frm->getField('gender')->setDefaultElement('');
 		$this->frm->getField('day')->setDefaultElement('');
 		$this->frm->getField('month')->setDefaultElement('');
@@ -120,6 +119,9 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 
 		// set email disabled
 		$this->frm->getField('email')->setAttribute('disabled', 'disabled');
+
+		// set avatar
+		$this->frm->addImage('avatar');
 
 		// when user exceeded the number of name changes set field disabled
 		if($nameChanges >= FrontendProfilesModel::MAX_DISPLAY_NAME_CHANGES) $this->frm->getField('display_name')->setAttribute('disabled', 'disabled');
@@ -136,6 +138,11 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 			// show success message
 			$this->tpl->assign('updateSettingsSuccess', true);
 		}
+
+		// assign avatar
+		$avatar = $this->profile->getSetting('avatar');
+		if(empty($avatar)) $avatar = '';
+		$this->tpl->assign('avatar', $avatar);
 
 		// parse the form
 		$this->frm->parse($this->tpl);
@@ -193,6 +200,9 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 				}
 			}
 
+			// validate avatar when given
+			$this->frm->getField('avatar')->isFilled();
+
 			// no errors
 			if($this->frm->isCorrect())
 			{
@@ -234,6 +244,19 @@ class FrontendProfilesSettings extends FrontendBaseBlock
 
 				// not filled in
 				else $settings['birth_date'] = null;
+
+				// avatar
+				$settings['avatar'] = $this->profile->getSetting('avatar');
+
+				// create new filename
+				if($this->frm->getField('avatar')->isFilled())
+				{
+					// field value
+					$settings['avatar'] = SpoonFilter::urlise($this->profile->getDisplayName()) . '.' . $this->frm->getField('avatar')->getExtension();
+
+					// move the file
+					$this->frm->getField('avatar')->generateThumbnails(FRONTEND_FILES_PATH . '/profiles/avatars/', $settings['avatar']);
+				}
 
 				// save settings
 				$this->profile->setSettings($settings);

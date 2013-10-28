@@ -1,4 +1,4 @@
-if(!jsClient) { var jsClient = new Object(); }
+if(!jsClient) { var jsClient = {}; }
 
 /**
  * @author Dave Lens <dave@netlash.com>
@@ -7,14 +7,14 @@ jsClient =
 {
 	debug: true,
 	language: 'en',
-	
+
 	init: function()
 	{
 		jsClient.setupAjax();
 		jsClient.controls.init();
 		jsClient.ajax.init();
 	},
-	
+
 	// set defaults for AJAX
 	setupAjax: function()
 	{
@@ -35,16 +35,16 @@ jsClient.controls =
 			jsClient.controls.hideAllModules();
 			jsClient.controls.toggleList($(this), $(this).siblings('.methods'));
 		});
-		
+
 		$('#modules li.method > a').click(function(e)
 		{
 			//e.preventDefault();
-			
+
 			jsClient.controls.hideAllMethods();
 			jsClient.controls.toggleList($(this), $(this).siblings('.methodForm'));
 		});
 	},
-	
+
 	toggleList: function(anchor, content)
 	{
 		if(content.is(':visible'))
@@ -58,20 +58,20 @@ jsClient.controls =
 			anchor.find('.toggle').text('-');
 		}
 	},
-	
+
 	hideAllMethods: function()
 	{
 		$('.methodForm').hide();
 		$('.methods').find('.toggle').text('+');
 	},
-	
+
 	hideAllModules: function()
 	{
 		$('.methodForm').hide();
 		$('.methods').hide();
 		$('.module').find('.toggle').text('+');
 	},
-	
+
 	eoo: true
 }
 
@@ -79,10 +79,10 @@ jsClient.parameters =
 {
 	get: function(object)
 	{
-		var parameters = new Array();
+		var parameters = [];
 		var method = object.parents('.method').find('a[rel]').attr('rel');
 
-		// loop all the textfields in the active form
+		// loop all the text fields in the active form
 		object.parents('form').find('.input-text').each(function(index, item)
 		{
 			var self = $(this);
@@ -90,32 +90,32 @@ jsClient.parameters =
 			// prepare for the http query by setting 'name=value'
 			parameters.push(self.attr('name') +'='+ self.attr('value'));
 		});
-		
+
 		parameters.push('method='+ method);
-		
+
 		// sort the parameters by key
 		parameters.sort();
-		
+
 		return parameters;
 	},
-	
+
 	eoo: true
 }
 
-jsClient.ajax = 
+jsClient.ajax =
 {
 	init: function()
 	{
 		// a call was initialized
 		$('.submit').live('click', jsClient.ajax.submitFormHandler);
 	},
-	
+
 	submitFormHandler: function(e)
 	{
 		var self = $(this);
 		e.stopPropagation();
 		e.preventDefault();
-		
+
 		var url = $('#url').val();
 		var requestMethod = $('input[type="radio"]:checked').val();
 		var output = $('#output');
@@ -161,7 +161,7 @@ jsClient.ajax =
 		output.focus();
 		output.find('pre').text(data);
 	},
-	
+
 	eoo: true
 }
 

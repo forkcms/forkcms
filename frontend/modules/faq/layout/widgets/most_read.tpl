@@ -4,7 +4,7 @@
 *}
 
 {option:widgetFaqMostRead}
-	<section id="blogRecentArticlesListWidget" class="mod">
+	<section id="faqMostReadWidget" class="mod">
 		<div class="inner">
 			<header class="hd">
 				<h3>{$lblMostReadQuestions|ucfirst}</h3>

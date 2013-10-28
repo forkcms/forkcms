@@ -34,7 +34,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 		$this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
 
 		// create & add elements
-		$this->frm->addText('email');
+		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
 	}
 
 	/**
@@ -79,7 +79,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 				try
 				{
 					// subscribe the user to our default group
-					FrontendMailmotorCMHelper::subscribe($email->getValue());
+					if(!FrontendMailmotorCMHelper::subscribe($email->getValue())) throw new FrontendException('Could not subscribe');
 
 					// trigger event
 					FrontendModel::triggerEvent('mailmotor', 'after_subscribe', array('email' => $email->getValue()));

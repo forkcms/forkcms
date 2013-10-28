@@ -6,7 +6,6 @@
  */
 var jsFrontend =
 {
-	// datamembers
 	debug: false,
 	current: {},
 
@@ -75,10 +74,10 @@ jsFrontend.controls =
 
 /**
  * Data related methods
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend.data = 
+jsFrontend.data =
 {
 	initialized: false,
 	data: {},
@@ -97,7 +96,7 @@ jsFrontend.data =
 	{
 		return (typeof eval('jsFrontend.data.data.' + key) != 'undefined');
 	},
-	
+
 	get: function(key)
 	{
 		// init if needed
@@ -158,7 +157,7 @@ jsFrontend.forms =
 		});
 	},
 
-	// initialize the datefields
+	// initialize the date fields
 	datefields: function()
 	{
 		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange')
@@ -174,7 +173,7 @@ jsFrontend.forms =
 			var dayNamesShort = [jsFrontend.locale.loc('DayShortSun'), jsFrontend.locale.loc('DayShortMon'), jsFrontend.locale.loc('DayShortTue'), jsFrontend.locale.loc('DayShortWed'), jsFrontend.locale.loc('DayShortThu'), jsFrontend.locale.loc('DayShortFri'), jsFrontend.locale.loc('DayShortSat')];
 			var monthNames = [jsFrontend.locale.loc('MonthLong1'), jsFrontend.locale.loc('MonthLong2'), jsFrontend.locale.loc('MonthLong3'), jsFrontend.locale.loc('MonthLong4'), jsFrontend.locale.loc('MonthLong5'), jsFrontend.locale.loc('MonthLong6'), jsFrontend.locale.loc('MonthLong7'), jsFrontend.locale.loc('MonthLong8'), jsFrontend.locale.loc('MonthLong9'), jsFrontend.locale.loc('MonthLong10'), jsFrontend.locale.loc('MonthLong11'), jsFrontend.locale.loc('MonthLong12')];
 			var monthNamesShort = [jsFrontend.locale.loc('MonthShort1'), jsFrontend.locale.loc('MonthShort2'), jsFrontend.locale.loc('MonthShort3'), jsFrontend.locale.loc('MonthShort4'), jsFrontend.locale.loc('MonthShort5'), jsFrontend.locale.loc('MonthShort6'), jsFrontend.locale.loc('MonthShort7'), jsFrontend.locale.loc('MonthShort8'), jsFrontend.locale.loc('MonthShort9'), jsFrontend.locale.loc('MonthShort10'), jsFrontend.locale.loc('MonthShort11'), jsFrontend.locale.loc('MonthShort12')];
-		
+
 			$inputDatefields.datepicker({
 				dayNames: dayNames,
 				dayNamesMin: dayNamesMin,
@@ -186,42 +185,42 @@ jsFrontend.forms =
 				prevText: jsFrontend.locale.lbl('Previous'),
 				showAnim: 'slideDown'
 			});
-	
+
 			// the default, nothing special
 			$inputDatefieldNormal.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option', {
 					dateFormat: data.mask,
 					firstDay: data.firstday
 				}).datepicker('setDate', value);
 			});
-	
-			// datefields that have a certain startdate
+
+			// date fields that have a certain start date
 			$inputDatefieldFrom.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option', {
 					dateFormat: data.mask, firstDay: data.firstday,
 					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
 				}).datepicker('setDate', value);
 			});
-	
-			// datefields that have a certain enddate
+
+			// date fields that have a certain enddate
 			$inputDatefieldTill.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option',
 				{
@@ -230,14 +229,14 @@ jsFrontend.forms =
 					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
 				}).datepicker('setDate', value);
 			});
-	
-			// datefields that have a certain range
+
+			// date fields that have a certain range
 			$inputDatefieldRange.each(function()
 			{
 				// get data
 				var data = $(this).data();
 				var value = $(this).val();
-	
+
 				// set options
 				$(this).datepicker('option',
 				{
@@ -352,10 +351,10 @@ jsFrontend.gravatar =
 
 /**
  * Locale
- * 
+ *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsFrontend.locale = 
+jsFrontend.locale =
 {
 	initialized: false,
 	data: {},
@@ -368,12 +367,12 @@ jsFrontend.locale =
 			type: 'GET',
 			dataType: 'json',
 			async: false,
-			success: function(data) 
+			success: function(data)
 			{
 				jsFrontend.locale.data = data;
 				jsFrontend.locale.initialized = true;
 			},
-			error: function(jqXHR, textStatus, errorThrown) 
+			error: function(jqXHR, textStatus, errorThrown)
 			{
 				throw 'Regenerate your locale-files.';
 			}
@@ -409,7 +408,7 @@ jsFrontend.locale =
 	{
 		return jsFrontend.locale.get('lbl', key);
 	},
-	
+
 	// get localization
 	loc: function(key)
 	{
@@ -433,13 +432,13 @@ jsFrontend.search =
 	// init, something like a constructor
 	init: function()
 	{
-		// autosuggest (search widget)
+		// auto suggest (search widget)
 		if($('input.autoSuggest').length > 0) jsFrontend.search.autosuggest(55);
 
 		// autocomplete (search results page: autocomplete based on known search terms)
 		if($('input.autoComplete').length > 0) jsFrontend.search.autocomplete();
 
-		// livesuggest (search results page: live feed of matches)
+		// live suggest (search results page: live feed of matches)
 		if($('input.liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest();
 	},
 
@@ -486,23 +485,25 @@ jsFrontend.search =
 				window.location.href = ui.item.url
 			}
 		})
-		// ok, so, when we have been typing in the search textfield and we blur out of it,
-		// I suppose we have entered our full search query and we're ready to save it
+		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
 		.on('blur', function()
 		{
-			// ajax call!
-			$.ajax(
+			if($(this).val() != '')
 			{
-				data:
+				// ajax call!
+				$.ajax(
 				{
-					fork: { module: 'search', action: 'save' },
-					term: $(this).val()
-				}
-			});
+					data:
+					{
+						fork: { module: 'search', action: 'save' },
+						term: $(this).val()
+					}
+				});
+			}
 		});
 	},
 
-	// autosuggest (search widget)
+	// auto suggest (search widget)
 	autosuggest: function(length)
 	{
 		// set default values
@@ -549,19 +550,21 @@ jsFrontend.search =
 				window.location.href = ui.item.url
 			}
 		})
-		// ok, so, when we have been typing in the search textfield and we blur out of it,
-		// I suppose we have entered our full search query and we're ready to save it
+		// when we have been typing in the search textfield and we blur out of it, we're ready to save it
 		.on('blur', function()
 		{
-			// ajax call!
-			$.ajax(
+			if($(this).val() != '')
 			{
-				data:
+				// ajax call!
+				$.ajax(
 				{
-					fork: { module: 'search', action: 'save' },
-					term: $(this).val()
-				}
-			});
+					data:
+					{
+						fork: { module: 'search', action: 'save' },
+						term: $(this).val()
+					}
+				});
+			}
 		})
 		// and also: alter the autocomplete style: add description!
 		.data('autocomplete')._renderItem = function(ul, item)
@@ -590,7 +593,7 @@ jsFrontend.search =
 			// make sure we're allowed to do the call (= previous call is no longer processing)
 			if(allowCall)
 			{
-				// temporarely allow no more calls
+				// temporarily allow no more calls
 				allowCall = false;
 
 				// fade out
@@ -639,7 +642,7 @@ jsFrontend.search =
 }
 
 /**
- * Gravatar related javascript
+ * Google analytics related javascript
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -659,19 +662,41 @@ jsFrontend.statistics =
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
-				return (typeof obj.href != 'undefined' && !obj.href.match(/^mailto\:/) && (obj.hostname != location.hostname));
+				return (typeof obj.href != 'undefined');
 			};
 
 			// bind on all links that don't have the class noTracking
 			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
-				var $this = $(this);
-				var link = $this.attr('href');
-				var title = $this.attr('title');
-				if(typeof title == 'undefined' || title == '') title = $this.html();
+				// only simulate direct links
+				var hasTarget = (typeof $(this).attr('target') != 'undefined');
+				if(!hasTarget) e.preventDefault();
+
+				var link = $(this).attr('href');
+
+				// outbound link by default
+				var type = 'Outbound Links';
+				var pageView = '/Outbound Links/' + link;
+
+				// set mailto
+				if(link.match(/^mailto\:/))
+				{
+					type = 'Mailto';
+					pageView = '/Mailto/' + link.substring(7);
+				}
+
+				// set anchor
+				if(link.match(/^\#/))
+				{
+					type = 'Anchors';
+					pageView = '/Anchor/' + link.substring(1);
+				}
 
 				// track in Google Analytics
-				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
+				_gaq.push(['_trackEvent', type, pageView]);
+
+				// set time out
+				if(!hasTarget) setTimeout(function() { document.location.href = link; }, 100);
 			});
 		}
 	}
@@ -686,7 +711,7 @@ jsFrontend.twitter =
 {
 	init: function()
 	{
-		// if GA is integrated and a tweetbutton is used
+		// if GA is integrated and a tweet button is used
 		if(typeof _gaq == 'object' && typeof twttr == 'object')
 		{
 			// bind event, so we can track the tweets

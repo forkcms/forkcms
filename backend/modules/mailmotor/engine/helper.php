@@ -82,6 +82,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @param string $name The name of the custom field.
 	 * @param string $groupId The CampaignMonitor ID of the list you want to remove the custom field from.
+	 * @return bool
 	 */
 	public static function deleteCustomField($name, $groupId)
 	{
@@ -109,7 +110,7 @@ class BackendMailmotorCMHelper
 	 */
 	public static function deleteGroups($ids)
 	{
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make one
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
@@ -211,7 +212,7 @@ class BackendMailmotorCMHelper
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
-		return BackendModel::getDB()->getVar(
+		return BackendModel::getContainer()->get('database')->getVar(
 			'SELECT cm_id
 			 FROM mailmotor_campaignmonitor_ids
 			 WHERE type = ? AND other_id = ?',
@@ -231,7 +232,7 @@ class BackendMailmotorCMHelper
 		if(empty($groupIds)) return array();
 
 		// fetch campaignmonitor IDs
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mci.cm_id
 			 FROM mailmotor_campaignmonitor_ids AS mci
 			 WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $groupIds) . ')',
@@ -251,7 +252,7 @@ class BackendMailmotorCMHelper
 		$templates = (empty($templateIds)) ? array(BackendMailmotorModel::getDefaultTemplateID()) : $templateIds;
 
 		// fetch campaignmonitor IDs
-		return (array) BackendModel::getDB()->getColumn(
+		return (array) BackendModel::getContainer()->get('database')->getColumn(
 			'SELECT mci.cm_id
 			 FROM mailmotor_campaignmonitor_ids AS mci
 			 WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $templates) . ')',
@@ -306,14 +307,14 @@ class BackendMailmotorCMHelper
 		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
+			if(!is_file(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
+				throw new BackendException(BL::err('ClassDoesNotExist', 'mailmotor'));
 			}
 
 			// require CampaignMonitor class
-			require_once 'external/campaignmonitor.php';
+			require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
 			// set login data
 			$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
@@ -355,33 +356,17 @@ class BackendMailmotorCMHelper
 	 */
 	public static function getCustomFields($groupId)
 	{
-		// get CM ID for this group
 		$listId = self::getCampaignMonitorID('list', $groupId);
-
-		// get the custom fields from CM
 		$cmFields = self::getCM()->getCustomFields($listId);
-
-		// reserve new fields array
-		$newFields = array();
-
-		// fields found
 		if(!empty($cmFields))
 		{
-			// get the custom fields from our database
 			$fields = BackendMailmotorModel::getCustomFields($groupId);
-
-			// loop the fields
 			foreach($cmFields as $field)
 			{
-				// check if the field exists already. If not; add it
 				if(!in_array($field['name'], $fields)) $fields[] = $field['name'];
 			}
-
-			// update the fields
 			BackendMailmotorModel::updateCustomFields($fields, $groupId);
 		}
-
-		// return the results
 		return (array) $fields;
 	}
 
@@ -560,7 +545,7 @@ class BackendMailmotorCMHelper
 		$stats['unopens'] = 0;
 
 		// fetch all mailings in this campaign
-		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $email));
+		$mailings = BackendModel::getContainer()->get('database')->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $email));
 
 		// no mailings found
 		if(empty($mailings)) return array();
@@ -613,7 +598,7 @@ class BackendMailmotorCMHelper
 		$stats['unopens'] = 0;
 
 		// fetch all mailings in this campaign
-		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
+		$mailings = BackendModel::getContainer()->get('database')->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
 
 		// no mailings found
 		if(empty($mailings)) return array();
@@ -716,7 +701,7 @@ class BackendMailmotorCMHelper
 		if($type == '') throw new CampaignMonitorException('No valid CM ID type given (only campaign, list, template).');
 
 		// insert the campaignmonitor ID
-		BackendModel::getDB(true)->insert('mailmotor_campaignmonitor_ids', array('type' => $type, 'cm_id' => $id, 'other_id' => $otherId));
+		BackendModel::getContainer()->get('database')->insert('mailmotor_campaignmonitor_ids', array('type' => $type, 'cm_id' => $id, 'other_id' => $otherId));
 	}
 
 	/**
@@ -743,7 +728,7 @@ class BackendMailmotorCMHelper
 			if($item['is_default'] === 'Y' && $item['language'] != '0')
 			{
 				// set all defaults to N.
-				BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
+				BackendModel::getContainer()->get('database')->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
 			}
 
 			// insert in database
@@ -852,9 +837,6 @@ class BackendMailmotorCMHelper
 	 */
 	public static function sendMailing($item)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// fetch the CM IDs for each group if this field is not set yet
 		if(!isset($item['group_cm_ids'])) $item['group_cm_ids'] = self::getCampaignMonitorIDsForGroups($item['groups']);
 
@@ -883,14 +865,14 @@ class BackendMailmotorCMHelper
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
 	 * @param string $email The emailaddress.
-	 * @param string[optional] $groupId The group wherin the emailaddress should be added.
+	 * @param string[optional] $groupId The group wherein the emailaddress should be added.
 	 * @param array[optional] $customFields Any optional custom fields.
 	 * @return bool
 	 */
 	public static function subscribe($email, $groupId = null, $customFields = null)
 	{
 		// get objects
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 		$cm = self::getCM();
 
 		// set groupID
@@ -959,13 +941,7 @@ class BackendMailmotorCMHelper
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{
-		// get objects
-		$cm = self::getCM();
-
-		// set group ID
 		$groupId = !empty($groupId) ? $groupId : BackendMailmotorModel::getDefaultGroupID();
-
-		// get group CM ID
 		$groupCMId = self::getCampaignMonitorID('list', $groupId);
 
 		// group exists
@@ -980,7 +956,7 @@ class BackendMailmotorCMHelper
 			$subscriber['unsubscribed_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 			// unsubscribe the user
-			BackendModel::getDB(true)->update('mailmotor_addresses_groups', $subscriber, 'email = ? AND group_id = ?', array($email, $groupId));
+			BackendModel::getContainer()->get('database')->update('mailmotor_addresses_groups', $subscriber, 'email = ? AND group_id = ?', array($email, $groupId));
 
 			// user unsubscribed
 			return true;
@@ -1020,7 +996,7 @@ class BackendMailmotorCMHelper
 		if($item['is_default'] === 'Y' && $item['language'] != '0')
 		{
 			// set all defaults to N
-			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', array($item['language']));
+			BackendModel::getContainer()->get('database')->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', array($item['language']));
 		}
 
 		// update the group in our database
@@ -1078,7 +1054,7 @@ class BackendMailmotorCMHelper
 	public static function updateMailingDraft(array $item)
 	{
 		// get the DB
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// get the CM campaign ID for this campaign
 		$campaignID = self::getCampaignMonitorID('campaign', $item['id']);

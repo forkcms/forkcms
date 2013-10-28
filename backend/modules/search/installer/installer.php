@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * Installer for the search module
  *
@@ -56,7 +59,7 @@ class SearchInstaller extends ModuleInstaller
 		$this->setNavigation($navigationModulesId, 'Search', 'search/settings');
 
 		// add extra's
-		$searchId = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
+		$searchId = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// loop languages
@@ -89,7 +92,10 @@ class SearchInstaller extends ModuleInstaller
 		$this->searchPages();
 
 		// create module cache path
-		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
+		$fs = new Filesystem();
+		if(!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
+			$fs->mkdir(PATH_WWW . '/frontend/cache/search');
+		}
 	}
 
 	/**
@@ -112,7 +118,7 @@ class SearchInstaller extends ModuleInstaller
 		);
 
 		// loop menu items
-		foreach($menu as $id => $page)
+		foreach($menu as $page)
 		{
 			// get blocks
 			$blocks = $db->getColumn('SELECT html FROM pages_blocks WHERE revision_id = ?', array($page['revision_id']));

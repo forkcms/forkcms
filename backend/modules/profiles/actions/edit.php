@@ -253,7 +253,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 				// update values
 				BackendProfilesModel::update($this->id, $values);
 
-				// bday is filled in
+				// birthday is filled in
 				if($ddmYear->isFilled())
 				{
 					// mysql format

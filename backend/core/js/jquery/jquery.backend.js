@@ -202,11 +202,11 @@
 				var c = new Array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
 
 				// the number-mapping
-				var n = new Array();
+				var n = [];
 				n['a'] = 4; n['b'] = 8; n['e'] = 3; n['g'] = 6; n['l'] = 1; n['o'] = 0; n['s'] = 5; n['t'] = 7; n['z'] = 2;
 
 				// the special chars-mapping
-				var s = new Array();
+				var s = [];
 				s['a'] = '@'; s['i'] = '!'; s['c'] = 'ç'; s['s'] = '$'; s['g'] = '&'; s['h'] = '#'; s['l'] = '|'; s['x'] = '%';
 
 				// init vars
@@ -632,6 +632,9 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
 				var inElements = false;
 
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
+
 				// a value should contain the split char
 				if(value.split(options.secondSplitChar).length == 1) value = '';
 
@@ -931,6 +934,9 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
+
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -1017,7 +1023,7 @@
 			function remove(value)
 			{
 				// get index for element
-				var index = $.inArray(value, elements);
+				var index = $.inArray(String(value), elements);
 
 				// remove element
 				if(index > -1) elements.splice(index, 1);
@@ -1122,7 +1128,7 @@
 				e.stopPropagation();
 
 				if(options.maxItems !== null && elements.length >= options.maxItems) return;
-				
+
 				// add element
 				add();
 			});
@@ -1146,6 +1152,9 @@
 				// init some vars
 				var value = $('#addValue-' + id).val();
 				var inElements = false;
+
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
 				$('#addValue-' + id).focus();
@@ -1426,7 +1435,7 @@
 				remove($(this).data('id'));
 			});
 
-			// bind keypress on inputfields (we need to rebuild so new values are saved)
+			// bind keypress on input fields (we need to rebuild so new values are saved)
 			$('.inputField-' + id).live('keyup', function(e)
 			{
 				// clear elements
@@ -1461,6 +1470,9 @@
 				// init some vars
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
+
+				// ugly hack to escape entities and quotes
+				value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// reset box
 				$('#addValue-' + id).val('').focus();

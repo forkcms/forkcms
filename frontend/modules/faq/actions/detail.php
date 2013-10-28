@@ -11,7 +11,7 @@
  * This is the detail-action
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendFaqDetail extends FrontendBaseBlock
 {
@@ -50,7 +50,7 @@ class FrontendFaqDetail extends FrontendBaseBlock
 	{
 		parent::execute();
 
-		// hide contenTitle, in the template the title is wrapped with an inverse-option
+		// hide contentTitle, in the template the title is wrapped with an inverse-option
 		$this->tpl->assign('hideContentTitle', true);
 
 		$this->loadTemplate();

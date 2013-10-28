@@ -7,7 +7,6 @@
  */
 var jsBackend =
 {
-	// datamembers
 	debug: false,
 	current:
 	{
@@ -219,14 +218,14 @@ jsBackend.ckeditor =
 		// buttons specific for the newsletter
 		toolbar_Newsletter:
 		[
-   			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
-   			{ name: 'clipboard', items: ['Undo', 'Redo'] },
-   			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
-   			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-   			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
-   			{ name: 'document', items: ['Templates', 'Source'] },
-   			{ name: 'styles', items : ['Format'] }
-   		],
+			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
+			{ name: 'document', items: ['Templates', 'Source'] },
+			{ name: 'styles', items : ['Format'] }
+		],
 
 		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
 		skin: 'BootstrapCK-Skin',
@@ -247,6 +246,7 @@ jsBackend.ckeditor =
 
 		// templates
 		templates_files: [],
+		templates_replaceContent: false,
 
 		// custom vars
 		editorType: 'default',
@@ -264,8 +264,8 @@ jsBackend.ckeditor =
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
 		{
 			// language options
-			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language,
-			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language'),
+			jsBackend.ckeditor.defaultConfig.contentsLanguage = jsBackend.current.language;
+			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language');
 
 			// content Css
 			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/screen.css');
@@ -410,7 +410,7 @@ jsBackend.ckeditor =
 				id: 'localPageOptions',
 				children:
 				[
-				 	{
+					{
 						type: 'select',
 						label: jsBackend.locale.msg('EditorSelectInternalPage'),
 						id: 'localPage',
@@ -424,8 +424,8 @@ jsBackend.ckeditor =
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
-				 	}
-			 	]
+					}
+				]
 			});
 		}
 
@@ -1035,7 +1035,7 @@ jsBackend.controls =
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
 
-				// excecute function directly
+				// execute function directly
 				var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 				// show
@@ -1047,7 +1047,7 @@ jsBackend.controls =
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
 
-					// excecute function directly
+					// execute function directly
 					var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 					// show
@@ -1153,7 +1153,7 @@ jsBackend.controls =
 		$('a.targetBlank').attr('target', '_blank');
 	},
 
-	// togle between the working languages
+	// toggle between the working languages
 	bindWorkingLanguageSelection: function()
 	{
 		// variables
@@ -1167,11 +1167,11 @@ jsBackend.controls =
 			// break the url int parts
 			var urlChunks = document.location.pathname.split('/');
 
-			// get the querystring, we will append it later
+			// get the query string, we will append it later
 			var queryChunks = document.location.search.split('&');
 			var newChunks = [];
 
-			// any parts in the querystring
+			// any parts in the query string
 			if(typeof queryChunks != 'undefined' && queryChunks.length > 0)
 			{
 				// remove variables that could trigger an message
@@ -1256,7 +1256,7 @@ jsBackend.effects =
 	// if a var highlight exists in the url it will be highlighted
 	bindHighlight: function()
 	{
-		// get hightlight from url
+		// get highlight from url
 		var highlightId = utils.url.getGetValue('highlight');
 
 		// id is set
@@ -1294,7 +1294,7 @@ jsBackend.forms =
 	// init, something like a constructor
 	init: function()
 	{
-		jsBackend.forms.placeholders();	// make sure this is done before focussing the first field
+		jsBackend.forms.placeholders();	// make sure this is done before focusing the first field
 		jsBackend.forms.focusFirstField();
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
@@ -1345,7 +1345,7 @@ jsBackend.forms =
 			}).datepicker('setDate', value);
 		});
 
-		// datefields that have a certain startdate
+		// date fields that have a certain start date
 		$inputDatefieldFrom.each(function()
 		{
 			// variables
@@ -1363,7 +1363,7 @@ jsBackend.forms =
 			}).datepicker('setDate', value);
 		});
 
-		// datefields that have a certain enddate
+		// date fields that have a certain end date
 		$inputDatefieldTill.each(function()
 		{
 			// variables
@@ -1382,7 +1382,7 @@ jsBackend.forms =
 			}).datepicker('setDate', value);
 		});
 
-		// datefields that have a certain range
+		// date fields that have a certain range
 		$inputDatefieldRange.each(function()
 		{
 			// variables
@@ -1517,7 +1517,7 @@ jsBackend.forms =
 		}
 	},
 
-	// add tagbox to the correct input fields
+	// add tag box to the correct input fields
 	tagBoxes: function()
 	{
 		if($('#sidebar input.tagBox').length > 0)
@@ -1651,7 +1651,7 @@ jsBackend.layout =
 		$('.dataFilter tbody .options').height(tallest);
 	},
 
-	// datagrid layout
+	// data grid layout
 	dataGrid: function()
 	{
 		if(jQuery.browser.msie)
@@ -1762,6 +1762,12 @@ jsBackend.locale =
 		if(data == null || !data.hasOwnProperty(type) || data[type] == null)
 		{
 			return missingTranslation;
+		}
+
+		// this is for the labels prefixed with "loc"
+		if(typeof(data[type][key]) == 'string')
+		{
+			return data[type][key];
 		}
 
 		// if the translation does not exist for the given module, try to fall back to the core
@@ -1887,7 +1893,7 @@ jsBackend.tabs =
 			// if the browser supports history.pushState(), use it to update the URL with the fragment identifier, without triggering a scroll/jump
 			if(window.history && window.history.pushState)
 			{
-				// an empty state object for now — either we implement a proper popstate handler ourselves, or wait for jQuery UI upstream
+				// an empty state object for now — either we implement a proper pop state handler ourselves, or wait for jQuery UI upstream
 				window.history.pushState({}, document.title, this.getAttribute('href'));
 			}
 
@@ -1969,7 +1975,7 @@ jsBackend.focusfix =
 	// init, something like a constructor
 	init: function()
 	{
-		function focusfix(selector, className)
+		function focusFix(selector, className)
 		{
 			$(selector).focus(function() { $(this).addClass(className); });
 			$(selector).blur(function() { $(this).removeClass(className); });
@@ -1978,9 +1984,9 @@ jsBackend.focusfix =
 		// IE6 & IE7 focus fix
 		if($.browser.msie && $.browser.version.substr(0, 1) < 9)
 		{
-			// apply focusfix
-			focusfix('input.inputText', 'focus');
-			focusfix('textarea', 'focus');
+			// apply focus fix
+			focusFix('input.inputText', 'focus');
+			focusFix('textarea', 'focus');
 		}
 	}
 }
@@ -2034,7 +2040,7 @@ jsBackend.tableSequenceByDragAndDrop =
 						}, extraParams),
 						success: function(data, textStatus)
 						{
-							// not a succes so revert the changes
+							// not a success so revert the changes
 							if(data.code != 200)
 							{
 								// revert

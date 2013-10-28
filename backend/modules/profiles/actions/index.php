@@ -30,6 +30,11 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	private $frm;
 
 	/**
+	 * @var BackendDataGridDB
+	 */
+	private $dgProfiles;
+
+	/**
 	 * Builds the query for this datagrid.
 	 *
 	 * @return array		An array with two arguments containing the query and its parameters.
@@ -166,7 +171,7 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 	{
 		parent::parse();
 
-		// parse datagrid
+		// parse data grid
 		$this->tpl->assign('dgProfiles', ($this->dgProfiles->getNumResults() != 0) ? $this->dgProfiles->getContent() : false);
 
 		// parse paging & sorting

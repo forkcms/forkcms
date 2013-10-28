@@ -11,7 +11,7 @@
  * This is the edit-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationEdit extends BackendBaseActionEdit
 {
@@ -40,7 +40,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			parent::execute();
 
 			// add js
-			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
+			$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
 			$this->loadData();
 
@@ -72,8 +72,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		// load the settings from the general settings
 		if(empty($this->settings))
 		{
-			$settings = BackendModel::getModuleSettings();
-			$settings = $settings['location'];
+			$settings = BackendModel::getModuleSettings('location');
 
 			$this->settings['width'] = $settings['width_widget'];
 			$this->settings['height'] = $settings['height_widget'];
@@ -83,7 +82,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			$this->settings['center']['lng'] = $this->record['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $this->record['lat'];
@@ -186,7 +185,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$item['city'] = $this->frm->getField('city')->getValue();
 				$item['country'] = $this->frm->getField('country')->getValue();
 
-				// check if it's neccessary to geocode again
+				// check if it's necessary to geocode again
 				if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country'])
 				{
 					// geocode address

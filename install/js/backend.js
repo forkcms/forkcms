@@ -1,6 +1,5 @@
 jsBackend =
 {
-	// datamembers
 	debug: false,
 
 	// init, something like a constructor
@@ -43,19 +42,19 @@ jsBackend.controls =
 				// hide all
 				$('#'+ wrapperId +' p.strength').hide();
 
-				// excecute function directly
+				// execute function directly
 				var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 				// show
 				$('#'+ wrapperId +' p.'+ classToShow).show();
 
-				// bind keypress
+				// bind key press
 				$(document).on('keyup', '#'+ id, function()
 				{
 					// hide all
 					$('#'+ wrapperId +' p.strength').hide();
 
-					// excecute function directly
+					// execute function directly
 					var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
 
 					// show
@@ -65,7 +64,7 @@ jsBackend.controls =
 		}
 	},
 
-	// check a string for passwordstrength
+	// check a string for password strength
 	checkPassword: function(string)
 	{
 		// init vars
@@ -90,7 +89,7 @@ jsBackend.controls =
 		// more then 6 chars is good
 		if(string.length >= 6) score++;
 
-		// more then 8 is beter
+		// more then 8 is better
 		if(string.length >= 8) score++;
 
 		// upper and lowercase?
@@ -162,7 +161,7 @@ jsBackend.forms =
 						else $('form#'+ formId).submit();
 					});
 
-					// dont submit the form on certain elements
+					// don't submit the form on certain elements
 					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
 					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
 
@@ -186,13 +185,13 @@ jsBackend.layout =
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
 
-		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
+		if($('.dataFilter').length > 0) { jsBackend.layout.dataFilter(); }
 
-		// fix last childs
+		// fix last children
 		$('.options p:last').addClass('lastChild');
 	},
 
-	// datafilter layout fixes
+	// data filter layout fixes
 	dataFilter: function()
 	{
 		// add last child and first child for IE
@@ -213,7 +212,7 @@ jsBackend.layout =
 		$('.dataFilter tbody .options').height(tallest);
 	},
 
-	// datagrid layout
+	// data grid layout
 	dataGrid: function()
 	{
 		if(jQuery.browser.msie)

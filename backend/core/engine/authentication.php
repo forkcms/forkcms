@@ -8,7 +8,7 @@
  */
 
 /**
- * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
+ * The class below will handle all authentication stuff. It will handle module-access, action-access, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
@@ -66,7 +66,7 @@ class BackendAuthentication
 		// more then 6 chars is good
 		if(mb_strlen($password) >= 6) $score++;
 
-		// more then 8 is beter
+		// more then 8 is better
 		if(mb_strlen($password) >= 8) $score++;
 
 		// @todo
@@ -95,7 +95,7 @@ class BackendAuthentication
 	public static function cleanupOldSessions()
 	{
 		// remove all sessions that are invalid (older then 30 min)
-		BackendModel::getDB(true)->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+		BackendModel::getContainer()->get('database')->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
 	}
 
 	/**
@@ -127,7 +127,7 @@ class BackendAuthentication
 
 	/**
 	 * Returns a string encrypted like sha1(md5($salt) . md5($string))
-	 * 	The salt is an optional extra string you can strenghten your encryption with
+	 * 	The salt is an optional extra string you can strengthen your encryption with
 	 *
 	 * @param string $string The string to encrypt.
 	 * @param string[optional] $salt The salt to use.
@@ -158,14 +158,11 @@ class BackendAuthentication
 	 * Is the given action allowed for the current user
 	 *
 	 * @param string $action The action to check for.
-	 * @param string $module The module wherin the action is located.
+	 * @param string $module The module wherein the action is located.
 	 * @return bool
 	 */
 	public static function isAllowedAction($action = null, $module = null)
 	{
-		// GOD's rule them all!
-		if(self::getUser()->isGod()) return true;
-
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(
 			'dashboard' => array('index' => 7),
@@ -183,14 +180,14 @@ class BackendAuthentication
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;
 
+		// get modules
+		$modules = BackendModel::getModules();
+
 		// we will cache everything
 		if(empty(self::$allowedActions))
 		{
 			// init var
-			$db = BackendModel::getDB();
-
-			// get modules
-			$modules = BackendModel::getModules();
+			$db = BackendModel::getContainer()->get('database');
 
 			// add always allowed
 			foreach($alwaysAllowed as $allowedModule => $actions) $modules[] = $allowedModule;
@@ -215,6 +212,9 @@ class BackendAuthentication
 			}
 		}
 
+		// module exists and God user is enough to be allowed
+		if(in_array($module, $modules) && self::getUser()->isGod()) return true;
+
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))
 		{
@@ -234,23 +234,21 @@ class BackendAuthentication
 	 */
 	public static function isAllowedModule($module)
 	{
-		// GOD's rule them all!
-		if(self::isLoggedIn() && self::getUser()->isGod()) return true;
-
-		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
+		$modules = BackendModel::getModules();
 		$alwaysAllowed = array('core', 'error', 'authentication');
-
-		// redefine
 		$module = (string) $module;
 
-		// is this module a module that doesn't require authentication?
+		// is this module a module that doesn't require user level authentication?
 		if(in_array($module, $alwaysAllowed)) return true;
+
+		// module is active and God user, good enough
+		if(in_array($module, $modules) && self::getUser()->isGod()) return true;
 
 		// do we already know something?
 		if(empty(self::$allowedModules))
 		{
 			// init var
-			$db = BackendModel::getDB();
+			$db = BackendModel::getContainer()->get('database');
 
 			// get allowed modules
 			$allowedModules = $db->getColumn(
@@ -286,7 +284,7 @@ class BackendAuthentication
 		if(SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) SpoonSession::get('backend_logged_in') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// get the row from the tables
 			$sessionData = $db->getRecord(
@@ -342,7 +340,7 @@ class BackendAuthentication
 		$login = (string) $login;
 		$password = (string) $password;
 
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// fetch the encrypted password
 		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);
@@ -393,15 +391,16 @@ class BackendAuthentication
 	}
 
 	/**
-	 * Logsout the current user
+	 * Logout the current user
 	 */
 	public static function logout()
 	{
 		// remove all rows owned by the current user
-		BackendModel::getDB(true)->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+		BackendModel::getContainer()->get('database')->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
 
 		// reset values. We can't destroy the session because session-data can be used on the site.
 		SpoonSession::set('backend_logged_in', false);
 		SpoonSession::set('backend_secret_key', '');
+		SpoonSession::set('csrf_token', '');
 	}
 }

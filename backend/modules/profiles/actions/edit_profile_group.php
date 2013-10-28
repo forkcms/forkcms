@@ -23,6 +23,11 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 	private $profileGroup;
 
 	/**
+	 * @var int
+	 */
+	private $profileId;
+
+	/**
 	 * Execute the action.
 	 */
 	public function execute()
@@ -130,13 +135,13 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 				else $values['expires_on'] = null;
 
 				// update values
-				$id = BackendProfilesModel::updateProfileGroup($this->id, $values);
+				BackendProfilesModel::updateProfileGroup($this->id, $values);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
 			}
 		}
 	}

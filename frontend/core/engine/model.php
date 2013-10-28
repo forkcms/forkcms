@@ -1,7 +1,5 @@
 <?php
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
@@ -9,12 +7,20 @@ use \TijsVerkoyen\Akismet\Akismet;
  * file that was distributed with this source code.
  */
 
+use TijsVerkoyen\Akismet\Akismet;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
+require_once __DIR__ . '/../../../app/BaseModel.php';
+
 /**
  * In this file we store all generic functions that we will be using in the frontend.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendModel
+class FrontendModel extends BaseModel
 {
 	/**
 	 * Cached modules
@@ -54,7 +60,7 @@ class FrontendModel
 		// get last chunk
 		$last = $chunks[$count - 1];
 
-		// is nummeric
+		// is numeric
 		if(SpoonFilter::isNumeric($last))
 		{
 			// remove last chunk
@@ -74,41 +80,30 @@ class FrontendModel
 	/**
 	 * Add parameters to an URL
 	 *
-	 * @param string $URL The URL to append the parameters too.
+	 * @param string $url The URL to append the parameters too.
 	 * @param array $parameters The parameters as key-value-pairs.
 	 * @return string
 	 */
-	public static function addURLParameters($URL, array $parameters)
+	public static function addURLParameters($url, array $parameters)
 	{
-		// redefine
-		$URL = (string) $URL;
+		$url = (string) $url;
 
-		// no parameters means no appending
-		if(empty($parameters)) return $URL;
+		if(empty($parameters)) return $url;
 
-		// split to remove the hash
-		$chunks = explode('#', $URL, 2);
-
-		// init var
+		$chunks = explode('#', $url, 2);
 		$hash = '';
-
 		if(isset($chunks[1]))
 		{
-			// reset URL
-			$URL = $chunks[0];
-
-			// store has
+			$url = $chunks[0];
 			$hash = '#' . $chunks[1];
 		}
 
-		// build querystring
+		// build query string
 		$queryString = http_build_query($parameters, null, '&amp;');
+		if(mb_strpos($url, '?') !== false) $url .= '&' . $queryString . $hash;
+		else $url .= '?' . $queryString . $hash;
 
-		// already GET parameters?
-		if(mb_strpos($URL, '?') !== false) return $URL .= '&' . $queryString . $hash;
-
-		// no GET-parameters defined before
-		else return $URL .= '?' . $queryString . $hash;
+		return $url;
 	}
 
 	/**
@@ -160,7 +155,7 @@ class FrontendModel
 		// replace 3 and more line breaks in a row by 2 line breaks
 		$text = preg_replace('/\n{3,}/', "\n\n", $text);
 
-		// use php contant for new lines
+		// use php constant for new lines
 		$text = str_replace("\n", PHP_EOL, $text);
 
 		// trim line breaks at the beginning and ending of the text
@@ -215,58 +210,30 @@ class FrontendModel
 	/**
 	 * Generate thumbnails based on the folders in the path
 	 * Use
-	 *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
-	 *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
-	 *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+	 *  - 128x128 as folder name to generate an image where the width will be 128px and the height will be 128px
+	 *  - 128x as folder name to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
+	 *  - x128 as folder name to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
 	 *
-	 * @param string $path The path wherin the thumbnail-folders will be stored.
+	 * @param string $path The path wherein the thumbnail-folders will be stored.
 	 * @param string $sourceFile The location of the source file.
 	 */
-	public static function generateThumbnails($path, $sourcefile)
+	public static function generateThumbnails($path, $sourceFile)
 	{
 		// get folder listing
 		$folders = self::getThumbnailFolders($path);
-		$filename = basename($sourcefile);
+		$filename = basename($sourceFile);
 
 		// loop folders
 		foreach($folders as $folder)
 		{
 			// generate the thumbnail
-			$thumbnail = new SpoonThumbnail($sourcefile, $folder['width'], $folder['height']);
+			$thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
 			$thumbnail->setAllowEnlargement(true);
 
 			// if the width & height are specified we should ignore the aspect ratio
 			if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
 			$thumbnail->parseToFile($folder['path'] . '/' . $filename);
 		}
-	}
-
-	/**
-	 * Get (or create and get) a database-connection
-	 * @later split the write and read connection
-	 *
-	 * @param bool[optional] $write Do you want the write-connection or not?
-	 * @return SpoonDatabase
-	 */
-	public static function getDB($write = false)
-	{
-		$write = (bool) $write;
-
-		// do we have a db-object ready?
-		if(!Spoon::exists('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-			// store
-			Spoon::set('database', $db);
-		}
-
-		// return db-object
-		return Spoon::get('database');
 	}
 
 	/**
@@ -280,7 +247,7 @@ class FrontendModel
 		if(empty(self::$modules))
 		{
 			// get all modules
-			$modules = (array) self::getDB()->getColumn('SELECT m.name FROM modules AS m');
+			$modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
 
 			// add modules to the cache
 			foreach($modules as $module) self::$modules[] = $module;
@@ -292,7 +259,7 @@ class FrontendModel
 	/**
 	 * Get a module setting
 	 *
-	 * @param string $module The module wherefor a setting has to be retrieved.
+	 * @param string $module The module wherefore a setting has to be retrieved.
 	 * @param string $name The name of the setting to be retrieved.
 	 * @param mixed[optional] $defaultValue A value that will be stored if the setting isn't present.
 	 * @return mixed
@@ -307,7 +274,7 @@ class FrontendModel
 		if(empty(self::$moduleSettings))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords(
+			$settings = (array) self::getContainer()->get('database')->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms
 				 INNER JOIN modules AS m ON ms.module = m.name'
@@ -327,7 +294,7 @@ class FrontendModel
 	/**
 	 * Get all module settings at once
 	 *
-	 * @param string $module The module wherefor all settings has to be retrieved.
+	 * @param string $module The module wherefore all settings has to be retrieved.
 	 * @return array
 	 */
 	public static function getModuleSettings($module)
@@ -338,7 +305,7 @@ class FrontendModel
 		if(empty(self::$moduleSettings[$module]))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->getRecords(
+			$settings = (array) self::getContainer()->get('database')->getRecords(
 				'SELECT ms.module, ms.name, ms.value
 				 FROM modules_settings AS ms'
 			);
@@ -357,7 +324,7 @@ class FrontendModel
 	/**
 	 * Get all data for a page
 	 *
-	 * @param int $pageId The pageId wherefor the data will be retrieved.
+	 * @param int $pageId The pageId wherefore the data will be retrieved.
 	 * @return array
 	 */
 	public static function getPage($pageId)
@@ -366,7 +333,7 @@ class FrontendModel
 		$pageId = (int) $pageId;
 
 		// get database instance
-		$db = self::getDB();
+		$db = self::getContainer()->get('database');
 
 		// get data
 		$record = (array) $db->getRecord(
@@ -393,9 +360,6 @@ class FrontendModel
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 		if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
-
-		// determine amount of blocks needed
-		$numBlocks = count($record['template_data']['names']);
 
 		// get blocks
 		$blocks = (array) $db->getRecords(
@@ -436,7 +400,7 @@ class FrontendModel
 		$revisionId = (int) $revisionId;
 
 		// get database instance
-		$db = self::getDB();
+		$db = self::getContainer()->get('database');
 
 		// get data
 		$record = (array) $db->getRecord(
@@ -499,30 +463,26 @@ class FrontendModel
 	 */
 	public static function getThumbnailFolders($path, $includeSource = false)
 	{
-		$folders = SpoonDirectory::getList((string) $path, false, null, '/^([0-9]*)x([0-9]*)$/');
-
-		if($includeSource && SpoonDirectory::exists($path . '/source')) $folders[] = 'source';
-
 		$return = array();
+		$fs = new Filesystem();
+		if(!$fs->exists($path)) return $return;
+		$finder = new Finder();
+		$finder->name('/^([0-9]*)x([0-9]*)$/');
+		if($includeSource) $finder->name('source');
 
-		foreach($folders as $folder)
-		{
-			$item = array();
-			$chunks = explode('x', $folder, 2);
-
-			// skip invalid items
+		foreach($finder->directories()->in($path) as $directory) {
+			$chunks = explode('x', $directory->getBasename(), 2);
 			if(count($chunks) != 2 && !$includeSource) continue;
 
-			$item['dirname'] = $folder;
-			$item['path'] = $path . '/' . $folder;
-			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($item['path'], strlen(PATH_WWW));
-			if($folder == 'source')
-			{
+			$item = array();
+			$item['dirname'] = $directory->getBasename();
+			$item['path'] = $directory->getRealPath();
+			if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+
+			if($item['dirname'] == 'source') {
 				$item['width'] = null;
 				$item['height'] = null;
-			}
-			else
-			{
+			} else {
 				$item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
 				$item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
 			}
@@ -536,7 +496,7 @@ class FrontendModel
 	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
-	 * @param string[optional] $format The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
+	 * @param string[optional] $format The format wherein the data will be returned, if not provided we will return it in MySQL-datetime-format.
 	 * @param int[optional] $timestamp A UNIX-timestamp that will be used as base.
 	 * @return string
 	 */
@@ -550,6 +510,41 @@ class FrontendModel
 
 		// timestamp given
 		return gmdate($format, (int) $timestamp);
+	}
+
+	/**
+	 * Get the UTC timestamp for a date/time object combination.
+	 *
+	 * @param SpoonFormDate $date An instance of SpoonFormDate.
+	 * @param SpoonFormTime[optional] $time An instance of SpoonFormTime.
+	 * @return int
+	 */
+	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
+	{
+		// validate date/time object
+		if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new FrontendException('You need to provide two objects that actually contain valid data.');
+
+		// init vars
+		$year = gmdate('Y', $date->getTimestamp());
+		$month = gmdate('m', $date->getTimestamp());
+		$day = gmdate('j', $date->getTimestamp());
+
+		// time object was given
+		if($time !== null)
+		{
+			// define hour & minute
+			list($hour, $minute) = explode(':', $time->getValue());
+		}
+
+		// user default time
+		else
+		{
+			$hour = 0;
+			$minute = 0;
+		}
+
+		// make and return timestamp
+		return mktime($hour, $minute, 0, $month, $day, $year);
 	}
 
 	/**
@@ -576,9 +571,9 @@ class FrontendModel
 	 *
 	 * @param string $content The content that was submitted.
 	 * @param string $permaLink The permanent location of the entry the comment was submitted to.
-	 * @param string[optional] $author Commenters name.
-	 * @param string[optional] $email Commenters email address.
-	 * @param string[optional] $URL Commenters URL.
+	 * @param string[optional] $author Commenter's name.
+	 * @param string[optional] $email Commenter's email address.
+	 * @param string[optional] $URL Commenter's URL.
 	 * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @return bool|string Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
 	 */
@@ -613,15 +608,12 @@ class FrontendModel
 			// return unknown status
 			return 'unknown';
 		}
-
-		// when everything fails
-		return false;
 	}
 
 	/**
 	 * Push a notification to Apple's notifications-server
 	 *
-	 * @param mixed $alert The message/dictonary to send.
+	 * @param mixed $alert The message/dictionary to send.
 	 * @param int[optional] $badge The number for the badge.
 	 * @param string[optional] $sound The sound that should be played.
 	 * @param array[optional] $extraDictionaries Extra dictionaries.
@@ -636,7 +628,7 @@ class FrontendModel
 		if($publicKey == '' || $privateKey == '') return;
 
 		// get all apple-device tokens
-		$deviceTokens = (array) FrontendModel::getDB()->getColumn(
+		$deviceTokens = (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT s.value
 			 FROM users AS i
 			 INNER JOIN users_settings AS s
@@ -677,12 +669,12 @@ class FrontendModel
 			if(!empty($response))
 			{
 				// get db
-				$db = FrontendModel::getDB(true);
+				$db = FrontendModel::getContainer()->get('database');
 
 				// loop the failed keys and remove them
 				foreach($response as $deviceToken)
 				{
-					// get setting wherin the token is available
+					// get setting wherein the token is available
 					$row = $db->getRecord(
 						'SELECT i.*
 						 FROM users_settings AS i
@@ -720,76 +712,9 @@ class FrontendModel
 	}
 
 	/**
-	 * Push a notification to Microsoft's notifications-server
+	 * Store a module setting
 	 *
-	 * @param string $title The title for the tile to send.
-	 * @param string[optional] $count The count for the tile to send.
-	 * @param string[optional] $image The image for the tile to send.
-	 * @param string[optional] $backTitle The title for the tile backtround to send.
-	 * @param string[optional] $backText The text for the tile background to send.
-	 * @param string[optional] $backImage The image for the tile background to send.
-	 * @param string[optional] $tile The secondary tile to update.
-	 * @param string[optional] $uri The application uri to navigate to.
-	 */
-	public static function pushToMicrosoftApp($title, $count = null, $image = null, $backTitle = null, $backText = null, $backImage = null, $tile = null, $uri = null)
-	{
-		// get ForkAPI-keys
-		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
-		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
-
-		// no keys, so stop here
-		if($publicKey == '' || $privateKey == '') return;
-
-		// get all microsoft channel uri's
-		$channelUris = (array) FrontendModel::getDB()->getColumn(
-			'SELECT s.value
-			 FROM users AS i
-			 INNER JOIN users_settings AS s
-			 WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
-			array('Y', 'N', 'microsoft_channel_uri', 'N;')
-		);
-
-		// no devices, so stop here
-		if(empty($channelUris)) return;
-
-		// init var
-		$uris = array();
-
-		// loop devices
-		foreach($channelUris as $row)
-		{
-			// unserialize
-			$row = unserialize($row);
-
-			// loop and add
-			foreach($row as $item) $uris[] = $item;
-		}
-
-		// no channel uri's, so stop here
-		if(empty($uris)) return;
-
-		// require the class
-		require_once PATH_LIBRARY . '/external/fork_api.php';
-
-		// create instance
-		$forkAPI = new ForkAPI($publicKey, $privateKey);
-
-		try
-		{
-			// push
-			$forkAPI->microsoftPush($uris, $title, $count, $image, $backTitle, $backText, $backImage, $tile, $uri);
-		}
-
-		catch(Exception $e)
-		{
-			if(SPOON_DEBUG) throw $e;
-		}
-	}
-
-	/**
-	 * Store a modulesetting
-	 *
-	 * @param string $module The module wherefor a setting has to be stored.
+	 * @param string $module The module wherefore a setting has to be stored.
 	 * @param string $name The name of the setting.
 	 * @param mixed $value The value (will be serialized so make sure the type is correct).
 	 */
@@ -800,7 +725,7 @@ class FrontendModel
 		$value = serialize($value);
 
 		// store
-		self::getDB(true)->execute(
+		self::getContainer()->get('database')->execute(
 			'INSERT INTO modules_settings (module, name, value)
 			 VALUES (?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -816,11 +741,12 @@ class FrontendModel
 	 */
 	public static function startProcessingHooks()
 	{
+		$fs = new Filesystem();
 		// is the queue already running?
-		if(SpoonFile::exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
+		if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid'))
 		{
 			// get the pid
-			$pid = trim(SpoonFile::getContent(FRONTEND_CACHE_PATH . '/hooks/pid'));
+			$pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/hooks/pid'));
 
 			// running on windows?
 			if(strtolower(substr(php_uname('s'), 0, 3)) == 'win')
@@ -832,7 +758,7 @@ class FrontendModel
 				if($output == '' || $output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -849,7 +775,7 @@ class FrontendModel
 				if($output === false)
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -860,10 +786,10 @@ class FrontendModel
 			else
 			{
 				// check if the process is still running, by checking the proc folder
-				if(!SpoonFile::exists('/proc/' . $pid))
+				if(!$fs->exists('/proc/' . $pid))
 				{
 					// delete the pid file
-					SpoonFile::delete(FRONTEND_CACHE_PATH . '/hooks/pid');
+					$fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
 				}
 
 				// already running
@@ -898,11 +824,11 @@ class FrontendModel
 	}
 
 	/**
-	 * Subscribe to an event, when the subsription already exists, the callback will be updated.
+	 * Subscribe to an event, when the subscription already exists, the callback will be updated.
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 * @param mixed $callback The callback that should be executed when the event is triggered.
 	 */
 	public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
@@ -918,7 +844,7 @@ class FrontendModel
 		$item['created_on'] = FrontendModel::getUTCDate();
 
 		// get db
-		$db = self::getDB(true);
+		$db = self::getContainer()->get('database');
 
 		// check if the subscription already exists
 		$exists = (bool) $db->getVar(
@@ -949,13 +875,11 @@ class FrontendModel
 		$eventName = (string) $eventName;
 
 		// create log instance
-		$log = new SpoonLog('custom', PATH_WWW . '/frontend/cache/logs/events');
-
-		// logging when we are in debugmode
-		if(SPOON_DEBUG) $log->write('Event (' . $module . '/' . $eventName . ') triggered.');
+		$log = self::getContainer()->get('logger');
+		$log->info('Event (' . $module . '/' . $eventName . ') triggered.');
 
 		// get all items that subscribe to this event
-		$subscriptions = (array) self::getDB()->getRecords(
+		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
 			'SELECT i.module, i.callback
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ?',
@@ -979,10 +903,9 @@ class FrontendModel
 				$item['created_on'] = FrontendModel::getUTCDate();
 
 				// add
-				$queuedItems[] = self::getDB(true)->insert('hooks_queue', $item);
+				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
-				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . $subscription['callback'] . ') is subcribed to event (' . $module . '/' . $eventName . ').');
+				$log->info('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
 			}
 
 			// start processing
@@ -995,7 +918,7 @@ class FrontendModel
 	 *
 	 * @param string $eventModule The module that triggers the event.
 	 * @param string $eventName The name of the event.
-	 * @param string $module The module that subsribes to the event.
+	 * @param string $module The module that subscribes to the event.
 	 */
 	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
 	{
@@ -1003,7 +926,7 @@ class FrontendModel
 		$eventName = (string) $eventName;
 		$module = (string) $module;
 
-		self::getDB(true)->delete(
+		self::getContainer()->get('database')->delete(
 			'hooks_subscriptions',
 			'event_module = ? AND event_name = ? AND module = ?',
 			array($eventModule, $eventName, $module)

@@ -11,7 +11,7 @@
  * In this file we store all generic functions that we will be using in the faq module
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendFaqModel implements FrontendTagsInterface
 {
@@ -23,7 +23,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function get($url)
 	{
-		return (array) FrontendModel::getDB()->getRecord(
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, m.url, c.title AS category_title, m2.url AS category_url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -50,7 +50,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 		$excludeIds = (empty($excludeIds) ? array(0) : (array) $excludeIds);
 
 		// get items
-		if($limit != null) $items = (array) FrontendModel::getDB()->getRecords(
+		if($limit != null) $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*, m.url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -61,7 +61,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 			array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
 		);
 
-		else $items = (array) FrontendModel::getDB()->getRecords(
+		else $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*, m.url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -87,7 +87,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function getCategories()
 	{
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*, m.url
 			 FROM faq_categories AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -113,13 +113,31 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function getCategory($url)
 	{
-		return (array) FrontendModel::getDB()->getRecord(
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.*, m.url
 			 FROM faq_categories AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
 			 WHERE m.url = ? AND i.language = ?
 			 ORDER BY i.sequence',
 			array((string) $url, FRONTEND_LANGUAGE)
+		);
+	}
+
+	/**
+	 * Get a category by id
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getCategoryById($id)
+	{
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
+			'SELECT i.*, m.url
+			 FROM faq_categories AS i
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 WHERE i.id = ? AND i.language = ?
+			 ORDER BY i.sequence',
+			array((int) $id, FRONTEND_LANGUAGE)
 		);
 	}
 
@@ -131,7 +149,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function getForTags(array $ids)
 	{
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.question AS title, m.url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
@@ -172,7 +190,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function getMostRead($limit)
 	{
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.*, m.url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -184,6 +202,32 @@ class FrontendFaqModel implements FrontendTagsInterface
 
 		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
 		foreach($items as &$item) $item['full_url'] = $link . '/' . $item['url'];
+
+		return $items;
+	}
+
+	/**
+	 * Get the all questions for selected category
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getFaqsForCategory($id)
+	{
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+				'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
+				 FROM faq_questions AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND i.category_id = ?
+				 ORDER BY i.sequence ASC',
+				array(FRONTEND_LANGUAGE, (int) $id)
+		);
+
+		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
+
+		foreach($items as &$item) {
+			$item['full_url'] = $link . '/' . $item['url'];
+		}
 
 		return $items;
 	}
@@ -203,7 +247,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 		if(empty($relatedIDs)) return array();
 
 		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.question, m.url
 			 FROM faq_questions AS i
 			 INNER JOIN meta AS m ON i.meta_id = m.id
@@ -227,7 +271,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function increaseViewCount($id)
 	{
-		FrontendModel::getDB(true)->execute(
+		FrontendModel::getContainer()->get('database')->execute(
 			'UPDATE faq_questions SET num_views = num_views + 1 WHERE id = ?',
 			array((int) $id)
 		);
@@ -243,7 +287,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 		$feedback['created_on'] = FrontendModel::getUTCDate();
 		unset($feedback['sentOn']);
 
-		FrontendModel::getDB(true)->insert('faq_feedback', $feedback);
+		FrontendModel::getContainer()->get('database')->insert('faq_feedback', $feedback);
 	}
 
 	/**
@@ -259,7 +303,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 	 */
 	public static function search(array $ids)
 	{
-		$items = (array) FrontendModel::getDB()->getRecords(
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.question AS title, i.answer AS text, m.url,
 			 c.title AS category_title, m2.url AS category_url
 			 FROM faq_questions AS i
@@ -293,7 +337,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 		// feedback hasn't changed so don't update the counters
 		if($previousFeedback !== null && $useful == $previousFeedback) return;
 
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// update counter with current feedback (increase)
 		if($useful) $db->execute(

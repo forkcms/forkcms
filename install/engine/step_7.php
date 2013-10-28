@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * Step 7 of the Fork installer
  *
@@ -18,13 +22,6 @@
  */
 class InstallerStep7 extends InstallerStep
 {
-	/**
-	 * Database connection, needed for installation
-	 *
-	 * @var	SpoonDatabases
-	 */
-	private $db;
-
 	/**
 	 * Build the language files
 	 *
@@ -95,61 +92,11 @@ class InstallerStep7 extends InstallerStep
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php', $value);
-	}
-
-	/**
-	 * Creates the configuration files
-	 */
-	private function createConfigurationFiles()
-	{
-		// build variables
-		$variables = array();
-		$variables['\'<debug-mode>\''] = SpoonSession::get('debug_mode') ? 'true' : 'false';
-		$variables['<spoon-debug-email>'] = SpoonSession::get('different_debug_email') ? SpoonSession::get('debug_email') : SpoonSession::get('email');
-		$variables['<database-name>'] = SpoonSession::get('db_database');
-		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
-		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
-		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
-		$variables['<database-port>'] = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306;
-		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local';
-		$variables['<site-default-title>'] = 'Fork CMS';
-		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
-		$variables['<path-www>'] = PATH_WWW;
-		$variables['<path-library>'] = PATH_LIBRARY;
-		$variables['<site-default-language>'] = SpoonSession::get('default_language');
-		$variables['<action-group-tag>'] = '@actiongroup';
-		$variables['<action-rights-level>'] = 7;
-
-		// globals files
-		$configurationFiles = array(
-			'globals.base.php' => 'globals.php',
-			'globals_frontend.base.php' => 'globals_frontend.php',
-			'globals_backend.base.php' => 'globals_backend.php'
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			PATH_WWW . '/' . $application . '/cache/locale/' . $language . '.php',
+			$value
 		);
-
-		// loop files
-		foreach($configurationFiles as $sourceFilename => $destinationFilename)
-		{
-			// grab content
-			$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/' . $sourceFilename);
-
-			// assign the variables
-			$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-			// write the file
-			SpoonFile::setContent(PATH_LIBRARY . '/' . $destinationFilename, $globalsContent);
-		}
-
-		// general configuration file
-		$globalsContent = SpoonFile::getContent(PATH_LIBRARY . '/config.base.php');
-
-		// assign the variables
-		$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
-
-		// write the file
-		SpoonFile::setContent(PATH_WWW . '/backend/cache/config/config.php', $globalsContent);
-		SpoonFile::setContent(PATH_WWW . '/frontend/cache/config/config.php', $globalsContent);
 	}
 
 	/**
@@ -164,7 +111,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($languages as $language)
 		{
 			// get applications
-			$applications = $this->db->getColumn(
+			$applications = $this->getContainer()->get('database')->getColumn(
 				'SELECT DISTINCT application
 				 FROM locale
 				 WHERE language = ?',
@@ -175,7 +122,7 @@ class InstallerStep7 extends InstallerStep
 			foreach((array) $applications as $application)
 			{
 				// build application locale cache
-				$this->buildCache($this->db, $language, $application);
+				$this->buildCache($this->getContainer()->get('database'), $language, $application);
 			}
 		}
 	}
@@ -203,44 +150,14 @@ class InstallerStep7 extends InstallerStep
 	 */
 	private function deleteCachedData()
 	{
-		// init some vars
-		$foldersToLoop = array('/backend/cache', '/frontend/cache');
-		$foldersToIgnore = array('/backend/cache/navigation');
-		$filesToIgnore = array('.gitignore');
-		$filesToDelete = array();
-
-		// loop folders
-		foreach($foldersToLoop as $folder)
-		{
-			// get folderlisting
-			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
-
-			// loop folders
-			foreach($subfolders as $subfolder)
-			{
-				// not in ignore list?
-				if(!in_array($folder . '/' . $subfolder, $foldersToIgnore))
-				{
-					// get the filelisting
-					$files = (array) SpoonFile::getList(PATH_WWW . $folder . '/' . $subfolder);
-
-					// loop the files
-					foreach($files as $file)
-					{
-						if(!in_array($file, $filesToIgnore))
-						{
-							$filesToDelete[] = PATH_WWW . $folder . '/' . $subfolder . '/' . $file;
-						}
-					}
-				}
-			}
-		}
-
-		// delete cached files
-		if(!empty($filesToDelete))
-		{
-			// loop files and delete them
-			foreach($filesToDelete as $file) SpoonFile::delete($file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->in(PATH_WWW . '/backend/cache')
+			        ->in(PATH_WWW . '/frontend/cache')
+		        as $file
+		) {
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -258,12 +175,6 @@ class InstallerStep7 extends InstallerStep
 		// delete cached data
 		$this->deleteCachedData();
 
-		// create configuration files
-		$this->createConfigurationFiles();
-
-		// init database
-		$this->initDatabase();
-
 		// define paths
 		$this->definePaths();
 
@@ -274,34 +185,17 @@ class InstallerStep7 extends InstallerStep
 		$this->createLocaleFiles();
 
 		// already installed
-		SpoonFile::setContent(dirname(__FILE__) . '/../cache/installed.txt', date('Y-m-d H:i:s'));
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			dirname(__FILE__) . '/../cache/installed.txt',
+			date('Y-m-d H:i:s')
+		);
 
 		// show success message
 		$this->showSuccess();
 
 		// clear session
 		SpoonSession::destroy();
-
-		// show output
-		$this->tpl->display('layout/templates/step_7.tpl');
-	}
-
-	/**
-	 * Init database.
-	 */
-	public function initDatabase()
-	{
-		// get port
-		$port = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? SpoonSession::get('db_port') : 3306;
-
-		// database instance
-		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'), $port);
-
-		// utf8 compliance & MySQL-timezone
-		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-		// store
-		Spoon::set('database', $this->db);
 	}
 
 	/**
@@ -323,7 +217,7 @@ class InstallerStep7 extends InstallerStep
 
 		// create the core installer
 		$installer = new CoreInstaller(
-			$this->db,
+			$this->getContainer()->get('database'),
 			SpoonSession::get('languages'),
 			SpoonSession::get('interface_languages'),
 			SpoonSession::get('example_data'),
@@ -364,7 +258,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($modules as $module)
 		{
 			// install exists
-			if(SpoonFile::exists(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
+			if(is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php'))
 			{
 				// users module needs custom variables
 				if($module == 'users')
@@ -380,7 +274,7 @@ class InstallerStep7 extends InstallerStep
 
 				// create installer
 				$installer = new $class(
-					$this->db,
+					$this->getContainer()->get('database'),
 					SpoonSession::get('languages'),
 					SpoonSession::get('interface_languages'),
 					SpoonSession::get('example_data'),
@@ -404,7 +298,7 @@ class InstallerStep7 extends InstallerStep
 		foreach($defaultExtras as $extra)
 		{
 			// get pages without this extra
-			$revisionIds = $this->db->getColumn(
+			$revisionIds = $this->getContainer()->get('database')->getColumn(
 				'SELECT i.revision_id
 				 FROM pages AS i
 				 WHERE i.revision_id NOT IN (
@@ -431,7 +325,7 @@ class InstallerStep7 extends InstallerStep
 			}
 
 			// insert block
-			$this->db->insert('pages_blocks', $insertExtras);
+			$this->getContainer()->get('database')->insert('pages_blocks', $insertExtras);
 		}
 
 		// parse the warnings

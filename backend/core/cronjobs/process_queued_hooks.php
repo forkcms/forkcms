@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This is the cronjob that processes the queued hooks.
  *
@@ -23,16 +26,20 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		set_time_limit(0);
 
 		// get database
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// create log
-		$log = new SpoonLog('custom', BACKEND_CACHE_PATH . '/logs/events');
+		$log = BackendModel::getContainer()->get('logger');
 
 		// get process-id
 		$pid = getmypid();
 
 		// store PID
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/hooks/pid', $pid);
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/hooks/pid',
+			$pid
+		);
 
 		while(true)
 		{
@@ -49,7 +56,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			if(!empty($item))
 			{
 				// init var
-				$processedSuccesfully = true;
+				$processedSuccessfully = true;
 
 				// set item as busy
 				$db->update('hooks_queue', array('status' => 'busy'), 'id = ?', array($item['id']));
@@ -68,16 +75,14 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 					// reset state
-					$processedSuccesfully = false;
+					$processedSuccessfully = false;
 
-					// logging when we are in debugmode
-					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+					$log->info('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				try
 				{
-					// logging when we are in debugmode
-					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') called.');
+					$log->info('Callback (' . serialize($item['callback']) . ') called.');
 
 					// call the callback
 					$return = call_user_func($item['callback'], $item['data']);
@@ -89,10 +94,9 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 						$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 						// reset state
-						$processedSuccesfully = false;
+						$processedSuccessfully = false;
 
-						// logging when we are in debugmode
-						if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+						$log->info('Callback (' . serialize($item['callback']) . ') failed.');
 					}
 				}
 				catch(Exception $e)
@@ -101,14 +105,14 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					$db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
 					// reset state
-					$processedSuccesfully = false;
+					$processedSuccessfully = false;
 
 					// logging when we are in debugmode
 					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				// everything went fine so delete the item
-				if($processedSuccesfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
+				if($processedSuccessfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
 
 				// logging when we are in debugmode
 				if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');
@@ -117,8 +121,8 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 			// stop it
 			else
 			{
-				// remove the file
-				SpoonFile::delete(BACKEND_CACHE_PATH . '/hooks/pid');
+				$fs = new Filesystem();
+				$fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
 
 				// stop the script
 				exit;

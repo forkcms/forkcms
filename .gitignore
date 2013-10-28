@@ -4,5 +4,8 @@
 .settings
 .*.swp
 .DS_Store
+app/cache/*
+app/logs/*
 backend/cache/navigation/
-vendor
+vendor/
+app/config/parameters.yml

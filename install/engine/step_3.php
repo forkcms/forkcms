@@ -24,7 +24,6 @@ class InstallerStep3 extends InstallerStep
 		$this->loadForm();
 		$this->validateForm();
 		$this->parseForm();
-		$this->tpl->display('layout/templates/step_3.tpl');
 	}
 
 	/**
@@ -42,7 +41,7 @@ class InstallerStep3 extends InstallerStep
 	 */
 	private function loadForm()
 	{
-		// seperate frontend/backend languages?
+		// separate frontend/backend languages?
 		$this->frm->addCheckbox('same_interface_language', (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true));
 
 		// multiple or single language (frontend)
@@ -71,6 +70,7 @@ class InstallerStep3 extends InstallerStep
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),
+				array('value' => 'el', 'label' => 'Greek'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
 				array('value' => 'lt', 'label' => 'Lithuanian'),
@@ -90,6 +90,7 @@ class InstallerStep3 extends InstallerStep
 				array('value' => 'nl', 'label' => 'Dutch'),
 				array('value' => 'fr', 'label' => 'French'),
 				array('value' => 'de', 'label' => 'German'),
+				array('value' => 'el', 'label' => 'Greek'),
 				array('value' => 'hu', 'label' => 'Hungarian'),
 				array('value' => 'it', 'label' => 'Italian'),
 				array('value' => 'lt', 'label' => 'Lithuanian'),
@@ -109,6 +110,7 @@ class InstallerStep3 extends InstallerStep
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
+				'el' => 'Greek',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
 				'lt' => 'Lithuanian',
@@ -128,6 +130,7 @@ class InstallerStep3 extends InstallerStep
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
+				'el' => 'Greek',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
 				'lt' => 'Lithuanian',
@@ -147,6 +150,7 @@ class InstallerStep3 extends InstallerStep
 				'nl' => 'Dutch',
 				'fr' => 'French',
 				'de' => 'German',
+				'el' => 'Greek',
 				'hu' => 'Hungarian',
 				'it' => 'Italian',
 				'lt' => 'Lithuanian',

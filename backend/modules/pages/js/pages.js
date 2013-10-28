@@ -119,7 +119,7 @@ jsBackend.pages.extras =
 			// link to edit this block/widget
 			var editLink = '';
 			if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
-			if(extrasById[extraId].type == 'widget' && typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
+			if(typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
 			// title, description & visibility
 			var title = extrasById[extraId].human_name;
@@ -242,18 +242,11 @@ jsBackend.pages.extras =
 				// remove placeholder
 				blockPlaceholder.remove();
 			},
-			// jQuery's dialog & CKEditor don't play nicely!
+			// Open dialog with CKEditor
 			open: function()
 			{
-				// reload the editors
-				jsBackend.ckeditor.destroy();
-				jsBackend.ckeditor.load();
-
-				// resize the editor, so we have space to edit the content
-				CKEDITOR.instances['html'].resize('100%', 375);
-
 				// set content in editor
-				$('#html').val(previousContent);
+				CKEDITOR.instances['html'].setData(previousContent);
 			}
 		});
 	},
@@ -697,7 +690,7 @@ jsBackend.pages.template =
 		});
 
 		// init var
-		newDefaults = new Array();
+		newDefaults = [];
 
 		// check if this default block has been changed
 		if(current != old || (typeof initDefaults != 'undefined' && initDefaults))

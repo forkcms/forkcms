@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * The base-class for the installer
  *
@@ -15,7 +19,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class ModuleInstaller
 {
@@ -162,9 +166,10 @@ class ModuleInstaller
 		}
 
 		// invalidate the cache for search
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file)
-		{
-			SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -340,18 +345,19 @@ class ModuleInstaller
 		$overwriteConflicts = (bool) $overwriteConflicts;
 
 		// load the file content and execute it
-		$content = trim(SpoonFile::getContent($filename));
+		$content = trim(file_get_contents($filename));
 
 		// file actually has content
 		if(!empty($content))
 		{
 			// load xml
-			$xml = @simplexml_load_file($filename);
+			$xml = @simplexml_load_string($content);
 
 			// import if it's valid xml
 			if($xml !== false)
 			{
 				// import locale
+				require_once BACKEND_CORE_PATH . '/engine/model.php';
 				require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 				BackendLocaleModel::importXML($xml, $overwriteConflicts, $this->getLanguages(), $this->getInterfaceLanguages(), $this->getDefaultUserID(), gmdate('Y-m-d H:i:s'));
 			}
@@ -366,7 +372,7 @@ class ModuleInstaller
 	protected function importSQL($filename)
 	{
 		// load the file content and execute it
-		$content = trim(SpoonFile::getContent($filename));
+		$content = trim(file_get_contents($filename));
 
 		// file actually has content
 		if(!empty($content))
@@ -541,6 +547,7 @@ class ModuleInstaller
 	 * @param array $revision An array with the revision data.
 	 * @param array[optional] $meta The meta-data.
 	 * @param array[optional] $block The blocks.
+	 * @return int
 	 */
 	protected function insertPage(array $revision, array $meta = null, array $block = null)
 	{
@@ -613,7 +620,7 @@ class ModuleInstaller
 			// build block
 			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
 			if(!isset($block['html'])) $block['html'] = '';
-			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
+			elseif(file_exists($block['html'])) $block['html'] = file_get_contents($block['html']);
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;
@@ -744,7 +751,12 @@ class ModuleInstaller
 		if($sequence === null)
 		{
 			// get maximum sequence for this parent
-			$maxSequence = (int) $this->getDB()->getVar('SELECT MAX(sequence) FROM backend_navigation WHERE parent_id = ?', $parentId);
+			$maxSequence = (int) $this->getDB()->getVar(
+				'SELECT MAX(sequence)
+				 FROM backend_navigation
+				 WHERE parent_id = ?',
+				array($parentId)
+			);
 
 			// add at the end
 			$sequence = $maxSequence + 1;

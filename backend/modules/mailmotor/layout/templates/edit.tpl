@@ -276,7 +276,7 @@
 
 <script type="text/javascript">
 	//<![CDATA[
-		var variables = new Array();
+		var variables = [];
 		variables = { mailingId: '{$mailing.id}' };
 	//]]>
 </script>

@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module
  *
@@ -32,7 +35,7 @@ class FrontendMailmotorModel
 	public static function deleteAddresses($emails)
 	{
 		// get DB
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// if $ids is not an array, make one
 		$emails = (!is_array($emails)) ? array($emails) : $emails;
@@ -50,7 +53,7 @@ class FrontendMailmotorModel
 	 */
 	public static function exists($email)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_addresses
 			 WHERE email = ?
@@ -67,7 +70,7 @@ class FrontendMailmotorModel
 	 */
 	public static function existsGroup($id)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM mailmotor_groups
 			 WHERE id = ?
@@ -85,7 +88,7 @@ class FrontendMailmotorModel
 	public static function get($id)
 	{
 		// get record and return it
-		$record = (array) FrontendModel::getDB()->getRecord(
+		$record = (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT mm.*
 			 FROM mailmotor_mailings AS mm
 			 WHERE mm.id = ?',
@@ -116,7 +119,7 @@ class FrontendMailmotorModel
 	 */
 	public static function getDefaultGroupID()
 	{
-		return (int) FrontendModel::getDB()->getVar(
+		return (int) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT mg.id
 			 FROM mailmotor_groups AS mg
 			 WHERE mg.is_default = ? AND mg.language = ?
@@ -135,7 +138,7 @@ class FrontendMailmotorModel
 	public static function getGroupIDsByEmail($email, $excludeId = null)
 	{
 		// get DB
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// return records
 		$records = (array) $db->getColumn(
@@ -189,16 +192,15 @@ class FrontendMailmotorModel
 	{
 		// set the path to the template folders for this language
 		$path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
+		$fs = new Filesystem();
 
 		// load all templates in the 'templates' folder for this language
-		$templates = SpoonDirectory::getList($path, false, array('.svn'));
-
-		// stop here if no directories were found
-		if(empty($templates) || !in_array($name, $templates)) return array();
-
-		// load all templates in the 'templates' folder for this language
-		if(!SpoonFile::exists($path . '/' . $name . '/template.tpl')) throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
-		if(!SpoonFile::exists($path . '/' . $name . '/css/screen.css')) throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		if(!$fs->exists($path . '/' . $name . '/template.tpl')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+		}
+		if(!$fs->exists($path . '/' . $name . '/css/screen.css')) {
+			throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+		}
 
 		// set template data
 		$record = array();
@@ -209,8 +211,8 @@ class FrontendMailmotorModel
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
 
 		// check if the template file actually exists
-		if(SpoonFile::exists($record['path_content'])) $record['content'] = SpoonFile::getContent($record['path_content']);
-		if(SpoonFile::exists($record['path_css'])) $record['css'] = SpoonFile::getContent($record['path_css']);
+		if($fs->exists($record['path_content'])) $record['content'] = file_get_contents($record['path_content']);
+		if($fs->exists($record['path_css'])) $record['css'] = file_get_contents($record['path_css']);
 
 		return $record;
 	}
@@ -225,7 +227,7 @@ class FrontendMailmotorModel
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{
 		// get DB
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// set record values
 		$record['email'] = $item['email'];
@@ -268,7 +270,7 @@ class FrontendMailmotorModel
 	public static function isSubscribed($email, $groupId = null)
 	{
 		// get DB
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// no group ID set
 		$groupId = (int) (empty($groupId) ? self::getDefaultGroupID() : $groupId);
@@ -293,7 +295,7 @@ class FrontendMailmotorModel
 	public static function subscribe($email, $groupId = null)
 	{
 		// get objects
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// set groupID
 		$groupId = !empty($groupId) ? $groupId : self::getDefaultGroupID();
@@ -360,7 +362,7 @@ class FrontendMailmotorModel
 	public static function unsubscribe($email, $groupId = null)
 	{
 		// get objects
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// set groupID
 		$groupId = !empty($groupId) ? $groupId : self::getDefaultGroupID();

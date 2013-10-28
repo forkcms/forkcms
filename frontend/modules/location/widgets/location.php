@@ -11,7 +11,7 @@
  * This is the location-widget: 1 specific address
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendLocationWidgetLocation extends FrontendBaseWidget
@@ -26,10 +26,9 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		// add Google Maps
 		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
+		parent::execute();
 
 		$this->loadTemplate();
 		$this->loadData();
@@ -56,7 +55,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
 			$this->settings['center']['lng'] = $this->item['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $this->item['lat'];

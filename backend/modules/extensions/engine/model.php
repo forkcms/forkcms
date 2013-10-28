@@ -7,12 +7,16 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic functions that we will be using in the extensions module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendExtensionsModel
 {
@@ -39,7 +43,7 @@ class BackendExtensionsModel
 	/**
 	 * Build HTML for a template (visual representation)
 	 *
-	 * @param array $template The template format.
+	 * @param array $format The template format.
 	 * @param bool[optional] $large Will the HTML be used in a large version?
 	 * @return string
 	 */
@@ -74,7 +78,7 @@ class BackendExtensionsModel
 				// init var
 				$colspan = 1;
 
-				// reset items in the same collumn
+				// reset items in the same column
 				while($x + $colspan < $cells && $table[$y][$x + $colspan] === $value) $table[$y][$x + $colspan++] = null;
 
 				// init var
@@ -112,7 +116,6 @@ class BackendExtensionsModel
 
 				// set values
 				$title = SpoonFilter::ucfirst($value);
-				$type = '';
 
 				// start cell
 				$html .= '<td';
@@ -215,32 +218,19 @@ class BackendExtensionsModel
 	 */
 	public static function clearCache()
 	{
-		// list of cache files to be deleted
-		$filesToDelete = array();
-
-		// backend navigation
-		$filesToDelete[] = BACKEND_CACHE_PATH . '/navigation/navigation.php';
-
-		// backend locale
-		foreach(SpoonFile::getList(BACKEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = BACKEND_CACHE_PATH . '/locale/' . $file;
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()
+			        ->name('*.php')
+			        ->name('*.js')
+			        ->in(BACKEND_CACHE_PATH . '/locale')
+			        ->in(FRONTEND_CACHE_PATH . '/navigation')
+			        ->in(FRONTEND_CACHE_PATH . '/locale')
+		        as $file
+		) {
+			$fs->remove($file->getRealPath());
 		}
-
-		// frontend navigation
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/navigation', '/\.(php|js)$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/navigation/' . $file;
-		}
-
-		// frontend locale
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/locale', '/\.php$/') as $file)
-		{
-			$filesToDelete[] = FRONTEND_CACHE_PATH . '/locale/' . $file;
-		}
-
-		// delete the files
-		foreach($filesToDelete as $file) SpoonFile::delete($file);
+		$fs->remove(BACKEND_CACHE_PATH . '/navigation/navigation.php');
 	}
 
 	/**
@@ -267,7 +257,7 @@ class BackendExtensionsModel
 		if(BackendExtensionsModel::isTemplateInUse($id)) return false;
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// delete
 		$db->delete('themes_templates', 'id = ?', $id);
@@ -301,9 +291,7 @@ class BackendExtensionsModel
 	public static function existsModule($module)
 	{
 		$module = (string) $module;
-
-		// check if modules directory exists
-		return SpoonDirectory::exists(BACKEND_MODULES_PATH . '/' . $module);
+		return is_dir(BACKEND_MODULES_PATH . '/' . $module);
 	}
 
 	/**
@@ -317,7 +305,7 @@ class BackendExtensionsModel
 		$id = (int) $id;
 
 		// get data
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT i.id FROM themes_templates AS i	WHERE i.id = ?',
 			array($id)
 		);
@@ -333,9 +321,7 @@ class BackendExtensionsModel
 	public static function existsTheme($theme)
 	{
 		$theme = (string) $theme;
-
-		// check if modules directory exists
-		return SpoonDirectory::exists(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
+		return is_dir(FRONTEND_PATH . '/themes/' . $theme) || $theme == 'core';
 	}
 
 	/**
@@ -346,7 +332,7 @@ class BackendExtensionsModel
 	public static function getExtras()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
+		$extras = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.module, i.type, i.label, i.data
 			 FROM modules_extras AS i
 			 INNER JOIN modules AS m ON i.module = m.name
@@ -366,8 +352,8 @@ class BackendExtensionsModel
 			// remove items that are not for the current language
 			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
 
-			// set URL if needed
-			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
+			// set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
+			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
 
 			// build name
 			$name = SpoonFilter::ucfirst(BL::lbl($row['label']));
@@ -399,7 +385,7 @@ class BackendExtensionsModel
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords(
+		$extras = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.module, i.type, i.label, i.data
 			 FROM modules_extras AS i
 			 INNER JOIN modules AS m ON i.module = m.name
@@ -415,7 +401,7 @@ class BackendExtensionsModel
 		$itemsToRemove = array();
 
 		// loop extras
-		foreach($extras as $id => $row)
+		foreach($extras as $row)
 		{
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
@@ -466,7 +452,7 @@ class BackendExtensionsModel
 		$information = array('data' => array(), 'warnings' => array());
 
 		// information needs to exists
-		if(SpoonFile::exists($pathInfoXml))
+		if(is_file($pathInfoXml))
 		{
 			try
 			{
@@ -530,13 +516,13 @@ class BackendExtensionsModel
 	public static function getModules()
 	{
 		// get installed modules
-		$installedModules = (array) BackendModel::getDB()->getRecords('SELECT name FROM modules', null, 'name');
+		$installedModules = (array) BackendModel::getContainer()->get('database')->getRecords('SELECT name FROM modules', null, 'name');
 
 		// get modules present on the filesystem
-		$modules = SpoonDirectory::getList(BACKEND_MODULES_PATH, false, null, '/^[a-zA-Z0-9_]+$/');
+		$modules = BackendModel::getModulesOnFilesystem(false);
 
 		// all modules that are managable in the backend
-		$managableModules = array();
+		$manageableModules = array();
 
 		// get more information for each module
 		foreach($modules as $moduleName)
@@ -588,11 +574,11 @@ class BackendExtensionsModel
 				// don't act upon error, we simply won't possess some info
 			}
 
-			// add to list of managable modules
-			$managableModules[] = $module;
+			// add to list of manageable modules
+			$manageableModules[] = $module;
 		}
 
-		return $managableModules;
+		return $manageableModules;
 	}
 
 	/**
@@ -656,7 +642,7 @@ class BackendExtensionsModel
 		$id = (int) $id;
 
 		// fetch data
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.* FROM themes_templates AS i WHERE i.id = ?',
 			array($id));
 	}
@@ -670,7 +656,7 @@ class BackendExtensionsModel
 	public static function getTemplates($theme = null)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// validate input
 		$theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
@@ -690,7 +676,7 @@ class BackendExtensionsModel
 		$i = 0;
 
 		// loop templates to unserialize the data
-		foreach($templates as $key => &$row)
+		foreach($templates as &$row)
 		{
 			// unserialize
 			$row['data'] = unserialize($row['data']);
@@ -737,21 +723,22 @@ class BackendExtensionsModel
 	 */
 	public static function getThemes()
 	{
-		// fetch themes
-		$records = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
+		$records = array();
+		$records['core'] = array(
+			'value' => 'core',
+			'label' => BL::lbl('NoTheme'),
+			'thumbnail' => '/frontend/core/layout/images/thumbnail.png',
+			'installed' => self::isThemeInstalled('core'),
+			'installable' => false,
+		);
 
-		// loop and complete the records
-		foreach($records as $key => $record)
+		$finder = new Finder();
+		foreach($finder->directories()->in(FRONTEND_PATH . '/themes')->depth(0) as $directory)
 		{
 			try
 			{
-				// path to info.xml
-				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $record . '/info.xml';
-
-				// load info.xml
+				$pathInfoXml = PATH_WWW . '/frontend/themes/' . $directory->getBasename() . '/info.xml';
 				$infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
-
-				// convert xml to useful array
 				$information = self::processThemeXml($infoXml);
 				if(!$information) throw new BackendException('Invalid info.xml');
 			}
@@ -763,27 +750,15 @@ class BackendExtensionsModel
 				$information['thumbnail'] = 'thumbnail.png';
 			}
 
-			// add additional values
-			$records[$record]['value'] = $record;
-			$records[$record]['label'] = $record;
-			$records[$record]['thumbnail'] = '/frontend/themes/' . $record . '/' . $information['thumbnail'];
+			$item = array();
+			$item['value'] = $directory->getBasename();
+			$item['label'] = $directory->getBasename();
+			$item['thumbnail'] =  '/frontend/themes/' . $item['value'] . '/' . $information['thumbnail'];
+			$item['installed'] = self::isThemeInstalled($item['value']);
+			$item['installable'] = isset($information['templates']);
 
-			// doublecheck if templates for this theme are installed already
-			$records[$record]['installed'] = self::isThemeInstalled($record);
-			$records[$record]['installable'] = isset($information['templates']);
-
-			// unset the key
-			unset($records[$key]);
+			$records[$item['value']] = $item;
 		}
-
-		// add core theme
-		$core = array('core' => array());
-		$core['core']['value'] = 'core';
-		$core['core']['label'] = BL::lbl('NoTheme');
-		$core['core']['thumbnail'] = '/frontend/core/layout/images/thumbnail.png';
-		$core['core']['installed'] = self::isThemeInstalled('core');
-		$core['core']['installable'] = false;
-		$records = array_merge($core, $records);
 
 		return (array) $records;
 	}
@@ -809,14 +784,14 @@ class BackendExtensionsModel
 	 */
 	public static function insertTemplate(array $template)
 	{
-		return (int) BackendModel::getDB(true)->insert('themes_templates', $template);
+		return (int) BackendModel::getContainer()->get('database')->insert('themes_templates', $template);
 	}
 
 	/**
 	 * Install a module.
 	 *
 	 * @param string $module The name of the module to be installed.
-	 * @param array $information Warnings from the upload of the module.
+	 * @param array $warnings Warnings from the upload of the module.
 	 */
 	public static function installModule($module, array $warnings = array())
 	{
@@ -832,7 +807,7 @@ class BackendExtensionsModel
 
 		// run installer
 		$installer = new $class(
-			BackendModel::getDB(true),
+			BackendModel::getContainer()->get('database'),
 			BL::getActiveLanguages(),
 			array_keys(BL::getInterfaceLanguages()),
 			false,
@@ -902,7 +877,7 @@ class BackendExtensionsModel
 				foreach($position['widgets'] as $widget)
 				{
 					// fetch extra_id for this extra
-					$extraId = (int) BackendModel::getDB()->getVar(
+					$extraId = (int) BackendModel::getContainer()->get('database')->getVar(
 						'SELECT i.id
 						 FROM modules_extras AS i
 						 WHERE type = ? AND module = ? AND action = ? AND data IS NULL AND hidden = ?',
@@ -936,7 +911,7 @@ class BackendExtensionsModel
 	 */
 	public static function isModuleInstalled($module)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM modules
 			 WHERE name = ?
@@ -953,7 +928,7 @@ class BackendExtensionsModel
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) BackendModel::getDB(false)->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM pages AS i
 			 WHERE i.template_id = ? AND i.status = ?
@@ -970,7 +945,7 @@ class BackendExtensionsModel
 	 */
 	public static function isThemeInstalled($theme)
 	{
-		return (bool) BackendModeL::getDB()->getVar(
+		return (bool) BackendModeL::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM themes_templates
 			 WHERE theme = ?
@@ -999,7 +974,7 @@ class BackendExtensionsModel
 		if($return === false) return false;
 
 		// unlink the random file
-		SpoonFile::delete($path . '/' . $file);
+		unlink($path . '/' . $file);
 
 		return true;
 	}
@@ -1211,7 +1186,7 @@ class BackendExtensionsModel
 	 */
 	public static function updateTemplate(array $item)
 	{
-		BackendModel::getDB(true)->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
+		BackendModel::getContainer()->get('database')->update('themes_templates', $item, 'id = ?', array((int) $item['id']));
 	}
 
 	/**

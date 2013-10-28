@@ -7,7 +7,7 @@
 	</requirements>
 	<description>
 		<![CDATA[
-			The content blocks module provides the possibility to re-use content on multiple pages, wherefor the content can be managed in 1 single point, but the changes are immediately visible on all pages it occurs.
+			The content blocks module provides the possibility to re-use content on multiple pages, wherefore the content can be managed in 1 single point, but the changes are immediately visible on all pages it occurs.
 			Content blocks are exceptionally well-suited for recurring content like contact details or call-to-actions.
 		]]>
 	</description>

@@ -19,7 +19,7 @@ class FrontendFormBuilderModel
 		$id = (int) $id;
 
 		// get form
-		$form = (array) FrontendModel::getDB()->getRecord(
+		$form = (array) FrontendModel::getContainer()->get('database')->getRecord(
 			'SELECT i.id, i.method, i.name, i.email, i.success_message, i.identifier
 			 FROM forms AS i
 			 WHERE i.id = ?',
@@ -38,13 +38,13 @@ class FrontendFormBuilderModel
 	/**
 	 * Get all fields of a form.
 	 *
-	 * @param int $id The id of the form wherefor we fetch the fields.
+	 * @param int $id The id of the form wherefore we fetch the fields.
 	 * @return array
 	 */
 	public static function getFields($id)
 	{
 		// get fields
-		$fields = (array) FrontendModel::getDB()->getRecords(
+		$fields = (array) FrontendModel::getContainer()->get('database')->getRecords(
 			'SELECT i.id, i.type, i.settings
 			 FROM forms_fields AS i
 			 WHERE i.form_id = ?
@@ -59,7 +59,7 @@ class FrontendFormBuilderModel
 			if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
 
 			// get validation
-			$field['validations'] = (array) FrontendModel::getDB()->getRecords(
+			$field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
 				'SELECT i.type, i.parameter, i.error_message
 				 FROM forms_fields_validation AS i
 				 WHERE i.field_id = ?',
@@ -79,7 +79,7 @@ class FrontendFormBuilderModel
 	 */
 	public static function insertData(array $data)
 	{
-		return FrontendModel::getDB(true)->insert('forms_data', $data);
+		return FrontendModel::getContainer()->get('database')->insert('forms_data', $data);
 	}
 
 	/**
@@ -90,6 +90,28 @@ class FrontendFormBuilderModel
 	 */
 	public static function insertDataField(array $data)
 	{
-		return FrontendModel::getDB(true)->insert('forms_data_fields', $data);
+		return FrontendModel::getContainer()->get('database')->insert('forms_data_fields', $data);
+	}
+
+	/**
+	 * Notify the admin
+	 *
+	 * @param array $data
+	 */
+	public static function notifyAdmin(array $data)
+	{
+		$alert = array(
+			'loc-key' => 'FORMBUILDER_SUBMISSION'
+		);
+
+		// build data
+		$data = array(
+			'api' => SITE_URL . '/api/1.0',
+			'form_id' => $data['form_id'],
+			'id' => $data['entry_id']
+		);
+
+		// push it
+		FrontendModel::pushToAppleApp($alert, 1, 'default', $data);
 	}
 }

@@ -550,7 +550,6 @@ class CKFinder_Connector_Utils_FileSystem
      * @access public
      * @param string $filePath absolute path to file
      * @param string $extension file extension
-     * @param integer $detectionLevel 0 = none, 1 = use getimagesize for images, 2 = use DetectHtml for images
      * @return boolean
     */
     public static function isImageValid($filePath, $extension)
@@ -695,18 +694,17 @@ class CKFinder_Connector_Utils_FileSystem
      *
      * @param string $filePath
      * @param string $fileName
-     * @param string $sFileNameOrginal
      */
     public static function autoRename( $filePath, $fileName )
     {
-      $sFileNameOrginal = $fileName;
+      $sFileNameOriginal = $fileName;
       $iCounter = 0;
       while (true)
       {
         $sFilePath = CKFinder_Connector_Utils_FileSystem::combinePaths($filePath, $fileName);
         if ( file_exists($sFilePath) ){
           $iCounter++;
-          $fileName = CKFinder_Connector_Utils_FileSystem::getFileNameWithoutExtension($sFileNameOrginal, false) . "(" . $iCounter . ")" . "." .CKFinder_Connector_Utils_FileSystem::getExtension($sFileNameOrginal, false);
+          $fileName = CKFinder_Connector_Utils_FileSystem::getFileNameWithoutExtension($sFileNameOriginal, false) . "(" . $iCounter . ")" . "." .CKFinder_Connector_Utils_FileSystem::getExtension($sFileNameOriginal, false);
         }
         else
         {

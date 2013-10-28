@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the configuration-object for the formbuilder module
+ * This is the configuration-object for the form builder module
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */

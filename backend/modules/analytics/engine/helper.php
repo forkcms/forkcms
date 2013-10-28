@@ -158,7 +158,7 @@ class BackendAnalyticsHelper
 	public static function getDataForPage($pageId, $startTimestamp, $endTimestamp)
 	{
 		// get page
-		$page = BackendModel::getDB(false)->getVar(
+		$page = BackendModel::getContainer()->get('database')->getVar(
 			'SELECT page
 			 FROM analytics_pages
 			 WHERE id = ?',
@@ -328,7 +328,7 @@ class BackendAnalyticsHelper
 		$apiKey = BackendModel::getModuleSetting('analytics', 'api_key', null);
 
 		// require the GoogleAnalytics class
-		require_once 'external/google_analytics.php';
+		require_once PATH_LIBRARY . '/external/google_analytics.php';
 
 		$ga = new GoogleAnalytics($sessionToken, $tableId);
 		$ga->setApiKey($apiKey);
@@ -511,7 +511,7 @@ class BackendAnalyticsHelper
 		// there are some records to be inserted
 		if(!empty($insertArray))
 		{
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// remove old data and insert array into database
 			$db->truncate('analytics_keywords');
@@ -561,7 +561,7 @@ class BackendAnalyticsHelper
 		// there are some records to be inserted
 		if(!empty($insertArray))
 		{
-			$db = BackendModel::getDB(true);
+			$db = BackendModel::getContainer()->get('database');
 
 			// remove old data and insert array into database
 			$db->truncate('analytics_referrers');

@@ -135,11 +135,11 @@ jsBackend.dashboard =
 		$sortableWidget.draggable('destroy').off('mouseenter mouseleave');
 
 		// build new array
-		var newSequence = new Array();
+		var newSequence = [];
 
 		// loop columns
 		$column.each(function() {
-			var items = new Array();
+			var items = [];
 
 			// loop widgets
 			$(this).find('.sortableWidget:visible').each(function()
@@ -165,7 +165,7 @@ jsBackend.dashboard =
 			},
 			success: function(data, textStatus)
 			{
-				// not a succes so revert the changes
+				// not a success so revert the changes
 				if(data.code != 200)
 				{
 					// refresh page

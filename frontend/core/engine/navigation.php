@@ -13,7 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class FrontendNavigation extends FrontendBaseObject
 {
@@ -62,7 +62,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$action = (string) $action;
 		$module = (string) $module;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-		$querystring = '';
+		$queryString = '';
 
 		// add at least one parameter
 		if(empty($parameters)) $parameters['token'] = 'true';
@@ -74,23 +74,23 @@ class FrontendNavigation extends FrontendBaseObject
 		foreach($parameters as $key => $value)
 		{
 			// first element
-			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			if($i == 1) $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			else $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
 		}
 
 		// build the URL and return it
-		return '/private/' . $language . '/' . $module . '/' . $action . $querystring;
+		return '/private/' . $language . '/' . $module . '/' . $action . $queryString;
 	}
 
 	/**
 	 * Get the first child for a given parent
 	 *
-	 * @param int $pageId The pageID wherefor we should retrieve the first child.
+	 * @param int $pageId The pageID wherefore we should retrieve the first child.
 	 * @return mixed
 	 */
 	public static function getFirstChildId($pageId)
@@ -103,7 +103,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop depths
 		foreach($navigation as $parent)
 		{
-			// no availabe, skip this element
+			// no available, skip this element
 			if(!isset($parent[$pageId])) continue;
 
 			// get keys
@@ -118,7 +118,7 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 	/**
-	 * Get all footerlinks
+	 * Get all footer links
 	 *
 	 * @return array
 	 */
@@ -158,7 +158,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get the page-keys
 	 *
-	 * @param string[optional] $language The language wherefor the navigation should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefore the navigation should be loaded, if not provided we will load the language that was provided in the URL.
 	 * @return array
 	 */
 	public static function getKeys($language = null)
@@ -169,7 +169,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// require BackendPagesModel
 				require_once PATH_WWW . '/backend/core/engine/model.php';
@@ -202,7 +202,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get the navigation-items
 	 *
-	 * @param string[optional] $language The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
+	 * @param string[optional] $language The language wherefore the keys should be loaded, if not provided we will load the language that was provided in the URL.
 	 * @return array
 	 */
 	public static function getNavigation($language = null)
@@ -214,7 +214,9 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+			if(!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) {
+				throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+			}
 
 			// init var
 			$navigation = array();
@@ -346,8 +348,8 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get a menuId for an specified URL
 	 *
-	 * @param  string $URL The URL wherfor you want a pageID.
-	 * @param string[optional] $language The language wherefor the pageID should be retrieved, if not provided we will load the language that was provided in the URL.
+	 * @param  string $URL The URL wherefore you want a pageID.
+	 * @param string[optional] $language The language wherefore the pageID should be retrieved, if not provided we will load the language that was provided in the URL.
 	 * @return int
 	 */
 	public static function getPageId($URL, $language = null)
@@ -372,7 +374,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get more info about a page
 	 *
-	 * @param int $pageId The pageID wherefor you want more information.
+	 * @param int $pageId The pageID wherefore you want more information.
 	 * @return mixed
 	 */
 	public static function getPageInfo($pageId)
@@ -398,7 +400,7 @@ class FrontendNavigation extends FrontendBaseObject
 						$return['parent_id'] = $parentId;
 
 						// return
-						return $return;;
+						return $return;
 					}
 				}
 			}
@@ -411,7 +413,7 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get URL for a given pageId
 	 *
-	 * @param int $pageId The pageID wherefor you want the URL.
+	 * @param int $pageId The pageID wherefore you want the URL.
 	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 * @return string
 	 */
@@ -426,7 +428,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// get the menuItems
 		$keys = self::getKeys($language);
 
-		// get the URL, if it doens't exist return 404
+		// get the URL, if it doesn't exist return 404
 		if(!isset($keys[$pageId])) return self::getURL(404, $language);
 
 		// add URL
@@ -439,8 +441,8 @@ class FrontendNavigation extends FrontendBaseObject
 	/**
 	 * Get the URL for a give module & action combination
 	 *
-	 * @param string $module The module wherefor the URL should be build.
-	 * @param string[optional] $action The specific action wherefor the URL shoul be build.
+	 * @param string $module The module wherefore the URL should be build.
+	 * @param string[optional] $action The specific action wherefore the URL should be build.
 	 * @param string[optional] $language The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 * @return string
 	 */
@@ -489,7 +491,7 @@ class FrontendNavigation extends FrontendBaseObject
 			}
 		}
 
-		// pageId stull null?
+		// pageId still null?
 		if($pageIdForURL === null) return self::getURL(404, $language);
 
 		// build URL
@@ -527,7 +529,7 @@ class FrontendNavigation extends FrontendBaseObject
 				foreach($pages as $properties)
 				{
 					// no extra_blocks available, so skip this item
-					if(isset($properties['extra_blocks'])) continue;
+					if(!isset($properties['extra_blocks'])) continue;
 
 					// loop extras
 					foreach($properties['extra_blocks'] as $extra)

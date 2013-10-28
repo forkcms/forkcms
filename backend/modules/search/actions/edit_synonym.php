@@ -95,7 +95,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 				$item['synonym'] = $this->frm->getField('synonym')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 
-				// upate the item
+				// update the item
 				BackendSearchModel::updateSynonym($item);
 
 				// trigger event

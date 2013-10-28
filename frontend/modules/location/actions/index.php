@@ -11,7 +11,7 @@
  * This is the index-action, it has an overview of locations.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
 class FrontendLocationIndex extends FrontendBaseBlock
@@ -26,10 +26,9 @@ class FrontendLocationIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
-		parent::execute();
-
-		// add Google Maps
 		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
+		parent::execute();
 
 		$this->loadTemplate();
 		$this->loadData();
@@ -52,7 +51,7 @@ class FrontendLocationIndex extends FrontendBaseBlock
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

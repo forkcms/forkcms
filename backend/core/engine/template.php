@@ -72,7 +72,7 @@ class BackendTemplate extends SpoonTemplate
 	 * @param string $template The path for the template.
 	 * @param bool[optional] $customHeaders Are there custom headers set?
 	 */
-	public function display($template, $customHeaders = false)
+	public function display($template)
 	{
 		$this->parseConstants();
 		$this->parseAuthenticatedUser();
@@ -80,12 +80,6 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseLabels();
 		$this->parseLocale();
 		$this->parseVars();
-
-		// parse headers
-		if(!$customHeaders)
-		{
-			SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
-		}
 
 		parent::display($template);
 	}
@@ -174,7 +168,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseAuthentication()
 	{
 		// init var
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get allowed actions
 		$allowedActions = (array) $db->getRecords(
@@ -218,7 +212,7 @@ class BackendTemplate extends SpoonTemplate
 		// we should only assign constants if there are constants to assign
 		if(!empty($realConstants)) $this->assign($realConstants);
 
-		// we use some abbrviations and common terms, these should also be assigned
+		// we use some abbreviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
 		if($this->URL instanceof BackendURL)
@@ -236,7 +230,7 @@ class BackendTemplate extends SpoonTemplate
 			// assign the authenticated users secret key
 			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
 
-			// assign the authentiated users preferred interface language
+			// assign the authenticated users preferred interface language
 			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
@@ -262,18 +256,8 @@ class BackendTemplate extends SpoonTemplate
 		elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
 		else $currentModule = 'core';
 
-		// init vars
-		$realErrors = array();
-		$realLabels = array();
-		$realMessages = array();
-
-		// get all errors
 		$errors = BackendLanguage::getErrors();
-
-		// get all labels
 		$labels = BackendLanguage::getLabels();
-
-		// get all messages
 		$messages = BackendLanguage::getMessages();
 
 		// set the begin state
@@ -316,7 +300,7 @@ class BackendTemplate extends SpoonTemplate
 			foreach($realMessages as &$value) $value = addslashes($value);
 		}
 
-		// sort the arrays (just to make it look beautifull)
+		// sort the arrays (just to make it look beautiful)
 		ksort($realErrors);
 		ksort($realLabels);
 		ksort($realMessages);
@@ -501,7 +485,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * syntac: {$var|formatdate}
+	 * syntax: {$var|formatdate}
 	 *
 	 * @param int $var The UNIX-timestamp to format.
 	 * @return string
@@ -524,7 +508,6 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		$var = (string) $var; // @todo what is this doing here?
 		return Spoon::get('navigation')->getNavigation(1, 1);
 	}
 
@@ -539,7 +522,6 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
 	{
-		$var = (string) $var;
 		$startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
@@ -559,12 +541,8 @@ class BackendTemplateModifiers
 	 */
 	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
-		// redefine
-		$var = (string) $var;
 		$action = ($action !== null) ? (string) $action : null;
 		$module = ($module !== null) ? (string) $module : null;
-
-		// build the url
 		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
 	}
 
@@ -574,12 +552,11 @@ class BackendTemplateModifiers
 	 *
 	 * @param string[optional] $var The string passed from the template.
 	 * @param int $min The minimum number.
-	 * @param int $max The maximim number.
+	 * @param int $max The maximum number.
 	 * @return int
 	 */
 	public static function random($var = null, $min, $max)
 	{
-		$var = (string) $var;
 		return rand((int) $min, (int) $max);
 	}
 

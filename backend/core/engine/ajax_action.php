@@ -7,8 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
- * This class is the real code, it creates an action, loads the configfile, ...
+ * This class is the real code, it creates an action, loads the config file, ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
@@ -25,6 +27,8 @@ class BackendAJAXAction extends BackendBaseObject
 	/**
 	 * Execute the action
 	 * We will build the classname, require the class and call the execute method.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
 	 */
 	public function execute()
 	{
@@ -33,7 +37,7 @@ class BackendAJAXAction extends BackendBaseObject
 		// build action-class-name
 		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
+		// require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
 		require_once BACKEND_MODULE_PATH . '/ajax/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
@@ -41,11 +45,10 @@ class BackendAJAXAction extends BackendBaseObject
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
-		
-		// set action and module!
 		$object->setAction($this->getAction(), $this->getModule());
-		
 		$object->execute();
+
+		return $object->getContent();
 	}
 
 	/**
@@ -66,7 +69,15 @@ class BackendAJAXAction extends BackendBaseObject
 		}
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+		if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
+			if(BackendModel::getContainer()->getParameter('kernel.debug')) {
+				throw new BackendException('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
+			} else {
+				$response = new Response('', 404);
+				$response->send();
+				exit;   // I know this line shouldn't be here
+			}
+		}
 
 		// build config-object-name
 		$configClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_config');

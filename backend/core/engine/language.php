@@ -93,7 +93,7 @@ class BackendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getError($key, $module = null)
@@ -166,7 +166,7 @@ class BackendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getLabel($key, $module = null)
@@ -206,7 +206,7 @@ class BackendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @param string $key The key to get.
-	 * @param string[optional] $module The module wherin we should search.
+	 * @param string[optional] $module The module wherein we should search.
 	 * @return string
 	 */
 	public static function getMessage($key, $module = null)
@@ -286,8 +286,14 @@ class BackendLanguage
 		require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 
 		// validate file, generate it if needed
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/en.php')) BackendLocaleModel::buildCache('en', APPLICATION);
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php')) BackendLocaleModel::buildCache($language, APPLICATION);
+		if(!is_file(BACKEND_CACHE_PATH . '/locale/en.php'))
+		{
+			BackendLocaleModel::buildCache('en', APPLICATION);
+		}
+		if(!is_file(BACKEND_CACHE_PATH . '/locale/' . $language . '.php'))
+		{
+			BackendLocaleModel::buildCache($language, APPLICATION);
+		}
 
 		// store
 		self::$currentInterfaceLanguage = $language;

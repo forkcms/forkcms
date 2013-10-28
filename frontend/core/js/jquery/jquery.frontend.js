@@ -13,11 +13,11 @@
  * 		2. if the title-attribute is used this value will be used in favor of the OpenGraph-title-tag.
  * 		3. if the data-title-attribute is set this value will be used, OpenGraph and title-attribute will be ignored.
  * 		4. as a fallback the value of the title-tag is used.
- * - The description (used by: delicious, linkedin, netlog, twitter)
+ * - The description (used by: Delicious, LinkedIn, Netlog, Twitter)
  * 		1. if the OpenGraph-description-tag is provided, that value will be used.
  * 		2. if the data-description-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. no description will be used.
- * - The image (used by: netlog)
+ * - The image (used by: Netlog)
  * 		1. if the OpenGraph-image tag is available the value of this tag will be used.
  * 		2. if the data-image-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. the default image if there is one provided.
@@ -27,7 +27,7 @@
  * - debug			if debug is enabled a warning will be logged to the console if og-parameters aren't available, possible values are: true, false.
  * - default_image	the image that will be used by default.
  * - sequence		an array containing the names of the share-items in the wanted sequence.
- * - isDropdown		will the plugin be used as a dropdownmenu? If so we will hide it by default an show on click/hover.
+ * - isDropdown		will the plugin be used as a drop-down-menu? If so we will hide it by default an show on click/hover.
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -46,8 +46,10 @@
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
 			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
-			isDropdown: true,
-
+			isDropdown: true
+		};
+		var settings =
+		{
 			delicious: { name: 'delicious', show: true, label: 'Delicious'},
 			digg: { name: 'digg', show: true, label: 'Digg' },
 			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
@@ -59,7 +61,8 @@
 		};
 
 		// extend options
-		var options = $.extend(true, defaults, options);
+		var options = $.extend(defaults, options);
+		options = $.extend(true, settings, options);
 
 		return this.each(function()
 		{
@@ -104,7 +107,7 @@
 					// based on the type we should generate the correct markup
 					switch(options[options.sequence[i]].name)
 					{
-						// delicious
+						// Delicious
 						case 'delicious':
 							// build url
 							var url = 'http://delicious.com/save?url=' + encodeURIComponent(link);
@@ -120,7 +123,7 @@
 									'</li>' + "\n";
 						break;
 
-						// digg
+						// Digg
 						case 'digg':
 							// build url
 							var url = 'http://digg.com/submit?url=' + encodeURIComponent(link);
@@ -135,7 +138,7 @@
 									'</li>' + "\n";
 						break;
 
-						// facebook?
+						// Facebook?
 						case 'facebook':
 							// check for OG-data.
 							if(options.debug && $('meta[property^="og"]').length == 0) console.log('You should provide OpenGraph data.');
@@ -157,7 +160,7 @@
 							html += '</li>';
 						break;
 
-						// linkedin
+						// LinkedIn
 						case 'linkedin':
 							if(!linkedInLoaded)
 							{
@@ -191,7 +194,7 @@
 									'</li>' + "\n";
 						break;
 
-						// netlog?
+						// Netlog?
 						case 'netlog':
 							// build url
 							var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + encodeURIComponent(link);
@@ -209,7 +212,7 @@
 									'</li>' + "\n";
 						break;
 
-						// twitter
+						// Twitter
 						case 'twitter':
 							if(!twitterLoaded)
 							{
@@ -238,9 +241,8 @@
 							html += '<li class="shareMenuTwitter">' +
 									'	<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
 							if(title != '') html += ' data-text="' + title + '"';
-							html += ' data-lang="' + jsFrontend.current.language + '"';
-							html += ' >' + options.twitter.label  + '</a>';
-							html += '</li>';
+							html += ' data-lang="' + jsFrontend.current.language + '">' + options.twitter.label  + '</a>' +
+									'</li>';
 						break;
 
 						// google plus
@@ -270,10 +272,10 @@
 
 							// build & add html
 							html += '<li class="shareMenuGoogleplus">' +
-							'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>';
-							html += '</li>';
+									'	<div class="g-plusone" data-size="medium" data-href="' + link + '"></div>' +
+									'</li>';
 						break;
-						
+
 						// pinterest
 						case 'pinterest':
 							if(image != '')
@@ -285,33 +287,37 @@
 									{
 										if($(this).attr('src') == '//assets.pinterest.com/js/pinit.js') pinterestLoaded = true;
 									});
-	
+
 									// not loaded?
 									if(!pinterestLoaded)
 									{
 										// create the script tag
 										var script = document.createElement('script')
 										script.src = '//assets.pinterest.com/js/pinit.js';
-	
+
 										// add into head
 										$('head').after(script);
-	
+
+										// ugly hack, for some stupid reason Pinterests adds an iframe at the bottom of the page
+										// therefor we set it to display none.
+										$('head').append('<style>iframe[src^="//assets.pinterest"] { display: none; }</style>');
+
 										// reset var
 										pinterestLoaded = true;
 									}
-									
+
 									if(typeof options[options.sequence[i]].countLayout != 'undefined') countLayout = options[options.sequence[i]].countLayout;
 									else countLayout = 'none';
 									if(countLayout != 'horizontal' || countLayout != 'vertical' || countLayout != 'none') countLayout = 'none';
 
 									// build & add html
 									html += '<li class="shareMenuPinterest">' +
-									'	<a href="http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) + 
-										'&media=' + encodeURIComponent(image) + 
-										'&description=' + encodeURIComponent(description) + 
-										'" class="pin-it-button" count-layout="' + countLayout + '">' +
-										'<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>';
-									html += '</li>';
+											'	<a href="http://pinterest.com/pin/create/button/?url=' + encodeURIComponent(link) +
+													'&media=' + encodeURIComponent(image) +
+													'&description=' + encodeURIComponent(description) +
+													'" class="pin-it-button" count-layout="' + countLayout + '">' +
+												'<img border="0" src="//assets.pinterest.com/images/PinExt.png" title="Pin It" /></a>' +
+											'</li>';
 								}
 							}
 						break;

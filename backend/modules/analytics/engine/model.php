@@ -7,6 +7,10 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
 /**
  * In this file we store all generic data communication functions
  *
@@ -20,7 +24,7 @@ class BackendAnalyticsModel
 	 *
 	 * @var	string
 	 */
-	const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&amp;scope=%2$s&amp;secure=0&amp;session=1';
+	const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&scope=%2$s&secure=0&session=1';
 	const GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE = 'https://www.google.com/analytics/feeds/';
 
 	/**
@@ -53,14 +57,14 @@ class BackendAnalyticsModel
 			if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 
 			// analytics table id (only show this error if no other exist)
 			if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
 			{
 				// add warning
-				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+				$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
 			}
 		}
 
@@ -72,7 +76,7 @@ class BackendAnalyticsModel
 	 */
 	public static function clearTables()
 	{
-		BackendModel::getDB(true)->truncate(
+		BackendModel::getContainer()->get('database')->truncate(
 			array(
 				'analytics_keywords',
 				'analytics_landing_pages',
@@ -89,7 +93,7 @@ class BackendAnalyticsModel
 	 */
 	public static function deleteLandingPage($ids)
 	{
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
+		BackendModel::getContainer()->get('database')->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
 	}
 
 	/**
@@ -100,7 +104,7 @@ class BackendAnalyticsModel
 	 */
 	public static function existsLandingPage($id)
 	{
-		return (bool) BackendModel::getDB()->getVar(
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM analytics_landing_pages
 			 WHERE id = ?
@@ -212,7 +216,7 @@ class BackendAnalyticsModel
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to empty
+			// doesn't exist in cache after loading the xml file so set to empty
 			if(!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
 		}
 
@@ -231,7 +235,7 @@ class BackendAnalyticsModel
 		$filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
 		// file exists
-		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/analytics/' . $filename))
+		if(is_file(BACKEND_CACHE_PATH . '/analytics/' . $filename))
 		{
 			// get the xml (cast is important otherwise we cant use array_walk_recursive)
 			$xml = simplexml_load_file(BACKEND_CACHE_PATH . '/analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -255,9 +259,6 @@ class BackendAnalyticsModel
 	 */
 	public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
-		$metrics = (array) $metrics;
-		$forceCache = (bool) $forceCache;
-
 		return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
 	}
 
@@ -270,7 +271,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache - load cache xml file
+		// doesn't exist in cache - load cache xml file
 		if(!isset(self::$dashboardData) || empty(self::$dashboardData))
 		{
 			self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
@@ -289,7 +290,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
 	{
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get id for this page
 		$id = (int) $db->getVar(
@@ -347,13 +348,13 @@ class BackendAnalyticsModel
 	 */
 	public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
 	{
-		// doesnt exist in cache
+		// doesn't exist in cache
 		if(!isset(self::$data[$type]))
 		{
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to false to get live data
+			// doesn't exist in cache after loading the xml file so set to false to get live data
 			if(!isset(self::$data[$type])) return false;
 		}
 
@@ -410,7 +411,7 @@ class BackendAnalyticsModel
 	public static function getLandingPages($startTimestamp, $endTimestamp, $limit = null)
 	{
 		$results = array();
-		$db = BackendModel::getDB();
+		$db = BackendModel::getContainer()->get('database');
 
 		// get data from database
 		if($limit === null) $items = (array) $db->getRecords(
@@ -476,10 +477,10 @@ class BackendAnalyticsModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
+		if(!is_file(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
-		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
+		$cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
 
 		// get the array
 		preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
@@ -512,13 +513,11 @@ class BackendAnalyticsModel
 	 * @param array $metrics The metrics to collect.
 	 * @param int $startTimestamp The start timestamp for the cache file.
 	 * @param int $endTimestamp The end timestamp for the cache file.
-	 * @param string[optional] $forceCache Should the data be forced from cache.
+	 * @param boolean[optional] $forceCache Should the data be forced from cache.
 	 * @return array
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
-		$metrics = (array) $metrics;
-
 		// get data from cache
 		$items = self::getDataFromCacheByType('metrics_per_day', $startTimestamp, $endTimestamp);
 
@@ -545,7 +544,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageByPath($path)
 	{
-		return (array) BackendModel::getDB()->getRecord(
+		return (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM analytics_pages
 			 WHERE page = ?',
@@ -561,7 +560,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageForId($pageId)
 	{
-		return (string) BackendModel::getDB()->getVar(
+		return (string) BackendModel::getContainer()->get('database')->getVar(
 			'SELECT page
 			 FROM analytics_pages
 			 WHERE id = ?',
@@ -613,11 +612,11 @@ class BackendAnalyticsModel
 	/**
 	 * Get the most recent keywords
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->getRecords(
+		return (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_keywords
 			 ORDER BY entrances DESC, id'
@@ -627,11 +626,11 @@ class BackendAnalyticsModel
 	/**
 	 * Get the most recent referrers
 	 *
-	 * @return string
+	 * @return array
 	 */
 	public static function getRecentReferrers()
 	{
-		$items = (array) BackendModel::getDB()->getRecords(
+		$items = (array) BackendModel::getContainer()->get('database')->getRecords(
 			'SELECT *
 			 FROM analytics_referrers
 			 ORDER BY entrances DESC, id'
@@ -885,7 +884,7 @@ class BackendAnalyticsModel
 	 */
 	public static function insertLandingPage(array $item)
 	{
-		return (int) BackendModel::getDB(true)->insert('analytics_landing_pages', $item);
+		return (int) BackendModel::getContainer()->get('database')->insert('analytics_landing_pages', $item);
 	}
 
 	/**
@@ -908,7 +907,7 @@ class BackendAnalyticsModel
 			if($name == '@attributes') continue;
 
 			// empty item
-			if(trim((string) $children) == '')
+			if(empty($children))
 			{
 				// save empty array
 				$data[$name] = array();
@@ -1047,12 +1046,11 @@ class BackendAnalyticsModel
 	 */
 	public static function removeCacheFiles()
 	{
-		$cachePath = BACKEND_CACHE_PATH . '/analytics';
-
-		// delete all cache files
-		foreach(SpoonFile::getList($cachePath) as $file)
+		$finder = new Finder();
+		$fs = new Filesystem();
+		foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file)
 		{
-			SpoonFile::delete($cachePath . '/' . $file);
+			$fs->remove($file->getRealPath());
 		}
 	}
 
@@ -1063,7 +1061,7 @@ class BackendAnalyticsModel
 	 */
 	public static function updatePageDateViewed($pageId)
 	{
-		BackendModel::getDB(true)->update(
+		BackendModel::getContainer()->get('database')->update(
 			'analytics_pages',
 			array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')),
 			'id = ?',
@@ -1111,7 +1109,7 @@ class BackendAnalyticsModel
 				foreach($items as $key => $value)
 				{
 					// skip empty items
-					if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+					if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
 					// value contains an array
 					if(is_array($value))
@@ -1143,16 +1141,16 @@ class BackendAnalyticsModel
 			else
 			{
 				// loop data
-				foreach($records as $subkey => $subitems)
+				foreach($records as $subKey => $subItems)
 				{
 					// build xml
-					$xml .= "\t\t<" . $subkey . ">\n";
+					$xml .= "\t\t<" . $subKey . ">\n";
 
-					// subitems is an array
-					if(is_array($subitems))
+					// sub items is an array
+					if(is_array($subItems))
 					{
 						// loop data
-						foreach($subitems as $key => $value)
+						foreach($subItems as $key => $value)
 						{
 							// skip empty items
 							if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
@@ -1184,10 +1182,10 @@ class BackendAnalyticsModel
 					}
 
 					// not an array
-					else $xml .= "<![CDATA[" . (string) $subitems . "]]>";
+					else $xml .= "<![CDATA[" . (string) $subItems . "]]>";
 
 					// end xml element
-					$xml .= "\t\t</" . $subkey . ">\n";
+					$xml .= "\t\t</" . $subKey . ">\n";
 				}
 			}
 
@@ -1202,7 +1200,11 @@ class BackendAnalyticsModel
 		$simpleXml = @simplexml_load_string($xml);
 		if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
-		$filename = $startTimestamp . '_' . $endTimestamp . '.xml';
-		SpoonFile::setContent(BACKEND_CACHE_PATH . '/analytics/' . $filename, $xml);
+		// store
+		$fs = new Filesystem();
+		$fs->dumpFile(
+			BACKEND_CACHE_PATH . '/analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
+			$xml
+		);
 	}
 }

@@ -15,6 +15,11 @@
 class FrontendProfilesWidgetLoginBox extends FrontendBaseWidget
 {
 	/**
+	 * @var FrontendForm
+	 */
+	private $frm;
+
+	/**
 	 * Execute the extra
 	 */
 	public function execute()
@@ -34,8 +39,8 @@ class FrontendProfilesWidgetLoginBox extends FrontendBaseWidget
 		if(FrontendProfilesAuthentication::isLoggedIn()) return;
 
 		$this->frm = new FrontendForm('login', FrontendNavigation::getURLForBlock('profiles', 'login'));
-		$this->frm->addText('email');
-		$this->frm->addPassword('password');
+		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addPassword('password')->setAttributes(array('required' => null));
 		$this->frm->addCheckbox('remember', true);
 
 		// parse the form

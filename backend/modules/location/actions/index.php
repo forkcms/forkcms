@@ -11,7 +11,7 @@
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendLocationIndex extends BackendBaseActionIndex
 {
@@ -35,7 +35,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// add js
-		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, false, true);
+		$this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
 		$this->loadData();
 
@@ -61,14 +61,13 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		// load the settings from the general settings
 		if(empty($this->settings))
 		{
-			$settings = BackendModel::getModuleSettings();
-			$this->settings = $settings['location'];
+			$this->settings = BackendModel::getModuleSettings('location');
 
 			$this->settings['center']['lat'] = $firstMarker['lat'];
 			$this->settings['center']['lng'] = $firstMarker['lng'];
 		}
 
-		// no center point given yet, use the first occurance
+		// no center point given yet, use the first occurrence
 		if(!isset($this->settings['center']))
 		{
 			$this->settings['center']['lat'] = $firstMarker['lat'];

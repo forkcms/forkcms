@@ -6,7 +6,6 @@
  */
 var utils =
 {
-	// datamembers
 	debug: false
 }
 
@@ -50,7 +49,7 @@ utils.cookies =
 	isEnabled: function()
 	{
 		// try to grab the property
-		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
+		var cookiesEnabled = !!(navigator.cookieEnabled);
 
 		// unknown property?
 		if(typeof navigator.cookieEnabled == 'undefined' && !cookiesEnabled)
@@ -85,11 +84,11 @@ utils.cookies =
 		// fallback
 		return null;
 	},
-	
+
 	setCookie: function(name, value, days)
 	{
 		if(typeof days == 'undefined') days = 7;
-		
+
 		var expireDate = new Date();
 		expireDate.setDate(expireDate.getDate() + days);
 		document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/';
@@ -115,7 +114,7 @@ utils.form =
 	},
 
 	/**
-	 * Is the value inside the element a valid emailaddress
+	 * Is the value inside the element a valid email address
 	 *
 	 * @return	bool
 	 * @param	object element
@@ -296,14 +295,14 @@ utils.string =
 	 *
 	 * @return	string
 	 * @param	string value
-	 * @param	string[optional] charlist
+	 * @param	string[optional] charList
 	 */
-	trim: function(value, charlist)
+	trim: function(value, charList)
 	{
 		if(value == undefined) return '';
-		if(charlist == undefined) charlist = ' ';
+		if(charList == undefined) charList = ' ';
 
-		var pattern = new RegExp('^[' + charlist + ']*|[' + charlist + ']*$', 'g');
+		var pattern = new RegExp('^[' + charList + ']*|[' + charList + ']*$', 'g');
 		return value.replace(pattern, '');
 	},
 
@@ -370,6 +369,17 @@ utils.string =
 
 		// trim - signs
 		return utils.string.trim(value, '-');
+	},
+
+	/**
+	 * Adds a capital letter to a string
+	 *
+	 * @return	string
+	 * @param	string $value
+	 */
+	ucfirst: function(value)
+	{
+		return value.charAt(0).toUpperCase() + value.slice(1);
 	},
 
 	/**

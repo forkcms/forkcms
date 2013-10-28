@@ -116,10 +116,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
 		// create elements
-		$this->frm->addText('author', $author);
-		$this->frm->addText('email', $email);
+		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
+		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addText('website', $website, null);
-		$this->frm->addTextarea('message');
+		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
 
 	/**
@@ -140,22 +140,18 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// add RSS-feed into the metaCustom
 		$this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])), 'href' => $rssCommentsLink), true);
 
-		// build Facebook Open Graph-data
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
-		{
-			// add specified image
-			if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
+		// add specified image
+		if(isset($this->record['image']) && $this->record['image'] != '') $this->header->addOpenGraphImage(FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']);
 
-			// add images from content
-			$this->header->extractOpenGraphImages($this->record['text']);
+		// Open Graph-data: add images from content
+		$this->header->extractOpenGraphImages($this->record['text']);
 
-			// add additional OpenGraph data
-			$this->header->addOpenGraphData('title', $this->record['title'], true);
-			$this->header->addOpenGraphData('type', 'article', true);
-			$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
-			$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
-			$this->header->addOpenGraphData('description', $this->record['title'], true);
-		}
+		// Open Graph-data: add additional OpenGraph data
+		$this->header->addOpenGraphData('title', $this->record['title'], true);
+		$this->header->addOpenGraphData('type', 'article', true);
+		$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
+		$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
+		$this->header->addOpenGraphData('description', ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'], true);
 
 		// when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb
 		if(count(FrontendBlogModel::getAllCategories()) > 1) $this->breadcrumb->addElement($this->record['category_title'], FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url']);
@@ -198,8 +194,30 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);
 
+		$navigation = FrontendBlogModel::getNavigation($this->record['id']);
+
+		// set previous and next link for usage with Flip ahead
+		if(!empty($navigation['previous']))
+		{
+			$this->header->addLink(
+				array(
+					'rel' => 'prev',
+					'href' => SITE_URL . $navigation['previous']['url'],
+				)
+			);
+		}
+		if(!empty($navigation['next']))
+		{
+			$this->header->addLink(
+				array(
+					'rel' => 'next',
+					'href' => SITE_URL . $navigation['next']['url'],
+				)
+			);
+		}
+
 		// assign navigation
-		$this->tpl->assign('navigation', FrontendBlogModel::getNavigation($this->record['id']));
+		$this->tpl->assign('navigation', $navigation);
 	}
 
 	/**
@@ -316,7 +334,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// notify the admin
 				FrontendBlogModel::notifyAdmin($comment);
 
-				// store timestamp in session so we can block excesive usage
+				// store timestamp in session so we can block excessive usage
 				SpoonSession::set('blog_comment_' . $this->record['id'], time());
 
 				// store author-data in cookies

@@ -1,5 +1,7 @@
 <?php
 
+use \MatthiasMullie\Minify;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -69,11 +71,11 @@ class BackendHeader
 	 *   /backend/modules/MODULE/layout/css/FILE (for modules)
 	 *   /backend/core/layout/css/FILE (for core)
 	 *
-	 * If you set overwritePath to true, the above-described automatic path creation will not happend, instead the
+	 * If you set overwritePath to true, the above-described automatic path creation will not happen, instead the
 	 * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
 	 *
 	 * @param string $file The name of the file to load.
-	 * @param string[optional] $module The module wherin the file is located.
+	 * @param string[optional] $module The module wherein the file is located.
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $minify Should the CSS be minified?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
@@ -85,9 +87,6 @@ class BackendHeader
 		$overwritePath = (bool) $overwritePath;
 		$minify = (bool) $minify;
 		$addTimestamp = (bool) $addTimestamp;
-
-		// init var
-		$realPath = '';
 
 		// no actual path given: create
 		if(!$overwritePath)
@@ -126,42 +125,30 @@ class BackendHeader
 	/**
 	 * Add a JS-file.
 	 * If you don't specify a module, the current one will be used
-	 * If you set parseThroughPHP to true, the JS will be parsed by PHP (labels and vars will be assignes)
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
 	 * @param string $file The file to load.
-	 * @param string[optional] $module The module wherin the file is located.
+	 * @param string[optional] $module The module wherein the file is located.
 	 * @param bool[optional] $minify Should the module be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed by PHP?
 	 * @param bool[optional] $overwritePath Should we overwrite the full path?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $module = null, $minify = true, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = false)
+	public function addJS($file, $module = null, $minify = true, $overwritePath = false, $addTimestamp = false)
 	{
 		$file = (string) $file;
 		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$minify = (bool) $minify;
-		$parseThroughPHP = (bool) $parseThroughPHP;
 		$overwritePath = (bool) $overwritePath;
 		$addTimestamp = (bool) $addTimestamp;
-
-		// validate parameters
-		if($parseThroughPHP && $overwritePath) throw new BackendException('parseThroughPHP and overwritePath can\'t be both true.');
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
 
-		// no minifying when parsing through PHP
-		if($parseThroughPHP) $minify = false;
-
 		// is the given path the real path?
 		if(!$overwritePath)
 		{
-			// should we parse the js-file? as in assign variables
-			if($parseThroughPHP) $file = '/backend/js.php?module=' . $module . '&amp;file=' . $file . '&amp;language=' . BL::getWorkingLanguage();
-
 			// we have to build the path, but core is a special one
-			elseif($module !== 'core') $file = '/backend/modules/' . $module . '/js/' . $file;
+			if($module !== 'core') $file = '/backend/modules/' . $module . '/js/' . $file;
 
 			// core is special because it isn't a real module
 			else $file = '/backend/core/js/' . $file;
@@ -225,11 +212,10 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$css = new MinifyCSS(PATH_WWW . $file);
+			$css = new Minify\CSS(PATH_WWW . $file);
 			$css->minify($finalPath);
 		}
 
@@ -250,11 +236,10 @@ class BackendHeader
 		$finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
-		if(!SpoonFile::exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
 		{
 			// minify the file
-			require_once PATH_LIBRARY . '/external/minify.php';
-			$js = new MinifyJS(PATH_WWW . $file);
+			$js = new Minify\JS(PATH_WWW . $file);
 			$js->minify($finalPath);
 		}
 
@@ -368,13 +353,16 @@ class BackendHeader
 			$this->jsData['editor']['language'] = (string) BackendAuthentication::getUser()->getSetting('interface_language');
 		}
 
+		// CKeditor has support for simplified Chinese, but the language is called zh-cn instead of zn
+		if($this->jsData['editor']['language'] == 'zh') $this->jsData['editor']['language'] = 'zh-cn';
+
 		// theme
 		if(BackendModel::getModuleSetting('core', 'theme') !== null)
 		{
 			$this->jsData['theme']['theme'] = BackendModel::getModuleSetting('core', 'theme');
 			$this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme');
-			$this->jsData['theme']['has_css'] = (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
-			$this->jsData['theme']['has_editor_css'] = (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
+			$this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
+			$this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
 		}
 
 		// encode and add

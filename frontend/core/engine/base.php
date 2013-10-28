@@ -7,12 +7,20 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
+
 /**
- * This class will be the base of the objects used in onsite
+ * This class will be the base of the objects used in on-site
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseObject
+class FrontendBaseObject extends KernelLoader
 {
 	/**
 	 * Template instance
@@ -91,14 +99,14 @@ class FrontendBaseConfig
 	protected $possibleAJAXActions = array();
 
 	/**
-	 * @param string $module The module wherefor this is the configuration-file.
+	 * @param string $module The module wherefore this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
 		$this->module = (string) $module;
 
 		// check if model exists
-		if(SpoonFile::exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
+		if(is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
 			require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
@@ -156,31 +164,26 @@ class FrontendBaseConfig
 	{
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+		$fs = new Filesystem();
 
-		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList($frontendModulePath . '/actions', '/(.*).php/');
-
-		// loop filelist
-		foreach($actionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
+		if($fs->exists($frontendModulePath . '/actions')) {
+			// get regular actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+			}
 		}
 
-		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath . '/ajax', '/(.*).php/');
-
-		// loop filelist
-		foreach($AJAXActionFiles as $file)
-		{
-			// get action by removing the extension, actions should not contain spaces (use _ instead)
-			$action = strtolower(str_replace('.php', '', $file));
-
-			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file] = $action;
+		if($fs->exists($frontendModulePath . '/ajax')) {
+			// get ajax-actions
+			$finder = new Finder();
+			$finder->name('*.php');
+			foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+				$action = $file->getBasename('.php');
+				if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+			}
 		}
 	}
 }
@@ -192,8 +195,9 @@ class FrontendBaseConfig
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendBaseBlock
+class FrontendBaseBlock extends FrontendBaseObject
 {
 	/**
 	 * The current action
@@ -272,7 +276,7 @@ class FrontendBaseBlock
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// get objects from the reference so they are accessable
+		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
@@ -311,10 +315,9 @@ class FrontendBaseBlock
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
+	public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -323,7 +326,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP, $addTimestamp);
+		$this->header->addJS($file, $minify, $addTimestamp);
 	}
 
 	/**
@@ -346,14 +349,18 @@ class FrontendBaseBlock
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
-		// buil URL to the module
+		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
-		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		// add javascript file with same name as module (if the file exists)
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
-		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		// add javascript file with same name as the action (if the file exists)
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**
@@ -472,29 +479,41 @@ class FrontendBaseBlock
 		$pagination['num_pages'] = $this->pagination['num_pages'];
 		$pagination['current_page'] = $this->pagination['requested_page'];
 
-		// as long as we are below page 5 we should show all pages starting from 1
-		if($this->pagination['requested_page'] <= 6)
+		// define anchor
+		$anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
+
+		// as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
+		if($this->pagination['requested_page'] > 5 && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4))
+		{
+			// init vars
+			$pagesStart = ($this->pagination['num_pages'] > 7) ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
+			$pagesEnd = $this->pagination['num_pages'];
+
+			// fix for page 6
+			if($this->pagination['num_pages'] == 6) $pagesStart = 1;
+
+			// show first pages
+			if($this->pagination['num_pages'] > 7) $showFirstPages = true;
+		}
+
+		// as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
+		elseif($this->pagination['requested_page'] <= 5)
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 7 : $this->pagination['num_pages'];
+			$pagesEnd = 6;
+
+			// when we have 7 pages, show 7 as end
+			if($this->pagination['num_pages'] == 7) $pagesEnd = 7;
+
+			// when we have less then 6 pages, show the maximum page
+			elseif($this->pagination['num_pages'] <= 6) $pagesEnd = $this->pagination['num_pages'];
 
 			// show last pages
-			if($this->pagination['num_pages'] > 6) $showLastPages = true;
+			if($this->pagination['num_pages'] > 7) $showLastPages = true;
 		}
 
-		// as long as we are 5 pages from the end we should show all pages till the end
-		elseif($this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4))
-		{
-			// init vars
-			$pagesStart = ($this->pagination['num_pages'] - 5);
-			$pagesEnd = $this->pagination['num_pages'];
-
-			// show first pages
-			if($this->pagination['num_pages'] > 5) $showFirstPages = true;
-		}
-
-		// page 7
+		// page 6
 		else
 		{
 			// init vars
@@ -513,7 +532,15 @@ class FrontendBaseBlock
 
 			// set
 			$pagination['show_previous'] = true;
-			$pagination['previous_url'] = $URL;
+			$pagination['previous_url'] = $URL . $anchor;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'prev',
+				     'href' => SITE_URL . $URL . $anchor,
+				)
+			);
 		}
 
 		// show first pages?
@@ -531,7 +558,7 @@ class FrontendBaseBlock
 				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
-				$pagination['first'][] = array('url' => $URL, 'label' => $i);
+				$pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
 			}
 		}
 
@@ -546,7 +573,7 @@ class FrontendBaseBlock
 			else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 			// add
-			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
+			$pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
 		}
 
 		// show last pages?
@@ -564,7 +591,7 @@ class FrontendBaseBlock
 				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
-				$pagination['last'][] = array('url' => $URL, 'label' => $i);
+				$pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
 			}
 		}
 
@@ -577,7 +604,15 @@ class FrontendBaseBlock
 
 			// set
 			$pagination['show_next'] = true;
-			$pagination['next_url'] = $URL;
+			$pagination['next_url'] = $URL . $anchor;
+
+			// flip ahead
+			$this->header->addLink(
+				array(
+				     'rel' => 'next',
+				     'href' => SITE_URL . $URL . $anchor,
+				)
+			);
 		}
 
 		// multiple pages
@@ -591,11 +626,26 @@ class FrontendBaseBlock
 	 * Redirect to a given URL
 	 *
 	 * @param string $URL The URL whereto will be redirected.
-	 * @param int[optional] $code The redirect code, default is 307 which means this is a temporary redirect.
+	 * @param int[optional] $code The redirect code, default is 302 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
 	{
-		SpoonHTTP::redirect((string) $URL, (int) $code);
+		$response = new RedirectResponse(
+			$URL, $code
+		);
+
+		/*
+		 * Since we've got some nested action structure, we'll send this
+		 * response directly after creating.
+		 */
+		$response->send();
+
+		/*
+		 * Stop code executing here
+		 * I know this is ugly as hell, but if we don't do this the code after
+		 * this call is executed and possibly will trigger errors.
+		 */
+		exit;
 	}
 
 	/**
@@ -665,7 +715,7 @@ class FrontendBaseBlock
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendBaseWidget
+class FrontendBaseWidget extends FrontendBaseObject
 {
 	/**
 	 * The current action
@@ -723,7 +773,7 @@ class FrontendBaseWidget
 	 */
 	public function __construct($module, $action, $data = null)
 	{
-		// get objects from the reference so they are accessable
+		// get objects from the reference so they are accessible
 		$this->tpl = new FrontendTemplate(false);
 		$this->header = Spoon::get('header');
 		$this->URL = Spoon::get('url');
@@ -761,9 +811,8 @@ class FrontendBaseWidget
 	 * @param  string $file The path to the javascript-file that should be loaded.
 	 * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
 	 * @param bool[optional] $minify Should the file be minified?
-	 * @param bool[optional] $parseThroughPHP Should the file be parsed through PHP?
 	 */
-	public function addJS($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJS($file, $overwritePath = false, $minify = true)
 	{
 		$file = (string) $file;
 		$overwritePath = (bool) $overwritePath;
@@ -772,7 +821,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
-		$this->header->addJS($file, $minify, $parseThroughPHP);
+		$this->header->addJS($file, $minify);
 	}
 
 	/**
@@ -795,14 +844,18 @@ class FrontendBaseWidget
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
-		// buil URL to the module
+		// build URL to the module
 		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
-		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		// add javascript file with same name as module (if the file exists)
+		if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+		}
 
-		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		// add javascript file with same name as the action (if the file exists)
+		if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+			$this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+		}
 	}
 
 	/**
@@ -938,6 +991,11 @@ class FrontendBaseAJAXAction
 	protected $action;
 
 	/**
+	 * @var array
+	 */
+	protected $content;
+
+	/**
 	 * The current module
 	 *
 	 * @var	string
@@ -960,7 +1018,7 @@ class FrontendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the children
+		return $this->getContent();
 	}
 
 	/**
@@ -971,6 +1029,27 @@ class FrontendBaseAJAXAction
 	public function getAction()
 	{
 		return $this->action;
+	}
+
+	/**
+	 * Since the display action in the backend is rather complicated and we
+	 * want to make this work with our Kernel, I've added this getContent
+	 * method to extract the output from the actual displaying.
+	 *
+	 * With this function we'll be able to get the content and return it as a
+	 * Symfony output object.
+	 *
+	 * @return Symfony\Component\HttpFoundation\Response
+	 */
+	public function getContent()
+	{
+		$statusCode = (isset($this->content['code']) ? $this->content['code'] : 200);
+
+		return new Response(
+			json_encode($this->content),
+			$statusCode,
+			array('content-type' => 'application/json')
+		);
 	}
 
 	/**
@@ -992,22 +1071,12 @@ class FrontendBaseAJAXAction
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
-		// redefine
 		$statusCode = (int) $statusCode;
 		if($message !== null) $message = (string) $message;
 
-		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
-		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
-
-		// output JSON to the browser
-		echo json_encode($response);
-
-		// stop script execution
-		exit;
+		$this->content = $response;
 	}
 
 	/**

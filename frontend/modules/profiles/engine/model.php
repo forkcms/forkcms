@@ -19,6 +19,13 @@ class FrontendProfilesModel
 	const MAX_DISPLAY_NAME_CHANGES = 2;
 
 	/**
+	 * Avatars cache
+	 *
+	 * @var array
+	 */
+	private static $avatars = array();
+
+	/**
 	 * Delete a setting.
 	 *
 	 * @param int $id Profile id.
@@ -27,7 +34,7 @@ class FrontendProfilesModel
 	 */
 	public static function deleteSetting($id, $name)
 	{
-		return (int) FrontendModel::getDB(true)->delete('profiles_settings', 'profile_id = ? AND name = ?', array((int) $id, (string) $name));
+		return (int) FrontendModel::getContainer()->get('database')->delete('profiles_settings', 'profile_id = ? AND name = ?', array((int) $id, (string) $name));
 	}
 
 	/**
@@ -39,7 +46,7 @@ class FrontendProfilesModel
 	 */
 	public static function existsByEmail($email, $ignoreId = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.email = ? AND p.id != ?
@@ -57,7 +64,7 @@ class FrontendProfilesModel
 	 */
 	public static function existsDisplayName($displayName, $id = null)
 	{
-		return (bool) FrontendModel::getDB()->getVar(
+		return (bool) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT 1
 			 FROM profiles AS p
 			 WHERE p.id != ? AND p.display_name = ?
@@ -75,6 +82,64 @@ class FrontendProfilesModel
 	public static function get($profileId)
 	{
 		return new FrontendProfilesProfile((int) $profileId);
+	}
+
+	/**
+	 * Get avatar
+	 *
+	 * @param int $id 					The id for the profile we want to get the avatar from.
+	 * @param string[optional] $email 	The email from the user we can use for gravatar.
+	 * @param string[optional] $size	The resolution you want to use. Default: 240x240 pixels.
+	 * @return string $avatar 			The absolute path to the avatar.
+	 */
+	public static function getAvatar($id, $email = null, $size = '240x240')
+	{
+		// redefine id
+		$id = (int) $id;
+
+		// return avatar from cache
+		if(isset(self::$avatars[$id])) return self::$avatars[$id];
+
+		// define avatar path
+		$avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/' . $size . '/';
+
+		// get user
+		$user = self::get($id);
+		
+		// if no email is given
+		if(!$email)
+		{
+			// redefine email
+			$email = $user->getEmail();
+		}
+
+		// define avatar
+		$avatar = $user->getSetting('avatar');
+
+		// no custom avatar defined, get gravatar if allowed
+		if(empty($avatar) && FrontendModel::getModuleSetting('profiles', 'allow_gravatar', true))
+		{
+			// define hash
+			$hash = md5(strtolower(trim('d' . $email)));
+
+			// define avatar url
+			$avatar = 'http://www.gravatar.com/avatar/' . $hash;
+
+			// when email not exists, it has to show our custom no-avatar image
+			$avatar .= '?d=' . urlencode(SITE_URL . $avatarPath) . 'no-avatar.gif';
+		}
+
+		// define avatar as not found
+		elseif(empty($avatar)) $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
+
+		// define custom avatar path
+		else $avatar = $avatarPath . $avatar;
+
+		// set avatar in cache
+		self::$avatars[$id] = $avatar;
+
+		// return avatar image path
+		return $avatar;
 	}
 
 	/**
@@ -97,7 +162,7 @@ class FrontendProfilesModel
 	 */
 	public static function getIdByEmail($email)
 	{
-		return (int) FrontendModel::getDB()->getVar('SELECT p.id FROM profiles AS p WHERE p.email = ?', (string) $email);
+		return (int) FrontendModel::getContainer()->get('database')->getVar('SELECT p.id FROM profiles AS p WHERE p.email = ?', (string) $email);
 	}
 
 	/**
@@ -109,7 +174,7 @@ class FrontendProfilesModel
 	 */
 	public static function getIdBySetting($name, $value)
 	{
-		return (int) FrontendModel::getDB()->getVar(
+		return (int) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT ps.profile_id
 			 FROM profiles_settings AS ps
 			 WHERE ps.name = ? AND ps.value = ?',
@@ -161,7 +226,7 @@ class FrontendProfilesModel
 	 */
 	public static function getSetting($id, $name)
 	{
-		return unserialize((string) FrontendModel::getDB()->getVar(
+		return unserialize((string) FrontendModel::getContainer()->get('database')->getVar(
 			'SELECT ps.value
 			 FROM profiles_settings AS ps
 			 WHERE ps.profile_id = ? AND ps.name = ?',
@@ -178,7 +243,7 @@ class FrontendProfilesModel
 	public static function getSettings($id)
 	{
 		// get settings
-		$settings = (array) FrontendModel::getDB()->getPairs(
+		$settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
 			'SELECT ps.name, ps.value
 			 FROM profiles_settings AS ps
 			 WHERE ps.profile_id = ?',
@@ -186,7 +251,7 @@ class FrontendProfilesModel
 		);
 
 		// unserialize values
-		foreach($settings as $key => &$value) $value = unserialize($value);
+		foreach($settings as &$value) $value = unserialize($value);
 
 		// return
 		return $settings;
@@ -201,14 +266,14 @@ class FrontendProfilesModel
 	 */
 	public static function getUrl($displayName, $id = null)
 	{
-		// decode specialchars
+		// decode special chars
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
 		$url = (string) CommonUri::getUrl($displayName);
 
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getContainer()->get('database');
 
 		// new item
 		if($id === null)
@@ -267,7 +332,7 @@ class FrontendProfilesModel
 	 */
 	public static function insert(array $values)
 	{
-		return (int) FrontendModel::getDB(true)->insert('profiles', $values);
+		return (int) FrontendModel::getContainer()->get('database')->insert('profiles', $values);
 	}
 
 	/**
@@ -294,20 +359,20 @@ class FrontendProfilesModel
 			$tpl->assign('isLoggedIn', true);
 		}
 
-		// ignore these url's in the querystring
+		// ignore these urls in the query string
 		$ignoreUrls = array(
 			FrontendNavigation::getURLForBlock('profiles', 'login'),
 			FrontendNavigation::getURLForBlock('profiles', 'register'),
 			FrontendNavigation::getURLForBlock('profiles', 'forgot_password')
 		);
 
-		// querystring
+		// query string
 		$queryString = (isset($_GET['queryString'])) ? SITE_URL . '/' . urldecode($_GET['queryString']) : SELF;
 
 		// check all ignore urls
 		foreach($ignoreUrls as $url)
 		{
-			// querystring contains a boeboe url
+			// query string contains a boeboe url
 			if(stripos($queryString, $url) !== false)
 			{
 				$queryString = '';
@@ -334,7 +399,7 @@ class FrontendProfilesModel
 	public static function setSetting($id, $name, $value)
 	{
 		// insert or update
-		FrontendModel::getDB(true)->execute(
+		FrontendModel::getContainer()->get('database')->execute(
 			'INSERT INTO profiles_settings(profile_id, name, value)
 			 VALUES(?, ?, ?)
 			 ON DUPLICATE KEY UPDATE value = ?',
@@ -365,7 +430,7 @@ class FrontendProfilesModel
 		$query .= rtrim(str_repeat('(?, ?, ?), ', count($values)), ', ') . ' ';
 		$query .= 'ON DUPLICATE KEY UPDATE value = VALUES(value)';
 
-		FrontendModel::getDB(true)->execute($query, $parameters);
+		FrontendModel::getContainer()->get('database')->execute($query, $parameters);
 	}
 
 	/**
@@ -377,6 +442,6 @@ class FrontendProfilesModel
 	 */
 	public static function update($id, array $values)
 	{
-		return (int) FrontendModel::getDB(true)->update('profiles', $values, 'id = ?', (int) $id);
+		return (int) FrontendModel::getContainer()->get('database')->update('profiles', $values, 'id = ?', (int) $id);
 	}
 }

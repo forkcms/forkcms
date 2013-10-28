@@ -7,11 +7,14 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * Frontend page class, this class will handle everything on a page
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Dave Lens <dave.lens@wijs.be>
  */
 class FrontendPage extends FrontendBaseObject
 {
@@ -74,12 +77,16 @@ class FrontendPage extends FrontendBaseObject
 	public function __construct()
 	{
 		parent::__construct();
+		Spoon::set('page', $this);
+	}
 
+	/**
+	 * Loads the actual components on the page
+	 */
+	public function load()
+	{
 		// set tracking cookie
 		FrontendModel::getVisitorId();
-
-		// add reference
-		Spoon::set('page', $this);
 
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
@@ -96,7 +103,7 @@ class FrontendPage extends FrontendBaseObject
 		// new footer instance
 		$this->footer = new FrontendFooter();
 
-		// get pagecontent
+		// get page content
 		$this->getPageContent();
 
 		// process page
@@ -107,9 +114,6 @@ class FrontendPage extends FrontendBaseObject
 
 		// store statistics
 		$this->storeStatistics();
-
-		// display
-		$this->display();
 
 		// trigger event
 		FrontendModel::triggerEvent(
@@ -157,11 +161,11 @@ class FrontendPage extends FrontendBaseObject
 		$unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
 		foreach($unusedPositions as $position) $this->tpl->assign('position' . SpoonFilter::ucfirst($position), array());
 
-		// only overwrite when status code is 404
-		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
-
 		// output
-		$this->tpl->display($this->templatePath, false, true);
+		return new Response(
+			$this->tpl->getContent($this->templatePath, false, true),
+			$this->statusCode
+		);
 	}
 
 	/**
@@ -209,7 +213,7 @@ class FrontendPage extends FrontendBaseObject
 		$redirect = true;
 
 		// loop blocks, if all are empty we should redirect to the first child
-		foreach($this->record['positions'] as $position => $blocks)
+		foreach($this->record['positions'] as $blocks)
 		{
 			// loop blocks in position
 			foreach($blocks as $block)
@@ -246,7 +250,7 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Get the content of the page
 	 *
-	 * @var	array
+	 * @return	array
 	 */
 	public function getRecord()
 	{
@@ -254,7 +258,7 @@ class FrontendPage extends FrontendBaseObject
 	}
 
 	/**
-	 * Fetch the statuscode for the current page.
+	 * Fetch the status code for the current page.
 	 *
 	 * @return int
 	 */
@@ -317,7 +321,7 @@ class FrontendPage extends FrontendBaseObject
 				// loop all blocks in this position
 				foreach($blocks as $i => $block)
 				{
-					// check for extra's that need to be reparsed
+					// check for extras that need to be reparsed
 					if(isset($block['extra']))
 					{
 						// fetch extra-specific variables
@@ -361,7 +365,12 @@ class FrontendPage extends FrontendBaseObject
 		// loop all extras
 		foreach($this->extras as $extra)
 		{
-			// execute
+			$this->getContainer()->get('logger')->info(
+				"Executing frontend action '{$extra->getAction()}' for module '{$extra->getModule()}'."
+			);
+
+			// all extras extend FrontendBaseObject, which extends KernelLoader
+			$extra->setKernel($this->getKernel());
 			$extra->execute();
 
 			// overwrite the template
@@ -407,9 +416,6 @@ class FrontendPage extends FrontendBaseObject
 			// loop blocks in position
 			foreach($blocks as $index => &$block)
 			{
-				// build templateVariable
-				$templateVariable = 'block' . ($index + 1);
-
 				// an extra
 				if($block['extra_id'] !== null)
 				{

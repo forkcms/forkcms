@@ -152,7 +152,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		list($query, $parameters) = $this->buildQuery();
 
 		// get locale from the database
-		$items = (array) BackendModel::getDB()->getRecords($query, $parameters);
+		$items = (array) $this->get('database')->getRecords($query, $parameters);
 
 		// init
 		$this->locale = array();

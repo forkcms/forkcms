@@ -1,7 +1,5 @@
 /**
- * Javascript for building forms
- *
- * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  * @author	Thomas Deceuninck <thomas@fronto.be>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -117,7 +115,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsDelete,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsDelete,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id
@@ -308,7 +306,7 @@ jsBackend.formBuilder.fields =
 			{
 				// init var
 				var rowIds = $(this).sortable('toArray');
-				var newIdSequence = new Array();
+				var newIdSequence = [];
 
 				// loop rowIds
 				for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);
@@ -316,14 +314,14 @@ jsBackend.formBuilder.fields =
 				// make ajax call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsSequence,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsSequence,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						new_id_sequence: newIdSequence.join('|')
 					}),
 					success: function(data, textStatus)
 					{
-						// not a succes so revert the changes
+						// not a success so revert the changes
 						if(data.code != 200)
 						{
 							// revert
@@ -372,7 +370,7 @@ jsBackend.formBuilder.fields =
 				// make the call
 				$.ajax(
 				{
-					data: $.extend(jsBackend.formBuilder.fields.paramsGet,
+					data: $.extend({}, jsBackend.formBuilder.fields.paramsGet,
 					{
 						form_id: jsBackend.formBuilder.formId,
 						field_id: id
@@ -393,6 +391,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxId').val(data.data.field.id);
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -724,7 +723,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -793,7 +792,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -858,7 +857,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -916,7 +915,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -978,7 +977,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1043,7 +1042,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1107,7 +1106,7 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
@@ -1162,7 +1161,7 @@ jsBackend.formBuilder.fields =
 	},
 
 	/**
-	 * Handle textbox save
+	 * Handle text box save
 	 */
 	saveTextbox: function()
 	{
@@ -1171,6 +1170,7 @@ jsBackend.formBuilder.fields =
 		var type = 'textbox';
 		var label = $('#textboxLabel').val();
 		var value = $('#textboxValue').val();
+		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
 		var validation = $('#textboxValidation').val();
@@ -1180,13 +1180,14 @@ jsBackend.formBuilder.fields =
 		// make the call
 		$.ajax(
 		{
-			data: $.extend(jsBackend.formBuilder.fields.paramsSave,
+			data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
 			{
 				form_id: jsBackend.formBuilder.formId,
 				field_id: fieldId,
 				type: type,
 				label: label,
 				default_values: value,
+				reply_to: replyTo,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,

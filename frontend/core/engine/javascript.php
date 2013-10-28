@@ -65,7 +65,7 @@ class FrontendJavascript
 		else $file = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
 
 		// output the template
-		$tpl->display(FrontendTheme::getPath($file), true);
+		$tpl->display(FrontendTheme::getPath($file));
 	}
 
 	/**
@@ -158,7 +158,7 @@ class FrontendJavascript
 		}
 
 		// check if the path exists, if not whe should given an error
-		if(!SpoonFile::exists($path))
+		if(!is_file($path))
 		{
 			// set correct headers
 			SpoonHTTP::setHeadersByCode(404);
@@ -196,7 +196,7 @@ class FrontendJavascript
 	private function setModule($value)
 	{
 		$modules = (array) FrontendModel::getModules();
-		
+
 		if(!in_array((string) $value, $modules))
 		{
 			// when debug is on throw an exception
@@ -205,7 +205,7 @@ class FrontendJavascript
 			// when debug is of show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);
 		}
-		
+
 		$this->module = (string) $value;
 	}
 }

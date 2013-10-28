@@ -12,7 +12,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class APIInit
+class APIInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -24,7 +24,7 @@ class APIInit
 	/**
 	 * @param string $type The type of init to load, possible values: backend, backend_ajax, backend_cronjob, backend_js
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('api');
 		$type = (string) $type;
@@ -46,15 +46,12 @@ class APIInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		$this->requireGlobals();
 		$this->definePaths();
-		$this->setIncludePath();
 		$this->setDebugging();
 
 		// get spoon
 		require_once 'spoon/spoon.php';
 
-		$this->requireAPIClasses();
 		SpoonFilter::disableMagicQuotes();
 		$this->initSession();
 	}
@@ -86,9 +83,6 @@ class APIInit
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		$errorNumber = (int) $errorNumber;
-		$errorString = (string) $errorString;
-
 		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
@@ -110,31 +104,24 @@ class APIInit
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
-
-		// create response array
 		$response = array(
 			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
 			'message' => $exception->getMessage()
 		);
-
-		// output JSON to the browser
 		echo json_encode($response);
 		exit;
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler
+	 * This method will be called by the Spoon Exception handler
 	 *
 	 * @param object $exception The exception that was thrown.
 	 * @param string $output The output that should be mailed.
@@ -154,7 +141,7 @@ class APIInit
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		echo '<html><body>Something went wrong.</body></html>';
@@ -162,7 +149,7 @@ class APIInit
 	}
 
 	/**
-	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions
+	 * This method will be called by the Spoon Exception handler and is specific for exceptions
 	 * thrown in JS-files parsed through PHP
 	 *
 	 * @param object $exception The exception that was thrown.
@@ -170,12 +157,7 @@ class APIInit
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
-
-		// output exception
 		echo '// ' . $exception->getMessage();
 		exit;
 	}
@@ -186,50 +168,6 @@ class APIInit
 	private function initSession()
 	{
 		SpoonSession::start();
-	}
-
-	/**
-	 * Require all needed classes
-	 */
-	private function requireAPIClasses()
-	{
-	}
-
-	/**
-	 * Require globals-file
-	 */
-	private function requireGlobals()
-	{
-		// fetch config
-		@include_once dirname(__FILE__) . '/../../backend/cache/config/config.php';
-
-		// config doest not exist, use standard library location
-		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../../library');
-
-		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
-
-		// something could not be loaded
-		if(in_array(false, $installed))
-		{
-			// installation folder
-			$installer = dirname(__FILE__) . '/../install/cache';
-
-			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
-			{
-				// redirect to installer
-				header('Location: /install');
-			}
-
-			// we can not load configuration file, however we can not run installer
-			echo 'Required configuration files are missing. Try deleting current files, clearing your database, ';
-			echo 're-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and ';
-			echo '<a href="/install">rerun the installer</a>.';
-			exit;
-		}
 	}
 
 	/**
@@ -248,7 +186,7 @@ class APIInit
 
 			/*
 			 * in debug mode notices are triggered when using non existing locale, so we use a custom
-			 * errorhandler to cleanup the message
+			 * error handler to cleanup the message
 			 */
 			set_error_handler(array('APIInit', 'errorHandler'));
 		}
@@ -262,33 +200,19 @@ class APIInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// don't overrule if there is already an exception handler defined
-			if(!defined('SPOON_EXCEPTION_CALLBACK'))
+			switch($this->type)
 			{
-				// add callback for the spoon exceptionhandler
-				switch($this->type)
-				{
-					case 'backend_ajax':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-						break;
+				case 'backend_ajax':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+					break;
 
-					case 'backend_js':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-						break;
+				case 'backend_js':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+					break;
 
-					default:
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				}
+				default:
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
 			}
 		}
-	}
-
-	/**
-	 * Set include path
-	 */
-	private function setIncludePath()
-	{
-		// prepend the libary and document_root to the existing include path
-		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }

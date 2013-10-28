@@ -13,7 +13,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendInit
+class BackendInit extends KernelLoader
 {
 	/**
 	 * Current type
@@ -25,7 +25,7 @@ class BackendInit
 	/**
 	 * @param string $type The type of init to load, possible values are: backend, backend_ajax, backend_cronjob, backend_js.
 	 */
-	public function __construct($type)
+	public function initialize($type)
 	{
 		$allowedTypes = array('backend', 'backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob');
 		$type = (string) $type;
@@ -45,10 +45,8 @@ class BackendInit
 		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
-		$this->requireGlobals();
-
 		// get last modified time for globals
-		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
+		$lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
@@ -58,13 +56,11 @@ class BackendInit
 
 		$this->definePaths();
 		$this->defineURLs();
-		$this->setIncludePath();
 		$this->setDebugging();
 
 		// require spoon
 		require_once 'spoon/spoon.php';
 
-		$this->requireBackendClasses();
 		SpoonFilter::disableMagicQuotes();
 	}
 
@@ -73,11 +69,6 @@ class BackendInit
 	 */
 	private function definePaths()
 	{
-		// fix the Application setting
-		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
-		if($this->type == 'backend_js') define('APPLICATION', 'backend');
-		if($this->type == 'backend_cronjob') define('APPLICATION', 'backend');
-
 		// general paths
 		define('BACKEND_PATH', PATH_WWW . '/' . APPLICATION);
 		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
@@ -110,26 +101,14 @@ class BackendInit
 	 */
 	public static function errorHandler($errorNumber, $errorString)
 	{
-		$errorNumber = (int) $errorNumber;
 		$errorString = (string) $errorString;
-
-		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
-			// cleanup
 			$index = trim(str_replace('Undefined index:', '', $errorString));
-
-			// get the type
 			$type = mb_substr($index, 0, 3);
-
-			// is the index locale?
 			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
-
-			// return false, so the standard error handler isn't bypassed
 			else return false;
 		}
-
-		// return false, so the standard error handler isn't bypassed
 		else return false;
 	}
 
@@ -141,15 +120,11 @@ class BackendInit
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
-
-		// create response array
-		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
-
-		// output to the browser
+		$response = array(
+			'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
+			'message' => $exception->getMessage()
+		);
 		echo json_encode($response);
 		exit;
 	}
@@ -225,63 +200,9 @@ class BackendInit
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
-		$output = (string) $output;
-
-		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
-
-		// output
 		echo '// ' . $exception->getMessage();
 		exit;
-	}
-
-	/**
-	 * Require all needed classes
-	 */
-	private function requireBackendClasses()
-	{
-		// for specific types, specific files should be loaded
-		switch($this->type)
-		{
-			case 'backend_ajax':
-				require_once PATH_WWW . '/routing.php';
-				break;
-		}
-	}
-
-	/**
-	 * Require globals-file
-	 */
-	private function requireGlobals()
-	{
-		// fetch config
-		@include_once dirname(__FILE__) . '/cache/config/config.php';
-
-		// config doest not exist, use standard library location
-		if(!defined('INIT_PATH_LIBRARY')) define('INIT_PATH_LIBRARY', dirname(__FILE__) . '/../library');
-
-		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
-
-		// something could not be loaded
-		if(in_array(false, $installed))
-		{
-			// installation folder
-			$installer = dirname(__FILE__) . '/../install/cache';
-
-			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
-			{
-				// redirect to installer
-				header('Location: /install');
-			}
-
-			// we can nog load configuration file, however we can not run installer
-			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
-			exit;
-		}
 	}
 
 	/**
@@ -289,9 +210,6 @@ class BackendInit
 	 */
 	private function setDebugging()
 	{
-		// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-		set_error_handler(array('BackendInit', 'errorHandler'));
-
 		// debugging enabled
 		if(SPOON_DEBUG)
 		{
@@ -314,32 +232,20 @@ class BackendInit
 			// don't show error on the screen
 			ini_set('display_errors', 'Off');
 
-			// don't overrule if there is already an exception handler defined
-			if(!defined('SPOON_EXCEPTION_CALLBACK'))
+			// add callback for the spoon exceptionhandler
+			switch($this->type)
 			{
-				// add callback for the spoon exceptionhandler
-				switch($this->type)
-				{
-					case 'backend_ajax':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
-						break;
+				case 'backend_ajax':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+					break;
 
-					case 'backend_js':
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
-						break;
+				case 'backend_js':
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+					break;
 
-					default:
-						define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
-				}
+				default:
+					Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
 			}
 		}
-	}
-
-	/**
-	 * Set include path
-	 */
-	private function setIncludePath()
-	{
-		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }

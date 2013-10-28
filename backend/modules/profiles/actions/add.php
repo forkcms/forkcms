@@ -121,7 +121,7 @@ class BackendProfilesAdd extends BackendBaseActionAdd
 				}
 			}
 
-			// one of the bday fields are filled in
+			// one of the birthday fields are filled in
 			if($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled())
 			{
 				// valid date?

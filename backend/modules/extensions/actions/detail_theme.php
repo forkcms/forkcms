@@ -73,7 +73,7 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 		$pathInfoXml = FRONTEND_PATH . '/themes/' . $this->currentTheme . '/info.xml';
 
 		// information needs to exists
-		if(SpoonFile::exists($pathInfoXml))
+		if(is_file($pathInfoXml))
 		{
 			try
 			{
@@ -103,7 +103,7 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
 	 */
 	private function loadDataGridTemplates()
 	{
-		// no hooks so dont bother
+		// no hooks so don't bother
 		if(!isset($this->information['templates'])) return;
 
 		// build data for display in datagrid

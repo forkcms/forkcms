@@ -80,21 +80,20 @@ class BackendURL extends BackendBaseObject
 		// store the querystring local, so we don't alter it.
 		$queryString = $this->getQueryString();
 
-		// find the position of ? (which seperates real URL and GET-parameters)
+		// find the position of ? (which separates real URL and GET-parameters)
 		$positionQuestionMark = strpos($queryString, '?');
 
-		// remove the GET-chunk from the parameters
+		// separate the GET-chunk from the parameters
+		$getParameters = '';
 		if($positionQuestionMark === false) $processedQueryString = $queryString;
 		else
 		{
 			$processedQueryString = substr($queryString, 0, $positionQuestionMark);
+			$getParameters = substr($queryString, $positionQuestionMark);
 		}
 
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
 		$chunks = (array) explode('/', trim($processedQueryString, '/'));
-
-		// check if this is a request for a JS-file
-		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
 
 		// check if this is a request for a AJAX-file
 		$isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax.php');
@@ -107,13 +106,13 @@ class BackendURL extends BackendBaseObject
 		}
 
 		// no language provided?
-		if($language == '' && !$isJS && !$isAJAX)
+		if($language == '' && !$isAJAX)
 		{
 			// remove first element
 			array_shift($chunks);
 
 			// redirect to login
-			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks));
+			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters);
 		}
 
 		// get the module, null will be the default
@@ -123,7 +122,7 @@ class BackendURL extends BackendBaseObject
 		if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
 
 		// no action passed through URL
-		elseif(!$isJS && !$isAJAX)
+		elseif(!$isAJAX)
 		{
 			// check if module path is not yet defined
 			if(!defined('BACKEND_MODULE_PATH'))
@@ -139,7 +138,7 @@ class BackendURL extends BackendBaseObject
 			 * check if the config is present? If it isn't present there is a huge problem, so we
 			 * will stop our code by throwing an error
 			 */
-			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php'))
+			if(!is_file(BACKEND_MODULE_PATH . '/config.php'))
 			{
 				// in debug mode we want to see the error
 				if(SPOON_DEBUG) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
@@ -195,13 +194,6 @@ class BackendURL extends BackendBaseObject
 			BackendLanguage::setWorkingLanguage($language);
 		}
 
-		// JS parameters are passed via GET
-		elseif($isJS)
-		{
-			$this->setModule(isset($_GET['module']) ? $_GET['module'] : '');
-			BackendLanguage::setWorkingLanguage(isset($_GET['language']) ? $_GET['language'] : SITE_DEFAULT_LANGUAGE);
-		}
-
 		// regular request
 		else $this->processRegularRequest($module, $action, $language);
 	}
@@ -211,7 +203,7 @@ class BackendURL extends BackendBaseObject
 	 *
 	 * @param string $module The requested module.
 	 * @param string $action The requested action.
-	 * @param strring $language The requested language.
+	 * @param string $language The requested language.
 	 */
 	private function processRegularRequest($module, $action, $language)
 	{
@@ -235,7 +227,7 @@ class BackendURL extends BackendBaseObject
 					require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
 
 					// loop the navigation to find the first allowed module
-					foreach($navigation as $key => $value)
+					foreach($navigation as $value)
 					{
 						// split up chunks
 						list($module, $action) = explode('/', $value['url']);

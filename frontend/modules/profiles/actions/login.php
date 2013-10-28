@@ -29,7 +29,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 	{
 		parent::execute();
 
- 		// profile not logged in
+		// profile not logged in
 		if(!FrontendProfilesAuthentication::isLoggedIn())
 		{
 			$this->loadTemplate();
@@ -41,7 +41,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 		// profile already logged in
 		else
 		{
-			// querystring
+			// query string
 			$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 			// redirect
@@ -55,8 +55,8 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 	private function loadForm()
 	{
 		$this->frm = new FrontendForm('login', null, null, 'loginForm');
-		$this->frm->addText('email');
-		$this->frm->addPassword('password');
+		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addPassword('password')->setAttributes(array('required' => null));
 		$this->frm->addCheckbox('remember', true);
 	}
 
@@ -124,7 +124,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 				// trigger event
 				FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId));
 
-				// querystring
+				// query string
 				$queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
 				// redirect

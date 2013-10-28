@@ -12,7 +12,7 @@
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Jelmer Snoeck <jelmer.snoeck@netlash.com>
+ * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
 class BackendFaqEditCategory extends BackendBaseActionEdit
 {
@@ -91,6 +91,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['language'] = $this->record['language'];
 				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['extra_id'] = $this->record['extra_id'];
 				$item['meta_id'] = $this->meta->save(true);
 
 				// update the item

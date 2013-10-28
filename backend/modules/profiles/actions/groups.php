@@ -40,7 +40,7 @@ class BackendProfilesGroups extends BackendBaseActionIndex
 
 		/*
 		 * Start query, as you can see this query is build in the wrong place, because of the
-		 * filter it is a special case wherin we allow the query to be in the actionfile itself
+		 * filter it is a special case wherein we allow the query to be in the actionfile itself
 		 */
 		$query =
 			'SELECT pg.id, pg.name, COUNT(gr.id) AS members_count

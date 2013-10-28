@@ -65,7 +65,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 			// check if module is searchable
 			if(!in_array($module, $disallowedModules) && is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search')))
 			{
-				// add field to decide wether or not this module is searchable
+				// add field to decide whether or not this module is searchable
 				$this->frm->addCheckbox('search_' . $module, isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false);
 
 				// add field to decide weight for this module
@@ -79,7 +79,13 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				}
 
 				// add to list of modules
-				$this->modules[] = array('module' => $module, 'id' => $this->frm->getField('search_' . $module)->getAttribute('id'), 'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(), 'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(), 'txtError' => '');
+				$this->modules[] = array(
+					'module' => $module,
+					'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
+					'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(),
+					'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
+					'txtError' => ''
+				);
 			}
 		}
 	}

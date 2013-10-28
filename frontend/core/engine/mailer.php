@@ -28,8 +28,8 @@ class FrontendMailer
 	 * @param string[optional] $toName The to-name for the email.
 	 * @param string[optional] $fromEmail The from-address for the mail.
 	 * @param string[optional] $fromName The from-name for the mail.
-	 * @param string[optional] $replyToEmail The replyto-address for the mail.
-	 * @param string[optional] $replyToName The replyto-name for the mail.
+	 * @param string[optional] $replyToEmail The reply to-address for the mail.
+	 * @param string[optional] $replyToName The reply to-name for the mail.
 	 * @param bool[optional] $queue Should the mail be queued?
 	 * @param int[optional] $sendOn When should the email be send, only used when $queue is true.
 	 * @param bool[optional] $isRawHTML If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
@@ -150,7 +150,7 @@ class FrontendMailer
 			foreach($attachments as $attachment)
 			{
 				// only add existing files
-				if(SpoonFile::exists($attachment)) $email['attachments'][] = $attachment;
+				if(is_file($attachment)) $email['attachments'][] = $attachment;
 			}
 
 			// serialize :)
@@ -165,7 +165,7 @@ class FrontendMailer
 		}
 
 		// insert the email into the database
-		$id = FrontendModel::getDB(true)->insert('emails', $email);
+		$id = FrontendModel::getContainer()->get('database')->insert('emails', $email);
 
 		// trigger event
 		FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
@@ -184,7 +184,7 @@ class FrontendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		return (array) FrontendModel::getDB()->getColumn(
+		return (array) FrontendModel::getContainer()->get('database')->getColumn(
 			'SELECT e.id
 			 FROM emails AS e
 			 WHERE e.send_on < ?',
@@ -196,7 +196,7 @@ class FrontendMailer
 	 * Returns the content from a given template
 	 *
 	 * @param string $template The template to use.
-	 * @param array[optional] $variables The variabled to assign.
+	 * @param array[optional] $variables The variables to assign.
 	 * @return string
 	 */
 	private static function getTemplateContent($template, $variables = null)
@@ -240,7 +240,7 @@ class FrontendMailer
 		$id = (int) $id;
 
 		// get db
-		$db = FrontendModel::getDB(true);
+		$db = FrontendModel::getContainer()->get('database');
 
 		// get record
 		$emailRecord = (array) $db->getRecord(
@@ -265,6 +265,13 @@ class FrontendMailer
 			$SMTPPort = FrontendModel::getModuleSetting('core', 'smtp_port', 25);
 			$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
+
+			// set security if needed
+			$secureLayer = FrontendModel::getModuleSetting('core','smtp_secure_layer');
+			if(in_array($secureLayer, array('ssl', 'tls')))
+			{
+				$email->setSMTPSecurity($secureLayer);
+			}
 
 			// set server and connect with SMTP
 			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);

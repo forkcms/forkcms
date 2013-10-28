@@ -108,7 +108,6 @@ class BlogInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'edit_category');
 		$this->setActionRights(1, 'blog', 'edit_comment');
 		$this->setActionRights(1, 'blog', 'edit');
-		$this->setActionRights(1, 'blog', 'import_blogger');
 		$this->setActionRights(1, 'blog', 'index');
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
@@ -119,7 +118,7 @@ class BlogInstaller extends ModuleInstaller
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
-		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit', 'blog/import_blogger'));
+		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit'));
 		$this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
 		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
 
@@ -214,8 +213,8 @@ class BlogInstaller extends ModuleInstaller
 				'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 				'language' => $language,
 				'title' => 'Nunc sediam est',
-				'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-				'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'introduction' => file_get_contents(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'text' => file_get_contents(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
 				'status' => 'active',
 				'publish_on' => gmdate('Y-m-d H:i:00'),
 				'created_on' => gmdate('Y-m-d H:i:00'),
@@ -233,8 +232,8 @@ class BlogInstaller extends ModuleInstaller
 				'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 				'language' => $language,
 				'title' => 'Lorem ipsum',
-				'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-				'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'introduction' => file_get_contents(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+				'text' => file_get_contents(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
 				'status' => 'active',
 				'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
 				'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),

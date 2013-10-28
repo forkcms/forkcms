@@ -44,7 +44,7 @@ class BackendCSV extends SpoonFileCSV
 		// overwrite the headers
 		SpoonHTTP::setHeaders($headers);
 
-		// ouput the CSV
+		// output the CSV
 		echo $csv;
 		exit;
 	}

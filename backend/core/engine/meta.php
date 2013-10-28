@@ -29,7 +29,7 @@ class BackendMeta
 	protected $callback = array();
 
 	/**
-	 * Do we need meta ustom
+	 * Do we need meta custom
 	 *
 	 * @var	bool
 	 */
@@ -71,7 +71,7 @@ class BackendMeta
 	 */
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
-		// check if URL is available from the referene
+		// check if URL is available from the reference
 		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
 
 		// get BackendURL instance
@@ -322,7 +322,7 @@ class BackendMeta
 		$this->id = (int) $id;
 
 		// get item
-		$this->data = (array) BackendModel::getDB()->getRecord(
+		$this->data = (array) BackendModel::getContainer()->get('database')->getRecord(
 			'SELECT *
 			 FROM meta AS m
 			 WHERE m.id = ?',
@@ -385,7 +385,7 @@ class BackendMeta
 		if(isset($meta['data'])) $meta['data'] = serialize($meta['data']);
 
 		// get db
-		$db = BackendModel::getDB(true);
+		$db = BackendModel::getContainer()->get('database');
 
 		// should we update the record
 		if($update)
