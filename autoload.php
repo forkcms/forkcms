@@ -44,7 +44,7 @@ class Autoloader
 		elseif(substr($unifiedClassName, 0, 11) == 'backendbase') $pathToLoad = __DIR__ . '/backend/core/engine/base.php';
 		elseif(substr($unifiedClassName, 0, 15) == 'backenddatagrid') $pathToLoad = __DIR__ . '/backend/core/engine/datagrid.php';
 		elseif(substr($unifiedClassName, 0, 7) == 'backend') $pathToLoad = __DIR__ . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
-		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = __DIR__ . '/library/base/' . str_replace('common', '', $unifiedClassName) . '.php';
+		elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = PATH_LIBRARY . '/base/' . str_replace('common', '', $unifiedClassName) . '.php';
 
 		// file check in core
 		if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
