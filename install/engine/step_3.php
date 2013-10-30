@@ -42,20 +42,23 @@ class InstallerStep3 extends InstallerStep
     private function loadForm()
     {
         // separate frontend/backend languages?
-        $this->frm->addCheckbox('same_interface_language', (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true));
+        $this->frm->addCheckbox(
+            'same_interface_language',
+            (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true)
+        );
 
         // multiple or single language (frontend)
         $this->frm->addRadiobutton(
             'language_type',
             array(
                 array(
-                    'value' => 'multiple',
-                    'label' => 'Multiple languages',
+                    'value'     => 'multiple',
+                    'label'     => 'Multiple languages',
                     'variables' => array('multiple' => true)
                 ),
                 array(
-                    'value' => 'single',
-                    'label' => 'Just one language',
+                    'value'     => 'single',
+                    'label'     => 'Just one language',
                     'variables' => array('single' => true)
                 )
             ),
@@ -63,7 +66,8 @@ class InstallerStep3 extends InstallerStep
         );
 
         // multiple languages (frontend)
-        $this->frm->addMultiCheckbox('languages',
+        $this->frm->addMultiCheckbox(
+            'languages',
             array(
                 array('value' => 'en', 'label' => 'English'),
                 array('value' => 'zh', 'label' => 'Chinese'),
@@ -82,7 +86,8 @@ class InstallerStep3 extends InstallerStep
         );
 
         // multiple languages (backend)
-        $this->frm->addMultiCheckbox('interface_languages',
+        $this->frm->addMultiCheckbox(
+            'interface_languages',
             array(
                 array('value' => 'en', 'label' => 'English'),
                 array('value' => 'zh', 'label' => 'Chinese'),
@@ -101,7 +106,8 @@ class InstallerStep3 extends InstallerStep
         );
 
         // single language (frontend)
-        $this->frm->addDropdown('language',
+        $this->frm->addDropdown(
+            'language',
             array(
                 'en' => 'English',
                 'zh' => 'Chinese',
@@ -120,7 +126,8 @@ class InstallerStep3 extends InstallerStep
         );
 
         // default language (frontend)
-        $this->frm->addDropdown('default_language',
+        $this->frm->addDropdown(
+            'default_language',
             array(
                 'en' => 'English',
                 'zh' => 'Chinese',
@@ -139,7 +146,8 @@ class InstallerStep3 extends InstallerStep
         );
 
         // default language (backend)
-        $this->frm->addDropdown('default_interface_language',
+        $this->frm->addDropdown(
+            'default_interface_language',
             array(
                 'en' => 'English',
                 'zh' => 'Chinese',
@@ -154,7 +162,7 @@ class InstallerStep3 extends InstallerStep
                 'sv' => 'Swedish',
                 'uk' => 'Ukrainian'
             ),
-            (SpoonSession::exists('default_interface_language') ? SpoonSession::get('default_interface_language') : 'en')
+            SpoonSession::exists('default_interface_language' ? SpoonSession::get('default_interface_language') : 'en')
         );
     }
 
@@ -164,43 +172,55 @@ class InstallerStep3 extends InstallerStep
     private function validateForm()
     {
         // form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // multiple languages
-            if($this->frm->getField('language_type')->getValue() == 'multiple') {
+            if ($this->frm->getField('language_type')->getValue() == 'multiple') {
                 // list of languages
                 $languages = $this->frm->getField('languages')->getValue();
 
                 // default language
-                if(!in_array($this->frm->getField('default_language')->getValue(), $languages)) $this->frm->getField('default_language')->setError('Your default language needs to be in the list of languages you chose.');
-            }
-
-            // single language
-            else {
+                if (!in_array($this->frm->getField('default_language')->getValue(), $languages)) {
+                    $this->frm->getField('default_language')->setError(
+                        'Your default language needs to be in the list of languages you chose.'
+                    );
+                }
+            } else {
                 // list of languages
                 $languages = (array) array($this->frm->getField('default_language')->getValue());
             }
 
             // same cms interface language
-            if($this->frm->getField('same_interface_language')->getChecked()) {
+            if ($this->frm->getField('same_interface_language')->getChecked()) {
                 // list of languages
                 $interfaceLanguages = $languages;
-            }
-
-            // different interface language
-            else {
+            } else {
                 // list of languages
                 $interfaceLanguages = $this->frm->getField('interface_languages')->getValue();
             }
 
             // default language
-            if(!in_array($this->frm->getField('default_interface_language')->getValue(), $interfaceLanguages)) $this->frm->getField('default_interface_language')->setError('Your default language needs to be in the list of languages you chose.');
+            if (!in_array(
+                $this->frm->getField('default_interface_language')->getValue(),
+                $interfaceLanguages
+            )
+            ) {
+                $this->frm->getField('default_interface_language')->setError(
+                    'Your default language needs to be in the list of languages you chose.'
+                );
+            }
 
             // all valid
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // set languages
                 SpoonSession::set('default_language', $this->frm->getField('default_language')->getValue());
-                SpoonSession::set('default_interface_language', $this->frm->getField('default_interface_language')->getValue());
-                SpoonSession::set('multiple_languages', ($this->frm->getField('language_type')->getValue() == 'multiple') ? true : false);
+                SpoonSession::set(
+                    'default_interface_language',
+                    $this->frm->getField('default_interface_language')->getValue()
+                );
+                SpoonSession::set(
+                    'multiple_languages',
+                    ($this->frm->getField('language_type')->getValue() == 'multiple') ? true : false
+                );
                 SpoonSession::set('languages', $languages);
                 SpoonSession::set('interface_languages', $interfaceLanguages);
 

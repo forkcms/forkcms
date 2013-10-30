@@ -33,7 +33,11 @@ class InstallerStep5 extends InstallerStep
      */
     public static function isAllowed()
     {
-        return InstallerStep4::isAllowed() && isset($_SESSION['modules']) && isset($_SESSION['example_data']) && isset($_SESSION['debug_mode']);
+        return (InstallerStep4::isAllowed() &&
+                isset($_SESSION['modules']) &&
+                isset($_SESSION['example_data']) &&
+                isset($_SESSION['debug_mode'])
+        );
     }
 
     /**
@@ -42,7 +46,7 @@ class InstallerStep5 extends InstallerStep
     private function loadForm()
     {
         // guess db & username
-        $host = $_SERVER['HTTP_HOST'];
+        $host   = $_SERVER['HTTP_HOST'];
         $chunks = explode('.', $host);
 
         // seems like windows can't handle localhost...
@@ -55,11 +59,17 @@ class InstallerStep5 extends InstallerStep
         $base = implode('_', $chunks);
 
         // create input fields
-        $this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost);
+        $this->frm->addText(
+            'hostname',
+            (SpoonSession::exists('db_hostname')) ? SpoonSession::get('db_hostname') : $dbHost
+        );
         $this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
         $this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
         $this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
-        $this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
+        $this->frm->addPassword(
+            'password',
+            (SpoonSession::exists('db_password')) ? SpoonSession::get('db_password') : null
+        );
     }
 
     /**
@@ -68,7 +78,7 @@ class InstallerStep5 extends InstallerStep
     private function validateForm()
     {
         // form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // database settings
             $this->frm->getField('hostname')->isFilled('This field is required.');
             $this->frm->getField('database')->isFilled('This field is required.');
@@ -76,14 +86,26 @@ class InstallerStep5 extends InstallerStep
             $this->frm->getField('password')->isFilled('This field is required.');
 
             // all filled out
-            if($this->frm->getField('hostname')->isFilled() && $this->frm->getField('database')->isFilled() && $this->frm->getField('username')->isFilled() && $this->frm->getField('password')->isFilled()) {
+            if ($this->frm->getField('hostname')->isFilled() &&
+                $this->frm->getField('database')->isFilled() &&
+                $this->frm->getField('username')->isFilled() &&
+                $this->frm->getField('password')->isFilled()
+            ) {
                 // test the database connection details
                 try {
                     // get port
-                    $port = ($this->frm->getField('port')->isFilled()) ? $this->frm->getField('port')->getValue() : 3306;
+                    $port = ($this->frm->getField('port')->isFilled()) ? $this->frm->getField('port')->getValue(
+                    ) : 3306;
 
                     // create instance
-                    $db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue(), $port);
+                    $db = new SpoonDatabase(
+                        'mysql',
+                        $this->frm->getField('hostname')->getValue(),
+                        $this->frm->getField('username')->getValue(),
+                        $this->frm->getField('password')->getValue(),
+                        $this->frm->getField('database')->getValue(),
+                        $port
+                    );
 
                     // test table
                     $table = 'test' . time();
@@ -94,10 +116,7 @@ class InstallerStep5 extends InstallerStep
 
                     // drop table
                     $db->drop($table);
-                }
-
-                // catch possible exceptions
-                catch(Exception $e) {
+                } catch (Exception $e) {
                     // add errors
                     $this->frm->addError('Problem with database credentials');
 
@@ -106,7 +125,7 @@ class InstallerStep5 extends InstallerStep
                 }
 
                 // all valid
-                if($this->frm->isCorrect()) {
+                if ($this->frm->isCorrect()) {
                     // update session
                     SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
                     SpoonSession::set('db_database', $this->frm->getField('database')->getValue());

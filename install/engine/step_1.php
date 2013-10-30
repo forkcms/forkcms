@@ -29,11 +29,11 @@ class InstallerStep1 extends InstallerStep
         $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
 
         // this should be the path
-        $path = realpath(dirname(__FILE__) . '/../../library');
+        $path        = realpath(dirname(__FILE__) . '/../../library');
         $spoonFolder = realpath($path . '/../vendor/spoon/library');
 
         // just one found? add it into the session
-        if(file_exists($spoonFolder . '/spoon/spoon.php')) {
+        if (file_exists($spoonFolder . '/spoon/spoon.php')) {
             $_SESSION['path_library'] = $path;
 
             // redirect to step 2
@@ -45,11 +45,13 @@ class InstallerStep1 extends InstallerStep
         $tpl = file_get_contents('layout/templates/step_1.tpl');
 
         // build the search & replace array
-        $search = array_keys($variables);
+        $search  = array_keys($variables);
         $replace = array_values($variables);
 
         // loop search values
-        foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
+        foreach ($search as $key => $value) {
+            $search[$key] = '{$' . $value . '}';
+        }
 
         // build output
         $output = str_replace($search, $replace, $tpl);

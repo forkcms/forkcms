@@ -20,29 +20,30 @@ class InstallerStep2 extends InstallerStep
     /**
      * Requirements error statuses
      */
-    const STATUS_OK = 'ok';
+    const STATUS_OK      = 'ok';
     const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    const STATUS_ERROR   = 'error';
 
     /**
      * Array containing all variables to be parsed in the template.
      *
-     * @var	array
+     * @var    array
      */
     private static $variables = array();
 
     /**
      * Check if a specific requirement is satisfied
      *
-     * @param string $variable The "name" of the check.
-     * @param bool $requirement The result of the check.
-     * @param string $severity The severity of the requirement.
+     * @param string $variable    The "name" of the check.
+     * @param bool   $requirement The result of the check.
+     * @param string $severity    The severity of the requirement.
      * @return bool
      */
     public static function checkRequirement($variable, $requirement, $severity = self::STATUS_ERROR)
     {
         // set status
         self::$variables[$variable] = $requirement ? self::STATUS_OK : $severity;
+
         return self::$variables[$variable] == self::STATUS_OK;
     }
 
@@ -54,7 +55,9 @@ class InstallerStep2 extends InstallerStep
     public static function checkRequirements()
     {
         // define constants
-        if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants();
+        if (!defined('PATH_WWW') && !defined('PATH_LIBRARY')) {
+            self::defineConstants();
+        }
 
         /*
          * At first we're going to check to see if the PHP version meets the minimum requirements
@@ -64,7 +67,11 @@ class InstallerStep2 extends InstallerStep
         self::checkRequirement('phpVersion', version_compare(PHP_VERSION, '5.3.16', '!='), self::STATUS_ERROR);
 
         // Fork can't be installed in subfolders, so we should check that.
-        self::checkRequirement('subfolder', (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'), self::STATUS_ERROR);
+        self::checkRequirement(
+            'subfolder',
+            (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'),
+            self::STATUS_ERROR
+        );
 
         /*
          * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
@@ -76,13 +83,25 @@ class InstallerStep2 extends InstallerStep
         self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), self::STATUS_ERROR);
         self::checkRequirement('extensionSPL', extension_loaded('SPL'), self::STATUS_ERROR);
         self::checkRequirement('extensionPDO', extension_loaded('PDO'), self::STATUS_ERROR);
-        self::checkRequirement('extensionPDOMySQL', extension_loaded('PDO') && in_array('mysql', PDO::getAvailableDrivers()), self::STATUS_ERROR);
+        self::checkRequirement(
+            'extensionPDOMySQL',
+            extension_loaded('PDO') && in_array('mysql', PDO::getAvailableDrivers()),
+            self::STATUS_ERROR
+        );
         self::checkRequirement('extensionMBString', extension_loaded('mbstring'), self::STATUS_ERROR);
         self::checkRequirement('extensionIconv', extension_loaded('iconv'), self::STATUS_ERROR);
-        self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), self::STATUS_ERROR);
+        self::checkRequirement(
+            'extensionGD2',
+            extension_loaded('gd') && function_exists('gd_info'),
+            self::STATUS_ERROR
+        );
         self::checkRequirement('extensionJSON', extension_loaded('json'), self::STATUS_ERROR);
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
-        self::checkRequirement('extensionPCRE', (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)), self::STATUS_ERROR);
+        self::checkRequirement(
+            'extensionPCRE',
+            (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
+            self::STATUS_ERROR
+        );
 
         /*
          * A couple of php.ini settings should be configured in a specific way to make sure that
@@ -90,7 +109,14 @@ class InstallerStep2 extends InstallerStep
          */
         self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', self::STATUS_WARNING);
         self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
-        self::checkRequirement('settingsDateTimezone', (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), DateTimeZone::listIdentifiers()))), self::STATUS_WARNING);
+        self::checkRequirement(
+            'settingsDateTimezone',
+            (ini_get('date.timezone') == '' || (in_array(
+                date_default_timezone_get(),
+                DateTimeZone::listIdentifiers()
+            ))),
+            self::STATUS_WARNING
+        );
 
         /*
          * Some functions should be available
@@ -99,31 +125,97 @@ class InstallerStep2 extends InstallerStep
         self::checkRequirement('functionSessionStart', function_exists('session_start'), self::STATUS_ERROR);
         self::checkRequirement('functionCtypeAlpha', function_exists('ctype_alpha'), self::STATUS_ERROR);
         self::checkRequirement('functionTokenGetAll', function_exists('token_get_all'), self::STATUS_ERROR);
-        self::checkRequirement('functionSimplexmlImportDom', function_exists('simplexml_import_dom'), self::STATUS_ERROR);
+        self::checkRequirement(
+            'functionSimplexmlImportDom',
+            function_exists('simplexml_import_dom'),
+            self::STATUS_ERROR
+        );
 
         /*
          * Make sure the filesystem is prepared for the installation and everything can be read/
          * written correctly.
          */
-        self::checkRequirement('fileSystemBackendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemBackendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'), self::STATUS_WARNING);
-        self::checkRequirement('fileSystemFrontendCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemFrontendFiles', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemFrontendModules', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'), self::STATUS_WARNING);
-        self::checkRequirement('fileSystemFrontendThemes', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'), self::STATUS_WARNING);
-        self::checkRequirement('fileSystemLibrary', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemLibraryExternal', defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'), self::STATUS_WARNING);
-        self::checkRequirement('fileSystemInstaller', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemAppCache', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/cache/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemAppLogs', defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/logs/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemAppConfig', defined('PATH_WWW') && self::isWritable(PATH_WWW . '/app/config/'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemParameters', defined('PATH_LIBRARY') && file_exists(PATH_WWW . '/app/config/parameters.yml.dist') && is_readable(PATH_WWW . '/app/config/parameters.yml.dist'), self::STATUS_ERROR);
-        self::checkRequirement('fileSystemPathLibrary', defined('PATH_LIBRARY') && PATH_LIBRARY != '', self::STATUS_ERROR);
+        self::checkRequirement(
+            'fileSystemBackendCache',
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemBackendModules',
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'),
+            self::STATUS_WARNING
+        );
+        self::checkRequirement(
+            'fileSystemFrontendCache',
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemFrontendFiles',
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemFrontendModules',
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'),
+            self::STATUS_WARNING
+        );
+        self::checkRequirement(
+            'fileSystemFrontendThemes',
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'),
+            self::STATUS_WARNING
+        );
+        self::checkRequirement(
+            'fileSystemLibrary',
+            defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemLibraryExternal',
+            defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external'),
+            self::STATUS_WARNING
+        );
+        self::checkRequirement(
+            'fileSystemInstaller',
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemAppCache',
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/cache/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemAppLogs',
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/app/logs/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemAppConfig',
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/app/config/'),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemParameters',
+            defined('PATH_LIBRARY') && file_exists(PATH_WWW . '/app/config/parameters.yml.dist') && is_readable(
+                PATH_WWW . '/app/config/parameters.yml.dist'
+            ),
+            self::STATUS_ERROR
+        );
+        self::checkRequirement(
+            'fileSystemPathLibrary',
+            defined('PATH_LIBRARY') && PATH_LIBRARY != '',
+            self::STATUS_ERROR
+        );
 
         /*
          * Ensure that Apache .htaccess file is written and mod_rewrite does its job
          */
-        self::checkRequirement('modRewrite', (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')), self::STATUS_WARNING);
+        self::checkRequirement(
+            'modRewrite',
+            (bool) (getenv('MOD_REWRITE') || getenv('REDIRECT_MOD_REWRITE')),
+            self::STATUS_WARNING
+        );
 
         // error status
         return !in_array(self::STATUS_ERROR, self::$variables);
@@ -137,17 +229,21 @@ class InstallerStep2 extends InstallerStep
     private static function defineConstants()
     {
         // define constants
-        if(!defined('PATH_WWW')) {
+        if (!defined('PATH_WWW')) {
             define('PATH_WWW', dirname(realpath($_SERVER['SCRIPT_FILENAME'])));
         }
 
-        if(!defined('PATH_LIBRARY')) {
+        if (!defined('PATH_LIBRARY')) {
             define('PATH_LIBRARY', (string) $_SESSION['path_library']);
         }
 
         // update session
-        if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
-        if(!isset($_SESSION['path_www'])) $_SESSION['path_www'] = PATH_WWW;
+        if (!isset($_SESSION['path_library'])) {
+            $_SESSION['path_library'] = PATH_LIBRARY;
+        }
+        if (!isset($_SESSION['path_www'])) {
+            $_SESSION['path_www'] = PATH_WWW;
+        }
     }
 
     /**
@@ -171,34 +267,39 @@ class InstallerStep2 extends InstallerStep
         // get template contents
         $tpl = file_get_contents(__DIR__ . '/../layout/templates/step_2.tpl');
 
-        // has errors
-        if(in_array(self::STATUS_ERROR, self::$variables)) self::$variables[self::STATUS_ERROR] = true;
-
-        // has warnings
-        elseif(in_array(self::STATUS_WARNING, self::$variables)) self::$variables[self::STATUS_WARNING] = true;
-
-        // no errors detected
-        else {
+        if (in_array(self::STATUS_ERROR, self::$variables)) {
+            self::$variables[self::STATUS_ERROR] = true;
+        } elseif (in_array(self::STATUS_WARNING, self::$variables)) {
+            self::$variables[self::STATUS_WARNING] = true;
+        } else {
             header('Location: ' . self::$variables['step3']);
             exit;
         }
 
         // set paths for template
-        self::$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
+        self::$variables['PATH_WWW']     = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
         self::$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
 
         // build the search & replace array
-        $search = array_keys(self::$variables);
+        $search  = array_keys(self::$variables);
         $replace = array_values(self::$variables);
 
         // loop search values
-        foreach($search as $key => $value) {
+        foreach ($search as $key => $value) {
             // parse variables
             $tpl = str_replace('{$' . $value . '}', $replace[$key], $tpl);
 
             // assign options
-            $tpl = preg_replace('/\{option:\!(' . $value . ')\}(.*?)\{\/option:\!\\1\}/is', (!$replace[$key] ? '\\2' : ''), $tpl);
-            $tpl = preg_replace('/\{option:(' . $value . ')\}(.*?)\{\/option:\\1\}/is', ($replace[$key] ? '\\2' : ''), $tpl);
+            $tpl = preg_replace(
+                '/\{option:\!(' . $value . ')\}(.*?)\{\/option:\!\\1\}/is',
+                (!$replace[$key] ? '\\2' : ''),
+                $tpl
+            );
+            $tpl = preg_replace(
+                '/\{option:(' . $value . ')\}(.*?)\{\/option:\\1\}/is',
+                ($replace[$key] ? '\\2' : ''),
+                $tpl
+            );
         }
 
         // assign leftover options
@@ -236,16 +337,20 @@ class InstallerStep2 extends InstallerStep
         $path = rtrim((string) $path, '/');
 
         // check if path is writable
-        if(!self::isWritable($path)) return false;
+        if (!self::isWritable($path)) {
+            return false;
+        }
 
         // loop child directories
-        foreach((array) scandir($path) as $file) {
+        foreach ((array) scandir($path) as $file) {
             // no '.' and '..'
-            if(($file != '.') && ($file != '..')) {
+            if (($file != '.') && ($file != '..')) {
                 // directory
-                if(is_dir($path . '/' . $file)) {
+                if (is_dir($path . '/' . $file)) {
                     // check if children are readable
-                    if(!self::isRecursivelyWritable($path . '/' . $file)) return false;
+                    if (!self::isRecursivelyWritable($path . '/' . $file)) {
+                        return false;
+                    }
                 }
             }
         }
@@ -271,7 +376,9 @@ class InstallerStep2 extends InstallerStep
 
         $return = @file_put_contents($path . '/' . $file, 'temporary file', FILE_APPEND);
 
-        if($return === false) return false;
+        if ($return === false) {
+            return false;
+        }
 
         // unlink the random file
         @unlink($path . '/' . $file);
