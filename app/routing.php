@@ -25,13 +25,13 @@ class ApplicationRouting
     /**
      * Virtual folders mappings
      *
-     * @var	array
+     * @var    array
      */
     private static $routes = array(
-        '' => self::DEFAULT_APPLICATION,
+        ''        => self::DEFAULT_APPLICATION,
         'private' => 'backend',
         'backend' => 'backend',
-        'api' => 'api',
+        'api'     => 'api',
         'install' => 'install'
     );
 
@@ -49,7 +49,7 @@ class ApplicationRouting
 
     /**
      * @param Request $request
-     * @param Kernel $kernel
+     * @param Kernel  $kernel
      */
     public function __construct(Request $request, Kernel $kernel)
     {
@@ -58,7 +58,7 @@ class ApplicationRouting
         require_once __DIR__ . '/KernelLoader.php';
 
         $this->request = $request;
-        $this->kernel = $kernel;
+        $this->kernel  = $kernel;
 
         $this->processQueryString();
     }
@@ -86,15 +86,15 @@ class ApplicationRouting
          * Our ajax and cronjobs don't go trough the index.php file at the
          * moment. Because of this we need to add some extra validation.
          */
-        if(strpos($this->request->getRequestUri(), 'ajax.php') !== false) {
+        if (strpos($this->request->getRequestUri(), 'ajax.php') !== false) {
             $applicationName .= '_ajax';
-        } elseif(strpos($this->request->getRequestUri(), 'cronjob.php') !== false) {
+        } elseif (strpos($this->request->getRequestUri(), 'cronjob.php') !== false) {
             $applicationName .= '_cronjob';
         }
 
         // Pave the way for the application we'll need to load.
         // This initializes basic functionality and retrieves the correct class to instantiate.
-        switch($applicationName) {
+        switch ($applicationName) {
             case 'frontend':
             case 'frontend_ajax':
                 $applicationClass = $this->initializeFrontend($applicationName);
@@ -109,9 +109,11 @@ class ApplicationRouting
                 break;
             case 'install':
                 // install directory might be deleted after install, handle it as a normal frontend request
-                if(file_exists(__DIR__ . '/../install')) {
+                if (file_exists(__DIR__ . '/../install')) {
                     $applicationClass = $this->initializeInstaller();
-                } else $applicationClass = 'frontend';
+                } else {
+                    $applicationClass = 'frontend';
+                }
                 break;
             default:
                 throw new Exception('Unknown application. (' . $applicationName . ')');
@@ -128,6 +130,7 @@ class ApplicationRouting
         $application = new $applicationClass($this->kernel);
         $application->passContainerToModels();
         $application->initialize();
+
         return $application->display();
     }
 
@@ -138,11 +141,11 @@ class ApplicationRouting
     protected function initializeAPI($app)
     {
         $queryString = $this->getQueryString();
-        $chunks = explode('/', $queryString);
-        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
+        $chunks      = explode('/', $queryString);
+        $apiVersion  = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
 
         // validate
-        if(!file_exists(__DIR__ . '/../api/' . $apiVersion . '/init.php')) {
+        if (!file_exists(__DIR__ . '/../api/' . $apiVersion . '/init.php')) {
             throw new Exception('This version of the API does not exists.');
         }
 
@@ -151,12 +154,10 @@ class ApplicationRouting
         $init->initialize($app);
 
         // The client was requested
-        if(array_key_exists(2, $chunks) && $chunks[2] === 'client') {
+        if (array_key_exists(2, $chunks) && $chunks[2] === 'client') {
             require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
             $applicationClass = 'ApiClient';
-        }
-        // The regular API was requested
-        else {
+        } else {
             $applicationClass = 'API';
         }
 
@@ -171,7 +172,9 @@ class ApplicationRouting
         session_start();
 
         // set a default timezone if no one was set by PHP.ini
-        if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+        if (ini_get('date.timezone') == '') {
+            date_default_timezone_set('Europe/Brussels');
+        }
 
         // require the installer class
         require_once __DIR__ . '/../install/engine/installer.php';
@@ -192,7 +195,7 @@ class ApplicationRouting
         $init = new BackendInit($this->kernel);
         $init->initialize($app);
 
-        switch($app) {
+        switch ($app) {
             case 'backend_ajax':
                 $applicationClass = 'BackendAJAX';
                 break;
@@ -235,27 +238,27 @@ class ApplicationRouting
     private function processQueryString()
     {
         $queryString = $this->getQueryString();
-
-        // split into chunks
-        $chunks = explode('/', $queryString);
+        $chunks      = explode('/', $queryString);
 
         // is there a application specified
-        if(isset($chunks[0])) {
-            // cleanup
+        if (isset($chunks[0])) {
             $proposedApplication = (string) $chunks[0];
-
-            // set real application
-            $application = (isset(self::$routes[$proposedApplication])) ? self::$routes[$proposedApplication] : self::DEFAULT_APPLICATION;
-        }
-
-        // no application
-        else {
-            $application = self::DEFAULT_APPLICATION;
+            if ((isset(self::$routes[$proposedApplication]))) {
+                $application = self::$routes[$proposedApplication];
+            } else {
+                $application = self::DEFAULT_APPLICATION;
+            }
+        } else {
+            $application         = self::DEFAULT_APPLICATION;
             $proposedApplication = $application;
         }
 
         // define APP
-        if(!defined('APPLICATION')) define('APPLICATION', $application);
-        if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', $proposedApplication);
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', $application);
+        }
+        if (!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', $proposedApplication);
+        }
     }
 }
