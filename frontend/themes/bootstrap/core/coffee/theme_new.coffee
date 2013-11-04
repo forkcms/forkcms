@@ -64,7 +64,7 @@ class DefaultTheme extends Theme
     $('html, body').stop().animate(scrollTop: 0, 600)
     false
     
-  scrollTo: (e) ->
+  scrollTo: (e) =>
     $anchor = $(e.currentTarget)
     href = $anchor.attr('href')
     url = href.substr(0, href.indexOf('#'))
@@ -78,7 +78,9 @@ class DefaultTheme extends Theme
         
       $('html, body').stop().animate({
         scrollTop: $(hash).offset().top
-      }, 600);
+      }, 600, =>
+        @setFocus(hash)
+      )
       false
   
   removeImageHeight: ->
@@ -89,6 +91,13 @@ class DefaultTheme extends Theme
       $(e.currentTarget).carousel('next')
     $('.carousel').on 'swiperight', (e)->
       $(e.currentTarget).carousel('prev')
+
+  setFocus: (hash) ->
+    if $(hash).find('.nonVisibleAnchor').length > 0
+      $(hash).find('.nonVisibleAnchor').focus()
+    else
+      console.log "Dear developer, watch out, you have not set a .nonVisibleAnchor! (Don't forget to remove this console.log when you've set all hidden anchors)"
+      false
 
 class SpecificTheme extends DefaultTheme
   @events

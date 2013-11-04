@@ -1,3 +1,5 @@
+{* Write your section-titles likes this when you are making a one-pager: <h2><a name="usefulName" href="#" class="nonVisibleAnchor"></a></h2> *}
+
 {include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">

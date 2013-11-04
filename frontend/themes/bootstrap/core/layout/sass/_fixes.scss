@@ -71,3 +71,35 @@ abbr[data-original-title] {
 .carousel-control {
   border: none;
 }
+
+// THE ALMIGHTY NON-VISIBLE ANCHOR!! OUR SECRET WEAPON FOR BETTER KEYBOARD NAVIGATION ON ONEPAGERS
+
+.nonVisibleAnchor {
+  color: inherit;
+  border: inherit;
+  text-align: inherit;
+  background: inherit;
+  @include border-radius(inherit);
+  outline: inherit;
+  text-decoration: inherit;
+  padding: inherit;
+  margin: inherit;
+  pointer-events: none;
+  cursor: text;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: inherit;
+    border: inherit;
+    text-align: inherit;
+    background: inherit;
+    @include border-radius(inherit);
+    outline: inherit;
+    text-decoration: inherit;
+    padding: inherit;
+    margin: inherit;
+    pointer-events: none;
+    cursor: text;
+  }
+}

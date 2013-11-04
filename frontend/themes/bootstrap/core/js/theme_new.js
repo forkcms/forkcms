@@ -81,6 +81,7 @@
     __extends(DefaultTheme, _super);
 
     function DefaultTheme() {
+      this.scrollTo = __bind(this.scrollTo, this);
       _ref = DefaultTheme.__super__.constructor.apply(this, arguments);
       return _ref;
     }
@@ -137,7 +138,8 @@
     };
 
     DefaultTheme.prototype.scrollTo = function(e) {
-      var $anchor, hash, href, url;
+      var $anchor, hash, href, url,
+        _this = this;
       $anchor = $(e.currentTarget);
       href = $anchor.attr('href');
       url = href.substr(0, href.indexOf('#'));
@@ -145,7 +147,9 @@
       if ((url === '' || url.indexOf(document.location.pathname) >= 0) && !$anchor.is('[data-no-scroll]') && $(hash).length > 0) {
         $('html, body').stop().animate({
           scrollTop: $(hash).offset().top
-        }, 600);
+        }, 600, function() {
+          return _this.setFocus(hash);
+        });
         return false;
       }
     };
@@ -163,6 +167,10 @@
       return $('.carousel').on('swiperight', function(e) {
         return $(e.currentTarget).carousel('prev');
       });
+    };
+
+    DefaultTheme.prototype.setFocus = function(hash) {
+      return $(hash).find('.nonVisibleAnchor').focus();
     };
 
     return DefaultTheme;
