@@ -2,6 +2,7 @@
 --
 Bugfixes:
 
+* BackendModel: getURLForBlock can now return the url when locale is not yet activated.
 * Form builder: Reply-To field flag was not saved
 * Tags: Auto completing has to take language into account
 * Pages: During page copy, the tags were not created in the target language.
