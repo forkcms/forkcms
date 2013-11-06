@@ -1,5 +1,9 @@
 3.6.6 (xxxx-xx-xx)
 —
+Improvements:
+
+* Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+
 Bugfixes:
 
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
