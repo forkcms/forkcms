@@ -18,24 +18,29 @@ class BackendInit extends KernelLoader
     /**
      * Current type
      *
-     * @var	string
+     * @var    string
      */
     private $type;
 
     /**
-     * @param string $type The type of init to load, possible values are: backend, backend_ajax, backend_cronjob, backend_js.
+     * @param string $type The type of init to load, possible values are:
+     *                      backend, backend_ajax, backend_cronjob, backend_js.
      */
     public function initialize($type)
     {
         $allowedTypes = array('backend', 'backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob');
-        $type = (string) $type;
+        $type         = (string) $type;
 
         // check if this is a valid type
-        if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
+        if (!in_array($type, $allowedTypes)) {
+            exit('Invalid init-type');
+        }
         $this->type = $type;
 
         // set a default timezone if no one was set by PHP.ini
-        if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+        if (ini_get('date.timezone') == '') {
+            date_default_timezone_set('Europe/Brussels');
+        }
 
         /**
          * At first we enable the error reporting. Later on it will be disabled based on the
@@ -49,7 +54,9 @@ class BackendInit extends KernelLoader
         $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
         // reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-        if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
+        if ($lastModifiedTime === false || SPOON_DEBUG) {
+            $lastModifiedTime = time();
+        }
 
         // define as a constant
         define('LAST_MODIFIED_TIME', $lastModifiedTime);
@@ -95,32 +102,37 @@ class BackendInit extends KernelLoader
     /**
      * A custom error-handler so we can handle warnings about undefined labels
      *
-     * @param int $errorNumber The level of the error raised, as an integer.
+     * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
      * @return bool
      */
     public static function errorHandler($errorNumber, $errorString)
     {
         $errorString = (string) $errorString;
-        if(mb_substr_count($errorString, 'Undefined index:') > 0) {
+        if (mb_substr_count($errorString, 'Undefined index:') > 0) {
             $index = trim(str_replace('Undefined index:', '', $errorString));
-            $type = mb_substr($index, 0, 3);
-            if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
-            else return false;
-        } else return false;
+            $type  = mb_substr($index, 0, 3);
+            if (in_array($type, array('act', 'err', 'lbl', 'msg'))) {
+                echo '{$' . $index . '}';
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
     }
 
     /**
      * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that should be mailed.
+     * @param string $output    The output that should be mailed.
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
         SpoonHTTP::setHeaders('content-type: application/json');
         $response = array(
-            'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
+            'code'    => ($exception->getCode() != 0) ? $exception->getCode() : 500,
             'message' => $exception->getMessage()
         );
         echo json_encode($response);
@@ -131,14 +143,14 @@ class BackendInit extends KernelLoader
      * This method will be called by the Spoon Exceptionhandler
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that should be mailed.
+     * @param string $output    The output that should be mailed.
      */
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
 
         // mail it?
-        if(SPOON_DEBUG_EMAIL != '') {
+        if (SPOON_DEBUG_EMAIL != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -180,7 +192,11 @@ class BackendInit extends KernelLoader
                 </head>
                 <body>
                     <h2>Internal error</h2>
-                    <p>There was an internal error while processing your request. We have been notified of this error and will resolve it shortly. We\'re sorry for the inconvenience.</p>
+                    <p>
+                        There was an internal error while processing your
+                        request. We have been notified of this error and will
+                        resolve it shortly. We\'re sorry for the inconvenience.
+                    </p>
                 </body>
             </html>
         ';
@@ -190,10 +206,11 @@ class BackendInit extends KernelLoader
     }
 
     /**
-     * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
+     * This method will be called by the Spoon Exceptionhandler and is specific
+     * for exceptions thrown in JS-files parsed through PHP
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that would be mailed.
+     * @param string $output    The output that would be mailed.
      */
     public static function exceptionJSHandler($exception, $output)
     {
@@ -208,19 +225,18 @@ class BackendInit extends KernelLoader
     private function setDebugging()
     {
         // debugging enabled
-        if(SPOON_DEBUG) {
+        if (SPOON_DEBUG) {
             // set error reporting as high as possible
             error_reporting(E_ALL | E_STRICT);
 
             // show errors on the screen
             ini_set('display_errors', 'On');
 
-            // in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+            // in debug mode notices are triggered when using non existing
+            // locale, so we use a custom errorhandler to cleanup the message
             set_error_handler(array('BackendInit', 'errorHandler'));
-        }
-
-        // debugging disabled
-        else {
+        } else {
+            // debugging disabled
             // set error reporting as low as possible
             error_reporting(0);
 
@@ -228,7 +244,7 @@ class BackendInit extends KernelLoader
             ini_set('display_errors', 'Off');
 
             // add callback for the spoon exceptionhandler
-            switch($this->type) {
+            switch ($this->type) {
                 case 'backend_ajax':
                     Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
