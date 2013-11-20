@@ -21,31 +21,38 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $generalSettings = BackendModel::getModuleSettings();
-        $generalSettings = $generalSettings['location'];
+        $generalSettings = BackendModel::getModuleSettings('location');
 
         // get parameters
-        $itemId = SpoonFilter::getPostValue('id', null, null, 'int');
-        $zoomLevel = trim(SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = strtoupper(trim(SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
-        $centerLat = SpoonFilter::getPostValue('centerLat', null, 1, 'float');
-        $centerlng = SpoonFilter::getPostValue('centerLng', null, 1, 'float');
-        $height = SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
-        $width = SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
-        $showLink = SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
+        $itemId         = SpoonFilter::getPostValue('id', null, null, 'int');
+        $zoomLevel      = trim(SpoonFilter::getPostValue('zoom', null, 'auto'));
+        $mapType        = strtoupper(
+            trim(SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap'))
+        );
+        $centerLat      = SpoonFilter::getPostValue('centerLat', null, 1, 'float');
+        $centerlng      = SpoonFilter::getPostValue('centerLng', null, 1, 'float');
+        $height         = SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
+        $width          = SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
+        $showLink       = SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
         $showDirections = SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
-        $showOverview = SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
+        $showOverview   = SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
 
         // reformat
-        $center = array('lat' => $centerLat, 'lng' => $centerlng);
-        $showLink = ($showLink == 'true');
+        $center         = array('lat' => $centerLat, 'lng' => $centerlng);
+        $showLink       = ($showLink == 'true');
         $showDirections = ($showDirections == 'true');
-        $showOverview = ($showOverview == 'true');
+        $showOverview   = ($showOverview == 'true');
 
         // standard dimensions
-        if($width > 800) $width = 800;
-        if($width < 300) $width = $generalSettings['width'];
-        if($height < 150) $height = $generalSettings['height'];
+        if ($width > 800) {
+            $width = 800;
+        }
+        if ($width < 300) {
+            $width = $generalSettings['width'];
+        }
+        if ($height < 150) {
+            $height = $generalSettings['height'];
+        }
 
         // no id given, this means we should update the main map
         BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);
@@ -57,8 +64,8 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
         BackendLocationModel::setMapSetting($itemId, 'full_url', $showLink);
 
         $item = array(
-            'id' => $itemId,
-            'language' => BL::getWorkingLanguage(),
+            'id'            => $itemId,
+            'language'      => BL::getWorkingLanguage(),
             'show_overview' => ($showOverview) ? 'Y' : 'N'
         );
         BackendLocationModel::update($item);

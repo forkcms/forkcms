@@ -24,7 +24,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist?
-        if($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
             parent::execute();
 
             $this->getData();
@@ -33,7 +33,9 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        } else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+        }
     }
 
     /**
@@ -65,7 +67,12 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 
         // assign the data
         $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('showFaqDeleteCategory', BackendFaqModel::deleteCategoryAllowed($this->id) && BackendAuthentication::isAllowedAction('delete_category'));
+        $this->tpl->assign(
+                  'showFaqDeleteCategory',
+                      BackendFaqModel::deleteCategoryAllowed($this->id) && BackendAuthentication::isAllowedAction(
+                                                                                                'delete_category'
+                      )
+        );
     }
 
     /**
@@ -73,7 +80,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
 
             $this->frm->cleanupFields();
@@ -82,11 +89,12 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
             $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['language'] = $this->record['language'];
                 $item['title'] = $this->frm->getField('title')->getValue();
+                $item['extra_id'] = $this->record['extra_id'];
                 $item['meta_id'] = $this->meta->save(true);
 
                 // update the item
@@ -94,7 +102,11 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                     BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode(
+                         $item['title']
+                     ) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

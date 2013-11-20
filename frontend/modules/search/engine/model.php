@@ -23,19 +23,19 @@ class FrontendSearchModel
     public static function buildTerm($terms)
     {
         // loop all items
-        foreach($terms as $i => $term) {
+        foreach ($terms as $i => $term) {
             // trim terms
             $term = trim($term);
 
             // last word may be incomplete (still typing)
-            $split = explode(' ', $term);
-            $last = (string) array_pop($split);
+            $split     = explode(' ', $term);
+            $last      = (string) array_pop($split);
             $terms[$i] = ($split ? '+' . implode(' +', $split) . ' ' : '') . '(>+' . $last . ' <+' . $last . '*)';
 
             // current string encountered
             $terms[$i] = '>' . $terms[$i];
 
-            if(strpos($terms[$i], ' ') !== false) {
+            if (strpos($terms[$i], ' ') !== false) {
                 // part of words encountered
                 $terms[$i] .= ' <(' . implode(' ', $split) . ' ' . trim($last) . '*)';
             }
@@ -52,26 +52,26 @@ class FrontendSearchModel
      * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
      *
      * @param mixed $term The search term (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
-     * @param int[optional] $limit The number of articles to get.
-     * @param int[optional] $offset The offset.
+     * @param       int   [optional] $limit The number of articles to get.
+     * @param       int   [optional] $offset The offset.
      * @return array
      */
     public static function execSearch($term, $limit = 20, $offset = 0)
     {
-        $limit = (int) $limit;
+        $limit  = (int) $limit;
         $offset = (int) $offset;
 
         // advanced search
-        if(is_array($term)) {
+        if (is_array($term)) {
             // init vars
-            $where = array();
-            $order = array();
-            $join = array();
+            $where   = array();
+            $order   = array();
+            $join    = array();
             $params1 = array();
             $params2 = array();
 
             // loop all searches
-            foreach($term as $field => $value) {
+            foreach ($term as $field => $value) {
                 // get all terms to search for (including synonyms)
                 $terms = self::getSynonyms((string) $value);
 
@@ -81,9 +81,17 @@ class FrontendSearchModel
                 $queryNr = count($where);
 
                 // add query
-                $where[$queryNr] = '(' . substr(str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
-                $order[$queryNr] = '(' . substr(str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)), 0, -3) . ') * m' . $queryNr . '.weight';
-                $join[$queryNr] = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
+                $where[$queryNr] = '(' . substr(
+                        str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)),
+                        0,
+                        -4
+                    ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
+                $order[$queryNr] = '(' . substr(
+                        str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)),
+                        0,
+                        -3
+                    ) . ') * m' . $queryNr . '.weight';
+                $join[$queryNr]  = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
 
                 // add params
                 $params1 = array_merge($params1, $terms);
@@ -93,15 +101,13 @@ class FrontendSearchModel
             // prepare query and params
             $query =
                 'SELECT i0.module, i0.other_id, ' . implode(' + ', $order) . ' AS score
-                 FROM ' . implode(' INNER JOIN ', $join) . '
-                 WHERE ' . implode(' AND ', $where) . '
-                 ORDER BY score DESC
-                 LIMIT ?, ?';
+				 FROM ' . implode(' INNER JOIN ', $join) . '
+				 WHERE ' . implode(' AND ', $where) . '
+				 ORDER BY score DESC
+				 LIMIT ?, ?';
 
             $params = array_merge($params1, $params2, array($offset, $limit));
-        }
-
-        // simple search
+        } // simple search
         else {
             // get all terms to search for (including synonyms)
             $terms = self::getSynonyms((string) $term);
@@ -111,13 +117,21 @@ class FrontendSearchModel
 
             // prepare query and params
             $query =
-                'SELECT i.module, i.other_id, SUM(' . substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)), 0, -3) . ') * m.weight AS score
-                 FROM search_index AS i
-                 INNER JOIN search_modules AS m ON i.module = m.module
-                 WHERE (' . substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
-                 GROUP BY module, other_id
-                 ORDER BY score DESC
-                 LIMIT ?, ?';
+                'SELECT i.module, i.other_id, SUM(' . substr(
+                    str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)),
+                    0,
+                    -3
+                ) . ') * m.weight AS score
+				 FROM search_index AS i
+				 INNER JOIN search_modules AS m ON i.module = m.module
+				 WHERE (' . substr(
+                    str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)),
+                    0,
+                    -4
+                ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+				 GROUP BY module, other_id
+				 ORDER BY score DESC
+				 LIMIT ?, ?';
 
             $params = array_merge($terms, $terms, array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit));
         }
@@ -128,46 +142,44 @@ class FrontendSearchModel
     /**
      * Get preview searches that start with ...
      *
-     * @param string $term The first letters of the term we're looking for.
-     * @param string[optional] $language The language to search in.
-     * @param int[optional] $limit Limit result set.
+     * @param string $term  The first letters of the term we're looking for.
+     * @param        string [optional] $language The language to search in.
+     * @param        int    [optional] $limit Limit result set.
      * @return array
      */
     public static function getStartsWith($term, $language = '', $limit = 10)
     {
         // language given
-        if($language) {
+        if ($language) {
             return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $language, $limit)
+                                        'SELECT s1.term, s1.num_results
+                                         FROM search_statistics AS s1
+                                         INNER JOIN
+                                         (
+                                             SELECT term, MAX(id) AS id, language
+                                             FROM search_statistics
+                                             WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
+                                             GROUP BY term
+                                         ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+                                         ORDER BY s1.num_results ASC
+                                         LIMIT ?',
+                                            array((string) $term . '%', $language, $limit)
             );
-        }
-
-        // no language given
+        } // no language given
         else {
             return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $limit)
+                                        'SELECT s1.term, s1.num_results
+                                         FROM search_statistics AS s1
+                                         INNER JOIN
+                                         (
+                                             SELECT term, MAX(id) AS id, language
+                                             FROM search_statistics
+                                             WHERE term LIKE ? AND num_results IS NOT NULL
+                                             GROUP BY term
+                                         ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+                                         ORDER BY s1.num_results ASC
+                                         LIMIT ?',
+                                            array((string) $term . '%', $limit)
             );
         }
     }
@@ -182,14 +194,16 @@ class FrontendSearchModel
     {
         // query db for synonyms
         $synonyms = FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT synonym
-             FROM search_synonyms
-             WHERE term = ?',
-            array((string) $term)
+                                 'SELECT synonym
+                                  FROM search_synonyms
+                                  WHERE term = ?',
+                                     array((string) $term)
         );
 
         // found any? merge with original term
-        if($synonyms) return array_unique(array_merge(array($term), explode(',', $synonyms)));
+        if ($synonyms) {
+            return array_unique(array_merge(array($term), explode(',', $synonyms)));
+        }
 
         // only original term
         return array($term);
@@ -212,14 +226,14 @@ class FrontendSearchModel
     public static function getTotal($term)
     {
         // advanced search
-        if(is_array($term)) {
+        if (is_array($term)) {
             // init vars
-            $where = array();
-            $join = array();
+            $where  = array();
+            $join   = array();
             $params = array();
 
             // loop all searches
-            foreach($term as $field => $value) {
+            foreach ($term as $field => $value) {
                 // get all terms to search for (including synonyms)
                 $terms = self::getSynonyms((string) $value);
 
@@ -229,8 +243,12 @@ class FrontendSearchModel
                 $queryNr = count($where);
 
                 // add query
-                $where[$queryNr] = '(' . substr(str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
-                $join[$queryNr] = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
+                $where[$queryNr] = '(' . substr(
+                        str_repeat('MATCH (i' . $queryNr . '.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)),
+                        0,
+                        -4
+                    ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
+                $join[$queryNr]  = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
 
                 // add params
                 $params = array_merge($params, $terms, array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y'));
@@ -243,11 +261,9 @@ class FrontendSearchModel
                  (
                      SELECT i0.module, i0.other_id
                      FROM ' . implode(' INNER JOIN ', $join) . '
-                     WHERE ' . implode(' AND ', $where) . '
-                 ) AS results';
-        }
-
-        // simple search
+				 	WHERE ' . implode(' AND ', $where) . '
+				 ) AS results';
+        } // simple search
         else {
             // get all terms to search for (including synonyms)
             $terms = self::getSynonyms((string) $term);
@@ -263,9 +279,13 @@ class FrontendSearchModel
                      SELECT i.module
                      FROM search_index AS i
                      INNER JOIN search_modules AS m ON i.module = m.module
-                     WHERE (' . substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
-                     GROUP BY i.module, i.other_id
-                 ) AS results';
+                     WHERE (' . substr(
+                    str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)),
+                    0,
+                    -4
+                ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+				 	GROUP BY i.module, i.other_id
+				 ) AS results';
 
             $params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
         }
@@ -295,14 +315,16 @@ class FrontendSearchModel
      * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (corresponding values in the array)
      *
      * @param mixed $term The search term (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
-     * @param int[optional] $limit The number of articles to get.
-     * @param int[optional] $offset The offset.
+     * @param       int   [optional] $limit The number of articles to get.
+     * @param       int   [optional] $offset The offset.
      * @return array
      */
     public static function search($term, $limit = 20, $offset = 0)
     {
         // revalidate searches
-        if(FrontendModel::getModuleSetting('search', 'validate_search', true) == true) self::validateSearch(); // @note: on heavy sites with a lot of inactive search indices better use a cronjob (which will automatically set this module setting to N)
+        if (FrontendModel::getModuleSetting('search', 'validate_search', true) == true) {
+            self::validateSearch();
+        } // @note: on heavy sites with a lot of inactive search indices better use a cronjob (which will automatically set this module setting to N)
 
         // execute the actual search
         $searchResults = self::execSearch($term, $limit, $offset);
@@ -311,32 +333,39 @@ class FrontendSearchModel
         $total = count($searchResults);
 
         // none found? return empty :(
-        if(!$searchResults) return array();
+        if (!$searchResults) {
+            return array();
+        }
 
         // prepare to send to modules
         $moduleResults = array();
 
         // loop the result set
-        foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+        foreach ($searchResults as $searchResult) {
+            $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+        }
 
         // pass the results to the modules
-        foreach($moduleResults as $module => $otherIds) {
+        foreach ($moduleResults as $module => $otherIds) {
             // check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
-            if(is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))) {
+            if (is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))) {
                 // get the required info from our module
-                $moduleResults[$module] = call_user_func(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'), $otherIds);
+                $moduleResults[$module] = call_user_func(
+                    array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'),
+                    $otherIds
+                );
+            } // does not exist, let's get this module out of here
+            else {
+                unset($moduleResults[$module]);
             }
-
-            // does not exist, let's get this module out of here
-            else unset($moduleResults[$module]);
         }
 
         // now place the prepared data back in our original result set, which has our results in correct order
-        foreach($searchResults as $i => $result) {
+        foreach ($searchResults as $i => $result) {
             // loop parsed results for this specific module to find the one we want here
-            foreach($moduleResults[$result['module']] as $otherId => $moduleResult) {
+            foreach ($moduleResults[$result['module']] as $otherId => $moduleResult) {
                 // that's the one..
-                if($otherId == $result['other_id']) {
+                if ($otherId == $result['other_id']) {
                     $searchResults[$i] = array_merge(array('module' => $result['module']), $moduleResult);
                     continue 2;
                 }
@@ -348,7 +377,9 @@ class FrontendSearchModel
         }
 
         // results got removed by the module? oh noes :o have another run, because now we've deactivated those responsible for the holes :)
-        if(count($searchResults) < $total && $total == $limit) $searchResults = self::search($term, $limit, $offset);
+        if (count($searchResults) < $total && $total == $limit) {
+            $searchResults = self::search($term, $limit, $offset);
+        }
 
         // return results
         return $searchResults;
@@ -357,9 +388,9 @@ class FrontendSearchModel
     /**
      * Deactivate an index (no longer has to be searched)
      *
-     * @param string $module The module we're deleting an item from.
-     * @param array $otherIds An array of other_id's for this module.
-     * @param bool[optional] $active Set the index to active?
+     * @param string $module   The module we're deleting an item from.
+     * @param array  $otherIds An array of other_id's for this module.
+     * @param        bool      [optional] $active Set the index to active?
      */
     public static function statusIndex($module, array $otherIds, $active = true)
     {
@@ -367,7 +398,14 @@ class FrontendSearchModel
         $active = ($active && $active !== 'N') ? 'Y' : 'N';
 
         // deactivate!
-        if($otherIds) FrontendModel::getContainer()->get('database')->update('search_index', array('active' => $active), 'module = ? AND other_id IN (' . implode(',', $otherIds) . ')', array((string) $module));
+        if ($otherIds) {
+            FrontendModel::getContainer()->get('database')->update(
+                         'search_index',
+                             array('active' => $active),
+                             'module = ? AND other_id IN (' . implode(',', $otherIds) . ')',
+                             array((string) $module)
+            );
+        }
     }
 
     /**
@@ -377,33 +415,40 @@ class FrontendSearchModel
     {
         // we'll iterate through the inactive search indices in little batches
         $offset = 0;
-        $limit = 50;
+        $limit  = 50;
 
-        while(1) {
+        while (1) {
             // get the inactive indices
             $searchResults = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT module, other_id
-                 FROM search_index
-                 WHERE language = ? AND active = ?
-                 GROUP BY module, other_id
-                 LIMIT ?, ?',
-                array(FRONTEND_LANGUAGE, 'N', $offset, $limit)
+                                                  'SELECT module, other_id
+                                                   FROM search_index
+                                                   WHERE language = ? AND active = ?
+                                                   GROUP BY module, other_id
+                                                   LIMIT ?, ?',
+                                                      array(FRONTEND_LANGUAGE, 'N', $offset, $limit)
             );
 
             // none found? good news!
-            if(!$searchResults) return;
+            if (!$searchResults) {
+                return;
+            }
 
             // prepare to send to modules
             $moduleResults = array();
 
             // loop the result set
-            foreach($searchResults as $searchResult) $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+            foreach ($searchResults as $searchResult) {
+                $moduleResults[$searchResult['module']][] = $searchResult['other_id'];
+            }
 
             // pass the results to the modules
-            foreach($moduleResults as $module => $otherIds) {
+            foreach ($moduleResults as $module => $otherIds) {
                 // check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
-                if(is_callable(array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search'))) {
-                    $moduleResults[$module] = call_user_func(array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search'), $otherIds);
+                if (is_callable(array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search'))) {
+                    $moduleResults[$module] = call_user_func(
+                        array('Frontend' . SpoonFilter::ucfirst($module) . 'Model', 'search'),
+                        $otherIds
+                    );
 
                     // update the ones that are allowed to be searched through
                     self::statusIndex($module, array_keys($moduleResults[$module]), true);
@@ -411,7 +456,9 @@ class FrontendSearchModel
             }
 
             // didn't even get the amount of result we asked for? no need to ask again!
-            if(count($searchResults) < $offset) return;
+            if (count($searchResults) < $offset) {
+                return;
+            }
 
             $offset += $limit;
         }

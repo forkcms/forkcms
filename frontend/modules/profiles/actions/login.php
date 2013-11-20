@@ -18,7 +18,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -29,15 +29,13 @@ class FrontendProfilesLogin extends FrontendBaseBlock
     {
         parent::execute();
 
-         // profile not logged in
-        if(!FrontendProfilesAuthentication::isLoggedIn()) {
+        // profile not logged in
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
             $this->loadTemplate();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
-        }
-
-        // profile already logged in
+        } // profile already logged in
         else {
             // query string
             $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
@@ -72,7 +70,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get fields
             $txtEmail = $this->frm->getField('email');
             $txtPassword = $this->frm->getField('password');
@@ -83,16 +81,22 @@ class FrontendProfilesLogin extends FrontendBaseBlock
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
 
             // both fields filled in
-            if($txtEmail->isFilled() && $txtPassword->isFilled()) {
+            if ($txtEmail->isFilled() && $txtPassword->isFilled()) {
                 // valid email?
-                if($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
                     // get the status for the given login
-                    $loginStatus = FrontendProfilesAuthentication::getLoginStatus($txtEmail->getValue(), $txtPassword->getValue());
+                    $loginStatus = FrontendProfilesAuthentication::getLoginStatus(
+                                                                 $txtEmail->getValue(),
+                                                                     $txtPassword->getValue()
+                    );
 
                     // valid login?
-                    if($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+                    if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
                         // get the error string to use
-                        $errorString = sprintf(FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login'), FrontendNavigation::getURLForBlock('profiles', 'resend_activation'));
+                        $errorString = sprintf(
+                            FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login'),
+                            FrontendNavigation::getURLForBlock('profiles', 'resend_activation')
+                        );
 
                         // add the error to stack
                         $this->frm->addError($errorString);
@@ -104,7 +108,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
             }
 
             // valid login
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 

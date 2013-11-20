@@ -26,10 +26,9 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
         $term = SpoonFilter::getPostValue('term', null, '');
 
         // validate
-        if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
-
-        // validated
-        else {
+        if ($term == '') {
+            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        } else {
             // get tags
             $tags = BackendTagsModel::getStartsWith($term);
 

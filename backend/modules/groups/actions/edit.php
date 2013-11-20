@@ -27,42 +27,42 @@ class BackendGroupsEdit extends BackendBaseActionEdit
     /**
      * The actions
      *
-     * @var	array
+     * @var    array
      */
     private $actions = array();
 
     /**
      * The dashboard sequence
      *
-     * @var	array
+     * @var    array
      */
     private $dashboardSequence = array();
 
     /**
      * The users datagrid
      *
-     * @var	BackendDataGrid
+     * @var    BackendDataGrid
      */
     private $dataGridUsers;
 
     /**
      * The modules
      *
-     * @var	array
+     * @var    array
      */
     private $modules;
 
     /**
      * The widgets
      *
-     * @var	array
+     * @var    array
      */
     private $widgets;
 
     /**
      * The widget instances
      *
-     * @var	array
+     * @var    array
      */
     private $widgetInstances;
 
@@ -71,32 +71,44 @@ class BackendGroupsEdit extends BackendBaseActionEdit
      */
     private function bundleActions()
     {
-        foreach($this->modules as $module) {
+        foreach ($this->modules as $module) {
             // loop through actions and add all classnames
-            foreach($this->actions[$module['value']] as $key => $action) {
+            foreach ($this->actions[$module['value']] as $key => $action) {
                 // ajax action?
-                if(is_file(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php')) {
+                if (is_file(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php')) {
                     // create reflection class
                     $reflection = new ReflectionClass('Backend' . $module['label'] . 'Ajax' . $action['label']);
+                } // no ajax action? create reflection class
+                else {
+                    $reflection = new ReflectionClass('Backend' . $module['label'] . $action['label']);
                 }
-
-                // no ajax action? create reflection class
-                else $reflection = new ReflectionClass('Backend' . $module['label'] . $action['label']);
 
                 // get the tag offset
                 $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
 
                 // no tag present? move on!
-                if(!($offset - strlen(ACTION_GROUP_TAG))) continue;
+                if (!($offset - strlen(ACTION_GROUP_TAG))) {
+                    continue;
+                }
 
                 // get the group info
-                $groupInfo = trim(substr($reflection->getDocComment(), $offset, (strpos($reflection->getDocComment(), '*', $offset) - $offset)));
+                $groupInfo = trim(
+                    substr(
+                        $reflection->getDocComment(),
+                        $offset,
+                        (strpos($reflection->getDocComment(), '*', $offset) - $offset)
+                    )
+                );
 
                 // get name and description
                 $bits = explode("\t", $groupInfo);
 
                 // delete empty values
-                foreach($bits as $i => $bit) if(empty($bit)) unset($bits[$i]);
+                foreach ($bits as $i => $bit) {
+                    if (empty($bit)) {
+                        unset($bits[$i]);
+                    }
+                }
 
                 // add group to actions
                 $this->actions[$module['value']][$key]['group'] = $bits[0];
@@ -126,49 +138,59 @@ class BackendGroupsEdit extends BackendBaseActionEdit
      */
     private function getActions()
     {
-        $filter = array('authentication', 'error', 'core');
+        $filter  = array('authentication', 'error', 'core');
         $modules = array();
 
         $finder = new Finder();
         $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/actions')
-            ->in(BACKEND_MODULES_PATH . '/*/ajax');
-        foreach($finder->files() as $file) {
+               ->in(BACKEND_MODULES_PATH . '/*/actions')
+               ->in(BACKEND_MODULES_PATH . '/*/ajax');
+        foreach ($finder->files() as $file) {
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
 
             // skip some modules
-            if(in_array($module, $filter)) continue;
+            if (in_array($module, $filter)) {
+                continue;
+            }
 
-            if(BackendAuthentication::isAllowedModule($module)) {
+            if (BackendAuthentication::isAllowedModule($module)) {
                 $actionName = $file->getBasename('.php');
-                $isAjax = $file->getPathInfo()->getBasename() == 'ajax';
-                $modules[] = $module;
+                $isAjax     = $file->getPathInfo()->getBasename() == 'ajax';
+                $modules[]  = $module;
 
                 // ajax-files should be required
-                if($isAjax) {
+                if ($isAjax) {
                     require_once $file->getRealPath();
-                    $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName);
-                } else $className = 'Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName);
+                    $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase(
+                                                                                                     $actionName
+                        );
+                } else {
+                    $className = 'Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase(
+                                                                                            $actionName
+                        );
+                }
 
                 $reflection = new ReflectionClass($className);
-                $phpDoc = trim($reflection->getDocComment());
-                if($phpDoc != '') {
-                    $offset = strpos($reflection->getDocComment(), '*', 7);
+                $phpDoc     = trim($reflection->getDocComment());
+                if ($phpDoc != '') {
+                    $offset      = strpos($reflection->getDocComment(), '*', 7);
                     $description = substr($reflection->getDocComment(), 0, $offset);
                     $description = str_replace('*', '', $description);
                     $description = trim(str_replace('/', '', $description));
-                } else $description = '';
+                } else {
+                    $description = '';
+                }
 
                 $this->actions[$module][] = array(
-                    'label' => SpoonFilter::toCamelCase($actionName),
-                    'value' => $actionName,
+                    'label'       => SpoonFilter::toCamelCase($actionName),
+                    'value'       => $actionName,
                     'description' => $description
                 );
             }
         }
 
         $modules = array_unique($modules);
-        foreach($modules as $module) {
+        foreach ($modules as $module) {
             $this->modules[] = array(
                 'label' => SpoonFilter::toCamelCase($module),
                 'value' => $module
@@ -190,7 +212,9 @@ class BackendGroupsEdit extends BackendBaseActionEdit
         $this->record = BackendGroupsModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
 
         $this->getWidgets();
         $this->getActions();
@@ -204,47 +228,49 @@ class BackendGroupsEdit extends BackendBaseActionEdit
     {
         $finder = new Finder();
         $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/widgets');
-        foreach($finder->files() as $file) {
+               ->in(BACKEND_MODULES_PATH . '/*/widgets');
+        foreach ($finder->files() as $file) {
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
-            if(BackendAuthentication::isAllowedModule($module)) {
+            if (BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');
-                $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
+                $className  = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase(
+                                                                                                    $widgetName
+                    );
                 require_once $file->getRealPath();
 
-                if(class_exists($className)) {
+                if (class_exists($className)) {
                     // add to array
                     $this->widgetInstances[] = array(
-                        'module' => $module,
-                        'widget' => $widgetName,
+                        'module'    => $module,
+                        'widget'    => $widgetName,
                         'className' => $className
                     );
 
                     // create reflection class
                     $reflection = new ReflectionClass($className);
-                    $phpDoc = trim($reflection->getDocComment());
-                    if($phpDoc != '') {
-                        $offset = strpos($reflection->getDocComment(), '*', 7);
+                    $phpDoc     = trim($reflection->getDocComment());
+                    if ($phpDoc != '') {
+                        $offset      = strpos($reflection->getDocComment(), '*', 7);
                         $description = substr($reflection->getDocComment(), 0, $offset);
                         $description = str_replace('*', '', $description);
                         $description = trim(str_replace('/', '', $description));
-                    } else $description = '';
+                    } else {
+                        $description = '';
+                    }
 
                     // check if model file exists
                     $pathName = $file->getPathInfo()->getPathInfo()->getRealPath();
-                    if(is_file($pathName . '/engine/model.php')) {
+                    if (is_file($pathName . '/engine/model.php')) {
                         // require model
                         require_once $pathName . '/engine/model.php';
                     }
 
                     // add to array
                     $this->widgets[] = array(
-                        'label' => SpoonFilter::toCamelCase($widgetName),
-                        'value' => $widgetName,
+                        'label'       => SpoonFilter::toCamelCase($widgetName),
+                        'value'       => $widgetName,
                         'description' => $description
                     );
-
-
                 }
             }
         }
@@ -258,22 +284,55 @@ class BackendGroupsEdit extends BackendBaseActionEdit
         $this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit', 'users')) {
+        if (BackendAuthentication::isAllowedAction('edit', 'users')) {
             // add columns
-            $this->dataGridUsers->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('surname', SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('name', SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn(
+                                'nickname',
+                                    SpoonFilter::ucfirst(BL::lbl('Nickname')),
+                                    null,
+                                    BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]'
+            );
+            $this->dataGridUsers->addColumn(
+                                'surname',
+                                    SpoonFilter::ucfirst(BL::lbl('Surname')),
+                                    null,
+                                    BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]'
+            );
+            $this->dataGridUsers->addColumn(
+                                'name',
+                                    SpoonFilter::ucfirst(BL::lbl('Name')),
+                                    null,
+                                    BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]'
+            );
 
             // add column URL
-            $this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+            $this->dataGridUsers->setColumnURL(
+                                'email',
+                                    BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]'
+            );
 
             // set columns sequence
             $this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
             // show users's name, surname and nickname
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'surname'), 'surname', false);
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'name'), 'name', false);
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
+            $this->dataGridUsers->setColumnFunction(
+                                array('BackendUsersModel', 'getSetting'),
+                                    array('[id]', 'surname'),
+                                    'surname',
+                                    false
+            );
+            $this->dataGridUsers->setColumnFunction(
+                                array('BackendUsersModel', 'getSetting'),
+                                    array('[id]', 'name'),
+                                    'name',
+                                    false
+            );
+            $this->dataGridUsers->setColumnFunction(
+                                array('BackendUsersModel', 'getSetting'),
+                                    array('[id]', 'nickname'),
+                                    'nickname',
+                                    false
+            );
         }
     }
 
@@ -289,23 +348,30 @@ class BackendGroupsEdit extends BackendBaseActionEdit
         $actionPermissions = BackendGroupsModel::getActionPermissions($this->id);
 
         // add selected modules to array
-        foreach($modulePermissions as $permission) $selectedModules[] = $permission['module'];
+        foreach ($modulePermissions as $permission) {
+            $selectedModules[] = $permission['module'];
+        }
 
         // loop through modules
-        foreach($this->modules as $key => $module) {
+        foreach ($this->modules as $key => $module) {
             // widgets available?
-            if(isset($this->widgets)) {
+            if (isset($this->widgets)) {
                 // loop through widgets
-                foreach($this->widgets as $j => $widget) {
+                foreach ($this->widgets as $j => $widget) {
                     // widget is present?
-                    if(isset($this->dashboardSequence[$module['value']][$widget['value']]['present']) && $this->dashboardSequence[$module['value']][$widget['value']]['present'] === true) {
+                    if (isset($this->dashboardSequence[$module['value']][$widget['value']]['present']) && $this->dashboardSequence[$module['value']][$widget['value']]['present'] === true) {
                         // add to array
                         $selectedWidgets[$j] = $widget['value'];
                     }
 
                     // add widget checkboxes
-                    $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
-                    $widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
+                    $widgetBoxes[$j]['checkbox']    = '<span>' . $this->frm->addCheckbox(
+                                                                           'widgets_' . $widget['label'],
+                                                                               isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null
+                        )                                                  ->parse() . '</span>';
+                    $widgetBoxes[$j]['widget']      = '<label for="widgets' . SpoonFilter::toCamelCase(
+                                                                                         $widget['label']
+                        ) . '">' . $widget['label'] . '</label>';
                     $widgetBoxes[$j]['description'] = $widget['description'];
                 }
             }
@@ -313,9 +379,11 @@ class BackendGroupsEdit extends BackendBaseActionEdit
             $selectedActions = array();
 
             // loop through action permissions
-            foreach($actionPermissions as $permission) {
+            foreach ($actionPermissions as $permission) {
                 // add to selected actions
-                if($permission['module'] == $module['value']) $selectedActions[] = $permission['action'];
+                if ($permission['module'] == $module['value']) {
+                    $selectedActions[] = $permission['action'];
+                }
             }
 
             // add module labels
@@ -325,35 +393,51 @@ class BackendGroupsEdit extends BackendBaseActionEdit
             $addedBundles = array();
 
             // loop through actions
-            foreach($this->actions[$module['value']] as $i => $action) {
+            foreach ($this->actions[$module['value']] as $i => $action) {
                 // action is bundled?
-                if(array_key_exists('group', $action)) {
+                if (array_key_exists('group', $action)) {
                     // bundle not yet in array?
-                    if(!in_array($action['group'], $addedBundles)) {
+                    if (!in_array($action['group'], $addedBundles)) {
                         // assign bundled action boxes
-                        $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($action['group']), in_array($action['value'], $selectedActions))->parse();
-                        $actionBoxes[$key]['actions'][$i]['action'] = SpoonFilter::ucfirst($action['group']);
+                        $actionBoxes[$key]['actions'][$i]['checkbox']    = $this->frm->addCheckbox(
+                                                                                     'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst(
+                                                                                                                                                 $action['group']
+                                                                                     ),
+                                                                                         in_array(
+                                                                                             $action['value'],
+                                                                                             $selectedActions
+                                                                                         )
+                        )                                                            ->parse();
+                        $actionBoxes[$key]['actions'][$i]['action']      = SpoonFilter::ucfirst($action['group']);
                         $actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
                         // add the group to the added bundles
                         $addedBundles[] = $action['group'];
                     }
-                }
-
-                // action not bundled
+                } // action not bundled
                 else {
                     // assign action boxes
-                    $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'], in_array($action['value'], $selectedActions))->parse();
-                    $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
+                    $actionBoxes[$key]['actions'][$i]['checkbox']    = $this->frm->addCheckbox(
+                                                                                 'actions_' . $module['label'] . '_' . $action['label'],
+                                                                                     in_array(
+                                                                                         $action['value'],
+                                                                                         $selectedActions
+                                                                                     )
+                    )                                                            ->parse();
+                    $actionBoxes[$key]['actions'][$i]['action']      = '<label for="actions' . SpoonFilter::toCamelCase(
+                                                                                                          $module['label'] . '_' . $action['label']
+                        ) . '">' . $action['label'] . '</label>';
                     $actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
                 }
             }
 
             // widgetboxes available?
-            if(isset($widgetBoxes)) {
+            if (isset($widgetBoxes)) {
                 // create datagrid
                 $widgetGrid = new BackendDataGridArray($widgetBoxes);
-                $widgetGrid->setHeaderLabels(array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /></span>'));
+                $widgetGrid->setHeaderLabels(
+                           array('checkbox' => '<span class="checkboxHolder"><input id="toggleChecksWidgets" type="checkbox" name="toggleChecks" value="toggleChecks" /></span>')
+                );
 
                 // get content
                 $widgets = $widgetGrid->getContent();
@@ -367,9 +451,12 @@ class BackendGroupsEdit extends BackendBaseActionEdit
 
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
-            $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
-            $permissionBoxes[$key]['id'] = SpoonFilter::toCamelCase($module['label']);
-
+            $permissionBoxes[$key]['chk']                 = $this->frm->addCheckbox(
+                                                                      $module['label'],
+                                                                          null,
+                                                                          'inputCheckbox checkBeforeUnload selectAll'
+            )                                                         ->parse();
+            $permissionBoxes[$key]['id']                  = SpoonFilter::toCamelCase($module['label']);
         }
 
         // create elements
@@ -387,31 +474,37 @@ class BackendGroupsEdit extends BackendBaseActionEdit
     {
         parent::parse();
 
-        $this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
+        $this->tpl->assign(
+                  'dataGridUsers',
+                      ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false
+        );
         $this->tpl->assign('item', $this->record);
         $this->tpl->assign('groupName', $this->record['name']);
 
         // only allow deletion of empty groups
-        $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete'));
+        $this->tpl->assign(
+                  'showGroupsDelete',
+                      $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete')
+        );
     }
 
     /**
      * Update the permissions
      *
-     * @param array $actionPermissions The action permissions.
+     * @param array $actionPermissions        The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
     private function updatePermissions($actionPermissions, $bundledActionPermissions)
     {
-        $modulesDenied = array();
-        $modulesGranted = array();
-        $actionsDenied = array();
-        $actionsGranted = array();
-        $checkedModules = array();
+        $modulesDenied    = array();
+        $modulesGranted   = array();
+        $actionsDenied    = array();
+        $actionsGranted   = array();
+        $checkedModules   = array();
         $uncheckedModules = array();
 
         // loop through action permissions
-        foreach($actionPermissions as $permission) {
+        foreach ($actionPermissions as $permission) {
             // get bits
             $bits = explode('_', $permission->getName());
 
@@ -420,63 +513,100 @@ class BackendGroupsEdit extends BackendBaseActionEdit
             $action = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[2])), '_');
 
             // permission checked?
-            if($permission->getChecked()) {
+            if ($permission->getChecked()) {
                 // add to granted
-                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsGranted[] = array(
+                    'group_id' => $this->id,
+                    'module'   => $module,
+                    'action'   => $action,
+                    'level'    => ACTION_RIGHTS_LEVEL
+                );
 
                 // if not yet present, add to checked modules
-                if(!in_array($module, $checkedModules)) $checkedModules[] = $module;
-            }
-
-            // permission not checked?
+                if (!in_array($module, $checkedModules)) {
+                    $checkedModules[] = $module;
+                }
+            } // permission not checked?
             else {
                 // add to denied
-                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsDenied[] = array(
+                    'group_id' => $this->id,
+                    'module'   => $module,
+                    'action'   => $action,
+                    'level'    => ACTION_RIGHTS_LEVEL
+                );
 
                 // if not yet present add to unchecked modules
-                if(!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
+                if (!in_array($module, $uncheckedModules)) {
+                    $uncheckedModules[] = $module;
+                }
             }
         }
 
         // loop through bundled action permissions
-        foreach($bundledActionPermissions as $permission) {
+        foreach ($bundledActionPermissions as $permission) {
             // get bits
             $bits = explode('_', $permission->getName());
 
             // convert camelcasing to underscore notation
             $module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
-            $group = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[3])), '_');
+            $group  = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[3])), '_');
 
             // create new item
             $moduleItem = array('group_id' => $this->id, 'module' => $module);
 
             // loop through actions
-            foreach($this->actions[$module] as $moduleAction) {
+            foreach ($this->actions[$module] as $moduleAction) {
                 // permission checked?
-                if($permission->getChecked()) {
+                if ($permission->getChecked()) {
                     // add to granted if in the right group
-                    if(in_array($group, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($group, $moduleAction)) {
+                        $actionsGranted[] = array(
+                            'group_id' => $this->id,
+                            'module'   => $module,
+                            'action'   => $moduleAction['value'],
+                            'level'    => ACTION_RIGHTS_LEVEL
+                        );
+                    }
 
                     // if not yet present, add to checked modules
-                    if(!in_array($module, $checkedModules)) $checkedModules[] = $module;
-                }
-
-                // permission not checked?
+                    if (!in_array($module, $checkedModules)) {
+                        $checkedModules[] = $module;
+                    }
+                } // permission not checked?
                 else {
                     // add to denied
-                    if(in_array($group, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($group, $moduleAction)) {
+                        $actionsDenied[] = array(
+                            'group_id' => $this->id,
+                            'module'   => $module,
+                            'action'   => $moduleAction['value'],
+                            'level'    => ACTION_RIGHTS_LEVEL
+                        );
+                    }
 
                     // if not yet present add to unchecked modules
-                    if(!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
+                    if (!in_array($module, $uncheckedModules)) {
+                        $uncheckedModules[] = $module;
+                    }
                 }
             }
         }
 
         // loop through granted modules and add to array
-        foreach($checkedModules as $module) $modulesGranted[] = array('group_id' => $this->id, 'module' => $module);
+        foreach ($checkedModules as $module) {
+            $modulesGranted[] = array('group_id' => $this->id, 'module' => $module);
+        }
 
         // loop through denied modules and add to array
-        foreach(array_diff($uncheckedModules, $checkedModules) as $module) $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
+        foreach (
+            array_diff(
+                $uncheckedModules,
+                $checkedModules
+            ) as $module
+        ) {
+            $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
+        }
 
         // add granted permissions
         BackendGroupsModel::addModulePermissions($modulesGranted);
@@ -502,16 +632,22 @@ class BackendGroupsEdit extends BackendBaseActionEdit
         $users = BackendGroupsModel::getUsers($this->id);
 
         // loop through users and create objects
-        foreach($users as $user) $userObjects[] = new BackendUser($user['id']);
+        foreach ($users as $user) {
+            $userObjects[] = new BackendUser($user['id']);
+        }
 
         // any users present?
-        if(!empty($userObjects)) {
+        if (!empty($userObjects)) {
             // loop through user objects and get all sequences
-            foreach($userObjects as $user) $userSequences[$user->getUserId()] = $user->getSetting('dashboard_sequence');
+            foreach ($userObjects as $user) {
+                $userSequences[$user->getUserId()] = $user->getSetting(
+                                                          'dashboard_sequence'
+                );
+            }
         }
 
         // loop through all widgets
-        foreach($this->widgetInstances as $widget) {
+        foreach ($this->widgetInstances as $widget) {
             // create instance
             $instance = new $widget['className']();
 
@@ -519,96 +655,110 @@ class BackendGroupsEdit extends BackendBaseActionEdit
             $instance->execute();
 
             // create module array if no existence
-            if(!isset($this->dashboardSequence[$widget['module']])) $this->dashboardSequence[$widget['module']] = array();
+            if (!isset($this->dashboardSequence[$widget['module']])) {
+                $this->dashboardSequence[$widget['module']] = array();
+            }
 
             // create dashboard sequence
             $this->dashboardSequence[$widget['module']] += array(
                 $widget['widget'] => array(
-                    'column' => $instance->getColumn(),
+                    'column'   => $instance->getColumn(),
                     'position' => (int) $instance->getPosition(),
-                    'hidden' => false,
-                    'present' => false
+                    'hidden'   => false,
+                    'present'  => false
                 )
             );
 
             // loop through selected widgets
-            foreach($widgetPresets as $preset) {
+            foreach ($widgetPresets as $preset) {
                 // if selected
-                if($preset->getChecked()) {
+                if ($preset->getChecked()) {
                     // convert camelcasing to underscore notation
-                    $selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
+                    $selected = trim(
+                        strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))),
+                        '_'
+                    );
 
                     // if selected is the right widget, set visible
-                    if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    if ($selected == $widget['widget']) {
+                        $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    }
                 }
             }
         }
 
         // build group
         $userGroup['name'] = $this->frm->getField('name')->getValue();
-        $userGroup['id'] = $this->id;
+        $userGroup['id']   = $this->id;
 
         // build setting
         $setting['group_id'] = $this->id;
-        $setting['name'] = 'dashboard_sequence';
-        $setting['value'] = serialize($this->dashboardSequence);
+        $setting['name']     = 'dashboard_sequence';
+        $setting['value']    = serialize($this->dashboardSequence);
 
         // update group
         BackendGroupsModel::update($userGroup, $setting);
 
         // loop through all widgets
-        foreach($this->widgetInstances as $widget) {
+        foreach ($this->widgetInstances as $widget) {
             // loop through users
-            foreach($users as $user) {
+            foreach ($users as $user) {
                 // unset visible if already present
-                if(isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = false;
+                if (isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
+                    $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = false;
+                }
 
                 // get groups for user
                 $groups = BackendGroupsModel::getGroupsByUser($user['id']);
 
                 // loop through groups
-                foreach($groups as $group) {
+                foreach ($groups as $group) {
                     // get group sequence
-                    $groupSequence = BackendGroupsModel::getSetting($group['id'] , 'dashboard_sequence');
+                    $groupSequence = BackendGroupsModel::getSetting($group['id'], 'dashboard_sequence');
 
                     // loop through selected widgets
-                    foreach($widgetPresets as $preset) {
+                    foreach ($widgetPresets as $preset) {
                         // if selected
-                        if($preset->getChecked()) {
+                        if ($preset->getChecked()) {
                             // convert camelcasing to underscore notation
-                            $selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
+                            $selected = trim(
+                                strtolower(
+                                    preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))
+                                ),
+                                '_'
+                            );
 
                             // if selected is the right widget
-                            if($selected == $widget['widget']) {
+                            if ($selected == $widget['widget']) {
                                 // set widgets visible
                                 $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
 
                                 // usersequence has widget?
-                                if(isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
+                                if (isset($userSequences[$user['id']][$widget['module']][$widget['widget']])) {
                                     // set visible
                                     $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = true;
-                                }
-
-                                // else assign widget
+                                } // else assign widget
                                 else {
                                     // assign module if not yet present
-                                     if(!isset($userSequences[$user['id']][$widget['module']])) $userSequences[$user['id']][$widget['module']] = array();
+                                    if (!isset($userSequences[$user['id']][$widget['module']])) {
+                                        $userSequences[$user['id']][$widget['module']] = array();
+                                    }
 
-                                     // add widget
-                                     $userSequences[$user['id']][$widget['module']] += array(
-                                         $widget['widget'] => array(
-                                             'column' => $instance->getColumn(),
-                                             'position' => (int) $instance->getPosition(),
-                                             'hidden' => false,
-                                             'present' => true
-                                         )
-                                     );
+                                    // add widget
+                                    $userSequences[$user['id']][$widget['module']] += array(
+                                        $widget['widget'] => array(
+                                            'column'   => $instance->getColumn(),
+                                            'position' => (int) $instance->getPosition(),
+                                            'hidden'   => false,
+                                            'present'  => true
+                                        )
+                                    );
                                 }
                             }
                         }
 
                         // widget in visible in other group?
-                        if($groupSequence[$widget['module']][$widget['widget']]['present']) {
+                        if ($groupSequence[$widget['module']][$widget['widget']]['present']) {
                             // set visible
                             $userSequences[$user['id']][$widget['module']][$widget['widget']]['present'] = true;
                         }
@@ -618,9 +768,11 @@ class BackendGroupsEdit extends BackendBaseActionEdit
         }
 
         // any users present?
-        if(!empty($userObjects)) {
+        if (!empty($userObjects)) {
             // loop through users and update sequence
-            foreach($userObjects as $user) $user->setSetting('dashboard_sequence', $userSequences[$user->getUserId()]);
+            foreach ($userObjects as $user) {
+                $user->setSetting('dashboard_sequence', $userSequences[$user->getUserId()]);
+            }
         }
 
         return $userGroup;
@@ -631,7 +783,7 @@ class BackendGroupsEdit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $bundledActionPermissions = array();
 
             // cleanup the submitted fields, ignore fields that were added by hackers
@@ -641,40 +793,57 @@ class BackendGroupsEdit extends BackendBaseActionEdit
             $nameField = $this->frm->getField('name');
 
             // loop through modules
-            foreach($this->modules as $module) {
+            foreach ($this->modules as $module) {
                 // loop through actions
-                foreach($this->actions[$module['value']] as $action) {
+                foreach ($this->actions[$module['value']] as $action) {
                     // collect permissions if not bundled
-                    if(!array_key_exists('group', $action)) $actionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . $action['label']);
+                    if (!array_key_exists('group', $action)) {
+                        $actionPermissions[] = $this->frm->getField(
+                                                         'actions_' . $module['label'] . '_' . $action['label']
+                        );
+                    }
                 }
 
                 // loop through bundled actions
-                foreach($this->actionGroups as $key => $group) {
+                foreach ($this->actionGroups as $key => $group) {
                     // loop through all fields
-                    foreach($this->frm->getFields() as $field) {
+                    foreach ($this->frm->getFields() as $field) {
                         // field exists?
-                        if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key)) {
+                        if ($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst(
+                                                                                                             $key
+                            )
+                        ) {
                             // add to bundled actions
-                            $bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key));
+                            $bundledActionPermissions[] = $this->frm->getField(
+                                                                    'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst(
+                                                                                                                                $key
+                                                                    )
+                            );
                         }
                     }
                 }
             }
 
             // loop through widgets and collect presets
-            foreach($this->widgets as $widget) $widgetPresets[] = $this->frm->getField('widgets_' . $widget['label']);
+            foreach ($this->widgets as $widget) {
+                $widgetPresets[] = $this->frm->getField('widgets_' . $widget['label']);
+            }
 
             // validate fields
             $nameField->isFilled(BL::err('NameIsRequired'));
 
             // new name given?
-            if($nameField->getValue() !== $this->record['name']) {
+            if ($nameField->getValue() !== $this->record['name']) {
                 // group already exists?
-                if(BackendGroupsModel::alreadyExists($nameField->getValue())) $nameField->setError(BL::err('GroupAlreadyExists'));
+                if (BackendGroupsModel::alreadyExists($nameField->getValue())) {
+                    $nameField->setError(
+                              BL::err('GroupAlreadyExists')
+                    );
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // update widgets
                 $group = $this->updateWidgets($widgetPresets);
 
@@ -685,7 +854,11 @@ class BackendGroupsEdit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(
+                     BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                         $group['name']
+                     ) . '&highlight=row-' . $group['id']
+                );
             }
         }
     }

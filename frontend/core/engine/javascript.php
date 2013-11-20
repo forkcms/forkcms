@@ -72,7 +72,7 @@ class FrontendJavascript
         }
 
         // output the template
-        $tpl->display(FrontendTheme::getPath($file), true);
+        $tpl->display(FrontendTheme::getPath($file));
     }
 
     /**

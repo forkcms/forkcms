@@ -10,10 +10,10 @@
 /**
  * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
- * 	- it will assign all labels
- * 	- it will map some modifiers
- * 	- it will assign a lot of constants
- * 	- ...
+ *    - it will assign all labels
+ *    - it will map some modifiers
+ *    - it will assign a lot of constants
+ *    - ...
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -30,24 +30,28 @@ class BackendTemplate extends SpoonTemplate
     /**
      * URL instance
      *
-     * @var	BackendURL
+     * @var    BackendURL
      */
     private $URL;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
-     * @param bool[optional] $addToReference Should the instance be added into the reference.
+     * @param bool [optional] $addToReference Should the instance be added into the reference.
      */
     public function __construct($addToReference = true)
     {
         parent::__construct();
 
         // get URL instance
-        if(FrontendModel::getContainer()->has('url')) $this->URL = FrontendModel::getContainer()->get('url');
+        if (Spoon::exists('url')) {
+            $this->URL = Spoon::get('url');
+        }
 
         // store in reference so we can access it from everywhere
-        if($addToReference) FrontendModel::getContainer()->set('template', $this);
+        if ($addToReference) {
+            Spoon::set('template', $this);
+        }
 
         // set cache directory
         $this->setCacheDirectory(BACKEND_CACHE_PATH . '/cached_templates');
@@ -70,9 +74,9 @@ class BackendTemplate extends SpoonTemplate
      * Will also assign the interfacelabels and all user-defined constants.
      *
      * @param string $template The path for the template.
-     * @param bool[optional] $customHeaders Are there custom headers set?
+     * @param        bool      [optional] $customHeaders Are there custom headers set?
      */
-    public function display($template, $customHeaders = false)
+    public function display($template)
     {
         $this->parseConstants();
         $this->parseAuthenticatedUser();
@@ -80,11 +84,6 @@ class BackendTemplate extends SpoonTemplate
         $this->parseLabels();
         $this->parseLocale();
         $this->parseVars();
-
-        // parse headers
-        if(!$customHeaders) {
-            SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
-        }
 
         parent::display($template);
     }
@@ -133,14 +132,14 @@ class BackendTemplate extends SpoonTemplate
     private function parseAuthenticatedUser()
     {
         // check if the current user is authenticated
-        if(BackendAuthentication::getUser()->isAuthenticated()) {
+        if (BackendAuthentication::getUser()->isAuthenticated()) {
             // show stuff that only should be visible if authenticated
             $this->assign('isAuthenticated', true);
 
             // get authenticated user-settings
             $settings = (array) BackendAuthentication::getUser()->getSettings();
 
-            foreach($settings as $key => $setting) {
+            foreach ($settings as $key => $setting) {
                 // redefine setting
                 $setting = ($setting === null) ? '' : $setting;
 
@@ -149,16 +148,16 @@ class BackendTemplate extends SpoonTemplate
             }
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('edit', 'users')) {
+            if (BackendAuthentication::isAllowedAction('edit', 'users')) {
                 // assign special vars
                 $this->assign(
-                    'authenticatedUserEditUrl',
-                    BackendModel::createURLForAction(
-                        'edit',
-                        'users',
-                        null,
-                        array('id' => BackendAuthentication::getUser()->getUserId())
-                    )
+                     'authenticatedUserEditUrl',
+                         BackendModel::createURLForAction(
+                                     'edit',
+                                         'users',
+                                         null,
+                                         array('id' => BackendAuthentication::getUser()->getUserId())
+                         )
                 );
             }
         }
@@ -174,19 +173,27 @@ class BackendTemplate extends SpoonTemplate
 
         // get allowed actions
         $allowedActions = (array) $db->getRecords(
-            'SELECT gra.module, gra.action, MAX(gra.level) AS level
-             FROM users_sessions AS us
-             INNER JOIN users AS u ON us.user_id = u.id
-             INNER JOIN users_groups AS ug ON u.id = ug.user_id
-             INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-             WHERE us.session_id = ? AND us.secret_key = ?
-             GROUP BY gra.module, gra.action',
-            array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
+                                     'SELECT gra.module, gra.action, MAX(gra.level) AS level
+                                      FROM users_sessions AS us
+                                      INNER JOIN users AS u ON us.user_id = u.id
+                                      INNER JOIN users_groups AS ug ON u.id = ug.user_id
+                                      INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
+                                      WHERE us.session_id = ? AND us.secret_key = ?
+                                      GROUP BY gra.module, gra.action',
+                                         array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key'))
         );
 
         // loop actions and assign to template
-        foreach($allowedActions as $action) {
-            if($action['level'] == '7') $this->assign('show' . SpoonFilter::toCamelCase($action['module'], '_') . SpoonFilter::toCamelCase($action['action'], '_'), true);
+        foreach ($allowedActions as $action) {
+            if ($action['level'] == '7') {
+                $this->assign(
+                     'show' . SpoonFilter::toCamelCase(
+                                         $action['module'],
+                                             '_'
+                     ) . SpoonFilter::toCamelCase($action['action'], '_'),
+                         true
+                );
+            }
         }
     }
 
@@ -205,35 +212,51 @@ class BackendTemplate extends SpoonTemplate
         $realConstants = array();
 
         // remove protected constants aka constants that should not be used in the template
-        foreach($constants['user'] as $key => $value) {
-            if(!in_array($key, $notPublicConstants)) $realConstants[$key] = $value;
+        foreach ($constants['user'] as $key => $value) {
+            if (!in_array($key, $notPublicConstants)) {
+                $realConstants[$key] = $value;
+            }
         }
 
         // we should only assign constants if there are constants to assign
-        if(!empty($realConstants)) $this->assign($realConstants);
+        if (!empty($realConstants)) {
+            $this->assign($realConstants);
+        }
 
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
-        if($this->URL instanceof BackendURL) {
+        if ($this->URL instanceof BackendURL) {
             // assign the current module
             $this->assign('MODULE', $this->URL->getModule());
 
             // assign the current action
-            if($this->URL->getAction() != '') $this->assign('ACTION', $this->URL->getAction());
+            if ($this->URL->getAction() != '') {
+                $this->assign('ACTION', $this->URL->getAction());
+            }
         }
 
         // is the user object filled?
-        if(BackendAuthentication::getUser()->isAuthenticated()) {
+        if (BackendAuthentication::getUser()->isAuthenticated()) {
             // assign the authenticated users secret key
             $this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
 
             // assign the authenticated users preferred interface language
-            $this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
+            $this->assign(
+                 'INTERFACE_LANGUAGE',
+                     (string) BackendAuthentication::getUser()->getSetting('interface_language')
+            );
         }
 
         // assign some variable constants (such as site-title)
-        $this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+        $this->assign(
+             'SITE_TITLE',
+                 BackendModel::getModuleSetting(
+                             'core',
+                                 'site_title_' . BackendLanguage::getWorkingLanguage(),
+                                 SITE_DEFAULT_TITLE
+                 )
+        );
     }
 
     /**
@@ -250,48 +273,70 @@ class BackendTemplate extends SpoonTemplate
     private function parseLabels()
     {
         // grab the current module
-        if(BackendModel::getContainer()->has('url')) $currentModule = BackendModel::getContainer()->get('url')->getModule();
-        elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
-        else $currentModule = 'core';
+        if (Spoon::exists('url')) {
+            $currentModule = Spoon::get('url')->getModule();
+        } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+            $currentModule = (string) $_GET['module'];
+        } else {
+            $currentModule = 'core';
+        }
 
-        $errors = BackendLanguage::getErrors();
-        $labels = BackendLanguage::getLabels();
+        $errors   = BackendLanguage::getErrors();
+        $labels   = BackendLanguage::getLabels();
         $messages = BackendLanguage::getMessages();
 
         // set the begin state
-        $realErrors = $errors['core'];
-        $realLabels = $labels['core'];
+        $realErrors   = $errors['core'];
+        $realLabels   = $labels['core'];
         $realMessages = $messages['core'];
 
         // loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
         // template to use the core-value instead of the one set by the module
-        foreach($errors['core'] as $key => $value) $realErrors['Core' . $key] = $value;
-        foreach($labels['core'] as $key => $value) $realLabels['Core' . $key] = $value;
-        foreach($messages['core'] as $key => $value) $realMessages['Core' . $key] = $value;
+        foreach ($errors['core'] as $key => $value) {
+            $realErrors['Core' . $key] = $value;
+        }
+        foreach ($labels['core'] as $key => $value) {
+            $realLabels['Core' . $key] = $value;
+        }
+        foreach ($messages['core'] as $key => $value) {
+            $realMessages['Core' . $key] = $value;
+        }
 
         // are there errors for the current module?
-        if(isset($errors[$currentModule])) {
+        if (isset($errors[$currentModule])) {
             // loop the module-specific errors and reset them in the array with values we will use
-            foreach($errors[$currentModule] as $key => $value) $realErrors[$key] = $value;
+            foreach ($errors[$currentModule] as $key => $value) {
+                $realErrors[$key] = $value;
+            }
         }
 
         // are there labels for the current module?
-        if(isset($labels[$currentModule])) {
+        if (isset($labels[$currentModule])) {
             // loop the module-specific labels and reset them in the array with values we will use
-            foreach($labels[$currentModule] as $key => $value) $realLabels[$key] = $value;
+            foreach ($labels[$currentModule] as $key => $value) {
+                $realLabels[$key] = $value;
+            }
         }
 
         // are there messages for the current module?
-        if(isset($messages[$currentModule])) {
+        if (isset($messages[$currentModule])) {
             // loop the module-specific errors and reset them in the array with values we will use
-            foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
+            foreach ($messages[$currentModule] as $key => $value) {
+                $realMessages[$key] = $value;
+            }
         }
 
         // execute addslashes on the values for the locale, will be used in JS
-        if($this->addSlashes) {
-            foreach($realErrors as &$value) $value = addslashes($value);
-            foreach($realLabels as &$value) $value = addslashes($value);
-            foreach($realMessages as &$value) $value = addslashes($value);
+        if ($this->addSlashes) {
+            foreach ($realErrors as &$value) {
+                $value = addslashes($value);
+            }
+            foreach ($realLabels as &$value) {
+                $value = addslashes($value);
+            }
+            foreach ($realMessages as &$value) {
+                $value = addslashes($value);
+            }
         }
 
         // sort the arrays (just to make it look beautiful)
@@ -318,18 +363,26 @@ class BackendTemplate extends SpoonTemplate
         $localeToAssign = array();
 
         // get months
-        $monthsLong = SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage(), false);
+        $monthsLong  = SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage(), false);
         $monthsShort = SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage(), true);
 
         // get days
-        $daysLong = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), false, 'sunday');
+        $daysLong  = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), false, 'sunday');
         $daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
         // build labels
-        foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
+        foreach ($monthsLong as $key => $value) {
+            $localeToAssign['locMonthLong' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($monthsShort as $key => $value) {
+            $localeToAssign['locMonthShort' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($daysLong as $key => $value) {
+            $localeToAssign['locDayLong' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($daysShort as $key => $value) {
+            $localeToAssign['locDayShort' . SpoonFilter::ucfirst($key)] = $value;
+        }
 
         // assign
         $this->assignArray($localeToAssign);
@@ -347,14 +400,17 @@ class BackendTemplate extends SpoonTemplate
         $this->assign('timestamp', time());
 
         // assign body ID
-        if($this->URL instanceof BackendURL) {
+        if ($this->URL instanceof BackendURL) {
             $this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
 
             // build classes
             $bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true);
 
             // special occasions
-            if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() . 'AddEdit';
+            if ($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit'
+            ) {
+                $bodyClass = $this->URL->getModule() . 'AddEdit';
+            }
 
             // assign
             $this->assign('bodyClass', $bodyClass);
@@ -364,7 +420,7 @@ class BackendTemplate extends SpoonTemplate
     /**
      * Should we execute addSlashed on the locale?
      *
-     * @param bool[optional] $on Enable addslashes.
+     * @param bool [optional] $on Enable addslashes.
      */
     public function setAddSlashes($on = true)
     {
@@ -381,7 +437,7 @@ class BackendTemplateModifiers
 {
     /**
      * Dumps the data
-     * 	syntax: {$var|dump}
+     *    syntax: {$var|dump}
      *
      * @param string $var The variable to dump.
      * @return string
@@ -428,21 +484,21 @@ class BackendTemplateModifiers
      * syntax: {$var|formatfloat}
      *
      * @param float $number The number to format.
-     * @param int[optional] $decimals The number of decimals.
+     * @param       int     [optional] $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
     {
-        $number = (float) $number;
+        $number   = (float) $number;
         $decimals = (int) $decimals;
 
         // get setting
         $format = BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing');
 
         // get separators
-        $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+        $separators         = explode('_', $format);
+        $separatorSymbols   = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+        $decimalSeparator   = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
         $thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
 
         // format the number
@@ -467,9 +523,9 @@ class BackendTemplateModifiers
         $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
 
         // get separators
-        $separators = explode('_', $format);
-        $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+        $separators         = explode('_', $format);
+        $separatorSymbols   = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+        $decimalSeparator   = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
         $thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
 
         // format the number
@@ -494,9 +550,9 @@ class BackendTemplateModifiers
 
     /**
      * Convert a var into main-navigation-html
-     * 	syntax: {$var|getmainnavigation}
+     *    syntax: {$var|getmainnavigation}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+     * @param string [optional] $var A placeholder var, will be replaced with the generated HTML.
      * @return string
      */
     public static function getMainNavigation($var = null)
@@ -508,15 +564,15 @@ class BackendTemplateModifiers
      * Convert a var into navigation-html
      * syntax: {$var|getnavigation:startdepth[:maximumdepth]}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
-     * @param int[optional] $startDepth The start depth of the navigation to get.
-     * @param int[optional] $endDepth The ending depth of the navigation to get.
+     * @param string [optional] $var A placeholder var, will be replaced with the generated HTML.
+     * @param int    [optional] $startDepth The start depth of the navigation to get.
+     * @param int    [optional] $endDepth The ending depth of the navigation to get.
      * @return string
      */
     public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
     {
         $startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
-        $endDepth = ($endDepth !== null) ? (int) $endDepth : null;
+        $endDepth   = ($endDepth !== null) ? (int) $endDepth : null;
 
         // return navigation
         return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth);
@@ -526,16 +582,17 @@ class BackendTemplateModifiers
      * Convert a var into a URL
      * syntax: {$var|geturl:<action>[:<module>]}
      *
-     * @param string[optional] $var A placeholder variable, it will be replaced with the URL.
-     * @param string[optional] $action The action to build the URL for.
-     * @param string[optional] $module The module to build the URL for.
-     * @param string[optional] $suffix A string to append.
+     * @param string [optional] $var A placeholder variable, it will be replaced with the URL.
+     * @param string [optional] $action The action to build the URL for.
+     * @param string [optional] $module The module to build the URL for.
+     * @param string [optional] $suffix A string to append.
      * @return string
      */
     public static function getURL($var = null, $action = null, $module = null, $suffix = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $module = ($module !== null) ? (string) $module : null;
+
         return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
     }
 
@@ -543,9 +600,9 @@ class BackendTemplateModifiers
      * Get a random var between a min and max
      * syntax: {$var|rand:min:max}
      *
-     * @param string[optional] $var The string passed from the template.
-     * @param int $min The minimum number.
-     * @param int $max The maximum number.
+     * @param     string [optional] $var The string passed from the template.
+     * @param int $min   The minimum number.
+     * @param int $max   The maximum number.
      * @return int
      */
     public static function random($var = null, $min, $max)
@@ -567,7 +624,7 @@ class BackendTemplateModifiers
 
     /**
      * Convert this string into a well formed label.
-     * 	syntax: {$var|tolabel}
+     *    syntax: {$var|tolabel}
      *
      * @param string $value The value to convert to a label.
      * @return string
@@ -579,11 +636,11 @@ class BackendTemplateModifiers
 
     /**
      * Truncate a string
-     * 	syntax: {$var|truncate:max-length[:append-hellip]}
+     *    syntax: {$var|truncate:max-length[:append-hellip]}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+     * @param     string  [optional] $var A placeholder var, will be replaced with the generated HTML.
      * @param int $length The maximum length of the truncated string.
-     * @param bool[optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param     bool    [optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true)
@@ -595,18 +652,22 @@ class BackendTemplateModifiers
         $var = strip_tags($var);
 
         // less characters
-        if(mb_strlen($var) <= $length) return SpoonFilter::htmlspecialchars($var);
-
-        // more characters
+        if (mb_strlen($var) <= $length) {
+            return SpoonFilter::htmlspecialchars($var);
+        } // more characters
         else {
             // hellip is seen as 1 char, so remove it from length
-            if($useHellip) $length = $length - 1;
+            if ($useHellip) {
+                $length = $length - 1;
+            }
 
             // get the amount of requested characters
             $var = mb_substr($var, 0, $length);
 
             // add hellip
-            if($useHellip) $var .= '…';
+            if ($useHellip) {
+                $var .= '…';
+            }
 
             return SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }

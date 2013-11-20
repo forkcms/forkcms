@@ -51,24 +51,25 @@ class BackendLocationIndex extends BackendBaseActionIndex
      */
     protected function loadData()
     {
-        $this->items = BackendLocationModel::getAll();
+        $this->items    = BackendLocationModel::getAll();
         $this->settings = BackendLocationModel::getMapSettings(0);
-        $firstMarker = current($this->items);
+        $firstMarker    = current($this->items);
 
         // if there are no markers we reset it to the birthplace of Fork
-        if($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        if ($firstMarker === false) {
+            $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        }
 
         // load the settings from the general settings
-        if(empty($this->settings)) {
-            $settings = BackendModel::getModuleSettings();
-            $this->settings = $settings['location'];
+        if (empty($this->settings)) {
+            $this->settings = BackendModel::getModuleSettings('location');
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }
@@ -79,14 +80,22 @@ class BackendLocationIndex extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(BackendLocationModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
+        $this->dataGrid = new BackendDataGridDB(BackendLocationModel::QRY_DATAGRID_BROWSE, array(
+                                                                                                BL::getWorkingLanguage()
+                                                                                           ));
         $this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
         $this->dataGrid->setSortParameter('ASC');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('edit')) {
             $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                           'edit',
+                               null,
+                               BL::lbl('Edit'),
+                               BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                               BL::lbl('Edit')
+            );
         }
     }
 
@@ -96,10 +105,10 @@ class BackendLocationIndex extends BackendBaseActionIndex
     protected function loadSettingsForm()
     {
         $mapTypes = array(
-            'ROADMAP' => BL::lbl('Roadmap', $this->getModule()),
+            'ROADMAP'   => BL::lbl('Roadmap', $this->getModule()),
             'SATELLITE' => BL::lbl('Satellite', $this->getModule()),
-            'HYBRID' => BL::lbl('Hybrid', $this->getModule()),
-            'TERRAIN' => BL::lbl('Terrain', $this->getModule())
+            'HYBRID'    => BL::lbl('Hybrid', $this->getModule()),
+            'TERRAIN'   => BL::lbl('Terrain', $this->getModule())
         );
 
         $zoomLevels = array_combine(

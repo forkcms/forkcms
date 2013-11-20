@@ -35,13 +35,17 @@ class BackendLocationModel
 
         // build extra
         $extra = array(
-            'id' => $item['extra_id'],
+            'id'     => $item['extra_id'],
             'module' => 'location',
-            'type' => 'widget',
+            'type'   => 'widget',
             'action' => 'location'
         );
 
-        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        $db->delete(
+           'modules_extras',
+               'id = ? AND module = ? AND type = ? AND action = ?',
+               array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        );
         $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
         $db->delete('location_settings', 'map_id = ?', array((int) $id));
     }
@@ -55,11 +59,11 @@ class BackendLocationModel
     public static function exists($id)
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM location AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+                                  'SELECT 1
+                                   FROM location AS i
+                                   WHERE i.id = ? AND i.language = ?
+                                   LIMIT 1',
+                                      array((int) $id, BL::getWorkingLanguage())
         );
     }
 
@@ -72,10 +76,10 @@ class BackendLocationModel
     public static function get($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+                                   'SELECT i.*
+                                    FROM location AS i
+                                    WHERE i.id = ? AND i.language = ?',
+                                       array((int) $id, BL::getWorkingLanguage())
         );
     }
 
@@ -87,30 +91,33 @@ class BackendLocationModel
     public static function getAll()
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.language = ? AND i.show_overview = ?',
-            array(BL::getWorkingLanguage(), 'Y')
+                                   'SELECT i.*
+                                    FROM location AS i
+                                    WHERE i.language = ? AND i.show_overview = ?',
+                                       array(BL::getWorkingLanguage(), 'Y')
         );
     }
 
     /**
      * Retrieve a map setting
      *
-     * @param int $mapId
+     * @param int    $mapId
      * @param string $name
      * @return mixed
      */
     public static function getMapSetting($mapId, $name)
     {
         $serializedData = (string) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ? AND s.name = ?',
-            array((int) $mapId, (string) $name)
+                                               'SELECT s.value
+                                                FROM location_settings AS s
+                                                WHERE s.map_id = ? AND s.name = ?',
+                                                   array((int) $mapId, (string) $name)
         );
 
-        if($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
+
         return false;
     }
 
@@ -123,13 +130,15 @@ class BackendLocationModel
     public static function getMapSettings($mapId)
     {
         $mapSettings = (array) BackendModel::getContainer()->get('database')->getPairs(
-            'SELECT s.name, s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ?',
-            array((int) $mapId)
+                                           'SELECT s.name, s.value
+                                            FROM location_settings AS s
+                                            WHERE s.map_id = ?',
+                                               array((int) $mapId)
         );
 
-        foreach($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }
@@ -142,44 +151,53 @@ class BackendLocationModel
      */
     public static function insert($item)
     {
-        $db = BackendModel::getContainer()->get('database');
+        $db                 = BackendModel::getContainer()->get('database');
         $item['created_on'] = BackendModel::getUTCDate();
+        $item['edited_on']  = BackendModel::getUTCDate();
 
         // build extra
         $extra = array(
-            'module' => 'location',
-            'type' => 'widget',
-            'label' => 'Location',
-            'action' => 'location',
-            'data' => null,
-            'hidden' => 'N',
+            'module'   => 'location',
+            'type'     => 'widget',
+            'label'    => 'Location',
+            'action'   => 'location',
+            'data'     => null,
+            'hidden'   => 'N',
             'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?', array('location')
+                             'SELECT MAX(i.sequence) + 1
+                              FROM modules_extras AS i
+                              WHERE i.module = ?',
+                                 array('location')
                 )
-            );
-        if(is_null($extra['sequence'])) {
+        );
+        if (is_null($extra['sequence'])) {
             $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000 FROM modules_extras AS i'
+                                    'SELECT CEILING(MAX(i.sequence) / 1000) * 1000 FROM modules_extras AS i'
             );
         }
 
         // insert extra
         $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
+        $extra['id']      = $item['extra_id'];
 
         // insert and return the new id
         $item['id'] = $db->insert('location', $item);
 
         // update extra (item id is now known)
-        $extra['data'] = serialize(array(
-            'id' => $item['id'],
-            'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-            'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+        $extra['data'] = serialize(
+            array(
+                 'id'          => $item['id'],
+                 'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+                 'language'    => $item['language'],
+                 'edit_url'    => BackendModel::createURLForAction('edit') . '&id=' . $item['id']
+            )
         );
-        $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        $db->update(
+           'modules_extras',
+               $extra,
+               'id = ? AND module = ? AND type = ? AND action = ?',
+               array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        );
 
         // return the new id
         return $item['id'];
@@ -188,19 +206,19 @@ class BackendLocationModel
     /**
      * Save the map settings
      *
-     * @param int $mapId
+     * @param int    $mapId
      * @param string $key
-     * @param mixed $value
+     * @param mixed  $value
      */
     public static function setMapSetting($mapId, $key, $value)
     {
         $value = serialize($value);
 
         BackendModel::getContainer()->get('database')->execute(
-            'INSERT INTO location_settings(map_id, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            array((int) $mapId, $key, $value, $value)
+                    'INSERT INTO location_settings(map_id, name, value)
+                     VALUES(?, ?, ?)
+                     ON DUPLICATE KEY UPDATE value = ?',
+                        array((int) $mapId, $key, $value, $value)
         );
     }
 
@@ -212,28 +230,35 @@ class BackendLocationModel
      */
     public static function update($item)
     {
-        $db = BackendModel::getContainer()->get('database');
+        $db                = BackendModel::getContainer()->get('database');
         $item['edited_on'] = BackendModel::getUTCDate();
 
-        if(isset($item['extra_id'])) {
+        if (isset($item['extra_id'])) {
             // build extra
             $extra = array(
-                'id' => $item['extra_id'],
+                'id'     => $item['extra_id'],
                 'module' => 'location',
-                'type' => 'widget',
-                'label' => 'Location',
+                'type'   => 'widget',
+                'label'  => 'Location',
                 'action' => 'location',
-                'data' => serialize(array(
-                    'id' => $item['id'],
-                    'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+                'data'   => serialize(
+                    array(
+                         'id'          => $item['id'],
+                         'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+                         'language'    => $item['language'],
+                         'edit_url'    => BackendModel::createURLForAction('edit') . '&id=' . $item['id']
+                    )
                 ),
                 'hidden' => 'N'
             );
 
             // update extra
-            $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+            $db->update(
+               'modules_extras',
+                   $extra,
+                   'id = ? AND module = ? AND type = ? AND action = ?',
+                   array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+            );
         }
 
         // update item

@@ -39,7 +39,7 @@ class FrontendTemplate extends SpoonTemplate
         parent::__construct();
 
         if ($addToReference) {
-            FrontendModel::getContainer()->set('template', $this);
+            Spoon::set('template', $this);
         }
 
         $this->setCacheDirectory(FRONTEND_CACHE_PATH . '/cached_templates');
@@ -51,7 +51,7 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * Compile a given template.
      *
-     * @param  string $path     The path to the template, excluding the template filename.
+     * @param string  $path     The path to the template, excluding the template filename.
      * @param  string $template The filename of the template within the path.
      * @return bool
      */
@@ -89,8 +89,8 @@ class FrontendTemplate extends SpoonTemplate
      * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
      *
      * @param string $template The path of the template to use.
-     * @param        bool      [optional] $customHeaders Are custom headers already set?
-     * @param        bool      [optional] $parseCustom   Parse custom template.
+     * @param        bool      [optional] $customHeaders Deprecated variable.
+     * @param        bool      [optional] $parseCustom Parse custom template.
      */
     public function display($template, $customHeaders = false, $parseCustom = false)
     {
@@ -113,14 +113,6 @@ class FrontendTemplate extends SpoonTemplate
 
         // parse vars
         $this->parseVars();
-
-        // in case of a call from parseWidget we don't need to set the headers again!
-        if (!FrontendModel::getContainer()->has('parseWidget') || !FrontendModel::getContainer()->get('parseWidget')) {
-            // parse headers
-            if (!$customHeaders) {
-                SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
-            }
-        }
 
         // get template path
         $template = FrontendTheme::getPath($template);
@@ -173,10 +165,10 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * Fetch the parsed content from this template.
      *
-     * @param  string $template The location of the template file, used to display this template.
-     * @param         bool      [optional] $customHeaders Are custom headers already set?
-     * @param         bool      [optional] $parseCustom   Parse custom template.
-     * @return string               The actual parsed content after executing this template.
+     * @param string $template The location of the template file, used to display this template.
+     * @param        bool      [optional] $customHeaders Are custom headers already set?
+     * @param        bool      [optional] $parseCustom Parse custom template.
+     * @return string The actual parsed content after executing this template.
      */
     public function getContent($template, $customHeaders = false, $parseCustom = false)
     {
@@ -189,14 +181,16 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * Is the cache for this item still valid.
      *
-     * @param  string $name The name of the cached block.
+     * @param string $name The name of the cached block.
      * @return bool
      */
     public function isCached($name)
     {
+        // never cached in debug
         if (SPOON_DEBUG) {
             return false;
-        } else {
+        } // let parent do the actual check
+        else {
             return parent::isCached($name);
         }
     }
@@ -693,11 +687,11 @@ class FrontendTemplateModifiers
         try {
             // get HTML
             $return = (string) FrontendNavigation::getNavigationHtml(
-                $type,
-                $parentID,
-                $endDepth,
-                $excludeIds,
-                (string) $tpl
+                                                 $type,
+                                                     $parentID,
+                                                     $endDepth,
+                                                     $excludeIds,
+                                                     (string) $tpl
             );
         } catch (Exception $e) {
             return '';
