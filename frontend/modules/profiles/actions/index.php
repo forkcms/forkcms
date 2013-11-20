@@ -21,7 +21,7 @@ class FrontendProfilesIndex extends FrontendBaseBlock
     public function execute()
     {
         // only logged in profiles can seer their dashboard
-        if(FrontendProfilesAuthentication::isLoggedIn()) {
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
             // call the parent
             parent::execute();
 
@@ -31,12 +31,11 @@ class FrontendProfilesIndex extends FrontendBaseBlock
              */
 
             $this->loadTemplate();
-        }
-
-        // profile not logged in
-        else {
+        } else {
+            // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
+                FrontendNavigation::getURLForBlock('profiles', 'login') .
+                '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
                 307
             );
         }

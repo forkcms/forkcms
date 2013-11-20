@@ -18,7 +18,7 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -35,19 +35,18 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
     public function execute()
     {
         // profile logged in
-        if(FrontendProfilesAuthentication::isLoggedIn()) {
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->getData();
             $this->loadTemplate();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
-        }
-
-        // profile not logged in
-        else {
+        } else {
+            // profile not logged in
             $this->redirect(
-                FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_email'),
+                FrontendNavigation::getURLForBlock('profiles', 'login') .
+                '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_email'),
                 307
             );
         }
@@ -69,7 +68,9 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
     {
         $this->frm = new FrontendForm('updateEmail', null, null, 'updateEmailForm');
         $this->frm->addPassword('password')->setAttributes(array('required' => null));
-        $this->frm->addText('email', $this->profile->getEmail())->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('email', $this->profile->getEmail())->setAttributes(
+            array('required' => null, 'type' => 'email')
+        );
     }
 
     /**
@@ -78,7 +79,7 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
     private function parse()
     {
         // have the settings been saved?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show success message
             $this->tpl->assign('updateEmailSuccess', true);
         }
@@ -93,25 +94,29 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get fields
             $txtPassword = $this->frm->getField('password');
-            $txtEmail = $this->frm->getField('email');
+            $txtEmail    = $this->frm->getField('email');
 
             // password filled in?
-            if($txtPassword->isFilled(FL::getError('PasswordIsRequired'))) {
+            if ($txtPassword->isFilled(FL::getError('PasswordIsRequired'))) {
                 // password correct?
-                if(FrontendProfilesAuthentication::getLoginStatus($this->profile->getEmail(), $txtPassword->getValue()) !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+                if (FrontendProfilesAuthentication::getLoginStatus(
+                    $this->profile->getEmail(),
+                    $txtPassword->getValue()
+                ) !== FrontendProfilesAuthentication::LOGIN_ACTIVE
+                ) {
                     // set error
                     $txtPassword->addError(FL::getError('InvalidPassword'));
                 }
 
                 // email filled in?
-                if($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
+                if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
                     // valid email?
-                    if($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+                    if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
                         // email already exists?
-                        if(FrontendProfilesModel::existsByEmail($txtEmail->getValue(), $this->profile->getId())) {
+                        if (FrontendProfilesModel::existsByEmail($txtEmail->getValue(), $this->profile->getId())) {
                             // set error
                             $txtEmail->setError(FL::getError('EmailExists'));
                         }
@@ -120,7 +125,7 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
             }
 
             // no errors
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // update email
                 FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
@@ -128,11 +133,12 @@ class FrontendProfilesChangeEmail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
                 // redirect
-                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true');
+                $this->redirect(
+                    SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true'
+                );
+            } else {
+                $this->tpl->assign('updateEmailHasFormError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('updateEmailHasFormError', true);
         }
     }
 }

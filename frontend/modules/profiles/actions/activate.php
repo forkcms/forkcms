@@ -27,12 +27,12 @@ class FrontendProfilesActivate extends FrontendBaseBlock
         $this->loadTemplate();
 
         // do we have an activation key?
-        if(isset($key)) {
+        if (isset($key)) {
             // get profile id
             $profileId = FrontendProfilesModel::getIdBySetting('activation_key', $key);
 
             // have id?
-            if($profileId != null) {
+            if ($profileId != null) {
                 // update status
                 FrontendProfilesModel::update($profileId, array('status' => 'active'));
 
@@ -47,13 +47,12 @@ class FrontendProfilesActivate extends FrontendBaseBlock
 
                 // show success message
                 $this->tpl->assign('activationSuccess', true);
+            } else {
+                // failure
+                $this->redirect(FrontendNavigation::getURL(404));
             }
-
-            // failure
-            else $this->redirect(FrontendNavigation::getURL(404));
+        } else {
+            $this->redirect(FrontendNavigation::getURL(404));
         }
-
-        // missing key
-        else $this->redirect(FrontendNavigation::getURL(404));
     }
 }

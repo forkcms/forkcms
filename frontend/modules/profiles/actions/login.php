@@ -35,8 +35,8 @@ class FrontendProfilesLogin extends FrontendBaseBlock
             $this->loadForm();
             $this->validateForm();
             $this->parse();
-        } // profile already logged in
-        else {
+        } else {
+            // profile already logged in
             // query string
             $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
@@ -72,7 +72,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
         // is the form submitted
         if ($this->frm->isSubmitted()) {
             // get fields
-            $txtEmail = $this->frm->getField('email');
+            $txtEmail    = $this->frm->getField('email');
             $txtPassword = $this->frm->getField('password');
             $chkRemember = $this->frm->getField('remember');
 
@@ -86,8 +86,8 @@ class FrontendProfilesLogin extends FrontendBaseBlock
                 if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
                     // get the status for the given login
                     $loginStatus = FrontendProfilesAuthentication::getLoginStatus(
-                                                                 $txtEmail->getValue(),
-                                                                     $txtPassword->getValue()
+                        $txtEmail->getValue(),
+                        $txtPassword->getValue()
                     );
 
                     // valid login?

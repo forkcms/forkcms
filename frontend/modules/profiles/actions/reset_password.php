@@ -18,7 +18,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -31,7 +31,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
         $key = $this->URL->getParameter(0);
 
         // do we have an reset key?
-        if(isset($key)) {
+        if (isset($key)) {
             // load parent
             parent::execute();
 
@@ -42,23 +42,22 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
             $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $key);
 
             // have id?
-            if($profileId !== 0) {
+            if ($profileId !== 0) {
                 // load
                 $this->loadForm();
 
                 // validate
                 $this->validateForm();
+            } elseif ($this->URL->getParameter('sent') != 'true') {
+                // invalid key
+                $this->redirect(FrontendNavigation::getURL(404));
             }
-
-            // invalid key
-            elseif($this->URL->getParameter('sent') != 'true') $this->redirect(FrontendNavigation::getURL(404));
 
             // parse
             $this->parse();
+        } else {
+            $this->redirect(FrontendNavigation::getURL(404));
         }
-
-        // no key set
-        else $this->redirect(FrontendNavigation::getURL(404));
     }
 
     /**
@@ -70,7 +69,9 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
         $this->frm = new FrontendForm('resetPassword', null, null, 'resetPasswordForm');
 
         // create & add elements
-        $this->frm->addPassword('password', null, null, 'inputText showPasswordInput')->setAttributes(array('required' => null));
+        $this->frm->addPassword('password', null, null, 'inputText showPasswordInput')->setAttributes(
+            array('required' => null)
+        );
         $this->frm->addCheckbox('show_password');
     }
 
@@ -80,16 +81,15 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
     private function parse()
     {
         // has the password been saved?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('resetPasswordSuccess', true);
 
             // hide form
             $this->tpl->assign('resetPasswordHideForm', true);
+        } else {
+            $this->frm->parse($this->tpl);
         }
-
-        // parse the form
-        else $this->frm->parse($this->tpl);
     }
 
     /**
@@ -98,7 +98,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get fields
             $txtPassword = $this->frm->getField('password');
 
@@ -106,7 +106,7 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
             $txtPassword->isFilled(FL::getError('PasswordIsRequired'));
 
             // valid
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdBySetting('forgot_password_key', $this->URL->getParameter(0));
 
@@ -117,17 +117,21 @@ class FrontendProfilesResetPassword extends FrontendBaseBlock
                 FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
                 // login (check again because we might have logged in in the meanwhile)
-                if(!FrontendProfilesAuthentication::isLoggedIn()) FrontendProfilesAuthentication::login($profileId);
+                if (!FrontendProfilesAuthentication::isLoggedIn()) {
+                    FrontendProfilesAuthentication::login($profileId);
+                }
 
                 // trigger event
                 FrontendModel::triggerEvent('profiles', 'after_reset_password', array('id' => $profileId));
 
                 // redirect
-                $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(0) . '?sent=true');
+                $this->redirect(
+                    FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' .
+                    $this->URL->getParameter(0) . '?sent=true'
+                );
+            } else {
+                $this->tpl->assign('forgotPasswordHasError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('forgotPasswordHasError', true);
         }
     }
 }

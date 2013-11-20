@@ -19,67 +19,69 @@ class FrontendProfilesProfile
     /**
      * The display name.
      *
-     * @var	string
+     * @var    string
      */
     private $displayName;
 
     /**
      * The profile email.
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
      * The groups this profile belongs to, if any. The keys are the group IDs, the values the HTML-escaped group names.
      *
-     * @var	array
+     * @var    array
      */
     protected $groups;
 
     /**
      * The profile id.
      *
-     * @var	int
+     * @var    int
      */
     private $id;
 
     /**
      * The profile register date (unix timestamp).
      *
-     * @var	int
+     * @var    int
      */
     private $registeredOn;
 
     /**
      * The profile settings.
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
     /**
      * The profile status.
      *
-     * @var	string
+     * @var    string
      */
     private $status;
 
     /**
      * The profile url.
      *
-     * @var	string
+     * @var    string
      */
     private $url;
 
     /**
      * Constructor.
      *
-     * @param int[optional] $profileId The profile id to load data from.
+     * @param int [optional] $profileId The profile id to load data from.
      */
     public function __construct($profileId = null)
     {
-        if($profileId !== null) $this->loadProfile((int) $profileId);
+        if ($profileId !== null) {
+            $this->loadProfile((int) $profileId);
+        }
     }
 
     /**
@@ -125,20 +127,23 @@ class FrontendProfilesProfile
     /**
      * Get a profile setting by name.
      *
-     * @param string $name Setting name.
-     * @param string[optional] $defaultValue Default value is used when the setting does not exist.
+     * @param string $name  Setting name.
+     * @param        string [optional] $defaultValue Default value is used when the setting does not exist.
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)
     {
         // if settings array does not exists then get it first
-        if(empty($this->settings)) $this->settings = $this->getSettings();
+        if (empty($this->settings)) {
+            $this->settings = $this->getSettings();
+        }
 
         // when setting exists return it
-        if(array_key_exists($name, $this->settings)) return $this->settings[$name];
-
-        // if not return default value
-        else return $defaultValue;
+        if (array_key_exists($name, $this->settings)) {
+            return $this->settings[$name];
+        } else {
+            return $defaultValue;
+        }
     }
 
     /**
@@ -149,7 +154,9 @@ class FrontendProfilesProfile
     public function getSettings()
     {
         // if settings array does not exist then get it first
-        if(empty($this->settings)) $this->settings = FrontendProfilesModel::getSettings($this->getId());
+        if (empty($this->settings)) {
+            $this->settings = FrontendProfilesModel::getSettings($this->getId());
+        }
 
         // return settings
         return $this->settings;
@@ -196,8 +203,8 @@ class FrontendProfilesProfile
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, p.url, UNIX_TIMESTAMP(p.registered_on) AS registered_on
-             FROM profiles AS p
-             WHERE p.id = ?',
+            FROM profiles AS p
+            WHERE p.id = ?',
             (int) $id
         );
 
@@ -212,9 +219,9 @@ class FrontendProfilesProfile
         // get the groups (only the ones we still have access to)
         $this->groups = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT pg.id, pg.name
-             FROM profiles_groups AS pg
-             INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
-             WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
+            FROM profiles_groups AS pg
+            INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
+            WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
             array(':id' => (int) $id)
         );
     }
@@ -229,8 +236,8 @@ class FrontendProfilesProfile
         // get profile data
         $profileData = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT p.id, p.email, p.status, p.display_name, UNIX_TIMESTAMP(p.registered_on) AS registered_on
-             FROM profiles AS p
-             WHERE p.url = ?',
+            FROM profiles AS p
+            WHERE p.url = ?',
             (string) $url
         );
 
@@ -244,20 +251,22 @@ class FrontendProfilesProfile
         // get the groups (only the ones we still have access to)
         $this->groups = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT pg.id, pg.name
-             FROM profiles_groups AS pg
-             INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
-             WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
+            FROM profiles_groups AS pg
+            INNER JOIN profiles_groups_rights AS pgr ON pg.id = pgr.group_id
+            WHERE pgr.profile_id = :id AND (pgr.expires_on IS NULL OR pgr.expires_on >= NOW())',
             array(':id' => (int) $this->getId())
         );
 
         $this->settings = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT i.name, i.value
-             FROM profiles_settings AS i
-             WHERE i.profile_id = ?',
-             $this->getId()
+            FROM profiles_settings AS i
+            WHERE i.profile_id = ?',
+            $this->getId()
         );
 
-        foreach($this->settings as &$value) $value = unserialize($value);
+        foreach ($this->settings as &$value) {
+            $value = unserialize($value);
+        }
     }
 
     /**
@@ -303,7 +312,7 @@ class FrontendProfilesProfile
     /**
      * Set a profile setting.
      *
-     * @param string $name Setting name.
+     * @param string $name  Setting name.
      * @param string $value New setting value.
      */
     public function setSetting($name, $value)
@@ -326,7 +335,7 @@ class FrontendProfilesProfile
         FrontendProfilesModel::setSettings($this->getId(), $values);
 
         // add settings to cache
-        foreach($values as $key => $value) {
+        foreach ($values as $key => $value) {
             $this->settings[$key] = $value;
         }
     }
@@ -359,16 +368,18 @@ class FrontendProfilesProfile
     public function toArray()
     {
         // basis info
-        $return['display_name'] = $this->getDisplayName();
+        $return['display_name']  = $this->getDisplayName();
         $return['registered_on'] = $this->getRegisteredOn();
 
         // add settings
-        foreach($this->settings as $key => $value) $return['settings'][$key] = $value;
+        foreach ($this->settings as $key => $value) {
+            $return['settings'][$key] = $value;
+        }
 
         // urls
         $return['url']['dashboard'] = FrontendNavigation::getURLForBlock('profiles');
-        $return['url']['settings'] = FrontendNavigation::getURLForBlock('profiles', 'settings');
-        $return['url']['url'] = $this->getUrl();
+        $return['url']['settings']  = FrontendNavigation::getURLForBlock('profiles', 'settings');
+        $return['url']['url']       = $this->getUrl();
 
         return $return;
     }

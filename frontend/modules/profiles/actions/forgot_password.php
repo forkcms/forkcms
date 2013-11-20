@@ -34,8 +34,8 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
             $this->loadForm();
             $this->validateForm();
             $this->parse();
-        } // already logged in, redirect to settings
-        else {
+        } else {
+            // already logged in, redirect to settings
             $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
         }
     }
@@ -95,37 +95,34 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 
                 // generate forgot password key
                 $key = FrontendProfilesModel::getEncryptedString(
-                                            $profileId . microtime(),
-                                                FrontendProfilesModel::getRandomString()
+                    $profileId . microtime(),
+                    FrontendProfilesModel::getRandomString()
                 );
 
                 // insert forgot password key
                 FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
 
                 // reset url
-                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock(
-                                                                       'profiles',
-                                                                           'reset_password'
-                    ) . '/' . $key;
+                $mailValues['resetUrl']  = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'reset_password') .
+                                           '/' . $key;
                 $mailValues['firstName'] = FrontendProfilesModel::getSetting($profileId, 'first_name');
-                $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');
+                $mailValues['lastName']  = FrontendProfilesModel::getSetting($profileId, 'last_name');
 
                 // trigger event
                 FrontendModel::triggerEvent('profiles', 'after_forgot_password', array('id' => $profileId));
 
                 // send email
                 FrontendMailer::addEmail(
-                              FL::getMessage('ForgotPasswordSubject'),
-                                  FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/forgot_password.tpl',
-                                  $mailValues,
-                                  $txtEmail->getValue(),
-                                  ''
+                    FL::getMessage('ForgotPasswordSubject'),
+                    FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/forgot_password.tpl',
+                    $mailValues,
+                    $txtEmail->getValue(),
+                    ''
                 );
 
                 // redirect
                 $this->redirect(SELF . '?sent=true');
-            } // show errors
-            else {
+            } else {
                 $this->tpl->assign('forgotPasswordHasError', true);
             }
         }
