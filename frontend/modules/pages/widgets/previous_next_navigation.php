@@ -17,7 +17,7 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
     /**
      * The items.
      *
-     * @var	array
+     * @var    array
      */
     private $navigation;
 
@@ -34,10 +34,8 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
         // check if the given template exists
         try {
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
-        }
-
-        // template does not exist; assume subpages_default.tpl
-        catch(FrontendException $e) {
+        } catch (FrontendException $e) {
+            // template does not exist; assume subpages_default.tpl
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/previous_next_navigation.tpl');
         }
 
@@ -54,11 +52,11 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
         $pageId = $this->getContainer()->get('page')->getId();
 
         $navigation = FrontendNavigation::getNavigation();
-        $pageInfo = FrontendNavigation::getPageInfo($pageId);
+        $pageInfo   = FrontendNavigation::getPageInfo($pageId);
 
         $this->navigation = array();
 
-        if(isset($navigation['page'][$pageInfo['parent_id']])) {
+        if (isset($navigation['page'][$pageInfo['parent_id']])) {
             $pages = $navigation['page'][$pageInfo['parent_id']];
 
             // store
@@ -66,8 +64,8 @@ class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
             $pagesNext = $pages;
 
             // check for current id
-            foreach($pagesNext as $key => $value) {
-                if((int) $key != (int) $pageId) {
+            foreach ($pagesNext as $key => $value) {
+                if ((int) $key != (int) $pageId) {
                     // go to next pointer in array
                     next($pagesNext);
                     next($pagesPrev);
