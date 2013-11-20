@@ -8,7 +8,6 @@
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will store the language-dependant content for the frontend.
@@ -20,21 +19,21 @@ class FrontendLanguage
     /**
      * Locale arrays
      *
-     * @var	array
+     * @var    array
      */
-    private static $act = array(), $err = array(), $lbl = array(), 	$msg = array();
+    private static $act = array(), $err = array(), $lbl = array(), $msg = array();
 
     /**
      * The possible languages
      *
-     * @var	array
+     * @var    array
      */
     private static $languages = array('active' => array(), 'possible_redirect' => array());
 
     /**
      * Build the language files
      *
-     * @param string $language The language to build the locale-file for.
+     * @param string $language    The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
     public static function buildCache($language, $application)
@@ -46,11 +45,11 @@ class FrontendLanguage
 
         // get locale for backend
         $locale = (array) $db->getRecords(
-            'SELECT type, module, name, value
-             FROM locale
-             WHERE language = ? AND application = ?
-             ORDER BY type ASC, name ASC, module ASC',
-            array((string) $language, (string) $application)
+                             'SELECT type, module, name, value
+                              FROM locale
+                              WHERE language = ? AND application = ?
+                              ORDER BY type ASC, name ASC, module ASC',
+                                 array((string) $language, (string) $application)
         );
 
         // init var
@@ -69,7 +68,7 @@ class FrontendLanguage
         $value .= "\n";
 
         // loop types
-        foreach($types as $type) {
+        foreach ($types as $type) {
             // default module
             $modules = array('core');
 
@@ -79,21 +78,29 @@ class FrontendLanguage
             $value .= '$' . $type . ' = array();' . "\n";
 
             // loop locale
-            foreach($locale as $i => $item) {
+            foreach ($locale as $i => $item) {
                 // types match
-                if($item['type'] == $type) {
+                if ($item['type'] == $type) {
                     // new module
-                    if(!in_array($item['module'], $modules)) {
+                    if (!in_array($item['module'], $modules)) {
                         $value .= '$' . $type . '[\'' . $item['module'] . '\'] = array();' . "\n";
                         $modules[] = $item['module'];
                     }
 
                     // parse
-                    if($application == 'backend') {
-                        $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                    if ($application == 'backend') {
+                        $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace(
+                                '\"',
+                                '"',
+                                addslashes($item['value'])
+                            ) . '\';' . "\n";
                         $json[$type][$item['module']][$item['name']] = $item['value'];
                     } else {
-                        $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                        $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace(
+                                '\"',
+                                '"',
+                                addslashes($item['value'])
+                            ) . '\';' . "\n";
                         $json[$type][$item['name']] = $item['value'];
                     }
 
@@ -110,35 +117,43 @@ class FrontendLanguage
 
         // store
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
-            $value
+           constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+               $value
         );
 
         // get months
-        $monthsLong = SpoonLocale::getMonths($language, false);
+        $monthsLong  = SpoonLocale::getMonths($language, false);
         $monthsShort = SpoonLocale::getMonths($language, true);
 
         // get days
-        $daysLong = SpoonLocale::getWeekDays($language, false, 'sunday');
+        $daysLong  = SpoonLocale::getWeekDays($language, false, 'sunday');
         $daysShort = SpoonLocale::getWeekDays($language, true, 'sunday');
 
         // build labels
-        foreach($monthsLong as $key => $value) $json['loc']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($monthsShort as $key => $value) $json['loc']['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysLong as $key => $value) $json['loc']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysShort as $key => $value) $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+        foreach ($monthsLong as $key => $value) {
+            $json['loc']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($monthsShort as $key => $value) {
+            $json['loc']['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($daysLong as $key => $value) {
+            $json['loc']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($daysShort as $key => $value) {
+            $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+        }
 
         // store
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
-            json_encode($json)
+           constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+               json_encode($json)
         );
     }
 
     /**
      * Get an action from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function getAction($key)
@@ -147,7 +162,9 @@ class FrontendLanguage
         $key = SpoonFilter::toCamelCase((string) $key);
 
         // if the action exists return it,
-        if(isset(self::$act[$key])) return self::$act[$key];
+        if (isset(self::$act[$key])) {
+            return self::$act[$key];
+        }
 
         // otherwise return the key in label-format
         return '{$act' . $key . '}';
@@ -171,7 +188,7 @@ class FrontendLanguage
     public static function getActiveLanguages()
     {
         // validate the cache
-        if(empty(self::$languages['active'])) {
+        if (empty(self::$languages['active'])) {
             // grab from settings
             $activeLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
 
@@ -186,27 +203,31 @@ class FrontendLanguage
     /**
      * Get the preferred language by using the browser-language
      *
-     * @param bool[optional] $forRedirect Only look in the languages to redirect?
+     * @param  bool [optional] $forRedirect Only look in the languages to redirect?
      * @return string
      */
     public static function getBrowserLanguage($forRedirect = true)
     {
         // browser language set
-        if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2) {
+        if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2) {
             // get languages
             $redirectLanguages = self::getRedirectLanguages();
 
             // preferred languages
             $acceptedLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
-            $browserLanguages = array();
+            $browserLanguages  = array();
 
-            foreach($acceptedLanguages as $language) {
-                $qPos = strpos($language, 'q=');
+            foreach ($acceptedLanguages as $language) {
+                $qPos   = strpos($language, 'q=');
                 $weight = 1;
 
-                if($qPos !== false) {
+                if ($qPos !== false) {
                     $endPos = strpos($language, ';', $qPos);
-                    $weight = ($endPos === false) ? (float) substr($language, $qPos + 2) : (float) substr($language, $qPos + 2, $endPos);
+                    $weight = ($endPos === false) ? (float) substr($language, $qPos + 2) : (float) substr(
+                        $language,
+                        $qPos + 2,
+                        $endPos
+                    );
                 }
 
                 $browserLanguages[$language] = $weight;
@@ -216,14 +237,16 @@ class FrontendLanguage
             arsort($browserLanguages);
 
             // loop until result
-            foreach(array_keys($browserLanguages) as $language) {
+            foreach (array_keys($browserLanguages) as $language) {
                 // redefine language
                 $language = substr($language, 0, 2); // first two characters
 
                 // find possible language
-                if($forRedirect) {
+                if ($forRedirect) {
                     // check in the redirect-languages
-                    if(in_array($language, $redirectLanguages)) return $language;
+                    if (in_array($language, $redirectLanguages)) {
+                        return $language;
+                    }
                 }
             }
         }
@@ -235,7 +258,7 @@ class FrontendLanguage
     /**
      * Get an error from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function getError($key)
@@ -244,7 +267,9 @@ class FrontendLanguage
         $key = SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
-        if(isset(self::$err[$key])) return self::$err[$key];
+        if (isset(self::$err[$key])) {
+            return self::$err[$key];
+        }
 
         // otherwise return the key in label-format
         return '{$err' . $key . '}';
@@ -263,7 +288,7 @@ class FrontendLanguage
     /**
      * Get a label from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function getLabel($key)
@@ -272,7 +297,9 @@ class FrontendLanguage
         $key = SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
-        if(isset(self::$lbl[$key])) return self::$lbl[$key];
+        if (isset(self::$lbl[$key])) {
+            return self::$lbl[$key];
+        }
 
         // otherwise return the key in label-format
         return '{$lbl' . $key . '}';
@@ -291,7 +318,7 @@ class FrontendLanguage
     /**
      * Get a message from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function getMessage($key)
@@ -300,7 +327,9 @@ class FrontendLanguage
         $key = SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
-        if(isset(self::$msg[$key])) return self::$msg[$key];
+        if (isset(self::$msg[$key])) {
+            return self::$msg[$key];
+        }
 
         // otherwise return the key in label-format
         return '{$msg' . $key . '}';
@@ -324,7 +353,7 @@ class FrontendLanguage
     public static function getRedirectLanguages()
     {
         // validate the cache
-        if(empty(self::$languages['possible_redirect'])) {
+        if (empty(self::$languages['possible_redirect'])) {
             // grab from settings
             $redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'redirect_languages');
 
@@ -339,8 +368,8 @@ class FrontendLanguage
     /**
      * Set locale
      *
-     * @param string[optional] $language The language to load, if not provided we will load the language based on the URL.
-     * @param bool[optional] $force Force the language, so don't check if the language is active.
+     * @param string [optional] $language The language to load, if not provided we will load the language based on the URL.
+     * @param bool   [optional] $force    Force the language, so don't check if the language is active.
      */
     public static function setLocale($language = null, $force = false)
     {
@@ -348,11 +377,21 @@ class FrontendLanguage
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         // validate language
-        if(!$force && !in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language (' . $language . ').');
+        if (!$force && !in_array(
+                $language,
+                self::getActiveLanguages()
+            )
+        ) {
+            throw new FrontendException('Invalid language (' . $language . ').');
+        }
 
         // validate file, generate it if needed
-        if(!is_file(FRONTEND_CACHE_PATH . '/locale/en.php')) self::buildCache('en', 'frontend');
-        if(!is_file(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) self::buildCache($language, 'frontend');
+        if (!is_file(FRONTEND_CACHE_PATH . '/locale/en.php')) {
+            self::buildCache('en', 'frontend');
+        }
+        if (!is_file(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) {
+            self::buildCache($language, 'frontend');
+        }
 
         // init vars
         $act = array();
@@ -386,7 +425,7 @@ class FL extends FrontendLanguage
     /**
      * Get an action from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function act($key)
@@ -397,7 +436,7 @@ class FL extends FrontendLanguage
     /**
      * Get an error from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function err($key)
@@ -408,7 +447,7 @@ class FL extends FrontendLanguage
     /**
      * Get a label from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function lbl($key)
@@ -419,7 +458,7 @@ class FL extends FrontendLanguage
     /**
      * Get a message from the language-file
      *
-     * @param string $key The key to get.
+     * @param  string $key The key to get.
      * @return string
      */
     public static function msg($key)

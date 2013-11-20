@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be the base of the objects used in on-site
@@ -25,14 +24,14 @@ class FrontendBaseObject extends KernelLoader
     /**
      * Template instance
      *
-     * @var	FrontendTemplate
+     * @var    FrontendTemplate
      */
     protected $tpl;
 
     /**
      * URL instance
      *
-     * @var	FrontendURL
+     * @var    FrontendURL
      */
     protected $URL;
 
@@ -51,7 +50,8 @@ class FrontendBaseObject extends KernelLoader
 }
 
 /**
- * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
+ * This is the base-object for config-files.
+ * The module-specific config-files can extend the functionality from this class.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -60,48 +60,48 @@ class FrontendBaseConfig extends KernelLoader
     /**
      * The default action
      *
-     * @var	string
+     * @var    string
      */
     protected $defaultAction = 'index';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var    array
      */
     protected $disabledActions = array();
 
     /**
      * The disabled AJAX-actions
      *
-     * @var	array
+     * @var    array
      */
     protected $disabledAJAXActions = array();
 
     /**
      * The current loaded module
      *
-     * @var	string
+     * @var    string
      */
     protected $module;
 
     /**
      * All the possible actions
      *
-     * @var	array
+     * @var    array
      */
     protected $possibleActions = array();
 
     /**
      * All the possible AJAX actions
      *
-     * @var	array
+     * @var    array
      */
     protected $possibleAJAXActions = array();
 
     /**
      * @param KernelInterface $kernel
-     * @param string $module The module wherefore this is the configuration-file.
+     * @param string          $module The module wherefore this is the configuration-file.
      */
     public function __construct(KernelInterface $kernel, $module)
     {
@@ -110,7 +110,7 @@ class FrontendBaseConfig extends KernelLoader
         $this->module = (string) $module;
 
         // check if model exists
-        if(is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php')) {
+        if (is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php')) {
             // the model exists, so we require it
             require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
         }
@@ -167,25 +167,29 @@ class FrontendBaseConfig extends KernelLoader
     {
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-        $fs = new Filesystem();
+        $fs                 = new Filesystem();
 
-        if($fs->exists($frontendModulePath . '/actions')) {
+        if ($fs->exists($frontendModulePath . '/actions')) {
             // get regular actions
             $finder = new Finder();
             $finder->name('*.php');
             foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
                 $action = $file->getBasename('.php');
-                if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+                if (!in_array($action, $this->disabledActions)) {
+                    $this->possibleActions[$file->getBasename()] = $action;
+                }
             }
         }
 
-        if($fs->exists($frontendModulePath . '/ajax')) {
+        if ($fs->exists($frontendModulePath . '/ajax')) {
             // get ajax-actions
             $finder = new Finder();
             $finder->name('*.php');
             foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
                 $action = $file->getBasename('.php');
-                if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+                if (!in_array($action, $this->disabledAJAXActions)) {
+                    $this->possibleAJAXActions[$file->getBasename()] = $action;
+                }
             }
         }
     }
@@ -193,7 +197,7 @@ class FrontendBaseConfig extends KernelLoader
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
- * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
+ * @later  Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
@@ -205,87 +209,87 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * The current action
      *
-     * @var	string
+     * @var    string
      */
     protected $action;
 
     /**
      * The breadcrumb object
      *
-     * @var	FrontendBreadcrumb
+     * @var    FrontendBreadcrumb
      */
     protected $breadcrumb;
 
     /**
      * The data
      *
-     * @var	mixed
+     * @var    mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var	FrontendHeader
+     * @var    FrontendHeader
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     protected $module;
 
     /**
      * Should the current template be replaced with the blocks one?
      *
-     * @var	bool
+     * @var    bool
      */
     private $overwrite;
 
     /**
      * Pagination array
      *
-     * @var	array
+     * @var    array
      */
     protected $pagination;
 
     /**
      * The path of the template to include, or that replaced the current one
      *
-     * @var	string
+     * @var    string
      */
     private $templatePath;
 
     /**
      * A reference to the current template
      *
-     * @var	FrontendTemplate
+     * @var    FrontendTemplate
      */
     public $tpl;
 
     /**
      * A reference to the URL-instance
      *
-     * @var	FrontendURL
+     * @var    FrontendURL
      */
     public $URL;
 
     /**
-     * @param KernelInterface $kernel
-     * @param string $module The name of the module.
-     * @param string $action The name of the action.
-     * @param string[optional] $data The data that should be available in this block.
+     * @param KernelInterface        $kernel
+     * @param string                 $module The name of the module.
+     * @param string                 $action The name of the action.
+     * @param                 string $data   The data that should be available in this block.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
-        $this->header = $this->getContainer()->get('header');
-        $this->URL = $this->getContainer()->get('url');
+        $this->tpl        = new FrontendTemplate(false);
+        $this->header     = $this->getContainer()->get('header');
+        $this->URL        = $this->getContainer()->get('url');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');
 
         // set properties
@@ -297,19 +301,21 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Add a CSS file into the array
      *
-     * @param  string $file The path for the CSS-file that should be loaded.
-     * @param bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool[optional] $minify Should the CSS be minified?
-     * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string      $file          The path for the CSS-file that should be loaded.
+     * @param        bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param        bool $minify        Should the CSS be minified?
+     * @param        bool $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
         // redefine
-        $file = (string) $file;
+        $file          = (string) $file;
         $overwritePath = (bool) $overwritePath;
 
         // use module path
-        if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
+        if (!$overwritePath) {
+            $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
+        }
 
         // add css to the header
         $this->header->addCSS($file, $minify, $addTimestamp);
@@ -318,18 +324,20 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Add a javascript file into the array
      *
-     * @param  string $file The path to the javascript-file that should be loaded.
-     * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool[optional] $minify Should the file be minified?
-     * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string      $file          The path to the javascript-file that should be loaded.
+     * @param        bool $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param        bool $minify        Should the file be minified?
+     * @param        bool $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addJS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
-        $file = (string) $file;
+        $file          = (string) $file;
         $overwritePath = (bool) $overwritePath;
 
         // use module path
-        if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
+        if (!$overwritePath) {
+            $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
+        }
 
         // add js to the header
         $this->header->addJS($file, $minify, $addTimestamp);
@@ -338,8 +346,8 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Add data that should be available in JS
      *
-     * @param string $key	The key whereunder the value will be stored.
-     * @param mixed $value	The value to pass.
+     * @param string $key   The key whereunder the value will be stored.
+     * @param mixed  $value The value to pass.
      */
     public function addJSData($key, $value)
     {
@@ -359,12 +367,12 @@ class FrontendBaseBlock extends FrontendBaseObject
         $frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
         // add javascript file with same name as module (if the file exists)
-        if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+        if (is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
         }
 
         // add javascript file with same name as the action (if the file exists)
-        if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+        if (is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
         }
     }
@@ -432,24 +440,23 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Load the template
      *
-     * @param string[optional] $path The path for the template to use.
-     * @param bool[optional] $overwrite Should the template overwrite the default?
+     * @param      string     [optional] $path      The path for the template to use.
+     * @param bool $overwrite Should the template overwrite the default?
      */
     protected function loadTemplate($path = null, $overwrite = false)
     {
         $overwrite = (bool) $overwrite;
 
         // no template given, so we should build the path
-        if($path === null) {
+        if ($path === null) {
             // build path to the module
             $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
             // build template path
             $path = $frontendModulePath . '/layout/templates/' . $this->getAction() . '.tpl';
+        } else {
+            $path = (string) $path;
         }
-
-        // redefine
-        else $path = (string) $path;
 
         // set properties
         $this->setOverwrite($overwrite);
@@ -461,100 +468,124 @@ class FrontendBaseBlock extends FrontendBaseObject
      */
     protected function parsePagination()
     {
-        $pagination = null;
-        $showFirstPages = false;
-        $showLastPages = false;
+        $pagination      = null;
+        $showFirstPages  = false;
+        $showLastPages   = false;
         $useQuestionMark = true;
 
         // validate pagination array
-        if(!isset($this->pagination['limit'])) throw new FrontendException('no limit in the pagination-property.');
-        if(!isset($this->pagination['offset'])) throw new FrontendException('no offset in the pagination-property.');
-        if(!isset($this->pagination['requested_page'])) throw new FrontendException('no requested_page available in the pagination-property.');
-        if(!isset($this->pagination['num_items'])) throw new FrontendException('no num_items available in the pagination-property.');
-        if(!isset($this->pagination['num_pages'])) throw new FrontendException('no num_pages available in the pagination-property.');
-        if(!isset($this->pagination['url'])) throw new FrontendException('no URL available in the pagination-property.');
+        if (!isset($this->pagination['limit'])) {
+            throw new FrontendException('no limit in the pagination-property.');
+        }
+        if (!isset($this->pagination['offset'])) {
+            throw new FrontendException('no offset in the pagination-property.');
+        }
+        if (!isset($this->pagination['requested_page'])) {
+            throw new FrontendException('no requested_page available in the pagination-property.');
+        }
+        if (!isset($this->pagination['num_items'])) {
+            throw new FrontendException('no num_items available in the pagination-property.');
+        }
+        if (!isset($this->pagination['num_pages'])) {
+            throw new FrontendException('no num_pages available in the pagination-property.');
+        }
+        if (!isset($this->pagination['url'])) {
+            throw new FrontendException('no URL available in the pagination-property.');
+        }
 
         // should we use a questionmark or an ampersand
-        if(mb_strpos($this->pagination['url'], '?') > 0) $useQuestionMark = false;
+        if (mb_strpos($this->pagination['url'], '?') > 0) {
+            $useQuestionMark = false;
+        }
 
         // no pagination needed
-        if($this->pagination['num_pages'] < 1) return;
+        if ($this->pagination['num_pages'] < 1) {
+            return;
+        }
 
         // populate count fields
-        $pagination['num_pages'] = $this->pagination['num_pages'];
+        $pagination['num_pages']    = $this->pagination['num_pages'];
         $pagination['current_page'] = $this->pagination['requested_page'];
 
         // define anchor
         $anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
 
         // as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
-        if($this->pagination['requested_page'] > 5 && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)) {
+        if ($this->pagination['requested_page'] > 5 &&
+            $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)
+        ) {
             // init vars
             $pagesStart = ($this->pagination['num_pages'] > 7) ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
-            $pagesEnd = $this->pagination['num_pages'];
+            $pagesEnd   = $this->pagination['num_pages'];
 
             // fix for page 6
-            if($this->pagination['num_pages'] == 6) $pagesStart = 1;
+            if ($this->pagination['num_pages'] == 6) {
+                $pagesStart = 1;
+            }
 
             // show first pages
-            if($this->pagination['num_pages'] > 7) $showFirstPages = true;
-        }
-
-        // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-        elseif($this->pagination['requested_page'] <= 5) {
-            // init vars
+            if ($this->pagination['num_pages'] > 7) {
+                $showFirstPages = true;
+            }
+        } elseif ($this->pagination['requested_page'] <= 5) {
+            // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
             $pagesStart = 1;
-            $pagesEnd = 6;
+            $pagesEnd   = 6;
 
-            // when we have 7 pages, show 7 as end
-            if($this->pagination['num_pages'] == 7) $pagesEnd = 7;
 
-            // when we have less then 6 pages, show the maximum page
-            elseif($this->pagination['num_pages'] <= 6) $pagesEnd = $this->pagination['num_pages'];
+            if ($this->pagination['num_pages'] == 7) {
+                $pagesEnd = 7;
+            } elseif ($this->pagination['num_pages'] <= 6) {
+                $pagesEnd = $this->pagination['num_pages'];
+            }
 
-            // show last pages
-            if($this->pagination['num_pages'] > 7) $showLastPages = true;
-        }
 
-        // page 6
-        else {
-            // init vars
-            $pagesStart = $this->pagination['requested_page'] - 2;
-            $pagesEnd = $this->pagination['requested_page'] + 2;
+            if ($this->pagination['num_pages'] > 7) {
+                $showLastPages = true;
+            }
+        } else {
+            $pagesStart     = $this->pagination['requested_page'] - 2;
+            $pagesEnd       = $this->pagination['requested_page'] + 2;
             $showFirstPages = true;
-            $showLastPages = true;
+            $showLastPages  = true;
         }
 
         // show previous
-        if($this->pagination['requested_page'] > 1) {
+        if ($this->pagination['requested_page'] > 1) {
             // build URL
-            if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
-            else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+            if ($useQuestionMark) {
+                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+            } else {
+                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
+            }
 
             // set
             $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL . $anchor;
+            $pagination['previous_url']  = $URL . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
-                     'rel' => 'prev',
-                     'href' => SITE_URL . $URL . $anchor,
+                    'rel'  => 'prev',
+                    'href' => SITE_URL . $URL . $anchor,
                 )
             );
         }
 
         // show first pages?
-        if($showFirstPages) {
+        if ($showFirstPages) {
             // init var
             $pagesFirstStart = 1;
-            $pagesFirstEnd = 1;
+            $pagesFirstEnd   = 1;
 
             // loop pages
-            for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
+            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
                 // build URL
-                if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
-                else $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                if ($useQuestionMark) {
+                    $URL = $this->pagination['url'] . '?page=' . $i;
+                } else {
+                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                }
 
                 // add
                 $pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
@@ -562,29 +593,35 @@ class FrontendBaseBlock extends FrontendBaseObject
         }
 
         // build array
-        for($i = $pagesStart; $i <= $pagesEnd; $i++) {
+        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
             // init var
             $current = ($i == $this->pagination['requested_page']);
 
             // build URL
-            if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
-            else $URL = $this->pagination['url'] . '&amp;page=' . $i;
+            if ($useQuestionMark) {
+                $URL = $this->pagination['url'] . '?page=' . $i;
+            } else {
+                $URL = $this->pagination['url'] . '&amp;page=' . $i;
+            }
 
             // add
             $pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
         }
 
         // show last pages?
-        if($showLastPages) {
+        if ($showLastPages) {
             // init var
             $pagesLastStart = $this->pagination['num_pages'];
-            $pagesLastEnd = $this->pagination['num_pages'];
+            $pagesLastEnd   = $this->pagination['num_pages'];
 
             // loop pages
-            for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
+            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
                 // build URL
-                if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
-                else $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                if ($useQuestionMark) {
+                    $URL = $this->pagination['url'] . '?page=' . $i;
+                } else {
+                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
+                }
 
                 // add
                 $pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
@@ -592,20 +629,23 @@ class FrontendBaseBlock extends FrontendBaseObject
         }
 
         // show next
-        if($this->pagination['requested_page'] < $this->pagination['num_pages']) {
+        if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
             // build URL
-            if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
-            else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+            if ($useQuestionMark) {
+                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+            } else {
+                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
+            }
 
             // set
             $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL . $anchor;
+            $pagination['next_url']  = $URL . $anchor;
 
             // flip ahead
             $this->header->addLink(
                 array(
-                     'rel' => 'next',
-                     'href' => SITE_URL . $URL . $anchor,
+                    'rel'  => 'next',
+                    'href' => SITE_URL . $URL . $anchor,
                 )
             );
         }
@@ -620,14 +660,12 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Redirect to a given URL
      *
-     * @param string $URL The URL whereto will be redirected.
-     * @param int[optional] $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param string     $URL  The URL whereto will be redirected.
+     * @param        int $code The redirect code, default is 302 which means this is a temporary redirect.
      */
     public function redirect($URL, $code = 302)
     {
-        $response = new RedirectResponse(
-            $URL, $code
-        );
+        $response = new RedirectResponse($URL, $code);
 
         /*
          * Since we've got some nested action structure, we'll send this
@@ -656,12 +694,12 @@ class FrontendBaseBlock extends FrontendBaseObject
     /**
      * Set the data, for later use
      *
-     * @param string[optional] $data The data that should be available.
+     * @param string [optional] $data The data that should be available.
      */
     private function setData($data = null)
     {
         // data given?
-        if($data !== null) {
+        if ($data !== null) {
             // unserialize data
             $data = unserialize($data);
 
@@ -703,7 +741,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 
 /**
  * This class implements a lot of functionality that can be extended by a specific widget
- * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
+ * @later  Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
@@ -714,66 +752,66 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * The current action
      *
-     * @var	string
+     * @var    string
      */
     protected $action;
 
     /**
      * The data
      *
-     * @var	mixed
+     * @var    mixed
      */
     protected $data;
 
     /**
      * The header object
      *
-     * @var	FrontendHeader
+     * @var    FrontendHeader
      */
     protected $header;
 
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     protected $module;
 
     /**
      * Path to the template
      *
-     * @var	string
+     * @var    string
      */
     protected $templatePath;
 
     /**
      * A reference to the current template
      *
-     * @var	FrontendTemplate
+     * @var    FrontendTemplate
      */
     public $tpl;
 
     /**
      * A reference to the URL-instance
      *
-     * @var	FrontendURL
+     * @var    FrontendURL
      */
     public $URL;
 
     /**
-     * @param KernelInterface $kernel
-     * @param string $module The module to use.
-     * @param string $action The action to use.
-     * @param string[optional] $data The data that should be available.
+     * @param KernelInterface        $kernel
+     * @param string                 $module The module to use.
+     * @param string                 $action The action to use.
+     * @param                 string $data   The data that should be available.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
+        $this->tpl    = new FrontendTemplate(false);
         $this->header = $this->getContainer()->get('header');
-        $this->URL = $this->getContainer()->get('url');
+        $this->URL    = $this->getContainer()->get('url');
 
         // set properties
         $this->setModule($module);
@@ -784,19 +822,21 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * Add a CSS file into the array
      *
-     * @param  string $file The path for the CSS-file that should be loaded.
-     * @param bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool[optional] $minify Should the CSS be minified?
-     * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $file          The path for the CSS-file that should be loaded.
+     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool   $minify        Should the CSS be minified?
+     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
         // redefine
-        $file = (string) $file;
+        $file          = (string) $file;
         $overwritePath = (bool) $overwritePath;
 
         // use module path
-        if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
+        if (!$overwritePath) {
+            $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
+        }
 
         // add css to the header
         $this->header->addCSS($file, $minify, $addTimestamp);
@@ -805,17 +845,19 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * Add a javascript file into the array
      *
-     * @param  string $file The path to the javascript-file that should be loaded.
-     * @param  bool[optional] $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param bool[optional] $minify Should the file be minified?
+     * @param string $file          The path to the javascript-file that should be loaded.
+     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool   $minify        Should the file be minified?
      */
     public function addJS($file, $overwritePath = false, $minify = true)
     {
-        $file = (string) $file;
+        $file          = (string) $file;
         $overwritePath = (bool) $overwritePath;
 
         // use module path
-        if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
+        if (!$overwritePath) {
+            $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
+        }
 
         // add js to the header
         $this->header->addJS($file, $minify);
@@ -824,8 +866,8 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * Add data that should be available in JS
      *
-     * @param string $key	The key whereunder the value will be stored.
-     * @param mixed $value	The value to pass.
+     * @param string $key   The key whereunder the value will be stored.
+     * @param mixed  $value The value to pass.
      */
     public function addJSData($key, $value)
     {
@@ -845,12 +887,12 @@ class FrontendBaseWidget extends FrontendBaseObject
         $frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
         // add javascript file with same name as module (if the file exists)
-        if(is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+        if (is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
         }
 
         // add javascript file with same name as the action (if the file exists)
-        if(is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+        if (is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
         }
     }
@@ -898,21 +940,20 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * Load the template
      *
-     * @param string[optional] $path The path for the template to use.
+     * @param string [optional] $path The path for the template to use.
      */
     protected function loadTemplate($path = null)
     {
         // no template given, so we should build the path
-        if($path === null) {
+        if ($path === null) {
             // build path to the module
             $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
             // build template path
             $path = $frontendModulePath . '/layout/widgets/' . $this->getAction() . '.tpl';
+        } else {
+            $path = (string) $path;
         }
-
-        // redefine
-        else $path = (string) $path;
 
         // set template
         $this->setTemplatePath($path);
@@ -931,12 +972,12 @@ class FrontendBaseWidget extends FrontendBaseObject
     /**
      * Set the data, for later use
      *
-     * @param string[optional] $data The data that should available.
+     * @param string [optional] $data The data that should available.
      */
     private function setData($data = null)
     {
         // data given?
-        if($data !== null) {
+        if ($data !== null) {
             // unserialize data
             $data = unserialize($data);
 
@@ -973,15 +1014,15 @@ class FrontendBaseWidget extends FrontendBaseObject
  */
 class FrontendBaseAJAXAction extends KernelLoader
 {
-    const OK = 200;
+    const OK          = 200;
     const BAD_REQUEST = 400;
-    const FORBIDDEN = 403;
-    const ERROR = 500;
+    const FORBIDDEN   = 403;
+    const ERROR       = 500;
 
     /**
      * The current action
      *
-     * @var	string
+     * @var    string
      */
     protected $action;
 
@@ -993,14 +1034,14 @@ class FrontendBaseAJAXAction extends KernelLoader
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     protected $module;
 
     /**
      * @param KernelInterface $kernel
-     * @param string $action The action to use.
-     * @param string $module The module to use.
+     * @param string          $action The action to use.
+     * @param string          $module The module to use.
      */
     public function __construct(KernelInterface $kernel, $action, $module)
     {
@@ -1063,14 +1104,17 @@ class FrontendBaseAJAXAction extends KernelLoader
     /**
      * Outputs an answer to the browser
      *
-     * @param int $statusCode The status code to use, use one of the available constants (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
-     * @param mixed[optional] $data The data to be returned (will be encoded as JSON).
-     * @param string[optional] $message A text-message.
+     * @param int    $statusCode The status code to use, use one of the available constants
+     *                           (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
+     * @param mixed  $data       The data to be returned (will be encoded as JSON).
+     * @param string $message    A text-message.
      */
     public function output($statusCode, $data = null, $message = null)
     {
         $statusCode = (int) $statusCode;
-        if($message !== null) $message = (string) $message;
+        if ($message !== null) {
+            $message = (string) $message;
+        }
 
         $response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 

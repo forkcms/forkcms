@@ -12,37 +12,37 @@ use Symfony\Component\HttpKernel\KernelInterface;
 /**
  * This class will handle the incoming URL.
  *
- * @author 	Tijs Verkoyen <tijs@sumocoders.be>
- * @author 	Davy Hellemans <davy.hellemans@netlash.com>
- * @author 	Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author    Tijs Verkoyen <tijs@sumocoders.be>
+ * @author    Davy Hellemans <davy.hellemans@netlash.com>
+ * @author    Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
 class FrontendURL extends KernelLoader
 {
     /**
      * The pages
      *
-     * @var	array
+     * @var    array
      */
     private $pages = array();
 
     /**
      * The parameters
      *
-     * @var	array
+     * @var    array
      */
     private $parameters = array();
 
     /**
      * The host, will be used for cookies
      *
-     * @var	string
+     * @var    string
      */
     private $host;
 
     /**
      * The query string
      *
-     * @var	string
+     * @var    string
      */
     private $queryString;
 
@@ -57,7 +57,11 @@ class FrontendURL extends KernelLoader
         $this->getContainer()->set('url', $this);
 
         // if there is a trailing slash we permanent redirect to the page without slash
-        if(mb_strlen($_SERVER['REQUEST_URI']) != 1 && mb_substr($_SERVER['REQUEST_URI'], -1) == '/') SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
+        if (mb_strlen($_SERVER['REQUEST_URI']) != 1 &&
+            mb_substr($_SERVER['REQUEST_URI'], -1) == '/'
+        ) {
+            SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
+        }
 
         // set query-string for later use
         $this->setQueryString($_SERVER['REQUEST_URI']);
@@ -99,7 +103,7 @@ class FrontendURL extends KernelLoader
     /**
      * Get a page specified by the given index
      *
-     * @param int $index The index (0-based).
+     * @param  int   $index The index (0-based).
      * @return mixed
      */
     public function getPage($index)
@@ -108,7 +112,9 @@ class FrontendURL extends KernelLoader
         $index = (int) $index;
 
         // does the index exists
-        if(isset($this->pages[$index])) return $this->pages[$index];
+        if (isset($this->pages[$index])) {
+            return $this->pages[$index];
+        }
 
         // fallback
         return null;
@@ -127,19 +133,30 @@ class FrontendURL extends KernelLoader
     /**
      * Get a parameter specified by the given index
      * The function will return null if the key is not available
-     * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
+     * By default we will cast the return value into a string, if you want
+     * something else specify it by passing the wanted type.
      *
-     * @param mixed $index The index of the parameter.
-     * @param string[optional] $type The return type, possible values are: bool, boolean, int, integer, float, double, string, array.
-     * @param mixed[optional] $defaultValue The value that should be returned if the key is not available.
+     * @param mixed             $index The index of the parameter.
+     * @param string [optional] $type  The return type, possible
+     *                     values are: bool, boolean, int, integer, float,
+     *                     double, string, array.
+     * @param mixed  [optional] $defaultValue The value that should be
+     *                     returned if the key is not available.
      * @return mixed
      */
     public function getParameter($index, $type = 'string', $defaultValue = null)
     {
         // does the index exists and isn't this parameter empty
-        if(isset($this->parameters[$index]) && $this->parameters[$index] != '') {
+        if (isset($this->parameters[$index]) && $this->parameters[$index] != '') {
             // parameter exists
-            if(isset($this->parameters[$index])) return SpoonFilter::getValue($this->parameters[$index], null, null, $type);
+            if (isset($this->parameters[$index])) {
+                return SpoonFilter::getValue(
+                    $this->parameters[$index],
+                    null,
+                    null,
+                    $type
+                );
+            }
         }
 
         // fallback
@@ -149,7 +166,7 @@ class FrontendURL extends KernelLoader
     /**
      * Return all the parameters
      *
-     * @param bool[optional] $includeGET Should the GET-parameters be included?
+     * @param  bool [optional] $includeGET Should the GET-parameters be included?
      * @return array
      */
     public function getParameters($includeGET = true)
@@ -179,7 +196,7 @@ class FrontendURL extends KernelLoader
         $getChunks = explode('?', $queryString);
 
         // are there GET-parameters
-        if(isset($getChunks[1])) {
+        if (isset($getChunks[1])) {
             // get key-value pairs
             $get = explode('&', $getChunks[1]);
 
@@ -187,17 +204,19 @@ class FrontendURL extends KernelLoader
             $queryString = str_replace('?' . $getChunks[1], '', $this->getQueryString());
 
             // loop pairs
-            foreach($get as $getItem) {
+            foreach ($get as $getItem) {
                 // get key and value
                 $getChunks = explode('=', $getItem, 2);
 
                 // key available?
-                if(isset($getChunks[0])) {
+                if (isset($getChunks[0])) {
                     // reset in $_GET
                     $_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
 
                     // add into parameters
-                    if(isset($getChunks[1])) $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];
+                    if (isset($getChunks[1])) {
+                        $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];
+                    }
                 }
             }
         }
@@ -206,13 +225,10 @@ class FrontendURL extends KernelLoader
         $chunks = (array) explode('/', $queryString);
 
         // single language
-        if(!SITE_MULTILANGUAGE) {
+        if (!SITE_MULTILANGUAGE) {
             // set language id
             $language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
-        }
-
-        // multiple languages
-        else {
+        } else {
             // default value
             $mustRedirect = false;
 
@@ -221,7 +237,7 @@ class FrontendURL extends KernelLoader
             $redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
             // the language is present in the URL
-            if(isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
+            if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
                 // define language
                 $language = (string) $chunks[0];
 
@@ -229,10 +245,7 @@ class FrontendURL extends KernelLoader
                 try {
                     // set cookie
                     CommonCookie::set('frontend_language', $language);
-                }
-
-                // fetch failed cookie
-                catch(SpoonCookieException $e) {
+                } catch (SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }
 
@@ -241,30 +254,22 @@ class FrontendURL extends KernelLoader
 
                 // remove the language part
                 array_shift($chunks);
-            }
-
-            // language set in the cookie
-            elseif(CommonCookie::exists('frontend_language') && in_array(CommonCookie::get('frontend_language'), $redirectLanguages)) {
+            } elseif (CommonCookie::exists('frontend_language') &&
+                      in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
+            ) {
                 // set languageId
                 $language = (string) CommonCookie::get('frontend_language');
 
                 // redirect is needed
                 $mustRedirect = true;
-            }
-
-            // default browser language
-            else {
+            } else {
                 // set languageId & abbreviation
                 $language = FrontendLanguage::getBrowserLanguage();
 
                 // try to set a cookie with the language
                 try {
-                    // set cookie
                     CommonCookie::set('frontend_language', $language);
-                }
-
-                // fetch failed cookie
-                catch(SpoonCookieException $e) {
+                } catch (SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }
 
@@ -273,7 +278,7 @@ class FrontendURL extends KernelLoader
             }
 
             // redirect is required
-            if($mustRedirect) {
+            if ($mustRedirect) {
                 // build URL
                 $URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
 
@@ -296,11 +301,11 @@ class FrontendURL extends KernelLoader
         $keys = FrontendNavigation::getKeys();
 
         // full URL
-        $URL = implode('/', $chunks);
+        $URL      = implode('/', $chunks);
         $startURL = $URL;
 
         // loop until we find the URL in the list of pages
-        while(!in_array($URL, $keys)) {
+        while (!in_array($URL, $keys)) {
             // remove the last chunk
             array_pop($chunks);
 
@@ -309,22 +314,26 @@ class FrontendURL extends KernelLoader
         }
 
         // remove language from query string
-        if(SITE_MULTILANGUAGE) $queryString = trim(substr($queryString, strlen($language)), '/');
+        if (SITE_MULTILANGUAGE) {
+            $queryString = trim(substr($queryString, strlen($language)), '/');
+        }
 
         // if it's the homepage AND parameters were given (not allowed!)
-        if($URL == '' && $queryString != '') {
+        if ($URL == '' && $queryString != '') {
             // get 404 URL
             $URL = FrontendNavigation::getURL(404);
 
             // remove language
-            if(SITE_MULTILANGUAGE) $URL = str_replace('/' . $language, '', $URL);
+            if (SITE_MULTILANGUAGE) {
+                $URL = str_replace('/' . $language, '', $URL);
+            }
         }
 
         // set pages
         $URL = trim($URL, '/');
 
         // currently not in the homepage
-        if($URL != '') {
+        if ($URL != '') {
             // explode in pages
             $pages = explode('/', $URL);
 
@@ -339,7 +348,7 @@ class FrontendURL extends KernelLoader
         $parameters = trim(substr($startURL, strlen($URL)), '/');
 
         // has at least one parameter
-        if($parameters != '') {
+        if ($parameters != '') {
             // parameters will be separated by /
             $parameters = explode('/', $parameters);
 
@@ -348,19 +357,21 @@ class FrontendURL extends KernelLoader
         }
 
         // pageId, parentId & depth
-        $pageId = FrontendNavigation::getPageId(implode('/', $this->getPages()));
+        $pageId   = FrontendNavigation::getPageId(implode('/', $this->getPages()));
         $pageInfo = FrontendNavigation::getPageInfo($pageId);
 
         // invalid page, or parameters but no extra
-        if($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
+        if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
             $URL = FrontendNavigation::getURL(404);
 
             // remove language
-            if(SITE_MULTILANGUAGE) $URL = trim(str_replace('/' . $language, '', $URL), '/');
+            if (SITE_MULTILANGUAGE) {
+                $URL = trim(str_replace('/' . $language, '', $URL), '/');
+            }
 
             // currently not in the homepage
-            if($URL != '') {
+            if ($URL != '') {
                 // explode in pages
                 $pages = explode('/', $URL);
 
@@ -373,20 +384,20 @@ class FrontendURL extends KernelLoader
         }
 
         // is this an internal redirect?
-        if(isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '') {
+        if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '') {
             // get url for item
             $newPageURL = FrontendNavigation::getURL((int) $pageInfo['redirect_page_id']);
-            $errorURL = FrontendNavigation::getURL(404);
+            $errorURL   = FrontendNavigation::getURL(404);
 
             // not an error?
-            if($newPageURL != $errorURL) {
+            if ($newPageURL != $errorURL) {
                 // redirect
                 SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
             }
         }
 
         // is this an external redirect?
-        if(isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '') {
+        if (isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '') {
             // redirect
             SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
         }
@@ -405,7 +416,7 @@ class FrontendURL extends KernelLoader
     /**
      * Set the pages
      *
-     * @param array[optional] $pages An array of all the pages to set.
+     * @param array [optional] $pages An array of all the pages to set.
      */
     private function setPages(array $pages = array())
     {
@@ -415,11 +426,13 @@ class FrontendURL extends KernelLoader
     /**
      * Set the parameters
      *
-     * @param array[optional] $parameters An array of all the parameters to set.
+     * @param array [optional] $parameters An array of all the parameters to set.
      */
     private function setParameters(array $parameters = array())
     {
-        foreach($parameters as $key => $value) $this->parameters[$key] = $value;
+        foreach ($parameters as $key => $value) {
+            $this->parameters[$key] = $value;
+        }
     }
 
     /**
@@ -432,7 +445,7 @@ class FrontendURL extends KernelLoader
         $queryString = trim((string) $queryString, '/');
 
         // replace GET with encoded GET in the queryString to prevent XSS
-        if(isset($_GET) && !empty($_GET)) {
+        if (isset($_GET) && !empty($_GET)) {
             // strip GET from the queryString
             list($queryString) = explode('?', $queryString, 2);
 

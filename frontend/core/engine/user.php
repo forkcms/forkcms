@@ -17,50 +17,54 @@ class FrontendUser
     /**
      * An array that will store all user objects
      *
-     * @var	array
+     * @var    array
      */
     private static $cache = array();
 
     /**
      * All settings
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var	int
+     * @var    int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
-     * @param int[optional] $userId If you provide a userId, the object will be loaded with the data for this user.
+     * @param int [optional] $userId If you provide a userId, the object will be loaded with the data for this user.
      */
     public function __construct($userId = null)
     {
         // if a user id is given we will load the user in this object
-        if($userId !== null) $this->loadUser($userId);
+        if ($userId !== null) {
+            $this->loadUser($userId);
+        }
     }
 
     /**
      * Get a backend user
      *
-     * @param int $userId The users id in the backend.
+     * @param  int          $userId The users id in the backend.
      * @return FrontendUser
      */
     public static function getBackendUser($userId)
     {
         // create new instance if necessary and cache it
-        if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
+        if (!isset(self::$cache[$userId])) {
+            self::$cache[$userId] = new FrontendUser($userId);
+        }
 
         return self::$cache[$userId];
     }
@@ -78,8 +82,8 @@ class FrontendUser
     /**
      * Get a setting
      *
-     * @param string $key The name of the setting.
-     * @return mixed The stored value, if the setting wasn't found null will be returned
+     * @param  string $key The name of the setting.
+     * @return mixed  The stored value, if the setting wasn't found null will be returned
      */
     public function getSetting($key)
     {
@@ -87,7 +91,9 @@ class FrontendUser
         $key = (string) $key;
 
         // not set? return null
-        if(!isset($this->settings[$key])) return null;
+        if (!isset($this->settings[$key])) {
+            return null;
+        }
 
         // return
         return $this->settings[$key];
@@ -128,14 +134,16 @@ class FrontendUser
         // get user-data
         $userData = (array) $db->getRecord(
             'SELECT u.id, u.email
-             FROM users AS u
-             WHERE u.id = ?
-             LIMIT 1',
+            FROM users AS u
+            WHERE u.id = ?
+            LIMIT 1',
             array($userId)
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if(empty($userData)) throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        if (empty($userData)) {
+            throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        }
 
         // set properties
         $this->setUserId($userData['id']);
@@ -144,13 +152,15 @@ class FrontendUser
         // get settings
         $settings = (array) $db->getPairs(
             'SELECT us.name, us.value
-             FROM users_settings AS us
-             WHERE us.user_id = ?',
+            FROM users_settings AS us
+            WHERE us.user_id = ?',
             array($userId)
         );
 
         // loop settings and store them in the object
-        foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
+        foreach ($settings as $key => $value) {
+            $this->settings[$key] = unserialize($value);
+        }
     }
 
     /**

@@ -17,7 +17,7 @@ class FrontendTemplateCustom
     /**
      * Template instance
      *
-     * @var	FrontendTemplate
+     * @var    FrontendTemplate
      */
     private $tpl;
 

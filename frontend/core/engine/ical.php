@@ -17,20 +17,20 @@ class FrontendIcal extends SpoonIcal
     /**
      * The title
      *
-     * @var	string
+     * @var    string
      */
     private $title;
 
     /**
      * Default constructor
      *
-     * @param string $title The title for the calendar.
+     * @param string $title       The title for the calendar.
      * @param string $description A description for the calendar.
      */
     public function __construct($title, $description)
     {
         // redefine
-        $title = (string) $title;
+        $title       = (string) $title;
         $description = (string) $description;
 
         // convert to plain text
@@ -41,8 +41,8 @@ class FrontendIcal extends SpoonIcal
 
         // build properties
         $properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
-        $properties['X-WR-CALDESC'] = $description;
-        $properties['X-WR-TIMEZONE'] = date_default_timezone_get();
+        $properties['X-WR-CALDESC']            = $description;
+        $properties['X-WR-TIMEZONE']           = date_default_timezone_get();
 
         // set the title
         $this->setTitle($title);
@@ -67,12 +67,16 @@ class FrontendIcal extends SpoonIcal
     /**
      * Parse the iCal and output into the browser.
      *
-     * @param bool[optional] $headers Should the headers be set? (Use false if you're debugging).
+     * @param bool [optional] $headers Should the headers be set? (Use false if you're debugging).
      */
     public function parse($headers = true)
     {
         // set headers
-        if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . SpoonFilter::urlise($this->getTitle()) . '.ics');
+        if ((bool) $headers) {
+            SpoonHTTP::setHeaders(
+                'Content-Disposition: inline; filename=' . SpoonFilter::urlise($this->getTitle()) . '.ics'
+            );
+        }
 
         // call the parent
         parent::parse($headers);
@@ -99,15 +103,15 @@ class FrontendIcalEvent extends SpoonIcalEvent
     /**
      * Initial values for UTM-parameters
      *
-     * @var	array
+     * @var    array
      */
     private $utm = array('utm_source' => 'feed', 'utm_medium' => 'ical');
 
     /**
      * Default constructor.
      *
-     * @param string $title The title for the item.
-     * @param string $link The link for the item.
+     * @param string $title       The title for the item.
+     * @param string $link        The link for the item.
      * @param string $description The content for the item.
      */
     public function __construct($title, $link, $description)
@@ -132,8 +136,8 @@ class FrontendIcalEvent extends SpoonIcalEvent
 
         // build properties
         $properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = $title;
-        $properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SITE_URL . '/favicon.ico';
-        $properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getUrl();
+        $properties['X-GOOGLE-CALENDAR-CONTENT-ICON']  = SITE_URL . '/favicon.ico';
+        $properties['X-GOOGLE-CALENDAR-CONTENT-URL']   = $this->getUrl();
 
         // set properties
         $this->setXProperties($properties);
@@ -142,7 +146,7 @@ class FrontendIcalEvent extends SpoonIcalEvent
     /**
      * Process links, will prepend SITE_URL if needed and append UTM-parameters
      *
-     * @param string $content The content to process.
+     * @param  string $content The content to process.
      * @return string
      */
     public function processLinks($content)
@@ -151,7 +155,7 @@ class FrontendIcalEvent extends SpoonIcalEvent
         $content = (string) $content;
 
         // replace URLs and images
-        $search = array('href="/', 'src="/');
+        $search  = array('href="/', 'src="/');
         $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 
         // replace links to files
@@ -164,14 +168,14 @@ class FrontendIcalEvent extends SpoonIcalEvent
         preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
 
         // any links?
-        if(isset($matches[1]) && !empty($matches[1])) {
+        if (isset($matches[1]) && !empty($matches[1])) {
             // init vars
-            $searchLinks = array();
+            $searchLinks  = array();
             $replaceLinks = array();
 
             // loop old links
-            foreach($matches[1] as $i => $link) {
-                $searchLinks[] = $matches[0][$i];
+            foreach ($matches[1] as $i => $link) {
+                $searchLinks[]  = $matches[0][$i];
                 $replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $this->utm) . '"';
             }
 
@@ -194,7 +198,9 @@ class FrontendIcalEvent extends SpoonIcalEvent
         $url = (string) $url;
 
         // if link doesn't start with http, we prepend the URL of the site
-        if(substr($url, 0, 7) != 'http://') $url = SITE_URL . $url;
+        if (substr($url, 0, 7) != 'http://') {
+            $url = SITE_URL . $url;
+        }
 
         $url = FrontendModel::addURLParameters($url, $this->utm);
         $url = htmlspecialchars_decode($url);
