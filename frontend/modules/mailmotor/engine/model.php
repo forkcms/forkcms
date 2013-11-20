@@ -55,9 +55,9 @@ class FrontendMailmotorModel
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM mailmotor_addresses
-             WHERE email = ?
-             LIMIT 1',
+            FROM mailmotor_addresses
+            WHERE email = ?
+            LIMIT 1',
             array((string) $email)
         );
     }
@@ -72,9 +72,9 @@ class FrontendMailmotorModel
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM mailmotor_groups
-             WHERE id = ?
-             LIMIT 1',
+            FROM mailmotor_groups
+            WHERE id = ?
+            LIMIT 1',
             array((int) $id)
         );
     }
@@ -90,13 +90,15 @@ class FrontendMailmotorModel
         // get record and return it
         $record = (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT mm.*
-             FROM mailmotor_mailings AS mm
-             WHERE mm.id = ?',
+            FROM mailmotor_mailings AS mm
+            WHERE mm.id = ?',
             array((int) $id)
         );
 
         // record is empty, stop here
-        if(empty($record)) return array();
+        if (empty($record)) {
+            return array();
+        }
 
         // return the record
         return $record;
@@ -121,9 +123,9 @@ class FrontendMailmotorModel
     {
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT mg.id
-             FROM mailmotor_groups AS mg
-             WHERE mg.is_default = ? AND mg.language = ?
-             LIMIT 1',
+            FROM mailmotor_groups AS mg
+            WHERE mg.is_default = ? AND mg.language = ?
+            LIMIT 1',
             array('Y', FRONTEND_LANGUAGE)
         );
     }
@@ -132,7 +134,7 @@ class FrontendMailmotorModel
      * Get all groups for a given e-mail address
      *
      * @param string $email The e-email address to use.
-     * @param int[optional] $excludeId The id off the group to exclude.
+     * @param        int    [optional] $excludeId The id off the group to exclude.
      * @return array
      */
     public static function getGroupIDsByEmail($email, $excludeId = null)
@@ -143,15 +145,15 @@ class FrontendMailmotorModel
         // return records
         $records = (array) $db->getColumn(
             'SELECT mg.id
-             FROM mailmotor_groups AS mg
-             LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
-             WHERE mag.email = ?
-             GROUP BY mg.id',
+            FROM mailmotor_groups AS mg
+            LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
+            WHERE mag.email = ?
+            GROUP BY mg.id',
             array((string) $email)
         );
 
         // excludeId set
-        if(!empty($excludeId)) {
+        if (!empty($excludeId)) {
             // check for the exclude ID key
             $key = array_search($excludeId, $records);
 
@@ -165,53 +167,64 @@ class FrontendMailmotorModel
     /**
      * Get a preview URL to the specific mailing
      *
-     * @param int $id The id of the mailing.
-     * @param string[optional] $contentType The content-type to set.
-     * @param bool[optional] $forCM Will this URL be used in Campaign Monitor?
+     * @param int $id    The id of the mailing.
+     * @param     string [optional] $contentType The content-type to set.
+     * @param     bool   [optional] $forCM Will this URL be used in Campaign Monitor?
      * @return string
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
     {
         // check input
         $contentType = SpoonFilter::getValue($contentType, array('html', 'plain'), 'html');
-        $forCM = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
+        $forCM       = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
 
         // return the URL
-        return SITE_URL . FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/' . $id . '?type=' . $contentType . (($forCM == 1) ? '&cm=' . $forCM : '');
+        return SITE_URL . FrontendNavigation::getURLForBlock('mailmotor', 'detail') .
+               '/' . $id . '?type=' . $contentType . (($forCM == 1) ? '&cm=' . $forCM : '');
     }
 
     /**
      * Get the template record
      *
      * @param string $language The language.
-     * @param string $name The name of the template.
+     * @param string $name     The name of the template.
      * @return array
      */
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
         $path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
-        $fs = new Filesystem();
+        $fs   = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
-        if(!$fs->exists($path . '/' . $name . '/template.tpl')) {
-            throw new SpoonException('The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.');
+        if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
+            throw new SpoonException(
+                'The template folder "' . $name . '" exists, but no template.tpl file was found. Please create one.'
+            );
         }
-        if(!$fs->exists($path . '/' . $name . '/css/screen.css')) {
-            throw new SpoonException('The template folder "' . $name . '" exists, but no screen.css file was found. Please create one in a subfolder "css".');
+        if (!$fs->exists($path . '/' . $name . '/css/screen.css')) {
+            throw new SpoonException(
+                'The template folder "' . $name . '" exists, but no screen.css file was found.
+                Please create one in a subfolder "css".'
+            );
         }
 
         // set template data
-        $record = array();
-        $record['name'] = $name;
-        $record['language'] = $language;
+        $record                 = array();
+        $record['name']         = $name;
+        $record['language']     = $language;
         $record['path_content'] = $path . '/' . $name . '/template.tpl';
-        $record['path_css'] = $path . '/' . $name . '/css/screen.css';
-        $record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
+        $record['path_css']     = $path . '/' . $name . '/css/screen.css';
+        $record['url_css']      = SITE_URL . '/backend/modules/mailmotor/templates/' .
+                                  $language . '/' . $name . '/css/screen.css';
 
         // check if the template file actually exists
-        if($fs->exists($record['path_content'])) $record['content'] = file_get_contents($record['path_content']);
-        if($fs->exists($record['path_css'])) $record['css'] = file_get_contents($record['path_css']);
+        if ($fs->exists($record['path_content'])) {
+            $record['content'] = file_get_contents($record['path_content']);
+        }
+        if ($fs->exists($record['path_css'])) {
+            $record['css'] = file_get_contents($record['path_css']);
+        }
 
         return $record;
     }
@@ -219,8 +232,9 @@ class FrontendMailmotorModel
     /**
      * Inserts a new e-mail address into the database
      *
-     * @param array $item The data to insert for the address.
-     * @param bool[optional] $unsubscribe If there are no groups the user will be added to the default group, unless this is true.
+     * @param array $item        The data to insert for the address.
+     * @param bool  $unsubscribe If there are no groups the user will be added to the default group,
+     *                           unless this is true.
      * @return bool
      */
     public static function insertAddress(array $item, $unsubscribe = false)
@@ -229,27 +243,31 @@ class FrontendMailmotorModel
         $db = FrontendModel::getContainer()->get('database');
 
         // set record values
-        $record['email'] = $item['email'];
-        $record['source'] = $item['source'];
+        $record['email']      = $item['email'];
+        $record['source']     = $item['source'];
         $record['created_on'] = $item['created_on'];
 
         // insert record
         $db->insert('mailmotor_addresses', $record);
 
         // if groups are empty, add the user to the default group for this working language
-        if(empty($item['groups']) && !$unsubscribe) $item['groups'][] = self::getDefaultGroupID();
+        if (empty($item['groups']) && !$unsubscribe) {
+            $item['groups'][] = self::getDefaultGroupID();
+        }
 
         // return true;
-        if(empty($item['groups'])) return true;
+        if (empty($item['groups'])) {
+            return true;
+        }
 
         // insert record(s)
-        foreach($item['groups'] as $id) {
+        foreach ($item['groups'] as $id) {
             // set variables
-            $variables = array();
-            $variables['group_id'] = $id;
-            $variables['status'] = 'subscribed';
+            $variables                  = array();
+            $variables['group_id']      = $id;
+            $variables['status']        = 'subscribed';
             $variables['subscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
-            $variables['email'] = $item['email'];
+            $variables['email']         = $item['email'];
 
             // insert the record
             $db->insert('mailmotor_addresses_groups', $variables);
@@ -262,7 +280,7 @@ class FrontendMailmotorModel
      * Checks if a given e-mail address is subscribed in our database
      *
      * @param string $email The e-mail address to check.
-     * @param int[optional] $groupId The id of the group that has to be checked.
+     * @param        int    [optional] $groupId The id of the group that has to be checked.
      * @return bool
      */
     public static function isSubscribed($email, $groupId = null)
@@ -276,9 +294,9 @@ class FrontendMailmotorModel
         // check the results
         return (bool) $db->getNumRows(
             'SELECT ma.email
-             FROM mailmotor_addresses AS ma
-             INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
-             WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?',
+            FROM mailmotor_addresses AS ma
+            INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
+            WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?',
             array((string) $email, $groupId, 'subscribed')
         );
     }
@@ -287,7 +305,7 @@ class FrontendMailmotorModel
      * Subscribes an e-mail address
      *
      * @param string $email The e-mail address to subscribe.
-     * @param string[optional] $groupId The id of the group to subscribe to.
+     * @param        string [optional] $groupId The id of the group to subscribe to.
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -299,17 +317,17 @@ class FrontendMailmotorModel
         $groupId = !empty($groupId) ? $groupId : self::getDefaultGroupID();
 
         // subscribe the user in CM
-        if(self::existsGroup($groupId)) {
+        if (self::existsGroup($groupId)) {
             // set variables
-            $subscriber['email'] = $email;
-            $subscriber['source'] = 'website';
+            $subscriber['email']      = $email;
+            $subscriber['source']     = 'website';
             $subscriber['created_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // insert/update the user
             $db->execute(
                 'INSERT INTO mailmotor_addresses(email, source, created_on)
-                 VALUES (?, ?, ?)
-                 ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
+                VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
                 array(
                     $subscriber['email'],
                     $subscriber['source'],
@@ -320,16 +338,16 @@ class FrontendMailmotorModel
             );
 
             // set variables
-            $subscriberGroup['email'] = $email;
-            $subscriberGroup['group_id'] = $groupId;
-            $subscriberGroup['status'] = 'subscribed';
+            $subscriberGroup['email']         = $email;
+            $subscriberGroup['group_id']      = $groupId;
+            $subscriberGroup['status']        = 'subscribed';
             $subscriberGroup['subscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // insert/update the user
             $db->execute(
                 'INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
-                 VALUES (?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
                 array(
                     $subscriberGroup['email'],
                     $subscriberGroup['group_id'],
@@ -353,7 +371,7 @@ class FrontendMailmotorModel
      * Unsubscribes an e-mail address
      *
      * @param string $email The mail address to unsubscribe.
-     * @param string[optional] $groupId The id of the group to unsubscribe from.
+     * @param        string [optional] $groupId The id of the group to unsubscribe from.
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)
@@ -365,9 +383,9 @@ class FrontendMailmotorModel
         $groupId = !empty($groupId) ? $groupId : self::getDefaultGroupID();
 
         // unsubscribe the user in CM
-        if(self::existsGroup($groupId)) {
+        if (self::existsGroup($groupId)) {
             // set variables
-            $subscriber['status'] = 'unsubscribed';
+            $subscriber['status']          = 'unsubscribed';
             $subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // unsubscribe the user

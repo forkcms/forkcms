@@ -24,10 +24,10 @@ class FrontendMailmotorCMHelper
     {
         return (bool) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM mailmotor_groups AS mg
-             INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-             WHERE mci.cm_id = ? AND mci.type = ?
-             LIMIT 1',
+            FROM mailmotor_groups AS mg
+            INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
+            WHERE mci.cm_id = ? AND mci.type = ?
+            LIMIT 1',
             array($id, 'list')
         );
     }
@@ -35,7 +35,7 @@ class FrontendMailmotorCMHelper
     /**
      * Inserts a record into the mailmotor_campaignmonitor_ids table
      *
-     * @param string $type The type for the item.
+     * @param string $type    The type for the item.
      * @param string $otherId The id of the item.
      * @return string
      */
@@ -43,8 +43,8 @@ class FrontendMailmotorCMHelper
     {
         return FrontendModel::getContainer()->get('database')->getVar(
             'SELECT cm_id
-             FROM mailmotor_campaignmonitor_ids
-             WHERE type = ? AND other_id = ?',
+            FROM mailmotor_campaignmonitor_ids
+            WHERE type = ? AND other_id = ?',
             array($type, $otherId)
         );
     }
@@ -62,24 +62,26 @@ class FrontendMailmotorCMHelper
     /**
      * Returns the CampaignMonitor object
      *
-     * @param int[optional] $listId The default list id to use.
+     * @param int [optional] $listId The default list id to use.
      * @return CampaignMonitor
      */
     public static function getCM($listId = null)
     {
         // campaignmonitor reference exists
-        if(!FrontendModel::getContainer()->has('campaignmonitor')) {
+        if (!FrontendModel::getContainer()->has('campaignmonitor')) {
             // check if the CampaignMonitor class exists
-            if(!file_exists(PATH_LIBRARY . '/external/campaignmonitor.php')) {
+            if (!file_exists(PATH_LIBRARY . '/external/campaignmonitor.php')) {
                 // the class doesn't exist, so throw an exception
-                throw new FrontendException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
+                throw new FrontendException(
+                    'The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external'
+                );
             }
 
             // require CampaignMonitor class
             require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
             // set login data
-            $url = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
+            $url      = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
             $username = FrontendModel::getModuleSetting('mailmotor', 'cm_username');
             $password = FrontendModel::getModuleSetting('mailmotor', 'cm_password');
 
@@ -118,7 +120,7 @@ class FrontendMailmotorCMHelper
      * Subscribes an e-mail address and send him/her to CampaignMonitor
      *
      * @param string $email The e-mail address to subscribe.
-     * @param string[optional] $groupId The id of the group to subscribe to.
+     * @param        string [optional] $groupId The id of the group to subscribe to.
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -134,17 +136,17 @@ class FrontendMailmotorCMHelper
         $listId = self::getCampaignMonitorID('list', $groupId);
 
         // group ID found
-        if(FrontendMailmotorModel::existsGroup($groupId) && $cm->subscribe($email, $email, array(), true, $listId)) {
+        if (FrontendMailmotorModel::existsGroup($groupId) && $cm->subscribe($email, $email, array(), true, $listId)) {
             // set variables
-            $subscriber['email'] = $email;
-            $subscriber['source'] = 'website';
+            $subscriber['email']      = $email;
+            $subscriber['source']     = 'website';
             $subscriber['created_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // insert/update the user
             $db->execute(
                 'INSERT INTO mailmotor_addresses(email, source, created_on)
-                 VALUES (?, ?, ?)
-                 ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
+                VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
                 array(
                     $subscriber['email'],
                     $subscriber['source'],
@@ -155,16 +157,16 @@ class FrontendMailmotorCMHelper
             );
 
             // set variables
-            $subscriberGroup['email'] = $email;
-            $subscriberGroup['group_id'] = $groupId;
-            $subscriberGroup['status'] = 'subscribed';
+            $subscriberGroup['email']         = $email;
+            $subscriberGroup['group_id']      = $groupId;
+            $subscriberGroup['status']        = 'subscribed';
             $subscriberGroup['subscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // insert/update the user
             $db->execute(
                 'INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
-                 VALUES (?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
+                VALUES (?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
                 array(
                     $subscriberGroup['email'],
                     $subscriberGroup['group_id'],
@@ -188,7 +190,7 @@ class FrontendMailmotorCMHelper
      * Unsubscribes an e-mail address from CampaignMonitor and our database
      *
      * @param string $email The e-mail address to unsubscribe.
-     * @param string[optional] $groupId The id of the group to unsubscribe from.
+     * @param        string [optional] $groupId The id of the group to unsubscribe from.
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)
@@ -204,24 +206,27 @@ class FrontendMailmotorCMHelper
         $groupCMId = self::getCampaignMonitorID('list', $groupId);
 
         // group exists
-        if(FrontendMailmotorModel::existsGroup($groupId)) {
+        if (FrontendMailmotorModel::existsGroup($groupId)) {
             try {
                 // unsubscribe the email from this group
                 $cm->unsubscribe($email, $groupCMId);
-            }
-
-            // for the unsubscribe function we ignore any errors
-            catch(Exception $e) {
+            } catch (Exception $e) {
+                // for the unsubscribe function we ignore any errors
                 // stop here if something went wrong with CM
                 return false;
             }
 
             // set variables
-            $subscriber['status'] = 'unsubscribed';
+            $subscriber['status']          = 'unsubscribed';
             $subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
             // unsubscribe the user
-            $db->update('mailmotor_addresses_groups', $subscriber, 'email = ? AND group_id = ?', array($email, $groupId));
+            $db->update(
+                'mailmotor_addresses_groups',
+                $subscriber,
+                'email = ? AND group_id = ?',
+                array($email, $groupId)
+            );
 
             // user unsubscribed
             return true;

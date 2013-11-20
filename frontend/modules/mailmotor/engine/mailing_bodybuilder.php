@@ -24,15 +24,25 @@ class MailingBodyBuilder
     /**
      * @var string
      */
-    private $html, $css, $templateHtml;
+    private $html;
+
+    /**
+     * @var string
+     */
+    private $css;
+
+    /**
+     * @var string
+     */
+    private $templateHtml;
 
     /**
      * @var array The UTM campaign parameters used in Google
      */
     private $utmParameters = array(
         'campaign' => '',
-        'source' => '',
-        'medium' => '',
+        'source'   => '',
+        'medium'   => '',
     );
 
     /**
@@ -44,14 +54,14 @@ class MailingBodyBuilder
     public function buildBody(array $replacements = null)
     {
         $templateHtml = $this->getTemplateContent();
-        $editorHtml = $this->getEditorContent();
-        $css = $this->getCSS();
+        $editorHtml   = $this->getEditorContent();
+        $css          = $this->getCSS();
 
-        if(empty($templateHtml)) {
+        if (empty($templateHtml)) {
             throw new Exception('No valid template HTML was set.');
         }
 
-        if(empty($editorHtml)) {
+        if (empty($editorHtml)) {
             throw new Exception('No valid editor content HTML was set.');
         }
 
@@ -70,7 +80,7 @@ class MailingBodyBuilder
         $body = $this->processCSS($body);
 
         // we will return plaintext if the user asked for it.
-        if($this->isPlaintext()) {
+        if ($this->isPlaintext()) {
             $body = SpoonFilter::stripHTML($body);
         }
 
@@ -148,11 +158,12 @@ class MailingBodyBuilder
         $css = $this->getCSS();
 
         // stop here if no template CSS was set
-        if(empty($css)) {
+        if (empty($css)) {
             return $body;
         }
 
         $css = new CSSToInlineStyles($body, $css);
+
         return $css->convert();
     }
 
@@ -160,16 +171,18 @@ class MailingBodyBuilder
      * Process the replacements.
      *
      * @param string $body
-     * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
+     * @param array  $replacements An array of key/value pairs, where key is the string to replace with the value.
      * @return string
      */
     protected function processReplacements($body, $replacements)
     {
-        if(empty($replacements)) return;
+        if (empty($replacements)) {
+            return;
+        }
 
-        $search = array_keys($replacements);
+        $search  = array_keys($replacements);
         $replace = array_values($replacements);
-        $body = str_replace($search, $replace, $body);
+        $body    = str_replace($search, $replace, $body);
 
         return $body;
     }
@@ -186,28 +199,32 @@ class MailingBodyBuilder
         preg_match_all('/href="(.*)"/isU', $body, $matches);
 
         // check if we have matches
-        if(!isset($matches[1]) || empty($matches[1])) return $body;
+        if (!isset($matches[1]) || empty($matches[1])) {
+            return $body;
+        }
 
         // build the google vars query
-        $utm = $this->getUTMParameters();
-        $params['utm_source'] = $utm['source'];
-        $params['utm_medium'] = $utm['medium'];
+        $utm                    = $this->getUTMParameters();
+        $params['utm_source']   = $utm['source'];
+        $params['utm_medium']   = $utm['medium'];
         $params['utm_campaign'] = $utm['campaign'];
 
         // build google vars query
         $googleQuery = http_build_query($params);
 
         // reserve search vars
-        $search = array();
+        $search  = array();
         $replace = array();
 
         // loop the matches
-        foreach($matches[1] as $match) {
+        foreach ($matches[1] as $match) {
             // ignore #
-            if(strpos($match, '#') > -1) continue;
+            if (strpos($match, '#') > -1) {
+                continue;
+            }
 
             // add results to search/replace stack
-            $search[] = 'href="' . $match . '"';
+            $search[]  = 'href="' . $match . '"';
             $replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
         }
 
@@ -249,13 +266,13 @@ class MailingBodyBuilder
      * Set the Google UTM GET parameters.
      *
      * @param string $campaign What the user entered in the editor in the CMS.
-     * @param string[optional] $source
-     * @param string[optional] $medium
+     * @param        string    [optional] $source
+     * @param        string    [optional] $medium
      */
     public function setUTMParameters($campaign, $source = 'mailmotor', $medium = 'email')
     {
         $this->utmParameters['campaign'] = $campaign;
-        $this->utmParameters['source'] = $source;
-        $this->utmParameters['medium'] = $medium;
+        $this->utmParameters['source']   = $source;
+        $this->utmParameters['medium']   = $medium;
     }
 }
