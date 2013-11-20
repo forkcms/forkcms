@@ -19,7 +19,12 @@ class FrontendLocationIndex extends FrontendBaseBlock
     /**
      * @var array
      */
-    protected $items = array(), $settings = array();
+    protected $items = array();
+
+    /**
+     * @var array
+     */
+    protected $settings = array();
 
     /**
      * Execute the extra
@@ -41,17 +46,17 @@ class FrontendLocationIndex extends FrontendBaseBlock
      */
     protected function loadData()
     {
-        $this->items = FrontendLocationModel::getAll();
+        $this->items    = FrontendLocationModel::getAll();
         $this->settings = FrontendLocationModel::getMapSettings(0);
-        $firstMarker = current($this->items);
-        if(empty($this->settings)) {
-            $this->settings = FrontendModel::getModuleSettings('location');
+        $firstMarker    = current($this->items);
+        if (empty($this->settings)) {
+            $this->settings                  = FrontendModel::getModuleSettings('location');
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }

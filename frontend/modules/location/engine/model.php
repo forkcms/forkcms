@@ -33,7 +33,7 @@ class FrontendLocationModel
         $url .= '&z=' . $settings['zoom_level'];
 
         // set the map type
-        switch(strtolower($settings['map_type'])) {
+        switch (strtolower($settings['map_type'])) {
             case 'roadmap':
                 $url .= '&t=m';
                 break;
@@ -50,11 +50,13 @@ class FrontendLocationModel
 
         $pointers = array();
         // add the markers to the url
-        foreach($markers as $marker) {
+        foreach ($markers as $marker) {
             $pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
         }
 
-        if(!empty($pointers)) $url .= '&q=' . implode('|', $pointers);
+        if (!empty($pointers)) {
+            $url .= '&q=' . implode('|', $pointers);
+        }
 
         return $url;
     }
@@ -69,8 +71,8 @@ class FrontendLocationModel
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT *
-             FROM location
-             WHERE id = ? AND language = ?',
+            FROM location
+            WHERE id = ? AND language = ?',
             array((int) $id, FRONTEND_LANGUAGE)
         );
     }
@@ -91,7 +93,7 @@ class FrontendLocationModel
     /**
      * Retrieve a map setting
      *
-     * @param int $mapId
+     * @param int    $mapId
      * @param string $name
      * @return mixed
      */
@@ -99,12 +101,15 @@ class FrontendLocationModel
     {
         $serializedData = (string) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ? AND s.name = ?',
+            FROM location_settings AS s
+            WHERE s.map_id = ? AND s.name = ?',
             array((int) $mapId, (string) $name)
         );
 
-        if($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
+
         return false;
     }
 
@@ -118,12 +123,14 @@ class FrontendLocationModel
     {
         $mapSettings = (array) FrontendModel::getContainer()->get('database')->getPairs(
             'SELECT s.name, s.value
-             FROM location_settings AS s
-             WHERE s.map_id = ?',
+            FROM location_settings AS s
+            WHERE s.map_id = ?',
             array((int) $mapId)
         );
 
-        foreach($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }

@@ -19,7 +19,12 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
     /**
      * @var array
      */
-    protected $items = array(), $settings = array();
+    protected $items = array();
+
+    /**
+     * @var array
+     */
+    protected $settings = array();
 
     /**
      * Execute the extra
@@ -41,21 +46,21 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
      */
     protected function loadData()
     {
-        $this->item = FrontendLocationModel::get($this->data['id']);
+        $this->item     = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
-        if(empty($this->settings)) {
+        if (empty($this->settings)) {
             $settings = FrontendModel::getModuleSettings('location');
 
-            $this->settings['width'] = $settings['width_widget'];
-            $this->settings['height'] = $settings['height_widget'];
-            $this->settings['map_type'] = $settings['map_type_widget'];
-            $this->settings['zoom_level'] = $settings['zoom_level_widget'];
+            $this->settings['width']         = $settings['width_widget'];
+            $this->settings['height']        = $settings['height_widget'];
+            $this->settings['map_type']      = $settings['map_type_widget'];
+            $this->settings['zoom_level']    = $settings['zoom_level_widget'];
             $this->settings['center']['lat'] = $this->item['lat'];
             $this->settings['center']['lng'] = $this->item['lng'];
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $this->item['lat'];
             $this->settings['center']['lng'] = $this->item['lng'];
         }
