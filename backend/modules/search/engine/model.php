@@ -11,7 +11,6 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
-
 /**
  * In this file we store all generic functions that we will be using in the search module
  *
@@ -54,9 +53,9 @@ class BackendSearchModel
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM search_synonyms
-             WHERE id = ?
-             LIMIT 1',
+            FROM search_synonyms
+            WHERE id = ?
+            LIMIT 1',
             array((int) $id)
         );
     }
@@ -65,24 +64,26 @@ class BackendSearchModel
      * Check if a synonym exists
      *
      * @param string $term The term we're looking for.
-     * @param int[optional] $exclude Exclude a certain id.
+     * @param        int   [optional] $exclude Exclude a certain id.
      * @return bool
      */
     public static function existsSynonymByTerm($term, $exclude = null)
     {
-        if($exclude == null) return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM search_synonyms
-             WHERE term = ?
-             LIMIT 1',
-            array((string) $term)
-        );
+        if ($exclude == null) {
+            return (bool) BackendModel::getContainer()->get('database')->getVar(
+                'SELECT 1
+                FROM search_synonyms
+                WHERE term = ?
+                LIMIT 1',
+                array((string) $term)
+            );
+        }
 
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM search_synonyms
-             WHERE term = ? AND id != ?
-             LIMIT 1',
+            FROM search_synonyms
+            WHERE term = ? AND id != ?
+            LIMIT 1',
             array((string) $term, (int) $exclude)
         );
     }
@@ -96,8 +97,9 @@ class BackendSearchModel
     {
         return BackendModel::getContainer()->get('database')->getRecords(
             'SELECT module, searchable, weight
-             FROM search_modules',
-            array(), 'module'
+            FROM search_modules',
+            array(),
+            'module'
         );
     }
 
@@ -111,8 +113,8 @@ class BackendSearchModel
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT *
-             FROM search_synonyms
-             WHERE id = ?',
+            FROM search_synonyms
+            WHERE id = ?',
             array((int) $id)
         );
     }
@@ -120,17 +122,17 @@ class BackendSearchModel
     /**
      * Insert module search settings
      *
-     * @param string $module The module wherein will be searched.
+     * @param string $module     The module wherein will be searched.
      * @param string $searchable Is the module searchable?
-     * @param string $weight Weight of this module's results.
+     * @param string $weight     Weight of this module's results.
      */
     public static function insertModuleSettings($module, $searchable, $weight)
     {
         // insert or update
         BackendModel::getContainer()->get('database')->execute(
             'INSERT INTO search_modules (module, searchable, weight)
-             VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
+            VALUES (?, ?, ?)
+            ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
             array($module['module'], $searchable, $weight, $searchable, $weight)
         );
 
@@ -162,7 +164,7 @@ class BackendSearchModel
     public static function invalidateCache()
     {
         $finder = new Finder();
-        $fs = new Filesystem();
+        $fs     = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
             $fs->remove($file->getRealPath());
         }
@@ -171,20 +173,28 @@ class BackendSearchModel
     /**
      * Remove an index
      *
-     * @param string $module The module wherein will be searched.
-     * @param int $otherId The id of the record.
-     * @param string[optional] $language The language to use.
+     * @param string $module  The module wherein will be searched.
+     * @param int    $otherId The id of the record.
+     * @param        string   [optional] $language The language to use.
      */
     public static function removeIndex($module, $otherId, $language = null)
     {
         // module exists?
-        if(!in_array('search', BackendModel::getModules())) return;
+        if (!in_array('search', BackendModel::getModules())) {
+            return;
+        }
 
         // set language
-        if(!$language) $language = BL::getWorkingLanguage();
+        if (!$language) {
+            $language = BL::getWorkingLanguage();
+        }
 
         // delete indexes
-        BackendModel::getContainer()->get('database')->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
+        BackendModel::getContainer()->get('database')->delete(
+            'search_index',
+            'module = ? AND other_id = ? AND language = ?',
+            array((string) $module, (int) $otherId, (string) $language)
+        );
 
         // invalidate the cache for search
         self::invalidateCache();
@@ -193,36 +203,51 @@ class BackendSearchModel
     /**
      * Edit an index
      *
-     * @param string $module The module wherein will be searched.
-     * @param int $otherId The id of the record.
-     * @param  array $fields A key/value pair of fields to index.
-     * @param string[optional] $language The frontend language for this entry.
+     * @param string $module  The module wherein will be searched.
+     * @param int    $otherId The id of the record.
+     * @param  array $fields  A key/value pair of fields to index.
+     * @param        string   [optional] $language The frontend language for this entry.
      */
     public static function saveIndex($module, $otherId, array $fields, $language = null)
     {
         // module exists?
-        if(!in_array('search', BackendModel::getModules())) return;
+        if (!in_array('search', BackendModel::getModules())) {
+            return;
+        }
 
         // no fields?
-        if(empty($fields)) return;
+        if (empty($fields)) {
+            return;
+        }
 
         // set language
-        if(!$language) $language = BL::getWorkingLanguage();
+        if (!$language) {
+            $language = BL::getWorkingLanguage();
+        }
 
         // get db
         $db = BackendModel::getContainer()->get('database');
 
         // insert search index
-        foreach($fields as $field => $value) {
+        foreach ($fields as $field => $value) {
             // reformat value
             $value = strip_tags((string) $value);
 
             // update search index
             $db->execute(
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
-                 ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+                VALUES (?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE value = ?, active = ?',
+                array(
+                    (string) $module,
+                    (int) $otherId,
+                    (string) $language,
+                    (string) $field,
+                    $value,
+                    'Y',
+                    $value,
+                    'Y',
+                )
             );
         }
 

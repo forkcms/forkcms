@@ -24,14 +24,13 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 
         // get parameters
         $searchTerm = SpoonFilter::getPostValue('term', null, '');
-        $term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
-        $limit = (int) FrontendModel::getModuleSetting('search', 'autocomplete_num_items', 10);
+        $term       = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities($searchTerm);
+        $limit      = (int) FrontendModel::getModuleSetting('search', 'autocomplete_num_items', 10);
 
         // validate
-        if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
-
-        // validated
-        else {
+        if ($term == '') {
+            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+        } else {
             // get matches
             $matches = FrontendSearchModel::getStartsWith($term, FRONTEND_LANGUAGE, $limit);
 
@@ -39,7 +38,9 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
             $url = FrontendNavigation::getURLForBlock('search');
 
             // loop items and set search url
-            foreach($matches as &$match) $match['url'] = $url . '?form=search&q=' . $match['term'];
+            foreach ($matches as &$match) {
+                $match['url'] = $url . '?form=search&q=' . $match['term'];
+            }
 
             // output
             $this->output(self::OK, $matches);
