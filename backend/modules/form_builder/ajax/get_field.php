@@ -14,35 +14,33 @@
  */
 class BackendFormBuilderAjaxGetField extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$formId = trim(SpoonFilter::getPostValue('form_id', null, '', 'int'));
-		$fieldId = trim(SpoonFilter::getPostValue('field_id', null, '', 'int'));
+        // get parameters
+        $formId = trim(SpoonFilter::getPostValue('form_id', null, '', 'int'));
+        $fieldId = trim(SpoonFilter::getPostValue('field_id', null, '', 'int'));
 
-		// invalid form id
-		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
-		
-		// validated form
-		else
-		{
-			// invalid fieldId
-			if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
-	
-			// validated field
-			else
-			{
-				// get field
-				$field = BackendFormBuilderModel::getField($fieldId);
-		
-				// success output
-				$this->output(self::OK, array('field' => $field));
-			}
-		}
-	}
+        // invalid form id
+        if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
+
+        // validated form
+        else {
+            // invalid fieldId
+            if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
+
+            // validated field
+            else {
+                // get field
+                $field = BackendFormBuilderModel::getField($fieldId);
+
+                // success output
+                $this->output(self::OK, array('field' => $field));
+            }
+        }
+    }
 }

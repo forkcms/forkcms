@@ -15,46 +15,45 @@
  */
 class BackendUsersIndex extends BackendBaseActionIndex
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadDataGrid();
-		$this->parse();
-		$this->display();
-	}
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadDataGrid();
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Load the datagrid.
-	 */
-	private function loadDataGrid()
-	{
-		// create datagrid with an overview of all active and undeleted users
-		$this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
+    /**
+     * Load the datagrid.
+     */
+    private function loadDataGrid()
+    {
+        // create datagrid with an overview of all active and undeleted users
+        $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
-		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit'))
-		{
-			// add column
-			$this->dataGrid->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+        // check if this action is allowed
+        if(BackendAuthentication::isAllowedAction('edit')) {
+            // add column
+            $this->dataGrid->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
-			// add edit column
-			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-		}
+            // add edit column
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+        }
 
-		// show the user's nickname
-		$this->dataGrid->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
-	}
+        // show the user's nickname
+        $this->dataGrid->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
+    }
 
-	/**
-	 * Parse the datagrid
-	 */
-	protected function parse()
-	{
-		parent::parse();
+    /**
+     * Parse the datagrid
+     */
+    protected function parse()
+    {
+        parent::parse();
 
-		$this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
-	}
+        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+    }
 }

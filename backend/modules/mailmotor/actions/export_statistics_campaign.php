@@ -14,23 +14,23 @@
  */
 class BackendMailmotorExportStatisticsCampaign extends BackendBaseAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// action to execute
-		$id = SpoonFilter::getGetValue('id', null, 0);
+        // action to execute
+        $id = SpoonFilter::getGetValue('id', null, 0);
 
-		// no id's provided
-		if(!BackendMailmotorModel::existsCampaign($id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
+        // no id's provided
+        if(!BackendMailmotorModel::existsCampaign($id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
 
-		// at least one id
-		else BackendMailmotorModel::exportStatisticsByCampaignID($id);
+        // at least one id
+        else BackendMailmotorModel::exportStatisticsByCampaignID($id);
 
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
-	}
+        // redirect
+        $this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
+    }
 }

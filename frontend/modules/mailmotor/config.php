@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use \Symfony\Component\HttpKernel\KernelInterface;
+
 /**
  * This is the configuration-object
  *
@@ -14,36 +16,37 @@
  */
 class FrontendMailmotorConfig extends FrontendBaseConfig
 {
-	/**
-	 * The default action
-	 *
-	 * @var	string
-	 */
-	protected $defaultAction = 'index';
+    /**
+     * The default action
+     *
+     * @var	string
+     */
+    protected $defaultAction = 'index';
 
-	/**
-	 * The disabled actions
-	 *
-	 * @var	array
-	 */
-	protected $disabledActions = array();
+    /**
+     * The disabled actions
+     *
+     * @var	array
+     */
+    protected $disabledActions = array();
 
-	/**
-	 * @param string $module
-	 */
-	public function __construct($module)
-	{
-		parent::__construct($module);
+    /**
+     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * @param string $module
+     */
+    public function __construct(KernelInterface $kernel, $module)
+    {
+        parent::__construct($kernel, $module);
 
-		$this->loadEngineFiles();
-	}
+        $this->loadEngineFiles();
+    }
 
-	/**
-	 * Loads additional engine files and helpers
-	 */
-	protected function loadEngineFiles()
-	{
-		require_once 'engine/helper.php';
-		require_once 'engine/mailing_bodybuilder.php';
-	}
+    /**
+     * Loads additional engine files and helpers
+     */
+    protected function loadEngineFiles()
+    {
+        require_once 'engine/helper.php';
+        require_once 'engine/mailing_bodybuilder.php';
+    }
 }

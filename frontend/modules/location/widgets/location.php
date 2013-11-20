@@ -16,65 +16,68 @@
  */
 class FrontendLocationWidgetLocation extends FrontendBaseWidget
 {
-	/**
-	 * @var array
-	 */
-	protected $items = array(), $settings = array();
+    /**
+     * @var array
+     */
+    protected $items = array();
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+    /**
+     * @var array
+     */
+    protected $settings = array();
 
-		parent::execute();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
-		$this->loadTemplate();
-		$this->loadData();
+        parent::execute();
 
-		$this->parse();
-	}
+        $this->loadTemplate();
+        $this->loadData();
 
-	/**
-	 * Load the data
-	 */
-	protected function loadData()
-	{
-		$this->item = FrontendLocationModel::get($this->data['id']);
-		$this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
-		if(empty($this->settings))
-		{
-			$settings = FrontendModel::getModuleSettings('location');
+        $this->parse();
+    }
 
-			$this->settings['width'] = $settings['width_widget'];
-			$this->settings['height'] = $settings['height_widget'];
-			$this->settings['map_type'] = $settings['map_type_widget'];
-			$this->settings['zoom_level'] = $settings['zoom_level_widget'];
-			$this->settings['center']['lat'] = $this->item['lat'];
-			$this->settings['center']['lng'] = $this->item['lng'];
-		}
+    /**
+     * Load the data
+     */
+    protected function loadData()
+    {
+        $this->item     = FrontendLocationModel::get($this->data['id']);
+        $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
+        if (empty($this->settings)) {
+            $settings = FrontendModel::getModuleSettings('location');
 
-		// no center point given yet, use the first occurrence
-		if(!isset($this->settings['center']))
-		{
-			$this->settings['center']['lat'] = $this->item['lat'];
-			$this->settings['center']['lng'] = $this->item['lng'];
-		}
+            $this->settings['width']         = $settings['width_widget'];
+            $this->settings['height']        = $settings['height_widget'];
+            $this->settings['map_type']      = $settings['map_type_widget'];
+            $this->settings['zoom_level']    = $settings['zoom_level_widget'];
+            $this->settings['center']['lat'] = $this->item['lat'];
+            $this->settings['center']['lng'] = $this->item['lng'];
+        }
 
-		$this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
-	}
+        // no center point given yet, use the first occurrence
+        if (!isset($this->settings['center'])) {
+            $this->settings['center']['lat'] = $this->item['lat'];
+            $this->settings['center']['lng'] = $this->item['lng'];
+        }
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
+        $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
+    }
 
-		$this->addJSData('settings_' . $this->item['id'], $this->settings);
-		$this->addJSData('items_' . $this->item['id'], array($this->item));
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
 
-		$this->tpl->assign('widgetLocationItem', $this->item);
-		$this->tpl->assign('widgetLocationSettings', $this->settings);
-	}
+        $this->addJSData('settings_' . $this->item['id'], $this->settings);
+        $this->addJSData('items_' . $this->item['id'], array($this->item));
+
+        $this->tpl->assign('widgetLocationItem', $this->item);
+        $this->tpl->assign('widgetLocationSettings', $this->settings);
+    }
 }

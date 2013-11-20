@@ -14,30 +14,29 @@
  */
 class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		$this->id = $this->getParameter('id', 'int');
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        $this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id !== null && BackendAnalyticsModel::existsLandingPage($this->id))
-		{
-			parent::execute();
-			$this->record = (array) BackendAnalyticsModel::getLandingPage($this->id);
+        // does the item exist
+        if($this->id !== null && BackendAnalyticsModel::existsLandingPage($this->id)) {
+            parent::execute();
+            $this->record = (array) BackendAnalyticsModel::getLandingPage($this->id);
 
-			// delete item
-			BackendAnalyticsModel::deleteLandingPage($this->id);
+            // delete item
+            BackendAnalyticsModel::deleteLandingPage($this->id);
 
-			// trigger event
-			BackendModel::triggerEvent($this->getModule(), 'after_delete_landing_page', array('id' => $this->id));
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_delete_landing_page', array('id' => $this->id));
 
-			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
-		}
+            // item was deleted, so redirect
+            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
+        }
 
-		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-	}
+        // something went wrong
+        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+    }
 }

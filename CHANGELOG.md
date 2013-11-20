@@ -1,3 +1,12 @@
+3.7.0 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3_7.md for more info.
+* Don't throw exceptions in production mode on non-existing files.
+* Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
+
+
 3.6.5 (2013-10-09)
 --
 Bugfixes:
@@ -64,6 +73,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 
 3.6.0 (2013-06-18)

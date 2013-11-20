@@ -14,121 +14,112 @@
  */
 class BackendAnalyticsAPI
 {
-	/**
-	 * Check the settings for the analytics-module.
-	 *
-	 * @return bool
-	 */
-	private static function checkSettings()
-	{
-		// analytics session token
-		if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
-		{
-			API::output(API::ERROR, array('message' => 'Analytics-module not configured correctly.'));
-		}
+    /**
+     * Check the settings for the analytics-module.
+     *
+     * @return bool
+     */
+    private static function checkSettings()
+    {
+        // analytics session token
+        if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') {
+            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+        }
 
-		// analytics table id (only show this error if no other exist)
-		if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
-		{
-			API::output(API::ERROR, array('message' => 'Analytics-module not configured correctly.'));
-		}
+        // analytics table id (only show this error if no other exist)
+        if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '') {
+            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	/**
-	 * Get the data for the keywords tab in the Iphone-app
-	 *
-	 * @return array
-	 */
-	public static function keywordsGetData()
-	{
-		// authorize
-		if(API::authorize() && API::isValidRequestMethod('GET') && self::checkSettings())
-		{
-			$data = BackendAnalyticsModel::getRecentKeywords();
+    /**
+     * Get the data for the keywords tab in the Iphone-app
+     *
+     * @return array
+     */
+    public static function keywordsGetData()
+    {
+        // authorize
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+            $data = BackendAnalyticsModel::getRecentKeywords();
 
-			$return = array('data' => null);
+            $return = array('data' => null);
 
-			foreach($data as $row)
-			{
-				$item['keyword'] = array();
-				$item['keyword']['word'] = $row['keyword'];
-				$item['keyword']['entrances'] = $row['entrances'];
+            foreach($data as $row) {
+                $item['keyword'] = array();
+                $item['keyword']['word'] = $row['keyword'];
+                $item['keyword']['entrances'] = $row['entrances'];
 
-				$return['data'][] = $item;
-			}
+                $return['data'][] = $item;
+            }
 
-			return $return;
-		}
-	}
+            return $return;
+        }
+    }
 
-	/**
-	 * Get the data for the referrers tab in the Iphone-app
-	 *
-	 * @return array
-	 */
-	public static function referrersGetData()
-	{
-		// authorize
-		if(API::authorize() && API::isValidRequestMethod('GET') && self::checkSettings())
-		{
-			$data = BackendAnalyticsModel::getRecentReferrers();
+    /**
+     * Get the data for the referrers tab in the Iphone-app
+     *
+     * @return array
+     */
+    public static function referrersGetData()
+    {
+        // authorize
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+            $data = BackendAnalyticsModel::getRecentReferrers();
 
-			$return = array('data' => null);
+            $return = array('data' => null);
 
-			foreach($data as $row)
-			{
-				$item['keyword'] = array();
-				$item['keyword']['referrer'] = $row['referrer'];
-				$item['keyword']['url'] = $row['url'];
-				$item['keyword']['entrances'] = $row['entrances'];
+            foreach($data as $row) {
+                $item['keyword'] = array();
+                $item['keyword']['referrer'] = $row['referrer'];
+                $item['keyword']['url'] = $row['url'];
+                $item['keyword']['entrances'] = $row['entrances'];
 
-				$return['data'][] = $item;
-			}
+                $return['data'][] = $item;
+            }
 
-			return $return;
-		}
-	}
+            return $return;
+        }
+    }
 
-	/**
-	 * Get the data for the visitors tab in the Iphone-app
-	 *
-	 * @return array
-	 */
-	public static function visitorsGetData()
-	{
-		// authorize
-		if(API::authorize() && API::isValidRequestMethod('GET') && self::checkSettings())
-		{
-			$startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
-			$endTimestamp = mktime(0, 0, 0);
+    /**
+     * Get the data for the visitors tab in the Iphone-app
+     *
+     * @return array
+     */
+    public static function visitorsGetData()
+    {
+        // authorize
+        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+            $startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
+            $endTimestamp = mktime(0, 0, 0);
 
-			// get data
-			$graphData = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);
-			$numericData = BackendAnalyticsHelper::getAggregates($startTimestamp, $endTimestamp);
+            // get data
+            $graphData = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);
+            $numericData = BackendAnalyticsHelper::getAggregates($startTimestamp, $endTimestamp);
 
-			$return = array('data' => null);
+            $return = array('data' => null);
 
-			foreach($graphData as $row)
-			{
-				// create array
-				$item['day'] = array();
+            foreach($graphData as $row) {
+                // create array
+                $item['day'] = array();
 
-				// article meta data
-				$item['day']['@attributes']['timestamp'] = date('c', $row['timestamp']);
-				$item['day']['visitors'] = $row['visitors'];
-				$item['day']['pageviews'] = $row['pageviews'];
+                // article meta data
+                $item['day']['@attributes']['timestamp'] = date('c', $row['timestamp']);
+                $item['day']['visitors'] = $row['visitors'];
+                $item['day']['pageviews'] = $row['pageviews'];
 
-				$return['data']['graph']['days'][] = $item;
-			}
+                $return['data']['graph']['days'][] = $item;
+            }
 
-			foreach($numericData as $key => $value)
-			{
-				$return['data']['numeric'][$key] = $value;
-			}
+            foreach($numericData as $key => $value) {
+                $return['data']['numeric'][$key] = $value;
+            }
 
-			return $return;
-		}
-	}
+            return $return;
+        }
+    }
 }

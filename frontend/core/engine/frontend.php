@@ -15,67 +15,65 @@
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend extends KernelLoader implements ApplicationInterface
+class frontend extends KernelLoader implements ApplicationInterface
 {
-	/**
-	 * @var FrontendPage
-	 */
-	private $page;
+    /**
+     * @var FrontendPage
+     */
+    private $page;
 
-	/**
-	 * @return Symfony\Component\HttpFoundation\Response
-	 */
-	public function display()
-	{
-		return $this->page->display();
-	}
+    /**
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display()
+    {
+        return $this->page->display();
+    }
 
-	/**
-	 * Initializes the entire frontend; preload FB, URL, template and the requested page.
-	 *
-	 * This method exists because the service container needs to be set before
-	 * the page's functionality gets loaded.
-	 */
-	public function initialize()
-	{
-		$this->initializeFacebook();
-		new FrontendURL();
-		new FrontendTemplate();
+    /**
+     * Initializes the entire frontend; preload FB, URL, template and the requested page.
+     *
+     * This method exists because the service container needs to be set before
+     * the page's functionality gets loaded.
+     */
+    public function initialize()
+    {
+        $this->initializeFacebook();
+        new FrontendURL($this->getKernel());
+        new FrontendTemplate();
 
-		// Load the rest of the page.
-		$this->page = new FrontendPage();
-		$this->page->setKernel($this->getKernel());
-		$this->page->load();
-	}
+        // Load the rest of the page.
+        $this->page = new FrontendPage($this->getKernel());
+        $this->page->load();
+    }
 
-	/**
-	 * Initialize Facebook
-	 */
-	private function initializeFacebook()
-	{
-		// get settings
-		$facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
-		$facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
+    /**
+     * Initialize Facebook
+     */
+    private function initializeFacebook()
+    {
+        // get settings
+        $facebookApplicationId     = FrontendModel::getModuleSetting('core', 'facebook_app_id');
+        $facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
 
-		// needed data available?
-		if($facebookApplicationId != '' && $facebookApplicationSecret != '')
-		{
-			$config = array(
-				'appId' => $facebookApplicationId,
-				'secret' => $facebookApplicationSecret,
-			);
+        // needed data available?
+        if ($facebookApplicationId != '' && $facebookApplicationSecret != '') {
+            $config = array(
+                'appId'  => $facebookApplicationId,
+                'secret' => $facebookApplicationSecret,
+            );
 
-			// create instance
-			$facebook = new Facebook($config);
+            // create instance
+            $facebook = new Facebook($config);
 
-			// grab the signed request, if a user is logged in the access token will be set
-			$facebook->getSignedRequest();
+            // grab the signed request, if a user is logged in the access token will be set
+            $facebook->getSignedRequest();
 
-			// store in reference
-			Spoon::set('facebook', $facebook);
+            // store in reference
+            $this->getContainer()->set('facebook', $facebook);
 
-			// trigger event
-			FrontendModel::triggerEvent('core', 'after_facebook_initialization');
-		}
-	}
+            // trigger event
+            FrontendModel::triggerEvent('core', 'after_facebook_initialization');
+        }
+    }
 }

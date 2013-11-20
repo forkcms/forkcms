@@ -14,56 +14,52 @@
  */
 class FrontendPagesWidgetSubpages extends FrontendBaseWidget
 {
-	/**
-	 * The items.
-	 *
-	 * @var	array
-	 */
-	private $items;
+    /**
+     * The items.
+     *
+     * @var    array
+     */
+    private $items;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadData();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadData();
 
-		$widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
+        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
 
-		// check if the given template exists
-		try
-		{
-			$template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
-		}
+        // check if the given template exists
+        try {
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
+        } catch (FrontendException $e) {
+            // template does not exist; assume subpages_default.tpl
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/subpages_default.tpl');
+        }
 
-		// template does not exist; assume subpages_default.tpl
-		catch(FrontendException $e)
-		{
-			$template = FrontendTheme::getPath($widgetTemplatesPath . '/subpages_default.tpl');
-		}
+        $this->loadTemplate($template);
+        $this->parse();
+    }
 
-		$this->loadTemplate($template);
-		$this->parse();
-	}
+    /**
+     * Load the data
+     */
+    private function loadData()
+    {
+        // get the current page id
+        $pageId = $this->getContainer()->get('page')->getId();
 
-	/**
-	 * Load the data
-	 */
-	private function loadData()
-	{
-		// get the current page id
-		$pageId = Spoon::get('page')->getId();
+        // fetch the items
+        $this->items = FrontendPagesModel::getSubpages($pageId);
+    }
 
-		// fetch the items
-		$this->items = FrontendPagesModel::getSubpages($pageId);
-	}
-
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		$this->tpl->assign('widgetSubpages', $this->items);
-	}
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        $this->tpl->assign('widgetSubpages', $this->items);
+    }
 }

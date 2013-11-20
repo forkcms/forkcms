@@ -14,24 +14,24 @@
  */
 class BackendFaqConfig extends BackendBaseConfig
 {
-	/**
-	 * The default action
-	 *
-	 * @var	string
-	 */
-	protected $defaultAction = 'index';
+    /**
+     * The default action
+     *
+     * @var	string
+     */
+    protected $defaultAction = 'index';
 
-	/**
-	 * The disabled actions
-	 *
-	 * @var	array
-	 */
-	protected $disabledActions = array();
+    /**
+     * The disabled actions
+     *
+     * @var	array
+     */
+    protected $disabledActions = array();
 
-	/**
-	 * The disabled AJAX-actions
-	 *
-	 * @var	array
-	 */
-	protected $disabledAJAXActions = array();
+    /**
+     * The disabled AJAX-actions
+     *
+     * @var	array
+     */
+    protected $disabledAJAXActions = array();
 }

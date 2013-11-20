@@ -14,27 +14,27 @@
  */
 class BackendUsersWidgetStatistics extends BackendBaseWidget
 {
-	/**
-	 * Execute the widget
-	 */
-	public function execute()
-	{
-		$this->setColumn('left');
-		$this->setPosition(1);
-		$this->parse();
-		$this->display();
-	}
+    /**
+     * Execute the widget
+     */
+    public function execute()
+    {
+        $this->setColumn('left');
+        $this->setPosition(1);
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Parse into template
-	 */
-	private function parse()
-	{
-		// get the logged in user
-		$authenticatedUser = BackendAuthentication::getUser();
+    /**
+     * Parse into template
+     */
+    private function parse()
+    {
+        // get the logged in user
+        $authenticatedUser = BackendAuthentication::getUser();
 
-		// check if we need to show the password strength and parse the label
-		$this->tpl->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
-		$this->tpl->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
-	}
+        // check if we need to show the password strength and parse the label
+        $this->tpl->assign('showPasswordStrength', ($authenticatedUser->getSetting('password_strength') !== 'strong'));
+        $this->tpl->assign('passwordStrengthLabel', BL::lbl($authenticatedUser->getSetting('password_strength')));
+    }
 }

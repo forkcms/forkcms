@@ -15,33 +15,29 @@
  */
 class FrontendProfilesIndex extends FrontendBaseBlock
 {
-	/**
-	 * Execute the extra.
-	 */
-	public function execute()
-	{
-		// only logged in profiles can seer their dashboard
-		if(FrontendProfilesAuthentication::isLoggedIn())
-		{
-			// call the parent
-			parent::execute();
+    /**
+     * Execute the extra.
+     */
+    public function execute()
+    {
+        // only logged in profiles can seer their dashboard
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
+            // call the parent
+            parent::execute();
 
-			/*
-			 * You could use this as some kind of dashboard where you can show an activity
-			 * stream, some statistics, ...
-			 */
+            /*
+             * You could use this as some kind of dashboard where you can show an activity
+             * stream, some statistics, ...
+             */
 
-			$this->loadTemplate();
-		}
-
-		// profile not logged in
-		else
-		{
-			$this->redirect(
-				FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
-				307
-			);
-		}
-	}
+            $this->loadTemplate();
+        } else {
+            // profile not logged in
+            $this->redirect(
+                FrontendNavigation::getURLForBlock('profiles', 'login') .
+                '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
+                307
+            );
+        }
+    }
 }
-

@@ -16,251 +16,263 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  */
 class MailingBodyBuilder
 {
-	/**
-	 * @var bool
-	 */
-	private $plaintext = false;
+    /**
+     * @var bool
+     */
+    private $plaintext = false;
 
-	/**
-	 * @var string
-	 */
-	private $html, $css, $templateHtml;
+    /**
+     * @var string
+     */
+    private $html;
 
-	/**
-	 * @var array The UTM campaign parameters used in Google
-	 */
-	private $utmParameters = array(
-		'campaign' => '',
-		'source' => '',
-		'medium' => '',
-	);
+    /**
+     * @var string
+     */
+    private $css;
 
-	/**
-	 * Builds and returns the generated mailing body HTML or plaintext.
-	 *
-	 * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
-	 * @return string The generated mailing body.
-	 */
-	public function buildBody(array $replacements = null)
-	{
-		$templateHtml = $this->getTemplateContent();
-		$editorHtml = $this->getEditorContent();
-		$css = $this->getCSS();
+    /**
+     * @var string
+     */
+    private $templateHtml;
 
-		if(empty($templateHtml))
-		{
-			throw new Exception('No valid template HTML was set.');
-		}
+    /**
+     * @var array The UTM campaign parameters used in Google
+     */
+    private $utmParameters = array(
+        'campaign' => '',
+        'source'   => '',
+        'medium'   => '',
+    );
 
-		if(empty($editorHtml))
-		{
-			throw new Exception('No valid editor content HTML was set.');
-		}
+    /**
+     * Builds and returns the generated mailing body HTML or plaintext.
+     *
+     * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
+     * @return string The generated mailing body.
+     */
+    public function buildBody(array $replacements = null)
+    {
+        $templateHtml = $this->getTemplateContent();
+        $editorHtml   = $this->getEditorContent();
+        $css          = $this->getCSS();
 
-		// we replace the editor tags with the content the user gave into the editor in the CMS
-		$body = preg_replace('/<!-- editor -->.*?<!-- \/editor -->/is', $editorHtml, $templateHtml);
+        if (empty($templateHtml)) {
+            throw new Exception('No valid template HTML was set.');
+        }
 
-		// we have to do this so we have entities in our body instead
-		$body = mb_convert_encoding($body, 'HTML-ENTITIES', 'UTF-8');
+        if (empty($editorHtml)) {
+            throw new Exception('No valid editor content HTML was set.');
+        }
 
-		// add Google UTM parameters to all anchors
-		$body = $this->processUTMParameters($body);
-		$body = $this->processReplacements($body, $replacements);
-		$body = $this->processCSS($body);
+        // we replace the editor tags with the content the user gave into the editor in the CMS
+        $body = preg_replace('/<!-- editor -->.*?<!-- \/editor -->/is', $editorHtml, $templateHtml);
 
-		// we parse the template CSS into the template, and re-build our body
-		$body = $this->processCSS($body);
+        // we have to do this so we have entities in our body instead
+        $body = mb_convert_encoding($body, 'HTML-ENTITIES', 'UTF-8');
 
-		// we will return plaintext if the user asked for it.
-		if($this->isPlaintext())
-		{
-			$body = SpoonFilter::stripHTML($body);
-		}
+        // add Google UTM parameters to all anchors
+        $body = $this->processUTMParameters($body);
+        $body = $this->processReplacements($body, $replacements);
+        $body = $this->processCSS($body);
 
-		return $body;
-	}
+        // we parse the template CSS into the template, and re-build our body
+        $body = $this->processCSS($body);
 
-	/**
-	 * Disable plaintext.
-	 */
-	public function disablePlaintext()
-	{
-		$this->plaintext = false;
-	}
+        // we will return plaintext if the user asked for it.
+        if ($this->isPlaintext()) {
+            $body = SpoonFilter::stripHTML($body);
+        }
 
-	/**
-	 * Enable plaintext.
-	 */
-	public function enablePlaintext()
-	{
-		$this->plaintext = true;
-	}
+        return $body;
+    }
 
-	/**
-	 * Retrieve the CSS.
-	 */
-	public function getCSS()
-	{
-		return $this->css;
-	}
+    /**
+     * Disable plaintext.
+     */
+    public function disablePlaintext()
+    {
+        $this->plaintext = false;
+    }
 
-	/**
-	 * Retrieve the editor content.
-	 */
-	public function getEditorContent()
-	{
-		return $this->html;
-	}
+    /**
+     * Enable plaintext.
+     */
+    public function enablePlaintext()
+    {
+        $this->plaintext = true;
+    }
 
-	/**
-	 * Retrieve template content.
-	 */
-	public function getTemplateContent()
-	{
-		return $this->templateHtml;
-	}
+    /**
+     * Retrieve the CSS.
+     */
+    public function getCSS()
+    {
+        return $this->css;
+    }
 
-	/**
-	 * Get the Google UTM GET parameters.
-	 *
-	 * @return array
-	 */
-	public function getUTMParameters()
-	{
-		return $this->utmParameters;
-	}
+    /**
+     * Retrieve the editor content.
+     */
+    public function getEditorContent()
+    {
+        return $this->html;
+    }
 
-	/**
-	 * Should we return a plaintext mailing or not.
-	 *
-	 * @return bool
-	 */
-	public function isPlaintext()
-	{
-		return $this->plaintext;
-	}
+    /**
+     * Retrieve template content.
+     */
+    public function getTemplateContent()
+    {
+        return $this->templateHtml;
+    }
 
-	/**
-	 * This method parses the template css in the template by using Tijs Verkoyen's CSSToInlineStyles parser.
-	 *
-	 * @param string $body
-	 * @return string
-	 */
-	protected function processCSS($body)
-	{
-		$css = $this->getCSS();
+    /**
+     * Get the Google UTM GET parameters.
+     *
+     * @return array
+     */
+    public function getUTMParameters()
+    {
+        return $this->utmParameters;
+    }
 
-		// stop here if no template CSS was set
-		if(empty($css))
-		{
-			return $body;
-		}
+    /**
+     * Should we return a plaintext mailing or not.
+     *
+     * @return bool
+     */
+    public function isPlaintext()
+    {
+        return $this->plaintext;
+    }
 
-		$css = new CSSToInlineStyles($body, $css);
-		return $css->convert();
-	}
+    /**
+     * This method parses the template css in the template by using Tijs Verkoyen's CSSToInlineStyles parser.
+     *
+     * @param string $body
+     * @return string
+     */
+    protected function processCSS($body)
+    {
+        $css = $this->getCSS();
 
-	/**
-	 * Process the replacements.
-	 *
-	 * @param string $body
-	 * @param array $replacements An array of key/value pairs, where key is the string to replace with the value.
-	 * @return string
-	 */
-	protected function processReplacements($body, $replacements)
-	{
-		if(empty($replacements)) return;
+        // stop here if no template CSS was set
+        if (empty($css)) {
+            return $body;
+        }
 
-		$search = array_keys($replacements);
-		$replace = array_values($replacements);
-		$body = str_replace($search, $replace, $body);
+        $css = new CSSToInlineStyles($body, $css);
 
-		return $body;
-	}
+        return $css->convert();
+    }
 
-	/**
-	 * Adds Google UTM GET parameters to all anchor links in the mailing
-	 *
-	 * @param string $body
-	 * @return string The given HTML content, with the UTM-vars assigned.
-	 */
-	private function processUTMParameters($body)
-	{
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $body, $matches);
+    /**
+     * Process the replacements.
+     *
+     * @param string $body
+     * @param array  $replacements An array of key/value pairs, where key is the string to replace with the value.
+     * @return string
+     */
+    protected function processReplacements($body, $replacements)
+    {
+        if (empty($replacements)) {
+            return;
+        }
 
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $body;
+        $search  = array_keys($replacements);
+        $replace = array_values($replacements);
+        $body    = str_replace($search, $replace, $body);
 
-		// build the google vars query
-		$utm = $this->getUTMParameters();
-		$params['utm_source'] = $utm['source'];
-		$params['utm_medium'] = $utm['medium'];
-		$params['utm_campaign'] = $utm['campaign'];
+        return $body;
+    }
 
-		// build google vars query
-		$googleQuery = http_build_query($params);
+    /**
+     * Adds Google UTM GET parameters to all anchor links in the mailing
+     *
+     * @param string $body
+     * @return string The given HTML content, with the UTM-vars assigned.
+     */
+    private function processUTMParameters($body)
+    {
+        // search for all hrefs
+        preg_match_all('/href="(.*)"/isU', $body, $matches);
 
-		// reserve search vars
-		$search = array();
-		$replace = array();
+        // check if we have matches
+        if (!isset($matches[1]) || empty($matches[1])) {
+            return $body;
+        }
 
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
+        // build the google vars query
+        $utm                    = $this->getUTMParameters();
+        $params['utm_source']   = $utm['source'];
+        $params['utm_medium']   = $utm['medium'];
+        $params['utm_campaign'] = $utm['campaign'];
 
-			// add results to search/replace stack
-			$search[] = 'href="' . $match . '"';
-			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
-		}
+        // build google vars query
+        $googleQuery = http_build_query($params);
 
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $body);
-	}
+        // reserve search vars
+        $search  = array();
+        $replace = array();
 
-	/**
-	 * Set the css.
-	 *
-	 * @param string $css The template CSS to parse through the body.
-	 */
-	public function setCSS($css)
-	{
-		$this->css = $css;
-	}
+        // loop the matches
+        foreach ($matches[1] as $match) {
+            // ignore #
+            if (strpos($match, '#') > -1) {
+                continue;
+            }
 
-	/**
-	 * Set the editor content.
-	 *
-	 * @param string $html What the user entered in the editor in the CMS.
-	 */
-	public function setEditorContent($html)
-	{
-		$this->html = $html;
-	}
+            // add results to search/replace stack
+            $search[]  = 'href="' . $match . '"';
+            $replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
+        }
 
-	/**
-	 * Set the template content.
-	 *
-	 * @param string $html The HTML of the template the user selected in the CMS.
-	 */
-	public function setTemplateContent($html)
-	{
-		$this->templateHtml = $html;
-	}
+        // replace the content HTML with the replace values
+        return str_replace($search, $replace, $body);
+    }
 
-	/**
-	 * Set the Google UTM GET parameters.
-	 *
-	 * @param string $campaign What the user entered in the editor in the CMS.
-	 * @param string[optional] $source
-	 * @param string[optional] $medium
-	 */
-	public function setUTMParameters($campaign, $source = 'mailmotor', $medium = 'email')
-	{
-		$this->utmParameters['campaign'] = $campaign;
-		$this->utmParameters['source'] = $source;
-		$this->utmParameters['medium'] = $medium;
-	}
+    /**
+     * Set the css.
+     *
+     * @param string $css The template CSS to parse through the body.
+     */
+    public function setCSS($css)
+    {
+        $this->css = $css;
+    }
+
+    /**
+     * Set the editor content.
+     *
+     * @param string $html What the user entered in the editor in the CMS.
+     */
+    public function setEditorContent($html)
+    {
+        $this->html = $html;
+    }
+
+    /**
+     * Set the template content.
+     *
+     * @param string $html The HTML of the template the user selected in the CMS.
+     */
+    public function setTemplateContent($html)
+    {
+        $this->templateHtml = $html;
+    }
+
+    /**
+     * Set the Google UTM GET parameters.
+     *
+     * @param string $campaign What the user entered in the editor in the CMS.
+     * @param        string    [optional] $source
+     * @param        string    [optional] $medium
+     */
+    public function setUTMParameters($campaign, $source = 'mailmotor', $medium = 'email')
+    {
+        $this->utmParameters['campaign'] = $campaign;
+        $this->utmParameters['source']   = $source;
+        $this->utmParameters['medium']   = $medium;
+    }
 }

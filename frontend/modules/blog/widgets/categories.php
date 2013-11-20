@@ -14,35 +14,34 @@
  */
 class FrontendBlogWidgetCategories extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		// get categories
-		$categories = FrontendBlogModel::getAllCategories();
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        // get categories
+        $categories = FrontendBlogModel::getAllCategories();
 
-		// any categories?
-		if(!empty($categories))
-		{
-			// build link
-			$link = FrontendNavigation::getURLForBlock('blog', 'category');
+        // any categories?
+        if(!empty($categories)) {
+            // build link
+            $link = FrontendNavigation::getURLForBlock('blog', 'category');
 
-			// loop and reset url
-			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
-		}
+            // loop and reset url
+            foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
+        }
 
-		// assign comments
-		$this->tpl->assign('widgetBlogCategories', $categories);
-	}
+        // assign comments
+        $this->tpl->assign('widgetBlogCategories', $categories);
+    }
 }

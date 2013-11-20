@@ -203,6 +203,19 @@
 		</div>
 	</div>
 
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblCookies|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<p>{$msgHelpCookies}</p>
+			<ul class="inputList pb0">
+				<li>{$chkShowCookieBar} <label for="showCookieBar">{$msgShowCookieBar}</label></li>
+			</ul>
+		</div>
+	</div>
+
+
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

@@ -14,162 +14,172 @@
  */
 class FrontendUser
 {
-	/**
-	 * An array that will store all user objects
-	 *
-	 * @var	array
-	 */
-	private static $cache = array();
+    /**
+     * An array that will store all user objects
+     *
+     * @var    array
+     */
+    private static $cache = array();
 
-	/**
-	 * All settings
-	 *
-	 * @var	array
-	 */
-	private $settings = array();
+    /**
+     * All settings
+     *
+     * @var    array
+     */
+    private $settings = array();
 
-	/**
-	 * The users id
-	 *
-	 * @var	int
-	 */
-	private $userId;
+    /**
+     * The users id
+     *
+     * @var    int
+     */
+    private $userId;
 
-	/**
-	 * The email
-	 *
-	 * @var	string
-	 */
-	private $email;
+    /**
+     * The email
+     *
+     * @var    string
+     */
+    private $email;
 
-	/**
-	 * @param int[optional] $userId If you provide a userId, the object will be loaded with the data for this user.
-	 */
-	public function __construct($userId = null)
-	{
-		// if a user id is given we will load the user in this object
-		if($userId !== null) $this->loadUser($userId);
-	}
+    /**
+     * @param int [optional] $userId If you provide a userId, the object will be loaded with the data for this user.
+     */
+    public function __construct($userId = null)
+    {
+        // if a user id is given we will load the user in this object
+        if ($userId !== null) {
+            $this->loadUser($userId);
+        }
+    }
 
-	/**
-	 * Get a backend user
-	 *
-	 * @param int $userId The users id in the backend.
-	 * @return FrontendUser
-	 */
-	public static function getBackendUser($userId)
-	{
-		// create new instance if necessary and cache it
-		if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
+    /**
+     * Get a backend user
+     *
+     * @param  int          $userId The users id in the backend.
+     * @return FrontendUser
+     */
+    public static function getBackendUser($userId)
+    {
+        // create new instance if necessary and cache it
+        if (!isset(self::$cache[$userId])) {
+            self::$cache[$userId] = new FrontendUser($userId);
+        }
 
-		return self::$cache[$userId];
-	}
+        return self::$cache[$userId];
+    }
 
-	/**
-	 * Get email
-	 *
-	 * @return string
-	 */
-	public function getEmail()
-	{
-		return $this->email;
-	}
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
 
-	/**
-	 * Get a setting
-	 *
-	 * @param string $key The name of the setting.
-	 * @return mixed The stored value, if the setting wasn't found null will be returned
-	 */
-	public function getSetting($key)
-	{
-		// redefine
-		$key = (string) $key;
+    /**
+     * Get a setting
+     *
+     * @param  string $key The name of the setting.
+     * @return mixed  The stored value, if the setting wasn't found null will be returned
+     */
+    public function getSetting($key)
+    {
+        // redefine
+        $key = (string) $key;
 
-		// not set? return null
-		if(!isset($this->settings[$key])) return null;
+        // not set? return null
+        if (!isset($this->settings[$key])) {
+            return null;
+        }
 
-		// return
-		return $this->settings[$key];
-	}
+        // return
+        return $this->settings[$key];
+    }
 
-	/**
-	 * Get all settings at once
-	 *
-	 * @return array An key-value-array with all settings for this user.
-	 */
-	public function getSettings()
-	{
-		return (array) $this->settings;
-	}
+    /**
+     * Get all settings at once
+     *
+     * @return array An key-value-array with all settings for this user.
+     */
+    public function getSettings()
+    {
+        return (array) $this->settings;
+    }
 
-	/**
-	 * Get user id
-	 *
-	 * @return int
-	 */
-	public function getUserId()
-	{
-		return $this->userId;
-	}
+    /**
+     * Get user id
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 
-	/**
-	 * Load the data for the given user
-	 *
-	 * @param int $userId The users id in the backend.
-	 */
-	public function loadUser($userId)
-	{
-		$userId = (int) $userId;
+    /**
+     * Load the data for the given user
+     *
+     * @param int $userId The users id in the backend.
+     */
+    public function loadUser($userId)
+    {
+        $userId = (int) $userId;
 
-		// get database instance
-		$db = FrontendModel::getContainer()->get('database');
+        // get database instance
+        $db = FrontendModel::getContainer()->get('database');
 
-		// get user-data
-		$userData = (array) $db->getRecord(
-			'SELECT u.id, u.email
-			 FROM users AS u
-			 WHERE u.id = ?
-			 LIMIT 1',
-			array($userId)
-		);
+        // get user-data
+        $userData = (array) $db->getRecord(
+            'SELECT u.id, u.email
+            FROM users AS u
+            WHERE u.id = ?
+            LIMIT 1',
+            array($userId)
+        );
 
-		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        // if there is no data we have to destroy this object, I know this isn't a realistic situation
+        if (empty($userData)) {
+            throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        }
 
-		// set properties
-		$this->setUserId($userData['id']);
-		$this->setEmail($userData['email']);
+        // set properties
+        $this->setUserId($userData['id']);
+        $this->setEmail($userData['email']);
 
-		// get settings
-		$settings = (array) $db->getPairs(
-			'SELECT us.name, us.value
-			 FROM users_settings AS us
-			 WHERE us.user_id = ?',
-			array($userId)
-		);
+        // get settings
+        $settings = (array) $db->getPairs(
+            'SELECT us.name, us.value
+            FROM users_settings AS us
+            WHERE us.user_id = ?',
+            array($userId)
+        );
 
-		// loop settings and store them in the object
-		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
-	}
+        // loop settings and store them in the object
+        foreach ($settings as $key => $value) {
+            $this->settings[$key] = unserialize($value);
+        }
+    }
 
-	/**
-	 * Set email
-	 *
-	 * @param string $value The email-address.
-	 */
-	private function setEmail($value)
-	{
-		$this->email = (string) $value;
-	}
+    /**
+     * Set email
+     *
+     * @param string $value The email-address.
+     */
+    private function setEmail($value)
+    {
+        $this->email = (string) $value;
+    }
 
-	/**
-	 * Set user id
-	 *
-	 * @param int $value The user's id.
-	 */
-	private function setUserId($value)
-	{
-		$this->userId = (int) $value;
-	}
+    /**
+     * Set user id
+     *
+     * @param int $value The user's id.
+     */
+    private function setUserId($value)
+    {
+        $this->userId = (int) $value;
+    }
 }

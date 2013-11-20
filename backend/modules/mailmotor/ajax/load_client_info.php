@@ -14,27 +14,26 @@
  */
 class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$clientId = SpoonFilter::getPostValue('client_id', null, '');
+        // get parameters
+        $clientId = SpoonFilter::getPostValue('client_id', null, '');
 
-		// check input
-		if(empty($clientId)) $this->output(self::BAD_REQUEST);
-		
-		// validated
-		else
-		{
-			// get basic details for this client
-			$client = BackendMailmotorCMHelper::getCM()->getClient($clientId);
-	
-			// CM was successfully initialized
-			$this->output(self::OK, $client);
-		}
-	}
+        // check input
+        if(empty($clientId)) $this->output(self::BAD_REQUEST);
+
+        // validated
+        else {
+            // get basic details for this client
+            $client = BackendMailmotorCMHelper::getCM()->getClient($clientId);
+
+            // CM was successfully initialized
+            $this->output(self::OK, $client);
+        }
+    }
 }

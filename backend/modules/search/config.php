@@ -14,17 +14,17 @@
  */
 class BackendSearchConfig extends BackendBaseConfig
 {
-	/**
-	 * The default action
-	 *
-	 * @var	string
-	 */
-	protected $defaultAction = 'statistics';
+    /**
+     * The default action
+     *
+     * @var	string
+     */
+    protected $defaultAction = 'statistics';
 
-	/**
-	 * The disabled actions
-	 *
-	 * @var	array
-	 */
-	protected $disabledActions = array();
+    /**
+     * The disabled actions
+     *
+     * @var	array
+     */
+    protected $disabledActions = array();
 }

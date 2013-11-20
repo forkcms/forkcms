@@ -15,21 +15,20 @@
  */
 class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// set busy file
-		$this->setBusyFile();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // set busy file
+        $this->setBusyFile();
 
-		// send all queued e-mails
-		foreach(BackendMailer::getQueuedMailIds() as $id)
-		{
-			BackendMailer::send($id);
-		}
+        // send all queued e-mails
+        foreach(BackendMailer::getQueuedMailIds() as $id) {
+            BackendMailer::send($id);
+        }
 
-		// remove busy file
-		$this->clearBusyFile();
-	}
+        // remove busy file
+        $this->clearBusyFile();
+    }
 }
