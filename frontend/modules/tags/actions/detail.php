@@ -19,7 +19,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
     /**
      * The tag
      *
-     * @var	array
+     * @var    array
      */
     private $record = array();
 
@@ -49,24 +49,28 @@ class FrontendTagsDetail extends FrontendBaseBlock
     private function getData()
     {
         // validate incoming parameters
-        if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->URL->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // fetch record
         $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
 
         // validate record
-        if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+        if (empty($this->record)) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // fetch modules
         $this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);
 
         // loop modules
-        foreach($this->modules as $module) {
+        foreach ($this->modules as $module) {
             // get the ids of the items linked to the tag
             $otherIds = (array) $this->get('database')->getColumn(
                 'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
+                FROM modules_tags
+                WHERE module = ? AND tag_id = ?',
                 array($module, $this->record['id'])
             );
 
@@ -77,7 +81,13 @@ class FrontendTagsDetail extends FrontendBaseBlock
             $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
 
             // add into results array
-            if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::lbl(SpoonFilter::ucfirst($module)), 'items' => $items);
+            if (!empty($items)) {
+                $this->results[] = array(
+                    'name'  => $module,
+                    'label' => FL::lbl(SpoonFilter::ucfirst($module)),
+                    'items' => $items,
+                );
+            }
         }
     }
 

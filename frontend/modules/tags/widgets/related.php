@@ -18,21 +18,21 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
     /**
      * Records to exclude
      *
-     * @var		array
+     * @var        array
      */
     private $exclude = array();
 
     /**
      * Tags on this page
      *
-     * @var		array
+     * @var        array
      */
     private $tags = array();
 
     /**
      * Related records
      *
-     * @var		array
+     * @var        array
      */
     private $related = array();
 
@@ -54,22 +54,24 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
     private function getRelated()
     {
         // loop tags
-        foreach($this->tags as $tag) {
+        foreach ($this->tags as $tag) {
             // fetch entries
             $items = (array) $this->get('database')->getRecords(
                 'SELECT mt.module, mt.other_id
-                 FROM modules_tags AS mt
-                 INNER JOIN tags AS t ON t.id = mt.tag_id
-                 WHERE t.language = ? AND t.tag = ?',
+                FROM modules_tags AS mt
+                INNER JOIN tags AS t ON t.id = mt.tag_id
+                WHERE t.language = ? AND t.tag = ?',
                 array(FRONTEND_LANGUAGE, $tag)
             );
 
             // loop items
-            foreach($items as $item) {
+            foreach ($items as $item) {
                 // loop existing items
-                foreach($this->related as $related) {
+                foreach ($this->related as $related) {
                     // already exists
-                    if($item == $related) continue 2;
+                    if ($item == $related) {
+                        continue 2;
+                    }
                 }
 
                 // add to list of related items
@@ -78,11 +80,11 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
         }
 
         // loop entries
-        foreach($this->related as $id => $entry) {
+        foreach ($this->related as $id => $entry) {
             // loop excluded records
-            foreach($this->exclude as $exclude) {
+            foreach ($this->exclude as $exclude) {
                 // check if this entry should be excluded
-                if($entry['module'] == $exclude['module'] && $entry['other_id'] == $exclude['other_id']) {
+                if ($entry['module'] == $exclude['module'] && $entry['other_id'] == $exclude['other_id']) {
                     unset($this->related[$id]);
                     continue 2;
                 }
@@ -92,11 +94,20 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
             $class = 'Frontend' . SpoonFilter::toCamelCase($entry['module']) . 'Model';
 
             // get module record
-            $this->related[$id] = FrontendTagsModel::callFromInterface($entry['module'], $class, 'getForTags', (array) array($entry['other_id']));
-            if($this->related[$id]) $this->related[$id] = array_pop($this->related[$id]);
+            $this->related[$id] = FrontendTagsModel::callFromInterface(
+                $entry['module'],
+                $class,
+                'getForTags',
+                (array) array($entry['other_id'])
+            );
+            if ($this->related[$id]) {
+                $this->related[$id] = array_pop($this->related[$id]);
+            }
 
             // remove empty items
-            if(empty($this->related[$id])) unset($this->related[$id]);
+            if (empty($this->related[$id])) {
+                unset($this->related[$id]);
+            }
         }
 
         // only show 3
@@ -116,29 +127,35 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 
         // get tags for page
         $tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
-        foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+        foreach ($tags as $tag) {
+            $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+        }
 
         // get page record
         $record = (array) FrontendNavigation::getPageInfo($pageId);
 
         // loop blocks
-        foreach((array) $record['extra_blocks'] as $block) {
+        foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
             $class = 'Frontend' . SpoonFilter::toCamelCase($block['module']) . 'Model';
 
-            if(is_callable(array($class, 'getIdForTags'))) {
+            if (is_callable(array($class, 'getIdForTags'))) {
                 // get record for module
                 $record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
 
                 // check if record exists
-                if(!$record) continue;
+                if (!$record) {
+                    continue;
+                }
 
                 // add to excluded records
                 $this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
 
                 // get record's tags
                 $tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
-                foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+                foreach ($tags as $tag) {
+                    $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+                }
             }
         }
     }
@@ -148,7 +165,6 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
      */
     private function parse()
     {
-        // assign
         $this->tpl->assign('widgetTagsRelated', $this->related);
     }
 }
