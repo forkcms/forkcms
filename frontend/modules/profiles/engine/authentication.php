@@ -252,6 +252,9 @@ class FrontendProfilesAuthentication
 		// update last login
 		FrontendProfilesModel::update($profileId, array('last_login' => FrontendModel::getUTCDate()));
 
+		// trigger event
+		FrontendModel::triggerEvent('profiles', 'after_logged_in', array('profile_id' => $profileId));
+
 		// load the profile object
 		self::$profile = new FrontendProfilesProfile($profileId);
 	}

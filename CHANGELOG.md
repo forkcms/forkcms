@@ -1,3 +1,10 @@
+3.6.6 (xxxx-xx-xx)
+—
+Improvements:
+
+* Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+
+
 3.6.5 (2013-10-09)
 --
 Bugfixes:
