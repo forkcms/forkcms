@@ -1,3 +1,10 @@
+3.6.6 (xxxx-xx-xx)
+—
+Bugfixes:
+
+* BackendModel: getURLForBlock can now return the url when locale is not yet activated.
+
+
 3.6.5 (2013-10-09)
 --
 Bugfixes:
