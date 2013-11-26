@@ -86,7 +86,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
 	 *
 	 * @param string $template The path of the template to use.
-	 * @param bool[optional] $customHeaders Are custom headers already set?
+	 * @param bool[optional] $customHeaders Deprecated variable.
 	 * @param bool[optional] $parseCustom Parse custom template.
 	 */
 	public function display($template, $customHeaders = false, $parseCustom = false)
@@ -108,13 +108,6 @@ class FrontendTemplate extends SpoonTemplate
 
 		// parse vars
 		$this->parseVars();
-
-		// in case of a call from parseWidget we don't need to set the headers again!
-		if(!FrontendModel::getContainer()->has('parseWidget') || !FrontendModel::getContainer()->get('parseWidget'))
-		{
-			// parse headers
-			if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=' . SPOON_CHARSET);
-		}
 
 		// get template path
 		$template = FrontendTheme::getPath($template);

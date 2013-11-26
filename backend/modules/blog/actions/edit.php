@@ -312,9 +312,13 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// if the image should be deleted
 					if($this->frm->getField('delete_image')->isChecked())
 					{
-						// delete the image
-						$fs->remove($imagePath . '/source/' . $item['image']);
-						BackendModel::deleteThumbnails($imagePath, $item['image']);
+						$filename = $imagePath . '/source/' . $item['image'];
+						if(is_file($filename))
+						{
+							// delete the image
+							$fs->remove($filename);
+							BackendModel::deleteThumbnails($imagePath, $item['image']);
+						}
 
 						// reset the name
 						$item['image'] = null;
@@ -323,9 +327,12 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// new image given?
 					if($this->frm->getField('image')->isFilled())
 					{
-						// delete the old image
-						$fs->remove($imagePath . '/source/' . $this->record['image']);
-						BackendModel::deleteThumbnails($imagePath, $this->record['image']);
+						$filename = $imagePath . '/source/' . $this->record['image'];
+						if(is_file($filename))
+						{
+							$fs->remove($filename);
+							BackendModel::deleteThumbnails($imagePath, $this->record['image']);
+						}
 
 						// build the image name
 						$item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();

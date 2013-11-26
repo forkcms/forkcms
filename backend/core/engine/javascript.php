@@ -64,7 +64,7 @@ class BackendJavascript
 		$tpl->setAddSlashes(true);
 
 		// display
-		$tpl->display($path, true);
+		$tpl->display($path);
 	}
 
 	/**

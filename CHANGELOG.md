@@ -7,7 +7,60 @@ Improvements:
 * Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
 
 
-3.6.1 (2013-06-26)
+3.6.6 (xxxx-xx-xx)
+—
+Bugfixes:
+
+* BackendModel: getURLForBlock can now return the url when locale is not yet activated.
+
+
+3.6.5 (2013-10-09)
+--
+Bugfixes:
+
+* Form builder: Reply-To field flag was not saved
+* Tags: Auto completing has to take language into account
+* Pages: During page copy, the tags were not created in the target language.
+
+
+3.6.4 (2013-09-25)
+--
+Bugfixes:
+
+* Couldn't use terminate function not yet.
+
+
+3.6.3 (2013-09-25)
+--
+Improvements:
+
+* Simplified getting backend settings
+* Only show tagbox when users has rights
+* Terminal event triggered after response
+* Composer: Readme suggests using the optimise option now
+
+Bugfixes:
+
+* Google Tracking: Don't ignore target on outbound links
+* Mailmotor: Export of selected addresses fixed
+
+
+3.6.2 (2013-09-11)
+--
+Improvements:
+
+* Locale: Added Greek as supported language
+* Locale: Several language updates
+* Analytics: Better event tracking
+* FAQ: Category questions widget added
+* Mailmotor: Subscribe widget uses form token
+
+Bugfixes:
+
+* Location: Creating a new location gave an exception
+
+
+3.6.1 (2013-08-20)
 --
 Improvements:
 
@@ -15,6 +68,9 @@ Improvements:
 * Blog: hide navigation when there are no items to show.
 * Profiles: a user can now upload his avatar in Frontend and we can also integrate the avatar in a Backend DataGrid. Fallback for avatar is Gravatar.
 * Speed enhancements
+* Don't throw exceptions in production mode on non-existing files.
+* Check if .htaccess file is properly uploaded
+* Do not expose composer and markdown files to the outside.
 
 Bugfixes:
 
@@ -23,6 +79,7 @@ Bugfixes:
 * Authentication: do not allow God users to access uninstalled modules.
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
+* Duplicated header 'content-type' fixed
 
 
 

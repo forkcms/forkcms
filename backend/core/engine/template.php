@@ -72,7 +72,7 @@ class BackendTemplate extends SpoonTemplate
 	 * @param string $template The path for the template.
 	 * @param bool[optional] $customHeaders Are there custom headers set?
 	 */
-	public function display($template, $customHeaders = false)
+	public function display($template)
 	{
 		$this->parseConstants();
 		$this->parseAuthenticatedUser();
@@ -80,12 +80,6 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseLabels();
 		$this->parseLocale();
 		$this->parseVars();
-
-		// parse headers
-		if(!$customHeaders)
-		{
-			SpoonHTTP::setHeaders('Content-type: text/html;charset=' . SPOON_CHARSET);
-		}
 
 		parent::display($template);
 	}

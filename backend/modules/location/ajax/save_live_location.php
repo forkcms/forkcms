@@ -21,8 +21,7 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
 	{
 		parent::execute();
 
-		$generalSettings = BackendModel::getModuleSettings();
-		$generalSettings = $generalSettings['location'];
+		$generalSettings = BackendModel::getModuleSettings('location');
 
 		// get parameters
 		$itemId = SpoonFilter::getPostValue('id', null, null, 'int');
