@@ -428,7 +428,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 				'The action file is present, but the class name should be: ' .
 				$actionClassName . '.'
 			);
-
+		}
 		// create action-object
 		$this->object = new $actionClassName(
 			$this->getModule(), $this->getAction(), $this->getData()
