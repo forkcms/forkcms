@@ -14,91 +14,82 @@
  */
 class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
 {
-	/**
-	 * The items.
-	 *
-	 * @var	array
-	 */
-	private $navigation;
+    /**
+     * The items.
+     *
+     * @var    array
+     */
+    private $navigation;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadData();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadData();
 
-		$widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
+        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
 
-		// check if the given template exists
-		try
-		{
-			$template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
-		}
+        // check if the given template exists
+        try {
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
+        } catch (FrontendException $e) {
+            // template does not exist; assume subpages_default.tpl
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/previous_next_navigation.tpl');
+        }
 
-		// template does not exist; assume subpages_default.tpl
-		catch(FrontendException $e)
-		{
-			$template = FrontendTheme::getPath($widgetTemplatesPath . '/previous_next_navigation.tpl');
-		}
+        $this->loadTemplate($template);
+        $this->parse();
+    }
 
-		$this->loadTemplate($template);
-		$this->parse();
-	}
+    /**
+     * Load the data
+     */
+    private function loadData()
+    {
+        // get the current page id
+        $pageId = $this->getContainer()->get('page')->getId();
 
-	/**
-	 * Load the data
-	 */
-	private function loadData()
-	{
-		// get the current page id
-		$pageId = $this->getContainer()->get('page')->getId();
+        $navigation = FrontendNavigation::getNavigation();
+        $pageInfo   = FrontendNavigation::getPageInfo($pageId);
 
-		$navigation = FrontendNavigation::getNavigation();
-		$pageInfo = FrontendNavigation::getPageInfo($pageId);
+        $this->navigation = array();
 
-		$this->navigation = array();
+        if (isset($navigation['page'][$pageInfo['parent_id']])) {
+            $pages = $navigation['page'][$pageInfo['parent_id']];
 
-		if(isset($navigation['page'][$pageInfo['parent_id']]))
-		{
-			$pages = $navigation['page'][$pageInfo['parent_id']];
+            // store
+            $pagesPrev = $pages;
+            $pagesNext = $pages;
 
-			// store
-			$pagesPrev = $pages;
-			$pagesNext = $pages;
+            // check for current id
+            foreach ($pagesNext as $key => $value) {
+                if ((int) $key != (int) $pageId) {
+                    // go to next pointer in array
+                    next($pagesNext);
+                    next($pagesPrev);
+                } else {
+                    break;
+                }
+            }
 
-			// check for current id
-			foreach($pagesNext as $key => $value)
-			{
-				if((int) $key != (int) $pageId)
-				{
-					// go to next pointer in array
-					next($pagesNext);
-					next($pagesPrev);
-				}
-				else
-				{
-					break;
-				}
-			}
+            // get previous page
+            $this->navigation['previous'] = prev($pagesPrev);
 
-			// get previous page
-			$this->navigation['previous'] = prev($pagesPrev);
+            // get next page
+            $this->navigation['next'] = next($pagesNext);
 
-			// get next page
-			$this->navigation['next'] = next($pagesNext);
+            // get parent page
+            $this->navigation['parent'] = FrontendNavigation::getPageInfo($pageInfo['parent_id']);
+        }
+    }
 
-			// get parent page
-			$this->navigation['parent'] = FrontendNavigation::getPageInfo($pageInfo['parent_id']);
-		}
-	}
-
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		$this->tpl->assign('widgetPagesNavigation', $this->navigation);
-	}
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        $this->tpl->assign('widgetPagesNavigation', $this->navigation);
+    }
 }

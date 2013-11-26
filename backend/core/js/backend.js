@@ -218,14 +218,14 @@ jsBackend.ckeditor =
 		// buttons specific for the newsletter
 		toolbar_Newsletter:
 		[
-   			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
-   			{ name: 'clipboard', items: ['Undo', 'Redo'] },
-   			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
-   			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-   			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
-   			{ name: 'document', items: ['Templates', 'Source'] },
-   			{ name: 'styles', items : ['Format'] }
-   		],
+			{ name: 'basicstyles', items: ['Bold', 'Italic', 'Strike'] },
+			{ name: 'clipboard', items: ['Undo', 'Redo'] },
+			{ name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote'] },
+			{ name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
+			{ name: 'insert', items : ['Image', 'MediaEmbed', '-', 'SpecialChar'] },
+			{ name: 'document', items: ['Templates', 'Source'] },
+			{ name: 'styles', items : ['Format'] }
+		],
 
 		// skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
 		skin: 'BootstrapCK-Skin',
@@ -410,7 +410,7 @@ jsBackend.ckeditor =
 				id: 'localPageOptions',
 				children:
 				[
-				 	{
+					{
 						type: 'select',
 						label: jsBackend.locale.msg('EditorSelectInternalPage'),
 						id: 'localPage',
@@ -424,8 +424,8 @@ jsBackend.ckeditor =
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
-				 	}
-			 	]
+					}
+				]
 			});
 		}
 

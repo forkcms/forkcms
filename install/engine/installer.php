@@ -25,86 +25,86 @@ require_once 'step_7.php';
  */
 class Installer extends KernelLoader implements ApplicationInterface
 {
-	/**
-	 * The current step number
-	 *
-	 * @var	int
-	 */
-	private $step;
+    /**
+     * The current step number
+     *
+     * @var    int
+     */
+    private $step;
 
-	/**
-	 * Only checks if this Fork is already installed
-	 *
-	 * @param Kernel $kernel
-	 */
-	public function __construct($kernel)
-	{
-		if(file_exists(__DIR__ .  '/../cache/installed.txt'))
-		{
-			exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
-		}
+    /**
+     * Only checks if this Fork is already installed
+     *
+     * @param Kernel $kernel
+     */
+    public function __construct($kernel)
+    {
+        if (file_exists(__DIR__ . '/../cache/installed.txt')) {
+            exit(
+            'This Fork has already been installed. To reinstall, delete
+            installed.txt from the install/cache directory. To log in,
+            <a href="/private">click here</a>.'
+            );
+        }
 
-		parent::__construct($kernel);
-	}
+        parent::__construct($kernel);
+    }
 
-	/**
-	 * Initializes the installation process
-	 */
-	public function initialize()
-	{
-		if(!defined('SPOON_DEBUG'))
-		{
-			define('SPOON_DEBUG', false);
-			define('SPOON_CHARSET', 'utf-8');
-		}
+    /**
+     * Initializes the installation process
+     */
+    public function initialize()
+    {
+        if (!defined('SPOON_DEBUG')) {
+            define('SPOON_DEBUG', false);
+            define('SPOON_CHARSET', 'utf-8');
+        }
 
-		$this->setStep();
-	}
+        $this->setStep();
+    }
 
-	/**
-	 * Executes the proper step
-	 */
-	public function display()
-	{
-		// step class name
-		$class = 'InstallerStep' . $this->step;
+    /**
+     * Executes the proper step
+     */
+    public function display()
+    {
+        // step class name
+        $class = 'InstallerStep' . $this->step;
 
-		// create & execute instance
-		$instance = new $class($this->step);
-		$instance->setKernel($this->getKernel());
-		$instance->initialize();
-		$instance->execute();
-		return $instance->display();
-	}
+        // create & execute instance
+        $instance = new $class($this->step);
+        $instance->setKernel($this->getKernel());
+        $instance->initialize();
+        $instance->execute();
 
-	/**
-	 * Sets the step based on a few checks
-	 */
-	private function setStep()
-	{
-		// fetch step
-		$step = (isset($_GET['step'])) ? (int) $_GET['step'] : 1;
+        return $instance->display();
+    }
 
-		// installer step class exists
-		if(class_exists('InstallerStep' . $step))
-		{
-			// isAllowed exists
-			if(is_callable(array('InstallerStep' . $step, 'isAllowed')))
-			{
-				// step is actually allowed
-				if(call_user_func(array('InstallerStep' . $step, 'isAllowed')))
-				{
-					// step has been validated
-					$this->step = $step;
+    /**
+     * Sets the step based on a few checks
+     */
+    private function setStep()
+    {
+        // fetch step
+        $step = (isset($_GET['step'])) ? (int) $_GET['step'] : 1;
 
-					// step out
-					return;
-				}
-			}
-		}
+        // installer step class exists
+        if (class_exists('InstallerStep' . $step)) {
+            // isAllowed exists
+            if (is_callable(array('InstallerStep' . $step, 'isAllowed'))) {
+                // step is actually allowed
+                if (call_user_func(array('InstallerStep' . $step, 'isAllowed'))) {
+                    // step has been validated
+                    $this->step = $step;
 
-		// step not ok? redirect to previous step!
-		header('Location: index.php?step=' . ($step - 1));
-		exit;
-	}
+                    // step out
+                    return;
+                }
+            }
+        }
+
+        // step not ok? redirect to previous step!
+        header('Location: index.php?step=' . ($step - 1));
+        exit;
+    }
 }

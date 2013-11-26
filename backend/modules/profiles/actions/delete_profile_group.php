@@ -15,34 +15,33 @@
  */
 class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action.
-	 */
-	public function execute()
-	{
-		// get parameters
-		$this->id = $this->getParameter('id', 'int');
+    /**
+     * Execute the action.
+     */
+    public function execute()
+    {
+        // get parameters
+        $this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id))
-		{
-			// call parent, this will probably add some general CSS/JS or other required files
-			parent::execute();
+        // does the item exist
+        if($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
+            // call parent, this will probably add some general CSS/JS or other required files
+            parent::execute();
 
-			// get profile group
-			$profileGroup = BackendProfilesModel::getProfileGroup($this->id);
+            // get profile group
+            $profileGroup = BackendProfilesModel::getProfileGroup($this->id);
 
-			// delete profile group
-			BackendProfilesModel::deleteProfileGroup($this->id);
+            // delete profile group
+            BackendProfilesModel::deleteProfileGroup($this->id);
 
-			// trigger event
-			BackendModel::triggerEvent($this->getModule(), 'after_profile_delete_from_group', array('id' => $this->id));
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_profile_delete_from_group', array('id' => $this->id));
 
-			// profile group was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups');
-		}
+            // profile group was deleted, so redirect
+            $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups');
+        }
 
-		// group does not exists
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-	}
+        // group does not exists
+        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+    }
 }

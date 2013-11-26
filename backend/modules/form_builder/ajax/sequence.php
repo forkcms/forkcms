@@ -14,39 +14,37 @@
  */
 class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
-		$newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        // get parameters
+        $formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
+        $newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
-		// invalid form id
-		if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
-		
-		// validated
-		else
-		{
-			// list id
-			$ids = (array) explode('|', rtrim($newIdSequence, '|'));
-	
-			// loop id's and set new sequence
-			foreach($ids as $i => $id)
-			{
-				$id = (int) $id;
-	
-				// get field
-				$field = BackendFormBuilderModel::getField($id);
-	
-				// from this form and not a submit button
-				if(!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
-			}
-	
-			$this->output(self::OK, null, 'sequence updated');
-		}
-	}
+        // invalid form id
+        if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
+
+        // validated
+        else {
+            // list id
+            $ids = (array) explode('|', rtrim($newIdSequence, '|'));
+
+            // loop id's and set new sequence
+            foreach($ids as $i => $id) {
+                $id = (int) $id;
+
+                // get field
+                $field = BackendFormBuilderModel::getField($id);
+
+                // from this form and not a submit button
+                if(!empty($field) && $field['form_id'] == $formId && $field['type'] != 'submit') BackendFormBuilderModel::updateField($id, array('sequence' => ($i + 1)));
+            }
+
+            $this->output(self::OK, null, 'sequence updated');
+        }
+    }
 }

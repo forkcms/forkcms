@@ -17,94 +17,87 @@
  */
 class BackendAJAX extends BackendBaseObject implements ApplicationInterface
 {
-	/**
-	 * @var BackendAJAXAction
-	 */
-	private $ajaxAction;
+    /**
+     * @var BackendAJAXAction
+     */
+    private $ajaxAction;
 
-	/**
-	 * @return Symfony\Component\HttpFoundation\Response
-	 */
-	public function display()
-	{
-		return $this->ajaxAction->execute();
-	}
+    /**
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display()
+    {
+        return $this->ajaxAction->execute();
+    }
 
-	public function initialize()
-	{
-		// check if the user is logged in
-		$this->validateLogin();
+    public function initialize()
+    {
+        // check if the user is logged in
+        $this->validateLogin();
 
-		// named application
-		if(!defined('NAMED_APPLICATION'))
-		{
-			define('NAMED_APPLICATION', 'backend_ajax');
-		}
+        // named application
+        if(!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', 'backend_ajax');
+        }
 
-		// get values from the GET-parameters
-		$module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
-		$action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
-		$language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
+        // get values from the GET-parameters
+        $module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
+        $action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
+        $language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
 
-		// overrule the values with the ones provided through POST
-		$module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
-		$action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
-		$language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
+        // overrule the values with the ones provided through POST
+        $module = (isset($_POST['fork']['module'])) ? $_POST['fork']['module'] : $module;
+        $action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
+        $language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
 
-		try
-		{
-			// create URL instance, since the template modifiers need this object
-			$URL = new BackendURL($this->getKernel());
-			$URL->setModule($module);
+        try {
+            // create URL instance, since the template modifiers need this object
+            $URL = new BackendURL($this->getKernel());
+            $URL->setModule($module);
 
-			$this->setModule($module);
-			$this->setAction($action);
-			$this->setLanguage($language);
+            $this->setModule($module);
+            $this->setAction($action);
+            $this->setLanguage($language);
 
-			// create a new action
-			$this->ajaxAction = new BackendAJAXAction($this->getKernel());
-			$this->ajaxAction->setModule($this->getModule());
-			$this->ajaxAction->setAction($this->getAction());
-		}
+            // create a new action
+            $this->ajaxAction = new BackendAJAXAction($this->getKernel());
+            $this->ajaxAction->setModule($this->getModule());
+            $this->ajaxAction->setAction($this->getAction());
+        } catch(Exception $e) {
+            $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
+            $this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
+        }
+    }
 
-		catch(Exception $e)
-		{
-			$this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
-			$this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
-		}
-	}
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        // get the possible languages
+        $possibleLanguages = BackendLanguage::getWorkingLanguages();
 
-	/**
-	 * @param string $language
-	 */
-	public function setLanguage($language)
-	{
-		// get the possible languages
-		$possibleLanguages = BackendLanguage::getWorkingLanguages();
+        // validate
+        if(!in_array($language, array_keys($possibleLanguages))) {
+            throw new BackendException('Language invalid.');
+        }
 
-		// validate
-		if(!in_array($language, array_keys($possibleLanguages)))
-		{
-			throw new BackendException('Language invalid.');
-		}
+        // set working language
+        BackendLanguage::setWorkingLanguage($language);
+    }
 
-		// set working language
-		BackendLanguage::setWorkingLanguage($language);
-	}
+    /**
+     * Do authentication stuff
+     * This method could end the script by throwing an exception
+     */
+    private function validateLogin()
+    {
+        // check if the user is logged on, if not he shouldn't load any JS-file
+        if(!BackendAuthentication::isLoggedIn()) {
+            throw new BackendException('Not logged in.');
+        }
 
-	/**
-	 * Do authentication stuff
-	 * This method could end the script by throwing an exception
-	 */
-	private function validateLogin()
-	{
-		// check if the user is logged on, if not he shouldn't load any JS-file
-		if(!BackendAuthentication::isLoggedIn())
-		{
-			throw new BackendException('Not logged in.');
-		}
-
-		// set interface language
-		BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language'));
-	}
+        // set interface language
+        BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language'));
+    }
 }

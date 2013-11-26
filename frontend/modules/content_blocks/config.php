@@ -14,17 +14,17 @@
  */
 class FrontendContentBlocksConfig extends FrontendBaseConfig
 {
-	/**
-	 * The default action
-	 *
-	 * @var	string
-	 */
-	protected $defaultAction = 'detail';
+    /**
+     * The default action
+     *
+     * @var	string
+     */
+    protected $defaultAction = 'detail';
 
-	/**
-	 * The disabled actions
-	 *
-	 * @var	array
-	 */
-	protected $disabledActions = array();
+    /**
+     * The disabled actions
+     *
+     * @var	array
+     */
+    protected $disabledActions = array();
 }

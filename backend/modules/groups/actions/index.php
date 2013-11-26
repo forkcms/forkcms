@@ -14,40 +14,39 @@
  */
 class BackendGroupsIndex extends BackendBaseActionIndex
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadDataGrid();
-		$this->parse();
-		$this->display();
-	}
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadDataGrid();
+        $this->parse();
+        $this->display();
+    }
 
-	/**
-	 * Load the datagrid
-	 */
-	public function loadDataGrid()
-	{
-		$this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
+    /**
+     * Load the datagrid
+     */
+    public function loadDataGrid()
+    {
+        $this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
 
-		// check if this action is allowed
-		if(BackendAuthentication::isAllowedAction('edit'))
-		{
-			$this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-			$this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
-			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-		}
-	}
+        // check if this action is allowed
+        if(BackendAuthentication::isAllowedAction('edit')) {
+            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('num_users', BackendModel::createURLForAction('edit') . '&amp;id=[id]#tabUsers');
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+        }
+    }
 
-	/**
-	 * Parse the datagrid
-	 */
-	protected function parse()
-	{
-		parent::parse();
+    /**
+     * Parse the datagrid
+     */
+    protected function parse()
+    {
+        parent::parse();
 
-		$this->tpl->assign('dataGrid', $this->dataGrid->getContent());
-	}
+        $this->tpl->assign('dataGrid', $this->dataGrid->getContent());
+    }
 }

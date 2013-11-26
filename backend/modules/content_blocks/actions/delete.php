@@ -16,31 +16,30 @@
  */
 class BackendContentBlocksDelete extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// get parameters
-		$this->id = $this->getParameter('id', 'int');
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // get parameters
+        $this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id !== null && BackendContentBlocksModel::exists($this->id))
-		{
-			parent::execute();
-			$this->record = (array) BackendContentBlocksModel::get($this->id);
+        // does the item exist
+        if($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+            parent::execute();
+            $this->record = (array) BackendContentBlocksModel::get($this->id);
 
-			// delete item
-			BackendContentBlocksModel::delete($this->id);
+            // delete item
+            BackendContentBlocksModel::delete($this->id);
 
-			// trigger event
-			BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
-			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
-		}
+            // item was deleted, so redirect
+            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+        }
 
-		// no item found, redirect to the overview with an error
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-	}
+        // no item found, redirect to the overview with an error
+        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+    }
 }

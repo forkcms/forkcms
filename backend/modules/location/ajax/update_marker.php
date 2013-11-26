@@ -14,36 +14,35 @@
  */
 class BackendLocationAjaxUpdateMarker extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$itemId = trim(SpoonFilter::getPostValue('id', null, '', 'int'));
-		$lat = SpoonFilter::getPostValue('lat', null, null, 'float');
-		$lng = SpoonFilter::getPostValue('lng', null, null, 'float');
+        // get parameters
+        $itemId = trim(SpoonFilter::getPostValue('id', null, '', 'int'));
+        $lat = SpoonFilter::getPostValue('lat', null, null, 'float');
+        $lng = SpoonFilter::getPostValue('lng', null, null, 'float');
 
-		// validate id
-		if($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        // validate id
+        if($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
 
-		// validated
-		else
-		{
-			//update
-			$updateData = array(
-				'id' => $itemId,
-				'lat' => $lat,
-				'lng' => $lng,
-				'language' => BL::getWorkingLanguage()
-			);
-	
-			BackendLocationModel::update($updateData);
-	
-			// output
-			$this->output(self::OK);
-		}
-	}
+        // validated
+        else {
+            //update
+            $updateData = array(
+                'id' => $itemId,
+                'lat' => $lat,
+                'lng' => $lng,
+                'language' => BL::getWorkingLanguage()
+            );
+
+            BackendLocationModel::update($updateData);
+
+            // output
+            $this->output(self::OK);
+        }
+    }
 }

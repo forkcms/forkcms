@@ -15,47 +15,44 @@
  */
 class FrontendProfilesActivate extends FrontendBaseBlock
 {
-	/**
-	 * Execute the extra.
-	 */
-	public function execute()
-	{
-		// get activation key
-		$key = $this->URL->getParameter(0);
+    /**
+     * Execute the extra.
+     */
+    public function execute()
+    {
+        // get activation key
+        $key = $this->URL->getParameter(0);
 
-		// load template
-		$this->loadTemplate();
+        // load template
+        $this->loadTemplate();
 
-		// do we have an activation key?
-		if(isset($key))
-		{
-			// get profile id
-			$profileId = FrontendProfilesModel::getIdBySetting('activation_key', $key);
+        // do we have an activation key?
+        if (isset($key)) {
+            // get profile id
+            $profileId = FrontendProfilesModel::getIdBySetting('activation_key', $key);
 
-			// have id?
-			if($profileId != null)
-			{
-				// update status
-				FrontendProfilesModel::update($profileId, array('status' => 'active'));
+            // have id?
+            if ($profileId != null) {
+                // update status
+                FrontendProfilesModel::update($profileId, array('status' => 'active'));
 
-				// delete activation key
-				FrontendProfilesModel::deleteSetting($profileId, 'activation_key');
+                // delete activation key
+                FrontendProfilesModel::deleteSetting($profileId, 'activation_key');
 
-				// login profile
-				FrontendProfilesAuthentication::login($profileId);
+                // login profile
+                FrontendProfilesAuthentication::login($profileId);
 
-				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_activate', array('id' => $profileId));
+                // trigger event
+                FrontendModel::triggerEvent('profiles', 'after_activate', array('id' => $profileId));
 
-				// show success message
-				$this->tpl->assign('activationSuccess', true);
-			}
-
-			// failure
-			else $this->redirect(FrontendNavigation::getURL(404));
-		}
-
-		// missing key
-		else $this->redirect(FrontendNavigation::getURL(404));
-	}
+                // show success message
+                $this->tpl->assign('activationSuccess', true);
+            } else {
+                // failure
+                $this->redirect(FrontendNavigation::getURL(404));
+            }
+        } else {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
+    }
 }

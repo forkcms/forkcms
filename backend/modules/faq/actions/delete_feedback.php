@@ -14,20 +14,20 @@
  */
 class BackendFaqDeleteFeedback extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		$feedbackId = $this->getParameter('id', 'int');
-		$feedback = BackendFaqModel::getFeedback($feedbackId);
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        $feedbackId = $this->getParameter('id', 'int');
+        $feedback = BackendFaqModel::getFeedback($feedbackId);
 
-		BackendModel::triggerEvent($this->getModule(), 'after_delete_feedback', array('item' => $feedback));
+        BackendModel::triggerEvent($this->getModule(), 'after_delete_feedback', array('item' => $feedback));
 
-		// there is no feedback data, so redirect
-		if(empty($feedback)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        // there is no feedback data, so redirect
+        if(empty($feedback)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 
-		BackendFaqModel::deleteFeedback($feedbackId);
-		$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $feedback['question_id'] . '&report=deleted#tabFeedback');
-	}
+        BackendFaqModel::deleteFeedback($feedbackId);
+        $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $feedback['question_id'] . '&report=deleted#tabFeedback');
+    }
 }

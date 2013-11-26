@@ -16,58 +16,61 @@
  */
 class FrontendLocationIndex extends FrontendBaseBlock
 {
-	/**
-	 * @var array
-	 */
-	protected $items = array(), $settings = array();
+    /**
+     * @var array
+     */
+    protected $items = array();
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		$this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+    /**
+     * @var array
+     */
+    protected $settings = array();
 
-		parent::execute();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
-		$this->loadTemplate();
-		$this->loadData();
+        parent::execute();
 
-		$this->parse();
-	}
+        $this->loadTemplate();
+        $this->loadData();
 
-	/**
-	 * Load the data
-	 */
-	protected function loadData()
-	{
-		$this->items = FrontendLocationModel::getAll();
-		$this->settings = FrontendLocationModel::getMapSettings(0);
-		$firstMarker = current($this->items);
-		if(empty($this->settings))
-		{
-			$this->settings = FrontendModel::getModuleSettings('location');
-			$this->settings['center']['lat'] = $firstMarker['lat'];
-			$this->settings['center']['lng'] = $firstMarker['lng'];
-		}
+        $this->parse();
+    }
 
-		// no center point given yet, use the first occurrence
-		if(!isset($this->settings['center']))
-		{
-			$this->settings['center']['lat'] = $firstMarker['lat'];
-			$this->settings['center']['lng'] = $firstMarker['lng'];
-		}
-	}
+    /**
+     * Load the data
+     */
+    protected function loadData()
+    {
+        $this->items    = FrontendLocationModel::getAll();
+        $this->settings = FrontendLocationModel::getMapSettings(0);
+        $firstMarker    = current($this->items);
+        if (empty($this->settings)) {
+            $this->settings                  = FrontendModel::getModuleSettings('location');
+            $this->settings['center']['lat'] = $firstMarker['lat'];
+            $this->settings['center']['lng'] = $firstMarker['lng'];
+        }
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		$this->addJSData('settings', $this->settings);
-		$this->addJSData('items', $this->items);
+        // no center point given yet, use the first occurrence
+        if (!isset($this->settings['center'])) {
+            $this->settings['center']['lat'] = $firstMarker['lat'];
+            $this->settings['center']['lng'] = $firstMarker['lng'];
+        }
+    }
 
-		$this->tpl->assign('locationItems', $this->items);
-		$this->tpl->assign('locationSettings', $this->settings);
-	}
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
+        $this->addJSData('settings', $this->settings);
+        $this->addJSData('items', $this->items);
+
+        $this->tpl->assign('locationItems', $this->items);
+        $this->tpl->assign('locationSettings', $this->settings);
+    }
 }

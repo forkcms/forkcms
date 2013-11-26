@@ -14,120 +14,117 @@
  */
 class FrontendProfilesResendActivation extends FrontendBaseBlock
 {
-	/**
-	 * @var FrontendForm
-	 */
-	private $frm;
+    /**
+     * @var FrontendForm
+     */
+    private $frm;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		// profile not logged in
-		if(!FrontendProfilesAuthentication::isLoggedIn())
-		{
-			parent::execute();
-			$this->loadTemplate();
-			$this->loadForm();
-			$this->validateForm();
-			$this->parse();
-		}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        // profile not logged in
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
+            parent::execute();
+            $this->loadTemplate();
+            $this->loadForm();
+            $this->validateForm();
+            $this->parse();
+        } else {
+            // profile logged in
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
+    }
 
-		// profile logged in
-		else $this->redirect(FrontendNavigation::getURL(404));
-	}
+    /**
+     * Load the form
+     */
+    private function loadForm()
+    {
+        // create the form
+        $this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
 
-	/**
-	 * Load the form
-	 */
-	private function loadForm()
-	{
-		// create the form
-		$this->frm = new FrontendForm('resendActivation', null, null, 'resendActivation');
+        // create & add elements
+        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+    }
 
-		// create & add elements
-		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
-	}
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
+        // form was sent?
+        if ($this->URL->getParameter('sent') == 'true') {
+            // show message
+            $this->tpl->assign('resendActivationSuccess', true);
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		// form was sent?
-		if($this->URL->getParameter('sent') == 'true')
-		{
-			// show message
-			$this->tpl->assign('resendActivationSuccess', true);
+            // hide form
+            $this->tpl->assign('resendActivationHideForm', true);
+        }
 
-			// hide form
-			$this->tpl->assign('resendActivationHideForm', true);
-		}
+        // parse the form
+        $this->frm->parse($this->tpl);
+    }
 
-		// parse the form
-		$this->frm->parse($this->tpl);
-	}
+    /**
+     * Validate the form
+     */
+    private function validateForm()
+    {
+        // is the form submitted
+        if ($this->frm->isSubmitted()) {
+            // get field
+            $txtEmail = $this->frm->getField('email');
 
-	/**
-	 * Validate the form
-	 */
-	private function validateForm()
-	{
-		// is the form submitted
-		if($this->frm->isSubmitted())
-		{
-			// get field
-			$txtEmail = $this->frm->getField('email');
+            // field is filled in?
+            if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
+                // valid email?
+                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+                    // email exists?
+                    if (FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
+                        // get profile id using the filled in email
+                        $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 
-			// field is filled in?
-			if($txtEmail->isFilled(FL::getError('EmailIsRequired')))
-			{
-				// valid email?
-				if($txtEmail->isEmail(FL::getError('EmailIsInvalid')))
-				{
-					// email exists?
-					if(FrontendProfilesModel::existsByEmail($txtEmail->getValue()))
-					{
-						// get profile id using the filled in email
-						$profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
+                        // get profile
+                        $profile = FrontendProfilesModel::get($profileId);
 
-						// get profile
-						$profile = FrontendProfilesModel::get($profileId);
+                        // must be inactive
+                        if ($profile->getStatus() != FrontendProfilesAuthentication::LOGIN_INACTIVE) {
+                            $txtEmail->addError(FL::getError('ProfileIsActive'));
+                        }
+                    } else {
+                        // email don't exist
+                        $txtEmail->addError(FL::getError('EmailIsInvalid'));
+                    }
+                }
+            }
 
-						// must be inactive
-						if($profile->getStatus() != FrontendProfilesAuthentication::LOGIN_INACTIVE) $txtEmail->addError(FL::getError('ProfileIsActive'));
-					}
+            // valid login
+            if ($this->frm->isCorrect()) {
+                // activation URL
+                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock(
+                    'profiles',
+                    'activate'
+                ) . '/' . $profile->getSetting('activation_key');
 
-					// email don't exist
-					else $txtEmail->addError(FL::getError('EmailIsInvalid'));
-				}
-			}
+                // trigger event
+                FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
 
-			// valid login
-			if($this->frm->isCorrect())
-			{
-				// activation URL
-				$mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $profile->getSetting('activation_key');
+                // send email
+                FrontendMailer::addEmail(
+                    FL::getMessage('RegisterSubject'),
+                    FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+                    $mailValues,
+                    $profile->getEmail(),
+                    ''
+                );
 
-				// trigger event
-				FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
-
-				// send email
-				FrontendMailer::addEmail(
-					FL::getMessage('RegisterSubject'),
-					FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
-					$mailValues,
-					$profile->getEmail(),
-					''
-				);
-
-				// redirect
-				$this->redirect(SELF . '?sent=true');
-			}
-
-			// show errors
-			else $this->tpl->assign('resendActivationHasError', true);
-		}
-	}
+                // redirect
+                $this->redirect(SELF . '?sent=true');
+            } else {
+                $this->tpl->assign('resendActivationHasError', true);
+            }
+        }
+    }
 }

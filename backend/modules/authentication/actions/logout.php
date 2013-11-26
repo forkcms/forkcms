@@ -14,15 +14,15 @@
  */
 class BackendAuthenticationLogout extends BackendBaseAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
-		BackendAuthentication::logout();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
+        BackendAuthentication::logout();
 
-		// redirect to login-screen
-		$this->redirect(BackendModel::createUrlForAction('index', $this->getModule()));
-	}
+        // redirect to login-screen
+        $this->redirect(BackendModel::createUrlForAction('index', $this->getModule()));
+    }
 }

@@ -14,36 +14,36 @@
  */
 class FrontendSearchWidgetForm extends FrontendBaseWidget
 {
-	/**
-	 * @var FrontendForm
-	 */
-	private $frm;
+    /**
+     * @var FrontendForm
+     */
+    private $frm;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->loadForm();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->loadForm();
+        $this->parse();
+    }
 
-	/**
-	 * Load the form
-	 */
-	private function loadForm()
-	{
-		$this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('search'), 'get', null, false);
-		$this->frm->addText('q_widget', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
-	}
+    /**
+     * Load the form
+     */
+    private function loadForm()
+    {
+        $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('search'), 'get', null, false);
+        $this->frm->addText('q_widget', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
+    }
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		$this->frm->parse($this->tpl);
-	}
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
+        $this->frm->parse($this->tpl);
+    }
 }

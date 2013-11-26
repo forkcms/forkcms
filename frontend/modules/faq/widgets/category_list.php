@@ -10,9 +10,9 @@
 /**
  * This is a widget with most read faq-questions
  *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jonas De Keukelaere <jonas@sumocoders.be>
  */
-class FrontendFaqWidgetMostRead extends FrontendBaseWidget
+class FrontendFaqWidgetCategoryList extends FrontendBaseWidget
 {
     /**
      * Execute the extra
@@ -31,6 +31,7 @@ class FrontendFaqWidgetMostRead extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->tpl->assign('widgetFaqMostRead', FrontendFaqModel::getMostRead(FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)));
+        $this->tpl->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
+        $this->tpl->assign('widgetFaqCategoryList', FrontendFaqModel::getAllForCategory($this->data['id'], FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)));
     }
 }

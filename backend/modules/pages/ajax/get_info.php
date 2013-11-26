@@ -14,28 +14,27 @@
  */
 class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		// call parent
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        // call parent
+        parent::execute();
 
-		// get parameters
-		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
+        // get parameters
+        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
 
-		// validate
-		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+        // validate
+        if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
 
-		// validated
-		else
-		{
-			// get page
-			$page = BackendPagesModel::get($id);
-	
-			// output
-			$this->output(self::OK, $page);
-		}
-	}
+        // validated
+        else {
+            // get page
+            $page = BackendPagesModel::get($id);
+
+            // output
+            $this->output(self::OK, $page);
+        }
+    }
 }
