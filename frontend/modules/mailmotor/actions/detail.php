@@ -17,26 +17,26 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
     /**
      * Whether this is CM requesting the information
      *
-     * @var	bool
+     * @var    bool
      */
     private $forCM = false;
 
     /**
      * The ID of the mailing record in our database
      *
-     * @var	int
+     * @var    int
      */
     private $id;
 
     /**
-     * @var	array
+     * @var    array
      */
     private $mailing;
 
     /**
      * The type of content to base the body on.
      *
-     * @var	string can be 'html' or 'plain'
+     * @var    string can be 'html' or 'plain'
      */
     private $type;
 
@@ -78,32 +78,42 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
         $mailing->setCSS($template['css']);
         $mailing->setUTMParameters($this->mailing['name']);
 
-        if($this->type === 'plain') {
+        if ($this->type === 'plain') {
             $mailing->enablePlaintext();
         }
 
         $body = $mailing->buildBody($replacements);
 
         // Handle the online preview link
-        if(preg_match_all('/<a.*?id="onlineVersionURL".*?>.*?<\/a>/', $body, $matches)) {
+        if (preg_match_all('/<a.*?id="onlineVersionURL".*?>.*?<\/a>/', $body, $matches)) {
             // loop the matches
-            foreach($matches[0] as $match) {
+            foreach ($matches[0] as $match) {
                 // replace the match
-                $body = str_replace('href="#', 'href="' . FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type), $body);
+                $body = str_replace(
+                    'href="#',
+                    'href="' . FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type),
+                    $body
+                );
             }
         }
 
         // Handle CM-related content substitutions, such as the unsubscribe link
-        if($this->forCM) {
+        if ($this->forCM) {
             // replace the unsubscribe
-            if(preg_match_all('/<a.*?id="unsubscribeURL".*?>.*?<\/a>/', $body, $matches)) {
+            if (preg_match_all('/<a.*?id="unsubscribeURL".*?>.*?<\/a>/', $body, $matches)) {
                 // loop the matches
-                foreach($matches[0] as $match) {
+                foreach ($matches[0] as $match) {
                     // get style attribute if one is provided
                     preg_match('/style=".*?"/is', $match, $styleAttribute);
 
                     // replace the match
-                    $body = str_replace($match, '<unsubscribe' . (isset($styleAttribute[0]) ? ' ' . $styleAttribute[0] : '') . '>' . strip_tags($match) . '</unsubscribe>', $body);
+                    $body = str_replace(
+                        $match,
+                        '<unsubscribe' . (isset($styleAttribute[0]) ? ' ' . $styleAttribute[0] : '') . '>' . strip_tags(
+                            $match
+                        ) . '</unsubscribe>',
+                        $body
+                    );
                 }
             }
         }
@@ -122,7 +132,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
         $this->forCM = SpoonFilter::getGetValue('cm', array(0, 1), 0, 'bool');
 
         // no point continuing if the mailing record is not set
-        if(empty($this->mailing)) {
+        if (empty($this->mailing)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
     }

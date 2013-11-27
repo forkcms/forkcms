@@ -10,7 +10,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
     /**
      * FrontendForm instance
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -43,7 +43,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
     private function parse()
     {
         // form was sent?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('subscribeIsSuccess', true);
 
@@ -61,38 +61,49 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // validate required fields
             $email = $this->frm->getField('email');
 
             // validate required fields
-            if($email->isEmail(FL::err('EmailIsInvalid'))) {
-                if(FrontendMailmotorModel::isSubscribed($email->getValue())) $email->addError(FL::err('AlreadySubscribed'));
+            if ($email->isEmail(FL::err('EmailIsInvalid'))) {
+                if (FrontendMailmotorModel::isSubscribed($email->getValue())) {
+                    $email->addError(
+                        FL::err('AlreadySubscribed')
+                    );
+                }
             }
 
             // no errors
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 try {
                     // subscribe the user to our default group
-                    if(!FrontendMailmotorCMHelper::subscribe($email->getValue())) throw new FrontendException('Could not subscribe');
+                    if (!FrontendMailmotorCMHelper::subscribe(
+                        $email->getValue()
+                    )
+                    ) {
+                        throw new FrontendException('Could not subscribe');
+                    }
 
                     // trigger event
                     FrontendModel::triggerEvent('mailmotor', 'after_subscribe', array('email' => $email->getValue()));
 
                     // redirect
-                    $this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm');
-                } catch(Exception $e) {
+                    $this->redirect(
+                        FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm'
+                    );
+                } catch (Exception $e) {
                     // when debugging we need to see the exceptions
-                    if(SPOON_DEBUG) throw $e;
+                    if (SPOON_DEBUG) {
+                        throw $e;
+                    }
 
                     // show error
                     $this->tpl->assign('subscribeHasError', true);
                 }
+            } else {
+                $this->tpl->assign('subscribeHasFormError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('subscribeHasFormError', true);
         }
     }
-
 }

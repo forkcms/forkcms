@@ -12,7 +12,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
     /**
      * The data grid object
      *
-     * @var	SpoonDataGrid
+     * @var    SpoonDataGrid
      */
     private $dataGrid;
 
@@ -26,7 +26,6 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
         $this->loadTemplate();
         $this->loadDataGrid();
         $this->parseDataGrid();
-
     }
 
     /**
@@ -35,7 +34,9 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get('database'), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
+        $source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get(
+            'database'
+        ), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
         // create data grid
         $this->dataGrid = new SpoonDataGrid($source);
