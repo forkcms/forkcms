@@ -17,14 +17,18 @@ class CommonUri
     /**
      * Prepares a string for a filename so that it can be used in urls.
      *
-     * @return	string						The urlised string.
-     * @param	string $value				The value (without extension) that should be urlised.
-     * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
+     * @return    string                        The urlised string.
+     * @param    string $value The value (without extension) that should be urlised.
+     * @param           string [optional] $charset    The charset to use, default is based on SPOON_CHARSET.
      */
     public static function getFilename($value, $charset = null)
     {
         // define charset
-        $charset = ($charset !== null) ? SpoonFilter::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+        $charset = ($charset !== null) ? SpoonFilter::getValue(
+            $charset,
+            Spoon::getCharsets(),
+            SPOON_CHARSET
+        ) : SPOON_CHARSET;
 
         // decode htmlspecial characters
         $value = SpoonFilter::htmlspecialcharsDecode($value);
@@ -37,9 +41,24 @@ class CommonUri
          * @see http://www.ietf.org/rfc/rfc3986.txt
          */
         $reservedCharacters = array(
-            '/', '?', ':', '@', '#', '[', ']',
-            '!', '$', '&', '\'', '(', ')', '*',
-            '+', ',', ';', '='
+            '/',
+            '?',
+            ':',
+            '@',
+            '#',
+            '[',
+            ']',
+            '!',
+            '$',
+            '&',
+            '\'',
+            '(',
+            ')',
+            '*',
+            '+',
+            ',',
+            ';',
+            '='
         );
 
         /*
@@ -59,7 +78,11 @@ class CommonUri
 
         // replace special characters by their normal character
         $value = SpoonFilter::htmlentities($value, $charset);
-        $value = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $value);
+        $value = preg_replace(
+            '/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i',
+            '\\1',
+            $value
+        );
 
         /**
          * we need to clean leftovers by using urlencode
@@ -84,9 +107,9 @@ class CommonUri
     /**
      * Prepares a string so that it can be used in urls.
      *
-     * @return	string						The urlised string.
-     * @param	string $value				The value that should be urlised.
-     * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
+     * @return    string                        The urlised string.
+     * @param    string $value The value that should be urlised.
+     * @param           string [optional] $charset    The charset to use, default is based on SPOON_CHARSET.
      */
     public static function getUrl($value, $charset = null)
     {
@@ -95,7 +118,8 @@ class CommonUri
 
         // define reserved characters
         $reservedCharacters = array(
-            '.', '_'
+            '.',
+            '_'
         );
 
         // remove reserved characters
