@@ -85,8 +85,8 @@ abstract class Kernel implements KernelInterface
      *
      * Debugging is added to mirror Symfony, but does not actually do anything at this moment.
      *
-     * @param string[optional] $environment
-     * @param bool[optional] $debug
+     * @param string [optional] $environment
+     * @param bool   [optional] $debug
      */
     public function __construct($environment = null, $debug = false)
     {
@@ -145,7 +145,7 @@ abstract class Kernel implements KernelInterface
             if (is_string($token)) {
                 $rawChunk .= $token;
             } elseif (T_START_HEREDOC === $token[0]) {
-                $output .= preg_replace(array('/\s+$/Sm', '/\n+/S'), "\n", $rawChunk).$token[1];
+                $output .= preg_replace(array('/\s+$/Sm', '/\n+/S'), "\n", $rawChunk) . $token[1];
                 do {
                     $token = next($tokens);
                     $output .= $token[1];
@@ -206,7 +206,7 @@ abstract class Kernel implements KernelInterface
      */
     protected function getContainerClass()
     {
-        return $this->name.ucfirst($this->environment).($this->debug ? 'Debug' : '').'ProjectContainer';
+        return $this->name . ucfirst($this->environment) . ($this->debug ? 'Debug' : '') . 'ProjectContainer';
     }
 
     /**
@@ -216,7 +216,7 @@ abstract class Kernel implements KernelInterface
     {
         $class = $this->getContainerClass();
 
-        $cache = new ConfigCache($this->getCacheDir().$class.'.php', true);
+        $cache = new ConfigCache($this->getCacheDir() . $class . '.php', true);
         if (!$cache->isFresh()) {
             $container = $this->buildContainer();
             $container->compile();
@@ -241,12 +241,13 @@ abstract class Kernel implements KernelInterface
          */
         $locator = new FileLocator($this);
         $resolver = new LoaderResolver(array(
-            new XmlFileLoader($container, $locator),
-            new YamlFileLoader($container, $locator),
-            new IniFileLoader($container, $locator),
-            new PhpFileLoader($container, $locator),
-            new ClosureLoader($container),
-        ));
+                                            new XmlFileLoader($container, $locator),
+                                            new YamlFileLoader($container, $locator),
+                                            new IniFileLoader($container, $locator),
+                                            new PhpFileLoader($container, $locator),
+                                            new ClosureLoader($container),
+                                       ));
+
         return new DelegatingLoader($resolver);
     }
 
@@ -277,7 +278,12 @@ abstract class Kernel implements KernelInterface
 
             if ($parentName = $bundle->getParent()) {
                 if (isset($directChildren[$parentName])) {
-                    throw new \LogicException(sprintf('Bundle "%s" is directly extended by two bundles "%s" and "%s".', $parentName, $name, $directChildren[$parentName]));
+                    throw new \LogicException(sprintf(
+                        'Bundle "%s" is directly extended by two bundles "%s" and "%s".',
+                        $parentName,
+                        $name,
+                        $directChildren[$parentName]
+                    ));
                 }
                 if ($parentName == $name) {
                     throw new \LogicException(sprintf('Bundle "%s" can not extend itself.', $name));
@@ -290,7 +296,11 @@ abstract class Kernel implements KernelInterface
 
         // look for orphans
         if (count($diff = array_values(array_diff(array_keys($directChildren), array_keys($this->bundles))))) {
-            throw new \LogicException(sprintf('Bundle "%s" extends bundle "%s", which is not registered.', $directChildren[$diff[0]], $diff[0]));
+            throw new \LogicException(sprintf(
+                'Bundle "%s" extends bundle "%s", which is not registered.',
+                $directChildren[$diff[0]],
+                $diff[0]
+            ));
         }
 
         // inheritance
@@ -309,7 +319,6 @@ abstract class Kernel implements KernelInterface
                 array_pop($bundleMap);
             }
         }
-
     }
 
     /**
@@ -350,7 +359,13 @@ abstract class Kernel implements KernelInterface
     public function getBundle($name, $first = true)
     {
         if (!isset($this->bundleMap[$name])) {
-            throw new \InvalidArgumentException(sprintf('Bundle "%s" does not exist or it is not enabled. Maybe you forgot to add it in the registerBundles() method of your %s.php file?', $name, get_class($this)));
+            throw new \InvalidArgumentException(sprintf(
+                'Bundle "%s" does not exist or it is not enabled. Maybe you
+                forgot to add it in the registerBundles() method of your
+                %s.php file?',
+                $name,
+                get_class($this)
+            ));
         }
 
         if (true === $first) {
@@ -393,10 +408,10 @@ abstract class Kernel implements KernelInterface
     /**
      * Dumps the service container to PHP code in the cache.
      *
-     * @param ConfigCache	  $cache	 The config cache
+     * @param ConfigCache      $cache     The config cache
      * @param ContainerBuilder $container The service container
-     * @param string		   $class	 The name of the class to generate
-     * @param string		   $baseClass The name of the container's base class
+     * @param string           $class     The name of the class to generate
+     * @param string           $baseClass The name of the container's base class
      */
     protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass)
     {
@@ -443,7 +458,7 @@ abstract class Kernel implements KernelInterface
      */
     public function getCacheDir()
     {
-        return $this->rootDir.'/cache/'.$this->environment;
+        return $this->rootDir . '/cache/' . $this->environment;
     }
 
     /**
@@ -453,7 +468,7 @@ abstract class Kernel implements KernelInterface
      */
     public function getLogDir()
     {
-        return $this->rootDir.'/logs';
+        return $this->rootDir . '/logs';
     }
 
     /**
@@ -492,14 +507,14 @@ abstract class Kernel implements KernelInterface
          * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
          * Will be removed in the next major release.
          */
-        if(!defined('SPOON_DEBUG')) {
+        if (!defined('SPOON_DEBUG')) {
             define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
             define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
             define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
             define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
         }
 
-        if(!defined('PATH_WWW')) {
+        if (!defined('PATH_WWW')) {
             define('PATH_WWW', $container->getParameter('site.path_www'));
             define('PATH_LIBRARY', $container->getParameter('site.path_library'));
         }
@@ -525,13 +540,14 @@ abstract class Kernel implements KernelInterface
      * We intercept this object so we can load all functionality involved with Fork.
      *
      * @param Request $request
-     * @param int[optional] $type
-     * @param bool[optional] $catch
+     * @param         int  [optional] $type
+     * @param         bool [optional] $catch
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)
     {
         $this->router = new ApplicationRouting($request, $this);
+
         return $this->router->handleRequest();
     }
 
@@ -540,13 +556,39 @@ abstract class Kernel implements KernelInterface
      * These methods need to be present in order to answer to interface requirements.
      * Most are only relevant when bundles are present, so we can't use them yet.
      */
-    public function getCharset(){}
-    public function getName(){}
-    public function getStartTime(){}
-    public function isClassInActiveBundle($class){}
-    public function isDebug(){}
-    public function locateResource($name, $dir = null, $first = true){}
-    public function shutdown(){}
-    public function serialize($name){}
-    public function unserialize($value){}
+    public function getCharset()
+    {
+    }
+
+    public function getName()
+    {
+    }
+
+    public function getStartTime()
+    {
+    }
+
+    public function isClassInActiveBundle($class)
+    {
+    }
+
+    public function isDebug()
+    {
+    }
+
+    public function locateResource($name, $dir = null, $first = true)
+    {
+    }
+
+    public function shutdown()
+    {
+    }
+
+    public function serialize($name)
+    {
+    }
+
+    public function unserialize($value)
+    {
+    }
 }
