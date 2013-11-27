@@ -17,7 +17,7 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
     /**
      * The comments
      *
-     * @var	array
+     * @var    array
      */
     private $items;
 
@@ -54,7 +54,7 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
         $rss = new FrontendRSS($title, $link, $description);
 
         // loop articles
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             // init vars
             $title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $item['post_title'];
             $link = $detailLink . '/' . $item['post_url'] . '/#comment-' . $item['id'];

@@ -18,7 +18,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var	array
+     * @var    array
      */
     private $items;
 
@@ -26,9 +26,15 @@ class FrontendBlogIndex extends FrontendBaseBlock
      * The pagination array
      * It will hold all needed parameters, some of them need initialization.
      *
-     * @var	array
+     * @var    array
      */
-    protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+    protected $pagination = array(
+        'limit' => 10,
+        'offset' => 0,
+        'requested_page' => 1,
+        'num_items' => null,
+        'num_pages' => null
+    );
 
     /**
      * Execute the extra
@@ -58,10 +64,16 @@ class FrontendBlogIndex extends FrontendBaseBlock
         $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
         // num pages is always equal to at least 1
-        if($this->pagination['num_pages'] == 0) $this->pagination['num_pages'] = 1;
+        if ($this->pagination['num_pages'] == 0) {
+            $this->pagination['num_pages'] = 1;
+        }
 
         // redirect if the request page doesn't exist
-        if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
+            $this->redirect(
+                FrontendNavigation::getURL(404)
+            );
+        }
 
         // populate calculated fields in pagination
         $this->pagination['requested_page'] = $requestedPage;
@@ -78,10 +90,20 @@ class FrontendBlogIndex extends FrontendBaseBlock
     {
         // get RSS-link
         $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
-        if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+        if ($rssLink == '') {
+            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+        }
 
         // add RSS-feed
-        $this->header->addLink(array('rel' => 'alternate', 'type' => 'application/rss+xml', 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE), 'href' => $rssLink), true);
+        $this->header->addLink(
+            array(
+                 'rel' => 'alternate',
+                 'type' => 'application/rss+xml',
+                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'href' => $rssLink
+            ),
+            true
+        );
 
         // assign articles
         $this->tpl->assign('items', $this->items);

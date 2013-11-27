@@ -18,14 +18,14 @@ class FrontendBlogRSS extends FrontendBaseBlock
     /**
      * The articles
      *
-     * @var	array
+     * @var    array
      */
     private $items;
 
     /**
      * The settings
      *
-     * @var	array
+     * @var    array
      */
     private $settings;
 
@@ -62,32 +62,40 @@ class FrontendBlogRSS extends FrontendBaseBlock
         $rss = new FrontendRSS($title, $link, $description);
 
         // loop articles
-        foreach($this->items as $item) {
+        foreach ($this->items as $item) {
             // init vars
             $title = $item['title'];
             $link = $item['full_url'];
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
             // meta is wanted
-            if(FrontendModel::getModuleSetting('blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
+            if (FrontendModel::getModuleSetting('blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
                 // append meta
                 $description .= '<div class="meta">' . "\n";
-                $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' . sprintf(FL::msg('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
-                $description .= ' ' . FL::lbl('In') . ' <a href="' . $item['category_full_url'] . '" title="' . $item['category_title'] . '">' . $item['category_title'] . '</a>.</p>' . "\n";
+                $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .
+                                sprintf(
+                                    FL::msg('WrittenBy'),
+                                    FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname')
+                                );
+                $description .= ' ' . FL::lbl('In') . ' <a href="' . $item['category_full_url'] . '" title="' .
+                                $item['category_title'] . '">' . $item['category_title'] . '</a>.</p>' . "\n";
 
                 // any tags
-                if(isset($item['tags'])) {
+                if (isset($item['tags'])) {
                     // append tags-paragraph
                     $description .= '	<p>' . SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
                     $first = true;
 
                     // loop tags
-                    foreach($item['tags'] as $tag) {
+                    foreach ($item['tags'] as $tag) {
                         // prepend separator
-                        if(!$first) $description .= ', ';
+                        if (!$first) {
+                            $description .= ', ';
+                        }
 
                         // add
-                        $description .= '<a href="' . $tag['full_url'] . '" rel="tag" title="' . $tag['name'] . '">' . $tag['name'] . '</a>';
+                        $description .= '<a href="' . $tag['full_url'] . '" rel="tag" title="' . $tag['name'] . '">' .
+                                        $tag['name'] . '</a>';
 
                         // reset
                         $first = false;
