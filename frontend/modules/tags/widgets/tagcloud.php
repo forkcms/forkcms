@@ -39,9 +39,11 @@ class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
         $link = FrontendNavigation::getURLForBlock('tags', 'detail');
 
         // any tags?
-        if(!empty($tags)) {
+        if (!empty($tags)) {
             // loop and reset url
-            foreach($tags as &$row) $row['url'] = $link . '/' . $row['url'];
+            foreach ($tags as &$row) {
+                $row['url'] = $link . '/' . $row['url'];
+            }
         }
 
         // assign comments

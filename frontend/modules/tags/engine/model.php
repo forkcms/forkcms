@@ -19,34 +19,39 @@ class FrontendTagsModel
      * Calls a method that has to be implemented though the tags interface
      *
      * @param string $module The module wherein to search.
-     * @param string $class The class that should contain the method.
+     * @param string $class  The class that should contain the method.
      * @param string $method The method to call.
-     * @param mixed[optional] $parameter The parameters to pass.
+     * @param        mixed   [optional] $parameter The parameters to pass.
      * @return mixed
      */
     public static function callFromInterface($module, $class, $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if(in_array('FrontendTagsInterface', class_implements($class))) {
+        if (in_array('FrontendTagsInterface', class_implements($class))) {
             // return result
             return call_user_func(array($class, $method), $parameter);
-        }
-
-        // interface is not implemented
-        else {
+        } else {
+            // interface is not implemented
             // when debug is on throw an exception
-            if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module (' . $module . ').');
-
-            // when debug is off show a descent message
-            else exit(SPOON_DEBUG_MESSAGE);
+            if (SPOON_DEBUG) {
+                throw new FrontendException(
+                    'To use the tags module you need
+                    to implement the FrontendTagsInterface
+                    in the model of your module
+                    (' . $module . ').'
+                );
+            } else {
+                // when debug is off show a descent message
+                exit(SPOON_DEBUG_MESSAGE);
+            }
         }
     }
 
     /**
      * Get the tag for a given URL
      *
-     * @param string $URL The URL to get the tag for.
-     * @param string[optional] $language
+     * @param string $URL   The URL to get the tag for.
+     * @param        string [optional] $language
      * @return array
      */
     public static function get($URL, $language = null)
@@ -82,8 +87,8 @@ class FrontendTagsModel
     /**
      * Get tags for an item
      *
-     * @param string $module The module wherein the otherId occurs.
-     * @param int $otherId The id of the item.
+     * @param string $module  The module wherein the otherId occurs.
+     * @param int    $otherId The id of the item.
      * @return array
      */
     public static function getForItem($module, $otherId)
@@ -104,13 +109,15 @@ class FrontendTagsModel
         );
 
         // return
-        if(empty($linkedTags)) return $return;
+        if (empty($linkedTags)) {
+            return $return;
+        }
 
         // create link
         $tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
 
         // loop tags
-        foreach($linkedTags as $row) {
+        foreach ($linkedTags as $row) {
             // add full URL
             $row['full_url'] = $tagLink . '/' . $row['url'];
 
@@ -125,8 +132,8 @@ class FrontendTagsModel
     /**
      * Get tags for multiple items.
      *
-     * @param string $module The module wherefore you want to retrieve the tags.
-     * @param array $otherIds The ids for the items.
+     * @param string $module   The module wherefore you want to retrieve the tags.
+     * @param array  $otherIds The ids for the items.
      * @return array
      */
     public static function getForMultipleItems($module, array $otherIds)
@@ -149,13 +156,15 @@ class FrontendTagsModel
         );
 
         // return
-        if(empty($linkedTags)) return $return;
+        if (empty($linkedTags)) {
+            return $return;
+        }
 
         // create link
         $tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
 
         // loop tags
-        foreach($linkedTags as $row) {
+        foreach ($linkedTags as $row) {
             // add full URL
             $row['full_url'] = $tagLink . '/' . $row['url'];
 
@@ -219,10 +228,10 @@ class FrontendTagsModel
     /**
      * Get all related items
      *
-     * @param int $id The id of the item in the source-module.
-     * @param int $module The source module.
+     * @param int $id          The id of the item in the source-module.
+     * @param int $module      The source module.
      * @param int $otherModule The module wherein the related items should appear.
-     * @param int[optional] $limit The maximum of related items to grab.
+     * @param     int          [optional] $limit The maximum of related items to grab.
      * @return array
      */
     public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
@@ -231,7 +240,8 @@ class FrontendTagsModel
             'SELECT t2.other_id
              FROM modules_tags AS t
              INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND (t2.module != t.module OR t2.other_id != t.other_id)
+             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND
+                (t2.module != t.module OR t2.other_id != t.other_id)
              GROUP BY t2.other_id
              ORDER BY COUNT(t2.tag_id) DESC
              LIMIT ?',
