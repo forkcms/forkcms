@@ -35,6 +35,8 @@ class BackendSettingsWidgetAnalyse extends BackendBaseWidget
         $warnings = BackendSettingsModel::getWarnings();
 
         // assign warnings
-        if(!empty($warnings)) $this->tpl->assign('warnings', $warnings);
+        if (!empty($warnings)) {
+            $this->tpl->assign('warnings', $warnings);
+        }
     }
 }
