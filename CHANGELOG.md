@@ -9,6 +9,11 @@ Improvements:
 
 3.6.6 (xxxx-xx-xx)
 —
+Improvements:
+
+* Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+* Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
+
 Bugfixes:
 
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
@@ -28,6 +33,7 @@ Bugfixes:
 Bugfixes:
 
 * Couldn't use terminate function not yet.
+* CamelCased API functions for Apple and Microsoft.
 
 
 3.6.3 (2013-09-25)
@@ -142,6 +148,7 @@ Bugfixes:
 --
 Improvements:
 
+* Core: CommonUri added so we can generate a safe filename and url. Tx to Jeroen Desloovere
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend.

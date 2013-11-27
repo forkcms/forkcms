@@ -46,7 +46,7 @@ class FrontendMailer
 		$to = FrontendModel::getModuleSetting('core', 'mailer_to');
 		$from = FrontendModel::getModuleSetting('core', 'mailer_from');
 		$replyTo = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
-		$utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => SpoonFilter::urlise($subject));
+		$utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => CommonUri::getUrl($subject));
 
 		// set recipient/sender headers
 		$email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;

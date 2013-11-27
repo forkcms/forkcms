@@ -695,7 +695,7 @@ jsFrontend.statistics =
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
-				return (typeof obj.href != 'undefined');
+				return (typeof obj.href != 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname);
 			};
 
 			// bind on all links that don't have the class noTracking
@@ -712,14 +712,14 @@ jsFrontend.statistics =
 				var pageView = '/Outbound Links/' + link;
 
 				// set mailto
-				if(link.match(/^mailto\:/))
+				if(link.match(/^mailto:/))
 				{
 					type = 'Mailto';
 					pageView = '/Mailto/' + link.substring(7);
 				}
 
 				// set anchor
-				if(link.match(/^\#/))
+				if(link.match(/^#/))
 				{
 					type = 'Anchors';
 					pageView = '/Anchor/' + link.substring(1);

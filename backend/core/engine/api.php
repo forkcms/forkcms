@@ -20,7 +20,7 @@ class BackendCoreAPI
 	 * @param string $token The token of the device.
 	 * @param string $email The emailaddress for the user to link the device to.
 	 */
-	public static function appleAdddevice($token, $email)
+	public static function appleAddDevice($token, $email)
 	{
 		if(API::isAuthorized())
 		{
@@ -77,7 +77,7 @@ class BackendCoreAPI
 	 * @param string $token The token of the device.
 	 * @param string $email The emailaddress for the user to link the device to.
 	 */
-	public static function appleRemovedevice($token, $email)
+	public static function appleRemoveDevice($token, $email)
 	{
 		if(API::isAuthorized())
 		{
@@ -204,7 +204,7 @@ class BackendCoreAPI
 	 * @param string $uri The uri of the channel opened for the device.
 	 * @param string $email The emailaddress for the user to link the device to.
 	 */
-	public static function microsoftAdddevice($uri, $email)
+	public static function microsoftAddDevice($uri, $email)
 	{
 		if(API::isAuthorized())
 		{
@@ -262,7 +262,7 @@ class BackendCoreAPI
 	 * @param string $uri The uri of the channel opened for the device.
 	 * @param string $email The emailaddress for the user to link the device to.
 	 */
-	public static function microsoftRemovedevice($uri, $email)
+	public static function microsoftRemoveDevice($uri, $email)
 	{
 		if(API::isAuthorized())
 		{

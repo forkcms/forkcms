@@ -89,8 +89,14 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 
 		catch(Exception $e)
 		{
+			if(BackendModel::getContainer()->getParameter('kernel.debug')) {
+				$message = $e->getMessage();
+			} else {
+				$message = BackendModel::getContainer()->getParameter('fork.debug_message');
+			}
+
 			$this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
-			$this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
+			$this->ajaxAction->output(FrontendBaseAJAXAction::ERROR, null, $message);
 			$this->output = $this->ajaxAction->execute();
 		}
 	}
