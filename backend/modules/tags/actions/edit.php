@@ -18,7 +18,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
     /**
      * DataGrid with the articles linked to the current tag
      *
-     * @var	BackendDataGridArray
+     * @var    BackendDataGridArray
      */
     protected $dgUsage;
 
@@ -30,7 +30,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendTagsModel::exists($this->id)) {
+        if ($this->id !== null && BackendTagsModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadDataGrid();
@@ -38,10 +38,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -64,9 +63,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
         $modules = BackendModel::getModules();
 
         // loop modules
-        foreach($modules as $module) {
+        foreach ($modules as $module) {
             // check if their is a model-file
-            if(is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php')) {
+            if (is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php')) {
                 // require the model-file
                 require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
 
@@ -74,16 +73,20 @@ class BackendTagsEdit extends BackendBaseActionEdit
                 $className = SpoonFilter::toCamelCase('backend_' . $module . '_model');
 
                 // check if the getByTag-method is available
-                if(is_callable(array($className, 'getByTag'))) {
+                if (is_callable(array($className, 'getByTag'))) {
                     // make the call and get the item
                     $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
 
                     // loop items
-                    foreach($moduleItems as $row) {
+                    foreach ($moduleItems as $row) {
                         // check if needed fields are available
-                        if(isset($row['url'], $row['name'], $row['module'])) {
+                        if (isset($row['url'], $row['name'], $row['module'])) {
                             // add
-                            $items[] = array('module' => SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
+                            $items[] = array(
+                                'module' => SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))),
+                                'name' => $row['name'],
+                                'url' => $row['url']
+                            );
                         }
                     }
                 }
@@ -129,7 +132,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -137,11 +140,14 @@ class BackendTagsEdit extends BackendBaseActionEdit
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build tag
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
-                $item['url'] = BackendTagsModel::getURL(CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $this->id);
+                $item['url'] = BackendTagsModel::getURL(
+                    CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    $this->id
+                );
 
                 // update the item
                 BackendTagsModel::update($item);
@@ -150,7 +156,11 @@ class BackendTagsEdit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['tag']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                        $item['tag']
+                    ) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

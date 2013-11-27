@@ -48,26 +48,30 @@ class TagsInstaller extends ModuleInstaller
         $this->insertExtra('tags', 'widget', 'Related', 'related', null, 'N', 32);
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+        $searchId = (int) $this->getDB()->getVar(
+            'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
+            array('search', 'widget', 'form')
+        );
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // check if a page for tags already exists in this language
             // @todo refactor this if statement
-            if(!(bool) $this->getDB()->getVar(
+            if (!(bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($tagsID, $language)))
-            {
+                array($tagsID, $language)
+            )
+            ) {
                 // insert contact page
                 $this->insertPage(
                     array(
-                        'title' => 'Tags',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Tags',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $tagsID, 'position' => 'main'),

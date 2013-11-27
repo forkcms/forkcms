@@ -25,15 +25,17 @@ class BackendTagsMassAction extends BackendBaseAction
         $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
-        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
-
-        // at least one id
-        else {
+        if (!isset($_GET['id'])) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
+        } else {
+            // at least one id
             // redefine id's
             $aIds = (array) $_GET['id'];
 
             // delete comment(s)
-            if($action == 'delete') BackendTagsModel::delete($aIds);
+            if ($action == 'delete') {
+                BackendTagsModel::delete($aIds);
+            }
         }
 
         // redirect

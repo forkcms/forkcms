@@ -36,7 +36,9 @@ class BackendTagsIndex extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
 
         // header labels
-        $this->dataGrid->setHeaderLabels(array('tag' => SpoonFilter::ucfirst(BL::lbl('Name')), 'num_tags' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
+        $this->dataGrid->setHeaderLabels(
+            array('tag' => SpoonFilter::ucfirst(BL::lbl('Name')), 'num_tags' => SpoonFilter::ucfirst(BL::lbl('Amount')))
+        );
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
@@ -54,9 +56,15 @@ class BackendTagsIndex extends BackendBaseActionIndex
         $this->dataGrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('edit')) {
             // add column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
