@@ -46,17 +46,21 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
             // validate field
             $this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
             $this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
-            if(BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) $this->frm->getField('term')->addError(BL::err('TermExists'));
+            if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) {
+                $this->frm->getField(
+                    'term'
+                )->addError(BL::err('TermExists'));
+            }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item = array();
                 $item['term'] = $this->frm->getField('term')->getValue();
@@ -70,7 +74,11 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_synonym', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('synonyms') . '&report=added-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $id);
+                $this->redirect(
+                    BackendModel::createURLForAction('synonyms') . '&report=added-synonym&var=' . urlencode(
+                        $item['term']
+                    ) . '&highlight=row-' . $id
+                );
             }
         }
     }

@@ -17,14 +17,14 @@ class BackendSearchSettings extends BackendBaseActionEdit
     /**
      * List of modules
      *
-     * @var	array
+     * @var    array
      */
     private $modules = array();
 
     /**
      * Settings per module
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
@@ -52,25 +52,45 @@ class BackendSearchSettings extends BackendBaseActionEdit
         $this->settings = BackendSearchModel::getModuleSettings();
 
         // add field for pagination
-        $this->frm->addDropdown('overview_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 20));
-        $this->frm->addDropdown('autocomplete_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'autocomplete_num_items', 20));
-        $this->frm->addDropdown('autosuggest_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'autosuggest_num_items', 20));
+        $this->frm->addDropdown(
+            'overview_num_items',
+            array_combine(range(1, 30), range(1, 30)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 20)
+        );
+        $this->frm->addDropdown(
+            'autocomplete_num_items',
+            array_combine(range(1, 30), range(1, 30)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'autocomplete_num_items', 20)
+        );
+        $this->frm->addDropdown(
+            'autosuggest_num_items',
+            array_combine(range(1, 30), range(1, 30)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'autosuggest_num_items', 20)
+        );
 
         // modules that, no matter what, can not be searched
         $disallowedModules = array('search');
 
         // loop modules
-        foreach(BackendModel::getModulesForDropDown() as $module => $label) {
+        foreach (BackendModel::getModulesForDropDown() as $module => $label) {
             // check if module is searchable
-            if(!in_array($module, $disallowedModules) && is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))) {
+            if (!in_array($module, $disallowedModules) &&
+                is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))
+            ) {
                 // add field to decide whether or not this module is searchable
-                $this->frm->addCheckbox('search_' . $module, isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false);
+                $this->frm->addCheckbox(
+                    'search_' . $module,
+                    isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false
+                );
 
                 // add field to decide weight for this module
-                $this->frm->addText('search_' . $module . '_weight', isset($this->settings[$module]) ? $this->settings[$module]['weight'] : 1);
+                $this->frm->addText(
+                    'search_' . $module . '_weight',
+                    isset($this->settings[$module]) ? $this->settings[$module]['weight'] : 1
+                );
 
                 // field disabled?
-                if(!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y') {
+                if (!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y') {
                     $this->frm->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
                     $this->frm->getField('search_' . $module . '_weight')->setAttribute('class', 'inputText disabled');
                 }
@@ -79,7 +99,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
                 $this->modules[] = array(
                     'module' => $module,
                     'id' => $this->frm->getField('search_' . $module)->getAttribute('id'),
-                    'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(),
+                    'label' => $label,
+                    'chk' => $this->frm->getField('search_' . $module)->parse(),
                     'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(),
                     'txtError' => ''
                 );
@@ -107,26 +128,42 @@ class BackendSearchSettings extends BackendBaseActionEdit
     private function validateForm()
     {
         // form is submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // validate module weights
-            foreach($this->modules as $i => $module) {
+            foreach ($this->modules as $i => $module) {
                 // only if this module is enabled
-                if($this->frm->getField('search_' . $module['module'])->getChecked()) {
+                if ($this->frm->getField('search_' . $module['module'])->getChecked()) {
                     // valid weight?
-                    $this->frm->getField('search_' . $module['module'] . '_weight')->isDigital(BL::err('WeightNotNumeric'));
-                    $this->modules[$i]['txtError'] = $this->frm->getField('search_' . $module['module'] . '_weight')->getErrors();
+                    $this->frm->getField('search_' . $module['module'] . '_weight')->isDigital(
+                        BL::err('WeightNotNumeric')
+                    );
+                    $this->modules[$i]['txtError'] = $this->frm->getField(
+                        'search_' . $module['module'] . '_weight'
+                    )->getErrors();
                 }
             }
 
             // form is validated
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // set our settings
-                BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', $this->frm->getField('overview_num_items')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'autocomplete_num_items', $this->frm->getField('autocomplete_num_items')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'autosuggest_num_items', $this->frm->getField('autosuggest_num_items')->getValue());
+                BackendModel::setModuleSetting(
+                    $this->URL->getModule(),
+                    'overview_num_items',
+                    $this->frm->getField('overview_num_items')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->URL->getModule(),
+                    'autocomplete_num_items',
+                    $this->frm->getField('autocomplete_num_items')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->URL->getModule(),
+                    'autosuggest_num_items',
+                    $this->frm->getField('autosuggest_num_items')->getValue()
+                );
 
                 // module search
-                foreach((array) $this->modules as $module) {
+                foreach ((array) $this->modules as $module) {
                     $searchable = $this->frm->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
                     $weight = $this->frm->getField('search_' . $module['module'] . '_weight')->getValue();
 

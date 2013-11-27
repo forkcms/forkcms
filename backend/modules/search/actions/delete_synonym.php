@@ -23,7 +23,7 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendSearchModel::existsSynonymById($this->id)) {
+        if ($this->id !== null && BackendSearchModel::existsSynonymById($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -37,10 +37,13 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete_synonym', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode($this->record['term']));
+            $this->redirect(
+                BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode(
+                    $this->record['term']
+                )
+            );
+        } else {
+            $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
         }
-
-        // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
     }
 }

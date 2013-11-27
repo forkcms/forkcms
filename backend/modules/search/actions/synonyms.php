@@ -31,7 +31,10 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS, BL::getWorkingLanguage());
+        $this->dataGrid = new BackendDataGridDB(
+            BackendSearchModel::QRY_DATAGRID_BROWSE_SYNONYMS,
+            BL::getWorkingLanguage()
+        );
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('term'), 'term');
@@ -40,12 +43,18 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_synonym')) {
+        if (BackendAuthentication::isAllowedAction('edit_synonym')) {
             // set column URLs
             $this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
 
             // add column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 

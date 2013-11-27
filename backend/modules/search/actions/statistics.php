@@ -31,7 +31,10 @@ class BackendSearchStatistics extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS, BL::getWorkingLanguage());
+        $this->dataGrid = new BackendDataGridDB(
+            BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
+            BL::getWorkingLanguage()
+        );
 
         // hide column
         $this->dataGrid->setColumnsHidden('data');
@@ -44,7 +47,12 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 
         // set column function
         $this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
-        $this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[time]'), 'time', true);
+        $this->dataGrid->setColumnFunction(
+            array('BackendDataGridFunctions', 'getLongDate'),
+            array('[time]'),
+            'time',
+            true
+        );
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('time', 'term'), 'time');

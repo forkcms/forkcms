@@ -51,7 +51,12 @@ class SearchInstaller extends ModuleInstaller
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
         $this->setNavigation($navigationSearchId, 'Statistics', 'search/statistics');
-        $this->setNavigation($navigationSearchId, 'Synonyms', 'search/synonyms', array('search/add_synonym', 'search/edit_synonym'));
+        $this->setNavigation(
+            $navigationSearchId,
+            'Synonyms',
+            'search/synonyms',
+            array('search/add_synonym', 'search/edit_synonym')
+        );
 
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -63,24 +68,25 @@ class SearchInstaller extends ModuleInstaller
         $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // check if a page for search already exists in this language
             // @todo refactor this nasty if statement...
-            if(!(bool) $this->getDB()->getVar(
+            if (!(bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($searchId, $language)))
-            {
+                array($searchId, $language)
+            )
+            ) {
                 // insert search
                 $this->insertPage(
                     array(
-                        'title' => SpoonFilter::ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')
+                         'title' => SpoonFilter::ucfirst($this->getLocale('Search', 'core', $language, 'lbl', 'frontend')),
+                         'type' => 'root',
+                         'language' => $language
                     ),
-                    'type' => 'root',
-                    'language' => $language),
                     null,
                     array('extra_id' => $searchId, 'position' => 'main')
                 );
@@ -92,7 +98,7 @@ class SearchInstaller extends ModuleInstaller
 
         // create module cache path
         $fs = new Filesystem();
-        if(!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
+        if (!$fs->exists(PATH_WWW . '/frontend/cache/search')) {
             $fs->mkdir(PATH_WWW . '/frontend/cache/search');
         }
     }
@@ -117,9 +123,12 @@ class SearchInstaller extends ModuleInstaller
         );
 
         // loop menu items
-        foreach($menu as $page) {
+        foreach ($menu as $page) {
             // get blocks
-            $blocks = $db->getColumn('SELECT html FROM pages_blocks WHERE revision_id = ?', array($page['revision_id']));
+            $blocks = $db->getColumn(
+                'SELECT html FROM pages_blocks WHERE revision_id = ?',
+                array($page['revision_id'])
+            );
 
             // merge blocks content
             $text = strip_tags(implode(' ', $blocks));
@@ -129,7 +138,16 @@ class SearchInstaller extends ModuleInstaller
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
                  VALUES (?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array('pages', (int) $page['id'], (string) $page['language'], 'title', $page['title'], 'Y', $page['title'], 'Y')
+                array(
+                     'pages',
+                     (int) $page['id'],
+                     (string) $page['language'],
+                     'title',
+                     $page['title'],
+                     'Y',
+                     $page['title'],
+                     'Y'
+                )
             );
             $db->execute(
                 'INSERT INTO search_index (module, other_id, language, field, value, active)
