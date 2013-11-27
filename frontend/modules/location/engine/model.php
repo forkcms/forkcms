@@ -33,7 +33,7 @@ class FrontendLocationModel
         $url .= '&z=' . $settings['zoom_level'];
 
         // set the map type
-        switch(strtolower($settings['map_type'])) {
+        switch (strtolower($settings['map_type'])) {
             case 'roadmap':
                 $url .= '&t=m';
                 break;
@@ -50,11 +50,13 @@ class FrontendLocationModel
 
         $pointers = array();
         // add the markers to the url
-        foreach($markers as $marker) {
+        foreach ($markers as $marker) {
             $pointers[] = urlencode($marker['title']) . '@' . $marker['lat'] . ',' . $marker['lng'];
         }
 
-        if(!empty($pointers)) $url .= '&q=' . implode('|', $pointers);
+        if (!empty($pointers)) {
+            $url .= '&q=' . implode('|', $pointers);
+        }
 
         return $url;
     }
@@ -91,7 +93,7 @@ class FrontendLocationModel
     /**
      * Retrieve a map setting
      *
-     * @param int $mapId
+     * @param int    $mapId
      * @param string $name
      * @return mixed
      */
@@ -104,7 +106,10 @@ class FrontendLocationModel
             array((int) $mapId, (string) $name)
         );
 
-        if($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
+
         return false;
     }
 
@@ -123,7 +128,9 @@ class FrontendLocationModel
             array((int) $mapId)
         );
 
-        foreach($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }

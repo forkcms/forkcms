@@ -19,7 +19,12 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
     /**
      * @var array
      */
-    protected $items = array(), $settings = array();
+    protected $items = array();
+
+    /**
+     * @var array
+     */
+    protected $settings = array();
 
     /**
      * Execute the extra
@@ -43,7 +48,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
     {
         $this->item = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
-        if(empty($this->settings)) {
+        if (empty($this->settings)) {
             $settings = FrontendModel::getModuleSettings('location');
 
             $this->settings['width'] = $settings['width_widget'];
@@ -55,7 +60,7 @@ class FrontendLocationWidgetLocation extends FrontendBaseWidget
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $this->item['lat'];
             $this->settings['center']['lng'] = $this->item['lng'];
         }
