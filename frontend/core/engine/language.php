@@ -25,6 +25,13 @@ class FrontendLanguage
 	private static $act = array(), $err = array(), $lbl = array(), 	$msg = array();
 
 	/**
+	 * Locale fallback arrays
+	 *
+	 * @var	array
+	 */
+	private static $fallbackAct = array(), $fallbackErr = array(), $fallbackLbl = array(), 	$fallbackMsg = array();
+
+	/**
 	 * The possible languages
 	 *
 	 * @var	array
@@ -146,15 +153,19 @@ class FrontendLanguage
 	 * Get an action from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function getAction($key)
+	public static function getAction($key, $fallback = true)
 	{
 		// redefine
 		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the action exists return it,
 		if(isset(self::$act[$key])) return self::$act[$key];
+
+		// If we should fallback and the fallback label exists, return it
+		if(isset(self::$fallbackAct[$key]) && $fallback === true && SPOON_DEBUG === false) return self::$fallbackAct[$key];
 
 		// otherwise return the key in label-format
 		return '{$act' . $key . '}';
@@ -167,7 +178,7 @@ class FrontendLanguage
 	 */
 	public static function getActions()
 	{
-		return self::$act;
+		return (SPOON_DEBUG === true) ? self::$act : array_merge(self::$fallbackAct, self::$act);
 	}
 
 	/**
@@ -249,15 +260,19 @@ class FrontendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function getError($key)
+	public static function getError($key, $fallback = true)
 	{
 		// redefine
 		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$err[$key])) return self::$err[$key];
+
+		// If we should fallback and the fallback label exists, return it
+		if(isset(self::$fallbackErr[$key]) && $fallback === true && SPOON_DEBUG === false) return self::$fallbackErr[$key];
 
 		// otherwise return the key in label-format
 		return '{$err' . $key . '}';
@@ -270,22 +285,26 @@ class FrontendLanguage
 	 */
 	public static function getErrors()
 	{
-		return self::$err;
+		return (SPOON_DEBUG === true) ? self::$err : array_merge(self::$fallbackErr, self::$err);
 	}
 
 	/**
 	 * Get a label from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function getLabel($key)
+	public static function getLabel($key, $fallback = true)
 	{
 		// redefine
 		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$lbl[$key])) return self::$lbl[$key];
+
+		// If we should fallback and the fallback label exists, return it
+		if(isset(self::$fallbackLbl[$key]) && $fallback === true && SPOON_DEBUG === false) return self::$fallbackLbl[$key];
 
 		// otherwise return the key in label-format
 		return '{$lbl' . $key . '}';
@@ -298,22 +317,26 @@ class FrontendLanguage
 	 */
 	public static function getLabels()
 	{
-		return self::$lbl;
+		return (SPOON_DEBUG === true) ? self::$lbl : array_merge(self::$fallbackLbl, self::$lbl);
 	}
 
 	/**
 	 * Get a message from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function getMessage($key)
+	public static function getMessage($key, $fallback = true)
 	{
 		// redefine
 		$key = SpoonFilter::toCamelCase((string) $key);
 
 		// if the error exists return it,
 		if(isset(self::$msg[$key])) return self::$msg[$key];
+
+		// If we should fallback and the fallback label exists, return it
+		if(isset(self::$fallbackMsg[$key]) && $fallback === true && SPOON_DEBUG === false) return self::$fallbackMsg[$key];
 
 		// otherwise return the key in label-format
 		return '{$msg' . $key . '}';
@@ -326,7 +349,7 @@ class FrontendLanguage
 	 */
 	public static function getMessages()
 	{
-		return self::$msg;
+		return (SPOON_DEBUG === true) ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
 	}
 
 	/**
@@ -376,17 +399,17 @@ class FrontendLanguage
 
 		// set English translations, they'll be the fallback
 		require FRONTEND_CACHE_PATH . '/locale/en.php';
+		self::$fallbackAct = (array) $act;
+		self::$fallbackErr = (array) $err;
+		self::$fallbackLbl = (array) $lbl;
+		self::$fallbackMsg = (array) $msg;
+
+		// We will overwrite with the requested language's translations upon request
+		require FRONTEND_CACHE_PATH . '/locale/' . $language . '.php';
 		self::$act = (array) $act;
 		self::$err = (array) $err;
 		self::$lbl = (array) $lbl;
 		self::$msg = (array) $msg;
-
-		// overwrite with the requested language's translations
-		require FRONTEND_CACHE_PATH . '/locale/' . $language . '.php';
-		self::$act = array_merge(self::$act, (array) $act);
-		self::$err = array_merge(self::$err, (array) $err);
-		self::$lbl = array_merge(self::$lbl, (array) $lbl);
-		self::$msg = array_merge(self::$msg, (array) $msg);
 	}
 }
 
@@ -401,43 +424,47 @@ class FL extends FrontendLanguage
 	 * Get an action from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function act($key)
+	public static function act($key, $fallback = true)
 	{
-		return FrontendLanguage::getAction($key);
+		return FrontendLanguage::getAction($key, $fallback);
 	}
 
 	/**
 	 * Get an error from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function err($key)
+	public static function err($key, $fallback = true)
 	{
-		return FrontendLanguage::getError($key);
+		return FrontendLanguage::getError($key, $fallback);
 	}
 
 	/**
 	 * Get a label from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function lbl($key)
+	public static function lbl($key, $fallback = true)
 	{
-		return FrontendLanguage::getLabel($key);
+		return FrontendLanguage::getLabel($key, $fallback);
 	}
 
 	/**
 	 * Get a message from the language-file
 	 *
 	 * @param string $key The key to get.
+	 * @param bool $fallback Should we provide a fallback in English?
 	 * @return string
 	 */
-	public static function msg($key)
+	public static function msg($key, $fallback = true)
 	{
-		return FrontendLanguage::getMessage($key);
+		return FrontendLanguage::getMessage($key, $fallback);
 	}
 }
