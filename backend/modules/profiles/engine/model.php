@@ -25,12 +25,13 @@ class BackendProfilesModel
     /**
      * Browse groups for datagrid.
      *
-     * @var	string
+     * @var    string
      */
     const QRY_DATAGRID_BROWSE_PROFILE_GROUPS =
         'SELECT gr.id, g.name AS group_name, UNIX_TIMESTAMP(gr.expires_on) AS expires_on
          FROM profiles_groups AS g
-         INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND (gr.expires_on IS NULL OR gr.expires_on > NOW())
+         INNER JOIN profiles_groups_rights AS gr ON gr.group_id = g.id AND
+            (gr.expires_on IS NULL OR gr.expires_on > NOW())
          WHERE gr.profile_id = ?';
 
     /**
@@ -47,7 +48,7 @@ class BackendProfilesModel
         $ids = (array) $ids;
 
         // delete profiles
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             // redefine
             $id = (int) $id;
 
@@ -117,7 +118,7 @@ class BackendProfilesModel
      * Check if a profile exists by email address.
      *
      * @param  string $email Email address to check for existence.
-     * @param int[optional] $id Profile id to ignore.
+     * @param         int    [optional] $id Profile id to ignore.
      * @return bool
      */
     public static function existsByEmail($email, $id = null)
@@ -135,7 +136,7 @@ class BackendProfilesModel
      * Check if a display name exists.
      *
      * @param  string $displayName The display name to check.
-     * @param int[optional] $id  Profile id to ignore.
+     * @param         int          [optional] $id  Profile id to ignore.
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -170,7 +171,7 @@ class BackendProfilesModel
      * Check if a group name exists.
      *
      * @param string $groupName Group name.
-     * @param int[optional] $id Group id to ignore.
+     * @param        int        [optional] $id Group id to ignore.
      * @return bool
      */
     public static function existsGroupName($groupName, $id = null)
@@ -220,9 +221,9 @@ class BackendProfilesModel
     /**
      * Get avatar
      *
-     * @param int $id 					The id for the profile we want to get the avatar from.
-     * @param string[optional] $email 	The email from the user we can use for gravatar.
-     * @return string $avatar 			The absolute path to the avatar.
+     * @param int $id    The id for the profile we want to get the avatar from.
+     * @param     string [optional] $email    The email from the user we can use for gravatar.
+     * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null)
     {
@@ -230,7 +231,9 @@ class BackendProfilesModel
         $id = (int) $id;
 
         // return avatar from cache
-        if(isset(self::$avatars[$id])) return self::$avatars[$id];
+        if (isset(self::$avatars[$id])) {
+            return self::$avatars[$id];
+        }
 
         // define avatar path
         $avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/32x32/';
@@ -239,7 +242,7 @@ class BackendProfilesModel
         $avatar = self::getSetting($id, 'avatar');
 
         // if no email is given
-        if(!$email) {
+        if (!$email) {
             // get user
             $user = self::get($id);
 
@@ -248,7 +251,7 @@ class BackendProfilesModel
         }
 
         // no custom avatar defined, get gravatar if allowed
-        if(empty($avatar) && BackendModel::getModuleSetting('profiles', 'allow_gravatar', true) && DB_HOSTNAME != 'localhost') {
+        if (empty($avatar) && BackendModel::getModuleSetting('profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(strtolower(trim('d' . $email)));
 
@@ -257,13 +260,13 @@ class BackendProfilesModel
 
             // when email not exists, it has to show our custom no-avatar image
             $avatar .= '?d=' . SITE_URL . $avatarPath . 'no-avatar.gif';
+        } elseif (empty($avatar)) {
+            // define avatar as not found
+            $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
+        } else {
+            // define custom avatar path
+            $avatar = $avatarPath . $avatar;
         }
-
-        // define avatar as not found
-        elseif(empty($avatar)) $avatar = SITE_URL . $avatarPath . 'no-avatar.gif';
-
-        // define custom avatar path
-        else $avatar = $avatarPath . $avatar;
 
         // set avatar in cache
         self::$avatars[$id] = $avatar;
@@ -276,7 +279,7 @@ class BackendProfilesModel
      * Encrypt a string with a salt.
      *
      * @param string $string String to encrypt.
-     * @param string $salt Salt to saltivy the string with.
+     * @param string $salt   Salt to saltivy the string with.
      * @return string
      */
     public static function getEncryptedString($string, $salt)
@@ -307,14 +310,16 @@ class BackendProfilesModel
      */
     public static function getGroups()
     {
-        return (array) BackendModel::getContainer()->get('database')->getPairs('SELECT id, name FROM profiles_groups ORDER BY name');
+        return (array) BackendModel::getContainer()->get('database')->getPairs(
+            'SELECT id, name FROM profiles_groups ORDER BY name'
+        );
     }
 
     /**
      * Get profile groups for dropdown not yet linked to a profile
      *
      * @param int $profileId Profile id.
-     * @param int[optional] $includeId Group id to always include.
+     * @param     int        [optional] $includeId Group id to always include.
      * @return array
      */
     public static function getGroupsForDropDown($profileId, $includeId = null)
@@ -323,20 +328,21 @@ class BackendProfilesModel
         $db = BackendModel::getContainer()->get('database');
 
         // get groups already linked but don't include the includeId
-        if($includeId !== null) $groupIds = (array) $db->getColumn(
-            'SELECT group_id
-             FROM profiles_groups_rights
-             WHERE profile_id = ? AND id != ?',
-            array($profileId, $includeId)
-        );
-
-        // get groups already linked
-        else $groupIds = (array) $db->getColumn(
-            'SELECT group_id
-             FROM profiles_groups_rights
-             WHERE profile_id = ?',
-            (int) $profileId
-        );
+        if ($includeId !== null) {
+            $groupIds = (array) $db->getColumn(
+                'SELECT group_id
+                 FROM profiles_groups_rights
+                 WHERE profile_id = ? AND id != ?',
+                array($profileId, $includeId)
+            );
+        } else {
+            $groupIds = (array) $db->getColumn(
+                'SELECT group_id
+                 FROM profiles_groups_rights
+                 WHERE profile_id = ?',
+                (int) $profileId
+            );
+        }
 
         // get groups not yet linked
         return (array) $db->getPairs(
@@ -383,27 +389,40 @@ class BackendProfilesModel
     /**
      * Generate a random string.
      *
-     * @param int[optional] $length Length of random string.
-     * @param bool[optional] $numeric Use numeric characters.
-     * @param bool[optional] $lowercase Use alphanumeric lowercase characters.
-     * @param bool[optional] $uppercase Use alphanumeric uppercase characters.
-     * @param bool[optional] $special Use special characters.
+     * @param int  [optional] $length Length of random string.
+     * @param bool [optional] $numeric Use numeric characters.
+     * @param bool [optional] $lowercase Use alphanumeric lowercase characters.
+     * @param bool [optional] $uppercase Use alphanumeric uppercase characters.
+     * @param bool [optional] $special Use special characters.
      * @return string
      */
-    public static function getRandomString($length = 15, $numeric = true, $lowercase = true, $uppercase = true, $special = true)
-    {
+    public static function getRandomString(
+        $length = 15,
+        $numeric = true,
+        $lowercase = true,
+        $uppercase = true,
+        $special = true
+    ) {
         // init
         $characters = '';
         $string = '';
 
         // possible characters
-        if($numeric) $characters .= '1234567890';
-        if($lowercase) $characters .= 'abcdefghijklmnopqrstuvwxyz';
-        if($uppercase) $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-        if($special) $characters .= '-_.:;,?!@#&=)([]{}*+%$';
+        if ($numeric) {
+            $characters .= '1234567890';
+        }
+        if ($lowercase) {
+            $characters .= 'abcdefghijklmnopqrstuvwxyz';
+        }
+        if ($uppercase) {
+            $characters .= 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        }
+        if ($special) {
+            $characters .= '-_.:;,?!@#&=)([]{}*+%$';
+        }
 
         // get random characters
-        for($i = 0; $i < $length; $i++) {
+        for ($i = 0; $i < $length; $i++) {
             // random index
             $index = mt_rand(0, strlen($characters));
 
@@ -418,17 +437,19 @@ class BackendProfilesModel
     /**
      * Get a setting for a profile.
      *
-     * @param int $id Profile id.
+     * @param int    $id   Profile id.
      * @param string $name Setting name.
      * @return string
      */
     public static function getSetting($id, $name)
     {
-        return unserialize((string) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT ps.value
-             FROM profiles_settings AS ps
-             WHERE ps.profile_id = ? AND ps.name = ?',
-            array((int) $id, (string) $name))
+        return unserialize(
+            (string) BackendModel::getContainer()->get('database')->getVar(
+                'SELECT ps.value
+                 FROM profiles_settings AS ps
+                 WHERE ps.profile_id = ? AND ps.name = ?',
+                array((int) $id, (string) $name)
+            )
         );
     }
 
@@ -446,7 +467,9 @@ class BackendProfilesModel
         $labels = $status;
 
         // loop and build labels
-        foreach($labels as &$row) $row = SpoonFilter::ucfirst(BackendLanguage::getLabel(SpoonFilter::ucfirst($row)));
+        foreach ($labels as &$row) {
+            $row = SpoonFilter::ucfirst(BackendLanguage::getLabel(SpoonFilter::ucfirst($row)));
+        }
 
         // build array
         return array_combine($status, $labels);
@@ -456,7 +479,7 @@ class BackendProfilesModel
      * Retrieve a unique URL for a profile based on the display name.
      *
      * @param string $displayName The display name to base on.
-     * @param int[optional] $id The id of the profile to ignore.
+     * @param        int          [optional] $id The id of the profile to ignore.
      * @return string
      */
     public static function getUrl($displayName, $id = null)
@@ -471,7 +494,7 @@ class BackendProfilesModel
         $db = BackendModel::getContainer()->get('database');
 
         // new item
-        if($id === null) {
+        if ($id === null) {
             // get number of profiles with this URL
             $number = (int) $db->getVar(
                 'SELECT 1
@@ -482,17 +505,14 @@ class BackendProfilesModel
             );
 
             // already exists
-            if($number != 0) {
+            if ($number != 0) {
                 // add number
                 $url = BackendModel::addNumber($url);
 
                 // try again
                 return self::getURL($url);
             }
-        }
-
-        // current profile should be excluded
-        else {
+        } else {
             // get number of profiles with this URL
             $number = (int) $db->getVar(
                 'SELECT 1
@@ -503,7 +523,7 @@ class BackendProfilesModel
             );
 
             // already exists
-            if($number != 0) {
+            if ($number != 0) {
                 // add number
                 $url = BackendModel::addNumber($url);
 
@@ -530,7 +550,9 @@ class BackendProfilesModel
         $user = self::get($id);
 
         // no user found, stop here
-        if(empty($user)) return '';
+        if (empty($user)) {
+            return '';
+        }
 
         // get settings
         $nickname = $user['display_name'];
@@ -542,11 +564,23 @@ class BackendProfilesModel
         // build html
         $html = '<div class="dataGridAvatar">' . "\n";
         $html .= '	<div class="avatar av24">' . "\n";
-        if($allowed) $html .= '		<a href="' . BackendModel::createURLForAction('edit', 'profiles') . '&amp;id=' . $id . '">' . "\n";
+        if ($allowed) {
+            $html .= '		<a href="' .
+                     BackendModel::createURLForAction(
+                         'edit',
+                         'profiles'
+                     ) . '&amp;id=' . $id . '">' . "\n";
+        }
         $html .= '			<img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-        if($allowed) $html .= '		</a>' . "\n";
+        if ($allowed) {
+            $html .= '		</a>' . "\n";
+        }
         $html .= '	</div>';
-        $html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'profiles') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+        $html .= '	<p><a href="' .
+                 BackendModel::createURLForAction(
+                     'edit',
+                     'profiles'
+                 ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
         $html .= '</div>';
 
         return $html;
@@ -588,9 +622,9 @@ class BackendProfilesModel
     /**
      * Insert or update a single profile setting.
      *
-     * @param int $id Profile id.
-     * @param string $name Setting name.
-     * @param mixed $value Setting value.
+     * @param int    $id    Profile id.
+     * @param string $name  Setting name.
+     * @param mixed  $value Setting value.
      */
     public static function setSetting($id, $name, $value)
     {
@@ -605,7 +639,7 @@ class BackendProfilesModel
     /**
      * Update a profile.
      *
-     * @param int $id The profile id.
+     * @param int   $id     The profile id.
      * @param array $values The values to update.
      * @return int
      */
@@ -617,24 +651,34 @@ class BackendProfilesModel
     /**
      * Update a profile group.
      *
-     * @param int $id Group id.
+     * @param int   $id     Group id.
      * @param array $values Group data.
      * @return int
      */
     public static function updateGroup($id, array $values)
     {
-        return (int) BackendModel::getContainer()->get('database')->update('profiles_groups', $values, 'id = ?', (int) $id);
+        return (int) BackendModel::getContainer()->get('database')->update(
+            'profiles_groups',
+            $values,
+            'id = ?',
+            (int) $id
+        );
     }
 
     /**
      * Update a membership of a profile in a group.
      *
-     * @param int $id Membership id.
+     * @param int   $id     Membership id.
      * @param array $values Membership data.
      * @return int
      */
     public static function updateProfileGroup($id, array $values)
     {
-        return (int) BackendModel::getContainer()->get('database')->update('profiles_groups_rights', $values, 'id = ?', (int) $id);
+        return (int) BackendModel::getContainer()->get('database')->update(
+            'profiles_groups_rights',
+            $values,
+            'id = ?',
+            (int) $id
+        );
     }
 }

@@ -31,17 +31,16 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendProfilesModel::existsGroup($this->id)) {
+        if ($this->id !== null && BackendProfilesModel::existsGroup($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
     }
 
     /**
@@ -79,7 +78,7 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -87,16 +86,16 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
             $txtName = $this->frm->getField('name');
 
             // name filled in?
-            if($txtName->isFilled(BL::getError('NameIsRequired'))) {
+            if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
                 // name already exists?
-                if(BackendProfilesModel::existsGroupName($txtName->getValue(), $this->id)) {
+                if (BackendProfilesModel::existsGroupName($txtName->getValue(), $this->id)) {
                     // set error
                     $txtName->addError(BL::getError('GroupNameExists'));
                 }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $values['name'] = $txtName->getValue();
 
@@ -107,7 +106,11 @@ class BackendProfilesEditGroup extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_group', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('groups') . '&report=group-saved&var=' . urlencode($values['name']) . '&highlight=row-' . $this->id);
+                $this->redirect(
+                    BackendModel::createURLForAction('groups') . '&report=group-saved&var=' . urlencode(
+                        $values['name']
+                    ) . '&highlight=row-' . $this->id
+                );
             }
         }
     }

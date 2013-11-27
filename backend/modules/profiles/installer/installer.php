@@ -59,54 +59,92 @@ class ProfilesInstaller extends ModuleInstaller
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationProfilesId = $this->setNavigation($navigationModulesId, 'Profiles');
-        $this->setNavigation($navigationProfilesId, 'Overview', 'profiles/index', array(
-            'profiles/add',
-            'profiles/edit',
-            'profiles/add_profile_group',
-            'profiles/edit_profile_group'
-        ));
-        $this->setNavigation($navigationProfilesId, 'Groups', 'profiles/groups', array(
-            'profiles/add_group',
-            'profiles/edit_group'
-        ));
+        $this->setNavigation(
+            $navigationProfilesId,
+            'Overview',
+            'profiles/index',
+            array(
+                 'profiles/add',
+                 'profiles/edit',
+                 'profiles/add_profile_group',
+                 'profiles/edit_profile_group'
+            )
+        );
+        $this->setNavigation(
+            $navigationProfilesId,
+            'Groups',
+            'profiles/groups',
+            array(
+                 'profiles/add_group',
+                 'profiles/edit_group'
+            )
+        );
 
         // add extra
         $activateId = $this->insertExtra('profiles', 'block', 'Activate', 'activate', null, 'N', 5000);
-        $forgotPasswordId = $this->insertExtra('profiles', 'block', 'ForgotPassword', 'forgot_password', null, 'N', 5001);
+        $forgotPasswordId = $this->insertExtra(
+            'profiles',
+            'block',
+            'ForgotPassword',
+            'forgot_password',
+            null,
+            'N',
+            5001
+        );
         $indexId = $this->insertExtra('profiles', 'block', 'Dashboard', null, null, 'N', 5002);
         $loginId = $this->insertExtra('profiles', 'block', 'Login', 'login', null, 'N', 5003);
         $logoutId = $this->insertExtra('profiles', 'block', 'Logout', 'logout', null, 'N', 5004);
         $changeEmailId = $this->insertExtra('profiles', 'block', 'ChangeEmail', 'change_email', null, 'N', 5005);
-        $changePasswordId = $this->insertExtra('profiles', 'block', 'ChangePassword', 'change_password', null, 'N', 5006);
+        $changePasswordId = $this->insertExtra(
+            'profiles',
+            'block',
+            'ChangePassword',
+            'change_password',
+            null,
+            'N',
+            5006
+        );
         $settingsId = $this->insertExtra('profiles', 'block', 'Settings', 'settings', null, 'N', 5007);
         $registerId = $this->insertExtra('profiles', 'block', 'Register', 'register', null, 'N', 5008);
         $resetPasswordId = $this->insertExtra('profiles', 'block', 'ResetPassword', 'reset_password', null, 'N', 5008);
-        $resendActivationId = $this->insertExtra('profiles', 'block', 'ResendActivation', 'resend_activation', null, 'N', 5009);
+        $resendActivationId = $this->insertExtra(
+            'profiles',
+            'block',
+            'ResendActivation',
+            'resend_activation',
+            null,
+            'N',
+            5009
+        );
 
         $this->insertExtra('profiles', 'widget', 'LoginBox', 'login_box', null, 'N', 5010);
 
         // get search widget id
-        $searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND action = ?', array('search', 'form'));
+        $searchId = (int) $this->getDB()->getVar(
+            'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
+            array('search', 'form')
+        );
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // only add pages if profiles isn't linked anywhere
             // @todo refactor me, syntax sucks atm
-            if(!(bool) $this->getDB()->getVar(
+            if (!(bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  INNER JOIN modules_extras AS e ON e.id = b.extra_id
                  WHERE e.module = ? AND p.language = ?
                  LIMIT 1',
-                array('profiles', $language)))
-            {
+                array('profiles', $language)
+            )
+            ) {
                 // activate page
                 $this->insertPage(
                     array(
-                        'title' => 'Activate',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Activate',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $activateId, 'position' => 'main'),
@@ -116,9 +154,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // forgot password page
                 $this->insertPage(
                     array(
-                        'title' => 'Forgot password',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Forgot password',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $forgotPasswordId, 'position' => 'main'),
@@ -128,9 +166,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // reset password page
                 $this->insertPage(
                     array(
-                        'title' => 'Reset password',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Reset password',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $resetPasswordId, 'position' => 'main'),
@@ -140,9 +178,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // resend activation email page
                 $this->insertPage(
                     array(
-                        'title' => 'Resend activation e-mail',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Resend activation e-mail',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $resendActivationId, 'position' => 'main'),
@@ -152,9 +190,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // login page
                 $this->insertPage(
                     array(
-                        'title' => 'Login',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Login',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $loginId, 'position' => 'main'),
@@ -164,9 +202,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // register page
                 $this->insertPage(
                     array(
-                        'title' => 'Register',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Register',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $registerId, 'position' => 'main'),
@@ -176,9 +214,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // logout page
                 $this->insertPage(
                     array(
-                        'title' => 'Logout',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Logout',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $logoutId, 'position' => 'main'),
@@ -188,9 +226,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // index page
                 $indexPageId = $this->insertPage(
                     array(
-                        'title' => 'Profile',
-                        'type' => 'root',
-                        'language' => $language
+                         'title' => 'Profile',
+                         'type' => 'root',
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $indexId, 'position' => 'main'),
@@ -200,9 +238,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // settings page
                 $this->insertPage(
                     array(
-                        'title' => 'Profile settings',
-                        'parent_id' => $indexPageId,
-                        'language' => $language
+                         'title' => 'Profile settings',
+                         'parent_id' => $indexPageId,
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $settingsId, 'position' => 'main'),
@@ -212,9 +250,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // change email page
                 $this->insertPage(
                     array(
-                        'title' => 'Change email',
-                        'parent_id' => $indexPageId,
-                        'language' => $language
+                         'title' => 'Change email',
+                         'parent_id' => $indexPageId,
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $changeEmailId, 'position' => 'main'),
@@ -224,9 +262,9 @@ class ProfilesInstaller extends ModuleInstaller
                 // change password page
                 $this->insertPage(
                     array(
-                        'title' => 'Change password',
-                        'parent_id' => $indexPageId,
-                        'language' => $language
+                         'title' => 'Change password',
+                         'parent_id' => $indexPageId,
+                         'language' => $language
                     ),
                     null,
                     array('extra_id' => $changePasswordId, 'position' => 'main'),

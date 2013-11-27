@@ -25,7 +25,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
     /**
      * Groups data grid.
      *
-     * @var	BackendDataGrid
+     * @var    BackendDataGrid
      */
     private $dgGroups;
 
@@ -37,7 +37,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist?
-        if($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadGroups();
@@ -45,10 +45,9 @@ class BackendProfilesEdit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -80,10 +79,10 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $birthDate = BackendProfilesModel::getSetting($this->id, 'birth_date');
 
         // get day, month and year
-        if($birthDate) list($birthYear, $birthMonth, $birthDay) = explode('-', $birthDate);
-
-        // no birth date setting
-        else {
+        if ($birthDate) {
+            list($birthYear, $birthMonth, $birthDay) = explode('-', $birthDate);
+        } else {
+            // no birth date setting
             $birthDay = '';
             $birthMonth = '';
             $birthYear = '';
@@ -103,7 +102,11 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $this->frm->addDropdown('day', array_combine($days, $days), $birthDay);
         $this->frm->addDropdown('month', $months, $birthMonth);
         $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
-        $this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), BackendProfilesModel::getSetting($this->id, 'country'));
+        $this->frm->addDropdown(
+            'country',
+            SpoonLocale::getCountries(BL::getInterfaceLanguage()),
+            BackendProfilesModel::getSetting($this->id, 'country')
+        );
 
         // set default elements dropdowns
         $this->frm->getField('gender')->setDefaultElement('');
@@ -119,7 +122,10 @@ class BackendProfilesEdit extends BackendBaseActionEdit
     private function loadGroups()
     {
         // create the data grid
-        $this->dgGroups = new BackendDataGridDB(BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS, array($this->profile['id']));
+        $this->dgGroups = new BackendDataGridDB(
+            BackendProfilesModel::QRY_DATAGRID_BROWSE_PROFILE_GROUPS,
+            array($this->profile['id'])
+        );
 
         // sorting columns
         $this->dgGroups->setSortingColumns(array('group_name'), 'group_name');
@@ -128,15 +134,29 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $this->dgGroups->setPaging(false);
 
         // set column function
-        $this->dgGroups->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[expires_on]'), 'expires_on', true);
+        $this->dgGroups->setColumnFunction(
+            array('BackendDataGridFunctions', 'getLongDate'),
+            array('[expires_on]'),
+            'expires_on',
+            true
+        );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_profile_group')) {
+        if (BackendAuthentication::isAllowedAction('edit_profile_group')) {
             // set column URLs
-            $this->dgGroups->setColumnURL('group_name', BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id);
+            $this->dgGroups->setColumnURL(
+                'group_name',
+                BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id
+            );
 
             // edit column
-            $this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id, BL::getLabel('Edit'));
+            $this->dgGroups->addColumn(
+                'edit',
+                null,
+                BL::getLabel('Edit'),
+                BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id,
+                BL::getLabel('Edit')
+            );
         }
     }
 
@@ -154,10 +174,14 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $this->tpl->assign('dgGroups', ($this->dgGroups->getNumResults() != 0) ? $this->dgGroups->getContent() : false);
 
         // show delete or undelete button?
-        if($this->profile['status'] === 'deleted') $this->tpl->assign('deleted', true);
+        if ($this->profile['status'] === 'deleted') {
+            $this->tpl->assign('deleted', true);
+        }
 
         // show block or unblock button?
-        if($this->profile['status'] === 'blocked') $this->tpl->assign('blocked', true);
+        if ($this->profile['status'] === 'blocked') {
+            $this->tpl->assign('blocked', true);
+        }
     }
 
     /**
@@ -166,7 +190,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -184,11 +208,11 @@ class BackendProfilesEdit extends BackendBaseActionEdit
             $ddmCountry = $this->frm->getField('country');
 
             // email filled in?
-            if($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
                 // valid email?
-                if($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
                     // email already exists?
-                    if(BackendProfilesModel::existsByEmail($txtEmail->getValue(), $this->id)) {
+                    if (BackendProfilesModel::existsByEmail($txtEmail->getValue(), $this->id)) {
                         // set error
                         $txtEmail->addError(BL::getError('EmailExists'));
                     }
@@ -196,36 +220,36 @@ class BackendProfilesEdit extends BackendBaseActionEdit
             }
 
             // display name filled in?
-            if($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
+            if ($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
                 // display name already exists?
-                if(BackendProfilesModel::existsDisplayName($txtDisplayName->getValue(), $this->id)) {
+                if (BackendProfilesModel::existsDisplayName($txtDisplayName->getValue(), $this->id)) {
                     // set error
                     $txtDisplayName->addError(BL::getError('DisplayNameExists'));
                 }
             }
 
             // one of the bday fields are filled in
-            if($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
+            if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
                 // valid date?
-                if(!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
+                if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
                     // set error
                     $ddmYear->addError(BL::getError('DateIsInvalid'));
                 }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $values['email'] = $txtEmail->getValue();
 
                 // only update if display name changed
-                if($txtDisplayName->getValue() != $this->profile['display_name']) {
+                if ($txtDisplayName->getValue() != $this->profile['display_name']) {
                     $values['display_name'] = $txtDisplayName->getValue();
                     $values['url'] = BackendProfilesModel::getUrl($txtDisplayName->getValue(), $this->id);
                 }
 
                 // new password filled in?
-                if($txtPassword->isFilled()) {
+                if ($txtPassword->isFilled()) {
                     // get new salt
                     $salt = BackendProfilesModel::getRandomString();
 
@@ -240,15 +264,14 @@ class BackendProfilesEdit extends BackendBaseActionEdit
                 BackendProfilesModel::update($this->id, $values);
 
                 // birthday is filled in
-                if($ddmYear->isFilled()) {
+                if ($ddmYear->isFilled()) {
                     // mysql format
                     $birthDate = $ddmYear->getValue() . '-';
                     $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
                     $birthDate .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
+                } else {
+                    $birthDate = null;
                 }
-
-                // not filled in
-                else $birthDate = null;
 
                 // update settings
                 BackendProfilesModel::setSetting($this->id, 'first_name', $txtFirstName->getValue());
@@ -262,7 +285,11 @@ class BackendProfilesEdit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($values['email']) . '&highlight=row-' . $this->id);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode(
+                        $values['email']
+                    ) . '&highlight=row-' . $this->id
+                );
             }
         }
     }

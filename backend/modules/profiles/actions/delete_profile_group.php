@@ -24,7 +24,7 @@ class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
+        if ($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -38,10 +38,13 @@ class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_profile_delete_from_group', array('id' => $this->id));
 
             // profile group was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups');
+            $this->redirect(
+                BackendModel::createURLForAction(
+                    'edit'
+                ) . '&id=' . $profileGroup['profile_id'] . '&report=membership-deleted#tabGroups'
+            );
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // group does not exists
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 }

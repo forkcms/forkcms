@@ -23,7 +23,7 @@ class BackendProfilesDelete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendProfilesModel::exists($this->id)) {
+        if ($this->id !== null && BackendProfilesModel::exists($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -31,7 +31,7 @@ class BackendProfilesDelete extends BackendBaseActionDelete
             $profile = BackendProfilesModel::get($this->id);
 
             // already deleted? Prolly want to undo then
-            if($profile['status'] === 'deleted') {
+            if ($profile['status'] === 'deleted') {
                 // set profile status to active
                 BackendProfilesModel::update($this->id, array('status' => 'active'));
 
@@ -39,11 +39,12 @@ class BackendProfilesDelete extends BackendBaseActionDelete
                 BackendModel::triggerEvent($this->getModule(), 'after_reactivate', array('id' => $this->id));
 
                 // redirect
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
-            }
-
-            // profile is active
-            else {
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode(
+                        $profile['email']
+                    ) . '&highlight=row-' . $profile['id']
+                );
+            } else {
                 // delete profile
                 BackendProfilesModel::delete($this->id);
 
@@ -51,11 +52,14 @@ class BackendProfilesDelete extends BackendBaseActionDelete
                 BackendModel::triggerEvent($this->getModule(), 'after_delete_profile', array('id' => $this->id));
 
                 // redirect
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode($profile['email']) . '&highlight=row-' . $profile['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode(
+                        $profile['email']
+                    ) . '&highlight=row-' . $profile['id']
+                );
             }
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // profile does not exists
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 }

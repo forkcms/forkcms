@@ -77,7 +77,7 @@ class BackendProfilesAdd extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -95,11 +95,11 @@ class BackendProfilesAdd extends BackendBaseActionAdd
             $ddmCountry = $this->frm->getField('country');
 
             // email filled in?
-            if($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
                 // valid email?
-                if($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
                     // email already exists?
-                    if(BackendProfilesModel::existsByEmail($txtEmail->getValue())) {
+                    if (BackendProfilesModel::existsByEmail($txtEmail->getValue())) {
                         // set error
                         $txtEmail->addError(BL::getError('EmailExists'));
                     }
@@ -107,25 +107,25 @@ class BackendProfilesAdd extends BackendBaseActionAdd
             }
 
             // display name filled in?
-            if($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
+            if ($txtDisplayName->isFilled(BL::getError('DisplayNameIsRequired'))) {
                 // display name already exists?
-                if(BackendProfilesModel::existsDisplayName($txtDisplayName->getValue())) {
+                if (BackendProfilesModel::existsDisplayName($txtDisplayName->getValue())) {
                     // set error
                     $txtDisplayName->addError(BL::getError('DisplayNameExists'));
                 }
             }
 
             // one of the birthday fields are filled in
-            if($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
+            if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
                 // valid date?
-                if(!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
+                if (!checkdate($ddmMonth->getValue(), $ddmDay->getValue(), $ddmYear->getValue())) {
                     // set error
                     $ddmYear->addError(BL::getError('DateIsInvalid'));
                 }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $values = array(
                     'email' => $txtEmail->getValue(),
@@ -137,7 +137,7 @@ class BackendProfilesAdd extends BackendBaseActionAdd
                 $this->id = BackendProfilesModel::insert($values);
 
                 // new password filled in?
-                if($txtPassword->isFilled()) {
+                if ($txtPassword->isFilled()) {
                     // get new salt
                     $salt = BackendProfilesModel::getRandomString();
 
@@ -152,15 +152,15 @@ class BackendProfilesAdd extends BackendBaseActionAdd
                 BackendProfilesModel::update($this->id, $values);
 
                 // bday is filled in
-                if($ddmYear->isFilled()) {
+                if ($ddmYear->isFilled()) {
                     // mysql format
                     $birthDate = $ddmYear->getValue() . '-';
                     $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
                     $birthDate .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
+                } else {
+                    // not filled in
+                    $birthDate = null;
                 }
-
-                // not filled in
-                else $birthDate = null;
 
                 // update settings
                 BackendProfilesModel::setSetting($this->id, 'first_name', $txtFirstName->getValue());

@@ -37,23 +37,21 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
         $this->profileId = $this->getParameter('profile_id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
+        if ($this->id !== null && BackendProfilesModel::existsProfileGroup($this->id)) {
             // does profile exists
-            if($this->profileId !== null && BackendProfilesModel::exists($this->profileId)) {
+            if ($this->profileId !== null && BackendProfilesModel::exists($this->profileId)) {
                 parent::execute();
                 $this->getData();
                 $this->loadForm();
                 $this->validateForm();
                 $this->parse();
                 $this->display();
+            } else {
+                $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
             }
-
-            // no item found, throw an exception, because somebody is fucking with our URL
-            else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -78,7 +76,10 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
         // create elements
         $this->frm->addDropdown('group', $ddmValues, $this->profileGroup['group_id']);
         $this->frm->addDate('expiration_date', $this->profileGroup['expires_on']);
-        $this->frm->addTime('expiration_time', ($this->profileGroup['expires_on'] !== null) ? date('H:i', $this->profileGroup['expires_on']) : '');
+        $this->frm->addTime(
+            'expiration_time',
+            ($this->profileGroup['expires_on'] !== null) ? date('H:i', $this->profileGroup['expires_on']) : ''
+        );
 
         // set default element
         $this->frm->getField('group')->setDefaultElement('');
@@ -101,7 +102,7 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -112,22 +113,29 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
 
             // fields filled?
             $ddmGroup->isFilled(BL::getError('GroupIsRequired'));
-            if($txtExpirationDate->isFilled()) $txtExpirationDate->isValid(BL::getError('DateIsInvalid'));
-            if($txtExpirationTime->isFilled()) $txtExpirationTime->isValid(BL::getError('TimeIsInvalid'));
+            if ($txtExpirationDate->isFilled()) {
+                $txtExpirationDate->isValid(BL::getError('DateIsInvalid'));
+            }
+            if ($txtExpirationTime->isFilled()) {
+                $txtExpirationTime->isValid(BL::getError('TimeIsInvalid'));
+            }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $values['group_id'] = $ddmGroup->getSelected();
 
                 // only format date if not empty
-                if($txtExpirationDate->isFilled() && $txtExpirationTime->isFilled()) {
+                if ($txtExpirationDate->isFilled() && $txtExpirationTime->isFilled()) {
                     // format date
-                    $values['expires_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($txtExpirationDate, $txtExpirationTime));
+                    $values['expires_on'] = BackendModel::getUTCDate(
+                        null,
+                        BackendModel::getUTCTimestamp($txtExpirationDate, $txtExpirationTime)
+                    );
+                } else {
+                    // reset expiration date
+                    $values['expires_on'] = null;
                 }
-
-                // reset expiration date
-                else $values['expires_on'] = null;
 
                 // update values
                 BackendProfilesModel::updateProfileGroup($this->id, $values);
@@ -136,7 +144,13 @@ class BackendProfilesEditProfileGroup extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_profile_edit_groups', array('id' => $this->id));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->profileId . '&report=membership-saved&var=' . urlencode($values['group_id']) . '&highlight=row-' . $this->id . '#tabGroups');
+                $this->redirect(
+                    BackendModel::createURLForAction(
+                        'edit'
+                    ) . '&id=' . $this->profileId . '&report=membership-saved&var=' . urlencode(
+                        $values['group_id']
+                    ) . '&highlight=row-' . $this->id . '#tabGroups'
+                );
             }
         }
     }

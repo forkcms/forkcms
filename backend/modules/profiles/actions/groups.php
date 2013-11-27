@@ -18,7 +18,7 @@ class BackendProfilesGroups extends BackendBaseActionIndex
     /**
      * Filter variables.
      *
-     * @var	array
+     * @var    array
      */
     private $filter;
 
@@ -45,12 +45,13 @@ class BackendProfilesGroups extends BackendBaseActionIndex
         $query =
             'SELECT pg.id, pg.name, COUNT(gr.id) AS members_count
              FROM profiles_groups AS pg
-             LEFT OUTER JOIN profiles_groups_rights AS gr ON gr.group_id = pg.id AND (gr.expires_on IS NULL OR gr.expires_on > NOW())
+             LEFT OUTER JOIN profiles_groups_rights AS gr ON gr.group_id = pg.id AND
+                (gr.expires_on IS NULL OR gr.expires_on > NOW())
              GROUP BY pg.id
              HAVING 1';
 
         // add name
-        if($this->filter['name'] !== null) {
+        if ($this->filter['name'] !== null) {
             $query .= ' AND pg.name LIKE ?';
             $parameters[] = '%' . $this->filter['name'] . '%';
         }
@@ -84,23 +85,48 @@ class BackendProfilesGroups extends BackendBaseActionIndex
         $this->dgGroups = new BackendDataGridDB($query, $parameters);
 
         // overrule default URL
-        $this->dgGroups->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'name' => $this->filter['name']), false));
+        $this->dgGroups->setURL(
+            BackendModel::createURLForAction(
+                null,
+                null,
+                null,
+                array(
+                     'offset' => '[offset]',
+                     'order' => '[order]',
+                     'sort' => '[sort]',
+                     'name' => $this->filter['name']
+                ),
+                false
+            )
+        );
 
         // sorting columns
         $this->dgGroups->setSortingColumns(array('name', 'members_count'), 'name');
 
         // set the amount of profiles
-        $this->dgGroups->setColumnFunction(array(__CLASS__, 'parseNumProfiles'), array('[id]', '[members_count]'), 'members_count');
+        $this->dgGroups->setColumnFunction(
+            array(__CLASS__, 'parseNumProfiles'),
+            array('[id]', '[members_count]'),
+            'members_count'
+        );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('index')) {
-            $this->dgGroups->setColumnURL('members_count', BackendModel::createURLForAction('index') . '&amp;group=[id]');
+        if (BackendAuthentication::isAllowedAction('index')) {
+            $this->dgGroups->setColumnURL(
+                'members_count',
+                BackendModel::createURLForAction('index') . '&amp;group=[id]'
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_group')) {
+        if (BackendAuthentication::isAllowedAction('edit_group')) {
             $this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
-            $this->dgGroups->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
+            $this->dgGroups->addColumn(
+                'edit',
+                null,
+                BL::getLabel('Edit'),
+                BackendModel::createURLForAction('edit_group') . '&amp;id=[id]'
+            );
         }
     }
 
@@ -141,23 +167,27 @@ class BackendProfilesGroups extends BackendBaseActionIndex
     /**
      * Parse amount of profiles for the datagrid.
      *
-     * @param int $groupId Group id.
+     * @param int $groupId     Group id.
      * @param int $numProfiles Number of profiles.
      * @return string
      */
     public static function parseNumProfiles($groupId, $numProfiles)
     {
         // 1 item
-        if($numProfiles == 1) $output = '1 ' . BL::getLabel('Profile');
-
-        // no items
-        else $output = $numProfiles . ' ' . BL::getLabel('Profiles');
+        if ($numProfiles == 1) {
+            $output = '1 ' . BL::getLabel('Profile');
+        } else {
+            // no items
+            $output = $numProfiles . ' ' . BL::getLabel('Profiles');
+        }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('edit')) {
             // complete output
-            $output = '<a href="' . BackendModel::createURLForAction('index') . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
-
+            $output = '<a href="' .
+                      BackendModel::createURLForAction(
+                          'index'
+                      ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }
 
         return $output;

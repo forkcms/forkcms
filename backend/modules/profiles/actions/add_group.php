@@ -42,7 +42,7 @@ class BackendProfilesAddGroup extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -50,16 +50,16 @@ class BackendProfilesAddGroup extends BackendBaseActionEdit
             $txtName = $this->frm->getField('name');
 
             // name filled in?
-            if($txtName->isFilled(BL::getError('NameIsRequired'))) {
+            if ($txtName->isFilled(BL::getError('NameIsRequired'))) {
                 // name exists?
-                if(BackendProfilesModel::existsGroupName($txtName->getValue())) {
+                if (BackendProfilesModel::existsGroupName($txtName->getValue())) {
                     // set error
                     $txtName->addError(BL::getError('GroupNameExists'));
                 }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $values['name'] = $txtName->getValue();
 
@@ -70,7 +70,11 @@ class BackendProfilesAddGroup extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('groups') . '&report=group-added&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
+                $this->redirect(
+                    BackendModel::createURLForAction('groups') . '&report=group-added&var=' . urlencode(
+                        $values['name']
+                    ) . '&highlight=row-' . $id
+                );
             }
         }
     }
