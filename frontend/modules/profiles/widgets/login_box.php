@@ -36,7 +36,9 @@ class FrontendProfilesWidgetLoginBox extends FrontendBaseWidget
     private function loadForm()
     {
         // don't show the form if someone is logged in
-        if(FrontendProfilesAuthentication::isLoggedIn()) return;
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
+            return;
+        }
 
         $this->frm = new FrontendForm('login', FrontendNavigation::getURLForBlock('profiles', 'login'));
         $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
@@ -54,7 +56,7 @@ class FrontendProfilesWidgetLoginBox extends FrontendBaseWidget
     {
         $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
-        if(FrontendProfilesAuthentication::isLoggedIn()) {
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
             // get the profile
             /**
              * @var FrontendProfilesProfile

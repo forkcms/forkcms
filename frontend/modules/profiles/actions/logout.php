@@ -21,7 +21,9 @@ class FrontendProfilesLogout extends FrontendBaseBlock
     public function execute()
     {
         // logout
-        if(FrontendProfilesAuthentication::isLoggedIn()) FrontendProfilesAuthentication::logout();
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
+            FrontendProfilesAuthentication::logout();
+        }
 
         // trigger event
         FrontendModel::triggerEvent('profiles', 'after_logout');

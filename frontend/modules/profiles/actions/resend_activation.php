@@ -25,16 +25,16 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
     public function execute()
     {
         // profile not logged in
-        if(!FrontendProfilesAuthentication::isLoggedIn()) {
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->loadTemplate();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
+        } else {
+            // profile logged in
+            $this->redirect(FrontendNavigation::getURL(404));
         }
-
-        // profile logged in
-        else $this->redirect(FrontendNavigation::getURL(404));
     }
 
     /**
@@ -55,7 +55,7 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
     private function parse()
     {
         // form was sent?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('resendActivationSuccess', true);
 
@@ -73,16 +73,16 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get field
             $txtEmail = $this->frm->getField('email');
 
             // field is filled in?
-            if($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
+            if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
                 // valid email?
-                if($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
                     // email exists?
-                    if(FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
+                    if (FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
                         // get profile id using the filled in email
                         $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 
@@ -90,18 +90,22 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
                         $profile = FrontendProfilesModel::get($profileId);
 
                         // must be inactive
-                        if($profile->getStatus() != FrontendProfilesAuthentication::LOGIN_INACTIVE) $txtEmail->addError(FL::getError('ProfileIsActive'));
+                        if ($profile->getStatus() != FrontendProfilesAuthentication::LOGIN_INACTIVE
+                        ) {
+                            $txtEmail->addError(FL::getError('ProfileIsActive'));
+                        }
+                    } else {
+                        // email don't exist
+                        $txtEmail->addError(FL::getError('EmailIsInvalid'));
                     }
-
-                    // email don't exist
-                    else $txtEmail->addError(FL::getError('EmailIsInvalid'));
                 }
             }
 
             // valid login
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // activation URL
-                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') . '/' . $profile->getSetting('activation_key');
+                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') .
+                                               '/' . $profile->getSetting('activation_key');
 
                 // trigger event
                 FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
@@ -117,10 +121,9 @@ class FrontendProfilesResendActivation extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(SELF . '?sent=true');
+            } else {
+                $this->tpl->assign('resendActivationHasError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('resendActivationHasError', true);
         }
     }
 }

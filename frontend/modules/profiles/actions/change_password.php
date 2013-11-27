@@ -18,7 +18,7 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -35,19 +35,19 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
     public function execute()
     {
         // profile logged in
-        if(FrontendProfilesAuthentication::isLoggedIn()) {
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->getData();
             $this->loadTemplate();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
-        }
-
-        // profile not logged in
-        else {
+        } else {
             $this->redirect(
-                FrontendNavigation::getURLForBlock('profiles', 'login') . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_password'),
+                FrontendNavigation::getURLForBlock(
+                    'profiles',
+                    'login'
+                ) . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_password'),
                 307
             );
         }
@@ -69,7 +69,9 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
     {
         $this->frm = new FrontendForm('updatePassword', null, null, 'updatePasswordForm');
         $this->frm->addPassword('old_password')->setAttributes(array('required' => null));
-        $this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput')->setAttributes(array('required' => null));
+        $this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput')->setAttributes(
+            array('required' => null)
+        );
         $this->frm->addCheckbox('show_password');
     }
 
@@ -79,7 +81,7 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
     private function parse()
     {
         // have the settings been saved?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show success message
             $this->tpl->assign('updatePasswordSuccess', true);
         }
@@ -94,15 +96,15 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get fields
             $txtOldPassword = $this->frm->getField('old_password');
             $txtNewPassword = $this->frm->getField('new_password');
 
             // old password filled in?
-            if($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
+            if ($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
                 // old password correct?
-                if(FrontendProfilesAuthentication::getLoginStatus($this->profile->getEmail(), $txtOldPassword->getValue()) !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
+                if (FrontendProfilesAuthentication::getLoginStatus($this->profile->getEmail(), $txtOldPassword->getValue()) !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
                     // set error
                     $txtOldPassword->addError(FL::getError('InvalidPassword'));
                 }
@@ -112,19 +114,24 @@ class FrontendProfilesChangePassword extends FrontendBaseBlock
             }
 
             // no errors
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // update password
                 FrontendProfilesAuthentication::updatePassword($this->profile->getId(), $txtNewPassword->getValue());
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_change_password', array('id' => $this->profile->getId()));
+                FrontendModel::triggerEvent(
+                    'profiles',
+                    'after_change_password',
+                    array('id' => $this->profile->getId())
+                );
 
                 // redirect
-                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true');
+                $this->redirect(
+                    SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true'
+                );
+            } else {
+                $this->tpl->assign('updatePasswordHasFormError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('updatePasswordHasFormError', true);
         }
     }
 }

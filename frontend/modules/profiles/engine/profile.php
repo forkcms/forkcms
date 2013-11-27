@@ -19,67 +19,69 @@ class FrontendProfilesProfile
     /**
      * The display name.
      *
-     * @var	string
+     * @var    string
      */
     private $displayName;
 
     /**
      * The profile email.
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
      * The groups this profile belongs to, if any. The keys are the group IDs, the values the HTML-escaped group names.
      *
-     * @var	array
+     * @var    array
      */
     protected $groups;
 
     /**
      * The profile id.
      *
-     * @var	int
+     * @var    int
      */
     private $id;
 
     /**
      * The profile register date (unix timestamp).
      *
-     * @var	int
+     * @var    int
      */
     private $registeredOn;
 
     /**
      * The profile settings.
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
     /**
      * The profile status.
      *
-     * @var	string
+     * @var    string
      */
     private $status;
 
     /**
      * The profile url.
      *
-     * @var	string
+     * @var    string
      */
     private $url;
 
     /**
      * Constructor.
      *
-     * @param int[optional] $profileId The profile id to load data from.
+     * @param int [optional] $profileId The profile id to load data from.
      */
     public function __construct($profileId = null)
     {
-        if($profileId !== null) $this->loadProfile((int) $profileId);
+        if ($profileId !== null) {
+            $this->loadProfile((int) $profileId);
+        }
     }
 
     /**
@@ -125,20 +127,24 @@ class FrontendProfilesProfile
     /**
      * Get a profile setting by name.
      *
-     * @param string $name Setting name.
-     * @param string[optional] $defaultValue Default value is used when the setting does not exist.
+     * @param string $name  Setting name.
+     * @param        string [optional] $defaultValue Default value is used when the setting does not exist.
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)
     {
         // if settings array does not exists then get it first
-        if(empty($this->settings)) $this->settings = $this->getSettings();
+        if (empty($this->settings)) {
+            $this->settings = $this->getSettings();
+        }
 
         // when setting exists return it
-        if(array_key_exists($name, $this->settings)) return $this->settings[$name];
-
-        // if not return default value
-        else return $defaultValue;
+        if (array_key_exists($name, $this->settings)) {
+            return $this->settings[$name];
+        } else {
+            // if not return default value
+            return $defaultValue;
+        }
     }
 
     /**
@@ -149,7 +155,9 @@ class FrontendProfilesProfile
     public function getSettings()
     {
         // if settings array does not exist then get it first
-        if(empty($this->settings)) $this->settings = FrontendProfilesModel::getSettings($this->getId());
+        if (empty($this->settings)) {
+            $this->settings = FrontendProfilesModel::getSettings($this->getId());
+        }
 
         // return settings
         return $this->settings;
@@ -254,10 +262,12 @@ class FrontendProfilesProfile
             'SELECT i.name, i.value
              FROM profiles_settings AS i
              WHERE i.profile_id = ?',
-             $this->getId()
+            $this->getId()
         );
 
-        foreach($this->settings as &$value) $value = unserialize($value);
+        foreach ($this->settings as &$value) {
+            $value = unserialize($value);
+        }
     }
 
     /**
@@ -303,7 +313,7 @@ class FrontendProfilesProfile
     /**
      * Set a profile setting.
      *
-     * @param string $name Setting name.
+     * @param string $name  Setting name.
      * @param string $value New setting value.
      */
     public function setSetting($name, $value)
@@ -326,7 +336,7 @@ class FrontendProfilesProfile
         FrontendProfilesModel::setSettings($this->getId(), $values);
 
         // add settings to cache
-        foreach($values as $key => $value) {
+        foreach ($values as $key => $value) {
             $this->settings[$key] = $value;
         }
     }
@@ -363,7 +373,9 @@ class FrontendProfilesProfile
         $return['registered_on'] = $this->getRegisteredOn();
 
         // add settings
-        foreach($this->settings as $key => $value) $return['settings'][$key] = $value;
+        foreach ($this->settings as $key => $value) {
+            $return['settings'][$key] = $value;
+        }
 
         // urls
         $return['url']['dashboard'] = FrontendNavigation::getURLForBlock('profiles');

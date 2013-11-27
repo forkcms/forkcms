@@ -18,7 +18,7 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
     /**
      * FrontendForm instance.
      *
-     * @var	FrontendForm
+     * @var    FrontendForm
      */
     private $frm;
 
@@ -28,16 +28,16 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
     public function execute()
     {
         // only for guests
-        if(!FrontendProfilesAuthentication::isLoggedIn()) {
+        if (!FrontendProfilesAuthentication::isLoggedIn()) {
             parent::execute();
             $this->loadTemplate();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
+        } else {
+            // already logged in, redirect to settings
+            $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
         }
-
-        // already logged in, redirect to settings
-        else $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
     }
 
     /**
@@ -55,7 +55,7 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
     private function parse()
     {
         // e-mail was sent?
-        if($this->URL->getParameter('sent') == 'true') {
+        if ($this->URL->getParameter('sent') == 'true') {
             // show message
             $this->tpl->assign('forgotPasswordSuccess', true);
 
@@ -73,34 +73,38 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
     private function validateForm()
     {
         // is the form submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get field
             $txtEmail = $this->frm->getField('email');
 
             // field is filled in?
-            if($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
+            if ($txtEmail->isFilled(FL::getError('EmailIsRequired'))) {
                 // valid email?
-                if($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
+                if ($txtEmail->isEmail(FL::getError('EmailIsInvalid'))) {
                     // email exists?
-                    if(!FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
+                    if (!FrontendProfilesModel::existsByEmail($txtEmail->getValue())) {
                         $txtEmail->addError(FL::getError('EmailIsUnknown'));
                     }
                 }
             }
 
             // valid login
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // get profile id
                 $profileId = FrontendProfilesModel::getIdByEmail($txtEmail->getValue());
 
                 // generate forgot password key
-                $key = FrontendProfilesModel::getEncryptedString($profileId . microtime(), FrontendProfilesModel::getRandomString());
+                $key = FrontendProfilesModel::getEncryptedString(
+                    $profileId . microtime(),
+                    FrontendProfilesModel::getRandomString()
+                );
 
                 // insert forgot password key
                 FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
 
                 // reset url
-                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $key;
+                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'reset_password') .
+                                          '/' . $key;
                 $mailValues['firstName'] = FrontendProfilesModel::getSetting($profileId, 'first_name');
                 $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');
 
@@ -118,10 +122,9 @@ class FrontendProfilesForgotPassword extends FrontendBaseBlock
 
                 // redirect
                 $this->redirect(SELF . '?sent=true');
+            } else {
+                $this->tpl->assign('forgotPasswordHasError', true);
             }
-
-            // show errors
-            else $this->tpl->assign('forgotPasswordHasError', true);
         }
     }
 }
