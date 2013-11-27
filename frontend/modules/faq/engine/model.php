@@ -39,8 +39,8 @@ class FrontendFaqModel implements FrontendTagsInterface
      * Get all items in a category
      *
      * @param int $categoryId
-     * @param int[optional] $limit
-     * @param mixed[optional] $excludeIds
+     * @param     int   [optional] $limit
+     * @param     mixed [optional] $excludeIds
      * @return array
      */
     public static function getAllForCategory($categoryId, $limit = null, $excludeIds = null)
@@ -50,32 +50,36 @@ class FrontendFaqModel implements FrontendTagsInterface
         $excludeIds = (empty($excludeIds) ? array(0) : (array) $excludeIds);
 
         // get items
-        if($limit != null) $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
-             AND i.id NOT IN (' . implode(',', $excludeIds) . ')
+        if ($limit != null) {
+            $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+                'SELECT i.*, m.url
+                 FROM faq_questions AS i
+                 INNER JOIN meta AS m ON i.meta_id = m.id
+                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
+                 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence
              LIMIT ?',
-            array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
-        );
-
-        else $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
-             AND i.id NOT IN (' . implode(',', $excludeIds) . ')
+                array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
+            );
+        } else {
+            $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+                'SELECT i.*, m.url
+                 FROM faq_questions AS i
+                 INNER JOIN meta AS m ON i.meta_id = m.id
+                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
+                 AND i.id NOT IN (' . implode(',', $excludeIds) . ')
              ORDER BY i.sequence',
-            array((int) $categoryId, FRONTEND_LANGUAGE, 'N')
-        );
+                array((int) $categoryId, FRONTEND_LANGUAGE, 'N')
+            );
+        }
 
         // init var
         $link = FrontendNavigation::getURLForBlock('faq', 'detail');
 
         // build the item urls
-        foreach($items as &$item) $item['full_url'] = $link . '/' . $item['url'];
+        foreach ($items as &$item) {
+            $item['full_url'] = $link . '/' . $item['url'];
+        }
 
         return $items;
     }
@@ -100,7 +104,9 @@ class FrontendFaqModel implements FrontendTagsInterface
         $link = FrontendNavigation::getURLForBlock('faq', 'category');
 
         // build the item url
-        foreach($items as &$item) $item['full_url'] = $link . '/' . $item['url'];
+        foreach ($items as &$item) {
+            $item['full_url'] = $link . '/' . $item['url'];
+        }
 
         return $items;
     }
@@ -158,11 +164,13 @@ class FrontendFaqModel implements FrontendTagsInterface
             array('N')
         );
 
-        if(!empty($items)) {
+        if (!empty($items)) {
             $link = FrontendNavigation::getURLForBlock('faq', 'detail');
 
             // build the item urls
-            foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
+            foreach ($items as &$row) {
+                $row['full_url'] = $link . '/' . $row['url'];
+            }
         }
 
         return $items;
@@ -178,6 +186,7 @@ class FrontendFaqModel implements FrontendTagsInterface
     public static function getIdForTags(FrontendURL $url)
     {
         $itemURL = (string) $url->getParameter(1);
+
         return self::get($itemURL);
     }
 
@@ -200,7 +209,9 @@ class FrontendFaqModel implements FrontendTagsInterface
         );
 
         $link = FrontendNavigation::getURLForBlock('faq', 'detail');
-        foreach($items as &$item) $item['full_url'] = $link . '/' . $item['url'];
+        foreach ($items as &$item) {
+            $item['full_url'] = $link . '/' . $item['url'];
+        }
 
         return $items;
     }
@@ -214,17 +225,17 @@ class FrontendFaqModel implements FrontendTagsInterface
     public static function getFaqsForCategory($id)
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND i.category_id = ?
-                 ORDER BY i.sequence ASC',
-                array(FRONTEND_LANGUAGE, (int) $id)
+            'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
+             FROM faq_questions AS i
+             INNER JOIN meta AS m ON i.meta_id = m.id
+             WHERE i.language = ? AND i.category_id = ?
+             ORDER BY i.sequence ASC',
+            array(FRONTEND_LANGUAGE, (int) $id)
         );
 
         $link = FrontendNavigation::getURLForBlock('faq', 'detail');
 
-        foreach($items as &$item) {
+        foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
         }
 
@@ -235,7 +246,7 @@ class FrontendFaqModel implements FrontendTagsInterface
      * Get related items based on tags
      *
      * @param int $id
-     * @param int[optional] $limit
+     * @param     int [optional] $limit
      * @return array
      */
     public static function getRelated($id, $limit = 5)
@@ -243,7 +254,9 @@ class FrontendFaqModel implements FrontendTagsInterface
         $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $id, 'faq', 'faq');
 
         // there are no items, so return an empty array
-        if(empty($relatedIDs)) return array();
+        if (empty($relatedIDs)) {
+            return array();
+        }
 
         $link = FrontendNavigation::getURLForBlock('faq', 'detail');
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -257,7 +270,9 @@ class FrontendFaqModel implements FrontendTagsInterface
             'id'
         );
 
-        foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
+        foreach ($items as &$row) {
+            $row['full_url'] = $link . '/' . $row['url'];
+        }
 
         return $items;
     }
@@ -293,8 +308,8 @@ class FrontendFaqModel implements FrontendTagsInterface
      * Parse the search results for this module
      *
      * Note: a module's search function should always:
-     * 		- accept an array of entry id's
-     * 		- return only the entries that are allowed to be displayed, with their array's index being the entry's id
+     *        - accept an array of entry id's
+     *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
      *
      *
      * @param array $ids
@@ -315,7 +330,7 @@ class FrontendFaqModel implements FrontendTagsInterface
         );
 
         // prepare items for search
-        foreach($items as &$item) {
+        foreach ($items as &$item) {
             $item['full_url'] = FrontendNavigation::getURLForBlock('faq', 'detail') . '/' . $item['url'];
         }
 
@@ -325,46 +340,52 @@ class FrontendFaqModel implements FrontendTagsInterface
     /**
      * Increase the number of views for this item
      *
-     * @param int $id
+     * @param int  $id
      * @param bool $useful
-     * @param mixed[optional] $previousFeedback
+     * @param      mixed [optional] $previousFeedback
      * @return array
      */
     public static function updateFeedback($id, $useful, $previousFeedback = null)
     {
         // feedback hasn't changed so don't update the counters
-        if($previousFeedback !== null && $useful == $previousFeedback) return;
+        if ($previousFeedback !== null && $useful == $previousFeedback) {
+            return;
+        }
 
         $db = FrontendModel::getContainer()->get('database');
 
         // update counter with current feedback (increase)
-        if($useful) $db->execute(
-            'UPDATE faq_questions
-             SET num_usefull_yes = num_usefull_yes + 1
-             WHERE id = ?',
-            array((int) $id)
-        );
-
-        else $db->execute(
-            'UPDATE faq_questions
-             SET num_usefull_no = num_usefull_no + 1
-             WHERE id = ?',
-            array((int) $id)
-        );
+        if ($useful) {
+            $db->execute(
+                'UPDATE faq_questions
+                 SET num_usefull_yes = num_usefull_yes + 1
+                 WHERE id = ?',
+                array((int) $id)
+            );
+        } else {
+            $db->execute(
+                'UPDATE faq_questions
+                 SET num_usefull_no = num_usefull_no + 1
+                 WHERE id = ?',
+                array((int) $id)
+            );
+        }
 
         // update counter with previous feedback (decrease)
-        if($previousFeedback) $db->execute(
-            'UPDATE faq_questions
-             SET num_usefull_yes = num_usefull_yes - 1
-             WHERE id = ?',
-            array((int) $id)
-        );
-
-        elseif($previousFeedback !== null) $db->execute(
-            'UPDATE faq_questions
-             SET num_usefull_no = num_usefull_no - 1
-             WHERE id = ?',
-            array((int) $id)
-        );
+        if ($previousFeedback) {
+            $db->execute(
+                'UPDATE faq_questions
+                 SET num_usefull_yes = num_usefull_yes - 1
+                 WHERE id = ?',
+                array((int) $id)
+            );
+        } elseif ($previousFeedback !== null) {
+            $db->execute(
+                'UPDATE faq_questions
+                 SET num_usefull_no = num_usefull_no - 1
+                 WHERE id = ?',
+                array((int) $id)
+            );
+        }
     }
 }

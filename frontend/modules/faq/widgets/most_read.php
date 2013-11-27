@@ -31,6 +31,9 @@ class FrontendFaqWidgetMostRead extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->tpl->assign('widgetFaqMostRead', FrontendFaqModel::getMostRead(FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)));
+        $this->tpl->assign(
+            'widgetFaqMostRead',
+            FrontendFaqModel::getMostRead(FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10))
+        );
     }
 }

@@ -37,7 +37,9 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 
         $this->loadTemplate();
 
-        if(!FrontendModel::getModuleSetting('faq', 'allow_own_question', false)) return;
+        if (!FrontendModel::getModuleSetting('faq', 'allow_own_question', false)) {
+            return;
+        }
 
         $this->loadForm();
         $this->validateForm();
@@ -62,8 +64,11 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
     private function parse()
     {
         // parse the form or a status
-        if(empty($this->status)) $this->frm->parse($this->tpl);
-        else $this->tpl->assign($this->status, true);
+        if (empty($this->status)) {
+            $this->frm->parse($this->tpl);
+        } else {
+            $this->tpl->assign($this->status, true);
+        }
 
         // parse an option so the stuff can be shown
         $this->tpl->assign('widgetFaqOwnQuestion', true);
@@ -74,7 +79,7 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // validate required fields
@@ -82,23 +87,36 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
             $this->frm->getField('email')->isEmail(FL::err('EmailIsInvalid'));
             $this->frm->getField('message')->isFilled(FL::err('QuestionIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 $spamFilterEnabled = FrontendModel::getModuleSetting('faq', 'spamfilter');
                 $variables['sentOn'] = time();
                 $variables['name'] = $this->frm->getField('name')->getValue();
                 $variables['email'] = $this->frm->getField('email')->getValue();
                 $variables['message'] = $this->frm->getField('message')->getValue();
 
-                if($spamFilterEnabled) {
+                if ($spamFilterEnabled) {
                     // if the comment is spam alter the comment status so it will appear in the spam queue
-                    if(FrontendModel::isSpam($variables['message'], SITE_URL . FrontendNavigation::getURLForBlock('faq'), $variables['name'], $variables['email'])) {
+                    if (FrontendModel::isSpam(
+                        $variables['message'],
+                        SITE_URL . FrontendNavigation::getURLForBlock('faq'),
+                        $variables['name'],
+                        $variables['email']
+                    )
+                    ) {
                         $this->status = 'errorSpam';
+
                         return;
                     }
                 }
 
                 $this->status = 'success';
-                FrontendMailer::addEmail(sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']), FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/own_question.tpl', $variables, $variables['email'], $variables['name']);
+                FrontendMailer::addEmail(
+                    sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']),
+                    FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/own_question.tpl',
+                    $variables,
+                    $variables['email'],
+                    $variables['name']
+                );
             }
         }
     }

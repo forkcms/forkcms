@@ -16,12 +16,12 @@
 class FrontendFaqCategory extends FrontendBaseBlock
 {
     /**
-     * @var	array
+     * @var    array
      */
     private $questions;
 
     /**
-     * @var	array
+     * @var    array
      */
     private $record;
 
@@ -44,13 +44,17 @@ class FrontendFaqCategory extends FrontendBaseBlock
     private function getData()
     {
         // validate incoming parameters
-        if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+        if ($this->URL->getParameter(1) === null) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         // get by URL
         $this->record = FrontendFaqModel::getCategory($this->URL->getParameter(1));
 
         // anything found?
-        if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+        if (empty($this->record)) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
         $this->record['full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $this->record['url'];
         $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);

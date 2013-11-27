@@ -32,6 +32,12 @@ class FrontendFaqWidgetCategoryList extends FrontendBaseWidget
     private function parse()
     {
         $this->tpl->assign('widgetFaqCategory', FrontendFaqModel::getCategoryById($this->data['id']));
-        $this->tpl->assign('widgetFaqCategoryList', FrontendFaqModel::getAllForCategory($this->data['id'], FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)));
+        $this->tpl->assign(
+            'widgetFaqCategoryList',
+            FrontendFaqModel::getAllForCategory(
+                $this->data['id'],
+                FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)
+            )
+        );
     }
 }
