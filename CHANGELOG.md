@@ -3,6 +3,7 @@
 Improvements:
 
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+* Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
 
 Bugfixes:
 
