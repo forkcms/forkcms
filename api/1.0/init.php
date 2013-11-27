@@ -17,7 +17,7 @@ class APIInit extends KernelLoader
     /**
      * Current type
      *
-     * @var	string
+     * @var    string
      */
     private $type;
 
@@ -30,13 +30,17 @@ class APIInit extends KernelLoader
         $type = (string) $type;
 
         // check if this is a valid type
-        if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
+        if (!in_array($type, $allowedTypes)) {
+            exit('Invalid init-type');
+        }
 
         // set type
         $this->type = $type;
 
         // set a default timezone if no one was set by PHP.ini
-        if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+        if (ini_get('date.timezone') == '') {
+            date_default_timezone_set('Europe/Brussels');
+        }
 
         /**
          * At first we enable the error reporting. Later on it will be disabled based on the
@@ -77,14 +81,14 @@ class APIInit extends KernelLoader
     /**
      * A custom error-handler so we can handle warnings about undefined labels
      *
-     * @param int $errorNumber The level of the error raised, as an integer.
+     * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
      * @return bool
      */
     public static function errorHandler($errorNumber, $errorString)
     {
         // is this an undefined index?
-        if(mb_substr_count($errorString, 'Undefined index:') > 0) {
+        if (mb_substr_count($errorString, 'Undefined index:') > 0) {
             // cleanup
             $index = trim(str_replace('Undefined index:', '', $errorString));
 
@@ -92,21 +96,23 @@ class APIInit extends KernelLoader
             $type = mb_substr($index, 0, 3);
 
             // is the index locale?
-            if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
-
+            if (in_array($type, array('act', 'err', 'lbl', 'msg'))) {
+                echo '{$' . $index . '}';
+            } else {
+                // return false, so the standard error handler isn't bypassed
+                return false;
+            }
+        } else {
             // return false, so the standard error handler isn't bypassed
-            else return false;
+            return false;
         }
-
-        // return false, so the standard error handler isn't bypassed
-        else return false;
     }
 
     /**
      * This method will be called by the Spoon Exception handler and is specific for exceptions thrown in AJAX-actions
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that should be mailed.
+     * @param string $output    The output that should be mailed.
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
@@ -123,14 +129,14 @@ class APIInit extends KernelLoader
      * This method will be called by the Spoon Exception handler
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that should be mailed.
+     * @param string $output    The output that should be mailed.
      */
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
 
         // mail it?
-        if(SPOON_DEBUG_EMAIL != '') {
+        if (SPOON_DEBUG_EMAIL != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -151,7 +157,7 @@ class APIInit extends KernelLoader
      * thrown in JS-files parsed through PHP
      *
      * @param object $exception The exception that was thrown.
-     * @param string $output The output that should be mailed.
+     * @param string $output    The output that should be mailed.
      */
     public static function exceptionJSHandler($exception, $output)
     {
@@ -174,7 +180,7 @@ class APIInit extends KernelLoader
     private function setDebugging()
     {
         // debugging enabled
-        if(SPOON_DEBUG) {
+        if (SPOON_DEBUG) {
             // set error reporting as high as possible
             error_reporting(E_ALL | E_STRICT);
 
@@ -186,17 +192,14 @@ class APIInit extends KernelLoader
              * error handler to cleanup the message
              */
             set_error_handler(array('APIInit', 'errorHandler'));
-        }
-
-        // debugging disabled
-        else {
+        } else {
             // set error reporting as low as possible
             error_reporting(0);
 
             // don't show error on the screen
             ini_set('display_errors', 'Off');
 
-            switch($this->type) {
+            switch ($this->type) {
                 case 'backend_ajax':
                     Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;

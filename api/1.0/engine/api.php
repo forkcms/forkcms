@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class api extends KernelLoader implements ApplicationInterface
+class Api extends KernelLoader implements ApplicationInterface
 {
     // statuses
     const OK = 200;
@@ -43,7 +43,7 @@ class api extends KernelLoader implements ApplicationInterface
         $parameters = array_merge($_GET, $_POST);
 
         // validate parameters
-        if(!isset($parameters['method'])) {
+        if (!isset($parameters['method'])) {
             return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }
 
@@ -51,7 +51,7 @@ class api extends KernelLoader implements ApplicationInterface
         $method = SpoonFilter::getValue($parameters['method'], null, '');
 
         // validate
-        if($method == '') {
+        if ($method == '') {
             return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }
 
@@ -59,16 +59,21 @@ class api extends KernelLoader implements ApplicationInterface
         $chunks = (array) explode('.', $method, 2);
 
         // validate method
-        if(!isset($chunks[1])) {
+        if (!isset($chunks[1])) {
             return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
         // build the path to the backend API file
-        if($chunks[0] == 'core') $path = BACKEND_CORE_PATH . '/engine/api.php';
-        else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
+        if ($chunks[0] == 'core') {
+            $path = BACKEND_CORE_PATH . '/engine/api.php';
+        } else {
+            $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
+        }
 
         // check if the file is present? If it isn't present there is a problem
-        if(!is_file($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+        if (!is_file($path)) {
+            return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+        }
 
         // build config-object-name
         $className = 'Backend' . SpoonFilter::toCamelCase($chunks[0]) . 'API';
@@ -78,7 +83,7 @@ class api extends KernelLoader implements ApplicationInterface
         require_once $path;
 
         // validate if the method exists
-        if(!is_callable(array($className, $methodName))) {
+        if (!is_callable(array($className, $methodName))) {
             return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
@@ -93,12 +98,16 @@ class api extends KernelLoader implements ApplicationInterface
 
             // get data from docs
             $matches = array();
-            preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $reflectionMethod->getDocComment(), $matches);
+            preg_match_all(
+                '/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um',
+                $reflectionMethod->getDocComment(),
+                $matches
+            );
 
             // documentation found
-            if(!empty($matches[0])) {
+            if (!empty($matches[0])) {
                 // loop matches
-                foreach($matches[0] as $i => $row) {
+                foreach ($matches[0] as $i => $row) {
                     // set documentation
                     $parameterDocumentation[$matches[2][$i]] = array(
                         'type' => str_replace('[optional]', '', $matches[1][$i]),
@@ -109,23 +118,25 @@ class api extends KernelLoader implements ApplicationInterface
             }
 
             // loop parameters
-            foreach($reflectionMethod->getParameters() as $parameter) {
+            foreach ($reflectionMethod->getParameters() as $parameter) {
                 // init var
                 $name = $parameter->getName();
 
                 // check if the parameter is available
-                if(!$parameter->isOptional() && !isset($parameters[$name])) {
+                if (!$parameter->isOptional() && !isset($parameters[$name])) {
                     return self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
                 }
 
                 // add not-passed arguments
-                if($parameter->isOptional() && !isset($parameters[$name])) $arguments[] = $parameter->getDefaultValue();
-
-                // add argument if we know the type
-                elseif(isset($parameterDocumentation[$name]['type'])) {
+                if ($parameter->isOptional() && !isset($parameters[$name])) {
+                    $arguments[] = $parameter->getDefaultValue();
+                } elseif (isset($parameterDocumentation[$name]['type'])) {
+                    // add argument if we know the type
                     // get default value
                     $defaultValue = null;
-                    if($parameter->isOptional()) $defaultValue = $parameter->getDefaultValue();
+                    if ($parameter->isOptional()) {
+                        $defaultValue = $parameter->getDefaultValue();
+                    }
 
                     // add argument
                     $arguments[] = SpoonFilter::getValue(
@@ -134,28 +145,27 @@ class api extends KernelLoader implements ApplicationInterface
                         $defaultValue,
                         $parameterDocumentation[$name]['type']
                     );
+                } else {
+                    // fallback
+                    $arguments[] = $parameters[$name];
                 }
-
-                // fallback
-                else $arguments[] = $parameters[$name];
             }
 
             // get the return
             $data = (array) call_user_func_array(array($className, $methodName), (array) $arguments);
 
             // output
-            if(self::$content === null) {
+            if (self::$content === null) {
                 self::output(self::OK, $data);
             }
-        }
-
-        // catch exceptions
-        catch(Exception $e) {
+        } catch (Exception $e) {
             // if we are debugging we should see the exceptions
-            if(SPOON_DEBUG) {
-                if(isset($parameters['debug']) && $parameters['debug'] == 'false') {
+            if (SPOON_DEBUG) {
+                if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
                     // do nothing
-                } else throw $e;
+                } else {
+                    throw $e;
+                }
             }
 
             // output
@@ -166,14 +176,16 @@ class api extends KernelLoader implements ApplicationInterface
     /**
      * Callback-method for elements in the return-array
      *
-     * @param mixed $input The value.
-     * @param string $key The key.
-     * @param DOMElement $XML The root-element.
+     * @param mixed      $input The value.
+     * @param string     $key   The key.
+     * @param DOMElement $XML   The root-element.
      */
     private static function arrayToXML(&$input, $key, $XML)
     {
         // skip attributes
-        if($key == '@attributes') return;
+        if ($key == '@attributes') {
+            return;
+        }
 
         // create element
         $element = new DOMElement($key);
@@ -182,18 +194,22 @@ class api extends KernelLoader implements ApplicationInterface
         $XML->appendChild($element);
 
         // no value? just stop here
-        if($input === null) return;
+        if ($input === null) {
+            return;
+        }
 
         // is it an array and are there attributes
-        if(is_array($input) && isset($input['@attributes'])) {
+        if (is_array($input) && isset($input['@attributes'])) {
             // loop attributes
-            foreach((array) $input['@attributes'] as $name => $value) $element->setAttribute($name, $value);
+            foreach ((array) $input['@attributes'] as $name => $value) {
+                $element->setAttribute($name, $value);
+            }
 
             // remove attributes
             unset($input['@attributes']);
 
             // reset the input if it is a single value
-            if(count($input) == 1) {
+            if (count($input) == 1) {
                 // get keys
                 $keys = array_keys($input);
 
@@ -203,9 +219,9 @@ class api extends KernelLoader implements ApplicationInterface
         }
 
         // the input isn't an array
-        if(!is_array($input)) {
+        if (!is_array($input)) {
             // a string?
-            if(is_string($input)) {
+            if (is_string($input)) {
                 // characters that require a cdata wrapper
                 $illegalCharacters = array('&', '<', '>', '"', '\'');
 
@@ -213,8 +229,8 @@ class api extends KernelLoader implements ApplicationInterface
                 $wrapCdata = false;
 
                 // find illegal characters in input string
-                foreach($illegalCharacters as $character) {
-                    if(stripos($input, $character) !== false) {
+                foreach ($illegalCharacters as $character) {
+                    if (stripos($input, $character) !== false) {
                         // wrap input with cdata
                         $wrapCdata = true;
 
@@ -224,25 +240,24 @@ class api extends KernelLoader implements ApplicationInterface
                 }
 
                 // check if value contains illegal chars, if so wrap in CDATA
-                if($wrapCdata) $element->appendChild(new DOMCdataSection($input));
-
-                // just regular element
-                else $element->appendChild(new DOMText($input));
+                if ($wrapCdata) {
+                    $element->appendChild(new DOMCdataSection($input));
+                } else {
+                    // just regular element
+                    $element->appendChild(new DOMText($input));
+                }
+            } else {
+                // regular element
+                $element->appendChild(new DOMText($input));
             }
-
-            // regular element
-            else $element->appendChild(new DOMText($input));
-        }
-
-        // the value is an array
-        else {
-            // init var
+        } else {
+            // the value is an array
             $isNonNumeric = false;
 
             // loop all elements
-            foreach($input as $index => $value) {
+            foreach ($input as $index => $value) {
                 // non numeric string as key?
-                if(!is_numeric($index)) {
+                if (!is_numeric($index)) {
                     // reset var
                     $isNonNumeric = true;
 
@@ -252,13 +267,15 @@ class api extends KernelLoader implements ApplicationInterface
             }
 
             // is there are named keys they should be handles as elements
-            if($isNonNumeric) array_walk($input, array('API', 'arrayToXML'), $element);
-
-            // numeric elements means this a list of items
-            else {
+            if ($isNonNumeric) {
+                array_walk($input, array('Api', 'arrayToXML'), $element);
+            } else {
+                // numeric elements means this a list of items
                 // handle the value as an element
-                foreach($input as $value) {
-                    if(is_array($value)) array_walk($value, array('API', 'arrayToXML'), $element);
+                foreach ($input as $value) {
+                    if (is_array($value)) {
+                        array_walk($value, array('Api', 'arrayToXML'), $element);
+                    }
                 }
             }
         }
@@ -277,12 +294,18 @@ class api extends KernelLoader implements ApplicationInterface
         $secret = SpoonFilter::getGetValue('secret', null, '');
 
         // data can be available in the POST, so check it
-        if($email == '') $email = SpoonFilter::getPostValue('email', null, '');
-        if($nonce == '') $nonce = SpoonFilter::getPostValue('nonce', null, '');
-        if($secret == '') $secret = SpoonFilter::getPostValue('secret', null, '');
+        if ($email == '') {
+            $email = SpoonFilter::getPostValue('email', null, '');
+        }
+        if ($nonce == '') {
+            $nonce = SpoonFilter::getPostValue('nonce', null, '');
+        }
+        if ($secret == '') {
+            $secret = SpoonFilter::getPostValue('secret', null, '');
+        }
 
         // check if needed elements are available
-        if($email === '' || $nonce === '' || $secret === '') {
+        if ($email === '' || $nonce === '' || $secret === '') {
             return self::output(
                 self::NOT_AUTHORIZED,
                 array('message' => 'Not authorized.')
@@ -292,19 +315,21 @@ class api extends KernelLoader implements ApplicationInterface
         // get the user
         try {
             $user = new BackendUser(null, $email);
-        } catch(Exception $e) {
-            return self::output( self::FORBIDDEN, array('message' => 'This account does not exist.'));
+        } catch (Exception $e) {
+            return self::output(self::FORBIDDEN, array('message' => 'This account does not exist.'));
         }
 
         // user is god!
-        if($user->isGod()) return true;
+        if ($user->isGod()) {
+            return true;
+        }
 
         // get settings
         $apiAccess = $user->getSetting('api_access', false);
         $apiKey = $user->getSetting('api_key');
 
         // no API-access
-        if(!$apiAccess) {
+        if (!$apiAccess) {
             return self::output(
                 self::FORBIDDEN,
                 array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.')
@@ -315,7 +340,9 @@ class api extends KernelLoader implements ApplicationInterface
         $hash = BackendAuthentication::getEncryptedString($email . $apiKey, $nonce);
 
         // output
-        if($secret != $hash) return self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
+        if ($secret != $hash) {
+            return self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
+        }
 
         // return
         return true;
@@ -326,9 +353,7 @@ class api extends KernelLoader implements ApplicationInterface
      */
     public function display()
     {
-        return new Response(
-            self::$content, 200
-        );
+        return new Response(self::$content, 200);
     }
 
     /**
@@ -340,8 +365,9 @@ class api extends KernelLoader implements ApplicationInterface
      */
     public static function isValidRequestMethod($method)
     {
-        if($method !== $_SERVER['REQUEST_METHOD']) {
+        if ($method !== $_SERVER['REQUEST_METHOD']) {
             $message = 'Illegal request method, only ' . $method . ' allowed for this method';
+
             return self::output(self::BAD_REQUEST, array('message' => $message));
         }
 
@@ -352,7 +378,7 @@ class api extends KernelLoader implements ApplicationInterface
      * Output the return
      *
      * @param int $statusCode The status code.
-     * @param array[optional] $data The data to return.
+     * @param     array       [optional] $data The data to return.
      * @return bool
      */
     public static function output($statusCode, array $data = null)
@@ -364,12 +390,20 @@ class api extends KernelLoader implements ApplicationInterface
         $output = 'xml';
 
         // use the accept header if it is provided
-        if(isset($_SERVER['HTTP_ACCEPT'])) {
+        if (isset($_SERVER['HTTP_ACCEPT'])) {
             $acceptHeader = strtolower($_SERVER['HTTP_ACCEPT']);
-            if(substr_count($acceptHeader, 'text/xml') > 0) $output = 'xml';
-            if(substr_count($acceptHeader, 'application/xml') > 0) $output = 'xml';
-            if(substr_count($acceptHeader, 'text/json') > 0) $output = 'json';
-            if(substr_count($acceptHeader, 'application/json') > 0) $output = 'json';
+            if (substr_count($acceptHeader, 'text/xml') > 0) {
+                $output = 'xml';
+            }
+            if (substr_count($acceptHeader, 'application/xml') > 0) {
+                $output = 'xml';
+            }
+            if (substr_count($acceptHeader, 'text/json') > 0) {
+                $output = 'json';
+            }
+            if (substr_count($acceptHeader, 'application/json') > 0) {
+                $output = 'json';
+            }
         }
 
         // format specified as a GET-parameter will overrule the one provided through the accept headers
@@ -379,7 +413,7 @@ class api extends KernelLoader implements ApplicationInterface
         $output = SpoonFilter::getPostValue('format', $allowedFormats, $output);
 
         // return in the requested format
-        switch($output) {
+        switch ($output) {
             // json
             case 'json':
                 self::outputJSON($statusCode, $data);
@@ -397,7 +431,7 @@ class api extends KernelLoader implements ApplicationInterface
      * Output as JSON
      *
      * @param int $statusCode The status code.
-     * @param array[optional] $data The data to return.
+     * @param     array       [optional] $data The data to return.
      */
     private static function outputJSON($statusCode, array $data = null)
     {
@@ -416,7 +450,9 @@ class api extends KernelLoader implements ApplicationInterface
         $JSON['meta']['endpoint'] = SITE_URL . '/api/' . $version;
 
         // add data
-        if($data !== null) $JSON['data'] = $data;
+        if ($data !== null) {
+            $JSON['data'] = $data;
+        }
 
         // set correct headers
         SpoonHTTP::setHeadersByCode($statusCode);
@@ -430,7 +466,7 @@ class api extends KernelLoader implements ApplicationInterface
      * Output as XML
      *
      * @param int $statusCode The status code.
-     * @param array[optional] $data The data to return.
+     * @param     array       [optional] $data The data to return.
      */
     private static function outputXML($statusCode, array $data = null)
     {
@@ -461,7 +497,7 @@ class api extends KernelLoader implements ApplicationInterface
         $XML->appendChild($root);
 
         // build XML
-        array_walk($data, array('API', 'arrayToXML'), $root);
+        array_walk($data, array('Api', 'arrayToXML'), $root);
 
         // set correct headers
         SpoonHTTP::setHeadersByCode($statusCode);

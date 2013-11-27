@@ -153,7 +153,7 @@ class ApplicationRouting
         // The client was requested
         if(array_key_exists(2, $chunks) && $chunks[2] === 'client') {
             require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
-            $applicationClass = 'APIClient';
+            $applicationClass = 'ApiClient';
         }
         // The regular API was requested
         else {
