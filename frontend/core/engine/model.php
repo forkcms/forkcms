@@ -25,21 +25,21 @@ class FrontendModel extends BaseModel
     /**
      * Cached modules
      *
-     * @var	array
+     * @var    array
      */
     private static $modules = array();
 
     /**
      * Cached module-settings
      *
-     * @var	array
+     * @var    array
      */
     private static $moduleSettings = array();
 
     /**
      * Visitor id from tracking cookie
      *
-     * @var	string
+     * @var    string
      */
     private static $visitorId;
 
@@ -61,16 +61,16 @@ class FrontendModel extends BaseModel
         $last = $chunks[$count - 1];
 
         // is numeric
-        if(SpoonFilter::isNumeric($last)) {
+        if (SpoonFilter::isNumeric($last)) {
             // remove last chunk
             array_pop($chunks);
 
             // join together, and increment the last one
-            $string = implode('-', $chunks ) . '-' . ((int) $last + 1);
+            $string = implode('-', $chunks) . '-' . ((int) $last + 1);
+        } else {
+            // not numeric, so add -2
+            $string .= '-2';
         }
-
-        // not numeric, so add -2
-        else $string .= '-2';
 
         // return
         return $string;
@@ -79,27 +79,32 @@ class FrontendModel extends BaseModel
     /**
      * Add parameters to an URL
      *
-     * @param string $url The URL to append the parameters too.
-     * @param array $parameters The parameters as key-value-pairs.
+     * @param string $url        The URL to append the parameters too.
+     * @param array  $parameters The parameters as key-value-pairs.
      * @return string
      */
     public static function addURLParameters($url, array $parameters)
     {
         $url = (string) $url;
 
-        if(empty($parameters)) return $url;
+        if (empty($parameters)) {
+            return $url;
+        }
 
         $chunks = explode('#', $url, 2);
         $hash = '';
-        if(isset($chunks[1])) {
+        if (isset($chunks[1])) {
             $url = $chunks[0];
             $hash = '#' . $chunks[1];
         }
 
         // build query string
         $queryString = http_build_query($parameters, null, '&amp;');
-        if(mb_strpos($url, '?') !== false) $url .= '&' . $queryString . $hash;
-        else $url .= '?' . $queryString . $hash;
+        if (mb_strpos($url, '?') !== false) {
+            $url .= '&' . $queryString . $hash;
+        } else {
+            $url .= '?' . $queryString . $hash;
+        }
 
         return $url;
     }
@@ -108,8 +113,8 @@ class FrontendModel extends BaseModel
      * Get plain text for a given text
      *
      * @param string $text The text to convert.
-     * @param bool[optional] $includeAHrefs Should the url be appended after the link-text?
-     * @param bool[optional] $includeImgAlts Should the alt tag be inserted for images?
+     * @param        bool  [optional] $includeAHrefs Should the url be appended after the link-text?
+     * @param        bool  [optional] $includeImgAlts Should the alt tag be inserted for images?
      * @return string
      */
     public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
@@ -123,18 +128,26 @@ class FrontendModel extends BaseModel
         $text = preg_replace('|\<script[^>]*\>(.*\n*)\</script\>|isU', '', $text);
 
         // put back some new lines where needed
-        $text = preg_replace('#(\<(h1|h2|h3|h4|h5|h6|p|ul|ol)[^\>]*\>.*\</(h1|h2|h3|h4|h5|h6|p|ul|ol)\>)#isU', "\n$1", $text);
+        $text = preg_replace(
+            '#(\<(h1|h2|h3|h4|h5|h6|p|ul|ol)[^\>]*\>.*\</(h1|h2|h3|h4|h5|h6|p|ul|ol)\>)#isU',
+            "\n$1",
+            $text
+        );
 
         // replace br tags with newlines
         $text = preg_replace('#(\<br[^\>]*\>)#isU', "\n", $text);
 
         // replace links with the inner html of the link with the url between ()
         // eg.: <a href="http://site.domain.com">My site</a> => My site (http://site.domain.com)
-        if($includeAHrefs) $text = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $text);
+        if ($includeAHrefs) {
+            $text = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $text);
+        }
 
         // replace images with their alternative content
         // eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image
-        if($includeImgAlts) $text = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '$1', $text);
+        if ($includeImgAlts) {
+            $text = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '$1', $text);
+        }
 
         // decode html entities
         $text = html_entity_decode($text, ENT_QUOTES, 'ISO-8859-15');
@@ -166,9 +179,9 @@ class FrontendModel extends BaseModel
     /**
      * Generate a totally random but readable/speakable password
      *
-     * @param int[optional] $length The maximum length for the password to generate.
-     * @param bool[optional] $uppercaseAllowed Are uppercase letters allowed?
-     * @param bool[optional] $lowercaseAllowed Are lowercase letters allowed?
+     * @param int  [optional] $length The maximum length for the password to generate.
+     * @param bool [optional] $uppercaseAllowed Are uppercase letters allowed?
+     * @param bool [optional] $lowercaseAllowed Are lowercase letters allowed?
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -177,7 +190,34 @@ class FrontendModel extends BaseModel
         $vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
         // list of allowed consonants and consonant sounds
-        $consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+        $consonants = array(
+            'b',
+            'c',
+            'd',
+            'g',
+            'h',
+            'j',
+            'k',
+            'm',
+            'n',
+            'p',
+            'r',
+            's',
+            't',
+            'u',
+            'v',
+            'w',
+            'tr',
+            'cr',
+            'fr',
+            'dr',
+            'wr',
+            'pr',
+            'th',
+            'ch',
+            'ph',
+            'st'
+        );
 
         // init vars
         $consonantsCount = count($consonants);
@@ -186,19 +226,29 @@ class FrontendModel extends BaseModel
         $tmp = '';
 
         // create temporary pass
-        for($i = 0; $i < $length; $i++) $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
+        for ($i = 0; $i < $length; $i++) {
+            $tmp .= ($consonants[rand(0, $consonantsCount - 1)] .
+                     $vowels[rand(0, $vowelsCount - 1)]);
+        }
 
         // reformat the pass
-        for($i = 0; $i < $length; $i++) {
-            if(rand(0, 1) == 1) $pass .= strtoupper(substr($tmp, $i, 1));
-            else $pass .= substr($tmp, $i, 1);
+        for ($i = 0; $i < $length; $i++) {
+            if (rand(0, 1) == 1) {
+                $pass .= strtoupper(substr($tmp, $i, 1));
+            } else {
+                $pass .= substr($tmp, $i, 1);
+            }
         }
 
         // reformat it again, if uppercase isn't allowed
-        if(!$uppercaseAllowed) $pass = strtolower($pass);
+        if (!$uppercaseAllowed) {
+            $pass = strtolower($pass);
+        }
 
         // reformat it again, if uppercase isn't allowed
-        if(!$lowercaseAllowed) $pass = strtoupper($pass);
+        if (!$lowercaseAllowed) {
+            $pass = strtoupper($pass);
+        }
 
         // return pass
         return $pass;
@@ -208,10 +258,12 @@ class FrontendModel extends BaseModel
      * Generate thumbnails based on the folders in the path
      * Use
      *  - 128x128 as folder name to generate an image where the width will be 128px and the height will be 128px
-     *  - 128x as folder name to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
-     *  - x128 as folder name to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+     *  - 128x as folder name to generate an image where the width will be 128px,
+     *      the height will be calculated based on the aspect ratio.
+     *  - x128 as folder name to generate an image where the height will be 128px,
+     *      the width will be calculated based on the aspect ratio.
      *
-     * @param string $path The path wherein the thumbnail-folders will be stored.
+     * @param string $path       The path wherein the thumbnail-folders will be stored.
      * @param string $sourceFile The location of the source file.
      */
     public static function generateThumbnails($path, $sourceFile)
@@ -221,13 +273,15 @@ class FrontendModel extends BaseModel
         $filename = basename($sourceFile);
 
         // loop folders
-        foreach($folders as $folder) {
+        foreach ($folders as $folder) {
             // generate the thumbnail
             $thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
             $thumbnail->setAllowEnlargement(true);
 
             // if the width & height are specified we should ignore the aspect ratio
-            if($folder['width'] !== null && $folder['height'] !== null) $thumbnail->setForceOriginalAspectRatio(false);
+            if ($folder['width'] !== null && $folder['height'] !== null) {
+                $thumbnail->setForceOriginalAspectRatio(false);
+            }
             $thumbnail->parseToFile($folder['path'] . '/' . $filename);
         }
     }
@@ -240,12 +294,14 @@ class FrontendModel extends BaseModel
     public static function getModules()
     {
         // validate cache
-        if(empty(self::$modules)) {
+        if (empty(self::$modules)) {
             // get all modules
             $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
 
             // add modules to the cache
-            foreach($modules as $module) self::$modules[] = $module;
+            foreach ($modules as $module) {
+                self::$modules[] = $module;
+            }
         }
 
         return self::$modules;
@@ -255,8 +311,8 @@ class FrontendModel extends BaseModel
      * Get a module setting
      *
      * @param string $module The module wherefore a setting has to be retrieved.
-     * @param string $name The name of the setting to be retrieved.
-     * @param mixed[optional] $defaultValue A value that will be stored if the setting isn't present.
+     * @param string $name   The name of the setting to be retrieved.
+     * @param        mixed   [optional] $defaultValue A value that will be stored if the setting isn't present.
      * @return mixed
      */
     public static function getModuleSetting($module, $name, $defaultValue = null)
@@ -266,7 +322,7 @@ class FrontendModel extends BaseModel
         $name = (string) $name;
 
         // get them all
-        if(empty(self::$moduleSettings)) {
+        if (empty(self::$moduleSettings)) {
             // fetch settings
             $settings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
@@ -275,11 +331,19 @@ class FrontendModel extends BaseModel
             );
 
             // loop settings and cache them, also unserialize the values
-            foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
+            foreach ($settings as $row) {
+                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
+                    $row['value']
+                );
+            }
         }
 
         // if the setting doesn't exists, store it (it will be available from te cache)
-        if(!array_key_exists($module, self::$moduleSettings) || !array_key_exists($name, self::$moduleSettings[$module])) self::setModuleSetting($module, $name, $defaultValue);
+        if (!array_key_exists($module, self::$moduleSettings) ||
+            !array_key_exists($name, self::$moduleSettings[$module])
+        ) {
+            self::setModuleSetting($module, $name, $defaultValue);
+        }
 
         // return
         return self::$moduleSettings[$module][$name];
@@ -296,7 +360,7 @@ class FrontendModel extends BaseModel
         $module = (string) $module;
 
         // get them all
-        if(empty(self::$moduleSettings[$module])) {
+        if (empty(self::$moduleSettings[$module])) {
             // fetch settings
             $settings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
@@ -304,11 +368,17 @@ class FrontendModel extends BaseModel
             );
 
             // loop settings and cache them, also unserialize the values
-            foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
+            foreach ($settings as $row) {
+                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
+                    $row['value']
+                );
+            }
         }
 
         // validate again
-        if(!isset(self::$moduleSettings[$module])) return array();
+        if (!isset(self::$moduleSettings[$module])) {
+            return array();
+        }
 
         // return
         return self::$moduleSettings[$module];
@@ -330,7 +400,8 @@ class FrontendModel extends BaseModel
 
         // get data
         $record = (array) $db->getRecord(
-            'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+            'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
+                 p.navigation_title_overwrite, p.data,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
                  m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -347,12 +418,24 @@ class FrontendModel extends BaseModel
         );
 
         // validate
-        if(empty($record)) return array();
+        if (empty($record)) {
+            return array();
+        }
 
         // unserialize page data and template data
-        if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
-        if(isset($record['meta_data']) && $record['meta_data'] != '') $record['meta_data'] = unserialize($record['meta_data']);
-        if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
+        if (isset($record['data']) && $record['data'] != '') {
+            $record['data'] = unserialize($record['data']);
+        }
+        if (isset($record['meta_data']) && $record['meta_data'] != '') {
+            $record['meta_data'] = unserialize(
+                $record['meta_data']
+            );
+        }
+        if (isset($record['template_data']) && $record['template_data'] != '') {
+            $record['template_data'] = @unserialize(
+                $record['template_data']
+            );
+        }
 
         // get blocks
         $blocks = (array) $db->getRecords(
@@ -370,9 +453,11 @@ class FrontendModel extends BaseModel
         $record['positions'] = array();
 
         // loop blocks
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             // unserialize data if it is available
-            if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+            if (isset($block['data'])) {
+                $block['data'] = unserialize($block['data']);
+            }
 
             // save to position
             $record['positions'][$block['position']][] = $block;
@@ -396,7 +481,8 @@ class FrontendModel extends BaseModel
 
         // get data
         $record = (array) $db->getRecord(
-            'SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+            'SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
+                 p.data,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
                  m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -412,11 +498,19 @@ class FrontendModel extends BaseModel
         );
 
         // validate
-        if(empty($record)) return array();
+        if (empty($record)) {
+            return array();
+        }
 
         // unserialize page data and template data
-        if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
-        if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
+        if (isset($record['data']) && $record['data'] != '') {
+            $record['data'] = unserialize($record['data']);
+        }
+        if (isset($record['template_data']) && $record['template_data'] != '') {
+            $record['template_data'] = @unserialize(
+                $record['template_data']
+            );
+        }
 
         // get blocks
         $blocks = (array) $db->getRecords(
@@ -434,9 +528,11 @@ class FrontendModel extends BaseModel
         $record['positions'] = array();
 
         // loop blocks
-        foreach($blocks as $block) {
+        foreach ($blocks as $block) {
             // unserialize data if it is available
-            if(isset($block['data'])) $block['data'] = unserialize($block['data']);
+            if (isset($block['data'])) {
+                $block['data'] = unserialize($block['data']);
+            }
 
             // save to position
             $record['positions'][$block['position']][] = $block;
@@ -449,28 +545,36 @@ class FrontendModel extends BaseModel
      * Get the thumbnail folders
      *
      * @param string $path The path
-     * @param bool[optional] $includeSource Should the source-folder be included in the return-array.
+     * @param        bool  [optional] $includeSource Should the source-folder be included in the return-array.
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
     {
         $return = array();
         $fs = new Filesystem();
-        if(!$fs->exists($path)) return $return;
+        if (!$fs->exists($path)) {
+            return $return;
+        }
         $finder = new Finder();
         $finder->name('/^([0-9]*)x([0-9]*)$/');
-        if($includeSource) $finder->name('source');
+        if ($includeSource) {
+            $finder->name('source');
+        }
 
-        foreach($finder->directories()->in($path) as $directory) {
+        foreach ($finder->directories()->in($path) as $directory) {
             $chunks = explode('x', $directory->getBasename(), 2);
-            if(count($chunks) != 2 && !$includeSource) continue;
+            if (count($chunks) != 2 && !$includeSource) {
+                continue;
+            }
 
             $item = array();
             $item['dirname'] = $directory->getBasename();
             $item['path'] = $directory->getRealPath();
-            if(substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) $item['url'] = substr($path, strlen(PATH_WWW));
+            if (substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) {
+                $item['url'] = substr($path, strlen(PATH_WWW));
+            }
 
-            if($item['dirname'] == 'source') {
+            if ($item['dirname'] == 'source') {
                 $item['width'] = null;
                 $item['height'] = null;
             } else {
@@ -487,8 +591,9 @@ class FrontendModel extends BaseModel
     /**
      * Get the UTC date in a specific format. Use this method when inserting dates in the database!
      *
-     * @param string[optional] $format The format wherein the data will be returned, if not provided we will return it in MySQL-datetime-format.
-     * @param int[optional] $timestamp A UNIX-timestamp that will be used as base.
+     * @param string $format    The format wherein the data will be returned, if not provided we will
+     *                          return it in MySQL-datetime-format.
+     * @param int    $timestamp A UNIX-timestamp that will be used as base.
      * @return string
      */
     public static function getUTCDate($format = null, $timestamp = null)
@@ -497,7 +602,9 @@ class FrontendModel extends BaseModel
         $format = ($format !== null) ? (string) $format : 'Y-m-d H:i:s';
 
         // no timestamp given
-        if($timestamp === null) return gmdate($format);
+        if ($timestamp === null) {
+            return gmdate($format);
+        }
 
         // timestamp given
         return gmdate($format, (int) $timestamp);
@@ -506,14 +613,17 @@ class FrontendModel extends BaseModel
     /**
      * Get the UTC timestamp for a date/time object combination.
      *
-     * @param SpoonFormDate $date An instance of SpoonFormDate.
-     * @param SpoonFormTime[optional] $time An instance of SpoonFormTime.
+     * @param SpoonFormDate $date         An instance of SpoonFormDate.
+     * @param               SpoonFormTime [optional] $time An instance of SpoonFormTime.
      * @return int
      */
     public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
     {
         // validate date/time object
-        if(!$date->isValid() || ($time !== null && !$time->isValid())) throw new FrontendException('You need to provide two objects that actually contain valid data.');
+        if (!$date->isValid() || ($time !== null && !$time->isValid())
+        ) {
+            throw new FrontendException('You need to provide two objects that actually contain valid data.');
+        }
 
         // init vars
         $year = gmdate('Y', $date->getTimestamp());
@@ -521,13 +631,11 @@ class FrontendModel extends BaseModel
         $day = gmdate('j', $date->getTimestamp());
 
         // time object was given
-        if($time !== null) {
+        if ($time !== null) {
             // define hour & minute
             list($hour, $minute) = explode(':', $time->getValue());
-        }
-
-        // user default time
-        else {
+        } else {
+            // user default time
             $hour = 0;
             $minute = 0;
         }
@@ -544,12 +652,16 @@ class FrontendModel extends BaseModel
     public static function getVisitorId()
     {
         // check if tracking id is fetched already
-        if(self::$visitorId !== null) return self::$visitorId;
+        if (self::$visitorId !== null) {
+            return self::$visitorId;
+        }
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(uniqid() . SpoonSession::getSessionId());
+        self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(
+            uniqid() . SpoonSession::getSessionId()
+        );
 
-        if(!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
+        if (!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
@@ -559,13 +671,14 @@ class FrontendModel extends BaseModel
     /**
      * General method to check if something is spam
      *
-     * @param string $content The content that was submitted.
+     * @param string $content   The content that was submitted.
      * @param string $permaLink The permanent location of the entry the comment was submitted to.
-     * @param string[optional] $author Commenter's name.
-     * @param string[optional] $email Commenter's email address.
-     * @param string[optional] $URL Commenter's URL.
-     * @param string[optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
-     * @return bool|string Will return a boolean, except when we can't decide the status (unknown will be returned in that case)
+     * @param string $author    Commenter's name.
+     * @param string $email     Commenter's email address.
+     * @param string $URL       Commenter's URL.
+     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @return bool|string Will return a boolean, except when we can't decide the status
+     *                          (unknown will be returned in that case)
      */
     public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
     {
@@ -573,7 +686,9 @@ class FrontendModel extends BaseModel
         $akismetKey = self::getModuleSetting('core', 'akismet_key');
 
         // invalid key, so we can't detect spam
-        if($akismetKey === '') return false;
+        if ($akismetKey === '') {
+            return false;
+        }
 
         // create new instance
         $akismet = new Akismet($akismetKey, SITE_URL);
@@ -586,12 +701,11 @@ class FrontendModel extends BaseModel
         try {
             // check with Akismet if the item is spam
             return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
-        }
-
-        // catch exceptions
-        catch(Exception $e) {
+        } catch (Exception $e) {
             // in debug mode we want to see exceptions, otherwise the fallback will be triggered
-            if(SPOON_DEBUG) throw $e;
+            if (SPOON_DEBUG) {
+                throw $e;
+            }
 
             // return unknown status
             return 'unknown';
@@ -602,9 +716,9 @@ class FrontendModel extends BaseModel
      * Push a notification to Apple's notifications-server
      *
      * @param mixed $alert The message/dictionary to send.
-     * @param int[optional] $badge The number for the badge.
-     * @param string[optional] $sound The sound that should be played.
-     * @param array[optional] $extraDictionaries Extra dictionaries.
+     * @param       int    [optional] $badge The number for the badge.
+     * @param       string [optional] $sound The sound that should be played.
+     * @param       array  [optional] $extraDictionaries Extra dictionaries.
      */
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
@@ -613,7 +727,9 @@ class FrontendModel extends BaseModel
         $privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
 
         // no keys, so stop here
-        if($publicKey == '' || $privateKey == '') return;
+        if ($publicKey == '' || $privateKey == '') {
+            return;
+        }
 
         // get all apple-device tokens
         $deviceTokens = (array) FrontendModel::getContainer()->get('database')->getColumn(
@@ -625,22 +741,28 @@ class FrontendModel extends BaseModel
         );
 
         // no devices, so stop here
-        if(empty($deviceTokens)) return;
+        if (empty($deviceTokens)) {
+            return;
+        }
 
         // init var
         $tokens = array();
 
         // loop devices
-        foreach($deviceTokens as $row) {
+        foreach ($deviceTokens as $row) {
             // unserialize
             $row = unserialize($row);
 
             // loop and add
-            foreach($row as $item) $tokens[] = $item;
+            foreach ($row as $item) {
+                $tokens[] = $item;
+            }
         }
 
         // no tokens, so stop here
-        if(empty($tokens)) return;
+        if (empty($tokens)) {
+            return;
+        }
 
         // require the class
         require_once PATH_LIBRARY . '/external/fork_api.php';
@@ -652,12 +774,12 @@ class FrontendModel extends BaseModel
             // push
             $response = $forkAPI->applePush($tokens, $alert, $badge, $sound, $extraDictionaries);
 
-            if(!empty($response)) {
+            if (!empty($response)) {
                 // get db
                 $db = FrontendModel::getContainer()->get('database');
 
                 // loop the failed keys and remove them
-                foreach($response as $deviceToken) {
+                foreach ($response as $deviceToken) {
                     // get setting wherein the token is available
                     $row = $db->getRecord(
                         'SELECT i.*
@@ -667,26 +789,40 @@ class FrontendModel extends BaseModel
                     );
 
                     // any rows?
-                    if(!empty($row)) {
+                    if (!empty($row)) {
                         // reset data
                         $data = unserialize($row['value']);
 
                         // loop keys
-                        foreach($data as $key => $token) {
+                        foreach ($data as $key => $token) {
                             // match and unset if needed.
-                            if($token == $deviceToken) unset($data[$key]);
+                            if ($token == $deviceToken) {
+                                unset($data[$key]);
+                            }
                         }
 
                         // no more tokens left?
-                        if(empty($data)) $db->delete('users_settings', 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
-
-                        // save
-                        else $db->update('users_settings', array('value' => serialize($data)), 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
+                        if (empty($data)) {
+                            $db->delete(
+                                'users_settings',
+                                'user_id = ? AND name = ?',
+                                array($row['user_id'], $row['name'])
+                            );
+                        } else {
+                            $db->update(
+                                'users_settings',
+                                array('value' => serialize($data)),
+                                'user_id = ? AND name = ?',
+                                array($row['user_id'], $row['name'])
+                            );
+                        }
                     }
                 }
             }
-        } catch(Exception $e) {
-            if(SPOON_DEBUG) throw $e;
+        } catch (Exception $e) {
+            if (SPOON_DEBUG) {
+                throw $e;
+            }
         }
     }
 
@@ -694,8 +830,8 @@ class FrontendModel extends BaseModel
      * Store a module setting
      *
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name The name of the setting.
-     * @param mixed $value The value (will be serialized so make sure the type is correct).
+     * @param string $name   The name of the setting.
+     * @param mixed  $value  The value (will be serialized so make sure the type is correct).
      */
     public static function setModuleSetting($module, $name, $value)
     {
@@ -722,50 +858,46 @@ class FrontendModel extends BaseModel
     {
         $fs = new Filesystem();
         // is the queue already running?
-        if($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid')) {
+        if ($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid')) {
             // get the pid
             $pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/hooks/pid'));
 
             // running on windows?
-            if(strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
+            if (strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
                 // get output
                 $output = @shell_exec('tasklist.exe /FO LIST /FI "PID eq ' . $pid . '"');
 
                 // validate output
-                if($output == '' || $output === false) {
+                if ($output == '' || $output === false) {
                     // delete the pid file
                     $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                } else {
+                    // already running
+                    return true;
                 }
-
-                // already running
-                else return true;
-            }
-
-            // Mac
-            elseif(strtolower(substr(php_uname('s'), 0, 6)) == 'darwin') {
+            } elseif (strtolower(substr(php_uname('s'), 0, 6)) == 'darwin') {
+                // Mac
                 // get output
                 $output = @posix_getsid($pid);
 
                 // validate output
-                if($output === false) {
+                if ($output === false) {
                     // delete the pid file
                     $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                } else {
+                    // already running
+                    return true;
                 }
-
-                // already running
-                else return true;
-            }
-
-            // UNIX
-            else {
+            } else {
+                // UNIX
                 // check if the process is still running, by checking the proc folder
-                if(!$fs->exists('/proc/' . $pid)) {
+                if (!$fs->exists('/proc/' . $pid)) {
                     // delete the pid file
                     $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                } else {
+                    // already running
+                    return true;
                 }
-
-                // already running
-                else return true;
             }
         }
 
@@ -774,10 +906,18 @@ class FrontendModel extends BaseModel
         $errNo = '';
         $errStr = '';
         $defaultPort = 80;
-        if($parts['scheme'] == 'https') $defaultPort = 433;
+        if ($parts['scheme'] == 'https') {
+            $defaultPort = 433;
+        }
 
         // open the socket
-        $socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : $defaultPort, $errNo, $errStr, 1);
+        $socket = fsockopen(
+            $parts['host'],
+            (isset($parts['port'])) ? $parts['port'] : $defaultPort,
+            $errNo,
+            $errStr,
+            1
+        );
 
         // build the request
         $request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks HTTP/1.1' . "\r\n";
@@ -799,14 +939,16 @@ class FrontendModel extends BaseModel
      * Subscribe to an event, when the subscription already exists, the callback will be updated.
      *
      * @param string $eventModule The module that triggers the event.
-     * @param string $eventName The name of the event.
-     * @param string $module The module that subscribes to the event.
-     * @param mixed $callback The callback that should be executed when the event is triggered.
+     * @param string $eventName   The name of the event.
+     * @param string $module      The module that subscribes to the event.
+     * @param mixed  $callback    The callback that should be executed when the event is triggered.
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
     {
         // validate
-        if(!is_callable($callback)) throw new FrontendException('Invalid callback!');
+        if (!is_callable($callback)) {
+            throw new FrontendException('Invalid callback!');
+        }
 
         // build record
         $item['event_module'] = (string) $eventModule;
@@ -828,18 +970,25 @@ class FrontendModel extends BaseModel
         );
 
         // update
-        if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-
-        // insert
-        else $db->insert('hooks_subscriptions', $item);
+        if ($exists) {
+            $db->update(
+                'hooks_subscriptions',
+                $item,
+                'event_module = ? AND event_name = ? AND module = ?',
+                array($eventModule, $eventName, $module)
+            );
+        } else {
+            // insert
+            $db->insert('hooks_subscriptions', $item);
+        }
     }
 
     /**
      * Trigger an event
      *
-     * @param string $module The module that triggers the event.
+     * @param string $module    The module that triggers the event.
      * @param string $eventName The name of the event.
-     * @param mixed[optional] $data The data that should be send to subscribers.
+     * @param        mixed      [optional] $data The data that should be send to subscribers.
      */
     public static function triggerEvent($module, $eventName, $data = null)
     {
@@ -859,12 +1008,12 @@ class FrontendModel extends BaseModel
         );
 
         // any subscriptions?
-        if(!empty($subscriptions)) {
+        if (!empty($subscriptions)) {
             // init var
             $queuedItems = array();
 
             // loop items
-            foreach($subscriptions as $subscription) {
+            foreach ($subscriptions as $subscription) {
                 // build record
                 $item['module'] = $subscription['module'];
                 $item['callback'] = $subscription['callback'];
@@ -875,7 +1024,10 @@ class FrontendModel extends BaseModel
                 // add
                 $queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
-                $log->info('Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').');
+                $log->info(
+                    'Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' .
+                    $eventName . ').'
+                );
             }
 
             // start processing
@@ -887,8 +1039,8 @@ class FrontendModel extends BaseModel
      * Unsubscribe from an event
      *
      * @param string $eventModule The module that triggers the event.
-     * @param string $eventName The name of the event.
-     * @param string $module The module that subscribes to the event.
+     * @param string $eventName   The name of the event.
+     * @param string $module      The module that subscribes to the event.
      */
     public static function unsubscribeFromEvent($eventModule, $eventName, $module)
     {

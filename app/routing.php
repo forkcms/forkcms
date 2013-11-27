@@ -111,7 +111,7 @@ class ApplicationRouting
                 // install directory might be deleted after install, handle it as a normal frontend request
                 if(file_exists(__DIR__ . '/../install')) {
                     $applicationClass = $this->initializeInstaller();
-                } else $applicationClass = 'frontend';
+                } else $applicationClass = 'Frontend';
                 break;
             default:
                 throw new Exception('Unknown application. (' . $applicationName . ')');

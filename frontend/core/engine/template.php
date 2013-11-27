@@ -10,10 +10,10 @@
 /**
  * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
- * 	- it will assign all labels
- * 	- it will map some modifiers
- * 	- it will assign a lot of constants
- * 	- ...
+ *    - it will assign all labels
+ *    - it will map some modifiers
+ *    - it will assign a lot of constants
+ *    - ...
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
@@ -32,13 +32,13 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
-     * @param bool[optional] $addToReference Should the instance be added into the reference.
+     * @param bool [optional] $addToReference Should the instance be added into the reference.
      */
     public function __construct($addToReference = true)
     {
         parent::__construct();
 
-        if($addToReference) {
+        if ($addToReference) {
             FrontendModel::getContainer()->set('template', $this);
         }
 
@@ -51,17 +51,21 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * Compile a given template.
      *
-     * @param string $path The path to the template, excluding the template filename.
+     * @param string  $path     The path to the template, excluding the template filename.
      * @param  string $template The filename of the template within the path.
      * @return bool
      */
     public function compile($path, $template)
     {
         // redefine template
-        if(realpath($template) === false) $template = $path . '/' . $template;
+        if (realpath($template) === false) {
+            $template = $path . '/' . $template;
+        }
 
         // source file does not exist
-        if(!is_file($template)) return false;
+        if (!is_file($template)) {
+            return false;
+        }
 
         // create object
         $compiler = new FrontendTemplateCompiler($template, $this->variables);
@@ -85,13 +89,15 @@ class FrontendTemplate extends SpoonTemplate
      * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
      *
      * @param string $template The path of the template to use.
-     * @param bool[optional] $customHeaders Deprecated variable.
-     * @param bool[optional] $parseCustom Parse custom template.
+     * @param        bool      [optional] $customHeaders Deprecated variable.
+     * @param        bool      [optional] $parseCustom Parse custom template.
      */
     public function display($template, $customHeaders = false, $parseCustom = false)
     {
         // do custom stuff
-        if($parseCustom) new FrontendTemplateCustom($this);
+        if ($parseCustom) {
+            new FrontendTemplateCustom($this);
+        }
 
         // parse constants
         $this->parseConstants();
@@ -120,7 +126,7 @@ class FrontendTemplate extends SpoonTemplate
         $template = (string) $template;
 
         // validate name
-        if(trim($template) == '' || !is_file($template)) {
+        if (trim($template) == '' || !is_file($template)) {
             throw new SpoonTemplateException('Please provide an existing template.');
         }
 
@@ -128,7 +134,7 @@ class FrontendTemplate extends SpoonTemplate
         $compileName = $this->getCompileName((string) $template);
 
         // compiled if needed
-        if($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName)) {
+        if ($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName)) {
             // create compiler
             $compiler = new FrontendTemplateCompiler((string) $template, $this->variables);
 
@@ -160,14 +166,15 @@ class FrontendTemplate extends SpoonTemplate
      * Fetch the parsed content from this template.
      *
      * @param string $template The location of the template file, used to display this template.
-     * @param bool[optional] $customHeaders Are custom headers already set?
-     * @param bool[optional] $parseCustom Parse custom template.
+     * @param        bool      [optional] $customHeaders Are custom headers already set?
+     * @param        bool      [optional] $parseCustom Parse custom template.
      * @return string The actual parsed content after executing this template.
      */
     public function getContent($template, $customHeaders = false, $parseCustom = false)
     {
         ob_start();
         $this->display($template, $customHeaders, $parseCustom);
+
         return ob_get_clean();
     }
 
@@ -180,10 +187,12 @@ class FrontendTemplate extends SpoonTemplate
     public function isCached($name)
     {
         // never cached in debug
-        if(SPOON_DEBUG) return false;
-
-        // let parent do the actual check
-        else return parent::isCached($name);
+        if (SPOON_DEBUG) {
+            return false;
+        } else {
+            // let parent do the actual check
+            return parent::isCached($name);
+        }
     }
 
     /**
@@ -262,30 +271,58 @@ class FrontendTemplate extends SpoonTemplate
         $realConstants = array();
 
         // remove protected constants aka constants that should not be used in the template
-        foreach($constants['user'] as $key => $value) {
-            if(!in_array($key, $notPublicConstants)) $realConstants[$key] = $value;
+        foreach ($constants['user'] as $key => $value) {
+            if (!in_array($key, $notPublicConstants)) {
+                $realConstants[$key] = $value;
+            }
         }
 
         // we should only assign constants if there are constants to assign
-        if(!empty($realConstants)) $this->assign($realConstants);
+        if (!empty($realConstants)) {
+            $this->assign($realConstants);
+        }
 
         // aliases
         $this->assign('LANGUAGE', FRONTEND_LANGUAGE);
         $this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
 
         // settings
-        $this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+        $this->assign(
+            'SITE_TITLE',
+            FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+        );
 
         // facebook stuff
-        if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->assign('FACEBOOK_ADMIN_IDS', FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null));
-        if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) $this->assign('FACEBOOK_APP_ID', FrontendModel::getModuleSetting('core', 'facebook_app_id', null));
-        if(FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) $this->assign('FACEBOOK_APP_SECRET', FrontendModel::getModuleSetting('core', 'facebook_app_secret', null));
+        if (FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) {
+            $this->assign(
+                'FACEBOOK_ADMIN_IDS',
+                FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)
+            );
+        }
+        if (FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+            $this->assign(
+                'FACEBOOK_APP_ID',
+                FrontendModel::getModuleSetting('core', 'facebook_app_id', null)
+            );
+        }
+        if (FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) {
+            $this->assign(
+                'FACEBOOK_APP_SECRET',
+                FrontendModel::getModuleSetting('core', 'facebook_app_secret', null)
+            );
+        }
 
         // theme
-        if(FrontendModel::getModuleSetting('core', 'theme') !== null) {
+        if (FrontendModel::getModuleSetting('core', 'theme') !== null) {
             $this->assign('THEME', FrontendModel::getModuleSetting('core', 'theme', 'default'));
-            $this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
-            $this->assign('THEME_URL', '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
+            $this->assign(
+                'THEME_PATH',
+                FRONTEND_PATH . '/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default')
+            );
+            $this->assign(
+                'THEME_URL',
+                '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default')
+            );
         }
     }
 
@@ -307,7 +344,9 @@ class FrontendTemplate extends SpoonTemplate
      */
     private function parseDebug()
     {
-        if(SPOON_DEBUG) $this->assign('debug', true);
+        if (SPOON_DEBUG) {
+            $this->assign('debug', true);
+        }
     }
 
     /**
@@ -321,18 +360,26 @@ class FrontendTemplate extends SpoonTemplate
         $messages = FrontendLanguage::getMessages();
 
         // execute addslashes on the values for the locale, will be used in JS
-        if($this->addSlashes) {
-            foreach($actions as &$value) {
-                if(!is_array($value)) $value = addslashes($value);
+        if ($this->addSlashes) {
+            foreach ($actions as &$value) {
+                if (!is_array($value)) {
+                    $value = addslashes($value);
+                }
             }
-            foreach($errors as &$value) {
-                if(!is_array($value)) $value = addslashes($value);
+            foreach ($errors as &$value) {
+                if (!is_array($value)) {
+                    $value = addslashes($value);
+                }
             }
-            foreach($labels as &$value) {
-                if(!is_array($value)) $value = addslashes($value);
+            foreach ($labels as &$value) {
+                if (!is_array($value)) {
+                    $value = addslashes($value);
+                }
             }
-            foreach($messages as &$value) {
-                if(!is_array($value)) $value = addslashes($value);
+            foreach ($messages as &$value) {
+                if (!is_array($value)) {
+                    $value = addslashes($value);
+                }
             }
         }
 
@@ -364,7 +411,7 @@ class FrontendTemplate extends SpoonTemplate
     /**
      * Should we execute addSlashed on the locale?
      *
-     * @param bool[optional] $on Enable addslashes.
+     * @param bool [optional] $on Enable addslashes.
      */
     public function setAddSlashes($on = true)
     {
@@ -381,7 +428,7 @@ class FrontendTemplateModifiers
 {
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
-     * 	syntax: {$var|cleanupPlainText}
+     *    syntax: {$var|cleanupPlainText}
      *
      * @param string $var The text to cleanup.
      * @return string
@@ -392,7 +439,10 @@ class FrontendTemplateModifiers
         $var = (string) $var;
 
         // detect links
-        $var = SpoonFilter::replaceURLsWithAnchors($var, FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false));
+        $var = SpoonFilter::replaceURLsWithAnchors(
+            $var,
+            FrontendModel::getModuleSetting('core', 'seo_nofollow_in_comments', false)
+        );
 
         // replace newlines
         $var = str_replace("\r", '', $var);
@@ -411,7 +461,7 @@ class FrontendTemplateModifiers
 
     /**
      * Dumps the data
-     * 	syntax: {$var|dump}
+     *    syntax: {$var|dump}
      *
      * @param string $var The variable to dump.
      * @return string
@@ -423,17 +473,17 @@ class FrontendTemplateModifiers
 
     /**
      * Format a number as currency
-     * 	syntax: {$var|formatcurrency[:currency[:decimals]]}
+     *    syntax: {$var|formatcurrency[:currency[:decimals]]}
      *
-     * @param string $var The string to form.
-     * @param string[optional] $currency The currency to will be used to format the number.
-     * @param int[optional] $decimals The number of decimals to show.
+     * @param string $var   The string to form.
+     * @param        string [optional] $currency The currency to will be used to format the number.
+     * @param        int    [optional] $decimals The number of decimals to show.
      * @return string
      */
     public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
     {
         // @later get settings from backend
-        switch($currency) {
+        switch ($currency) {
             case 'EUR':
                 $decimals = ($decimals === null) ? 2 : (int) $decimals;
 
@@ -445,10 +495,10 @@ class FrontendTemplateModifiers
 
     /**
      * Format a number as a float
-     * 	syntax: {$var|formatfloat[:decimals]}
+     *    syntax: {$var|formatfloat[:decimals]}
      *
      * @param float $number The number to format.
-     * @param int[optional] $decimals The number of decimals.
+     * @param       int     [optional] $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -458,7 +508,7 @@ class FrontendTemplateModifiers
 
     /**
      * Format a number
-     * 	syntax: {$var|formatnumber}
+     *    syntax: {$var|formatnumber}
      *
      * @param float $var The number to format.
      * @return string
@@ -486,26 +536,36 @@ class FrontendTemplateModifiers
 
     /**
      * Get the navigation html
-     * 	syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
+     *    syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
      *
-     * @param string[optional] $var The variable.
-     * @param string[optional] $type The type of navigation, possible values are: page, footer.
-     * @param int[optional] $parentId The parent wherefore the navigation should be build.
-     * @param int[optional] $depth The maximum depth that has to be build.
-     * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string[optional] $tpl The template that will be used.
+     * @param string [optional] $var The variable.
+     * @param string [optional] $type The type of navigation, possible values are: page, footer.
+     * @param int    [optional] $parentId The parent wherefore the navigation should be build.
+     * @param int    [optional] $depth The maximum depth that has to be build.
+     * @param string [optional] $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string [optional] $tpl The template that will be used.
      * @return string
      */
-    public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
-    {
+    public static function getNavigation(
+        $var = null,
+        $type = 'page',
+        $parentId = 0,
+        $depth = null,
+        $excludeIds = null,
+        $tpl = '/core/layout/templates/navigation.tpl'
+    ) {
         // build excludeIds
-        if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
+        if ($excludeIds !== null) {
+            $excludeIds = (array) explode('-', $excludeIds);
+        }
 
         // get HTML
         $return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $tpl);
 
         // return the var
-        if($return != '') return $return;
+        if ($return != '') {
+            return $return;
+        }
 
         // fallback
         return $var;
@@ -513,12 +573,12 @@ class FrontendTemplateModifiers
 
     /**
      * Get a given field for a page-record
-     * 	syntax: {$var|getpageinfo:pageId[:field[:language]]}
+     *    syntax: {$var|getpageinfo:pageId[:field[:language]]}
      *
-     * @param string[optional] $var The string passed from the template.
+     * @param     string  [optional] $var The string passed from the template.
      * @param int $pageId The id of the page to build the URL for.
-     * @param string[optional] $field The field to get.
-     * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+     * @param     string  [optional] $field The field to get.
+     * @param     string  [optional] $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
@@ -531,8 +591,12 @@ class FrontendTemplateModifiers
         $page = FrontendNavigation::getPageInfo((int) $pageId);
 
         // validate
-        if(empty($page)) return '';
-        if(!isset($page[$field])) return '';
+        if (empty($page)) {
+            return '';
+        }
+        if (!isset($page[$field])) {
+            return '';
+        }
 
         // return page info
         return $page[$field];
@@ -540,9 +604,9 @@ class FrontendTemplateModifiers
 
     /**
      * Fetch the path for an include (theme file if available, core file otherwise)
-     * 	syntax: {$var|getpath:file}
+     *    syntax: {$var|getpath:file}
      *
-     * @param string $var The variable.
+     * @param string $var  The variable.
      * @param string $file The base path.
      * @return string
      */
@@ -553,58 +617,78 @@ class FrontendTemplateModifiers
 
     /**
      * Get the subnavigation html
-     * 	syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:excludeIds-splitted-by-dash[:tpl]]]]]}
+     *   syntax: {$var|getsubnavigation[:type[:parentId[:startdepth[:enddepth[:excludeIds-splitted-by-dash[:tpl]]]]]}
      *
-     * 	NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
+     *   NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
      *
-     * @param string[optional] $var The variable.
-     * @param string[optional] $type The type of navigation, possible values are: page, footer.
-     * @param int[optional] $pageId The parent wherefore the navigation should be build.
-     * @param int[optional] $startDepth The depth to start from.
-     * @param int[optional] $endDepth The maximum depth that has to be build.
-     * @param string[optional] $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string[optional] $tpl The template that will be used.
+     * @param string [optional] $var The variable.
+     * @param string [optional] $type The type of navigation, possible values are: page, footer.
+     * @param int    [optional] $pageId The parent wherefore the navigation should be build.
+     * @param int    [optional] $startDepth The depth to start from.
+     * @param int    [optional] $endDepth The maximum depth that has to be build.
+     * @param string [optional] $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string [optional] $tpl The template that will be used.
      * @return string
      */
-    public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null, $tpl = '/core/layout/templates/navigation.tpl')
-    {
+    public static function getSubNavigation(
+        $var = null,
+        $type = 'page',
+        $pageId = 0,
+        $startDepth = 1,
+        $endDepth = null,
+        $excludeIds = null,
+        $tpl = '/core/layout/templates/navigation.tpl'
+    ) {
         // build excludeIds
-        if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
+        if ($excludeIds !== null) {
+            $excludeIds = (array) explode('-', $excludeIds);
+        }
 
         // get info about the given page
         $pageInfo = FrontendNavigation::getPageInfo($pageId);
 
         // validate page info
-        if($pageInfo === false) return '';
+        if ($pageInfo === false) {
+            return '';
+        }
 
         // split URL into chunks
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks,2) : (array) array_slice($chunks,1);
-        if( count($chunks) == 0 ) $chunks[0] = '';
+        $chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        if (count($chunks) == 0) {
+            $chunks[0] = '';
+        }
 
         // init var
         $parentURL = '';
 
         // build url
-        for($i = 0; $i < $startDepth - 1; $i++) $parentURL .= $chunks[$i] . '/';
+        for ($i = 0; $i < $startDepth - 1; $i++) {
+            $parentURL .= $chunks[$i] . '/';
+        }
 
         // get parent ID
         $parentID = FrontendNavigation::getPageId($parentURL);
 
         try {
             // get HTML
-            $return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds, (string) $tpl);
-        }
-
-        // catch exceptions
-        catch(Exception $e) {
+            $return = (string) FrontendNavigation::getNavigationHtml(
+                $type,
+                $parentID,
+                $endDepth,
+                $excludeIds,
+                (string) $tpl
+            );
+        } catch (Exception $e) {
             return '';
         }
 
         // return the var
-        if($return != '') return $return;
+        if ($return != '') {
+            return $return;
+        }
 
         // fallback
         return $var;
@@ -612,54 +696,57 @@ class FrontendTemplateModifiers
 
     /**
      * Get the URL for a given pageId & language
-     * 	syntax: {$var|geturl:pageId[:language]}
+     *    syntax: {$var|geturl:pageId[:language]}
      *
-     * @param string $var The string passed from the template.
-     * @param int $pageId The id of the page to build the URL for.
-     * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var    The string passed from the template.
+     * @param int    $pageId The id of the page to build the URL for.
+     * @param        string  [optional] $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getURL($var, $pageId, $language = null)
     {
         $language = ($language !== null) ? (string) $language : null;
+
         return FrontendNavigation::getURL((int) $pageId, $language);
     }
 
     /**
      * Get the URL for a give module & action combination
-     * 	syntax: {$var|geturlforblock:module[:action[:language]]}
+     *    syntax: {$var|geturlforblock:module[:action[:language]]}
      *
-     * @param string $var The string passed from the template.
-     * @param string $module The module wherefore the URL should be build.
-     * @param string[optional] $action A specific action wherefore the URL should be build, otherwise the default will be used.
-     * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var      The string passed from the template.
+     * @param string $module   The module wherefore the URL should be build.
+     * @param string $action   A specific action wherefore the URL should be build, otherwise the default will be used.
+     * @param string $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getURLForBlock($var, $module, $action = null, $language = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : null;
+
         return FrontendNavigation::getURLForBlock((string) $module, $action, $language);
     }
 
     /**
      * Fetch an URL based on an extraId
-     * 	syntax: {$var|geturlforextraid:extraId[:language]}
+     *    syntax: {$var|geturlforextraid:extraId[:language]}
      *
-     * @param string $var The string passed from the template.
-     * @param int $extraId The id of the extra.
-     * @param string[optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var     The string passed from the template.
+     * @param int    $extraId The id of the extra.
+     * @param        string   [optional] $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getURLForExtraId($var, $extraId, $language = null)
     {
         $language = ($language !== null) ? (string) $language : null;
+
         return FrontendNavigation::getURLForExtraId((int) $extraId, $language);
     }
 
     /**
      * Highlights all strings in <code> tags.
-     * 	syntax: {$var|highlight}
+     *    syntax: {$var|highlight}
      *
      * @param string $var The string passed from the template.
      * @return string
@@ -670,9 +757,9 @@ class FrontendTemplateModifiers
         $pattern = '/<code>.*?<\/code>/is';
 
         // find matches
-        if(preg_match_all($pattern, $var, $matches)) {
+        if (preg_match_all($pattern, $var, $matches)) {
             // loop matches
-            foreach($matches[0] as $match) {
+            foreach ($matches[0] as $match) {
                 // encase content in highlight_string
                 $content = str_replace($match, highlight_string($match, true), $var);
 
@@ -687,10 +774,10 @@ class FrontendTemplateModifiers
     /**
      * Parse a widget straight from the template, rather than adding it through pages.
      *
-     * @param string $var The variable.
+     * @param string $var    The variable.
      * @param string $module The module whose module we want to execute.
      * @param string $action The action to execute.
-     * @param string $id The widget id (saved in data-column).
+     * @param string $id     The widget id (saved in data-column).
      * @return string|null
      */
     public static function parseWidget($var, $module, $action, $id = null)
@@ -707,10 +794,13 @@ class FrontendTemplateModifiers
             $extra->execute();
             $content = $extra->getContent();
             FrontendModel::getContainer()->set('parseWidget', null);
+
             return $content;
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if(SPOON_DEBUG) throw $e;
+            if (SPOON_DEBUG) {
+                throw $e;
+            }
 
             return null;
         }
@@ -719,32 +809,37 @@ class FrontendTemplateModifiers
     /**
      * Output a profile setting
      *
-     * @param string $var The variable
+     * @param string $var  The variable
      * @param string $name The name of the setting
      * @return string
      */
     public static function profileSetting($var, $name)
     {
         $profile = FrontendProfilesModel::get((int) $var);
-        if($profile === false) return '';
+        if ($profile === false) {
+            return '';
+        }
 
         // convert into array
         $profile = $profile->toArray();
 
         // @remark I know this is dirty, but I couldn't find a better way.
-        if(in_array($name, array('display_name', 'registered_on', 'full_url')) && isset($profile[$name])) {
+        if (in_array($name, array('display_name', 'registered_on', 'full_url')) && isset($profile[$name])) {
             return $profile[$name];
-        } elseif(isset($profile['settings'][$name])) return $profile['settings'][$name];
-        else return '';
+        } elseif (isset($profile['settings'][$name])) {
+            return $profile['settings'][$name];
+        } else {
+            return '';
+        }
     }
 
     /**
      * Get a random var between a min and max
-     * 	syntax: {$var|rand:min:max}
+     *    syntax: {$var|rand:min:max}
      *
-     * @param string[optional] $var The string passed from the template.
-     * @param int $min The minimum random number.
-     * @param int $max The maximum random number.
+     * @param     string [optional] $var The string passed from the template.
+     * @param int $min   The minimum random number.
+     * @param int $max   The maximum random number.
      * @return int
      */
     public static function random($var = null, $min, $max)
@@ -769,9 +864,9 @@ class FrontendTemplateModifiers
 
     /**
      * Formats a timestamp as a string that indicates the time ago
-     * 	syntax: {$var|timeago}
+     *    syntax: {$var|timeago}
      *
-     * @param string[optional] $var A UNIX-timestamp that will be formatted as a time-ago-string.
+     * @param string [optional] $var A UNIX-timestamp that will be formatted as a time-ago-string.
      * @return string
      */
     public static function timeAgo($var = null)
@@ -779,19 +874,28 @@ class FrontendTemplateModifiers
         $var = (int) $var;
 
         // invalid timestamp
-        if($var == 0) return '';
+        if ($var == 0) {
+            return '';
+        }
 
         // return
-        return '<abbr title="' . SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_long') . ', ' . FrontendModel::getModuleSetting('core', 'time_format'), $var, FRONTEND_LANGUAGE) . '">' . SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
+        return '<abbr title="' . SpoonDate::getDate(
+            FrontendModel::getModuleSetting('core', 'date_format_long') . ', ' . FrontendModel::getModuleSetting(
+                'core',
+                'time_format'
+            ),
+            $var,
+            FRONTEND_LANGUAGE
+        ) . '">' . SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
     }
 
     /**
      * Truncate a string
-     * 	syntax: {$var|truncate:max-length[:append-hellip]}
+     *    syntax: {$var|truncate:max-length[:append-hellip]}
      *
-     * @param string[optional] $var The string passed from the template.
+     * @param     string  [optional] $var The string passed from the template.
      * @param int $length The maximum length of the truncated string.
-     * @param bool[optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param     bool    [optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true)
@@ -803,18 +907,22 @@ class FrontendTemplateModifiers
         $var = strip_tags($var);
 
         // less characters
-        if(mb_strlen($var) <= $length) return SpoonFilter::htmlspecialchars($var);
-
-        // more characters
-        else {
+        if (mb_strlen($var) <= $length) {
+            return SpoonFilter::htmlspecialchars($var);
+        } else {
+            // more characters
             // hellip is seen as 1 char, so remove it from length
-            if($useHellip) $length = $length - 1;
+            if ($useHellip) {
+                $length = $length - 1;
+            }
 
             // get the amount of requested characters
             $var = mb_substr($var, 0, $length, SPOON_CHARSET);
 
             // add hellip
-            if($useHellip) $var .= '…';
+            if ($useHellip) {
+                $var .= '…';
+            }
 
             // return
             return SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
@@ -823,11 +931,11 @@ class FrontendTemplateModifiers
 
     /**
      * Get the value for a user-setting
-     * 	syntax {$var|usersetting:setting[:userId]}
+     *    syntax {$var|usersetting:setting[:userId]}
      *
-     * @param string[optional] $var The string passed from the template.
+     * @param        string   [optional] $var The string passed from the template.
      * @param string $setting The name of the setting you want.
-     * @param int[optional] $userId The userId, if not set by $var.
+     * @param        int      [optional] $userId The userId, if not set by $var.
      * @return string
      */
     public static function userSetting($var = null, $setting, $userId = null)
@@ -836,7 +944,9 @@ class FrontendTemplateModifiers
         $setting = (string) $setting;
 
         // validate
-        if($userId === 0) throw new FrontendException('Invalid user id');
+        if ($userId === 0) {
+            throw new FrontendException('Invalid user id');
+        }
 
         // get user
         $user = FrontendUser::getBackendUser($userId);

@@ -29,57 +29,57 @@ class FrontendBlockExtra extends FrontendBaseObject
     /**
      * The config file
      *
-     * @var	FrontendBaseConfig
+     * @var    FrontendBaseConfig
      */
     private $config;
 
     /**
      * The data that was passed by the extra
      *
-     * @var	mixed
+     * @var    mixed
      */
     private $data;
 
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     private $module;
 
     /**
      * The extra object
      *
-     * @var	FrontendBaseBlock
+     * @var    FrontendBaseBlock
      */
     private $object;
 
     /**
      * The block's output
      *
-     * @var	string
+     * @var    string
      */
     private $output;
 
     /**
      * Should the template overwrite the current one
      *
-     * @var	bool
+     * @var    bool
      */
     protected $overwrite = false;
 
     /**
      * The path for the template
      *
-     * @var	string
+     * @var    string
      */
     protected $templatePath = '';
 
     /**
      * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string $action The action to load.
-     * @param mixed[optional] $data The data that was passed from the database.
+     * @param string          $module The module to load.
+     * @param string          $action The action to load.
+     * @param                 mixed   [optional] $data The data that was passed from the database.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -88,13 +88,20 @@ class FrontendBlockExtra extends FrontendBaseObject
         // set properties
         $this->setModule($module);
         $this->setAction($action);
-        if($data !== null) $this->setData($data);
+        if ($data !== null) {
+            $this->setData($data);
+        }
 
         // load the config file for the required module
         $this->loadConfig();
 
-        // is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
-        if(!in_array($this->getAction(), $this->config->getPossibleActions())) $this->setAction($this->config->getDefaultAction());
+        // is the requested action possible? If not we throw an exception.
+        // We don't redirect because that could trigger a redirect loop
+        if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
+            $this->setAction(
+                $this->config->getDefaultAction()
+            );
+        }
     }
 
     /**
@@ -106,51 +113,65 @@ class FrontendBlockExtra extends FrontendBaseObject
         // build action-class-name
         $actionClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_' . $this->getAction());
 
-        // require the config file, we know it is there because we validated it before (possible actions are defined by existence off the file).
+        // require the config file, we know it is there because we validated it before
+        // (possible actions are defined by existence off the file).
         require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/actions/' . $this->getAction() . '.php';
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
+        if (!class_exists($actionClassName)) {
+            throw new FrontendException(
+                'The action file is present, but the class name should be: ' . $actionClassName . '.'
+            );
+        }
 
         // create action-object
-        $this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
+        $this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData(
+        ));
 
         // validate if the execute-method is callable
-        if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
+        if (!is_callable(
+            array($this->object, 'execute')
+        )
+        ) {
+            throw new FrontendException('The action file should contain a callable method "execute".');
+        }
 
         // call the execute method of the real action (defined in the module)
         $this->object->execute();
 
         // set some properties
         $this->setOverwrite($this->object->getOverwrite());
-        if($this->object->getTemplatePath() !== null) $this->setTemplatePath($this->object->getTemplatePath());
+        if ($this->object->getTemplatePath() !== null) {
+            $this->setTemplatePath($this->object->getTemplatePath());
+        }
     }
 
     /**
      * Get the current action
-     * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+     * REMARK: You should not use this method from your code, but it has to be
+     * public so we can access it later on in the core-code
      *
      * @return string
      */
     public function getAction()
     {
         // no action specified?
-        if($this->action === null) {
+        if ($this->action === null) {
             // get first parameter
             $actionParameter = $this->URL->getParameter(0);
 
             // unknown action and not provided in URL
-            if($actionParameter === null) $this->setAction($this->config->getDefaultAction());
-
-            // action provided in the URL
-            else {
+            if ($actionParameter === null) {
+                $this->setAction($this->config->getDefaultAction());
+            } else {
+                // action provided in the URL
                 // loop possible actions
-                foreach($this->config->getPossibleActions() as $actionName) {
+                foreach ($this->config->getPossibleActions() as $actionName) {
                     // get action that should be passed as parameter
                     $actionURL = urlencode(FL::act(SpoonFilter::toCamelCase($actionName)));
 
                     // the action is the requested one
-                    if($actionURL == $actionParameter) {
+                    if ($actionURL == $actionParameter) {
                         // set action
                         $this->setAction($actionName);
 
@@ -172,7 +193,9 @@ class FrontendBlockExtra extends FrontendBaseObject
     public function getContent()
     {
         // set path to template if the widget didn't return any data
-        if($this->output === null) return $this->object->getContent();
+        if ($this->output === null) {
+            return $this->object->getContent();
+        }
 
         // return possible output
         return $this->output;
@@ -190,7 +213,8 @@ class FrontendBlockExtra extends FrontendBaseObject
 
     /**
      * Get the current module
-     * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+     * REMARK: You should not use this method from your code, but it has to be
+     * public so we can access it later on in the core-code
      *
      * @return string
      */
@@ -241,20 +265,26 @@ class FrontendBlockExtra extends FrontendBaseObject
 
     /**
      * Load the config file for the requested block.
-     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
      * Other configurations will also be stored in it.
      */
     public function loadConfig()
     {
         // build path for core
-        if($this->getModule() == 'core') $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
+        if ($this->getModule() == 'core') {
+            $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
+        } else {
+            // build path to the module and define it. This is a constant because we can use this in templates.
+            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+        }
 
-        // build path to the module and define it. This is a constant because we can use this in templates.
-        else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-        // check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-        if(!is_file($frontendModulePath . '/config.php')) {
-            throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
+        // check if the config is present? If it isn't present there is a huge
+        // problem, so we will stop our code by throwing an error
+        if (!is_file($frontendModulePath . '/config.php')) {
+            throw new FrontendException(
+                'The config file for the module (' . $this->getModule() . ') can\'t be found.'
+            );
         }
 
         // build config-object-name
@@ -264,8 +294,10 @@ class FrontendBlockExtra extends FrontendBaseObject
         require_once $frontendModulePath . '/config.php';
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($configClassName)) {
-            throw new FrontendException('The config file is present, but the class name should be: ' . $configClassName . '.');
+        if (!class_exists($configClassName)) {
+            throw new FrontendException(
+                'The config file is present, but the class name should be: ' . $configClassName . '.'
+            );
         }
 
         // create config-object, the constructor will do some magic
@@ -275,11 +307,13 @@ class FrontendBlockExtra extends FrontendBaseObject
     /**
      * Set the action
      *
-     * @param string[optional] $action The action to load.
+     * @param string [optional] $action The action to load.
      */
     private function setAction($action = null)
     {
-        if($action !== null) $this->action = (string) $action;
+        if ($action !== null) {
+            $this->action = (string) $action;
+        }
     }
 
     /**
@@ -342,43 +376,43 @@ class FrontendBlockWidget extends FrontendBaseObject
     /**
      * The config file
      *
-     * @var	FrontendBaseConfig
+     * @var    FrontendBaseConfig
      */
     private $config;
 
     /**
      * The data that was passed by the extra
      *
-     * @var	mixed
+     * @var    mixed
      */
     private $data;
 
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     private $module;
 
     /**
      * The extra object
      *
-     * @var	FrontendBaseWidget
+     * @var    FrontendBaseWidget
      */
     private $object;
 
     /**
      * The block's output
      *
-     * @var	string
+     * @var    string
      */
     private $output;
 
     /**
      * @param KernelInterface $kernel
-     * @param string $module The module to load.
-     * @param string $action The action to load.
-     * @param mixed[optional] $data The data that was passed from the database.
+     * @param string          $module The module to load.
+     * @param string          $action The action to load.
+     * @param                 mixed   [optional] $data The data that was passed from the database.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -387,7 +421,9 @@ class FrontendBlockWidget extends FrontendBaseObject
         // set properties
         $this->setModule($module);
         $this->setAction($action);
-        if($data !== null) $this->setData($data);
+        if ($data !== null) {
+            $this->setData($data);
+        }
 
         // load the config file for the required module
         $this->loadConfig();
@@ -400,15 +436,14 @@ class FrontendBlockWidget extends FrontendBaseObject
     public function execute()
     {
         // build action-class-name
-        $actionClassName = 'Frontend' . SpoonFilter::toCamelCase(
-            $this->getModule() . '_widget_' . $this->getAction()
-        );
+        $actionClassName = 'Frontend' .
+                           SpoonFilter::toCamelCase($this->getModule() . '_widget_' . $this->getAction());
 
         // build path to the module
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // when including a widget from the template modifier, this wasn't checked yet
-        if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) {
+        if (!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) {
             throw new FrontendException(
                 'The action file "' . $frontendModulePath . '/widgets/' .
                 $this->getAction() . '.php' . '"" is not present'
@@ -420,17 +455,18 @@ class FrontendBlockWidget extends FrontendBaseObject
         require_once $frontendModulePath . '/widgets/' . $this->getAction() . '.php';
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClassName)) {
+        if (!class_exists($actionClassName)) {
             throw new FrontendException(
                 'The action file is present, but the class name should be: ' .
                 $actionClassName . '.'
             );
         }
         // create action-object
-        $this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
+        $this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData(
+        ));
 
         // validate if the execute-method is callable
-        if(!is_callable(array($this->object, 'execute'))) {
+        if (!is_callable(array($this->object, 'execute'))) {
             throw new FrontendException(
                 'The action file should contain a callable method "execute".'
             );
@@ -442,14 +478,17 @@ class FrontendBlockWidget extends FrontendBaseObject
 
     /**
      * Get the current action
-     * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+     * REMARK: You should not use this method from your code, but it has to be
+     * public so we can access it later on in the core-code
      *
      * @return string
      */
     public function getAction()
     {
         // no action specified?
-        if($this->action === null) $this->setAction($this->config->getDefaultAction());
+        if ($this->action === null) {
+            $this->setAction($this->config->getDefaultAction());
+        }
 
         // return action
         return $this->action;
@@ -463,7 +502,9 @@ class FrontendBlockWidget extends FrontendBaseObject
     public function getContent()
     {
         // set path to template if the widget didn't return any data
-        if($this->output === null) return $this->object->getContent();
+        if ($this->output === null) {
+            return $this->object->getContent();
+        }
 
         // return possible output
         return $this->output;
@@ -481,7 +522,8 @@ class FrontendBlockWidget extends FrontendBaseObject
 
     /**
      * Get the current module
-     * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+     * REMARK: You should not use this method from your code, but it has to be
+     * public so we can access it later on in the core-code
      *
      * @return string
      */
@@ -502,19 +544,23 @@ class FrontendBlockWidget extends FrontendBaseObject
 
     /**
      * Load the config file for the requested block.
-     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * In the config file we have to find disabled actions,
+     * the constructor will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
     public function loadConfig()
     {
         // build path for core
-        if($this->getModule() == 'core') $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
+        if ($this->getModule() == 'core') {
+            $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
+        } else {
+            // build path to the module and define it. This is a constant because we can use this in templates.
+            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
+        }
 
-        // build path to the module and define it. This is a constant because we can use this in templates.
-        else $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-        // check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-        if(!is_file($frontendModulePath . '/config.php')) {
+        // check if the config is present? If it isn't present there is a huge
+        // problem, so we will stop our code by throwing an error
+        if (!is_file($frontendModulePath . '/config.php')) {
             throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
         }
 
@@ -525,8 +571,10 @@ class FrontendBlockWidget extends FrontendBaseObject
         require_once $frontendModulePath . '/config.php';
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($configClassName)) {
-            throw new FrontendException('The config file is present, but the class name should be: ' . $configClassName . '.');
+        if (!class_exists($configClassName)) {
+            throw new FrontendException(
+                'The config file is present, but the class name should be: ' . $configClassName . '.'
+            );
         }
 
         // create config-object, the constructor will do some magic
@@ -536,11 +584,13 @@ class FrontendBlockWidget extends FrontendBaseObject
     /**
      * Set the action
      *
-     * @param string[optional] $action The action to load.
+     * @param string [optional] $action The action to load.
      */
     private function setAction($action = null)
     {
-        if($action !== null) $this->action = (string) $action;
+        if ($action !== null) {
+            $this->action = (string) $action;
+        }
     }
 
     /**

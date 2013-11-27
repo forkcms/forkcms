@@ -26,18 +26,20 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
     protected function parseIncludes($content)
     {
         // regex pattern
-        // no unified restriction can be done on the allowed characters, that differs from one OS to another (see http://www.comentum.com/File-Systems-HFS-FAT-UFS.html)
+        // no unified restriction can be done on the allowed characters,
+        // that differs from one OS to another
+        // (see http://www.comentum.com/File-Systems-HFS-FAT-UFS.html)
         $pattern = '/\{include:(("[^"]*?"|\'[^\']*?\')|[^:]*?)\}/i';
 
         // find matches
-        if(preg_match_all($pattern, $content, $matches, PREG_SET_ORDER)) {
+        if (preg_match_all($pattern, $content, $matches, PREG_SET_ORDER)) {
             // loop matches
-            foreach($matches as $match) {
+            foreach ($matches as $match) {
                 // search string
                 $search = $match[0];
 
                 // inside a string
-                if(in_array(substr($match[1], 0, 1), array('\'', '"'))) {
+                if (in_array(substr($match[1], 0, 1), array('\'', '"'))) {
                     // strip quotes
                     $match[1] = substr($match[1], 1, -1);
                 }
@@ -53,14 +55,25 @@ class FrontendTemplateCompiler extends SpoonTemplateCompiler
                 ?>' . $this->variables['FRONTEND_PATH'] . '/' . $match[1] . '<?php
                 $includes[] = str_replace(\'//\', \'/\', eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\'));
                 foreach($includes as $include) if(@file_exists($include) && is_file($include)) break;
-                if($this->getForceCompile() || !file_exists($this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\'))) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
-                $return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\');
+                if($this->getForceCompile() || !file_exists($this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' .
+                           dirname(
+                               realpath($this->template)
+                           ) . '\'))) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
+                $return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' .
+                           dirname(
+                               realpath($this->template)
+                           ) . '\');
                 if($return === false && $this->compile(\'' . dirname(realpath($this->template)) . '\', $include)) {
-                    $return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\');
+                    $return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' .
+                           dirname(
+                               realpath($this->template)
+                           ) . '\');
                 }' . "\n";
-                if(SPOON_DEBUG) $replace .= 'if($return === false) {
+                if (SPOON_DEBUG) {
+                    $replace .= 'if($return === false) {
                     ?>' . $match[0] . '<?php
                 }' . "\n";
+                }
                 $replace .= '?>';
 
                 // replace it

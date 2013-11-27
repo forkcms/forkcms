@@ -36,42 +36,42 @@ class FrontendPage extends FrontendBaseObject
     /**
      * Footer instance
      *
-     * @var	FrontendFooter
+     * @var    FrontendFooter
      */
     protected $footer;
 
     /**
      * Header instance
      *
-     * @var	FrontendHeader
+     * @var    FrontendHeader
      */
     protected $header;
 
     /**
      * The current pageId
      *
-     * @var	int
+     * @var    int
      */
     protected $pageId;
 
     /**
      * Content of the page
      *
-     * @var	array
+     * @var    array
      */
     protected $record = array();
 
     /**
      * The path of the template to show
      *
-     * @var	string
+     * @var    string
      */
     protected $templatePath;
 
     /**
      * The statuscode
      *
-     * @var	int
+     * @var    int
      */
     protected $statusCode = 200;
 
@@ -97,7 +97,9 @@ class FrontendPage extends FrontendBaseObject
         $this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
         // set headers if this is a 404 page
-        if($this->pageId == 404) $this->statusCode = 404;
+        if ($this->pageId == 404) {
+            $this->statusCode = 404;
+        }
 
         // create breadcrumb instance
         $this->breadcrumb = new FrontendBreadcrumb($this->getKernel());
@@ -125,16 +127,16 @@ class FrontendPage extends FrontendBaseObject
             'core',
             'after_page_processed',
             array(
-                'id' => $this->getId(),
-                'record' => $this->getRecord(),
-                'statusCode' => $this->getStatusCode(),
-                'sessionId' => SpoonSession::getSessionId(),
-                'visitorId' => FrontendModel::getVisitorId(),
-                'SESSION' => $_SESSION,
-                'COOKIE' => $_COOKIE,
-                'GET' => $_GET,
-                'POST' => $_POST,
-                'SERVER' => $_SERVER
+                 'id' => $this->getId(),
+                 'record' => $this->getRecord(),
+                 'statusCode' => $this->getStatusCode(),
+                 'sessionId' => SpoonSession::getSessionId(),
+                 'visitorId' => FrontendModel::getVisitorId(),
+                 'SESSION' => $_SESSION,
+                 'COOKIE' => $_COOKIE,
+                 'GET' => $_GET,
+                 'POST' => $_POST,
+                 'SERVER' => $_SERVER
             )
         );
     }
@@ -160,14 +162,22 @@ class FrontendPage extends FrontendBaseObject
         $this->tpl->assign('isPage' . $this->pageId, true);
 
         // hide the cookiebar from within the code to prevent flickering
-        $this->tpl->assign('cookieBarHide', (!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar()));
+        $this->tpl->assign(
+            'cookieBarHide',
+            (!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
+        );
 
         // the the positions to the template
         $this->parsePositions();
 
         // assign empty positions
         $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
-        foreach($unusedPositions as $position) $this->tpl->assign('position' . SpoonFilter::ucfirst($position), array());
+        foreach ($unusedPositions as $position) {
+            $this->tpl->assign(
+                'position' . SpoonFilter::ucfirst($position),
+                array()
+            );
+        }
 
         // output
         return new Response(
@@ -202,45 +212,53 @@ class FrontendPage extends FrontendBaseObject
     protected function getPageContent()
     {
         // load revision
-        if($this->URL->getParameter('page_revision', 'int') != 0) {
+        if ($this->URL->getParameter('page_revision', 'int') != 0) {
             // get data
             $this->record = FrontendModel::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
             // add no-index to meta-custom, so the draft won't get accidentally indexed
             $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+        } else {
+            // get page record
+            $this->record = (array) FrontendModel::getPage($this->pageId);
         }
 
-        // get page record
-        else $this->record = (array) FrontendModel::getPage($this->pageId);
-
         // empty record (pageId doesn't exists, hope this line is never used)
-        if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+        if (empty($this->record) && $this->pageId != 404) {
+            SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+        }
 
         // init var
         $redirect = true;
 
         // loop blocks, if all are empty we should redirect to the first child
-        foreach($this->record['positions'] as $blocks) {
+        foreach ($this->record['positions'] as $blocks) {
             // loop blocks in position
-            foreach($blocks as $block) {
+            foreach ($blocks as $block) {
                 // HTML provided?
-                if($block['html'] != '') $redirect = false;
+                if ($block['html'] != '') {
+                    $redirect = false;
+                }
 
                 // an decent extra provided?
-                if($block['extra_type'] == 'block') $redirect = false;
+                if ($block['extra_type'] == 'block') {
+                    $redirect = false;
+                }
 
                 // a widget provided
-                if($block['extra_type'] == 'widget') $redirect = false;
+                if ($block['extra_type'] == 'widget') {
+                    $redirect = false;
+                }
             }
         }
 
         // should we redirect?
-        if($redirect) {
+        if ($redirect) {
             // get first child
             $firstChildId = FrontendNavigation::getFirstChildId($this->record['id']);
 
             // validate the child
-            if($firstChildId !== false) {
+            if ($firstChildId !== false) {
                 // build URL
                 $URL = FrontendNavigation::getURL($firstChildId);
 
@@ -253,7 +271,7 @@ class FrontendPage extends FrontendBaseObject
     /**
      * Get the content of the page
      *
-     * @return	array
+     * @return    array
      */
     public function getRecord()
     {
@@ -276,7 +294,7 @@ class FrontendPage extends FrontendBaseObject
     protected function parseLanguages()
     {
         // just execute if the site is multi-language
-        if(SITE_MULTILANGUAGE) {
+        if (SITE_MULTILANGUAGE) {
             // get languages
             $activeLanguages = FrontendLanguage::getActiveLanguages();
 
@@ -284,7 +302,7 @@ class FrontendPage extends FrontendBaseObject
             $languages = array();
 
             // loop active languages
-            foreach($activeLanguages as $language) {
+            foreach ($activeLanguages as $language) {
                 // build temp array
                 $temp = array();
                 $temp['url'] = '/' . $language;
@@ -297,7 +315,9 @@ class FrontendPage extends FrontendBaseObject
             }
 
             // assign
-            if(count($languages) > 1) $this->tpl->assign('languages', $languages);
+            if (count($languages) > 1) {
+                $this->tpl->assign('languages', $languages);
+            }
         }
     }
 
@@ -316,13 +336,13 @@ class FrontendPage extends FrontendBaseObject
             $mainVariables = $this->tpl->getAssignedVariables();
 
             // loop all positions
-            foreach($this->record['positions'] as $position => $blocks) {
+            foreach ($this->record['positions'] as $position => $blocks) {
                 // loop all blocks in this position
-                foreach($blocks as $i => $block) {
+                foreach ($blocks as $i => $block) {
                     // check for extras that need to be reparsed
-                    if(isset($block['extra'])) {
+                    if (isset($block['extra'])) {
                         // fetch extra-specific variables
-                        if(isset($positions[$position][$i]['variables'])) {
+                        if (isset($positions[$position][$i]['variables'])) {
                             $extraVariables = $positions[$position][$i]['variables'];
                         } else {
                             $extraVariables = $block['extra']->getTemplate()->getAssignedVariables();
@@ -340,13 +360,15 @@ class FrontendPage extends FrontendBaseObject
                             'blockIsHTML' => false,
                             'blockContent' => $block['extra']->getContent()
                         );
-                    } else $positions[$position][$i] = $block;
+                    } else {
+                        $positions[$position][$i] = $block;
+                    }
                 }
 
                 // assign position to template
                 $this->tpl->assign('position' . SpoonFilter::ucfirst($position), $positions[$position]);
             }
-        } while($oldPositions != $positions);
+        } while ($oldPositions != $positions);
     }
 
     /**
@@ -355,7 +377,7 @@ class FrontendPage extends FrontendBaseObject
     protected function processExtras()
     {
         // loop all extras
-        foreach($this->extras as $extra) {
+        foreach ($this->extras as $extra) {
             $this->getContainer()->get('logger')->info(
                 "Executing frontend action '{$extra->getAction()}' for module '{$extra->getModule()}'."
             );
@@ -365,7 +387,10 @@ class FrontendPage extends FrontendBaseObject
             $extra->execute();
 
             // overwrite the template
-            if(is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
+            if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()
+            ) {
+                $this->templatePath = $extra->getTemplatePath();
+            }
 
             // assign the variables from this extra to the main template
             $this->tpl->assignArray((array) $extra->getTemplate()->getAssignedVariables());
@@ -381,13 +406,27 @@ class FrontendPage extends FrontendBaseObject
         $this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
 
         // set meta-data
-        $this->header->addMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
-        $this->header->addMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+        $this->header->addMetaDescription(
+            $this->record['meta_description'],
+            (bool) ($this->record['meta_description_overwrite'] == 'Y')
+        );
+        $this->header->addMetaKeywords(
+            $this->record['meta_keywords'],
+            ($this->record['meta_keywords_overwrite'] == 'Y')
+        );
         $this->header->setMetaCustom($this->record['meta_custom']);
 
         // advanced SEO-attributes
-        if(isset($this->record['meta_data']['seo_index'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index']));
-        if(isset($this->record['meta_data']['seo_follow'])) $this->header->addMetaData(array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow']));
+        if (isset($this->record['meta_data']['seo_index'])) {
+            $this->header->addMetaData(
+                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_index'])
+            );
+        }
+        if (isset($this->record['meta_data']['seo_follow'])) {
+            $this->header->addMetaData(
+                array('name' => 'robots', 'content' => $this->record['meta_data']['seo_follow'])
+            );
+        }
 
         // create navigation instance
         new FrontendNavigation($this->getKernel());
@@ -399,24 +438,29 @@ class FrontendPage extends FrontendBaseObject
         $this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
 
         // loop blocks
-        foreach($this->record['positions'] as $position => &$blocks) {
+        foreach ($this->record['positions'] as $position => &$blocks) {
             // position not known in template = skip it
-            if(!in_array($position, $this->record['template_data']['names'])) continue;
+            if (!in_array($position, $this->record['template_data']['names'])) {
+                continue;
+            }
 
             // loop blocks in position
-            foreach($blocks as $index => &$block) {
+            foreach ($blocks as $index => &$block) {
                 // an extra
-                if($block['extra_id'] !== null) {
+                if ($block['extra_id'] !== null) {
                     // block
-                    if($block['extra_type'] == 'block') {
+                    if ($block['extra_type'] == 'block') {
                         // create new instance
-                        $extra = new FrontendBlockExtra($this->getKernel(), $block['extra_module'], $block['extra_action'], $block['extra_data']);
-                    }
-
-                    // widget
-                    else {
-                        // create new instance
-                        $extra = new FrontendBlockWidget($this->getKernel(), $block['extra_module'], $block['extra_action'], $block['extra_data']);
+                        $extra = new FrontendBlockExtra($this->getKernel(
+                        ), $block['extra_module'], $block['extra_action'], $block['extra_data']);
+                    } else {
+                        // widget
+                        $extra = new FrontendBlockWidget(
+                            $this->getKernel(),
+                            $block['extra_module'],
+                            $block['extra_action'],
+                            $block['extra_data']
+                        );
                     }
 
                     // add to list of extras
@@ -424,10 +468,8 @@ class FrontendPage extends FrontendBaseObject
 
                     // add to list of extras to parse
                     $this->extras[] = $extra;
-                }
-
-                // the block only contains HTML
-                else {
+                } else {
+                    // the block only contains HTML
                     $block = array(
                         'blockIsHTML' => true,
                         'blockContent' => $block['html']

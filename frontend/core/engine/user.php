@@ -17,38 +17,40 @@ class FrontendUser
     /**
      * An array that will store all user objects
      *
-     * @var	array
+     * @var    array
      */
     private static $cache = array();
 
     /**
      * All settings
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var	int
+     * @var    int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
-     * @param int[optional] $userId If you provide a userId, the object will be loaded with the data for this user.
+     * @param int [optional] $userId If you provide a userId, the object will be loaded with the data for this user.
      */
     public function __construct($userId = null)
     {
         // if a user id is given we will load the user in this object
-        if($userId !== null) $this->loadUser($userId);
+        if ($userId !== null) {
+            $this->loadUser($userId);
+        }
     }
 
     /**
@@ -60,7 +62,9 @@ class FrontendUser
     public static function getBackendUser($userId)
     {
         // create new instance if necessary and cache it
-        if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
+        if (!isset(self::$cache[$userId])) {
+            self::$cache[$userId] = new FrontendUser($userId);
+        }
 
         return self::$cache[$userId];
     }
@@ -87,7 +91,9 @@ class FrontendUser
         $key = (string) $key;
 
         // not set? return null
-        if(!isset($this->settings[$key])) return null;
+        if (!isset($this->settings[$key])) {
+            return null;
+        }
 
         // return
         return $this->settings[$key];
@@ -135,7 +141,9 @@ class FrontendUser
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if(empty($userData)) throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        if (empty($userData)) {
+            throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+        }
 
         // set properties
         $this->setUserId($userData['id']);
@@ -150,7 +158,9 @@ class FrontendUser
         );
 
         // loop settings and store them in the object
-        foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
+        foreach ($settings as $key => $value) {
+            $this->settings[$key] = unserialize($value);
+        }
     }
 
     /**

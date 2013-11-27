@@ -13,4 +13,6 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class FrontendException extends SpoonException {}
+class FrontendException extends SpoonException
+{
+}

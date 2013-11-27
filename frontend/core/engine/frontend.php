@@ -15,7 +15,7 @@
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class frontend extends KernelLoader implements ApplicationInterface
+class Frontend extends KernelLoader implements ApplicationInterface
 {
     /**
      * @var FrontendPage
@@ -57,7 +57,7 @@ class frontend extends KernelLoader implements ApplicationInterface
         $facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
 
         // needed data available?
-        if($facebookApplicationId != '' && $facebookApplicationSecret != '') {
+        if ($facebookApplicationId != '' && $facebookApplicationSecret != '') {
             $config = array(
                 'appId' => $facebookApplicationId,
                 'secret' => $facebookApplicationSecret,

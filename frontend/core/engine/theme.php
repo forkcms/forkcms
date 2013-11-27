@@ -17,7 +17,7 @@ class FrontendTheme
     /**
      * The current active theme's name
      *
-     * @var	string
+     * @var    string
      */
     private static $theme;
 
@@ -37,21 +37,21 @@ class FrontendTheme
         $theme = self::getTheme();
 
         // theme in use
-        if(FrontendModel::getModuleSetting('core', 'theme', 'core') != 'core') {
+        if (FrontendModel::getModuleSetting('core', 'theme', 'core') != 'core') {
             // theme not yet specified
-            if(strpos($file, 'frontend/themes/' . $theme) === false) {
+            if (strpos($file, 'frontend/themes/' . $theme) === false) {
                 // add theme location
                 $themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme . '/'), $file);
 
                 // check if this template exists
-                if(is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
+                if (is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
                     $file = $themeTemplate;
                 }
             }
         }
 
         // check if the file exists
-        if(!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
+        if (!is_file(PATH_WWW . str_replace(PATH_WWW, '', $file))) {
             throw new FrontendException('The template (' . $file . ') does not exists.');
         }
 
@@ -67,7 +67,9 @@ class FrontendTheme
     public static function getTheme()
     {
         // theme name has not yet been saved, fetch and save it
-        if(!self::$theme) self::$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+        if (!self::$theme) {
+            self::$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+        }
 
         // return theme name
         return self::$theme;
