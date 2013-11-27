@@ -707,6 +707,147 @@ class BackendBlogModel
 	}
 
 	/**
+	 * Inserts a complete post item based on some arrays of data
+	 *
+	 * This method's purpose is to be able to insert a post (possibly with all its metadata, tags, and comments)
+	 * in one method call. As much data as possible has been made optional, to be able to do imports where only
+	 * fractions of the data we need are known.
+	 *
+	 * The item array should have at least a 'title' and a 'text' property other properties are optional.
+	 * The meta array has only optional properties. You can use these to override the defaults.
+	 * The tags array is just a list of tagnames as string.
+	 * The comments array is an array of arrays with comment properties. A comment should have
+	 * at least 'author', 'email', and 'text' properties.
+	 *
+	 * @param array    $item     The data to insert.
+	 * @param array    $meta     The metadata to insert.
+	 * @param array    $tags     The tags to connect to this post.
+	 * @param array    $comments The comments attached to this post.
+	 * @return int
+	 */
+	public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
+	{
+		// Build item
+		if (!isset($item['id'])) {
+			$item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
+		}
+		if (!isset($item['user_id'])) {
+			$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+		}
+		if (!isset($item['hidden'])) {
+			$item['hidden'] = 'N';
+		}
+		if (!isset($item['allow_comments'])) {
+			$item['allow_comments'] = 'Y';
+		}
+		if (!isset($item['num_comments'])) {
+			$item['num_comments'] = 0;
+		}
+		if (!isset($item['status'])) {
+			$item['status'] = 'active';
+		}
+		if (!isset($item['language'])) {
+			$item['language'] = BL::getWorkingLanguage();
+		}
+		if (!isset($item['publish_on'])) {
+			$item['publish_on'] = BackendModel::getUTCDate();
+		}
+		if (!isset($item['created_on'])) {
+			$item['created_on'] = BackendModel::getUTCDate();
+		}
+		if (!isset($item['edited_on'])) {
+			$item['edited_on'] = BackendModel::getUTCDate();
+		}
+		if (!isset($item['category_id'])) {
+			$item['category_id'] = 1;
+		}
+		if (!isset($item['title']) || !isset($item['text'])) {
+			throw new Exception('$item should at least have a title and a text property');
+		}
+
+		// Set drafts hidden
+		if(strtotime((string) $item['publish_on']) > time())
+		{
+			$item['hidden'] = 'Y';
+			$item['status'] = 'draft';
+		}
+
+		// Build meta
+		if (!is_array($meta)) {
+			$meta = array();
+		}
+		if (!isset($meta['keywords'])) {
+			$meta['keywords'] = $item['title'];
+		}
+		if (!isset($meta['keywords_overwrite'])) {
+			$meta['keywords_overwrite'] = 'N';
+		}
+		if (!isset($meta['description'])) {
+			$meta['description'] = $item['title'];
+		}
+		if (!isset($meta['description_overwrite'])) {
+			$meta['description_overwrite'] = 'N';
+		}
+		if (!isset($meta['title'])) {
+			$meta['title'] = $item['title'];
+		}
+		if (!isset($meta['title_overwrite'])) {
+			$meta['title_overwrite'] = 'N';
+		}
+		if (!isset($meta['url'])) {
+			$meta['url'] = self::getURL($item['title']);
+		}
+		if (!isset($meta['url_overwrite'])) {
+			$meta['url_overwrite'] = 'N';
+		}
+
+		// Write meta to db
+		$item['meta_id'] = BackendModel::getDB(true)->insert('meta', $meta);
+
+		// Write post to db
+		$item['revision_id'] = self::insert($item);
+
+		// Any tags?
+		if(!empty($tags)) {
+			BackendTagsModel::saveTags($item['id'], implode(',', $tags), 'blog');
+		}
+
+		// Any comments?
+		foreach ($comments as $comment) {
+			// We require some fields (author, email, text)
+			if (!isset($comment['author']) || !isset($comment['email']) || !isset($comment['text'])) {
+				continue;
+			}
+
+			// Set some defaults
+			if (!isset($comment['language'])) {
+				$comment['language'] = BL::getWorkingLanguage();
+			}
+			if (!isset($comment['created_on'])) {
+				$comment['created_on'] = BackendModel::getUTCDate();
+			}
+			if (!isset($comment['status'])) {
+				$comment['status'] = 'published';
+			}
+			if (!isset($comment['data'])) {
+				$comment['data'] = serialize(array('server' => $_SERVER));
+			}
+			if (!isset($comment['website'])) {
+				$comment['website'] = '';
+			}
+
+			$comment['post_id'] = $item['id'];
+			$comment['data'] = serialize(array('server' => $_SERVER));
+
+			// Insert the comment
+			self::insertComment($comment);
+		}
+
+		// Return
+		return $item['revision_id'];
+	}
+
+	/**
 	 * Inserts a new category into the database
 	 *
 	 * @param array $item The data for the category to insert.
@@ -729,6 +870,40 @@ class BackendBlogModel
 
 		// return the id
 		return $item['id'];
+	}
+
+	/**
+	 * Inserts a new comment (Taken from FrontendBlogModel)
+	 *
+	 * @param array $comment The comment to add.
+	 * @return int
+	 */
+	public static function insertComment(array $comment)
+	{
+		// get db
+		$db = BackendModel::getContainer()->get('database');
+
+		// insert comment
+		$comment['id'] = (int) $db->insert('blog_comments', $comment);
+
+		// recalculate if published
+		if($comment['status'] == 'published')
+		{
+			// num comments
+			$numComments = (int) BackendModel::getContainer()->get('database')->getVar(
+				'SELECT COUNT(i.id) AS comment_count
+				 FROM blog_comments AS i
+				 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+				 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
+				 GROUP BY i.post_id',
+				array('published', $comment['post_id'], BL::getWorkingLanguage(), 'active')
+			);
+
+			// update num comments
+			$db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+		}
+
+		return $comment['id'];
 	}
 
 	/**
