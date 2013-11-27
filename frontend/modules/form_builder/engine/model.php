@@ -27,7 +27,9 @@ class FrontendFormBuilderModel
         );
 
         // unserialize the recipients
-        if(isset($form['email'])) $form['email'] = (array) unserialize($form['email']);
+        if (isset($form['email'])) {
+            $form['email'] = (array) unserialize($form['email']);
+        }
 
         // get validation
         $form['fields'] = self::getFields($id);
@@ -53,9 +55,11 @@ class FrontendFormBuilderModel
         );
 
         // fields
-        foreach($fields as &$field) {
+        foreach ($fields as &$field) {
             // unserialize
-            if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+            if ($field['settings'] !== null) {
+                $field['settings'] = unserialize($field['settings']);
+            }
 
             // get validation
             $field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
