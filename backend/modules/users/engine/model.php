@@ -27,7 +27,12 @@ class BackendUsersModel
      */
     public static function delete($id)
     {
-        BackendModel::getContainer()->get('database')->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', array((int) $id));
+        BackendModel::getContainer()->get('database')->update(
+            'users',
+            array('active' => 'N', 'deleted' => 'Y'),
+            'id = ?',
+            array((int) $id)
+        );
     }
 
     /**
@@ -37,7 +42,11 @@ class BackendUsersModel
      */
     public static function deleteResetPasswordSettings($id)
     {
-        BackendModel::getContainer()->get('database')->delete('users_settings', '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?', array((int) $id));
+        BackendModel::getContainer()->get('database')->delete(
+            'users_settings',
+            '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?',
+            array((int) $id)
+        );
     }
 
     /**
@@ -61,8 +70,8 @@ class BackendUsersModel
     /**
      * Does the user exist.
      *
-     * @param int $id The userId to check for existence.
-     * @param bool[optional] $active Should the user be active also?
+     * @param int $id  The userId to check for existence.
+     * @param     bool [optional] $active Should the user be active also?
      * @return bool
      */
     public static function exists($id, $active = true)
@@ -74,13 +83,15 @@ class BackendUsersModel
         $db = BackendModel::getContainer()->get('database');
 
         // if the user should also be active, there should be at least one row to return true
-        if($active) return (bool) $db->getVar(
-            'SELECT 1
-             FROM users AS i
-             WHERE i.id = ? AND i.deleted = ?
-             LIMIT 1',
-            array($id, 'N')
-        );
+        if ($active) {
+            return (bool) $db->getVar(
+                'SELECT 1
+                 FROM users AS i
+                 WHERE i.id = ? AND i.deleted = ?
+                 LIMIT 1',
+                array($id, 'N')
+            );
+        }
 
         // fallback, this doesn't take the active nor deleted status in account
         return (bool) $db->getVar(
@@ -97,7 +108,7 @@ class BackendUsersModel
      * If you specify a userId, the email with the given id will be ignored.
      *
      * @param string $email The email to check for.
-     * @param int[optional] $id The userId to be ignored.
+     * @param        int    [optional] $id The userId to be ignored.
      * @return bool
      */
     public static function existsEmail($email, $id = null)
@@ -109,13 +120,15 @@ class BackendUsersModel
         $db = BackendModel::getContainer()->get('database');
 
         // userid specified?
-        if($id !== null) return (bool) $db->getVar(
-            'SELECT 1
-             FROM users AS i
-             WHERE i.id != ? AND i.email = ?
-             LIMIT 1',
-            array($id, $email)
-        );
+        if ($id !== null) {
+            return (bool) $db->getVar(
+                'SELECT 1
+                 FROM users AS i
+                 WHERE i.id != ? AND i.email = ?
+                 LIMIT 1',
+                array($id, $email)
+            );
+        }
 
         // no user to ignore
         return (bool) $db->getVar(
@@ -158,7 +171,9 @@ class BackendUsersModel
         );
 
         // loop settings and unserialize them
-        foreach($user['settings'] as &$value) $value = unserialize($value);
+        foreach ($user['settings'] as &$value) {
+            $value = unserialize($value);
+        }
 
         // return
         return $user;
@@ -201,8 +216,12 @@ class BackendUsersModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach((array) BackendModel::getModuleSetting('users', 'date_formats') as $format) {
-            $possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+        foreach ((array) BackendModel::getModuleSetting('users', 'date_formats') as $format) {
+            $possibleFormats[$format] = SpoonDate::getDate(
+                $format,
+                null,
+                BackendAuthentication::getUser()->getSetting('interface_language')
+            );
         }
 
         // return
@@ -253,7 +272,7 @@ class BackendUsersModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach((array) BackendModel::getModuleSetting('core', 'number_formats') as $format => $example) {
+        foreach ((array) BackendModel::getModuleSetting('core', 'number_formats') as $format => $example) {
             $possibleFormats[$format] = $example;
         }
 
@@ -264,18 +283,20 @@ class BackendUsersModel
     /**
      * Fetch a user setting for a specific user
      *
-     * @param int $userId The id of the user.
+     * @param int    $userId  The id of the user.
      * @param string $setting The name of the setting to get.
      * @return mixed
      */
     public static function getSetting($userId, $setting)
     {
-        return @unserialize(BackendModel::getContainer()->get('database')->getVar(
-            'SELECT value
-             FROM users_settings
-             WHERE user_id = ? AND name = ?',
-            array((int) $userId, (string) $setting)
-        ));
+        return @unserialize(
+            BackendModel::getContainer()->get('database')->getVar(
+                'SELECT value
+                 FROM users_settings
+                 WHERE user_id = ? AND name = ?',
+                array((int) $userId, (string) $setting)
+            )
+        );
     }
 
     /**
@@ -289,8 +310,12 @@ class BackendUsersModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach(BackendModel::getModuleSetting('users', 'time_formats') as $format) {
-            $possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+        foreach (BackendModel::getModuleSetting('users', 'time_formats') as $format) {
+            $possibleFormats[$format] = SpoonDate::getDate(
+                $format,
+                null,
+                BackendAuthentication::getUser()->getSetting('interface_language')
+            );
         }
 
         // return
@@ -310,11 +335,14 @@ class BackendUsersModel
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            array('nickname', 'Y', 'N'), 'id'
+            array('nickname', 'Y', 'N'),
+            'id'
         );
 
         // loop users & unserialize
-        foreach($users as &$value) $value = unserialize($value);
+        foreach ($users as &$value) {
+            $value = unserialize($value);
+        }
 
         // return
         return $users;
@@ -323,7 +351,7 @@ class BackendUsersModel
     /**
      * Add a new user.
      *
-     * @param array $user The userdata.
+     * @param array $user     The userdata.
      * @param array $settings The settings for the new user.
      * @return int
      */
@@ -337,7 +365,13 @@ class BackendUsersModel
         $userSettings = array();
 
         // loop settings
-        foreach($settings as $key => $value) $userSettings[] = array('user_id' => $userId, 'name' => $key, 'value' => serialize($value));
+        foreach ($settings as $key => $value) {
+            $userSettings[] = array(
+                'user_id' => $userId,
+                'name' => $key,
+                'value' => serialize($value)
+            );
+        }
 
         // insert all settings at once
         $db->insert('users_settings', $userSettings);
@@ -349,9 +383,9 @@ class BackendUsersModel
     /**
      * Set a user setting for a specific user
      *
-     * @param int $userId The id of the user.
+     * @param int    $userId  The id of the user.
      * @param string $setting The name of the setting to set.
-     * @param string $value The value of the setting to set.
+     * @param string $value   The value of the setting to set.
      * @return mixed
      */
     public static function setSetting($userId, $setting, $value)
@@ -367,7 +401,7 @@ class BackendUsersModel
 
     /**
      * Restores a user
-     * @later	this method should check if all needed data is present
+     * @later    this method should check if all needed data is present
      *
      * @param string $email The e-mail address of the user to restore.
      * @return bool
@@ -390,9 +424,9 @@ class BackendUsersModel
         );
 
         // no valid users
-        if($id === null) return false;
-
-        else {
+        if ($id === null) {
+            return false;
+        } else {
             // restore
             $db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
 
@@ -405,7 +439,7 @@ class BackendUsersModel
      * Save the changes for a given user
      * Remark: $user['id'] should be available
      *
-     * @param array $user The userdata.
+     * @param array $user     The userdata.
      * @param array $settings The settings for the user.
      */
     public static function update(array $user, array $settings)
@@ -417,7 +451,7 @@ class BackendUsersModel
         $updated = $db->update('users', $user, 'id = ?', array($user['id']));
 
         // loop settings
-        foreach($settings as $key => $value) {
+        foreach ($settings as $key => $value) {
             // insert or update
             $db->execute(
                 'INSERT INTO users_settings(user_id, name, value)
@@ -433,8 +467,8 @@ class BackendUsersModel
     /**
      * Update the user password
      *
-     * @param BackendUser $user An instance of BackendUser.
-     * @param string $password The new password for the user.
+     * @param BackendUser $user     An instance of BackendUser.
+     * @param string      $password The new password for the user.
      */
     public static function updatePassword(BackendUser $user, $password)
     {
@@ -443,7 +477,12 @@ class BackendUsersModel
         $key = $user->getSetting('password_key');
 
         // update user
-        BackendModel::getContainer()->get('database')->update('users', array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)), 'id = ?', $userId);
+        BackendModel::getContainer()->get('database')->update(
+            'users',
+            array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)),
+            'id = ?',
+            $userId
+        );
 
         // remove the user settings linked to the resetting of passwords
         self::deleteResetPasswordSettings($userId);

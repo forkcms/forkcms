@@ -22,23 +22,25 @@ class BackendUsersUndoDelete extends BackendBaseAction
         $email = $this->getParameter('email', 'string');
 
         // does the user exist
-        if($email !== null) {
+        if ($email !== null) {
             parent::execute();
 
             // delete item
-            if(BackendUsersModel::undoDelete($email)) {
+            if (BackendUsersModel::undoDelete($email)) {
                 // get user
                 $user = new BackendUser(null, $email);
 
                 // item was deleted, so redirect
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId() . '&report=restored&var=' . $user->getSetting('nickname') . '&highlight=row-' . $user->getUserId());
+                $this->redirect(
+                    BackendModel::createURLForAction('edit') . '&id=' . $user->getUserId(
+                    ) . '&report=restored&var=' . $user->getSetting('nickname') . '&highlight=row-' . $user->getUserId()
+                );
+            } else {
+                // invalid user
+                $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
             }
-
-            // invalid user
-            else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no user found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 }

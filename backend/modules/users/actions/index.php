@@ -35,16 +35,32 @@ class BackendUsersIndex extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('edit')) {
             // add column
-            $this->dataGrid->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'nickname',
+                SpoonFilter::ucfirst(BL::lbl('Nickname')),
+                null,
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
 
             // add edit column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+            );
         }
 
         // show the user's nickname
-        $this->dataGrid->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
+        $this->dataGrid->setColumnFunction(
+            array('BackendUsersModel', 'getSetting'),
+            array('[id]', 'nickname'),
+            'nickname',
+            false
+        );
     }
 
     /**

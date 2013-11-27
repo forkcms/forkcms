@@ -24,14 +24,18 @@ class BackendUsersDelete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the user exist
-        if($this->id !== null && BackendUsersModel::exists($this->id) && BackendAuthentication::getUser()->getUserId() != $this->id) {
+        if ($this->id !== null && BackendUsersModel::exists($this->id) &&
+            BackendAuthentication::getUser()->getUserId() != $this->id
+        ) {
             parent::execute();
 
             // get data
             $user = new BackendUser($this->id);
 
             // God-users can't be deleted
-            if($user->isGod()) $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
+            if ($user->isGod()) {
+                $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
+            }
 
             // delete item
             BackendUsersModel::delete($this->id);
@@ -40,10 +44,11 @@ class BackendUsersDelete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname'));
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&report=deleted&var=' . $user->getSetting('nickname')
+            );
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no user found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 }
