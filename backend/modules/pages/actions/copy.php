@@ -10,7 +10,7 @@
 /**
  * BackendPagesCopy
  * This is the copy-action, it will copy pages from one language to another
- * @remark:	IMPORTANT existing data will be removed, this feature is also experimental!
+ * @remark :    IMPORTANT existing data will be removed, this feature is also experimental!
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Sam Tubbax <sam@sumocoders.be>
@@ -23,7 +23,8 @@ class BackendPagesCopy extends BackendBaseActionIndex
      *
      * @var string
      */
-    private $from, $to;
+    private $from;
+    private $to;
 
     /**
      * Execute the action
@@ -38,8 +39,12 @@ class BackendPagesCopy extends BackendBaseActionIndex
         $this->to = $this->getParameter('to');
 
         // validate
-        if($this->from == '') throw new BackendException('Specify a from-parameter.');
-        if($this->to == '') throw new BackendException('Specify a to-parameter.');
+        if ($this->from == '') {
+            throw new BackendException('Specify a from-parameter.');
+        }
+        if ($this->to == '') {
+            throw new BackendException('Specify a to-parameter.');
+        }
 
         // copy pages
         BackendPagesModel::copy($this->from, $this->to);

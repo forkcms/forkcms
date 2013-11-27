@@ -26,10 +26,9 @@ class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
         $id = SpoonFilter::getPostValue('id', null, 0, 'int');
 
         // validate
-        if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-
-        // validated
-        else {
+        if ($id === 0) {
+            $this->output(self::BAD_REQUEST, null, 'no id provided');
+        } else {
             // get page
             $page = BackendPagesModel::get($id);
 

@@ -36,7 +36,10 @@ class BackendPagesSettings extends BackendBaseActionEdit
         $this->frm = new BackendForm('settings');
 
         // add fields for meta navigation
-        $this->frm->addCheckbox('meta_navigation', BackendModel::getModuleSetting($this->getModule(), 'meta_navigation', false));
+        $this->frm->addCheckbox(
+            'meta_navigation',
+            BackendModel::getModuleSetting($this->getModule(), 'meta_navigation', false)
+        );
     }
 
     /**
@@ -45,11 +48,15 @@ class BackendPagesSettings extends BackendBaseActionEdit
     private function validateForm()
     {
         // form is submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // form is validated
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // set our settings
-                BackendModel::setModuleSetting($this->getModule(), 'meta_navigation', (bool) $this->frm->getField('meta_navigation')->getValue());
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'meta_navigation',
+                    (bool) $this->frm->getField('meta_navigation')->getValue()
+                );
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');
