@@ -17,7 +17,7 @@ class FrontendPagesWidgetSubpages extends FrontendBaseWidget
     /**
      * The items.
      *
-     * @var	array
+     * @var    array
      */
     private $items;
 
@@ -34,10 +34,8 @@ class FrontendPagesWidgetSubpages extends FrontendBaseWidget
         // check if the given template exists
         try {
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
-        }
-
-        // template does not exist; assume subpages_default.tpl
-        catch(FrontendException $e) {
+        } catch (FrontendException $e) {
+            // template does not exist; assume subpages_default.tpl
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/subpages_default.tpl');
         }
 
