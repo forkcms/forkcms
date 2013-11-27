@@ -13,7 +13,7 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
     /**
      * The item.
      *
-     * @var	array
+     * @var    array
      */
     private $item;
 
@@ -27,20 +27,19 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
         $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl');
 
         // is the content block visible?
-        if(!empty($this->item)) {
+        if (!empty($this->item)) {
             // check if the given template exists
             try {
-                $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']);
-            }
-
-            // template does not exist; use the default template
-            catch(FrontendException $e) {
+                $template = FrontendTheme::getPath(
+                    FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']
+                );
+            } catch (FrontendException $e) {
                 // do nothing
             }
+        } else {
+            // set a default text so we don't see the template data
+            $this->item['text'] = '';
         }
-
-        // set a default text so we don't see the template data
-        else $this->item['text'] = '';
 
         return $template;
     }
