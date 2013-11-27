@@ -270,7 +270,7 @@ class FrontendProfilesModel
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
-		$url = (string) SpoonFilter::urlise($displayName);
+		$url = (string) CommonUri::getUrl($displayName);
 
 		// get db
 		$db = FrontendModel::getContainer()->get('database');

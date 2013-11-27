@@ -469,7 +469,7 @@ class BackendProfilesModel
 		$displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
 		// urlise
-		$url = SpoonFilter::urlise($displayName);
+		$url = CommonUri::getUrl($displayName);
 
 		// get db
 		$db = BackendModel::getContainer()->get('database');

@@ -137,6 +137,7 @@ Bugfixes:
 --
 Improvements:
 
+* Core: CommonUri added so we can generate a safe filename and url. Tx to Jeroen Desloovere
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend.
