@@ -16,34 +16,34 @@
  * @author Dave Lens <dave.lens@wijs.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class Backend extends KernelLoader implements ApplicationInterface
+class backend extends KernelLoader implements ApplicationInterface
 {
-	/**
-	 * @var BackendAction
-	 */
-	private $action;
+    /**
+     * @var BackendAction
+     */
+    private $action;
 
-	/**
-	 * @return Symfony\Component\HttpFoundation\Response
-	 */
-	public function display()
-	{
-		return $this->action->execute();
-	}
+    /**
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display()
+    {
+        return $this->action->execute();
+    }
 
-	/**
-	 * This method exists because the service container needs to be set before
-	 * the page's functionality gets loaded.
-	 */
-	public function initialize()
-	{
-		$URL = new BackendURL($this->getKernel());
-		new BackendTemplate();
-		new BackendNavigation($this->getKernel());
-		new BackendHeader($this->getKernel());
+    /**
+     * This method exists because the service container needs to be set before
+     * the page's functionality gets loaded.
+     */
+    public function initialize()
+    {
+        $URL = new BackendURL($this->getKernel());
+        new BackendTemplate();
+        new BackendNavigation($this->getKernel());
+        new BackendHeader($this->getKernel());
 
-		$this->action = new BackendAction($this->getKernel());
-		$this->action->setModule($URL->getModule());
-		$this->action->setAction($URL->getAction());
-	}
+        $this->action = new BackendAction($this->getKernel());
+        $this->action->setModule($URL->getModule());
+        $this->action->setAction($URL->getAction());
+    }
 }

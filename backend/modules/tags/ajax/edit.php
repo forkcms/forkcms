@@ -14,62 +14,59 @@
  */
 class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// get parameters
-		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
-		$tag = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+        // get parameters
+        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
+        $tag = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
 
-		// validate id
-		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
+        // validate id
+        if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+        if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
 
-		// check if tag exists
-		if(BackendTagsModel::existsTag($tag)) $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+        // check if tag exists
+        if(BackendTagsModel::existsTag($tag)) $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
 
-		// build array
-		$item['id'] = $id;
-		$item['tag'] = SpoonFilter::htmlspecialchars($tag);
-		$item['url'] = BackendTagsModel::getURL(CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
+        // build array
+        $item['id'] = $id;
+        $item['tag'] = SpoonFilter::htmlspecialchars($tag);
+        $item['url'] = BackendTagsModel::getURL(CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
 
-		// update
-		BackendTagsModel::update($item);
+        // update
+        BackendTagsModel::update($item);
 
-		// output
-		$this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
-		
-		// validated id
-		else
-		{
-			// validate tag name
-			if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
-			
-			// validated tag name
-			else
-			{
-				// check if tag exists
-				if(BackendTagsModel::existsTag($tag)) $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
-		
-				// tags doesn't exists yet
-				else
-				{
-					// build array
-					$item['id'] = $id;
-					$item['tag'] = SpoonFilter::htmlspecialchars($tag);
-					$item['url'] = BackendTagsModel::getURL(SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
-			
-					// update
-					BackendTagsModel::update($item);
-			
-					// output
-					$this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
-				}
-			}
-		}
-	}
+        // output
+        $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+
+        // validated id
+        else {
+            // validate tag name
+            if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
+
+            // validated tag name
+            else {
+                // check if tag exists
+                if(BackendTagsModel::existsTag($tag)) $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+
+                // tags doesn't exists yet
+                else {
+                    // build array
+                    $item['id'] = $id;
+                    $item['tag'] = SpoonFilter::htmlspecialchars($tag);
+                    $item['url'] = BackendTagsModel::getURL(SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($item['tag'])), $id);
+
+                    // update
+                    BackendTagsModel::update($item);
+
+                    // output
+                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+                }
+            }
+        }
+    }
 }

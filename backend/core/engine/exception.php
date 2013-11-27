@@ -14,12 +14,12 @@
  */
 class BackendException extends SpoonException
 {
-	/**
-	 * @param string $message The message of the exception.
-	 * @param int[optional] $code The numeric code of the exception.
-	 */
-	public function __construct($message, $code = 0)
-	{
-		parent::__construct((string) $message, (int) $code);
-	}
+    /**
+     * @param string $message The message of the exception.
+     * @param int[optional] $code The numeric code of the exception.
+     */
+    public function __construct($message, $code = 0)
+    {
+        parent::__construct((string) $message, (int) $code);
+    }
 }

@@ -15,18 +15,18 @@
  */
 class FrontendProfilesLogout extends FrontendBaseBlock
 {
-	/**
-	 * Execute the extra.
-	 */
-	public function execute()
-	{
-		// logout
-		if(FrontendProfilesAuthentication::isLoggedIn()) FrontendProfilesAuthentication::logout();
+    /**
+     * Execute the extra.
+     */
+    public function execute()
+    {
+        // logout
+        if(FrontendProfilesAuthentication::isLoggedIn()) FrontendProfilesAuthentication::logout();
 
-		// trigger event
-		FrontendModel::triggerEvent('profiles', 'after_logout');
+        // trigger event
+        FrontendModel::triggerEvent('profiles', 'after_logout');
 
-		// redirect
-		$this->redirect(SITE_URL);
-	}
+        // redirect
+        $this->redirect(SITE_URL);
+    }
 }

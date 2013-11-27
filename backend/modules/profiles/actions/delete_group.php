@@ -15,34 +15,33 @@
  */
 class BackendProfilesDeleteGroup extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action.
-	 */
-	public function execute()
-	{
-		// get parameters
-		$this->id = $this->getParameter('id', 'int');
+    /**
+     * Execute the action.
+     */
+    public function execute()
+    {
+        // get parameters
+        $this->id = $this->getParameter('id', 'int');
 
-		// does the item exist
-		if($this->id !== null && BackendProfilesModel::existsGroup($this->id))
-		{
-			// call parent, this will probably add some general CSS/JS or other required files
-			parent::execute();
+        // does the item exist
+        if($this->id !== null && BackendProfilesModel::existsGroup($this->id)) {
+            // call parent, this will probably add some general CSS/JS or other required files
+            parent::execute();
 
-			// get group
-			$group = BackendProfilesModel::getGroup($this->id);
+            // get group
+            $group = BackendProfilesModel::getGroup($this->id);
 
-			// delete group
-			BackendProfilesModel::deleteGroup($this->id);
+            // delete group
+            BackendProfilesModel::deleteGroup($this->id);
 
-			// trigger event
-			BackendModel::triggerEvent($this->getModule(), 'after_delete_group', array('id' => $this->id));
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_delete_group', array('id' => $this->id));
 
-			// group was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('groups') . '&report=deleted&var=' . urlencode($group['name']));
-		}
+            // group was deleted, so redirect
+            $this->redirect(BackendModel::createURLForAction('groups') . '&report=deleted&var=' . urlencode($group['name']));
+        }
 
-		// group does not exists
-		else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
-	}
+        // group does not exists
+        else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+    }
 }

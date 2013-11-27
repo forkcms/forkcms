@@ -16,49 +16,48 @@
  */
 class FrontendFaqIndex extends FrontendBaseBlock
 {
-	/**
-	 * @var	array
-	 */
-	private $items = array();
+    /**
+     * @var	array
+     */
+    private $items = array();
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		$this->getData();
-		$this->loadTemplate();
-		$this->parse();
-	}
+        $this->getData();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Load the data, don't forget to validate the incoming data
-	 */
-	private function getData()
-	{
-		$categories = FrontendFaqModel::getCategories();
-		$limit = FrontendModel::getModuleSetting('faq', 'overview_num_items_per_category', 10);
+    /**
+     * Load the data, don't forget to validate the incoming data
+     */
+    private function getData()
+    {
+        $categories = FrontendFaqModel::getCategories();
+        $limit = FrontendModel::getModuleSetting('faq', 'overview_num_items_per_category', 10);
 
-		foreach($categories as $item)
-		{
-			$item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
+        foreach($categories as $item) {
+            $item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
 
-			// no questions? next!
-			if(empty($item['questions'])) continue;
+            // no questions? next!
+            if(empty($item['questions'])) continue;
 
-			// add the category item including the questions
-			$this->items[] = $item;
-		}
-	}
+            // add the category item including the questions
+            $this->items[] = $item;
+        }
+    }
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		$this->tpl->assign('faqCategories', (array) $this->items);
-		$this->tpl->assign('allowMultipleCategories', FrontendModel::getModuleSetting('faq', 'allow_multiple_categories', true));
-	}
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
+        $this->tpl->assign('faqCategories', (array) $this->items);
+        $this->tpl->assign('allowMultipleCategories', FrontendModel::getModuleSetting('faq', 'allow_multiple_categories', true));
+    }
 }

@@ -14,122 +14,114 @@
  */
 class BackendMailmotorMassAddressAction extends BackendBaseAction
 {
-	/**
-	 * The passed e-mails
-	 *
-	 * @var	array
-	 */
-	private $emails;
+    /**
+     * The passed e-mails
+     *
+     * @var	array
+     */
+    private $emails;
 
-	/**
-	 * The group ID we have to perform the actions for
-	 *
-	 * @var	int
-	 */
-	private $groupId;
+    /**
+     * The group ID we have to perform the actions for
+     *
+     * @var	int
+     */
+    private $groupId;
 
-	/**
-	 * Delete addresses
-	 */
-	private function deleteAddresses()
-	{
-		// no group set
-		if($this->groupId == '') $this->groupId = null;
+    /**
+     * Delete addresses
+     */
+    private function deleteAddresses()
+    {
+        // no group set
+        if($this->groupId == '') $this->groupId = null;
 
-		// get all groups
-		$groupIds = BackendMailmotorModel::getGroupIDs();
+        // get all groups
+        $groupIds = BackendMailmotorModel::getGroupIDs();
 
-		// loop the emails
-		foreach($this->emails as $email)
-		{
-			// the group ID is not set
-			if($this->groupId == null)
-			{
-				// if no groups were set, break here
-				if(empty($groupIds)) break;
+        // loop the emails
+        foreach($this->emails as $email) {
+            // the group ID is not set
+            if($this->groupId == null) {
+                // if no groups were set, break here
+                if(empty($groupIds)) break;
 
-				// loop the group IDs
-				foreach($groupIds as $groupId)
-				{
-					// try to unsubscribe this address
-					try
-					{
-						BackendMailmotorCMHelper::unsubscribe($email, $groupId);
-					}
+                // loop the group IDs
+                foreach($groupIds as $groupId) {
+                    // try to unsubscribe this address
+                    try {
+                        BackendMailmotorCMHelper::unsubscribe($email, $groupId);
+                    }
 
-					// ignore exceptions
-					catch(Exception $e)
-					{
-						// do nothing
-					}
-				}
+                    // ignore exceptions
+                    catch(Exception $e) {
+                        // do nothing
+                    }
+                }
 
-				// delete all addresses
-				BackendMailmotorModel::deleteAddresses($email);
-			}
+                // delete all addresses
+                BackendMailmotorModel::deleteAddresses($email);
+            }
 
-			// group ID was set, unsubscribe the address for this group
-			else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
-		}
+            // group ID was set, unsubscribe the address for this group
+            else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
+        }
 
-		// trigger event
-		BackendModel::triggerEvent($this->getModule(), 'after_delete_addresses');
+        // trigger event
+        BackendModel::triggerEvent($this->getModule(), 'after_delete_addresses');
 
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
-	}
+        // redirect
+        $this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
+    }
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// action to execute
-		$action = SpoonFilter::getGetValue('action', array('delete', 'export'), '');
-		$this->groupId = SpoonFilter::getGetValue('group_id', null, '');
+        // action to execute
+        $action = SpoonFilter::getGetValue('action', array('delete', 'export'), '');
+        $this->groupId = SpoonFilter::getGetValue('group_id', null, '');
 
-		// no id's provided
-		if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
-		if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-items-selected');
+        // no id's provided
+        if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
+        if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-items-selected');
 
-		// at least one id
-		else
-		{
-			// redefine id's
-			$this->emails = (array) $_GET['emails'];
+        // at least one id
+        else {
+            // redefine id's
+            $this->emails = (array) $_GET['emails'];
 
-			// evaluate $action, see what action was triggered
-			switch($action)
-			{
-				case 'delete':
-					$this->deleteAddresses();
-					break;
+            // evaluate $action, see what action was triggered
+            switch($action) {
+                case 'delete':
+                    $this->deleteAddresses();
+                    break;
 
-				case 'export':
-					$this->exportAddresses();
-					break;
-			}
-		}
-	}
+                case 'export':
+                    $this->exportAddresses();
+                    break;
+            }
+        }
+    }
 
-	/**
-	 * Export addresses
-	 */
-	private function exportAddresses()
-	{
-		// fetch the creationdate for the addresses
-		foreach($this->emails as &$email)
-		{
-			$address = BackendMailmotorModel::getAddress($email);
-			$email = array(
-				'email' => $email,
-				'created_on' => strtotime($address['created_on'])
-			);
-		}
+    /**
+     * Export addresses
+     */
+    private function exportAddresses()
+    {
+        // fetch the creationdate for the addresses
+        foreach($this->emails as &$email) {
+            $address = BackendMailmotorModel::getAddress($email);
+            $email = array(
+                'email' => $email,
+                'created_on' => strtotime($address['created_on'])
+            );
+        }
 
-		// export the addresses
-		BackendMailmotorModel::exportAddresses($this->emails);
-	}
+        // export the addresses
+        BackendMailmotorModel::exportAddresses($this->emails);
+    }
 }

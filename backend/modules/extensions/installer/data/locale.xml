@@ -53,7 +53,7 @@
       </item>
       <item type="message" name="CronjobsInfo">
         <translation language="nl"><![CDATA[
-          
+
             <p>
               Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
               Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.<br />
@@ -63,7 +63,7 @@
               Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />
               Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>
             </p>
-      	  
+
      	]]></translation>
         <translation language="en"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
         <translation language="ru"><![CDATA[                      <p>              Планировщик задач периодически в заданное время будет выполнять специальные скрипты.<br />              Планировщик задач может быть запущен в командной строке на вашем сервере.<br />              Если на сервере несколько Fork CMS, советуем для каждой установить иное время.            </p>            <p>              Командная строка: <small>php %1$s/backend/cronjob.php module=<i>module</i> action=<i>action</i></small><br />              Веб-сервер: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob.php?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>

@@ -14,40 +14,40 @@
  */
 class FrontendTagsIndex extends FrontendBaseBlock
 {
-	/**
-	 * List of tags
-	 *
-	 * @var	array
-	 */
-	private $tags = array();
+    /**
+     * List of tags
+     *
+     * @var	array
+     */
+    private $tags = array();
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		$this->loadTemplate();
-		$this->getData();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        $this->loadTemplate();
+        $this->getData();
+        $this->parse();
+    }
 
-	/**
-	 * Load the data from the database.
-	 */
-	private function getData()
-	{
-		$this->tags = FrontendTagsModel::getAll();
-	}
+    /**
+     * Load the data from the database.
+     */
+    private function getData()
+    {
+        $this->tags = FrontendTagsModel::getAll();
+    }
 
-	/**
-	 * Parse the data into the template
-	 */
-	private function parse()
-	{
-		// make tags available
-		$this->tpl->assign('tags', $this->tags);
+    /**
+     * Parse the data into the template
+     */
+    private function parse()
+    {
+        // make tags available
+        $this->tpl->assign('tags', $this->tags);
 
-		// tag-pages don't have any SEO-value, so don't index them
-		$this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
-	}
+        // tag-pages don't have any SEO-value, so don't index them
+        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
+    }
 }

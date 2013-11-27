@@ -14,44 +14,39 @@
  */
 class BackendAnalyticsCronjobGetTrafficSources extends BackendBaseCronjob
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// fork is no longer authorized to collect analytics data
-		if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED')
-		{
-			// remove all parameters from the module settings
-			BackendModel::setModuleSetting('analytics', 'session_token', null);
-			BackendModel::setModuleSetting('analytics', 'account_name', null);
-			BackendModel::setModuleSetting('analytics', 'table_id', null);
-			BackendModel::setModuleSetting('analytics', 'profile_title', null);
+        // fork is no longer authorized to collect analytics data
+        if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
+            // remove all parameters from the module settings
+            BackendModel::setModuleSetting('analytics', 'session_token', null);
+            BackendModel::setModuleSetting('analytics', 'account_name', null);
+            BackendModel::setModuleSetting('analytics', 'table_id', null);
+            BackendModel::setModuleSetting('analytics', 'profile_title', null);
 
-			BackendAnalyticsModel::removeCacheFiles();
-			BackendAnalyticsModel::clearTables();
-			return;
-		}
+            BackendAnalyticsModel::removeCacheFiles();
+            BackendAnalyticsModel::clearTables();
+            return;
+        }
 
-		$this->getData();
-	}
+        $this->getData();
+    }
 
-	/**
-	 * Get data
-	 */
-	private function getData()
-	{
-		try
-		{
-			BackendAnalyticsHelper::getRecentReferrers();
-			BackendAnalyticsHelper::getRecentKeywords();
-		}
-
-		catch(Exception $e)
-		{
-			throw new SpoonException('Something went wrong while getting dashboard data.');
-		}
-	}
+    /**
+     * Get data
+     */
+    private function getData()
+    {
+        try {
+            BackendAnalyticsHelper::getRecentReferrers();
+            BackendAnalyticsHelper::getRecentKeywords();
+        } catch(Exception $e) {
+            throw new SpoonException('Something went wrong while getting dashboard data.');
+        }
+    }
 }

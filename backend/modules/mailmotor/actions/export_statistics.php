@@ -14,23 +14,23 @@
  */
 class BackendMailmotorExportStatistics extends BackendBaseAction
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-		// action to execute
-		$id = SpoonFilter::getGetValue('id', null, 0);
+        // action to execute
+        $id = SpoonFilter::getGetValue('id', null, 0);
 
-		// no id's provided
-		if(!BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
+        // no id's provided
+        if(!BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
 
-		// at least one id
-		else BackendMailmotorModel::exportStatistics($id);
+        // at least one id
+        else BackendMailmotorModel::exportStatistics($id);
 
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
-	}
+        // redirect
+        $this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
+    }
 }

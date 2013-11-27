@@ -15,38 +15,35 @@
  */
 class BackendSettingsModel
 {
-	/**
-	 * Get warnings for active modules
-	 *
-	 * @return array
-	 */
-	public static function getWarnings()
-	{
-		// init vars
-		$warnings = array();
-		$installedModules = BackendModel::getModules();
+    /**
+     * Get warnings for active modules
+     *
+     * @return array
+     */
+    public static function getWarnings()
+    {
+        // init vars
+        $warnings = array();
+        $installedModules = BackendModel::getModules();
 
-		// loop modules
-		foreach($installedModules as $module)
-		{
-			// model class
-			$class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
+        // loop modules
+        foreach($installedModules as $module) {
+            // model class
+            $class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
 
-			// model file exists
-			if(is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
-			{
-				// require class
-				require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
-			}
+            // model file exists
+            if(is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php')) {
+                // require class
+                require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
+            }
 
-			// method exists
-			if(is_callable(array($class, 'checkSettings')))
-			{
-				// add possible warnings
-				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
-			}
-		}
+            // method exists
+            if(is_callable(array($class, 'checkSettings'))) {
+                // add possible warnings
+                $warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
+            }
+        }
 
-		return (array) $warnings;
-	}
+        return (array) $warnings;
+    }
 }

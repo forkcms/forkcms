@@ -14,79 +14,79 @@
  */
 class FrontendIcal extends SpoonIcal
 {
-	/**
-	 * The title
-	 *
-	 * @var	string
-	 */
-	private $title;
+    /**
+     * The title
+     *
+     * @var	string
+     */
+    private $title;
 
-	/**
-	 * Default constructor
-	 *
-	 * @param string $title The title for the calendar.
-	 * @param string $description A description for the calendar.
-	 */
-	public function __construct($title, $description)
-	{
-		// redefine
-		$title = (string) $title;
-		$description = (string) $description;
+    /**
+     * Default constructor
+     *
+     * @param string $title The title for the calendar.
+     * @param string $description A description for the calendar.
+     */
+    public function __construct($title, $description)
+    {
+        // redefine
+        $title = (string) $title;
+        $description = (string) $description;
 
-		// convert to plain text
-		$description = FrontendModel::convertToPlainText($description);
+        // convert to plain text
+        $description = FrontendModel::convertToPlainText($description);
 
-		// set some basic stuff
-		$this->setProductIdentifier('Fork v' . FORK_VERSION);
+        // set some basic stuff
+        $this->setProductIdentifier('Fork v' . FORK_VERSION);
 
-		// build properties
-		$properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
-		$properties['X-WR-CALDESC'] = $description;
-		$properties['X-WR-TIMEZONE'] = date_default_timezone_get();
+        // build properties
+        $properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
+        $properties['X-WR-CALDESC'] = $description;
+        $properties['X-WR-TIMEZONE'] = date_default_timezone_get();
 
-		// set the title
-		$this->setTitle($title);
+        // set the title
+        $this->setTitle($title);
 
-		// set properties
-		$this->setXProperties($properties);
+        // set properties
+        $this->setXProperties($properties);
 
-		// set the filename
-		$this->setFilename(str_replace('-', '_', CommonUri::getUrl($title)) . '.ics');
-	}
+        // set the filename
+        $this->setFilename(str_replace('-', '_', CommonUri::getUrl($title)) . '.ics');
+    }
 
-	/**
-	 * Get the title
-	 *
-	 * @return string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
+    /**
+     * Get the title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
 
-	/**
-	 * Parse the iCal and output into the browser.
-	 *
-	 * @param bool[optional] $headers Should the headers be set? (Use false if you're debugging).
-	 */
-	public function parse($headers = true)
-	{
-		// set headers
-		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . CommonUri::getUrl($this->getTitle()) . '.ics');
+    /**
+     * Parse the iCal and output into the browser.
+     *
+     * @param bool[optional] $headers Should the headers be set? (Use false if you're debugging).
+     */
+    public function parse($headers = true)
+    {
+        // set headers
+        if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . CommonUri::getUrl($this->getTitle()) . '.ics');
 
-		// call the parent
-		parent::parse($headers);
-	}
+        // call the parent
+        parent::parse($headers);
+    }
 
-	/**
-	 * Set the title
-	 *
-	 * @param string $title The title for the calendar.
-	 */
-	public function setTitle($title)
-	{
-		$this->title = (string) $title;
-	}
+    /**
+     * Set the title
+     *
+     * @param string $title The title for the calendar.
+     */
+    public function setTitle($title)
+    {
+        $this->title = (string) $title;
+    }
 }
 
 /**
@@ -96,112 +96,110 @@ class FrontendIcal extends SpoonIcal
  */
 class FrontendIcalEvent extends SpoonIcalEvent
 {
-	/**
-	 * Initial values for UTM-parameters
-	 *
-	 * @var	array
-	 */
-	private $utm = array('utm_source' => 'feed', 'utm_medium' => 'ical');
+    /**
+     * Initial values for UTM-parameters
+     *
+     * @var	array
+     */
+    private $utm = array('utm_source' => 'feed', 'utm_medium' => 'ical');
 
-	/**
-	 * Default constructor.
-	 *
-	 * @param string $title The title for the item.
-	 * @param string $link The link for the item.
-	 * @param string $description The content for the item.
-	 */
-	public function __construct($title, $link, $description)
-	{
-		// set UTM-campaign
-		$this->utm['utm_campaign'] = CommonUri::getUrl($title);
+    /**
+     * Default constructor.
+     *
+     * @param string $title The title for the item.
+     * @param string $link The link for the item.
+     * @param string $description The content for the item.
+     */
+    public function __construct($title, $link, $description)
+    {
+        // set UTM-campaign
+        $this->utm['utm_campaign'] = CommonUri::getUrl($title);
 
-		// convert to plain text
-		$description = FrontendModel::convertToPlainText($description);
+        // convert to plain text
+        $description = FrontendModel::convertToPlainText($description);
 
-		// set title
-		$this->setSummary($title);
+        // set title
+        $this->setSummary($title);
 
-		// set url
-		$this->setUrl(FrontendModel::addURLParameters($link, $this->utm));
+        // set url
+        $this->setUrl(FrontendModel::addURLParameters($link, $this->utm));
 
-		// set description
-		$this->setDescription($this->processLinks($description));
+        // set description
+        $this->setDescription($this->processLinks($description));
 
-		// set identifier
-		$this->setUniqueIdentifier(md5($link));
+        // set identifier
+        $this->setUniqueIdentifier(md5($link));
 
-		// build properties
-		$properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = $title;
-		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SITE_URL . '/favicon.ico';
-		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getUrl();
+        // build properties
+        $properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = $title;
+        $properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SITE_URL . '/favicon.ico';
+        $properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = $this->getUrl();
 
-		// set properties
-		$this->setXProperties($properties);
-	}
+        // set properties
+        $this->setXProperties($properties);
+    }
 
-	/**
-	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
-	 *
-	 * @param string $content The content to process.
-	 * @return string
-	 */
-	public function processLinks($content)
-	{
-		// redefine
-		$content = (string) $content;
+    /**
+     * Process links, will prepend SITE_URL if needed and append UTM-parameters
+     *
+     * @param string $content The content to process.
+     * @return string
+     */
+    public function processLinks($content)
+    {
+        // redefine
+        $content = (string) $content;
 
-		// replace URLs and images
-		$search = array('href="/', 'src="/');
-		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
+        // replace URLs and images
+        $search = array('href="/', 'src="/');
+        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 
-		// replace links to files
-		$content = str_replace($search, $replace, $content);
+        // replace links to files
+        $content = str_replace($search, $replace, $content);
 
-		// init var
-		$matches = array();
+        // init var
+        $matches = array();
 
-		// match links
-		preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
+        // match links
+        preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
 
-		// any links?
-		if(isset($matches[1]) && !empty($matches[1]))
-		{
-			// init vars
-			$searchLinks = array();
-			$replaceLinks = array();
+        // any links?
+        if(isset($matches[1]) && !empty($matches[1])) {
+            // init vars
+            $searchLinks = array();
+            $replaceLinks = array();
 
-			// loop old links
-			foreach($matches[1] as $i => $link)
-			{
-				$searchLinks[] = $matches[0][$i];
-				$replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $this->utm) . '"';
-			}
+            // loop old links
+            foreach($matches[1] as $i => $link) {
+                $searchLinks[] = $matches[0][$i];
+                $replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $this->utm) . '"';
+            }
 
-			// replace
-			$content = str_replace($searchLinks, $replaceLinks, $content);
-		}
+            // replace
+            $content = str_replace($searchLinks, $replaceLinks, $content);
+        }
 
-		// return content
-		return $content;
-	}
+        // return content
+        return $content;
+    }
 
-	/**
-	 * Set the url
-	 *
-	 * @param string $url The url to associate the item with.
-	 */
-	public function setUrl($url)
-	{
-		// redefine var
-		$url = (string) $url;
+    /**
+     * Set the url
+     *
+     * @param string $url The url to associate the item with.
+     */
+    public function setUrl($url)
+    {
+        // redefine var
+        $url = (string) $url;
 
-		// if link doesn't start with http, we prepend the URL of the site
-		if(substr($url, 0, 7) != 'http://') $url = SITE_URL . $url;
+        // if link doesn't start with http, we prepend the URL of the site
+        if(substr($url, 0, 7) != 'http://') $url = SITE_URL . $url;
 
-		$url = FrontendModel::addURLParameters($url, $this->utm);
-		$url = htmlspecialchars_decode($url);
+        $url = FrontendModel::addURLParameters($url, $this->utm);
+        $url = htmlspecialchars_decode($url);
 
-		// call parent
-		parent::setUrl($url);
-	}
+        // call parent
+        parent::setUrl($url);
+    }
 }
