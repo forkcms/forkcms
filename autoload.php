@@ -33,26 +33,36 @@ class Autoloader
         $exceptions['api'] = __DIR__ . '/api/1.0/engine/api.php';
 
         // is it an exception?
-        if(isset($exceptions[$unifiedClassName])) $pathToLoad = $exceptions[$unifiedClassName];
-
-        // if it is a Spoon-class we can stop using this autoloader
-        elseif(substr($unifiedClassName, 0, 5) == 'spoon') return;
-
-        elseif(substr($unifiedClassName, 0, 12) == 'frontendbase') $pathToLoad = __DIR__ . '/frontend/core/engine/base.php';
-        elseif(substr($unifiedClassName, 0, 13) == 'frontendblock') $pathToLoad = __DIR__ . '/frontend/core/engine/block.php';
-        elseif(substr($unifiedClassName, 0, 8) == 'frontend') $pathToLoad = __DIR__ . '/frontend/core/engine/' . str_replace('frontend', '', $unifiedClassName) . '.php';
-        elseif(substr($unifiedClassName, 0, 11) == 'backendbase') $pathToLoad = __DIR__ . '/backend/core/engine/base.php';
-        elseif(substr($unifiedClassName, 0, 15) == 'backenddatagrid') $pathToLoad = __DIR__ . '/backend/core/engine/datagrid.php';
-        elseif(substr($unifiedClassName, 0, 7) == 'backend') $pathToLoad = __DIR__ . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
-        elseif(substr($unifiedClassName, 0, 6) == 'common') $pathToLoad = __DIR__ . '/library/base/' . str_replace('common', '', $unifiedClassName) . '.php';
+        if (isset($exceptions[$unifiedClassName])) {
+            $pathToLoad = $exceptions[$unifiedClassName];
+        } elseif (substr($unifiedClassName, 0, 5) == 'spoon') {
+            // if it is a Spoon-class we can stop using this autoloader
+            return;
+        } elseif (substr($unifiedClassName, 0, 12) == 'frontendbase') {
+            $pathToLoad = __DIR__ . '/frontend/core/engine/base.php';
+        } elseif (substr($unifiedClassName, 0, 13) == 'frontendblock') {
+            $pathToLoad = __DIR__ . '/frontend/core/engine/block.php';
+        } elseif (substr($unifiedClassName, 0, 8) == 'frontend') {
+            $pathToLoad = __DIR__ . '/frontend/core/engine/' . str_replace('frontend', '', $unifiedClassName) . '.php';
+        } elseif (substr($unifiedClassName, 0, 11) == 'backendbase') {
+            $pathToLoad = __DIR__ . '/backend/core/engine/base.php';
+        } elseif (substr($unifiedClassName, 0, 15) == 'backenddatagrid') {
+            $pathToLoad = __DIR__ . '/backend/core/engine/datagrid.php';
+        } elseif (substr($unifiedClassName, 0, 7) == 'backend') {
+            $pathToLoad = __DIR__ . '/backend/core/engine/' . str_replace('backend', '', $unifiedClassName) . '.php';
+        } elseif (substr($unifiedClassName, 0, 6) == 'common') {
+            $pathToLoad = __DIR__ . '/library/base/' .
+                          str_replace('common', '', $unifiedClassName) . '.php';
+        }
 
         // file check in core
-        if($pathToLoad != '' && file_exists($pathToLoad)) require_once $pathToLoad;
-
-        // check if module file exists
-        else {
+        if ($pathToLoad != '' && file_exists($pathToLoad)) {
+            require_once $pathToLoad;
+        } else {
             // split in parts, if nothing is found we stop processing
-            if(!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) return;
+            if (!preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts)) {
+                return;
+            }
 
             // the real matches
             $parts = $parts[0];
@@ -61,28 +71,35 @@ class Autoloader
             $root = array_shift($parts);
             $root = __DIR__ . '/' . strtolower($root);
 
-            foreach($parts as $i => $part) {
+            foreach ($parts as $i => $part) {
                 // skip the first
-                if($i == 0) continue;
+                if ($i == 0) {
+                    continue;
+                }
 
                 // action
                 $action = strtolower(implode('_', $parts));
 
                 // module
                 $module = '';
-                for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
+                for ($j = 0; $j < $i; $j++) {
+                    $module .= strtolower($parts[$j]) . '_';
+                }
 
                 // fix action & module
                 $action = substr($action, strlen($module));
                 $module = substr($module, 0, -1);
 
                 // check the actions, engine & widgets directories
-                foreach(array('actions', 'engine', 'widgets') as $dir) {
+                foreach (array('actions', 'engine', 'widgets') as $dir) {
                     // file to be loaded
-                    $pathToLoad = $root . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $module . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . $action . '.php';
+                    $pathToLoad = $root . DIRECTORY_SEPARATOR . 'modules' .
+                                  DIRECTORY_SEPARATOR . $module .
+                                  DIRECTORY_SEPARATOR . $dir .
+                                  DIRECTORY_SEPARATOR . $action . '.php';
 
                     // if it exists, load it!
-                    if($pathToLoad != '' && file_exists($pathToLoad)) {
+                    if ($pathToLoad != '' && file_exists($pathToLoad)) {
                         require_once $pathToLoad;
                         break;
                     }
