@@ -23,6 +23,7 @@ Bugfixes:
 Bugfixes:
 
 * Couldn't use terminate function not yet.
+* CamelCased API functions for Apple and Microsoft.
 
 
 3.6.3 (2013-09-25)
