@@ -23,12 +23,12 @@ require_once 'step_7.php';
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class installer extends KernelLoader implements ApplicationInterface
+class Installer extends KernelLoader implements ApplicationInterface
 {
     /**
      * The current step number
      *
-     * @var	int
+     * @var    int
      */
     private $step;
 
@@ -39,8 +39,10 @@ class installer extends KernelLoader implements ApplicationInterface
      */
     public function __construct($kernel)
     {
-        if(file_exists(__DIR__ .  '/../cache/installed.txt')) {
-            exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
+        if (file_exists(__DIR__ . '/../cache/installed.txt')) {
+            exit('This Fork has already been installed. To reinstall, delete
+                 installed.txt from the install/cache directory. To log in,
+                 <a href="/private">click here</a>.');
         }
 
         parent::__construct($kernel);
@@ -51,7 +53,7 @@ class installer extends KernelLoader implements ApplicationInterface
      */
     public function initialize()
     {
-        if(!defined('SPOON_DEBUG')) {
+        if (!defined('SPOON_DEBUG')) {
             define('SPOON_DEBUG', false);
             define('SPOON_CHARSET', 'utf-8');
         }
@@ -72,6 +74,7 @@ class installer extends KernelLoader implements ApplicationInterface
         $instance->setKernel($this->getKernel());
         $instance->initialize();
         $instance->execute();
+
         return $instance->display();
     }
 
@@ -84,11 +87,11 @@ class installer extends KernelLoader implements ApplicationInterface
         $step = (isset($_GET['step'])) ? (int) $_GET['step'] : 1;
 
         // installer step class exists
-        if(class_exists('InstallerStep' . $step)) {
+        if (class_exists('InstallerStep' . $step)) {
             // isAllowed exists
-            if(is_callable(array('InstallerStep' . $step, 'isAllowed'))) {
+            if (is_callable(array('InstallerStep' . $step, 'isAllowed'))) {
                 // step is actually allowed
-                if(call_user_func(array('InstallerStep' . $step, 'isAllowed'))) {
+                if (call_user_func(array('InstallerStep' . $step, 'isAllowed'))) {
                     // step has been validated
                     $this->step = $step;
 

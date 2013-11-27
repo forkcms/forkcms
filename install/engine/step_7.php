@@ -25,9 +25,9 @@ class InstallerStep7 extends InstallerStep
     /**
      * Build the language files
      *
-     * @param SpoonDatabase $db The database connection instance.
-     * @param string $language The language to build the locale-file for.
-     * @param string $application The application to build the locale-file for.
+     * @param SpoonDatabase $db          The database connection instance.
+     * @param string        $language    The language to build the locale-file for.
+     * @param string        $application The application to build the locale-file for.
      */
     public function buildCache(SpoonDatabase $db, $language, $application)
     {
@@ -35,11 +35,13 @@ class InstallerStep7 extends InstallerStep
         $types = $db->getEnumValues('locale', 'type');
 
         // get locale for backend
-        $locale = (array) $db->getRecords('SELECT type, module, name, value
-                                            FROM locale
-                                            WHERE language = ? AND application = ?
-                                            ORDER BY type ASC, name ASC, module ASC',
-                                            array((string) $language, (string) $application));
+        $locale = (array) $db->getRecords(
+            'SELECT type, module, name, value
+                                                        FROM locale
+                                                        WHERE language = ? AND application = ?
+                                                        ORDER BY type ASC, name ASC, module ASC',
+            array((string) $language, (string) $application)
+        );
 
         // start generating PHP
         $value = '<?php' . "\n";
@@ -54,7 +56,7 @@ class InstallerStep7 extends InstallerStep
         $value .= "\n";
 
         // loop types
-        foreach($types as $type) {
+        foreach ($types as $type) {
             // default module
             $modules = array('core');
 
@@ -65,18 +67,23 @@ class InstallerStep7 extends InstallerStep
             $value .= '$' . $type . '[\'core\'] = array();' . "\n";
 
             // loop locale
-            foreach($locale as $i => $item) {
+            foreach ($locale as $i => $item) {
                 // types match
-                if($item['type'] == $type) {
+                if ($item['type'] == $type) {
                     // new module
-                    if(!in_array($item['module'], $modules)) {
+                    if (!in_array($item['module'], $modules)) {
                         $value .= '$' . $type . '[\'' . $item['module'] . '\'] = array();' . "\n";
                         $modules[] = $item['module'];
                     }
 
                     // parse
-                    if($application == 'backend') $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
-                    else $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                    if ($application == 'backend') {
+                        $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' .
+                                  str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                    } else {
+                        $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' .
+                                  str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                    }
 
                     // unset
                     unset($locale[$i]);
@@ -101,10 +108,12 @@ class InstallerStep7 extends InstallerStep
     private function createLocaleFiles()
     {
         // all available languages
-        $languages = array_unique(array_merge(SpoonSession::get('languages'), SpoonSession::get('interface_languages')));
+        $languages = array_unique(
+            array_merge(SpoonSession::get('languages'), SpoonSession::get('interface_languages'))
+        );
 
         // loop all the languages
-        foreach($languages as $language) {
+        foreach ($languages as $language) {
             // get applications
             $applications = $this->getContainer()->get('database')->getColumn(
                 'SELECT DISTINCT application
@@ -114,7 +123,7 @@ class InstallerStep7 extends InstallerStep
             );
 
             // loop applications
-            foreach((array) $applications as $application) {
+            foreach ((array) $applications as $application) {
                 // build application locale cache
                 $this->buildCache($this->getContainer()->get('database'), $language, $application);
             }
@@ -146,11 +155,7 @@ class InstallerStep7 extends InstallerStep
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach($finder->files()
-                    ->in(PATH_WWW . '/backend/cache')
-                    ->in(PATH_WWW . '/frontend/cache')
-                as $file
-        ) {
+        foreach ($finder->files()->in(PATH_WWW . '/backend/cache')->in(PATH_WWW . '/frontend/cache') as $file) {
             $fs->remove($file->getRealPath());
         }
     }
@@ -164,7 +169,9 @@ class InstallerStep7 extends InstallerStep
         set_time_limit(0);
 
         // validate all previous steps
-        if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
+        if (!$this->validateForm()) {
+            SpoonHTTP::redirect('index.php?step=1');
+        }
 
         // delete cached data
         $this->deleteCachedData();
@@ -197,7 +204,8 @@ class InstallerStep7 extends InstallerStep
      */
     private function installModules()
     {
-        // The default extras to add to every page after installation of all modules and to add to the default templates.
+        // The default extras to add to every page after installation of all
+        // modules and to add to the default templates.
         $defaultExtras = array();
 
         // init var
@@ -216,16 +224,16 @@ class InstallerStep7 extends InstallerStep
             SpoonSession::get('interface_languages'),
             SpoonSession::get('example_data'),
             array(
-                'default_language' => SpoonSession::get('default_language'),
-                'default_interface_language' => SpoonSession::get('default_interface_language'),
-                'spoon_debug_email' => SpoonSession::get('email'),
-                'api_email' => SpoonSession::get('email'),
-                'site_domain' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
-                'site_title' => 'Fork CMS',
-                'smtp_server' => '',
-                'smtp_port' => '',
-                'smtp_username' => '',
-                'smtp_password' => ''
+                 'default_language' => SpoonSession::get('default_language'),
+                 'default_interface_language' => SpoonSession::get('default_interface_language'),
+                 'spoon_debug_email' => SpoonSession::get('email'),
+                 'api_email' => SpoonSession::get('email'),
+                 'site_domain' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+                 'site_title' => 'Fork CMS',
+                 'smtp_server' => '',
+                 'smtp_port' => '',
+                 'smtp_username' => '',
+                 'smtp_password' => ''
             )
         );
 
@@ -234,11 +242,15 @@ class InstallerStep7 extends InstallerStep
 
         // add the warnings
         $moduleWarnings = $installer->getWarnings();
-        if(!empty($moduleWarnings)) $warnings[] = array('module' => 'core', 'warnings' => $moduleWarnings);
+        if (!empty($moduleWarnings)) {
+            $warnings[] = array('module' => 'core', 'warnings' => $moduleWarnings);
+        }
 
         // add the default extras
         $moduleDefaultExtras = $installer->getDefaultExtras();
-        if(!empty($moduleDefaultExtras)) array_merge($defaultExtras, $moduleDefaultExtras);
+        if (!empty($moduleDefaultExtras)) {
+            array_merge($defaultExtras, $moduleDefaultExtras);
+        }
 
         // variables passed to module installers
         $variables = array();
@@ -249,11 +261,11 @@ class InstallerStep7 extends InstallerStep
         $modules = array_unique(array_merge($this->modules['required'], SpoonSession::get('modules')));
 
         // loop required modules
-        foreach($modules as $module) {
+        foreach ($modules as $module) {
             // install exists
-            if(is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php')) {
+            if (is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php')) {
                 // users module needs custom variables
-                if($module == 'users') {
+                if ($module == 'users') {
                     $variables['password'] = SpoonSession::get('password');
                 }
 
@@ -277,16 +289,20 @@ class InstallerStep7 extends InstallerStep
 
                 // add the warnings
                 $moduleWarnings = $installer->getWarnings();
-                if(!empty($moduleWarnings)) $warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
+                if (!empty($moduleWarnings)) {
+                    $warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
+                }
 
                 // add the default extras
                 $moduleDefaultExtras = $installer->getDefaultExtras();
-                if(!empty($moduleDefaultExtras)) $defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+                if (!empty($moduleDefaultExtras)) {
+                    $defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+                }
             }
         }
 
         // loop default extras
-        foreach($defaultExtras as $extra) {
+        foreach ($defaultExtras as $extra) {
             // get pages without this extra
             $revisionIds = $this->getContainer()->get('database')->getColumn(
                 'SELECT i.revision_id
@@ -302,7 +318,7 @@ class InstallerStep7 extends InstallerStep
 
             // build insert array for this extra
             $insertExtras = array();
-            foreach($revisionIds as $revisionId) {
+            foreach ($revisionIds as $revisionId) {
                 $insertExtras[] = array(
                     'revision_id' => $revisionId,
                     'position' => $extra['position'],

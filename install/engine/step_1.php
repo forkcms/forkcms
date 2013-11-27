@@ -33,7 +33,7 @@ class InstallerStep1 extends InstallerStep
         $spoonFolder = realpath($path . '/../vendor/spoon/library');
 
         // just one found? add it into the session
-        if(file_exists($spoonFolder . '/spoon/spoon.php')) {
+        if (file_exists($spoonFolder . '/spoon/spoon.php')) {
             $_SESSION['path_library'] = $path;
 
             // redirect to step 2
@@ -49,7 +49,9 @@ class InstallerStep1 extends InstallerStep
         $replace = array_values($variables);
 
         // loop search values
-        foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
+        foreach ($search as $key => $value) {
+            $search[$key] = '{$' . $value . '}';
+        }
 
         // build output
         $output = str_replace($search, $replace, $tpl);

@@ -27,12 +27,23 @@ class InstallerStep extends KernelLoader
 
     /**
      * List of all modules (required, hidden and found on the filesystem).
-     * Keep in mind that the order of the required modules is the actual order in which we're going to install these modules.
+     * Keep in mind that the order of the required modules is the actual
+     * order in which we're going to install these modules.
      *
      * @var array
      */
     protected $modules = array(
-        'required' => array('locale', 'settings', 'users', 'groups', 'extensions', 'pages', 'search', 'content_blocks', 'tags'),
+        'required' => array(
+            'locale',
+            'settings',
+            'users',
+            'groups',
+            'extensions',
+            'pages',
+            'search',
+            'content_blocks',
+            'tags'
+        ),
         'hidden' => array('authentication', 'dashboard', 'error'),
         'optional' => array()
     );
@@ -40,14 +51,14 @@ class InstallerStep extends KernelLoader
     /**
      * Step number
      *
-     * @var	int
+     * @var    int
      */
     protected $step;
 
     /**
      * Template
      *
-     * @var	SpoonTemplate
+     * @var    SpoonTemplate
      */
     protected $tpl;
 
@@ -66,7 +77,7 @@ class InstallerStep extends KernelLoader
     public function initialize()
     {
         // skip step 1
-        if($this->step > 1) {
+        if ($this->step > 1) {
             // load spoon
             require_once 'spoon/spoon.php';
 
@@ -76,7 +87,9 @@ class InstallerStep extends KernelLoader
             $this->tpl->setCompileDirectory(dirname(__FILE__) . '/../cache/');
 
             // assign the path
-            if(defined('PATH_WWW')) $this->tpl->assign('PATH_WWW', PATH_WWW);
+            if (defined('PATH_WWW')) {
+                $this->tpl->assign('PATH_WWW', PATH_WWW);
+            }
 
             // create form
             $this->frm = new SpoonForm('step' . $this->step, 'index.php?step=' . $this->step);
@@ -92,6 +105,7 @@ class InstallerStep extends KernelLoader
     {
         $stepTemplate = __DIR__ . '/../layout/templates/step_' . $this->step . '.tpl';
         $stepContent = $this->tpl->getContent($stepTemplate, false, true);
+
         return new Response($stepContent, 200);
     }
 
@@ -110,6 +124,8 @@ class InstallerStep extends KernelLoader
      */
     protected function parseForm()
     {
-        if($this->step > 1) $this->frm->parse($this->tpl);
+        if ($this->step > 1) {
+            $this->frm->parse($this->tpl);
+        }
     }
 }
