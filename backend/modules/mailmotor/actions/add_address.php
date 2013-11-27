@@ -17,7 +17,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
     /**
      * The given group ID
      *
-     * @var	int
+     * @var    int
      */
     private $groupId;
 
@@ -46,7 +46,9 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
         $groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
         // if no groups are found, redirect to overview
-        if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no_groups');
+        if (empty($groups)) {
+            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no_groups');
+        }
 
         // add checkboxes for groups
         $this->frm->addMultiCheckbox('groups', $groups, $this->groupId);
@@ -58,7 +60,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -69,9 +71,9 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
             $addresses = (array) explode(',', $this->frm->getField('email')->getValue());
 
             // loop addresses
-            foreach($addresses as $email) {
+            foreach ($addresses as $email) {
                 // validate email
-                if(!SpoonFilter::isEmail(trim($email))) {
+                if (!SpoonFilter::isEmail(trim($email))) {
                     // add error if needed
                     $this->frm->getField('email')->addError(BL::err('ContainsInvalidEmail'));
 
@@ -83,15 +85,15 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
             $this->frm->getField('groups')->isFilled(BL::err('ChooseAtLeastOneGroup'));
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item = $this->frm->getValues();
                 $item['source'] = BL::lbl('Manual');
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
                 // loop the groups
-                foreach($item['groups'] as $group) {
-                    foreach($addresses as $email) {
+                foreach ($item['groups'] as $group) {
+                    foreach ($addresses as $email) {
                         BackendMailmotorCMHelper::subscribe(trim($email), $group);
                     }
                 }
@@ -100,7 +102,11 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_address', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added');
+                $this->redirect(
+                    BackendModel::createURLForAction(
+                        'addresses'
+                    ) . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added'
+                );
             }
         }
     }

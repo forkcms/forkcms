@@ -17,7 +17,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
     /**
      * The group record
      *
-     * @var	array
+     * @var    array
      */
     private $group;
 
@@ -46,7 +46,9 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
         $this->group = BackendMailmotorModel::getGroup($id);
 
         // group doesn't exist
-        if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        if (empty($this->group)) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        }
     }
 
     /**
@@ -64,7 +66,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -72,12 +74,16 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
             $txtName = $this->frm->getField('name');
 
             // validate fields
-            if($txtName->isFilled(BL::err('NameIsRequired'))) {
-                if(in_array($txtName->getValue(), $this->group['custom_fields'])) $txtName->addError(BL::err('CustomFieldExists'));
+            if ($txtName->isFilled(BL::err('NameIsRequired'))) {
+                if (in_array($txtName->getValue(), $this->group['custom_fields'])) {
+                    $txtName->addError(
+                        BL::err('CustomFieldExists')
+                    );
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 try {
                     // add the new item to the custom fields list
                     $this->group['custom_fields'][] = $txtName->getValue();
@@ -86,9 +92,11 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
                     $groupFields = array_flip($this->group['custom_fields']);
 
                     // group custom fields found
-                    if(!empty($groupFields)) {
+                    if (!empty($groupFields)) {
                         // loop the group fields and empty every value
-                        foreach($groupFields as &$field) $field = '';
+                        foreach ($groupFields as &$field) {
+                            $field = '';
+                        }
                     }
 
                     // addresses found and custom field delete with CM
@@ -96,16 +104,25 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 
                     // update custom fields for this group
                     BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
-                }
-
-                // exception was triggered
-                catch(Exception $e) {
+                } catch (Exception $e) {
                     // redirect with a custom error
-                    $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode($e->getMessage()));
+                    $this->redirect(
+                        BackendModel::createURLForAction(
+                            'custom_fields'
+                        ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode(
+                            $e->getMessage()
+                        )
+                    );
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode($txtName->getValue()) . '&highlight=id-' . $this->group['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction(
+                        'custom_fields'
+                    ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode(
+                        $txtName->getValue()
+                    ) . '&highlight=id-' . $this->group['id']
+                );
             }
         }
     }

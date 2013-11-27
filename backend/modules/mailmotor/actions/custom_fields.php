@@ -19,7 +19,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
     /**
      * The group record
      *
-     * @var	array
+     * @var    array
      */
     private $group;
 
@@ -47,13 +47,17 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         $this->group = BackendMailmotorModel::getGroup($id);
 
         // group doesn't exist
-        if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        if (empty($this->group)) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        }
 
         // no custom fields for this group
-        if(empty($this->group['custom_fields'])) $this->group['custom_fields'] = array();
+        if (empty($this->group['custom_fields'])) {
+            $this->group['custom_fields'] = array();
+        }
 
         // loop the record's custom fields
-        foreach($this->group['custom_fields'] as $key => $field) {
+        foreach ($this->group['custom_fields'] as $key => $field) {
             // reformat the custom fields so they work in a datagrid
             $this->group['custom_fields'][$key] = array('name' => $field);
         }
@@ -78,7 +82,11 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('asc');
 
         // add the multicheckbox column
-        $this->dataGrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>');
+        $this->dataGrid->addColumn(
+            'checkbox',
+            '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />',
+            '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>'
+        );
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
@@ -115,7 +123,11 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
     public function setStatisticsLink($id)
     {
         // build the link HTML
-        $html = '<a href="' . BackendModel::createURLForAction('statistics_campaign') . '&id=' . $id . '" class="button icon iconStats linkButton"><span><span><span>' . BL::lbl('Statistics') . '</span></span></span></a>';
+        $html = '<a href="' .
+                BackendModel::createURLForAction(
+                    'statistics_campaign'
+                ) . '&id=' . $id . '" class="button icon iconStats linkButton"><span><span><span>' .
+                BL::lbl('Statistics') . '</span></span></span></a>';
 
         // check if this campaign has sent mailings
         $hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;

@@ -17,7 +17,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
     /**
      * Campaign ID
      *
-     * @var	int
+     * @var    int
      */
     private $campaigns;
 
@@ -30,17 +30,16 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(BackendMailmotorModel::existsMailing($this->id)) {
+        if (BackendMailmotorModel::existsMailing($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -55,7 +54,9 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
         $this->campaigns = (array) BackendMailmotorModel::getCampaignsAsPairs();
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -87,7 +88,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -95,7 +96,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
             $ddmCampaigns = $this->frm->getField('campaigns');
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['campaign_id'] = $ddmCampaigns->getValue();
@@ -107,7 +108,11 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($this->record['name']) . '&highlight=id-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                        $this->record['name']
+                    ) . '&highlight=id-' . $item['id']
+                );
             }
         }
     }

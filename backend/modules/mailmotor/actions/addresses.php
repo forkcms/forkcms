@@ -19,7 +19,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var	array
+     * @var    array
      */
     private $filter;
 
@@ -31,14 +31,14 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
     /**
      * The passed group record
      *
-     * @var	array
+     * @var    array
      */
     private $group;
 
     /**
      * Builds the query for this datagrid
      *
-     * @return array		An array with two arguments containing the query and its parameters.
+     * @return array        An array with two arguments containing the query and its parameters.
      */
     private function buildQuery()
     {
@@ -56,13 +56,13 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $parameters = array();
 
         // add name
-        if($this->filter['email'] !== null) {
+        if ($this->filter['email'] !== null) {
             $query .= ' AND ma.email REGEXP ?';
             $parameters[] = $this->filter['email'];
         }
 
         // group was set
-        if(!empty($this->group)) {
+        if (!empty($this->group)) {
             $query .= ' AND mag.group_id = ? AND mag.status = ?';
             $parameters[] = $this->group['id'];
             $parameters[] = 'subscribed';
@@ -82,7 +82,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
     private function downloadCSV($path)
     {
         // check if the file exists
-        if(!is_file($path)) {
+        if (!is_file($path)) {
             throw new BackendException('The file ' . $path . ' doesn\'t exist.');
         }
 
@@ -132,10 +132,25 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridDB($query, $parameters);
 
         // overrule default URL
-        $this->dataGrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'email' => $this->filter['email']), false));
+        $this->dataGrid->setURL(
+            BackendModel::createURLForAction(
+                null,
+                null,
+                null,
+                array(
+                     'offset' => '[offset]',
+                     'order' => '[order]',
+                     'sort' => '[sort]',
+                     'email' => $this->filter['email']
+                ),
+                false
+            )
+        );
 
         // add the group to the URL if one is set
-        if(!empty($this->group)) $this->dataGrid->setURL('&group_id=' . $this->group['id'], true);
+        if (!empty($this->group)) {
+            $this->dataGrid->setURL('&group_id=' . $this->group['id'], true);
+        }
 
         // set headers values
         $headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
@@ -147,19 +162,33 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('email', 'source', 'created_on'), 'email');
 
         // add the multicheckbox column
-        $this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="emails[]" value="[email]" class="inputCheckbox" /></span>');
+        $this->dataGrid->addColumn(
+            'checkbox',
+            '<span class="checkboxHolder block"><input type="checkbox" name="toggleChecks" value="toggleChecks" />',
+            '<input type="checkbox" name="emails[]" value="[email]" class="inputCheckbox" /></span>'
+        );
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array('export' => BL::lbl('Export'), 'delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new SpoonFormDropdown('action', array(
+                                                              'export' => BL::lbl('Export'),
+                                                              'delete' => BL::lbl('Delete')
+                                                         ), 'delete');
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+        $this->dataGrid->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[created_on]'),
+            'created_on',
+            true
+        );
 
         // add edit column
         $editURL = BackendModel::createURLForAction('edit_address') . '&amp;email=[email]';
-        if(!empty($this->group)) $editURL .= '&amp;group_id=' . $this->group['id'];
+        if (!empty($this->group)) {
+            $editURL .= '&amp;group_id=' . $this->group['id'];
+        }
         $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
 
         // set paging limit
@@ -182,7 +211,9 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
 
         // check if the filter form was set
-        if($this->frm->isSubmitted()) $this->tpl->assign('oPost', true);
+        if ($this->frm->isSubmitted()) {
+            $this->tpl->assign('oPost', true);
+        }
     }
 
     /**
@@ -197,12 +228,15 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $download = $this->getParameter('download', 'bool', false);
 
         // a failed import just happened
-        if(!empty($csv)) {
+        if (!empty($csv)) {
             // assign the CSV URL to the template
-            $this->tpl->assign('csvURL', BackendModel::createURLForAction('addresses') . '&csv=' . $csv . '&download=1');
+            $this->tpl->assign(
+                'csvURL',
+                BackendModel::createURLForAction('addresses') . '&csv=' . $csv . '&download=1'
+            );
 
             // we should download the file
-            if($download) {
+            if ($download) {
                 $this->downloadCSV(BACKEND_CACHE_PATH . '/mailmotor/' . $csv);
             }
         }
@@ -237,7 +271,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $id = SpoonFilter::getGetValue('group_id', null, 0, 'int');
 
         // group was set
-        if(!empty($id)) {
+        if (!empty($id)) {
             // get group record
             $this->group = BackendMailmotorModel::getGroup($id);
 

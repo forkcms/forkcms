@@ -28,20 +28,25 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
         $messageDate = $sendOnDate;
 
         // validate mailing ID
-        if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'Provide a valid mailing ID');
-
-        // validated mailing ID
-        else {
+        if ($mailingId == '') {
+            $this->output(self::BAD_REQUEST, null, 'Provide a valid mailing ID');
+        } else {
             // validate date & time
-            if($sendOnDate == '' || $sendOnTime == '') $this->output(self::BAD_REQUEST, null, 'Provide a valid send date date provided');
-
-            // validated date & time
-            else {
+            if ($sendOnDate == '' || $sendOnTime == '') {
+                $this->output(
+                    self::BAD_REQUEST,
+                    null,
+                    'Provide a valid send date date provided'
+                );
+            } else {
                 // record is empty
-                if(!BackendMailmotorModel::existsMailing($mailingId)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
-
-                // record is filled
-                else {
+                if (!BackendMailmotorModel::existsMailing($mailingId)) {
+                    $this->output(
+                        self::BAD_REQUEST,
+                        null,
+                        BL::err('MailingDoesNotExist', 'mailmotor')
+                    );
+                } else {
                     // reverse the date and make it a proper
                     $explodedDate = explode('/', $sendOnDate);
                     $sendOnDate = $explodedDate[2] . '-' . $explodedDate[1] . '-' . $explodedDate[0];
@@ -61,7 +66,11 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
                     BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step4', array('item' => $item));
 
                     // output
-                    $this->output(self::OK, array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp), sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime));
+                    $this->output(
+                        self::OK,
+                        array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp),
+                        sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime)
+                    );
                 }
             }
         }

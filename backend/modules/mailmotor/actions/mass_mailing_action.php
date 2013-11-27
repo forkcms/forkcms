@@ -25,15 +25,17 @@ class BackendMailmotorMassMailingAction extends BackendBaseAction
         $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
-        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-items-selected');
-
-        // at least one id
-        else {
+        if (!isset($_GET['id'])) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=no-items-selected'
+            );
+        } else {
+            // at least one id
             // redefine id's
             $ids = (array) $_GET['id'];
 
             // delete comment(s)
-            if($action == 'delete') {
+            if ($action == 'delete') {
                 BackendMailmotorCMHelper::deleteMailings($ids);
 
                 // trigger event

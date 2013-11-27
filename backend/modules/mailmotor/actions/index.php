@@ -22,16 +22,18 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
     /**
      * The active campaign
      *
-     * @var	array
+     * @var    array
      */
     private $campaign = array();
 
     /**
      * DataGrids
      *
-     * @var	BackendDataGrid
+     * @var    BackendDataGrid
      */
-    private $dgQueuedMailings, $dgSentMailings, $dgUnsentMailings;
+    private $dgQueuedMailings;
+    private $dgSentMailings;
+    private $dgUnsentMailings;
 
     /**
      * Execute the action
@@ -78,7 +80,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $parameters = array('queued');
 
         // campaign is set
-        if(!empty($this->campaign)) {
+        if (!empty($this->campaign)) {
             // reset query, add to parameters
             $query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN;
             $parameters[] = $this->campaign['id'];
@@ -89,7 +91,9 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgQueuedMailings->setColumnsHidden(array('campaign_id', 'status'));
 
         // if a campaign is set, hide the campaign name in the datagrid
-        if(!empty($this->campaign)) $this->dgQueuedMailings->setColumnHidden('campaign_name');
+        if (!empty($this->campaign)) {
+            $this->dgQueuedMailings->setColumnHidden('campaign_name');
+        }
 
         // set headers values
         $headers['sent'] = SpoonFilter::ucfirst(BL::lbl('WillBeSentOn'));
@@ -102,7 +106,11 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgQueuedMailings->setSortParameter('desc');
 
         // add the multicheckbox column
-        $this->dgQueuedMailings->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
+        $this->dgQueuedMailings->addColumn(
+            'checkbox',
+            '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
+            '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
+        );
         $this->dgQueuedMailings->setColumnsSequence('checkbox');
 
         // add mass action dropdown
@@ -110,22 +118,48 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgQueuedMailings->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dgQueuedMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
+        $this->dgQueuedMailings->setColumnFunction(
+            array(__CLASS__, 'setCampaignLink'),
+            array('[campaign_id]', '[campaign_name]'),
+            'campaign_name',
+            true
+        );
         $this->dgQueuedMailings->setColumnFunction('date', array('Y-m-d @ H:i', '[sent]'), 'sent', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('copy')) {
-            $this->dgQueuedMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
+        if (BackendAuthentication::isAllowedAction('copy')) {
+            $this->dgQueuedMailings->addColumnAction(
+                'copy',
+                null,
+                BL::lbl('Copy'),
+                BackendModel::createURLForAction('copy') . '&amp;id=[id]',
+                BL::lbl('Copy'),
+                array('class' => 'button icon iconMailAdd linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_mailing_campaign')) {
-            $this->dgQueuedMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
+        if (BackendAuthentication::isAllowedAction('edit_mailing_campaign')) {
+            $this->dgQueuedMailings->addColumnAction(
+                'edit_mailing_campaign',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]',
+                BL::lbl('EditMailingCampaign'),
+                array('class' => 'button icon iconFolderEdit linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('statistics')) {
-            $this->dgQueuedMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+        if (BackendAuthentication::isAllowedAction('statistics')) {
+            $this->dgQueuedMailings->addColumnAction(
+                'statistics',
+                null,
+                BL::lbl('Statistics'),
+                BackendModel::createURLForAction('statistics') . '&amp;id=[id]',
+                BL::lbl('Statistics'),
+                array('class' => 'button icon iconStats linkButton')
+            );
         }
 
         // add styles
@@ -160,7 +194,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $parameters = array('sent');
 
         // campaign is set
-        if(!empty($this->campaign)) {
+        if (!empty($this->campaign)) {
             // reset query, add to parameters
             $query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN;
             $parameters[] = $this->campaign['id'];
@@ -171,14 +205,20 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgSentMailings->setColumnsHidden(array('campaign_id', 'status'));
 
         // if a campaign is set, hide the campaign name in the datagrid
-        if(!empty($this->campaign)) $this->dgSentMailings->setColumnHidden('campaign_name');
+        if (!empty($this->campaign)) {
+            $this->dgSentMailings->setColumnHidden('campaign_name');
+        }
 
         // sorting columns
         $this->dgSentMailings->setSortingColumns(array('name', 'campaign_name', 'sent', 'language'), 'sent');
         $this->dgSentMailings->setSortParameter('desc');
 
         // add the multicheckbox column
-        $this->dgSentMailings->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
+        $this->dgSentMailings->addColumn(
+            'checkbox',
+            '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
+            '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
+        );
         $this->dgSentMailings->setColumnsSequence('checkbox');
 
         // add mass action dropdown
@@ -186,22 +226,53 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgSentMailings->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-        $this->dgSentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
+        $this->dgSentMailings->setColumnFunction(
+            array(__CLASS__, 'setCampaignLink'),
+            array('[campaign_id]', '[campaign_name]'),
+            'campaign_name',
+            true
+        );
+        $this->dgSentMailings->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[sent]'),
+            'sent',
+            true
+        );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('copy')) {
-            $this->dgSentMailings->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('copy') . '&amp;id=[id]', BL::lbl('Copy'), array('class' => 'button icon iconMailAdd linkButton'));
+        if (BackendAuthentication::isAllowedAction('copy')) {
+            $this->dgSentMailings->addColumnAction(
+                'copy',
+                null,
+                BL::lbl('Copy'),
+                BackendModel::createURLForAction('copy') . '&amp;id=[id]',
+                BL::lbl('Copy'),
+                array('class' => 'button icon iconMailAdd linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_mailing_campaign')) {
-            $this->dgSentMailings->addColumnAction('edit_mailing_campaign', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]', BL::lbl('EditMailingCampaign'), array('class' => 'button icon iconFolderEdit linkButton'));
+        if (BackendAuthentication::isAllowedAction('edit_mailing_campaign')) {
+            $this->dgSentMailings->addColumnAction(
+                'edit_mailing_campaign',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_mailing_campaign') . '&amp;id=[id]',
+                BL::lbl('EditMailingCampaign'),
+                array('class' => 'button icon iconFolderEdit linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('statistics')) {
-            $this->dgSentMailings->addColumnAction('statistics', null, BL::lbl('Statistics'), BackendModel::createURLForAction('statistics') . '&amp;id=[id]', BL::lbl('Statistics'), array('class' => 'button icon iconStats linkButton'));
+        if (BackendAuthentication::isAllowedAction('statistics')) {
+            $this->dgSentMailings->addColumnAction(
+                'statistics',
+                null,
+                BL::lbl('Statistics'),
+                BackendModel::createURLForAction('statistics') . '&amp;id=[id]',
+                BL::lbl('Statistics'),
+                array('class' => 'button icon iconStats linkButton')
+            );
         }
 
         // add styles
@@ -221,7 +292,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $parameters = array('concept');
 
         // campaign is set
-        if(!empty($this->campaign)) {
+        if (!empty($this->campaign)) {
             // reset query, add to parameters
             $query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_UNSENT_FOR_CAMPAIGN;
             $parameters[] = $this->campaign['id'];
@@ -232,23 +303,38 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgUnsentMailings->setColumnsHidden(array('campaign_id', 'status'));
 
         // if a campaign is set, hide the campaign name in the datagrid
-        if(!empty($this->campaign)) $this->dgUnsentMailings->setColumnHidden('campaign_name');
+        if (!empty($this->campaign)) {
+            $this->dgUnsentMailings->setColumnHidden('campaign_name');
+        }
 
         // sorting columns
-        $this->dgUnsentMailings->setSortingColumns(array('name', 'campaign_name', 'created_on', 'language'), 'created_on');
+        $this->dgUnsentMailings->setSortingColumns(
+            array('name', 'campaign_name', 'created_on', 'language'),
+            'created_on'
+        );
         $this->dgUnsentMailings->setSortParameter('desc');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('edit')) {
             // set colum URLs
             $this->dgUnsentMailings->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
             // add edit column
-            $this->dgUnsentMailings->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dgUnsentMailings->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
 
         // add the multicheckbox column
-        $this->dgUnsentMailings->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
+        $this->dgUnsentMailings->addColumn(
+            'checkbox',
+            '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
+            '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
+        );
         $this->dgUnsentMailings->setColumnsSequence('checkbox');
 
         // add mass action dropdown
@@ -256,8 +342,18 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         $this->dgUnsentMailings->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dgUnsentMailings->setColumnFunction(array('BackendMailmotorIndex', 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-        $this->dgUnsentMailings->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+        $this->dgUnsentMailings->setColumnFunction(
+            array('BackendMailmotorIndex', 'setCampaignLink'),
+            array('[campaign_id]', '[campaign_name]'),
+            'campaign_name',
+            true
+        );
+        $this->dgUnsentMailings->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[created_on]'),
+            'created_on',
+            true
+        );
 
         // add styles
         $this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
@@ -274,22 +370,33 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
         parent::parse();
 
         // a campaign was found, so parse the campaign record
-        if(!empty($this->campaign)) $this->tpl->assign($this->campaign);
+        if (!empty($this->campaign)) {
+            $this->tpl->assign($this->campaign);
+        }
 
         // parse the datagrid for all unsent mailings
-        $this->tpl->assign('dgUnsentMailings', ($this->dgUnsentMailings->getNumResults() != 0) ? $this->dgUnsentMailings->getContent() : false);
+        $this->tpl->assign(
+            'dgUnsentMailings',
+            ($this->dgUnsentMailings->getNumResults() != 0) ? $this->dgUnsentMailings->getContent() : false
+        );
 
         // parse the datagrid for all sent mailings
-        $this->tpl->assign('dgSentMailings', ($this->dgSentMailings->getNumResults() != 0) ? $this->dgSentMailings->getContent() : false);
+        $this->tpl->assign(
+            'dgSentMailings',
+            ($this->dgSentMailings->getNumResults() != 0) ? $this->dgSentMailings->getContent() : false
+        );
 
         // parse the datagrid for all queued mailings
-        $this->tpl->assign('dgQueuedMailings', ($this->dgQueuedMailings->getNumResults() != 0) ? $this->dgQueuedMailings->getContent() : false);
+        $this->tpl->assign(
+            'dgQueuedMailings',
+            ($this->dgQueuedMailings->getNumResults() != 0) ? $this->dgQueuedMailings->getContent() : false
+        );
     }
 
     /**
      * Sets the correct campaign link in the datagrid
      *
-     * @param int $id The ID of the campaign.
+     * @param int    $id   The ID of the campaign.
      * @param string $name The name of the campaign.
      * @return string
      */

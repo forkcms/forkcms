@@ -23,7 +23,7 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
         $this->id = $this->getParameter('mailing_id', 'int');
 
         // does the item exist
-        if(BackendMailmotorModel::existsMailing($this->id)) {
+        if (BackendMailmotorModel::existsMailing($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -34,11 +34,11 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
             $records = (array) BackendMailmotorCMHelper::getCM()->getCampaignBounces($mailing['cm_id']);
 
             // reset some data
-            if(!empty($records)) {
+            if (!empty($records)) {
                 // loop the records
-                foreach($records as $record) {
+                foreach ($records as $record) {
                     // only remove the hard bounces
-                    if($record['bounce_type'] == 'Hard') {
+                    if ($record['bounce_type'] == 'Hard') {
                         // remove the address
                         BackendMailmotorModel::deleteAddresses($record['email']);
                     }
@@ -49,10 +49,11 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete_bounces');
 
             // user was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $mailing['id'] . '&report=deleted-bounces');
+            $this->redirect(
+                BackendModel::createURLForAction('statistics') . '&id=' . $mailing['id'] . '&report=deleted-bounces'
+            );
+        } else {
+            $this->redirect(BackendModel::createURLForAction('statistics') . '&error=no-bounces');
         }
-
-        // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('statistics') . '&error=no-bounces');
     }
 }

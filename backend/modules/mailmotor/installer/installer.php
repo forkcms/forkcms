@@ -57,33 +57,53 @@ class MailmotorInstaller extends ModuleInstaller
 
         // set navigation
         $navigationMailmotorId = $this->setNavigation(null, 'Mailmotor', null, null, 5);
-        $this->setNavigation($navigationMailmotorId, 'Newsletters', 'mailmotor/index', array(
-            'mailmotor/add',
-            'mailmotor/edit',
-            'mailmotor/edit_mailing_campaign',
-            'mailmotor/statistics',
-            'mailmotor/statistics_link',
-            'mailmotor/statistics_bounces',
-            'mailmotor/statistics_campaign',
-            'mailmotor/statistics_opens'
-        ));
-        $this->setNavigation($navigationMailmotorId, 'Campaigns', 'mailmotor/campaigns', array(
-            'mailmotor/add_campaign',
-            'mailmotor/edit_campaign',
-            'mailmotor/statistics_campaigns'
-        ));
-        $this->setNavigation($navigationMailmotorId, 'MailmotorGroups', 'mailmotor/groups', array(
-            'mailmotor/add_group',
-            'mailmotor/edit_group',
-            'mailmotor/custom_fields',
-            'mailmotor/add_custom_field',
-            'mailmotor/import_groups'
-        ));
-        $this->setNavigation($navigationMailmotorId, 'Addresses', 'mailmotor/addresses', array(
-            'mailmotor/add_address',
-            'mailmotor/edit_address',
-            'mailmotor/import_addresses'
-        ));
+        $this->setNavigation(
+            $navigationMailmotorId,
+            'Newsletters',
+            'mailmotor/index',
+            array(
+                 'mailmotor/add',
+                 'mailmotor/edit',
+                 'mailmotor/edit_mailing_campaign',
+                 'mailmotor/statistics',
+                 'mailmotor/statistics_link',
+                 'mailmotor/statistics_bounces',
+                 'mailmotor/statistics_campaign',
+                 'mailmotor/statistics_opens'
+            )
+        );
+        $this->setNavigation(
+            $navigationMailmotorId,
+            'Campaigns',
+            'mailmotor/campaigns',
+            array(
+                 'mailmotor/add_campaign',
+                 'mailmotor/edit_campaign',
+                 'mailmotor/statistics_campaigns'
+            )
+        );
+        $this->setNavigation(
+            $navigationMailmotorId,
+            'MailmotorGroups',
+            'mailmotor/groups',
+            array(
+                 'mailmotor/add_group',
+                 'mailmotor/edit_group',
+                 'mailmotor/custom_fields',
+                 'mailmotor/add_custom_field',
+                 'mailmotor/import_groups'
+            )
+        );
+        $this->setNavigation(
+            $navigationMailmotorId,
+            'Addresses',
+            'mailmotor/addresses',
+            array(
+                 'mailmotor/add_address',
+                 'mailmotor/edit_address',
+                 'mailmotor/import_addresses'
+            )
+        );
 
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -150,18 +170,39 @@ class MailmotorInstaller extends ModuleInstaller
         // add extra's
         $sentMailingsID = $this->insertExtra('mailmotor', 'block', 'SentMailings', null, null, 'N', 3000);
         $subscribeFormID = $this->insertExtra('mailmotor', 'block', 'SubscribeForm', 'subscribe', null, 'N', 3001);
-        $unsubscribeFormID = $this->insertExtra('mailmotor', 'block', 'UnsubscribeForm', 'unsubscribe', null, 'N', 3002);
-        $widgetSubscribeFormID = $this->insertExtra('mailmotor', 'widget', 'SubscribeForm', 'subscribe', null, 'N', 3003);
+        $unsubscribeFormID = $this->insertExtra(
+            'mailmotor',
+            'block',
+            'UnsubscribeForm',
+            'unsubscribe',
+            null,
+            'N',
+            3002
+        );
+        $widgetSubscribeFormID = $this->insertExtra(
+            'mailmotor',
+            'widget',
+            'SubscribeForm',
+            'subscribe',
+            null,
+            'N',
+            3003
+        );
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+        $searchId = (int) $this->getDB()->getVar(
+            'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
+            array('search', 'widget', 'form')
+        );
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             $parentID = $this->insertPage(
-                array('title' => SpoonFilter::ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
-                'type' => 'root',
-                'language' => $language),
+                array(
+                     'title' => SpoonFilter::ucfirst($this->getLocale('SentMailings', 'core', $language, 'lbl', 'frontend')),
+                     'type' => 'root',
+                     'language' => $language
+                ),
                 null,
                 array('extra_id' => $sentMailingsID, 'position' => 'main'),
                 array('extra_id' => $searchId, 'position' => 'top')
@@ -169,10 +210,10 @@ class MailmotorInstaller extends ModuleInstaller
 
             $this->insertPage(
                 array(
-                    'parent_id' => $parentID,
-                    'title' => SpoonFilter::ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')
+                     'parent_id' => $parentID,
+                     'title' => SpoonFilter::ucfirst($this->getLocale('Subscribe', 'core', $language, 'lbl', 'frontend')),
+                     'language' => $language
                 ),
-                'language' => $language),
                 null,
                 array('extra_id' => $subscribeFormID, 'position' => 'main'),
                 array('extra_id' => $searchId, 'position' => 'top')
@@ -180,10 +221,10 @@ class MailmotorInstaller extends ModuleInstaller
 
             $this->insertPage(
                 array(
-                    'parent_id' => $parentID,
-                    'title' => SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')
+                     'parent_id' => $parentID,
+                     'title' => SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'core', $language, 'lbl', 'frontend')),
+                     'language' => $language
                 ),
-                'language' => $language),
                 null,
                 array('extra_id' => $unsubscribeFormID, 'position' => 'main'),
                 array('extra_id' => $searchId, 'position' => 'top')
@@ -214,7 +255,8 @@ class MailmotorInstaller extends ModuleInstaller
         $this->setSetting('mailmotor', 'price_per_email', 0);
         $this->setSetting('mailmotor', 'price_per_campaign', 0);
 
-        // pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
+        // pre-load these CM settings -
+        // these are used to obtain a client ID after the CampaignMonitor account is linked.
         $this->setSetting('mailmotor', 'cm_url', '');
         $this->setSetting('mailmotor', 'cm_username', '');
         $this->setSetting('mailmotor', 'cm_password', '');

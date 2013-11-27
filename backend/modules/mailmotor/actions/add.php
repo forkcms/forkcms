@@ -42,17 +42,25 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
         $groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
         // no groups were made yet
-        if(empty($groups) && empty($groupIds)) $this->redirect(BackendModel::createURLForAction('add_group') . '&error=add-mailing-no-groups');
-
-        // groups were made, but none have subscribers
-        elseif(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-subscribers');
+        if (empty($groups) && empty($groupIds)) {
+            $this->redirect(
+                BackendModel::createURLForAction('add_group') . '&error=add-mailing-no-groups'
+            );
+        } elseif (empty($groups)) {
+            // groups were made, but none have subscribers
+            $this->redirect(
+                BackendModel::createURLForAction('addresses') . '&error=no-subscribers'
+            );
+        }
 
         // fetch the languages
         $languages = BackendMailmotorModel::getLanguagesForCheckboxes();
 
         // settings
         $this->frm->addText('name');
-        if(count($campaigns) > 1) $this->frm->addDropdown('campaign', $campaigns);
+        if (count($campaigns) > 1) {
+            $this->frm->addDropdown('campaign', $campaigns);
+        }
 
         // sender
         $this->frm->addText('from_name', BackendModel::getModuleSetting($this->getModule(), 'from_name'));
@@ -62,7 +70,11 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
         $this->frm->addText('reply_to_email', BackendModel::getModuleSetting($this->getModule(), 'reply_to_email'));
 
         // groups - if there is only 1 group present, we select it by default
-        $this->frm->addMultiCheckbox('groups', $groups, ((count($groups) == 1 && isset($groups[0])) ? $groups[0]['value'] : false));
+        $this->frm->addMultiCheckbox(
+            'groups',
+            $groups,
+            ((count($groups) == 1 && isset($groups[0])) ? $groups[0]['value'] : false)
+        );
 
         // languages
         $this->frm->addRadiobutton('languages', $languages, BL::getWorkingLanguage());
@@ -74,7 +86,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -96,20 +108,25 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
             $values = $this->frm->getValues();
 
             // check if at least one recipient group is chosen
-            if(empty($values['groups'])) $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
-            else {
+            if (empty($values['groups'])) {
+                $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
+            } else {
                 // fetch the recipients for these groups
                 $recipients = BackendMailmotorModel::getAddressesByGroupID($values['groups']);
 
                 // if no recipients were found, throw an error
-                if(empty($recipients)) $chkGroups->addError(BL::err('GroupsNoRecipients'));
+                if (empty($recipients)) {
+                    $chkGroups->addError(BL::err('GroupsNoRecipients'));
+                }
             }
 
             // check if at least one language is chosen
-            if(empty($values['languages'])) $rbtLanguages->isFilled(BL::err('FieldIsRequired'));
+            if (empty($values['languages'])) {
+                $rbtLanguages->isFilled(BL::err('FieldIsRequired'));
+            }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // set values
                 $item['name'] = $txtName->getValue();
                 $item['from_name'] = $txtFromName->getValue();
@@ -119,7 +136,9 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
                 $item['status'] = 'concept';
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
                 $item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-                if(!empty($values['campaign'])) $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
+                if (!empty($values['campaign'])) {
+                    $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
+                }
 
                 // insert the concept
                 $item['id'] = BackendMailmotorModel::insertMailing($item);

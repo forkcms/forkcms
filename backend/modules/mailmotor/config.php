@@ -19,14 +19,14 @@ class BackendMailmotorConfig extends BackendBaseConfig
     /**
      * The default action
      *
-     * @var	string
+     * @var    string
      */
     protected $defaultAction = 'index';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var    array
      */
     protected $disabledActions = array();
 
@@ -34,7 +34,7 @@ class BackendMailmotorConfig extends BackendBaseConfig
      * Check if all required settings have been set
      *
      * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     * @param string $module The module.
+     * @param string                                        $module The module.
      */
     public function __construct(KernelInterface $kernel, $module)
     {
@@ -44,7 +44,12 @@ class BackendMailmotorConfig extends BackendBaseConfig
         $url = $this->getContainer()->has('url') ? $this->getContainer()->get('url') : null;
 
         // do the client ID check if we're not in the settings page
-        if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'link_account', 'load_client_info'))) {
+        if ($url != null &&
+            !in_array(
+                $url->getAction(),
+                array('settings', 'import_groups', 'link_account', 'load_client_info')
+            )
+        ) {
             $this->checkForAccount();
             $this->checkForClientID();
             $this->checkForGroups();
@@ -57,15 +62,27 @@ class BackendMailmotorConfig extends BackendBaseConfig
     private function checkForAccount()
     {
         // if the settings were set and we can make a connection
-        if($this->checkForSettings()) {
+        if ($this->checkForSettings()) {
             // no connection to campaignmonitor could be made, so the service is probably unreachable at this point
-            if(!BackendMailmotorCMHelper::checkAccount()) {
-                SpoonHTTP::redirect(BackendModel::createURLForAction('index', 'mailmotor', BL::getWorkingLanguage()) . '&error=could-not-connect');
+            if (!BackendMailmotorCMHelper::checkAccount()) {
+                SpoonHTTP::redirect(
+                    BackendModel::createURLForAction(
+                        'index',
+                        'mailmotor',
+                        BL::getWorkingLanguage()
+                    ) . '&error=could-not-connect'
+                );
             }
+        } else {
+            // no settings were set
+            SpoonHTTP::redirect(
+                BackendModel::createURLForAction(
+                    'settings',
+                    'mailmotor',
+                    BL::getWorkingLanguage()
+                ) . '#tabSettingsAccount'
+            );
         }
-
-        // no settings were set
-        else SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '#tabSettingsAccount');
     }
 
     /**
@@ -77,13 +94,25 @@ class BackendMailmotorConfig extends BackendBaseConfig
         $clientId = BackendMailmotorCMHelper::getClientID();
 
         // no client ID set, so redirect to settings with an appropriate error message.
-        if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
+        if (empty($clientId)) {
+            SpoonHTTP::redirect(
+                BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage())
+            );
+        }
 
         // get price per email
         $pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
 
         // check if a price per e-mail is set
-        if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '&error=no-price-per-email');
+        if (empty($pricePerEmail) && $pricePerEmail != 0) {
+            SpoonHTTP::redirect(
+                BackendModel::createURLForAction(
+                    'settings',
+                    'mailmotor',
+                    BL::getWorkingLanguage()
+                ) . '&error=no-price-per-email'
+            );
+        }
     }
 
     /**
@@ -108,13 +137,17 @@ class BackendMailmotorConfig extends BackendBaseConfig
     private function checkForGroups()
     {
         // groups are already set
-        if(BackendModel::getModuleSetting('mailmotor', 'cm_groups_set')) return false;
+        if (BackendModel::getModuleSetting('mailmotor', 'cm_groups_set')) {
+            return false;
+        }
 
         // no CM data found
-        if(!BackendMailmotorCMHelper::checkAccount()) return false;
+        if (!BackendMailmotorCMHelper::checkAccount()) {
+            return false;
+        }
 
         // check if there are external groups present in CampaignMonitor
-        if($this->checkForExternalGroups()) {
+        if ($this->checkForExternalGroups()) {
             // external groups were found, so redirect to the import_groups action
             SpoonHTTP::redirect(BackendModel::createURLForAction('import_groups', 'mailmotor'));
         }
@@ -123,9 +156,9 @@ class BackendMailmotorConfig extends BackendBaseConfig
         $groups = BackendMailmotorModel::getDefaultGroups();
 
         // loop languages
-        foreach(BL::getActiveLanguages() as $language) {
+        foreach (BL::getActiveLanguages() as $language) {
             // this language does not have a default group set
-            if(!isset($groups[$language])) {
+            if (!isset($groups[$language])) {
                 // set group record
                 $group['name'] = 'Website (' . strtoupper($language) . ')';
                 $group['language'] = $language;
@@ -135,7 +168,7 @@ class BackendMailmotorConfig extends BackendBaseConfig
                 try {
                     // insert the group in CampaignMonitor
                     BackendMailmotorCMHelper::insertGroup($group);
-                } catch(CampaignMonitorException $e) {
+                } catch (CampaignMonitorException $e) {
                     // ignore
                 }
             }

@@ -22,7 +22,9 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
     private function checkForDefaultGroups()
     {
         // groups are already set
-        if(BackendModel::getModuleSetting($this->getModule(), 'cm_groups_defaults_set')) return true;
+        if (BackendModel::getModuleSetting($this->getModule(), 'cm_groups_defaults_set')) {
+            return true;
+        }
 
         // show the message
         $this->tpl->assign('noDefaultsSet', true);
@@ -54,7 +56,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('addresses')) {
+        if (BackendAuthentication::isAllowedAction('addresses')) {
             // set column URLs
             $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
         }
@@ -71,21 +73,46 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+        $this->dataGrid->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[created_on]'),
+            'created_on',
+            true
+        );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('custom_fields')) {
-            $this->dataGrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
+        if (BackendAuthentication::isAllowedAction('custom_fields')) {
+            $this->dataGrid->addColumnAction(
+                'custom_fields',
+                null,
+                BL::lbl('CustomFields'),
+                BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]',
+                BL::lbl('CustomFields'),
+                array('class' => 'button icon iconEdit linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('export_addresses')) {
-            $this->dataGrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
+        if (BackendAuthentication::isAllowedAction('export_addresses')) {
+            $this->dataGrid->addColumnAction(
+                'export',
+                null,
+                BL::lbl('Export'),
+                BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]',
+                BL::lbl('Export'),
+                array('class' => 'button icon iconExport linkButton')
+            );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_group')) {
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
+        if (BackendAuthentication::isAllowedAction('edit_group')) {
+            $this->dataGrid->addColumn(
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_group') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
 
         // add styles

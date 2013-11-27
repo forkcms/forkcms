@@ -25,10 +25,9 @@ class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
         $clientId = SpoonFilter::getPostValue('client_id', null, '');
 
         // check input
-        if(empty($clientId)) $this->output(self::BAD_REQUEST);
-
-        // validated
-        else {
+        if (empty($clientId)) {
+            $this->output(self::BAD_REQUEST);
+        } else {
             // get basic details for this client
             $client = BackendMailmotorCMHelper::getCM()->getClient($clientId);
 

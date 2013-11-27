@@ -25,21 +25,21 @@ class BackendMailmotorExportAddresses extends BackendBaseAction
         $id = SpoonFilter::getGetValue('id', null, 0);
 
         // no id's provided
-        if(empty($id)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-items-selected');
-
-        // at least one id
-        else {
+        if (empty($id)) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-items-selected');
+        } else {
+            // at least one id
             // export all addresses
-            if($id == 'all') {
+            if ($id == 'all') {
                 // fetch records
                 $records = BackendMailmotorModel::getAddresses();
 
                 // export records
                 BackendMailmotorModel::exportAddresses($records);
+            } else {
+                // export addresses by group ID
+                BackendMailmotorModel::exportAddressesByGroupID($id);
             }
-
-            // export addresses by group ID
-            else BackendMailmotorModel::exportAddressesByGroupID($id);
         }
 
         // redirect

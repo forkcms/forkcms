@@ -17,14 +17,14 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
     /**
      * The passed fields
      *
-     * @var	array
+     * @var    array
      */
     private $fields;
 
     /**
      * The group record
      *
-     * @var	array
+     * @var    array
      */
     private $group;
 
@@ -37,15 +37,17 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
         $groupFields = array_flip($this->group['custom_fields']);
 
         // group custom fields found
-        if(!empty($groupFields)) {
+        if (!empty($groupFields)) {
             // loop the group fields and empty every value
-            foreach($groupFields as &$field) $field = '';
+            foreach ($groupFields as &$field) {
+                $field = '';
+            }
         }
 
         // loop the fields
-        foreach($this->fields as $field) {
+        foreach ($this->fields as $field) {
             // check if the passed field is in the group's field list
-            if(isset($groupFields[$field])) {
+            if (isset($groupFields[$field])) {
                 // delete the custom field in CM
                 BackendMailmotorCMHelper::deleteCustomField('[' . $field . ']', $this->group['id']);
 
@@ -58,7 +60,11 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
         BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']);
+        $this->redirect(
+            BackendModel::createURLForAction(
+                'custom_fields'
+            ) . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']
+        );
     }
 
     /**
@@ -81,17 +87,20 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
         $redirectURL = BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'];
 
         // no id's provided
-        if(!$action) $this->redirect($redirectURL . '&error=no-action-selected');
-        if(!isset($_GET['fields'])) $this->redirect($redirectURL . '&error=no-items-selected');
-        if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
-
-        // at least one id
-        else {
+        if (!$action) {
+            $this->redirect($redirectURL . '&error=no-action-selected');
+        }
+        if (!isset($_GET['fields'])) {
+            $this->redirect($redirectURL . '&error=no-items-selected');
+        }
+        if (empty($this->group)) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        } else {
             // redefine id's
             $this->fields = (array) $_GET['fields'];
 
             // evaluate $action, see what action was triggered
-            switch($action) {
+            switch ($action) {
                 case 'delete':
                     $this->deleteCustomFields();
                     break;

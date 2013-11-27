@@ -20,21 +20,21 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
     /**
      * The given mailing record
      *
-     * @var	array
+     * @var    array
      */
     private $mailing;
 
     /**
      * The statistics record
      *
-     * @var	array
+     * @var    array
      */
     private $statistics;
 
     /**
      * The given link URL
      *
-     * @var	string
+     * @var    string
      */
     public $linkURL;
 
@@ -62,8 +62,16 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         $this->linkURL = $this->getParameter('url');
 
         // does the item exist
-        if(!BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
-        if($this->linkURL == '') $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $id . '&error=link-does-not-exist');
+        if (!BackendMailmotorModel::existsMailing($id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+            );
+        }
+        if ($this->linkURL == '') {
+            $this->redirect(
+                BackendModel::createURLForAction('statistics') . '&id=' . $id . '&error=link-does-not-exist'
+            );
+        }
 
         // fetch the statistics
         $this->statistics = BackendMailmotorCMHelper::getStatistics($id, true);
@@ -72,7 +80,11 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         $this->mailing = BackendMailmotorModel::getMailing($id);
 
         // no stats found
-        if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-statistics-loaded');
+        if ($this->statistics === false) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=no-statistics-loaded'
+            );
+        }
     }
 
     /**
@@ -81,14 +93,21 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // no statistics found
-        if(empty($this->statistics['clicked_links_by'][$this->linkURL])) return false;
+        if (empty($this->statistics['clicked_links_by'][$this->linkURL])) {
+            return false;
+        }
 
         // create a new source-object
         $source = new SpoonDataGridSourceArray($this->statistics['clicked_links_by'][$this->linkURL]);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
-        $this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . urlencode($this->linkURL));
+        $this->dataGrid->setURL(
+            BackendModel::createURLForAction(
+            ) . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id'] . '&url=' . urlencode(
+                $this->linkURL
+            )
+        );
         $this->dataGrid->setColumnsHidden(array('list_id', 'url'));
 
         // set header labels
@@ -121,7 +140,12 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         $this->frm->parse($this->tpl);
 
         // parse the datagrid
-        if(!empty($this->statistics['clicked_links_by'][$this->linkURL])) $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        if (!empty($this->statistics['clicked_links_by'][$this->linkURL])) {
+            $this->tpl->assign(
+                'dataGrid',
+                ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false
+            );
+        }
 
         // parse the mailing ID and url
         $this->tpl->assign('url', $this->linkURL);
@@ -139,7 +163,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -147,12 +171,16 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
             $txtGroup = $this->frm->getField('group');
 
             // validate fields
-            if($txtGroup->isFilled(BL::err('NameIsRequired'))) {
-                if(BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) $txtGroup->addError(BL::err('GroupAlreadyExists'));
+            if ($txtGroup->isFilled(BL::err('NameIsRequired'))) {
+                if (BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) {
+                    $txtGroup->addError(
+                        BL::err('GroupAlreadyExists')
+                    );
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['name'] = $txtGroup->getValue();
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
@@ -161,13 +189,17 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
                 $item['id'] = BackendMailmotorCMHelper::insertGroup($item);
 
                 // loop the addresses
-                foreach($this->statistics['clicked_links_by'][$this->linkURL] as $clicker) {
+                foreach ($this->statistics['clicked_links_by'][$this->linkURL] as $clicker) {
                     // subscribe the user to the created group
                     BackendMailmotorCMHelper::subscribe($clicker['email'], $item['id']);
                 }
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('statistics_link') . '&url=' . $this->linkURL . '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' . urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('statistics_link') . '&url=' . $this->linkURL .
+                    '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' .
+                    urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']
+                );
             }
         }
     }

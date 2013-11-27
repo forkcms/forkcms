@@ -41,7 +41,7 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -52,7 +52,7 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
             $txtName->isFilled(BL::err('NameIsRequired'));
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['name'] = $txtName->getValue();
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
@@ -64,7 +64,11 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_campaign', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode(
+                        $item['name']
+                    ) . '&highlight=id-' . $item['id']
+                );
             }
         }
     }

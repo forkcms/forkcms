@@ -31,15 +31,14 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(BackendMailmotorModel::existsMailing($this->id)) {
+        if (BackendMailmotorModel::existsMailing($this->id)) {
             parent::execute();
             $this->getData();
             $this->parse();
             $this->display(BACKEND_MODULE_PATH . '/layout/templates/edit_mailing_iframe.tpl');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -54,7 +53,9 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
         $this->template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -78,7 +79,13 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
     private function parseTemplateContent()
     {
         // template content is empty
-        if(!isset($this->template['content'])) $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist');
+        if (!isset($this->template['content'])) {
+            $this->redirect(
+                BackendModel::createURLForAction(
+                    'edit'
+                ) . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist'
+            );
+        }
 
         // set CSS object
         $css = new CSSToInlineStyles($this->template['content'], $this->template['css']);
@@ -96,7 +103,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
         */
 
         // find the body element
-        if(preg_match('/<body.*>.*?<\/body>/is', $HTML, $match)) {
+        if (preg_match('/<body.*>.*?<\/body>/is', $HTML, $match)) {
             // search values
             $search = array();
             $search[] = 'body';

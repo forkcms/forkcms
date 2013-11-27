@@ -17,14 +17,14 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
     /**
      * The passed e-mails
      *
-     * @var	array
+     * @var    array
      */
     private $emails;
 
     /**
      * The group ID we have to perform the actions for
      *
-     * @var	int
+     * @var    int
      */
     private $groupId;
 
@@ -34,44 +34,49 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
     private function deleteAddresses()
     {
         // no group set
-        if($this->groupId == '') $this->groupId = null;
+        if ($this->groupId == '') {
+            $this->groupId = null;
+        }
 
         // get all groups
         $groupIds = BackendMailmotorModel::getGroupIDs();
 
         // loop the emails
-        foreach($this->emails as $email) {
+        foreach ($this->emails as $email) {
             // the group ID is not set
-            if($this->groupId == null) {
+            if ($this->groupId == null) {
                 // if no groups were set, break here
-                if(empty($groupIds)) break;
+                if (empty($groupIds)) {
+                    break;
+                }
 
                 // loop the group IDs
-                foreach($groupIds as $groupId) {
+                foreach ($groupIds as $groupId) {
                     // try to unsubscribe this address
                     try {
                         BackendMailmotorCMHelper::unsubscribe($email, $groupId);
-                    }
-
-                    // ignore exceptions
-                    catch(Exception $e) {
+                    } catch (Exception $e) {
                         // do nothing
                     }
                 }
 
                 // delete all addresses
                 BackendMailmotorModel::deleteAddresses($email);
+            } else {
+                // group ID was set, unsubscribe the address for this group
+                BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
             }
-
-            // group ID was set, unsubscribe the address for this group
-            else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
         }
 
         // trigger event
         BackendModel::triggerEvent($this->getModule(), 'after_delete_addresses');
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('addresses') . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : ''));
+        $this->redirect(
+            BackendModel::createURLForAction(
+                'addresses'
+            ) . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '')
+        );
     }
 
     /**
@@ -86,16 +91,19 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
         $this->groupId = SpoonFilter::getGetValue('group_id', null, '');
 
         // no id's provided
-        if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
-        if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-items-selected');
-
-        // at least one id
-        else {
+        if (!$action) {
+            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
+        }
+        if (!isset($_GET['emails'])) {
+            $this->redirect(
+                BackendModel::createURLForAction('addresses') . '&error=no-items-selected'
+            );
+        } else {
             // redefine id's
             $this->emails = (array) $_GET['emails'];
 
             // evaluate $action, see what action was triggered
-            switch($action) {
+            switch ($action) {
                 case 'delete':
                     $this->deleteAddresses();
                     break;
@@ -113,7 +121,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
     private function exportAddresses()
     {
         // fetch the creationdate for the addresses
-        foreach($this->emails as &$email) {
+        foreach ($this->emails as &$email) {
             $address = BackendMailmotorModel::getAddress($email);
             $email = array(
                 'email' => $email,

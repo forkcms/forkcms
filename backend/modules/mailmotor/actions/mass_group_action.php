@@ -25,15 +25,14 @@ class BackendMailmotorMassGroupAction extends BackendBaseAction
         $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
-        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-selection');
-
-        // at least one id
-        else {
+        if (!isset($_GET['id'])) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-selection');
+        } else {
             // redefine id's
             $ids = (array) $_GET['id'];
 
             // delete comment(s)
-            if($action == 'delete') {
+            if ($action == 'delete') {
                 BackendMailmotorCMHelper::deleteGroups($ids);
 
                 // trigger event

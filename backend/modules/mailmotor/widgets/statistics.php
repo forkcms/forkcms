@@ -20,7 +20,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
     /**
      * the default group ID
      *
-     * @var	int
+     * @var    int
      */
     private $groupId;
 
@@ -45,10 +45,14 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
         $mailing = BackendMailmotorModel::getSentMailings(1);
 
         // check if a mailing was found
-        if(empty($mailing)) return false;
+        if (empty($mailing)) {
+            return false;
+        }
 
         // check if a mailing was set
-        if(!isset($mailing[0])) return false;
+        if (!isset($mailing[0])) {
+            return false;
+        }
 
         // show the sent mailings block
         $this->tpl->assign('oSentMailings', true);
@@ -60,17 +64,27 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
         $stats = BackendMailmotorCMHelper::getStatistics($mailing[0]['id'], true);
 
         // reformat the send date
-        $mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' . BL::lbl('At') . ' ' . SpoonDate::getDate('H:i', $mailing);
+        $mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' .
+                              BL::lbl('At') . ' ' . SpoonDate::getDate('H:i', $mailing);
 
         // get results
         $results[] = array('label' => BL::lbl('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
         $results[] = array('label' => BL::lbl('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
-        $results[] = array('label' => BL::lbl('MailmotorSent'), 'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')');
-        $results[] = array('label' => BL::lbl('MailmotorOpened'), 'value' => $stats['unique_opens'] . ' (' . $stats['unique_opens_percentage'] . ')');
-        $results[] = array('label' => BL::lbl('MailmotorClicks'), 'value' => $stats['clicks_total'] . ' (' . $stats['clicks_percentage'] . ')');
+        $results[] = array(
+            'label' => BL::lbl('MailmotorSent'),
+            'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')'
+        );
+        $results[] = array(
+            'label' => BL::lbl('MailmotorOpened'),
+            'value' => $stats['unique_opens'] . ' (' . $stats['unique_opens_percentage'] . ')'
+        );
+        $results[] = array(
+            'label' => BL::lbl('MailmotorClicks'),
+            'value' => $stats['clicks_total'] . ' (' . $stats['clicks_percentage'] . ')'
+        );
 
         // there are some results
-        if(!empty($results)) {
+        if (!empty($results)) {
             // get the datagrid
             $dataGrid = new BackendDataGridArray($results);
 
@@ -91,7 +105,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
         $results = BackendMailmotorModel::getRecentSubscriptions(self::PAGING_LIMIT);
 
         // there are some results
-        if(!empty($results)) {
+        if (!empty($results)) {
             // get the datagrid
             $dataGrid = new BackendDataGridArray($results);
 
@@ -99,12 +113,20 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
             $dataGrid->setPaging(false);
 
             // set column functions
-            $dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[subscribed_on]'), 'subscribed_on', true);
+            $dataGrid->setColumnFunction(
+                array('BackendDataGridFunctions', 'getTimeAgo'),
+                array('[subscribed_on]'),
+                'subscribed_on',
+                true
+            );
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('edit_address', 'mailmotor')) {
+            if (BackendAuthentication::isAllowedAction('edit_address', 'mailmotor')) {
                 // set edit link
-                $dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+                $dataGrid->setColumnURL(
+                    'email',
+                    BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]'
+                );
             }
 
             // parse the datagrid
@@ -121,14 +143,22 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
         $results = BackendMailmotorModel::getRecentUnsubscriptions(self::PAGING_LIMIT);
 
         // there are some results
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
-            $dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[unsubscribed_on]'), 'unsubscribed_on', true);
+            $dataGrid->setColumnFunction(
+                array('BackendDataGridFunctions', 'getTimeAgo'),
+                array('[unsubscribed_on]'),
+                'unsubscribed_on',
+                true
+            );
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('edit_address')) {
-                $dataGrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
+            if (BackendAuthentication::isAllowedAction('edit_address')) {
+                $dataGrid->setColumnURL(
+                    'email',
+                    BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]'
+                );
             }
 
             // parse the datagrid

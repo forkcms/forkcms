@@ -23,17 +23,16 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(BackendMailmotorModel::existsCampaign($this->id)) {
+        if (BackendMailmotorModel::existsCampaign($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -45,7 +44,11 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
         $this->record = (array) BackendMailmotorModel::getCampaign($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(
+                BackendModel::createURLForAction('campaigns') . '&error=non-existing'
+            );
+        }
     }
 
     /**
@@ -77,7 +80,7 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -85,12 +88,16 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
             $txtName = $this->frm->getField('name');
 
             // validate fields
-            if($txtName->isFilled(BL::err('NameIsRequired'))) {
-                if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsCampaignByName($txtName->getValue())) $txtName->addError(BL::err('CampaignExists'));
+            if ($txtName->isFilled(BL::err('NameIsRequired'))) {
+                if ($txtName->getValue() != $this->record['name'] &&
+                    BackendMailmotorModel::existsCampaignByName($txtName->getValue())
+                ) {
+                    $txtName->addError(BL::err('CampaignExists'));
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['name'] = $txtName->getValue();
@@ -103,7 +110,11 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_campaign', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('campaigns') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('campaigns') . '&report=edited&var=' . urlencode(
+                        $item['name']
+                    ) . '&highlight=id-' . $item['id']
+                );
             }
         }
     }

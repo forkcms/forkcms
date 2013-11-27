@@ -26,18 +26,20 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
         $name = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate
-        if($name == '') $this->output(self::BAD_REQUEST, null, 'no name provided');
-
-        // validated
-        else {
+        if ($name == '') {
+            $this->output(self::BAD_REQUEST, null, 'no name provided');
+        } else {
             // get existing id
             $existingId = BackendMailmotorModel::getCampaignId($name);
 
             // validate
-            if($existingId !== 0 && $id !== $existingId) $this->output(self::ERROR, array('id' => $existingId, 'error' => true), BL::err('CampaignExists', $this->getModule()));
-
-            // existing campaign
-            else {
+            if ($existingId !== 0 && $id !== $existingId) {
+                $this->output(
+                    self::ERROR,
+                    array('id' => $existingId, 'error' => true),
+                    BL::err('CampaignExists', $this->getModule())
+                );
+            } else {
                 // build array
                 $item = array();
                 $item['id'] = $id;
@@ -51,8 +53,15 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
                 BackendModel::triggerEvent($this->getModule(), 'edited_campaign', array('item' => $item));
 
                 // output
-                if($rows !== 0) $this->output(self::OK, array('id' => $id), BL::msg('CampaignEdited', $this->getModule()));
-                else $this->output(self::ERROR, null, BL::err('CampaignNotEdited', $this->getModule()));
+                if ($rows !== 0) {
+                    $this->output(
+                        self::OK,
+                        array('id' => $id),
+                        BL::msg('CampaignEdited', $this->getModule())
+                    );
+                } else {
+                    $this->output(self::ERROR, null, BL::err('CampaignNotEdited', $this->getModule()));
+                }
             }
         }
     }

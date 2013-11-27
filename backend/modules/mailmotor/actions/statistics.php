@@ -20,21 +20,21 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
     /**
      * The given mailing ID
      *
-     * @var	int
+     * @var    int
      */
     private $id;
 
     /**
      * The mailing record
      *
-     * @var	array
+     * @var    array
      */
     private $mailing;
 
     /**
      * The statistics record
      *
-     * @var	array
+     * @var    array
      */
     private $statistics;
 
@@ -59,7 +59,11 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(!BackendMailmotorModel::existsMailing($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=mailing-does-not-exist');
+        if (!BackendMailmotorModel::existsMailing($this->id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&amp;error=mailing-does-not-exist'
+            );
+        }
 
         // get mailing
         $this->mailing = BackendMailmotorModel::getMailing($this->id);
@@ -68,7 +72,15 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         $this->statistics = BackendMailmotorCMHelper::getStatistics($this->id, true);
 
         // no stats found
-        if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace('#', '', $this->mailing['name']));
+        if ($this->statistics === false) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace(
+                    '#',
+                    '',
+                    $this->mailing['name']
+                )
+            );
+        }
     }
 
     /**
@@ -77,17 +89,24 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // no statistics found
-        if(empty($this->statistics['clicked_links'])) return false;
+        if (empty($this->statistics['clicked_links'])) {
+            return false;
+        }
 
         // map urlencode to clicked links stack
-        $this->statistics['clicked_links'] = SpoonFilter::arrayMapRecursive('urlencode', $this->statistics['clicked_links']);
+        $this->statistics['clicked_links'] = SpoonFilter::arrayMapRecursive(
+            'urlencode',
+            $this->statistics['clicked_links']
+        );
 
         // create a new source-object
         $source = new SpoonDataGridSourceArray($this->statistics['clicked_links']);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
-        $this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
+        $this->dataGrid->setURL(
+            BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id
+        );
 
         // set headers values
         $headers['link'] = strtoupper(BL::lbl('URL'));
@@ -107,9 +126,15 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('statistics_link')) {
+        if (BackendAuthentication::isAllowedAction('statistics_link')) {
             // add edit column
-            $this->dataGrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
+            $this->dataGrid->addColumnAction(
+                'users',
+                null,
+                BL::lbl('Who'),
+                BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id,
+                BL::lbl('Who')
+            );
         }
     }
 
@@ -121,7 +146,12 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid
-        if(!empty($this->statistics['clicked_links'])) $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        if (!empty($this->statistics['clicked_links'])) {
+            $this->tpl->assign(
+                'dataGrid',
+                ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false
+            );
+        }
 
         // parse the mailing record
         $this->tpl->assign('mailing', $this->mailing);

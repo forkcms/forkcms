@@ -17,28 +17,30 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
     /**
      * Holds true if the CM account exists
      *
-     * @var	bool
+     * @var    bool
      */
     private $accountLinked = false;
 
     /**
      * The client ID
      *
-     * @var	string
+     * @var    string
      */
     private $clientID;
 
     /**
      * The forms used on this page
      *
-     * @var	BackendForm
+     * @var    BackendForm
      */
-    private $frmAccount, $frmClient, $frmGeneral;
+    private $frmAccount;
+    private $frmClient;
+    private $frmGeneral;
 
     /**
      * Mailmotor settings
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
@@ -67,10 +69,15 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
             $clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
 
             // store ID in a setting
-            if(!empty($clientID)) BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
-        } catch(Exception $e) {
+            if (!empty($clientID)) {
+                BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
+            }
+        } catch (Exception $e) {
             // add an error to the email field
-            $this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
+            $this->redirect(
+                BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(
+                ) . '#tabSettingsClient'
+            );
         }
     }
 
@@ -119,7 +126,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
         $this->frmAccount->addText('username', $this->settings['cm_username']);
         $this->frmAccount->addPassword('password', $this->settings['cm_password']);
 
-        if($this->accountLinked) {
+        if ($this->accountLinked) {
             $this->frmAccount->getField('url')->setAttributes(array('disabled' => 'disabled'));
             $this->frmAccount->getField('username')->setAttributes(array('disabled' => 'disabled'));
             $this->frmAccount->getField('password')->setAttributes(array('disabled' => 'disabled'));
@@ -135,7 +142,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
         $this->frmClient = new BackendForm('settingsClient');
 
         // an account was successfully made
-        if($this->accountLinked) {
+        if ($this->accountLinked) {
             // get all clients linked to the active account
             $clients = BackendMailmotorCMHelper::getClientsAsPairs();
 
@@ -144,7 +151,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
         }
 
         // account was made
-        if($this->accountLinked) {
+        if ($this->accountLinked) {
             // fetch CM countries
             $countries = BackendMailmotorCMHelper::getCountriesAsPairs();
 
@@ -187,7 +194,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
         $this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
 
         // user is god
-        if(BackendAuthentication::getUser()->isGod()) {
+        if (BackendAuthentication::getUser()->isGod()) {
             // price per email
             $this->frmGeneral->addText('price_per_email', $this->settings['price_per_email']);
 
@@ -207,7 +214,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
         $this->tpl->assign('account', $this->accountLinked);
 
         // parse client ID
-        if($this->accountLinked && !empty($this->settings['cm_client_id'])) $this->tpl->assign('clientId', $this->settings['cm_client_id']);
+        if ($this->accountLinked && !empty($this->settings['cm_client_id'])) {
+            $this->tpl->assign(
+                'clientId',
+                $this->settings['cm_client_id']
+            );
+        }
 
         // parse god status
         $this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
@@ -241,9 +253,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
             // update the client
             $cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             // add an error to the email field
-            $this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
+            $this->redirect(
+                BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(
+                ) . '#tabSettingsClient'
+            );
         }
     }
 
@@ -253,9 +268,9 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
     private function validateAccountForm()
     {
         // form is submitted
-        if($this->frmAccount->isSubmitted()) {
+        if ($this->frmAccount->isSubmitted()) {
             // form is validated
-            if($this->frmAccount->isCorrect()) {
+            if ($this->frmAccount->isCorrect()) {
                 // unlink the account and client ID
                 BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
                 BackendModel::setModuleSetting($this->getModule(), 'cm_url', null);
@@ -278,13 +293,13 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
     private function validateClientForm()
     {
         // form is submitted
-        if($this->frmClient->isSubmitted()) {
+        if ($this->frmClient->isSubmitted()) {
             $this->frmClient->getField('company_name')->isFilled(BL::err('FieldIsRequired'));
             $this->frmClient->getField('countries')->isFilled(BL::err('FieldIsRequired'));
             $this->frmClient->getField('timezones')->isFilled(BL::err('FieldIsRequired'));
 
             // form is validated
-            if($this->frmClient->isCorrect()) {
+            if ($this->frmClient->isCorrect()) {
                 // get the client settings from the install
                 $client = array();
                 $client['company_name'] = $this->frmClient->getField('company_name')->getValue();
@@ -292,12 +307,16 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
                 $client['timezone'] = $this->frmClient->getField('timezones')->getValue();
 
                 // client ID was not yet set OR the user wants a new client created
-                if($this->frmClient->getField('client_id')->getValue() == '0') {
+                if ($this->frmClient->getField('client_id')->getValue() == '0') {
                     // attempt to create the client
                     $this->createClient($client);
 
                     // store the client info in our database
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+                    BackendModel::setModuleSetting(
+                        $this->getModule(),
+                        'cm_client_company_name',
+                        $client['company_name']
+                    );
                     BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
                     BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
@@ -305,11 +324,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
                     BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
 
                     // redirect to a custom success message
-                    $this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
-                }
-
-                // client ID was already set
-                else {
+                    $this->redirect(
+                        BackendModel::createURLForAction(
+                            'settings'
+                        ) . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue()
+                    );
+                } else {
                     // overwrite the client ID
                     $this->clientID = $this->frmClient->getField('client_id')->getValue();
 
@@ -317,7 +337,11 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
                     $this->updateClient($client);
 
                     // store the client info in our database
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+                    BackendModel::setModuleSetting(
+                        $this->getModule(),
+                        'cm_client_company_name',
+                        $client['company_name']
+                    );
                     BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
                     BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
@@ -340,33 +364,49 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
     private function validateGeneralForm()
     {
         // form is submitted
-        if($this->frmGeneral->isSubmitted()) {
+        if ($this->frmGeneral->isSubmitted()) {
             // validate required fields
             $this->frmGeneral->getField('from_name')->isFilled(BL::getError('FieldIsRequired'));
             $this->frmGeneral->getField('from_email')->isEmail(BL::getError('EmailIsInvalid'));
             $this->frmGeneral->getField('reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
 
             // user is god
-            if(BackendAuthentication::getUser()->isGod()) {
-                if($this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'))) {
+            if (BackendAuthentication::getUser()->isGod()) {
+                if ($this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'))) {
                     $this->frmGeneral->getField('price_per_email')->isFloat(BL::err('InvalidPrice'));
                 }
 
-                if($this->frmGeneral->getField('price_per_campaign')->isFilled(BL::err('FieldIsRequired'))) {
+                if ($this->frmGeneral->getField('price_per_campaign')->isFilled(BL::err('FieldIsRequired'))) {
                     $this->frmGeneral->getField('price_per_campaign')->isFloat(BL::err('InvalidPrice'));
                 }
             }
 
             // form is validated
-            if($this->frmGeneral->isCorrect()) {
+            if ($this->frmGeneral->isCorrect()) {
                 // set sender info
-                BackendModel::setModuleSetting($this->getModule(), 'from_name', $this->frmGeneral->getField('from_name')->getValue());
-                BackendModel::setModuleSetting($this->getModule(), 'from_email', $this->frmGeneral->getField('from_email')->getValue());
-                BackendModel::setModuleSetting($this->getModule(), 'reply_to_email', $this->frmGeneral->getField('reply_to_email')->getValue());
-                BackendModel::setModuleSetting($this->getModule(), 'plain_text_editable', $this->frmGeneral->getField('plain_text_editable')->getValue());
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'from_name',
+                    $this->frmGeneral->getField('from_name')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'from_email',
+                    $this->frmGeneral->getField('from_email')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'reply_to_email',
+                    $this->frmGeneral->getField('reply_to_email')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'plain_text_editable',
+                    $this->frmGeneral->getField('plain_text_editable')->getValue()
+                );
 
                 // user is god?
-                if(BackendAuthentication::getUser()->isGod()) {
+                if (BackendAuthentication::getUser()->isGod()) {
                     // set price per email
                     BackendModel::setModuleSetting(
                         $this->getModule(),

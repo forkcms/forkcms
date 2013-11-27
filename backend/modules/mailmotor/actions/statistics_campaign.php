@@ -20,21 +20,21 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
     /**
      * The given campaign ID
      *
-     * @var	int
+     * @var    int
      */
     private $id;
 
     /**
      * The campaign record
      *
-     * @var	array
+     * @var    array
      */
     private $campaign;
 
     /**
      * The statistics record
      *
-     * @var	array
+     * @var    array
      */
     private $statistics;
 
@@ -60,7 +60,11 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
+        if (!BackendMailmotorModel::existsCampaign($this->id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist'
+            );
+        }
 
         // store mailing
         $this->campaign = BackendMailmotorModel::getCampaign($this->id);
@@ -69,7 +73,11 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         $this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id, true);
 
         // no stats found
-        if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded');
+        if ($this->statistics === false || empty($this->statistics)) {
+            $this->redirect(
+                BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded'
+            );
+        }
     }
 
     /**
@@ -78,9 +86,14 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // call the parent, as in create a new datagrid with the created source
-        $this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $this->id));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN,
+            array('sent', $this->id)
+        );
         $this->dataGrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
-        $this->dataGrid->setURL(BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id);
+        $this->dataGrid->setURL(
+            BackendModel::createURLForAction() . '&offset=[offset]&order=[order]&sort=[sort]&id=' . $this->id
+        );
 
         // set headers values
         $headers['sent'] = SpoonFilter::ucfirst(BL::lbl('Sent'));
@@ -92,13 +105,18 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('name', 'sent'), 'name');
 
         // set column functions
-        $this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
+        $this->dataGrid->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[sent]'),
+            'sent',
+            true
+        );
 
         // set paging limit
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('statistics')) {
+        if (BackendAuthentication::isAllowedAction('statistics')) {
             // set url for mailing name
             $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
         }

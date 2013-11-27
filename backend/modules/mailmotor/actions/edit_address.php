@@ -17,28 +17,28 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
     /**
      * The custom fields
      *
-     * @var	array
+     * @var    array
      */
     private $customFields = array();
 
     /**
      * The e-mail parameter
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
      * The passed group record
      *
-     * @var	array
+     * @var    array
      */
     private $group;
 
     /**
      * The subscriptions this e-mail is part of
      *
-     * @var	array
+     * @var    array
      */
     private $subscriptions;
 
@@ -50,7 +50,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         $this->email = $this->getParameter('email');
 
         // does the item exist
-        if(BackendMailmotorModel::existsAddress($this->email)) {
+        if (BackendMailmotorModel::existsAddress($this->email)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
@@ -58,10 +58,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
     }
 
     /**
@@ -73,7 +72,11 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         $this->record = (array) BackendMailmotorModel::getAddress($this->email);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(
+                BackendModel::createURLForAction('addresses') . '&error=non-existing'
+            );
+        }
 
         // get subscriptions (key/pair values)
         $this->subscriptions = BackendMailmotorModel::getGroupsByEmailAsPairs($this->email);
@@ -94,7 +97,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
     private function loadCustomFields()
     {
         // no groups or subscriptions at this point
-        if(empty($this->group)) return false;
+        if (empty($this->group)) {
+            return false;
+        }
 
         // reserve counter
         $i = 0;
@@ -103,17 +108,22 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         $this->group['custom_fields'] = BackendMailmotorModel::getCustomFields($this->id);
 
         // no custom fields for this group
-        if(empty($this->group['custom_fields'])) return false;
+        if (empty($this->group['custom_fields'])) {
+            return false;
+        }
 
         // loop the custom fields
-        foreach($this->group['custom_fields'] as $name) {
+        foreach ($this->group['custom_fields'] as $name) {
             // set value
             $value = isset($this->record['custom_fields'][$this->id][$name]) ? $this->record['custom_fields'][$this->id][$name] : '';
 
             // store textfield value
             $this->customFields[$i]['label'] = $name;
             $this->customFields[$i]['name'] = SpoonFilter::toCamelCase($name, array('-', '_', ' '));
-            $this->customFields[$i]['formElements']['txtField'] = $this->frm->addText($this->customFields[$i]['name'], $value);
+            $this->customFields[$i]['formElements']['txtField'] = $this->frm->addText(
+                $this->customFields[$i]['name'],
+                $value
+            );
             $i++;
 
             // unset this field
@@ -140,13 +150,17 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         $checkboxGroups = BackendMailmotorModel::getGroupsForCheckboxes();
 
         // if no groups are found, redirect to overview
-        if(empty($checkboxGroups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+        if (empty($checkboxGroups)) {
+            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+        }
 
         // add checkboxes for groups
         $this->frm->addMultiCheckbox('groups', $checkboxGroups, $this->record['groups']);
 
         // add dropdown for subscriptions
-        if(!empty($this->subscriptions)) $this->frm->addDropdown('subscriptions', $this->subscriptions, $this->id);
+        if (!empty($this->subscriptions)) {
+            $this->frm->addDropdown('subscriptions', $this->subscriptions, $this->id);
+        }
     }
 
     /**
@@ -169,21 +183,23 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
             // get subscriptions
-            if(!empty($this->subscriptions)) $ddmGroups = $this->frm->getField('subscriptions');
+            if (!empty($this->subscriptions)) {
+                $ddmGroups = $this->frm->getField('subscriptions');
+            }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['email'] = $this->email;
                 $item['groups'] = isset($_POST['groups']) ? $_POST['groups'] : array();
 
                 // loop the fields
-                foreach($this->customFields as $field) {
+                foreach ($this->customFields as $field) {
                     // shorten the field
                     $txtField = $field['formElements']['txtField'];
 
@@ -192,20 +208,26 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
                 }
 
                 /*
-                 * This is, in fact, an unsubscribe of the subscriber's current groups, and a re-subscribe of the
-                 * groups he requested. This is done because the CM API supports no updateSubscriber function, and it
-                 * overwrites the values of custom fields if you do an update for 1 list and don't provide values for another.
+                 * This is, in fact, an unsubscribe of the subscriber's
+                 * current groups, and a re-subscribe of the groups he
+                 * requested. This is done because the CM API supports no
+                 * updateSubscriber function, and it overwrites the values of
+                 * custom fields if you do an update for 1 list and don't
+                 * provide values for another.
                  *
-                 * NOTE: A user will still be in the suppression list if he is resubscribed, but he will receive e-mails.
-                 * 		 (see: http://www.campaignmonitor.com/forums/viewtopic.php?id=1761)
+                 * NOTE: A user will still be in the suppression list if he is
+                 * resubscribed, but he will receive e-mails.
+                 * (see: http://www.campaignmonitor.com/forums/viewtopic.php?id=1761)
                  */
 
                 // the groups the user is currently subscribed to
-                if(!empty($this->record['groups'])) {
+                if (!empty($this->record['groups'])) {
                     // loop the groups
-                    foreach($this->record['groups'] as $group) {
+                    foreach ($this->record['groups'] as $group) {
                         // Check if this group is in the allowed list. If it is, it should not be unsubscribed
-                        if(!empty($item['groups']) && in_array($group, $item['groups'])) continue;
+                        if (!empty($item['groups']) && in_array($group, $item['groups'])) {
+                            continue;
+                        }
 
                         // unsubscribe the user
                         BackendMailmotorCMHelper::unsubscribe($this->email, $group);
@@ -213,9 +235,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
                 }
 
                 // the groups the user wants to keep
-                if(!empty($item['groups'])) {
+                if (!empty($item['groups'])) {
                     // loop the groups
-                    foreach($item['groups'] as $group) {
+                    foreach ($item['groups'] as $group) {
                         // continue looping if this group has no custom fields
                         $customFields = !empty($this->record['custom_fields'][$group]) ? $this->record['custom_fields'][$group] : null;
 
@@ -228,7 +250,10 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_address', array('item' => $this->record));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']);
+                $this->redirect(
+                    BackendModel::createURLForAction('addresses') .
+                    (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']
+                );
             }
         }
     }

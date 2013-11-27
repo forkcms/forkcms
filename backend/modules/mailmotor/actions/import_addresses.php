@@ -17,7 +17,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
     /**
      * The passed group ID
      *
-     * @var	int
+     * @var    int
      */
     private $groupId;
 
@@ -30,7 +30,9 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         $downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
 
         // stop here if no download parameter was given
-        if(!$downloadExample) return false;
+        if (!$downloadExample) {
+            return false;
+        }
 
         // build the csv
         $csv = array();
@@ -71,9 +73,9 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         unset($subscriber['email']);
 
         // check if there's something left in our record
-        if(!empty($subscriber)) {
+        if (!empty($subscriber)) {
             // loop the fields in the records
-            foreach($subscriber as $name => $value) {
+            foreach ($subscriber as $name => $value) {
                 // add this to the custom fields stack
                 $item['CustomFields'][] = array('Key' => $name, 'Value' => $value);
             }
@@ -100,7 +102,9 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         $groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
         // if no groups are found, redirect to overview
-        if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+        if (empty($groups)) {
+            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+        }
 
         // add radiobuttons for groups
         $this->frm->addRadiobutton('groups', $groups, (empty($this->groupId) ? null : $this->groupId));
@@ -112,8 +116,8 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
     /**
      * Processes the subscriber import. Returns an array with failed subscribers.
      *
-     * @param array $csv The uploaded CSV file.
-     * @param int $groupID The group ID for which we're importing.
+     * @param array $csv     The uploaded CSV file.
+     * @param int   $groupID The group ID for which we're importing.
      * @return array A list with failed subscribers.
      */
     private function processImport($csv, $groupID)
@@ -127,9 +131,11 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         /*
             IMPORTANT NOTE: CM only allows a maximum amount of 100 subscribers for each import. So we have to batch
         */
-        foreach($csv as $key => $record) {
+        foreach ($csv as $key => $record) {
             // no e-mail address set means stop here
-            if(empty($record['email'])) continue;
+            if (empty($record['email'])) {
+                continue;
+            }
 
             // build record to insert
             $subscribers[$key] = $this->formatSubscriberCSVRow($record);
@@ -142,21 +148,23 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         $failedSubscribersCSV = array();
 
         // loop the batches
-        foreach($batches as $key => $batch) {
+        foreach ($batches as $key => $batch) {
             // import every 100 subscribers
             $feedback[$key] = BackendMailmotorCMHelper::getCM()->importSubscribers($batch, $listID);
 
             // if the batch did not contain failed imports, we continue looping
-            if(empty($feedback[$key])) continue;
+            if (empty($feedback[$key])) {
+                continue;
+            }
 
             // merge the feedback results with the full failed set
             $failed = array_merge($failed, $feedback[$key]);
         }
 
         // now we have to loop all uploaded CSV rows in order to provide a .csv with all failed records.
-        foreach($csv as $row) {
+        foreach ($csv as $row) {
             // the subscriber didn't fail the import, so we proceed to insert him in our database
-            if(!in_array($row['email'], $failed)) {
+            if (!in_array($row['email'], $failed)) {
                 // build subscriber record
                 $subscriber = array();
                 $subscriber['email'] = $row['email'];
@@ -188,7 +196,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -203,20 +211,22 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
             $csv = $fileCSV->isFilled() ? BackendCSV::fileToArray($fileCSV->getTempFileName()) : null;
 
             // check if the csv is valid
-            if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::err('InvalidCSV'));
+            if ($csv === false || empty($csv) || !isset($csv[0])) {
+                $fileCSV->addError(BL::err('InvalidCSV'));
+            }
 
             // there was a csv file found
-            if(!empty($csv)) {
+            if (!empty($csv)) {
                 // fetch the columns of the first row
                 $columns = array_keys($csv[0]);
 
                 // loop the columns
-                foreach($csv as $row) {
+                foreach ($csv as $row) {
                     // fetch the row columns
                     $rowColumns = array_keys($row);
 
                     // check if the arrays match
-                    if($rowColumns != $columns) {
+                    if ($rowColumns != $columns) {
                         // add an error to the CSV files
                         $fileCSV->addError(BL::err('InvalidCSV'));
 
@@ -230,10 +240,12 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
             $values = $this->frm->getValues();
 
             // check if at least one recipient group is chosen
-            if(empty($values['groups'])) $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
+            if (empty($values['groups'])) {
+                $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
+            }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // convert the CSV file to an array, and fetch the group's CM ID
                 $csv = BackendCSV::fileToArray($fileCSV->getTempFileName());
 
@@ -244,22 +256,42 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
                 $this->tpl->assign('import', false);
 
                 // no failed subscribers found
-                if(empty($failedSubscribers)) {
+                if (empty($failedSubscribers)) {
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_import_address');
 
                     // redirect to success message
-                    $this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
+                    $this->redirect(
+                        BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count(
+                            $csv
+                        ) . '&var[]=' . count($values['groups'])
+                    );
                 } else {
                     // write a CSV file to the cache
                     $csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
-                    BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers, null, null, ';', '"');
+                    BackendCSV::arrayToFile(
+                        BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile,
+                        $failedSubscribers,
+                        null,
+                        null,
+                        ';',
+                        '"'
+                    );
 
                     // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_import_address_with_failed_items', array('failed' => $failedSubscribers));
+                    BackendModel::triggerEvent(
+                        $this->getModule(),
+                        'after_import_address_with_failed_items',
+                        array('failed' => $failedSubscribers)
+                    );
 
-                    // redirect to failed message with an additional parameter to display a download link to the report-csv form cache.
-                    $this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);
+                    // redirect to failed message with an additional parameter to
+                    // display a download link to the report-csv form cache.
+                    $this->redirect(
+                        BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' .
+                        count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' .
+                        count($failedSubscribers) . '&csv=' . $csvFile
+                    );
                 }
             }
         }

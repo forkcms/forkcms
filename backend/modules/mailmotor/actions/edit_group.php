@@ -23,17 +23,16 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if(BackendMailmotorModel::existsGroup($this->id)) {
+        if (BackendMailmotorModel::existsGroup($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
     }
 
     /**
@@ -45,7 +44,9 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
         $this->record = (array) BackendMailmotorModel::getGroup($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+        }
     }
 
     /**
@@ -60,7 +61,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
         $chkDefaultForLanguageValues[] = array('label' => BL::msg('NoDefault'), 'value' => '0');
 
         // set default for language radiobutton values
-        foreach(BL::getWorkingLanguages() as $key => $value) {
+        foreach (BL::getWorkingLanguages() as $key => $value) {
             $chkDefaultForLanguageValues[] = array('label' => $value, 'value' => $key);
         }
 
@@ -86,7 +87,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -95,12 +96,16 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
             $rbtDefaultForLanguage = $this->frm->getField('default');
 
             // validate fields
-            if($txtName->isFilled(BL::err('NameIsRequired'))) {
-                if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::err('GroupAlreadyExists'));
+            if ($txtName->isFilled(BL::err('NameIsRequired'))) {
+                if ($txtName->getValue() != $this->record['name'] &&
+                    BackendMailmotorModel::existsGroupByName($txtName->getValue())
+                ) {
+                    $txtName->addError(BL::err('GroupAlreadyExists'));
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['name'] = $txtName->getValue();
@@ -117,7 +122,11 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_group', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode(
+                        $item['name']
+                    ) . '&highlight=id-' . $item['id']
+                );
             }
         }
     }

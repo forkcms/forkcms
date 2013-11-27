@@ -47,7 +47,11 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column
-        $this->dataGrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
+        $this->dataGrid->addColumn(
+            'checkbox',
+            '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
+            '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
+        );
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
@@ -55,15 +59,29 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
-        $this->dataGrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+        $this->dataGrid->setColumnFunction(
+            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array('[created_on]'),
+            'created_on',
+            true
+        );
 
         // add statistics column
         $this->dataGrid->addColumn('statistics');
-        $this->dataGrid->setColumnAttributes('statistics', array('class' => 'action actionStatistics', 'width' => '10%'));
+        $this->dataGrid->setColumnAttributes(
+            'statistics',
+            array('class' => 'action actionStatistics', 'width' => '10%')
+        );
         $this->dataGrid->setColumnFunction(array(__CLASS__, 'setStatisticsLink'), array('[id]'), 'statistics', true);
 
         // add edit column
-        $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]', BL::lbl('Edit'));
+        $this->dataGrid->addColumn(
+            'edit',
+            null,
+            BL::lbl('Edit'),
+            BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]',
+            BL::lbl('Edit')
+        );
 
         // add styles
         $this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
@@ -72,7 +90,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('index')) {
+        if (BackendAuthentication::isAllowedAction('index')) {
             // set column URLs
             $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
         }
@@ -97,7 +115,11 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
     public static function setStatisticsLink($id)
     {
         // build the link HTML
-        $html = '<a href="' . BackendModel::createURLForAction('statistics_campaign') . '&amp;id=' . $id . '" class="button icon iconStats linkButton"><span>' . BL::lbl('Statistics') . '</span></a>';
+        $html = '<a href="' .
+                BackendModel::createURLForAction(
+                    'statistics_campaign'
+                ) . '&amp;id=' . $id . '" class="button icon iconStats linkButton"><span>' .
+                BL::lbl('Statistics') . '</span></a>';
 
         // check if this campaign has sent mailings
         $hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;

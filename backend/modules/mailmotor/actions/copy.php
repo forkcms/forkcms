@@ -26,10 +26,11 @@ class BackendMailmotorCopy extends BackendBaseAction
         $id = SpoonFilter::getGetValue('id', null, 0);
 
         // no id's provided
-        if(empty($id) || !BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
-
-        // at least one id
-        else {
+        if (empty($id) || !BackendMailmotorModel::existsMailing($id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+            );
+        } else {
             // get the mailing and reset some fields
             $mailing = BackendMailmotorModel::getMailing($id);
             $mailing['status'] = 'concept';

@@ -38,7 +38,7 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
         $chkDefaultForLanguageValues[] = array('label' => BL::msg('NoDefault'), 'value' => '0');
 
         // set default for language radiobutton values
-        foreach(BL::getWorkingLanguages() as $key => $value) {
+        foreach (BL::getWorkingLanguages() as $key => $value) {
             $chkDefaultForLanguageValues[] = array('label' => $value, 'value' => $key);
         }
 
@@ -53,7 +53,7 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -62,13 +62,17 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
             $rbtDefaultForLanguage = $this->frm->getField('default');
 
             // validate fields
-            if($txtName->isFilled(BL::err('NameIsRequired'))) {
+            if ($txtName->isFilled(BL::err('NameIsRequired'))) {
                 // check if the group exists by name
-                if(BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::err('GroupAlreadyExists'));
+                if (BackendMailmotorModel::existsGroupByName($txtName->getValue())) {
+                    $txtName->addError(
+                        BL::err('GroupAlreadyExists')
+                    );
+                }
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['name'] = $txtName->getValue();
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
@@ -85,7 +89,11 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_group', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode(
+                        $item['name']
+                    ) . '&highlight=id-' . $item['id']
+                );
             }
         }
     }

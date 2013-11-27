@@ -20,14 +20,14 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
     /**
      * The list with bounces
      *
-     * @var	array
+     * @var    array
      */
     private $bounces;
 
     /**
      * The given mailing record
      *
-     * @var	array
+     * @var    array
      */
     private $mailing;
 
@@ -52,7 +52,11 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
         $id = $this->getParameter('mailing_id', 'int');
 
         // does the item exist
-        if(!BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
+        if (!BackendMailmotorModel::existsMailing($id)) {
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+            );
+        }
 
         // fetch the mailing
         $this->mailing = BackendMailmotorModel::getMailing($id);
@@ -61,7 +65,11 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
         $this->bounces = BackendMailmotorCMHelper::getBounces($this->mailing['id']);
 
         // does the item exist
-        if(empty($this->bounces)) $this->redirect(BackendModel::createURLForAction('statistics') . '&id=' . $this->mailing['id'] . '&error=no-bounces');
+        if (empty($this->bounces)) {
+            $this->redirect(
+                BackendModel::createURLForAction('statistics') . '&id=' . $this->mailing['id'] . '&error=no-bounces'
+            );
+        }
     }
 
     /**
@@ -74,7 +82,11 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
-        $this->dataGrid->setURL(BackendModel::createURLForAction('statistics_bounces') . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id']);
+        $this->dataGrid->setURL(
+            BackendModel::createURLForAction(
+                'statistics_bounces'
+            ) . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id']
+        );
 
         // hide the following columns
         $this->dataGrid->setColumnHidden('list_id');

@@ -17,7 +17,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
     /**
      * The mailing record
      *
-     * @var	array
+     * @var    array
      */
     private $mailing;
 
@@ -35,28 +35,33 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
         $contentPlain = SpoonFilter::getPostValue('content_plain', null, '');
 
         // validate mailing ID
-        if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
-
-        // validated mailing ID
-        else {
+        if ($mailingId == '') {
+            $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
+        } else {
             // get mailing record
             $this->mailing = BackendMailmotorModel::getMailing($mailingId);
 
             // check if record is empty
-            if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', $this->getModule()));
-
-            // record is filled
-            else {
+            if (empty($this->mailing)) {
+                $this->output(
+                    self::BAD_REQUEST,
+                    null,
+                    BL::err('MailingDoesNotExist', $this->getModule())
+                );
+            } else {
                 // validate subject
-                if($subject == '') $this->output(500, array('element' => 'subject', 'element_error' => BL::err('NoSubject', $this->getModule())), BL::err('FormError'));
-
-                // validated subject
-                else {
+                if ($subject == '') {
+                    $this->output(
+                        500,
+                        array('element' => 'subject', 'element_error' => BL::err('NoSubject', $this->getModule())),
+                        BL::err('FormError')
+                    );
+                } else {
                     // set plain content
                     $contentPlain = empty($contentPlain) ? SpoonFilter::stripHTML($contentHTML) : $contentPlain;
 
                     // add unsubscribe link
-                    if(mb_strpos($contentPlain, '[unsubscribe]') === false) {
+                    if (mb_strpos($contentPlain, '[unsubscribe]') === false) {
                         $contentPlain .= PHP_EOL . '[unsubscribe]';
                     }
 
@@ -82,31 +87,26 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
                     try {
                         BackendMailmotorCMHelper::saveMailingDraft($item);
-                    } catch(Exception $e) {
+                    } catch (Exception $e) {
                         // CM did not receive a valid URL
-                        if(strpos($e->getMessage(), 'HTML Content URL Required')) {
+                        if (strpos($e->getMessage(), 'HTML Content URL Required')) {
                             $message = BL::err('HTMLContentURLRequired', $this->getModule());
-                        }
-
-                        // no payment details were set for the CM client yet
-                        elseif(strpos($e->getMessage(), 'Payment details required')) {
+                        } elseif (strpos($e->getMessage(), 'Payment details required')) {
+                            // no payment details were set for the CM client yet
                             $error = BL::err('PaymentDetailsRequired', $this->getModule());
                             $cmUsername = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
                             $message = sprintf($error, $cmUsername);
-                        }
-
-                        // the campaign name already exists in CM
-                        elseif(strpos($e->getMessage(), 'Duplicate Campaign Name')) {
+                        } elseif (strpos($e->getMessage(), 'Duplicate Campaign Name')) {
+                            // the campaign name already exists in CM
                             $message = BL::err('DuplicateCampaignName', $this->getModule());
-                        }
-
-                        // we received an unknown error
-                        else {
+                        } else {
+                            // we received an unknown error
                             $message = $e->getMessage();
                         }
 
                         // stop the script and show our error
                         $this->output(500, null, $message);
+
                         return;
                     }
 
@@ -114,12 +114,17 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
                     BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step3', array('item' => $item));
 
                     // output
-                    $this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', $this->getModule()));
+                    $this->output(
+                        self::OK,
+                        array('mailing_id' => $mailingId),
+                        BL::msg('MailingEdited', $this->getModule())
+                    );
                 }
             }
 
             // error
             $this->output(500, null, $message);
+
             return;
         }
     }
@@ -127,9 +132,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
     /**
      * Returns the text between 2 tags
      *
-     * @param string $tag The tag.
+     * @param string $tag  The tag.
      * @param string $html The HTML to search in.
-     * @param bool[optional] $strict Use strictmode?
+     * @param        bool  [optional] $strict Use strictmode?
      * @return array
      */
     private function getTextBetweenTags($tag, $html, $strict = false)
@@ -150,7 +155,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
         $content = $dom->getElementsByTagname($tag);
 
         // loop the content
-        foreach($content as $item) {
+        foreach ($content as $item) {
             // add node value to results
             $results[] = $item->nodeValue;
         }
