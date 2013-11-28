@@ -800,6 +800,9 @@ class BackendBlogModel
 		if (!isset($meta['url_overwrite'])) {
 			$meta['url_overwrite'] = 'N';
 		}
+		if (!isset($meta['data'])) {
+			$meta['data'] = serialize(array('seo_index' => 'index', 'seo_follow' => 'follow'));
+		}
 
 		// Write meta to db
 		$item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
