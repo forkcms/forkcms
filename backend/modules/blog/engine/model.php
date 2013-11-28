@@ -802,7 +802,7 @@ class BackendBlogModel
 		}
 
 		// Write meta to db
-		$item['meta_id'] = BackendModel::getDB(true)->insert('meta', $meta);
+		$item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
 
 		// Write post to db
 		$item['revision_id'] = self::insert($item);

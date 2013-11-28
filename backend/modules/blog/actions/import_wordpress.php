@@ -7,6 +7,17 @@
 class BackendBlogImportWordpress extends BackendBaseActionEdit
 {
     /**
+     * @var array
+     */
+    private $authors = array();
+
+    /**
+     * @var array
+     */
+    private $attachments = array();
+
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -58,9 +69,6 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
                 // Process the XML
                 $this->processXML();
 
-                // Recalculate the comments
-                BackendBlogModel::reCalculateCommentCount($this->newIds);
-
                 // Remove the file
                 SpoonFile::delete(FRONTEND_FILES_PATH . '/wordpress.xml');
 
@@ -86,7 +94,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
         while($reader->read())
         {
             // Start tag for item?
-            if($reader->name != 'item') continue;
+            if($reader->name != 'item' && $reader->name != 'wp:author') continue;
 
             // End tag?
             if($reader->nodeType == XMLReader::END_ELEMENT) continue;
@@ -94,16 +102,15 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
             // Get the raw XML
             $xmlString = $reader->readOuterXml();
 
+            // Read the XML as an SimpleXML-object
+            /* @var SimpleXMLElement $xml */
+            $xml = @simplexml_load_string($reader->readOuterXml());
+
+            // Skip element if it isn't a valid SimpleXML-object
+            if($xml === false) continue;
+
             // Is it really an item?
-            if(substr($xmlString, 0, 5) == '<item')
-            {
-                // Read the XML as an SimpleXML-object
-                /* @var SimpleXMLElement $xml */
-                $xml = @simplexml_load_string($reader->readOuterXml());
-
-                // Skip element if it isn't a valid SimpleXML-object
-                if($xml === false) continue;
-
+            if(substr($xmlString, 0, 5) == '<item') {
                 // What type of content are we dealing with?
                 switch ($xml->children('wp', true)->post_type) {
                     case 'post':
@@ -118,7 +125,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
 
                     case 'attachment':
                         // Process as attachment
-                        // $this->processAttachment($xml);
+                        $this->processAttachment($xml);
                         break;
 
                     default:
@@ -126,11 +133,21 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
                         break;
                 }
             }
+            // Process the authors
+            elseif (substr($xmlString, 0, 10) == '<wp:author') {
+                $this->authors[(string) $xml->children('wp', true)->author_login] = array(
+                    'id'           => (string) $xml->children('wp', true)->author_id,
+                    'login'        => (string) $xml->children('wp', true)->author_login,
+                    'email'        => (string) $xml->children('wp', true)->author_email,
+                    'display_name' => (string) $xml->children('wp', true)->author_display_name,
+                    'first_name'   => (string) $xml->children('wp', true)->author_first_name,
+                    'last_name'    => (string) $xml->children('wp', true)->author_last_name,
+                );
+            }
 
             // End
             if(!$reader->read()) break;
         }
-        die;
 
         // close
         $reader->close();
@@ -158,10 +175,10 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
         // Mapping for wordpress status => fork status
         $statusses = array(
             'draft'   => 'draft',
-            'future'  => 'draft',
             'pending'  => 'draft',
             'private'  => 'private',
             'publish' => 'active',
+            'future'  => 'publish',
             'trash'   => '',
         );
         $commentStatusses = array(
@@ -171,9 +188,9 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
 
         // Prepare item
         $item = array();
-        $item['user_id'] = 0; // @TODO $xml->children('dc', true)->creator
+        $item['user_id'] = $this->handleUser((string) $xml->children('dc', true)->creator);
         $item['title'] = (string) $xml->title;
-        $item['text'] = (string) $xml->children('content', true)->encoded;
+        $item['text'] = $this->handleUrls((string) $xml->children('content', true)->encoded);
         $item['created_on'] = (string) $xml->children('wp', true)->post_date;
         $item['publish_on'] = (string) $xml->children('wp', true)->post_date;
         $item['edited_on'] = (string) $xml->children('wp', true)->post_date;
@@ -201,7 +218,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
             /* @var SimpleXMLElement $category */
             switch ($category->attributes()->domain) {
                 case 'category':
-                    $item['category_id'] = (string) $category; // @TODO
+                    $item['category_id'] = $this->handleCategory((string) $category);
                     break;
 
                 case 'post_tag':
@@ -229,10 +246,185 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
             );
         }
 
-        var_dump($item, $meta, $tags, $comments);
-        echo '<hr>';
-
         // Make the call
-        // BackendBlogModel::insertCompletePost($item, $meta, $tags, $comments);
+        BackendBlogModel::insertCompletePost($item, $meta, $tags, $comments);
+
+        return true;
+    }
+
+
+    /**
+     * Import an attachment
+     *
+     * @param SimpleXMLElement $xml
+     * @return bool
+     */
+    private function processAttachment($xml)
+    {
+        // Are we really working with a post?
+        if ($xml->children('wp', true)->post_type != 'attachment') {
+            return false;
+        }
+
+        // Set paths
+        $imagesPath = FRONTEND_FILES_PATH . '/userfiles/images/blog';
+        $imagesURL = FRONTEND_FILES_URL . '/userfiles/images/blog';
+
+        // Create directory if needed
+        if(!SpoonDirectory::exists($imagesPath)) {
+            SpoonDirectory::create($imagesPath);
+        }
+
+        $file = (string) $xml->children('wp', true)->attachment_url;
+        $guid = (string) $xml->guid;
+        $fileId = (string) $xml->children('wp', true)->post_id;
+
+        // Get file info
+        $fileInfo = SpoonFile::getInfo($file);
+
+        // Set filename
+        $destinationFile = $fileId . '_' . $fileInfo['basename'];
+
+        // Download the file
+        try {
+            SpoonFile::download($file, $imagesPath . '/' . $destinationFile);
+        } catch (Exception $e) {
+            // Ignore
+        }
+
+        // Keep a log of downloaded files
+        $this->attachments[strtolower($file)] = $imagesURL . '/' . $destinationFile;
+        $this->attachments[strtolower($guid)] = $imagesURL . '/' . $destinationFile;
+
+        return true;
+    }
+
+
+    /**
+     * Handle the user of a post
+     *
+     * We'll try and match the original user with a fork user.
+     * If we find no matches, we'll assign to the main fork user.
+     *
+     * @param string $username The original user name
+     * @return int
+     */
+    private function handleUser($username = '')
+    {
+        // Does someone with this username exist?
+        /* @var SpoonDatabase $db */
+        $db = BackendModel::getContainer()->get('database');
+        $id = (int) $db->getVar(
+            'SELECT id FROM users WHERE email=? AND active=? AND deleted=?',
+            array(strtolower($this->authors[(string) $username]['email']), 'Y', 'N'));
+
+        // We found an id!
+        if ($id > 0) {
+            return $id;
+        }
+
+        // Assign to main user
+        return 1;
+    }
+
+
+    /**
+     * Handle the urls inside a post
+     *
+     * We'll try and download images, and replace their urls
+     * We'll also check for links to schrijf.be and try to replace them
+     *
+     * @param string  $text     The post text
+     * @param string  $filter   The text that needs to be in a url before we start replacing it.
+     * @return string
+     */
+    private function handleUrls($text, $filter = 'schrijf.be')
+    {
+        // Check for images and download them, replace urls
+        preg_match_all('/<img.*src="(.*)".*\/>/Ui', $text, $matchesImages);
+
+        if (isset($matchesImages[1]) && !empty($matchesImages[1])) {
+            // Walk through image links
+            foreach ($matchesImages[1] as $key => $file) {
+                // Should we bother looking at this file?
+                if (!empty($filter) && !stristr($file, $filter)) {
+                    continue;
+                }
+
+                $noSize = preg_replace('/\-\d+x\d+/i', '', $file);
+
+                if (isset($this->attachments[strtolower($file)])) {
+                    $text = str_replace($file, $this->attachments[strtolower($file)], $text);
+                }
+                elseif (isset($this->attachments[strtolower($noSize)])) {
+                    $text = str_replace($file, $this->attachments[strtolower($noSize)], $text);
+                }
+            }
+        }
+
+        // Check for links to schrijf.be and try to replace them
+        preg_match_all('/<a.*href="(.*)".*\/>/Ui', $text, $matchesLinks);
+
+        if (isset($matchesLinks[1]) && !empty($matchesLinks[1])) {
+            // Walk through links
+            foreach ($matchesLinks[1] as $key => $link) {
+                // Should we bother looking at this file?
+                if (!empty($filter) && !stristr($link, $filter)) {
+                    continue;
+                }
+
+                $noSize = preg_replace('/\-\d+x\d+/i', '', $link);
+
+                if (isset($this->attachments[strtolower($link)])) {
+                    $text = str_replace($link, $this->attachments[strtolower($link)], $text);
+                }
+                elseif (isset($this->attachments[strtolower($noSize)])) {
+                    $text = str_replace($link, $this->attachments[strtolower($noSize)], $text);
+                }
+            }
+        }
+
+        return $text;
+    }
+
+
+    /**
+     * Handle the category of a post
+     *
+     * We'll check if the category exists in the fork blog module, and create it if it doesn't.
+     *
+     * @param string $category The post category
+     * @return int
+     */
+    private function handleCategory($category = '')
+    {
+        // Does a category with this name exist?
+        /* @var SpoonDatabase $db */
+        $db = BackendModel::getContainer()->get('database');
+        $id = (int) $db->getVar(
+            'SELECT id FROM blog_categories WHERE title=? AND language=?',
+            array($category, BL::getWorkingLanguage()));
+
+        // We found an id!
+        if ($id > 0) {
+            return $id;
+        }
+
+        // Return default if we got an empty string
+        if (trim($category) == '') {
+            return 2;
+        }
+
+        // We should create a new category
+        $cat                 = array();
+        $cat['language']     = BL::getWorkingLanguage();
+        $cat['title']        = $category;
+        $meta                = array();
+        $meta['keywords']    = $category;
+        $meta['description'] = $category;
+        $meta['title']       = $category;
+        $meta['url']         = $category;
+
+        return BackendBlogModel::insertCategory($cat, $meta);
     }
 }
