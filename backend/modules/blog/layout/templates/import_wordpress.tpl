@@ -16,6 +16,11 @@
 				{$fileWordpress} {$fileWordpressError}
 				<span class="helpTxt">{$msgHelpWordpress}</span>
 			</p>
+			<p>
+				<label for="filter">{$lblWordpressFilter|ucfirst}</label>
+				{$txtFilter} {$txtFilterError}
+				<span class="helpTxt">{$msgHelpWordpressFilter}</span>
+			</p>
 		</div>
 	</div>
 

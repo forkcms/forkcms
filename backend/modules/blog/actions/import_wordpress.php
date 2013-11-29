@@ -38,6 +38,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('import');
         $this->frm->addFile('wordpress');
+        $this->frm->addText('filter', SITE_URL);
     }
 
 
@@ -190,7 +191,10 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
         $item = array();
         $item['user_id'] = $this->handleUser((string) $xml->children('dc', true)->creator);
         $item['title'] = (string) $xml->title;
-        $item['text'] = $this->handleUrls((string) $xml->children('content', true)->encoded);
+        $item['text'] = $this->handleUrls(
+            (string) $xml->children('content', true)->encoded,
+            $this->frm->getField('filter')->getValue()
+        );
         $item['created_on'] = (string) $xml->children('wp', true)->post_date;
         $item['publish_on'] = (string) $xml->children('wp', true)->post_date;
         $item['edited_on'] = (string) $xml->children('wp', true)->post_date;
@@ -338,7 +342,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
      * @param string  $filter   The text that needs to be in a url before we start replacing it.
      * @return string
      */
-    private function handleUrls($text, $filter = 'schrijf.be')
+    private function handleUrls($text, $filter = '')
     {
         // Check for images and download them, replace urls
         preg_match_all('/<img.*src="(.*)".*\/>/Ui', $text, $matchesImages);
