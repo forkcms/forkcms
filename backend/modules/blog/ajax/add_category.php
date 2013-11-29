@@ -26,6 +26,25 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 
 		// validate
 		if($categoryTitle === '') $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
+
+		// get the data
+		// build array
+		$item['title'] = SpoonFilter::htmlspecialchars($categoryTitle);
+		$item['language'] = BL::getWorkingLanguage();
+
+		$meta['keywords'] = $item['title'];
+		$meta['keywords_overwrite'] = 'N';
+		$meta['description'] = $item['title'];
+		$meta['description_overwrite'] = 'N';
+		$meta['title'] = $item['title'];
+		$meta['title_overwrite'] = 'N';
+		$meta['url'] = BackendBlogModel::getURLForCategory(CommonUri::getUrl($item['title']));
+
+		// update
+		$item['id'] = BackendBlogModel::insertCategory($item, $meta);
+
+		// output
+		$this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), array($item['title'])));
 		
 		// validated
 		else

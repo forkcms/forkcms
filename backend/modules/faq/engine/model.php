@@ -321,6 +321,8 @@ class BackendFaqModel
 	 */
 	public static function getURL($url, $id = null)
 	{
+		$url = CommonUri::getUrl((string) $url);
+		$db = BackendModel::getDB();
 		$url = SpoonFilter::urlise((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
@@ -369,6 +371,8 @@ class BackendFaqModel
 	 */
 	public static function getURLForCategory($url, $id = null)
 	{
+		$url = CommonUri::getUrl((string) $url);
+		$db = BackendModel::getDB();
 		$url = SpoonFilter::urlise((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
