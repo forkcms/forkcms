@@ -119,11 +119,6 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
                         $this->processPost($xml);
                         break;
 
-                    case 'page':
-                        // Process as page
-                        // $this->processPage($xml);
-                        break;
-
                     case 'attachment':
                         // Process as attachment
                         $this->processAttachment($xml);
@@ -180,7 +175,6 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
             'private'  => 'private',
             'publish' => 'active',
             'future'  => 'publish',
-            'trash'   => '',
         );
         $commentStatusses = array(
             'open'    => 'Y',
