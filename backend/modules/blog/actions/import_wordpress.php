@@ -1,4 +1,7 @@
 <?php
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 /**
  * This import-action will let you import a wordpress blog
  *
@@ -16,6 +19,11 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
      */
     private $attachments = array();
 
+    /**
+     * @var Filesystem
+     */
+    private $fs;
+
 
     /**
      * Execute the action
@@ -24,6 +32,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
     {
         parent::execute();
         set_time_limit(0);
+        $this->fs = new Filesystem();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
@@ -71,7 +80,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
                 $this->processXML();
 
                 // Remove the file
-                SpoonFile::delete(FRONTEND_FILES_PATH . '/wordpress.xml');
+                $this->fs->remove(FRONTEND_FILES_PATH . '/wordpress.xml');
 
                 // Everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
@@ -269,23 +278,23 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
         $imagesURL = FRONTEND_FILES_URL . '/userfiles/images/blog';
 
         // Create directory if needed
-        if(!SpoonDirectory::exists($imagesPath)) {
-            SpoonDirectory::create($imagesPath);
+        if(!file_exists($imagesPath) || !is_dir($imagesPath)) {
+            $this->fs->mkdir($imagesPath);
         }
 
         $file = (string) $xml->children('wp', true)->attachment_url;
         $guid = (string) $xml->guid;
         $fileId = (string) $xml->children('wp', true)->post_id;
 
-        // Get file info
-        $fileInfo = SpoonFile::getInfo($file);
-
         // Set filename
-        $destinationFile = $fileId . '_' . $fileInfo['basename'];
+        $destinationFile = $fileId . '_' . basename($file);
 
         // Download the file
         try {
-            SpoonFile::download($file, $imagesPath . '/' . $destinationFile);
+            $this->fs->dumpFile(
+                $imagesPath . '/' . $destinationFile,
+                SpoonHttp::getContent($file)
+            );
         } catch (Exception $e) {
             // Ignore
         }
