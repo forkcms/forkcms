@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+        <item type="label" name="Sitemap">
+            <translation language="nl"><![CDATA[sitemap]]></translation>
+            <translation language="en"><![CDATA[sitemap]]></translation>
+        </item>
+    </core>
+    <sitemap>
+        <item type="label" name="Files">
+            <translation language="nl"><![CDATA[bestanden]]></translation>
+            <translation language="en"><![CDATA[files]]></translation>
+        </item>
+        <item type="message" name="SitemapExplanation">
+            <translation language="nl"><![CDATA[Deze module zorgt voor een ideale xml sitemap die voor SEO heel belangrijk is. Deze houdt rekening met alle pagina's en met modules. Bij het opslaan van deze pagina wordt de xml sitemap opnieuw aangemaakt.]]></translation>
+            <translation language="en"><![CDATA[This module takes care of a perfect xml sitemap that's very importont for SEO. This doesn't only look at normal pages but also at modules. When saving this page this xml sitemap will be regenerated.]]></translation>
+        </item>
+        <item type="message" name="NonImplementedModules">
+            <translation language="nl"><![CDATA[Hieronder kan je de modules terugvinden die de sitemap interface (BackendSitemapInterface) niet implementeren. Om de sitemap zo accuraat mogelijk op te maken dienen deze modules in mate van het mogelijke deze interface te implementeren.]]></translation>
+            <translation language="en"><![CDATA[Below you can find the modules that doesn't implement the sitemap interface (BackendSitemapInterface). To create the sitemap as correct as possible these modules should, if possible, impelement this interface.]]></translation>
+        </item>
+        <item type="message" name="SitemapsWillCreated">
+            <translation language="nl"><![CDATA[Onderstaande sitemap bestanden zullen aangemaakt worden.]]></translation>
+            <translation language="en"><![CDATA[The sitemap files below will be created.]]></translation>
+        </item>
+    </sitemap>
+  </backend>
+</locale>

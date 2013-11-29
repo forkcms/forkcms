@@ -15,7 +15,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendBlogModel
+class BackendBlogModel implements BackendSitemapInterface
 {
 	const QRY_DATAGRID_BROWSE =
 		'SELECT i.hidden, i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
@@ -918,5 +918,165 @@ class BackendBlogModel
 			// invalidate the cache for blog
 			foreach($languages as $language) BackendModel::invalidateFrontendCache('blog', $language);
 		}
+	}
+
+	/**
+	 * SITEMAP INTERFACE IMPLEMENTATION
+	 */
+
+	/**
+	 * Get image sitemap for blog
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getImageSitemap($language)
+	{
+		// redefine some vars
+		$language = (string) $language;
+		$images = array();
+
+		// db instance
+		$db = BackendModel::getContainer()->get('database');
+
+		$items = (array) $db->getRecords(
+			'SELECT b.image, m.url
+			 FROM blog_posts AS b
+			 INNER JOIN meta AS m ON m.id = b.meta_id
+			 WHERE b.language = ? AND b.status = ? AND b.hidden = ?
+			 ORDER BY b.edited_on DESC',
+			array((string) $language, 'active', 'N')
+		);
+
+		if(!empty($items))
+		{
+			// get detail url
+			$detailUrl = BackendModel::getURLForBlock('blog', 'detail', $language);
+			$imageUrl = SITE_URL . FRONTEND_FILES_URL . '/blog/images/source/';
+
+			// create array for the xml sitemap
+			foreach($items as $item)
+			{
+				if(!empty($item['image']))
+				{
+					$images[] = array(
+						'loc' => SITE_URL . $detailUrl . '/' . $item['url'],
+						'images' => array($imageUrl . $item['image'])
+					);
+				}
+			}
+		}
+
+		return $images;
+	}
+
+	/**
+	 * Get sitemap for blog
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getSitemap($language)
+	{
+		// redefine some vars
+		$language = (string) $language;
+
+		// default array with index page in it
+		$pages = array(
+			array('loc' => SITE_URL . BackendModel::getURLForBlock('blog', null, $language))
+		);
+
+		// get the categories pages
+		$pages = array_merge($pages, self::getCategoriesForSitemap($language));
+
+		// get the detail pages
+		$pages = array_merge($pages, self::getPostsForSitemap($language));
+
+		return $pages;
+	}
+
+	/**
+	 * Get the categories urls for sitemap
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getCategoriesForSitemap($language)
+	{
+		// db instance
+		$db = BackendModel::getContainer()->get('database');
+		$categories = array();
+
+		$items = (array) $db->getRecords(
+			'SELECT DISTINCT m.url
+			 FROM blog_categories AS c
+			 INNER JOIN blog_posts AS b ON b.category_id = c.id
+			 INNER JOIN meta AS m ON m.id = c.meta_id
+			 WHERE c.language = ?',
+			array((string) $language)
+		);
+
+		if(!empty($items))
+		{
+			// get detail url
+			$categoryUrl = BackendModel::getURLForBlock('blog', 'category', $language);
+
+			// create array for the xml sitemap
+			foreach($items as $item)
+			{
+				$categories[] = array(
+					'loc' => SITE_URL . $categoryUrl . '/' . $item['url']
+				);
+			}
+		}
+
+		return $categories;
+	}
+
+	/**
+	 * Get the posts detail urls for sitemap
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getPostsForSitemap($language)
+	{
+		// db instance
+		$db = BackendModel::getContainer()->get('database');
+		$posts = array();
+
+		$items = (array) $db->getRecords(
+			'SELECT UNIX_TIMESTAMP(b.edited_on) AS edited_on, m.url
+			 FROM blog_posts AS b
+			 INNER JOIN meta AS m ON m.id = b.meta_id
+			 WHERE b.language = ? AND b.status = ? AND b.hidden = ?
+			 ORDER BY b.edited_on DESC',
+			array((string) $language, 'active', 'N')
+		);
+
+		if(!empty($items))
+		{
+			// get detail url
+			$detailUrl = BackendModel::getURLForBlock('blog', 'detail', $language);
+
+			// create array for the xml sitemap
+			foreach($items as $item)
+			{
+				// create last modification date
+				$lastMod = new DateTime();
+				$lastMod->setTimestamp($item['edited_on']);
+
+				$posts[] = array(
+					'loc' => SITE_URL . $detailUrl . '/' . $item['url'],
+					'lastmod' => $lastMod->format('Y-m-d')
+				);
+			}
+		}
+
+		return $posts;
 	}
 }
