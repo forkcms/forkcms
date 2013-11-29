@@ -247,7 +247,7 @@ class BackendBlogImportWordpress extends BackendBaseActionEdit
             $comments[] = array(
                 'author' => (string) $comment->children('wp', true)->comment_author,
                 'email'  => (string) $comment->children('wp', true)->comment_author_email,
-                'text'   => (string) $comment->children('wp', true)->comment_content,
+                'text'   => filter_var((string) $comment->children('wp', true)->comment_content, FILTER_SANITIZE_STRING),
                 'created_on' => (string) $comment->children('wp', true)->comment_date,
                 'status' => ((string) $comment->children('wp', true)->comment_approved == '1') ? 'published' : 'moderation',
             );
