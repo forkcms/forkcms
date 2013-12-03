@@ -15,6 +15,23 @@
  */
 interface BackendSitemapInterface
 {
+	/**
+	 * This method is needed in the module to get the normal sitemap urls for that module
+	 *
+	 * @param  string $language
+	 *
+	 * @return array
+	 */
 	public static function getSitemap($language);
+
+	/**
+	 * This method is needed in the module to get the image sitemap urls for that module
+	 * It could that the module doesn't use images so you have to implement this method and just
+	 * return an empty array
+	 *
+	 * @param  string $language
+	 *
+	 * @return array
+	 */
 	public static function getImageSitemap($language);
 }

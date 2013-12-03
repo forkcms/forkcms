@@ -21,8 +21,9 @@ class BackendSitemapGenerator
 	protected $languages;
 	protected $navigations;
 	protected $types = array('page', 'meta', 'footer');
-	protected $pageTypesToSkip = array('error', 'direct_action', 'hidden');
+	protected $pageTypesToSkip = array('error', 'hidden');
 	protected $nonImplementedModules = array();
+	protected $implementedModules = array();
 
 	/**
 	 * The constructor of this class
@@ -31,6 +32,20 @@ class BackendSitemapGenerator
 	{
 		$this->loadData();
 		$this->createIndexes();
+	}
+
+	/**
+	 * Add implemented module
+	 *
+	 * @param string $module
+	 * @param string $language
+	 *
+	 * @return void
+	 */
+	public function addImplementedModule($module, $language)
+	{
+		// add module to implemented modules
+		$this->implementedModules[(string) $language][] = (string) $module;
 	}
 
 	/**
@@ -48,7 +63,7 @@ class BackendSitemapGenerator
 		$modulePages = array();
 
 		// continue only if a module has been found
-		if($module)
+		if($module && !$this->isModuleImplemented($module, $language))
 		{
 			// get correct class name for that module
 			$class = $this->getClassName($module);
@@ -66,10 +81,13 @@ class BackendSitemapGenerator
 					$refMethod = new ReflectionMethod($class, 'getSitemap');
 					$modulePages = $refMethod->invoke(null, $language);
 
+					// clear underscores for the index name
+					$indexName = str_replace('_', '-', $module);
+
 					// add pages to a new index when we got some pages
 					if(!empty($modulePages))
 					{
-						$this->indexes[$module . '-' . $language] = $modulePages;
+						$this->indexes[$indexName . '-' . $language] = $modulePages;
 					}
 
 					// get image sitemap for this module
@@ -79,8 +97,11 @@ class BackendSitemapGenerator
 					// add pages to a new index when we got some pages
 					if(!empty($moduleImages))
 					{
-						$this->indexes[$module . '-images-' . $language] = $moduleImages;
+						$this->indexes[$indexName . '-images-' . $language] = $moduleImages;
 					}
+
+					// add module as implemented
+					$this->addImplementedModule($module, $language);
 				}
 				else
 				{
@@ -331,7 +352,7 @@ class BackendSitemapGenerator
 		// loop through all the extra's
 		foreach($page['extra_blocks'] as $block)
 		{
-			if(!empty($block['module']) && $block['action'] == null)
+			if(!empty($block['module']))
 			{
 				$module = $block['module'];
 				break;
@@ -349,6 +370,31 @@ class BackendSitemapGenerator
 	public function getNonImplementedModules()
 	{
 		return $this->nonImplementedModules;
+	}
+
+	/**
+	 * Checks if a module is already implemented for a language
+	 *
+	 * @param string $module
+	 * @param string $language
+	 *
+	 * @return bool
+	 */
+	public function isModuleImplemented($module, $language)
+	{
+		// redefine incoming params
+		$module = (string) $module;
+		$language = (string) $language;
+		$result = false;
+
+		// check if array exists for that language
+		if(!empty($this->implementedModules[$language]))
+		{
+
+			$result = in_array($module, $this->implementedModules[$language]);
+		}
+
+		return $result;
 	}
 
 	/**
@@ -403,7 +449,6 @@ class BackendSitemapGenerator
 				// generate image xml sitemap
 				$this->generateXmlImages($key);
 			}
-
 		}
 
 		// save the xml to a file
