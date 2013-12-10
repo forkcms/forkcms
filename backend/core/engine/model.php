@@ -134,7 +134,7 @@ class BackendModel extends BaseModel
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
 		// add at least one parameter
-		if(empty($parameters)) $parameters['token'] = self::getToken();
+		$parameters['token'] = self::getToken();
 
 		// init counter
 		$i = 1;
