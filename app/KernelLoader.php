@@ -61,7 +61,7 @@ class KernelLoader
 	 * @param string $reference The service id
 	 * @return Boolean true if the service id is defined, false otherwise
 	 */
-	public static function has($reference)
+	public function has($reference)
 	{
 		return $this->getKernel()->getContainer()->has($reference);
 	}
