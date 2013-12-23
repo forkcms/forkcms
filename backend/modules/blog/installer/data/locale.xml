@@ -306,7 +306,7 @@
         <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (λίστα).]]></translation>
       </item>
       <item type="message" name="ShowImageForm">
-        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding.]]></translation>
+        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
         <translation language="en"><![CDATA[The user can upload a file.]]></translation>
         <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
