@@ -244,20 +244,6 @@ class BlogInstaller extends ModuleInstaller
 				'num_comments' => '0'
 			));
 
-			// insert example comment 1
-			$db->insert('blog_comments', array(
-				'post_id' => 1,
-				'language' => $language,
-				'created_on' => gmdate('Y-m-d H:i:00'),
-				'author' => 'Matthias Mullie',
-				'email' => 'forkcms-sample@mullie.eu',
-				'website' => 'http://www.mullie.eu',
-				'text' => 'cool!',
-				'type' => 'comment',
-				'status' => 'published',
-				'data' => null
-			));
-
 			// insert example comment 2
 			$db->insert('blog_comments', array(
 				'post_id' => 1,
