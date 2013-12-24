@@ -108,6 +108,7 @@ class BlogInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'edit_category');
 		$this->setActionRights(1, 'blog', 'edit_comment');
 		$this->setActionRights(1, 'blog', 'edit');
+		$this->setActionRights(1, 'blog', 'import_wordpress');
 		$this->setActionRights(1, 'blog', 'index');
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
@@ -118,7 +119,7 @@ class BlogInstaller extends ModuleInstaller
 		// set navigation
 		$navigationModulesId = $this->setNavigation(null, 'Modules');
 		$navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
-		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit'));
+		$this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit', 'blog/import_wordpress'));
 		$this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
 		$this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
 
