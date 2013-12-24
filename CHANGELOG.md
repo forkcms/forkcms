@@ -1,13 +1,21 @@
 3.6.6 (xxxx-xx-xx)
-—
+--
+
 Improvements:
 
+* Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+* Users: event ‚after_undelete’ triggered when a deleted user was restored.
 * Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
+* Core: Better error handling for module rights.
+* Various dutch translations updated.
 
 Bugfixes:
 
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
+* Urls containing md threw a 403 forbidden error.
+* Syntax error in FrontendBlockWidget fixed.
+* Some ajax files gave a syntax error as a result of merge conflicts.
 
 
 3.6.5 (2013-10-09)
