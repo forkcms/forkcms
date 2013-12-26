@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Groups;
+
 /*
  * This file is part of Fork CMS.
  *

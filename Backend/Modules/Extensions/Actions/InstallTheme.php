@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions\Actions;
+
 /**
  * This is the theme install-action.
  * It will install the theme given via the "theme" GET parameter.

@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Mailmotor\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *

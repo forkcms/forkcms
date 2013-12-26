@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions;
+
 /**
  * This is the configuration-object for the extensions module.
  *

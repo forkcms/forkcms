@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *

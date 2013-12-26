@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Core\Engine;
+
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /*

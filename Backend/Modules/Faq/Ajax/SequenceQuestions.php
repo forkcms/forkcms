@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Faq\Ajax;
+
 /**
  * Reorder questions
  *

@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Authentication\Actions;
+
 /*
  * This file is part of Fork CMS.
  *

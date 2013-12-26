@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Users\Actions;
+
 /*
  * This file is part of Fork CMS.
  *

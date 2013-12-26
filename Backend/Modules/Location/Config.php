@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Location;
+
 /*
  * This file is part of Fork CMS.
  *

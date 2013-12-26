@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Blog\Installer;
+
 /*
  * This file is part of Fork CMS.
  *

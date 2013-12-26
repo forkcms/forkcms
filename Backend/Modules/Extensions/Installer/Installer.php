@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions\Installer;
+
 /**
  * Installer for the extensions module.
  *

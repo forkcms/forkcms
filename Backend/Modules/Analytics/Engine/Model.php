@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Analytics\Engine;
+
 /*
  * This file is part of Fork CMS.
  *

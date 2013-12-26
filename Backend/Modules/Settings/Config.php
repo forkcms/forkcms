@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Settings;
+
 /*
  * This file is part of Fork CMS.
  *

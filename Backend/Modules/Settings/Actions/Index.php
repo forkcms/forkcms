@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Settings\Actions;
+
 use \TijsVerkoyen\Akismet\Akismet;
 
 /*

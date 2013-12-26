@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend;
+
 /*
  * This file is part of Fork CMS.
  *

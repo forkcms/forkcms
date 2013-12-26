@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions\Actions;
+
 /**
  * This is the detail-action it will display the details of a module.
  *

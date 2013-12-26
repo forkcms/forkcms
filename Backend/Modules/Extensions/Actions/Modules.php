@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions\Actions;
+
 /**
  * This is the modules-action, it will display the overview of modules.
  *

@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Tags;
+
 /*
  * This file is part of Fork CMS.
  *

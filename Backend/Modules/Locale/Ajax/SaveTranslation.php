@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Locale\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *

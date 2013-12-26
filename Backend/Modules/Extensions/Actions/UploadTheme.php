@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Extensions\Actions;
+
 /**
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.

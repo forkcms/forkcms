@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Core\Engine;
+
 use \MatthiasMullie\Minify;
 use \Symfony\Component\HttpKernel\KernelInterface;
 

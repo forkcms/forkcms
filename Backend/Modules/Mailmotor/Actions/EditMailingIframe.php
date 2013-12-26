@@ -1,5 +1,7 @@
 <?php
 
+namespace Backend\Modules\Mailmotor\Actions;
+
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /*
