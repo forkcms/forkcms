@@ -25,5 +25,12 @@
     },
     "scripts": {
         "post-update-cmd": "cd tools && ./remove_cache"
+    },
+    "autoload": {
+        "psr-0": {
+            "Backend\\": "Backend/",
+            "Frontend\\": "Frontend/",
+            "Install\\": "Install/"
+        }
     }
 }
