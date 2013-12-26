@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Backend\Init as BackendInit;
 
 /**
  * Application routing
@@ -29,8 +30,8 @@ class ApplicationRouting
      */
     private static $routes = array(
         '' => self::DEFAULT_APPLICATION,
-        'private' => 'backend',
-        'backend' => 'backend',
+        'private' => 'Backend',
+        'backend' => 'Backend',
         'api' => 'api',
         'install' => 'install'
     );
@@ -99,9 +100,9 @@ class ApplicationRouting
             case 'frontend_ajax':
                 $applicationClass = $this->initializeFrontend($applicationName);
                 break;
-            case 'backend':
-            case 'backend_ajax':
-            case 'backend_cronjob':
+            case 'Backend':
+            case 'Backend_ajax':
+            case 'Backend_cronjob':
                 $applicationClass = $this->initializeBackend($applicationName);
                 break;
             case 'api':
@@ -192,19 +193,18 @@ class ApplicationRouting
      */
     protected function initializeBackend($app)
     {
-        require_once __DIR__ . '/../backend/init.php';
         $init = new BackendInit($this->kernel);
         $init->initialize($app);
 
         switch ($app) {
-            case 'backend_ajax':
-                $applicationClass = 'BackendAJAX';
+            case 'Backend_ajax':
+                $applicationClass = 'Backend\Core\Engine\Ajax';
                 break;
-            case 'backend_cronjob':
-                $applicationClass = 'BackendCronjob';
+            case 'Backend_cronjob':
+                $applicationClass = 'Backend\Core\Engine\Cronjob';
                 break;
             default:
-                $applicationClass = 'Backend';
+                $applicationClass = 'Backend\Core\Engine\Backend';
         }
 
         return $applicationClass;

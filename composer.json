@@ -28,9 +28,9 @@
     },
     "autoload": {
         "psr-0": {
-            "Backend\\": "Backend/",
-            "Frontend\\": "Frontend/",
-            "Install\\": "Install/"
+            "Backend": "src/",
+            "Frontend": "src/",
+            "Install": "src/"
         }
     }
 }

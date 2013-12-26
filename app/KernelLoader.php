@@ -8,6 +8,8 @@
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class is used in several Fork applications to bubble down the AppKernel/Kernel object.
@@ -74,10 +76,8 @@ class KernelLoader
      */
     public function passContainerToModels()
     {
-        require_once __DIR__ . '/../frontend/core/engine/model.php';
         FrontendModel::setContainer($this->getKernel()->getContainer());
 
-        require_once __DIR__ . '/../backend/core/engine/model.php';
         BackendModel::setContainer($this->getKernel()->getContainer());
     }
 
