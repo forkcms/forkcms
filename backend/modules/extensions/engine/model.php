@@ -763,6 +763,47 @@ class BackendExtensionsModel
 		return (array) $records;
 	}
 
+	public static function createTemplateXmlForExport($theme) {
+		$xml = new DOMDocument('1.0', SPOON_CHARSET);
+
+		// set some properties
+		$xml->preserveWhiteSpace = false;
+		$xml->formatOutput = true;
+
+		// locale root element
+		$root = $xml->createElement('templates');
+		$xml->appendChild($root);
+
+		$db = BackendModel::getContainer()->get('database');
+
+		$records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, array($theme));
+
+		foreach ($records as $row) {
+			$template = BackendExtensionsModel::getTemplate($row['id']);
+			$data = unserialize($template['data']);
+
+			$templateElement = $xml->createElement('template');
+			$templateElement->setAttribute('label', $template['label']);
+			$templateElement->setAttribute('path', $template['path']);
+			$root->appendChild($templateElement);
+
+			$positionsElement = $xml->createElement('positions');
+			$templateElement->appendChild($positionsElement);
+
+			foreach ($data['names'] as $name) {
+				$positionElement = $xml->createElement('position');
+				$positionElement->setAttribute('name', $name);
+				$positionsElement->appendChild($positionElement);
+			}
+
+			$formatElement = $xml->createElement('format');
+			$templateElement->appendChild($formatElement);
+			$formatElement->nodeValue = $data['format'];
+		}
+
+		return $xml->saveXML();
+	}
+
 	/**
 	 * Checks if a specific module has errors or not
 	 *
