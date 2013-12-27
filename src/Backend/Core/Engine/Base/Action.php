@@ -129,15 +129,15 @@ class Action extends Object
     public function execute()
     {
         // add jquery, we will need this in every action, so add it globally
-        $this->header->addJS('jquery/jquery.js', 'core', false);
-        $this->header->addJS('jquery/jquery.ui.js', 'core', false);
-        $this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'core');
-        $this->header->addJS('jquery/jquery.tools.js', 'core', false);
-        $this->header->addJS('jquery/jquery.backend.js', 'core');
+        $this->header->addJS('jquery/jquery.js', 'Core', false);
+        $this->header->addJS('jquery/jquery.ui.js', 'Core', false);
+        $this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'Core');
+        $this->header->addJS('jquery/jquery.tools.js', 'Core', false);
+        $this->header->addJS('jquery/jquery.backend.js', 'Core');
 
         // add items that always need to be loaded
-        $this->header->addJS('utils.js', 'core');
-        $this->header->addJS('backend.js', 'core');
+        $this->header->addJS('utils.js', 'Core');
+        $this->header->addJS('backend.js', 'Core');
 
         // add module js
         if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) {
@@ -150,10 +150,10 @@ class Action extends Object
         }
 
         // add core css files
-        $this->header->addCSS('reset.css', 'core');
-        $this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core', false, false);
-        $this->header->addCSS('screen.css', 'core');
-        $this->header->addCSS('debug.css', 'core');
+        $this->header->addCSS('reset.css', 'Core');
+        $this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'Core', false, false);
+        $this->header->addCSS('screen.css', 'Core');
+        $this->header->addCSS('debug.css', 'Core');
 
         // add module specific css
         if(is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) {

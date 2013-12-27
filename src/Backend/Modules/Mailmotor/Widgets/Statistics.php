@@ -9,13 +9,15 @@ namespace Backend\Modules\Mailmotor\Widgets;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This is the classic fork mailmotor widget
  *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendMailmotorWidgetStatistics extends BackendBaseWidget
+class Statistics extends BackendBaseWidget
 {
     const PAGING_LIMIT = 10;
 

@@ -9,6 +9,11 @@ namespace Backend\Modules\Dashboard\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Exception as BackendException;
+use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -18,7 +23,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendDashboardIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * The widgets
@@ -71,11 +76,10 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 
                 // loop widgets
                 foreach($finder->files()->in($pathName . '/widgets') as $file) {
-                    // require the class
-                    require_once $pathName . '/widgets/' . $file->getBasename();
+                    $widgetName = $file->getBaseName('.php');
+                    $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
+                    if($module == 'Core') $className = 'Backend\\Core\\Widgets\\' . $widgetName;
 
-                    $widgetName = $file->getBasename('.php');
-                    $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
                     if(!class_exists($className)) {
                         throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
                     }
@@ -106,7 +110,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
                     // user sequence provided?
                     $column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
                     $position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
-                    $title = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(SpoonFilter::toCamelCase($widgetName));
+                    $title = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(\SpoonFilter::toCamelCase($widgetName));
                     $templatePath = $instance->getTemplatePath();
 
                     // reset template path

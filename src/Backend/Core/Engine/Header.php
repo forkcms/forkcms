@@ -96,10 +96,10 @@ class Header extends \Backend\Core\Engine\Base\Object
         // no actual path given: create
         if(!$overwritePath) {
             // we have to build the path, but core is a special one
-            if($module !== 'Core') $file = '/Backend/Modules/' . $module . '/Layout/css/' . $file;
+            if($module !== 'Core') $file = '/src/Backend/Modules/' . $module . '/Layout/css/' . $file;
 
             // core is special because it isn't a real module
-            else $file = '/Backend/Core/Layout/css/' . $file;
+            else $file = '/src/Backend/Core/Layout/css/' . $file;
         }
 
         // no minifying when debugging
@@ -150,10 +150,10 @@ class Header extends \Backend\Core\Engine\Base\Object
         // is the given path the real path?
         if(!$overwritePath) {
             // we have to build the path, but core is a special one
-            if($module !== 'Core') $file = '/Backend/Modules/' . $module . '/Js/' . $file;
+            if($module !== 'Core') $file = '/src/Backend/Modules/' . $module . '/Js/' . $file;
 
             // core is special because it isn't a real module
-            else $file = '/Backend/Core/Js/' . $file;
+            else $file = '/src/Backend/Core/Js/' . $file;
         }
 
         // try to minify
@@ -209,8 +209,8 @@ class Header extends \Backend\Core\Engine\Base\Object
     {
         // create unique filename
         $fileName = md5($file) . '.css';
-        $finalURL = BACKEND_CACHE_URL . '/minified_css/' . $fileName;
-        $finalPath = BACKEND_CACHE_PATH . '/minified_css/' . $fileName;
+        $finalURL = BACKEND_CACHE_URL . '/MinifiedCss/' . $fileName;
+        $finalPath = BACKEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
         if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
@@ -232,8 +232,8 @@ class Header extends \Backend\Core\Engine\Base\Object
     {
         // create unique filename
         $fileName = md5($file) . '.js';
-        $finalURL = BACKEND_CACHE_URL . '/minified_js/' . $fileName;
-        $finalPath = BACKEND_CACHE_PATH . '/minified_js/' . $fileName;
+        $finalURL = BACKEND_CACHE_URL . '/MinifiedJs/' . $fileName;
+        $finalPath = BACKEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
         if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
@@ -293,14 +293,14 @@ class Header extends \Backend\Core\Engine\Base\Object
         if(!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/Backend/Core/Js/jquery/jquery.js',
-                '/Backend/Core/Js/jquery/jquery.ui.js',
-                '/Backend/Core/Js/ckeditor/jquery.ui.dialog.patch.js',
-                '/Backend/Core/Js/jquery/jquery.tools.js',
-                '/Backend/Core/Js/jquery/jquery.backend.js',
-                '/Backend/Core/Js/ckeditor/ckeditor.js',
-                '/Backend/Core/Js/ckeditor/adapters/jquery.js',
-                '/Backend/Core/Js/ckfinder/ckfinder.js'
+                '/src/Backend/Core/Js/jquery/jquery.js',
+                '/src/Backend/Core/Js/jquery/jquery.ui.js',
+                '/src/Backend/Core/Js/ckeditor/jquery.ui.dialog.patch.js',
+                '/src/Backend/Core/Js/jquery/jquery.tools.js',
+                '/src/Backend/Core/Js/jquery/jquery.backend.js',
+                '/src/Backend/Core/Js/ckeditor/ckeditor.js',
+                '/src/Backend/Core/Js/ckeditor/adapters/jquery.js',
+                '/src/Backend/Core/Js/ckfinder/ckfinder.js'
             );
 
             foreach($existingJSFiles as $file) {
@@ -347,11 +347,11 @@ class Header extends \Backend\Core\Engine\Base\Object
         if($this->jsData['editor']['language'] == 'zh') $this->jsData['editor']['language'] = 'zh-cn';
 
         // theme
-        if(BackendModel::getModuleSetting('core', 'theme') !== null) {
-            $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('core', 'theme');
-            $this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme');
-            $this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/screen.css'));
-            $this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/layout/css/editor_content.css'));
+        if(BackendModel::getModuleSetting('Core', 'theme') !== null) {
+            $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('Core', 'theme');
+            $this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme');
+            $this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/screen.css'));
+            $this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/editor_content.css'));
         }
 
         // encode and add

@@ -9,12 +9,14 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+
 /**
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendAuthenticationResetPassword extends BackendBaseActionAdd
+class ResetPassword extends BackendBaseActionAdd
 {
     /**
      * Form instance

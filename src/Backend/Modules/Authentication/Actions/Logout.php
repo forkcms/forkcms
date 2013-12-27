@@ -9,12 +9,14 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+
 /**
  * This is the logout-action, it will logout the current user
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendAuthenticationLogout extends BackendBaseAction
+class Logout extends BackendBaseAction
 {
     /**
      * Execute the action

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Modules\Faq\Feedback;
+namespace Backend\Modules\Faq\Widgets;
 
 /*
  * This file is part of Fork CMS.
@@ -9,12 +9,14 @@ namespace Backend\Modules\Faq\Feedback;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This widget will show the latest feedback
  *
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqWidgetFeedback extends BackendBaseWidget
+class Feedback extends BackendBaseWidget
 {
     /**
      * The feedback

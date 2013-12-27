@@ -9,12 +9,14 @@ namespace Backend\Modules\Analytics\Widgets;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This widget will show the latest visitors
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
+class Visitors extends BackendBaseWidget
 {
     /**
      * Execute the widget

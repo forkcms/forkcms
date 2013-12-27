@@ -9,12 +9,14 @@ namespace Backend\Modules\Analytics\Widgets;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This widget will show the latest traffic sources
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
+class TrafficSources extends BackendBaseWidget
 {
     /**
      * Execute the widget

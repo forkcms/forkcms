@@ -9,13 +9,15 @@ namespace Backend\Modules\Blog\Widgets;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This widget will show the latest comments
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendBlogWidgetComments extends BackendBaseWidget
+class Comments extends BackendBaseWidget
 {
     /**
      * The comments

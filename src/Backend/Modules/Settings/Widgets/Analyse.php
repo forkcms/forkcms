@@ -9,13 +9,15 @@ namespace Backend\Modules\Settings\Widgets;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+
 /**
  * This widget will analyze the CMS warnings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendSettingsWidgetAnalyse extends BackendBaseWidget
+class Analyse extends BackendBaseWidget
 {
     /**
      * Execute the widget
