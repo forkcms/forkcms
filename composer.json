@@ -30,7 +30,8 @@
         "psr-0": {
             "Backend": "src/",
             "Frontend": "src/",
-            "Install": "src/"
+            "Install": "src/",
+            "Api": "src/"
         }
     }
 }
