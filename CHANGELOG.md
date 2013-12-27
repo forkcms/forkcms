@@ -9,6 +9,7 @@ Improvements:
 * Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
 * Core: Better error handling for module rights.
 * Various dutch translations updated.
+* Extensions: add export of theme templates (XML).
 
 Bugfixes:
 
