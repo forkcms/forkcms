@@ -92,7 +92,7 @@ class Object extends \KernelLoader
         }
 
         // set property
-        $this->action = (string) $action;
+        $this->action = (string) \SpoonFilter::toCamelCase($action);
     }
 
     /**

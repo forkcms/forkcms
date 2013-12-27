@@ -9,12 +9,16 @@ namespace Backend\Modules\Dashboard\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAjaxAction;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * This will alter the sequence of the widgets
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
+class AlterSequence extends BackendBaseAjaxAction
 {
     /**
      * Execute the action
@@ -24,7 +28,7 @@ class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $newSequence = SpoonFilter::getPostValue('new_sequence', null, '');
+        $newSequence = \SpoonFilter::getPostValue('new_sequence', null, '');
 
         // validate
         if($newSequence == '') $this->output(self::BAD_REQUEST, null, 'no new_sequence provided');
