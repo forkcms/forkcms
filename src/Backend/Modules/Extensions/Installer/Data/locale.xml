@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <extensions>
+    <Extensions>
       <item type="message" name="AddedTemplate">
         <translation language="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The template "%1$s" was added.]]></translation>
@@ -793,6 +793,6 @@
         <translation language="zh"><![CDATA[主题文件名和info.xml里的主题名称不匹配。]]></translation>
         <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
       </item>
-    </extensions>
+    </Extensions>
   </backend>
 </locale>

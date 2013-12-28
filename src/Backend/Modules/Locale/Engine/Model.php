@@ -65,13 +65,13 @@ class Model
 
         foreach($types as $type) {
             // default module
-            $modules = array('core');
+            $modules = array('Core');
 
             // continue output
             $value .= "\n";
             $value .= '// init var' . "\n";
             $value .= '$' . $type . ' = array();' . "\n";
-            $value .= '$' . $type . '[\'core\'] = array();' . "\n";
+            $value .= '$' . $type . '[\'Core\'] = array();' . "\n";
 
             // loop locale
             foreach($locale as $i => $item) {
@@ -84,7 +84,7 @@ class Model
                     }
 
                     // parse
-                    if($application == 'backend') {
+                    if($application == 'Backend') {
                         $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
                         $json[$type][$item['module']][$item['name']] = $item['value'];
                     } else {
@@ -389,9 +389,9 @@ class Model
         foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
         $finder = new Finder();
-        $finder->notPath('cache')
-            ->notPath('core/js/ckeditor')
-            ->notPath('core/js/ckfinder')
+        $finder->notPath('Cache')
+            ->notPath('Core/Js/ckeditor')
+            ->notPath('Core/Js/ckfinder')
             ->name('*.php')
             ->name('*.tpl')
             ->name('*.js');

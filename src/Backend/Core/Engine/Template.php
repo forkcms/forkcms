@@ -251,22 +251,22 @@ class Template extends \SpoonTemplate
         // grab the current module
         if(BackendModel::getContainer()->has('url')) $currentModule = BackendModel::getContainer()->get('url')->getModule();
         elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
-        else $currentModule = 'core';
+        else $currentModule = 'Core';
 
         $errors = Language::getErrors();
         $labels = Language::getLabels();
         $messages = Language::getMessages();
 
         // set the begin state
-        $realErrors = $errors['core'];
-        $realLabels = $labels['core'];
-        $realMessages = $messages['core'];
+        $realErrors = $errors['Core'];
+        $realLabels = $labels['Core'];
+        $realMessages = $messages['Core'];
 
         // loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
-        // template to use the core-value instead of the one set by the module
-        foreach($errors['core'] as $key => $value) $realErrors['Core' . $key] = $value;
-        foreach($labels['core'] as $key => $value) $realLabels['Core' . $key] = $value;
-        foreach($messages['core'] as $key => $value) $realMessages['Core' . $key] = $value;
+        // template to use the Core-value instead of the one set by the module
+        foreach($errors['Core'] as $key => $value) $realErrors['Core' . $key] = $value;
+        foreach($labels['Core'] as $key => $value) $realLabels['Core' . $key] = $value;
+        foreach($messages['Core'] as $key => $value) $realMessages['Core' . $key] = $value;
 
         // are there errors for the current module?
         if(isset($errors[$currentModule])) {

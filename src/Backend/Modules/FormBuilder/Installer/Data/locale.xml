@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <form_builder>
+    <FormBuilder>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
         <translation language="en"><![CDATA[add form]]></translation>
@@ -936,6 +936,6 @@
         <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
       </item>
-    </form_builder>
+    </FormBuilder>
   </backend>
 </locale>

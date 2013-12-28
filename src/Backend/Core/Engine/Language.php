@@ -58,7 +58,7 @@ class Language
         // validate the cache
         if(empty(self::$activeLanguages)) {
             // grab from settings
-            $activeLanguages = (array) BackendModel::getModuleSetting('core', 'active_languages');
+            $activeLanguages = (array) BackendModel::getModuleSetting('Core', 'active_languages');
 
             // store in cache
             self::$activeLanguages = $activeLanguages;
@@ -105,7 +105,7 @@ class Language
         if($module === null) {
             if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
             elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'core';
+            else $module = 'Core';
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -114,8 +114,8 @@ class Language
         // check if the error exists
         if(isset(self::$err[$module][$key])) return self::$err[$module][$key];
 
-        // check if the error exists in the core
-        if(isset(self::$err['core'][$key])) return self::$err['core'][$key];
+        // check if the error exists in the Core
+        if(isset(self::$err['Core'][$key])) return self::$err['Core'][$key];
 
         // otherwise return the key in label-format
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -151,9 +151,9 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('en')) as $key) {
+        foreach((array) BackendModel::getModuleSetting('Core', 'interface_languages', array('en')) as $key) {
             // fetch language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'core');
+            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
 
         // sort alphabetically
@@ -176,7 +176,7 @@ class Language
         if($module === null) {
             if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
             elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'core';
+            else $module = 'Core';
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -185,8 +185,8 @@ class Language
         // check if the label exists
         if(isset(self::$lbl[$module][$key])) return self::$lbl[$module][$key];
 
-        // check if the label exists in the core
-        if(isset(self::$lbl['core'][$key])) return self::$lbl['core'][$key];
+        // check if the label exists in the Core
+        if(isset(self::$lbl['Core'][$key])) return self::$lbl['Core'][$key];
 
         // otherwise return the key in label-format
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -214,7 +214,7 @@ class Language
         if($module === null) {
             if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
             elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'core';
+            else $module = 'Core';
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -223,8 +223,8 @@ class Language
         // check if the message exists
         if(isset(self::$msg[$module][$key])) return self::$msg[$module][$key];
 
-        // check if the message exists in the core
-        if(isset(self::$msg['core'][$key])) return self::$msg['core'][$key];
+        // check if the message exists in the Core
+        if(isset(self::$msg['Core'][$key])) return self::$msg['Core'][$key];
 
         // otherwise return the key in label-format
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -260,9 +260,9 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach((array) BackendModel::getModuleSetting('core', 'languages', array('en')) as $key) {
+        foreach((array) BackendModel::getModuleSetting('Core', 'languages', array('en')) as $key) {
             // fetch the language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'core');
+            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
 
         // sort alphabetically

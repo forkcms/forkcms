@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <faq>
+    <Faq>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
         <translation language="en"><![CDATA[add question]]></translation>
@@ -314,14 +314,14 @@
         <translation language="el"><![CDATA[Επεξεργασία της γνώμης σας.]]></translation>
         <translation language="zh"><![CDATA[回复正在被处理。]]></translation>
       </item>
-    </faq>
+    </Faq>
   </backend>
   <frontend>
-    <core>
+    <Core>
       <item type="message" name="OtherQuestions">
         <translation language="nl"><![CDATA[Andere vragen]]></translation>
         <translation language="en"><![CDATA[Other questions]]></translation>
       </item>
-    </core>
+    </Core>
   </frontend>
 </locale>

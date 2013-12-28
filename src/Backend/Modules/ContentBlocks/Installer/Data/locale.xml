@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <content_blocks>
+    <ContentBlocks>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[inhoudsblok toevoegen]]></translation>
         <translation language="en"><![CDATA[add content block]]></translation>
@@ -96,6 +96,6 @@
         <translation language="sv"><![CDATA[Ingen mall]]></translation>
         <translation language="el"><![CDATA[Κανένα πρότυπο]]></translation>
       </item>
-    </content_blocks>
+    </ContentBlocks>
   </backend>
 </locale>

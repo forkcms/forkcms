@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <locale>
+    <Locale>
       <item type="label" name="Actions">
         <translation language="nl"><![CDATA[acties]]></translation>
         <translation language="en"><![CDATA[actions]]></translation>
@@ -463,6 +463,6 @@
         <translation language="uk"><![CDATA[Не обрано перекладів]]></translation>
         <translation language="el"><![CDATA[Δεν επελέγη καμμία μετάφραση.]]></translation>
       </item>
-    </locale>
+    </Locale>
   </backend>
 </locale>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <users>
+    <Users>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[gebruiker toevoegen]]></translation>
         <translation language="en"><![CDATA[add user]]></translation>
@@ -173,6 +173,6 @@
         <translation language="es"><![CDATA[Este usuario no existe.]]></translation>
         <translation language="el"><![CDATA[Ο χρήστης δεν υπάρχει.]]></translation>
       </item>
-    </users>
+    </Users>
   </backend>
 </locale>

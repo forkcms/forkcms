@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <dashboard>
+    <Dashboard>
       <item type="label" name="AllStatistics">
         <translation language="nl"><![CDATA[alle statistieken]]></translation>
         <translation language="en"><![CDATA[all statistics]]></translation>
@@ -86,6 +86,6 @@
         <translation language="sv"><![CDATA[Denna widget kommer att återaktiveras vid sparande.]]></translation>
         <translation language="el"><![CDATA[Η μικροεφαρμογή θα ενεργοποιηθεί πάλι κατά την αποθήκευση.]]></translation>
       </item>
-    </dashboard>
+    </Dashboard>
   </backend>
 </locale>

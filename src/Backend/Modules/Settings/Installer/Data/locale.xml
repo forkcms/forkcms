@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <settings>
+    <Settings>
       <item type="label" name="AdminIds">
         <translation language="nl"><![CDATA[admin-ids]]></translation>
         <translation language="en"><![CDATA[admin ids]]></translation>
@@ -476,6 +476,6 @@
         <translation language="es"><![CDATA[El servidor es requerido.]]></translation>
         <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
       </item>
-    </settings>
+    </Settings>
   </backend>
 </locale>

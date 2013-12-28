@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <frontend>
-    <core>
+    <Core>
       <item type="label" name="AboutUs">
         <translation language="nl"><![CDATA[over ons]]></translation>
         <translation language="en"><![CDATA[about us]]></translation>
@@ -3671,10 +3671,10 @@
         <translation language="el"><![CDATA[διαγραφή-συνδρομής]]></translation>
         <translation language="pl"><![CDATA[nie-subskrybuj]]></translation>
       </item>
-    </core>
+    </Core>
   </frontend>
   <backend>
-    <core>
+    <Core>
       <item type="label" name="AccountManagement">
         <translation language="nl"><![CDATA[account beheer]]></translation>
         <translation language="en"><![CDATA[account management]]></translation>
@@ -11620,6 +11620,6 @@
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία τύπου XML.]]></translation>
         <translation language="tr"><![CDATA[Sadece XML dosyalarına izin verilir.]]></translation>
       </item>
-    </core>
+    </Core>
   </backend>
 </locale>

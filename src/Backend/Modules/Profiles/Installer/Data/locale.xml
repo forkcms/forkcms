@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <profiles>
+    <Profiles>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
         <translation language="en"><![CDATA[active]]></translation>
@@ -687,17 +687,17 @@
         <translation language="es"><![CDATA[Acción desconocida.]]></translation>
         <translation language="el"><![CDATA[Άγνωστη ενέργεια.]]></translation>
       </item>
-    </profiles>
-    <core>
+    </Profiles>
+    <Core>
       <item type="label" name="LoginBox">
         <translation language="nl"><![CDATA[login box]]></translation>
         <translation language="en"><![CDATA[login box]]></translation>
         <translation language="ru"><![CDATA[окно авторизации]]></translation>
       </item>
-    </core>
+    </Core>
   </backend>
   <frontend>
-    <core>
+    <Core>
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
         <translation language="en"><![CDATA[settings]]></translation>
@@ -708,6 +708,6 @@
         <translation language="en"><![CDATA[You are logged on as <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="ru"><![CDATA[Вы вошли как <a href="%2$s">%1$s</a>.]]></translation>
       </item>
-    </core>
+    </Core>
   </frontend>
 </locale>

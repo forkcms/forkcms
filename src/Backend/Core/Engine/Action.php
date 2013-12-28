@@ -66,7 +66,7 @@ class Action extends \Backend\Core\Engine\Base\Object
         if($this->getModule() == 'Core') $actionClass = 'Backend\\Core\\Actions\\' . $this->getAction();
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClass)) throw new Exception('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
+        if(!class_exists($actionClass)) throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
 
         // get working languages
         $languages = Language::getWorkingLanguages();

@@ -1,5 +1,5 @@
-{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
-{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
+{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 
 {form:add}
 	{$hidTemplateId}
@@ -398,5 +398,5 @@
 	//]]>
 </script>
 
-{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
-{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
+{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureEnd.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

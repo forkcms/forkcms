@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <pages>
+    <Pages>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add page]]></translation>
@@ -585,15 +585,15 @@
         <translation language="es"><![CDATA[No puedes vincular un módulo a la página principal.]]></translation>
         <translation language="el"><![CDATA[Δεν επιτρέπεται να συνδέσετε μία ενότητα με την Αρχική Σελίδα.]]></translation>
       </item>
-    </pages>
+    </Pages>
   </backend>
   <frontend>
-    <core>
+    <Core>
       <item type="label" name="Parent">
         <translation language="nl"><![CDATA[ouder]]></translation>
         <translation language="en"><![CDATA[parent]]></translation>
         <translation language="ru"><![CDATA[родитель]]></translation>
       </item>
-    </core>
+    </Core>
   </frontend>
 </locale>

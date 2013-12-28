@@ -9,6 +9,8 @@ namespace Backend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -20,7 +22,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class BackendPagesModel
+class Model
 {
     const QRY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
@@ -67,7 +69,7 @@ class BackendPagesModel
     public static function buildCache($language = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get tree
         $levels = self::getTree(array(0), null, 1, $language);
@@ -376,7 +378,7 @@ class BackendPagesModel
                     }
 
                     // get the title
-                    $title = SpoonFilter::htmlspecialcharsDecode($cachedTitles[$pageId]);
+                    $title = \SpoonFilter::htmlspecialcharsDecode($cachedTitles[$pageId]);
 
                     // split into chunks
                     $urlChunks = explode('/', $url);
@@ -628,7 +630,7 @@ class BackendPagesModel
         $navigation = array();
 
         // require
-        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php';
+        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php';
 
         // check if item exists
         if (isset($navigation[$type][$depth][$parentId])) {
@@ -675,7 +677,7 @@ class BackendPagesModel
     {
         // redefine
         $id = (int) $id;
-        $language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -739,7 +741,7 @@ class BackendPagesModel
     {
         // redefine
         $id = (int) $id;
-        $language = BackendLanguage::getWorkingLanguage();
+        $language = BL::getWorkingLanguage();
 
         // exists?
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -769,7 +771,7 @@ class BackendPagesModel
         // redefine
         $id = (int) $id;
         $revisionId = (int) $revisionId;
-        $language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
         // get page (active version)
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -838,7 +840,7 @@ class BackendPagesModel
         // redefine
         $id = (int) $id;
         $revisionId = (int) $revisionId;
-        $language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
         // get page (active version)
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -925,7 +927,7 @@ class BackendPagesModel
     public static function getFullURL($id)
     {
         // generate the cache files if needed
-        if (!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+        if (!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
             self::buildCache(BL::getWorkingLanguage());
         }
 
@@ -933,7 +935,7 @@ class BackendPagesModel
         $keys = array();
 
         // require the file
-        require PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php';
+        require PATH_WWW . '/frontend/cache/navigation/keys_' . BL::getWorkingLanguage() . '.php';
 
         // available in generated file?
         if (isset($keys[$id])) {
@@ -944,7 +946,7 @@ class BackendPagesModel
 
             // multilanguages?
             if (SITE_MULTILANGUAGE) {
-                $URL = '/' . BackendLanguage::getWorkingLanguage();
+                $URL = '/' . BL::getWorkingLanguage();
             }
 
             // return the unique URL!
@@ -956,7 +958,7 @@ class BackendPagesModel
 
         // if the is available in multiple languages we should add the current lang
         if (SITE_MULTILANGUAGE) {
-            $URL = '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL;
+            $URL = '/' . BL::getWorkingLanguage() . '/' . $URL;
         } else {
             // just prepend with slash
             $URL = '/' . $URL;
@@ -977,7 +979,7 @@ class BackendPagesModel
     {
         // redefine
         $id = (int) $id;
-        $language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT revision_id
@@ -1008,7 +1010,7 @@ class BackendPagesModel
     public static function getMaximumPageId($language = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get the maximum id
         $maximumMenuId = (int) BackendModel::getContainer()->get('database')->getVar(
@@ -1036,7 +1038,7 @@ class BackendPagesModel
     public static function getMaximumSequence($parentId, $language = null)
     {
         $parentId = (int) $parentId;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get the maximum sequence inside a certain leaf
         return (int) BackendModel::getContainer()->get('database')->getVar(
@@ -1086,7 +1088,7 @@ class BackendPagesModel
     public static function getPagesForDropdown($language = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get tree
         $levels = self::getTree(array(0), null, 1, $language);
@@ -1122,7 +1124,7 @@ class BackendPagesModel
 
                 // get URL for parent
                 $title = (isset($titles[$parentID])) ? $titles[$parentID] : '';
-                $title = trim($title, SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
+                $title = trim($title, \SpoonFilter::ucfirst(BL::lbl('Home')) . ' > ');
 
                 // add it
                 $titles[$pageID] = trim($title . ' > ' . $page['title'], ' > ');
@@ -1214,7 +1216,7 @@ class BackendPagesModel
     {
         // redefine
         $level = (int) $level;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get data
         $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -1259,7 +1261,7 @@ class BackendPagesModel
     {
         // check if the cached file exists, if not we generated it
         if (!is_file(
-            PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php'
+            PATH_WWW . '/frontend/cache/navigation/navigation_' . BL::getWorkingLanguage() . '.php'
         )
         ) {
             self::buildCache(BL::getWorkingLanguage());
@@ -1269,10 +1271,10 @@ class BackendPagesModel
         $navigation = array();
 
         // require the file
-        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php';
+        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php';
 
         // start HTML
-        $html = '<h4>' . SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
+        $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
         $html .= '<div class="clearfix" data-tree="main">' . "\n";
         $html .= '	<ul>' . "\n";
         $html .= '		<li id="page-1" rel="home">';
@@ -1284,7 +1286,7 @@ class BackendPagesModel
                      null,
                      null,
                      array('id' => 1)
-                 ) . '"><ins>&#160;</ins>' . SpoonFilter::ucfirst(BL::lbl('Home')) . '</a>' . "\n";
+                 ) . '"><ins>&#160;</ins>' . \SpoonFilter::ucfirst(BL::lbl('Home')) . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubTree($navigation, 1);
@@ -1297,7 +1299,7 @@ class BackendPagesModel
         // only show meta if needed
         if (BackendModel::getModuleSetting('pages', 'meta_navigation', false)) {
             // meta pages
-            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
+            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
             $html .= '	<ul>' . "\n";
 
@@ -1331,7 +1333,7 @@ class BackendPagesModel
         }
 
         // footer pages
-        $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
+        $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Footer')) . '</h4>' . "\n";
 
         // start
         $html .= '<div class="clearfix" data-tree="footer">' . "\n";
@@ -1369,7 +1371,7 @@ class BackendPagesModel
         // are there any root pages
         if (isset($navigation['root'][0]) && !empty($navigation['root'][0])) {
             // meta pages
-            $html .= '<h4>' . SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
+            $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Root')) . '</h4>' . "\n";
 
             // start
             $html .= '<div class="clearfix" data-tree="root">' . "\n";
@@ -1496,7 +1498,7 @@ class BackendPagesModel
         // does the parent have extras?
         if ($parentPageInfo['has_extra'] == 'Y' && !$isAction) {
             // set locale
-            FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage(), true);
+            FrontendLanguage::setLocale(BL::getWorkingLanguage(), true);
 
             // get all on-site action
             $actions = FrontendLanguage::getActions();
@@ -1575,9 +1577,9 @@ class BackendPagesModel
     {
         $id = (int) $id;
         $droppedOn = (int) $droppedOn;
-        $typeOfDrop = SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
-        $tree = SpoonFilter::getValue($tree, array('main', 'meta', 'footer', 'root'), 'inside');
-        $language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+        $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
+        $tree = \SpoonFilter::getValue($tree, array('main', 'meta', 'footer', 'root'), 'inside');
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
         // get db
         $db = BackendModel::getContainer()->get('database');

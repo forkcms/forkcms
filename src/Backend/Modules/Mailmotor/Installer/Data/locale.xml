@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <mailmotor>
+    <Mailmotor>
       <item type="message" name="AccountLinked">
         <translation language="en"><![CDATA[Your CampaignMonitor account is now linked to Fork.]]></translation>
         <translation language="nl"><![CDATA[Uw CampaignMonitor account is met succes gekoppeld aan Fork.]]></translation>
@@ -2400,6 +2400,6 @@
         <translation language="es"><![CDATA[Primero elige una plantilla antes de proceder con el siguiente paso.]]></translation>
         <translation language="el"><![CDATA[Επιλέξτε ένα πρότυπο πριν προχωρήσετε στο επόμενο βήμα.]]></translation>
       </item>
-    </mailmotor>
+    </Mailmotor>
   </backend>
 </locale>

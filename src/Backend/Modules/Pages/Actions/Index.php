@@ -9,12 +9,20 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+
 /**
  * This is the index-action (default), it will display the pages-overview
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendPagesIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * DataGrids
@@ -37,14 +45,14 @@ class BackendPagesIndex extends BackendBaseActionIndex
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
         // add css
-        $this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
+        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // check if the cached files exists
-        if (!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) {
+        if (!is_file(PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
             BackendPagesModel::buildCache(BL::getWorkingLanguage());
         }
         if (!is_file(
-            PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php'
+            PATH_WWW . '/src/Frontend/Cache/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
         )
         ) {
             BackendPagesModel::buildCache(BL::getWorkingLanguage());
@@ -79,13 +87,13 @@ class BackendPagesIndex extends BackendBaseActionIndex
 
         // set column functions
         $this->dgDrafts->setColumnFunction(
-            array('BackendDataGridFunctions', 'getUser'),
+            array(new BackendDataGridFunctions(), 'getUser'),
             array('[user_id]'),
             'user_id',
             true
         );
         $this->dgDrafts->setColumnFunction(
-            array('BackendDataGridFunctions', 'getLongDate'),
+            array(new BackendDataGridFunctions(), 'getLongDate'),
             array('[edited_on]'),
             'edited_on'
         );
@@ -93,8 +101,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
         // set headers
         $this->dgDrafts->setHeaderLabels(
             array(
-                 'user_id' => SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
             )
         );
 
@@ -136,12 +144,12 @@ class BackendPagesIndex extends BackendBaseActionIndex
 
         // set functions
         $this->dgRecentlyEdited->setColumnFunction(
-            array('BackendDataGridFunctions', 'getUser'),
+            array(new BackendDataGridFunctions(), 'getUser'),
             array('[user_id]'),
             'user_id'
         );
         $this->dgRecentlyEdited->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[edited_on]'),
             'edited_on'
         );
@@ -149,8 +157,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
         // set headers
         $this->dgRecentlyEdited->setHeaderLabels(
             array(
-                 'user_id' => SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEdited'))
+                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEdited'))
             )
         );
 

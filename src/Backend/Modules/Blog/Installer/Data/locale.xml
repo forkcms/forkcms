@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <blog>
+    <Blog>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[artikel toevoegen]]></translation>
         <translation language="en"><![CDATA[add article]]></translation>
@@ -356,6 +356,6 @@
         <translation language="sv"><![CDATA[Blogg RSS beskrivning är ännu inte tillagd. <en href="%1$s">Konfigurera</en>]]></translation>
         <translation language="el"><![CDATA[Δεν έχει δοθεί ακόμη η περιγραφή γιά τη ροή RSS του ιστολογίου. <a href="%1$s">Ρυθμίστε την</a>]]></translation>
       </item>
-    </blog>
+    </Blog>
   </backend>
 </locale>

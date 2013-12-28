@@ -1,6 +1,5 @@
-{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
-{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
-
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
+{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
 
 <div class="pageTitle">
 	<h2>
@@ -8,13 +7,13 @@
 		{option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
 	</h2>
 
-    {option:showPagesAdd}
+	{option:showPagesAdd}
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
-    {/option:showPagesAdd}
+	{/option:showPagesAdd}
 </div>
 
 {option:dgDrafts}
@@ -44,5 +43,5 @@
 	{option:!dgRecentlyEdited}<p>{$msgNoItems}</p>{/option:!dgRecentlyEdited}
 </div>
 
-{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
-{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
+{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureEnd.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

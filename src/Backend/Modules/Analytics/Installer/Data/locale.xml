@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <backend>
-    <analytics>
+    <Analytics>
       <item type="label" name="AddLandingPage">
         <translation language="nl"><![CDATA[landingspagina toevoegen]]></translation>
         <translation language="en"><![CDATA[add landing page]]></translation>
@@ -881,6 +881,6 @@
         <translation language="sv"><![CDATA[Ta bort länken från ditt Analytics webbplats profil]]></translation>
         <translation language="el"><![CDATA[Αφαίρεσε τη σύνδεσή σου με το προφίλ στη σελίδα των Analytics]]></translation>
       </item>
-    </analytics>
+    </Analytics>
   </backend>
 </locale>
