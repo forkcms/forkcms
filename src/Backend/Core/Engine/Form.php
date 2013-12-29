@@ -237,14 +237,14 @@ class Form extends \SpoonForm
         $HTML = (bool) $HTML;
 
         // we add JS because we need CKEditor
-        $this->header->addJS('ckeditor/ckeditor.js', 'core', false);
-        $this->header->addJS('ckeditor/adapters/jquery.js', 'core', false);
-        $this->header->addJS('ckfinder/ckfinder.js', 'core', false);
+        $this->header->addJS('ckeditor/ckeditor.js', 'Core', false);
+        $this->header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
+        $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
-        if(is_file(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
-            $timestamp = @filemtime(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js');
-            $this->header->addJS('/frontend/cache/navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, true, false);
+        if(is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+            $timestamp = @filemtime(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js');
+            $this->header->addJS('/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js?m=' . $timestamp, null, false, true, false);
         }
 
         // create and return a textarea for the editor

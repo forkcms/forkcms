@@ -9,13 +9,10 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Exception as BackendException;
 
 /**
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
@@ -29,7 +26,7 @@ class Config extends Object
      *
      * @var string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
@@ -116,7 +113,7 @@ class Config extends Object
         $modules = BackendModel::getModulesOnFilesystem();
         if(!in_array($module, $modules)) {
             // set correct headers
-            SpoonHTTP::setHeadersByCode(403);
+            \SpoonHTTP::setHeadersByCode(403);
 
             // throw exception
             throw new BackendException('Module not allowed.');
@@ -135,7 +132,7 @@ class Config extends Object
         $path = BACKEND_MODULES_PATH . '/' . $this->getModule();
         if(is_dir($path . '/Actions')) {
             $finder = new Finder();
-            foreach($finder->files()->name('*.php')->in($path . '/actions') as $file) {
+            foreach($finder->files()->name('*.php')->in($path . '/Actions') as $file) {
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions
@@ -143,9 +140,9 @@ class Config extends Object
             }
         }
 
-        if(is_dir($path . '/ajax')) {
+        if(is_dir($path . '/Ajax')) {
             $finder = new Finder();
-            foreach($finder->files()->name('*.php')->in($path . '/ajax') as $file) {
+            foreach($finder->files()->name('*.php')->in($path . '/Ajax') as $file) {
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions

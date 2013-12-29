@@ -173,6 +173,22 @@ utils.string =
 	div: false,
 
 	/**
+	 * Camelcases a string
+	 *
+	 * @param string input
+	 * @param string[optional] splitchar
+	 * @return string
+	 */
+	camelCase: function(input, splitChar)
+	{
+		splitChar = typeof splitChar !== 'undefined' ? splitChar : '_';
+		var regex = new RegExp('/' + splitChar + '(.)/', 'g');
+		return input.toLowerCase().replace(regex, function(match, group1) {
+			return group1.toUpperCase();
+		});
+	},
+
+	/**
 	 * Fix a HTML5-chunk, so IE can render it
 	 *
 	 * @return	string

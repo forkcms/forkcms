@@ -10,7 +10,9 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
+use Backend\Model\Extensions\Engine\Model as BackendExtensionsModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -251,7 +253,7 @@ class Model
         $fs = new Filesystem();
 
         // write the file
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php', $keysString);
+        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php', $keysString);
 
         // write the navigation-file
         $navigationString = '<?php' . "\n\n";
@@ -337,7 +339,7 @@ class Model
         $navigationString .= '?>';
 
         // write the file
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php', $navigationString);
+        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php', $navigationString);
 
         // get the order
         foreach (array_keys($navigation) as $type) {
@@ -418,10 +420,10 @@ class Model
         $editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
         // write the file
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
+        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
 
         // trigger an event
-        BackendModel::triggerEvent('pages', 'after_recreated_cache');
+        BackendModel::triggerEvent('Pages', 'after_recreated_cache');
     }
 
     /**
@@ -506,7 +508,7 @@ class Model
         // loop
         foreach ($ids as $id) {
             // get data
-            $sourceData = BackendPagesModel::get($id, null, $from);
+            $sourceData = self::get($id, null, $from);
 
             // get and build meta
             $meta = $db->getRecord(
@@ -546,14 +548,14 @@ class Model
             $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
 
             // insert page, store the id, we need it when building the blocks
-            $revisionId = BackendPagesModel::insert($page);
+            $revisionId = self::insert($page);
 
             // init var
             $blocks = array();
             $hasBlock = ($sourceData['has_extra'] == 'Y');
 
             // get the blocks
-            $sourceBlocks = BackendPagesModel::getBlocks($id, null, $from);
+            $sourceBlocks = self::getBlocks($id, null, $from);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -572,7 +574,7 @@ class Model
             }
 
             // insert the blocks
-            BackendPagesModel::insertBlocks($blocks, $hasBlock);
+            self::insertBlocks($blocks, $hasBlock);
 
             // check if the method exists
             if (method_exists('BackendSearchModel', 'saveIndex')) {
@@ -612,7 +614,7 @@ class Model
         }
 
         // build cache
-        BackendPagesModel::buildCache($to);
+        self::buildCache($to);
     }
 
     /**
@@ -927,7 +929,7 @@ class Model
     public static function getFullURL($id)
     {
         // generate the cache files if needed
-        if (!is_file(PATH_WWW . '/frontend/cache/navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
+        if (!is_file(PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
             self::buildCache(BL::getWorkingLanguage());
         }
 
@@ -935,7 +937,7 @@ class Model
         $keys = array();
 
         // require the file
-        require PATH_WWW . '/frontend/cache/navigation/keys_' . BL::getWorkingLanguage() . '.php';
+        require PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
 
         // available in generated file?
         if (isset($keys[$id])) {
@@ -1523,7 +1525,7 @@ class Model
         }
 
         // check if it is an application
-        if (in_array(trim($fullURL, '/'), array_keys(ApplicationRouting::getRoutes()))) {
+        if (in_array(trim($fullURL, '/'), array_keys(\ApplicationRouting::getRoutes()))) {
             // add a number
             $URL = BackendModel::addNumber($URL);
 
@@ -1828,7 +1830,7 @@ class Model
         // loop pages
         foreach ($pages as $page) {
             // fetch blocks
-            $blocksContent = BackendPagesModel::getBlocks($page['id'], $page['revision_id'], $page['language']);
+            $blocksContent = self::getBlocks($page['id'], $page['revision_id'], $page['language']);
 
             // unset revision id
             unset($page['revision_id']);
@@ -1837,7 +1839,7 @@ class Model
             $page['template_id'] = $newTemplateId;
 
             // save new page revision
-            $page['revision_id'] = BackendPagesModel::update($page);
+            $page['revision_id'] = self::update($page);
 
             // overwrite all blocks with current defaults
             if ($overwrite) {
@@ -1882,7 +1884,7 @@ class Model
             }
 
             // insert the blocks
-            BackendPagesModel::insertBlocks($blocksContent);
+            self::insertBlocks($blocksContent);
         }
     }
 }

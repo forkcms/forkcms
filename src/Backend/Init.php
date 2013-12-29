@@ -30,7 +30,7 @@ class Init extends \KernelLoader
      */
     public function initialize($type)
     {
-        $allowedTypes = array('Backend', 'Backend_direct', 'Backend_ajax', 'Backend_js', 'Backend_cronjob');
+        $allowedTypes = array('Backend', 'Backend_direct', 'BackendAjax', 'BackendJs', 'BackendCronjob');
         $type = (string) $type;
 
         // check if this is a valid type
@@ -96,8 +96,8 @@ class Init extends \KernelLoader
      */
     private function defineURLs()
     {
-        define('BACKEND_CACHE_URL', '/' . APPLICATION . '/Cache');
-        define('FRONTEND_FILES_URL', '/Frontend/Files');
+        define('BACKEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
+        define('FRONTEND_FILES_URL', '/src/Frontend/Files');
     }
 
     /**

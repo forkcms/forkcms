@@ -9,6 +9,8 @@ namespace Backend\Core;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+
 /**
  * This is the configuration-object for the core
  *
@@ -21,7 +23,7 @@ class Config extends BackendBaseConfig
      *
      * @var	string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions

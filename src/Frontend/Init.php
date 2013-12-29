@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendInit extends KernelLoader
+class Init extends \KernelLoader
 {
     /**
      * Current type
@@ -28,7 +30,7 @@ class FrontendInit extends KernelLoader
      */
     public function initialize($type)
     {
-        $allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
+        $allowedTypes = array('Frontend', 'FrontendAjax', 'FrontendJs');
         $type = (string) $type;
 
         // check if this is a valid type
@@ -54,7 +56,7 @@ class FrontendInit extends KernelLoader
         $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
         // reset last modified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-        if ($lastModifiedTime === false || Spoon::getDebug()) {
+        if ($lastModifiedTime === false || \Spoon::getDebug()) {
             $lastModifiedTime = time();
         }
 
@@ -69,7 +71,7 @@ class FrontendInit extends KernelLoader
         require_once 'spoon/spoon.php';
 
         $this->requireFrontendClasses();
-        SpoonFilter::disableMagicQuotes();
+        \SpoonFilter::disableMagicQuotes();
     }
 
     /**
@@ -78,11 +80,11 @@ class FrontendInit extends KernelLoader
     private function definePaths()
     {
         // general paths
-        define('FRONTEND_PATH', PATH_WWW . '/' . APPLICATION);
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
+        define('FRONTEND_PATH', PATH_WWW . '/src/' . APPLICATION);
+        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -90,9 +92,9 @@ class FrontendInit extends KernelLoader
      */
     private function defineURLs()
     {
-        define('FRONTEND_CORE_URL', '/' . APPLICATION . '/core');
-        define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/cache');
-        define('FRONTEND_FILES_URL', '/' . APPLICATION . '/files');
+        define('FRONTEND_CORE_URL', '/' . APPLICATION . '/Core');
+        define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/Cache');
+        define('FRONTEND_FILES_URL', '/' . APPLICATION . '/Files');
     }
 
     /**
@@ -129,7 +131,7 @@ class FrontendInit extends KernelLoader
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
-        SpoonHTTP::setHeaders('content-type: application/json');
+        \SpoonHTTP::setHeaders('content-type: application/json');
         $response = array(
             'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
             'message' => $exception->getMessage()
@@ -181,7 +183,7 @@ class FrontendInit extends KernelLoader
     public static function exceptionJSHandler($exception, $output)
     {
         // set correct headers
-        SpoonHTTP::setHeaders('content-type: application/javascript');
+        \SpoonHTTP::setHeaders('content-type: application/javascript');
 
         // output
         echo '// ' . $exception->getMessage();
@@ -217,7 +219,7 @@ class FrontendInit extends KernelLoader
 
             // in debug mode notices are triggered when using non existing
             // locale, so we use a custom error handler to cleanup the message
-            set_error_handler(array('FrontendInit', 'errorHandler'));
+            set_error_handler(array(__CLASS__, 'errorHandler'));
         } else {
             // set error reporting as low as possible
             error_reporting(0);
@@ -226,16 +228,16 @@ class FrontendInit extends KernelLoader
             ini_set('display_errors', 'Off');
 
             switch ($this->type) {
-                case 'backend_ajax':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+                case 'Backend_ajax':
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
 
-                case 'backend_js':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+                case 'Backend_js':
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 
                 default:
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
             }
         }
     }

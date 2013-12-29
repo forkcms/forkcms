@@ -54,8 +54,6 @@ class Ajax extends \Backend\Core\Engine\Base\Object implements \ApplicationInter
         $action = (isset($_POST['fork']['action'])) ? $_POST['fork']['action'] : $action;
         $language = (isset($_POST['fork']['language'])) ? $_POST['fork']['language'] : $language;
 
-        $module = \SpoonFilter::toCamelCase($module);
-
         try {
             // create URL instance, since the template modifiers need this object
             $URL = new Url($this->getKernel());

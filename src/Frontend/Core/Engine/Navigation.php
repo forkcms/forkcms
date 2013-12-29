@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -17,7 +21,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendNavigation extends FrontendBaseObject
+class Navigation extends FrontendBaseObject
 {
     /**
      * The excluded page ids. These will not be shown in the menu.
@@ -195,11 +199,7 @@ class FrontendNavigation extends FrontendBaseObject
         // does the keys exists in the cache?
         if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
             // validate file
-            if (!is_file(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php')) {
-                // require BackendPagesModel
-                require_once PATH_WWW . '/backend/core/engine/model.php';
-                require_once PATH_WWW . '/backend/modules/pages/engine/model.php';
-
+            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
                 // generate the cache
                 BackendPagesModel::buildCache($language);
 
@@ -211,11 +211,11 @@ class FrontendNavigation extends FrontendBaseObject
             $keys = array();
 
             // require file
-            require FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php';
+            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
 
             // validate keys
             if (empty($keys)) {
-                throw new FrontendException('No pages for ' . $language . '.');
+                throw new Exception('No pages for ' . $language . '.');
             }
 
             // store
@@ -242,7 +242,7 @@ class FrontendNavigation extends FrontendBaseObject
         if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
             // validate file @later: the file should be regenerated
             if (!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) {
-                throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
+                throw new Exception('No navigation-file (navigation_' . $language . '.php) found.');
             }
 
             // init var
@@ -286,7 +286,7 @@ class FrontendNavigation extends FrontendBaseObject
 
         // meta-navigation is requested but meta isn't enabled
         if ($type == 'meta' &&
-            (!FrontendModel::getModuleSetting('pages', 'meta_navigation', true) ||
+            (!Model::getModuleSetting('pages', 'meta_navigation', true) ||
              !isset($navigation['meta']))
         ) {
             return '';
@@ -294,12 +294,12 @@ class FrontendNavigation extends FrontendBaseObject
 
         // validate
         if (!isset($navigation[$type])) {
-            throw new FrontendException(
+            throw new Exception(
                 'This type (' . $type . ') isn\'t a valid navigation type. Possible values are: page, footer, meta.'
             );
         }
         if (!isset($navigation[$type][$parentId])) {
-            throw new FrontendException('The parent (' . $parentId . ') doesn\'t exists.');
+            throw new Exception('The parent (' . $parentId . ') doesn\'t exists.');
         }
 
         // special construction to merge home with it's immediate children
@@ -394,11 +394,11 @@ class FrontendNavigation extends FrontendBaseObject
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
 
                 // set link
-                $navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
+                $navigation[$type][$parentId][$id]['link'] = Navigation::getURL($page['page_id']);
 
                 // is this an internal redirect?
                 if (isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') {
-                    $navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL(
+                    $navigation[$type][$parentId][$id]['link'] = Navigation::getURL(
                         (int) $page['redirect_page_id']
                     );
                 }
@@ -414,7 +414,7 @@ class FrontendNavigation extends FrontendBaseObject
         }
 
         // create template
-        $navigationTpl = new FrontendTemplate(false);
+        $navigationTpl = new Template(false);
 
         // assign navigation to template
         $navigationTpl->assign('navigation', $navigation[$type][$parentId]);
@@ -574,7 +574,7 @@ class FrontendNavigation extends FrontendBaseObject
         $URL = self::getURL($pageIdForURL, $language);
 
         // append action
-        $URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
+        $URL .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
 
         // return the URL
         return $URL;

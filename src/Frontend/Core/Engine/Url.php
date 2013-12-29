@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -16,7 +18,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author    Davy Hellemans <davy.hellemans@netlash.com>
  * @author    Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendURL extends KernelLoader
+class Url extends \KernelLoader
 {
     /**
      * The pages
@@ -60,7 +62,7 @@ class FrontendURL extends KernelLoader
         if (mb_strlen($_SERVER['REQUEST_URI']) != 1 &&
             mb_substr($_SERVER['REQUEST_URI'], -1) == '/'
         ) {
-            SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
+            \SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
         }
 
         // set query-string for later use
@@ -148,7 +150,7 @@ class FrontendURL extends KernelLoader
         if (isset($this->parameters[$index]) && $this->parameters[$index] != '') {
             // parameter exists
             if (isset($this->parameters[$index])) {
-                return SpoonFilter::getValue(
+                return \SpoonFilter::getValue(
                     $this->parameters[$index],
                     null,
                     null,
@@ -225,15 +227,15 @@ class FrontendURL extends KernelLoader
         // single language
         if (!SITE_MULTILANGUAGE) {
             // set language id
-            $language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $language = Model::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
         } else {
             // multiple languages
             // default value
             $mustRedirect = false;
 
             // get possible languages
-            $possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
-            $redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
+            $possibleLanguages = (array) Language::getActiveLanguages();
+            $redirectLanguages = (array) Language::getRedirectLanguages();
 
             // the language is present in the URL
             if (isset($chunks[0]) && in_array($chunks[0], $possibleLanguages)) {
@@ -243,34 +245,34 @@ class FrontendURL extends KernelLoader
                 // try to set a cookie with the language
                 try {
                     // set cookie
-                    CommonCookie::set('frontend_language', $language);
-                } catch (SpoonCookieException $e) {
+                    \CommonCookie::set('frontend_language', $language);
+                } catch (\SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }
 
                 // set sessions
-                SpoonSession::set('frontend_language', $language);
+                \SpoonSession::set('frontend_language', $language);
 
                 // remove the language part
                 array_shift($chunks);
-            } elseif (CommonCookie::exists('frontend_language') &&
-                      in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
+            } elseif (\CommonCookie::exists('frontend_language') &&
+                      in_array(\CommonCookie::get('frontend_language'), $redirectLanguages)
             ) {
                 // set languageId
-                $language = (string) CommonCookie::get('frontend_language');
+                $language = (string) \CommonCookie::get('frontend_language');
 
                 // redirect is needed
                 $mustRedirect = true;
             } else {
                 // default browser language
                 // set languageId & abbreviation
-                $language = FrontendLanguage::getBrowserLanguage();
+                $language = Language::getBrowserLanguage();
 
                 // try to set a cookie with the language
                 try {
                     // set cookie
-                    CommonCookie::set('frontend_language', $language);
-                } catch (SpoonCookieException $e) {
+                    \CommonCookie::set('frontend_language', $language);
+                } catch (\SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }
 
@@ -288,7 +290,7 @@ class FrontendURL extends KernelLoader
                 $redirectCode = ($URL == '/' . $language ? 302 : 301);
 
                 // set header & redirect
-                SpoonHTTP::redirect($URL, $redirectCode);
+                \SpoonHTTP::redirect($URL, $redirectCode);
             }
         }
 
@@ -296,10 +298,10 @@ class FrontendURL extends KernelLoader
         define('FRONTEND_LANGUAGE', $language);
 
         // sets the locale file
-        FrontendLanguage::setLocale($language);
+        Language::setLocale($language);
 
         // list of pageIds & their full URL
-        $keys = FrontendNavigation::getKeys();
+        $keys = Navigation::getKeys();
 
         // full URL
         $URL = implode('/', $chunks);
@@ -322,7 +324,7 @@ class FrontendURL extends KernelLoader
         // if it's the homepage AND parameters were given (not allowed!)
         if ($URL == '' && $queryString != '') {
             // get 404 URL
-            $URL = FrontendNavigation::getURL(404);
+            $URL = Navigation::getURL(404);
 
             // remove language
             if (SITE_MULTILANGUAGE) {
@@ -358,13 +360,13 @@ class FrontendURL extends KernelLoader
         }
 
         // pageId, parentId & depth
-        $pageId = FrontendNavigation::getPageId(implode('/', $this->getPages()));
-        $pageInfo = FrontendNavigation::getPageInfo($pageId);
+        $pageId = Navigation::getPageId(implode('/', $this->getPages()));
+        $pageInfo = Navigation::getPageInfo($pageId);
 
         // invalid page, or parameters but no extra
         if ($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra'])) {
             // get 404 URL
-            $URL = FrontendNavigation::getURL(404);
+            $URL = Navigation::getURL(404);
 
             // remove language
             if (SITE_MULTILANGUAGE) {
@@ -387,20 +389,20 @@ class FrontendURL extends KernelLoader
         // is this an internal redirect?
         if (isset($pageInfo['redirect_page_id']) && $pageInfo['redirect_page_id'] != '') {
             // get url for item
-            $newPageURL = FrontendNavigation::getURL((int) $pageInfo['redirect_page_id']);
-            $errorURL = FrontendNavigation::getURL(404);
+            $newPageURL = Navigation::getURL((int) $pageInfo['redirect_page_id']);
+            $errorURL = Navigation::getURL(404);
 
             // not an error?
             if ($newPageURL != $errorURL) {
                 // redirect
-                SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
+                \SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
             }
         }
 
         // is this an external redirect?
         if (isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '') {
             // redirect
-            SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
+            \SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
         }
     }
 

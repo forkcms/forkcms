@@ -76,7 +76,7 @@
 				{
 					data:
 					{
-						fork: { module: 'core', action: 'generate_url' },
+						fork: { module: 'Core', action: 'GenerateUrl' },
 						url: url,
 						metaId: $('#metaId').val(),
 						baseFieldName: $('#baseFieldName').val(),

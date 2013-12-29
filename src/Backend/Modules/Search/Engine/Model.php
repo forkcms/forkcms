@@ -9,6 +9,8 @@ namespace Backend\Modules\Search\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -19,7 +21,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendSearchModel
+class Model
 {
     const QRY_DATAGRID_BROWSE_SYNONYMS =
         'SELECT i.id, i.term, i.synonym

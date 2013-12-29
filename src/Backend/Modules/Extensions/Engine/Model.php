@@ -9,6 +9,8 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
@@ -20,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendExtensionsModel
+class Model
 {
     /**
      * Overview of templates.
@@ -111,7 +113,7 @@ class BackendExtensionsModel
                 $exists = $value != '/';
 
                 // set values
-                $title = SpoonFilter::ucfirst($value);
+                $title = \SpoonFilter::ucfirst($value);
 
                 // start cell
                 $html .= '<td';
@@ -134,7 +136,7 @@ class BackendExtensionsModel
                                     <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
                                     <div class="buttonHolder buttonAddHolder">
                                         <a href="#addBlock" class="button icon iconAdd addBlock">
-                                            <span>' . SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '</span>
+                                            <span>' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '</span>
                                         </a>
                                     </div>
                                 </td>' . "\n";
@@ -336,20 +338,20 @@ class BackendExtensionsModel
             $row['data'] = @unserialize($row['data']);
 
             // remove items that are not for the current language
-            if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
+            if(isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) $itemsToRemove[] = $id;
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
 
             // build name
-            $name = SpoonFilter::ucfirst(BL::lbl($row['label']));
+            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
             if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
             if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
             // add human readable name
-            $module = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
-            $row['human_name'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
-            $row['path'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
+            $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
+            $row['human_name'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ': ' . $name;
+            $row['path'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
         }
 
         // any items to remove?
@@ -391,18 +393,18 @@ class BackendExtensionsModel
             $row['data'] = @unserialize($row['data']);
 
             // remove items that are not for the current language
-            if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) continue;
+            if(isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) continue;
 
             // set URL if needed
             if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
             // build name
-            $name = SpoonFilter::ucfirst(BL::lbl($row['label']));
+            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
             if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
             if(isset($row['data']['label_variables'])) $name = vsprintf($name, $row['data']['label_variables']);
 
             // create modulename
-            $moduleName = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
+            $moduleName = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
 
             // build array
             if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
@@ -413,8 +415,8 @@ class BackendExtensionsModel
 
         // loop
         foreach($values as &$row) {
-            if(!empty($row['items']['widget'])) $row['items']['widget'] = SpoonFilter::arraySortKeys($row['items']['widget']);
-            if(!empty($row['items']['block'])) $row['items']['block'] = SpoonFilter::arraySortKeys($row['items']['block']);
+            if(!empty($row['items']['widget'])) $row['items']['widget'] = \SpoonFilter::arraySortKeys($row['items']['widget']);
+            if(!empty($row['items']['block'])) $row['items']['block'] = \SpoonFilter::arraySortKeys($row['items']['block']);
         }
 
         return $values;
@@ -508,7 +510,7 @@ class BackendExtensionsModel
             $module = array();
             $module['id'] = 'module_' . $moduleName;
             $module['raw_name'] = $moduleName;
-            $module['name'] = SpoonFilter::ucfirst(BL::getLabel(SpoonFilter::toCamelCase($moduleName)));
+            $module['name'] = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::toCamelCase($moduleName)));
             $module['description'] = '';
             $module['version'] = '';
             $module['installed'] = false;
@@ -625,7 +627,7 @@ class BackendExtensionsModel
         $db = BackendModel::getContainer()->get('database');
 
         // validate input
-        $theme = SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
+        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
 
         // get templates
         $templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.data
@@ -655,7 +657,7 @@ class BackendExtensionsModel
                 // loop extras
                 foreach($row['data']['default_extras'] as $value) {
                     // store if the module has blocks
-                    if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
+                    if(\SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
                 }
             }
 
@@ -760,7 +762,7 @@ class BackendExtensionsModel
         require_once BACKEND_MODULES_PATH . '/' . $module . '/installer/installer.php';
 
         // installer class name
-        $class = SpoonFilter::toCamelCase($module) . 'Installer';
+        $class = \SpoonFilter::toCamelCase($module) . 'Installer';
 
         // possible variables available for the module installers
         $variables = array();
@@ -782,9 +784,9 @@ class BackendExtensionsModel
 
         // save the warnings in session for later use
         if($installer->getWarnings()) {
-            $warnings = SpoonSession::exists('installer_warnings') ? SpoonSession::get('installer_warnings') : array();
+            $warnings = \SpoonSession::exists('installer_warnings') ? \SpoonSession::get('installer_warnings') : array();
             $warnings = array_merge($warnings, array('module' => $module, 'warnings' => $installer->getWarnings()));
-            SpoonSession::set('installer_warnings', $warnings);
+            \SpoonSession::set('installer_warnings', $warnings);
         }
 
         // clear the cache so locale (and so much more) gets rebuilt

@@ -1,11 +1,15 @@
 <?php
 
+namespace Frontend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class defines the frontend, it is the core. Everything starts here.
@@ -15,7 +19,7 @@
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class Frontend extends KernelLoader implements ApplicationInterface
+class Frontend extends \KernelLoader implements \ApplicationInterface
 {
     /**
      * @var FrontendPage
@@ -39,11 +43,11 @@ class Frontend extends KernelLoader implements ApplicationInterface
     public function initialize()
     {
         $this->initializeFacebook();
-        new FrontendURL($this->getKernel());
-        new FrontendTemplate();
+        new Url($this->getKernel());
+        new Template();
 
         // Load the rest of the page.
-        $this->page = new FrontendPage($this->getKernel());
+        $this->page = new Page($this->getKernel());
         $this->page->load();
     }
 

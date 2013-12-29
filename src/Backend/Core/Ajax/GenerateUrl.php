@@ -9,12 +9,16 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+
 /**
  * This action will generate a valid url based upon the submitted url.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
+class GenerateUrl extends BackendBaseAJAXAction
 {
     /**
      * @var BackendMeta
@@ -33,13 +37,13 @@ class BackendCoreAjaxGenerateUrl extends BackendBaseAJAXAction
         $frm = new BackendForm('meta');
 
         // get parameters
-        $URL = SpoonFilter::getPostValue('url', null, '', 'string');
-        $metaId = SpoonFilter::getPostValue('meta_id', null, null);
-        $baseFieldName = SpoonFilter::getPostValue('baseFieldName', null, '', 'string');
-        $custom = SpoonFilter::getPostValue('custom', null, false, 'bool');
-        $className = SpoonFilter::getPostValue('className', null, '', 'string');
-        $methodName = SpoonFilter::getPostValue('methodName', null, '', 'string');
-        $parameters = SpoonFilter::getPostValue('parameters', null, '', 'string');
+        $URL = \SpoonFilter::getPostValue('url', null, '', 'string');
+        $metaId = \SpoonFilter::getPostValue('meta_id', null, null);
+        $baseFieldName = \SpoonFilter::getPostValue('baseFieldName', null, '', 'string');
+        $custom = \SpoonFilter::getPostValue('custom', null, false, 'bool');
+        $className = \SpoonFilter::getPostValue('className', null, '', 'string');
+        $methodName = \SpoonFilter::getPostValue('methodName', null, '', 'string');
+        $parameters = \SpoonFilter::getPostValue('parameters', null, '', 'string');
 
         // cleanup values
         $metaId = $metaId ? (int) $metaId : null;

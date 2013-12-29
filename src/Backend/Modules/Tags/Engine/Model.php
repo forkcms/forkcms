@@ -9,6 +9,10 @@ namespace Backend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * In this file we store all generic functions that we will be using in the TagsModule
  *
@@ -17,7 +21,7 @@ namespace Backend\Modules\Tags\Engine;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendTagsModel
+class Model
 {
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, i.tag, i.number AS num_tags
@@ -98,7 +102,7 @@ class BackendTagsModel
     {
         $language = ($language != null)
             ? (string) $language
-            : BackendLanguage::getWorkingLanguage();
+            : BL::getWorkingLanguage();
 
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.tag AS name, i.tag AS value
@@ -122,8 +126,8 @@ class BackendTagsModel
     {
         $module = (string) $module;
         $otherId = (int) $otherId;
-        $type = (string) SpoonFilter::getValue($type, array('string', 'array'), 'string');
-        $language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
+        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
         // fetch tags
         $tags = (array) BackendModel::getContainer()->get('database')->getColumn(
@@ -153,7 +157,7 @@ class BackendTagsModel
      */
     public static function getURL($URL, $id = null)
     {
-        $URL = CommonUri::getUrl((string) $URL);
+        $URL = \CommonUri::getUrl((string) $URL);
         $language = BL::getWorkingLanguage();
 
         // get db
@@ -213,7 +217,7 @@ class BackendTagsModel
     public static function insert($tag, $language = null)
     {
         $tag = (string) $tag;
-        $language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
         // build record
         $item['language'] = $language;
@@ -239,7 +243,7 @@ class BackendTagsModel
         $otherId = (int) $otherId;
         $tags = (is_array($tags)) ? (array) $tags : (string) $tags;
         $module = (string) $module;
-        $language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
         // redefine the tags as an array
         if (!is_array($tags)) {

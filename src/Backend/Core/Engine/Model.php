@@ -130,6 +130,10 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
         $querystring = '';
 
+        // lets create underscore cased module and action names
+        $module = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
+        $action = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $action));
+
         // add offset, order & sort (only if not yet manually added)
         if(isset($_GET['offset']) && !isset($parameters['offset'])) $parameters['offset'] = (int) $_GET['offset'];
         if(isset($_GET['order']) && !isset($parameters['order'])) $parameters['order'] = (string) $_GET['order'];
@@ -556,7 +560,7 @@ class Model extends \BaseModel
      */
     public static function getModulesOnFilesystem($includeCore = true)
     {
-        if($includeCore) $return = array('core');
+        if($includeCore) $return = array('Core');
         else $return = array();
         $finder = new Finder();
         foreach($finder->directories()->in(PATH_WWW . '/src/Backend/Modules')->depth('==0') as $folder) {

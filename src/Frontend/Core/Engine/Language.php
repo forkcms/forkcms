@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -15,7 +17,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendLanguage
+class Language
 {
     /**
      * Locale arrays
@@ -52,7 +54,7 @@ class FrontendLanguage
      */
     public static function buildCache($language, $application)
     {
-        $db = FrontendModel::getContainer()->get('database');
+        $db = Model::getContainer()->get('database');
 
         // get types
         $types = $db->getEnumValues('locale', 'type');
@@ -133,35 +135,35 @@ class FrontendLanguage
 
         // store
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.php',
             $value
         );
 
         // get months
-        $monthsLong = SpoonLocale::getMonths($language, false);
-        $monthsShort = SpoonLocale::getMonths($language, true);
+        $monthsLong = \SpoonLocale::getMonths($language, false);
+        $monthsShort = \SpoonLocale::getMonths($language, true);
 
         // get days
-        $daysLong = SpoonLocale::getWeekDays($language, false, 'sunday');
-        $daysShort = SpoonLocale::getWeekDays($language, true, 'sunday');
+        $daysLong = \SpoonLocale::getWeekDays($language, false, 'sunday');
+        $daysShort = \SpoonLocale::getWeekDays($language, true, 'sunday');
 
         // build labels
         foreach ($monthsLong as $key => $value) {
-            $json['loc']['MonthLong' . SpoonFilter::ucfirst($key)] = $value;
+            $json['loc']['MonthLong' . \SpoonFilter::ucfirst($key)] = $value;
         }
         foreach ($monthsShort as $key => $value) {
-            $json['loc']['MonthShort' . SpoonFilter::ucfirst($key)] = $value;
+            $json['loc']['MonthShort' . \SpoonFilter::ucfirst($key)] = $value;
         }
         foreach ($daysLong as $key => $value) {
-            $json['loc']['DayLong' . SpoonFilter::ucfirst($key)] = $value;
+            $json['loc']['DayLong' . \SpoonFilter::ucfirst($key)] = $value;
         }
         foreach ($daysShort as $key => $value) {
-            $json['loc']['DayShort' . SpoonFilter::ucfirst($key)] = $value;
+            $json['loc']['DayShort' . \SpoonFilter::ucfirst($key)] = $value;
         }
 
         // store
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
             json_encode($json)
         );
     }
@@ -176,7 +178,7 @@ class FrontendLanguage
     public static function getAction($key, $fallback = true)
     {
         // redefine
-        $key = SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase((string) $key);
 
         // if the action exists return it,
         if (isset(self::$act[$key])) {
@@ -212,7 +214,7 @@ class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['active'])) {
             // grab from settings
-            $activeLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
+            $activeLanguages = (array) Model::getModuleSetting('core', 'active_languages');
 
             // store in cache
             self::$languages['active'] = $activeLanguages;
@@ -287,7 +289,7 @@ class FrontendLanguage
     public static function getError($key, $fallback = true)
     {
         // redefine
-        $key = SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
         if (isset(self::$err[$key])) {
@@ -323,7 +325,7 @@ class FrontendLanguage
     public static function getLabel($key, $fallback = true)
     {
         // redefine
-        $key = SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
         if (isset(self::$lbl[$key])) {
@@ -359,7 +361,7 @@ class FrontendLanguage
     public static function getMessage($key, $fallback = true)
     {
         // redefine
-        $key = SpoonFilter::toCamelCase((string) $key);
+        $key = \SpoonFilter::toCamelCase((string) $key);
 
         // if the error exists return it,
         if (isset(self::$msg[$key])) {
@@ -395,7 +397,7 @@ class FrontendLanguage
         // validate the cache
         if (empty(self::$languages['possible_redirect'])) {
             // grab from settings
-            $redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'redirect_languages');
+            $redirectLanguages = (array) Model::getModuleSetting('core', 'redirect_languages');
 
             // store in cache
             self::$languages['possible_redirect'] = $redirectLanguages;
@@ -418,14 +420,14 @@ class FrontendLanguage
 
         // validate language
         if (!$force && !in_array($language, self::getActiveLanguages())) {
-            throw new FrontendException('Invalid language (' . $language . ').');
+            throw new Exception('Invalid language (' . $language . ').');
         }
 
         // validate file, generate it if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/locale/en.php')) {
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/en.php')) {
             self::buildCache('en', 'frontend');
         }
-        if (!is_file(FRONTEND_CACHE_PATH . '/locale/' . $language . '.php')) {
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
             self::buildCache($language, 'frontend');
         }
 
@@ -436,28 +438,20 @@ class FrontendLanguage
         $msg = array();
 
         // set English translations, they'll be the fallback
-        require FRONTEND_CACHE_PATH . '/locale/en.php';
+        require FRONTEND_CACHE_PATH . '/Locale/en.php';
         self::$fallbackAct = (array) $act;
         self::$fallbackErr = (array) $err;
         self::$fallbackLbl = (array) $lbl;
         self::$fallbackMsg = (array) $msg;
 
         // We will overwrite with the requested language's translations upon request
-        require FRONTEND_CACHE_PATH . '/locale/' . $language . '.php';
+        require FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php';
         self::$act = (array) $act;
         self::$err = (array) $err;
         self::$lbl = (array) $lbl;
         self::$msg = (array) $msg;
     }
-}
 
-/**
- * FL (some kind of alias for FrontendLanguage)
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- */
-class FL extends FrontendLanguage
-{
     /**
      * Get an action from the language-file
      *
@@ -467,7 +461,7 @@ class FL extends FrontendLanguage
      */
     public static function act($key, $fallback = true)
     {
-        return FrontendLanguage::getAction($key, $fallback);
+        return self::getAction($key, $fallback);
     }
 
     /**
@@ -479,7 +473,7 @@ class FL extends FrontendLanguage
      */
     public static function err($key, $fallback = true)
     {
-        return FrontendLanguage::getError($key, $fallback);
+        return self::getError($key, $fallback);
     }
 
     /**
@@ -491,7 +485,7 @@ class FL extends FrontendLanguage
      */
     public static function lbl($key, $fallback = true)
     {
-        return FrontendLanguage::getLabel($key, $fallback);
+        return self::getLabel($key, $fallback);
     }
 
     /**
@@ -503,6 +497,6 @@ class FL extends FrontendLanguage
      */
     public static function msg($key, $fallback = true)
     {
-        return FrontendLanguage::getMessage($key, $fallback);
+        return self::getMessage($key, $fallback);
     }
 }

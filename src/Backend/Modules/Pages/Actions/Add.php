@@ -9,6 +9,17 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
@@ -17,7 +28,7 @@ namespace Backend\Modules\Pages\Actions;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendPagesAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * The blocks linked to this page
@@ -68,7 +79,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
         // add css
-        $this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
+        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
@@ -133,7 +144,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
             $values = array();
 
             foreach ($items as $value) {
-                $values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+                $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
                 $checked[] = $value;
             }
 
@@ -236,15 +247,15 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
         // redirect
         $redirectValues = array(
-            array('value' => 'none', 'label' => SpoonFilter::ucfirst(BL::lbl('None'))),
+            array('value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))),
             array(
                 'value' => 'internal',
-                'label' => SpoonFilter::ucfirst(BL::lbl('InternalLink')),
+                'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
                 'variables' => array('isInternal' => true)
             ),
             array(
                 'value' => 'external',
-                'label' => SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
+                'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
                 'variables' => array('isExternal' => true)
             ),
         );
@@ -269,7 +280,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, false));
+        $this->meta->setURLCallback('Backend\Modules\Pages\Engine\Model', 'getURL', array(0, null, false));
     }
 
     /**
@@ -309,7 +320,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
             // validate redirect
             $redirectValue = $this->frm->getField('redirect')->getValue();
@@ -324,7 +335,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
             // set callback for generating an unique URL
             $this->meta->setURLCallback(
-                'BackendPagesModel',
+                'Backend\Modules\Pages\Engine\Model',
                 'getURL',
                 array(0, null, $this->frm->getField('is_action')->getChecked())
             );
@@ -367,7 +378,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
                 $page['parent_id'] = $parentId;
                 $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
                 $page['meta_id'] = (int) $this->meta->save();
-                $page['language'] = BackendLanguage::getWorkingLanguage();
+                $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();

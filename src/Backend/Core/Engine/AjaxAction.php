@@ -38,16 +38,14 @@ class AjaxAction extends \Backend\Core\Engine\Base\Object
         $this->loadConfig();
 
         // build action-class-name
-        $actionClassName = 'Backend' . \SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
-
-        // require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
-        require_once BACKEND_MODULE_PATH . '/ajax/' . $this->getAction() . '.php';
+        $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
+        if($this->getModule() == 'Core') $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClassName)) throw new Exception('The actionfile is present, but the classname should be: ' . $actionClassName . '.');
+        if(!class_exists($actionClass)) throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
 
         // create action-object
-        $object = new $actionClassName($this->getKernel(), $this->getAction(), $this->getModule());
+        $object = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
         $object->setAction($this->getAction(), $this->getModule());
         $object->execute();
 
@@ -56,41 +54,31 @@ class AjaxAction extends \Backend\Core\Engine\Base\Object
 
     /**
      * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor will read the folder
-     * and set possible actions. Other configurations will also be stored in it.
+     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * Other configurations will be stored in it also.
      */
     public function loadConfig()
     {
         // check if module path is not yet defined
         if(!defined('BACKEND_MODULE_PATH')) {
             // build path for core
-            if($this->getModule() == 'core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
+            if($this->getModule() == 'Core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
 
             // build path to the module and define it. This is a constant because we can use this in templates.
             else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
         }
 
-        // check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-        if(!is_file(BACKEND_MODULE_PATH . '/config.php')) {
-            if(BackendModel::getContainer()->getParameter('kernel.debug')) {
-                throw new Exception('The configfile for the module (' . $this->getModule() . ') can\'t be found.');
-            } else {
-                $response = new Response('', 404);
-                $response->send();
-                exit;   // I know this line shouldn't be here
-            }
-        }
-
-        // build config-object-name
-        $configClassName = 'Backend' . \SpoonFilter::toCamelCase($this->getModule() . '_config');
-
-        // require the config file, we validated before for existence.
-        require_once BACKEND_MODULE_PATH . '/config.php';
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+        if($this->getModule() == 'Core') $configClass = 'Backend\\Core\\Config';
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($configClassName)) throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        if(!class_exists($configClass)) throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
 
         // create config-object, the constructor will do some magic
-        $this->config = new $configClassName($this->getKernel(), $this->getModule());
+        $this->config = new $configClass($this->getKernel(), $this->getModule());
+
+        // set action
+        $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
     }
 }

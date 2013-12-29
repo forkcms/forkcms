@@ -26,8 +26,8 @@ var jsBackend =
 
 		// set some properties
 		jsBackend.debug = jsBackend.data.get('debug');
-		jsBackend.current.module = chunks[3];
-		jsBackend.current.action = chunks[4];
+		jsBackend.current.module = utils.string.camelCase(chunks[3]);
+		jsBackend.current.action = utils.string.camelCase(chunks[4]);
 		jsBackend.current.language = chunks[2];
 
 		// set defaults
@@ -64,7 +64,7 @@ var jsBackend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
-			url: '/backend/ajax.php',
+			url: '/src/Backend/Ajax.php',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
@@ -258,7 +258,7 @@ jsBackend.ckeditor =
 	init: function()
 	{
 		// the language isn't know before this init-method is called, so we set the url for the template-files just now
-		jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax.php?fork[module]=core&fork[action]=templates&fork[language]=' + jsBackend.current.language];
+		jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax.php?fork[module]=Core&fork[action]=Templates&fork[language]=' + jsBackend.current.language];
 
 		// load the editor
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)
@@ -268,11 +268,11 @@ jsBackend.ckeditor =
 			jsBackend.ckeditor.defaultConfig.language = jsBackend.data.get('editor.language');
 
 			// content Css
-			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/screen.css');
-			if(jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/screen.css');
-			jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/core/layout/css/editor_content.css');
-			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/frontend/themes/' + jsBackend.data.get('theme.theme') + '/core/layout/css/editor_content.css');
-			jsBackend.ckeditor.defaultConfig.contentsCss.push('/backend/core/layout/css/imports/editor.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/css/screen.css');
+			if(jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/css/screen.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/css/editor_content.css');
+			if(jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/css/editor_content.css');
+			jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Backend/Core/Layout/css/imports/editor.css');
 
 			// bind on some global events
 			CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
@@ -326,7 +326,7 @@ jsBackend.ckeditor =
 		// add the CKFinder
 		CKFinder.setupCKEditor(null,
 		{
-			basePath: '/backend/core/js/ckfinder',
+			basePath: '/src/Backend/Core/Js/ckfinder',
 			width: 800
 		});
 	},
@@ -1773,12 +1773,12 @@ jsBackend.locale =
 		// if the translation does not exist for the given module, try to fall back to the core
 		if(!data[type].hasOwnProperty(module) || data[type][module] == null || !data[type][module].hasOwnProperty(key) || data[type][module][key] == null)
 		{
-			if(!data[type].hasOwnProperty('core') || data[type]['core'] == null || !data[type]['core'].hasOwnProperty(key) || data[type]['core'][key] == null)
+			if(!data[type].hasOwnProperty('Core') || data[type]['Core'] == null || !data[type]['Core'].hasOwnProperty(key) || data[type]['Core'][key] == null)
 			{
 				return missingTranslation;
 			}
 
-			return data[type]['core'][key];
+			return data[type]['Core'][key];
 		}
 
 		return data[type][module][key];

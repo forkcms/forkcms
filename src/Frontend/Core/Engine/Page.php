@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Core\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -17,7 +20,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class FrontendPage extends FrontendBaseObject
+class Page extends FrontendBaseObject
 {
     /**
      * Breadcrumb instance
