@@ -377,7 +377,10 @@ class Navigation extends \Backend\Core\Engine\Base\Object
     private function compareURL(array $value, $key, $keys = array())
     {
         // create active url
-        $activeURL = $this->URL->getModule() . '/' . $this->URL->getAction();
+        $activeURL = ltrim(
+            $this->URL->getQueryString(),
+            'private/' . Language::getWorkingLanguage() . '/'
+        );
 
         // add current key
         $keys[] = $key;
