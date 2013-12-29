@@ -9,12 +9,16 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This action is used to update one or more data items
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendFormBuilderMassDataAction extends BackendBaseAction
+class MassDataAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,10 +28,10 @@ class BackendFormBuilderMassDataAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), '');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), '');
 
         // form id
-        $formId = SpoonFilter::getGetValue('form_id', null, '', 'int');
+        $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');
 
         // no id's provided
         if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-items-selected');

@@ -182,7 +182,7 @@ utils.string =
 	camelCase: function(input, splitChar)
 	{
 		splitChar = typeof splitChar !== 'undefined' ? splitChar : '_';
-		var regex = new RegExp('/' + splitChar + '(.)/', 'g');
+		var regex = new RegExp(splitChar + '(.)', 'g');
 		return input.toLowerCase().replace(regex, function(match, group1) {
 			return group1.toUpperCase();
 		});

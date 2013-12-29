@@ -9,12 +9,15 @@ namespace Backend\Modules\FormBuilder\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * Re-sequence the fields via ajax.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
+class Sequence extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,8 +27,8 @@ class BackendFormBuilderAjaxSequence extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
-        $newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        $formId = \SpoonFilter::getPostValue('form_id', null, '', 'int');
+        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
         // invalid form id
         if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');

@@ -9,13 +9,19 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Csv as BackendCSV;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This action is used to export submissions of a form.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendFormBuilderExportData extends BackendBaseAction
+class ExportData extends BackendBaseAction
 {
     /**
      * CSV column headers.
@@ -148,8 +154,8 @@ class BackendFormBuilderExportData extends BackendBaseAction
     private function setItems()
     {
         // init header labels
-        $lblSessionId = SpoonFilter::ucfirst(BL::lbl('SessionId'));
-        $lblSentOn = SpoonFilter::ucfirst(BL::lbl('SentOn'));
+        $lblSessionId = \SpoonFilter::ucfirst(BL::lbl('SessionId'));
+        $lblSentOn = \SpoonFilter::ucfirst(BL::lbl('SentOn'));
         $this->columnHeaders = array($lblSessionId, $lblSentOn);
 
         // fetch query and parameters
@@ -164,7 +170,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
             // first row of a submission
             if(!isset($data[$row['data_id']])) {
                 $data[$row['data_id']][$lblSessionId] = $row['session_id'];
-                $data[$row['data_id']][$lblSentOn] = SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BackendLanguage::getWorkingLanguage());
+                $data[$row['data_id']][$lblSentOn] = \SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BL::getWorkingLanguage());
             }
 
             // value is serialized
@@ -174,7 +180,7 @@ class BackendFormBuilderExportData extends BackendBaseAction
             if(is_array($value)) $value = implode(', ', $value);
 
             // group submissions
-            $data[$row['data_id']][$row['label']] = SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
+            $data[$row['data_id']][$row['label']] = \SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
 
             // add into headers if not yet added
             if(!in_array($row['label'], $this->columnHeaders)) $this->columnHeaders[] = $row['label'];

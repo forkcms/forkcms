@@ -377,12 +377,11 @@ class Navigation extends \Backend\Core\Engine\Base\Object
     private function compareURL(array $value, $key, $keys = array())
     {
         // create active url
-        $activeURL = substr(
-            $this->URL->getQueryString(),
-            strlen('private/' . Language::getWorkingLanguage() . '/')
-        );
+        $activeURL = $this->URL->getModule() . '/' . $this->URL->getAction();
 
-        $activeURL = strtok($activeURL, '?');
+        // we use the lowercased versions in the url
+        $activeURL = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $activeURL));
+
         // add current key
         $keys[] = $key;
 

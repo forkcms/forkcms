@@ -9,13 +9,21 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This is the index-action (default), it will display the overview
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendFormBuilderIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -33,17 +41,38 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(BackendFormBuilderModel::QRY_BROWSE, BL::getWorkingLanguage());
-        $this->dataGrid->setHeaderLabels(array('email' => SpoonFilter::ucfirst(BL::getLabel('Recipient')), 'sent_forms' => ''));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendFormBuilderModel::QRY_BROWSE,
+            BL::getWorkingLanguage()
+        );
+        $this->dataGrid->setHeaderLabels(array(
+            'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),
+            'sent_forms' => ''
+        ));
         $this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
-        $this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'formatRecipients'), array('[email]'), 'email');
-        $this->dataGrid->setColumnFunction(array('BackendFormBuilderModel', 'getLocale'), array('Method_[method]'), 'method');
-        $this->dataGrid->setColumnFunction(array('BackendFormBuilderIndex', 'parseNumForms'), array('[id]', '[sent_forms]'), 'sent_forms');
+        $this->dataGrid->setColumnFunction(
+            array(new BackendFormBuilderModel(), 'formatRecipients'),
+            array('[email]'), 'email'
+        );
+        $this->dataGrid->setColumnFunction(
+            array(new BackendFormBuilderModel(), 'getLocale'),
+            array('Method_[method]'), 'method'
+        );
+        $this->dataGrid->setColumnFunction(
+            array(__CLASS__, 'parseNumForms'), array('[id]', '[sent_forms]'),
+            'sent_forms'
+        );
 
         // check if edit action is allowed
         if(BackendAuthentication::isAllowedAction('edit')) {
-            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-            $this->dataGrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::getLabel('Edit'));
+            $this->dataGrid->setColumnURL(
+                'name', BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+            );
+            $this->dataGrid->addColumn(
+                'edit', null, BL::getLabel('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BL::getLabel('Edit')
+            );
         }
     }
 
@@ -55,7 +84,7 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
         parent::parse();
 
         // add datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 
     /**
@@ -81,9 +110,10 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
         else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
         // check if data action is allowed
-        if(BackendAuthentication::isAllowedAction('data', 'form_builder')) {
+        if(BackendAuthentication::isAllowedAction('data', 'FormBuilder')) {
             // output
-            $output = '<a href="' . BackendModel::createURLForAction('data') . '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
+            $output = '<a href="' . BackendModel::createURLForAction('data') .
+                      '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';
         }
 
         return $output;

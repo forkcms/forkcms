@@ -9,12 +9,16 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This is the delete-action, it will delete an item.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendFormBuilderDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action

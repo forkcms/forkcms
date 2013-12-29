@@ -79,10 +79,10 @@ jsBackend.formBuilder.fields =
 	init: function()
 	{
 		// set urls
-		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'delete_field' } };
-		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'get_field' } };
-		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'save_field' } };
-		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'sequence' } };
+		jsBackend.formBuilder.fields.paramsDelete = { fork: { action: 'DeleteField' } };
+		jsBackend.formBuilder.fields.paramsGet = { fork: { action: 'GetField' } };
+		jsBackend.formBuilder.fields.paramsSave = { fork: { action: 'SaveField' } };
+		jsBackend.formBuilder.fields.paramsSequence = { fork: { action: 'Sequence' } };
 
 		// init errors
 		if(typeof defaultErrorMessages != 'undefined') jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;

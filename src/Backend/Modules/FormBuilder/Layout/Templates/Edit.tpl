@@ -77,7 +77,7 @@
 
 							{* This row always needs to be here. We show/hide it with javascript *}
 							<div id="noFields" class="options"{option:fields} style="display: none;"{/option:fields}>
-								<img src="/backend/modules/form_builder/layout/images/placeholder_{$INTERFACE_LANGUAGE}.png" alt="{$msgNoFields}" />
+								<img src="/src/Backend/Modules/FormBuilder/Layout/images/placeholder_{$INTERFACE_LANGUAGE}.png" alt="{$msgNoFields}" />
 							</div>
 
 							{* Submit button is always here. Cannot be deleted or moved. *}

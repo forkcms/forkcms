@@ -9,13 +9,17 @@ namespace Backend\Modules\FormBuilder\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Frontend\Core\Engine\Language as FL;
+
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendFormBuilderModel
+class Model
 {
     const QRY_BROWSE =
         'SELECT i.id, i.name, i.email, i.method,
@@ -421,12 +425,12 @@ class BackendFormBuilderModel
      */
     public static function getLocale($name, $type = 'label', $application = 'backend')
     {
-        $name = SpoonFilter::toCamelCase($name);
-        $class = SpoonFilter::ucfirst($application) . 'Language';
-        $function = 'get' . SpoonFilter::ucfirst($type);
+        $name = \SpoonFilter::toCamelCase($name);
+        $class = \SpoonFilter::ucfirst($application) . '\Core\Engine\Language';
+        $function = 'get' . \SpoonFilter::ucfirst($type);
 
         // execute and return value
-        return SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
+        return \SpoonFilter::ucfirst(call_user_func_array(array($class, $function), array($name)));
     }
 
     /**
@@ -460,7 +464,12 @@ class BackendFormBuilderModel
         $extra['type'] = 'widget';
         $extra['label'] = 'FormBuilder';
         $extra['action'] = 'form';
-        $extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['name'], 'id' => $insertId, 'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $insertId));
+        $extra['data'] = serialize(array(
+            'language' => $values['language'],
+            'extra_label' => $values['name'],
+            'id' => $insertId,
+            'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $insertId
+        ));
         $extra['hidden'] = 'N';
         $extra['sequence'] = '400' . $insertId;
 
@@ -527,148 +536,5 @@ class BackendFormBuilderModel
     {
         BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', (int) $id);
         return $id;
-    }
-}
-
-/**
- * Helper class for the form_builder module.
- *
- * @todo this class should be in helper.php like the other modules do
- *
- * Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
- */
-class FormBuilderHelper
-{
-    /**
-     * Parse a field and return the HTML.
-     *
-     * @param array $field Field data.
-     * @return string
-     */
-    public static function parseField(array $field)
-    {
-        if(!empty($field)) {
-            // init
-            $frm = new BackendForm('tmp', '');
-            $tpl = (BackendModel::getContainer()->has('template') ? BackendModel::getContainer()->get('template') : new BackendTemplate());
-            $fieldHTML = '';
-            $fieldName = 'field' . $field['id'];
-            $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-            $defaultValues = (isset($field['settings']['default_values']) ? $field['settings']['default_values'] : null);
-
-            /**
-             * Create form and parse to HTML
-             */
-            // dropdown
-            if($field['type'] == 'dropdown') {
-                // get index of selected item
-                $defaultIndex = array_search($defaultValues, $values, true);
-                if($defaultIndex === false) $defaultIndex = null;
-
-                // create element
-                $ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
-
-                // empty default element
-                $ddm->setDefaultElement('');
-
-                // get content
-                $fieldHTML = $ddm->parse();
-            }
-
-            // radiobutton
-            elseif($field['type'] == 'radiobutton') {
-                // rebuild values
-                foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
-
-                // create element
-                $rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
-
-                // get content
-                $fieldHTML = $rbt->parse();
-            }
-
-            // checkbox
-            elseif($field['type'] == 'checkbox') {
-                // rebuild values
-                foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
-
-                // create element
-                $chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
-
-                // get content
-                $fieldHTML = $chk->parse();
-            }
-
-            // textbox
-            elseif($field['type'] == 'textbox') {
-                // create element
-                $txt = $frm->addText($fieldName, $defaultValues);
-                $txt->setAttribute('disabled', 'disabled');
-
-                // get content
-                $fieldHTML = $txt->parse();
-            }
-
-            // textarea
-            elseif($field['type'] == 'textarea') {
-                // create element
-                $txt = $frm->addTextarea($fieldName, $defaultValues);
-                $txt->setAttribute('cols', 30);
-                $txt->setAttribute('disabled', 'disabled');
-
-                // get content
-                $fieldHTML = $txt->parse();
-            }
-
-            // heading
-            elseif($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';
-
-            // paragraph
-            elseif($field['type'] == 'paragraph') $fieldHTML = $values;
-
-            /**
-             * Parse the field into the template
-             */
-            // init
-            $tpl->assign('plaintext', false);
-            $tpl->assign('simple', false);
-            $tpl->assign('multiple', false);
-            $tpl->assign('id', $field['id']);
-            $tpl->assign('required', isset($field['validations']['required']));
-
-            // plaintext items
-            if($field['type'] == 'heading' || $field['type'] == 'paragraph') {
-                // assign
-                $tpl->assign('content', $fieldHTML);
-                $tpl->assign('plaintext', true);
-            }
-
-            // multiple items
-            elseif($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
-                // name (prefixed by type)
-                $name = ($field['type'] == 'checkbox') ? 'chk' . SpoonFilter::ucfirst($fieldName) : 'rbt' . SpoonFilter::ucfirst($fieldName);
-
-                // rebuild so the html is stored in a general name (and not rbtName)
-                foreach($fieldHTML as &$item) $item['field'] = $item[$name];
-
-                // show multiple
-                $tpl->assign('label', $field['settings']['label']);
-                $tpl->assign('items', $fieldHTML);
-                $tpl->assign('multiple', true);
-            }
-
-            // simple items
-            else {
-                // assign
-                $tpl->assign('label', $field['settings']['label']);
-                $tpl->assign('field', $fieldHTML);
-                $tpl->assign('simple', true);
-            }
-
-            return $tpl->getContent(BACKEND_MODULE_PATH . '/layout/templates/field.tpl');
-        }
-
-        // empty field so return empty string
-        else return '';
     }
 }

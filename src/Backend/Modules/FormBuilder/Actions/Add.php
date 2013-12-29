@@ -9,13 +9,21 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Frontend\Core\Engine\Language as FL;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This is the add-action, it will display a form to create a new item.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendFormBuilderAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -69,7 +77,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
                 foreach($emailAddresses as $address) {
                     $address = trim($address);
 
-                    if(!SpoonFilter::isEmail($address)) {
+                    if(!\SpoonFilter::isEmail($address)) {
                         $error = true;
                         break;
                     }
@@ -82,7 +90,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
             // identifier
             if($txtIdentifier->isFilled()) {
                 // invalid characters
-                if(!SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
 
                 // unique identifier
                 elseif(BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
@@ -112,7 +120,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
                 // create submit button
                 $field['form_id'] = $id;
                 $field['type'] = 'submit';
-                $field['settings'] = serialize(array('values' => SpoonFilter::ucfirst(FL::getLabel('Send'))));
+                $field['settings'] = serialize(array('values' => \SpoonFilter::ucfirst(FL::getLabel('Send'))));
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform

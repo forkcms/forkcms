@@ -9,12 +9,17 @@ namespace Backend\Modules\FormBuilder\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
+
 /**
  * Save a field via ajax.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
+class SaveField extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,20 +29,20 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $formId = SpoonFilter::getPostValue('form_id', null, '', 'int');
-        $fieldId = SpoonFilter::getPostValue('field_id', null, '', 'int');
-        $type = SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
-        $label = trim(SpoonFilter::getPostValue('label', null, '', 'string'));
-        $values = trim(SpoonFilter::getPostValue('values', null, '', 'string'));
-        $defaultValues = trim(SpoonFilter::getPostValue('default_values', null, '', 'string'));
-        $required = SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
-        $requiredErrorMessage = trim(SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-        $validation = SpoonFilter::getPostValue('validation', array('email', 'numeric'), '', 'string');
-        $validationParameter = trim(SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
-        $errorMessage = trim(SpoonFilter::getPostValue('error_message', null, '', 'string'));
+        $formId = \SpoonFilter::getPostValue('form_id', null, '', 'int');
+        $fieldId = \SpoonFilter::getPostValue('field_id', null, '', 'int');
+        $type = \SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
+        $label = trim(\SpoonFilter::getPostValue('label', null, '', 'string'));
+        $values = trim(\SpoonFilter::getPostValue('values', null, '', 'string'));
+        $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
+        $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
+        $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
+        $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric'), '', 'string');
+        $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
+        $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
         // special field for textbox: reply to
-        $replyTo = SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
+        $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
 
         // invalid form id
         if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
@@ -118,8 +123,8 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
                     else {
                         // htmlspecialchars except for paragraphs
                         if($type != 'paragraph') {
-                            if($values != '') $values = SpoonFilter::htmlspecialchars($values);
-                            if($defaultValues != '') $defaultValues = SpoonFilter::htmlspecialchars($defaultValues);
+                            if($values != '') $values = \SpoonFilter::htmlspecialchars($values);
+                            if($defaultValues != '') $defaultValues = \SpoonFilter::htmlspecialchars($defaultValues);
                         }
 
                         // split
@@ -130,7 +135,7 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
                          */
                         // settings
                         $settings = array();
-                        if($label != '') $settings['label'] = SpoonFilter::htmlspecialchars($label);
+                        if($label != '') $settings['label'] = \SpoonFilter::htmlspecialchars($label);
                         if($values != '') $settings['values'] = $values;
                         if($defaultValues != '') $settings['default_values'] = $defaultValues;
 
@@ -168,7 +173,7 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
                             // build array
                             $validate['field_id'] = $fieldId;
                             $validate['type'] = 'required';
-                            $validate['error_message'] = SpoonFilter::htmlspecialchars($requiredErrorMessage);
+                            $validate['error_message'] = \SpoonFilter::htmlspecialchars($requiredErrorMessage);
 
                             // add validation
                             BackendFormBuilderModel::insertFieldValidation($validate);
@@ -182,8 +187,8 @@ class BackendFormBuilderAjaxSaveField extends BackendBaseAJAXAction
                             // build array
                             $validate['field_id'] = $fieldId;
                             $validate['type'] = $validation;
-                            $validate['error_message'] = SpoonFilter::htmlspecialchars($errorMessage);
-                            $validate['parameter'] = ($validationParameter != '') ? SpoonFilter::htmlspecialchars($validationParameter) : null;
+                            $validate['error_message'] = \SpoonFilter::htmlspecialchars($errorMessage);
+                            $validate['parameter'] = ($validationParameter != '') ? \SpoonFilter::htmlspecialchars($validationParameter) : null;
 
                             // add validation
                             BackendFormBuilderModel::insertFieldValidation($validate);

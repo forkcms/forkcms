@@ -9,12 +9,15 @@ namespace Backend\Modules\FormBuilder\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+
 /**
  * This is the data-action it will display the details of a sent data item
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendFormBuilderDataDetails extends BackendBaseActionIndex
+class DataDetails extends BackendBaseActionIndex
 {
     /**
      * @var array
