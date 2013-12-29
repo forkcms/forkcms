@@ -96,7 +96,7 @@ class Navigation extends \Backend\Core\Engine\Base\Object
         $value .= ");\n";
         $value .= "\n";
         $value .= '?>';
-var_dump(BACKEND_CACHE_PATH . '/navigation/navigation.php');exit;
+
         // store
         $fs = new Filesystem();
         $fs->dumpFile(
