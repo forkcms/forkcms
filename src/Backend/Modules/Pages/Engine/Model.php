@@ -12,7 +12,9 @@ namespace Backend\Modules\Pages\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
-use Backend\Model\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -577,24 +579,21 @@ class Model
             // insert the blocks
             self::insertBlocks($blocks, $hasBlock);
 
-            // check if the method exists
-            if (method_exists('BackendSearchModel', 'saveIndex')) {
-                // init var
-                $text = '';
+            // init var
+            $text = '';
 
-                // build search-text
-                foreach ($blocks as $block) {
-                    $text .= ' ' . $block['html'];
-                }
-
-                // add
-                BackendSearchModel::saveIndex(
-                    'pages',
-                    (int) $page['id'],
-                    array('title' => $page['title'], 'text' => $text),
-                    $to
-                );
+            // build search-text
+            foreach ($blocks as $block) {
+                $text .= ' ' . $block['html'];
             }
+
+            // add
+            BackendSearchModel::saveIndex(
+                'pages',
+                (int) $page['id'],
+                array('title' => $page['title'], 'text' => $text),
+                $to
+            );
 
             // get tags
             $tags = BackendTagsModel::getTags('pages', $id, 'string', $from);

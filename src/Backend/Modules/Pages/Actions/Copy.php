@@ -9,6 +9,11 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Exception as BackendException;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+
 /**
  * BackendPagesCopy
  * This is the copy-action, it will copy pages from one language to another
@@ -18,7 +23,7 @@ namespace Backend\Modules\Pages\Actions;
  * @author Sam Tubbax <sam@sumocoders.be>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class BackendPagesCopy extends BackendBaseActionIndex
+class Copy extends BackendBaseActionIndex
 {
     /**
      * The languages

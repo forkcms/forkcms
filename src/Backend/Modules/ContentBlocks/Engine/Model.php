@@ -9,6 +9,9 @@ namespace Backend\Modules\ContentBlocks\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -20,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class BackendContentBlocksModel
+class Model
 {
     const QRY_BROWSE =
         'SELECT i.id, i.title, i.hidden
@@ -66,7 +69,7 @@ class BackendContentBlocksModel
             $newBlock = array();
 
             // build new block
-            $newBlock['id'] = BackendContentBlocksModel::getMaximumId() + $i;
+            $newBlock['id'] = self::getMaximumId() + $i;
             $newBlock['language'] = $to;
             $newBlock['created_on'] = BackendModel::getUTCDate();
             $newBlock['edited_on'] = BackendModel::getUTCDate();
@@ -78,7 +81,7 @@ class BackendContentBlocksModel
             $newBlock['hidden'] = $contentBlock['hidden'];
 
             // inset content block
-            $newId = BackendContentBlocksModel::insert($newBlock);
+            $newId = self::insert($newBlock);
 
             // save ids for later
             $oldIds[] = $oldId;
@@ -224,12 +227,12 @@ class BackendContentBlocksModel
         $templates = array();
         $finder = new Finder();
         $finder->name('*.tpl');
-        $finder->in(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets');
+        $finder->in(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets');
 
         // if there is a custom theme we should include the templates there also
-        $theme = BackendModel::getModuleSetting('core', 'theme', 'core');
+        $theme = BackendModel::getModuleSetting('Core', 'theme', 'core');
         if($theme != 'core') {
-            $path = FRONTEND_PATH . '/themes/' . $theme . '/modules/content_blocks/layout/widgets';
+            $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/ContentBlocks/Layout/Widgets';
             if(is_dir($path)) {
                 $finder->in($path);
             }
@@ -285,7 +288,7 @@ class BackendContentBlocksModel
             'id' => $item['id'],
             'extra_label' => $item['title'],
             'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('edit', 'content_blocks', $item['language']) . '&id=' . $item['id'])
+            'edit_url' => BackendModel::createURLForAction('edit', 'ContentBlocks', $item['language']) . '&id=' . $item['id'])
         );
         $db->update(
             'modules_extras',
@@ -332,7 +335,7 @@ class BackendContentBlocksModel
         $item['revision_id'] = $db->insert('content_blocks', $item);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('content_blocks', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::getModuleSetting('ContentBlocks', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $db->getColumn(
