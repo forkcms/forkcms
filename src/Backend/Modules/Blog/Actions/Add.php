@@ -9,6 +9,16 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -21,7 +31,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendBlogAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Is the image field allowed?
@@ -57,7 +67,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
         // get categories
         $categories = BackendBlogModel::getCategories();
-        $categories['new_category'] = SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
+        $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
         $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
@@ -65,7 +75,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting($this->getModule(), 'allow_comments', false));
-        $this->frm->addDropdown('category_id', $categories, SpoonFilter::getGetValue('category', null, null, 'int'));
+        $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
         if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
         $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
@@ -101,7 +111,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
         // is the form submitted?
         if($this->frm->isSubmitted()) {
             // get the status
-            $status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();

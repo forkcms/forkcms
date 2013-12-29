@@ -9,13 +9,20 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This is the edit category action, it will display a form to edit an existing category.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendBlogEditCategory extends BackendBaseActionEdit
+class EditCategory extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -62,7 +69,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
-        $this->meta->setUrlCallback('BackendBlogModel', 'getURLForCategory', array($this->record['id']));
+        $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory', array($this->record['id']));
     }
 
     /**
@@ -75,7 +82,10 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
         $this->tpl->assign('item', $this->record);
 
         // delete allowed?
-        $this->tpl->assign('showBlogDeleteCategory', BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('delete_category'));
+        $this->tpl->assign(
+            'showBlogDeleteCategory',
+            BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('delete_category')
+        );
     }
 
     /**
@@ -106,7 +116,10 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('categories') . '&report=edited-category&var=' .
+                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

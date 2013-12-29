@@ -1530,7 +1530,7 @@ jsBackend.forms =
 				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
 				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
 				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
-				params: { fork: { module: 'tags', action: 'autocomplete' } }
+				params: { fork: { module: 'Tags', action: 'Autocomplete' } }
 			});
 		}
 		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
@@ -1541,7 +1541,7 @@ jsBackend.forms =
 				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
 				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
 				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
-				params: { fork: { module: 'tags', action: 'autocomplete' } },
+				params: { fork: { module: 'Tags', action: 'Autocomplete' } },
 				showIconOnly: false
 			});
 		}

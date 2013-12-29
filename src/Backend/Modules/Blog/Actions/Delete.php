@@ -9,6 +9,12 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This action will delete a blogpost
  *
@@ -16,7 +22,7 @@ namespace Backend\Modules\Blog\Actions;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBlogDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * The id of the category where is filtered on
@@ -39,7 +45,7 @@ class BackendBlogDelete extends BackendBaseActionDelete
             parent::execute();
 
             // set category id
-            $this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+            $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
             if($this->categoryId == 0) $this->categoryId = null;
 
             // get data
@@ -55,7 +61,7 @@ class BackendBlogDelete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // delete search indexes
-            if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex($this->getModule(), $this->id);
+            BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
             // build redirect URL
             $redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']);

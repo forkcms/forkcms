@@ -9,12 +9,18 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBlogEditComment extends BackendBaseActionEdit
+class EditComment extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -65,7 +71,11 @@ class BackendBlogEditComment extends BackendBaseActionEdit
         $this->frm->addTextarea('text', $this->record['text']);
 
         // assign URL
-        $this->tpl->assign('itemURL', BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' . $this->record['post_url'] . '#comment-' . $this->record['post_id']);
+        $this->tpl->assign(
+            'itemURL',
+            BackendModel::getURLForBlock($this->getModule(), 'detail') . '/' .
+            $this->record['post_url'] . '#comment-' . $this->record['post_id']
+        );
         $this->tpl->assign('itemTitle', $this->record['post_title']);
     }
 
@@ -101,7 +111,11 @@ class BackendBlogEditComment extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_comment', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' . $item['id'] . '&highlight=row-' . $item['id'] . '#tab' . SpoonFilter::toCamelCase($item['status']));
+                $this->redirect(
+                    BackendModel::createURLForAction('comments') . '&report=edited-comment&id=' .
+                    $item['id'] . '&highlight=row-' . $item['id'] . '#tab' .
+                    \SpoonFilter::toCamelCase($item['status'])
+                );
             }
         }
     }

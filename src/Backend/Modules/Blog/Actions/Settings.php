@@ -9,6 +9,12 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * This is the settings-action, it will display a form to set general blog settings
  *
@@ -16,7 +22,7 @@ namespace Backend\Modules\Blog\Actions;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendBlogSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
     /**
      * Is the user a god user?
@@ -47,9 +53,21 @@ class BackendBlogSettings extends BackendBaseActionEdit
         $this->frm = new BackendForm('settings');
 
         // add fields for pagination
-        $this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 10));
-        $this->frm->addDropdown('recent_articles_full_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_full_num_items', 5));
-        $this->frm->addDropdown('recent_articles_list_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_list_num_items', 5));
+        $this->frm->addDropdown(
+            'overview_number_of_items',
+            array_combine(range(1, 30), range(1, 30)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 10)
+        );
+        $this->frm->addDropdown(
+            'recent_articles_full_number_of_items',
+            array_combine(range(1, 10), range(1, 10)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_full_num_items', 5)
+        );
+        $this->frm->addDropdown(
+            'recent_articles_list_number_of_items',
+            array_combine(range(1, 10), range(1, 10)),
+            BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_list_num_items', 5)
+        );
 
         // add fields for spam
         $this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
@@ -65,8 +83,14 @@ class BackendBlogSettings extends BackendBaseActionEdit
         $this->frm->addCheckbox('moderation', BackendModel::getModuleSetting($this->URL->getModule(), 'moderation', false));
 
         // add fields for notifications
-        $this->frm->addCheckbox('notify_by_email_on_new_comment_to_moderate', BackendModel::getModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', false));
-        $this->frm->addCheckbox('notify_by_email_on_new_comment', BackendModel::getModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment', false));
+        $this->frm->addCheckbox(
+            'notify_by_email_on_new_comment_to_moderate',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', false)
+        );
+        $this->frm->addCheckbox(
+            'notify_by_email_on_new_comment',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment', false)
+        );
 
         // add fields for SEO
         $this->frm->addCheckbox('ping_services', BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false));

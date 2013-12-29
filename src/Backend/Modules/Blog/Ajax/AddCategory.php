@@ -9,12 +9,16 @@ namespace Backend\Modules\Blog\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This add-action will create a new category using Ajax
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
+class AddCategory extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,35 +28,16 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $categoryTitle = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+        $categoryTitle = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate
         if($categoryTitle === '') $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
-
-        // get the data
-        // build array
-        $item['title'] = SpoonFilter::htmlspecialchars($categoryTitle);
-        $item['language'] = BL::getWorkingLanguage();
-
-        $meta['keywords'] = $item['title'];
-        $meta['keywords_overwrite'] = 'N';
-        $meta['description'] = $item['title'];
-        $meta['description_overwrite'] = 'N';
-        $meta['title'] = $item['title'];
-        $meta['title_overwrite'] = 'N';
-        $meta['url'] = BackendBlogModel::getURLForCategory(CommonUri::getUrl($item['title']));
-
-        // update
-        $item['id'] = BackendBlogModel::insertCategory($item, $meta);
-
-        // output
-        $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), array($item['title'])));
 
         // validated
         else {
             // get the data
             // build array
-            $item['title'] = SpoonFilter::htmlspecialchars($categoryTitle);
+            $item['title'] = \SpoonFilter::htmlspecialchars($categoryTitle);
             $item['language'] = BL::getWorkingLanguage();
 
             $meta['keywords'] = $item['title'];
@@ -61,7 +46,7 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
             $meta['description_overwrite'] = 'N';
             $meta['title'] = $item['title'];
             $meta['title_overwrite'] = 'N';
-            $meta['url'] = BackendBlogModel::getURLForCategory(SpoonFilter::urlise($item['title']));
+            $meta['url'] = BackendBlogModel::getURLForCategory(\SpoonFilter::urlise($item['title']));
 
             // update
             $item['id'] = BackendBlogModel::insertCategory($item, $meta);

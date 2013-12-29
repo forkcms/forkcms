@@ -9,12 +9,16 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This action is used to update one or more comments (status, delete, ...)
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendBlogMassCommentAction extends BackendBaseAction
+class MassCommentAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,10 +28,10 @@ class BackendBlogMassCommentAction extends BackendBaseAction
         parent::execute();
 
         // current status
-        $from = SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
+        $from = \SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
+        $action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
         // no id's provided
         if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') . '&error=no-comments-selected');
@@ -124,6 +128,6 @@ class BackendBlogMassCommentAction extends BackendBaseAction
         if($action == 'delete') $report .= 'deleted';
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . SpoonFilter::ucfirst($from));
+        $this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
     }
 }

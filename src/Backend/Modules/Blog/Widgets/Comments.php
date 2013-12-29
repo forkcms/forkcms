@@ -10,6 +10,7 @@ namespace Backend\Modules\Blog\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 
 /**
  * This widget will show the latest comments

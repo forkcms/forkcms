@@ -9,13 +9,21 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This is the categories-action, it will display the overview of blog categories
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendBlogCategories extends BackendBaseActionIndex
+class Categories extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -34,16 +42,25 @@ class BackendBlogCategories extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, array('active', BL::getWorkingLanguage()));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
+            array('active', BL::getWorkingLanguage()
+            ));
 
         // set headers
-        $this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
+        $this->dataGrid->setHeaderLabels(array(
+            'num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+        ));
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('title', 'num_items'), 'title');
 
         // convert the count into a readable and clickable one
-        $this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
+        $this->dataGrid->setColumnFunction(
+            array(__CLASS__, 'setClickableCount'),
+            array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'),
+            'num_items', true
+        );
 
         // disable paging
         $this->dataGrid->setPaging(false);
@@ -54,10 +71,17 @@ class BackendBlogCategories extends BackendBaseActionIndex
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit_category')) {
             // set column URLs
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL(
+                'title',
+                BackendModel::createURLForAction('edit_category') . '&amp;id=[id]'
+            );
 
             // add column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit', null, BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_category') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
@@ -68,7 +92,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 
     /**

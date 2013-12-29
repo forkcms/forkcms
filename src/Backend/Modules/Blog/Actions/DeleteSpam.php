@@ -9,12 +9,16 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This action will delete a blogpost
  *
  * @author Tijs Verkoyen <tijs@verkoyen.eu>
  */
-class BackendBlogDeleteSpam extends BackendBaseActionDelete
+class DeleteSpam extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -25,6 +29,9 @@ class BackendBlogDeleteSpam extends BackendBaseActionDelete
         BackendBlogModel::deleteSpamComments();
 
         // item was deleted, so redirect
-        $this->redirect(BackendModel::createURLForAction('comments') . '&report=deleted-spam#tabSpam');
+        $this->redirect(
+            BackendModel::createURLForAction('comments') .
+            '&report=deleted-spam#tabSpam'
+        );
     }
 }

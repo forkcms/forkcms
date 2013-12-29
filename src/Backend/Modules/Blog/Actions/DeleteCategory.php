@@ -9,12 +9,16 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
+
 /**
  * This action will delete a category
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendBlogDeleteCategory extends BackendBaseActionDelete
+class DeleteCategory extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -40,11 +44,17 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
                 BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('id' => $this->id));
 
                 // category was deleted, so redirect
-                $this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
+                $this->redirect(
+                    BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' .
+                    urlencode($this->record['title'])
+                );
             }
 
             // delete category not allowed
-            else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
+            else $this->redirect(
+                BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' .
+                urlencode($this->record['title'])
+            );
         }
 
         // something went wrong

@@ -66,7 +66,7 @@ jsBackend.blog.controls =
 							{
 								data:
 								{
-									fork: { action: 'add_category' },
+									fork: { action: 'AddCategory' },
 									value: $('#categoryTitle').val()
 								},
 								success: function(json, textStatus)

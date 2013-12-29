@@ -94,7 +94,7 @@ class Meta
         if($metaId !== null) $this->loadMeta($metaId);
 
         // set default callback
-        $this->setUrlCallback('Backend' . \SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model', 'getURL');
+        $this->setUrlCallback('Backend\\Modules\\' . $this->URL->getModule() . '\\Engine\\Model', 'getURL');
 
         // load the form
         $this->loadForm();
