@@ -13,6 +13,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Model\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
