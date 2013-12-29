@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,13 +9,15 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Url AS FrontendURL;
+
 /**
  * In this file we specify the functions a class must implement to work with tags.
  * To use tags in your module simply implement this interface in your module's model class.
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-interface FrontendTagsInterface
+interface TagsInterface
 {
     /**
      * Get at least the title and full url for items with the given ids.

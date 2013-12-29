@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Pages\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Frontend\Core\Engine\Url AS FrontendURL;
+
 /**
  * In this file we store all generic functions that we will be using in the pages module
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class FrontendPagesModel implements FrontendTagsInterface
+class Model implements FrontendTagsInterface
 {
     /**
      * Fetch a list of items for a list of ids

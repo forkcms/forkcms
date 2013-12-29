@@ -9,12 +9,18 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This is the edit synonym action, it will display a form to edit an existing synonym.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchEditSynonym extends BackendBaseActionEdit
+class EditSynonym extends BackendBaseActionEdit
 {
     /**
      * Execute the action

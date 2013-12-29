@@ -9,12 +9,16 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This action will delete a synonym
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchDeleteSynonym extends BackendBaseActionDelete
+class DeleteSynonym extends BackendBaseActionDelete
 {
     /**
      * Execute the action

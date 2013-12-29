@@ -16,9 +16,6 @@
 
 {option:dataGrid}
 <div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>{$lblSynonyms|ucfirst}</h3>
-	</div>
 	{$dataGrid}
 </div>
 {/option:dataGrid}

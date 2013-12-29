@@ -1,11 +1,16 @@
 <?php
 
+namespace Frontend\Modules\Blog\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Frontend\Core\Engine\Url AS FrontendURL;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module
@@ -17,7 +22,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendBlogModel implements FrontendTagsInterface
+class Model implements FrontendTagsInterface
 {
     /**
      * Get an item

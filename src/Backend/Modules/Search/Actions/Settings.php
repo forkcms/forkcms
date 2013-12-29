@@ -9,12 +9,18 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This is the settings-action, it will display a form to set general search settings
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
     /**
      * List of modules
@@ -71,13 +77,13 @@ class BackendSearchSettings extends BackendBaseActionEdit
         );
 
         // modules that, no matter what, can not be searched
-        $disallowedModules = array('search');
+        $disallowedModules = array('Search');
 
         // loop modules
         foreach (BackendModel::getModulesForDropDown() as $module => $label) {
             // check if module is searchable
             if (!in_array($module, $disallowedModules) &&
-                is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))
+                method_exists('Frontend\\Modules\\' . $module . '\\Engine\\Model', 'search')
             ) {
                 // add field to decide whether or not this module is searchable
                 $this->frm->addCheckbox(

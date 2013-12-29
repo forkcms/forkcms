@@ -42,9 +42,6 @@ class Installer extends ModuleInstaller
         $this->setSetting('Location', 'height_widget', 300);
         $this->setSetting('Location', 'map_type_widget', 'ROADMAP');
 
-        // make module searchable
-        $this->makeSearchable('Location');
-
         // module rights
         $this->setModuleRights(1, 'Location');
 

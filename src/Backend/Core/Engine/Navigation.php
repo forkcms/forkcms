@@ -381,6 +381,7 @@ class Navigation extends \Backend\Core\Engine\Base\Object
             $this->URL->getQueryString(),
             'private/' . Language::getWorkingLanguage() . '/'
         );
+        $activeURL = strtok($activeURL, '?');
 
         // add current key
         $keys[] = $key;

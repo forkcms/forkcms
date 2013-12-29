@@ -9,12 +9,19 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This is the synonyms-action, it will display the overview of search synonyms
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchSynonyms extends BackendBaseActionIndex
+class Synonyms extends BackendBaseActionIndex
 {
     /**
      * Execute the action

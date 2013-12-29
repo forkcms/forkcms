@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,13 +9,16 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Frontend\Core\Engine\Url AS FrontendURL;
+
 /**
  * In this file we store all generic functions that we will be using in the faq module
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendFaqModel implements FrontendTagsInterface
+class Model implements FrontendTagsInterface
 {
     /**
      * Fetch a question

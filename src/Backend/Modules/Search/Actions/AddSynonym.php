@@ -9,13 +9,18 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
- * BackendSearchAddSynonym
  * This is the add-action, it will display a form to create a new synonym
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchAddSynonym extends BackendBaseActionAdd
+class AddSynonym extends BackendBaseActionAdd
 {
     /**
      * Execute the action

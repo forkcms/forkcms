@@ -640,7 +640,7 @@ class Model extends \BaseModel
      */
     public static function getModulesForDropDown()
     {
-        $dropdown = array('core' => 'core');
+        $dropdown = array('Core' => 'Core');
 
         // fetch modules
         $modules = self::getModules();
