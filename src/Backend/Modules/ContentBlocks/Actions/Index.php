@@ -9,13 +9,21 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+
 /**
  * This is the index-action (default), it will display the overview
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
-class BackendContentBlocksIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -33,13 +41,23 @@ class BackendContentBlocksIndex extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE, array('active', BL::getWorkingLanguage()));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendContentBlocksModel::QRY_BROWSE,
+            array('active', BL::getWorkingLanguage())
+        );
         $this->dataGrid->setSortingColumns(array('title'));
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit')) {
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->setColumnURL(
+                'title',
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+            );
+            $this->dataGrid->addColumn(
+                'edit', null, BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
@@ -50,6 +68,6 @@ class BackendContentBlocksIndex extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 }

@@ -9,6 +9,11 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+
 /**
  * This is the delete-action, it will delete an item.
  *
@@ -16,7 +21,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendContentBlocksDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -38,7 +43,10 @@ class BackendContentBlocksDelete extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&report=deleted&var=' .
+                urlencode($this->record['title'])
+            );
         }
 
         // no item found, redirect to the overview with an error

@@ -170,7 +170,7 @@ class DataGrid extends \SpoonDataGrid
             // we have a match, set the row function
             if(array_search($column, $allColumns) !== false) {
                 $this->setColumnHidden($column);
-                $this->setRowFunction(array('BackendDatagridFunctions', 'greyOut'), array($column, '[' . $column . ']'), array($column));
+                $this->setRowFunction(array(new DatagridFunctions(), 'greyOut'), array($column, '[' . $column . ']'), array($column));
             }
         }
     }

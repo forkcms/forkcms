@@ -9,6 +9,13 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
@@ -16,7 +23,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendContentBlocksAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * The available templates
@@ -61,19 +68,20 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
     {
         if($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
+            $fields = $this->frm->getFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
             if($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
+                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
                 $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['hidden'] = $this->frm->getField('hidden')->getValue() ? 'N' : 'Y';
+                $item['title'] = $fields['title']->getValue();
+                $item['text'] = $fields['text']->getValue();
+                $item['hidden'] = $fields['hidden']->getValue() ? 'N' : 'Y';
                 $item['status'] = 'active';
                 $item['created_on'] = BackendModel::getUTCDate();
                 $item['edited_on'] = BackendModel::getUTCDate();
@@ -85,7 +93,10 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=added&var=' .
+                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

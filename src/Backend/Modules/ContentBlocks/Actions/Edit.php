@@ -9,6 +9,15 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+
 /**
  * This is the edit-action, it will display a form to edit an existing item
  *
@@ -17,7 +26,7 @@ namespace Backend\Modules\ContentBlocks\Actions;
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendContentBlocksEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * The available templates
@@ -73,7 +82,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
         $this->templates = BackendContentBlocksModel::getTemplates();
 
         // check if selected template is still available
-        if($this->record['template'] && !in_array($this->record['template'], $this->templates)) $this->record['template'] = '';
+        if($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
+            $this->record['template'] = '';
+        }
     }
 
     /**
@@ -98,7 +109,10 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
     private function loadRevisions()
     {
         // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id'], BL::getWorkingLanguage()));
+        $this->dgRevisions = new BackendDataGridDB(
+            BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
+            array('archived', $this->record['id'], BL::getWorkingLanguage())
+        );
 
         // hide columns
         $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
@@ -107,19 +121,37 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
         $this->dgRevisions->setPaging(false);
 
         // set headers
-        $this->dgRevisions->setHeaderLabels(array('user_id' => SpoonFilter::ucfirst(BL::lbl('By')), 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))));
+        $this->dgRevisions->setHeaderLabels(array(
+            'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+        ));
 
         // set column-functions
-        $this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
-        $this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+        $this->dgRevisions->setColumnFunction(
+            array(new BackendDataGridFunctions(), 'getUser'),
+            array('[user_id]'), 'user_id'
+        );
+        $this->dgRevisions->setColumnFunction(
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
+            array('[edited_on]'), 'edited_on'
+        );
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit')) {
             // set column URLs
-            $this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
+            $this->dgRevisions->setColumnURL(
+                'title',
+                BackendModel::createURLForAction('edit') .
+                '&amp;id=[id]&amp;revision=[revision_id]'
+            );
 
             // add use column
-            $this->dgRevisions->addColumn('use_revision', null, BL::lbl('UseThisVersion'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+            $this->dgRevisions->addColumn(
+                'use_revision', null, BL::lbl('UseThisVersion'),
+                BackendModel::createURLForAction('edit') .
+                '&amp;id=[id]&amp;revision=[revision_id]',
+                BL::lbl('UseThisVersion')
+            );
         }
     }
 
@@ -135,7 +167,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
         $this->tpl->assign('revision_id', $this->record['revision_id']);
 
         // assign revisions-datagrid
-        $this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
+        $this->tpl->assign('revisions', (string) $this->dgRevisions->getContent());
     }
 
     /**
@@ -145,19 +177,20 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
     {
         if($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
+            $fields = $this->frm->getFields();
 
             // validate fields
-            $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+            $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
             if($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $this->frm->getField('template')->getValue() : $this->templates[0];
+                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
                 $item['language'] = $this->record['language'];
                 $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['text'] = $this->frm->getField('text')->getValue();
-                $item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
+                $item['title'] = $fields['title']->getValue();
+                $item['text'] = $fields['text']->getValue();
+                $item['hidden'] = $fields['hidden']->getChecked() ? 'N' : 'Y';
                 $item['status'] = 'active';
                 $item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
                 $item['edited_on'] = BackendModel::getUTCDate();
@@ -169,7 +202,10 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('index') . '&report=edited&var=' .
+                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }
