@@ -9,12 +9,15 @@ namespace Backend\Modules\Pages\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+
 /**
  * This edit-action will get the page info using Ajax
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
+class GetInfo extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -25,7 +28,7 @@ class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
+        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
 
         // validate
         if ($id === 0) {

@@ -27,9 +27,10 @@ var jsBackend =
 		// set some properties
 		jsBackend.debug = jsBackend.data.get('debug');
 		jsBackend.current.language = chunks[2];
-		jsBackend.current.module = utils.string.camelCase(chunks[3]);
+		if(typeof chunks[3] == 'undefined') jsBackend.current.module = null;
+		else jsBackend.current.module = utils.string.ucfirst(utils.string.camelCase(chunks[3]));
 		if(typeof chunks[4] == 'undefined') jsBackend.current.action = null;
-		else jsBackend.current.action = utils.string.camelCase(chunks[4]);
+		else jsBackend.current.action = utils.string.ucfirst(utils.string.camelCase(chunks[4]));
 
 		// set defaults
 		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';

@@ -9,12 +9,16 @@ namespace Backend\Modules\Pages\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+
 /**
  * This edit-action will reorder moved pages using Ajax
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendPagesAjaxMove extends BackendBaseAJAXAction
+class Move extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -25,10 +29,10 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
-        $droppedOn = SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
-        $typeOfDrop = SpoonFilter::getPostValue('type', null, '');
-        $tree = SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
+        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $droppedOn = \SpoonFilter::getPostValue('dropped_on', null, -1, 'int');
+        $typeOfDrop = \SpoonFilter::getPostValue('type', null, '');
+        $tree = \SpoonFilter::getPostValue('tree', array('main', 'meta', 'footer', 'root'), '');
 
         // init validation
         $errors = array();
