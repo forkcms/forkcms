@@ -1,5 +1,5 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
-{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblModuleSettings|ucfirst}: {$lblPages}</h2>
@@ -25,5 +25,5 @@
 	</div>
 {/form:settings}
 
-{include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureEnd.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

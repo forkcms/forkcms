@@ -9,13 +9,17 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+
 /**
  * This is the settings-action, it will display a form to set general pages settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendPagesSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
     /**
      * Execute the action
