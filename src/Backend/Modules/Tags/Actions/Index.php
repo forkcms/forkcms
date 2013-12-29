@@ -9,6 +9,14 @@ namespace Backend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This is the index-action, it will display the overview of tags
  *
@@ -16,7 +24,7 @@ namespace Backend\Modules\Tags\Actions;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendTagsIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -35,12 +43,16 @@ class BackendTagsIndex extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
+        $this->dataGrid = new BackendDataGridDB(
+            BackendTagsModel::QRY_DATAGRID_BROWSE,
+            BL::getWorkingLanguage()
+        );
 
         // header labels
-        $this->dataGrid->setHeaderLabels(
-            array('tag' => SpoonFilter::ucfirst(BL::lbl('Name')), 'num_tags' => SpoonFilter::ucfirst(BL::lbl('Amount')))
-        );
+        $this->dataGrid->setHeaderLabels(array(
+            'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
+            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+        ));
 
         // sorting columns
         $this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
@@ -50,7 +62,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
         $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
         $ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
         $this->dataGrid->setMassAction($ddmMassAction);
 
@@ -77,6 +89,6 @@ class BackendTagsIndex extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 }

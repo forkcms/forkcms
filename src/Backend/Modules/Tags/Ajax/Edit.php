@@ -9,12 +9,16 @@ namespace Backend\Modules\Tags\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This edit-action will update tags using Ajax
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendTagsAjaxEdit extends BackendBaseAJAXAction
+class Edit extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,8 +28,8 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = SpoonFilter::getPostValue('id', null, 0, 'int');
-        $tag = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+        $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
+        $tag = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate id
         if ($id === 0) {
@@ -42,9 +46,9 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 
         // build array
         $item['id'] = $id;
-        $item['tag'] = SpoonFilter::htmlspecialchars($tag);
+        $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
         $item['url'] = BackendTagsModel::getURL(
-            CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+            \CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
             $id
         );
 

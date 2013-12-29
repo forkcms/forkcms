@@ -9,12 +9,16 @@ namespace Backend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This action is used to perform mass actions on tags (delete, ...)
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendTagsMassAction extends BackendBaseAction
+class MassAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,11 +28,13 @@ class BackendTagsMassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&error=no-selection'
+            );
         } else {
             // at least one id
             // redefine id's
@@ -41,6 +47,8 @@ class BackendTagsMassAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted');
+        $this->redirect(
+            BackendModel::createURLForAction('index') . '&report=deleted'
+        );
     }
 }

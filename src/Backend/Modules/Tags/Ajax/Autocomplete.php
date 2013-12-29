@@ -9,13 +9,17 @@ namespace Backend\Modules\Tags\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
- * This is the autocomplete-action, it will output a list of tags that start with a certain string.
+ * This is the autocomplete-action, it will output a list of tags that start
+ * with a certain string.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
+class Autocomplete extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -25,7 +29,7 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $term = SpoonFilter::getPostValue('term', null, '');
+        $term = \SpoonFilter::getPostValue('term', null, '');
 
         // validate
         if ($term == '') {

@@ -465,20 +465,3 @@ class DataGrid extends \SpoonDataGrid
         else parent::setURL($URL);
     }
 }
-
-/**
- * A datagrid with an array as source
- *
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- */
-class DataGridArray extends DataGrid
-{
-    /**
-     * @param array $array The data.
-     */
-    public function __construct(array $array)
-    {
-        $source = new \SpoonDataGridSourceArray($array);
-        parent::__construct($source);
-    }
-}

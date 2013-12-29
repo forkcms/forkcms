@@ -9,13 +9,20 @@ namespace Backend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This is the edit action, it will display a form to edit an existing tag.
  *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendTagsEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * DataGrid with the articles linked to the current tag
@@ -72,7 +79,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
                 require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
 
                 // build class name
-                $className = SpoonFilter::toCamelCase('backend_' . $module . '_model');
+                $className = \SpoonFilter::toCamelCase('backend_' . $module . '_model');
 
                 // check if the getByTag-method is available
                 if (is_callable(array($className, 'getByTag'))) {
@@ -85,7 +92,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
                         if (isset($row['url'], $row['name'], $row['module'])) {
                             // add
                             $items[] = array(
-                                'module' => SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))),
+                                'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
                                 'name' => $row['name'],
                                 'url' => $row['url']
                             );
@@ -99,9 +106,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
         $this->dgUsage = new BackendDataGridArray($items);
         $this->dgUsage->setPaging(false);
         $this->dgUsage->setColumnsHidden(array('url'));
-        $this->dgUsage->setHeaderLabels(array('name' => SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
-        $this->dgUsage->setColumnURL('name', '[url]', SpoonFilter::ucfirst(BL::lbl('Edit')));
-        $this->dgUsage->addColumn('edit', null, SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
+        $this->dgUsage->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('Title')), 'url' => ''));
+        $this->dgUsage->setColumnURL('name', '[url]', \SpoonFilter::ucfirst(BL::lbl('Edit')));
+        $this->dgUsage->addColumn('edit', null, \SpoonFilter::ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
     }
 
     /**
@@ -125,7 +132,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
         $this->tpl->assign('name', $this->record['name']);
 
         // assign usage-datagrid
-        $this->tpl->assign('usage', ($this->dgUsage->getNumResults() != 0) ? $this->dgUsage->getContent() : false);
+        $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
     }
 
     /**
@@ -147,7 +154,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getURL(
-                    CommonUri::getUrl(SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    \CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
 
