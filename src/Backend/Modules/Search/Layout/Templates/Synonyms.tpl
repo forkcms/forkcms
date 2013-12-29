@@ -25,7 +25,5 @@
 
 {option:!dataGrid}<p>{$msgNoSynonyms|sprintf:{$var|geturl:'add_synonym'}}</p>{/option:!dataGrid}
 
-{include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
-{include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
