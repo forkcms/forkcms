@@ -9,6 +9,9 @@ namespace Backend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * In this file we store all generic functions that we will be using in the blog module
  *
@@ -17,7 +20,7 @@ namespace Backend\Modules\Blog\Engine;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendBlogModel
+class Model
 {
     const QRY_DATAGRID_BROWSE =
         'SELECT i.hidden, i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
