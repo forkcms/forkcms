@@ -95,11 +95,11 @@
 	z-index: 2147483647;
 	width: 16px;
 	height: 16px;
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) 0 -653px no-repeat;
+	background: url(/src/Backend/Core/Layout/images/sprites/fork_icons.png) 0 -653px no-repeat;
 }
 
 #jstree-marker.marker_plus {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) 0 -3px no-repeat;
+	background: url(/src/Backend/Core/Layout/images/sprites/fork_icons.png) 0 -3px no-repeat;
 }
 
 /* BACKGROUND DOTS */ 
@@ -231,11 +231,11 @@
 }
 
 #jstree-dragged.tree-fork ins {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) 0 -610px no-repeat;
+	background: url(/src/Backend/Core/Layout/images/sprites/fork_icons.png) 0 -610px no-repeat;
 }
 
 #jstree-dragged.tree-fork ins.forbidden {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) 0 -631px no-repeat;
+	background: url(/src/Backend/Core/Layout/images/sprites/fork_icons.png) 0 -631px no-repeat;
 }
 
 /* LOCKED */

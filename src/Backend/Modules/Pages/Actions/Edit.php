@@ -9,6 +9,19 @@ namespace Backend\Modules\Pages\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This is the edit-action, it will display a form to update an item
  *
@@ -17,7 +30,7 @@ namespace Backend\Modules\Pages\Actions;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendPagesEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * The blocks linked to this page
@@ -77,7 +90,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
         // add css
-        $this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
+        $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // get the templates
         $this->templates = BackendExtensionsModel::getTemplates();
@@ -181,15 +194,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
         // set headers
         $this->dgDrafts->setHeaderLabels(
             array(
-                 'user_id' => SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
             )
         );
 
         // set column-functions
-        $this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+        $this->dgDrafts->setColumnFunction(array(new BackendDataGridFunctions(), 'getUser'), array('[user_id]'), 'user_id');
         $this->dgDrafts->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[edited_on]'),
             'edited_on'
         );
@@ -251,7 +264,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
             $values = array();
 
             foreach ($items as $value) {
-                $values[] = array('label' => BL::msg(SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
+                $values[] = array('label' => BL::msg(\SpoonFilter::toCamelCase('allow_' . $value)), 'value' => $value);
                 if (isset($this->record['allow_' . $value]) && $this->record['allow_' . $value] == 'Y') {
                     $checked[] = $value;
                 }
@@ -369,15 +382,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
             $redirectValue = 'external';
         }
         $redirectValues = array(
-            array('value' => 'none', 'label' => SpoonFilter::ucfirst(BL::lbl('None'))),
+            array('value' => 'none', 'label' => \SpoonFilter::ucfirst(BL::lbl('None'))),
             array(
                 'value' => 'internal',
-                'label' => SpoonFilter::ucfirst(BL::lbl('InternalLink')),
+                'label' => \SpoonFilter::ucfirst(BL::lbl('InternalLink')),
                 'variables' => array('isInternal' => true)
             ),
             array(
                 'value' => 'external',
-                'label' => SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
+                'label' => \SpoonFilter::ucfirst(BL::lbl('ExternalLink')),
                 'variables' => array('isExternal' => true)
             ),
         );
@@ -421,7 +434,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
         // set callback for generating an unique URL
         $this->meta->setURLCallback(
-            'BackendPagesModel',
+            'Backend\Modules\Pages\Engine\Model',
             'getURL',
             array($this->record['id'], $this->record['parent_id'], $isAction)
         );
@@ -433,12 +446,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
     private function loadRevisions()
     {
         // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array(
-                                                                                                 $this->id,
-                                                                                                 'archive',
-                                                                                                 BL::getWorkingLanguage(
-                                                                                                 )
-                                                                                            ));
+        $this->dgRevisions = new BackendDataGridDB(
+            BackendPagesModel::QRY_BROWSE_REVISIONS,
+            array(
+                 $this->id,
+                 'archive',
+                 BL::getWorkingLanguage(
+                 )
+            )
+        );
 
         // hide columns
         $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
@@ -449,19 +465,19 @@ class BackendPagesEdit extends BackendBaseActionEdit
         // set headers
         $this->dgRevisions->setHeaderLabels(
             array(
-                 'user_id' => SpoonFilter::ucfirst(BL::lbl('By')),
-                 'edited_on' => SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+                 'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+                 'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
             )
         );
 
         // set functions
         $this->dgRevisions->setColumnFunction(
-            array('BackendDataGridFunctions', 'getUser'),
+            array(new BackendDataGridFunctions(), 'getUser'),
             array('[user_id]'),
             'user_id'
         );
         $this->dgRevisions->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[edited_on]'),
             'edited_on'
         );
@@ -549,7 +565,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             // get the status
-            $status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+            $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
             // validate redirect
             $redirectValue = $this->frm->getField('redirect')->getValue();
@@ -564,7 +580,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
             // set callback for generating an unique URL
             $this->meta->setURLCallback(
-                'BackendPagesModel',
+                'Backend\Modules\Pages\Engine\Model',
                 'getURL',
                 array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked())
             );
@@ -606,7 +622,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
                 $page['parent_id'] = $this->record['parent_id'];
                 $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
                 $page['meta_id'] = (int) $this->meta->save();
-                $page['language'] = BackendLanguage::getWorkingLanguage();
+                $page['language'] = BL::getWorkingLanguage();
                 $page['type'] = $this->record['type'];
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
