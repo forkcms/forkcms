@@ -9,12 +9,18 @@ namespace Backend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+
 /**
  * This is the statistics-action, it will display the overview of search statistics
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendSearchStatistics extends BackendBaseActionIndex
+class Statistics extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -45,12 +51,12 @@ class BackendSearchStatistics extends BackendBaseActionIndex
         $this->dataGrid->addColumn('referrer', BL::lbl('Referrer'));
 
         // header labels
-        $this->dataGrid->setHeaderLabels(array('time' => SpoonFilter::ucfirst(BL::lbl('SearchedOn'))));
+        $this->dataGrid->setHeaderLabels(array('time' => \SpoonFilter::ucfirst(BL::lbl('SearchedOn'))));
 
         // set column function
         $this->dataGrid->setColumnFunction(array(__CLASS__, 'setReferrer'), '[data]', 'referrer');
         $this->dataGrid->setColumnFunction(
-            array('BackendDataGridFunctions', 'getLongDate'),
+            array(new BackendDataGridFunctions(), 'getLongDate'),
             array('[time]'),
             'time',
             true
