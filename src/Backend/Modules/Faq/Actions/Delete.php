@@ -9,13 +9,17 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This action will delete a question
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendFaqDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -30,9 +34,18 @@ class BackendFaqDelete extends BackendBaseActionDelete
 
             // delete item
             BackendFaqModel::delete($this->id);
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('item' => $this->record));
+            BackendModel::triggerEvent(
+                $this->getModule(),
+                'after_delete',
+                array('item' => $this->record)
+            );
 
-            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['question']));
-        } else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&report=deleted&var=' .
+                urlencode($this->record['question'])
+            );
+        } else $this->redirect(
+            BackendModel::createURLForAction('index') . '&error=non-existing'
+        );
     }
 }

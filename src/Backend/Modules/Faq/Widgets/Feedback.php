@@ -10,6 +10,9 @@ namespace Backend\Modules\Faq\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\Model as BackendModel;
+
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * This widget will show the latest feedback
@@ -46,7 +49,8 @@ class Feedback extends BackendBaseWidget
 
         // build the urls
         foreach($allFeedback as $feedback) {
-            $feedback['full_url'] = BackendModel::createURLForAction('edit', 'faq') . '&id=' . $feedback['question_id'] . '#tabFeedback';
+            $feedback['full_url'] = BackendModel::createURLForAction('edit', 'faq') .
+                                    '&id=' . $feedback['question_id'] . '#tabFeedback';
             $this->feedback[] = $feedback;
         }
     }

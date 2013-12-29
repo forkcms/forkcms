@@ -9,6 +9,15 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This is the index-action (default), it will display the overview
  *
@@ -17,7 +26,7 @@ namespace Backend\Modules\Faq\Actions;
  * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * The dataGrids
@@ -48,7 +57,10 @@ class BackendFaqIndex extends BackendBaseActionIndex
 
         // loop categories and create a dataGrid for each one
         foreach($categories as $categoryId => $categoryTitle) {
-            $dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage(), $categoryId));
+            $dataGrid = new BackendDataGridDB(
+                BackendFaqModel::QRY_DATAGRID_BROWSE,
+                array(BL::getWorkingLanguage(), $categoryId)
+            );
             $dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
             $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
             $dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
@@ -60,17 +72,29 @@ class BackendFaqIndex extends BackendBaseActionIndex
             // check if this action is allowed
             if(BackendAuthentication::isAllowedAction('edit')) {
                 $dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-                $dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+                $dataGrid->addColumn(
+                    'edit', null, BL::lbl('Edit'),
+                    BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                    BL::lbl('Edit')
+                );
             }
 
             // add dataGrid to list
-            $this->dataGrids[] = array('id' => $categoryId,
-                                       'title' => $categoryTitle,
-                                       'content' => $dataGrid->getContent());
+            $this->dataGrids[] = array(
+                'id' => $categoryId,
+                'title' => $categoryTitle,
+                'content' => $dataGrid->getContent()
+            );
         }
 
         // set empty datagrid
-        $this->emptyDatagrid = new BackendDataGridArray(array(array('dragAndDropHandle' => '', 'question' => BL::msg('NoQuestionInCategory'), 'edit' => '')));
+        $this->emptyDatagrid = new BackendDataGridArray(
+            array(array(
+                'dragAndDropHandle' => '',
+                'question' => BL::msg('NoQuestionInCategory'),
+                'edit' => ''
+            ))
+        );
         $this->emptyDatagrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop emptyGrid'));
         $this->emptyDatagrid->setHeaderLabels(array('edit' => null, 'dragAndDropHandle' => null));
     }

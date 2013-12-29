@@ -9,6 +9,10 @@ namespace Backend\Modules\Faq\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * In this file we store all generic functions that we will be using in the faq module
  *
@@ -17,7 +21,7 @@ namespace Backend\Modules\Faq\Engine;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqModel
+class Model
 {
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
@@ -41,7 +45,7 @@ class BackendFaqModel
     public static function delete($id)
     {
         BackendModel::getContainer()->get('database')->delete('faq_questions', 'id = ?', array((int) $id));
-        BackendTagsModel::saveTags($id, '', 'faq');
+        BackendTagsModel::saveTags($id, '', 'Faq');
     }
 
     /**
@@ -61,7 +65,7 @@ class BackendFaqModel
 
             // build extra
             $extra = array('id' => $item['extra_id'],
-                    'module' => 'faq',
+                    'module' => 'Faq',
                     'type' => 'widget',
                     'action' => 'category_list');
 
@@ -69,7 +73,7 @@ class BackendFaqModel
             $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
             // invalidate the cache for the faq
-            BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
 
@@ -90,7 +94,7 @@ class BackendFaqModel
              array((int) $id, BL::getWorkingLanguage())) == 0);
 
         // exception
-        if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true) && self::getCategoryCount() == 1) {
+        if(!BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true) && self::getCategoryCount() == 1) {
             return false;
         } else return $result;
     }
@@ -199,7 +203,7 @@ class BackendFaqModel
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN faq_questions AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.language = ?',
-             array('faq', (int) $tagId, BL::getWorkingLanguage()));
+             array('Faq', (int) $tagId, BL::getWorkingLanguage()));
 
         foreach($items as &$row) {
             $row['url'] = BackendModel::createURLForAction('edit', 'faq', null, array('id' => $row['url']));
@@ -317,9 +321,9 @@ class BackendFaqModel
      */
     public static function getURL($url, $id = null)
     {
-        $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::getDB();
-        $url = SpoonFilter::urlise((string) $url);
+        $url = \CommonUri::getUrl((string) $url);
+        $db = BackendModel::get('database');
+        $url = \SpoonFilter::urlise((string) $url);
         $db = BackendModel::getContainer()->get('database');
 
         // new item
@@ -365,9 +369,9 @@ class BackendFaqModel
      */
     public static function getURLForCategory($url, $id = null)
     {
-        $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::getDB();
-        $url = SpoonFilter::urlise((string) $url);
+        $url = \CommonUri::getUrl((string) $url);
+        $db = BackendModel::get('database');
+        $url = \SpoonFilter::urlise((string) $url);
         $db = BackendModel::getContainer()->get('database');
 
         // new category
@@ -412,7 +416,7 @@ class BackendFaqModel
     {
         $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
 
-        BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         return $insertId;
     }
@@ -430,7 +434,7 @@ class BackendFaqModel
 
         // build extra
         $extra = array(
-                'module' => 'faq',
+                'module' => 'Faq',
                 'type' => 'widget',
                 'label' => 'Faq',
                 'action' => 'category_list',
@@ -440,7 +444,7 @@ class BackendFaqModel
                         'SELECT MAX(i.sequence) + 1
                  FROM modules_extras AS i
                  WHERE i.module = ?',
-                        array('faq')
+                        array('Faq')
                 )
         );
 
@@ -457,14 +461,14 @@ class BackendFaqModel
         if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
         $item['id'] = $db->insert('faq_categories', $item);
 
-        BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         // update extra (item id is now known)
         $extra['data'] = serialize(array(
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('edit_category', 'faq', $item['language']) . '&id=' . $item['id'])
+                'edit_url' => BackendModel::createURLForAction('edit_category', 'Faq', $item['language']) . '&id=' . $item['id'])
         );
 
         $db->update(
@@ -485,7 +489,7 @@ class BackendFaqModel
     public static function update(array $item)
     {
         BackendModel::getContainer()->get('database')->update('faq_questions', $item, 'id = ?', array((int) $item['id']));
-        BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 
     /**
@@ -498,12 +502,12 @@ class BackendFaqModel
         $db = BackendModel::getContainer()->get('database');
 
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
-        BackendModel::invalidateFrontendCache('faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         // build extra
         $extra = array(
                 'id' => $item['extra_id'],
-                'module' => 'faq',
+                'module' => 'Faq',
                 'type' => 'widget',
                 'label' => 'Faq',
                 'action' => 'category_list',

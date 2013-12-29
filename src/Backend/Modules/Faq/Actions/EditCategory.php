@@ -9,6 +9,16 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+
 /**
  * This is the edit category action, it will display a form to edit an existing category.
  *
@@ -16,7 +26,7 @@ namespace Backend\Modules\Faq\Actions;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqEditCategory extends BackendBaseActionEdit
+class EditCategory extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -76,7 +86,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
     private function validateForm()
     {
         if($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback('BackendFaqModel', 'getURLForCategory', array($this->record['id']));
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory', array($this->record['id']));
 
             $this->frm->cleanupFields();
 

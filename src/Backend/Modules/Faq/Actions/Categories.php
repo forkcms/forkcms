@@ -9,6 +9,14 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This is the categories-action, it will display the overview of faq categories
  *
@@ -17,7 +25,7 @@ namespace Backend\Modules\Faq\Actions;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author SIESQO <info@siesqo.be>
  */
-class BackendFaqCategories extends BackendBaseActionIndex
+class Categories extends BackendBaseActionIndex
 {
     /**
      * Deny the use of multiple categories
@@ -48,8 +56,11 @@ class BackendFaqCategories extends BackendBaseActionIndex
         $this->multipleCategoriesAllowed = BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true);
 
         // create dataGrid
-        $this->dataGrid = new BackendDataGridDB(BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
-        $this->dataGrid->setHeaderLabels(array('num_items' => SpoonFilter::ucfirst(BL::lbl('Amount'))));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
+            BL::getWorkingLanguage()
+        );
+        $this->dataGrid->setHeaderLabels(array('num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))));
         if($this->multipleCategoriesAllowed) $this->dataGrid->enableSequenceByDragAndDrop();
         else $this->dataGrid->setColumnsHidden(array('sequence'));
         $this->dataGrid->setRowAttributes(array('id' => '[id]'));
@@ -57,13 +68,21 @@ class BackendFaqCategories extends BackendBaseActionIndex
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('index')) {
-            $this->dataGrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
+            $this->dataGrid->setColumnFunction(
+                array(__CLASS__, 'setClickableCount'),
+                array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'),
+                'num_items', true
+            );
         }
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit_category')) {
             $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn(
+                'edit', null, BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit_category') . '&amp;id=[id]',
+                BL::lbl('Edit')
+            );
         }
     }
 
@@ -74,7 +93,7 @@ class BackendFaqCategories extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('add_category') && $this->multipleCategoriesAllowed) {

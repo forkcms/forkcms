@@ -89,7 +89,7 @@ jsBackend.faq =
 					{
 						data:
 						{
-							fork: { action: 'sequence_questions' },
+							fork: { action: 'SequenceQuestions' },
 							questionId: questionId,
 							fromCategoryId: fromCategoryId,
 							toCategoryId: toCategoryId,

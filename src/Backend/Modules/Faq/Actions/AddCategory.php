@@ -9,6 +9,13 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This is the add-action, it will display a form to create a new category
  *
@@ -17,7 +24,7 @@ namespace Backend\Modules\Faq\Actions;
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author SIESQO <info@siesqo.be>
  */
-class BackendFaqAddCategory extends BackendBaseActionAdd
+class AddCategory extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -25,7 +32,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
     public function execute()
     {
         // only one category allowed, so we redirect
-        if(!BackendModel::getModuleSetting('faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
+        if(!BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('categories') . '&error=only-one-category-allowed');
 
         parent::execute();
         $this->loadForm();
@@ -51,7 +58,7 @@ class BackendFaqAddCategory extends BackendBaseActionAdd
     private function validateForm()
     {
         if($this->frm->isSubmitted()) {
-            $this->meta->setURLCallback('BackendFaqModel', 'getURLForCategory');
+            $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory');
 
             $this->frm->cleanupFields();
 

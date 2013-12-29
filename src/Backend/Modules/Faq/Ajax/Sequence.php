@@ -9,12 +9,15 @@ namespace Backend\Modules\Faq\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * Reorder categories
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  */
-class BackendFaqAjaxSequence extends BackendBaseAJAXAction
+class Sequence extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,7 +27,7 @@ class BackendFaqAjaxSequence extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $newIdSequence = trim(SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
+        $newIdSequence = trim(\SpoonFilter::getPostValue('new_id_sequence', null, '', 'string'));
 
         // list id
         $ids = (array) explode(',', rtrim($newIdSequence, ','));

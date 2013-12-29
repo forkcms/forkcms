@@ -2,6 +2,9 @@
 
 namespace Backend\Modules\Faq\Ajax;
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * Reorder questions
  *
@@ -9,7 +12,7 @@ namespace Backend\Modules\Faq\Ajax;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
+class SequenceQuestions extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -18,11 +21,11 @@ class BackendFaqAjaxSequenceQuestions extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $questionId = SpoonFilter::getPostValue('questionId', null, '', 'int');
-        $fromCategoryId = SpoonFilter::getPostValue('fromCategoryId', null, '', 'int');
-        $toCategoryId = SpoonFilter::getPostValue('toCategoryId', null, '', 'int');
-        $fromCategorySequence = SpoonFilter::getPostValue('fromCategorySequence', null, '', 'string');
-        $toCategorySequence = SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
+        $questionId = \SpoonFilter::getPostValue('questionId', null, '', 'int');
+        $fromCategoryId = \SpoonFilter::getPostValue('fromCategoryId', null, '', 'int');
+        $toCategoryId = \SpoonFilter::getPostValue('toCategoryId', null, '', 'int');
+        $fromCategorySequence = \SpoonFilter::getPostValue('fromCategorySequence', null, '', 'string');
+        $toCategorySequence = \SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
 
         // invalid question id
         if(!BackendFaqModel::exists($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');

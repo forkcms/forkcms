@@ -9,6 +9,10 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This action will delete a category
  *
@@ -16,7 +20,7 @@ namespace Backend\Modules\Faq\Actions;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqDeleteCategory extends BackendBaseActionDelete
+class DeleteCategory extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -34,11 +38,23 @@ class BackendFaqDeleteCategory extends BackendBaseActionDelete
 
                 // delete item
                 BackendFaqModel::deleteCategory($this->id);
-                BackendModel::triggerEvent($this->getModule(), 'after_delete_category', array('item' => $this->record));
+                BackendModel::triggerEvent(
+                    $this->getModule(),
+                    'after_delete_category',
+                    array('item' => $this->record)
+                );
 
                 // category was deleted, so redirect
-                $this->redirect(BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' . urlencode($this->record['title']));
-            } else $this->redirect(BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' . urlencode($this->record['title']));
-        } else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+                $this->redirect(
+                    BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' .
+                    urlencode($this->record['title'])
+                );
+            } else $this->redirect(
+                BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' .
+                urlencode($this->record['title'])
+            );
+        } else $this->redirect(
+            BackendModel::createURLForAction('categories') . '&error=non-existing'
+        );
     }
 }

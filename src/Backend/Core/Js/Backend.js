@@ -2018,7 +2018,7 @@ jsBackend.tableSequenceByDragAndDrop =
 				{
 					// the table
 					$table = $(this);
-					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'sequence' : $table.parents('table.dataGrid').data('action').toString();
+					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'Sequence' : $table.parents('table.dataGrid').data('action').toString();
 					var module = (typeof $table.parents('table.dataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.dataGrid').data('module').toString();
 
 					// fetch extra params
