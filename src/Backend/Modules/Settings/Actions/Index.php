@@ -2,8 +2,6 @@
 
 namespace Backend\Modules\Settings\Actions;
 
-use \TijsVerkoyen\Akismet\Akismet;
-
 /*
  * This file is part of Fork CMS.
  *
@@ -11,13 +9,21 @@ use \TijsVerkoyen\Akismet\Akismet;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use \TijsVerkoyen\Akismet\Akismet;
+
 /**
  * This is the index-action (default), it will display the setting-overview
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendSettingsIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * The form instance
@@ -69,88 +75,88 @@ class BackendSettingsIndex extends BackendBaseActionIndex
         // general settings
         $this->frm->addText(
             'site_title',
-            BackendModel::getModuleSetting('core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            BackendModel::getModuleSetting('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
         $this->frm->addTextarea(
             'site_html_header',
-            BackendModel::getModuleSetting('core', 'site_html_header', null),
+            BackendModel::getModuleSetting('Core', 'site_html_header', null),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
-            BackendModel::getModuleSetting('core', 'site_html_footer', null),
+            BackendModel::getModuleSetting('Core', 'site_html_footer', null),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_domains',
-            implode("\n", (array) BackendModel::getModuleSetting('core', 'site_domains', $defaultDomains)),
+            implode("\n", (array) BackendModel::getModuleSetting('Core', 'site_domains', $defaultDomains)),
             'textarea code',
             'textareaError code'
         );
 
         // facebook settings
-        $this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('core', 'facebook_admin_ids', null));
-        $this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('core', 'facebook_app_id', null));
+        $this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('Core', 'facebook_admin_ids', null));
+        $this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('Core', 'facebook_app_id', null));
         $this->frm->addText(
             'facebook_application_secret',
-            BackendModel::getModuleSetting('core', 'facebook_app_secret', null)
+            BackendModel::getModuleSetting('Core', 'facebook_app_secret', null)
         );
 
         // ckfinder
         $this->frm->addText(
             'ckfinder_license_name',
-            BackendModel::getModuleSetting('core', 'ckfinder_license_name', null)
+            BackendModel::getModuleSetting('Core', 'ckfinder_license_name', null)
         );
         $this->frm->addText(
             'ckfinder_license_key',
-            BackendModel::getModuleSetting('core', 'ckfinder_license_key', null)
+            BackendModel::getModuleSetting('Core', 'ckfinder_license_key', null)
         );
         $this->frm->addText(
             'ckfinder_image_max_width',
-            BackendModel::getModuleSetting('core', 'ckfinder_image_max_width', 1600)
+            BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width', 1600)
         );
         $this->frm->addText(
             'ckfinder_image_max_height',
-            BackendModel::getModuleSetting('core', 'ckfinder_image_max_height', 1200)
+            BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height', 1200)
         );
 
         // api keys
-        $this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
+        $this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('Core', 'fork_api_public_key', null));
         $this->frm->addText(
             'fork_api_private_key',
-            BackendModel::getModuleSetting('core', 'fork_api_private_key', null)
+            BackendModel::getModuleSetting('Core', 'fork_api_private_key', null)
         );
 
         // date & time formats
         $this->frm->addDropdown(
             'time_format',
             BackendModel::getTimeFormats(),
-            BackendModel::getModuleSetting('core', 'time_format')
+            BackendModel::getModuleSetting('Core', 'time_format')
         );
         $this->frm->addDropdown(
             'date_format_short',
             BackendModel::getDateFormatsShort(),
-            BackendModel::getModuleSetting('core', 'date_format_short')
+            BackendModel::getModuleSetting('Core', 'date_format_short')
         );
         $this->frm->addDropdown(
             'date_format_long',
             BackendModel::getDateFormatsLong(),
-            BackendModel::getModuleSetting('core', 'date_format_long')
+            BackendModel::getModuleSetting('Core', 'date_format_long')
         );
 
         // number formats
         $this->frm->addDropdown(
             'number_format',
             BackendModel::getNumberFormats(),
-            BackendModel::getModuleSetting('core', 'number_format')
+            BackendModel::getModuleSetting('Core', 'number_format')
         );
 
         // create a list of the languages
-        foreach (BackendModel::getModuleSetting('core', 'languages', array('en')) as $abbreviation) {
+        foreach (BackendModel::getModuleSetting('Core', 'languages', array('en')) as $abbreviation) {
             // is this the default language
             $defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
 
@@ -161,7 +167,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
             $redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
             // fetch label
-            $label = BL::lbl(mb_strtoupper($abbreviation), 'core');
+            $label = BL::lbl(mb_strtoupper($abbreviation), 'Core');
 
             // default may not be unselected
             if ($defaultLanguage) {
@@ -209,30 +215,30 @@ class BackendSettingsIndex extends BackendBaseActionIndex
         $this->frm->addMultiCheckbox(
             'active_languages',
             $activeLanguages,
-            BackendModel::getModuleSetting('core', 'active_languages', array(SITE_MULTILANGUAGE))
+            BackendModel::getModuleSetting('Core', 'active_languages', array(SITE_MULTILANGUAGE))
         );
         $this->frm->addMultiCheckbox(
             'redirect_languages',
             $redirectLanguages,
-            BackendModel::getModuleSetting('core', 'redirect_languages', array(SITE_MULTILANGUAGE))
+            BackendModel::getModuleSetting('Core', 'redirect_languages', array(SITE_MULTILANGUAGE))
         );
 
         // api keys are not required for every module
         if ($this->needsAkismet) {
             $this->frm->addText(
                 'akismet_key',
-                BackendModel::getModuleSetting('core', 'akismet_key', null)
+                BackendModel::getModuleSetting('Core', 'akismet_key', null)
             );
         }
         if ($this->needsGoogleMaps) {
             $this->frm->addText(
                 'google_maps_key',
-                BackendModel::getModuleSetting('core', 'google_maps_key', null)
+                BackendModel::getModuleSetting('Core', 'google_maps_key', null)
             );
         }
 
         // cookies
-        $this->frm->addCheckbox('show_cookie_bar', BackendModel::getModuleSetting('core', 'show_cookie_bar', false));
+        $this->frm->addCheckbox('show_cookie_bar', BackendModel::getModuleSetting('Core', 'show_cookie_bar', false));
     }
 
     /**
@@ -290,7 +296,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
             // akismet key may be filled in
             if ($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled()) {
                 // key has changed
-                if ($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('core', 'akismet_key', null)) {
+                if ($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('Core', 'akismet_key', null)) {
                     // create instance
                     $akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 
@@ -337,38 +343,38 @@ class BackendSettingsIndex extends BackendBaseActionIndex
             if ($this->frm->isCorrect()) {
                 // general settings
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'site_title_' . BL::getWorkingLanguage(),
                     $this->frm->getField('site_title')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'site_html_header',
                     $this->frm->getField('site_html_header')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'site_html_footer',
                     $this->frm->getField('site_html_footer')->getValue()
                 );
 
                 // facebook settings
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'facebook_admin_ids',
                     ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField(
                         'facebook_admin_ids'
                     )->getValue() : null
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'facebook_app_id',
                     ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField(
                         'facebook_application_id'
                     )->getValue() : null
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'facebook_app_secret',
                     ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField(
                         'facebook_application_secret'
@@ -377,28 +383,28 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
                 // ckfinder settings
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'ckfinder_license_name',
                     ($this->frm->getField('ckfinder_license_name')->isFilled()) ? $this->frm->getField(
                         'ckfinder_license_name'
                     )->getValue() : null
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'ckfinder_license_key',
                     ($this->frm->getField('ckfinder_license_key')->isFilled()) ? $this->frm->getField(
                         'ckfinder_license_key'
                     )->getValue() : null
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'ckfinder_image_max_width',
                     ($this->frm->getField('ckfinder_image_max_width')->isFilled()) ? $this->frm->getField(
                         'ckfinder_image_max_width'
                     )->getValue() : 1600
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'ckfinder_image_max_height',
                     ($this->frm->getField('ckfinder_image_max_height')->isFilled()) ? $this->frm->getField(
                         'ckfinder_image_max_height'
@@ -407,46 +413,46 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
                 // api keys
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'fork_api_public_key',
                     $this->frm->getField('fork_api_public_key')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'fork_api_private_key',
                     $this->frm->getField('fork_api_private_key')->getValue()
                 );
                 if ($this->needsAkismet) {
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'akismet_key',
                         $this->frm->getField('akismet_key')->getValue()
                     );
                 }
                 if ($this->needsGoogleMaps) {
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'google_maps_key',
                         $this->frm->getField('google_maps_key')->getValue()
                     );
                 }
 
                 // date & time formats
-                BackendModel::setModuleSetting('core', 'time_format', $this->frm->getField('time_format')->getValue());
+                BackendModel::setModuleSetting('Core', 'time_format', $this->frm->getField('time_format')->getValue());
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'date_format_short',
                     $this->frm->getField('date_format_short')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'date_format_long',
                     $this->frm->getField('date_format_long')->getValue()
                 );
 
                 // date & time formats
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'number_format',
                     $this->frm->getField('number_format')->getValue()
                 );
@@ -464,8 +470,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
                 $redirectLanguages = array_intersect($redirectLanguages, $activeLanguages);
 
                 // save active languages
-                BackendModel::setModuleSetting('core', 'active_languages', $activeLanguages);
-                BackendModel::setModuleSetting('core', 'redirect_languages', $redirectLanguages);
+                BackendModel::setModuleSetting('Core', 'active_languages', $activeLanguages);
+                BackendModel::setModuleSetting('Core', 'redirect_languages', $redirectLanguages);
 
                 // domains may not contain www, http or https. Therefor we must loop and create the list of domains.
                 $siteDomains = array();
@@ -483,10 +489,10 @@ class BackendSettingsIndex extends BackendBaseActionIndex
                 }
 
                 // save domains
-                BackendModel::setModuleSetting('core', 'site_domains', $siteDomains);
+                BackendModel::setModuleSetting('Core', 'site_domains', $siteDomains);
 
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'show_cookie_bar',
                     $this->frm->getField('show_cookie_bar')->getChecked()
                 );

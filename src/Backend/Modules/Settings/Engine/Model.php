@@ -9,13 +9,15 @@ namespace Backend\Modules\Settings\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * In this file we store all generic functions that we will be using in the settings module.
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendSettingsModel
+class Model
 {
     /**
      * Get warnings for active modules
@@ -31,13 +33,8 @@ class BackendSettingsModel
         // loop modules
         foreach ($installedModules as $module) {
             // model class
-            $class = 'Backend' . SpoonFilter::toCamelCase($module) . 'Model';
-
-            // model file exists
-            if (is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php')) {
-                // require class
-                require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
-            }
+            $class = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
+            if($module == 'Core') $class = 'Backend\\Core\\Engine\\Model';
 
             // method exists
             if (is_callable(array($class, 'checkSettings'))) {

@@ -9,12 +9,18 @@ namespace Backend\Modules\Settings\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * This is the email-action, it will display a form to set email settings
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendSettingsEmail extends BackendBaseActionIndex
+class Email extends BackendBaseActionIndex
 {
     /**
      * Is the user a god user?
@@ -52,30 +58,30 @@ class BackendSettingsEmail extends BackendBaseActionIndex
         $this->frm = new BackendForm('settingsEmail');
 
         // email settings
-        $mailerFrom = BackendModel::getModuleSetting('core', 'mailer_from');
+        $mailerFrom = BackendModel::getModuleSetting('Core', 'mailer_from');
         $this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
         $this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
-        $mailerTo = BackendModel::getModuleSetting('core', 'mailer_to');
+        $mailerTo = BackendModel::getModuleSetting('Core', 'mailer_to');
         $this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
         $this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
-        $mailerReplyTo = BackendModel::getModuleSetting('core', 'mailer_reply_to');
+        $mailerReplyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
         $this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
         $this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
 
 
         if ($this->isGod) {
-            $mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
+            $mailerType = BackendModel::getModuleSetting('Core', 'mailer_type', 'mail');
             $this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
 
             // smtp settings
-            $this->frm->addText('smtp_server', BackendModel::getModuleSetting('core', 'smtp_server', ''));
-            $this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
-            $this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
-            $this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
+            $this->frm->addText('smtp_server', BackendModel::getModuleSetting('Core', 'smtp_server', ''));
+            $this->frm->addText('smtp_port', BackendModel::getModuleSetting('Core', 'smtp_port', 25));
+            $this->frm->addText('smtp_username', BackendModel::getModuleSetting('Core', 'smtp_username', ''));
+            $this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('Core', 'smtp_password', ''));
             $this->frm->addDropdown(
                 'smtp_secure_layer',
                 array('no' => ucfirst(BL::lbl('None')), 'ssl' => 'SSL', 'tls' => 'TLS'),
-                BackendModel::getModuleSetting('core', 'smtp_secure_layer', 'no')
+                BackendModel::getModuleSetting('Core', 'smtp_secure_layer', 'no')
             );
         }
 
@@ -121,7 +127,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
             if ($this->frm->isCorrect()) {
                 // e-mail settings
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'mailer_from',
                     array(
                          'name' => $this->frm->getField('mailer_from_name')->getValue(),
@@ -129,7 +135,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
                     )
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'mailer_to',
                     array(
                          'name' => $this->frm->getField('mailer_to_name')->getValue(),
@@ -137,7 +143,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
                     )
                 );
                 BackendModel::setModuleSetting(
-                    'core',
+                    'Core',
                     'mailer_reply_to',
                     array(
                          'name' => $this->frm->getField('mailer_reply_to_name')->getValue(),
@@ -148,30 +154,30 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 
                 if ($this->isGod) {
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'mailer_type',
                         $this->frm->getField('mailer_type')->getValue()
                     );
 
                     // smtp settings
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'smtp_server',
                         $this->frm->getField('smtp_server')->getValue()
                     );
-                    BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
+                    BackendModel::setModuleSetting('Core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'smtp_username',
                         $this->frm->getField('smtp_username')->getValue()
                     );
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'smtp_password',
                         $this->frm->getField('smtp_password')->getValue()
                     );
                     BackendModel::setModuleSetting(
-                        'core',
+                        'Core',
                         'smtp_secure_layer',
                         $this->frm->getField('smtp_secure_layer')->getValue()
                     );

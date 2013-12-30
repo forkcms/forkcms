@@ -96,7 +96,7 @@ class Model extends \BaseModel
         // check if this action is allowed
         if(Authentication::isAllowedAction('index', 'settings')) {
             // check if the fork API keys are available
-            if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '') {
+            if(self::getModuleSetting('Core', 'fork_api_private_key') == '' || self::getModuleSetting('Core', 'fork_api_public_key') == '') {
                 $warnings[] = array('message' => sprintf(Language::err('ForkAPIKeys'), self::createURLForAction('index', 'settings')));
             }
         }
@@ -394,7 +394,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach((array) self::getModuleSetting('core', 'date_formats_long') as $format) {
+        foreach((array) self::getModuleSetting('Core', 'date_formats_long') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate($format, null, Authentication::getUser()->getSetting('interface_language'));
         }
@@ -412,7 +412,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach((array) self::getModuleSetting('core', 'date_formats_short') as $format) {
+        foreach((array) self::getModuleSetting('Core', 'date_formats_short') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate($format, null, Authentication::getUser()->getSetting('interface_language'));
         }
@@ -694,7 +694,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach((array) self::getModuleSetting('core', 'number_formats') as $format => $example) {
+        foreach((array) self::getModuleSetting('Core', 'number_formats') as $format => $example) {
             // reformat array
             $possibleFormats[$format] = $example;
         }
@@ -749,7 +749,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach(self::getModuleSetting('core', 'time_formats') as $format) {
+        foreach(self::getModuleSetting('Core', 'time_formats') as $format) {
             // get time based on given format
             $possibleFormats[$format] = \SpoonDate::getDate($format, null, Authentication::getUser()->getSetting('interface_language'));
         }
@@ -1032,19 +1032,19 @@ class Model extends \BaseModel
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::getModuleSetting('core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = self::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;
 
         // get ping services
-        $pingServices = self::getModuleSetting('core', 'ping_services', null);
+        $pingServices = self::getModuleSetting('Core', 'ping_services', null);
 
         // no ping services available or older than one month ago
         if($pingServices === null || $pingServices['date'] < strtotime('-1 month')) {
             // get ForkAPI-keys
-            $publicKey = self::getModuleSetting('core', 'fork_api_public_key', '');
-            $privateKey = self::getModuleSetting('core', 'fork_api_private_key', '');
+            $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
+            $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
 
             // validate keys
             if($publicKey == '' || $privateKey == '') return false;
@@ -1074,7 +1074,7 @@ class Model extends \BaseModel
             }
 
             // store the services
-            self::setModuleSetting('core', 'ping_services', $pingServices);
+            self::setModuleSetting('Core', 'ping_services', $pingServices);
         }
 
         // make sure services array will not trigger an error (even if we couldn't load any)
@@ -1259,7 +1259,7 @@ class Model extends \BaseModel
     public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
     {
         // get some settings
-        $akismetKey = self::getModuleSetting('core', 'akismet_key');
+        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if($akismetKey === '') return false;
@@ -1305,7 +1305,7 @@ class Model extends \BaseModel
     public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
     {
         // get some settings
-        $akismetKey = self::getModuleSetting('core', 'akismet_key');
+        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if($akismetKey === '') return false;

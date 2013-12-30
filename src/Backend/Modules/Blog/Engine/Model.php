@@ -9,6 +9,7 @@ namespace Backend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -110,15 +111,15 @@ class Model
         $warnings = array();
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('settings', 'blog')) {
+        if(BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if(BackendModel::getModuleSetting('blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+            if(BackendModel::getModuleSetting('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+                $warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'Blog'), BackendModel::createURLForAction('Settings', 'Blog')));
             }
 
             // rss description
-            if(BackendModel::getModuleSetting('blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+            if(BackendModel::getModuleSetting('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+                $warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'Blog'), BackendModel::createURLForAction('Settings', 'Blog')));
             }
         }
 
@@ -160,10 +161,10 @@ class Model
         $db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
 
         // delete tags
-        foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'blog');
+        foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'Blog');
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -190,7 +191,7 @@ class Model
             $db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
 
             // invalidate the cache for blog
-            BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+            BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
         }
     }
 
@@ -245,7 +246,7 @@ class Model
         if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -270,7 +271,7 @@ class Model
         if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
     }
 
     /**
@@ -396,12 +397,12 @@ class Model
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN blog_posts AS i ON mt.other_id = i.id
              WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
-            array('blog', (int) $tagId, 'active', BL::getWorkingLanguage())
+            array('Blog', (int) $tagId, 'active', BL::getWorkingLanguage())
         );
 
         // overwrite the url
         foreach($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('edit', 'blog', null, array('id' => $row['url']));
+            $row['url'] = BackendModel::createURLForAction('edit', 'Blog', null, array('id' => $row['url']));
         }
 
         return $items;
@@ -548,7 +549,7 @@ class Model
 
         // overwrite url
         foreach($comments as &$row) {
-            $row['full_url'] = BackendModel::getURLForBlock('blog', 'detail', $row['language']) . '/' . $row['url'];
+            $row['full_url'] = BackendModel::getURLForBlock('Blog', 'detail', $row['language']) . '/' . $row['url'];
         }
 
         return $comments;
@@ -694,7 +695,7 @@ class Model
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the new revision id
         return $item['revision_id'];
@@ -719,7 +720,7 @@ class Model
         $item['id'] = $db->insert('blog_categories', $item);
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the id
         return $item['id'];
@@ -791,7 +792,7 @@ class Model
         unset($item['revision_id']);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('blog', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::getModuleSetting('Blog', 'max_num_revisions', 20);
 
         // set type of archive
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
@@ -813,7 +814,7 @@ class Model
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         // return the new revision id
         return $item['revision_id'];
@@ -844,7 +845,7 @@ class Model
         }
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
 
         return $updated;
     }
@@ -906,7 +907,7 @@ class Model
             self::reCalculateCommentCount($itemIds);
 
             // invalidate the cache for blog
-            foreach($languages as $language) BackendModel::invalidateFrontendCache('blog', $language);
+            foreach($languages as $language) BackendModel::invalidateFrontendCache('Blog', $language);
         }
     }
 }

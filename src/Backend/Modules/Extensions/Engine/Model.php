@@ -9,6 +9,7 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Filesystem\Filesystem;
@@ -30,9 +31,9 @@ class Model
      * @var	string
      */
     const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
-                                    FROM themes_templates AS i
-                                    WHERE i.theme = ?
-                                    ORDER BY i.label ASC';
+                                  FROM themes_templates AS i
+                                  WHERE i.theme = ?
+                                  ORDER BY i.label ASC';
 
     /**
      * Modules which are part of the core and can not be managed.
@@ -40,8 +41,8 @@ class Model
      * @var	array
      */
     private static $ignoredModules = array(
-        'authentication', 'dashboard',
-        'error', 'extensions', 'settings'
+        'Authentication', 'Dashboard',
+        'Error', 'Extensions', 'Settings'
     );
 
     /**

@@ -1569,7 +1569,7 @@ class Model
              WHERE mg.is_default = ? AND mg.language = ?
              LIMIT 1',
             array('Y', BL::getWorkingLanguage())
-        )‡
+        )
         ) {
             // this list will be a default list
             $item['language'] = BL::getWorkingLanguage();

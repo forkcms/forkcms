@@ -10,6 +10,7 @@ namespace Backend\Modules\Settings\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Modules\Settings\Engine\Model as BackendSettingsModel;
 
 /**
  * This widget will analyze the CMS warnings
