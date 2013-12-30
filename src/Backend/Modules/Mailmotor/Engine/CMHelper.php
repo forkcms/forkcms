@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Exception as BackendException;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorCMHelper
+class CMHelper
 {
     /**
      * Checks if a valid CM account is set up
@@ -25,7 +30,7 @@ class BackendMailmotorCMHelper
     {
         try {
             self::getCM();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
 
@@ -49,7 +54,7 @@ class BackendMailmotorCMHelper
         $clientId = self::getCM()->createClient($companyName, $country, $timezone);
 
         // add client ID as a module setting for mailmotor
-        BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientId);
+        BackendModel::setModuleSetting('Mailmotor', 'cm_client_id', $clientId);
     }
 
     /**
@@ -157,7 +162,7 @@ class BackendMailmotorCMHelper
             */
             try {
                 self::getCM()->deleteCampaign(self::getCampaignMonitorID('campaign', $id));
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // ignore exception
             }
 
@@ -266,7 +271,7 @@ class BackendMailmotorCMHelper
      */
     public static function getClientID()
     {
-        return (string) BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+        return (string) BackendModel::getModuleSetting('Mailmotor', 'cm_client_id');
     }
 
     /**
@@ -286,7 +291,7 @@ class BackendMailmotorCMHelper
 
         // reserve results stack
         $results = array();
-        $results[0] = SpoonFilter::ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
+        $results[0] = \SpoonFilter::ucfirst(BL::lbl('CreateNewClient', 'Mailmotor'));
 
         // loop the clients
         foreach ($clients as $client) {
@@ -308,19 +313,19 @@ class BackendMailmotorCMHelper
             // check if the CampaignMonitor class exists
             if (!is_file(PATH_LIBRARY . '/external/campaignmonitor.php')) {
                 // the class doesn't exist, so throw an exception
-                throw new BackendException(BL::err('ClassDoesNotExist', 'mailmotor'));
+                throw new BackendException(BL::err('ClassDoesNotExist', 'Mailmotor'));
             }
 
             // require CampaignMonitor class
             require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
             // set login data
-            $url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-            $username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-            $password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+            $url = BackendModel::getModuleSetting('Mailmotor', 'cm_url');
+            $username = BackendModel::getModuleSetting('Mailmotor', 'cm_username');
+            $password = BackendModel::getModuleSetting('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new CampaignMonitor($url, $username, $password, 60, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 60, self::getClientId());
 
             // set CampaignMonitor object reference
             BackendModel::getContainer()->set('campaignmonitor', $cm);
@@ -442,7 +447,7 @@ class BackendMailmotorCMHelper
     {
         // check if the mailing exists
         if (!BackendMailmotorModel::existsMailing($id)) {
-            throw new SpoonException('No mailing found for id ' . $id);
+            throw new \SpoonException('No mailing found for id ' . $id);
         }
 
         // fetch cmID
@@ -711,11 +716,11 @@ class BackendMailmotorCMHelper
     public static function insertCampaignMonitorID($type, $id, $otherId)
     {
         // check input
-        $type = SpoonFilter::getValue($type, array('campaign', 'list', 'template'), '');
+        $type = \SpoonFilter::getValue($type, array('campaign', 'list', 'template'), '');
 
         // no valid type given
         if ($type == '') {
-            throw new CampaignMonitorException('No valid CM ID type given (only campaign, list, template).');
+            throw new \CampaignMonitorException('No valid CM ID type given (only campaign, list, template).');
         }
 
         // insert the campaignmonitor ID
@@ -736,7 +741,7 @@ class BackendMailmotorCMHelper
         // build unsubscribe link for this list
         $unsubscribeLink = SITE_URL .
                            BackendModel::getURLForBlock(
-                               'mailmotor',
+                               'Mailmotor',
                                'unsubscribe',
                                BL::getWorkingLanguage()
                            );
@@ -1054,7 +1059,7 @@ class BackendMailmotorCMHelper
         // build unsubscribe link for this list
         $unsubscribeLink = SITE_URL .
                            BackendModel::getURLForBlock(
-                               'mailmotor',
+                               'Mailmotor',
                                'unsubscribe',
                                BL::getWorkingLanguage()
                            );

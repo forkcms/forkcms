@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This action is used to update one or more groups (delete, ...)
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorMassGroupAction extends BackendBaseAction
+class MassGroupAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,11 +29,11 @@ class BackendMailmotorMassGroupAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-selection');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=no-selection');
         } else {
             // redefine id's
             $ids = (array) $_GET['id'];
@@ -43,6 +48,6 @@ class BackendMailmotorMassGroupAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('groups') . '&report=delete-groups');
+        $this->redirect(BackendModel::createURLForAction('Groups') . '&report=delete-groups');
     }
 }

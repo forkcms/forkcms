@@ -10,6 +10,12 @@ namespace Backend\Modules\Mailmotor\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the classic fork mailmotor widget
@@ -33,7 +39,7 @@ class Statistics extends BackendBaseWidget
      */
     public function execute()
     {
-        $this->header->addCSS('widgets.css', 'mailmotor');
+        $this->header->addCSS('widgets.css', 'Mailmotor');
         $this->setColumn('right');
         $this->setPosition(1);
         $this->parse();
@@ -61,15 +67,12 @@ class Statistics extends BackendBaseWidget
         // show the sent mailings block
         $this->tpl->assign('oSentMailings', true);
 
-        // require the helper class
-        require_once BACKEND_MODULES_PATH . '/mailmotor/engine/helper.php';
-
         // fetch the statistics for this mailing
         $stats = BackendMailmotorCMHelper::getStatistics($mailing[0]['id'], true);
 
         // reformat the send date
-        $mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' .
-                              BL::lbl('At') . ' ' . SpoonDate::getDate('H:i', $mailing);
+        $mailing[0]['sent'] = \SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' .
+                              BL::lbl('At') . ' ' . \SpoonDate::getDate('H:i', $mailing);
 
         // get results
         $results[] = array('label' => BL::lbl('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
@@ -118,18 +121,18 @@ class Statistics extends BackendBaseWidget
 
             // set column functions
             $dataGrid->setColumnFunction(
-                array('BackendDataGridFunctions', 'getTimeAgo'),
+                array(new BackendDataGridFunctions(), 'getTimeAgo'),
                 array('[subscribed_on]'),
                 'subscribed_on',
                 true
             );
 
             // check if this action is allowed
-            if (BackendAuthentication::isAllowedAction('edit_address', 'mailmotor')) {
+            if (BackendAuthentication::isAllowedAction('EditAddress', 'Mailmotor')) {
                 // set edit link
                 $dataGrid->setColumnURL(
                     'email',
-                    BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]'
+                    BackendModel::createURLForAction('EditAddress', 'Mailmotor') . '&amp;email=[email]'
                 );
             }
 
@@ -151,17 +154,17 @@ class Statistics extends BackendBaseWidget
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
             $dataGrid->setColumnFunction(
-                array('BackendDataGridFunctions', 'getTimeAgo'),
+                array(new BackendDataGridFunctions(), 'getTimeAgo'),
                 array('[unsubscribed_on]'),
                 'unsubscribed_on',
                 true
             );
 
             // check if this action is allowed
-            if (BackendAuthentication::isAllowedAction('edit_address')) {
+            if (BackendAuthentication::isAllowedAction('EditAddress')) {
                 $dataGrid->setColumnURL(
                     'email',
-                    BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]'
+                    BackendModel::createURLForAction('EditAddress', 'Mailmotor') . '&amp;email=[email]'
                 );
             }
 

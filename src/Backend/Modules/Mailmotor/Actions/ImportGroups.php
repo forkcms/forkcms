@@ -9,12 +9,18 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorImportGroups extends BackendBaseActionAdd
+class ImportGroups extends BackendBaseActionAdd
 {
     /**
      * CampaignMonitor object
@@ -148,7 +154,7 @@ class BackendMailmotorImportGroups extends BackendBaseActionAdd
                 // redirect to the index
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'index',
+                        'Index',
                         $this->getModule()
                     ) . '&report=groups-imported&var[]=' . count($this->externalGroups) . '&var[]=' . $subscribersTotal
                 );

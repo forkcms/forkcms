@@ -33,7 +33,7 @@ class Installer extends ModuleInstaller
         );
 
         // insert widget
-        $this->insertDashboardWidget('Mailmotor', 'statistics', $statistics);
+        $this->insertDashboardWidget('Mailmotor', 'Statistics', $statistics);
     }
 
     /**

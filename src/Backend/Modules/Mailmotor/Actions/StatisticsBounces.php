@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Datagrid as BackendDataGrid;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This page will display the statistical overview of bounces for a specified mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
+class StatisticsBounces extends BackendBaseActionIndex
 {
     // maximum number of items
     const PAGING_LIMIT = 20;
@@ -56,7 +63,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
         // does the item exist
         if (!BackendMailmotorModel::existsMailing($id)) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+                BackendModel::createURLForAction('Index') . '&error=mailing-does-not-exist'
             );
         }
 
@@ -69,7 +76,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
         // does the item exist
         if (empty($this->bounces)) {
             $this->redirect(
-                BackendModel::createURLForAction('statistics') . '&id=' . $this->mailing['id'] . '&error=no-bounces'
+                BackendModel::createURLForAction('Statistics') . '&id=' . $this->mailing['id'] . '&error=no-bounces'
             );
         }
     }
@@ -80,13 +87,13 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new SpoonDataGridSourceArray($this->bounces);
+        $source = new \SpoonDataGridSourceArray($this->bounces);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
         $this->dataGrid->setURL(
             BackendModel::createURLForAction(
-                'statistics_bounces'
+                'StatisticsBounces'
             ) . '&offset=[offset]&order=[order]&sort=[sort]&mailing_id=' . $this->mailing['id']
         );
 
@@ -108,7 +115,7 @@ class BackendMailmotorStatisticsBounces extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // parse mailing record
         $this->tpl->assign('mailing', $this->mailing);

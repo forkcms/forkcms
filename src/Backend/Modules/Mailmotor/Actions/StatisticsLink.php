@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Datagrid as BackendDataGrid;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
+class StatisticsLink extends BackendBaseActionIndex
 {
     // maximum number of items
     const PAGING_LIMIT = 20;
@@ -66,12 +73,12 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         // does the item exist
         if (!BackendMailmotorModel::existsMailing($id)) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+                BackendModel::createURLForAction('Index') . '&error=mailing-does-not-exist'
             );
         }
         if ($this->linkURL == '') {
             $this->redirect(
-                BackendModel::createURLForAction('statistics') . '&id=' . $id . '&error=link-does-not-exist'
+                BackendModel::createURLForAction('Statistics') . '&id=' . $id . '&error=link-does-not-exist'
             );
         }
 
@@ -84,7 +91,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         // no stats found
         if ($this->statistics === false) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=no-statistics-loaded'
+                BackendModel::createURLForAction('Index') . '&error=no-statistics-loaded'
             );
         }
     }
@@ -100,7 +107,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
         }
 
         // create a new source-object
-        $source = new SpoonDataGridSourceArray($this->statistics['clicked_links_by'][$this->linkURL]);
+        $source = new \SpoonDataGridSourceArray($this->statistics['clicked_links_by'][$this->linkURL]);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
@@ -198,7 +205,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('statistics_link') . '&url=' . $this->linkURL .
+                    BackendModel::createURLForAction('StatisticsLink') . '&url=' . $this->linkURL .
                     '&mailing_id=' . $this->mailing['id'] . '&report=group-added&var=' .
                     urlencode($item['name']) . '&highlight=id-' . $this->mailing['id']
                 );

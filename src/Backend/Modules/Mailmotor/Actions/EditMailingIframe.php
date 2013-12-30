@@ -11,12 +11,17 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
+class EditMailingIframe extends BackendBaseActionEdit
 {
     /**
      * The active template
@@ -37,9 +42,9 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
             parent::execute();
             $this->getData();
             $this->parse();
-            $this->display(BACKEND_MODULE_PATH . '/layout/templates/edit_mailing_iframe.tpl');
+            $this->display(BACKEND_MODULE_PATH . '/Layout/Templates/EditMailingIframe.tpl');
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -56,7 +61,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -84,19 +89,19 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
         if (!isset($this->template['content'])) {
             $this->redirect(
                 BackendModel::createURLForAction(
-                    'edit'
+                    'Edit'
                 ) . '&id=' . $this->id . '&step=2&exclude_id=' . $this->id . '&error=template-does-not-exist'
             );
         }
 
         // set CSS object
-        $css = new CSSToInlineStyles($this->template['content'], $this->template['css']);
+        $css = new \CSSToInlineStyles($this->template['content'], $this->template['css']);
         $HTML = urldecode($css->convert());
 
         /*
             I realise this is a bit confusing, so let me elaborate:
 
-            1.	edit_mailing_iframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
+            1.	EditMailingIframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
 
             2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
                 become the editor field which will contain our stored content HTML.

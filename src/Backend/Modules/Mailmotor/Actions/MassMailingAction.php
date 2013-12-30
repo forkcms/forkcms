@@ -9,12 +9,16 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This action is used to update one or more mailings (delete, ...)
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorMassMailingAction extends BackendBaseAction
+class MassMailingAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,12 +28,12 @@ class BackendMailmotorMassMailingAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=no-items-selected'
+                BackendModel::createURLForAction('Index') . '&error=no-items-selected'
             );
         } else {
             // at least one id

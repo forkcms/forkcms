@@ -9,12 +9,20 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This page will display the overview of groups
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorGroups extends BackendBaseActionIndex
+class Groups extends BackendBaseActionIndex
 {
     const PAGING_LIMIT = 10;
 
@@ -60,7 +68,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('addresses')) {
             // set column URLs
-            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
+            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('Addresses') . '&amp;group_id=[id]');
         }
 
         // set the datagrid ID so we don't run into trouble with multiple datagrids that use mass actions
@@ -71,48 +79,48 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
         $this->dataGrid->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[created_on]'),
             'created_on',
             true
         );
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('custom_fields')) {
+        if (BackendAuthentication::isAllowedAction('CustomFields')) {
             $this->dataGrid->addColumnAction(
                 'custom_fields',
                 null,
                 BL::lbl('CustomFields'),
-                BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]',
+                BackendModel::createURLForAction('CustomFields') . '&amp;group_id=[id]',
                 BL::lbl('CustomFields'),
                 array('class' => 'button icon iconEdit linkButton')
             );
         }
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('export_addresses')) {
+        if (BackendAuthentication::isAllowedAction('ExportAddresses')) {
             $this->dataGrid->addColumnAction(
                 'export',
                 null,
                 BL::lbl('Export'),
-                BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]',
+                BackendModel::createURLForAction('ExportAddresses') . '&amp;id=[id]',
                 BL::lbl('Export'),
                 array('class' => 'button icon iconExport linkButton')
             );
         }
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit_group')) {
+        if (BackendAuthentication::isAllowedAction('EditGroup')) {
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit_group') . '&amp;id=[id]',
+                BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

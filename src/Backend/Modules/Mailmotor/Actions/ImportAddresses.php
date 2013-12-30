@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Csv as BackendCSV;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This is the import-action, it will import records from a CSV file
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorImportAddresses extends BackendBaseActionEdit
+class ImportAddresses extends BackendBaseActionEdit
 {
     /**
      * The passed group ID
@@ -29,7 +36,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
     private function downloadExampleFile()
     {
         // Should we download the example file or not?
-        $downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
+        $downloadExample = \SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
 
         // stop here if no download parameter was given
         if (!$downloadExample) {
@@ -41,7 +48,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
         $csv[] = array('email' => BackendModel::getModuleSetting($this->getModule(), 'from_email'));
 
         // download the file
-        BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ';', '"', true);
+        BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/Mailmotor/example.csv', $csv, null, null, ';', '"', true);
     }
 
     /**
@@ -50,7 +57,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
     public function execute()
     {
         parent::execute();
-        $this->groupId = SpoonFilter::getGetValue('group_id', null, 0, 'int');
+        $this->groupId = \SpoonFilter::getGetValue('group_id', null, 0, 'int');
         $this->downloadExampleFile();
         $this->loadForm();
         $this->validateForm();
@@ -105,7 +112,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
         // if no groups are found, redirect to overview
         if (empty($groups)) {
-            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+            $this->redirect(BackendModel::createURLForAction('Addresses') . '&error=no-groups');
         }
 
         // add radiobuttons for groups
@@ -264,7 +271,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
                     // redirect to success message
                     $this->redirect(
-                        BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count(
+                        BackendModel::createURLForAction('Addresses') . '&report=imported-addresses&var[]=' . count(
                             $csv
                         ) . '&var[]=' . count($values['groups'])
                     );
@@ -272,7 +279,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
                     // write a CSV file to the cache
                     $csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
                     BackendCSV::arrayToFile(
-                        BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile,
+                        BACKEND_CACHE_PATH . '/Mailmotor/' . $csvFile,
                         $failedSubscribers,
                         null,
                         null,
@@ -290,7 +297,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
                     // redirect to failed message with an additional parameter to
                     // display a download link to the report-csv form cache.
                     $this->redirect(
-                        BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' .
+                        BackendModel::createURLForAction('Addresses') . '&error=imported-addresses&var[]=' .
                         count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' .
                         count($failedSubscribers) . '&csv=' . $csvFile
                     );

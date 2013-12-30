@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This sends a mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
+class SendMailing extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,7 +29,7 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = SpoonFilter::getPostValue('id', null, '', 'int');
+        $id = \SpoonFilter::getPostValue('id', null, '', 'int');
 
         // validate
         if ($id == '' || !BackendMailmotorModel::existsMailing($id)) {
@@ -60,7 +65,7 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
                         // send the mailing if it wasn't queued
                         BackendMailmotorCMHelper::sendMailing($mailing);
                     }
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // stop the script and show our error
                     $this->output(500, null, $e->getMessage());
 

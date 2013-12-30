@@ -9,12 +9,20 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Datagrid as BackendDataGrid;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This page will display the statistical overview of a sent mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorStatistics extends BackendBaseActionIndex
+class Statistics extends BackendBaseActionIndex
 {
     // maximum number of items
     const PAGING_LIMIT = 10;
@@ -63,7 +71,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         // does the item exist
         if (!BackendMailmotorModel::existsMailing($this->id)) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&amp;error=mailing-does-not-exist'
+                BackendModel::createURLForAction('Index') . '&amp;error=mailing-does-not-exist'
             );
         }
 
@@ -76,7 +84,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         // no stats found
         if ($this->statistics === false) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace(
+                BackendModel::createURLForAction('Index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace(
                     '#',
                     '',
                     $this->mailing['name']
@@ -96,13 +104,13 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         }
 
         // map urlencode to clicked links stack
-        $this->statistics['clicked_links'] = SpoonFilter::arrayMapRecursive(
+        $this->statistics['clicked_links'] = \SpoonFilter::arrayMapRecursive(
             'urlencode',
             $this->statistics['clicked_links']
         );
 
         // create a new source-object
-        $source = new SpoonDataGridSourceArray($this->statistics['clicked_links']);
+        $source = new \SpoonDataGridSourceArray($this->statistics['clicked_links']);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
@@ -112,7 +120,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 
         // set headers values
         $headers['link'] = strtoupper(BL::lbl('URL'));
-        $headers['clicks'] = SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
+        $headers['clicks'] = \SpoonFilter::ucfirst(BL::msg('ClicksAmount'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);
@@ -128,13 +136,13 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('statistics_link')) {
+        if (BackendAuthentication::isAllowedAction('StatisticsLink')) {
             // add edit column
             $this->dataGrid->addColumnAction(
                 'users',
                 null,
                 BL::lbl('Who'),
-                BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id,
+                BackendModel::createURLForAction('StatisticsLink') . '&amp;url=[link]&amp;mailing_id=' . $this->id,
                 BL::lbl('Who')
             );
         }
@@ -151,7 +159,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
         if (!empty($this->statistics['clicked_links'])) {
             $this->tpl->assign(
                 'dataGrid',
-                ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false
+                (string) $this->dataGrid->getContent()
             );
         }
 

@@ -9,12 +9,15 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This loads CM client info
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
+class LoadClientInfo extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,7 +27,7 @@ class BackendMailmotorAjaxLoadClientInfo extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $clientId = SpoonFilter::getPostValue('client_id', null, '');
+        $clientId = \SpoonFilter::getPostValue('client_id', null, '');
 
         // check input
         if (empty($clientId)) {

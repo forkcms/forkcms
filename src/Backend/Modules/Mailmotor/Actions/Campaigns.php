@@ -9,12 +9,20 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This page will display the overview of campaigns
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorCampaigns extends BackendBaseActionIndex
+class Campaigns extends BackendBaseActionIndex
 {
     const PAGING_LIMIT = 10;
 
@@ -38,8 +46,8 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridDB(BackendMailmotorModel::QRY_DATAGRID_BROWSE_CAMPAIGNS);
 
         // set headers values
-        $headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
-        $headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
+        $headers['name'] = \SpoonFilter::ucfirst(BL::lbl('Title'));
+        $headers['created_on'] = \SpoonFilter::ucfirst(BL::lbl('Created'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);
@@ -57,12 +65,12 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
         $this->dataGrid->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[created_on]'),
             'created_on',
             true
@@ -81,7 +89,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]',
+            BackendModel::createURLForAction('EditCampaign') . '&amp;id=[id]',
             BL::lbl('Edit')
         );
 
@@ -92,9 +100,9 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('index')) {
+        if (BackendAuthentication::isAllowedAction('Index')) {
             // set column URLs
-            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
+            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('Index') . '&amp;campaign=[id]');
         }
     }
 
@@ -105,7 +113,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 
     /**
@@ -119,7 +127,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
         // build the link HTML
         $html = '<a href="' .
                 BackendModel::createURLForAction(
-                    'statistics_campaign'
+                    'StatisticsCampaign'
                 ) . '&amp;id=' . $id . '" class="button icon iconStats linkButton"><span>' .
                 BL::lbl('Statistics') . '</span></a>';
 

@@ -9,12 +9,15 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * This checks if a CampaignMonitor account exists or not, and links it if it does
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
+class LinkAccount extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,9 +27,9 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $url = SpoonFilter::getPostValue('url', null, '');
-        $username = SpoonFilter::getPostValue('username', null, '');
-        $password = SpoonFilter::getPostValue('password', null, '');
+        $url = \SpoonFilter::getPostValue('url', null, '');
+        $username = \SpoonFilter::getPostValue('username', null, '');
+        $password = \SpoonFilter::getPostValue('password', null, '');
 
         // filter out the 'http://' from the URL
         if (strpos($url, 'http://') !== false) {
@@ -57,7 +60,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
             try {
                 // check if the CampaignMonitor class exists
                 if (!is_file(PATH_LIBRARY . '/external/campaignmonitor.php')) {
-                    throw new Exception(BL::err(
+                    throw new \Exception(BL::err(
                         'ClassDoesNotExist'
                     ));
                 }
@@ -66,7 +69,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
                 require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
                 // init CampaignMonitor object
-                new CampaignMonitor($url, $username, $password, 10);
+                new \CampaignMonitor($url, $username, $password, 10);
 
                 // save the new data
                 BackendModel::setModuleSetting($this->getModule(), 'cm_url', $url);
@@ -85,7 +88,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
                     array('message' => 'account-linked'),
                     BL::msg('AccountLinked', $this->getModule())
                 );
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // timeout occurred
                 if ($e->getMessage() == 'Error Fetching http headers') {
                     $this->output(

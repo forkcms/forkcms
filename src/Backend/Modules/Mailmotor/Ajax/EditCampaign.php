@@ -9,12 +9,16 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This is the ajax-action to update a campaign
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
+class EditCampaign extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,8 +28,8 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $id = SpoonFilter::getPostValue('id', null, '', 'int');
-        $name = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+        $id = \SpoonFilter::getPostValue('id', null, '', 'int');
+        $name = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate
         if ($name == '') {

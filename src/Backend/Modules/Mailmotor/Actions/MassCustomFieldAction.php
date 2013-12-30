@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This action is used to update one or more custom fields (delete, ...)
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
+class MassCustomFieldAction extends BackendBaseAction
 {
     /**
      * The passed fields
@@ -64,7 +69,7 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
         // redirect
         $this->redirect(
             BackendModel::createURLForAction(
-                'custom_fields'
+                'CustomFields'
             ) . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']
         );
     }
@@ -77,16 +82,16 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), '');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), '');
 
         // get passed group ID
-        $id = SpoonFilter::getGetValue('group_id', null, 0, 'int');
+        $id = \SpoonFilter::getGetValue('group_id', null, 0, 'int');
 
         // fetch group record
         $this->group = BackendMailmotorModel::getGroup($id);
 
         // set redirect URL
-        $redirectURL = BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'];
+        $redirectURL = BackendModel::createURLForAction('CustomFields') . '&group_id=' . $this->group['id'];
 
         // no id's provided
         if (!$action) {
@@ -96,7 +101,7 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
             $this->redirect($redirectURL . '&error=no-items-selected');
         }
         if (empty($this->group)) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         } else {
             // redefine id's
             $this->fields = (array) $_GET['fields'];

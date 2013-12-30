@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Engine\CMHelper as BackendLocationCMHelper;
+
 /**
  * This is the edit-action, it will display a form to edit a subscriber
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorEditAddress extends BackendBaseActionEdit
+class EditAddress extends BackendBaseActionEdit
 {
     /**
      * The custom fields
@@ -61,7 +68,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -76,7 +83,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
             $this->redirect(
-                BackendModel::createURLForAction('addresses') . '&error=non-existing'
+                BackendModel::createURLForAction('Addresses') . '&error=non-existing'
             );
         }
 
@@ -87,7 +94,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
         $allowedGroups = array_keys($this->subscriptions);
 
         // set the passed group ID
-        $this->id = SpoonFilter::getGetValue('group_id', $allowedGroups, key($this->subscriptions), 'int');
+        $this->id = \SpoonFilter::getGetValue('group_id', $allowedGroups, key($this->subscriptions), 'int');
 
         // get group record
         $this->group = BackendMailmotorModel::getGroup($this->id);
@@ -121,7 +128,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 
             // store textfield value
             $this->customFields[$i]['label'] = $name;
-            $this->customFields[$i]['name'] = SpoonFilter::toCamelCase($name, array('-', '_', ' '));
+            $this->customFields[$i]['name'] = \SpoonFilter::toCamelCase($name, array('-', '_', ' '));
             $this->customFields[$i]['formElements']['txtField'] = $this->frm->addText(
                 $this->customFields[$i]['name'],
                 $value
@@ -153,7 +160,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 
         // if no groups are found, redirect to overview
         if (empty($checkboxGroups)) {
-            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
+            $this->redirect(BackendModel::createURLForAction('Addresses') . '&error=no-groups');
         }
 
         // add checkboxes for groups
@@ -253,7 +260,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('addresses') .
+                    BackendModel::createURLForAction('Addresses') .
                     (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']
                 );
             }

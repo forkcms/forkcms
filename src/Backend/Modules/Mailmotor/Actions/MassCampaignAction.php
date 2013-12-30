@@ -9,12 +9,16 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This action is used to update one or more campaigns (delete, ...)
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorMassCampaignAction extends BackendBaseAction
+class MassCampaignAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,12 +28,12 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
         if (!isset($_GET['id'])) {
             $this->redirect(
-                BackendModel::createURLForAction('campaigns') . '&error=no-items-selected'
+                BackendModel::createURLForAction('Campaigns') . '&error=no-items-selected'
             );
         } else {
             // redefine id's
@@ -45,6 +49,6 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('campaigns') . '&report=delete-campaigns');
+        $this->redirect(BackendModel::createURLForAction('Campaigns') . '&report=delete-campaigns');
     }
 }

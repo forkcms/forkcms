@@ -9,6 +9,10 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This action is used to create a draft based on an existing mailing.
  *
@@ -25,7 +29,7 @@ class BackendMailmotorCopy extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $id = SpoonFilter::getGetValue('id', null, 0);
+        $id = \SpoonFilter::getGetValue('id', null, 0);
 
         // no id's provided
         if (empty($id) || !BackendMailmotorModel::existsMailing($id)) {

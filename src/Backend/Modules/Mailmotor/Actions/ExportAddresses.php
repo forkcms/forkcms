@@ -9,12 +9,16 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This action is used to export email addresses by group ID
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorExportAddresses extends BackendBaseAction
+class ExportAddresses extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -24,11 +28,11 @@ class BackendMailmotorExportAddresses extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $id = SpoonFilter::getGetValue('id', null, 0);
+        $id = \SpoonFilter::getGetValue('id', null, 0);
 
         // no id's provided
         if (empty($id)) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-items-selected');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=no-items-selected');
         } else {
             // at least one id
             // export all addresses
@@ -45,6 +49,6 @@ class BackendMailmotorExportAddresses extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
+        $this->redirect(BackendModel::createURLForAction('Groups') . '&report=export-failed');
     }
 }

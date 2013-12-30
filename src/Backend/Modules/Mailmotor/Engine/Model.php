@@ -9,6 +9,11 @@ namespace Backend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Csv as BackendCSV;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -19,7 +24,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendMailmotorModel
+class Model
 {
     const QRY_DATAGRID_BROWSE_CAMPAIGNS =
         'SELECT c.*, UNIX_TIMESTAMP(c.created_on) AS created_on
@@ -65,7 +70,7 @@ class BackendMailmotorModel
     public static function checkDefaultGroups()
     {
         // check if the defaults were set already, and return true if they were
-        if (BackendModel::getModuleSetting('mailmotor', 'cm_groups_defaults_set')) {
+        if (BackendModel::getModuleSetting('Mailmotor', 'cm_groups_defaults_set')) {
             return true;
         }
 
@@ -76,7 +81,7 @@ class BackendMailmotorModel
         // the total amount of default groups not all default groups were set.
         if (count(BL::getWorkingLanguages()) === count($defaults)) {
             // cm_groups_defaults_set status is now true
-            BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', true);
+            BackendModel::setModuleSetting('Mailmotor', 'cm_groups_defaults_set', true);
 
             // return true
             return true;
@@ -96,20 +101,20 @@ class BackendMailmotorModel
         $warnings = array();
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('settings', 'mailmotor')) {
+        if (BackendAuthentication::isAllowedAction('settings', 'Mailmotor')) {
             // analytics session token
-            if (BackendModel::getModuleSetting('mailmotor', 'cm_account') == false) {
+            if (BackendModel::getModuleSetting('Mailmotor', 'cm_account') == false) {
                 $warnings[] = array(
                     'message' => sprintf(
-                        BL::err('AnalysisNoCMAccount', 'mailmotor'),
-                        BackendModel::createURLForAction('settings', 'mailmotor')
+                        BL::err('AnalysisNoCMAccount', 'Mailmotor'),
+                        BackendModel::createURLForAction('settings', 'Mailmotor')
                     )
                 );
-            } elseif (BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '') {
+            } elseif (BackendModel::getModuleSetting('Mailmotor', 'cm_client_id') == '') {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
-                        BL::err('AnalysisNoCMClientID', 'mailmotor'),
+                        BL::err('AnalysisNoCMClientID', 'Mailmotor'),
                         BackendModel::createURLForAction('settings', 'mailmtor')
                     )
                 );
@@ -381,13 +386,13 @@ class BackendMailmotorModel
     public static function exportAddresses(array $emails)
     {
         // set the filename and path
-        $filename = 'addresses-' . SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/mailmotor/' . $filename;
+        $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
+        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
 
         // reformat the created_on date
         if (!empty($emails)) {
             foreach ($emails as &$email) {
-                $email['created_on'] = SpoonDate::getDate(
+                $email['created_on'] = \SpoonDate::getDate(
                     'j F Y',
                     $email['created_on'],
                     BL::getWorkingLanguage()
@@ -408,8 +413,8 @@ class BackendMailmotorModel
     public static function exportAddressesByGroupID($id)
     {
         // set the filename and path
-        $filename = 'addresses-' . SpoonDate::getDate('YmdHi') . '.csv';
-        $path = BACKEND_CACHE_PATH . '/mailmotor/' . $filename;
+        $filename = 'addresses-' . \SpoonDate::getDate('YmdHi') . '.csv';
+        $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
 
         // fetch the addresses by group
         $records = self::getAddressesByGroupID(array($id));
@@ -430,7 +435,7 @@ class BackendMailmotorModel
             // loop records
             foreach ($records as $key => $record) {
                 // reformat the date
-                $records[$key]['created_on'] = SpoonDate::getDate(
+                $records[$key]['created_on'] = \SpoonDate::getDate(
                     'j F Y',
                     $record['created_on'],
                     BL::getWorkingLanguage()
@@ -490,14 +495,14 @@ class BackendMailmotorModel
         // check set links
         if (!empty($statsClickedLinks)) {
             // urldecode the clicked URLs
-            $statsClickedLinks = SpoonFilter::arrayMapRecursive('urldecode', $statsClickedLinks);
+            $statsClickedLinks = \SpoonFilter::arrayMapRecursive('urldecode', $statsClickedLinks);
 
             // fetch CSV strings
             $csv .= PHP_EOL . BackendCSV::arrayToString($statsClickedLinks);
         }
 
         // set the filename and path
-        $filename = 'statistics-' . SpoonDate::getDate('YmdHi') . '.csv';
+        $filename = 'statistics-' . \SpoonDate::getDate('YmdHi') . '.csv';
 
         // set headers for download
         $headers = array();
@@ -505,7 +510,7 @@ class BackendMailmotorModel
         $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
 
         // overwrite the headers
-        SpoonHTTP::setHeaders($headers);
+        \SpoonHTTP::setHeaders($headers);
 
         // output the CSV string
         echo $csv;
@@ -523,7 +528,7 @@ class BackendMailmotorModel
     public static function exportStatisticsByCampaignID($id)
     {
         // set the filename and path
-        $filename = 'statistics-' . SpoonDate::getDate('YmdHi') . '.csv';
+        $filename = 'statistics-' . \SpoonDate::getDate('YmdHi') . '.csv';
 
         // fetch the addresses by group
         $records = array();
@@ -549,7 +554,7 @@ class BackendMailmotorModel
 
         // fetch all mailings in this campaign
         $mailings = BackendModel::getContainer()->get('database')->getRecords(
-            BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN,
+            self::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN,
             array('sent', $id)
         );
 
@@ -575,7 +580,7 @@ class BackendMailmotorModel
         $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
 
         // overwrite the headers
-        SpoonHTTP::setHeaders($headers);
+        \SpoonHTTP::setHeaders($headers);
 
         // output the CSV string
         echo $csv;
@@ -786,7 +791,7 @@ class BackendMailmotorModel
         );
 
         // prepend an additional option
-        $record = array('0' => SpoonFilter::ucfirst(BL::lbl('NoCampaign'))) + $record;
+        $record = array('0' => \SpoonFilter::ucfirst(BL::lbl('NoCampaign'))) + $record;
 
         return $record;
     }
@@ -815,17 +820,15 @@ class BackendMailmotorModel
     public static function getCustomFieldsByAddress($email)
     {
         // email is not valid
-        if (!SpoonFilter::isEmail($email)) {
-            throw new SpoonException('No valid e-mail given.');
+        if (!\SpoonFilter::isEmail($email)) {
+            throw new \SpoonException('No valid e-mail given.');
         }
 
         // fetch all group IDs
         $groupIds = self::getGroupIDs();
 
         // no groups found = stop here
-        if (empty($groupIds)) {
-            return array();
-        }
+        if (empty($groupIds)) return array();
 
         // fetch address group records
         $records = BackendModel::getContainer()->get('database')->getRecords(
@@ -1066,9 +1069,7 @@ class BackendMailmotorModel
     public static function getGroupsByIds($ids)
     {
         // no ids set = stop here
-        if (empty($ids)) {
-            return false;
-        }
+        if (empty($ids)) return false;
 
         // check if an array was given
         $ids = (array) $ids;
@@ -1116,9 +1117,7 @@ class BackendMailmotorModel
         );
 
         // no records found
-        if (empty($records)) {
-            return array();
-        }
+        if (empty($records)) return array();
 
         foreach ($records as &$record) {
             // store variables array
@@ -1145,9 +1144,7 @@ class BackendMailmotorModel
         $languages = BL::getActiveLanguages();
 
         // no languages found
-        if (empty($languages)) {
-            return array();
-        }
+        if (empty($languages)) return array();
 
         // init results
         $results = array();
@@ -1178,9 +1175,7 @@ class BackendMailmotorModel
         );
 
         // stop here if record is empty
-        if (empty($record)) {
-            return array();
-        }
+        if (empty($record)) return array();
 
         // get groups for this mailing ID
         $record['groups'] = self::getGroupIDsByMailingID($id);
@@ -1218,13 +1213,13 @@ class BackendMailmotorModel
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
     {
-        $contentType = SpoonFilter::getValue($contentType, array('html', 'plain'), 'html');
-        $forCM = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
+        $contentType = \SpoonFilter::getValue($contentType, array('html', 'plain'), 'html');
+        $forCM = \SpoonFilter::getValue($forCM, array(false, true), false, 'int');
 
         // return the URL
         return SITE_URL . BackendModel::getURLForBlock(
-            'mailmotor',
-            'detail'
+            'Mailmotor',
+            'Detail'
         ) . '/' . $id . '?type=' . $contentType . '&cm=' . $forCM;
     }
 
@@ -1318,7 +1313,7 @@ class BackendMailmotorModel
      */
     public static function getSentMailings($limit = null)
     {
-        $query = BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT . ' ORDER BY send_on DESC';
+        $query = self::QRY_DATAGRID_BROWSE_SENT . ' ORDER BY send_on DESC';
         $parameters = array('sent');
 
         if (!empty($limit)) {
@@ -1356,18 +1351,18 @@ class BackendMailmotorModel
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
-        $path = BACKEND_MODULE_PATH . '/templates/' . $language;
+        $path = BACKEND_MODULE_PATH . '/Templates/' . $language;
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
         if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
-            throw new SpoonException(
+            throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no template.tpl file was found. Please create one.'
             );
         }
         if (!$fs->exists($path . '/' . $name . '/css/screen.css')) {
-            throw new SpoonException(
+            throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no screen.css file was found. Please create one in a subfolder "css".'
             );
@@ -1377,10 +1372,10 @@ class BackendMailmotorModel
         $record = array();
         $record['name'] = $name;
         $record['language'] = $language;
-        $record['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($record, array('-', '_')));
+        $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase($record, array('-', '_')));
         $record['path_content'] = $path . '/' . $name . '/template.tpl';
         $record['path_css'] = $path . '/' . $name . '/css/screen.css';
-        $record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language .
+        $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' . $language .
                              '/' . $name . '/css/screen.css';
 
         // check if the template file actually exists
@@ -1406,11 +1401,11 @@ class BackendMailmotorModel
         $records = array();
         $finder = new Finder();
         $finder->depth(0);
-        foreach ($finder->directories()->in(BACKEND_MODULE_PATH . '/templates/' . $language) as $directory) {
+        foreach ($finder->directories()->in(BACKEND_MODULE_PATH . '/Templates/' . $language) as $directory) {
             $item = array();
             $item['language'] = $language;
             $item['value'] = $directory->getBaseName();
-            $item['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_')));
+            $item['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_')));
 
             $records[$item['value']] = $item;
         }
@@ -1427,9 +1422,7 @@ class BackendMailmotorModel
     public static function getUnsubscribedAddressesByGroupID($ids)
     {
         // check input
-        if (empty($ids)) {
-            return array();
-        }
+        if (empty($ids)) return array();
 
         // check if an array was given
         $ids = (array) $ids;
@@ -1466,9 +1459,7 @@ class BackendMailmotorModel
         $db->insert('mailmotor_addresses', $record);
 
         // no groups = stop here
-        if (empty($item['groups'])) {
-            return;
-        }
+        if (empty($item['groups'])) return;
 
         // check if groups was an array or not
         $item['groups'] = (array) $item['groups'];
@@ -1519,12 +1510,10 @@ class BackendMailmotorModel
         $db = BackendModel::getContainer()->get('database');
 
         // no fields given
-        if (empty($fields)) {
-            return false;
-        }
+        if (empty($fields)) return false;
 
         // no email address set means we just update the custom fields (ie adding new ones)
-        if (!empty($email) && SpoonFilter::isEmail($email)) {
+        if (!empty($email) && \SpoonFilter::isEmail($email)) {
             // set custom fields values
             $subscription['email'] = $email;
             $subscription['custom_fields'] = serialize($fields);
@@ -1573,14 +1562,14 @@ class BackendMailmotorModel
         $db = BackendModel::getContainer()->get('database');
 
         // check if there is a default group set for this language
-        // @todo refactor, this looks like shite
+        // @todo refactor, this looks like shit
         if (!(bool) $db->getVar(
             'SELECT 1
-                                            FROM mailmotor_groups AS mg
-                                            WHERE mg.is_default = ? AND mg.language = ?
-                                            LIMIT 1',
+             FROM mailmotor_groups AS mg
+             WHERE mg.is_default = ? AND mg.language = ?
+             LIMIT 1',
             array('Y', BL::getWorkingLanguage())
-        )
+        )‡
         ) {
             // this list will be a default list
             $item['language'] = BL::getWorkingLanguage();
@@ -1614,9 +1603,7 @@ class BackendMailmotorModel
         $db = BackendModel::getContainer()->get('database');
 
         // if groups are empty, add the user to the default group for this working language
-        if (empty($item['groups'])) {
-            return array();
-        }
+        if (empty($item['groups'])) return array();
 
         // insert record(s)
         foreach ($item['groups'] as $id) {
@@ -1676,8 +1663,8 @@ class BackendMailmotorModel
         // insert/update the user
         $db->execute(
             'INSERT INTO mailmotor_addresses(email, source, created_on)
-                                    VALUES (?, ?, ?)
-                                    ON DUPLICATE KEY UPDATE email = ?',
+             VALUES (?, ?, ?)
+             ON DUPLICATE KEY UPDATE email = ?',
             array(
                  $record['email'],
                  $record['source'],
@@ -1741,7 +1728,7 @@ class BackendMailmotorModel
         $values = array();
 
         // no email address set means we just update the custom fields (ie adding new ones)
-        if (!empty($email) && SpoonFilter::isEmail($email)) {
+        if (!empty($email) && \SpoonFilter::isEmail($email)) {
             // set custom fields values
             $values['custom_fields'] = serialize($fields);
 
@@ -1794,9 +1781,7 @@ class BackendMailmotorModel
         $db = BackendModel::getContainer()->get('database');
 
         // stop here if groups are empty
-        if (empty($groupIds)) {
-            return false;
-        }
+        if (empty($groupIds)) return false;
 
         // check if $groupIds is an array or not, make it one if it isn't
         $groupIds = (array) $groupIds;
@@ -1830,9 +1815,7 @@ class BackendMailmotorModel
         $db->delete('mailmotor_mailings_groups', 'mailing_id = ?', array((int) $mailingId));
 
         // stop here if groups are empty
-        if (empty($groupIds)) {
-            return false;
-        }
+        if (empty($groupIds)) return false;
 
         // insert record(s)
         foreach ($groupIds as $id) {
@@ -1875,9 +1858,7 @@ class BackendMailmotorModel
         $records = $db->getRecords(self::QRY_DATAGRID_BROWSE_SENT, array('queued'));
 
         // no records found, so stop here
-        if (empty($records)) {
-            return false;
-        }
+        if (empty($records)) return false;
 
         // reserve update stack
         $updateIds = array();

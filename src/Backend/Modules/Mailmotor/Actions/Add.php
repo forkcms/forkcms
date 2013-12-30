@@ -9,12 +9,18 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This is the add-action, it will display a form to create a new mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -46,12 +52,12 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
         // no groups were made yet
         if (empty($groups) && empty($groupIds)) {
             $this->redirect(
-                BackendModel::createURLForAction('add_group') . '&error=add-mailing-no-groups'
+                BackendModel::createURLForAction('AddGroup') . '&error=add-mailing-no-groups'
             );
         } elseif (empty($groups)) {
             // groups were made, but none have subscribers
             $this->redirect(
-                BackendModel::createURLForAction('addresses') . '&error=no-subscribers'
+                BackendModel::createURLForAction('Addresses') . '&error=no-subscribers'
             );
         }
 
@@ -152,7 +158,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_mailing_step1', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=2');
+                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&step=2');
             }
         }
     }

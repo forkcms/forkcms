@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This action is used to update one or more e-mail addresses (delete, ...)
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorMassAddressAction extends BackendBaseAction
+class MassAddressAction extends BackendBaseAction
 {
     /**
      * The passed e-mails
@@ -57,7 +62,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
                     // try to unsubscribe this address
                     try {
                         BackendMailmotorCMHelper::unsubscribe($email, $groupId);
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         // do nothing
                     }
                 }
@@ -89,16 +94,16 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('delete', 'export'), '');
-        $this->groupId = SpoonFilter::getGetValue('group_id', null, '');
+        $action = \SpoonFilter::getGetValue('action', array('delete', 'export'), '');
+        $this->groupId = \SpoonFilter::getGetValue('group_id', null, '');
 
         // no id's provided
         if (!$action) {
-            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-action-selected');
+            $this->redirect(BackendModel::createURLForAction('Addresses') . '&error=no-action-selected');
         }
         if (!isset($_GET['emails'])) {
             $this->redirect(
-                BackendModel::createURLForAction('addresses') . '&error=no-items-selected'
+                BackendModel::createURLForAction('Addresses') . '&error=no-items-selected'
             );
         } else {
             // redefine id's

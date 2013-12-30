@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Engine\CMHelper as BackendLocationCMHelper;
+
 /**
  * This is the edit-action, it will display a form to edit a group
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorEditGroup extends BackendBaseActionEdit
+class EditGroup extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -33,7 +40,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
     }
 
@@ -47,7 +54,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
     }
 
@@ -125,7 +132,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=edited&var=' . urlencode(
                         $item['name']
                     ) . '&highlight=id-' . $item['id']
                 );

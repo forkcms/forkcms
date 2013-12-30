@@ -9,12 +9,21 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This page will display the statistical overview of all sent mailings in a specified campaign
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
+class StatisticsCampaign extends BackendBaseActionIndex
 {
     // maximum number of items
     const PAGING_LIMIT = 10;
@@ -46,7 +55,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-        $this->header->addJS('highcharts.js', 'core', false);
+        $this->header->addJS('highcharts.js', 'Core', false);
         $this->getData();
         $this->loadDataGrid();
         $this->parse();
@@ -64,7 +73,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         // does the item exist
         if (!BackendMailmotorModel::existsCampaign($this->id)) {
             $this->redirect(
-                BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist'
+                BackendModel::createURLForAction('Campaigns') . '&error=campaign-does-not-exist'
             );
         }
 
@@ -77,7 +86,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         // no stats found
         if ($this->statistics === false || empty($this->statistics)) {
             $this->redirect(
-                BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded'
+                BackendModel::createURLForAction('Campaigns') . '&error=no-statistics-loaded'
             );
         }
     }
@@ -98,7 +107,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         );
 
         // set headers values
-        $headers['sent'] = SpoonFilter::ucfirst(BL::lbl('Sent'));
+        $headers['sent'] = \SpoonFilter::ucfirst(BL::lbl('Sent'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);
@@ -108,7 +117,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 
         // set column functions
         $this->dataGrid->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[sent]'),
             'sent',
             true
@@ -118,9 +127,9 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('statistics')) {
+        if (BackendAuthentication::isAllowedAction('Statistics')) {
             // set url for mailing name
-            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('Statistics') . '&amp;id=[id]');
         }
     }
 
@@ -132,7 +141,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // parse the campaign record
         $this->tpl->assign('campaign', $this->campaign);

@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Engine\CMHelper as BackendLocationCMHelper;
+
 /**
  * This is the edit-action, it will display a form to edit a mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * Bool that represents if the plain-text box should be shown
@@ -42,7 +49,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // get the step
-        $this->stepId = SpoonFilter::getGetValue('step', array(1, 2, 3, 4), 1, 'int');
+        $this->stepId = \SpoonFilter::getGetValue('step', array(1, 2, 3, 4), 1, 'int');
 
         // does the item exist
         if (BackendMailmotorModel::existsMailing($this->id)) {
@@ -54,7 +61,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -70,7 +77,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record) || $this->record['status'] == 'sent') {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=non-existing'
+                BackendModel::createURLForAction('Index') . '&error=non-existing'
             );
         }
     }
@@ -140,7 +147,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         $this->tpl->assign('groups', $groups);
 
         // assign the template language
-        $this->tpl->assign('templateLanguage', SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
+        $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
 
         // get the price settings
         $pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
@@ -204,7 +211,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         // no templates found
         if (empty($templates)) {
             $this->redirect(
-                BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=1&error=no-templates'
+                BackendModel::createURLForAction('Edit') . '&id=' . $this->id . '&step=1&error=no-templates'
             );
         }
 
@@ -241,7 +248,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         // check if we have to redirect back to step 2 (template is not set)
         if (empty($this->record['template'])) {
             $this->redirect(
-                BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=2&error=complete-step-2'
+                BackendModel::createURLForAction('Edit') . '&id=' . $this->id . '&step=2&error=complete-step-2'
             );
         }
 
@@ -271,7 +278,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         // check if we have to redirect back to step 3 (HTML content is not set)
         if (empty($this->record['content_html'])) {
             $this->redirect(
-                BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=3&error=complete-step-3'
+                BackendModel::createURLForAction('Edit') . '&id=' . $this->id . '&step=3&error=complete-step-3'
             );
         }
 
@@ -292,7 +299,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
         // subject
         $this->frm->addText('email');
         $this->frm->addDate('send_on_date', $this->record['send_on']);
-        $this->frm->addTime('send_on_time', SpoonDate::getDate('H:i', $this->record['send_on']));
+        $this->frm->addTime('send_on_time', \SpoonDate::getDate('H:i', $this->record['send_on']));
 
         // show the form
         $this->tpl->assign('step4', true);
@@ -353,7 +360,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
     {
         // check if this template path exists
         $templatePath = file_exists(
-            BACKEND_MODULE_PATH . '/templates/' . $this->record['language'] . '/' . $this->record['template']
+            BACKEND_MODULE_PATH . '/Templates/' . $this->record['language'] . '/' . $this->record['template']
         );
 
         // set wizard values

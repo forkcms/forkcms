@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This page will display the overview of custom fields
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorCustomFields extends BackendBaseActionIndex
+class CustomFields extends BackendBaseActionIndex
 {
     const PAGING_LIMIT = 10;
 
@@ -43,14 +50,14 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
     private function getData()
     {
         // get passed group ID
-        $id = SpoonFilter::getGetValue('group_id', null, 0, 'int');
+        $id = \SpoonFilter::getGetValue('group_id', null, 0, 'int');
 
         // fetch group record
         $this->group = BackendMailmotorModel::getGroup($id);
 
         // group doesn't exist
         if (empty($this->group)) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
 
         // no custom fields for this group
@@ -74,7 +81,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridArray($this->group['custom_fields']);
 
         // set headers values
-        $headers['name'] = SpoonFilter::ucfirst(BL::lbl('Title'));
+        $headers['name'] = \SpoonFilter::ucfirst(BL::lbl('Title'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);
@@ -92,7 +99,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add styles
@@ -110,7 +117,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         parent::parse();
 
         // parse the datagrid
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // parse group record in template
         $this->tpl->assign('group', $this->group);
@@ -127,7 +134,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         // build the link HTML
         $html = '<a href="' .
                 BackendModel::createURLForAction(
-                    'statistics_campaign'
+                    'StatisticsCampaign'
                 ) . '&id=' . $id . '" class="button icon iconStats linkButton"><span><span><span>' .
                 BL::lbl('Statistics') . '</span></span></span></a>';
 
@@ -135,6 +142,6 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
         $hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;
 
         // return the result
-        return ($hasSentMailings && BackendAuthentication::isAllowedAction('statistics_campaign')) ? $html : '';
+        return ($hasSentMailings && BackendAuthentication::isAllowedAction('StatisticsCampaign')) ? $html : '';
     }
 }

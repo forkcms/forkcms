@@ -9,12 +9,16 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This saved the date on which the mailing is to be sent
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
+class SaveSendDate extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -24,9 +28,9 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $mailingId = SpoonFilter::getPostValue('mailing_id', null, '', 'int');
-        $sendOnDate = SpoonFilter::getPostValue('send_on_date', null, BackendModel::getUTCDate('d/m/Y'));
-        $sendOnTime = SpoonFilter::getPostValue('send_on_time', null, BackendModel::getUTCDate('H:i'));
+        $mailingId = \SpoonFilter::getPostValue('mailing_id', null, '', 'int');
+        $sendOnDate = \SpoonFilter::getPostValue('send_on_date', null, BackendModel::getUTCDate('d/m/Y'));
+        $sendOnTime = \SpoonFilter::getPostValue('send_on_time', null, BackendModel::getUTCDate('H:i'));
         $messageDate = $sendOnDate;
 
         // validate mailing ID

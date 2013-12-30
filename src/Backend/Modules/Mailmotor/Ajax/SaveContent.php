@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This saves the mailing content
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
+class SaveContent extends BackendBaseAJAXAction
 {
     /**
      * The mailing record
@@ -31,10 +36,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $mailingId = SpoonFilter::getPostValue('mailing_id', null, '', 'int');
-        $subject = SpoonFilter::getPostValue('subject', null, '');
-        $contentHTML = urldecode(SpoonFilter::getPostValue('content_html', null, ''));
-        $contentPlain = SpoonFilter::getPostValue('content_plain', null, '');
+        $mailingId = \SpoonFilter::getPostValue('mailing_id', null, '', 'int');
+        $subject = \SpoonFilter::getPostValue('subject', null, '');
+        $contentHTML = urldecode(\SpoonFilter::getPostValue('content_html', null, ''));
+        $contentPlain = \SpoonFilter::getPostValue('content_plain', null, '');
 
         // validate mailing ID
         if ($mailingId == '') {
@@ -60,7 +65,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
                     );
                 } else {
                     // set plain content
-                    $contentPlain = empty($contentPlain) ? SpoonFilter::stripHTML($contentHTML) : $contentPlain;
+                    $contentPlain = empty($contentPlain) ? \SpoonFilter::stripHTML($contentHTML) : $contentPlain;
 
                     // add unsubscribe link
                     if (mb_strpos($contentPlain, '[unsubscribe]') === false) {
@@ -89,7 +94,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
                     try {
                         BackendMailmotorCMHelper::saveMailingDraft($item);
-                    } catch (Exception $e) {
+                    } catch (\Exception $e) {
                         // CM did not receive a valid URL
                         if (strpos($e->getMessage(), 'HTML Content URL Required')) {
                             $message = BL::err('HTMLContentURLRequired', $this->getModule());
@@ -142,7 +147,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
     private function getTextBetweenTags($tag, $html, $strict = false)
     {
         // new dom document
-        $dom = new domDocument;
+        $dom = new \domDocument;
 
         // load HTML
         ($strict == true) ? $dom->loadXML($html) : $dom->loadHTML($html);

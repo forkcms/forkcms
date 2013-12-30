@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This is the add-action, it will display a form to create a new subscriber
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAddAddress extends BackendBaseActionAdd
+class AddAddress extends BackendBaseActionAdd
 {
     /**
      * The given group ID
@@ -49,7 +56,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 
         // if no groups are found, redirect to overview
         if (empty($groups)) {
-            $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no_groups');
+            $this->redirect(BackendModel::createURLForAction('Addresses') . '&error=no_groups');
         }
 
         // add checkboxes for groups
@@ -75,7 +82,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
             // loop addresses
             foreach ($addresses as $email) {
                 // validate email
-                if (!SpoonFilter::isEmail(trim($email))) {
+                if (!\SpoonFilter::isEmail(trim($email))) {
                     // add error if needed
                     $this->frm->getField('email')->addError(BL::err('ContainsInvalidEmail'));
 
@@ -106,7 +113,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'addresses'
+                        'Addresses'
                     ) . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '') . '&report=added'
                 );
             }

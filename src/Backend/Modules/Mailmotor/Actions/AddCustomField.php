@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  * This is the add-action, it will display a form to create a new custom field
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAddCustomField extends BackendBaseActionAdd
+class AddCustomField extends BackendBaseActionAdd
 {
     /**
      * The group record
@@ -42,7 +49,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
     private function getData()
     {
         // get passed group ID
-        $id = SpoonFilter::getGetValue('group_id', null, 0, 'int');
+        $id = \SpoonFilter::getGetValue('group_id', null, 0, 'int');
 
         // fetch group record
         $this->group = BackendMailmotorModel::getGroup($id);
@@ -106,11 +113,11 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 
                     // update custom fields for this group
                     BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // redirect with a custom error
                     $this->redirect(
                         BackendModel::createURLForAction(
-                            'custom_fields'
+                            'CustomFields'
                         ) . '&group_id=' . $this->group['id'] . '&error=campaign-monitor-error&var=' . urlencode(
                             $e->getMessage()
                         )
@@ -120,7 +127,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'custom_fields'
+                        'CustomFields'
                     ) . '&group_id=' . $this->group['id'] . '&report=added&var=' . urlencode(
                         $txtName->getValue()
                     ) . '&highlight=id-' . $this->group['id']

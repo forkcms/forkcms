@@ -9,12 +9,18 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
+
 /**
  * This action will delete all bounces for a specified mailing
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
+class DeleteBounces extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -52,10 +58,10 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
 
             // user was deleted, so redirect
             $this->redirect(
-                BackendModel::createURLForAction('statistics') . '&id=' . $mailing['id'] . '&report=deleted-bounces'
+                BackendModel::createURLForAction('Statistics') . '&id=' . $mailing['id'] . '&report=deleted-bounces'
             );
         } else {
-            $this->redirect(BackendModel::createURLForAction('statistics') . '&error=no-bounces');
+            $this->redirect(BackendModel::createURLForAction('Statistics') . '&error=no-bounces');
         }
     }
 }

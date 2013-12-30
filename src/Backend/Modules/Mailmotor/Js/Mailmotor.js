@@ -187,7 +187,7 @@ jsBackend.mailmotor.linkAccount =
 				{
 					data:
 					{
-						fork: { action: 'load_client_info' },
+						fork: { action: 'LoadClientInfo' },
 						client_id: clientId
 					},
 					success: function(data, textStatus)
@@ -228,7 +228,7 @@ jsBackend.mailmotor.linkAccount =
 		{
 			data:
 			{
-				fork: { action: 'link_account' },
+				fork: { action: 'LinkAccount' },
 				url: $url.val(),
 				username: $username.val(),
 				password: $password.val()
@@ -342,7 +342,7 @@ jsBackend.mailmotor.step3 =
 				{
 					data:
 					{
-						fork: { action: 'save_content' },
+						fork: { action: 'SaveContent' },
 						mailing_id: variables.mailingId,
 						subject: subject,
 						content_plain: plainText,
@@ -460,7 +460,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { action: 'save_send_date' },
+				fork: { action: 'SaveSendDate' },
 				mailing_id: variables.mailingId,
 				send_on_date: sendOnDate,
 				send_on_time: sendOnTime
@@ -519,7 +519,7 @@ jsBackend.mailmotor.step4 =
 		{
 			data:
 			{
-				fork: { action: 'send_mailing' },
+				fork: { action: 'SendMailing' },
 				id: variables.mailingId
 			},
 			success: function(data, textStatus)

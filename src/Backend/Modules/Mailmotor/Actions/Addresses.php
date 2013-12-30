@@ -9,12 +9,21 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Exception as BackendException;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This page will display the overview of addresses
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorAddresses extends BackendBaseActionIndex
+class Addresses extends BackendBaseActionIndex
 {
     const PAGING_LIMIT = 10;
 
@@ -98,7 +107,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $headers[] = 'Pragma: no-cache';
 
         // overwrite the headers
-        SpoonHTTP::setHeaders($headers);
+        \SpoonHTTP::setHeaders($headers);
 
         // get the file contents
         $content = file_get_contents($path);
@@ -155,7 +164,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         }
 
         // set headers values
-        $headers['created_on'] = SpoonFilter::ucfirst(BL::lbl('Created'));
+        $headers['created_on'] = \SpoonFilter::ucfirst(BL::lbl('Created'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);
@@ -172,22 +181,23 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
         $this->dataGrid->setColumnsSequence('checkbox');
 
         // add mass action dropdown
-        $ddmMassAction = new SpoonFormDropdown('action', array(
-                                                              'export' => BL::lbl('Export'),
-                                                              'delete' => BL::lbl('Delete')
-                                                         ), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown('action', array(
+                'export' => BL::lbl('Export'),
+                'delete' => BL::lbl('Delete')
+            ), 'delete'
+        );
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions
         $this->dataGrid->setColumnFunction(
-            array('BackendDataGridFunctions', 'getTimeAgo'),
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
             array('[created_on]'),
             'created_on',
             true
         );
 
         // add edit column
-        $editURL = BackendModel::createURLForAction('edit_address') . '&amp;email=[email]';
+        $editURL = BackendModel::createURLForAction('EditAddress') . '&amp;email=[email]';
         if (!empty($this->group)) {
             $editURL .= '&amp;group_id=' . $this->group['id'];
         }
@@ -234,12 +244,12 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
             // assign the CSV URL to the template
             $this->tpl->assign(
                 'csvURL',
-                BackendModel::createURLForAction('addresses') . '&csv=' . $csv . '&download=1'
+                BackendModel::createURLForAction('Addresses') . '&csv=' . $csv . '&download=1'
             );
 
             // we should download the file
             if ($download) {
-                $this->downloadCSV(BACKEND_CACHE_PATH . '/mailmotor/' . $csv);
+                $this->downloadCSV(BACKEND_CACHE_PATH . '/Mailmotor/' . $csv);
             }
         }
 
@@ -270,7 +280,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
     private function setGroup()
     {
         // set the passed group ID
-        $id = SpoonFilter::getGetValue('group_id', null, 0, 'int');
+        $id = \SpoonFilter::getGetValue('group_id', null, 0, 'int');
 
         // group was set
         if (!empty($id)) {

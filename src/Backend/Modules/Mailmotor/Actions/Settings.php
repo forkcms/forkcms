@@ -9,12 +9,19 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+
 /**
  *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendMailmotorSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
     /**
      * Holds true if the CM account exists
@@ -108,7 +115,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
     private function getData()
     {
         // define mailmotor settings
-        $this->settings = BackendModel::getModuleSettings('mailmotor');
+        $this->settings = BackendModel::getModuleSettings($this->getModule());
 
         // check if an account was linked already and/or client ID was set
         $this->accountLinked = BackendMailmotorCMHelper::checkAccount();

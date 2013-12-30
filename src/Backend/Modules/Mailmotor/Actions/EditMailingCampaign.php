@@ -9,12 +9,17 @@ namespace Backend\Modules\Mailmotor\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+
 /**
  * This is the edit-action, it will display a form to edit a mailing's campaign
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
+class EditMailingCampaign extends BackendBaseActionEdit
 {
     /**
      * Campaign ID
@@ -40,7 +45,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -57,7 +62,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -111,7 +116,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
                         $this->record['name']
                     ) . '&highlight=id-' . $item['id']
                 );
