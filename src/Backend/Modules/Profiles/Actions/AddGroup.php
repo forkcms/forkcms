@@ -9,13 +9,19 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This is the add_group-action, it will display a form to add a group for profiles.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendProfilesAddGroup extends BackendBaseActionEdit
+class AddGroup extends BackendBaseActionAdd
 {
     /**
      * Execute the action.

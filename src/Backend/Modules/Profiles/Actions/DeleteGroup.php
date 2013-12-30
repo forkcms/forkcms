@@ -9,13 +9,17 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This action will delete a profile group.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendProfilesDeleteGroup extends BackendBaseActionDelete
+class DeleteGroup extends BackendBaseActionDelete
 {
     /**
      * Execute the action.

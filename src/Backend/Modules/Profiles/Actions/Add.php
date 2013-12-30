@@ -9,12 +9,18 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This is the add-action, it will display a form to add a new profile.
  *
  * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  */
-class BackendProfilesAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * @var int
@@ -40,13 +46,13 @@ class BackendProfilesAdd extends BackendBaseActionAdd
     {
         // gender dropdown values
         $genderValues = array(
-            'male' => SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
         );
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = SpoonLocale::getMonths(BL::getInterfaceLanguage());
+        $months = \SpoonLocale::getMonths(BL::getInterfaceLanguage());
         $years = range(date('Y'), 1900);
 
         // create form
@@ -63,7 +69,7 @@ class BackendProfilesAdd extends BackendBaseActionAdd
         $this->frm->addDropdown('day', array_combine($days, $days));
         $this->frm->addDropdown('month', $months);
         $this->frm->addDropdown('year', array_combine($years, $years));
-        $this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()));
+        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()));
 
         // set default elements dropdowns
         $this->frm->getField('gender')->setDefaultElement('');
@@ -117,6 +123,9 @@ class BackendProfilesAdd extends BackendBaseActionAdd
                 }
             }
 
+            // password filled in?
+            $txtPassword->isFilled(BL::err('FieldIsRequired'));
+
             // one of the birthday fields are filled in
             if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
                 // valid date?
@@ -128,27 +137,23 @@ class BackendProfilesAdd extends BackendBaseActionAdd
 
             // no errors?
             if ($this->frm->isCorrect()) {
+                // get new salt
+                $salt = BackendProfilesModel::getRandomString();
+
                 // build item
                 $values = array(
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
-                    'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue())
+                    'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
+                    'password' => BackendProfilesModel::getEncryptedString($txtPassword->getValue(), $salt),
+                    'last_login' => BackendModel::getUTCDate(null, 0)
                 );
 
                 $this->id = BackendProfilesModel::insert($values);
 
-                // new password filled in?
-                if ($txtPassword->isFilled()) {
-                    // get new salt
-                    $salt = BackendProfilesModel::getRandomString();
-
-                    // update salt
-                    BackendProfilesModel::setSetting($this->id, 'salt', $salt);
-
-                    // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString($txtPassword->getValue(), $salt);
-                }
+                // update salt
+                BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
                 // update values
                 BackendProfilesModel::update($this->id, $values);

@@ -9,13 +9,22 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This is the edit-action, it will display a form to edit an existing profile.
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendProfilesEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * Info about the current profile.
@@ -68,13 +77,13 @@ class BackendProfilesEdit extends BackendBaseActionEdit
     {
         // gender dropdown values
         $genderValues = array(
-            'male' => SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
         );
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = SpoonLocale::getMonths(BL::getInterfaceLanguage());
+        $months = \SpoonLocale::getMonths(BL::getInterfaceLanguage());
         $years = range(date('Y'), 1900);
 
         // get settings
@@ -106,7 +115,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
         $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
         $this->frm->addDropdown(
             'country',
-            SpoonLocale::getCountries(BL::getInterfaceLanguage()),
+            \SpoonLocale::getCountries(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
 
@@ -137,7 +146,7 @@ class BackendProfilesEdit extends BackendBaseActionEdit
 
         // set column function
         $this->dgGroups->setColumnFunction(
-            array('BackendDataGridFunctions', 'getLongDate'),
+            array(new BackendDataGridFunctions(), 'getLongDate'),
             array('[expires_on]'),
             'expires_on',
             true

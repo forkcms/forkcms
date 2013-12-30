@@ -9,13 +9,17 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * Mass action handler to delete profiles or add them to a specific group.
  *
  * @author Jan Moesen <jan.moesen@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendProfilesMassAction extends BackendBaseAction
+class MassAction extends BackendBaseAction
 {
     /**
      * Execute the action.
@@ -26,9 +30,9 @@ class BackendProfilesMassAction extends BackendBaseAction
         parent::execute();
 
         // action to execute
-        $action = SpoonFilter::getGetValue('action', array('addToGroup', 'delete'), '');
+        $action = \SpoonFilter::getGetValue('action', array('addToGroup', 'delete'), '');
         $ids = (isset($_GET['id'])) ? (array) $_GET['id'] : array();
-        $newGroupId = SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
+        $newGroupId = \SpoonFilter::getGetValue('newGroup', array_keys(BackendProfilesModel::getGroups()), '');
 
         // no ids provided
         if (empty($ids)) {
@@ -88,12 +92,12 @@ class BackendProfilesMassAction extends BackendBaseAction
                 null,
                 null,
                 array(
-                     'offset' => SpoonFilter::getGetValue('offset', null, ''),
-                     'order' => SpoonFilter::getGetValue('order', null, ''),
-                     'sort' => SpoonFilter::getGetValue('sort', null, ''),
-                     'email' => SpoonFilter::getGetValue('email', null, ''),
-                     'status' => SpoonFilter::getGetValue('status', null, ''),
-                     'group' => SpoonFilter::getGetValue('group', null, '')
+                     'offset' => \SpoonFilter::getGetValue('offset', null, ''),
+                     'order' => \SpoonFilter::getGetValue('order', null, ''),
+                     'sort' => \SpoonFilter::getGetValue('sort', null, ''),
+                     'email' => \SpoonFilter::getGetValue('email', null, ''),
+                     'status' => \SpoonFilter::getGetValue('status', null, ''),
+                     'group' => \SpoonFilter::getGetValue('group', null, '')
                 )
             ) . '&report=' . $report
         );

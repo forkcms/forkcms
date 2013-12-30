@@ -17,7 +17,7 @@
 					{$txtDisplayName} {$txtDisplayNameError}
 				</p>
 				<p>
-					<label for="password">{$lblPassword|ucfirst}</label>
+					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtPassword} {$txtPasswordError}
 				</p>
 			</fieldset>

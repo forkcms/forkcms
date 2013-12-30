@@ -9,13 +9,17 @@ namespace Backend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * In this file we store all generic functions that we will be using in the profiles module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class BackendProfilesModel
+class Model
 {
     /**
      * Cache avatars
@@ -470,7 +474,7 @@ class BackendProfilesModel
 
         // loop and build labels
         foreach ($labels as &$row) {
-            $row = SpoonFilter::ucfirst(BackendLanguage::getLabel(SpoonFilter::ucfirst($row)));
+            $row = \SpoonFilter::ucfirst(BL::getLabel(\SpoonFilter::ucfirst($row)));
         }
 
         // build array
@@ -487,10 +491,10 @@ class BackendProfilesModel
     public static function getUrl($displayName, $id = null)
     {
         // decode specialchars
-        $displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
+        $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
         // urlise
-        $url = CommonUri::getUrl($displayName);
+        $url = \CommonUri::getUrl($displayName);
 
         // get db
         $db = BackendModel::getContainer()->get('database');

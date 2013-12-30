@@ -9,13 +9,22 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This is the index-action, it will display the overview of profiles.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Lester Lievens <lester@netlash.com>
  */
-class BackendProfilesIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * Filter variables.
@@ -48,7 +57,7 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 
         // construct the query in the controller instead of the model as an allowed exception for data grid usage
         $query = 'SELECT p.id, p.email, p.display_name, p.status,
-                    UNIX_TIMESTAMP(p.registered_on) AS registered_on FROM profiles AS p';
+                  UNIX_TIMESTAMP(p.registered_on) AS registered_on FROM profiles AS p';
         $where = array();
 
         // add status
@@ -115,12 +124,12 @@ class BackendProfilesIndex extends BackendBaseActionIndex
                 null,
                 null,
                 array(
-                     'offset' => '[offset]',
-                     'order' => '[order]',
-                     'sort' => '[sort]',
-                     'email' => $this->filter['email'],
-                     'status' => $this->filter['status'],
-                     'group' => $this->filter['group']
+                    'offset' => '[offset]',
+                    'order' => '[order]',
+                    'sort' => '[sort]',
+                    'email' => $this->filter['email'],
+                    'status' => $this->filter['status'],
+                    'group' => $this->filter['group']
                 ),
                 false
             )
@@ -131,7 +140,7 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 
         // set column function
         $this->dgProfiles->setColumnFunction(
-            array('BackendDataGridFunctions', 'getLongDate'),
+            array(new BackendDataGridFunctions(), 'getLongDate'),
             array('[registered_on]'),
             'registered_on',
             true
@@ -139,10 +148,12 @@ class BackendProfilesIndex extends BackendBaseActionIndex
 
         // add the mass action controls
         $this->dgProfiles->setMassActionCheckboxes('checkbox', '[id]');
-        $ddmMassAction = new SpoonFormDropdown('action', array(
-                                                              'addToGroup' => BL::getLabel('AddToGroup'),
-                                                              'delete' => BL::getLabel('Delete')
-                                                         ), 'addToGroup');
+        $ddmMassAction = new \SpoonFormDropdown('action',
+            array(
+                'addToGroup' => BL::getLabel('AddToGroup'),
+                'delete' => BL::getLabel('Delete')
+            ), 'addToGroup'
+        );
         $ddmMassAction->setAttribute('id', 'massAction');
         $ddmMassAction->setOptionAttributes('addToGroup', array('data-message-id' => 'confirmAddToGroup'));
         $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));

@@ -9,12 +9,16 @@ namespace Backend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+
 /**
  * This action will delete or restore a profile.
  *
  * @author Lester Lievens <lester@netlash.com>
  */
-class BackendProfilesDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action.
