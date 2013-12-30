@@ -9,12 +9,17 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
+
 /**
  * This action is used to perform mass actions on landing pages (delete, ...)
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
+class MassLandingPageAction extends BackendBaseAction
 {
     /**
      * Execute the action
@@ -22,11 +27,11 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
     public function execute()
     {
         parent::execute();
-        $action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
+        $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
         if(!isset($_GET['id'])) {
-            $this->redirect(BackendModel::createURLForAction('landing_pages') . '&error=no-items-selected');
+            $this->redirect(BackendModel::createURLForAction('LandingPages') . '&error=no-items-selected');
         }
 
         // at least one id
@@ -36,6 +41,6 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=' . $action);
+        $this->redirect(BackendModel::createURLForAction('LandingPages') . '&report=' . $action);
     }
 }

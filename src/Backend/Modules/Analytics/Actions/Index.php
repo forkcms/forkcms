@@ -9,13 +9,18 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
+
 /**
  * This is the index-action (default), it will display the overview of analytics posts
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendAnalyticsIndex extends BackendAnalyticsBase
+class Index extends BackendAnalyticsBase
 {
     /**
      * Execute the action
@@ -73,8 +78,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
             // set headers
             $dataGrid->setHeaderLabels(
                 array(
-                    'pageviews' => SpoonFilter::ucfirst(BL::lbl('Views')),
-                    'pageviews_percentage' => '% ' . SpoonFilter::ucfirst(BL::lbl('Views'))
+                    'pageviews' => \SpoonFilter::ucfirst(BL::lbl('Views')),
+                    'pageviews_percentage' => '% ' . \SpoonFilter::ucfirst(BL::lbl('Views'))
                 )
             );
 
@@ -97,8 +102,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
             // set headers
             $dataGrid->setHeaderLabels(
                 array(
-                    'pageviews' => SpoonFilter::ucfirst(BL::lbl('Views')),
-                    'pageviews_percentage' => '% ' . SpoonFilter::ucfirst(BL::lbl('Views'))
+                    'pageviews' => \SpoonFilter::ucfirst(BL::lbl('Views')),
+                    'pageviews_percentage' => '% ' . \SpoonFilter::ucfirst(BL::lbl('Views'))
                 )
             );
 
@@ -122,7 +127,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
             // build graph data array
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
-            $graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+            $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
             $graphData[$i]['i'] = $i + 1;
             $graphData[$i]['data'] = array();
 
@@ -219,11 +224,11 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 
         foreach($sources as $i => $source) {
             // get label
-            $label = BL::lbl(SpoonFilter::toCamelCase($source['label']), 'analytics');
-            if($label == '{$lblAnalytics' . SpoonFilter::toCamelCase($source['label']) . '}') $label = $source['label'];
+            $label = BL::lbl(\SpoonFilter::toCamelCase($source['label']), 'analytics');
+            if($label == '{$lblAnalytics' . \SpoonFilter::toCamelCase($source['label']) . '}') $label = $source['label'];
 
             // build array
-            $graphData[$i]['label'] = SpoonFilter::ucfirst($label);
+            $graphData[$i]['label'] = \SpoonFilter::ucfirst($label);
             $graphData[$i]['value'] = (string) $source['value'];
             $graphData[$i]['percentage'] = (string) $source['percentage'];
         }

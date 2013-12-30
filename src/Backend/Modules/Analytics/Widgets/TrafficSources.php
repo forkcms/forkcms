@@ -10,6 +10,11 @@ namespace Backend\Modules\Analytics\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 
 /**
  * This widget will show the latest traffic sources
@@ -24,15 +29,15 @@ class TrafficSources extends BackendBaseWidget
     public function execute()
     {
         // check analytics session token and analytics table id
-        if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') return;
-        if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '') return;
+        if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') return;
+        if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') return;
 
         // settings are ok, set option
         $this->tpl->assign('analyticsValidSettings', true);
 
         $this->setColumn('left');
         $this->setPosition(0);
-        $this->header->addJS('dashboard.js', 'analytics');
+        $this->header->addJS('Dashboard.js', 'Analytics');
         $this->parse();
         $this->getData();
         $this->display();
@@ -43,7 +48,7 @@ class TrafficSources extends BackendBaseWidget
      */
     private function getData()
     {
-        $URL = SITE_URL . '/backend/cronjob.php?module=analytics&action=get_traffic_sources&id=2';
+        $URL = SITE_URL . '/src/Backend/Cronjob.php?module=Analytics&action=GetTrafficSources&id=2';
 
         // set options
         $options = array();
@@ -64,9 +69,9 @@ class TrafficSources extends BackendBaseWidget
     private function parse()
     {
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('settings', 'analytics')) {
+        if(BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
             // parse redirect link
-            $this->tpl->assign('settingsUrl', BackendModel::createURLForAction('settings', 'analytics'));
+            $this->tpl->assign('settingsUrl', BackendModel::createURLForAction('Settings', 'Analytics'));
         }
 
         $this->parseKeywords();

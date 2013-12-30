@@ -9,13 +9,18 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
+
 /**
  * This is the loading-action, it will display a spinner while data is collected
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendAnalyticsLoading extends BackendAnalyticsBase
+class Loading extends BackendAnalyticsBase
 {
     /**
      * The page id of the page we are requesting
@@ -47,11 +52,11 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
      */
     private function getData()
     {
-        $this->redirectAction = SpoonFilter::getGetValue('redirect_action', null, 'index');
+        $this->redirectAction = \SpoonFilter::getGetValue('redirect_action', null, 'index');
         $this->identifier = time() . rand(0, 999);
-        $this->pageId = SpoonFilter::getGetValue('page_id', null, '');
-        $this->pagePath = SpoonFilter::getGetValue('page_path', null, '');
-        $force = SpoonFilter::getGetValue('force', null, '');
+        $this->pageId = \SpoonFilter::getGetValue('page_id', null, '');
+        $this->pagePath = \SpoonFilter::getGetValue('page_path', null, '');
+        $force = \SpoonFilter::getGetValue('force', null, '');
 
         // no id set but we have a path
         if($this->pageId == '' && $this->pagePath != '') {
@@ -63,7 +68,7 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
         }
 
         // build url
-        $URL = SITE_URL . '/backend/cronjob.php?module=analytics&action=get_data&id=1';
+        $URL = SITE_URL . '/src/Backend/Cronjob.php?module=Analytics&action=GetData&id=1';
         $URL .= '&page=' . $this->redirectAction;
         if($this->pageId != '') $URL .= '&page_id=' . $this->pageId;
         $URL .= '&identifier=' . $this->identifier;

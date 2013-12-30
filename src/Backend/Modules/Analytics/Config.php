@@ -10,6 +10,7 @@ namespace Backend\Modules\Analytics;
  */
 
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use Backend\Core\Engine\Model as BackendModel;
 use \Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -24,7 +25,7 @@ class Config extends BackendBaseConfig
      *
      * @var	string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
@@ -47,14 +48,14 @@ class Config extends BackendBaseConfig
         $action = $this->getContainer()->has('url') ? $this->getContainer()->get('url')->getAction() : null;
 
         // analytics session token
-        if(BackendModel::getModuleSetting('analytics', 'session_token') === null) $error = true;
+        if(BackendModel::getModuleSetting('Analytics', 'session_token') === null) $error = true;
 
         // analytics table id
-        if(BackendModel::getModuleSetting('analytics', 'table_id') === null) $error = true;
+        if(BackendModel::getModuleSetting('Analytics', 'table_id') === null) $error = true;
 
         // missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
-        if($error && $action != 'settings' && $action != 'index') {
-            SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
+        if($error && $action != 'Settings' && $action != 'Index') {
+            \SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
         }
     }
 }

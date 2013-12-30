@@ -9,12 +9,19 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * This is the add-landing-page-action, it will display a form to create a new landing page
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
+class AddLandingPage extends BackendBaseActionAdd
 {
     /**
      * The list of links in the application
@@ -69,8 +76,8 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
     {
         BackendAnalyticsHelper::setDates();
 
-        $this->startTimestamp = (int) SpoonSession::get('analytics_start_timestamp');
-        $this->endTimestamp = (int) SpoonSession::get('analytics_end_timestamp');
+        $this->startTimestamp = (int) \SpoonSession::get('analytics_start_timestamp');
+        $this->endTimestamp = (int) \SpoonSession::get('analytics_end_timestamp');
     }
 
     /**
@@ -91,7 +98,7 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
             else $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
 
             // validate fields
-            if(isset($page) && !SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
+            if(isset($page) && !\SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
             if(!isset($page)) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
             if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
 

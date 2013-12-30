@@ -9,13 +9,20 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
+
 /**
  * This is the all-pages-action, it will display the overview of analytics posts
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsAllPages extends BackendAnalyticsBase
+class AllPages extends BackendAnalyticsBase
 {
     /**
      * Execute the action
@@ -60,7 +67,7 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
         foreach($metrics as $i => $metric) {
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
-            $graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+            $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
             $graphData[$i]['i'] = $i + 1;
             $graphData[$i]['data'] = array();
 

@@ -9,12 +9,16 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * This action will delete a landing page
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsDeleteLandingPage extends BackendBaseActionDelete
+class DeleteLandingPage extends BackendBaseActionDelete
 {
     /**
      * Execute the action

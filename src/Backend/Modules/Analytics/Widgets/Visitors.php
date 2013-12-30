@@ -10,6 +10,9 @@ namespace Backend\Modules\Analytics\Widgets;
  */
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 
 /**
  * This widget will show the latest visitors
@@ -24,8 +27,8 @@ class Visitors extends BackendBaseWidget
     public function execute()
     {
         // analytics session token and analytics table id
-        if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') return;
-        if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '') return;
+        if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') return;
+        if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') return;
 
         // settings are ok, set option
         $this->tpl->assign('analyticsValidSettings', true);
@@ -34,11 +37,11 @@ class Visitors extends BackendBaseWidget
         $this->setPosition(0);
 
         // add css
-        $this->header->addCSS('widgets.css', 'analytics');
+        $this->header->addCSS('widgets.css', 'Analytics');
 
         // add highchart javascript
-        $this->header->addJS('highcharts.js', 'core', false);
-        $this->header->addJS('analytics.js', 'analytics');
+        $this->header->addJS('highcharts.js', 'Core', false);
+        $this->header->addJS('Analytics.js', 'Analytics');
 
         $this->parse();
         $this->display();
@@ -65,7 +68,7 @@ class Visitors extends BackendBaseWidget
                 // build graph data array
                 $graphData[$i] = array();
                 $graphData[$i]['title'] = $metric;
-                $graphData[$i]['label'] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+                $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
                 $graphData[$i]['i'] = $i + 1;
                 $graphData[$i]['data'] = array();
 

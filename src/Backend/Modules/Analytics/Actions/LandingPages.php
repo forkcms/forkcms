@@ -9,13 +9,20 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
+
 /**
  * This is the landing-pages-action, it will display the overview of analytics posts
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsLandingPages extends BackendAnalyticsBase
+class LandingPages extends BackendAnalyticsBase
 {
     /**
      * Execute the action
@@ -47,11 +54,11 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 
             // set headers
             $dataGrid->setHeaderLabels(
-                array('page_path' => SpoonFilter::ucfirst(BL::lbl('Page')))
+                array('page_path' => \SpoonFilter::ucfirst(BL::lbl('Page')))
             );
 
             // add mass action dropdown
-            $ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
+            $ddmMassAction = new \SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
             $dataGrid->setMassAction($ddmMassAction);
 
             // parse the datagrid

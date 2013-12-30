@@ -9,12 +9,19 @@ namespace Backend\Modules\Analytics\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * This edit-action will refresh the traffic sources using Ajax
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
+class RefreshTrafficSources extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -69,7 +76,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
         try {
             BackendAnalyticsHelper::getRecentReferrers();
             BackendAnalyticsHelper::getRecentKeywords();
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             $this->output(self::OK, array('status' => 'error'), 'Something went wrong while getting traffic sources.');
         }
     }

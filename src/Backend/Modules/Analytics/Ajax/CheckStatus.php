@@ -9,6 +9,9 @@ namespace Backend\Modules\Analytics\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -17,7 +20,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
+class CheckStatus extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -25,8 +28,8 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
     public function execute()
     {
         parent::execute();
-        $page = trim(SpoonFilter::getPostValue('page', null, ''));
-        $identifier = trim(SpoonFilter::getPostValue('identifier', null, ''));
+        $page = trim(\SpoonFilter::getPostValue('page', null, ''));
+        $identifier = trim(\SpoonFilter::getPostValue('identifier', null, ''));
         $fs = new Filesystem();
 
         // validate
@@ -35,7 +38,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
         // validated
         else {
             // init vars
-            $filename = BACKEND_CACHE_PATH . '/analytics/' . $page . '_' . $identifier . '.txt';
+            $filename = BACKEND_CACHE_PATH . '/Analytics/' . $page . '_' . $identifier . '.txt';
 
             if($fs->exists($filename)) {
                 $status = file_get_contents($filename);
@@ -58,7 +61,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
                 // file's been busy for more than hundred cycles - just stop here
                 if($counter > 100) {
                     // remove file
-                    SpoonFile::delete($filename);
+                    \SpoonFile::delete($filename);
 
                     // return status
                     $this->output(self::ERROR, array('status' => 'timeout'), 'Error while retrieving data - the script took too long to retrieve data.');

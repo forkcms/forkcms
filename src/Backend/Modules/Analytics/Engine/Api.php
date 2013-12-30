@@ -24,12 +24,12 @@ class BackendAnalyticsAPI
     private static function checkSettings()
     {
         // analytics session token
-        if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') {
+        if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
             Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 
         // analytics table id (only show this error if no other exist)
-        if(BackendModel::getModuleSetting('analytics', 'table_id', null) == '') {
+        if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
             Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 

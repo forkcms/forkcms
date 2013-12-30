@@ -9,13 +9,20 @@ namespace Backend\Modules\Analytics\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Template as BackendTemplate;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * Helper class to make our life easier
  *
  * @author Dieter Van den Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsHelper
+class Helper
 {
     /**
      * Get aggregates
@@ -319,14 +326,14 @@ class BackendAnalyticsHelper
     public static function getGoogleAnalyticsInstance()
     {
         // get session token and table id
-        $sessionToken = BackendModel::getModuleSetting('analytics', 'session_token', null);
-        $tableId = BackendModel::getModuleSetting('analytics', 'table_id', null);
-        $apiKey = BackendModel::getModuleSetting('analytics', 'api_key', null);
+        $sessionToken = BackendModel::getModuleSetting('Analytics', 'session_token', null);
+        $tableId = BackendModel::getModuleSetting('Analytics', 'table_id', null);
+        $apiKey = BackendModel::getModuleSetting('Analytics', 'api_key', null);
 
         // require the GoogleAnalytics class
         require_once PATH_LIBRARY . '/external/google_analytics.php';
 
-        $ga = new GoogleAnalytics($sessionToken, $tableId);
+        $ga = new \GoogleAnalytics($sessionToken, $tableId);
         $ga->setApiKey($apiKey);
 
         // get and return an instance
@@ -797,8 +804,8 @@ class BackendAnalyticsHelper
     public static function setDates()
     {
         // init vars with session data
-        $startTimestamp = (SpoonSession::exists('analytics_start_timestamp') ? SpoonSession::get('analytics_start_timestamp') : null);
-        $endTimestamp = (SpoonSession::exists('analytics_end_timestamp') ? SpoonSession::get('analytics_end_timestamp') : null);
+        $startTimestamp = (\SpoonSession::exists('analytics_start_timestamp') ? \SpoonSession::get('analytics_start_timestamp') : null);
+        $endTimestamp = (\SpoonSession::exists('analytics_end_timestamp') ? \SpoonSession::get('analytics_end_timestamp') : null);
 
         // overwrite with get data if needed
         if(isset($_GET['start_timestamp']) && $_GET['start_timestamp'] != '' && isset($_GET['end_timestamp']) && $_GET['end_timestamp'] != '') {
@@ -833,20 +840,20 @@ class BackendAnalyticsHelper
             // valid dates
             if($valid) {
                 // set sessions
-                SpoonSession::set('analytics_start_timestamp', $startTimestamp);
-                SpoonSession::set('analytics_end_timestamp', $endTimestamp);
+                \SpoonSession::set('analytics_start_timestamp', $startTimestamp);
+                \SpoonSession::set('analytics_end_timestamp', $endTimestamp);
             }
         }
 
         // dates are not set
         else {
             // get interval
-            $interval = BackendModel::getModuleSetting('analytics', 'interval', 'week');
+            $interval = BackendModel::getModuleSetting('Analytics', 'interval', 'week');
             if($interval == 'week') $interval .= ' -1 days';
 
             // set sessions
-            SpoonSession::set('analytics_start_timestamp', strtotime('-1' . $interval, mktime(0, 0, 0)));
-            SpoonSession::set('analytics_end_timestamp', mktime(0, 0, 0));
+            \SpoonSession::set('analytics_start_timestamp', strtotime('-1' . $interval, mktime(0, 0, 0)));
+            \SpoonSession::set('analytics_end_timestamp', mktime(0, 0, 0));
         }
     }
 }

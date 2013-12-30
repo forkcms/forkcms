@@ -9,6 +9,10 @@ namespace Backend\Modules\Analytics\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Cronjob as BackendBaseCronjob;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
@@ -18,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
+class GetData extends BackendBaseCronjob
 {
     /**
      * The path to the analytics cache files
@@ -50,7 +54,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
         $this->get('database')->delete(
             'analytics_pages',
             'date_viewed < ?',
-            array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))
+            array(\SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week')))
         );
     }
 
@@ -63,19 +67,19 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
         $this->cachePath = BACKEND_CACHE_PATH . '/analytics';
 
         // get parameters
-        $page = trim(SpoonFilter::getGetValue('page', null, ''));
-        $pageId = trim(SpoonFilter::getGetValue('page_id', null, ''));
-        $identifier = trim(SpoonFilter::getGetValue('identifier', null, ''));
-        $startTimestamp = (int) trim(SpoonFilter::getGetValue('start_date', null, ''));
-        $endTimestamp = (int) trim(SpoonFilter::getGetValue('end_date', null, ''));
-        $force = trim(SpoonFilter::getGetValue('force', array('Y', 'N'), 'N')) == 'Y';
+        $page = trim(\SpoonFilter::getGetValue('page', null, ''));
+        $pageId = trim(\SpoonFilter::getGetValue('page_id', null, ''));
+        $identifier = trim(\SpoonFilter::getGetValue('identifier', null, ''));
+        $startTimestamp = (int) trim(\SpoonFilter::getGetValue('start_date', null, ''));
+        $endTimestamp = (int) trim(\SpoonFilter::getGetValue('end_date', null, ''));
+        $force = trim(\SpoonFilter::getGetValue('force', array('Y', 'N'), 'N')) == 'Y';
         $filename = null;
 
         // no parameters given? cronjob called
         if($page == '' && $identifier == '' && $startTimestamp === 0 && $endTimestamp === 0) {
             // is everything still set?
             if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED') {
-                $interval = BackendModel::getModuleSetting('analytics', 'interval', 'week');
+                $interval = BackendModel::getModuleSetting('Analytics', 'interval', 'week');
                 if($interval == 'week') $interval .= ' -2 days';
 
                 $page = 'all';
@@ -105,7 +109,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
         }
 
         // some parameters aren't given? throw exception
-        else throw new SpoonException('Some parameters are missing.');
+        else throw new \SpoonException('Some parameters are missing.');
 
         $this->getDashboardData();
         $this->getData($startTimestamp, $endTimestamp, $force, $page, $pageId, $filename);
@@ -132,8 +136,8 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
             // update cache file
             BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
-        } catch(Exception $e) {
-            throw new SpoonException('Something went wrong while getting dashboard data.');
+        } catch(\Exception $e) {
+            throw new \SpoonException('Something went wrong while getting dashboard data.');
         }
     }
 
@@ -264,10 +268,10 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
             // update cache file
             BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             // set file content to indicate something went wrong if needed
             if(isset($filename)) $fs->dumpFile($filename, 'error');
-            else throw new SpoonException('Something went wrong while getting data.');
+            else throw new \SpoonException('Something went wrong while getting data.');
         }
 
         // remove temporary file if needed

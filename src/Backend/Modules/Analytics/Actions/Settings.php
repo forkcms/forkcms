@@ -9,13 +9,20 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * This is the settings-action, it will display a form to set general analytics settings
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class BackendAnalyticsSettings extends BackendBaseActionEdit
+class Settings extends BackendBaseActionEdit
 {
     /**
      * The account name
@@ -84,7 +91,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
      */
     private function getAnalyticsParameters()
     {
-        $remove = SpoonFilter::getGetValue('remove', array('session_token', 'table_id'), null);
+        $remove = \SpoonFilter::getGetValue('remove', array('session_token', 'table_id'), null);
 
         // something has to be removed before proceeding
         if(!empty($remove)) {
@@ -116,7 +123,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 
         // no session token
         if(!isset($this->sessionToken)) {
-            $token = SpoonFilter::getGetValue('token', null, null);
+            $token = \SpoonFilter::getGetValue('token', null, null);
 
             // a one time token is given in the get parameters
             if(!empty($token) && $token !== 'true') {
@@ -160,7 +167,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 
             // everything went fine
             elseif(is_array($this->profiles)) {
-                $tableId = SpoonFilter::getGetValue('table_id', null, null);
+                $tableId = \SpoonFilter::getGetValue('table_id', null, null);
 
                 // a table id is given in the get parameters
                 if(!empty($tableId)) {

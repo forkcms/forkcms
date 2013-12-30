@@ -9,12 +9,17 @@ namespace Backend\Modules\Analytics\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Cronjob as BackendBaseCronjob;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * This cronjob will fetch the traffic sources
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsCronjobGetTrafficSources extends BackendBaseCronjob
+class GetTrafficSources extends BackendBaseCronjob
 {
     /**
      * Execute the action
@@ -26,10 +31,10 @@ class BackendAnalyticsCronjobGetTrafficSources extends BackendBaseCronjob
         // fork is no longer authorized to collect analytics data
         if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
             // remove all parameters from the module settings
-            BackendModel::setModuleSetting('analytics', 'session_token', null);
-            BackendModel::setModuleSetting('analytics', 'account_name', null);
-            BackendModel::setModuleSetting('analytics', 'table_id', null);
-            BackendModel::setModuleSetting('analytics', 'profile_title', null);
+            BackendModel::setModuleSetting('Analytics', 'session_token', null);
+            BackendModel::setModuleSetting('Analytics', 'account_name', null);
+            BackendModel::setModuleSetting('Analytics', 'table_id', null);
+            BackendModel::setModuleSetting('Analytics', 'profile_title', null);
 
             BackendAnalyticsModel::removeCacheFiles();
             BackendAnalyticsModel::clearTables();
@@ -47,8 +52,8 @@ class BackendAnalyticsCronjobGetTrafficSources extends BackendBaseCronjob
         try {
             BackendAnalyticsHelper::getRecentReferrers();
             BackendAnalyticsHelper::getRecentKeywords();
-        } catch(Exception $e) {
-            throw new SpoonException('Something went wrong while getting dashboard data.');
+        } catch(\Exception $e) {
+            throw new \SpoonException('Something went wrong while getting dashboard data.');
         }
     }
 }

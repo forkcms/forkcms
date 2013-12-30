@@ -42,7 +42,7 @@
 		{option:!analyticsGraphData}
 			<p class="analyticsFallback">
 				<a href="{$var|geturl:'index':'analytics'}" class="linkedImage">
-					<img src="{$SITE_URL}/backend/modules/analytics/layout/images/analytics_widget_{$INTERFACE_LANGUAGE}.jpg" alt="" />
+					<img src="{$SITE_URL}/src/Backend/Modules/Analytics/Layout/images/analytics_widget_{$INTERFACE_LANGUAGE}.jpg" alt="" />
 				</a>
 			</p>
 		{/option:!analyticsGraphData}

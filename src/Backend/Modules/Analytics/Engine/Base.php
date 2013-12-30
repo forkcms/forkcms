@@ -9,12 +9,14 @@ namespace Backend\Modules\Analytics\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+
 /**
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class BackendAnalyticsBase extends BackendBaseActionIndex
+class Base extends BackendBaseActionIndex
 {
     /**
      * The selected page
@@ -46,8 +48,8 @@ class BackendAnalyticsBase extends BackendBaseActionIndex
     protected function parse()
     {
         // period picker
-        if(isset($this->pagePath)) BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
-        else BackendAnalyticsHelper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
+        if(isset($this->pagePath)) Helper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
+        else Helper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
     }
 
     /**
@@ -55,9 +57,9 @@ class BackendAnalyticsBase extends BackendBaseActionIndex
      */
     private function setDates()
     {
-        BackendAnalyticsHelper::setDates();
+        Helper::setDates();
 
-        $this->startTimestamp = SpoonSession::get('analytics_start_timestamp');
-        $this->endTimestamp = SpoonSession::get('analytics_end_timestamp');
+        $this->startTimestamp = \SpoonSession::get('analytics_start_timestamp');
+        $this->endTimestamp = \SpoonSession::get('analytics_end_timestamp');
     }
 }

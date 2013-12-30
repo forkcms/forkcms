@@ -9,6 +9,10 @@ namespace Backend\Modules\Analytics\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
@@ -19,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Dieter Van den Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendAnalyticsModel
+class Model
 {
     /**
      * Google authentication url and scope
@@ -53,17 +57,17 @@ class BackendAnalyticsModel
         $warnings = array();
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('settings', 'analytics')) {
+        if(BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
             // analytics session token
-            if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '') {
+            if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
+                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'Analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
             }
 
             // analytics table id (only show this error if no other exist)
-            if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '') {
+            if(empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
+                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'Analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
             }
         }
 
@@ -150,7 +154,7 @@ class BackendAnalyticsModel
         if($aggregates === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         return $aggregates;
     }
@@ -194,7 +198,7 @@ class BackendAnalyticsModel
         if($aggregates === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         return $aggregates;
     }
@@ -311,7 +315,7 @@ class BackendAnalyticsModel
         if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // update date_viewed for this page
         BackendAnalyticsModel::updatePageDateViewed($id);
@@ -375,7 +379,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // init vars
         $results = array();
@@ -522,7 +526,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         return $items;
     }
@@ -578,7 +582,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // init vars
         $results = array();
@@ -689,7 +693,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // init vars
         $results = array();
@@ -730,7 +734,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         $results = array();
 
@@ -772,7 +776,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // init vars
         $results = array();
@@ -816,7 +820,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         // init
         $results = array();
@@ -856,7 +860,7 @@ class BackendAnalyticsModel
         if($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
-        SpoonSession::set($action . 'Loop', null);
+        \SpoonSession::set($action . 'Loop', null);
 
         return $items;
     }
@@ -994,13 +998,13 @@ class BackendAnalyticsModel
     public static function redirectToLoadingPage($action, array $extraParameters = array())
     {
         // get loop counter
-        $counter = (SpoonSession::exists($action . 'Loop') ? SpoonSession::get($action . 'Loop') : 0);
+        $counter = (\SpoonSession::exists($action . 'Loop') ? \SpoonSession::get($action . 'Loop') : 0);
 
         // loop has run too long - throw exception
         if($counter > 2) throw new BackendException('An infinite loop has been detected while getting data from cache for the action "' . $action . '".');
 
         // set new counter
-        SpoonSession::set($action . 'Loop', ++$counter);
+        \SpoonSession::set($action . 'Loop', ++$counter);
 
         // put parameters into a string
         $extraParameters = (empty($extraParameters) ? '' : '&' . http_build_query($extraParameters));
