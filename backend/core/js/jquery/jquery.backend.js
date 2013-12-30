@@ -1411,7 +1411,7 @@
 			});
 
 			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; });
+			$('#addValue-' + id).bind('blur', function(e) { blockSubmit = false; add(); });
 
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(e)
@@ -1425,7 +1425,7 @@
 			});
 
 			// bind click on delete-button
-			$('.deleteButton-' + id).live('click', function(e)
+			$(document).on('click', '.deleteButton-'+id, function(e)
 			{
 				// dont submit
 				e.preventDefault();
@@ -1436,7 +1436,7 @@
 			});
 
 			// bind keypress on input fields (we need to rebuild so new values are saved)
-			$('.inputField-' + id).live('keyup', function(e)
+			$(document).on('keyup', '.inputField-'+id, function(e)
 			{
 				// clear elements
 				elements = [];
@@ -1468,7 +1468,7 @@
 				blockSubmit = false;
 
 				// init some vars
-				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
 				var inElements = false;
 
 				// ugly hack to escape entities and quotes
@@ -1478,26 +1478,30 @@
 				$('#addValue-' + id).val('').focus();
 				$('#addButton-' + id).addClass('disabledButton');
 
-				// only add new element if it isn't empty
-				if(value != '')
-				{
-					// already in elements?
-					for(var i in elements)
+				var values = value.split(options.splitChar);
+				for (var e in values) {
+					value = values[e];
+					// only add new element if it isn't empty
+					if(value != '')
 					{
-						if(value == elements[i]) inElements = true;
-					}
+						// already in elements?
+						for(var i in elements)
+						{
+							if(value == elements[i]) inElements = true;
+						}
 
-					// only add if not already in elements
-					if(!inElements)
-					{
-						// add elements
-						elements.push(value);
+						// only add if not already in elements
+						if(!inElements)
+						{
+							// add elements
+							elements.push(value);
 
-						// set new value
-						$('#' + id).val(elements.join(options.splitChar));
+							// set new value
+							$('#' + id).val(elements.join(options.splitChar));
 
-						// rebuild element list
-						build();
+							// rebuild element list
+							build();
+						}
 					}
 				}
 			}

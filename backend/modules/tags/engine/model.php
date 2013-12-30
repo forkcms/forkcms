@@ -148,7 +148,7 @@ class BackendTagsModel
 	 */
 	public static function getURL($URL, $id = null)
 	{
-		$URL = SpoonFilter::urlise((string) $URL);
+		$URL = CommonUri::getUrl((string) $URL);
 		$language = BL::getWorkingLanguage();
 
 		// get db
