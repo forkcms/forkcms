@@ -9,13 +9,20 @@ namespace Backend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+
 /**
  * This is the edit-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendLocationEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * @var array
@@ -72,7 +79,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 
         // load the settings from the general settings
         if(empty($this->settings)) {
-            $settings = BackendModel::getModuleSettings('location');
+            $settings = BackendModel::getModuleSettings('Location');
 
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];
@@ -103,7 +110,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
         $this->frm->addText('city', $this->record['city']);
-        $this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
+        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
         $this->frm->addHidden('redirect', 'overview');
     }
 
@@ -185,8 +192,8 @@ class BackendLocationEdit extends BackendBaseActionEdit
                 // check if it's necessary to geocode again
                 if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
                     // geocode address
-                    $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
-                    $geocode = json_decode(SpoonHTTP::getContent($url));
+                    $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . \SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
+                    $geocode = json_decode(\SpoonHTTP::getContent($url));
                     $item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
                     $item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
                 }

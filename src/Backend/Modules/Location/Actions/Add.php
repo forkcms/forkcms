@@ -9,12 +9,19 @@ namespace Backend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendLocationAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -39,7 +46,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
         $this->frm->addText('number');
         $this->frm->addText('zip');
         $this->frm->addText('city');
-        $this->frm->addDropdown('country', SpoonLocale::getCountries(BL::getInterfaceLanguage()), 'BE');
+        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), 'BE');
     }
 
     /**
@@ -68,8 +75,12 @@ class BackendLocationAdd extends BackendBaseActionAdd
                 $item['country'] = $this->frm->getField('country')->getValue();
 
                 // geocode address
-                $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
-                $geocode = json_decode(SpoonHTTP::getContent($url));
+                $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' .
+                       urlencode($item['street'] . ' ' . $item['number'] . ', ' .
+                       $item['zip'] . ' ' . $item['city'] . ', ' .
+                       \SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) .
+                       '&sensor=false';
+                $geocode = json_decode(\SpoonHTTP::getContent($url));
                 $item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
                 $item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
 
@@ -83,7 +94,10 @@ class BackendLocationAdd extends BackendBaseActionAdd
                 }
 
                 // redirect
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=added&var=' . urlencode($item['title']));
+                $this->redirect(
+                    BackendModel::createURLForAction('edit') . '&id=' . $item['id'] .
+                    '&report=added&var=' . urlencode($item['title'])
+                );
             }
         }
     }

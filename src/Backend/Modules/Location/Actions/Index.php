@@ -9,13 +9,21 @@ namespace Backend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+
 /**
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendLocationIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * The settings form
@@ -62,7 +70,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
 
         // load the settings from the general settings
         if(empty($this->settings)) {
-            $this->settings = BackendModel::getModuleSettings('location');
+            $this->settings = BackendModel::getModuleSettings('Location');
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
@@ -80,14 +88,22 @@ class BackendLocationIndex extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(BackendLocationModel::QRY_DATAGRID_BROWSE, array(BL::getWorkingLanguage()));
+        $this->dataGrid = new BackendDataGridDB(
+            BackendLocationModel::QRY_DATAGRID_BROWSE,
+            array(BL::getWorkingLanguage())
+        );
         $this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
         $this->dataGrid->setSortParameter('ASC');
 
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit')) {
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->setColumnURL(
+                'title', BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+            );
+            $this->dataGrid->addColumn(
+                'edit', null, BL::lbl('Edit'),
+                BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit')
+            );
         }
     }
 
@@ -125,7 +141,7 @@ class BackendLocationIndex extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
 
         // assign to template

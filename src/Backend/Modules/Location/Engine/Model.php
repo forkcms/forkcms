@@ -9,13 +9,16 @@ namespace Backend\Modules\Location\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+
 /**
  * In this file we store all generic functions that we will be using in the location module
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendLocationModel
+class Model
 {
     const QRY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
@@ -178,7 +181,7 @@ class BackendLocationModel
         // update extra (item id is now known)
         $extra['data'] = serialize(array(
             'id' => $item['id'],
-            'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+            'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
             'language' => $item['language'],
             'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
         );
@@ -228,7 +231,7 @@ class BackendLocationModel
                 'action' => 'location',
                 'data' => serialize(array(
                     'id' => $item['id'],
-                    'extra_label' => SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
+                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
                     'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
                 ),

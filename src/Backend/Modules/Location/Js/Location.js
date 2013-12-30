@@ -109,7 +109,7 @@ jsBackend.location =
 		{
 			data:
 			{
-				fork: { module: 'location', action: 'save_live_location' },
+				fork: { module: 'Location', action: 'SaveLiveLocation' },
 				zoom: jsBackend.location.zoomLevel,
 				type: jsBackend.location.type,
 				centerLat: jsBackend.location.centerLat,
@@ -208,7 +208,7 @@ jsBackend.location =
 		{
 			data:
 			{
-				fork: { module: 'location', action: 'update_marker' },
+				fork: { module: 'Location', action: 'UpdateMarker' },
 				id: jsBackend.location.mapId,
 				lat: lat,
 				lng: lng

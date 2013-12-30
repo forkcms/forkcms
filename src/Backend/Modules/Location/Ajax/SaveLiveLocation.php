@@ -9,12 +9,17 @@ namespace Backend\Modules\Location\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+
 /**
  * This is an ajax handler that will set a new position for a certain map
  *
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
+class SaveLiveLocation extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -23,19 +28,19 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $generalSettings = BackendModel::getModuleSettings('location');
+        $generalSettings = BackendModel::getModuleSettings('Location');
 
         // get parameters
-        $itemId = SpoonFilter::getPostValue('id', null, null, 'int');
-        $zoomLevel = trim(SpoonFilter::getPostValue('zoom', null, 'auto'));
-        $mapType = strtoupper(trim(SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
-        $centerLat = SpoonFilter::getPostValue('centerLat', null, 1, 'float');
-        $centerlng = SpoonFilter::getPostValue('centerLng', null, 1, 'float');
-        $height = SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
-        $width = SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
-        $showLink = SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
-        $showDirections = SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
-        $showOverview = SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
+        $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');
+        $zoomLevel = trim(\SpoonFilter::getPostValue('zoom', null, 'auto'));
+        $mapType = strtoupper(trim(\SpoonFilter::getPostValue('type', array('roadmap', 'satelitte', 'hybrid', 'terrain'), 'roadmap')));
+        $centerLat = \SpoonFilter::getPostValue('centerLat', null, 1, 'float');
+        $centerlng = \SpoonFilter::getPostValue('centerLng', null, 1, 'float');
+        $height = \SpoonFilter::getPostValue('height', null, $generalSettings['height'], 'int');
+        $width = \SpoonFilter::getPostValue('width', null, $generalSettings['width'], 'int');
+        $showLink = \SpoonFilter::getPostValue('link', array('true', 'false'), 'false', 'string');
+        $showDirections = \SpoonFilter::getPostValue('directions', array('true', 'false'), 'false', 'string');
+        $showOverview = \SpoonFilter::getPostValue('showOverview', array('true', 'false'), 'true', 'string');
 
         // reformat
         $center = array('lat' => $centerLat, 'lng' => $centerlng);
@@ -65,6 +70,6 @@ class BackendLocationAjaxSaveLiveLocation extends BackendBaseAJAXAction
         BackendLocationModel::update($item);
 
         // output
-        $this->output(self::OK, null, FL::msg('Success'));
+        $this->output(self::OK, null, BL::msg('Success'));
     }
 }

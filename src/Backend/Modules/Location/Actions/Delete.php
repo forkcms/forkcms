@@ -9,12 +9,16 @@ namespace Backend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+
 /**
  * This action will delete an item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendLocationDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -34,15 +38,14 @@ class BackendLocationDelete extends BackendBaseActionDelete
             // delete item
             BackendLocationModel::delete($this->id);
 
-            // delete search indexes
-            // @todo why is this commented out
-            // BackendSearchModel::removeIndex($this->getModule(), $this->id);
-
             // trigger event
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 
             // user was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&report=deleted&var=' .
+                urlencode($this->record['title'])
+            );
         }
 
         // something went wrong
