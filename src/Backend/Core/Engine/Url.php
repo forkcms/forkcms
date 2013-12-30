@@ -134,7 +134,7 @@ class Url extends \Backend\Core\Engine\Base\Object
         $module = \SpoonFilter::toCamelCase($module);
 
         // get the requested action, if it is passed
-        if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
+        if(isset($chunks[3]) && $chunks[3] != '') $action = \SpoonFilter::toCamelCase($chunks[3]);
 
         // no action passed through URL
         elseif(!$isAJAX) {
@@ -217,9 +217,9 @@ class Url extends \Backend\Core\Engine\Base\Object
             // does our user has access to this module?
             if(!Authentication::isAllowedModule($module)) {
                 // if the module is the dashboard redirect to the first allowed module
-                if($module == 'dashboard') {
+                if($module == 'Dashboard') {
                     // require navigation-file
-                    require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
+                    require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
                     // loop the navigation to find the first allowed module
                     foreach($navigation as $value) {
