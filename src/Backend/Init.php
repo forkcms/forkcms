@@ -131,7 +131,7 @@ class Init extends \KernelLoader
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
-        SpoonHTTP::setHeaders('content-type: application/json');
+        \SpoonHTTP::setHeaders('content-type: application/json');
         $response = array(
             'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
             'message' => $exception->getMessage()
@@ -216,7 +216,7 @@ class Init extends \KernelLoader
      */
     public static function exceptionJSHandler($exception, $output)
     {
-        SpoonHTTP::setHeaders('content-type: application/javascript');
+        \SpoonHTTP::setHeaders('content-type: application/javascript');
         echo '// ' . $exception->getMessage();
         exit;
     }
@@ -247,15 +247,15 @@ class Init extends \KernelLoader
             // add callback for the spoon exceptionhandler
             switch ($this->type) {
                 case 'backend_ajax':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
 
                 case 'backend_js':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 
                 default:
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
             }
         }
     }
