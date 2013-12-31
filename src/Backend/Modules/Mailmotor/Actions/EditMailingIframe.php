@@ -2,7 +2,6 @@
 
 namespace Backend\Modules\Mailmotor\Actions;
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /*
  * This file is part of Fork CMS.
@@ -11,6 +10,7 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  * file that was distributed with this source code.
  */
 
+use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
@@ -95,7 +95,7 @@ class EditMailingIframe extends BackendBaseActionEdit
         }
 
         // set CSS object
-        $css = new \CSSToInlineStyles($this->template['content'], $this->template['css']);
+        $css = new CSSToInlineStyles($this->template['content'], $this->template['css']);
         $HTML = urldecode($css->convert());
 
         /*

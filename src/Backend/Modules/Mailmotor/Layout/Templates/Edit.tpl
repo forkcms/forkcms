@@ -123,7 +123,7 @@
 						<li{option:templates.selected} class="selected"{/option:templates.selected}>
 							{$templates.rbtTemplates}
 							<label for="{$templates.id}">
-								<img src="/backend/modules/mailmotor/templates/{$templates.language}/{$templates.value}/images/thumb.jpg" width="172" height="129" alt="{$templates.label|ucfirst}" />
+								<img src="/src/Backend/Modules/Mailmotor/Templates/{$templates.language}/{$templates.value}/images/thumb.jpg" width="172" height="129" alt="{$templates.label|ucfirst}" />
 								<span>{$templates.label|ucfirst}</span>
 							</label>
 						</li>

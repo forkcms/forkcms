@@ -8,22 +8,22 @@
 	<title>Fork CMS - mailing</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/css/screen.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Modules/Mailmotor/Layout/css/iframe.css" />
 
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.dialog.patch.js"></script>
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.tools.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.ui.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.tools.js"></script>
 
-	<script type="text/javascript" src="/backend/core/js/jquery/jquery.backend.js"></script>
-	<script type="text/javascript" src="/backend/core/js/backend.js"></script>
-	<script type="text/javascript" src="/backend/core/js/utils.js"></script>
-	<script type="text/javascript" src="/backend/modules/mailmotor/js/mailmotor.js"></script>
-	<script type="text/javascript" src="/backend/core/js/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="/backend/core/js/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="/backend/core/js/ckfinder/ckfinder.js"></script>
-	<script type="text/javascript" src="/frontend/cache/navigation/editor_link_list_{$LANGUAGE}.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.backend.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/backend.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/utils.js"></script>
+	<script type="text/javascript" src="/src/Backend/Modules/Mailmotor/Js/mailmotor.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/ckeditor.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/adapters/jquery.js"></script>
+	<script type="text/javascript" src="/src/Backend/Core/Js/ckfinder/ckfinder.js"></script>
+	<script type="text/javascript" src="/src/Frontend/Cache/Navigation/editor_link_list_{$LANGUAGE}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			{$jsData}

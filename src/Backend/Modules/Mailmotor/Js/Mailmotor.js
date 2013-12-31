@@ -335,7 +335,6 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 				var textareaValue = $iframe[0].contentWindow.getEditorContent();
-				console.log('called save_content');
 
 				// make the call
 				$.ajax(

@@ -13,8 +13,8 @@ use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
-use Backend\Modules\Location\Engine\Model as BackendLocationModel;
-use Backend\Modules\Location\Engine\CMHelper as BackendLocationCMHelper;
+use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
+use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
  * This is the edit-action, it will display a form to edit a mailing
