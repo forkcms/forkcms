@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -16,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendFooter extends FrontendBaseObject
+class Footer extends FrontendBaseObject
 {
     /**
      * @param KernelInterface $kernel
@@ -34,16 +35,16 @@ class FrontendFooter extends FrontendBaseObject
     public function parse()
     {
         // get footer links
-        $footerLinks = (array) FrontendNavigation::getFooterLinks();
+        $footerLinks = (array) Navigation::getFooterLinks();
 
         // assign footer links
         $this->tpl->assign('footerLinks', $footerLinks);
 
         // initial value for footer HTML
-        $siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
+        $siteHTMLFooter = (string) Model::getModuleSetting('core', 'site_html_footer', null);
 
         // facebook admins given?
-        if (FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null || FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) !== null || Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
             // build correct locale
             switch (FRONTEND_LANGUAGE) {
                 case 'en':
@@ -83,10 +84,10 @@ class FrontendFooter extends FrontendBaseObject
 
             // add facebook JS
             $siteHTMLFooter .= '<script>' . "\n";
-            if (FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+            if (Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
                 $siteHTMLFooter .= '  window.fbAsyncInit = function() {' . "\n";
                 $siteHTMLFooter .= '    FB.init({ appId: "' .
-                                   FrontendModel::getModuleSetting('core', 'facebook_app_id', null) .
+                                   Model::getModuleSetting('core', 'facebook_app_id', null) .
                                    '", status: true, cookie: true, xfbml: true, oauth: true });' . "\n";
                 $siteHTMLFooter .= '  jsFrontend.facebook.afterInit();' . "\n";
                 $siteHTMLFooter .= '  };' . "\n";

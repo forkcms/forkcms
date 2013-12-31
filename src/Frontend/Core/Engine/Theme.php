@@ -14,7 +14,7 @@ namespace Frontend\Core\Engine;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendTheme
+class Theme
 {
     /**
      * The current active theme's name
@@ -39,11 +39,11 @@ class FrontendTheme
         $theme = self::getTheme();
 
         // theme in use
-        if (FrontendModel::getModuleSetting('core', 'theme', 'core') != 'core') {
+        if (Model::getModuleSetting('core', 'theme', 'core') != 'core') {
             // theme not yet specified
-            if (strpos($file, 'frontend/themes/' . $theme) === false) {
+            if (strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
                 // add theme location
-                $themeTemplate = str_replace(array('frontend/'), array('frontend/themes/' . $theme . '/'), $file);
+                $themeTemplate = str_replace(array('src/Frontend/'), array('src/Frontend/Themes/' . $theme . '/'), $file);
 
                 // check if this template exists
                 if (is_file(PATH_WWW . str_replace(PATH_WWW, '', $themeTemplate))) {
@@ -70,7 +70,7 @@ class FrontendTheme
     {
         // theme name has not yet been saved, fetch and save it
         if (!self::$theme) {
-            self::$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+            self::$theme = Model::getModuleSetting('core', 'theme', null);
         }
 
         // return theme name

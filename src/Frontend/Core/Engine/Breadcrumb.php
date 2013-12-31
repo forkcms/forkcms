@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -18,7 +19,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
-class FrontendBreadcrumb extends FrontendBaseObject
+class Breadcrumb extends FrontendBaseObject
 {
     /**
      * The items in the breadcrumb
@@ -38,31 +39,31 @@ class FrontendBreadcrumb extends FrontendBaseObject
         $this->getContainer()->set('breadcrumb', $this);
 
         // get more information for the homepage
-        $homeInfo = FrontendNavigation::getPageInfo(1);
+        $homeInfo = Navigation::getPageInfo(1);
 
         // add homepage as first item (with correct element)
-        $this->addElement($homeInfo['navigation_title'], FrontendNavigation::getURL(1));
+        $this->addElement($homeInfo['navigation_title'], Navigation::getURL(1));
 
         // get other pages
         $pages = $this->URL->getPages();
 
         // init vars
         $items = array();
-        $errorURL = FrontendNavigation::getUrl(404);
+        $errorURL = Navigation::getUrl(404);
 
         // loop pages
         while (!empty($pages)) {
             // init vars
             $URL = implode('/', $pages);
-            $menuId = FrontendNavigation::getPageId($URL);
-            $pageInfo = FrontendNavigation::getPageInfo($menuId);
+            $menuId = Navigation::getPageId($URL);
+            $pageInfo = Navigation::getPageInfo($menuId);
 
             // do we know something about the page
             if ($pageInfo !== false && isset($pageInfo['navigation_title'])) {
                 // only add pages that aren't direct actions
                 if ($pageInfo['tree_type'] != 'direct_action') {
                     // get URL
-                    $pageURL = FrontendNavigation::getUrl($menuId);
+                    $pageURL = Navigation::getUrl($menuId);
 
                     // if this is the error-page, so we won't show an URL.
                     if ($pageURL == $errorURL) {
@@ -112,7 +113,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
             unset($this->items[(int) $key]);
 
             // resort, to avoid shit when parsing
-            $this->items = SpoonFilter::arraySortKeys($this->items);
+            $this->items = \SpoonFilter::arraySortKeys($this->items);
         } else {
             // clear all
             $this->items = array();

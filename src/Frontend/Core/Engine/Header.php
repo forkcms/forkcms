@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use \MatthiasMullie\Minify;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
@@ -21,7 +22,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendHeader extends FrontendBaseObject
+class Header extends FrontendBaseObject
 {
     /**
      * The canonical URL
@@ -90,20 +91,20 @@ class FrontendHeader extends FrontendBaseObject
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
-        $this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css', false);
-        $this->addCSS('/frontend/core/layout/css/screen.css');
+        $this->addCSS('/src/Frontend/Core/Layout/css/jquery_ui/jquery_ui.css', false);
+        $this->addCSS('/src/Frontend/Core/Layout/css/screen.css');
 
         // debug stylesheet
         if (SPOON_DEBUG) {
-            $this->addCSS('/frontend/core/layout/css/debug.css');
+            $this->addCSS('/src/Frontend/Core/Layout/css/debug.css');
         }
 
         // add default javascript-files
-        $this->addJS('/frontend/core/js/jquery/jquery.js', false);
-        $this->addJS('/frontend/core/js/jquery/jquery.ui.js', false);
-        $this->addJS('/frontend/core/js/jquery/jquery.frontend.js', true);
-        $this->addJS('/frontend/core/js/utils.js', true);
-        $this->addJS('/frontend/core/js/frontend.js', false);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true);
+        $this->addJS('/src/Frontend/Core/Js/utils.js', true);
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', false);
     }
 
     /**
@@ -120,7 +121,7 @@ class FrontendHeader extends FrontendBaseObject
         $addTimestamp = (bool) $addTimestamp;
 
         // get file path
-        $file = FrontendTheme::getPath($file);
+        $file = Theme::getPath($file);
 
         // no minifying when debugging
         if (SPOON_DEBUG) {
@@ -168,7 +169,7 @@ class FrontendHeader extends FrontendBaseObject
 
         // get file path
         if (substr($file, 0, 4) != 'http') {
-            $file = FrontendTheme::getPath($file);
+            $file = Theme::getPath($file);
         }
 
         // no minifying when debugging
@@ -527,8 +528,8 @@ class FrontendHeader extends FrontendBaseObject
     {
         // create unique filename
         $fileName = md5($file) . '.css';
-        $finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
-        $finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
+        $finalURL = FRONTEND_CACHE_URL . '/MinifiedCss/' . $fileName;
+        $finalPath = FRONTEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
         $fs = new Filesystem();
@@ -556,8 +557,8 @@ class FrontendHeader extends FrontendBaseObject
     {
         // create unique filename
         $fileName = md5($file) . '.js';
-        $finalURL = FRONTEND_CACHE_URL . '/minified_js/' . $fileName;
-        $finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
+        $finalURL = FRONTEND_CACHE_URL . '/MinifiedJs/' . $fileName;
+        $finalPath = FRONTEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
         $fs = new Filesystem();
@@ -609,7 +610,7 @@ class FrontendHeader extends FrontendBaseObject
         // assign site title
         $this->tpl->assign(
             'siteTitle',
-            (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) Model::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -645,10 +646,10 @@ class FrontendHeader extends FrontendBaseObject
     private function parseCustomHeaderHTMLAndGoogleAnalytics()
     {
         // get the data
-        $siteHTMLHeader = (string) FrontendModel::getModuleSetting('core', 'site_html_header', null);
-        $siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
-        $webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
-        $type = FrontendModel::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
+        $siteHTMLHeader = (string) Model::getModuleSetting('core', 'site_html_header', null);
+        $siteHTMLFooter = (string) Model::getModuleSetting('core', 'site_html_footer', null);
+        $webPropertyId = Model::getModuleSetting('analytics', 'web_property_id', null);
+        $type = Model::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if ($webPropertyId != '' &&
@@ -663,8 +664,8 @@ class FrontendHeader extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) &&
-                        !CommonCookie::hasAllowedCookies()
+                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                        !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
                     }
@@ -683,8 +684,8 @@ class FrontendHeader extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) &&
-                        !CommonCookie::hasAllowedCookies()
+                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                        !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
                     }
@@ -706,8 +707,8 @@ class FrontendHeader extends FrontendBaseObject
                                       ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
                                     ';
 
-                    if (FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) &&
-                        !CommonCookie::hasAllowedCookies()
+                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                        !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
                     } else {
@@ -716,7 +717,7 @@ class FrontendHeader extends FrontendBaseObject
                     $trackingCode .= '</script>';
                     break;
                 default:
-                    throw new Exception('Unknown type. (' . $type . ')');
+                    throw new \Exception('Unknown type. (' . $type . ')');
             }
 
             $siteHTMLHeader .= "\n" . $trackingCode;
@@ -741,11 +742,11 @@ class FrontendHeader extends FrontendBaseObject
         $parseFacebook = false;
 
         // check if facebook admins are set
-        if (FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) {
+        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) !== null) {
             $this->addMetaData(
                 array(
                      'property' => 'fb:admins',
-                     'content' => FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null)
+                     'content' => Model::getModuleSetting('core', 'facebook_admin_ids', null)
                 ),
                 true,
                 array('property')
@@ -754,13 +755,13 @@ class FrontendHeader extends FrontendBaseObject
         }
 
         // check if no facebook admin is set but an app is configured we use the application as an admin
-        if (FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) == '' &&
-            FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null
+        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) == '' &&
+            Model::getModuleSetting('core', 'facebook_app_id', null) !== null
         ) {
             $this->addMetaData(
                 array(
                      'property' => 'fb:app_id',
-                     'content' => FrontendModel::getModuleSetting('core', 'facebook_app_id', null)
+                     'content' => Model::getModuleSetting('core', 'facebook_app_id', null)
                 ),
                 true,
                 array('property')
@@ -808,7 +809,7 @@ class FrontendHeader extends FrontendBaseObject
             $this->addOpenGraphData('locale', $locale);
 
             // if a default image has been set for facebook, assign it
-            $this->addOpenGraphImage('/frontend/themes/' . FrontendTheme::getTheme() . '/facebook.png');
+            $this->addOpenGraphImage('/frontend/themes/' . Theme::getTheme() . '/facebook.png');
             $this->addOpenGraphImage('/facebook.png');
         }
     }
@@ -826,8 +827,8 @@ class FrontendHeader extends FrontendBaseObject
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/frontend/core/js/jquery/jquery.js',
-                '/frontend/core/js/jquery/jquery.ui.js'
+                '/src/Frontend/Core/Js/Jquery/jquery.js',
+                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
             );
 
             // loop the JS-files
@@ -913,7 +914,7 @@ class FrontendHeader extends FrontendBaseObject
     {
         // when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
         $queryString = trim($this->URL->getQueryString(), '/');
-        $language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        $language = Model::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
         }
@@ -956,18 +957,18 @@ class FrontendHeader extends FrontendBaseObject
         }
 
         // prevent against xss
-        $url = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($url) : SpoonFilter::htmlentities($url);
+        $url = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
 
         // canonical
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
         // noodp, noydir
-        if (FrontendModel::getModuleSetting('core', 'seo_noodp', false)) {
+        if (Model::getModuleSetting('core', 'seo_noodp', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noodp')
             );
         }
-        if (FrontendModel::getModuleSetting('core', 'seo_noydir', false)) {
+        if (Model::getModuleSetting('core', 'seo_noydir', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noydir')
             );
@@ -1019,7 +1020,7 @@ class FrontendHeader extends FrontendBaseObject
         } else {
             // empty value given?
             if (empty($value)) {
-                $this->pageTitle = FrontendModel::getModuleSetting(
+                $this->pageTitle = Model::getModuleSetting(
                     'core',
                     'site_title_' . FRONTEND_LANGUAGE,
                     SITE_DEFAULT_TITLE
@@ -1028,7 +1029,7 @@ class FrontendHeader extends FrontendBaseObject
                 // if the current page title is empty we should add the site title
                 if ($this->pageTitle == '') {
                     $this->pageTitle = $value . ' -  ' .
-                                       FrontendModel::getModuleSetting(
+                                       Model::getModuleSetting(
                                            'core',
                                            'site_title_' . FRONTEND_LANGUAGE,
                                            SITE_DEFAULT_TITLE

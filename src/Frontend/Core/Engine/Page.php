@@ -10,6 +10,8 @@ namespace Frontend\Core\Engine;
  */
 
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
+use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -94,10 +96,10 @@ class Page extends FrontendBaseObject
     public function load()
     {
         // set tracking cookie
-        FrontendModel::getVisitorId();
+        Model::getVisitorId();
 
         // get pageId for requested URL
-        $this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
+        $this->pageId = Navigation::getPageId(implode('/', $this->URL->getPages()));
 
         // set headers if this is a 404 page
         if ($this->pageId == 404) {
@@ -105,13 +107,13 @@ class Page extends FrontendBaseObject
         }
 
         // create breadcrumb instance
-        $this->breadcrumb = new FrontendBreadcrumb($this->getKernel());
+        $this->breadcrumb = new Breadcrumb($this->getKernel());
 
         // create header instance
-        $this->header = new FrontendHeader($this->getKernel());
+        $this->header = new Header($this->getKernel());
 
         // new footer instance
-        $this->footer = new FrontendFooter($this->getKernel());
+        $this->footer = new Footer($this->getKernel());
 
         // get page content
         $this->getPageContent();
@@ -126,15 +128,15 @@ class Page extends FrontendBaseObject
         $this->storeStatistics();
 
         // trigger event
-        FrontendModel::triggerEvent(
+        Model::triggerEvent(
             'core',
             'after_page_processed',
             array(
                  'id' => $this->getId(),
                  'record' => $this->getRecord(),
                  'statusCode' => $this->getStatusCode(),
-                 'sessionId' => SpoonSession::getSessionId(),
-                 'visitorId' => FrontendModel::getVisitorId(),
+                 'sessionId' => \SpoonSession::getSessionId(),
+                 'visitorId' => Model::getVisitorId(),
                  'SESSION' => $_SESSION,
                  'COOKIE' => $_COOKIE,
                  'GET' => $_GET,
@@ -167,7 +169,7 @@ class Page extends FrontendBaseObject
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
             'cookieBarHide',
-            (!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
+            (!Model::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
 
         // the the positions to the template
@@ -177,7 +179,7 @@ class Page extends FrontendBaseObject
         $unusedPositions = array_diff($this->record['template_data']['names'], array_keys($this->record['positions']));
         foreach ($unusedPositions as $position) {
             $this->tpl->assign(
-                'position' . SpoonFilter::ucfirst($position),
+                'position' . \SpoonFilter::ucfirst($position),
                 array()
             );
         }
@@ -217,18 +219,18 @@ class Page extends FrontendBaseObject
         // load revision
         if ($this->URL->getParameter('page_revision', 'int') != 0) {
             // get data
-            $this->record = FrontendModel::getPageRevision($this->URL->getParameter('page_revision', 'int'));
+            $this->record = Model::getPageRevision($this->URL->getParameter('page_revision', 'int'));
 
             // add no-index to meta-custom, so the draft won't get accidentally indexed
             $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
         } else {
             // get page record
-            $this->record = (array) FrontendModel::getPage($this->pageId);
+            $this->record = (array) Model::getPage($this->pageId);
         }
 
         // empty record (pageId doesn't exists, hope this line is never used)
         if (empty($this->record) && $this->pageId != 404) {
-            SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+            \SpoonHTTP::redirect(Navigation::getURL(404), 404);
         }
 
         // init var
@@ -258,15 +260,15 @@ class Page extends FrontendBaseObject
         // should we redirect?
         if ($redirect) {
             // get first child
-            $firstChildId = FrontendNavigation::getFirstChildId($this->record['id']);
+            $firstChildId = Navigation::getFirstChildId($this->record['id']);
 
             // validate the child
             if ($firstChildId !== false) {
                 // build URL
-                $URL = FrontendNavigation::getURL($firstChildId);
+                $URL = Navigation::getURL($firstChildId);
 
                 // redirect
-                SpoonHTTP::redirect($URL, 301);
+                \SpoonHTTP::redirect($URL, 301);
             }
         }
     }
@@ -369,7 +371,7 @@ class Page extends FrontendBaseObject
                 }
 
                 // assign position to template
-                $this->tpl->assign('position' . SpoonFilter::ucfirst($position), $positions[$position]);
+                $this->tpl->assign('position' . \SpoonFilter::ucfirst($position), $positions[$position]);
             }
         } while ($oldPositions != $positions);
     }
@@ -432,7 +434,7 @@ class Page extends FrontendBaseObject
         }
 
         // create navigation instance
-        new FrontendNavigation($this->getKernel());
+        new Navigation($this->getKernel());
 
         // assign content
         $this->tpl->assign('page', $this->record);

@@ -92,9 +92,9 @@ class Init extends \KernelLoader
      */
     private function defineURLs()
     {
-        define('FRONTEND_CORE_URL', '/' . APPLICATION . '/Core');
-        define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/Cache');
-        define('FRONTEND_FILES_URL', '/' . APPLICATION . '/Files');
+        define('FRONTEND_CORE_URL', '/src/' . APPLICATION . '/Core');
+        define('FRONTEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
+        define('FRONTEND_FILES_URL', '/src/' . APPLICATION . '/Files');
     }
 
     /**

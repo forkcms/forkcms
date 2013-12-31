@@ -659,12 +659,12 @@ class Model extends \BaseModel
         }
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(
-            uniqid() . SpoonSession::getSessionId()
+        self::$visitorId = \CommonCookie::exists('track') ? (string) \CommonCookie::get('track') : md5(
+            uniqid() . \SpoonSession::getSessionId()
         );
 
-        if (!FrontendModel::getModuleSetting('core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
-            CommonCookie::set('track', self::$visitorId, 86400 * 365);
+        if (!self::getModuleSetting('core', 'show_cookie_bar', false) || \CommonCookie::hasAllowedCookies()) {
+            \CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
         return self::getVisitorId();
@@ -703,7 +703,7 @@ class Model extends \BaseModel
         try {
             // check with Akismet if the item is spam
             return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // in debug mode we want to see exceptions, otherwise the fallback will be triggered
             if (SPOON_DEBUG) {
                 throw $e;
@@ -725,8 +725,8 @@ class Model extends \BaseModel
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
         // get ForkAPI-keys
-        $publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
-        $privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+        $publicKey = self::getModuleSetting('core', 'fork_api_public_key', '');
+        $privateKey = self::getModuleSetting('core', 'fork_api_private_key', '');
 
         // no keys, so stop here
         if ($publicKey == '' || $privateKey == '') {
@@ -734,7 +734,7 @@ class Model extends \BaseModel
         }
 
         // get all apple-device tokens
-        $deviceTokens = (array) FrontendModel::getContainer()->get('database')->getColumn(
+        $deviceTokens = (array) self::getContainer()->get('database')->getColumn(
             'SELECT s.value
              FROM users AS i
              INNER JOIN users_settings AS s
@@ -778,7 +778,7 @@ class Model extends \BaseModel
 
             if (!empty($response)) {
                 // get db
-                $db = FrontendModel::getContainer()->get('database');
+                $db = self::getContainer()->get('database');
 
                 // loop the failed keys and remove them
                 foreach ($response as $deviceToken) {
@@ -957,7 +957,7 @@ class Model extends \BaseModel
         $item['event_name'] = (string) $eventName;
         $item['module'] = (string) $module;
         $item['callback'] = serialize($callback);
-        $item['created_on'] = FrontendModel::getUTCDate();
+        $item['created_on'] = self::getUTCDate();
 
         // get db
         $db = self::getContainer()->get('database');
@@ -1021,7 +1021,7 @@ class Model extends \BaseModel
                 $item['callback'] = $subscription['callback'];
                 $item['data'] = serialize($data);
                 $item['status'] = 'queued';
-                $item['created_on'] = FrontendModel::getUTCDate();
+                $item['created_on'] = self::getUTCDate();
 
                 // add
                 $queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
