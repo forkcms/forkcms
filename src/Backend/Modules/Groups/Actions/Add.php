@@ -9,6 +9,13 @@ namespace Backend\Modules\Groups\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -16,7 +23,7 @@ use Symfony\Component\Finder\Finder;
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
-class BackendGroupsAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * The action groups
@@ -76,13 +83,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             // loop through actions and add all classnames
             foreach($this->actions[$module['value']] as $key => $action) {
                 // ajax action?
-                if(is_file(BACKEND_MODULES_PATH . '/' . $module['value'] . '/ajax/' . $action['value'] . '.php')) {
+                if(class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
                     // create reflection class
-                    $reflection = new ReflectionClass('Backend' . $module['label'] . 'Ajax' . $action['label']);
+                    $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
                 }
 
                 // no ajax action? create reflection class
-                else $reflection = new ReflectionClass('Backend' . $module['label'] . $action['label']);
+                else $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
 
                 // get the tag offset
                 $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
@@ -126,13 +133,13 @@ class BackendGroupsAdd extends BackendBaseActionAdd
      */
     private function getActions()
     {
-        $filter = array('authentication', 'error', 'core');
+        $filter = array('Authentication', 'Error', 'Core');
         $modules = array();
 
         $finder = new Finder();
         $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/actions')
-            ->in(BACKEND_MODULES_PATH . '/*/ajax');
+            ->in(BACKEND_MODULES_PATH . '/*/Actions')
+            ->in(BACKEND_MODULES_PATH . '/*/Ajax');
         foreach($finder->files() as $file) {
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
 
@@ -141,16 +148,14 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
             if(BackendAuthentication::isAllowedModule($module)) {
                 $actionName = $file->getBasename('.php');
-                $isAjax = $file->getPathInfo()->getBasename() == 'ajax';
+                $isAjax = $file->getPathInfo()->getBasename() == 'Ajax';
                 $modules[] = $module;
 
                 // ajax-files should be required
-                if($isAjax) {
-                    require_once $file->getRealPath();
-                    $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Ajax' . SpoonFilter::toCamelCase($actionName);
-                } else $className = 'Backend' . SpoonFilter::toCamelCase($module) . SpoonFilter::toCamelCase($actionName);
+                if($isAjax) $class = 'Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
+                else $class = 'Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
 
-                $reflection = new ReflectionClass($className);
+                $reflection = new \ReflectionClass($class);
                 $phpDoc = trim($reflection->getDocComment());
                 if($phpDoc != '') {
                     $offset = strpos($reflection->getDocComment(), '*', 7);
@@ -160,7 +165,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
                 } else $description = '';
 
                 $this->actions[$module][] = array(
-                    'label' => SpoonFilter::toCamelCase($actionName),
+                    'label' => \SpoonFilter::toCamelCase($actionName),
                     'value' => $actionName,
                     'description' => $description
                 );
@@ -170,7 +175,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
         $modules = array_unique($modules);
         foreach($modules as $module) {
             $this->modules[] = array(
-                'label' => SpoonFilter::toCamelCase($module),
+                'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module
             );
         }
@@ -198,19 +203,18 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if(BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');
-                $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
-                require_once $file->getRealPath();
+                $class = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
 
-                if(class_exists($className)) {
+                if(class_exists($class)) {
                     // add to array
                     $this->widgetInstances[] = array(
                         'module' => $module,
                         'widget' => $widgetName,
-                        'className' => $className
+                        'className' => $class
                     );
 
                     // create reflection class
-                    $reflection = new ReflectionClass($className);
+                    $reflection = new \ReflectionClass($class);
                     $phpDoc = trim($reflection->getDocComment());
                     if($phpDoc != '') {
                         $offset = strpos($reflection->getDocComment(), '*', 7);
@@ -228,7 +232,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
                     // add to array
                     $this->widgets[] = array(
-                        'label' => SpoonFilter::toCamelCase($widgetName),
+                        'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
                         'description' => $description
                     );
@@ -261,8 +265,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             $bits = explode('_', $permission->getName());
 
             // convert camelcasing to underscore notation
-            $module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
-            $action = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[2])), '_');
+            $module = $bits[1];
+            $action = $bits[2];
 
             // permission checked?
             if($permission->getChecked()) {
@@ -289,8 +293,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             $bits = explode('_', $permission->getName());
 
             // convert camelcasing to underscore notation
-            $module = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[1])), '_');
-            $group = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', $bits[3])), '_');
+            $module = $bits[1];
+            $group = $bits[3];
 
             // create new item
             $moduleItem = array('group_id' => $this->id, 'module' => $module);
@@ -342,7 +346,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
         // loop through all widgets
         foreach($this->widgetInstances as $widget) {
             // create instance
-            $instance = new $widget['className']();
+            $instance = new $widget['className']($this->getKernel());
 
             // execute instance
             $instance->execute();
@@ -362,8 +366,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
 
             foreach($widgetPresets as $preset) {
                 if($preset->getChecked()) {
-                    // convert camelcasing to underscore notation
-                    $selected = trim(strtolower(preg_replace('/([A-Z])/', '_${1}', str_replace('widgets_', '', $preset->getName()))), '_');
+                    // remove widgets_ prefix
+                    $selected = str_replace('widgets_', '', $preset->getName());
 
                     // if right widget set visible
                     if($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
@@ -398,7 +402,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             foreach($this->widgets as $j => $widget) {
                 // add widget checkboxes
                 $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'])->parse() . '</span>';
-                $widgetBoxes[$j]['widget'] = '<label for="widgets' . SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
+                $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
         }
@@ -418,8 +422,8 @@ class BackendGroupsAdd extends BackendBaseActionAdd
                     // bundle not yet in array?
                     if(!in_array($action['group'], $addedBundles)) {
                         // assign bundled action boxes
-                        $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($action['group']))->parse();
-                        $actionBoxes[$key]['actions'][$i]['action'] = SpoonFilter::ucfirst($action['group']);
+                        $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($action['group']))->parse();
+                        $actionBoxes[$key]['actions'][$i]['action'] = \SpoonFilter::ucfirst($action['group']);
                         $actionBoxes[$key]['actions'][$i]['description'] = $this->actionGroups[$action['group']];
 
                         // add the group to the added bundles
@@ -431,7 +435,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
                 else {
                     // assign action boxes
                     $actionBoxes[$key]['actions'][$i]['checkbox'] = $this->frm->addCheckbox('actions_' . $module['label'] . '_' . $action['label'])->parse();
-                    $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
+                    $actionBoxes[$key]['actions'][$i]['action'] = '<label for="actions' . \SpoonFilter::toCamelCase($module['label'] . '_' . $action['label']) . '">' . $action['label'] . '</label>';
                     $actionBoxes[$key]['actions'][$i]['description'] = $action['description'];
                 }
             }
@@ -455,7 +459,7 @@ class BackendGroupsAdd extends BackendBaseActionAdd
             // get content of datagrids
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
             $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
-            $permissionBoxes[$key]['id'] = SpoonFilter::toCamelCase($module['label']);
+            $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
         // create elements
@@ -502,9 +506,9 @@ class BackendGroupsAdd extends BackendBaseActionAdd
                     // loop through all fields
                     foreach($this->frm->getFields() as $field) {
                         // field exists?
-                        if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key)) {
+                        if($field->getName() == 'actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key)) {
                             // add to bundled actions
-                            $bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . SpoonFilter::ucfirst($key));
+                            $bundledActionPermissions[] = $this->frm->getField('actions_' . $module['label'] . '_' . 'Group_' . \SpoonFilter::ucfirst($key));
                         }
                     }
                 }

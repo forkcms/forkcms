@@ -9,12 +9,16 @@ namespace Backend\Modules\Groups\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+
 /**
  * This is the delete-action, it will delete an item.
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
  */
-class BackendGroupsDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
