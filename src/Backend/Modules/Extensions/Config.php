@@ -16,7 +16,7 @@ final class Config extends BackendBaseConfig
      *
      * @var	string
      */
-    protected $defaultAction = 'modules';
+    protected $defaultAction = 'Modules';
 
     /**
      * The disabled actions

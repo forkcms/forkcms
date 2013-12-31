@@ -9,12 +9,20 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the themes-action, it will display the overview of modules.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendExtensionsThemes extends BackendBaseActionIndex
+class Themes extends BackendBaseActionIndex
 {
     /**
      * The form instance.
@@ -73,7 +81,7 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
         $themes = $this->installedThemes;
 
         // set selected theme
-        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('core', 'theme', 'core');
+        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('Core', 'theme', 'core');
 
         // no themes found
         if(empty($themes)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
@@ -120,7 +128,7 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
             if($this->frm->isCorrect()) {
                 // determine themes
                 $newTheme = $this->frm->getField('installedThemes')->getValue();
-                $oldTheme = BackendModel::getModuleSetting('core', 'theme', 'core');
+                $oldTheme = BackendModel::getModuleSetting('Core', 'theme', 'core');
 
                 // check if we actually switched themes
                 if($newTheme != $oldTheme) {
@@ -136,7 +144,7 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
                     }
 
                     // fetch current default template
-                    $oldDefaultTemplatePath = $oldTemplates[BackendModel::getModuleSetting('pages', 'default_template')]['path'];
+                    $oldDefaultTemplatePath = $oldTemplates[BackendModel::getModuleSetting('Pages', 'default_template')]['path'];
 
                     // loop new templates
                     foreach($newTemplates as $newTemplateId => $newTemplate) {
@@ -155,10 +163,10 @@ class BackendExtensionsThemes extends BackendBaseActionIndex
                     }
 
                     // update theme
-                    BackendModel::setModuleSetting('core', 'theme', $newTheme);
+                    BackendModel::setModuleSetting('Core', 'theme', $newTheme);
 
                     // save new default template
-                    BackendModel::setModuleSetting('pages', 'default_template', $newDefaultTemplateId);
+                    BackendModel::setModuleSetting('Pages', 'default_template', $newDefaultTemplateId);
 
                     // loop old templates
                     foreach($oldTemplates as $oldTemplateId => $oldTemplate) {

@@ -2,13 +2,19 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the theme upload-action.
  * It will install a theme via a compressed zip file.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendExtensionsUploadTheme extends BackendBaseActionAdd
+class UploadTheme extends BackendBaseActionAdd
 {
     /**
      * Execute the action.
@@ -22,7 +28,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
         if(!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
 
         // ZipArchive class is required for theme upload
-        if(!class_exists('ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
+        if(!class_exists('\ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
 
         // we need write rights to upload files
         elseif(!$this->isWritable()) $this->tpl->assign('notWritable', true);
@@ -79,7 +85,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
                 // only zip files allowed
                 if($fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                     // create ziparchive instance
-                    $zip = new ZipArchive();
+                    $zip = new \ZipArchive();
 
                     // try and open it
                     if($zip->open($fileFile->getTempFileName()) === true) {
@@ -101,7 +107,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
                                 // parse xml
                                 try {
                                     // load info.xml
-                                    $infoXml = @new SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
+                                    $infoXml = @new \SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
 
                                     // convert xml to useful array
                                     $this->information = BackendExtensionsModel::processThemeXml($infoXml);
@@ -114,7 +120,7 @@ class BackendExtensionsUploadTheme extends BackendBaseActionAdd
                                 }
 
                                 // warning that the information file is corrupt
-                                catch(Exception $e) {
+                                catch(\Exception $e) {
                                     $fileFile->addError(BL::getMessage('InformationFileCouldNotBeLoaded'));
                                 }
                             }

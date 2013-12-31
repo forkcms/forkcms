@@ -9,13 +9,20 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the module install-action.
  * It will install the module given via the "module" GET parameter.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendExtensionsInstallModule extends BackendBaseActionIndex
+class InstallModule extends BackendBaseActionIndex
 {
     /**
      * Module we want to install.
@@ -62,7 +69,7 @@ class BackendExtensionsInstallModule extends BackendBaseActionIndex
         }
 
         // no installer class present
-        if(!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/installer/installer.php')) {
+        if(!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/Installer/Installer.php')) {
             $this->redirect(BackendModel::createURLForAction('modules') . '&error=no-installer-file&var=' . $this->currentModule);
         }
     }

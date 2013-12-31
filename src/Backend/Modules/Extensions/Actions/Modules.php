@@ -2,13 +2,20 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the modules-action, it will display the overview of modules.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendExtensionsModules extends BackendBaseActionIndex
+class Modules extends BackendBaseActionIndex
 {
     /**
      * Data grids.
@@ -64,7 +71,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
         $this->dataGridInstallableModules = new BackendDataGridArray($this->installableModules);
 
         $this->dataGridInstallableModules->setSortingColumns(array('raw_name'));
-        $this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => SpoonFilter::ucfirst(BL::getLabel('Name'))));
+        $this->dataGridInstallableModules->setHeaderLabels(array('raw_name' => \SpoonFilter::ucfirst(BL::getLabel('Name'))));
         $this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
         // check if this action is allowed
@@ -77,7 +84,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
         if(BackendAuthentication::isAllowedAction('install_module')) {
             // add install column
             $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
-            $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
+            $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
         }
     }
 
@@ -100,7 +107,7 @@ class BackendExtensionsModules extends BackendBaseActionIndex
 
         // add the greyed out option to modules that have warnings
         $this->dataGridInstalledModules->addColumn('hidden');
-        $this->dataGridInstalledModules->setColumnFunction(array('BackendExtensionsModel', 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
+        $this->dataGridInstalledModules->setColumnFunction(array(new BackendExtensionsModel(), 'hasModuleWarnings'), array('[raw_name]'), array('hidden'));
     }
 
     /**
@@ -115,6 +122,6 @@ class BackendExtensionsModules extends BackendBaseActionIndex
         $this->tpl->assign('dataGridInstalledModules', (string) $this->dataGridInstalledModules->getContent());
 
         // parse installer warnings
-        $this->tpl->assign('warnings', (array) SpoonSession::get('installer_warnings'));
+        $this->tpl->assign('warnings', (array) \SpoonSession::get('installer_warnings'));
     }
 }

@@ -9,6 +9,12 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the module upload-action.
  * It will install a module via a compressed zip file.
@@ -16,7 +22,7 @@ namespace Backend\Modules\Extensions\Actions;
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendExtensionsUploadModule extends BackendBaseActionAdd
+class UploadModule extends BackendBaseActionAdd
 {
     /**
      * Execute the action.
@@ -29,8 +35,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
         // zip extension is required for module upload
         if(!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
 
-        // ZipArchive class is required for module upload
-        if(!class_exists('ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
+        // \ZipArchive class is required for module upload
+        if(!class_exists('\ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
 
         // we need write rights to upload files
         elseif(!$this->isWritable()) $this->tpl->assign('notWritable', true);
@@ -59,8 +65,8 @@ class BackendExtensionsUploadModule extends BackendBaseActionAdd
         // shorten field variables
         $fileFile = $this->frm->getField('file');
 
-        // create ziparchive instance
-        $zip = new ZipArchive();
+        // create \ziparchive instance
+        $zip = new \ZipArchive();
 
         // try and open it
         if($zip->open($fileFile->getTempFileName()) !== true) {

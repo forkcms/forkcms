@@ -2,12 +2,19 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the detail-action it will display the details of a theme.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendExtensionsDetailTheme extends BackendBaseActionIndex
+class DetailTheme extends BackendBaseActionIndex
 {
     /**
      * Theme we request the details of.
@@ -70,13 +77,13 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
         }
 
         // path to information file
-        $pathInfoXml = FRONTEND_PATH . '/themes/' . $this->currentTheme . '/info.xml';
+        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml';
 
         // information needs to exists
         if(is_file($pathInfoXml)) {
             try {
                 // load info.xml
-                $infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+                $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
                 // convert xml to useful array
                 $this->information = BackendExtensionsModel::processThemeXml($infoXml);
@@ -86,7 +93,7 @@ class BackendExtensionsDetailTheme extends BackendBaseActionIndex
             }
 
             // warning that the information file is corrupt
-            catch(Exception $e) {
+            catch(\Exception $e) {
                 $this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
             }
         }

@@ -2,13 +2,20 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the theme install-action.
  * It will install the theme given via the "theme" GET parameter.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendExtensionsInstallTheme extends BackendBaseActionIndex
+class InstallTheme extends BackendBaseActionIndex
 {
     /**
      * Theme we ant to install.
@@ -60,7 +67,7 @@ class BackendExtensionsInstallTheme extends BackendBaseActionIndex
         }
 
         // no information file present
-        if(!is_file(FRONTEND_PATH . '/themes/' . $this->currentTheme . '/info.xml')) {
+        if(!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
             $this->redirect(BackendModel::createURLForAction('themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }

@@ -47,7 +47,7 @@
 							<h3>{$lblImage|ucfirst}</h3>
 						</div>
 						<div class="options">
-							<img src="/frontend/themes/{$name}/{$information.thumbnail}" alt="{$name}" />
+							<img src="/src/Frontend/Themes/{$name}/{$information.thumbnail}" alt="{$name}" />
 						</div>
 					</div>
 				{/option:information.thumbnail}

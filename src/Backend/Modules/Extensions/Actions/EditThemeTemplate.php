@@ -9,6 +9,13 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the edit-action, it will display a form to edit an item
  *
@@ -17,7 +24,7 @@ namespace Backend\Modules\Extensions\Actions;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
+class EditThemeTemplate extends BackendBaseActionEdit
 {
     /**
      * The position's default extras.
@@ -39,7 +46,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
     public function execute()
     {
         parent::execute();
-        $this->header->addJS('theme_template.js');
+        $this->header->addJS('ThemeTemplate.js');
         $this->loadData();
         $this->loadForm();
         $this->validateForm();
@@ -101,7 +108,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
         foreach(BackendExtensionsModel::getThemes() as $theme) $themes[$theme['value']] = $theme['label'];
 
         // create elements
-        $this->frm->addDropdown('theme', $themes, BackendModel::getModuleSetting('core', 'theme', 'core'));
+        $this->frm->addDropdown('theme', $themes, BackendModel::getModuleSetting('Core', 'theme', 'core'));
         $this->frm->addText('label', $this->record['label']);
         $this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
         $this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
@@ -129,11 +136,11 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
         // loop extras to populate the default extras
         foreach($extras as $item) {
             if($item['type'] == 'block') {
-                $blocks[$item['id']] = SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $blocks[$item['id']] = SpoonFilter::ucfirst($item['data']['extra_label']);
+                $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                if(isset($item['data']['extra_label'])) $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
             } elseif($item['type'] == 'widget') {
-                $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                if(isset($item['data']['extra_label'])) $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
             }
         }
 
@@ -143,8 +150,8 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
 
         // create array
         $defaultExtras = array(
-            '' => array(0 => SpoonFilter::ucfirst(BL::lbl('Editor'))),
-            SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets
+            '' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+            \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets
         );
 
         // create default position field
@@ -190,7 +197,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
                 if($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
 
                 // not alphanumeric -> error
-                if(!SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
 
                 // save positions
                 $this->names[] = $name;
@@ -310,7 +317,7 @@ class BackendExtensionsEditThemeTemplate extends BackendBaseActionEdit
                 $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
-                $item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;
+                $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
 
                 // serialize
                 $item['data'] = serialize($item['data']);

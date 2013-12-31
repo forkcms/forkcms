@@ -9,12 +9,16 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the delete-action, it will delete a template
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendExtensionsDeleteThemeTemplate extends BackendBaseActionDelete
+class DeleteThemeTemplate extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -45,11 +49,11 @@ class BackendExtensionsDeleteThemeTemplate extends BackendBaseActionDelete
             }
 
             // page is deleted, so redirect to the overview
-            if($success) $this->redirect(BackendModel::createURLForAction('theme_templates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
-            else $this->redirect(BackendModel::createURLForAction('theme_templates') . '&error=non-existing');
+            if($success) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
+            else $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
         }
 
         // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('theme_templates') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
     }
 }

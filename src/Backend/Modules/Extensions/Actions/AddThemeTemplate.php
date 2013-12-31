@@ -9,6 +9,13 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Symfony\Component\Finder\Finder;
+
 /**
  * This is the add-action, it will display a form to create a new item
  *
@@ -16,7 +23,7 @@ namespace Backend\Modules\Extensions\Actions;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
+class AddThemeTemplate extends BackendBaseActionAdd
 {
     /**
      * All available themes.
@@ -54,7 +61,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
         parent::execute();
 
         // load additional js
-        $this->header->addJS('theme_template.js');
+        $this->header->addJS('ThemeTemplate.js');
 
         // load data
         $this->loadData();
@@ -76,7 +83,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
         foreach(BackendExtensionsModel::getThemes() as $theme) $this->availableThemes[$theme['value']] = $theme['label'];
 
         // determine selected theme, based upon submitted form or default theme
-        $this->selectedTheme = SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('core', 'theme', 'core'));
+        $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('Core', 'theme', 'core'));
     }
 
     /**
@@ -104,11 +111,11 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
         // loop extras to populate the default extras
         foreach($extras as $item) {
             if($item['type'] == 'block') {
-                $blocks[$item['id']] = SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $blocks[$item['id']] = SpoonFilter::ucfirst($item['data']['extra_label']);
+                $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                if(isset($item['data']['extra_label'])) $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
             } elseif($item['type'] == 'widget') {
-                $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $widgets[$item['id']] = SpoonFilter::ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
+                if(isset($item['data']['extra_label'])) $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
             }
         }
 
@@ -117,8 +124,8 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
         asort($widgets, SORT_STRING);
 
         // create array
-        $defaultExtras = array('' => array(0 => SpoonFilter::ucfirst(BL::lbl('Editor'))),
-                                SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets);
+        $defaultExtras = array('' => array(0 => \SpoonFilter::ucfirst(BL::lbl('Editor'))),
+                                \SpoonFilter::ucfirst(BL::lbl('Widgets')) => $widgets);
 
         // create default position field
         $position = array();
@@ -163,7 +170,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
                 if($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
 
                 // not alphanumeric -> error
-                if(!SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
 
                 // save positions
                 $this->names[] = $name;
@@ -273,7 +280,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
                 $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;
                 $item['data']['default_extras'] = $this->extras;
-                $item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()] = $this->extras;
+                $item['data']['default_extras_' . BL::getWorkingLanguage()] = $this->extras;
 
                 // serialize the data
                 $item['data'] = serialize($item['data']);
@@ -288,7 +295,7 @@ class BackendExtensionsAddThemeTemplate extends BackendBaseActionAdd
                 if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('theme_templates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

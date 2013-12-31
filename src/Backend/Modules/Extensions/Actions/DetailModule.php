@@ -2,13 +2,20 @@
 
 namespace Backend\Modules\Extensions\Actions;
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+
 /**
  * This is the detail-action it will display the details of a module.
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendExtensionsDetailModule extends BackendBaseActionIndex
+class DetailModule extends BackendBaseActionIndex
 {
     /**
      * Module we request the details of.

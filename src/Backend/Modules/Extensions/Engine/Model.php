@@ -11,6 +11,7 @@ namespace Backend\Modules\Extensions\Engine;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -189,7 +190,7 @@ class Model
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('modules', 'extensions')) {
             // check if there are cronjobs that are not yet set
-            $modules = BackendExtensionsModel::getModules();
+            $modules = self::getModules();
             foreach($modules as $module) {
                 if(isset($module['cronjobs_active']) && !$module['cronjobs_active']) {
                     // add warning
@@ -244,8 +245,8 @@ class Model
         if(count($templates) == 1) return false;
 
         // we can't delete the default template
-        if($id == BackendModel::getModuleSetting('pages', 'default_template')) return false;
-        if(BackendExtensionsModel::isTemplateInUse($id)) return false;
+        if($id == BackendModel::getModuleSetting('Pages', 'default_template')) return false;
+        if(self::isTemplateInUse($id)) return false;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -441,7 +442,7 @@ class Model
         if(is_file($pathInfoXml)) {
             try {
                 // load info.xml
-                $infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+                $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
                 // convert xml to useful array
                 $information['data'] = self::processModuleXml($infoXml);
@@ -522,7 +523,7 @@ class Model
 
             // get extra info from the info.xml
             try {
-                $infoXml = @new SimpleXMLElement(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', LIBXML_NOCDATA, true);
+                $infoXml = @new \SimpleXMLElement(BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml', LIBXML_NOCDATA, true);
 
                 // process XML to a clean array
                 $info = self::processModuleXml($infoXml);
@@ -541,7 +542,7 @@ class Model
                         }
                     }
                 }
-            } catch(Exception $e) {
+            } catch(\Exception $e) {
                 // don't act upon error, we simply won't possess some info
             }
 
@@ -628,7 +629,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // validate input
-        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('core', 'theme', 'core'));
+        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('Core', 'theme', 'core'));
 
         // get templates
         $templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.data
@@ -693,16 +694,16 @@ class Model
         $records['core'] = array(
             'value' => 'core',
             'label' => BL::lbl('NoTheme'),
-            'thumbnail' => '/frontend/core/layout/images/thumbnail.png',
+            'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
             'installed' => self::isThemeInstalled('core'),
             'installable' => false,
         );
 
         $finder = new Finder();
-        foreach($finder->directories()->in(FRONTEND_PATH . '/themes')->depth(0) as $directory) {
+        foreach($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
             try {
-                $pathInfoXml = PATH_WWW . '/frontend/themes/' . $directory->getBasename() . '/info.xml';
-                $infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+                $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
+                $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information = self::processThemeXml($infoXml);
                 if(!$information) throw new BackendException('Invalid info.xml');
             }
@@ -716,7 +717,7 @@ class Model
             $item = array();
             $item['value'] = $directory->getBasename();
             $item['label'] = $directory->getBasename();
-            $item['thumbnail'] =  '/frontend/themes/' . $item['value'] . '/' . $information['thumbnail'];
+            $item['thumbnail'] =  '/src/Frontend/Themes/' . $item['value'] . '/' . $information['thumbnail'];
             $item['installed'] = self::isThemeInstalled($item['value']);
             $item['installable'] = isset($information['templates']);
 
@@ -805,7 +806,7 @@ class Model
         $pathInfoXml = FRONTEND_PATH . '/themes/' . $theme . '/info.xml';
 
         // load info.xml
-        $infoXml = @new SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
+        $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
         // convert xml to useful array
         $information = self::processThemeXml($infoXml);
@@ -940,10 +941,10 @@ class Model
     /**
      * Process the module's information XML and return an array with the information.
      *
-     * @param SimpleXMLElement $xml
+     * @param \SimpleXMLElement $xml
      * @return array
      */
-    public static function processModuleXml(SimpleXMLElement $xml)
+    public static function processModuleXml(\SimpleXMLElement $xml)
     {
         $information = array();
 
@@ -982,7 +983,7 @@ class Model
             $item['description'] = $cronjob[0];
 
             // check if cronjob has already been run
-            $cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
+            $cronjobs = (array) BackendModel::getModuleSetting('Core', 'cronjobs');
             $item['active'] = in_array($information['name'] . '.' . $attributes['action'], $cronjobs);
 
             // add cronjob to list
@@ -1008,10 +1009,10 @@ class Model
     /**
      * Process the theme's information XML and return an array with the information.
      *
-     * @param SimpleXMLElement $xml
+     * @param \SimpleXMLElement $xml
      * @return array
      */
-    public static function processThemeXml(SimpleXMLElement $xml)
+    public static function processThemeXml(\SimpleXMLElement $xml)
     {
         $information = array();
 
