@@ -174,13 +174,13 @@ class Model
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('index', 'settings')) {
             // check if the akismet key is available if there are modules that require it
-            if(!empty($akismetModules) && BackendModel::getModuleSetting('core', 'akismet_key', null) == '') {
+            if(!empty($akismetModules) && BackendModel::getModuleSetting('Core', 'akismet_key', null) == '') {
                 // add warning
                 $warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
             }
 
             // check if the google maps key is available if there are modules that require it
-            if(!empty($googleMapsModules) && BackendModel::getModuleSetting('core', 'google_maps_key', null) == '') {
+            if(!empty($googleMapsModules) && BackendModel::getModuleSetting('Core', 'google_maps_key', null) == '') {
                 // add warning
                 $warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
             }

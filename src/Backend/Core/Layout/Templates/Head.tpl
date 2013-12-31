@@ -9,8 +9,8 @@
 	<link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 
 	{iteration:cssFiles}<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}{/iteration:cssFiles}
-	<!--[if IE 7]><link rel="stylesheet" href="/Backend/Core/Layout/css/conditionals/ie7.css" /><![endif]-->
-	<!--[if IE 8]><link rel="stylesheet" href="/Backend/Core/Layout/css/conditionals/ie8.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" href="/src/Backend/Core/Layout/css/conditionals/ie7.css" /><![endif]-->
+	<!--[if IE 8]><link rel="stylesheet" href="/src/Backend/Core/Layout/css/conditionals/ie8.css" /><![endif]-->
 
 	{iteration:jsFiles}<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
 	<script>

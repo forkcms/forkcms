@@ -11,6 +11,7 @@ namespace Backend\Modules\Mailmotor\Ajax;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This checks if a CampaignMonitor account exists or not, and links it if it does

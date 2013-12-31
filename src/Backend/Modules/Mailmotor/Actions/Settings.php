@@ -72,7 +72,7 @@ class Settings extends BackendBaseActionEdit
             $timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
             // init CampaignMonitor object
-            $cm = new CampaignMonitor($url, $username, $password, 10);
+            $cm = new \CampaignMonitor($url, $username, $password, 10);
 
             // create client
             $clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
@@ -81,7 +81,7 @@ class Settings extends BackendBaseActionEdit
             if (!empty($clientID)) {
                 BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // add an error to the email field
             $this->redirect(
                 BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(
@@ -258,11 +258,11 @@ class Settings extends BackendBaseActionEdit
             $timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
             // init CampaignMonitor object
-            $cm = new CampaignMonitor($url, $username, $password, 10, $this->clientID);
+            $cm = new \CampaignMonitor($url, $username, $password, 10, $this->clientID);
 
             // update the client
             $cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // add an error to the email field
             $this->redirect(
                 BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage(

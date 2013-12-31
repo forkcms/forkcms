@@ -115,7 +115,7 @@ class Model
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('AnalysisNoCMClientID', 'Mailmotor'),
-                        BackendModel::createURLForAction('settings', 'mailmtor')
+                        BackendModel::createURLForAction('settings', 'Mailmtor')
                     )
                 );
             }
