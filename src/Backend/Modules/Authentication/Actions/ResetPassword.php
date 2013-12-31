@@ -10,6 +10,12 @@ namespace Backend\Modules\Authentication\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\User as BackendUser;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
@@ -72,8 +78,8 @@ class ResetPassword extends BackendBaseActionAdd
     private function isUserAllowed()
     {
         // catch the key and e-mail address from GET
-        $this->email = urldecode(SpoonFilter::getGetValue('email', null, ''));
-        $this->key = SpoonFilter::getGetValue('key', null, '');
+        $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
+        $this->key = \SpoonFilter::getGetValue('key', null, '');
 
         // if the email or the key aren't set, redirect the user
         if($this->email !== '' && $this->key !== '') {

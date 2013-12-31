@@ -12,7 +12,7 @@ namespace Backend\Modules\Authentication\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BackendLanguage;
+use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Mailer as BackendMailer;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
@@ -70,7 +70,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // assign the interface language ourself, because it won't be assigned automagically
-        $this->tpl->assign('INTERFACE_LANGUAGE', BackendLanguage::getInterfaceLanguage());
+        $this->tpl->assign('INTERFACE_LANGUAGE', BL::getInterfaceLanguage());
 
         $this->frm->parse($this->tpl);
         $this->frmForgotPassword->parse($this->tpl);
