@@ -9,12 +9,16 @@ namespace Backend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+
 /**
  * This is the DeleteFeedback action, it will display a form to create a new item
  *
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class BackendFaqDeleteFeedback extends BackendBaseActionDelete
+class DeleteFeedback extends BackendBaseActionDelete
 {
     /**
      * Execute the action

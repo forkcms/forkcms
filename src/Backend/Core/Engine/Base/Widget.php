@@ -147,7 +147,7 @@ class Widget extends \KernelLoader
     protected function setColumn($column)
     {
         $allowedColumns = array('left', 'middle', 'right');
-        $this->column = SpoonFilter::getValue((string) $column, $allowedColumns, 'left');
+        $this->column = \SpoonFilter::getValue((string) $column, $allowedColumns, 'left');
     }
 
     /**

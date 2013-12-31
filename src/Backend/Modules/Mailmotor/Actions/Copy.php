@@ -18,7 +18,7 @@ use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class BackendMailmotorCopy extends BackendBaseAction
+class Copy extends BackendBaseAction
 {
     /**
      * Execute the action

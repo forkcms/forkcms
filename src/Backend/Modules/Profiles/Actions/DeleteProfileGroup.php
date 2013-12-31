@@ -19,7 +19,7 @@ use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class BackendProfilesDeleteProfileGroup extends BackendBaseActionDelete
+class DeleteProfileGroup extends BackendBaseActionDelete
 {
     /**
      * Execute the action.
