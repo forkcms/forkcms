@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -20,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class InstallerStep7 extends InstallerStep
+class Step7 extends Step
 {
     /**
      * Build the language files

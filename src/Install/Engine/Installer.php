@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,23 +9,13 @@
  * file that was distributed with this source code.
  */
 
-// load substantial steps
-require_once 'step.php';
-require_once 'step_1.php';
-require_once 'step_2.php';
-require_once 'step_3.php';
-require_once 'step_4.php';
-require_once 'step_5.php';
-require_once 'step_6.php';
-require_once 'step_7.php';
-
 /**
  * Fork Installer
  *
  * @author Davy Hellemans <davy@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Installer extends KernelLoader implements ApplicationInterface
+class Installer extends \KernelLoader implements \ApplicationInterface
 {
     /**
      * The current step number
@@ -39,7 +31,7 @@ class Installer extends KernelLoader implements ApplicationInterface
      */
     public function __construct($kernel)
     {
-        if (file_exists(__DIR__ . '/../cache/installed.txt')) {
+        if (file_exists(__DIR__ . '/../Cache/installed.txt')) {
             exit('This Fork has already been installed. To reinstall, delete
                  installed.txt from the install/cache directory. To log in,
                  <a href="/private">click here</a>.');
@@ -67,7 +59,7 @@ class Installer extends KernelLoader implements ApplicationInterface
     public function display()
     {
         // step class name
-        $class = 'InstallerStep' . $this->step;
+        $class = 'Install\\Engine\\Step' . $this->step;
 
         // create & execute instance
         $instance = new $class($this->step);
@@ -85,13 +77,14 @@ class Installer extends KernelLoader implements ApplicationInterface
     {
         // fetch step
         $step = (isset($_GET['step'])) ? (int) $_GET['step'] : 1;
+        $class = 'Install\\Engine\\Step' . $step;
 
         // installer step class exists
-        if (class_exists('InstallerStep' . $step)) {
+        if (class_exists($class)) {
             // isAllowed exists
-            if (is_callable(array('InstallerStep' . $step, 'isAllowed'))) {
+            if (is_callable(array($class, 'isAllowed'))) {
                 // step is actually allowed
-                if (call_user_func(array('InstallerStep' . $step, 'isAllowed'))) {
+                if (call_user_func(array($class, 'isAllowed'))) {
                     // step has been validated
                     $this->step = $step;
 
@@ -102,7 +95,7 @@ class Installer extends KernelLoader implements ApplicationInterface
         }
 
         // step not ok? redirect to previous step!
-        header('Location: index.php?step=' . ($step - 1));
+        header('Location: install?step=' . ($step - 1));
         exit;
     }
 }

@@ -111,7 +111,7 @@ class ApplicationRouting
                 break;
             case 'Install':
                 // install directory might be deleted after install, handle it as a normal frontend request
-                if (file_exists(__DIR__ . '/../install')) {
+                if (file_exists(__DIR__ . '/../src/Install')) {
                     $applicationClass = $this->initializeInstaller();
                 } else {
                     $applicationClass = 'Frontend';
@@ -179,13 +179,10 @@ class ApplicationRouting
             date_default_timezone_set('Europe/Brussels');
         }
 
-        // require the installer class
-        require_once __DIR__ . '/../install/engine/installer.php';
-
         // we'll be using utf-8
         header('Content-type: text/html;charset=utf8');
 
-        return 'Installer';
+        return 'Install\Engine\Installer';
     }
 
     /**
@@ -254,6 +251,7 @@ class ApplicationRouting
         if (isset($chunks[0])) {
             // cleanup
             $proposedApplication = (string) $chunks[0];
+            $proposedApplication = strtok($proposedApplication, '?');
 
             // set real application
             if (isset(self::$routes[$proposedApplication])) {

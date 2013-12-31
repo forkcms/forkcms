@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -17,7 +19,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class InstallerStep6 extends InstallerStep
+class Step6 extends Step
 {
     /**
      * Executes this step.

@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -15,7 +17,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
  */
-class InstallerStep4 extends InstallerStep
+class Step4 extends Step
 {
     /**
      * Executes this step.

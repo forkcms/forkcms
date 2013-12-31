@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class InstallerStep1 extends InstallerStep
+class Step1 extends Step
 {
     /**
      * Execute this step
@@ -25,11 +27,11 @@ class InstallerStep1 extends InstallerStep
         $variables = array();
 
         // head
-        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/head.tpl');
-        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../layout/templates/foot.tpl');
+        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/head.tpl');
+        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/foot.tpl');
 
         // this should be the path
-        $path = realpath(dirname(__FILE__) . '/../../library');
+        $path = realpath(dirname(__FILE__) . '/../../../library');
         $spoonFolder = realpath($path . '/../vendor/spoon/library');
 
         // just one found? add it into the session
@@ -37,12 +39,12 @@ class InstallerStep1 extends InstallerStep
             $_SESSION['path_library'] = $path;
 
             // redirect to step 2
-            header('Location: index.php?step=2');
+            header('Location: install?step=2');
             exit;
         }
 
         // template contents
-        $tpl = file_get_contents('layout/templates/step_1.tpl');
+        $tpl = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/step1.tpl');
 
         // build the search & replace array
         $search = array_keys($variables);

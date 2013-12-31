@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -15,7 +17,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
-class InstallerStep2 extends InstallerStep
+class Step2 extends Step
 {
     /**
      * Requirements error statuses
@@ -323,7 +325,7 @@ class InstallerStep2 extends InstallerStep
      */
     public static function isAllowed()
     {
-        return InstallerStep1::isAllowed() && isset($_SESSION['path_library']);
+        return Step1::isAllowed() && isset($_SESSION['path_library']);
     }
 
     /**

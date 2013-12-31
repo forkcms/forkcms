@@ -1,5 +1,7 @@
 <?php
 
+namespace Install\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -16,12 +18,12 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class InstallerStep extends KernelLoader
+class Step extends \KernelLoader
 {
     /**
      * Form
      *
-     * @var SpoonForm
+     * @var \SpoonForm
      */
     protected $frm;
 
@@ -58,7 +60,7 @@ class InstallerStep extends KernelLoader
     /**
      * Template
      *
-     * @var    SpoonTemplate
+     * @var    \SpoonTemplate
      */
     protected $tpl;
 
@@ -82,7 +84,7 @@ class InstallerStep extends KernelLoader
             require_once 'spoon/spoon.php';
 
             // create template
-            $this->tpl = new SpoonTemplate();
+            $this->tpl = new \SpoonTemplate();
             $this->tpl->setForceCompile(true);
             $this->tpl->setCompileDirectory(dirname(__FILE__) . '/../cache/');
 
@@ -92,7 +94,7 @@ class InstallerStep extends KernelLoader
             }
 
             // create form
-            $this->frm = new SpoonForm('step' . $this->step, 'index.php?step=' . $this->step);
+            $this->frm = new \SpoonForm('step' . $this->step, 'index.php?step=' . $this->step);
             $this->frm->setParameter('class', 'forkForms submitWithLink');
             $this->frm->setParameter('id', 'installForm');
         }
