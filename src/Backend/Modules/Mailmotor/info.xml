@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<name>mailmotor</name>
+	<name>Mailmotor</name>
 	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>

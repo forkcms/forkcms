@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<name>pages</name>
+	<name>Pages</name>
 	<version>2.0.0</version>
 	<requirements>
 		<minimum_version>3.0.0</minimum_version>

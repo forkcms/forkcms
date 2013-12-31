@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<name>location</name>
+	<name>Location</name>
 	<version>2.0.0</version>
 	<requirements>
 		<minimum_version>3.2.2</minimum_version>

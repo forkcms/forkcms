@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module>
-	<name>form_builder</name>
+	<name>FormBuilder</name>
 	<version>1.0.0</version>
 	<requirements>
 		<minimum_version>2.0.0</minimum_version>
