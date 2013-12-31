@@ -92,7 +92,7 @@ class Installer extends ModuleInstaller
             $user['id'] = $this->getDB()->insert('users', $user);
 
             // build group
-            $group['group_id'] = $this->getSetting('users', 'default_group');
+            $group['group_id'] = $this->getSetting('Users', 'default_group');
             $group['user_id'] = $user['id'];
 
             // insert group

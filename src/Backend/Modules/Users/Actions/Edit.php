@@ -9,6 +9,14 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\User as BackendUser;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -20,7 +28,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Siesqo <info@siesqo.be>
  */
-class BackendUsersEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * The authenticated user
@@ -121,7 +129,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
         // settings
         $this->frm->addDropdown(
             'interface_language',
-            BackendLanguage::getInterfaceLanguages(),
+            BL::getInterfaceLanguages(),
             $this->record['settings']['interface_language']
         );
         $this->frm->addDropdown(
@@ -228,7 +236,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
                                 sprintf(
                                     BL::err('EmailWasDeletedBefore'),
                                     BackendModel::createURLForAction(
-                                        'undo_delete',
+                                        'UndoDelete',
                                         null,
                                         null,
                                         array('email' => $fields['email']->getValue())

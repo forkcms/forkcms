@@ -10,6 +10,8 @@ namespace Backend\Modules\Users\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\User as BackendUser;
 
 /**
  * In this file we store all generic functions that we will be using in the users module.
@@ -220,8 +222,8 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) BackendModel::getModuleSetting('users', 'date_formats') as $format) {
-            $possibleFormats[$format] = SpoonDate::getDate(
+        foreach ((array) BackendModel::getModuleSetting('Users', 'date_formats') as $format) {
+            $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,
                 BackendAuthentication::getUser()->getSetting('interface_language')
@@ -276,7 +278,7 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) BackendModel::getModuleSetting('core', 'number_formats') as $format => $example) {
+        foreach ((array) BackendModel::getModuleSetting('Core', 'number_formats') as $format => $example) {
             $possibleFormats[$format] = $example;
         }
 
@@ -314,8 +316,8 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach (BackendModel::getModuleSetting('users', 'time_formats') as $format) {
-            $possibleFormats[$format] = SpoonDate::getDate(
+        foreach (BackendModel::getModuleSetting('Users', 'time_formats') as $format) {
+            $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,
                 BackendAuthentication::getUser()->getSetting('interface_language')

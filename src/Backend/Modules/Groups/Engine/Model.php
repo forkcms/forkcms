@@ -9,12 +9,14 @@ namespace Backend\Modules\Groups\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * In this file we store all generic functions that we will be using in the groups module.
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
-class BackendGroupsModel
+class Model
 {
     const QRY_BROWSE =
         'SELECT g.id, g.name, COUNT(u.id) AS num_users

@@ -9,13 +9,20 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+
 /**
  * This is the index-action (default), it will display the users-overview
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendUsersIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * Execute the action
@@ -41,7 +48,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
             // add column
             $this->dataGrid->addColumn(
                 'nickname',
-                SpoonFilter::ucfirst(BL::lbl('Nickname')),
+                \SpoonFilter::ucfirst(BL::lbl('Nickname')),
                 null,
                 BackendModel::createURLForAction('edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
@@ -58,7 +65,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            array('BackendUsersModel', 'getSetting'),
+            array(new BackendUsersModel(), 'getSetting'),
             array('[id]', 'nickname'),
             'nickname',
             false
@@ -72,6 +79,6 @@ class BackendUsersIndex extends BackendBaseActionIndex
     {
         parent::parse();
 
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
     }
 }

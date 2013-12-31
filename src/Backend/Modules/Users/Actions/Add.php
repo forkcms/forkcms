@@ -9,13 +9,21 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+
 /**
  * This is the add-action, it will display a form to create a new user
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendUsersAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -61,8 +69,8 @@ class BackendUsersAdd extends BackendBaseActionAdd
 
         $this->frm->addDropdown(
             'interface_language',
-            BackendLanguage::getInterfaceLanguages(),
-            BackendModel::getModuleSetting('core', 'default_interface_language')
+            BL::getInterfaceLanguages(),
+            BackendModel::getModuleSetting('Core', 'default_interface_language')
         );
         $this->frm->addDropdown(
             'date_format',
@@ -112,7 +120,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
                             sprintf(
                                 BL::err('EmailWasDeletedBefore'),
                                 BackendModel::createURLForAction(
-                                    'undo_delete',
+                                    'UndoDelete',
                                     null,
                                     null,
                                     array('email' => $this->frm->getField('email')->getValue())

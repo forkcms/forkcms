@@ -9,12 +9,17 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Action as BackendBaseAction;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\User as BackendUser;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+
 /**
  * This is the undo-delete-action, it will restore a deleted user
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendUsersUndoDelete extends BackendBaseAction
+class UndoDelete extends BackendBaseAction
 {
     /**
      * Execute the action

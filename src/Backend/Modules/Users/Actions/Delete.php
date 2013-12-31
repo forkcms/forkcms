@@ -9,13 +9,19 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\User as BackendUser;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+
 /**
  * This is the delete-action, it will deactivate and mark the user as deleted
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BackendUsersDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
