@@ -9,13 +9,19 @@ namespace Backend\Modules\Locale\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This action will update a translation using AJAX
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
+class SaveTranslation extends BackendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -30,18 +36,18 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
         else $possibleLanguages = BL::getWorkingLanguages();
 
         // get parameters
-        $language = SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
-        $module = SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
-        $name = SpoonFilter::getPostValue('name', null, null, 'string');
-        $type = SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
-        $application = SpoonFilter::getPostValue('application', array('backend', 'frontend'), null, 'string');
-        $value = SpoonFilter::getPostValue('value', null, null, 'string');
+        $language = \SpoonFilter::getPostValue('language', array_keys($possibleLanguages), null, 'string');
+        $module = \SpoonFilter::getPostValue('module', BackendModel::getModules(), null, 'string');
+        $name = \SpoonFilter::getPostValue('name', null, null, 'string');
+        $type = \SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
+        $application = \SpoonFilter::getPostValue('application', array('Backend', 'Frontend'), null, 'string');
+        $value = \SpoonFilter::getPostValue('value', null, null, 'string');
 
         // validate values
-        if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'frontend' && $module != 'core')) $error = BL::err('InvalidValue');
+        if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if($type == 'act' && !isset($error)) if(urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
+        if($type == 'act' && !isset($error)) if(urlencode($value) != \CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
 
         // no error?
         if(!isset($error)) {

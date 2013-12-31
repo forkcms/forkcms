@@ -9,12 +9,20 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
-class BackendLocaleIndex extends BackendBaseActionIndex
+class Index extends BackendBaseActionIndex
 {
     /**
      * @var BackendDataGridArray
@@ -83,7 +91,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
             $dataGrid->setPaging(false);
 
             // set header label for reference code
-            $dataGrid->setHeaderLabels(array('name' => SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
+            $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
             // set column attributes for each language
             foreach($this->filter['language'] as $lang) {
@@ -98,7 +106,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
                 if($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
 
                 // set header labels
-                $dataGrid->setHeaderLabels(array($lang => SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
+                $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
                 // set column attributes
                 $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
@@ -136,13 +144,13 @@ class BackendLocaleIndex extends BackendBaseActionIndex
     private function loadForm()
     {
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
-        $this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
+        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
         $this->frm->addText('name', $this->filter['name']);
         $this->frm->addText('value', $this->filter['value']);
         $this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
         $this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-        $this->frm->getField('module')->setDefaultElement(SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
+        $this->frm->getField('module')->setDefaultElement(\SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
 
         // manually parse fields
         $this->frm->parse($this->tpl);
@@ -195,7 +203,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
         }
 
         // set filter
-        $this->filter['application'] = $this->getParameter('application') == null ? 'frontend' : $this->getParameter('application');
+        $this->filter['application'] = $this->getParameter('application') == null ? 'Frontend' : $this->getParameter('application');
         $this->filter['module'] = $this->getParameter('module', 'string', null);
         $this->filter['type'] = $this->getParameter('type', 'array');
         $this->filter['language'] = $this->getParameter('language', 'array');

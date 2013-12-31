@@ -9,6 +9,13 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the edit action, it will display a form to edit an existing locale item.
  *
@@ -16,7 +23,7 @@ namespace Backend\Modules\Locale\Actions;
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendLocaleEdit extends BackendBaseActionEdit
+class Edit extends BackendBaseActionEdit
 {
     /**
      * Filter variables
@@ -66,12 +73,12 @@ class BackendLocaleEdit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
-        $this->frm->addDropdown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->record['application']);
+        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
         $this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
-        $this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $this->record['language']);
+        $this->frm->addDropdown('language', BL::getWorkingLanguages(), $this->record['language']);
     }
 
     /**
@@ -82,7 +89,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
         parent::parse();
 
         // prevent XSS
-        $filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+        $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         // parse filter
         $this->tpl->assign($filter);
@@ -142,12 +149,12 @@ class BackendLocaleEdit extends BackendBaseActionEdit
             if($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if($this->frm->getField('type')->getValue() == 'act') {
-                    if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                    if(urlencode($txtValue->getValue()) != \CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
                 }
             }
 
             // module should be 'core' for any other application than backend
-            if($this->frm->getField('application')->getValue() != 'backend' && $this->frm->getField('module')->getValue() != 'core') {
+            if($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
                 $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
             }
 

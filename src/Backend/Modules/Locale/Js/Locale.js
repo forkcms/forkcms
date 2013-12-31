@@ -29,7 +29,7 @@ jsBackend.translations.controls =
 			// bind
 			$('.dataGrid td.translationValue').inlineTextEdit(
 			{
-				params: { fork: { action: 'save_translation' } },
+				params: { fork: { action: 'SaveTranslation' } },
 				tooltip: jsBackend.locale.msg('ClickToEdit'),
 				afterSave: function(item)
 				{

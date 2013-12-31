@@ -9,12 +9,18 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the import action, it will display a form to import a XML locale file.
  *
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  */
-class BackendLocaleImport extends BackendBaseActionAdd
+class Import extends BackendBaseActionAdd
 {
     /**
      * @var array

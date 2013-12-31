@@ -9,13 +9,18 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the export-action, it will create a XML with locale items.
  *
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
-class BackendLocaleExport extends BackendBaseActionIndex
+class Export extends BackendBaseActionIndex
 {
     /**
      * Filter variables.
@@ -109,7 +114,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
         $headers[] = 'Content-Length: ' . strlen($xmlOutput);
 
         // set headers
-        SpoonHTTP::setHeaders($headers);
+        \SpoonHTTP::setHeaders($headers);
 
         // output XML
         echo $xmlOutput;
@@ -132,7 +137,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
      */
     private function setFilter()
     {
-        $this->filter['application'] = $this->getParameter('application') == null ? 'backend' : $this->getParameter('application');
+        $this->filter['application'] = $this->getParameter('application') == null ? 'Backend' : $this->getParameter('application');
         $this->filter['module'] = $this->getParameter('module');
         $this->filter['type'] = $this->getParameter('type', 'array');
         $this->filter['language'] = $this->getParameter('language', 'array');

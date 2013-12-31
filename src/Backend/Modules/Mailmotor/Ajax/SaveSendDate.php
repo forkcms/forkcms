@@ -50,7 +50,7 @@ class SaveSendDate extends BackendBaseAJAXAction
                     $this->output(
                         self::BAD_REQUEST,
                         null,
-                        BL::err('MailingDoesNotExist', 'mailmotor')
+                        BL::err('MailingDoesNotExist', $this->getModule())
                     );
                 } else {
                     // reverse the date and make it a proper

@@ -9,13 +9,21 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the analyse-action, it will display an overview of used locale.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  */
-class BackendLocaleAnalyse extends BackendBaseActionIndex
+class Analyse extends BackendBaseActionIndex
 {
     /**
      * DataGrid instances
@@ -151,6 +159,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
         $this->tpl->assign('dgFrontend', ($this->dgFrontend->getNumResults() != 0) ? $this->dgFrontend->getContent() : false);
 
         // parse filter
-        $this->tpl->assign('language', BackendLanguage::getWorkingLanguage());
+        $this->tpl->assign('language', BL::getWorkingLanguage());
     }
 }

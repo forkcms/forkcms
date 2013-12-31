@@ -9,10 +9,13 @@ namespace Backend\Modules\Locale\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Frontend\Core\Engine\Language as FL;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
@@ -149,7 +152,7 @@ class Model
      */
     public static function createXMLForExport(array $items)
     {
-        $xml = new DOMDocument('1.0', SPOON_CHARSET);
+        $xml = new \DOMDocument('1.0', SPOON_CHARSET);
 
         // set some properties
         $xml->preserveWhiteSpace = false;
@@ -180,7 +183,7 @@ class Model
                         $moduleElement->appendChild($itemElement);
 
                         // attributes
-                        $itemElement->setAttribute('type', BackendLocaleModel::getTypeName($type));
+                        $itemElement->setAttribute('type', self::getTypeName($type));
                         $itemElement->setAttribute('name', $name);
 
                         // loop translations
@@ -193,7 +196,7 @@ class Model
                             $translationElement->setAttribute('language', $translation['language']);
 
                             // set content
-                            $translationElement->appendChild(new DOMCdataSection($translation['value']));
+                            $translationElement->appendChild(new \DOMCdataSection($translation['value']));
                         }
                     }
                 }
@@ -220,8 +223,8 @@ class Model
         BackendModel::getContainer()->get('database')->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
         // rebuild cache
-        self::buildCache(BL::getWorkingLanguage(), 'backend');
-        self::buildCache(BL::getWorkingLanguage(), 'frontend');
+        self::buildCache(BL::getWorkingLanguage(), 'Backend');
+        self::buildCache(BL::getWorkingLanguage(), 'Frontend');
     }
 
     /**
@@ -598,7 +601,7 @@ class Model
                             // loop modules
                             foreach($data['module_specific'] as $module) {
                                 // if the error isn't found add it to the list
-                                if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'Backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                             }
                         }
 
@@ -628,7 +631,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                             }
                         }
                         break;
@@ -640,7 +643,7 @@ class Model
                             // loop modules
                             foreach($data['module_specific'] as $module) {
                                 // if the label isn't found add it to the list
-                                if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'Backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                             }
                         }
 
@@ -670,7 +673,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                             }
                         }
                         break;
@@ -685,7 +688,7 @@ class Model
                                 if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) {
                                     $nonExisting['backend' . $key . $type . $module] = array(
                                         'language' => $language,
-                                        'application' => 'backend',
+                                        'application' => 'Backend',
                                         'module' => $module,
                                         'type' => $type,
                                         'name' => $key,
@@ -721,7 +724,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                             }
                         }
                         break;
@@ -843,7 +846,7 @@ class Model
         $nonExisting = array();
 
         // set language
-        FrontendLanguage::setLocale($language);
+        FL::setLocale($language);
 
         // check if the locale is present in the current language
         foreach($used as $type => $items) {
@@ -853,22 +856,22 @@ class Model
                 switch($type) {
                     case 'act':
                         // if the action isn't available add it to the list
-                        if(FL::act($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if(FL::act($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                         break;
 
                     case 'err':
                         // if the error isn't available add it to the list
-                        if(FL::err($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if(FL::err($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                         break;
 
                     case 'lbl':
                         // if the label isn't available add it to the list
-                        if(FL::lbl($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if(FL::lbl($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                         break;
 
                     case 'msg':
                         // if the message isn't available add it to the list
-                        if(FL::msg($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if(FL::msg($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
                         break;
                 }
             }
@@ -1051,7 +1054,7 @@ class Model
     /**
      * Import a locale XML file.
      *
-     * @param SimpleXMLElement $xml The locale XML.
+     * @param \SimpleXMLElement $xml The locale XML.
      * @param bool[optional] $overwriteConflicts Should we overwrite when there is a conflict?
      * @param array[optional] $frontendLanguages The frontend languages to install locale for.
      * @param array[optional] $backendLanguages The backend languages to install locale for.
@@ -1059,7 +1062,7 @@ class Model
      * @param int[optional] $date The date the translation has been inserted.
      * @return array The import statistics
      */
-    public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false, $frontendLanguages = null, $backendLanguages = null, $userId = null, $date = null)
+    public static function importXML(\SimpleXMLElement $xml, $overwriteConflicts = false, $frontendLanguages = null, $backendLanguages = null, $userId = null, $date = null)
     {
         $overwriteConflicts = (bool) $overwriteConflicts;
         $statistics = array(

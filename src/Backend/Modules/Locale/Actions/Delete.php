@@ -9,12 +9,18 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This action will delete a translation
  *
  * @author Lowie Benoot <lowiebenoot@netlash.com>
  */
-class BackendLocaleDelete extends BackendBaseActionDelete
+class Delete extends BackendBaseActionDelete
 {
     /**
      * Filter variables

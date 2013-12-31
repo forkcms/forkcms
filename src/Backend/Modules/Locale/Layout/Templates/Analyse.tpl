@@ -6,7 +6,7 @@
 
 	{option:showLocaleExportAnalyse}
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'export_analyse'}&amp;language={$language}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+		<a href="{$var|geturl:'ExportAnalyse'}&amp;language={$language}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 	</div>
 	{/option:showLocaleExportAnalyse}
 </div>

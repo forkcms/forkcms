@@ -193,7 +193,7 @@ class Model
             foreach($modules as $module) {
                 if(isset($module['cronjobs_active']) && !$module['cronjobs_active']) {
                     // add warning
-                    $warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+                    $warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'Extensions'), BackendModel::createURLForAction('modules', 'extensions')));
                     break;
                 }
             }

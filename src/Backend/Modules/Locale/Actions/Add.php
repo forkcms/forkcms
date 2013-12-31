@@ -9,6 +9,13 @@ namespace Backend\Modules\Locale\Actions;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+
 /**
  * This is the add action, it will display a form to add an item to the locale.
  *
@@ -16,7 +23,7 @@ namespace Backend\Modules\Locale\Actions;
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class BackendLocaleAdd extends BackendBaseActionAdd
+class Add extends BackendBaseActionAdd
 {
     /**
      * Filter variables
@@ -69,12 +76,12 @@ class BackendLocaleAdd extends BackendBaseActionAdd
         $this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
 
         // create and add elements
-        $this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
+        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
         $this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
         $this->frm->addTextarea('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
-        $this->frm->addDropdown('language', BackendLanguage::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
+        $this->frm->addDropdown('language', BL::getWorkingLanguages(), $isCopy ? $translation['language'] : $this->filter['language'][0]);
     }
 
     /**
@@ -85,7 +92,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
         parent::parse();
 
         // prevent XSS
-        $filter = SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
+        $filter = \SpoonFilter::arrayMapRecursive('htmlspecialchars', $this->filter);
 
         $this->tpl->assign($filter);
     }
@@ -139,12 +146,12 @@ class BackendLocaleAdd extends BackendBaseActionAdd
             if($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if($this->frm->getField('type')->getValue() == 'act') {
-                    if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                    if(urlencode($txtValue->getValue()) != \CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
                 }
             }
 
             // module should be 'core' for any other application than backend
-            if($this->frm->getField('application')->getValue() != 'backend' && $this->frm->getField('module')->getValue() != 'core') {
+            if($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
                 $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore'));
             }
 
