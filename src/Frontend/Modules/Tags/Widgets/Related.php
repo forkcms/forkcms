@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class FrontendTagsWidgetRelated extends FrontendBaseWidget
+class Related extends FrontendBaseWidget
 {
     /**
      * Records to exclude

@@ -14,7 +14,7 @@
  * @author Matthias Mullie <matthias.mullie@netlash.com>
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendPagesWidgetSitemap extends FrontendBaseWidget
+class Sitemap extends FrontendBaseWidget
 {
     /**
      * Execute the extra

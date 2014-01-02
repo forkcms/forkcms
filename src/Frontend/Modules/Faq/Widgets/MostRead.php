@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class FrontendFaqWidgetMostRead extends FrontendBaseWidget
+class MostRead extends FrontendBaseWidget
 {
     /**
      * Execute the extra

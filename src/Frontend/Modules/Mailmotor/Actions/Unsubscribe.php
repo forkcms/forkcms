@@ -1,11 +1,13 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Actions;
+
 /**
  * This is the index-action
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
+class Unsubscribe extends FrontendBaseBlock
 {
     /**
      * The email address passed to this page

@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -15,7 +17,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorModel
+class Model
 {
     const QRY_DATAGRID_BROWSE_SENT =
         'SELECT

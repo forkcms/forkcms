@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorCMHelper
+class CMHelper
 {
     /**
      * Checks if a group exists by its CampaignMonitor ID

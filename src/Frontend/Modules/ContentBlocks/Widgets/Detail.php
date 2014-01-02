@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\ContentBlocks\Widgets;
+
 /**
  * This is the detail widget.
  *
@@ -8,7 +10,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
+class Detail extends FrontendBaseWidget
 {
     /**
      * The item.

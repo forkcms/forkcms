@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendTagsModel
+class Model
 {
     /**
      * Calls a method that has to be implemented though the tags interface

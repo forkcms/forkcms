@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Location\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendLocationModel
+class Model
 {
     /**
      * This will build the url to google maps for a large map

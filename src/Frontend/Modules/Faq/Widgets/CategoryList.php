@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Jonas De Keukelaere <jonas@sumocoders.be>
  */
-class FrontendFaqWidgetCategoryList extends FrontendBaseWidget
+class CategoryList extends FrontendBaseWidget
 {
     /**
      * Execute the extra

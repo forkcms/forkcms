@@ -1,11 +1,13 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Actions;
+
 /**
  * This is the subscribe-action
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorSubscribe extends FrontendBaseBlock
+class Subscribe extends FrontendBaseBlock
 {
     /**
      * FrontendForm instance

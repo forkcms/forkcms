@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\ContentBlocks\Engine;
+
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
@@ -7,7 +9,7 @@
  * @author Tijs verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class FrontendContentBlocksModel
+class BlocksModel
 {
     /**
      * Get an item.

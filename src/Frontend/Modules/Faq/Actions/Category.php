@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendFaqCategory extends FrontendBaseBlock
+class Category extends FrontendBaseBlock
 {
     /**
      * @var    array

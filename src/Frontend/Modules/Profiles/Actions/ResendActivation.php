@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendProfilesResendActivation extends FrontendBaseBlock
+class ResendActivation extends FrontendBaseBlock
 {
     /**
      * @var FrontendForm

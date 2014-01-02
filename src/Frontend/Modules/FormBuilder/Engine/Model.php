@@ -1,12 +1,14 @@
 <?php
 
+namespace Frontend\Modules\FormBuilder\Engine;
+
 /**
  * In this file we store all generic functions that we will be using in the form_builder module
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendFormBuilderModel
+class Model
 {
     /**
      * Get an item.

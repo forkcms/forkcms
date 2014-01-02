@@ -12,7 +12,7 @@
  *
  * @author Frederik Heyninck <frederik@figure8.be>
  */
-class FrontendPagesWidgetPreviousNextNavigation extends FrontendBaseWidget
+class PreviousNextNavigation extends FrontendBaseWidget
 {
     /**
      * The items.

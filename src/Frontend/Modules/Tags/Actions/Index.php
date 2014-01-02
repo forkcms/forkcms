@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class FrontendTagsIndex extends FrontendBaseBlock
+class Index extends FrontendBaseBlock
 {
     /**
      * List of tags

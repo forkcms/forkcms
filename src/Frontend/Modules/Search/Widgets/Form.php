@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchWidgetForm extends FrontendBaseWidget
+class Form extends FrontendBaseWidget
 {
     /**
      * @var FrontendForm

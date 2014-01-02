@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Engine;
+
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /*

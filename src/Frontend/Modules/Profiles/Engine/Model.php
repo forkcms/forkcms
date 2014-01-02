@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jan Moesen <jan.moesen@netlash.com>
  */
-class FrontendProfilesModel
+class Model
 {
     const MAX_DISPLAY_NAME_CHANGES = 2;
 

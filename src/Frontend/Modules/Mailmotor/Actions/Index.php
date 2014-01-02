@@ -1,11 +1,13 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Actions;
+
 /**
  * This is the index-action
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorIndex extends FrontendBaseBlock
+class Index extends FrontendBaseBlock
 {
     const MAILINGS_PAGING_LIMIT = 10;
 

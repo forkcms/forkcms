@@ -1,11 +1,13 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Actions;
+
 /**
  * This is the detail-action
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorDetail extends FrontendBaseBlock
+class Detail extends FrontendBaseBlock
 {
     /**
      * The mailing's body to assign in the template
