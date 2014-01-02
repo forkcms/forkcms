@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <frontend>
+  <Frontend>
     <Core>
       <item type="label" name="AboutUs">
         <translation language="nl"><![CDATA[over ons]]></translation>
@@ -3672,8 +3672,8 @@
         <translation language="pl"><![CDATA[nie-subskrybuj]]></translation>
       </item>
     </Core>
-  </frontend>
-  <backend>
+  </Frontend>
+  <Backend>
     <Core>
       <item type="label" name="AccountManagement">
         <translation language="nl"><![CDATA[account beheer]]></translation>
@@ -11621,5 +11621,5 @@
         <translation language="tr"><![CDATA[Sadece XML dosyalarına izin verilir.]]></translation>
       </item>
     </Core>
-  </backend>
+  </Backend>
 </locale>

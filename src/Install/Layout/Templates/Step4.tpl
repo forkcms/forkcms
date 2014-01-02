@@ -1,4 +1,4 @@
-{include:{$PATH_WWW}/install/layout/templates/head.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Head.tpl}
 
 <h2>Settings</h2>
 {form:step4}
@@ -45,4 +45,4 @@
 		</div>
 {/form:step4}
 
-{include:{$PATH_WWW}/install/layout/templates/foot.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Foot.tpl}

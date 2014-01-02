@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Profiles>
       <item type="label" name="Active">
         <translation language="nl"><![CDATA[actief]]></translation>
@@ -695,8 +695,8 @@
         <translation language="ru"><![CDATA[окно авторизации]]></translation>
       </item>
     </Core>
-  </backend>
-  <frontend>
+  </Backend>
+  <Frontend>
     <Core>
       <item type="label" name="Settings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
@@ -709,5 +709,5 @@
         <translation language="ru"><![CDATA[Вы вошли как <a href="%2$s">%1$s</a>.]]></translation>
       </item>
     </Core>
-  </frontend>
+  </Frontend>
 </locale>

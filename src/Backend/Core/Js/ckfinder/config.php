@@ -54,7 +54,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseUrl = '/frontend/files/userfiles/';
+$baseUrl = '/src/Frontend/Files/userfiles/';
 
 /*
 $baseDir : the path to the local directory (in the server) which points to the
@@ -73,7 +73,7 @@ Examples:
 
 ATTENTION: The trailing slash is required.
 */
-$baseDir = $kernel->getContainer()->getParameter('site.path_www') . '/frontend/files/userfiles/';
+$baseDir = $kernel->getContainer()->getParameter('site.path_www') . $baseUrl;
 
 /*
  * ### Advanced Settings

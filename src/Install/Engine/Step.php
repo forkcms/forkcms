@@ -36,17 +36,17 @@ class Step extends \KernelLoader
      */
     protected $modules = array(
         'required' => array(
-            'locale',
-            'settings',
-            'users',
-            'groups',
-            'extensions',
-            'pages',
-            'search',
-            'content_blocks',
-            'tags'
+            'Locale',
+            'Settings',
+            'Users',
+            'Groups',
+            'Extensions',
+            'Pages',
+            'Search',
+            'ContentBlocks',
+            'Tags'
         ),
-        'hidden' => array('authentication', 'dashboard', 'error'),
+        'hidden' => array('Authentication', 'Dashboard', 'Error'),
         'optional' => array()
     );
 
@@ -86,7 +86,7 @@ class Step extends \KernelLoader
             // create template
             $this->tpl = new \SpoonTemplate();
             $this->tpl->setForceCompile(true);
-            $this->tpl->setCompileDirectory(dirname(__FILE__) . '/../cache/');
+            $this->tpl->setCompileDirectory(dirname(__FILE__) . '/../Cache/');
 
             // assign the path
             if (defined('PATH_WWW')) {
@@ -94,7 +94,7 @@ class Step extends \KernelLoader
             }
 
             // create form
-            $this->frm = new \SpoonForm('step' . $this->step, 'index.php?step=' . $this->step);
+            $this->frm = new \SpoonForm('step' . $this->step, '/install?step=' . $this->step);
             $this->frm->setParameter('class', 'forkForms submitWithLink');
             $this->frm->setParameter('id', 'installForm');
         }
@@ -109,16 +109,6 @@ class Step extends \KernelLoader
         $stepContent = $this->tpl->getContent($stepTemplate, false, true);
 
         return new Response($stepContent, 200);
-    }
-
-    /**
-     * Loads spoon library
-     *
-     * @param string $pathLibrary The path of the library.
-     */
-    protected function loadSpoon($pathLibrary)
-    {
-        require_once $pathLibrary . '/spoon/spoon.php';
     }
 
     /**

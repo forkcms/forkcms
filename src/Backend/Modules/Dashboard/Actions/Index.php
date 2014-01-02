@@ -84,11 +84,6 @@ class Index extends BackendBaseActionIndex
                         throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
                     }
 
-                    // check if model file exists
-                    if($fs->exists($pathName . '/engine/model.php')) {
-                        require_once $pathName . '/engine/model.php';
-                    }
-
                     // present?
                     $present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
 

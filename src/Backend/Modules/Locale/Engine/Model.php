@@ -1081,7 +1081,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // possible values
-        $possibleApplications = array('frontend', 'backend');
+        $possibleApplications = array('Frontend', 'Backend');
         $possibleModules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
 
         // types
@@ -1090,8 +1090,8 @@ class Model
 
         // install English translations anyhow, they're fallback
         $possibleLanguages = array(
-            'frontend' => array_unique(array_merge(array('en'), $frontendLanguages)),
-            'backend' => array_unique(array_merge(array('en'), $backendLanguages))
+            'Frontend' => array_unique(array_merge(array('en'), $frontendLanguages)),
+            'Backend' => array_unique(array_merge(array('en'), $backendLanguages))
         );
 
         // current locale items (used to check for conflicts)

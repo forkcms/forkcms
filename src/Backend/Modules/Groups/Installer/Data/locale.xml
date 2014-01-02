@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Groups>
       <item type="label" name="Action">
         <translation language="nl"><![CDATA[actie]]></translation>
@@ -171,5 +171,5 @@
         <translation language="el"><![CDATA[Αυτή η ομάδα υπάρχει ήδη.]]></translation>
       </item>
     </Groups>
-  </backend>
+  </Backend>
 </locale>

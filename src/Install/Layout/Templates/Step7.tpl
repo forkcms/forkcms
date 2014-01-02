@@ -1,4 +1,4 @@
-{include:{$PATH_WWW}/install/layout/templates/head.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Head.tpl}
 
 <h2>Installation complete</h2>
 <p>Fork CMS is installed! You can now log in using:</p>
@@ -41,4 +41,4 @@
 	</div>
 {/option:warnings}
 
-{include:{$PATH_WWW}/install/layout/templates/foot.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Foot.tpl}

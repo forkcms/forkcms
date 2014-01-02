@@ -1,4 +1,4 @@
-{include:{$PATH_WWW}/install/layout/templates/head.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Head.tpl}
 
 <h2>Database configuration</h2>
 {form:step5}
@@ -31,4 +31,4 @@
 	</p>
 {/form:step5}
 
-{include:{$PATH_WWW}/install/layout/templates/foot.tpl}
+{include:{$PATH_WWW}/src/Install/Layout/Templates/Foot.tpl}

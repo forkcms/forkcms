@@ -25,7 +25,7 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . 'Data/install.sql');
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
         // add as a module
         $this->addModule('FormBuilder');

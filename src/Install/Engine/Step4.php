@@ -9,6 +9,8 @@ namespace Install\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * Step 4 of the Fork installer
  *
@@ -37,7 +39,7 @@ class Step4 extends Step
      */
     public static function isAllowed()
     {
-        return InstallerStep3::isAllowed() && isset($_SESSION['default_language']) &&
+        return Step3::isAllowed() && isset($_SESSION['default_language']) &&
                isset($_SESSION['default_interface_language']) &&
                isset($_SESSION['multiple_languages']) && isset($_SESSION['languages']) &&
                isset($_SESSION['interface_languages']);
@@ -50,13 +52,13 @@ class Step4 extends Step
     {
         // init var
         $modules = array();
-        $checkedModules = (SpoonSession::exists('modules')) ? SpoonSession::get('modules') : array();
+        $checkedModules = (\SpoonSession::exists('modules')) ? \SpoonSession::get('modules') : array();
 
         // loop required modules
         foreach ($this->modules['required'] as $module) {
             // add to the list
             $modules[] = array(
-                'label' => SpoonFilter::toCamelCase($module),
+                'label' => \SpoonFilter::toCamelCase($module),
                 'value' => $module,
                 'attributes' => array('disabled' => 'disabled')
             );
@@ -72,7 +74,7 @@ class Step4 extends Step
         // loop optional modules
         foreach ($this->modules['optional'] as $module) {
             // add to the list
-            $modules[] = array('label' => SpoonFilter::toCamelCase($module), 'value' => $module);
+            $modules[] = array('label' => \SpoonFilter::toCamelCase($module), 'value' => $module);
         }
 
         // add multi checkbox
@@ -85,25 +87,25 @@ class Step4 extends Step
         // example data
         $this->frm->addCheckbox(
             'example_data',
-            (SpoonSession::exists('example_data') ? SpoonSession::get('example_data') : true)
+            (\SpoonSession::exists('example_data') ? \SpoonSession::get('example_data') : true)
         );
 
         // debug mode
         $this->frm->addCheckbox(
             'debug_mode',
-            (SpoonSession::exists('debug_mode') ? SpoonSession::get('debug_mode') : false)
+            (\SpoonSession::exists('debug_mode') ? \SpoonSession::get('debug_mode') : false)
         );
 
         // specific debug email address
         $this->frm->addCheckbox(
             'different_debug_email',
-            (SpoonSession::exists('different_debug_email') ? SpoonSession::get('different_debug_email') : false)
+            (\SpoonSession::exists('different_debug_email') ? \SpoonSession::get('different_debug_email') : false)
         );
 
         // specific debug email address text
         $this->frm->addText(
             'debug_email',
-            (SpoonSession::exists('debug_email')) ? SpoonSession::get('debug_email') : ''
+            (\SpoonSession::exists('debug_email')) ? \SpoonSession::get('debug_email') : ''
         );
     }
 
@@ -150,22 +152,22 @@ class Step4 extends Step
                 }
 
                 // set modules
-                SpoonSession::set('modules', $modules);
+                \SpoonSession::set('modules', $modules);
 
                 // example data
-                SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
+                \SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
 
                 // debug mode
-                SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
+                \SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
 
                 // specific debug email address
-                SpoonSession::set('different_debug_email', $this->frm->getField('different_debug_email')->getChecked());
+                \SpoonSession::set('different_debug_email', $this->frm->getField('different_debug_email')->getChecked());
 
                 // specific debug email address text
-                SpoonSession::set('debug_email', $this->frm->getField('debug_email')->getValue());
+                \SpoonSession::set('debug_email', $this->frm->getField('debug_email')->getValue());
 
                 // redirect
-                SpoonHTTP::redirect('index.php?step=5');
+                \SpoonHTTP::redirect('/install?step=5');
             }
         }
     }

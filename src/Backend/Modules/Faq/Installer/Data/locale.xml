@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Faq>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
@@ -315,13 +315,13 @@
         <translation language="zh"><![CDATA[回复正在被处理。]]></translation>
       </item>
     </Faq>
-  </backend>
-  <frontend>
+  </Backend>
+  <Frontend>
     <Core>
       <item type="message" name="OtherQuestions">
         <translation language="nl"><![CDATA[Andere vragen]]></translation>
         <translation language="en"><![CDATA[Other questions]]></translation>
       </item>
     </Core>
-  </frontend>
+  </Frontend>
 </locale>

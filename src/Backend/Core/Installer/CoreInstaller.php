@@ -37,7 +37,7 @@ class CoreInstaller extends ModuleInstaller
         if($this->getVariable('site_title') === null) throw new \SpoonException('Site title is not provided.');
 
         // import SQL
-        $this->importSQL(dirname(__FILE__) . '/data/install.sql');
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
         // add core modules
         $this->addModule('Core');
@@ -139,7 +139,8 @@ class CoreInstaller extends ModuleInstaller
         }
 
         // create new instance
-        $api = new ForkAPI();
+        require_once PATH_LIBRARY . '/external/fork_api.php';
+        $api = new \ForkAPI();
 
         try {
             // get the keys
@@ -161,7 +162,7 @@ class CoreInstaller extends ModuleInstaller
         }
 
         // catch exceptions
-        catch(Exception $e) {
+        catch(\Exception $e) {
             // we don't need those keys.
         }
 

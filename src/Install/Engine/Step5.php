@@ -35,7 +35,7 @@ class Step5 extends Step
      */
     public static function isAllowed()
     {
-        return InstallerStep4::isAllowed() && isset($_SESSION['modules']) &&
+        return Step4::isAllowed() && isset($_SESSION['modules']) &&
                isset($_SESSION['example_data']) && isset($_SESSION['debug_mode']);
     }
 
@@ -60,14 +60,14 @@ class Step5 extends Step
         // create input fields
         $this->frm->addText(
             'hostname',
-            SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost
+            \SpoonSession::exists('db_hostname') ? \SpoonSession::get('db_hostname') : $dbHost
         );
-        $this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
-        $this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
-        $this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
+        $this->frm->addText('port', \SpoonSession::exists('db_port') ? \SpoonSession::get('db_port') : 3306, 10);
+        $this->frm->addText('database', \SpoonSession::exists('db_database') ? \SpoonSession::get('db_database') : $base);
+        $this->frm->addText('username', \SpoonSession::exists('db_username') ? \SpoonSession::get('db_username') : $base);
         $this->frm->addPassword(
             'password',
-            SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null
+            \SpoonSession::exists('db_password') ? \SpoonSession::get('db_password') : null
         );
     }
 
@@ -97,7 +97,7 @@ class Step5 extends Step
                     ) : 3306;
 
                     // create instance
-                    $db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField(
+                    $db = new \SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField(
                         'username'
                     )->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField(
                         'database'
@@ -112,7 +112,7 @@ class Step5 extends Step
 
                     // drop table
                     $db->drop($table);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // add errors
                     $this->frm->addError('Problem with database credentials');
 
@@ -123,14 +123,14 @@ class Step5 extends Step
                 // all valid
                 if ($this->frm->isCorrect()) {
                     // update session
-                    SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
-                    SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
-                    SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
-                    SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
-                    SpoonSession::set('db_port', $this->frm->getField('port')->getValue());
+                    \SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
+                    \SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
+                    \SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
+                    \SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
+                    \SpoonSession::set('db_port', $this->frm->getField('port')->getValue());
 
                     // redirect
-                    SpoonHTTP::redirect('index.php?step=6');
+                    \SpoonHTTP::redirect('/install?step=6');
                 }
             }
         }

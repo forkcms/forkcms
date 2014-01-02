@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Location>
       <item type="error" name="AddressCouldNotBeGeocoded">
         <translation language="nl"><![CDATA[Dit adres kon niet worden omgezet naar coördinaten.]]></translation>
@@ -185,8 +185,8 @@
         <translation language="de"><![CDATA[Mindestens %1$spx und maximal %2$spx]]></translation>
       </item>
     </Location>
-  </backend>
-  <frontend>
+  </Backend>
+  <Frontend>
     <Core>
       <item type="label" name="ViewLargeMap">
         <translation language="nl"><![CDATA[Grote kaart weergeven]]></translation>
@@ -204,5 +204,5 @@
         <translation language="ru"><![CDATA[начальная точка]]></translation>
       </item>
     </Core>
-  </frontend>
+  </Frontend>
 </locale>

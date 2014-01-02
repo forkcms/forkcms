@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Pages>
       <item type="label" name="Add">
         <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
@@ -586,8 +586,8 @@
         <translation language="el"><![CDATA[Δεν επιτρέπεται να συνδέσετε μία ενότητα με την Αρχική Σελίδα.]]></translation>
       </item>
     </Pages>
-  </backend>
-  <frontend>
+  </Backend>
+  <Frontend>
     <Core>
       <item type="label" name="Parent">
         <translation language="nl"><![CDATA[ouder]]></translation>
@@ -595,5 +595,5 @@
         <translation language="ru"><![CDATA[родитель]]></translation>
       </item>
     </Core>
-  </frontend>
+  </Frontend>
 </locale>

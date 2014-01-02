@@ -9,6 +9,7 @@ namespace Install\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Installer\CoreInstaller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
@@ -31,7 +32,7 @@ class Step7 extends Step
      * @param string        $language    The language to build the locale-file for.
      * @param string        $application The application to build the locale-file for.
      */
-    public function buildCache(SpoonDatabase $db, $language, $application)
+    public function buildCache(\SpoonDatabase $db, $language, $application)
     {
         // get types
         $types = $db->getEnumValues('locale', 'type');
@@ -111,7 +112,7 @@ class Step7 extends Step
     {
         // all available languages
         $languages = array_unique(
-            array_merge(SpoonSession::get('languages'), SpoonSession::get('interface_languages'))
+            array_merge(\SpoonSession::get('languages'), \SpoonSession::get('interface_languages'))
         );
 
         // loop all the languages
@@ -138,16 +139,16 @@ class Step7 extends Step
     private function definePaths()
     {
         // general paths
-        define('BACKEND_PATH', PATH_WWW . '/backend');
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/modules');
+        define('BACKEND_PATH', PATH_WWW . '/src/Backend');
+        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
+        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
+        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
 
-        define('FRONTEND_PATH', PATH_WWW . '/frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
+        define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
+        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -157,7 +158,7 @@ class Step7 extends Step
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach ($finder->files()->in(PATH_WWW . '/backend/cache')->in(PATH_WWW . '/frontend/cache') as $file) {
+        foreach ($finder->files()->in(BACKEND_CACHE_PATH)->in(FRONTEND_CACHE_PATH) as $file) {
             $fs->remove($file->getRealPath());
         }
     }
@@ -172,14 +173,14 @@ class Step7 extends Step
 
         // validate all previous steps
         if (!$this->validateForm()) {
-            SpoonHTTP::redirect('index.php?step=1');
+            SpoonHTTP::redirect('/install?step=1');
         }
-
-        // delete cached data
-        $this->deleteCachedData();
 
         // define paths
         $this->definePaths();
+
+        // delete cached data
+        $this->deleteCachedData();
 
         // install modules
         $this->installModules();
@@ -190,7 +191,7 @@ class Step7 extends Step
         // already installed
         $fs = new Filesystem();
         $fs->dumpFile(
-            dirname(__FILE__) . '/../cache/installed.txt',
+            dirname(__FILE__) . '/../Cache/Installed.txt',
             date('Y-m-d H:i:s')
         );
 
@@ -198,7 +199,7 @@ class Step7 extends Step
         $this->showSuccess();
 
         // clear session
-        SpoonSession::destroy();
+        \SpoonSession::destroy();
     }
 
     /**
@@ -213,23 +214,17 @@ class Step7 extends Step
         // init var
         $warnings = array();
 
-        /**
-         * First we need to install the core. All the linked modules, settings and sql tables are
-         * being installed.
-         */
-        require_once PATH_WWW . '/backend/core/installer/installer.php';
-
         // create the core installer
         $installer = new CoreInstaller(
             $this->getContainer()->get('database'),
-            SpoonSession::get('languages'),
-            SpoonSession::get('interface_languages'),
-            SpoonSession::get('example_data'),
+            \SpoonSession::get('languages'),
+            \SpoonSession::get('interface_languages'),
+            \SpoonSession::get('example_data'),
             array(
-                 'default_language' => SpoonSession::get('default_language'),
-                 'default_interface_language' => SpoonSession::get('default_interface_language'),
-                 'spoon_debug_email' => SpoonSession::get('email'),
-                 'api_email' => SpoonSession::get('email'),
+                 'default_language' => \SpoonSession::get('default_language'),
+                 'default_interface_language' => \SpoonSession::get('default_interface_language'),
+                 'spoon_debug_email' => \SpoonSession::get('email'),
+                 'api_email' => \SpoonSession::get('email'),
                  'site_domain' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
                  'site_title' => 'Fork CMS',
                  'smtp_server' => '',
@@ -245,7 +240,7 @@ class Step7 extends Step
         // add the warnings
         $moduleWarnings = $installer->getWarnings();
         if (!empty($moduleWarnings)) {
-            $warnings[] = array('module' => 'core', 'warnings' => $moduleWarnings);
+            $warnings[] = array('module' => 'Core', 'warnings' => $moduleWarnings);
         }
 
         // add the default extras
@@ -256,33 +251,29 @@ class Step7 extends Step
 
         // variables passed to module installers
         $variables = array();
-        $variables['email'] = SpoonSession::get('email');
-        $variables['default_interface_language'] = SpoonSession::get('default_interface_language');
+        $variables['email'] = \SpoonSession::get('email');
+        $variables['default_interface_language'] = \SpoonSession::get('default_interface_language');
 
         // modules to install (required + selected)
-        $modules = array_unique(array_merge($this->modules['required'], SpoonSession::get('modules')));
+        $modules = array_unique(array_merge($this->modules['required'], \SpoonSession::get('modules')));
 
         // loop required modules
         foreach ($modules as $module) {
+            $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
+
             // install exists
-            if (is_file(PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php')) {
+            if (class_exists($class)) {
                 // users module needs custom variables
-                if ($module == 'users') {
-                    $variables['password'] = SpoonSession::get('password');
+                if ($module == 'Users') {
+                    $variables['password'] = \SpoonSession::get('password');
                 }
-
-                // load installer file
-                require_once PATH_WWW . '/backend/modules/' . $module . '/installer/installer.php';
-
-                // build installer class name
-                $class = SpoonFilter::toCamelCase($module) . 'Installer';
 
                 // create installer
                 $installer = new $class(
                     $this->getContainer()->get('database'),
-                    SpoonSession::get('languages'),
-                    SpoonSession::get('interface_languages'),
-                    SpoonSession::get('example_data'),
+                    \SpoonSession::get('languages'),
+                    \SpoonSession::get('interface_languages'),
+                    \SpoonSession::get('example_data'),
                     $variables
                 );
 
@@ -346,7 +337,7 @@ class Step7 extends Step
      */
     public static function isAllowed()
     {
-        return InstallerStep6::isAllowed() && isset($_SESSION['email']) && isset($_SESSION['password']);
+        return Step6::isAllowed() && isset($_SESSION['email']) && isset($_SESSION['password']);
     }
 
     /**
@@ -356,8 +347,8 @@ class Step7 extends Step
     {
         // assign variables
         $this->tpl->assign('url', (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local');
-        $this->tpl->assign('email', SpoonSession::get('email'));
-        $this->tpl->assign('password', SpoonSession::get('password'));
+        $this->tpl->assign('email', \SpoonSession::get('email'));
+        $this->tpl->assign('password', \SpoonSession::get('password'));
     }
 
     /**
@@ -365,6 +356,6 @@ class Step7 extends Step
      */
     private function validateForm()
     {
-        return InstallerStep6::isAllowed();
+        return Step6::isAllowed();
     }
 }

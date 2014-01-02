@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-  <backend>
+  <Backend>
     <Tags>
       <item type="message" name="Deleted">
         <translation language="nl"><![CDATA[De geselecteerde tag(s) werd(en) verwijderd.]]></translation>
@@ -87,5 +87,5 @@
         <translation language="el"><![CDATA[Αυτή η ετικέτα ήδη υπάρχει.]]></translation>
       </item>
     </Tags>
-  </backend>
+  </Backend>
 </locale>

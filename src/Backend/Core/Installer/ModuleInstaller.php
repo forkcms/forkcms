@@ -12,7 +12,7 @@ namespace Backend\Core\Installer;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Backend\Modules\Locale\Engine\Modules as BackendLocaleModel;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * The base-class for the installer
@@ -227,7 +227,7 @@ class ModuleInstaller
                  ORDER BY id ASC',
                 array('Y', 'Y', 'N')
             );
-        } catch(Exception $e) {
+        } catch(\Exception $e) {
             return 1;
         }
     }

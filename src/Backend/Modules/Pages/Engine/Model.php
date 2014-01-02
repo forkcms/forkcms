@@ -929,7 +929,7 @@ class Model
     public static function getFullURL($id)
     {
         // generate the cache files if needed
-        if (!is_file(PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
+        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
             self::buildCache(BL::getWorkingLanguage());
         }
 
@@ -937,7 +937,7 @@ class Model
         $keys = array();
 
         // require the file
-        require PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
+        require FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
 
         // available in generated file?
         if (isset($keys[$id])) {
@@ -1263,7 +1263,7 @@ class Model
     {
         // check if the cached file exists, if not we generated it
         if (!is_file(
-            PATH_WWW . '/frontend/cache/navigation/navigation_' . BL::getWorkingLanguage() . '.php'
+            FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php'
         )
         ) {
             self::buildCache(BL::getWorkingLanguage());
