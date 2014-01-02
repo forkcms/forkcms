@@ -44,7 +44,7 @@ class Step1 extends Step
         }
 
         // template contents
-        $tpl = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/step1.tpl');
+        $tpl = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Step1.tpl');
 
         // build the search & replace array
         $search = array_keys($variables);

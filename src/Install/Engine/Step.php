@@ -105,7 +105,7 @@ class Step extends \KernelLoader
      */
     public function display()
     {
-        $stepTemplate = __DIR__ . '/../layout/templates/step_' . $this->step . '.tpl';
+        $stepTemplate = dirname(__FILE__) . '/../Layout/Templates/Step' . $this->step . '.tpl';
         $stepContent = $this->tpl->getContent($stepTemplate, false, true);
 
         return new Response($stepContent, 200);

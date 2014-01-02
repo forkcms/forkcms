@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
 	<title>Installer - Fork CMS</title>
-	<link rel="shortcut icon" href="../backend/favicon.ico" />
+	<link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/css/reset.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/src/Install/Layout/css/installer.css" />

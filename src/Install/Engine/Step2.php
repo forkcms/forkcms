@@ -71,7 +71,7 @@ class Step2 extends Step
         // Fork can't be installed in subfolders, so we should check that.
         self::checkRequirement(
             'subfolder',
-            (substr($_SERVER['REQUEST_URI'], 0, 18) == '/install/index.php'),
+            (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
             self::STATUS_ERROR
         );
 
@@ -87,7 +87,7 @@ class Step2 extends Step
         self::checkRequirement('extensionPDO', extension_loaded('PDO'), self::STATUS_ERROR);
         self::checkRequirement(
             'extensionPDOMySQL',
-            extension_loaded('PDO') && in_array('mysql', PDO::getAvailableDrivers()),
+            extension_loaded('PDO') && in_array('mysql', \PDO::getAvailableDrivers()),
             self::STATUS_ERROR
         );
         self::checkRequirement('extensionMBString', extension_loaded('mbstring'), self::STATUS_ERROR);
@@ -113,7 +113,7 @@ class Step2 extends Step
         self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
         self::checkRequirement(
             'settingsDateTimezone',
-            (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), DateTimeZone::listIdentifiers()))),
+            (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), \DateTimeZone::listIdentifiers()))),
             self::STATUS_WARNING
         );
 
@@ -136,32 +136,32 @@ class Step2 extends Step
          */
         self::checkRequirement(
             'fileSystemBackendCache',
-            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/'),
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/src/Backend/cache/'),
             self::STATUS_ERROR
         );
         self::checkRequirement(
             'fileSystemBackendModules',
-            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/backend/modules/'),
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/src/Backend/Modules/'),
             self::STATUS_WARNING
         );
         self::checkRequirement(
             'fileSystemFrontendCache',
-            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/'),
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/src/Frontend/Cache/'),
             self::STATUS_ERROR
         );
         self::checkRequirement(
             'fileSystemFrontendFiles',
-            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/'),
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/src/Frontend/Files/'),
             self::STATUS_ERROR
         );
         self::checkRequirement(
             'fileSystemFrontendModules',
-            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/modules/'),
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/src/Frontend/Modules/'),
             self::STATUS_WARNING
         );
         self::checkRequirement(
             'fileSystemFrontendThemes',
-            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/frontend/themes/'),
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/src/Frontend/Themes/'),
             self::STATUS_WARNING
         );
         self::checkRequirement(
@@ -176,7 +176,7 @@ class Step2 extends Step
         );
         self::checkRequirement(
             'fileSystemInstaller',
-            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache'),
+            defined('PATH_WWW') && self::isWritable(PATH_WWW . '/src/Install/Cache'),
             self::STATUS_ERROR
         );
         self::checkRequirement(
@@ -254,17 +254,17 @@ class Step2 extends Step
         self::$variables = array();
 
         // head
-        self::$variables['head'] = file_get_contents(__DIR__ . '/../layout/templates/head.tpl');
-        self::$variables['foot'] = file_get_contents(__DIR__ . '/../layout/templates/foot.tpl');
+        self::$variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/head.tpl');
+        self::$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/foot.tpl');
 
         // next step
-        self::$variables['step3'] = 'index.php?step=3';
+        self::$variables['step3'] = '/install?step=3';
 
         // check requirements
         self::checkRequirements();
 
         // get template contents
-        $tpl = file_get_contents(__DIR__ . '/../layout/templates/step_2.tpl');
+        $tpl = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Step2.tpl');
 
         // has errors
         if (in_array(self::STATUS_ERROR, self::$variables)) {

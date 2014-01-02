@@ -35,7 +35,7 @@ class Step3 extends Step
      */
     public static function isAllowed()
     {
-        return InstallerStep2::isAllowed() && InstallerStep2::checkRequirements();
+        return Step2::isAllowed() && Step2::checkRequirements();
     }
 
     /**
@@ -46,7 +46,7 @@ class Step3 extends Step
         // separate frontend/backend languages?
         $this->frm->addCheckbox(
             'same_interface_language',
-            (SpoonSession::exists('same_interface_language') ? SpoonSession::get('same_interface_language') : true)
+            (\SpoonSession::exists('same_interface_language') ? \SpoonSession::get('same_interface_language') : true)
         );
 
         // multiple or single language (frontend)
@@ -64,7 +64,7 @@ class Step3 extends Step
                      'variables' => array('single' => true)
                  )
             ),
-            (SpoonSession::exists('multiple_languages') && SpoonSession::get('multiple_languages')) ? 'multiple' : 'single'
+            (\SpoonSession::exists('multiple_languages') && \SpoonSession::get('multiple_languages')) ? 'multiple' : 'single'
         );
 
         // multiple languages (frontend)
@@ -85,7 +85,7 @@ class Step3 extends Step
                  array('value' => 'sv', 'label' => 'Swedish'),
                  array('value' => 'uk', 'label' => 'Ukrainian')
             ),
-            (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'en')
+            (\SpoonSession::exists('languages') ? \SpoonSession::get('languages') : 'en')
         );
 
         // multiple languages (backend)
@@ -106,7 +106,7 @@ class Step3 extends Step
                  array('value' => 'sv', 'label' => 'Swedish'),
                  array('value' => 'uk', 'label' => 'Ukrainian')
             ),
-            (SpoonSession::exists('interface_languages') ? SpoonSession::get('interface_languages') : 'en')
+            (\SpoonSession::exists('interface_languages') ? \SpoonSession::get('interface_languages') : 'en')
         );
 
         // single language (frontend)
@@ -127,7 +127,7 @@ class Step3 extends Step
                  'sv' => 'Swedish',
                  'uk' => 'Ukrainian'
             ),
-            (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
+            (\SpoonSession::exists('default_language') ? \SpoonSession::get('default_language') : 'en')
         );
 
         // default language (frontend)
@@ -148,7 +148,7 @@ class Step3 extends Step
                  'sv' => 'Swedish',
                  'uk' => 'Ukrainian'
             ),
-            (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'en')
+            (\SpoonSession::exists('default_language') ? \SpoonSession::get('default_language') : 'en')
         );
 
         // default language (backend)
@@ -169,7 +169,7 @@ class Step3 extends Step
                  'sv' => 'Swedish',
                  'uk' => 'Ukrainian'
             ),
-            (SpoonSession::exists('default_interface_language') ? SpoonSession::get(
+            (\SpoonSession::exists('default_interface_language') ? \SpoonSession::get(
                 'default_interface_language'
             ) : 'en')
         );
@@ -221,20 +221,20 @@ class Step3 extends Step
             // all valid
             if ($this->frm->isCorrect()) {
                 // set languages
-                SpoonSession::set('default_language', $this->frm->getField('default_language')->getValue());
-                SpoonSession::set(
+                \SpoonSession::set('default_language', $this->frm->getField('default_language')->getValue());
+                \SpoonSession::set(
                     'default_interface_language',
                     $this->frm->getField('default_interface_language')->getValue()
                 );
-                SpoonSession::set(
+                \SpoonSession::set(
                     'multiple_languages',
                     ($this->frm->getField('language_type')->getValue() == 'multiple') ? true : false
                 );
-                SpoonSession::set('languages', $languages);
-                SpoonSession::set('interface_languages', $interfaceLanguages);
+                \SpoonSession::set('languages', $languages);
+                \SpoonSession::set('interface_languages', $interfaceLanguages);
 
                 // redirect
-                SpoonHTTP::redirect('index.php?step=4');
+                \SpoonHTTP::redirect('/install?step=4');
             }
         }
     }
