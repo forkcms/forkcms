@@ -1,5 +1,7 @@
 <?php
 
+namespace Api\V1\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,8 @@
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\User as BackendUser;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -16,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @author Dieter Vanden Eynde <dieter@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class Api extends KernelLoader implements ApplicationInterface
+class Api extends \KernelLoader implements \ApplicationInterface
 {
     // statuses
     const OK = 200;
@@ -48,7 +52,7 @@ class Api extends KernelLoader implements ApplicationInterface
         }
 
         // check GET
-        $method = SpoonFilter::getValue($parameters['method'], null, '');
+        $method = \SpoonFilter::getValue($parameters['method'], null, '');
 
         // validate
         if ($method == '') {
@@ -63,27 +67,26 @@ class Api extends KernelLoader implements ApplicationInterface
             return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
+        // camelcase module name
+        $chunks[0] = \SpoonFilter::toCamelCase($chunks[0]);
+
         // build the path to the backend API file
-        if ($chunks[0] == 'core') {
-            $path = BACKEND_CORE_PATH . '/engine/api.php';
+        if ($chunks[0] == 'Core') {
+            $class = 'Backend\\Core\\Engine\\Api';
         } else {
-            $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
+            $class = 'Backend\\Modules\\' . $chunks[0] . '\\Engine\\Api';
         }
 
         // check if the file is present? If it isn't present there is a problem
-        if (!is_file($path)) {
+        if (!class_exists($class)) {
             return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
         // build config-object-name
-        $className = 'Backend' . SpoonFilter::toCamelCase($chunks[0]) . 'API';
-        $methodName = SpoonFilter::toCamelCase($chunks[1], '.', true);
-
-        // require the class
-        require_once $path;
+        $methodName = \SpoonFilter::toCamelCase($chunks[1], '.', true);
 
         // validate if the method exists
-        if (!is_callable(array($className, $methodName))) {
+        if (!is_callable(array($class, $methodName))) {
             return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
@@ -93,7 +96,7 @@ class Api extends KernelLoader implements ApplicationInterface
             $arguments = null;
 
             // create reflection method
-            $reflectionMethod = new ReflectionMethod($className, $methodName);
+            $reflectionMethod = new \ReflectionMethod($class, $methodName);
             $parameterDocumentation = array();
 
             // get data from docs
@@ -139,7 +142,7 @@ class Api extends KernelLoader implements ApplicationInterface
                     }
 
                     // add argument
-                    $arguments[] = SpoonFilter::getValue(
+                    $arguments[] = \SpoonFilter::getValue(
                         $parameters[$name],
                         null,
                         $defaultValue,
@@ -152,13 +155,13 @@ class Api extends KernelLoader implements ApplicationInterface
             }
 
             // get the return
-            $data = (array) call_user_func_array(array($className, $methodName), (array) $arguments);
+            $data = (array) call_user_func_array(array($class, $methodName), (array) $arguments);
 
             // output
             if (self::$content === null) {
                 self::output(self::OK, $data);
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
             if (SPOON_DEBUG) {
                 if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
@@ -178,7 +181,7 @@ class Api extends KernelLoader implements ApplicationInterface
      *
      * @param mixed      $input The value.
      * @param string     $key   The key.
-     * @param DOMElement $XML   The root-element.
+     * @param \DOMElement $XML   The root-element.
      */
     private static function arrayToXML(&$input, $key, $XML)
     {
@@ -188,7 +191,7 @@ class Api extends KernelLoader implements ApplicationInterface
         }
 
         // create element
-        $element = new DOMElement($key);
+        $element = new \DOMElement($key);
 
         // append
         $XML->appendChild($element);
@@ -241,14 +244,14 @@ class Api extends KernelLoader implements ApplicationInterface
 
                 // check if value contains illegal chars, if so wrap in CDATA
                 if ($wrapCdata) {
-                    $element->appendChild(new DOMCdataSection($input));
+                    $element->appendChild(new \DOMCdataSection($input));
                 } else {
                     // just regular element
-                    $element->appendChild(new DOMText($input));
+                    $element->appendChild(new \DOMText($input));
                 }
             } else {
                 // regular element
-                $element->appendChild(new DOMText($input));
+                $element->appendChild(new \DOMText($input));
             }
         } else {
             // the value is an array
@@ -289,19 +292,19 @@ class Api extends KernelLoader implements ApplicationInterface
     public static function isAuthorized()
     {
         // grab data
-        $email = SpoonFilter::getGetValue('email', null, '');
-        $nonce = SpoonFilter::getGetValue('nonce', null, '');
-        $secret = SpoonFilter::getGetValue('secret', null, '');
+        $email = \SpoonFilter::getGetValue('email', null, '');
+        $nonce = \SpoonFilter::getGetValue('nonce', null, '');
+        $secret = \SpoonFilter::getGetValue('secret', null, '');
 
         // data can be available in the POST, so check it
         if ($email == '') {
-            $email = SpoonFilter::getPostValue('email', null, '');
+            $email = \SpoonFilter::getPostValue('email', null, '');
         }
         if ($nonce == '') {
-            $nonce = SpoonFilter::getPostValue('nonce', null, '');
+            $nonce = \SpoonFilter::getPostValue('nonce', null, '');
         }
         if ($secret == '') {
-            $secret = SpoonFilter::getPostValue('secret', null, '');
+            $secret = \SpoonFilter::getPostValue('secret', null, '');
         }
 
         // check if needed elements are available
@@ -315,7 +318,7 @@ class Api extends KernelLoader implements ApplicationInterface
         // get the user
         try {
             $user = new BackendUser(null, $email);
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return self::output(self::FORBIDDEN, array('message' => 'This account does not exist.'));
         }
 
@@ -407,10 +410,10 @@ class Api extends KernelLoader implements ApplicationInterface
         }
 
         // format specified as a GET-parameter will overrule the one provided through the accept headers
-        $output = SpoonFilter::getGetValue('format', $allowedFormats, $output);
+        $output = \SpoonFilter::getGetValue('format', $allowedFormats, $output);
 
         // if the format was specified in the POST it will overrule all previous formats
-        $output = SpoonFilter::getPostValue('format', $allowedFormats, $output);
+        $output = \SpoonFilter::getPostValue('format', $allowedFormats, $output);
 
         // return in the requested format
         switch ($output) {
@@ -442,6 +445,8 @@ class Api extends KernelLoader implements ApplicationInterface
         $pathChunks = explode('/', trim(dirname(__FILE__), '/'));
         $version = $pathChunks[count($pathChunks) - 2];
 
+        $version = strtolower($version);
+
         // build array
         $JSON = array();
         $JSON['meta']['status_code'] = $statusCode;
@@ -455,8 +460,8 @@ class Api extends KernelLoader implements ApplicationInterface
         }
 
         // set correct headers
-        SpoonHTTP::setHeadersByCode($statusCode);
-        SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeadersByCode($statusCode);
+        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
         // output JSON
         self::$content = json_encode($JSON);
@@ -477,8 +482,10 @@ class Api extends KernelLoader implements ApplicationInterface
         $pathChunks = explode('/', trim(dirname(__FILE__), '/'));
         $version = $pathChunks[count($pathChunks) - 2];
 
+        $version = strtolower($version);
+
         // init XML
-        $XML = new DOMDocument('1.0', SPOON_CHARSET);
+        $XML = new \DOMDocument('1.0', SPOON_CHARSET);
 
         // set some properties
         $XML->preserveWhiteSpace = false;
@@ -497,11 +504,11 @@ class Api extends KernelLoader implements ApplicationInterface
         $XML->appendChild($root);
 
         // build XML
-        array_walk($data, array('Api', 'arrayToXML'), $root);
+        array_walk($data, array(__CLASS__, 'arrayToXML'), $root);
 
         // set correct headers
-        SpoonHTTP::setHeadersByCode($statusCode);
-        SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeadersByCode($statusCode);
+        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
         // output XML
         self::$content = $XML->saveXML();

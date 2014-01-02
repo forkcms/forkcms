@@ -3,15 +3,15 @@
 <head>
 	<title>API client</title>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/screen.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Api/V1/Client/Layout/css/screen.css" />
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	<script type="text/javascript" src="/frontend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="js/client.js"></script>
+	<script type="text/javascript" src="/src/Frontend/Core/Js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/src/Api/V1/Client/Js/client.js"></script>
 </head>
 <body class="en onsite">
 	<div id="container">

@@ -9,6 +9,7 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Api\V1\Engine\Api as BaseAPI;
 use Backend\Core\Engine\Model as BackendModel;
 use Frontend\Core\Engine\Model as FrontendModel;
 
@@ -27,20 +28,20 @@ class Api
      */
     public static function appleAddDevice($token, $email)
     {
-        if(Api::isAuthorized()) {
+        if(BaseAPI::isAuthorized()) {
             $token = str_replace(' ', '', (string) $token);
 
             // validate
-            if($token == '') Api::output(Api::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
-            if($email == '') Api::output(Api::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+            if($token == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
+            if($email == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 
             // we should tell the ForkAPI that we registered a device
-            $publicKey = BackendModel::getModuleSetting('core', 'fork_api_public_key', '');
-            $privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+            $publicKey = BackendModel::getModuleSetting('Core', 'fork_api_public_key', '');
+            $privateKey = FrontendModel::getModuleSetting('Core', 'fork_api_private_key', '');
 
             // validate keys
             if($publicKey == '' || $privateKey == '') {
-                Api::output(Api::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
+                BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
             }
 
             try {
@@ -57,7 +58,7 @@ class Api
                 require_once PATH_LIBRARY . '/external/fork_api.php';
 
                 // create instance
-                $forkAPI = new ForkAPI($publicKey, $privateKey);
+                $forkAPI = new \ForkAPI($publicKey, $privateKey);
 
                 // make the call
                 $forkAPI->appleRegisterDevice($token);
@@ -65,7 +66,7 @@ class Api
                 // store
                 if(!empty($tokens)) $user->setSetting('apple_device_token', $tokens);
             } catch(Exception $e) {
-                Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+                BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
             }
         }
     }
@@ -78,13 +79,13 @@ class Api
      */
     public static function appleRemoveDevice($token, $email)
     {
-        if(Api::isAuthorized()) {
+        if(BaseAPI::isAuthorized()) {
             // redefine
             $token = str_replace(' ', '', (string) $token);
 
             // validate
-            if($token == '') Api::output(Api::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
-            if($email == '') Api::output(Api::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+            if($token == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
+            if($email == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 
             try {
                 // load user
@@ -104,7 +105,7 @@ class Api
                     $user->setSetting('apple_device_token', $tokens);
                 }
             } catch(Exception $e) {
-                Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+                BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
             }
         }
     }
@@ -122,8 +123,8 @@ class Api
         $password = (string) $password;
 
         // validate
-        if($email == '') Api::output(Api::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
-        if($password == '') Api::output(Api::BAD_REQUEST, array('message' => 'No password-parameter provided.'));
+        if($email == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+        if($password == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No password-parameter provided.'));
 
         // load user
         try {
@@ -132,15 +133,15 @@ class Api
 
         // catch exceptions
         catch(Exception $e) {
-            Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+            BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
         }
 
         // validate password
-        if(!Authentication::loginUser($email, $password)) Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+        if(!Authentication::loginUser($email, $password)) BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
 
         else {
             // does the user have access?
-            if($user->getSetting('api_access', false) == false) Api::output(Api::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
+            if($user->getSetting('api_access', false) == false) BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
 
             else {
                 // create the key if needed
@@ -159,12 +160,12 @@ class Api
      */
     public static function getInfo()
     {
-        if(Api::isAuthorized()) {
+        if(BaseAPI::isAuthorized()) {
             $info = array();
 
             // get all languages
             $languages = Language::getActiveLanguages();
-            $default = BackendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $default = BackendModel::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
 
             // loop languages
             foreach($languages as $language) {
@@ -176,7 +177,7 @@ class Api
                 if($language == $default) $var['language']['@attributes']['is_default'] = 'true';
 
                 // set attributes
-                $var['language']['title'] = BackendModel::getModuleSetting('core', 'site_title_' . $language);
+                $var['language']['title'] = BackendModel::getModuleSetting('Core', 'site_title_' . $language);
                 $var['language']['url'] = SITE_URL . '/' . $language;
 
                 // add
@@ -195,21 +196,21 @@ class Api
      */
     public static function microsoftAddDevice($uri, $email)
     {
-        if(Api::isAuthorized()) {
+        if(BaseAPI::isAuthorized()) {
             // redefine
             $uri = (string) $uri;
 
             // validate
-            if($uri == '') Api::output(Api::BAD_REQUEST, array('message' => 'No uri-parameter provided.'));
-            if($email == '') Api::output(Api::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+            if($uri == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No uri-parameter provided.'));
+            if($email == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 
             // we should tell the ForkAPI that we registered a device
-            $publicKey = BackendModel::getModuleSetting('core', 'fork_api_public_key', '');
-            $privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+            $publicKey = BackendModel::getModuleSetting('Core', 'fork_api_public_key', '');
+            $privateKey = FrontendModel::getModuleSetting('Core', 'fork_api_private_key', '');
 
             // validate keys
             if($publicKey == '' || $privateKey == '') {
-                Api::output(Api::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
+                BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configure them in the backend.'));
             }
 
             try {
@@ -226,7 +227,7 @@ class Api
                 require_once PATH_LIBRARY . '/external/fork_api.php';
 
                 // create instance
-                $forkAPI = new ForkAPI($publicKey, $privateKey);
+                $forkAPI = new \ForkAPI($publicKey, $privateKey);
 
                 // make the call
                 $forkAPI->microsoftRegisterDevice($uris);
@@ -234,7 +235,7 @@ class Api
                 // store
                 if(!empty($uris)) $user->setSetting('microsoft_channel_uri', $uris);
             } catch(Exception $e) {
-                Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+                BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
             }
         }
     }
@@ -247,13 +248,13 @@ class Api
      */
     public static function microsoftRemoveDevice($uri, $email)
     {
-        if(Api::isAuthorized()) {
+        if(BaseAPI::isAuthorized()) {
             // redefine
             $uri = (string) $uri;
 
             // validate
-            if($uri == '') Api::output(Api::BAD_REQUEST, array('message' => 'No uri-parameter provided.'));
-            if($email == '') Api::output(Api::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+            if($uri == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No uri-parameter provided.'));
+            if($email == '') BaseAPI::output(BaseAPI::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 
             try {
                 // load user
@@ -273,7 +274,7 @@ class Api
                     $user->setSetting('microsoft_channel_uri', $uris);
                 }
             } catch(Exception $e) {
-                Api::output(Api::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+                BaseAPI::output(BaseAPI::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
             }
         }
     }

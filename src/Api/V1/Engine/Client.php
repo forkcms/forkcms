@@ -1,5 +1,7 @@
 <?php
 
+namespace Api\V1\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -14,10 +17,10 @@ use Symfony\Component\HttpFoundation\Response;
  *
  * @author Dave Lens <dave.lens@wijs.be>
  */
-class ApiClient extends Api
+class Client extends Api
 {
     /**
-     * @var SpoonTemplate
+     * @var \SpoonTemplate
      */
     private $tpl;
 
@@ -32,9 +35,9 @@ class ApiClient extends Api
      */
     public function initialize()
     {
-        $this->tpl = new SpoonTemplate();
+        $this->tpl = new \SpoonTemplate();
         $this->tpl->setForceCompile(true);
-        $this->tpl->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
+        $this->tpl->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         $this->loadModules();
         $this->parse();
@@ -60,18 +63,18 @@ class ApiClient extends Api
         $modules = BackendModel::getModules();
 
         foreach ($modules as &$module) {
+
+            // class names of the API file are always based on the name o/t module
+            $className = 'Backend\\Modules\\' . $module . '\\Engine\\Api';
+            if($module == 'Core') $className = 'Backend\\Core\\Engine\\Api';
+
             /*
              * check if the api.php file exists for this module, and load it so our methods are
              * accessible by the Reflection API.
              */
-            $moduleAPIFile = BACKEND_MODULES_PATH . '/' . $module . '/engine/api.php';
-            if (!file_exists($moduleAPIFile)) {
+            if (!class_exists($className)) {
                 continue;
             }
-            require_once $moduleAPIFile;
-
-            // class names of the API file are always based on the name o/t module
-            $className = 'Backend' . SpoonFilter::toCamelCase($module) . 'API';
             $methods = get_class_methods($className);
 
             // we will need the parameters + PHPDoc to generate our text fields
@@ -101,7 +104,7 @@ class ApiClient extends Api
     {
         // dig for data on the chosen method, in the chosen class
         $parameters = array();
-        $reflectionMethod = new ReflectionMethod($className, $method);
+        $reflectionMethod = new \ReflectionMethod($className, $method);
         $PHPDoc = $reflectionMethod->getDocComment();
 
         /*

@@ -9,7 +9,7 @@ namespace Backend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
-use Api\V1.0\Engine\Api as BaseAPI;
+use Api\V1\Engine\Api as BaseAPI;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 

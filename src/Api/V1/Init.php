@@ -1,5 +1,7 @@
 <?php
 
+namespace API\V1;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class APIInit extends KernelLoader
+class Init extends \KernelLoader
 {
     /**
      * Current type
@@ -26,7 +28,7 @@ class APIInit extends KernelLoader
      */
     public function initialize($type)
     {
-        $allowedTypes = array('api');
+        $allowedTypes = array('Api');
         $type = (string) $type;
 
         // check if this is a valid type
@@ -56,7 +58,7 @@ class APIInit extends KernelLoader
         // get spoon
         require_once 'spoon/spoon.php';
 
-        SpoonFilter::disableMagicQuotes();
+        \SpoonFilter::disableMagicQuotes();
         $this->initSession();
     }
 
@@ -66,16 +68,16 @@ class APIInit extends KernelLoader
     private function definePaths()
     {
         define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
-        define('BACKEND_PATH', PATH_WWW . '/backend');
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/modules');
+        define('BACKEND_PATH', PATH_WWW . '/src/Backend');
+        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
+        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
+        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
 
-        define('FRONTEND_PATH', PATH_WWW . '/frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
+        define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
+        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -116,7 +118,7 @@ class APIInit extends KernelLoader
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
-        SpoonHTTP::setHeaders('content-type: application/json');
+        \SpoonHTTP::setHeaders('content-type: application/json');
         $response = array(
             'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
             'message' => $exception->getMessage()
@@ -161,7 +163,7 @@ class APIInit extends KernelLoader
      */
     public static function exceptionJSHandler($exception, $output)
     {
-        SpoonHTTP::setHeaders('content-type: application/javascript');
+        \SpoonHTTP::setHeaders('content-type: application/javascript');
         echo '// ' . $exception->getMessage();
         exit;
     }
@@ -171,7 +173,7 @@ class APIInit extends KernelLoader
      */
     private function initSession()
     {
-        SpoonSession::start();
+        \SpoonSession::start();
     }
 
     /**
@@ -191,7 +193,7 @@ class APIInit extends KernelLoader
              * in debug mode notices are triggered when using non existing locale, so we use a custom
              * error handler to cleanup the message
              */
-            set_error_handler(array('APIInit', 'errorHandler'));
+            set_error_handler(array(__CLASS__, 'errorHandler'));
         } else {
             // set error reporting as low as possible
             error_reporting(0);
@@ -201,15 +203,15 @@ class APIInit extends KernelLoader
 
             switch ($this->type) {
                 case 'backend_ajax':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
 
                 case 'backend_js':
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 
                 default:
-                    Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
+                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
             }
         }
     }
