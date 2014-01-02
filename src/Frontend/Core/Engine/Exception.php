@@ -15,6 +15,6 @@ namespace Frontend\Core\Engine;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class FrontendException extends SpoonException
+class Exception extends \SpoonException
 {
 }

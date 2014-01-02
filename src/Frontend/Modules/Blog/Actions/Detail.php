@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Blog\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendBlogDetail extends FrontendBaseBlock
+class Detail extends FrontendBaseBlock
 {
     /**
      * The comments

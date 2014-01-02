@@ -92,33 +92,18 @@ class Widget extends FrontendBaseObject
     public function execute()
     {
         // build action-class-name
-        $actionClassName = 'Frontend' .
-                           \SpoonFilter::toCamelCase($this->getModule() . '_widget_' . $this->getAction());
-
-        // build path to the module
-        $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-
-        // when including a widget from the template modifier, this wasn't checked yet
-        if (!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) {
-            throw new FrontendException(
-                'The action file "' . $frontendModulePath . '/widgets/' .
-                $this->getAction() . '.php' . '"" is not present'
-            );
-        }
-
-        // require the config file, we know it is there because we validated it before
-        // (possible actions are defined by existance off the file).
-        require_once $frontendModulePath . '/widgets/' . $this->getAction() . '.php';
+        $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Widgets\\' . $this->getAction();
+        if($this->getModule() == 'Core') $actionClass = 'Frontend\\Core\\Widgets\\' . $this->getAction();
 
         // validate if class exists (aka has correct name)
-        if (!class_exists($actionClassName)) {
+        if (!class_exists($actionClass)) {
             throw new FrontendException(
                 'The action file is present, but the class name should be: ' .
-                $actionClassName . '.'
+                $actionClass . '.'
             );
         }
         // create action-object
-        $this->object = new $actionClassName($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData(
+        $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData(
         ));
 
         // validate if the execute-method is callable
@@ -206,35 +191,18 @@ class Widget extends FrontendBaseObject
      */
     public function loadConfig()
     {
-        // build path for core
-        if ($this->getModule() == 'core') {
-            $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
-        } else {
-            // build path to the module and define it. This is a constant because we can use this in templates.
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-        }
-
-        // check if the config is present? If it isn't present there is a huge
-        // problem, so we will stop our code by throwing an error
-        if (!is_file($frontendModulePath . '/config.php')) {
-            throw new FrontendException('The config file for the module (' . $this->getModule() . ') can\'t be found.');
-        }
-
-        // build config-object-name
-        $configClassName = 'Frontend' . \SpoonFilter::toCamelCase($this->getModule() . '_config');
-
-        // require the config file, we validated before for existence.
-        require_once $frontendModulePath . '/config.php';
+        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
 
         // validate if class exists (aka has correct name)
-        if (!class_exists($configClassName)) {
+        if (!class_exists($configClass)) {
             throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClassName . '.'
+                'The config file is present, but the class name should be: ' . $configClass . '.'
             );
         }
 
         // create config-object, the constructor will do some magic
-        $this->config = new $configClassName($this->getKernel(), $this->getModule());
+        $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
     /**

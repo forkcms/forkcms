@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Blog\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,12 +9,15 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is a widget with the link to the archive
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBlogWidgetArchive extends FrontendBaseWidget
+class Archive extends FrontendBaseWidget
 {
     /**
      * Execute the extra

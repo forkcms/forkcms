@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Blog\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBlogArchive extends FrontendBaseBlock
+class Archive extends FrontendBaseBlock
 {
     /**
      * The articles

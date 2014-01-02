@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Blog\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,12 +9,16 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is a widget with recent blog-articles
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendBlogWidgetRecentArticlesFull extends FrontendBaseWidget
+class RecentArticlesFull extends FrontendBaseWidget
 {
     /**
      * Execute the extra

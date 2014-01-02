@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,19 +9,21 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+
 /**
  * This is the configuration-object
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
  */
-class FrontendFaqConfig extends FrontendBaseConfig
+class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
      * @var	string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions

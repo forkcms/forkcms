@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Blog\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
+class ArticleCommentsRSS extends FrontendBaseBlock
 {
     /**
      * The record

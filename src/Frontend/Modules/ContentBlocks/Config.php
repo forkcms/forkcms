@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\ContentBlocks;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,19 +9,21 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+
 /**
  * This is the configuration-object
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendContentBlocksConfig extends FrontendBaseConfig
+class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
      * @var	string
      */
-    protected $defaultAction = 'detail';
+    protected $defaultAction = 'Detail';
 
     /**
      * The disabled actions

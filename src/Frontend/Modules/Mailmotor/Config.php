@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,7 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
 use \Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -14,14 +17,14 @@ use \Symfony\Component\HttpKernel\KernelInterface;
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorConfig extends FrontendBaseConfig
+class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
      * @var	string
      */
-    protected $defaultAction = 'index';
+    protected $defaultAction = 'Index';
 
     /**
      * The disabled actions
@@ -29,24 +32,4 @@ class FrontendMailmotorConfig extends FrontendBaseConfig
      * @var	array
      */
     protected $disabledActions = array();
-
-    /**
-     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
-     * @param string $module
-     */
-    public function __construct(KernelInterface $kernel, $module)
-    {
-        parent::__construct($kernel, $module);
-
-        $this->loadEngineFiles();
-    }
-
-    /**
-     * Loads additional engine files and helpers
-     */
-    protected function loadEngineFiles()
-    {
-        require_once 'engine/helper.php';
-        require_once 'engine/mailing_bodybuilder.php';
-    }
 }

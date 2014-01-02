@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Template as FrontendTemplate;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;

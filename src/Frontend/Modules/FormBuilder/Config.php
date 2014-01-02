@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\FormBuilder;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,19 +9,21 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+
 /**
  * This is the configuration-object
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendFormBuilderConfig extends FrontendBaseConfig
+class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
      * @var	string
      */
-    protected $defaultAction = 'form';
+    protected $defaultAction = 'Form';
 
     /**
      * The disabled actions
