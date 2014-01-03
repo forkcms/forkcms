@@ -9,6 +9,11 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the overview-action
  *

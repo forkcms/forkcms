@@ -14,7 +14,7 @@ namespace Frontend\Core\Engine;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendUser
+class User
 {
     /**
      * An array that will store all user objects
@@ -59,13 +59,13 @@ class FrontendUser
      * Get a backend user
      *
      * @param int $userId The users id in the backend.
-     * @return FrontendUser
+     * @return User
      */
     public static function getBackendUser($userId)
     {
         // create new instance if necessary and cache it
         if (!isset(self::$cache[$userId])) {
-            self::$cache[$userId] = new FrontendUser($userId);
+            self::$cache[$userId] = new User($userId);
         }
 
         return self::$cache[$userId];
@@ -131,7 +131,7 @@ class FrontendUser
         $userId = (int) $userId;
 
         // get database instance
-        $db = FrontendModel::getContainer()->get('database');
+        $db = Model::getContainer()->get('database');
 
         // get user-data
         $userData = (array) $db->getRecord(
@@ -144,7 +144,7 @@ class FrontendUser
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
         if (empty($userData)) {
-            throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
+            throw new Exception('The user (' . $userId . ') doesn\'t exist.');
         }
 
         // set properties

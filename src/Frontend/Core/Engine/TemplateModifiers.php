@@ -542,7 +542,7 @@ class TemplateModifiers
         }
 
         // get user
-        $user = FrontendUser::getBackendUser($userId);
+        $user = User::getBackendUser($userId);
 
         // return
         return (string) $user->getSetting($setting);
