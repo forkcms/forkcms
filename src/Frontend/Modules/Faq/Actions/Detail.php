@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Faq\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  */
-class FrontendFaqDetail extends FrontendBaseBlock
+class Detail extends FrontendBaseBlock
 {
     /**
      * Form instance

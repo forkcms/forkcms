@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -13,7 +15,7 @@
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class FrontendProfilesChangeEmail extends FrontendBaseBlock
+class ChangeEmail extends FrontendBaseBlock
 {
     /**
      * FrontendForm instance.

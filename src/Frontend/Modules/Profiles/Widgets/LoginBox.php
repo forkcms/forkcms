@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendProfilesWidgetLoginBox extends FrontendBaseWidget
+class LoginBox extends FrontendBaseWidget
 {
     /**
      * @var FrontendForm

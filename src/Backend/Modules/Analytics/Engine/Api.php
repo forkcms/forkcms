@@ -9,12 +9,16 @@ namespace Backend\Modules\Analytics\Engine;
  * file that was distributed with this source code.
  */
 
+use Api\V1\Engine\Api as BaseAPI;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+
 /**
  * In this file we store all generic functions that we will be available through the API
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendAnalyticsAPI
+class Api
 {
     /**
      * Check the settings for the analytics-module.
@@ -25,12 +29,12 @@ class BackendAnalyticsAPI
     {
         // analytics session token
         if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
-            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+            BaseAPI::output(BaseAPI::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 
         // analytics table id (only show this error if no other exist)
         if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
-            Api::output(Api::ERROR, array('message' => 'Analytics-module not configured correctly.'));
+            BaseAPI::output(BaseAPI::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 
         return true;
@@ -44,7 +48,7 @@ class BackendAnalyticsAPI
     public static function keywordsGetData()
     {
         // authorize
-        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentKeywords();
 
             $return = array('data' => null);
@@ -69,7 +73,7 @@ class BackendAnalyticsAPI
     public static function referrersGetData()
     {
         // authorize
-        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentReferrers();
 
             $return = array('data' => null);
@@ -95,7 +99,7 @@ class BackendAnalyticsAPI
     public static function visitorsGetData()
     {
         // authorize
-        if(Api::isAuthorized() && Api::isValidRequestMethod('GET') && self::checkSettings()) {
+        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
             $startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
             $endTimestamp = mktime(0, 0, 0);
 

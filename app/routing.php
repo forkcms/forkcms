@@ -144,24 +144,24 @@ class ApplicationRouting
     {
         $queryString = $this->getQueryString();
         $chunks = explode('/', $queryString);
-        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
+        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : 'v1';
+        $apiVersion = strtok($apiVersion, '?');
+        $apiClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Init';
 
         // validate
-        if (!file_exists(__DIR__ . '/../api/' . $apiVersion . '/init.php')) {
+        if (!class_exists($apiClass)) {
             throw new Exception('This version of the API does not exists.');
         }
 
-        require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
-        $init = new APIInit($this->kernel);
+        $init = new $apiClass($this->kernel);
         $init->initialize($app);
 
         // The client was requested
         if (array_key_exists(2, $chunks) && $chunks[2] === 'client') {
-            require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
-            $applicationClass = 'ApiClient';
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Client';
         } else {
             // The regular API was requested
-            $applicationClass = 'API';
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Api';
         }
 
         return $applicationClass;

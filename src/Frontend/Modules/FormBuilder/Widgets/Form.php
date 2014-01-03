@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\FormBuilder\Widgets;
+
 /**
  * This is the form widget.
  *
@@ -7,7 +9,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
-class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
+class Form extends FrontendBaseWidget
 {
     /**
      * Fields in HTML form.

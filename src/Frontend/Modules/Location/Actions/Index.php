@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Location\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendLocationIndex extends FrontendBaseBlock
+class Index extends FrontendBaseBlock
 {
     /**
      * @var array

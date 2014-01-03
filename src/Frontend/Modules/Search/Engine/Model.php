@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Search\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchModel
+class Model
 {
     /**
      * Build the search term

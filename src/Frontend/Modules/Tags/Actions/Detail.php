@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class FrontendTagsDetail extends FrontendBaseBlock
+class Detail extends FrontendBaseBlock
 {
     /**
      * The tag

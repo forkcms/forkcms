@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Search\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -16,7 +18,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchIndex extends FrontendBaseBlock
+class Index extends FrontendBaseBlock
 {
     /**
      * Name of the cache file

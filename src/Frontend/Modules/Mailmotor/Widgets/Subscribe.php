@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Mailmotor\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Dave Lens <dave.lens@netlash.com>
  */
-class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
+class Subscribe extends FrontendBaseWidget
 {
     /**
      * Execute the extra

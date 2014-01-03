@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Tags\Engine;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
+class Tagcloud extends FrontendBaseWidget
 {
     /**
      * Execute the extra

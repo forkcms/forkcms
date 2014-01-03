@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Profiles\Actions;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendProfilesRegister extends FrontendBaseBlock
+class Register extends FrontendBaseBlock
 {
     /**
      * FrontendForm instance.
