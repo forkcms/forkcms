@@ -39,7 +39,7 @@ class Theme
         $theme = self::getTheme();
 
         // theme in use
-        if (Model::getModuleSetting('core', 'theme', 'core') != 'core') {
+        if (Model::getModuleSetting('Core', 'theme', 'core') != 'core') {
             // theme not yet specified
             if (strpos($file, 'src/Frontend/Themes/' . $theme) === false) {
                 // add theme location
@@ -70,7 +70,7 @@ class Theme
     {
         // theme name has not yet been saved, fetch and save it
         if (!self::$theme) {
-            self::$theme = Model::getModuleSetting('core', 'theme', null);
+            self::$theme = Model::getModuleSetting('Core', 'theme', null);
         }
 
         // return theme name
