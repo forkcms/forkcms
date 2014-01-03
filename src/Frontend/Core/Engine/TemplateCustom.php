@@ -14,7 +14,7 @@ namespace Frontend\Core\Engine;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendTemplateCustom
+class TemplateCustom
 {
     /**
      * Template instance

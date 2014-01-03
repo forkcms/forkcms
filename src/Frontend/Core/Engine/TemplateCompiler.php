@@ -14,7 +14,7 @@ namespace Frontend\Core\Engine;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendTemplateCompiler extends SpoonTemplateCompiler
+class TemplateCompiler extends \SpoonTemplateCompiler
 {
     /**
      * Parse the include tags.

@@ -9,6 +9,10 @@ namespace Frontend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+
 /**
  * In this file we store all generic functions that we will be using in the tags module
  *

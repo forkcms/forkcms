@@ -301,7 +301,7 @@ class Page extends FrontendBaseObject
         // just execute if the site is multi-language
         if (SITE_MULTILANGUAGE) {
             // get languages
-            $activeLanguages = FrontendLanguage::getActiveLanguages();
+            $activeLanguages = Language::getActiveLanguages();
 
             // init var
             $languages = array();
@@ -312,7 +312,7 @@ class Page extends FrontendBaseObject
                 $temp = array();
                 $temp['url'] = '/' . $language;
                 $temp['label'] = $language;
-                $temp['name'] = FL::msg(strtoupper($language));
+                $temp['name'] = Language::msg(strtoupper($language));
                 $temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
 
                 // add
