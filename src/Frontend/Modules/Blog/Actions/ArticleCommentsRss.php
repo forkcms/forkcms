@@ -9,13 +9,21 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Rss as FrontendRSS;
+use Frontend\Core\Engine\RssItem as FrontendRSSItem;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the RSS-feed for comments on a certain article.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class ArticleCommentsRSS extends FrontendBaseBlock
+class ArticleCommentsRss extends FrontendBaseBlock
 {
     /**
      * The record

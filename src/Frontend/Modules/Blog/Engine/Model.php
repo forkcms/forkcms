@@ -110,8 +110,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('blog', 'detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
+        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'category');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -132,7 +132,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('blog', 'allow_comments')) {
+            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -145,7 +145,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get all tags
-        $tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
+        $tags = FrontendTagsModel::getForMultipleItems('Blog', array_keys($items));
 
         // loop tags and add to correct item
         foreach ($tags as $postId => $data) {
@@ -264,8 +264,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('blog', 'detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
+        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'category');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -286,7 +286,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('blog', 'allow_comments')) {
+            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -300,7 +300,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get all tags
-        $tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
+        $tags = FrontendTagsModel::getForMultipleItems('Blog', array_keys($items));
 
         // loop tags and add to correct item
         foreach ($tags as $postId => $data) {
@@ -376,7 +376,7 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('blog', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
         // loop
@@ -396,7 +396,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('blog', 'allow_comments')) {
+            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -410,7 +410,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get all tags
-        $tags = FrontendTagsModel::getForMultipleItems('blog', array_keys($items));
+        $tags = FrontendTagsModel::getForMultipleItems('Blog', array_keys($items));
 
         // loop tags and add to correct item
         foreach ($tags as $postId => $data) {
@@ -467,7 +467,7 @@ class Model implements FrontendTagsInterface
 
         // init vars
         $stats = array();
-        $link = FrontendNavigation::getURLForBlock('blog', 'archive');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
 
@@ -584,7 +584,7 @@ class Model implements FrontendTagsInterface
         // has items
         if (!empty($items)) {
             // init var
-            $link = FrontendNavigation::getURLForBlock('blog', 'detail');
+            $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
             $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
 
             // reset url
@@ -650,7 +650,7 @@ class Model implements FrontendTagsInterface
 
         // init var
         $navigation = array();
-        $detailLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/';
+        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/';
 
         // get previous post
         $navigation['previous'] = $db->getRecord(
@@ -721,7 +721,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('blog', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
 
         // loop comments
         foreach ($comments as &$row) {
@@ -747,7 +747,7 @@ class Model implements FrontendTagsInterface
         $limit = (int) $limit;
 
         // get the related IDs
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'blog', 'blog', $limit);
+        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'Blog', 'Blog', $limit);
 
         // no items
         if (empty($relatedIDs)) {
@@ -755,7 +755,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('blog', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
 
         // get items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -912,17 +912,17 @@ class Model implements FrontendTagsInterface
         FrontendModel::pushToAppleApp($alert, null, 'default', $data);
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment', false);
+        $notifyByMailOnComment = FrontendModel::getModuleSetting('Blog', 'notify_by_email_on_new_comment', false);
         $notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting(
-            'blog',
+            'Blog',
             'notify_by_email_on_new_comment_to_moderate',
             false
         );
 
         // create URLs
-        $URL = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' .
+        $URL = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' .
                $comment['post_url'] . '#comment-' . $comment['id'];
-        $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'blog') . '#tabModeration';
+        $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
 
         // notify on all comments
         if ($notifyByMailOnComment) {
@@ -991,7 +991,7 @@ class Model implements FrontendTagsInterface
 
         // prepare items for search
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $item['url'];
+            $item['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' . $item['url'];
         }
 
         // return

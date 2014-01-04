@@ -9,12 +9,19 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Rss as FrontendRSS;
+use Frontend\Core\Engine\RssItem as FrontendRSSItem;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the RSS-feed with all the comments
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class CommentsRSS extends FrontendBaseBlock
+class CommentsRss extends FrontendBaseBlock
 {
     /**
      * The comments
@@ -47,7 +54,7 @@ class CommentsRSS extends FrontendBaseBlock
     private function parse()
     {
         // get vars
-        $title = SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
+        $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
         $link = SITE_URL . FrontendNavigation::getURLForBlock('blog');
         $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
         $description = null;

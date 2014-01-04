@@ -9,6 +9,12 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the category-action
  *
@@ -69,7 +75,7 @@ class Category extends FrontendBaseBlock
         }
 
         // requested category
-        $requestedCategory = SpoonFilter::getValue(
+        $requestedCategory = \SpoonFilter::getValue(
             $this->URL->getParameter(1, 'string'),
             array_keys($possibleCategories),
             'false'
@@ -87,8 +93,8 @@ class Category extends FrontendBaseBlock
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $requestedCategory;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $requestedCategory;
+        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
@@ -119,9 +125,9 @@ class Category extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
         }
 
         // add RSS-feed
@@ -129,18 +135,18 @@ class Category extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
         );
 
         // add into breadcrumb
-        $this->breadcrumb->addElement(SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Category')));
         $this->breadcrumb->addElement($this->category['label']);
 
         // set pageTitle
-        $this->header->setPageTitle(SpoonFilter::ucfirst(FL::lbl('Category')));
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Category')));
         $this->header->setPageTitle($this->category['label']);
 
         // advanced SEO-attributes

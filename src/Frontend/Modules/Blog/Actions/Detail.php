@@ -9,6 +9,14 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is the detail-action
  *
@@ -94,15 +102,15 @@ class Detail extends FrontendBaseBlock
         $this->comments = FrontendBlogModel::getComments($this->record['id']);
 
         // get tags
-        $this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
+        $this->record['tags'] = FrontendTagsModel::getForItem('Blog', $this->record['id']);
 
         // get settings
-        $this->settings = FrontendModel::getModuleSettings('blog');
+        $this->settings = FrontendModel::getModuleSettings('Blog');
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') .
+        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' . $this->record['url'];
         $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
         $this->record['comments_count'] = count($this->comments);
 
@@ -122,9 +130,9 @@ class Detail extends FrontendBaseBlock
         $this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
         // init vars
-        $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
-        $email = (CommonCookie::exists('comment_email') && SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
-        $website = (CommonCookie::exists('comment_website') && SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
+        $author = (\CommonCookie::exists('comment_author')) ? \CommonCookie::get('comment_author') : null;
+        $email = (\CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(\CommonCookie::get('comment_email'))) ? \CommonCookie::get('comment_email') : null;
+        $website = (\CommonCookie::exists('comment_website') && \SpoonFilter::isURL(\CommonCookie::get('comment_website'))) ? \CommonCookie::get('comment_website') : 'http://';
 
         // create elements
         $this->frm->addText('author', $author)->setAttributes(array('required' => null));
@@ -139,9 +147,9 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
         }
 
         // add RSS-feed
@@ -149,14 +157,14 @@ class Detail extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
         );
 
         // get RSS-link for the comments
-        $rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .
+        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'article_comments_rss') .
                            '/' . $this->record['url'];
 
         // add RSS-feed into the metaCustom
@@ -200,7 +208,7 @@ class Detail extends FrontendBaseBlock
         if (count(FrontendBlogModel::getAllCategories()) > 1) {
             $this->breadcrumb->addElement(
                 $this->record['category_title'],
-                FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url']
+                FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $this->record['category_url']
             );
         }
 
@@ -388,7 +396,7 @@ class Detail extends FrontendBaseBlock
                 $comment['id'] = FrontendBlogModel::insertComment($comment);
 
                 // trigger event
-                FrontendModel::triggerEvent('blog', 'after_add_comment', array('comment' => $comment));
+                FrontendModel::triggerEvent('Blog', 'after_add_comment', array('comment' => $comment));
 
                 // append a parameter to the URL so we can show moderation
                 if (strpos($redirectLink, '?') === false) {
@@ -425,9 +433,9 @@ class Detail extends FrontendBaseBlock
 
                 // store author-data in cookies
                 try {
-                    CommonCookie::set('comment_author', $author);
-                    CommonCookie::set('comment_email', $email);
-                    CommonCookie::set('comment_website', $website);
+                    \CommonCookie::set('comment_author', $author);
+                    \CommonCookie::set('comment_email', $email);
+                    \CommonCookie::set('comment_website', $website);
                 } catch (Exception $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }

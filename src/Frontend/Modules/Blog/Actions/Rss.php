@@ -9,13 +9,22 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\User as FrontendUser;
+use Frontend\Core\Engine\Rss as FrontendRSS;
+use Frontend\Core\Engine\RssItem as FrontendRSSItem;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the RSS-feed
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class RSS extends FrontendBaseBlock
+class Rss extends FrontendBaseBlock
 {
     /**
      * The articles
@@ -47,7 +56,7 @@ class RSS extends FrontendBaseBlock
     private function getData()
     {
         $this->items = FrontendBlogModel::getAll(30);
-        $this->settings = FrontendModel::getModuleSettings('blog');
+        $this->settings = FrontendModel::getModuleSettings('Blog');
     }
 
     /**
@@ -56,8 +65,8 @@ class RSS extends FrontendBaseBlock
     private function parse()
     {
         // get vars
-        $title = (isset($this->settings['rss_title_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_title_' . FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('blog');
+        $title = (isset($this->settings['rss_title_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_title_' . FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
         $description = (isset($this->settings['rss_description_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_description_' . FRONTEND_LANGUAGE] : null;
 
         // create new rss instance
@@ -71,7 +80,7 @@ class RSS extends FrontendBaseBlock
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
             // meta is wanted
-            if (FrontendModel::getModuleSetting('blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
+            if (FrontendModel::getModuleSetting('Blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
                 // append meta
                 $description .= '<div class="meta">' . "\n";
                 $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .
@@ -85,7 +94,7 @@ class RSS extends FrontendBaseBlock
                 // any tags
                 if (isset($item['tags'])) {
                     // append tags-paragraph
-                    $description .= '	<p>' . SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
+                    $description .= '	<p>' . \SpoonFilter::ucfirst(FL::lbl('Tags')) . ': ';
                     $first = true;
 
                     // loop tags

@@ -9,6 +9,12 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+
 /**
  * This is the archive-action
  *
@@ -89,7 +95,7 @@ class Archive extends FrontendBaseBlock
         if ($this->month !== null && mb_strlen($this->month) != 2) {
             $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
             $this->redirect(
-                FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $this->year . '/' . str_pad(
+                FrontendNavigation::getURLForBlock('Blog', 'archive') . '/' . $this->year . '/' . str_pad(
                     $this->month,
                     2,
                     '0',
@@ -131,8 +137,8 @@ class Archive extends FrontendBaseBlock
         }
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'archive') . '/' . $url;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'archive') . '/' . $url;
+        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);
@@ -164,9 +170,9 @@ class Archive extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
         }
 
         // add RSS-feed
@@ -174,27 +180,27 @@ class Archive extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
         );
 
         // add into breadcrumb
-        $this->breadcrumb->addElement(SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Archive')));
         $this->breadcrumb->addElement($this->year);
         if ($this->month !== null) {
             $this->breadcrumb->addElement(
-                SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
+                \SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
             );
         }
 
         // set pageTitle
-        $this->header->setPageTitle(SpoonFilter::ucfirst(FL::lbl('Archive')));
+        $this->header->setPageTitle(\SpoonFilter::ucfirst(FL::lbl('Archive')));
         $this->header->setPageTitle($this->year);
         if ($this->month !== null) {
             $this->header->setPageTitle(
-                SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
+                \SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true)
             );
         }
 
@@ -213,7 +219,7 @@ class Archive extends FrontendBaseBlock
         $this->tpl->assign('items', $this->items);
 
         // assign allowComments
-        $this->tpl->assign('allowComments', FrontendModel::getModuleSetting('blog', 'allow_comments'));
+        $this->tpl->assign('allowComments', FrontendModel::getModuleSetting('Blog', 'allow_comments'));
 
         // parse the pagination
         $this->parsePagination();

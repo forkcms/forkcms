@@ -63,8 +63,8 @@ class Index extends FrontendBaseBlock
         $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog');
+        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllCount();
@@ -96,9 +96,9 @@ class Index extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
         }
 
         // add RSS-feed
@@ -106,7 +106,7 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
