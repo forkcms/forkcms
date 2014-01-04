@@ -37,9 +37,9 @@ class RecentArticlesList extends FrontendBaseWidget
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
 
         // add RSS-feed into the metaCustom
@@ -47,7 +47,7 @@ class RecentArticlesList extends FrontendBaseWidget
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
@@ -56,7 +56,7 @@ class RecentArticlesList extends FrontendBaseWidget
         // assign comments
         $this->tpl->assign(
             'widgetBlogRecentArticlesList',
-            FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_list_num_items', 5))
+            FrontendBlogModel::getAll(FrontendModel::getModuleSetting('Blog', 'recent_articles_list_num_items', 5))
         );
         $this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
     }

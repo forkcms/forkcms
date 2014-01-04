@@ -34,7 +34,7 @@ class TemplateModifiers
         // detect links
         $var = \SpoonFilter::replaceURLsWithAnchors(
             $var,
-            Model::getModuleSetting('core', 'seo_nofollow_in_comments', false)
+            Model::getModuleSetting('Core', 'seo_nofollow_in_comments', false)
         );
 
         // replace newlines
@@ -472,14 +472,14 @@ class TemplateModifiers
         }
 
         // return
-        return '<abbr title="' . SpoonDate::getDate(
-            Model::getModuleSetting('core', 'date_format_long') . ', ' . Model::getModuleSetting(
-                'core',
+        return '<abbr title="' . \SpoonDate::getDate(
+            Model::getModuleSetting('Core', 'date_format_long') . ', ' . Model::getModuleSetting(
+                'Core',
                 'time_format'
             ),
             $var,
             FRONTEND_LANGUAGE
-        ) . '">' . SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
+        ) . '">' . \SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
     }
 
     /**
