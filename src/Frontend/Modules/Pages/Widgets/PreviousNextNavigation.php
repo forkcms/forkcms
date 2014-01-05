@@ -1,11 +1,18 @@
 <?php
 
+namespace Frontend\Modules\Pages\Widgets;
+
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Theme AS FrontendTheme;
+use Frontend\Core\Engine\Exception AS FrontendException;
+use Frontend\Core\Engine\Navigation AS FrontendNavigation;
 
 /**
  * This is a widget which creates a previous/next navigation for pages on the same level.

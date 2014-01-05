@@ -10,6 +10,8 @@ namespace Frontend\Modules\Pages\Engine;
  */
 
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Frontend\Core\Engine\Model AS FrontendModel;
+use Frontend\Core\Engine\Navigation AS FrontendNavigation;
 use Frontend\Core\Engine\Url AS FrontendURL;
 
 /**

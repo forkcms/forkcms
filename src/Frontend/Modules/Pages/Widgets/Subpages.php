@@ -9,6 +9,11 @@ namespace Frontend\Modules\Pages\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Theme as FrontendTheme;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Modules\Pages\Engine\Model as FrontendPagesModel;
+
 /**
  * This is a widget which shows the subpages.
  *
@@ -31,14 +36,14 @@ class Subpages extends FrontendBaseWidget
         parent::execute();
         $this->loadData();
 
-        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
+        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/Pages/Layout/Widgets';
 
         // check if the given template exists
         try {
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
         } catch (FrontendException $e) {
             // template does not exist; assume subpages_default.tpl
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/subpages_default.tpl');
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/SubpagesDefault.tpl');
         }
 
         $this->loadTemplate($template);
