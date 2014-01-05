@@ -9,12 +9,19 @@ namespace Frontend\Modules\Faq\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as Frontendavigation;
+use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+
 /**
  * This is a widget with the form to ask a question
  *
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  */
-class OwnQuestion extends FrontendBaseWidget
+class AskOwnQuestion extends FrontendBaseWidget
 {
     /**
      * Form instance
@@ -39,7 +46,7 @@ class OwnQuestion extends FrontendBaseWidget
 
         $this->loadTemplate();
 
-        if (!FrontendModel::getModuleSetting('faq', 'allow_own_question', false)) {
+        if (!FrontendModel::getModuleSetting('Faq', 'allow_own_question', false)) {
             return;
         }
 
@@ -90,7 +97,7 @@ class OwnQuestion extends FrontendBaseWidget
             $this->frm->getField('message')->isFilled(FL::err('QuestionIsRequired'));
 
             if ($this->frm->isCorrect()) {
-                $spamFilterEnabled = FrontendModel::getModuleSetting('faq', 'spamfilter');
+                $spamFilterEnabled = FrontendModel::getModuleSetting('Faq', 'spamfilter');
                 $variables['sentOn'] = time();
                 $variables['name'] = $this->frm->getField('name')->getValue();
                 $variables['email'] = $this->frm->getField('email')->getValue();
@@ -100,7 +107,7 @@ class OwnQuestion extends FrontendBaseWidget
                     // if the comment is spam alter the comment status so it will appear in the spam queue
                     if (FrontendModel::isSpam(
                         $variables['message'],
-                        SITE_URL . FrontendNavigation::getURLForBlock('faq'),
+                        SITE_URL . FrontendNavigation::getURLForBlock('Faq'),
                         $variables['name'],
                         $variables['email']
                     )
@@ -114,7 +121,7 @@ class OwnQuestion extends FrontendBaseWidget
                 $this->status = 'success';
                 FrontendMailer::addEmail(
                     sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']),
-                    FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/own_question.tpl',
+                    FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/own_question.tpl',
                     $variables,
                     $variables['email'],
                     $variables['name']

@@ -9,6 +9,15 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Mailer as FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is the detail-action
  *
@@ -82,15 +91,15 @@ class Detail extends FrontendBaseBlock
         }
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') .
+        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('faq', 'detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Detail') . '/' . $this->record['url'];
 
         // get tags
-        $this->record['tags'] = FrontendTagsModel::getForItem('faq', $this->record['id']);
+        $this->record['tags'] = FrontendTagsModel::getForItem('Faq', $this->record['id']);
 
         // get settings
-        $this->settings = FrontendModel::getModuleSettings('faq');
+        $this->settings = FrontendModel::getModuleSettings('Faq');
 
         // reset allow comments
         if (!$this->settings['allow_feedback']) {
@@ -181,7 +190,7 @@ class Detail extends FrontendBaseBlock
     private function updateStatistics()
     {
         // view has been counted
-        if (SpoonSession::exists('viewed_faq_' . $this->record['id'])) {
+        if (\SpoonSession::exists('viewed_faq_' . $this->record['id'])) {
             return;
         }
 
@@ -189,7 +198,7 @@ class Detail extends FrontendBaseBlock
         FrontendFaqModel::increaseViewCount($this->record['id']);
 
         // save in session so we know this view has been counted
-        SpoonSession::set('viewed_faq_' . $this->record['id'], true);
+        \SpoonSession::set('viewed_faq_' . $this->record['id'], true);
     }
 
     /**
@@ -222,7 +231,7 @@ class Detail extends FrontendBaseBlock
                 $text = $this->frm->getField('message')->getValue();
 
                 // get feedback in session
-                $previousFeedback = (SpoonSession::exists('faq_feedback_' . $this->record['id']) ? SpoonSession::get(
+                $previousFeedback = (\SpoonSession::exists('faq_feedback_' . $this->record['id']) ? \SpoonSession::get(
                     'faq_feedback_' . $this->record['id']
                 ) : null);
 
@@ -230,7 +239,7 @@ class Detail extends FrontendBaseBlock
                 FrontendFaqModel::updateFeedback($this->record['id'], $useful, $previousFeedback);
 
                 // save feedback in session
-                SpoonSession::set('faq_feedback_' . $this->record['id'], $useful);
+                \SpoonSession::set('faq_feedback_' . $this->record['id'], $useful);
 
                 // answer is yes so there's no feedback
                 if (!$useful) {
@@ -255,7 +264,7 @@ class Detail extends FrontendBaseBlock
                     FrontendFaqModel::saveFeedback($variables);
 
                     // send email on new feedback?
-                    if (FrontendModel::getModuleSetting('faq', 'send_email_on_new_feedback')) {
+                    if (FrontendModel::getModuleSetting('Faq', 'send_email_on_new_feedback')) {
                         // add the question
                         $variables['question'] = $this->record['question'];
 
@@ -269,7 +278,7 @@ class Detail extends FrontendBaseBlock
                 }
 
                 // trigger event
-                FrontendModel::triggerEvent('faq', 'after_add_feedback', array('comment' => $text));
+                FrontendModel::triggerEvent('Faq', 'after_add_feedback', array('comment' => $text));
 
                 // save status
                 $this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));

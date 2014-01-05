@@ -10,7 +10,10 @@ namespace Frontend\Modules\Faq\Engine;
  */
 
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Url as FrontendURL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
@@ -79,7 +82,7 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('faq', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
 
         // build the item urls
         foreach ($items as &$item) {
@@ -106,7 +109,7 @@ class Model implements FrontendTagsInterface
         );
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('faq', 'category');
+        $link = FrontendNavigation::getURLForBlock('Faq', 'Category');
 
         // build the item url
         foreach ($items as &$item) {
@@ -170,7 +173,7 @@ class Model implements FrontendTagsInterface
         );
 
         if (!empty($items)) {
-            $link = FrontendNavigation::getURLForBlock('faq', 'detail');
+            $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
 
             // build the item urls
             foreach ($items as &$row) {
@@ -213,7 +216,7 @@ class Model implements FrontendTagsInterface
             array(FRONTEND_LANGUAGE, 'N', (int) $limit)
         );
 
-        $link = FrontendNavigation::getURLForBlock('faq', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
         }
@@ -238,7 +241,7 @@ class Model implements FrontendTagsInterface
             array(FRONTEND_LANGUAGE, (int) $id)
         );
 
-        $link = FrontendNavigation::getURLForBlock('faq', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
 
         foreach ($items as &$item) {
             $item['full_url'] = $link . '/' . $item['url'];
@@ -256,14 +259,14 @@ class Model implements FrontendTagsInterface
      */
     public static function getRelated($id, $limit = 5)
     {
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $id, 'faq', 'faq');
+        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags((int) $id, 'Faq', 'Faq');
 
         // there are no items, so return an empty array
         if (empty($relatedIDs)) {
             return array();
         }
 
-        $link = FrontendNavigation::getURLForBlock('faq', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.question, m.url
              FROM faq_questions AS i
@@ -336,7 +339,7 @@ class Model implements FrontendTagsInterface
 
         // prepare items for search
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('faq', 'detail') . '/' . $item['url'];
+            $item['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Detail') . '/' . $item['url'];
         }
 
         return $items;

@@ -9,6 +9,11 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+
 /**
  * This is the index-action
  *
@@ -41,7 +46,7 @@ class Index extends FrontendBaseBlock
     private function getData()
     {
         $categories = FrontendFaqModel::getCategories();
-        $limit = FrontendModel::getModuleSetting('faq', 'overview_num_items_per_category', 10);
+        $limit = FrontendModel::getModuleSetting('Faq', 'overview_num_items_per_category', 10);
 
         foreach ($categories as $item) {
             $item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
@@ -64,7 +69,7 @@ class Index extends FrontendBaseBlock
         $this->tpl->assign('faqCategories', (array) $this->items);
         $this->tpl->assign(
             'allowMultipleCategories',
-            FrontendModel::getModuleSetting('faq', 'allow_multiple_categories', true)
+            FrontendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)
         );
     }
 }

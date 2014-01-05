@@ -9,6 +9,10 @@ namespace Frontend\Modules\Faq\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+
 /**
  * This is a widget with most read faq-questions
  *
@@ -38,7 +42,7 @@ class CategoryList extends FrontendBaseWidget
             'widgetFaqCategoryList',
             FrontendFaqModel::getAllForCategory(
                 $this->data['id'],
-                FrontendModel::getModuleSetting('faq', 'most_read_num_items', 10)
+                FrontendModel::getModuleSetting('Faq', 'most_read_num_items', 10)
             )
         );
     }

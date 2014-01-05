@@ -9,6 +9,10 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
+
 /**
  * This is the category-action
  *
@@ -58,7 +62,7 @@ class Category extends FrontendBaseBlock
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('faq', 'category') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') . '/' . $this->record['url'];
         $this->questions = FrontendFaqModel::getAllForCategory($this->record['id']);
     }
 

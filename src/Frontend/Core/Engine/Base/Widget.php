@@ -113,7 +113,7 @@ class Widget extends Object
 
         // use module path
         if (!$overwritePath) {
-            $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
+            $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/css/' . $file;
         }
 
         // add css to the header
@@ -134,7 +134,7 @@ class Widget extends Object
 
         // use module path
         if (!$overwritePath) {
-            $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
+            $file = '/src/Frontend/Modules/' . $this->getModule() . '/Js/' . $file;
         }
 
         // add js to the header
@@ -162,15 +162,15 @@ class Widget extends Object
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
+        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
 
         // add javascript file with same name as module (if the file exists)
-        if (is_file($frontendModulePath . '/js/' . $this->getModule() . '.js')) {
+        if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
         }
 
         // add javascript file with same name as the action (if the file exists)
-        if (is_file($frontendModulePath . '/js/' . $this->getAction() . '.js')) {
+        if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
         }
     }
@@ -228,7 +228,7 @@ class Widget extends Object
             $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
             // build template path
-            $path = $frontendModulePath . '/layout/widgets/' . $this->getAction() . '.tpl';
+            $path = $frontendModulePath . '/Layout/Widgets/' . $this->getAction() . '.tpl';
         } else {
             // redefine
             $path = (string) $path;
