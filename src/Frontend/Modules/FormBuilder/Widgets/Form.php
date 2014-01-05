@@ -2,6 +2,15 @@
 
 namespace Frontend\Modules\FormBuilder\Widgets;
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Mailer as FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
+
 /**
  * This is the form widget.
  *
@@ -62,7 +71,7 @@ class Form extends FrontendBaseWidget
             }
 
             // normal parameter
-            if (SpoonFilter::isInteger($key)) {
+            if (\SpoonFilter::isInteger($key)) {
                 $moduleParameters[] = $value;
             } else {
                 // get parameter
@@ -273,7 +282,7 @@ class Form extends FrontendBaseWidget
                     $field['plaintext'] = true;
                 } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                     // name (prefixed by type)
-                    $name = ($field['type'] == 'checkbox') ? 'chk' . SpoonFilter::toCamelCase($field['name']) : 'rbt' . SpoonFilter::toCamelCase($field['name']);
+                    $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::toCamelCase($field['name']) : 'rbt' . \SpoonFilter::toCamelCase($field['name']);
 
                     // rebuild so the html is stored in a general name (and not rbtName)
                     foreach ($field['html'] as &$item) {
@@ -325,9 +334,9 @@ class Form extends FrontendBaseWidget
         // submitted
         if ($this->frm->isSubmitted()) {
             // does the key exists?
-            if (SpoonSession::exists('formbuilder_' . $this->item['id'])) {
+            if (\SpoonSession::exists('formbuilder_' . $this->item['id'])) {
                 // calculate difference
-                $diff = time() - (int) SpoonSession::get('formbuilder_' . $this->item['id']);
+                $diff = time() - (int) \SpoonSession::get('formbuilder_' . $this->item['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
@@ -377,7 +386,7 @@ class Form extends FrontendBaseWidget
             if ($this->frm->isCorrect()) {
                 // item
                 $data['form_id'] = $this->item['id'];
-                $data['session_id'] = SpoonSession::getSessionId();
+                $data['session_id'] = \SpoonSession::getSessionId();
                 $data['sent_on'] = FrontendModel::getUTCDate();
                 $data['data'] = serialize(array('server' => $_SERVER));
 
@@ -447,7 +456,7 @@ class Form extends FrontendBaseWidget
                             $field['settings']['reply_to'] === true
                         ) {
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            if (SpoonFilter::isEmail($email)) {
+                            if (\SpoonFilter::isEmail($email)) {
                                 $replyTo = $email;
                             }
                         }
@@ -458,7 +467,7 @@ class Form extends FrontendBaseWidget
                         // add email
                         FrontendMailer::addEmail(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
-                            FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
                             $variables,
                             $address,
                             $this->item['name'],
@@ -483,7 +492,7 @@ class Form extends FrontendBaseWidget
                 );
 
                 // store timestamp in session so we can block excessive usage
-                SpoonSession::set('formbuilder_' . $this->item['id'], time());
+                \SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
                 $redirect = SITE_URL . '/' . $this->URL->getQueryString();
@@ -491,7 +500,7 @@ class Form extends FrontendBaseWidget
                 $redirect .= 'identifier=' . $this->item['identifier'];
 
                 // redirect with identifier
-                SpoonHTTP::redirect($redirect);
+                \SpoonHTTP::redirect($redirect);
             } else {
                 // not correct, show errors
                 // global form errors set

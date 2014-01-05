@@ -2,14 +2,14 @@
 
 namespace Frontend\Core\Engine;
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
  * This class will send mails
@@ -18,7 +18,7 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Sam Tubbax <sam@sumocoders.be>
  */
-class FrontendMailer
+class Mailer
 {
     /**
      * Adds an email to the queue.
@@ -60,10 +60,10 @@ class FrontendMailer
         $template = (string) $template;
 
         // set defaults
-        $to = FrontendModel::getModuleSetting('core', 'mailer_to');
-        $from = FrontendModel::getModuleSetting('core', 'mailer_from');
-        $replyTo = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
-        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => CommonUri::getUrl($subject));
+        $to = Model::getModuleSetting('Core', 'mailer_to');
+        $from = Model::getModuleSetting('Core', 'mailer_from');
+        $replyTo = Model::getModuleSetting('Core', 'mailer_reply_to');
+        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => \CommonUri::getUrl($subject));
 
         // set recipient/sender headers
         $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
@@ -74,30 +74,30 @@ class FrontendMailer
         $email['reply_to_name'] = ($replyToName === null) ? (string) $replyTo['name'] : $replyToName;
 
         // validate
-        if (!SpoonFilter::isEmail(
+        if (!\SpoonFilter::isEmail(
             $email['to_email']
         )
         ) {
-            throw new FrontendException('Invalid e-mail address for recipient.');
+            throw new Exception('Invalid e-mail address for recipient.');
         }
-        if (!SpoonFilter::isEmail(
+        if (!\SpoonFilter::isEmail(
             $email['from_email']
         )
         ) {
-            throw new FrontendException('Invalid e-mail address for sender.');
+            throw new Exception('Invalid e-mail address for sender.');
         }
-        if (!SpoonFilter::isEmail(
+        if (!\SpoonFilter::isEmail(
             $email['reply_to_email']
         )
         ) {
-            throw new FrontendException('Invalid e-mail address for reply-to address.');
+            throw new Exception('Invalid e-mail address for reply-to address.');
         }
 
         // build array
-        $email['to_name'] = SpoonFilter::htmlentitiesDecode($email['to_name']);
-        $email['from_name'] = SpoonFilter::htmlentitiesDecode($email['from_name']);
-        $email['reply_to_name'] = SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
-        $email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
+        $email['to_name'] = \SpoonFilter::htmlentitiesDecode($email['to_name']);
+        $email['from_name'] = \SpoonFilter::htmlentitiesDecode($email['from_name']);
+        $email['reply_to_name'] = \SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
+        $email['subject'] = \SpoonFilter::htmlentitiesDecode($subject);
         if ($isRawHTML) {
             $email['html'] = $template;
         } else {
@@ -106,7 +106,7 @@ class FrontendMailer
         if ($plainText !== null) {
             $email['plain_text'] = $plainText;
         }
-        $email['created_on'] = FrontendModel::getUTCDate();
+        $email['created_on'] = Model::getUTCDate();
 
         // init var
         $matches = array();
@@ -167,7 +167,7 @@ class FrontendMailer
             // loop old links
             foreach ($matches[1] as $i => $link) {
                 $searchLinks[] = $matches[0][$i];
-                $replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $utm) . '"';
+                $replaceLinks[] = 'href="' . Model::addURLParameters($link, $utm) . '"';
             }
 
             // replace
@@ -193,17 +193,17 @@ class FrontendMailer
         // set send date
         if ($queue) {
             if ($sendOn === null) {
-                $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H') . ':00:00';
+                $email['send_on'] = Model::getUTCDate('Y-m-d H') . ':00:00';
             } else {
-                $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
+                $email['send_on'] = Model::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
             }
         }
 
         // insert the email into the database
-        $id = FrontendModel::getContainer()->get('database')->insert('emails', $email);
+        $id = Model::getContainer()->get('database')->insert('emails', $email);
 
         // trigger event
-        FrontendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
+        Model::triggerEvent('Core', 'after_email_queued', array('id' => $id));
 
         // if queue was not enabled, send this mail right away
         if (!$queue) {
@@ -221,11 +221,11 @@ class FrontendMailer
      */
     public static function getQueuedMailIds()
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
+        return (array) Model::getContainer()->get('database')->getColumn(
             'SELECT e.id
              FROM emails AS e
              WHERE e.send_on < ?',
-            array(FrontendModel::getUTCDate())
+            array(Model::getUTCDate())
         );
     }
 
@@ -239,7 +239,7 @@ class FrontendMailer
     private static function getTemplateContent($template, $variables = null)
     {
         // new template instance
-        $tpl = new FrontendTemplate(false);
+        $tpl = new Template(false);
 
         // set some options
         $tpl->setForceCompile(true);
@@ -279,7 +279,7 @@ class FrontendMailer
         $id = (int) $id;
 
         // get db
-        $db = FrontendModel::getContainer()->get('database');
+        $db = Model::getContainer()->get('database');
 
         // get record
         $emailRecord = (array) $db->getRecord(
@@ -290,22 +290,22 @@ class FrontendMailer
         );
 
         // mailer type
-        $mailerType = FrontendModel::getModuleSetting('core', 'mailer_type', 'mail');
+        $mailerType = Model::getModuleSetting('Core', 'mailer_type', 'mail');
 
-        // create new SpoonEmail-instance
-        $email = new SpoonEmail();
-        $email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
+        // create new \SpoonEmail-instance
+        $email = new \SpoonEmail();
+        $email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
 
         // send via SMTP
         if ($mailerType == 'smtp') {
             // get settings
-            $SMTPServer = FrontendModel::getModuleSetting('core', 'smtp_server');
-            $SMTPPort = FrontendModel::getModuleSetting('core', 'smtp_port', 25);
-            $SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
-            $SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
+            $SMTPServer = Model::getModuleSetting('Core', 'smtp_server');
+            $SMTPPort = Model::getModuleSetting('Core', 'smtp_port', 25);
+            $SMTPUsername = Model::getModuleSetting('Core', 'smtp_username');
+            $SMTPPassword = Model::getModuleSetting('Core', 'smtp_password');
 
             // set security if needed
-            $secureLayer = FrontendModel::getModuleSetting('core', 'smtp_secure_layer');
+            $secureLayer = Model::getModuleSetting('Core', 'smtp_secure_layer');
             if (in_array($secureLayer, array('ssl', 'tls'))) {
                 $email->setSMTPSecurity($secureLayer);
             }
@@ -348,7 +348,7 @@ class FrontendMailer
             $db->delete('emails', 'id = ?', array($id));
 
             // trigger event
-            FrontendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
+            Model::triggerEvent('Core', 'after_email_sent', array('id' => $id));
         }
     }
 }
