@@ -2,6 +2,15 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
+use Frontend\Modules\Mailmotor\Engine\CMHelper as FrontendMailmotorCMHelper;
+
 /**
  * This is the subscribe-action
  *
@@ -88,13 +97,13 @@ class Subscribe extends FrontendBaseBlock
                     }
 
                     // trigger event
-                    FrontendModel::triggerEvent('mailmotor', 'after_subscribe', array('email' => $email->getValue()));
+                    FrontendModel::triggerEvent('Mailmotor', 'after_subscribe', array('email' => $email->getValue()));
 
                     // redirect
                     $this->redirect(
-                        FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm'
+                        FrontendNavigation::getURLForBlock('Mailmotor', 'Subscribe') . '?sent=true#subscribeForm'
                     );
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
                     if (SPOON_DEBUG) {
                         throw $e;

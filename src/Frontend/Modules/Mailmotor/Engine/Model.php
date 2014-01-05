@@ -9,6 +9,8 @@ namespace Frontend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -113,7 +115,7 @@ class Model
      */
     public static function getClientID()
     {
-        return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
+        return (string) FrontendModel::getModuleSetting('Mailmotor', 'cm_client_id');
     }
 
     /**
@@ -177,13 +179,13 @@ class Model
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
     {
         // check input
-        $contentType = SpoonFilter::getValue($contentType, array('html', 'plain'), 'html');
-        $forCM = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
+        $contentType = \SpoonFilter::getValue($contentType, array('html', 'plain'), 'html');
+        $forCM = \SpoonFilter::getValue($forCM, array(false, true), false, 'int');
 
         // return the URL
         return SITE_URL . FrontendNavigation::getURLForBlock(
-            'mailmotor',
-            'detail'
+            'Mailmotor',
+            'Detail'
         ) . '/' . $id . '?type=' . $contentType . (($forCM == 1) ? '&cm=' . $forCM : '');
     }
 
@@ -197,18 +199,18 @@ class Model
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
-        $path = PATH_WWW . '/backend/modules/mailmotor/templates/' . $language;
+        $path = PATH_WWW . '/src/Backend/Modules/Mailmotor/Templates/' . $language;
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
         if (!$fs->exists($path . '/' . $name . '/template.tpl')) {
-            throw new SpoonException(
+            throw new \SpoonException(
                 'The template folder "' . $name . '" exists, but no
                 template.tpl file was found. Please create one.'
             );
         }
         if (!$fs->exists($path . '/' . $name . '/css/screen.css')) {
-            throw new SpoonException(
+            throw new \SpoonException(
                 'The template folder "' . $name . '" exists, but no screen.css
                 file was found. Please create one in a subfolder "css".'
             );
@@ -220,7 +222,7 @@ class Model
         $record['language'] = $language;
         $record['path_content'] = $path . '/' . $name . '/template.tpl';
         $record['path_css'] = $path . '/' . $name . '/css/screen.css';
-        $record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' .
+        $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' .
                              $language . '/' . $name . '/css/screen.css';
 
         // check if the template file actually exists

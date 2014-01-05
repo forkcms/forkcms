@@ -2,6 +2,12 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
+
 /**
  * This is the index-action
  *
@@ -14,7 +20,7 @@ class Index extends FrontendBaseBlock
     /**
      * The data grid object
      *
-     * @var    SpoonDataGrid
+     * @var    \SpoonDataGrid
      */
     private $dataGrid;
 
@@ -36,20 +42,20 @@ class Index extends FrontendBaseBlock
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new SpoonDataGridSourceDB(FrontendModel::getContainer()->get(
+        $source = new \SpoonDataGridSourceDB(FrontendModel::getContainer()->get(
             'database'
         ), array(FrontendMailmotorModel::QRY_DATAGRID_BROWSE_SENT, array('sent', FRONTEND_LANGUAGE)));
 
         // create data grid
-        $this->dataGrid = new SpoonDataGrid($source);
-        $this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
+        $this->dataGrid = new \SpoonDataGrid($source);
+        $this->dataGrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
 
         // set hidden columns
         $this->dataGrid->setColumnsHidden(array('id', 'status'));
 
         // set headers values
-        $headers['name'] = SpoonFilter::ucfirst(FL::lbl('Name'));
-        $headers['send_on'] = SpoonFilter::ucfirst(FL::lbl('Sent'));
+        $headers['name'] = \SpoonFilter::ucfirst(FL::lbl('Name'));
+        $headers['send_on'] = \SpoonFilter::ucfirst(FL::lbl('Sent'));
 
         // set headers
         $this->dataGrid->setHeaderLabels($headers);

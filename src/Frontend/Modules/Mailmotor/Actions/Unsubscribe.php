@@ -2,6 +2,15 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
+use Frontend\Modules\Mailmotor\Engine\CMHelper as FrontendMailmotorCMHelper;
+
 /**
  * This is the index-action
  *
@@ -36,8 +45,8 @@ class Unsubscribe extends FrontendBaseBlock
     public function execute()
     {
         // check if an email was given
-        $this->group = SpoonFilter::getGetValue('group', null, '');
-        $this->email = urldecode(SpoonFilter::getGetValue('email', null, ''));
+        $this->group = \SpoonFilter::getGetValue('group', null, '');
+        $this->email = urldecode(\SpoonFilter::getGetValue('email', null, ''));
 
         $this->loadTemplate();
         $this->loadForm();
@@ -72,7 +81,7 @@ class Unsubscribe extends FrontendBaseBlock
         }
 
         // unsubscribe was issued for a specific group/address
-        if (SpoonFilter::isEmail($this->email) && FrontendMailmotorModel::existsGroup($this->group)) {
+        if (\SpoonFilter::isEmail($this->email) && FrontendMailmotorModel::existsGroup($this->group)) {
             // unsubscribe the address from this group
             if (FrontendMailmotorModel::unsubscribe($this->email, $this->group)) {
                 // hide form
@@ -130,13 +139,13 @@ class Unsubscribe extends FrontendBaseBlock
                     }
 
                     // trigger event
-                    FrontendModel::triggerEvent('mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));
+                    FrontendModel::triggerEvent('Mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));
 
                     // redirect
                     $this->redirect(
-                        FrontendNavigation::getURLForBlock('mailmotor', 'unsubscribe') . '?sent=true#unsubscribeForm'
+                        FrontendNavigation::getURLForBlock('Mailmotor', 'unsubscribe') . '?sent=true#unsubscribeForm'
                     );
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
                     if (SPOON_DEBUG) {
                         throw $e;

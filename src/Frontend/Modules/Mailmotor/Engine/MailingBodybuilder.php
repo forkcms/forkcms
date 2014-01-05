@@ -60,11 +60,11 @@ class MailingBodyBuilder
         $css = $this->getCSS();
 
         if (empty($templateHtml)) {
-            throw new Exception('No valid template HTML was set.');
+            throw new \Exception('No valid template HTML was set.');
         }
 
         if (empty($editorHtml)) {
-            throw new Exception('No valid editor content HTML was set.');
+            throw new \Exception('No valid editor content HTML was set.');
         }
 
         // we replace the editor tags with the content the user gave into the editor in the CMS
@@ -83,7 +83,7 @@ class MailingBodyBuilder
 
         // we will return plaintext if the user asked for it.
         if ($this->isPlaintext()) {
-            $body = SpoonFilter::stripHTML($body);
+            $body = \SpoonFilter::stripHTML($body);
         }
 
         return $body;

@@ -9,6 +9,10 @@ namespace Frontend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
+
 /**
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
@@ -58,7 +62,7 @@ class CMHelper
      */
     public static function getClientID()
     {
-        return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
+        return (string) FrontendModel::getModuleSetting('Mailmotor', 'cm_client_id');
     }
 
     /**
@@ -84,12 +88,12 @@ class CMHelper
             require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
             // set login data
-            $url = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
-            $username = FrontendModel::getModuleSetting('mailmotor', 'cm_username');
-            $password = FrontendModel::getModuleSetting('mailmotor', 'cm_password');
+            $url = FrontendModel::getModuleSetting('Mailmotor', 'cm_url');
+            $username = FrontendModel::getModuleSetting('Mailmotor', 'cm_username');
+            $password = FrontendModel::getModuleSetting('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
-            $cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
+            $cm = new \CampaignMonitor($url, $username, $password, 5, self::getClientId());
 
             // set CampaignMonitor object reference
             FrontendModel::getContainer()->set('campaignmonitor', $cm);
@@ -213,7 +217,7 @@ class CMHelper
             try {
                 // unsubscribe the email from this group
                 $cm->unsubscribe($email, $groupCMId);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // for the unsubscribe function we ignore any errors
                 // stop here if something went wrong with CM
                 return false;
