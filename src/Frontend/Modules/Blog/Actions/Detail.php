@@ -318,9 +318,9 @@ class Detail extends FrontendBaseBlock
             $this->frm->cleanupFields();
 
             // does the key exists?
-            if (SpoonSession::exists('blog_comment_' . $this->record['id'])) {
+            if (\SpoonSession::exists('blog_comment_' . $this->record['id'])) {
                 // calculate difference
-                $diff = time() - (int) SpoonSession::get('blog_comment_' . $this->record['id']);
+                $diff = time() - (int) \SpoonSession::get('blog_comment_' . $this->record['id']);
 
                 // calculate difference, it it isn't 10 seconds the we tell the user to slow down
                 if ($diff < 10 && $diff != 0) {
@@ -429,14 +429,14 @@ class Detail extends FrontendBaseBlock
                 FrontendBlogModel::notifyAdmin($comment);
 
                 // store timestamp in session so we can block excessive usage
-                SpoonSession::set('blog_comment_' . $this->record['id'], time());
+                \SpoonSession::set('blog_comment_' . $this->record['id'], time());
 
                 // store author-data in cookies
                 try {
                     \CommonCookie::set('comment_author', $author);
                     \CommonCookie::set('comment_email', $email);
                     \CommonCookie::set('comment_website', $website);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }
 
