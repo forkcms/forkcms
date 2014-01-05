@@ -41,9 +41,9 @@ class Model
         // build extra
         $extra = array(
             'id' => $item['extra_id'],
-            'module' => 'location',
+            'module' => 'Location',
             'type' => 'widget',
-            'action' => 'location'
+            'action' => 'Location'
         );
 
         $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
@@ -153,16 +153,16 @@ class Model
 
         // build extra
         $extra = array(
-            'module' => 'location',
+            'module' => 'Location',
             'type' => 'widget',
             'label' => 'Location',
-            'action' => 'location',
+            'action' => 'Location',
             'data' => null,
             'hidden' => 'N',
             'sequence' => $db->getVar(
                 'SELECT MAX(i.sequence) + 1
                  FROM modules_extras AS i
-                 WHERE i.module = ?', array('location')
+                 WHERE i.module = ?', array('Location')
                 )
             );
         if(is_null($extra['sequence'])) {
@@ -225,15 +225,15 @@ class Model
             // build extra
             $extra = array(
                 'id' => $item['extra_id'],
-                'module' => 'location',
+                'module' => 'Location',
                 'type' => 'widget',
                 'label' => 'Location',
-                'action' => 'location',
+                'action' => 'Location',
                 'data' => serialize(array(
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
                 ),
                 'hidden' => 'N'
             );

@@ -9,6 +9,11 @@ namespace Frontend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
+
 /**
  * This is the index-action, it has an overview of locations.
  *
@@ -52,7 +57,7 @@ class Index extends FrontendBaseBlock
         $this->settings = FrontendLocationModel::getMapSettings(0);
         $firstMarker = current($this->items);
         if (empty($this->settings)) {
-            $this->settings = FrontendModel::getModuleSettings('location');
+            $this->settings = FrontendModel::getModuleSettings('Location');
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }

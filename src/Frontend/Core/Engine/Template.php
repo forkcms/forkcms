@@ -323,7 +323,7 @@ class Template extends \SpoonTemplate
             );
             $this->assign(
                 'THEME_URL',
-                '/frontend/themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
             );
         }
     }

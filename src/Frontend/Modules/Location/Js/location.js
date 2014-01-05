@@ -32,16 +32,16 @@ jsFrontend.location =
 		// build the options
 		var options =
 		{
-			zoom: (jsFrontend.data.get('location.settings' + suffix + '.zoom_level') == 'auto') ? 0 : parseInt(jsFrontend.data.get('location.settings' + suffix + '.zoom_level')),
-			center: new google.maps.LatLng(jsFrontend.data.get('location.settings' + suffix + '.center.lat'), jsFrontend.data.get('location.settings' + suffix + '.center.lng')),
-			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('location.settings' + suffix + '.map_type')]
+			zoom: (jsFrontend.data.get('Location.settings' + suffix + '.zoom_level') == 'auto') ? 0 : parseInt(jsFrontend.data.get('Location.settings' + suffix + '.zoom_level')),
+			center: new google.maps.LatLng(jsFrontend.data.get('Location.settings' + suffix + '.center.lat'), jsFrontend.data.get('Location.settings' + suffix + '.center.lng')),
+			mapTypeId: google.maps.MapTypeId[jsFrontend.data.get('Location.settings' + suffix + '.map_type')]
 		};
 
 		// create map
 		jsFrontend.location.map[mapId] = new google.maps.Map(document.getElementById('map' + id), options);
 
 		// get the items
-		var items = jsFrontend.data.get('location.items' + suffix);
+		var items = jsFrontend.data.get('Location.items' + suffix);
 
 		// any items
 		if(items.length > 0)
@@ -55,7 +55,7 @@ jsFrontend.location =
 		}
 
 		// are directions enabled?
-		if(jsFrontend.data.get('location.settings' + suffix + '.directions'))
+		if(jsFrontend.data.get('Location.settings' + suffix + '.directions'))
 		{
 			// create direction variables if needed
 			if(jsFrontend.location.directionsService == null) jsFrontend.location.directionsService = new google.maps.DirectionsService();

@@ -9,6 +9,8 @@ namespace Frontend\Modules\Location\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+
 /**
  * In this file we store all generic functions that we will be using in the location module
  *
