@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\ContentBlocks\Engine;
 
+use Frontend\Core\Engine\Model as FrontendModel;
+
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
@@ -9,7 +11,7 @@ namespace Frontend\Modules\ContentBlocks\Engine;
  * @author Tijs verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class BlocksModel
+class Model
 {
     /**
      * Get an item.

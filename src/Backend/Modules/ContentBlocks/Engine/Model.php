@@ -125,7 +125,7 @@ class Model
 
         // build extra
         $extra = array('id' => $item['extra_id'],
-                        'module' => 'content_blocks',
+                        'module' => 'ContentBlocks',
                         'type' => 'widget',
                         'action' => 'detail');
 
@@ -257,7 +257,7 @@ class Model
 
         // build extra
         $extra = array(
-            'module' => 'content_blocks',
+            'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
             'action' => 'detail',
@@ -267,7 +267,7 @@ class Model
                 'SELECT MAX(i.sequence) + 1
                  FROM modules_extras AS i
                  WHERE i.module = ?',
-                array('content_blocks')
+                array('ContentBlocks')
             )
         );
 
@@ -313,7 +313,7 @@ class Model
         // build extra
         $extra = array(
             'id' => $item['extra_id'],
-            'module' => 'content_blocks',
+            'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
             'action' => 'detail',

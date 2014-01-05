@@ -2,6 +2,11 @@
 
 namespace Frontend\Modules\ContentBlocks\Widgets;
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Theme as FrontendTheme;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Modules\ContentBlocks\Engine\Model as FrontendContentBlocksModel;
+
 /**
  * This is the detail widget.
  *
@@ -26,14 +31,14 @@ class Detail extends FrontendBaseWidget
      */
     private function assignTemplate()
     {
-        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/default.tpl');
+        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/default.tpl');
 
         // is the content block visible?
         if (!empty($this->item)) {
             // check if the given template exists
             try {
                 $template = FrontendTheme::getPath(
-                    FRONTEND_MODULES_PATH . '/content_blocks/layout/widgets/' . $this->item['template']
+                    FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/' . $this->item['template']
                 );
             } catch (FrontendException $e) {
                 // do nothing
