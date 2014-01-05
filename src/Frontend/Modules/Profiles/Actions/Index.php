@@ -9,6 +9,10 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+
 /**
  * This is the index-action, it can be used as a dashboard.
  *
@@ -37,9 +41,9 @@ class Index extends FrontendBaseBlock
             // profile not logged in
             $this->redirect(
                 FrontendNavigation::getURLForBlock(
-                    'profiles',
-                    'login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('profiles'),
+                    'Profiles',
+                    'Login'
+                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles'),
                 307
             );
         }

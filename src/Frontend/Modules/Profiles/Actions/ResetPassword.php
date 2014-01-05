@@ -9,6 +9,14 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * Reset your password using a token received from the forgot_password action.
  *
@@ -123,11 +131,11 @@ class ResetPassword extends FrontendBaseBlock
                 }
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_reset_password', array('id' => $profileId));
+                FrontendModel::triggerEvent('Profiles', 'after_reset_password', array('id' => $profileId));
 
                 // redirect
                 $this->redirect(
-                    FrontendNavigation::getURLForBlock('profiles', 'reset_password') . '/' . $this->URL->getParameter(
+                    FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->URL->getParameter(
                         0
                     ) . '?sent=true'
                 );

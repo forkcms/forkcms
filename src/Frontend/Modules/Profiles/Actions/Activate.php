@@ -9,6 +9,12 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * This is the activate-action.
  *
@@ -45,7 +51,7 @@ class Activate extends FrontendBaseBlock
                 FrontendProfilesAuthentication::login($profileId);
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_activate', array('id' => $profileId));
+                FrontendModel::triggerEvent('Profiles', 'after_activate', array('id' => $profileId));
 
                 // show success message
                 $this->tpl->assign('activationSuccess', true);

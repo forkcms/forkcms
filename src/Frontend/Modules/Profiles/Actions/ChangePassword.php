@@ -9,6 +9,13 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+
 /**
  * Change the password of the current logged in profile.
  *
@@ -47,9 +54,9 @@ class ChangePassword extends FrontendBaseBlock
         } else {
             $this->redirect(
                 FrontendNavigation::getURLForBlock(
-                    'profiles',
-                    'login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_password'),
+                    'Profiles',
+                    'Login'
+                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword'),
                 307
             );
         }
@@ -122,14 +129,14 @@ class ChangePassword extends FrontendBaseBlock
 
                 // trigger event
                 FrontendModel::triggerEvent(
-                    'profiles',
+                    'Profiles',
                     'after_change_password',
                     array('id' => $this->profile->getId())
                 );
 
                 // redirect
                 $this->redirect(
-                    SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_password') . '?sent=true'
+                    SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword') . '?sent=true'
                 );
             } else {
                 $this->tpl->assign('updatePasswordHasFormError', true);

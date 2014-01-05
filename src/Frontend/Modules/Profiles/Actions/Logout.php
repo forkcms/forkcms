@@ -9,6 +9,10 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+
 /**
  * This is the logout-action.
  *
@@ -28,7 +32,7 @@ class Logout extends FrontendBaseBlock
         }
 
         // trigger event
-        FrontendModel::triggerEvent('profiles', 'after_logout');
+        FrontendModel::triggerEvent('Profiles', 'after_logout');
 
         // redirect
         $this->redirect(SITE_URL);

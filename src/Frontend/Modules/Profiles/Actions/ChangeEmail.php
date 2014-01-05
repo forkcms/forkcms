@@ -9,6 +9,14 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * Change the e-mail of the current logged in profile.
  *
@@ -48,9 +56,9 @@ class ChangeEmail extends FrontendBaseBlock
             // profile not logged in
             $this->redirect(
                 FrontendNavigation::getURLForBlock(
-                    'profiles',
-                    'login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'change_email'),
+                    'Profiles',
+                    'Login'
+                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail'),
                 307
             );
         }
@@ -130,11 +138,11 @@ class ChangeEmail extends FrontendBaseBlock
                 FrontendProfilesModel::update($this->profile->getId(), array('email' => $txtEmail->getValue()));
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_change_email', array('id' => $this->profile->getId()));
+                FrontendModel::triggerEvent('Profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
                 // redirect
                 $this->redirect(
-                    SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'change_email') . '?sent=true'
+                    SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail') . '?sent=true'
                 );
             } else {
                 $this->tpl->assign('updateEmailHasFormError', true);

@@ -9,6 +9,11 @@ namespace Frontend\Modules\Profiles\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication
+
 /**
  * This is a widget with a login form
  *
@@ -42,7 +47,7 @@ class LoginBox extends FrontendBaseWidget
             return;
         }
 
-        $this->frm = new FrontendForm('login', FrontendNavigation::getURLForBlock('profiles', 'login'));
+        $this->frm = new FrontendForm('login', FrontendNavigation::getURLForBlock('Profiles', 'Login'));
         $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
         $this->frm->addPassword('password')->setAttributes(array('required' => null));
         $this->frm->addCheckbox('remember', true);

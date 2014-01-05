@@ -9,6 +9,14 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * This is the login-action.
  *
@@ -40,7 +48,7 @@ class Login extends FrontendBaseBlock
         } else {
             // profile already logged in
             // query string
-            $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
+            $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
             // redirect
             $this->redirect($queryString);
@@ -96,8 +104,8 @@ class Login extends FrontendBaseBlock
                     if ($loginStatus !== FrontendProfilesAuthentication::LOGIN_ACTIVE) {
                         // get the error string to use
                         $errorString = sprintf(
-                            FL::getError('Profiles' . SpoonFilter::toCamelCase($loginStatus) . 'Login'),
-                            FrontendNavigation::getURLForBlock('profiles', 'resend_activation')
+                            FL::getError('Profiles' . \SpoonFilter::toCamelCase($loginStatus) . 'Login'),
+                            FrontendNavigation::getURLForBlock('Profiles', 'ResendActivation')
                         );
 
                         // add the error to stack
@@ -121,10 +129,10 @@ class Login extends FrontendBaseBlock
                 FrontendProfilesAuthentication::updatePassword($profileId, $txtPassword->getValue());
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_logged_in', array('id' => $profileId));
+                FrontendModel::triggerEvent('Profiles', 'after_logged_in', array('id' => $profileId));
 
                 // query string
-                $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
+                $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
                 // redirect
                 $this->redirect($queryString);

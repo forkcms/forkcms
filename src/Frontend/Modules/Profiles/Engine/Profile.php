@@ -9,6 +9,10 @@ namespace Frontend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * In this file we store all generic functions that we will be using to get and set profile information.
  *

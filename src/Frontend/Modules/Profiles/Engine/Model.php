@@ -9,6 +9,10 @@ namespace Frontend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Profile as FrontendProfilesProfile;
+
 /**
  * In this file we store all generic functions that we will be using with profiles.
  *
@@ -109,7 +113,7 @@ class Model
         }
 
         // define avatar path
-        $avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/' . $size . '/';
+        $avatarPath = FRONTEND_FILES_URL . '/Profiles/Avatars/' . $size . '/';
 
         // get user
         $user = self::get($id);
@@ -124,7 +128,7 @@ class Model
         $avatar = $user->getSetting('avatar');
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && FrontendModel::getModuleSetting('profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && FrontendModel::getModuleSetting('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(strtolower(trim('d' . $email)));
 
@@ -292,10 +296,10 @@ class Model
     public static function getUrl($displayName, $id = null)
     {
         // decode special chars
-        $displayName = SpoonFilter::htmlspecialcharsDecode((string) $displayName);
+        $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
         // urlise
-        $url = (string) CommonUri::getUrl($displayName);
+        $url = (string) \CommonUri::getUrl($displayName);
 
         // get db
         $db = FrontendModel::getContainer()->get('database');
@@ -381,9 +385,9 @@ class Model
 
         // ignore these urls in the query string
         $ignoreUrls = array(
-            FrontendNavigation::getURLForBlock('profiles', 'login'),
-            FrontendNavigation::getURLForBlock('profiles', 'register'),
-            FrontendNavigation::getURLForBlock('profiles', 'forgot_password')
+            FrontendNavigation::getURLForBlock('Profiles', 'Login'),
+            FrontendNavigation::getURLForBlock('Profiles', 'Register'),
+            FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword')
         );
 
         // query string
@@ -402,9 +406,9 @@ class Model
         $queryString = ($queryString != '') ? '?queryString=' . urlencode($queryString) : '';
 
         // useful urls
-        $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('profiles', 'login') . $queryString);
-        $tpl->assign('registerUrl', FrontendNavigation::getURLForBlock('profiles', 'register'));
-        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('profiles', 'forgot_password'));
+        $tpl->assign('loginUrl', FrontendNavigation::getURLForBlock('Profiles', 'Login') . $queryString);
+        $tpl->assign('registerUrl', FrontendNavigation::getURLForBlock('Profiles', 'Register'));
+        $tpl->assign('forgotPasswordUrl', FrontendNavigation::getURLForBlock('Profiles', 'ForgotPassword'));
     }
 
     /**

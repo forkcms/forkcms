@@ -9,6 +9,15 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Mailer as FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * Request a reset password email.
  *
@@ -38,7 +47,7 @@ class ForgotPassword extends FrontendBaseBlock
             $this->parse();
         } else {
             // already logged in, redirect to settings
-            $this->redirect(FrontendNavigation::getURLForBlock('profiles', 'settings'));
+            $this->redirect(FrontendNavigation::getURLForBlock('Profiles', 'Settings'));
         }
     }
 
@@ -111,12 +120,12 @@ class ForgotPassword extends FrontendBaseBlock
                 $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_forgot_password', array('id' => $profileId));
+                FrontendModel::triggerEvent('Profiles', 'after_forgot_password', array('id' => $profileId));
 
                 // send email
                 FrontendMailer::addEmail(
                     FL::getMessage('ForgotPasswordSubject'),
-                    FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/forgot_password.tpl',
+                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/forgot_password.tpl',
                     $mailValues,
                     $txtEmail->getValue(),
                     ''

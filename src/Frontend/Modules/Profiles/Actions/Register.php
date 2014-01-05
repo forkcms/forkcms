@@ -9,6 +9,15 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Mailer as FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * Register a profile.
  *
@@ -124,6 +133,7 @@ class Register extends FrontendBaseBlock
                 $values['status'] = 'inactive';
                 $values['display_name'] = $txtDisplayName->getValue();
                 $values['registered_on'] = FrontendModel::getUTCDate();
+                $values['last_login'] = FrontendModel::getUTCDate(null, 0);
 
                 /*
                  * Add a profile.
@@ -140,7 +150,7 @@ class Register extends FrontendBaseBlock
                     );
 
                     // trigger event
-                    FrontendModel::triggerEvent('profiles', 'after_register', array('id' => $profileId));
+                    FrontendModel::triggerEvent('Profiles', 'after_register', array('id' => $profileId));
 
                     // generate activation key
                     $settings['activation_key'] = FrontendProfilesModel::getEncryptedString(
@@ -155,13 +165,13 @@ class Register extends FrontendBaseBlock
                     FrontendProfilesAuthentication::login($profileId);
 
                     // activation URL
-                    $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate')
+                    $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate')
                                                    . '/' . $settings['activation_key'];
 
                     // send email
                     FrontendMailer::addEmail(
                         FL::getMessage('RegisterSubject'),
-                        FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
                         $mailValues,
                         $values['email'],
                         ''
@@ -169,7 +179,7 @@ class Register extends FrontendBaseBlock
 
                     // redirect
                     $this->redirect(SELF . '?sent=true');
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
                     if (SPOON_DEBUG) {
                         throw $e;

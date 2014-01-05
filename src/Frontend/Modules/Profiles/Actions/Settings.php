@@ -9,6 +9,14 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * Change the settings for the current logged in profile.
  *
@@ -48,9 +56,9 @@ class Settings extends FrontendBaseBlock
             // profile not logged in
             $this->redirect(
                 FrontendNavigation::getURLForBlock(
-                    'profiles',
-                    'login'
-                ) . '?queryString=' . FrontendNavigation::getURLForBlock('profiles', 'settings'),
+                    'Profiles',
+                    'Login'
+                ) . '?queryString=' . FrontendNavigation::getURLForBlock('Profiles', 'Settings'),
                 307
             );
         }
@@ -72,13 +80,13 @@ class Settings extends FrontendBaseBlock
     {
         // gender dropdown values
         $genderValues = array(
-            'male' => SpoonFilter::ucfirst(FL::getLabel('Male')),
-            'female' => SpoonFilter::ucfirst(FL::getLabel('Female'))
+            'male' => \SpoonFilter::ucfirst(FL::getLabel('Male')),
+            'female' => \SpoonFilter::ucfirst(FL::getLabel('Female'))
         );
 
         // birthdate dropdown values
         $days = range(1, 31);
-        $months = SpoonLocale::getMonths(FRONTEND_LANGUAGE);
+        $months = \SpoonLocale::getMonths(FRONTEND_LANGUAGE);
         $years = range(date('Y'), 1900);
 
         // get settings
@@ -106,7 +114,7 @@ class Settings extends FrontendBaseBlock
         $this->frm->addText('city', $this->profile->getSetting('city'));
         $this->frm->addDropdown(
             'country',
-            SpoonLocale::getCountries(FRONTEND_LANGUAGE),
+            \SpoonLocale::getCountries(FRONTEND_LANGUAGE),
             $this->profile->getSetting('country')
         );
         $this->frm->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));
@@ -267,12 +275,12 @@ class Settings extends FrontendBaseBlock
                 // create new filename
                 if ($this->frm->getField('avatar')->isFilled()) {
                     // field value
-                    $settings['avatar'] = SpoonFilter::urlise($this->profile->getDisplayName()) . '.' .
+                    $settings['avatar'] = \SpoonFilter::urlise($this->profile->getDisplayName()) . '.' .
                                           $this->frm->getField('avatar')->getExtension();
 
                     // move the file
                     $this->frm->getField('avatar')->generateThumbnails(
-                        FRONTEND_FILES_PATH . '/profiles/avatars/',
+                        FRONTEND_FILES_PATH . '/Profiles/Avatars/',
                         $settings['avatar']
                     );
                 }
@@ -281,10 +289,10 @@ class Settings extends FrontendBaseBlock
                 $this->profile->setSettings($settings);
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
+                FrontendModel::triggerEvent('Profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
 
                 // redirect
-                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'settings') . '?sent=true');
+                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Settings') . '?sent=true');
             } else {
                 $this->tpl->assign('updateSettingsHasFormError', true);
             }

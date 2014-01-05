@@ -9,6 +9,15 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Mailer as FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+
 /**
  * This is the resend activation-action. It will resend your activation email.
  *
@@ -106,16 +115,16 @@ class ResendActivation extends FrontendBaseBlock
             // valid login
             if ($this->frm->isCorrect()) {
                 // activation URL
-                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'activate') .
+                $mailValues['activationUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Activate') .
                                                '/' . $profile->getSetting('activation_key');
 
                 // trigger event
-                FrontendModel::triggerEvent('profiles', 'after_resend_activation', array('id' => $profileId));
+                FrontendModel::triggerEvent('Profiles', 'after_resend_activation', array('id' => $profileId));
 
                 // send email
                 FrontendMailer::addEmail(
                     FL::getMessage('RegisterSubject'),
-                    FRONTEND_MODULES_PATH . '/profiles/layout/templates/mails/register.tpl',
+                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
                     $mailValues,
                     $profile->getEmail(),
                     ''
