@@ -9,6 +9,10 @@ namespace Frontend\Modules\Mailmotor\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+
 /**
  * This is a widget with the subscribe form
  *
@@ -33,7 +37,7 @@ class Subscribe extends FrontendBaseWidget
     {
         $this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
         $this->frm->setAction(
-            FrontendNavigation::getURLForBlock('mailmotor', 'subscribe')
+            FrontendNavigation::getURLForBlock('Mailmotor', 'Subscribe')
         );
         $this->frm->addText('email')
             ->setAttributes(array('required' => null, 'type' => 'email'));
