@@ -169,7 +169,7 @@ class Model
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/search/') as $file) {
+        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
             $fs->remove($file->getRealPath());
         }
     }
@@ -184,7 +184,7 @@ class Model
     public static function removeIndex($module, $otherId, $language = null)
     {
         // module exists?
-        if (!in_array('search', BackendModel::getModules())) {
+        if (!in_array('Search', BackendModel::getModules())) {
             return;
         }
 
@@ -215,7 +215,7 @@ class Model
     public static function saveIndex($module, $otherId, array $fields, $language = null)
     {
         // module exists?
-        if (!in_array('search', BackendModel::getModules())) {
+        if (!in_array('Search', BackendModel::getModules())) {
             return;
         }
 

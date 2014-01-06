@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Search\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,12 +9,17 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
+
 /**
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
+class Autocomplete extends FrontendBaseAJAXAction
 {
     /**
      * Execute the action
@@ -23,11 +30,11 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
         parent::execute();
 
         // get parameters
-        $searchTerm = SpoonFilter::getPostValue('term', null, '');
-        $term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars($searchTerm) : SpoonFilter::htmlentities(
+        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
             $searchTerm
         );
-        $limit = (int) FrontendModel::getModuleSetting('search', 'autocomplete_num_items', 10);
+        $limit = (int) FrontendModel::getModuleSetting('Search', 'autocomplete_num_items', 10);
 
         // validate
         if ($term == '') {
@@ -37,7 +44,7 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
             $matches = FrontendSearchModel::getStartsWith($term, FRONTEND_LANGUAGE, $limit);
 
             // get search url
-            $url = FrontendNavigation::getURLForBlock('search');
+            $url = FrontendNavigation::getURLForBlock('Search');
 
             // loop items and set search url
             foreach ($matches as &$match) {

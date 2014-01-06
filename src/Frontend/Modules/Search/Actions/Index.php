@@ -9,6 +9,12 @@ namespace Frontend\Modules\Search\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -225,8 +231,8 @@ class Index extends FrontendBaseBlock
         $this->frm = new FrontendForm('search', null, 'get', null, false);
 
         // could also have been submitted by our widget
-        if (!SpoonFilter::getGetValue('q', null, '')) {
-            $_GET['q'] = SpoonFilter::getGetValue('q_widget', null, '');
+        if (!\SpoonFilter::getGetValue('q', null, '')) {
+            $_GET['q'] = \SpoonFilter::getGetValue('q_widget', null, '');
         }
 
         // create elements
@@ -278,8 +284,8 @@ class Index extends FrontendBaseBlock
         }
 
         // previous search result
-        $previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
-        SpoonSession::set('searchTerm', '');
+        $previousTerm = \SpoonSession::exists('searchTerm') ? \SpoonSession::get('searchTerm') : '';
+        \SpoonSession::set('searchTerm', '');
 
         // save this term?
         if ($previousTerm != $this->term) {
@@ -296,7 +302,7 @@ class Index extends FrontendBaseBlock
         }
 
         // save current search term in cookie
-        SpoonSession::set('searchTerm', $this->term);
+        \SpoonSession::set('searchTerm', $this->term);
     }
 
     /**

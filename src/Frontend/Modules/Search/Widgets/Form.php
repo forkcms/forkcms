@@ -41,7 +41,7 @@ class Form extends FrontendBaseWidget
      */
     private function loadForm()
     {
-        $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('search'), 'get', null, false);
+        $this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('Search'), 'get', null, false);
         $this->frm->addText('q_widget', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
     }
 

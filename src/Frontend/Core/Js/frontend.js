@@ -44,7 +44,7 @@ var jsFrontend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
-			url: '/frontend/ajax.php',
+			url: '/src/Frontend/Ajax.php',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
@@ -492,7 +492,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'autocomplete' },
+						fork: { module: 'Search', action: 'Autocomplete' },
 						term: request.term
 					},
 					success: function(data, textStatus)
@@ -528,7 +528,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'save' },
+						fork: { module: 'Search', action: 'Save' },
 						term: $(this).val()
 					}
 				});
@@ -556,7 +556,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'autosuggest' },
+						fork: { module: 'Search', action: 'Autosuggest' },
 						term: request.term,
 						length: length
 					},
@@ -593,7 +593,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'save' },
+						fork: { module: 'Search', action: 'Save' },
 						term: $(this).val()
 					}
 				});
@@ -637,7 +637,7 @@ jsFrontend.search =
 				{
 					data:
 					{
-						fork: { module: 'search', action: 'livesuggest' },
+						fork: { module: 'Search', action: 'Livesuggest' },
 						term: $(this).val()
 					},
 					success: function(data, textStatus)

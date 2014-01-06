@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
 
@@ -21,7 +22,7 @@ use Symfony\Component\Finder\Finder;
  * @author Dave Lens <dave.lens@wijs.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class FrontendAJAX extends KernelLoader implements ApplicationInterface
+class Ajax extends \KernelLoader implements \ApplicationInterface
 {
     /**
      * The action
@@ -31,7 +32,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
     private $action;
 
     /**
-     * @var FrontendAJAXAction
+     * @var AjaxAction
      */
     private $ajaxAction;
 
@@ -92,13 +93,13 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
             $this->setAction($action);
             $this->setLanguage($language);
 
-            $this->ajaxAction = new FrontendAJAXAction($this->getKernel(), $this->getAction(), $this->getModule());
+            $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
             $this->output = $this->ajaxAction->execute();
         } catch (Exception $e) {
-            if (BackendModel::getContainer()->getParameter('kernel.debug')) {
+            if (Model::getContainer()->getParameter('kernel.debug')) {
                 $message = $e->getMessage();
             } else {
-                $message = BackendModel::getContainer()->getParameter('fork.debug_message');
+                $message = Model::getContainer()->getParameter('fork.debug_message');
             }
 
             $this->ajaxAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
@@ -136,21 +137,21 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
     {
         // check if module is set
         if ($this->getModule() === null) {
-            throw new BackendException('Module has not yet been set.');
+            throw new Exception('Module has not yet been set.');
         }
 
         // grab the file
         $finder = new Finder();
         $finder->name($value . '.php');
         if ($this->getModule() == 'core') {
-            $finder->in(FRONTEND_PATH . '/core/ajax/');
+            $finder->in(FRONTEND_PATH . '/Core/Ajax/');
         } else {
-            $finder->in(FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/');
+            $finder->in(FRONTEND_PATH . '/Modules/' . $this->getModule() . '/Ajax/');
         }
 
         // validate
         if (count($finder->files()) != 1) {
-            $fakeAction = new FrontendBaseAJAXAction('', '');
+            $fakeAction = new FrontendBaseAJAXAction($this->getKernel(), '', '');
             $fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Action not correct.');
         }
 
@@ -166,7 +167,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
     public function setLanguage($value)
     {
         // get the possible languages
-        $possibleLanguages = FrontendLanguage::getActiveLanguages();
+        $possibleLanguages = Language::getActiveLanguages();
 
         // validate
         if (!in_array($value, $possibleLanguages)) {
@@ -177,7 +178,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
                 );
             } else {
                 // multiple languages available but none selected
-                throw new BackendException('Language invalid.');
+                throw new Exception('Language invalid.');
             }
         } else {
             // language is valid: set property
@@ -188,7 +189,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
         define('FRONTEND_LANGUAGE', $this->language);
 
         // set the locale (we need this for the labels)
-        FrontendLanguage::setLocale($this->language);
+        Language::setLocale($this->language);
     }
 
     /**
@@ -199,7 +200,7 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
     public function setModule($value)
     {
         // get the possible modules
-        $possibleModules = FrontendModel::getModules();
+        $possibleModules = Model::getModules();
 
         // validate
         if (!in_array($value, $possibleModules)) {
@@ -212,188 +213,5 @@ class FrontendAJAX extends KernelLoader implements ApplicationInterface
 
         // set property
         $this->module = (string) $value;
-    }
-}
-
-/**
- * FrontendAJAXAction
- *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Davy Hellemans <davy.hellemans@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
- */
-class FrontendAJAXAction extends FrontendBaseAJAXAction
-{
-    /**
-     * The current action
-     *
-     * @var    string
-     */
-    protected $action;
-
-    /**
-     * The config file
-     *
-     * @var    FrontendBaseConfig
-     */
-    protected $config;
-
-    /**
-     * The current module
-     *
-     * @var    string
-     */
-    protected $module;
-
-    /**
-     * @param KernelInterface $kernel
-     * @param string          $action The action that should be executed.
-     * @param string          $module The module that wherein the action is available.
-     */
-    public function __construct(KernelInterface $kernel, $action, $module)
-    {
-        parent::__construct($kernel, $action, $module);
-
-        // set properties
-        $this->setModule($module);
-        $this->setAction($action);
-
-        // load the config file for the required module
-        $this->loadConfig();
-    }
-
-    /**
-     * Execute the action.
-     * We will build the class name, require the class and call the execute method
-     */
-    public function execute()
-    {
-        // build action-class-name
-        $actionClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_ajax_' . $this->getAction());
-
-        // build the path (core is a special case)
-        if ($this->getModule() == 'core') {
-            $path = FRONTEND_PATH . '/core/ajax/' . $this->getAction() . '.php';
-        } else {
-            $path = FRONTEND_PATH . '/modules/' . $this->getModule() . '/ajax/' . $this->getAction() . '.php';
-        }
-
-        // check if the config is present? If it isn't present there is a huge
-        // problem, so we will stop our code by throwing an error
-        if (!is_file($path)) {
-            throw new FrontendException('The action file (' . $path . ') can\'t be found.');
-        }
-
-        // require the ajax file, we know it is there because we validated it
-        // before (possible actions are defined by existance of the file).
-        require_once $path;
-
-        // validate if class exists
-        if (!class_exists($actionClassName)) {
-            throw new FrontendException(
-                'The action file is present, but the class name should be: ' . $actionClassName . '.'
-            );
-        }
-
-        // create action-object
-        $object = new $actionClassName($this->getKernel(), $this->getAction(), $this->getModule());
-
-        // validate if the execute-method is callable
-        if (!is_callable(
-            array($object, 'execute')
-        )
-        ) {
-            throw new FrontendException('The action file should contain a callable method "execute".');
-        }
-
-        // call the execute method of the real action (defined in the module)
-        $object->execute();
-
-        return $object->getContent();
-    }
-
-    /**
-     * Get the current action.
-     * REMARK: You should not use this method from your code, but it has to be
-     * public so we can access it later on in the core-code.
-     *
-     * @return string
-     */
-    public function getAction()
-    {
-        return $this->action;
-    }
-
-    /**
-     * Get the current module.
-     * REMARK: You should not use this method from your code, but it has to be
-     * public so we can access it later on in the core-code.
-     *
-     * @return string
-     */
-    public function getModule()
-    {
-        return $this->module;
-    }
-
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions.
-     * Other configurations will also be stored in it.
-     */
-    public function loadConfig()
-    {
-        // build path for core
-        if ($this->getModule() == 'core') {
-            $frontendModulePath = FRONTEND_PATH . '/' . $this->getModule();
-        } else {
-            // build path to the module and define it. This is a constant because we can use this in templates.
-            $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
-        }
-
-        // check if the config is present? If it isn't present there is a huge
-        // problem, so we will stop our code by throwing an error
-        if (!is_file($frontendModulePath . '/config.php')) {
-            throw new FrontendException(
-                'The config file for the module (' . $this->getModule() . ') can\'t be found.'
-            );
-        }
-
-        // build config-object-name
-        $configClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_config');
-
-        // require the config file, we validated before for existence.
-        require_once $frontendModulePath . '/config.php';
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClassName)) {
-            throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClassName . '.'
-            );
-        }
-
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClassName($this->getKernel(), $this->getModule());
-    }
-
-    /**
-     * Set the action
-     *
-     * @param string $action The action that should be executed.
-     */
-    protected function setAction($action)
-    {
-        $this->action = (string) $action;
-    }
-
-    /**
-     * Set the module
-     *
-     * @param string $module The module wherein the action is available.
-     */
-    protected function setModule($module)
-    {
-        $this->module = (string) $module;
     }
 }

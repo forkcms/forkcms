@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Search\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,11 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -15,7 +22,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
+class Autosuggest extends FrontendBaseAJAXAction
 {
     /**
      * Name of the cache file
@@ -80,7 +87,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('search', 'autosuggest_num_items', 10);
+        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -157,8 +164,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
+        $this->pagination['limit'] = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
 
         // populate calculated fields in pagination
         $this->pagination['requested_page'] = $this->requestedPage;
@@ -214,7 +221,7 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
             $this->items[] = array(
                 'title' => FL::lbl('More'),
                 'text' => FL::msg('MoreResults'),
-                'full_url' => FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term
+                'full_url' => FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term
             );
         }
 
@@ -234,11 +241,11 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
     private function validateForm()
     {
         // set values
-        $searchTerm = SpoonFilter::getPostValue('term', null, '');
-        $this->term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars(
+        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $this->term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
-        ) : SpoonFilter::htmlentities($searchTerm);
-        $this->length = (int) SpoonFilter::getPostValue('length', null, 50);
+        ) : \SpoonFilter::htmlentities($searchTerm);
+        $this->length = (int) \SpoonFilter::getPostValue('length', null, 50);
 
         // validate
         if ($this->term == '') {

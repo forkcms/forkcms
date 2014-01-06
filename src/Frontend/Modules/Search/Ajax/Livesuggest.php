@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Modules\Search\Ajax;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,6 +9,13 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -15,7 +24,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
+class Livesuggest extends FrontendBaseAJAXAction
 {
     /**
      * Name of the cache file
@@ -80,7 +89,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -98,7 +107,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
         // output
         $this->output(
             self::OK,
-            $this->tpl->getContent(FRONTEND_PATH . '/modules/search/layout/templates/results.tpl', false, true)
+            $this->tpl->getContent(FRONTEND_PATH . '/Modules/Search/Layout/Templates/Results.tpl', false, true)
         );
     }
 
@@ -165,7 +174,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -407,10 +416,10 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
     private function validateForm()
     {
         // set search term
-        $searchTerm = SpoonFilter::getPostValue('term', null, '');
-        $this->term = (SPOON_CHARSET == 'utf-8') ? SpoonFilter::htmlspecialchars(
+        $searchTerm = \SpoonFilter::getPostValue('term', null, '');
+        $this->term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
-        ) : SpoonFilter::htmlentities($searchTerm);
+        ) : \SpoonFilter::htmlentities($searchTerm);
 
         // validate
         if ($this->term == '') {

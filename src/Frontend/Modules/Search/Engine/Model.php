@@ -9,6 +9,8 @@ namespace Frontend\Modules\Search\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+
 /**
  * In this file we store all generic functions that we will be using in the search module
  *
@@ -401,7 +403,7 @@ class Model
     public static function search($term, $limit = 20, $offset = 0)
     {
         // revalidate searches
-        if (FrontendModel::getModuleSetting('search', 'validate_search', true) == true) {
+        if (FrontendModel::getModuleSetting('Search', 'validate_search', true) == true) {
             self::validateSearch();
         }
         // @note: on heavy sites with a lot of inactive search indices better
@@ -429,22 +431,11 @@ class Model
         // pass the results to the modules
         foreach ($moduleResults as $module => $otherIds) {
             // check if this module actually is prepared to handle searches
-            // (well it should, because else there shouldn't be any search indices)
-            if (is_callable(
-                array(
-                     'Frontend' . SpoonFilter::toCamelCase($module) . 'Model',
-                     'search'
-                )
-            )
-            ) {
+            $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+            if (is_callable(array($class, 'search'))) {
                 // get the required info from our module
                 $moduleResults[$module] = call_user_func(
-                    array(
-                         'Frontend' . SpoonFilter::toCamelCase(
-                             $module
-                         ) . 'Model',
-                         'search'
-                    ),
+                    array($class, 'search'),
                     $otherIds
                 );
             } else {
@@ -545,21 +536,10 @@ class Model
             // pass the results to the modules
             foreach ($moduleResults as $module => $otherIds) {
                 // check if this module actually is prepared to handle searches
-                // (well it should, because else there shouldn't be any search indices)
-                if (is_callable(
-                    array(
-                         'Frontend' . SpoonFilter::ucfirst($module) . 'Model',
-                         'search'
-                    )
-                )
-                ) {
+                $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+                if (is_callable(array($class, 'search'))) {
                     $moduleResults[$module] = call_user_func(
-                        array(
-                             'Frontend' . SpoonFilter::ucfirst(
-                                 $module
-                             ) . 'Model',
-                             'search'
-                        ),
+                        array($class, 'search'),
                         $otherIds
                     );
 
