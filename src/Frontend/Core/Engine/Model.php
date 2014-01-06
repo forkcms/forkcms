@@ -860,9 +860,9 @@ class Model extends \BaseModel
     {
         $fs = new Filesystem();
         // is the queue already running?
-        if ($fs->exists(FRONTEND_CACHE_PATH . '/hooks/pid')) {
+        if ($fs->exists(FRONTEND_CACHE_PATH . '/Hooks/pid')) {
             // get the pid
-            $pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/hooks/pid'));
+            $pid = trim(file_get_contents(FRONTEND_CACHE_PATH . '/Hooks/pid'));
 
             // running on windows?
             if (strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
@@ -872,7 +872,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(FRONTEND_CACHE_PATH . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -885,7 +885,7 @@ class Model extends \BaseModel
                 // validate output
                 if ($output === false) {
                     // delete the pid file
-                    $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(FRONTEND_CACHE_PATH . '/Hooks/pid');
                 } else {
                     // already running
                     return true;
@@ -895,7 +895,7 @@ class Model extends \BaseModel
                 // check if the process is still running, by checking the proc folder
                 if (!$fs->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(FRONTEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(FRONTEND_CACHE_PATH . '/Hooks/pid');
                 } else {
                     // already running
                     return true;

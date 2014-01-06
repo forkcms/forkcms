@@ -215,14 +215,14 @@ class Model
         foreach($finder->files()
                     ->name('*.php')
                     ->name('*.js')
-                    ->in(BACKEND_CACHE_PATH . '/locale')
-                    ->in(FRONTEND_CACHE_PATH . '/navigation')
-                    ->in(FRONTEND_CACHE_PATH . '/locale')
+                    ->in(BACKEND_CACHE_PATH . '/Locale')
+                    ->in(FRONTEND_CACHE_PATH . '/Navigation')
+                    ->in(FRONTEND_CACHE_PATH . '/Locale')
                 as $file
         ) {
             $fs->remove($file->getRealPath());
         }
-        $fs->remove(BACKEND_CACHE_PATH . '/navigation/navigation.php');
+        $fs->remove(BACKEND_CACHE_PATH . '/Navigation/navigation.php');
     }
 
     /**
@@ -760,11 +760,10 @@ class Model
     public static function installModule($module, array $warnings = array())
     {
         // we need the installer
-        require_once BACKEND_CORE_PATH . '/installer/installer.php';
-        require_once BACKEND_MODULES_PATH . '/' . $module . '/installer/installer.php';
+        require_once BACKEND_MODULES_PATH . '/' . $module . '/Installer/Installer.php';
 
         // installer class name
-        $class = \SpoonFilter::toCamelCase($module) . 'Installer';
+        $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
 
         // possible variables available for the module installers
         $variables = array();
@@ -803,7 +802,7 @@ class Model
     public static function installTheme($theme)
     {
         // set path to info.xml
-        $pathInfoXml = FRONTEND_PATH . '/themes/' . $theme . '/info.xml';
+        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
 
         // load info.xml
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);

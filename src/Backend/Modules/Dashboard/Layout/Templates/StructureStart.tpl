@@ -3,7 +3,7 @@
 	<table id="encloser">
 		<tr>
 			<td>
-				{include:{$BACKEND_CORE_PATH}/layout/templates/header.tpl}
+				{include:{$BACKEND_CORE_PATH}/Layout/Templates/Header.tpl}
 			</td>
 		</tr>
 		<tr>

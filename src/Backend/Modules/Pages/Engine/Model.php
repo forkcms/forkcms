@@ -633,7 +633,7 @@ class Model
         $navigation = array();
 
         // require
-        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
 
         // check if item exists
         if (isset($navigation[$type][$depth][$parentId])) {
@@ -1264,7 +1264,7 @@ class Model
     {
         // check if the cached file exists, if not we generated it
         if (!is_file(
-            FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php'
+            FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
         )
         ) {
             self::buildCache(BL::getWorkingLanguage());
@@ -1274,7 +1274,7 @@ class Model
         $navigation = array();
 
         // require the file
-        require_once FRONTEND_CACHE_PATH . '/navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
 
         // start HTML
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";

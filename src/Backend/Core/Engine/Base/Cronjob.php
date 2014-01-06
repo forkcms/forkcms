@@ -37,7 +37,7 @@ class Cronjob extends Object
     protected function clearBusyFile()
     {
         // build path
-        $path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
+        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
 
         // remove the file
         $fs = new Filesystem();
@@ -75,8 +75,8 @@ class Cronjob extends Object
         if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
 
         // path to look for actions based on the module
-        if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
-        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
+        if($this->getModule() == 'Core') $path = BACKEND_CORE_PATH . '/Cronjobs';
+        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Cronjobs';
 
         // check if file exists
         if(!is_file($path . '/' . $action . '.php')) {
@@ -98,7 +98,7 @@ class Cronjob extends Object
 
         // build path
         $fs = new Filesystem();
-        $path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
+        $path = BACKEND_CACHE_PATH . '/Cronjobs/' . $this->getId() . '.busy';
 
         // init var
         $isBusy = false;

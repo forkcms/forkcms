@@ -48,14 +48,14 @@ class Navigation extends \Backend\Core\Engine\Base\Object
         $this->URL = $this->getContainer()->get('url');
 
         // check if navigation cache file exists
-        if(!is_file(BACKEND_CACHE_PATH . '/navigation/navigation.php')) {
+        if(!is_file(BACKEND_CACHE_PATH . '/Navigation/navigation.php')) {
             $this->buildCache();
         }
 
         $navigation = array();
 
         // require navigation-file
-        require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
+        require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
         // load it
         $this->navigation = (array) $navigation;
@@ -100,7 +100,7 @@ class Navigation extends \Backend\Core\Engine\Base\Object
         // store
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/navigation/navigation.php',
+            BACKEND_CACHE_PATH . '/Navigation/navigation.php',
             $value
         );
     }

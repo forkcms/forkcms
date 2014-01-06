@@ -64,7 +64,7 @@ class GetData extends BackendBaseCronjob
     public function execute()
     {
         parent::execute();
-        $this->cachePath = BACKEND_CACHE_PATH . '/analytics';
+        $this->cachePath = BACKEND_CACHE_PATH . '/Analytics';
 
         // get parameters
         $page = trim(\SpoonFilter::getGetValue('page', null, ''));

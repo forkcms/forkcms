@@ -68,9 +68,9 @@ class FrontendJavascript
 
         // fetch the template path
         if ($this->module == 'core') {
-            $file = FRONTEND_CORE_PATH . '/js/' . $this->getFile();
+            $file = FRONTEND_CORE_PATH . '/Js/' . $this->getFile();
         } else {
-            $file = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
+            $file = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Js/' . $this->getFile();
         }
 
         // output the template
@@ -137,18 +137,18 @@ class FrontendJavascript
         // core is a special module
         if ($this->module == 'core') {
             // build path
-            $path = realpath(FRONTEND_CORE_PATH . '/js/' . $this->filename);
+            $path = realpath(FRONTEND_CORE_PATH . '/Js/' . $this->filename);
 
             // validate if path is allowed
-            if (substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH . '/js/'))) != realpath(FRONTEND_CORE_PATH . '/js/')) {
+            if (substr($path, 0, strlen(realpath(FRONTEND_CORE_PATH . '/Js/'))) != realpath(FRONTEND_CORE_PATH . '/js/')) {
                 $valid = false;
             }
         } else {
             // build path
-            $path = realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename);
+            $path = realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Js/' . $this->filename);
 
             // validate if path is allowed
-            if (substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/'))) != realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/')) {
+            if (substr($path, 0, strlen(realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Js/'))) != realpath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/')) {
                 $valid = false;
             }
         }

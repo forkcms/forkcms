@@ -39,7 +39,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
         // store PID
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/hooks/pid',
+            BACKEND_CACHE_PATH . '/Hooks/pid',
             $pid
         );
 
@@ -116,7 +116,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
             // stop it
             else {
                 $fs = new Filesystem();
-                $fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+                $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
 
                 // stop the script
                 exit;

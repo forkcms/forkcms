@@ -237,9 +237,9 @@ class Model
         $filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
         // file exists
-        if(is_file(BACKEND_CACHE_PATH . '/analytics/' . $filename)) {
+        if(is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
             // get the xml (cast is important otherwise we cant use array_walk_recursive)
-            $xml = simplexml_load_file(BACKEND_CACHE_PATH . '/analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
 
             // parse xml to array
             return self::parseXMLToArray($xml);
@@ -473,10 +473,10 @@ class Model
         $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         // there is no cache file
-        if(!is_file(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
+        if(!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) return array();
 
         // read the cache file
-        $cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
+        $cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js');
 
         // get the array
         preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
@@ -1162,7 +1162,7 @@ class Model
         // store
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
+            BACKEND_CACHE_PATH . '/Analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
             $xml
         );
     }

@@ -666,7 +666,7 @@ class Model extends \BaseModel
         // does the keys exists in the cache?
         if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
             // validate file
-            if(!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) {
+            if(!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
                 // regenerate cache
                 BackendPagesModel::buildCache($language);
             }
@@ -675,7 +675,7 @@ class Model extends \BaseModel
             $navigation = array();
 
             // require file
-            require FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php';
+            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
 
             // store
             self::$navigation[$language] = $navigation;
@@ -988,7 +988,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : null;
 
         // get cache path
-        $path = FRONTEND_CACHE_PATH . '/cached_templates';
+        $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
 
         if(is_dir($path)) {
             // build regular expression
@@ -1169,9 +1169,9 @@ class Model extends \BaseModel
         $fs = new Filesystem();
 
         // is the queue already running?
-        if($fs->exists(BACKEND_CACHE_PATH . '/hooks/pid')) {
+        if($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
             // get the pid
-            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/hooks/pid'));
+            $pid = trim(file_get_contents(BACKEND_CACHE_PATH . '/Hooks/pid'));
 
             // running on windows?
             if(strtolower(substr(php_uname('s'), 0, 3)) == 'win') {
@@ -1181,7 +1181,7 @@ class Model extends \BaseModel
                 // validate output
                 if($output == '' || $output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
                 }
 
                 // already running
@@ -1196,7 +1196,7 @@ class Model extends \BaseModel
                 // validate output
                 if($output === false) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
                 }
 
                 // already running
@@ -1208,7 +1208,7 @@ class Model extends \BaseModel
                 // check if the process is still running, by checking the proc folder
                 if(!$fs->exists('/proc/' . $pid)) {
                     // delete the pid file
-                    $fs->remove(BACKEND_CACHE_PATH . '/hooks/pid');
+                    $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
                 }
 
                 // already running
@@ -1227,7 +1227,7 @@ class Model extends \BaseModel
         $socket = fsockopen($parts['host'], (isset($parts['port'])) ? $parts['port'] : $defaultPort, $errNo, $errStr, 1);
 
         // build the request
-        $request = 'GET /Backend/Cronjob.php?module=core&action=process_queued_hooks HTTP/1.1' . "\r\n";
+        $request = 'GET /src/Backend/Cronjob.php?module=Core&action=ProcessQueuedHooks HTTP/1.1' . "\r\n";
         $request .= 'Host: ' . $parts['host'] . "\r\n";
         $request .= 'Content-Length: 0' . "\r\n\r\n";
         $request .= 'Connection: Close' . "\r\n\r\n";

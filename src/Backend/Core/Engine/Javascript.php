@@ -53,8 +53,8 @@ class Javascript
         $this->setLanguage(\SpoonFilter::getGetValue('language', array_keys(Language::getWorkingLanguages()), SITE_DEFAULT_LANGUAGE));
 
         // build the path
-        if($this->module == 'core') $path = BACKEND_CORE_PATH . '/js/' . $this->getFile();
-        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile();
+        if($this->module == 'Core') $path = BACKEND_CORE_PATH . '/Js/' . $this->getFile();
+        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Js/' . $this->getFile();
 
         // set correct headers
         \SpoonHTTP::setHeaders('content-type: application/javascript');

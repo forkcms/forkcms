@@ -241,7 +241,7 @@ class Navigation extends FrontendBaseObject
         // do the keys exists in the cache?
         if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
             // validate file @later: the file should be regenerated
-            if (!is_file(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) {
+            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
                 throw new Exception('No navigation-file (navigation_' . $language . '.php) found.');
             }
 
@@ -249,7 +249,7 @@ class Navigation extends FrontendBaseObject
             $navigation = array();
 
             // require file
-            require FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php';
+            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
 
             // store
             self::$navigation[$language] = $navigation;

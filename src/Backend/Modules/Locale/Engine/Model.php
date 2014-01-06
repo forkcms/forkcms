@@ -106,7 +106,7 @@ class Model
 
         $fs = new Filesystem();
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.php',
             $value
         );
 
@@ -125,7 +125,7 @@ class Model
         foreach($daysShort as $key => $value) $json['loc']['DayShort' . \SpoonFilter::ucfirst($key)] = $value;
 
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.json',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
             json_encode($json)
         );
     }
