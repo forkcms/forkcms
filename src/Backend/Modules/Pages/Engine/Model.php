@@ -16,6 +16,7 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Frontend\Core\Engine\Language as FrontendLanguage;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -101,7 +102,7 @@ class Model
         $sitemapID = null;
 
         foreach ($widgets as $id => $row) {
-            if ($row['action'] == 'sitemap') {
+            if ($row['action'] == 'Sitemap') {
                 $sitemapID = $id;
                 break;
             }
