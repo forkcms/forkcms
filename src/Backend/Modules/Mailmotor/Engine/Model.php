@@ -107,7 +107,7 @@ class Model
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('AnalysisNoCMAccount', 'Mailmotor'),
-                        BackendModel::createURLForAction('settings', 'Mailmotor')
+                        BackendModel::createURLForAction('Settings', 'Mailmotor')
                     )
                 );
             } elseif (BackendModel::getModuleSetting('Mailmotor', 'cm_client_id') == '') {
@@ -115,7 +115,7 @@ class Model
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('AnalysisNoCMClientID', 'Mailmotor'),
-                        BackendModel::createURLForAction('settings', 'Mailmtor')
+                        BackendModel::createURLForAction('Settings', 'Mailmtor')
                     )
                 );
             }

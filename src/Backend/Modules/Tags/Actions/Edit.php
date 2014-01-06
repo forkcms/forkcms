@@ -48,7 +48,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -166,7 +166,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
                         $item['tag']
                     ) . '&highlight=row-' . $item['id']
                 );

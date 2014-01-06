@@ -103,7 +103,7 @@ class ExportData extends BackendBaseAction
         }
 
         // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**

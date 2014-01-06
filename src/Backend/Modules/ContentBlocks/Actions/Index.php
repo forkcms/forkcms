@@ -48,14 +48,14 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('title'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

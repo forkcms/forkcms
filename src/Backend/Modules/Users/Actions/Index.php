@@ -44,13 +44,13 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // add column
             $this->dataGrid->addColumn(
                 'nickname',
                 \SpoonFilter::ucfirst(BL::lbl('Nickname')),
                 null,
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
 
@@ -59,7 +59,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]'
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
         }
 

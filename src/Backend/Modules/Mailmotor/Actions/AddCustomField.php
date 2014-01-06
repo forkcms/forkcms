@@ -56,7 +56,7 @@ class AddCustomField extends BackendBaseActionAdd
 
         // group doesn't exist
         if (empty($this->group)) {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
     }
 

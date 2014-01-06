@@ -327,7 +327,7 @@ class Index extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             // set colum URLs
-            $this->dgUnsentMailings->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+            $this->dgUnsentMailings->setColumnURL('name', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
 
             // add edit column
             $this->dgUnsentMailings->addColumn(
@@ -412,6 +412,6 @@ class Index extends BackendBaseActionIndex
      */
     public static function setCampaignLink($id, $name)
     {
-        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
+        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('Index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
     }
 }

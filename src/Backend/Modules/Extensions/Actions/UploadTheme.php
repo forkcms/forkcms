@@ -157,13 +157,13 @@ class UploadTheme extends BackendBaseActionAdd
             // passed all validation
             if($this->frm->isCorrect()) {
                 // unpack module files
-                $zip->extractTo(FRONTEND_PATH . '/themes', $files);
+                $zip->extractTo(FRONTEND_PATH . '/Themes', $files);
 
                 // run installer
                 BackendExtensionsModel::installTheme($themeName);
 
                 // redirect with fireworks
-                $this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $themeName);
+                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $themeName);
             }
         }
     }

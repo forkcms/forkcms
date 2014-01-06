@@ -39,7 +39,7 @@ class Index extends BackendBaseActionIndex
     {
         // check if the user is really logged on
         if(BackendAuthentication::getUser()->isAuthenticated()) {
-            $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard')));
+            $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'Dashboard')));
         }
 
         parent::execute();
@@ -223,10 +223,10 @@ class Index extends BackendBaseActionIndex
                 $user->setSetting('reset_password_timestamp', time());
 
                 // variables to parse in the e-mail
-                $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password') . '&email=' . $email . '&key=' . $key;
+                $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('ResetPassword') . '&email=' . $email . '&key=' . $key;
 
                 // send e-mail to user
-                BackendMailer::addEmail(\SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH . '/layout/templates/mails/reset_password.tpl', $variables, $email);
+                BackendMailer::addEmail(\SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH . '/Layout/Templates/Mails/ResetPassword.tpl', $variables, $email);
 
                 // clear post-values
                 $_POST['backend_email_forgot'] = '';

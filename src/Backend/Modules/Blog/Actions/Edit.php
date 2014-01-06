@@ -83,7 +83,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -123,7 +123,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -163,17 +163,17 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add use column
             $this->dgDrafts->addColumn(
                 'use_draft', null, BL::lbl('UseThisDraft'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('UseThisDraft')
             );
         }
@@ -257,17 +257,17 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]'
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]'
             );
 
             // add use column
             $this->dgRevisions->addColumn(
                 'use_revision', null, BL::lbl('UseThisVersion'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
         }
@@ -442,7 +442,7 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // build URL
-                    $redirectUrl = BackendModel::createURLForAction('index') .
+                    $redirectUrl = BackendModel::createURLForAction('Index') .
                                    '&report=edited&var=' . urlencode($item['title']) .
                                    '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
                 }
@@ -450,7 +450,7 @@ class Edit extends BackendBaseActionEdit
                 // draft
                 elseif($item['status'] == 'draft') {
                     // everything is saved, so redirect to the edit action
-                    $redirectUrl = BackendModel::createURLForAction('edit') .
+                    $redirectUrl = BackendModel::createURLForAction('Edit') .
                                    '&report=saved-as-draft&var=' . urlencode($item['title']) .
                                    '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
                                    '&highlight=row-' . $item['revision_id'];

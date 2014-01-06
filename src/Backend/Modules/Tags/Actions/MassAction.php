@@ -33,7 +33,7 @@ class MassAction extends BackendBaseAction
         // no id's provided
         if (!isset($_GET['id'])) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=no-selection'
+                BackendModel::createURLForAction('Index') . '&error=no-selection'
             );
         } else {
             // at least one id
@@ -48,7 +48,7 @@ class MassAction extends BackendBaseAction
 
         // redirect
         $this->redirect(
-            BackendModel::createURLForAction('index') . '&report=deleted'
+            BackendModel::createURLForAction('Index') . '&report=deleted'
         );
     }
 }

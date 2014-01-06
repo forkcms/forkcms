@@ -107,11 +107,11 @@ class Index extends BackendBaseActionIndex
         );
 
         // check if allowed to edit
-        if (BackendAuthentication::isAllowedAction('edit', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]'
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]'
             );
 
             // add edit column
@@ -119,7 +119,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('Edit')
             );
         }
@@ -163,11 +163,11 @@ class Index extends BackendBaseActionIndex
         );
 
         // check if allowed to edit
-        if (BackendAuthentication::isAllowedAction('edit', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('Edit', $this->getModule())) {
             // set column URL
             $this->dgRecentlyEdited->setColumnUrl(
                 'title',
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
 
@@ -176,7 +176,7 @@ class Index extends BackendBaseActionIndex
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

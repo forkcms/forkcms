@@ -41,7 +41,7 @@ class Delete extends BackendBaseActionDelete
             // cannot have children
             if (BackendPagesModel::getFirstChildId($this->id) !== false) {
                 $this->redirect(
-                    BackendModel::createURLForAction('edit') . '&error=non-existing'
+                    BackendModel::createURLForAction('Edit') . '&error=non-existing'
                 );
             }
 
@@ -72,14 +72,14 @@ class Delete extends BackendBaseActionDelete
             if ($success) {
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'index'
+                        'Index'
                     ) . '&id=' . $page['parent_id'] . '&report=deleted&var=' . urlencode($page['title'])
                 );
             } else {
-                $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
+                $this->redirect(BackendModel::createURLForAction('Edit') . '&error=non-existing');
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('edit') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Edit') . '&error=non-existing');
         }
     }
 }

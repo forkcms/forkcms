@@ -493,7 +493,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step1', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=2');
+                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&step=2');
             }
         }
     }
@@ -533,7 +533,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_mailing_step2', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&step=3');
+                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&step=3');
             }
         }
     }
@@ -570,7 +570,7 @@ class Edit extends BackendBaseActionEdit
                 BackendMailmotorCMHelper::sendPreviewMailing($this->id, $txtEmail->getValue());
 
                 // build URL
-                $url = BackendModel::createURLForAction('edit') . '&id=' . $this->id . '&step=4';
+                $url = BackendModel::createURLForAction('Edit') . '&id=' . $this->id . '&step=4';
 
                 // send the preview
                 $this->redirect($url . '&report=preview-sent&var=' . $txtEmail->getValue());

@@ -81,7 +81,7 @@ class MassAddressAction extends BackendBaseAction
         // redirect
         $this->redirect(
             BackendModel::createURLForAction(
-                'addresses'
+                'Addresses'
             ) . '&report=delete-addresses' . (!empty($this->groupId) ? '&group_id=' . $this->groupId : '')
         );
     }

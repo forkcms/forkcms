@@ -781,9 +781,9 @@ class Helper
         // we only allow live data fetching when the end date is today, no point in fetching and older range because it will never change
         if($endTimestamp == mktime(0, 0, 0, date('n'), date('j'), date('Y'))) {
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('loading', 'analytics')) {
+            if(BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
                 // url of current action
-                $liveDataUrl = BackendModel::createURLForAction('loading') . '&amp;redirect_action=' . BackendModel::getContainer()->get('url')->getAction();
+                $liveDataUrl = BackendModel::createURLForAction('Loading') . '&amp;redirect_action=' . BackendModel::getContainer()->get('url')->getAction();
 
                 // page id set
                 if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id=' . (int) $_GET['page_id'];

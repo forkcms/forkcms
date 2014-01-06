@@ -67,7 +67,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -80,7 +80,7 @@ class Edit extends BackendBaseActionEdit
         $this->user = new BackendUser($this->id);
         $this->authenticatedUser = BackendAuthentication::getUser();
         $this->allowUserRights = (
-            (BackendAuthentication::isAllowedAction('index') ||
+            (BackendAuthentication::isAllowedAction('Index') ||
              $this->authenticatedUser->getUserId() != $this->id) ||
             $this->authenticatedUser->isGod()
         );
@@ -89,7 +89,7 @@ class Edit extends BackendBaseActionEdit
         if (!$this->authenticatedUser->isGod() &&
             ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('index'))
         ) {
-            $this->redirect(BackendModel::createURLForAction('error') . '&type=not-allowed');
+            $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
         }
 
         // create form
@@ -426,18 +426,18 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $user));
 
                 // can only edit own profile
-                if (!BackendAuthentication::isAllowedAction('index')) {
+                if (!BackendAuthentication::isAllowedAction('Index')) {
                     // everything is saved, so redirect to the edit page
                     $this->redirect(
                         BackendModel::createURLForAction(
-                            'edit'
+                            'Edit'
                         ) . '&id=' . $this->id . '&report=edited&var=' . $settings['nickname']
                     );
                 } else {
                     // everything is saved, so redirect to the overview
                     $this->redirect(
                         BackendModel::createURLForAction(
-                            'index'
+                            'Index'
                         ) . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']
                     );
                 }

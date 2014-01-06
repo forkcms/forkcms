@@ -468,7 +468,7 @@ class Model
             'language' => $values['language'],
             'extra_label' => $values['name'],
             'id' => $insertId,
-            'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $insertId
+            'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
         ));
         $extra['hidden'] = 'N';
         $extra['sequence'] = '400' . $insertId;

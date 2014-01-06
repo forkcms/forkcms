@@ -70,11 +70,11 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setRowAttributes(array('id' => '[id]'));
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('edit')) {
-                $dataGrid->setColumnURL('question', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+            if(BackendAuthentication::isAllowedAction('Edit')) {
+                $dataGrid->setColumnURL('question', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
                 $dataGrid->addColumn(
                     'edit', null, BL::lbl('Edit'),
-                    BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+                    BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                     BL::lbl('Edit')
                 );
             }

@@ -66,7 +66,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // this translation doesn't exist
-            else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing' . $this->filterQuery);
+            else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing' . $this->filterQuery);
         }
 
         // not copying
@@ -173,7 +173,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, null) . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
             }
         }
     }

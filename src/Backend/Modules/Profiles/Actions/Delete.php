@@ -46,7 +46,7 @@ class Delete extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=profile-undeleted&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=profile-undeleted&var=' . urlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $profile['id']
                 );
@@ -59,13 +59,13 @@ class Delete extends BackendBaseActionDelete
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=profile-deleted&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=profile-deleted&var=' . urlencode(
                         $profile['email']
                     ) . '&highlight=row-' . $profile['id']
                 );
             }
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 }

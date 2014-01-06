@@ -47,7 +47,7 @@ class EditGroup extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Groups') . '&error=non-existing');
         }
     }
 
@@ -115,7 +115,7 @@ class EditGroup extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('groups') . '&report=group-saved&var=' . urlencode(
+                    BackendModel::createURLForAction('Groups') . '&report=group-saved&var=' . urlencode(
                         $values['name']
                     ) . '&highlight=row-' . $this->id
                 );

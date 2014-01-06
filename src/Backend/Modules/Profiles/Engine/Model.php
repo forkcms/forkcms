@@ -573,8 +573,8 @@ class Model
         if ($allowed) {
             $html .= '		<a href="' .
                      BackendModel::createURLForAction(
-                         'edit',
-                         'profiles'
+                         'Edit',
+                         'Profiles'
                      ) . '&amp;id=' . $id . '">' . "\n";
         }
         $html .= '			<img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
@@ -584,8 +584,8 @@ class Model
         $html .= '	</div>';
         $html .= '	<p><a href="' .
                  BackendModel::createURLForAction(
-                     'edit',
-                     'profiles'
+                     'Edit',
+                     'Profiles'
                  ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
         $html .= '</div>';
 

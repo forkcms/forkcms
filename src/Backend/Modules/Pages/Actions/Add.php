@@ -473,7 +473,7 @@ class Add extends BackendBaseActionAdd
                     // everything is saved, so redirect to the overview
                     $this->redirect(
                         BackendModel::createURLForAction(
-                            'edit'
+                            'Edit'
                         ) . '&id=' . $page['id'] . '&report=added&var=' . urlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['id']
@@ -482,7 +482,7 @@ class Add extends BackendBaseActionAdd
                     // everything is saved, so redirect to the edit action
                     $this->redirect(
                         BackendModel::createURLForAction(
-                            'edit'
+                            'Edit'
                         ) . '&id=' . $page['id'] . '&report=saved-as-draft&var=' . urlencode(
                             $page['title']
                         ) . '&highlight=row-' . $page['revision_id'] . '&draft=' . $page['revision_id']

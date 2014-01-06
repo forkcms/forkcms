@@ -46,15 +46,15 @@ class DeleteCategory extends BackendBaseActionDelete
 
                 // category was deleted, so redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('categories') . '&report=deleted-category&var=' .
+                    BackendModel::createURLForAction('Categories') . '&report=deleted-category&var=' .
                     urlencode($this->record['title'])
                 );
             } else $this->redirect(
-                BackendModel::createURLForAction('categories') . '&error=delete-category-not-allowed&var=' .
+                BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
                 urlencode($this->record['title'])
             );
         } else $this->redirect(
-            BackendModel::createURLForAction('categories') . '&error=non-existing'
+            BackendModel::createURLForAction('Categories') . '&error=non-existing'
         );
     }
 }

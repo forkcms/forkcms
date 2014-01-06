@@ -112,8 +112,8 @@ class Loading extends BackendAnalyticsBase
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('settings', $this->getModule())) {
-            $data['settingsUrl'] = BackendModel::createURLForAction('settings');
+        if(BackendAuthentication::isAllowedAction('Settings', $this->getModule())) {
+            $data['settingsUrl'] = BackendModel::createURLForAction('Settings');
         }
 
         // parse redirect link

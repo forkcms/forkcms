@@ -173,28 +173,28 @@ class Model
         $googleMapsModules = self::getModulesThatRequireGoogleMaps();
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('index', 'settings')) {
+        if(BackendAuthentication::isAllowedAction('Index', 'Settings')) {
             // check if the akismet key is available if there are modules that require it
             if(!empty($akismetModules) && BackendModel::getModuleSetting('Core', 'akismet_key', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('index', 'settings')));
+                $warnings[] = array('message' => sprintf(BL::err('AkismetKey'), BackendModel::createURLForAction('Index', 'Settings')));
             }
 
             // check if the google maps key is available if there are modules that require it
             if(!empty($googleMapsModules) && BackendModel::getModuleSetting('Core', 'google_maps_key', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('index', 'settings')));
+                $warnings[] = array('message' => sprintf(BL::err('GoogleMapsKey'), BackendModel::createURLForAction('Index', 'Settings')));
             }
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('modules', 'extensions')) {
+        if(BackendAuthentication::isAllowedAction('Modules', 'Extensions')) {
             // check if there are cronjobs that are not yet set
             $modules = self::getModules();
             foreach($modules as $module) {
                 if(isset($module['cronjobs_active']) && !$module['cronjobs_active']) {
                     // add warning
-                    $warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'Extensions'), BackendModel::createURLForAction('modules', 'extensions')));
+                    $warnings[] = array('message' => sprintf(BL::err('CronjobsNotSet', 'Extensions'), BackendModel::createURLForAction('Modules', 'Extensions')));
                     break;
                 }
             }
@@ -398,7 +398,7 @@ class Model
             if(isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) continue;
 
             // set URL if needed
-            if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
+            if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('Index', $row['module']);
 
             // build name
             $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));

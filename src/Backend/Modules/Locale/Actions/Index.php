@@ -117,20 +117,20 @@ class Index extends BackendBaseActionIndex
                 // only 1 language selected?
                 if(count($this->filter['language']) == 1) {
                     // check if this action is allowed
-                    if(BackendAuthentication::isAllowedAction('edit')) {
+                    if(BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
                             'edit', null, BL::lbl('Edit'),
-                            BackendModel::createURLForAction('edit') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
 
                     // check if this action is allowed
-                    if(BackendAuthentication::isAllowedAction('add')) {
+                    if(BackendAuthentication::isAllowedAction('Add')) {
                         // add copy button
                         $dataGrid->addColumnAction(
                             'copy', null, BL::lbl('Copy'),
-                            BackendModel::createURLForAction('add') . '&amp;id=[translation_id]' . $this->filterQuery
+                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
                 }
@@ -182,7 +182,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('noItems', $this->dgLabels->getNumResults() == 0 && $this->dgMessages->getNumResults() == 0 && $this->dgErrors->getNumResults() == 0 && $this->dgActions->getNumResults() == 0);
 
         // parse the add URL
-        $this->tpl->assign('addURL', BackendModel::createURLForAction('add', null, null, null) . $this->filterQuery);
+        $this->tpl->assign('addURL', BackendModel::createURLForAction('Add', null, null, null) . $this->filterQuery);
     }
 
     /**

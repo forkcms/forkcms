@@ -95,7 +95,7 @@ class Add extends BackendBaseActionAdd
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('edit') . '&id=' . $item['id'] .
+                    BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .
                     '&report=added&var=' . urlencode($item['title'])
                 );
             }

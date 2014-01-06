@@ -44,12 +44,12 @@ class DeleteSynonym extends BackendBaseActionDelete
 
             // item was deleted, so redirect
             $this->redirect(
-                BackendModel::createURLForAction('synonyms') . '&report=deleted-synonym&var=' . urlencode(
+                BackendModel::createURLForAction('Synonyms') . '&report=deleted-synonym&var=' . urlencode(
                     $this->record['term']
                 )
             );
         } else {
-            $this->redirect(BackendModel::createURLForAction('synonyms') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Synonyms') . '&error=non-existing');
         }
     }
 }

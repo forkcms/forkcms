@@ -45,15 +45,15 @@ class InstallTheme extends BackendBaseActionIndex
                 BackendExtensionsModel::installTheme($this->currentTheme);
 
                 // redirect to index with a success message
-                $this->redirect(BackendModel::createURLForAction('themes') . '&report=theme-installed&var=' . $this->currentTheme);
+                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->currentTheme);
             } catch(Exception $e) {
                 // redirect to index with a success message
-                $this->redirect(BackendModel::createURLForAction('themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
+                $this->redirect(BackendModel::createURLForAction('Themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
             }
         }
 
         // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('themes') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
     }
 
     /**
@@ -63,12 +63,12 @@ class InstallTheme extends BackendBaseActionIndex
     {
         // already installed
         if(BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
-            $this->redirect(BackendModel::createURLForAction('themes') . '&error=already-installed&var=' . $this->currentTheme);
+            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=already-installed&var=' . $this->currentTheme);
         }
 
         // no information file present
         if(!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
-            $this->redirect(BackendModel::createURLForAction('themes') . '&error=no-information-file&var=' . $this->currentTheme);
+            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }
 }

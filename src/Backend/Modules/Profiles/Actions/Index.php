@@ -160,16 +160,16 @@ class Index extends BackendBaseActionIndex
         $this->dgProfiles->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
-            $this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+            $this->dgProfiles->setColumnURL('email', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
 
             // add columns
             $this->dgProfiles->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[id]',
+                BackendModel::createURLForAction('Edit', null, null, null) . '&amp;id=[id]',
                 BL::getLabel('Edit')
             );
         }

@@ -61,7 +61,7 @@ class ResetPassword extends BackendBaseActionAdd
 
         // the user email and key provided match
         if(!$this->isUserAllowed()) {
-            $this->redirect(BackendModel::createURLForAction('index'));
+            $this->redirect(BackendModel::createURLForAction('Index'));
         }
 
         $this->loadForm();
@@ -94,7 +94,7 @@ class ResetPassword extends BackendBaseActionAdd
                 BackendUsersModel::deleteResetPasswordSettings($userId);
 
                 // redirect to the login form, with a timeout error
-                $this->redirect(BackendModel::createURLForAction('index', null, null, array('reset' => 'timeout')));
+                $this->redirect(BackendModel::createURLForAction('Index', null, null, array('reset' => 'timeout')));
             }
 
             // check if the provided key matches the one in the user record
@@ -151,11 +151,11 @@ class ResetPassword extends BackendBaseActionAdd
                 // attempt to login the user
                 if(!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
                     // redirect to the login form with an error
-                    $this->redirect(BackendModel::createURLForAction('index', null, null, array('login' => 'failed')));
+                    $this->redirect(BackendModel::createURLForAction('Index', null, null, array('login' => 'failed')));
                 }
 
                 // redirect to the login form
-                $this->redirect(BackendModel::createUrlForAction('index', 'dashboard', null, array('password_reset' => 'success')));
+                $this->redirect(BackendModel::createUrlForAction('Index', 'Dashboard', null, array('password_reset' => 'success')));
             }
         }
     }

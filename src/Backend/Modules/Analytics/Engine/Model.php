@@ -61,13 +61,13 @@ class Model
             // analytics session token
             if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'Analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
+                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'Analytics'), BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))));
             }
 
             // analytics table id (only show this error if no other exist)
             if(empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'Analytics'), BackendModel::createURLForAction('settings', 'analytics', null, array('ga' => 1))));
+                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'Analytics'), BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))));
             }
         }
 
@@ -1010,9 +1010,9 @@ class Model
         $extraParameters = (empty($extraParameters) ? '' : '&' . http_build_query($extraParameters));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('loading', 'analytics')) {
+        if(BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
             // redirect to loading page which will get the needed data based on the current action
-            SpoonHTTP::redirect(BackendModel::createURLForAction('loading') . '&redirect_action=' . $action . $extraParameters);
+            SpoonHTTP::redirect(BackendModel::createURLForAction('Loading') . '&redirect_action=' . $action . $extraParameters);
         }
     }
 
@@ -1023,7 +1023,7 @@ class Model
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach($finder->files()->in(BACKEND_CACHE_PATH . '/analytics') as $file) {
+        foreach($finder->files()->in(BACKEND_CACHE_PATH . '/Analytics') as $file) {
             $fs->remove($file->getRealPath());
         }
     }

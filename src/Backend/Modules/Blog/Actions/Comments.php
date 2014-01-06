@@ -124,19 +124,19 @@ class Comments extends BackendBaseActionIndex
         $this->dgPublished->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_comment')) {
+        if(BackendAuthentication::isAllowedAction('EditComment')) {
             $this->dgPublished->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]',
+                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
+        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgPublished->addColumn(
                 'mark_as_spam', null, BL::lbl('MarkAsSpam'),
-                BackendModel::createURLForAction('mass_comment_action') .
+                BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=spam',
                 BL::lbl('MarkAsSpam')
             );
@@ -203,19 +203,19 @@ class Comments extends BackendBaseActionIndex
         $this->dgModeration->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_comment')) {
+        if(BackendAuthentication::isAllowedAction('EditComment')) {
             $this->dgModeration->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]',
+                BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
+        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgModeration->addColumn(
                 'approve', null, BL::lbl('Approve'),
-                BackendModel::createURLForAction('mass_comment_action') .
+                BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=published',
                 BL::lbl('Approve')
             );
@@ -279,10 +279,10 @@ class Comments extends BackendBaseActionIndex
         $this->dgSpam->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('mass_comment_action')) {
+        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgSpam->addColumn(
                 'approve', null, BL::lbl('Approve'),
-                BackendModel::createURLForAction('mass_comment_action') .
+                BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=spam&amp;action=published',
                 BL::lbl('Approve')
             );

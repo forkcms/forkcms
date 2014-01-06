@@ -879,8 +879,8 @@ class Model
         // loop items
         foreach ($items as &$row) {
             $row['url'] = BackendModel::createURLForAction(
-                'edit',
-                'pages',
+                'Edit',
+                'Pages',
                 null,
                 array('id' => $row['url'])
             );
@@ -1184,7 +1184,7 @@ class Model
                 // insert link
                 $html .= '	<a href="' .
                          BackendModel::createURLForAction(
-                             'edit',
+                             'Edit',
                              null,
                              null,
                              array('id' => $page['page_id'])
@@ -1284,7 +1284,7 @@ class Model
         // homepage should
         $html .= '			<a href="' .
                  BackendModel::createURLForAction(
-                     'edit',
+                     'Edit',
                      null,
                      null,
                      array('id' => 1)
@@ -1315,7 +1315,7 @@ class Model
                     // insert link
                     $html .= '			<a href="' .
                              BackendModel::createURLForAction(
-                                 'edit',
+                                 'Edit',
                                  null,
                                  null,
                                  array('id' => $page['page_id'])
@@ -1352,7 +1352,7 @@ class Model
                 // insert link
                 $html .= '			<a href="' .
                          BackendModel::createURLForAction(
-                             'edit',
+                             'Edit',
                              null,
                              null,
                              array('id' => $page['page_id'])
@@ -1387,7 +1387,7 @@ class Model
                 // insert link
                 $html .= '			<a href="' .
                          BackendModel::createURLForAction(
-                             'edit',
+                             'Edit',
                              null,
                              null,
                              array('id' => $page['page_id'])

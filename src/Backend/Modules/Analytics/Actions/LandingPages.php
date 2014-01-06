@@ -48,8 +48,8 @@ class LandingPages extends BackendAnalyticsBase
             $dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule())) {
-                $dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+                $dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
             // set headers

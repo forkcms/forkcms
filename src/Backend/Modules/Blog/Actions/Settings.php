@@ -163,7 +163,7 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');
 
                 // redirect to the settings page
-                $this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
+                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
             }
         }
     }

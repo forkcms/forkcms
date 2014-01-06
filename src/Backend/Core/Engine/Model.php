@@ -94,10 +94,10 @@ class Model extends \BaseModel
         if(SPOON_DEBUG) $warnings[] = array('message' => Language::err('DebugModeIsActive'));
 
         // check if this action is allowed
-        if(Authentication::isAllowedAction('index', 'settings')) {
+        if(Authentication::isAllowedAction('Index', 'Settings')) {
             // check if the fork API keys are available
             if(self::getModuleSetting('Core', 'fork_api_private_key') == '' || self::getModuleSetting('Core', 'fork_api_public_key') == '') {
-                $warnings[] = array('message' => sprintf(Language::err('ForkAPIKeys'), self::createURLForAction('index', 'settings')));
+                $warnings[] = array('message' => sprintf(Language::err('ForkAPIKeys'), self::createURLForAction('Index', 'Settings')));
             }
         }
 

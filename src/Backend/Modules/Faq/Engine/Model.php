@@ -206,7 +206,7 @@ class Model
              array('Faq', (int) $tagId, BL::getWorkingLanguage()));
 
         foreach($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('edit', 'faq', null, array('id' => $row['url']));
+            $row['url'] = BackendModel::createURLForAction('Edit', 'Faq', null, array('id' => $row['url']));
         }
 
         return $items;
@@ -468,7 +468,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('edit_category', 'Faq', $item['language']) . '&id=' . $item['id'])
+                'edit_url' => BackendModel::createURLForAction('EditCategory', 'Faq', $item['language']) . '&id=' . $item['id'])
         );
 
         $db->update(
@@ -515,7 +515,7 @@ class Model
                         'id' => $item['id'],
                         'extra_label' => 'Category: ' . $item['title'],
                         'language' => $item['language'],
-                        'edit_url' => BackendModel::createURLForAction('edit_category') . '&id=' . $item['id'])
+                        'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id'])
                 ),
                 'hidden' => 'N');
 

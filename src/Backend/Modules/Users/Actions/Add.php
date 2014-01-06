@@ -284,7 +284,7 @@ class Add extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'index'
+                        'Index'
                     ) . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']
                 );
             }

@@ -75,15 +75,15 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('detail_module')) {
-            $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
-            $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+        if(BackendAuthentication::isAllowedAction('DetailModule')) {
+            $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
+            $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('install_module')) {
+        if(BackendAuthentication::isAllowedAction('InstallModule')) {
             // add install column
-            $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('install_module') . '&amp;module=[raw_name]', BL::lbl('Install'));
+            $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('InstallModule') . '&amp;module=[raw_name]', BL::lbl('Install'));
             $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
         }
     }
@@ -100,9 +100,9 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('detail_module')) {
-            $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]');
-            $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('detail_module') . '&amp;module=[raw_name]', BL::lbl('Details'));
+        if(BackendAuthentication::isAllowedAction('DetailModule')) {
+            $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
+            $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }
 
         // add the greyed out option to modules that have warnings

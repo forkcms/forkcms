@@ -84,7 +84,7 @@ class Themes extends BackendBaseActionIndex
         $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('Core', 'theme', 'core');
 
         // no themes found
-        if(empty($themes)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+        if(empty($themes)) $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
 
         // loop the templates
         foreach($themes as &$record) {
@@ -139,7 +139,7 @@ class Themes extends BackendBaseActionIndex
                     // check if templates already exist
                     if(empty($newTemplates)) {
                         // templates do not yet exist; don't switch
-                        $this->redirect(BackendModel::createURLForAction('themes') . '&error=no-templates-available');
+                        $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
                         exit;
                     }
 

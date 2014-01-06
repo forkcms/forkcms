@@ -152,7 +152,7 @@ class Settings extends BackendBaseActionEdit
                     // reset token so we can alter the API key
                     BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 
-                    $this->redirect(BackendModel::createURLForAction('settings') . '&error=invalid-api-key');
+                    $this->redirect(BackendModel::createURLForAction('Settings') . '&error=invalid-api-key');
                 }
             }
 
@@ -162,7 +162,7 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
 
                 // redirect to the settings page without parameters
-                $this->redirect(BackendModel::createURLForAction('settings'));
+                $this->redirect(BackendModel::createURLForAction('Settings'));
             }
 
             // everything went fine
@@ -229,7 +229,7 @@ class Settings extends BackendBaseActionEdit
                     $this->frmTrackingType->getField('type')->getValue()
                 );
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_tracking_type_settings');
-                $this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
+                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
             }
         }
     }

@@ -62,7 +62,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -73,7 +73,7 @@ class Edit extends BackendBaseActionEdit
         $this->record = (array) BackendLocationModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
 
@@ -215,10 +215,10 @@ class Edit extends BackendBaseActionEdit
 
                 // redirect to the overview
                 if($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
+                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
                 }
                 // redirect to the edit action
-                else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id'] . '&report=edited');
+                else $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
             }
         }
     }

@@ -41,11 +41,11 @@ class Delete extends BackendBaseActionDelete
             );
 
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&report=deleted&var=' .
+                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
                 urlencode($this->record['question'])
             );
         } else $this->redirect(
-            BackendModel::createURLForAction('index') . '&error=non-existing'
+            BackendModel::createURLForAction('Index') . '&error=non-existing'
         );
     }
 }

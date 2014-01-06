@@ -63,7 +63,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // validate id
-        if($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('theme_templates') . '&error=non-existing');
+        if($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
 
         // get the record
         $this->record = BackendExtensionsModel::getTemplate($this->id);
@@ -341,7 +341,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 if(BackendExtensionsModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('theme_templates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
             }
         }
     }

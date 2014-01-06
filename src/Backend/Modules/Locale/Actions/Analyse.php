@@ -86,16 +86,16 @@ class Analyse extends BackendBaseActionIndex
         $this->dgFrontend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('add')) {
+        if(BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions
         $this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('save_translation')) {
+        if(BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
             $this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
@@ -122,16 +122,16 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('add')) {
+        if(BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
-            $this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+            $this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
 
         // set column functions
         $this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('save_translation')) {
+        if(BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
             $this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
 

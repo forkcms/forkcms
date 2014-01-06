@@ -127,18 +127,18 @@ class Index extends BackendBaseActionIndex
         $this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgPosts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
             // add edit column
             $this->dgPosts->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );
@@ -196,11 +196,11 @@ class Index extends BackendBaseActionIndex
         $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId
             );
@@ -208,7 +208,7 @@ class Index extends BackendBaseActionIndex
             // add edit column
             $this->dgDrafts->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
                 $this->categoryId, BL::lbl('Edit')
             );
@@ -261,18 +261,18 @@ class Index extends BackendBaseActionIndex
         $this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set colum URLs
             $this->dgRecent->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId
             );
 
             // add edit column
             $this->dgRecent->addColumn(
                 'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
             );

@@ -92,7 +92,7 @@ class Action extends Object
 
         $this->redirect(
             BackendModel::createURLForAction(
-                'index',
+                'Index',
                 null,
                 null,
                 array(

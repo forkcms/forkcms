@@ -57,7 +57,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 
@@ -153,11 +153,11 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit_profile_group')) {
+        if (BackendAuthentication::isAllowedAction('EditProfileGroup')) {
             // set column URLs
             $this->dgGroups->setColumnURL(
                 'group_name',
-                BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id
+                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
             );
 
             // edit column
@@ -165,7 +165,7 @@ class Edit extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('edit_profile_group') . '&amp;id=[id]&amp;profile_id=' . $this->id,
+                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
                 BL::getLabel('Edit')
             );
         }
@@ -297,7 +297,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode(
+                    BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode(
                         $values['email']
                     ) . '&highlight=row-' . $this->id
                 );

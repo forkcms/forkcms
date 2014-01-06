@@ -34,7 +34,7 @@ class MassCommentAction extends BackendBaseAction
         $action = \SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
         // no id's provided
-        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') . '&error=no-comments-selected');
+        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('Comments') . '&error=no-comments-selected');
 
         // redefine id's
         $ids = (array) $_GET['id'];
@@ -128,6 +128,6 @@ class MassCommentAction extends BackendBaseAction
         if($action == 'delete') $report .= 'deleted';
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
+        $this->redirect(BackendModel::createURLForAction('Comments') . '&report=' . $report . '#tab' . \SpoonFilter::ucfirst($from));
     }
 }

@@ -45,7 +45,7 @@ class EditCategory extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        } else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
+        } else $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
     }
 
     /**
@@ -107,7 +107,7 @@ class EditCategory extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
             }
         }
     }

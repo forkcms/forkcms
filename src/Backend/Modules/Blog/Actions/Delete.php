@@ -64,7 +64,7 @@ class Delete extends BackendBaseActionDelete
             BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
             // build redirect URL
-            $redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']);
+            $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['title']);
 
             // append to redirect URL
             if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
@@ -74,6 +74,6 @@ class Delete extends BackendBaseActionDelete
         }
 
         // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 }

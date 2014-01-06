@@ -183,7 +183,7 @@ class Model
             'id' => $item['id'],
             'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
             'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])
+            'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
         );
         $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 

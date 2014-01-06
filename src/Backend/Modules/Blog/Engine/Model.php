@@ -402,7 +402,7 @@ class Model
 
         // overwrite the url
         foreach($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('edit', 'Blog', null, array('id' => $row['url']));
+            $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, array('id' => $row['url']));
         }
 
         return $items;

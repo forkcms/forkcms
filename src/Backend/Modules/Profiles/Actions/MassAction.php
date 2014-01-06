@@ -36,7 +36,7 @@ class MassAction extends BackendBaseAction
 
         // no ids provided
         if (empty($ids)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=no-profiles-selected');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-profiles-selected');
         }
 
         // delete the given profiles
@@ -48,7 +48,7 @@ class MassAction extends BackendBaseAction
             // no group id provided
             if ($newGroupId == '') {
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&error=no-group-selected'
+                    BackendModel::createURLForAction('Index') . '&error=no-group-selected'
                 );
             }
 
@@ -79,7 +79,7 @@ class MassAction extends BackendBaseAction
             $report = 'added-to-group';
         } else {
             // unknown action
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=unknown-action');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=unknown-action');
         }
 
         // report
@@ -88,7 +88,7 @@ class MassAction extends BackendBaseAction
         // redirect
         $this->redirect(
             BackendModel::createURLForAction(
-                'index',
+                'Index',
                 null,
                 null,
                 array(

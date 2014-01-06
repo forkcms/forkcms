@@ -52,16 +52,16 @@ class Synonyms extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction('str_replace', array(',', ', ', '[synonym]'), 'synonym', true);
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit_synonym')) {
+        if (BackendAuthentication::isAllowedAction('EditSynonym')) {
             // set column URLs
-            $this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('term', BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]');
 
             // add column
             $this->dataGrid->addColumn(
                 'edit',
                 null,
                 BL::lbl('Edit'),
-                BackendModel::createURLForAction('edit_synonym') . '&amp;id=[id]',
+                BackendModel::createURLForAction('EditSynonym') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }

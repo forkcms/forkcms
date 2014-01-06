@@ -34,7 +34,7 @@ class Copy extends BackendBaseAction
         // no id's provided
         if (empty($id) || !BackendMailmotorModel::existsMailing($id)) {
             $this->redirect(
-                BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist'
+                BackendModel::createURLForAction('Index') . '&error=mailing-does-not-exist'
             );
         } else {
             // get the mailing and reset some fields
@@ -60,6 +60,6 @@ class Copy extends BackendBaseAction
         }
 
         // redirect
-        $this->redirect(BackendModel::createURLForAction('index') . '&report=mailing-copied&var=' . $mailing['name']);
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report=mailing-copied&var=' . $mailing['name']);
     }
 }

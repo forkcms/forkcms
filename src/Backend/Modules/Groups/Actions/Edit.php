@@ -199,7 +199,7 @@ class Edit extends BackendBaseActionEdit
         $this->record = BackendGroupsModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
 
         $this->getWidgets();
         $this->getActions();
@@ -268,12 +268,12 @@ class Edit extends BackendBaseActionEdit
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('edit', 'users')) {
             // add columns
-            $this->dataGridUsers->addColumn('nickname', \SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('surname', \SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
-            $this->dataGridUsers->addColumn('name', \SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('nickname', \SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('surname', \SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
+            $this->dataGridUsers->addColumn('name', \SpoonFilter::ucfirst(BL::lbl('Name')), null, BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
 
             // add column URL
-            $this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('edit', 'users') . '&amp;id=[id]');
+            $this->dataGridUsers->setColumnURL('email', BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
 
             // set columns sequence
             $this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
@@ -693,7 +693,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
             }
         }
     }

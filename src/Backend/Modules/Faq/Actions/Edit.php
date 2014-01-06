@@ -51,7 +51,7 @@ class Edit extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        } else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        } else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -136,7 +136,7 @@ class Edit extends BackendBaseActionEdit
                 BackendSearchModel::saveIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
             }
         }
     }

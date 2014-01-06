@@ -55,7 +55,7 @@ class Config extends BackendBaseConfig
 
         // missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
         if($error && $action != 'Settings' && $action != 'Index') {
-            \SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
+            \SpoonHTTP::redirect(BackendModel::createURLForAction('Index'));
         }
     }
 }

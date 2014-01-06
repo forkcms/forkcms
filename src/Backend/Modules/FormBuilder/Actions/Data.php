@@ -103,7 +103,7 @@ class Data extends BackendBaseActionIndex
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -141,12 +141,12 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('data_details')) {
+        if(BackendAuthentication::isAllowedAction('DataDetails')) {
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'sent_on',
                 BackendModel::createURLForAction(
-                    'data_details', null, null, array(
+                    'DataDetails', null, null, array(
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date']
                     ), false) . '&amp;id=[id]'
@@ -156,7 +156,7 @@ class Data extends BackendBaseActionIndex
             $this->dataGrid->addColumn(
                 'details', null, BL::getLabel('Details'),
                 BackendModel::createURLForAction(
-                    'data_details', null, null, array(
+                    'DataDetails', null, null, array(
                         'start_date' => $this->filter['start_date'],
                         'end_date' => $this->filter['end_date']
                     )

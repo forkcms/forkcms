@@ -121,21 +121,21 @@ class Groups extends BackendBaseActionIndex
         );
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('index')) {
+        if (BackendAuthentication::isAllowedAction('Index')) {
             $this->dgGroups->setColumnURL(
                 'members_count',
-                BackendModel::createURLForAction('index') . '&amp;group=[id]'
+                BackendModel::createURLForAction('Index') . '&amp;group=[id]'
             );
         }
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('edit_group')) {
-            $this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('edit_group') . '&amp;id=[id]');
+        if (BackendAuthentication::isAllowedAction('EditGroup')) {
+            $this->dgGroups->setColumnURL('name', BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]');
             $this->dgGroups->addColumn(
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('edit_group') . '&amp;id=[id]'
+                BackendModel::createURLForAction('EditGroup') . '&amp;id=[id]'
             );
         }
     }
@@ -196,7 +196,7 @@ class Groups extends BackendBaseActionIndex
             // complete output
             $output = '<a href="' .
                       BackendModel::createURLForAction(
-                          'index'
+                          'Index'
                       ) . '&amp;group=' . $groupId . '" title="' . $output . '">' . $output . '</a>';
         }
 

@@ -43,7 +43,7 @@ class EditCategory extends BackendBaseActionEdit
         }
 
         // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -84,7 +84,7 @@ class EditCategory extends BackendBaseActionEdit
         // delete allowed?
         $this->tpl->assign(
             'showBlogDeleteCategory',
-            BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('delete_category')
+            BackendBlogModel::deleteCategoryAllowed($this->id) && BackendModel::createURLForAction('DeleteCategory')
         );
     }
 
@@ -117,7 +117,7 @@ class EditCategory extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('categories') . '&report=edited-category&var=' .
+                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
                     urlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

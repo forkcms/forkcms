@@ -82,12 +82,12 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->dataGrid = new BackendDataGridDB(BackendExtensionsModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit_theme_template')) {
+        if(BackendAuthentication::isAllowedAction('EditThemeTemplate')) {
             // set colum URLs
-            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]');
+            $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]');
 
             // add edit column
-            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_theme_template') . '&amp;id=[id]', BL::lbl('Edit'));
+            $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]', BL::lbl('Edit'));
         }
     }
 

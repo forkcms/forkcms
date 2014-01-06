@@ -153,8 +153,8 @@ class Template extends \SpoonTemplate
                 $this->assign(
                     'authenticatedUserEditUrl',
                     BackendModel::createURLForAction(
-                        'edit',
-                        'users',
+                        'Edit',
+                        'Users',
                         null,
                         array('id' => Authentication::getUser()->getUserId())
                     )

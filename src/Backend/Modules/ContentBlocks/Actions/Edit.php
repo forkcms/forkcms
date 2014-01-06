@@ -54,7 +54,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -137,18 +137,18 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit')) {
+        if(BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;revision=[revision_id]'
             );
 
             // add use column
             $this->dgRevisions->addColumn(
                 'use_revision', null, BL::lbl('UseThisVersion'),
-                BackendModel::createURLForAction('edit') .
+                BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
@@ -203,7 +203,7 @@ class Edit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=edited&var=' .
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' .
                     urlencode($item['title']) . '&highlight=row-' . $item['id']
                 );
             }

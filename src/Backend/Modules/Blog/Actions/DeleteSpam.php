@@ -30,7 +30,7 @@ class DeleteSpam extends BackendBaseActionDelete
 
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('comments') .
+            BackendModel::createURLForAction('Comments') .
             '&report=deleted-spam#tabSpam'
         );
     }

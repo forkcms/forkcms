@@ -181,7 +181,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $this->id);
+                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $this->id);
             }
         }
     }
