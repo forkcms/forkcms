@@ -663,7 +663,7 @@ class Model extends \BaseModel
             uniqid() . \SpoonSession::getSessionId()
         );
 
-        if (!self::getModuleSetting('core', 'show_cookie_bar', false) || \CommonCookie::hasAllowedCookies()) {
+        if (!self::getModuleSetting('Core', 'show_cookie_bar', false) || \CommonCookie::hasAllowedCookies()) {
             \CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
@@ -685,7 +685,7 @@ class Model extends \BaseModel
     public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
     {
         // get some settings
-        $akismetKey = self::getModuleSetting('core', 'akismet_key');
+        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if ($akismetKey === '') {
@@ -725,8 +725,8 @@ class Model extends \BaseModel
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
         // get ForkAPI-keys
-        $publicKey = self::getModuleSetting('core', 'fork_api_public_key', '');
-        $privateKey = self::getModuleSetting('core', 'fork_api_private_key', '');
+        $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
+        $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
 
         // no keys, so stop here
         if ($publicKey == '' || $privateKey == '') {

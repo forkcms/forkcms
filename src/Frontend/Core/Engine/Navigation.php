@@ -275,7 +275,7 @@ class Navigation extends FrontendBaseObject
         $parentId = 0,
         $depth = null,
         $excludeIds = array(),
-        $tpl = '/core/layout/templates/navigation.tpl',
+        $tpl = '/Core/Layout/Templates/Navigation.tpl',
         $depthCounter = 1
     ) {
         // get navigation
@@ -286,7 +286,7 @@ class Navigation extends FrontendBaseObject
 
         // meta-navigation is requested but meta isn't enabled
         if ($type == 'meta' &&
-            (!Model::getModuleSetting('pages', 'meta_navigation', true) ||
+            (!Model::getModuleSetting('Pages', 'meta_navigation', true) ||
              !isset($navigation['meta']))
         ) {
             return '';

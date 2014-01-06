@@ -610,7 +610,7 @@ class Header extends FrontendBaseObject
         // assign site title
         $this->tpl->assign(
             'siteTitle',
-            (string) Model::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -646,10 +646,10 @@ class Header extends FrontendBaseObject
     private function parseCustomHeaderHTMLAndGoogleAnalytics()
     {
         // get the data
-        $siteHTMLHeader = (string) Model::getModuleSetting('core', 'site_html_header', null);
-        $siteHTMLFooter = (string) Model::getModuleSetting('core', 'site_html_footer', null);
-        $webPropertyId = Model::getModuleSetting('analytics', 'web_property_id', null);
-        $type = Model::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
+        $siteHTMLHeader = (string) Model::getModuleSetting('Core', 'site_html_header', null);
+        $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
+        $webPropertyId = Model::getModuleSetting('Analytics', 'web_property_id', null);
+        $type = Model::getModuleSetting('Analytics', 'tracking_type', 'universal_analytics');
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if ($webPropertyId != '' &&
@@ -664,7 +664,7 @@ class Header extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
                         !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
@@ -684,7 +684,7 @@ class Header extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
                         !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
@@ -707,7 +707,7 @@ class Header extends FrontendBaseObject
                                       ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
                                     ';
 
-                    if (Model::getModuleSetting('core', 'show_cookie_bar', false) &&
+                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
                         !\CommonCookie::hasAllowedCookies()
                     ) {
                         $trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
@@ -742,11 +742,11 @@ class Header extends FrontendBaseObject
         $parseFacebook = false;
 
         // check if facebook admins are set
-        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) !== null) {
+        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
             $this->addMetaData(
                 array(
                      'property' => 'fb:admins',
-                     'content' => Model::getModuleSetting('core', 'facebook_admin_ids', null)
+                     'content' => Model::getModuleSetting('Core', 'facebook_admin_ids', null)
                 ),
                 true,
                 array('property')
@@ -755,13 +755,13 @@ class Header extends FrontendBaseObject
         }
 
         // check if no facebook admin is set but an app is configured we use the application as an admin
-        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) == '' &&
-            Model::getModuleSetting('core', 'facebook_app_id', null) !== null
+        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) == '' &&
+            Model::getModuleSetting('Core', 'facebook_app_id', null) !== null
         ) {
             $this->addMetaData(
                 array(
                      'property' => 'fb:app_id',
-                     'content' => Model::getModuleSetting('core', 'facebook_app_id', null)
+                     'content' => Model::getModuleSetting('Core', 'facebook_app_id', null)
                 ),
                 true,
                 array('property')
@@ -914,7 +914,7 @@ class Header extends FrontendBaseObject
     {
         // when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
         $queryString = trim($this->URL->getQueryString(), '/');
-        $language = Model::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
         }
@@ -963,12 +963,12 @@ class Header extends FrontendBaseObject
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
         // noodp, noydir
-        if (Model::getModuleSetting('core', 'seo_noodp', false)) {
+        if (Model::getModuleSetting('Core', 'seo_noodp', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noodp')
             );
         }
-        if (Model::getModuleSetting('core', 'seo_noydir', false)) {
+        if (Model::getModuleSetting('Core', 'seo_noydir', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noydir')
             );
@@ -1021,7 +1021,7 @@ class Header extends FrontendBaseObject
             // empty value given?
             if (empty($value)) {
                 $this->pageTitle = Model::getModuleSetting(
-                    'core',
+                    'Core',
                     'site_title_' . FRONTEND_LANGUAGE,
                     SITE_DEFAULT_TITLE
                 );
@@ -1030,7 +1030,7 @@ class Header extends FrontendBaseObject
                 if ($this->pageTitle == '') {
                     $this->pageTitle = $value . ' -  ' .
                                        Model::getModuleSetting(
-                                           'core',
+                                           'Core',
                                            'site_title_' . FRONTEND_LANGUAGE,
                                            SITE_DEFAULT_TITLE
                                        );

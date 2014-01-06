@@ -227,7 +227,7 @@ class Url extends \KernelLoader
         // single language
         if (!SITE_MULTILANGUAGE) {
             // set language id
-            $language = Model::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         } else {
             // multiple languages
             // default value

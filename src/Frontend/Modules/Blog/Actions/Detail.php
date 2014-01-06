@@ -194,7 +194,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
         $this->header->addOpenGraphData(
             'site_name',
-            FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            FrontendModel::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
             true
         );
         $this->header->addOpenGraphData(

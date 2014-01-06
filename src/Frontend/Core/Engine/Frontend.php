@@ -57,8 +57,8 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     private function initializeFacebook()
     {
         // get settings
-        $facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
-        $facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
+        $facebookApplicationId = FrontendModel::getModuleSetting('Core', 'facebook_app_id');
+        $facebookApplicationSecret = FrontendModel::getModuleSetting('Core', 'facebook_app_secret');
 
         // needed data available?
         if ($facebookApplicationId != '' && $facebookApplicationSecret != '') {

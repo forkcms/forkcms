@@ -96,7 +96,7 @@ class Index extends FrontendBaseBlock
     {
         // set variables
         $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
-        $this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+        $this->limit = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .

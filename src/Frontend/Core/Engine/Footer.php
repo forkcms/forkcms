@@ -41,10 +41,10 @@ class Footer extends FrontendBaseObject
         $this->tpl->assign('footerLinks', $footerLinks);
 
         // initial value for footer HTML
-        $siteHTMLFooter = (string) Model::getModuleSetting('core', 'site_html_footer', null);
+        $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
 
         // facebook admins given?
-        if (Model::getModuleSetting('core', 'facebook_admin_ids', null) !== null || Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null || Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
             // build correct locale
             switch (FRONTEND_LANGUAGE) {
                 case 'en':
@@ -84,10 +84,10 @@ class Footer extends FrontendBaseObject
 
             // add facebook JS
             $siteHTMLFooter .= '<script>' . "\n";
-            if (Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+            if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
                 $siteHTMLFooter .= '  window.fbAsyncInit = function() {' . "\n";
                 $siteHTMLFooter .= '    FB.init({ appId: "' .
-                                   Model::getModuleSetting('core', 'facebook_app_id', null) .
+                                   Model::getModuleSetting('Core', 'facebook_app_id', null) .
                                    '", status: true, cookie: true, xfbml: true, oauth: true });' . "\n";
                 $siteHTMLFooter .= '  jsFrontend.facebook.afterInit();' . "\n";
                 $siteHTMLFooter .= '  };' . "\n";
