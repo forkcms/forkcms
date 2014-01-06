@@ -9,6 +9,9 @@ namespace Frontend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is the index-action
  *

@@ -9,6 +9,11 @@ namespace Frontend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is the detail-action
  *
@@ -77,7 +82,7 @@ class Detail extends FrontendBaseBlock
             );
 
             // set module class
-            $class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
+            $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
             // get the items that are linked to the tags
             $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
@@ -86,7 +91,7 @@ class Detail extends FrontendBaseBlock
             if (!empty($items)) {
                 $this->results[] = array(
                     'name' => $module,
-                    'label' => FL::lbl(SpoonFilter::ucfirst($module)),
+                    'label' => FL::lbl(\SpoonFilter::ucfirst($module)),
                     'items' => $items
                 );
             }

@@ -9,6 +9,10 @@ namespace Frontend\Modules\Tags\Widgets;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is a widget with the related items based on tags
  *
@@ -93,7 +97,7 @@ class Related extends FrontendBaseWidget
             }
 
             // set module class
-            $class = 'Frontend' . SpoonFilter::toCamelCase($entry['module']) . 'Model';
+            $class = 'Frontend\\Modules\\' . $entry['module'] . '\\Engine\\Model';
 
             // get module record
             $this->related[$id] = FrontendTagsModel::callFromInterface(
@@ -139,7 +143,7 @@ class Related extends FrontendBaseWidget
         // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
-            $class = 'Frontend' . SpoonFilter::toCamelCase($block['module']) . 'Model';
+            $class = 'Frontend\\Modules\\' . $record['module'] . '\\Engine\\Model';
 
             if (is_callable(array($class, 'getIdForTags'))) {
                 // get record for module

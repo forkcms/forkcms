@@ -10,7 +10,7 @@
 			{option:tags}
 				<ul>
 					{iteration:tags}
-						<li><a href="{$var|geturlforblock:'tags':'detail'}/{$tags.url}">{$tags.name}</a></li>
+						<li><a href="{$var|geturlforblock:'Tags':'Detail'}/{$tags.url}">{$tags.name}</a></li>
 					{/iteration:tags}
 				</ul>
 			{/option:tags}

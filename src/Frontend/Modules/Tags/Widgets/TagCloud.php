@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Tags\Engine;
+namespace Frontend\Modules\Tags\Widgets;
 
 /*
  * This file is part of Fork CMS.
@@ -9,12 +9,16 @@ namespace Frontend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+
 /**
  * This is a widget with the tags
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class Tagcloud extends FrontendBaseWidget
+class TagCloud extends FrontendBaseWidget
 {
     /**
      * Execute the extra
@@ -38,7 +42,7 @@ class Tagcloud extends FrontendBaseWidget
         $tags = array_slice($tags, 0, 10);
 
         // build link
-        $link = FrontendNavigation::getURLForBlock('tags', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Tags', 'Detail');
 
         // any tags?
         if (!empty($tags)) {

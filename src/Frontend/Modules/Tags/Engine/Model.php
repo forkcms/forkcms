@@ -33,7 +33,7 @@ class Model
     public static function callFromInterface($module, $class, $method, $parameter = null)
     {
         // check to see if the interface is implemented
-        if (in_array('FrontendTagsInterface', class_implements($class))) {
+        if (in_array('Frontend\\Modules\\Tags\\Engine\\TagsInterface', class_implements($class))) {
             // return result
             return call_user_func(array($class, $method), $parameter);
         } else {
