@@ -71,8 +71,8 @@ class Settings extends BackendBaseActionEdit
                 $height = (int) $this->frm->getField('height_widget')->getValue();
 
                 if($width > 800) $width = 800;
-                elseif($width < 300) $width = BackendModel::getModuleSetting('location', 'width_widget');
-                if($height < 150) $height = BackendModel::getModuleSetting('location', 'height_widget');
+                elseif($width < 300) $width = BackendModel::getModuleSetting('Location', 'width_widget');
+                if($height < 150) $height = BackendModel::getModuleSetting('Location', 'height_widget');
 
                 // set our settings (widgets)
                 BackendModel::setModuleSetting($this->URL->getModule(), 'zoom_level_widget', (string) $this->frm->getField('zoom_level_widget')->getValue());

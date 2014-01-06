@@ -48,9 +48,9 @@ class Mailer
         $template = (string) $template;
 
         // set defaults
-        $to = BackendModel::getModuleSetting('core', 'mailer_to');
-        $from = BackendModel::getModuleSetting('core', 'mailer_from');
-        $replyTo = BackendModel::getModuleSetting('core', 'mailer_reply_to');
+        $to = BackendModel::getModuleSetting('Core', 'mailer_to');
+        $from = BackendModel::getModuleSetting('Core', 'mailer_from');
+        $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
 
         // set recipient/sender headers
         $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
@@ -141,7 +141,7 @@ class Mailer
         $id = BackendModel::getContainer()->get('database')->insert('emails', $email);
 
         // trigger event
-        BackendModel::triggerEvent('core', 'after_email_queued', array('id' => $id));
+        BackendModel::triggerEvent('Core', 'after_email_queued', array('id' => $id));
 
         // if queue was not enabled, send this mail right away
         if(!$queue) self::send($id);
@@ -222,7 +222,7 @@ class Mailer
         );
 
         // mailer type
-        $mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
+        $mailerType = BackendModel::getModuleSetting('Core', 'mailer_type', 'mail');
 
         // create new \SpoonEmail-instance
         $email = new \SpoonEmail();
@@ -231,13 +231,13 @@ class Mailer
         // send via SMTP
         if($mailerType == 'smtp') {
             // get settings
-            $SMTPServer = BackendModel::getModuleSetting('core', 'smtp_server');
-            $SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port', 25);
-            $SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
-            $SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
+            $SMTPServer = BackendModel::getModuleSetting('Core', 'smtp_server');
+            $SMTPPort = BackendModel::getModuleSetting('Core', 'smtp_port', 25);
+            $SMTPUsername = BackendModel::getModuleSetting('Core', 'smtp_username');
+            $SMTPPassword = BackendModel::getModuleSetting('Core', 'smtp_password');
 
             // set security if needed
-            $secureLayer = BackendModel::getModuleSetting('core','smtp_secure_layer');
+            $secureLayer = BackendModel::getModuleSetting('Core','smtp_secure_layer');
             if(in_array($secureLayer, array('ssl', 'tls'))) {
                 $email->setSMTPSecurity($secureLayer);
             }
@@ -274,7 +274,7 @@ class Mailer
             $db->delete('emails', 'id = ?', array($id));
 
             // trigger event
-            BackendModel::triggerEvent('core', 'after_email_sent', array('id' => $id));
+            BackendModel::triggerEvent('Core', 'after_email_sent', array('id' => $id));
         }
     }
 }

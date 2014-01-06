@@ -183,7 +183,7 @@ class Javascript
         }
 
         // unknown user (fallback to default language)
-        else $language = BackendModel::getModuleSetting('core', 'default_interface_language');
+        else $language = BackendModel::getModuleSetting('Core', 'default_interface_language');
 
         // set the locale (we need this for the labels)
         Language::setLocale($language);

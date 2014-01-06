@@ -29,9 +29,9 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
 
         // init vars
         $templates = array();
-        $theme = BackendModel::getModuleSetting('core', 'theme');
-        $files[] = BACKEND_PATH . '/core/layout/editor_templates/templates.js';
-        $themePath = FRONTEND_PATH . '/themes/' . $theme . '/core/layout/editor_templates/templates.js';
+        $theme = BackendModel::getModuleSetting('Core', 'theme');
+        $files[] = BACKEND_PATH . '/Core/Layout/editor_templates/templates.js';
+        $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/editor_templates/templates.js';
 
         if(is_file($themePath)) $files[] = $themePath;
 

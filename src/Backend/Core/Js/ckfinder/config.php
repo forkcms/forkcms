@@ -35,8 +35,8 @@ function CheckAuthentication()
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be fully functional, in demo mode.
-$config['LicenseName'] = BackendModel::getModuleSetting('core', 'ckfinder_license_name');
-$config['LicenseKey'] = BackendModel::getModuleSetting('core', 'ckfinder_license_key');
+$config['LicenseName'] = BackendModel::getModuleSetting('Core', 'ckfinder_license_name');
+$config['LicenseKey'] = BackendModel::getModuleSetting('Core', 'ckfinder_license_key');
 
 
 /*
@@ -96,8 +96,8 @@ $config['Thumbnails'] = array(
 
 // set the maximum size of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = array(
-	'maxWidth' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_width'),
-	'maxHeight' => BackendModel::getModuleSetting('core', 'ckfinder_image_max_height'),
+	'maxWidth' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width'),
+	'maxHeight' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height'),
 	'quality' => 100
 );
 

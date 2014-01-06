@@ -1299,7 +1299,7 @@ class Model
         $html .= '</div>' . "\n";
 
         // only show meta if needed
-        if (BackendModel::getModuleSetting('pages', 'meta_navigation', false)) {
+        if (BackendModel::getModuleSetting('Pages', 'meta_navigation', false)) {
             // meta pages
             $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
@@ -1764,7 +1764,7 @@ class Model
         $page['revision_id'] = (int) $db->insert('pages', $page);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('pages', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::getModuleSetting('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $db->getColumn(

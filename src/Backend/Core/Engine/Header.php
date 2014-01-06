@@ -349,9 +349,9 @@ class Header extends \Backend\Core\Engine\Base\Object
         // theme
         if(BackendModel::getModuleSetting('Core', 'theme') !== null) {
             $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('Core', 'theme');
-            $this->jsData['theme']['path'] = FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme');
-            $this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/screen.css'));
-            $this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/editor_content.css'));
+            $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme');
+            $this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/screen.css'));
+            $this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/editor_content.css'));
         }
 
         // encode and add

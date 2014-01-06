@@ -142,9 +142,9 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
         $this->setLanguage(\SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
         // mark cronjob as run
-        $cronjobs = (array) BackendModel::getModuleSetting('core', 'cronjobs');
+        $cronjobs = (array) BackendModel::getModuleSetting('Core', 'cronjobs');
         $cronjobs[] = $this->getModule() . '.' . $this->getAction();
-        BackendModel::setModuleSetting('core', 'cronjobs', array_unique($cronjobs));
+        BackendModel::setModuleSetting('Core', 'cronjobs', array_unique($cronjobs));
 
         $this->execute();
     }

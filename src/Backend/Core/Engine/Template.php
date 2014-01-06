@@ -232,7 +232,7 @@ class Template extends \SpoonTemplate
         }
 
         // assign some variable constants (such as site-title)
-        $this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+        $this->assign('SITE_TITLE', BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE));
     }
 
     /**

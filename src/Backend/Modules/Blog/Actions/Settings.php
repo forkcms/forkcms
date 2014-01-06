@@ -73,7 +73,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 
         // no Akismet-key, so we can't enable spam-filter
-        if(BackendModel::getModuleSetting('core', 'akismet_key') == '') {
+        if(BackendModel::getModuleSetting('Core', 'akismet_key') == '') {
             $this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
             $this->tpl->assign('noAkismetKey', true);
         }
@@ -157,7 +157,7 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
                 if($this->isGod) BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
-                if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                if(BackendModel::getModuleSetting('Core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

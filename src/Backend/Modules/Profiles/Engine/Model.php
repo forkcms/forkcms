@@ -242,7 +242,7 @@ class Model
         }
 
         // define avatar path
-        $avatarPath = FRONTEND_FILES_URL . '/profiles/avatars/32x32/';
+        $avatarPath = FRONTEND_FILES_URL . '/Profiles/Avatars/32x32/';
 
         // get avatar for profile
         $avatar = self::getSetting($id, 'avatar');
@@ -257,7 +257,7 @@ class Model
         }
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && BackendModel::getModuleSetting('profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && BackendModel::getModuleSetting('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(strtolower(trim('d' . $email)));
 
