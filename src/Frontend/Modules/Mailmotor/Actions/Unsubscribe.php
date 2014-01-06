@@ -143,7 +143,7 @@ class Unsubscribe extends FrontendBaseBlock
 
                     // redirect
                     $this->redirect(
-                        FrontendNavigation::getURLForBlock('Mailmotor', 'unsubscribe') . '?sent=true#unsubscribeForm'
+                        FrontendNavigation::getURLForBlock('Mailmotor', 'Unsubscribe') . '?sent=true#unsubscribeForm'
                     );
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions

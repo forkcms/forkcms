@@ -93,7 +93,7 @@ class Category extends FrontendBaseBlock
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $requestedCategory;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
         $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -127,7 +127,7 @@ class Category extends FrontendBaseBlock
         // get RSS-link
         $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
 
         // add RSS-feed

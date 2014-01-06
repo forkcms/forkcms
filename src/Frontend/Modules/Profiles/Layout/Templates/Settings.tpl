@@ -25,7 +25,7 @@
 						{$txtEmail}{$txtEmailError}
 					</p>
 					<p>
-						<a href="{$var|geturlforblock:'profiles':'change_email'}">{$msgChangeEmail}</a>
+						<a href="{$var|geturlforblock:'Profiles':'ChangeEmail'}">{$msgChangeEmail}</a>
 					</p>
 					<p{option:txtFirstNameError} class="errorArea"{/option:txtFirstNameError}>
 						<label for="firstName">{$lblFirstName|ucfirst}</label>
@@ -59,7 +59,7 @@
 				<fieldset>
 					<legend>{$lblYourAvatar|ucfirst}</legend>
 					{option:avatar}
-						<img src="{$FRONTEND_FILES_URL}/profiles/avatars/240x240/{$avatar}" />
+						<img src="{$FRONTEND_FILES_URL}/Profiles/Avatars/240x240/{$avatar}" />
 					{/option:avatar}
 
 					<p{option:fileAvatarError} class="errorArea"{/option:fileAvatarError}>

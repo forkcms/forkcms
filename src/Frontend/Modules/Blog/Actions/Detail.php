@@ -108,9 +108,9 @@ class Detail extends FrontendBaseBlock
         $this->settings = FrontendModel::getModuleSettings('Blog');
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'category') .
+        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') .
                                              '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' . $this->record['url'];
+        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $this->record['url'];
         $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
         $this->record['comments_count'] = count($this->comments);
 
@@ -149,7 +149,7 @@ class Detail extends FrontendBaseBlock
         // get RSS-link
         $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
 
         // add RSS-feed
@@ -164,7 +164,7 @@ class Detail extends FrontendBaseBlock
         );
 
         // get RSS-link for the comments
-        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'article_comments_rss') .
+        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
         // add RSS-feed into the metaCustom
@@ -208,7 +208,7 @@ class Detail extends FrontendBaseBlock
         if (count(FrontendBlogModel::getAllCategories()) > 1) {
             $this->breadcrumb->addElement(
                 $this->record['category_title'],
-                FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $this->record['category_url']
+                FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $this->record['category_url']
             );
         }
 

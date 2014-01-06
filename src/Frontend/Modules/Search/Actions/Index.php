@@ -176,7 +176,7 @@ class Index extends FrontendBaseBlock
         }
 
         // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
 
         // populate calculated fields in pagination
         $this->pagination['limit'] = $this->limit;
@@ -245,7 +245,7 @@ class Index extends FrontendBaseBlock
         );
 
         // since we know the term just here we should set the canonical url here
-        $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('search');
+        $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
         if (isset($_GET['q']) && $_GET['q'] != '') {
             $canonicalUrl .= '?q=' . $_GET['q'];
         }

@@ -36,7 +36,7 @@
 		</div>
 		<footer class="ft">
 			<p>
-				<a href="{$var|geturlforblock:'profiles':'forgot_password'}" title="{$msgForgotPassword}">{$msgForgotPassword}</a>
+				<a href="{$var|geturlforblock:'Profiles':'ForgotPassword'}" title="{$msgForgotPassword}">{$msgForgotPassword}</a>
 			</p>
 		</footer>
 	</div>

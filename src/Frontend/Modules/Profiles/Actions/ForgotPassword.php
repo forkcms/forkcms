@@ -114,7 +114,7 @@ class ForgotPassword extends FrontendBaseBlock
                 FrontendProfilesModel::setSetting($profileId, 'forgot_password_key', $key);
 
                 // reset url
-                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('profiles', 'reset_password') .
+                $mailValues['resetUrl'] = SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') .
                                           '/' . $key;
                 $mailValues['firstName'] = FrontendProfilesModel::getSetting($profileId, 'first_name');
                 $mailValues['lastName'] = FrontendProfilesModel::getSetting($profileId, 'last_name');

@@ -78,9 +78,9 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // get vars
         $title = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
-        $link = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .
+        $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                 '/' . $this->record['url'];
-        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
+        $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
         $description = null;
 
         // create new rss instance

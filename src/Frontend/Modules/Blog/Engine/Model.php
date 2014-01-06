@@ -61,7 +61,7 @@ class Model implements FrontendTagsInterface
 
         // image?
         if (isset($return['image'])) {
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
             foreach ($folders as $folder) {
                 $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $return['image'];
@@ -110,9 +110,9 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -264,9 +264,9 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'category');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -376,8 +376,8 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
-        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+        $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
         // loop
         foreach ($items as $key => $row) {
@@ -467,7 +467,7 @@ class Model implements FrontendTagsInterface
 
         // init vars
         $stats = array();
-        $link = FrontendNavigation::getURLForBlock('Blog', 'archive');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
 
@@ -584,8 +584,8 @@ class Model implements FrontendTagsInterface
         // has items
         if (!empty($items)) {
             // init var
-            $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
-            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/blog/images', true);
+            $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
             // reset url
             foreach ($items as &$row) {
@@ -650,7 +650,7 @@ class Model implements FrontendTagsInterface
 
         // init var
         $navigation = array();
-        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/';
+        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/';
 
         // get previous post
         $navigation['previous'] = $db->getRecord(
@@ -721,7 +721,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
 
         // loop comments
         foreach ($comments as &$row) {
@@ -755,7 +755,7 @@ class Model implements FrontendTagsInterface
         }
 
         // get link
-        $link = FrontendNavigation::getURLForBlock('Blog', 'detail');
+        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
 
         // get items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
@@ -920,7 +920,7 @@ class Model implements FrontendTagsInterface
         );
 
         // create URLs
-        $URL = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' .
+        $URL = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
                $comment['post_url'] . '#comment-' . $comment['id'];
         $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
 
@@ -991,7 +991,7 @@ class Model implements FrontendTagsInterface
 
         // prepare items for search
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'detail') . '/' . $item['url'];
+            $item['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $item['url'];
         }
 
         // return

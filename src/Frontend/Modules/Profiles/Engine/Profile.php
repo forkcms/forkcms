@@ -384,8 +384,8 @@ class Profile
         }
 
         // urls
-        $return['url']['dashboard'] = FrontendNavigation::getURLForBlock('profiles');
-        $return['url']['settings'] = FrontendNavigation::getURLForBlock('profiles', 'settings');
+        $return['url']['dashboard'] = FrontendNavigation::getURLForBlock('Profiles');
+        $return['url']['settings'] = FrontendNavigation::getURLForBlock('Profiles', 'Settings');
         $return['url']['url'] = $this->getUrl();
 
         return $return;

@@ -120,7 +120,7 @@ class Model
         }
 
         // create link
-        $tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
+        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
 
         // loop tags
         foreach ($linkedTags as $row) {
@@ -167,7 +167,7 @@ class Model
         }
 
         // create link
-        $tagLink = FrontendNavigation::getURLForBlock('tags', 'detail');
+        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
 
         // loop tags
         foreach ($linkedTags as $row) {

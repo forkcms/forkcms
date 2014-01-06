@@ -27,7 +27,7 @@
 				<p>{$msgNoQuestionsInCategory|ucfirst}</p>
 			{/option:!questions}
 
-			<p><a href="{$var|geturlforblock:'faq'}" title="{$lblToFaqOverview|ucfirst}">{$lblToFaqOverview|ucfirst}</a></p>
+			<p><a href="{$var|geturlforblock:'Faq'}" title="{$lblToFaqOverview|ucfirst}">{$lblToFaqOverview|ucfirst}</a></p>
 		</div>
 	</div>
 </section>

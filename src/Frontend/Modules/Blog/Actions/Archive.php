@@ -95,7 +95,7 @@ class Archive extends FrontendBaseBlock
         if ($this->month !== null && mb_strlen($this->month) != 2) {
             $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
             $this->redirect(
-                FrontendNavigation::getURLForBlock('Blog', 'archive') . '/' . $this->year . '/' . str_pad(
+                FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
                     $this->month,
                     2,
                     '0',
@@ -137,7 +137,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'archive') . '/' . $url;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
         $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
@@ -172,7 +172,7 @@ class Archive extends FrontendBaseBlock
         // get RSS-link
         $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
 
         // add RSS-feed

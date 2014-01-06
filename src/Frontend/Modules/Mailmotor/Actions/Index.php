@@ -65,7 +65,7 @@ class Index extends FrontendBaseBlock
         $this->dataGrid->setSortParameter('desc');
 
         // set column URLs
-        $this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
+        $this->dataGrid->setColumnURL('name', FrontendNavigation::getURLForBlock('Mailmotor', 'Detail') . '/[id]');
 
         // set column functions
         $this->dataGrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);

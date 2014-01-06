@@ -98,7 +98,7 @@ class Index extends FrontendBaseBlock
         // get RSS-link
         $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
         if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'rss');
+            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
 
         // add RSS-feed
