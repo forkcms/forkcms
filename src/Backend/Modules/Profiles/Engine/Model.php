@@ -562,7 +562,7 @@ class Model
 
         // get settings
         $nickname = $user['display_name'];
-        $allowed = BackendAuthentication::isAllowedAction('edit', 'profiles');
+        $allowed = BackendAuthentication::isAllowedAction('Edit', 'Profiles');
 
         // get avatar
         $avatar = self::getAvatar($id, $user['email']);

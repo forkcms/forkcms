@@ -96,7 +96,7 @@ class Categories extends BackendBaseActionIndex
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('add_category') && $this->multipleCategoriesAllowed) {
+        if(BackendAuthentication::isAllowedAction('AddCategory') && $this->multipleCategoriesAllowed) {
             $this->tpl->assign('showFaqAddCategory', true);
         } else $this->tpl->assign('showFaqAddCategory', false);
     }

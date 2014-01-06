@@ -133,7 +133,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // edit search index
-                BackendSearchModel::saveIndex('faq', $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
+                BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);

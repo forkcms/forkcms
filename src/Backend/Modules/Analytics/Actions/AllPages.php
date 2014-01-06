@@ -163,7 +163,7 @@ class AllPages extends BackendAnalyticsBase
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule())) {
+            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
             }
 

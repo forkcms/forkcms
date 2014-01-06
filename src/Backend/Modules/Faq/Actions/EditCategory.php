@@ -77,7 +77,7 @@ class EditCategory extends BackendBaseActionEdit
 
         // assign the data
         $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('showFaqDeleteCategory', BackendFaqModel::deleteCategoryAllowed($this->id) && BackendAuthentication::isAllowedAction('delete_category'));
+        $this->tpl->assign('showFaqDeleteCategory', BackendFaqModel::deleteCategoryAllowed($this->id) && BackendAuthentication::isAllowedAction('DeleteCategory'));
     }
 
     /**

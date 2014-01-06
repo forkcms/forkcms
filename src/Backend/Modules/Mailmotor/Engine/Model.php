@@ -101,7 +101,7 @@ class Model
         $warnings = array();
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('settings', 'Mailmotor')) {
+        if (BackendAuthentication::isAllowedAction('Settings', 'Mailmotor')) {
             // analytics session token
             if (BackendModel::getModuleSetting('Mailmotor', 'cm_account') == false) {
                 $warnings[] = array(

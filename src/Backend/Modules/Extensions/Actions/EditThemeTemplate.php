@@ -85,7 +85,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         if($this->record['id'] == BackendModel::getModuleSetting('Pages', 'default_template')) $deleteAllowed = false;
         elseif(count(BackendExtensionsModel::getTemplates()) == 1) $deleteAllowed = false;
         elseif($inUse) $deleteAllowed = false;
-        elseif(!BackendAuthentication::isAllowedAction('delete_theme_template')) $deleteAllowed = false;
+        elseif(!BackendAuthentication::isAllowedAction('DeleteThemeTemplate')) $deleteAllowed = false;
 
         // assign
         $this->tpl->assign('inUse', $inUse);

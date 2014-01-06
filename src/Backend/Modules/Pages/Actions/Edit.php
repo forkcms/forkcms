@@ -536,7 +536,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // allowed?
-        if (!BackendAuthentication::isAllowedAction('delete', $this->getModule())) {
+        if (!BackendAuthentication::isAllowedAction('Delete', $this->getModule())) {
             $showDelete = false;
         }
 

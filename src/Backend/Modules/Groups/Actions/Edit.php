@@ -266,7 +266,7 @@ class Edit extends BackendBaseActionEdit
         $this->dataGridUsers = new BackendDataGridDB(BackendGroupsModel::QRY_ACTIVE_USERS, array($this->id, 'N'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('edit', 'users')) {
+        if(BackendAuthentication::isAllowedAction('Edit', 'Users')) {
             // add columns
             $this->dataGridUsers->addColumn('nickname', \SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
             $this->dataGridUsers->addColumn('surname', \SpoonFilter::ucfirst(BL::lbl('Surname')), null, BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=[id]');
@@ -400,7 +400,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('groupName', $this->record['name']);
 
         // only allow deletion of empty groups
-        $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('delete'));
+        $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('Delete'));
     }
 
     /**

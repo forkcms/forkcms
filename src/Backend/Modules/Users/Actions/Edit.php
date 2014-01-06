@@ -87,7 +87,7 @@ class Edit extends BackendBaseActionEdit
 
         // redirect to error page when not allowed to edit other profiles
         if (!$this->authenticatedUser->isGod() &&
-            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('index'))
+            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Index'))
         ) {
             $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
         }
@@ -193,7 +193,7 @@ class Edit extends BackendBaseActionEdit
         // only allow deletion of other users
         $this->tpl->assign(
             'showUsersDelete',
-            $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('delete')
+            $this->authenticatedUser->getUserId() != $this->id && BackendAuthentication::isAllowedAction('Delete')
         );
 
         // assign

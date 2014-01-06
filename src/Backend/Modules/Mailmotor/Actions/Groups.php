@@ -66,7 +66,7 @@ class Groups extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
-        if (BackendAuthentication::isAllowedAction('addresses')) {
+        if (BackendAuthentication::isAllowedAction('Addresses')) {
             // set column URLs
             $this->dataGrid->setColumnURL('name', BackendModel::createURLForAction('Addresses') . '&amp;group_id=[id]');
         }

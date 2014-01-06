@@ -110,7 +110,7 @@ class Index extends BackendBaseActionIndex
         else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
         // check if data action is allowed
-        if(BackendAuthentication::isAllowedAction('data', 'FormBuilder')) {
+        if(BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
             // output
             $output = '<a href="' . BackendModel::createURLForAction('Data') .
                       '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';

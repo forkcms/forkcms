@@ -140,7 +140,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->tpl->assign('name', $this->currentModule);
         $this->tpl->assign('warnings', $this->warnings);
         $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showExtensionsInstallModule', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('install_module'));
+        $this->tpl->assign('showExtensionsInstallModule', !BackendModel::isModuleInstalled($this->currentModule) && BackendAuthentication::isAllowedAction('InstallModule'));
 
         // data grids
         $this->tpl->assign('dataGridEvents', (isset($this->dataGridEvents) && $this->dataGridEvents->getNumResults() > 0) ? $this->dataGridEvents->getContent() : false);

@@ -589,7 +589,7 @@ class Model
 
             // add
             BackendSearchModel::saveIndex(
-                'pages',
+                'Pages',
                 (int) $page['id'],
                 array('title' => $page['title'], 'text' => $text),
                 $to
@@ -727,7 +727,7 @@ class Model
         }
 
         // delete tags
-        BackendTagsModel::saveTags($id, '', 'pages');
+        BackendTagsModel::saveTags($id, '', 'Pages');
 
         // return
         return true;

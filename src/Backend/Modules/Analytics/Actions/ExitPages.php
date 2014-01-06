@@ -107,8 +107,8 @@ class ExitPages extends BackendAnalyticsBase
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('detail_page', $this->getModule())) {
-                $dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
+            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+                $dataGrid->setColumnURL('page', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
             // parse the datagrid

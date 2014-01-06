@@ -148,7 +148,7 @@ class Template extends \SpoonTemplate
             }
 
             // check if this action is allowed
-            if(Authentication::isAllowedAction('edit', 'users')) {
+            if(Authentication::isAllowedAction('Edit', 'Users')) {
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
