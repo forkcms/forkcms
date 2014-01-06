@@ -76,12 +76,6 @@ class Config extends \KernelLoader
 
         $this->module = (string) $module;
 
-        // check if model exists
-        if (is_file(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php')) {
-            // the model exists, so we require it
-            require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
-        }
-
         // read the possible actions based on the files
         $this->setPossibleActions();
     }
