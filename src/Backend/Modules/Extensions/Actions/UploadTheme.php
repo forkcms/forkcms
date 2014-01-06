@@ -52,7 +52,7 @@ class UploadTheme extends BackendBaseActionAdd
     private function isWritable()
     {
         // check if writable
-        if(!BackendExtensionsModel::isWritable(FRONTEND_PATH . '/themes')) return false;
+        if(!BackendExtensionsModel::isWritable(FRONTEND_PATH . '/Themes')) return false;
 
         // everything is writeable
         return true;
