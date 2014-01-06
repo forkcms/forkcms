@@ -129,7 +129,7 @@ class Page extends FrontendBaseObject
 
         // trigger event
         Model::triggerEvent(
-            'core',
+            'Core',
             'after_page_processed',
             array(
                  'id' => $this->getId(),

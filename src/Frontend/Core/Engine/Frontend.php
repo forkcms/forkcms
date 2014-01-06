@@ -77,7 +77,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
             $this->getContainer()->set('facebook', $facebook);
 
             // trigger event
-            FrontendModel::triggerEvent('core', 'after_facebook_initialization');
+            FrontendModel::triggerEvent('Core', 'after_facebook_initialization');
         }
     }
 }

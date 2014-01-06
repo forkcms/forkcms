@@ -480,7 +480,7 @@ class Form extends FrontendBaseWidget
 
                 // trigger event
                 FrontendModel::triggerEvent(
-                    'form_builder',
+                    'FormBuilder',
                     'after_submission',
                     array(
                          'form_id' => $this->item['id'],
