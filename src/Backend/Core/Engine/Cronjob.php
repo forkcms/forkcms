@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpFoundation\Response;
 use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Core\Engine\Language as FrontendLanguage;
 
 /**
  * This class will handle cronjob related stuff
@@ -48,46 +49,23 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
      */
     protected function execute()
     {
+        $this->loadConfig();
+
         // build action-class-name
-        $actionClassName = 'Backend' . \SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
-
-        if($this->getModule() == 'core') {
-            // check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-            if(!is_file(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php')) {
-                // set correct headers
-                \SpoonHTTP::setHeadersByCode(500);
-
-                // throw exception
-                throw new Exception('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
-            }
-
-            // require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
-            require_once BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php';
-        } else {
-            // check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-            if(!is_file(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php')) {
-                // set correct headers
-                \SpoonHTTP::setHeadersByCode(500);
-
-                // throw exception
-                throw new Exception('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
-            }
-
-            // require the config file, we know it is there because we validated it before (possible actions are defined by existence of the file).
-            require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php';
-        }
+        $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Cronjobs\\' . $this->getAction();
+        if($this->getModule() == 'Core') $actionClass = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClassName)) {
+        if(!class_exists($actionClass)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(500);
 
             // throw exception
-            throw new Exception('The cronjobfile is present, but the classname should be: ' . $actionClassName . '.');
+            throw new Exception('The cronjobfile is present, but the classname should be: ' . $actionClass . '.');
         }
 
         // create action-object
-        $this->cronjob = new $actionClassName($this->getKernel());
+        $this->cronjob = new $actionClass($this->getKernel());
         $this->cronjob->setModule($this->getModule());
         $this->cronjob->setAction($this->getAction());
     }
@@ -133,10 +111,10 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
         if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
         // set the module
-        $this->setModule(\SpoonFilter::getGetValue('module', null, ''));
+        $this->setModule(\SpoonFilter::toCamelCase(\SpoonFilter::getGetValue('module', null, '')));
 
         // set the requested file
-        $this->setAction(\SpoonFilter::getGetValue('action', null, ''));
+        $this->setAction(\SpoonFilter::toCamelCase(\SpoonFilter::getGetValue('action', null, '')));
 
         // set the language
         $this->setLanguage(\SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
@@ -160,6 +138,36 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
     }
 
     /**
+     * Load the config file for the requested module.
+     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * Other configurations will be stored in it also.
+     */
+    public function loadConfig()
+    {
+        // check if module path is not yet defined
+        if(!defined('BACKEND_MODULE_PATH')) {
+            // build path for core
+            if($this->getModule() == 'Core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
+
+            // build path to the module and define it. This is a constant because we can use this in templates.
+            else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+        }
+
+        // check if we can load the config file
+        $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+        if($this->getModule() == 'Core') $configClass = 'Backend\\Core\\Config';
+
+        // validate if class exists (aka has correct name)
+        if(!class_exists($configClass)) throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+
+        // create config-object, the constructor will do some magic
+        $this->config = new $configClass($this->getKernel(), $this->getModule());
+
+        // set action
+        $action = ($this->config->getDefaultAction() !== null) ? $this->config->getDefaultAction() : 'Index';
+    }
+
+    /**
      * Set the action
      *
      * We can't rely on the parent setModule function, because a cronjob requires no login
@@ -174,16 +182,6 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
 
         // check if module is set
         if($this->getModule() === null) throw new Exception('Module has not yet been set.');
-
-        // path to look for actions based on the module
-        if($this->getModule() == 'core') $path = BACKEND_CORE_PATH . '/cronjobs';
-        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs';
-
-        // check if file exists
-        if(!is_file($path . '/' . $action . '.php')) {
-            \SpoonHTTP::setHeadersByCode(403);
-            throw new Exception('Action not allowed.');
-        }
 
         // set property
         $this->action = (string) $action;
