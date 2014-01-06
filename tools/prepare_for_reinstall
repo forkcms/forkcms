@@ -5,24 +5,24 @@
 # @version	1.0.0
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
-rm -f `find ../install/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ../frontend/cache/cached_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/minified_css/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/minified_js/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../frontend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ../backend/cache/analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/compiled_templates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ../backend/cache/logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ../src/Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
 rm -f ../app/config/parameters.yml
 
