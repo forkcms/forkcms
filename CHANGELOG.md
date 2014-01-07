@@ -17,7 +17,7 @@ Bugfixes:
 * Urls containing md threw a 403 forbidden error.
 * Syntax error in FrontendBlockWidget fixed.
 * Some ajax files gave a syntax error as a result of merge conflicts.
-
+* Mailmotor: Form token for widget fixed.
 
 3.6.5 (2013-10-09)
 --
