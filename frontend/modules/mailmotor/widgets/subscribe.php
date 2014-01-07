@@ -36,5 +36,6 @@ class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 		$this->frm->addText('email')
 			->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->parse($this->tpl);
+		$this->tpl->assign('formToken', $this->frm->getToken());
 	}
 }
