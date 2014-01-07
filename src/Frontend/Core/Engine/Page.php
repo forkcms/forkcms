@@ -169,7 +169,7 @@ class Page extends FrontendBaseObject
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
             'cookieBarHide',
-            (!Model::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
+            (!Model::getModuleSetting('Core', 'show_cookie_bar', false) || \CommonCookie::hasHiddenCookieBar())
         );
 
         // the the positions to the template
