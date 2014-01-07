@@ -10,6 +10,7 @@ namespace Backend\Modules\Analytics\Engine;
  */
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
@@ -239,7 +240,7 @@ class Model
         // file exists
         if(is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
             // get the xml (cast is important otherwise we cant use array_walk_recursive)
-            $xml = simplexml_load_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename, '\SimpleXMLElement', LIBXML_NOCDATA);
 
             // parse xml to array
             return self::parseXMLToArray($xml);
@@ -879,10 +880,10 @@ class Model
     /**
      * Parse a XML object to an array and cast all fields to their corresponding types
      *
-     * @param SimpleXMLElement $xml The simpleXML to convert to an array.
+     * @param \SimpleXMLElement $xml The simpleXML to convert to an array.
      * @return array
      */
-    private static function parseXMLToArray(SimpleXMLElement $xml)
+    private static function parseXMLToArray(\SimpleXMLElement $xml)
     {
         $data = array();
         $xml = (array) $xml;
