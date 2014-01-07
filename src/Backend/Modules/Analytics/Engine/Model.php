@@ -1037,7 +1037,7 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'analytics_pages',
-            array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')),
+            array('date_viewed' => \SpoonDate::getDate('Y-m-d H:i:s')),
             'id = ?',
             array((int) $pageId)
         );
