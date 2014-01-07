@@ -16,6 +16,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the themes-action, it will display the overview of modules.
