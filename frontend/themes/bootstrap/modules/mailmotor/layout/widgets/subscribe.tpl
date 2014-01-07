@@ -6,6 +6,7 @@
 			</label>
 			<div class="controls">
 				<input type="hidden" name="form" value="subscribe" />
+                <input type="hidden" name="form_token" id="formToken" value="{$formToken}" />
 				<input type="email" value="" id="email" name="email" class="inputText" />
 				<input id="send" class="btn" type="submit" name="send" value="{$lblSubscribe|ucfirst}" />
 			</div>
