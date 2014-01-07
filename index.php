@@ -25,7 +25,7 @@ $installer = dirname(__FILE__) . '/src/Install/Cache';
 $request = Request::createFromGlobals();
 if (file_exists($installer) &&
     is_dir($installer) &&
-    !file_exists($installer . '/installed.txt') &&
+    !file_exists($installer . '/Installed.txt') &&
     substr($request->getRequestURI(), 0, 8) != '/install'
 ) {
     // check .htaccess
