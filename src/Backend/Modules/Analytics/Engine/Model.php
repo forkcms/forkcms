@@ -1012,7 +1012,7 @@ class Model
         // check if this action is allowed
         if(BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
             // redirect to loading page which will get the needed data based on the current action
-            SpoonHTTP::redirect(BackendModel::createURLForAction('Loading') . '&redirect_action=' . $action . $extraParameters);
+            \SpoonHTTP::redirect(BackendModel::createURLForAction('Loading') . '&redirect_action=' . $action . $extraParameters);
         }
     }
 
