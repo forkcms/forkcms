@@ -43,6 +43,9 @@ class Model
             }
         }
 
+        // Multiple modules can return the same errors.
+        $warnings = array_unique($warnings, SORT_REGULAR);
+
         return (array) $warnings;
     }
 }
