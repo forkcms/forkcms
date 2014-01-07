@@ -9,6 +9,8 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Exception as BackendException;
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -80,7 +82,7 @@ class Cronjob extends Object
 
         // check if file exists
         if(!is_file($path . '/' . $action . '.php')) {
-            SpoonHTTP::setHeadersByCode(403);
+            \SpoonHTTP::setHeadersByCode(403);
             throw new BackendException('Action not allowed.');
         }
 
@@ -113,10 +115,11 @@ class Cronjob extends Object
             // check the counter
             if($counter > 9) {
                 // build class name
-                $className = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
+                $class = 'Backend\\Modules\\' . $this->getModule() . '\\Cronjobs\\' . $this->getAction();
+                if($this->getModule() == 'Core') $class = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
 
                 // notify user
-                throw new BackendException('Cronjob (' . $className . ') is still busy after 10 runs, check it out!');
+                throw new BackendException('Cronjob (' . $class . ') is still busy after 10 runs, check it out!');
             }
         }
 
@@ -146,7 +149,7 @@ class Cronjob extends Object
         $modules = BackendModel::getModulesOnFilesystem();
         if(!in_array($module, $modules)) {
             // set correct headers
-            SpoonHTTP::setHeadersByCode(403);
+            \SpoonHTTP::setHeadersByCode(403);
 
             // throw exception
             throw new BackendException('Module not allowed.');
