@@ -16,12 +16,17 @@
  * Create a Kernel and load the DI container to be able to access the Backend Model methods and
  * the configuration. This should be refactored in time.
  */
-require '../../../../../../../autoload.php';
-require '../../../../../../../app/AppKernel.php';
-require '../../../../../../../app/KernelLoader.php';
+require '../../../../../../../../autoload.php';
+require '../../../../../../../../app/AppKernel.php';
+require '../../../../../../../../app/KernelLoader.php';
 $kernel = new AppKernel();
 $loader = new KernelLoader($kernel);
 $loader->passContainerToModels();
+
+// after registring autoloaders, let's add use statements for our needed classes
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This function must check the user session to be sure that he/she is
@@ -31,7 +36,7 @@ $loader->passContainerToModels();
  */
 function CheckAuthentication()
 {
-	return BackendAuthentication::isLoggedIn();
+    return BackendAuthentication::isLoggedIn();
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be fully functional, in demo mode.
@@ -49,8 +54,8 @@ $baseUrl : the base path used to build the final URL for the resources handled
 in CKFinder. If empty, the default value (/userfiles/) is used.
 
 Examples:
-	$baseUrl = 'http://example.com/ckfinder/files/';
-	$baseUrl = '/userfiles/';
+    $baseUrl = 'http://example.com/ckfinder/files/';
+    $baseUrl = '/userfiles/';
 
 ATTENTION: The trailing slash is required.
 */
@@ -62,14 +67,14 @@ above $baseUrl URL. This is the path used by CKFinder to handle the files in
 the server. Full write permissions must be granted to this directory.
 
 Examples:
-	// You may point it to a directory directly:
-	$baseDir = '/home/login/public_html/ckfinder/files/';
-	$baseDir = 'C:/SiteDir/CKFinder/userfiles/';
+    // You may point it to a directory directly:
+    $baseDir = '/home/login/public_html/ckfinder/files/';
+    $baseDir = 'C:/SiteDir/CKFinder/userfiles/';
 
-	// Or you may let CKFinder discover the path, based on $baseUrl.
-	// WARNING: resolveUrl() *will not work* if $baseUrl does not start with a slash ("/"),
-	// for example if $baseDir is set to  http://example.com/ckfinder/files/
-	$baseDir = resolveUrl($baseUrl);
+    // Or you may let CKFinder discover the path, based on $baseUrl.
+    // WARNING: resolveUrl() *will not work* if $baseUrl does not start with a slash ("/"),
+    // for example if $baseDir is set to  http://example.com/ckfinder/files/
+    $baseDir = resolveUrl($baseUrl);
 
 ATTENTION: The trailing slash is required.
 */
@@ -84,21 +89,21 @@ Thumbnails : thumbnails settings. All thumbnails will end up in the same
 directory, no matter the resource type.
 */
 $config['Thumbnails'] = array(
-	'url' => $baseUrl . '_thumbs',
-	'directory' => $baseDir . '_thumbs',
-	'enabled' => true,
-	'directAccess' => true,
-	'maxWidth' => 96,
-	'maxHeight' => 96,
-	'bmpSupported' => false,
-	'quality' => 100
+    'url' => $baseUrl . '_thumbs',
+    'directory' => $baseDir . '_thumbs',
+    'enabled' => true,
+    'directAccess' => true,
+    'maxWidth' => 96,
+    'maxHeight' => 96,
+    'bmpSupported' => false,
+    'quality' => 100
 );
 
 // set the maximum size of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = array(
-	'maxWidth' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width'),
-	'maxHeight' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height'),
-	'quality' => 100
+    'maxWidth' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width'),
+    'maxHeight' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height'),
+    'quality' => 100
 );
 
 /*
@@ -117,25 +122,25 @@ AccessControl : used to restrict access or features to specific folders.
 Many "AccessControl" entries can be added. All attributes are optional.
 Subfolders inherit their default settings from their parents' definitions.
 
-	- The "role" attribute accepts the special '*' value, which means
-	  "everybody".
-	- The "resourceType" attribute accepts the special value '*', which
-	  means "all resource types".
+    - The "role" attribute accepts the special '*' value, which means
+      "everybody".
+    - The "resourceType" attribute accepts the special value '*', which
+      means "all resource types".
 */
 $config['AccessControl'][] = array(
-	'role' => '*',
-	'resourceType' => '*',
-	'folder' => '/',
+    'role' => '*',
+    'resourceType' => '*',
+    'folder' => '/',
 
-	'folderView' => true,
-	'folderCreate' => true,
-	'folderRename' => true,
-	'folderDelete' => true,
+    'folderView' => true,
+    'folderCreate' => true,
+    'folderRename' => true,
+    'folderDelete' => true,
 
-	'fileView' => true,
-	'fileUpload' => true,
-	'fileRename' => true,
-	'fileDelete' => true
+    'fileView' => true,
+    'fileUpload' => true,
+    'fileRename' => true,
+    'fileDelete' => true
 );
 
 /*
@@ -149,21 +154,21 @@ maxSize is defined in bytes, but shorthand notation may be also used. Available 
 $config['DefaultResourceTypes'] = '';
 
 $config['ResourceType'][] = array(
-	'name' => 'Files',
-	'url' => $baseUrl . 'files',
-	'directory' => $baseDir . 'files',
-	'maxSize' => 0,
-	'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,xml,zip',
-	'deniedExtensions' => ''
+    'name' => 'Files',
+    'url' => $baseUrl . 'files',
+    'directory' => $baseDir . 'files',
+    'maxSize' => 0,
+    'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,xml,zip',
+    'deniedExtensions' => ''
 );
 
 $config['ResourceType'][] = array(
-	'name' => 'Images',
-	'url' => $baseUrl . 'images',
-	'directory' => $baseDir . 'images',
-	'maxSize' => 0,
-	'allowedExtensions' => 'gif,jpeg,jpg,png',
-	'deniedExtensions' => ''
+    'name' => 'Images',
+    'url' => $baseUrl . 'images',
+    'directory' => $baseDir . 'images',
+    'maxSize' => 0,
+    'allowedExtensions' => 'gif,jpeg,jpg,png',
+    'deniedExtensions' => ''
 );
 
 /*
@@ -172,12 +177,12 @@ $config['ResourceType'][] = array(
 
  How does it work? Suppose the following:
 
-	- If "php" is on the denied extensions list, a file named foo.php cannot be
-	  uploaded.
-	- If "rar" (or any other) extension is allowed, one can upload a file named
-	  foo.rar.
-	- The file foo.php.rar has "rar" extension so, in theory, it can be also
-	  uploaded.
+    - If "php" is on the denied extensions list, a file named foo.php cannot be
+      uploaded.
+    - If "rar" (or any other) extension is allowed, one can upload a file named
+      foo.rar.
+    - The file foo.php.rar has "rar" extension so, in theory, it can be also
+      uploaded.
 
 In some conditions Apache can treat the foo.php.rar file just like any PHP
 script and execute it.
@@ -199,11 +204,11 @@ $config['DisallowUnsafeCharacters'] = false;
 If you have iconv enabled (visit http://php.net/iconv for more information),
 you can use this directive to specify the encoding of file names in your
 system. Acceptable values can be found at:
-	http://www.gnu.org/software/libiconv/
+    http://www.gnu.org/software/libiconv/
 
 Examples:
-	$config['FilesystemEncoding'] = 'CP1250';
-	$config['FilesystemEncoding'] = 'ISO-8859-2';
+    $config['FilesystemEncoding'] = 'CP1250';
+    $config['FilesystemEncoding'] = 'ISO-8859-2';
 */
 $config['FilesystemEncoding'] = 'UTF-8';
 
