@@ -45,7 +45,7 @@
 }
 
 	#fullwidthSwitch.collapsed {
-		background: #EAEAEA url(/backend/core/layout/images/close_w.gif) no-repeat -6px center;
+		background: #EAEAEA url(/src/Backend/Core/Layout/images/close_w.gif) no-repeat -6px center;
 	}
 
 	#fullwidthSwitch a {
@@ -168,7 +168,7 @@
 
 .templateVisual td:empty,
 .templateVisual td.empty {
-	background: #EEE url(/backend/core/layout/images/na.png) repeat;
+	background: #EEE url(/src/Backend/Core/Layout/images/na.png) repeat;
 	border: 1px solid #CCC;
 }
 
@@ -271,7 +271,7 @@
 
 		#templateVisualLarge td.empty,
 		#templateVisualFallback td.empty {
-			background: #EEE url(/backend/core/layout/images/na.png) repeat;
+			background: #EEE url(/src/Backend/Core/Layout/images/na.png) repeat;
 			box-shadow: 0 0 0 1px #ddd inset;
 			padding: 10px;
 		}
