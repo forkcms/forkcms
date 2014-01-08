@@ -20,8 +20,9 @@ class BackendSitemapGenerator
 	protected $indexes;
 	protected $languages;
 	protected $navigations;
-	protected $types = array('page', 'meta', 'footer');
+	protected $types = array('page', 'meta', 'footer', 'root');
 	protected $pageTypesToSkip = array('error', 'hidden');
+	protected $modulesToSkip = array('search', 'tags', 'mailmotor');
 	protected $nonImplementedModules = array();
 	protected $implementedModules = array();
 
@@ -62,8 +63,11 @@ class BackendSitemapGenerator
 		$module = $this->getModuleExtra($page);
 		$modulePages = array();
 
+		// go away when module is already implemented
+		if($this->isModuleImplemented($module, $language)) return;
+
 		// continue only if a module has been found
-		if($module && !$this->isModuleImplemented($module, $language))
+		if($module)
 		{
 			// get correct class name for that module
 			$class = $this->getClassName($module);
@@ -125,14 +129,19 @@ class BackendSitemapGenerator
 	 */
 	protected function addNonImplementedModule($module)
 	{
-		// redefine incoming params
-		$module = array('name' => (string) $module);
-
-		// add module to array if it doesn't exist yes, this
-		// is needed because we're handling multi languages
-		if(!in_array($module, $this->nonImplementedModules))
+		// we don't want to get notified for modules
+		// we will never create a sitemap for
+		if(!in_array($module, $this->modulesToSkip))
 		{
-			$this->nonImplementedModules[] = $module;
+			// redefine incoming params
+			$module = array('name' => (string) $module);
+
+			// add module to array if it doesn't exist yes, this
+			// is needed because we're handling multi languages
+			if(!in_array($module, $this->nonImplementedModules))
+			{
+				$this->nonImplementedModules[] = $module;
+			}
 		}
 	}
 
@@ -390,7 +399,6 @@ class BackendSitemapGenerator
 		// check if array exists for that language
 		if(!empty($this->implementedModules[$language]))
 		{
-
 			$result = in_array($module, $this->implementedModules[$language]);
 		}
 

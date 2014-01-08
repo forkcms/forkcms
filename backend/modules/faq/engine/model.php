@@ -14,8 +14,9 @@
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jonas Goderis <jonas.goderis@wijs.be>
  */
-class BackendFaqModel
+class BackendFaqModel implements BackendSitemapInterface
 {
 	const QRY_DATAGRID_BROWSE =
 		'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
@@ -523,4 +524,130 @@ class BackendFaqModel
 		$db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 	}
+
+	/**
+	 * SITEMAP INTERFACE IMPLEMENTATION
+	 */
+
+	/**
+	 * Get image sitemap for companies
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getImageSitemap($language)
+	{
+		return array();
+	}
+
+	/**
+	 * Get sitemap for companies
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getSitemap($language)
+	{
+		// redefine some vars
+		$language = (string) $language;
+
+		// default array with index page in it
+		$pages = array(
+			array('loc' => SITE_URL . BackendModel::getURLForBlock('faq', null, $language))
+		);
+
+		// get the categories pages
+		$pages = array_merge($pages, self::getCategoriesForSitemap($language));
+
+		// get the detail pages
+		$pages = array_merge($pages, self::getQuestionsForSitemap($language));
+
+		return $pages;
+	}
+
+	/**
+	 * Get the categories urls for sitemap
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getCategoriesForSitemap($language)
+	{
+		// db instance
+		$db = BackendModel::getContainer()->get('database');
+		$categories = array();
+
+		$items = (array) $db->getRecords(
+			'SELECT DISTINCT m.url
+			 FROM faq_categories AS c
+			 INNER JOIN faq_questions AS b ON b.category_id = c.id
+			 INNER JOIN meta AS m ON m.id = c.meta_id
+			 WHERE c.language = ?',
+			array((string) $language)
+		);
+
+		if(!empty($items))
+		{
+			// get detail url
+			$categoryUrl = BackendModel::getURLForBlock('faq', 'category', $language);
+
+			// create array for the xml sitemap
+			foreach($items as $item)
+			{
+				$categories[] = array(
+					'loc' => SITE_URL . $categoryUrl . '/' . $item['url']
+				);
+			}
+		}
+
+		return $categories;
+	}
+
+	/**
+	 * Get the questions for the sitemap
+	 *
+	 * @param string $language
+	 *
+	 * @return array
+	 */
+	public static function getQuestionsForSitemap($language)
+	{
+		// db instance
+		$db = BackendModel::getContainer()->get('database');
+		$questions = array();
+
+		$items = (array) $db->getRecords(
+			'SELECT UNIX_TIMESTAMP(b.created_on) AS created_on, m.url
+			 FROM faq_questions AS b
+			 INNER JOIN meta AS m ON m.id = b.meta_id
+			 WHERE b.language = ? AND b.hidden = ?
+			 ORDER BY b.created_on DESC',
+			array((string) $language, 'N')
+		);
+
+		if(!empty($items))
+		{
+			// get detail url
+			$detailUrl = BackendModel::getURLForBlock('faq', 'detail', $language);
+
+			// create array for the xml sitemap
+			foreach($items as $item)
+			{
+				// create last modification date
+				$lastMod = new DateTime();
+				$lastMod->setTimestamp($item['edited_on']);
+
+				$questions[] = array(
+					'loc' => SITE_URL . $detailUrl . '/' . $item['url'],
+					'lastmod' => $lastMod->format('Y-m-d')
+				);
+			}
+		}
+
+		return $questions;
+	}
+
 }

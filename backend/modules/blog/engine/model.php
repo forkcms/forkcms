@@ -14,6 +14,7 @@
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Jonas Goderis <jonas.goderis@wijs.be>
  */
 class BackendBlogModel implements BackendSitemapInterface
 {
