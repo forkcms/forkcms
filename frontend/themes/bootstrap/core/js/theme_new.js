@@ -170,7 +170,12 @@
     };
 
     DefaultTheme.prototype.setFocus = function(hash) {
-      return $(hash).find('.nonVisibleAnchor').focus();
+      if ($(hash).find('.nonVisibleAnchor').length > 0) {
+        return $(hash).find('.nonVisibleAnchor').focus();
+      } else {
+        console.log("Dear developer, watch out, you have not set a .nonVisibleAnchor! (Don't forget to remove this console.log when you've set all hidden anchors)");
+        return false;
+      }
     };
 
     return DefaultTheme;

@@ -1,0 +1,55 @@
+/* Headings */
+
+h1,h2,h3,h4,h5,h6 {
+  @if ($boldFontFamily) {
+    font-weight: 100;
+    font-family: $boldFontFamily;
+  }
+  @else {
+    font-weight: 500;
+  }
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+
+/* Links */
+
+a {
+
+
+  &:hover,
+  &:focus {
+
+  }
+
+  &:focus {
+
+  }
+
+  &:active {
+
+  }
+}

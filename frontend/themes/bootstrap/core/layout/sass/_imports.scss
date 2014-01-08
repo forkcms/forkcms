@@ -1,5 +1,5 @@
 /* Configuration */
-@import "_variables";
+//@import "_variables";
 
 /* Some imports */
 
@@ -7,16 +7,11 @@
 //@import "compass_twitter_bootstrap";
 //@import "compass_twitter_bootstrap_responsive";
 
-@import "_bootstrap";
+@import "backbone/_bootstrap";
 @import "compass/css3";
 @import "compass/typography";
 @import "compass/utilities";
 @import "compass_sumo";
 
 /* Usefull mixins */
-@import "_fonts";
-//@import "_icon-sprites";
-//@import "_halfling-icon-sprites";
-//@import "_icons";
-//@import "_halfling-icons";
-@import "_sumo";
+@import "backbone/_sumo";

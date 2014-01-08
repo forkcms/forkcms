@@ -1,3 +1,7 @@
+body {
+  padding: 0;
+}
+
 .hideText {
 	@include squish-text;
 }
@@ -45,3 +49,17 @@
 	background-position: 5px center;
 	padding-left: 30px;
 }
+
+/* Marketing content */
+.marketing { text-align: center; }
+.marketing h2 { font-weight: normal; }
+.marketing .span4 p { margin-left: 10px; margin-right: 10px; }
+
+/* Featurettes */
+
+.featurette-divider { margin: 80px 0; }
+.featurette { padding-top: 120px; overflow: hidden; }
+.featurette-image { margin-top: -120px; }
+.featurette-image.pull-left { margin-right: 40px; }
+.featurette-image.pull-right { margin-left: 40px; }
+.featurette-heading { font-size: 50px; font-weight: 300; line-height: 1; letter-spacing: -1px; }
