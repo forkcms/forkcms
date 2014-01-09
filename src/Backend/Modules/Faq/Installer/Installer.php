@@ -128,7 +128,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Faq', 'EditCategory');
         $this->setActionRights(1, 'Faq', 'DeleteCategory');
         $this->setActionRights(1, 'Faq', 'SequenceQuestions');
-        $this->setActionRights(1, 'Faq', 'ProcessFeedback');
         $this->setActionRights(1, 'Faq', 'DeleteFeedback');
         $this->setActionRights(1, 'Faq', 'Settings');
 
