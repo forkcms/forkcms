@@ -286,7 +286,7 @@ class Settings extends BackendBaseActionEdit
                 // there are accounts
                 if(!empty($accounts)) {
                     // sort accounts
-                    uksort($accounts, array('BackendAnalyticsSettings', 'sortAccounts'));
+                    uksort($accounts, array(__CLASS__, 'sortAccounts'));
 
                     // create form
                     $this->frmLinkProfile = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
