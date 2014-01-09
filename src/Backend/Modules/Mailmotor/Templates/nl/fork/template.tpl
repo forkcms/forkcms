@@ -10,7 +10,7 @@
 					<td align="center" valign="top">
 						<table border="0" cellpadding="0" cellspacing="0" width="540" style="background-color:#ffffff;" bgcolor="#ffffff">
 							<tr>
-								<td height="72" valign="center" bgcolor="#fafafa" background="{$siteURL}/backend/modules/mailmotor/templates/nl/fork/images/header.gif" style="background: #fafafa url({$siteURL}/backend/modules/mailmotor/templates/nl/fork/images/header.gif);background-repeat: repeat-y no-repeat;">
+								<td height="72" valign="center" bgcolor="#fafafa" background="{$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif" style="background: #fafafa url({$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/header.gif);background-repeat: repeat-y no-repeat;">
 									<table id="header" border="0" cellpadding="0" cellspacing="0">
 										<tr>
 											<td width="32">
@@ -108,7 +108,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td height="40" valign="center" bgcolor="#fafafa" background="{$siteURL}/backend/modules/mailmotor/templates/nl/fork/images/footer.gif" style="background: #fafafa url({$siteURL}/backend/modules/mailmotor/templates/nl/fork/images/footer.gif) no-repeat;">
+								<td height="40" valign="center" bgcolor="#fafafa" background="{$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif" style="background: #fafafa url({$siteURL}/src/Backend/Modules/Mailmotor/Templates/nl/fork/images/footer.gif) no-repeat;">
 									<table id="footer" border="0" cellpadding="0" cellspacing="0">
 										<tr>
 											<td width="32">
