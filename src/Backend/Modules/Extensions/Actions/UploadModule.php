@@ -146,13 +146,13 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // installer in array?
-        if(!in_array('Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
+        if(!in_array('src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
             return;
         }
 
         // unpack module files
-        $zip->extractTo(PATH_WWW . '/src', $files);
+        $zip->extractTo(PATH_WWW, $files);
 
         // run installer
         BackendExtensionsModel::installModule($moduleName, $warnings);
