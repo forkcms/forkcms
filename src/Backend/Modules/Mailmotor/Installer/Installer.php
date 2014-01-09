@@ -157,7 +157,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Mailmotor', 'MassGroupAction');
         $this->setActionRights(1, 'Mailmotor', 'MassMailingAction');
         $this->setActionRights(1, 'Mailmotor', 'SaveContent');
-        $this->setActionRights(1, 'Mailmotor', 'SaveSendCate');
+        $this->setActionRights(1, 'Mailmotor', 'SaveSendDate');
         $this->setActionRights(1, 'Mailmotor', 'SendMailing');
         $this->setActionRights(1, 'Mailmotor', 'Settings');
         $this->setActionRights(1, 'Mailmotor', 'Statistics');
