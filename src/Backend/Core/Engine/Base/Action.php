@@ -10,6 +10,7 @@ namespace Backend\Core\Engine\Base;
  */
 
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
