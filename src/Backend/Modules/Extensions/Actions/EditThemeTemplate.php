@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 
 /**
  * This is the edit-action, it will display a form to edit an item
