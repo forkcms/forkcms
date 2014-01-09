@@ -61,7 +61,7 @@ class Step7 extends Step
         // loop types
         foreach ($types as $type) {
             // default module
-            $modules = array('core');
+            $modules = array('Core');
 
             // continue output
             $value .= "\n";
