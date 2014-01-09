@@ -73,30 +73,26 @@ class Edit extends BackendBaseActionEdit
 
         // loop modules
         foreach ($modules as $module) {
-            // check if their is a model-file
-            if (is_file(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php')) {
-                // require the model-file
-                require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
 
-                // build class name
-                $className = \SpoonFilter::toCamelCase('backend_' . $module . '_model');
+            // build class name
+            $className = 'Backend\\Modules\\' . $module . '\\Engine\\Model';
+            if($module == 'Core') $className = 'Backend\\Core\\Engine\\Model';
 
-                // check if the getByTag-method is available
-                if (is_callable(array($className, 'getByTag'))) {
-                    // make the call and get the item
-                    $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
+            // check if the getByTag-method is available
+            if (is_callable(array($className, 'getByTag'))) {
+                // make the call and get the item
+                $moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
 
-                    // loop items
-                    foreach ($moduleItems as $row) {
-                        // check if needed fields are available
-                        if (isset($row['url'], $row['name'], $row['module'])) {
-                            // add
-                            $items[] = array(
-                                'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
-                                'name' => $row['name'],
-                                'url' => $row['url']
-                            );
-                        }
+                // loop items
+                foreach ($moduleItems as $row) {
+                    // check if needed fields are available
+                    if (isset($row['url'], $row['name'], $row['module'])) {
+                        // add
+                        $items[] = array(
+                            'module' => \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module']))),
+                            'name' => $row['name'],
+                            'url' => $row['url']
+                        );
                     }
                 }
             }
