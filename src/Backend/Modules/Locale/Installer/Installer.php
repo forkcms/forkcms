@@ -49,7 +49,6 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Locale', 'Edit');
         $this->setActionRights(1, 'Locale', 'ExportAnalyse');
         $this->setActionRights(1, 'Locale', 'Index');
-        $this->setActionRights(1, 'Locale', 'MassAction');
         $this->setActionRights(1, 'Locale', 'SaveTranslation');
         $this->setActionRights(1, 'Locale', 'Export');
         $this->setActionRights(1, 'Locale', 'Import');
