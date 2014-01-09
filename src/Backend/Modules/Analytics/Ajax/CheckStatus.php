@@ -51,7 +51,7 @@ class CheckStatus extends BackendBaseAJAXAction
 
                 // return status
                 $this->output(self::OK, array('status' => false), 'Temporary file was missing. We created one.');
-                }
+            }
 
             // busy status
             elseif(strpos($status, 'busy') !== false) {

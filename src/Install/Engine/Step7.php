@@ -100,7 +100,7 @@ class Step7 extends Step
         // store
         $fs = new Filesystem();
         $fs->dumpFile(
-            PATH_WWW . 'src/' . $application . '/Cache/Locale/' . $language . '.php',
+            PATH_WWW . '/src/' . $application . '/Cache/Locale/' . $language . '.php',
             $value
         );
     }
