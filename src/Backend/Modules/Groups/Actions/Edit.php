@@ -18,6 +18,7 @@ use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
 use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Finder\Finder;
 
 /**
@@ -279,9 +280,9 @@ class Edit extends BackendBaseActionEdit
             $this->dataGridUsers->setColumnsSequence('nickname', 'surname', 'name', 'email');
 
             // show users's name, surname and nickname
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'surname'), 'surname', false);
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'name'), 'name', false);
-            $this->dataGridUsers->setColumnFunction(array('BackendUsersModel', 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
+            $this->dataGridUsers->setColumnFunction(array(new BackendUsersModel(), 'getSetting'), array('[id]', 'surname'), 'surname', false);
+            $this->dataGridUsers->setColumnFunction(array(new BackendUsersModel(), 'getSetting'), array('[id]', 'name'), 'name', false);
+            $this->dataGridUsers->setColumnFunction(array(new BackendUsersModel(), 'getSetting'), array('[id]', 'nickname'), 'nickname', false);
         }
     }
 
