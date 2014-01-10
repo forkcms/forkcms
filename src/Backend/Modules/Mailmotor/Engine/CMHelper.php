@@ -183,7 +183,7 @@ class CMHelper
         $cmId = self::getCampaignMonitorID('campaign', $id);
 
         // get all bounces from CM
-        $bounces = BackendMailmotorCMHelper::getCM()->getCampaignBounces($cmId);
+        $bounces = self::getCM()->getCampaignBounces($cmId);
 
         // get all addresses
         $addresses = BackendMailmotorModel::getAddressesAsPairs();
@@ -464,7 +464,7 @@ class CMHelper
             }
 
             // reset the bounces to match the real ones
-            $bounces = BackendMailmotorCMHelper::getBounces($id);
+            $bounces = self::getBounces($id);
 
             // re-calculate base stats to match CM's
             $stats['bounces'] = count($bounces);

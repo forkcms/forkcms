@@ -54,7 +54,7 @@ class Statistics extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-        $this->header->addJS('highcharts.js', 'core', false);
+        $this->header->addJS('highcharts.js', 'Core', false);
         $this->getData();
         $this->loadDataGrid();
         $this->parse();
