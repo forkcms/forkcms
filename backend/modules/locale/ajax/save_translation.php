@@ -39,7 +39,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'frontend' && $module != 'core')) $error = BL::err('InvalidValue');
 
 		// in case this is a 'act' type, there are special rules concerning possible values
-		if($type == 'act' && !isset($error)) if(urlencode($value) != SpoonFilter::urlise($value)) $error = BL::err('InvalidActionValue', $this->getModule());
+		if($type == 'act' && !isset($error)) if(urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
 
 		// no error?
 		if(!isset($error))
