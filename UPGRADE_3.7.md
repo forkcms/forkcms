@@ -153,3 +153,23 @@ After
         $cmHelper = new MailmotorCMHelper;
         ...
     }
+
+### Misc
+
+* Using backend datagrid functions now requires you to send the class name including namespaces or an instance of the class to work.
+
+Before
+
+    $dg->setColumnFunction('BackendDatagridFunctions', 'getTimeAgo', '[time]', 'time');
+
+After
+
+    use Backend\Core\Engine\DatagridFunctions;
+
+    ...
+    $dg->setColumnFunction(new DatagridFunctions(), 'getTimeAgo', '[time]', 'time');
+
+or
+
+    $dg->setColumnFunction('Backend\\Core\\Engine\\DatagridFunctions', 'getTimeAgo', '[time]', 'time');
+
