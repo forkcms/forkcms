@@ -717,10 +717,10 @@ class FrontendTemplateModifiers
 				 WHERE i.module = ? AND i.action = ? AND i.id = ?',
 				array($module, $action, $id)
 			);
-       }
+		}
 
-       // we don't have an id
-       else $data = null;
+		// we don't have an id
+		else $data = null;
 
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
