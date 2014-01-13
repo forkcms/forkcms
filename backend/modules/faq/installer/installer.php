@@ -31,13 +31,43 @@ class FaqInstaller extends ModuleInstaller
 	 */
 	private function addCategory($language, $title, $url)
 	{
+		// db
+		$db = $this->getDB();
+
+		// get sequence for widget
+		$sequenceExtra = $db->getVar(
+			'SELECT MAX(i.sequence) + 1
+			 FROM modules_extras AS i
+			 WHERE i.module = ?',
+			array('faq'));
+
 		// build array
 		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+		$item['extra_id'] = $this->insertExtra('faq', 'widget', 'Faq', 'category_list', null, 'N', $sequenceExtra);
 		$item['language'] = (string) $language;
 		$item['title'] = (string) $title;
 		$item['sequence'] = 1;
 
-		return (int) $this->getDB()->insert('faq_categories', $item);
+		// insert category
+		$item['id'] = (int) $db->insert('faq_categories', $item);
+
+		// build data for widget
+		$extra['data'] = serialize(array(
+			'id' => $item['id'],
+			'extra_label' => 'Category: ' . $item['title'],
+			'language' => $item['language'],
+			'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'])
+		);
+
+		// update widget
+		$db->update(
+			'modules_extras',
+			$extra,
+			'id = ? AND module = ? AND type = ? AND action = ?',
+			array($item['extra_id'], 'faq', 'widget', 'category_list')
+		);
+
+		return $item['id'];
 	}
 
 	/**
@@ -99,6 +129,9 @@ class FaqInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'settings');
 
 		$faqId = $this->insertExtra('faq', 'block', 'Faq');
+
+		// Register widgets
+		// Category faq widgets will be added on the fly
 		$this->insertExtra('faq', 'widget', 'MostReadQuestions', 'most_read');
 		$this->insertExtra('faq', 'widget', 'AskOwnQuestion', 'own_question');
 
@@ -131,10 +164,15 @@ class FaqInstaller extends ModuleInstaller
 				 array($faqId, $language)))
 			{
 				// insert page
-				$this->insertPage(array('title' => 'FAQ',
-										'language' => $language),
-									null,
-									array('extra_id' => $faqId));
+				$this->insertPage(
+					array(
+						'title' => 'FAQ',
+						'language' => $language
+					),
+					null,
+					array(
+						 'extra_id' => $faqId)
+				);
 			}
 		}
 

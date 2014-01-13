@@ -642,7 +642,7 @@ jsFrontend.search =
 }
 
 /**
- * Gravatar related javascript
+ * Google analytics related javascript
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -662,19 +662,41 @@ jsFrontend.statistics =
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
-				return (typeof obj.href != 'undefined' && !obj.href.match(/^mailto\:/) && (obj.hostname != location.hostname));
+				return (typeof obj.href != 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname);
 			};
 
 			// bind on all links that don't have the class noTracking
 			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
-				var $this = $(this);
-				var link = $this.attr('href');
-				var title = $this.attr('title');
-				if(typeof title == 'undefined' || title == '') title = $this.html();
+				// only simulate direct links
+				var hasTarget = (typeof $(this).attr('target') != 'undefined');
+				if(!hasTarget) e.preventDefault();
+
+				var link = $(this).attr('href');
+
+				// outbound link by default
+				var type = 'Outbound Links';
+				var pageView = '/Outbound Links/' + link;
+
+				// set mailto
+				if(link.match(/^mailto:/))
+				{
+					type = 'Mailto';
+					pageView = '/Mailto/' + link.substring(7);
+				}
+
+				// set anchor
+				if(link.match(/^#/))
+				{
+					type = 'Anchors';
+					pageView = '/Anchor/' + link.substring(1);
+				}
 
 				// track in Google Analytics
-				_gaq.push(['_trackEvent', 'Outbound Links', link, title]);
+				_gaq.push(['_trackEvent', type, pageView]);
+
+				// set time out
+				if(!hasTarget) setTimeout(function() { document.location.href = link; }, 100);
 			});
 		}
 	}

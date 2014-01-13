@@ -72,8 +72,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		// load the settings from the general settings
 		if(empty($this->settings))
 		{
-			$settings = BackendModel::getModuleSettings();
-			$settings = $settings['location'];
+			$settings = BackendModel::getModuleSettings('location');
 
 			$this->settings['width'] = $settings['width_widget'];
 			$this->settings['height'] = $settings['height_widget'];

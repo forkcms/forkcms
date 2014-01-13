@@ -13,6 +13,7 @@
         <translation language="hu"><![CDATA[A CampaignMonitor összekapcsolva a Fork-kal.]]></translation>
         <translation language="es"><![CDATA[Tu cuenta CampaignMonitor esta ahora vinculada a Fork.]]></translation>
         <translation language="uk"><![CDATA[Вдале з'єдання з Успешное соединение с CampaignMonitor.]]></translation>
+        <translation language="el"><![CDATA[Ο λογαριασμός σας στο CampaignMonitor συνδέθηκε τώρα με το Fork.]]></translation>
       </item>
       <item type="message" name="AddMultipleEmails">
         <translation language="en"><![CDATA[add multiple email addresses by using a comma (,) as a delimiter]]></translation>
@@ -25,6 +26,7 @@
         <translation language="hu"><![CDATA[több címzett vesszővel (,) elválasztva]]></translation>
         <translation language="es"><![CDATA[añade multiples email direcciones usado una coma (,) como separador]]></translation>
         <translation language="uk"><![CDATA[Можна додати декілька адресб розділяючи їх комою (,)]]></translation>
+        <translation language="el"><![CDATA[Προσθέσατε πολλαπλές διευθύνσεις email με χρήση του κόμμα (,) ως διαχωριστικού.]]></translation>
       </item>
       <item type="message" name="BackToCampaigns">
         <translation language="en"><![CDATA[Back to campaign overview]]></translation>
@@ -37,6 +39,7 @@
         <translation language="de"><![CDATA[Zurück zur Kampagnenübersicht]]></translation>
         <translation language="es"><![CDATA[Volver al resumen de la campaña]]></translation>
         <translation language="uk"><![CDATA[Повернутись до огляду кампанії]]></translation>
+        <translation language="el"><![CDATA[Πίσω στην προεπισκόπιση της καμπάνιας]]></translation>
       </item>
       <item type="message" name="BackToMailings">
         <translation language="en"><![CDATA[Back to mailings overview]]></translation>
@@ -49,6 +52,7 @@
         <translation language="de"><![CDATA[Zurück zur Newsletterübersicht]]></translation>
         <translation language="es"><![CDATA[volver al resumen de envios]]></translation>
         <translation language="uk"><![CDATA[Повернутись до огляду розсилок]]></translation>
+        <translation language="el"><![CDATA[Πίσω στην προεπισκόπηση ταχυδρομήσεων]]></translation>
       </item>
       <item type="message" name="BackToStatistics">
         <translation language="en"><![CDATA[Back to statistics for &ldquo;%1$s&rdquo;]]></translation>
@@ -61,6 +65,7 @@
         <translation language="de"><![CDATA[Zurück zu den Statistiken für "%1$s"]]></translation>
         <translation language="es"><![CDATA[Volver a las estadisticas para &ldquo;%1$s&rdquo;]]></translation>
         <translation language="uk"><![CDATA[Повернутись до статистики “%1$s”]]></translation>
+        <translation language="el"><![CDATA[Πίσω στα στατιστικά γιά &ldquo;%1$s&rdquo;]]></translation>
       </item>
       <item type="message" name="CampaignAdded">
         <translation language="en"><![CDATA[The campaign has been added successfully.]]></translation>
@@ -73,6 +78,7 @@
         <translation language="de"><![CDATA[Die Kampagne wurde erfolgreich hinzugefügt.]]></translation>
         <translation language="es"><![CDATA[La campaña ha sido agregada con éxito.]]></translation>
         <translation language="uk"><![CDATA[Кампанію додано.]]></translation>
+        <translation language="el"><![CDATA[Η καμπάνια προστέθηκε επιτυχώς.]]></translation>
       </item>
       <item type="message" name="CampaignEdited">
         <translation language="en"><![CDATA[The campaign has been edited successfully.]]></translation>
@@ -85,6 +91,7 @@
         <translation language="de"><![CDATA[Die Kampagne wurde erfolgreich bearbeitet.]]></translation>
         <translation language="es"><![CDATA[La campaña ha sido editada con éxito.]]></translation>
         <translation language="uk"><![CDATA[Кампанія змінена]]></translation>
+        <translation language="el"><![CDATA[Οι μεταβολέ στην καμπάνια έγιναν με επιτυχία.]]></translation>
       </item>
       <item type="message" name="CampaignMailings">
         <translation language="en"><![CDATA[mailings in this campaign]]></translation>
@@ -97,6 +104,7 @@
         <translation language="de"><![CDATA[Newsletter in dieser Kampagne]]></translation>
         <translation language="es"><![CDATA[envios en esta campaña]]></translation>
         <translation language="uk"><![CDATA[Розсилки в цій кампанії]]></translation>
+        <translation language="el"><![CDATA[Ταχυδρομήσεις σε αυτή την ]]></translation>
       </item>
       <item type="message" name="ClickedLinks">
         <translation language="en"><![CDATA[ontvangers hebben op links geklikt.]]></translation>
@@ -109,6 +117,7 @@
         <translation language="de"><![CDATA[Empfänger haben Links angeklickt.]]></translation>
         <translation language="es"><![CDATA[destinatarios que han hecho click en el enlace.]]></translation>
         <translation language="uk"><![CDATA[Переходів по посиланням]]></translation>
+        <translation language="el"><![CDATA[Σύνδεσμοι που κλικαρίστηκαν]]></translation>
       </item>
       <item type="message" name="ClicksAmount">
         <translation language="en"><![CDATA[number of clicks]]></translation>
@@ -120,6 +129,7 @@
         <translation language="de"><![CDATA[Klick-Anzahl]]></translation>
         <translation language="hu"><![CDATA[klikkek száma]]></translation>
         <translation language="es"><![CDATA[número de clicks]]></translation>
+        <translation language="el"><![CDATA[Πλήθος κλικαρισμάτων]]></translation>
       </item>
       <item type="message" name="ClicksBreakdown">
         <translation language="en"><![CDATA[%1$s of opened]]></translation>
@@ -131,6 +141,7 @@
         <translation language="hu"><![CDATA[%1$s nyitott]]></translation>
         <translation language="de"><![CDATA[%1$s der geöffneten]]></translation>
         <translation language="es"><![CDATA[%1$s abiertos]]></translation>
+        <translation language="el"><![CDATA[%1$s που ανοίχτηκαν]]></translation>
       </item>
       <item type="message" name="ClicksOpened">
         <translation language="en"><![CDATA[times opened]]></translation>
@@ -142,6 +153,7 @@
         <translation language="de"><![CDATA[mal geöffnet]]></translation>
         <translation language="hu"><![CDATA[alkalommal megnyitva]]></translation>
         <translation language="es"><![CDATA[veces abierto]]></translation>
+        <translation language="el"><![CDATA[Φορές που ανοίχτηκε]]></translation>
       </item>
       <item type="message" name="ClientLinked">
         <translation language="en"><![CDATA[The client &ldquo;%1$s&rdquo; is now linked to Fork.]]></translation>
@@ -153,6 +165,7 @@
         <translation language="de"><![CDATA[Der Kunde "%1$s" ist jetzt mit Fork verknüpft.]]></translation>
         <translation language="hu"><![CDATA[A(z) “%1$s” kliens összekapcsolva a Fork-kal.]]></translation>
         <translation language="es"><![CDATA[El cliente &ldquo;%1$s&rdquo; está vinculada ahora a Fork.]]></translation>
+        <translation language="el"><![CDATA[Ο πελάτης &ldquo;%1$s&rdquo; είναι τώρα συνδεδεμένος με το Fork.]]></translation>
       </item>
       <item type="message" name="CreateGroupByAddresses">
         <translation language="en"><![CDATA[Create a new group with the addresses below.]]></translation>
@@ -164,6 +177,7 @@
         <translation language="hu"><![CDATA[Új csoport létrehozása az alábbi címen.]]></translation>
         <translation language="de"><![CDATA[Erstelle eine Gruppe mit der untenstehenden Adresse.]]></translation>
         <translation language="es"><![CDATA[Crear un nuevo grupo con las diguientes direcciones.]]></translation>
+        <translation language="el"><![CDATA[Δημιουργία νέας ομάδας με τις παρακάτω διευθύνσεις.]]></translation>
       </item>
       <item type="message" name="DefaultGroup">
         <translation language="en"><![CDATA[Selecting a language here will mark this as the default group for that language. This means visitors who subscribe to your mailinglist in this language version of your website will end up in this group. Only one default group can be set for each language.]]></translation>
@@ -175,6 +189,7 @@
         <translation language="fr"><![CDATA[Choisir un language ici en fera le language du groupe par défaut. Ceci veut dire que les visiteurs qui s'abonneront à votre mailing list dans ce language seront dirigés vers ce groupe. Seul un groupe peut être assigné pour chaque language.]]></translation>
         <translation language="de"><![CDATA[Das wählen einer Sprache definiert diese Gruppe als die Standard-Gruppe für diese Sprache. Das heißt, dass Besucher, die die Website in dieser Sprachversion besuchen und den Newsletter abonnieren in dieser Gruppe landen. Es kann nur eine Standardgruppe pro Sprache gesetzt werden.]]></translation>
         <translation language="es"><![CDATA[Seleccionando una lengua se entrará a formar parte del grupo de defecto de esa lengua. Esto significa que los visitantes que se inscriben al correo list en la versión del sitio en este idioma acabarán en este grupo. Cada lengua puede tener sólo un grupo de defecto.]]></translation>
+        <translation language="el"><![CDATA[Αν επιλέξετε εδώ μία γλώσσα, η ομάδα αυτή θα θεωρείται η εξορισμού ομάδα γιά αυτή τη γλώσσα. Αυτό σημαίνει οτι οι επισκέπτες που εγγράφονται στην ταχυδρομική σας λίστα σε αυτή τη γλώσσα θα τοποθετούνται σε αυτή την ομάδα. Μόνον μία εξορισμού ομάδα μπορεί να οριστεί γιά κάθε γλώσσα.]]></translation>
       </item>
       <item type="message" name="DeleteAddresses">
         <translation language="en"><![CDATA[The address(es) have been deleted successfully.]]></translation>
@@ -186,6 +201,7 @@
         <translation language="hu"><![CDATA[A cím(ek) sikeresen törölve.]]></translation>
         <translation language="fr"><![CDATA[L'adresse a été effacée correctement.]]></translation>
         <translation language="es"><![CDATA[La dirección(es) se han eliminado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Οι διευθύνσεις διεγράφησαν με επιτυχία.]]></translation>
       </item>
       <item type="message" name="DeleteBounces">
         <translation language="en"><![CDATA[Delete all hard bounces]]></translation>
@@ -197,6 +213,7 @@
         <translation language="fr"><![CDATA[Effacer tous les hard bounces]]></translation>
         <translation language="de"><![CDATA[Lösche alle Bounces.]]></translation>
         <translation language="es"><![CDATA[Eliminar todos los hard bounces]]></translation>
+        <translation language="el"><![CDATA[Διαγραφή όλων των επιστροφών email που συμβαίνουν μόνιμα]]></translation>
       </item>
       <item type="message" name="DeleteCampaigns">
         <translation language="en"><![CDATA[The campaigns have been deleted successfully.]]></translation>
@@ -208,6 +225,7 @@
         <translation language="fr"><![CDATA[Les campagnes ont été effacés correctement.]]></translation>
         <translation language="de"><![CDATA[Die Kampagne wurde erfolgreich gelöscht.]]></translation>
         <translation language="es"><![CDATA[Las campañas se han eliminado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Οι καμπάνιες διεγράφησαν με επιτυχία.]]></translation>
       </item>
       <item type="message" name="DeletedBounces">
         <translation language="en"><![CDATA[The hard bounces for this mailing have been deleted.]]></translation>
@@ -219,6 +237,7 @@
         <translation language="fr"><![CDATA[Les hard bounces pour ce mailing on été effacés.]]></translation>
         <translation language="de"><![CDATA[Die Hard-Bounces für diesen Newsletter wurden gelöscht.]]></translation>
         <translation language="es"><![CDATA[Los hard bounces para estos envios han sido eliminados.]]></translation>
+        <translation language="el"><![CDATA[Οι μόνιμες επιστροφές email γιά αυτή την ταχυδρόμηση διεγράφησαν.]]></translation>
       </item>
       <item type="message" name="DeletedCustomFields">
         <translation language="en"><![CDATA[The custom fields for group &ldquo;%1$s&rdquo; have been deleted successfully.]]></translation>
@@ -230,6 +249,7 @@
         <translation language="fr"><![CDATA[Les champs personnalisés pour le groupe &ldquo;%1$s&rdquo; ont été effacés avec succès.]]></translation>
         <translation language="de"><![CDATA[Die benutzerdefinierten Felder für die Gruppe "%1$s" wurden erfolgreich gelöscht.]]></translation>
         <translation language="es"><![CDATA[Los campos personalizados para el grupo &ldquo;%1$s&rdquo; han sido eliminados con éxito.]]></translation>
+        <translation language="el"><![CDATA[Τα κατασκευασμένα πεδία γιά την ομάδα &ldquo;%1$s&rdquo; διεγράφησαν επιτυχώς.]]></translation>
       </item>
       <item type="message" name="DeleteGroups">
         <translation language="en"><![CDATA[The groups have been deleted successfully.]]></translation>
@@ -241,6 +261,7 @@
         <translation language="fr"><![CDATA[Les groupes ont été effacés correctement.]]></translation>
         <translation language="de"><![CDATA[Die Gruppen wurden erfolgreich gelöscht.]]></translation>
         <translation language="es"><![CDATA[Los grupos han sido eliminados con éxito.]]></translation>
+        <translation language="el"><![CDATA[Οι ομάδες διεγράφησαν με επιτυχία.]]></translation>
       </item>
       <item type="message" name="DeleteMailings">
         <translation language="en"><![CDATA[The mailings have been deleted successfully.]]></translation>
@@ -252,6 +273,7 @@
         <translation language="fr"><![CDATA[Les mailings ont été effacés correctement.]]></translation>
         <translation language="de"><![CDATA[Die Newsletter wurden erfolgreich gelöscht.]]></translation>
         <translation language="es"><![CDATA[Los envios han sido eliminados con éxito.]]></translation>
+        <translation language="el"><![CDATA[Οι λίστες παραληπτών διεγράφησαν με επιτυχία.]]></translation>
       </item>
       <item type="message" name="EditMailingCampaign">
         <translation language="en"><![CDATA[Edit campaign]]></translation>
@@ -263,6 +285,7 @@
         <translation language="fr"><![CDATA[éditer la campagne]]></translation>
         <translation language="de"><![CDATA[Kampagne bearbeiten]]></translation>
         <translation language="es"><![CDATA[Editar campaña]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή καμπάνιας]]></translation>
       </item>
       <item type="message" name="ExportFailed">
         <translation language="en"><![CDATA[Export failed.]]></translation>
@@ -274,6 +297,7 @@
         <translation language="hu"><![CDATA[Sikertelen exportálás.]]></translation>
         <translation language="fr"><![CDATA[L'export a échoué.]]></translation>
         <translation language="es"><![CDATA[Exportado fallado.]]></translation>
+        <translation language="el"><![CDATA[Η εξαγωγή απέτυχε.]]></translation>
       </item>
       <item type="message" name="GroupAdded">
         <translation language="en"><![CDATA[The group has been added successfully.]]></translation>
@@ -285,6 +309,7 @@
         <translation language="hu"><![CDATA[A csoport sikeresen hozzáadva.]]></translation>
         <translation language="fr"><![CDATA[Le groupe a été ajouté avec succès.]]></translation>
         <translation language="es"><![CDATA[El grupo ha sido agregado correctamente.]]></translation>
+        <translation language="el"><![CDATA[Η ομάδα προσετέθη με επιτυχία.]]></translation>
       </item>
       <item type="message" name="GroupsImported">
         <translation language="en"><![CDATA[%1$s group(s) and %2$s email-addresses were imported from CampaignMonitor. Don't forget to select a default group for each language!]]></translation>
@@ -307,6 +332,7 @@
         <translation language="fr"><![CDATA[Ce groupe contient "%1$s" adresse(s).]]></translation>
         <translation language="de"><![CDATA[Diese Gruppe beinhaltet %1$s Adresse(n).]]></translation>
         <translation language="es"><![CDATA[Este grupo contiene %1$s dirección(es).]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ομάδα περιέχει  %1$s διευθύνσεις.]]></translation>
       </item>
       <item type="message" name="HelpCMURL">
         <translation language="en"><![CDATA[The URL of the CampaignMonitor API for your account. (ex. *.createsend.com)]]></translation>
@@ -338,6 +364,8 @@
         <translation language="de"><![CDATA[z.B. 0.01]]></translation>
         <translation language="es"><![CDATA[ej. 0.01]]></translation>
         <translation language="hu"><![CDATA[pl. 0.01]]></translation>
+        <translation language="el"><![CDATA[πχ. 0.001]]></translation>
+        <translation language="zh"><![CDATA[例如：0.01]]></translation>
       </item>
       <item type="message" name="ImportedAddresses">
         <translation language="en"><![CDATA[%1$s addresses are imported in %2$s group(s).]]></translation>
@@ -349,6 +377,7 @@
         <translation language="fr"><![CDATA[%1$s adresses sont importées dans %2$s groupe(s).]]></translation>
         <translation language="de"><![CDATA[%1$s Adressen in %2$s Gruppe(n) wurden importiert]]></translation>
         <translation language="es"><![CDATA[%1$s direcciones se han importado %2$s grupo(s).]]></translation>
+        <translation language="el"><![CDATA[%1$s διευθύνσεις εισήχθησαν σε %2$s ομάδες.]]></translation>
       </item>
       <item type="message" name="ImportFailedDownloadCSV">
         <translation language="en"><![CDATA[Download a CSV with the failed addresses <a href="%1$s">here</a>.]]></translation>
@@ -360,6 +389,7 @@
         <translation language="fr"><![CDATA[Télécharger un fichier CSV contenant les adresses erronées <a href="%1$s">ici</a>]]></translation>
         <translation language="de"><![CDATA[Lade eine CSV-Datei mit den fehlgeschlagenen Adressen <a href="%1$s">hier</a> herunter.]]></translation>
         <translation language="es"><![CDATA[Descargar un CSV con las direcciones falladas <a href="%1$s">aquí</a>.]]></translation>
+        <translation language="el"><![CDATA[Κατεβάστε ένα αρχείο τύπου CSV με τις διευθύνσεις που απέτυχαν <a href="%1$s">εδώ</a>.]]></translation>
       </item>
       <item type="message" name="ImportGroups">
         <translation language="en"><![CDATA[Fork has found the following groups in Campaignmonitor]]></translation>
@@ -371,6 +401,7 @@
         <translation language="fr"><![CDATA[Fork a trouvé les gromupes suivants dans CampaignMonitor]]></translation>
         <translation language="de"><![CDATA[Fork hat die folgenden Gruppen im CampaignMonitor gefunden]]></translation>
         <translation language="es"><![CDATA[Fork ha encontrado los siguientes grupos en Campaignmonitor]]></translation>
+        <translation language="el"><![CDATA[Το Fork βρήκε τις ακόλουθες ομάδες στο Campaignmonitor.]]></translation>
       </item>
       <item type="message" name="ImportGroupsTitle">
         <translation language="en"><![CDATA[Import groups from CampaignMonitor]]></translation>
@@ -393,6 +424,7 @@
         <translation language="hu"><![CDATA[Nem minden cím lett importálva.]]></translation>
         <translation language="fr"><![CDATA[Toutes les adresses e-mail n'ont pas été importées.]]></translation>
         <translation language="es"><![CDATA[No todas las direcciones han sido importadas.]]></translation>
+        <translation language="el"><![CDATA[Δεν εισήχθησαν όλες οι διευθύνσης.]]></translation>
       </item>
       <item type="message" name="LinkCMAccount">
         <translation language="en"><![CDATA[Link CampaignMonitor account]]></translation>
@@ -404,6 +436,7 @@
         <translation language="fr"><![CDATA[Lier votre compte CampaignMonitor.]]></translation>
         <translation language="de"><![CDATA[Verbinde CampaignMonitor-Konto]]></translation>
         <translation language="es"><![CDATA[Vincular cuenta CampaignMonitor]]></translation>
+        <translation language="el"><![CDATA[Σύνδεση του λογαριασμού στο Campaignmonitor.]]></translation>
       </item>
       <item type="message" name="MailingAdded">
         <translation language="en"><![CDATA[The mailing has been added successfully.]]></translation>
@@ -415,6 +448,7 @@
         <translation language="fr"><![CDATA[Le mailing a été ajouté avec succès.]]></translation>
         <translation language="de"><![CDATA[Der Newsletter wurde erfolgreich hinzugefügt.]]></translation>
         <translation language="es"><![CDATA[El boletin ha sido agregado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Η ταχυδρόμηση προστέθηκε με επιτυχία.]]></translation>
       </item>
       <item type="message" name="MailingConfirmSend">
         <translation language="en"><![CDATA[Are you sure you want to send the mailing?]]></translation>
@@ -426,6 +460,7 @@
         <translation language="fr"><![CDATA[Etes-vous sûr de vouloir envoyer ce mailing ?]]></translation>
         <translation language="de"><![CDATA[Willst du den Newsletter wirklich verschicken?]]></translation>
         <translation language="es"><![CDATA[¿Estás seguro de que quieres enviar el envio?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να αποστείλετε αυτή την ταχυδρόμηση;]]></translation>
       </item>
       <item type="message" name="MailingConfirmTitle">
         <translation language="en"><![CDATA[Send this mailing.]]></translation>
@@ -437,6 +472,7 @@
         <translation language="fr"><![CDATA[Envoyer ce mailing.]]></translation>
         <translation language="de"><![CDATA[Versende diesen Newsletter.]]></translation>
         <translation language="es"><![CDATA[Enviar este envio.]]></translation>
+        <translation language="el"><![CDATA[Αποστολή αυτής της ταχυδρόμησης.]]></translation>
       </item>
       <item type="message" name="MailingCopied">
         <translation language="en"><![CDATA[The mailing &ldquo;%1$s&rdquo; has been copied successfully.]]></translation>
@@ -448,6 +484,7 @@
         <translation language="fr"><![CDATA[Le mailing &ldquo;%1$s&rdquo; a été copié avec succès.]]></translation>
         <translation language="de"><![CDATA[Der Newsletter "%1$s" wurde erfolgreich kopiert.]]></translation>
         <translation language="es"><![CDATA[El envio &ldquo;%1$s&rdquo; ha sido copiado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Η ταχυδρόμηση &ldquo;%1$s&rdquo; αντιγράφηκε με επιτυχία.]]></translation>
       </item>
       <item type="message" name="MailingCSVBounces">
         <translation language="en"><![CDATA[bounces]]></translation>
@@ -459,6 +496,7 @@
         <translation language="fr"><![CDATA[rebonds]]></translation>
         <translation language="de"><![CDATA[Bounces]]></translation>
         <translation language="es"><![CDATA[rebotes]]></translation>
+        <translation language="el"><![CDATA[Επιστροφές email]]></translation>
       </item>
       <item type="message" name="MailingCSVBouncesPercentage">
         <translation language="en"><![CDATA[% bounces]]></translation>
@@ -470,6 +508,7 @@
         <translation language="fr"><![CDATA[% rebonds]]></translation>
         <translation language="de"><![CDATA[% Bounces]]></translation>
         <translation language="es"><![CDATA[% rebotes]]></translation>
+        <translation language="el"><![CDATA[Ποσοστό % επιστροφών email]]></translation>
       </item>
       <item type="message" name="MailingCSVOpens">
         <translation language="en"><![CDATA[opened mailings]]></translation>
@@ -481,6 +520,7 @@
         <translation language="fr"><![CDATA[mailings ouverts]]></translation>
         <translation language="de"><![CDATA[geöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[envios abiertos]]></translation>
+        <translation language="el"><![CDATA[Ανοικτές ταχυδρομήσεις]]></translation>
       </item>
       <item type="message" name="MailingCSVRecipients">
         <translation language="en"><![CDATA[total sent mailings]]></translation>
@@ -492,6 +532,7 @@
         <translation language="fr"><![CDATA[total de mailings envoyés]]></translation>
         <translation language="de"><![CDATA[Total versendete Newsletter]]></translation>
         <translation language="es"><![CDATA[total de envios enviados]]></translation>
+        <translation language="el"><![CDATA[Πλήθος παραληπτών απεσταλμένων ταχυδρομήσεων]]></translation>
       </item>
       <item type="message" name="MailingCSVUniqueOpens">
         <translation language="en"><![CDATA[uniquely opened mailings]]></translation>
@@ -503,6 +544,7 @@
         <translation language="fr"><![CDATA[mailing ouverts de façon unique]]></translation>
         <translation language="de"><![CDATA[einzigartig geöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[envios abiertos únicos]]></translation>
+        <translation language="el"><![CDATA[Μοναδικές ταχυδρομήσεις που ανοίχθηκαν.]]></translation>
       </item>
       <item type="message" name="MailingCSVUniqueOpensPercentage">
         <translation language="en"><![CDATA[% opened mailings]]></translation>
@@ -514,6 +556,7 @@
         <translation language="fr"><![CDATA[% de mailing ouverts]]></translation>
         <translation language="de"><![CDATA[% geöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[% envios abiertos]]></translation>
+        <translation language="el"><![CDATA[% ανοιγμένες ταχυδρομήσεις.]]></translation>
       </item>
       <item type="message" name="MailingCSVUnopens">
         <translation language="en"><![CDATA[opened mailings]]></translation>
@@ -525,6 +568,7 @@
         <translation language="fr"><![CDATA[mailings non ouverts]]></translation>
         <translation language="de"><![CDATA[ungeöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[envios abiertos]]></translation>
+        <translation language="el"><![CDATA[Ανοιγμένες ταχυδρομήσεις.]]></translation>
       </item>
       <item type="message" name="MailingCSVUnopensPercentage">
         <translation language="en"><![CDATA[% unopened mailings]]></translation>
@@ -536,6 +580,7 @@
         <translation language="fr"><![CDATA[% mailings non ouverts]]></translation>
         <translation language="de"><![CDATA[% ungeöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[% envios no abiertos]]></translation>
+        <translation language="el"><![CDATA[% μη ανοιγμένων ταχυδρομήσεων.]]></translation>
       </item>
       <item type="message" name="MailingCSVUnsubscribes">
         <translation language="en"><![CDATA[unsubscribes]]></translation>
@@ -547,6 +592,7 @@
         <translation language="fr"><![CDATA[désabonnements]]></translation>
         <translation language="de"><![CDATA[Abmeldungen]]></translation>
         <translation language="es"><![CDATA[bajas]]></translation>
+        <translation language="el"><![CDATA[Διαγραφές συνδρομών]]></translation>
       </item>
       <item type="message" name="MailingEdited">
         <translation language="en"><![CDATA[The mailing has been edited successfully.]]></translation>
@@ -558,6 +604,7 @@
         <translation language="fr"><![CDATA[Ce mailing a été édité correctement.]]></translation>
         <translation language="de"><![CDATA[Dieser Newsletter wurde erfolgreich bearbeitet.]]></translation>
         <translation language="es"><![CDATA[El envio ha sido editado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Η ταχυδρόμηση μεταβλήθηκε με επιτυχία.]]></translation>
       </item>
       <item type="message" name="MailingLinks">
         <translation language="en"><![CDATA[links in this mailing]]></translation>
@@ -569,6 +616,7 @@
         <translation language="fr"><![CDATA[liens dans ce mailing]]></translation>
         <translation language="de"><![CDATA[Links in diesem Newsletter]]></translation>
         <translation language="es"><![CDATA[enlaces en este envio]]></translation>
+        <translation language="el"><![CDATA[Σύνδεσμοι μέσα στην ταχυδρόμηση.]]></translation>
       </item>
       <item type="message" name="MailingSent">
         <translation language="en"><![CDATA[The mailing has been sent successfully.]]></translation>
@@ -580,6 +628,7 @@
         <translation language="hu"><![CDATA[A levél sikeresen elküldve.]]></translation>
         <translation language="de"><![CDATA[Der Newsletter wurde erfolgreich versendet.]]></translation>
         <translation language="es"><![CDATA[El envio ha sido enviado con éxito.]]></translation>
+        <translation language="el"><![CDATA[Η ταχυδρόμηση απεστάλη επιτυχώς.]]></translation>
       </item>
       <item type="message" name="NameInternalUseOnly">
         <translation language="en"><![CDATA[This name is for internal use only.]]></translation>
@@ -591,6 +640,7 @@
         <translation language="fr"><![CDATA[Ce nom est valable en interne uniquement.]]></translation>
         <translation language="hu"><![CDATA[Ez a név csak belső használatra.]]></translation>
         <translation language="es"><![CDATA[Este nombre es para uso interno solo.]]></translation>
+        <translation language="el"><![CDATA[Αυτό το όνομα είναι μόνον γιά εσωτερική χρήση.]]></translation>
       </item>
       <item type="message" name="NoClientID">
         <translation language="en"><![CDATA[No CampaignMonitor client has been linked to Fork yet. Choose an existing client from the dropdown]]></translation>
@@ -602,6 +652,7 @@
         <translation language="hu"><![CDATA[A CampaignMonitor kliens nincs még összekapcsolva a Fork-kal. Válassz egy meglébő klienst a legördülő menüből.]]></translation>
         <translation language="de"><![CDATA[Es wurde noch kein CampaignMonitor-Kunde mit Fork verbunden. Wähle einen existierenden Kunden aus dem Dropdown.]]></translation>
         <translation language="es"><![CDATA[Ningun cliente CampaignMonitor ha sido vinculado a Fork aun. elige un cliente del desplegable]]></translation>
+        <translation language="el"><![CDATA[Κανείς πελάτης του CampaignMonitor δεν έχει ακόμη συνδεθεί με το Fork. Επιλέξτε έναν υπάρχοντα πελάτη από την πτυσσόμενη  λίστα.]]></translation>
       </item>
       <item type="message" name="NoDefault">
         <translation language="en"><![CDATA[This is not a default group.]]></translation>
@@ -613,6 +664,7 @@
         <translation language="hu"><![CDATA[Éz nem alapértelmezett csoport.]]></translation>
         <translation language="de"><![CDATA[Das ist keine Standardgruppe.]]></translation>
         <translation language="es"><![CDATA[Este no es un grupo por defecto.]]></translation>
+        <translation language="el"><![CDATA[Αυτή δεν είναι μία ομάδα εξορισμού.]]></translation>
       </item>
       <item type="message" name="NoDefaultsSet">
         <translation language="en"><![CDATA[A default group for a language is the group where visitors end up in when they subscribe through the subscribe-forms on your Fork website. Edit a group and select a language to set it as the default group for that language.]]></translation>
@@ -635,6 +687,7 @@
         <translation language="hu"><![CDATA[Nem minden alapértelmezett csoport állítható még be.]]></translation>
         <translation language="de"><![CDATA[Es sind noch nicht alle Standardgruppen gesetzt.]]></translation>
         <translation language="es"><![CDATA[No todos los gurpos por defecto han sido establecidos aun.]]></translation>
+        <translation language="el"><![CDATA[Δεν έχουν ορισθεί ακόμη όλες οι εξορισμού (αρχικές) ομάδες.]]></translation>
       </item>
       <item type="message" name="NoResultsForFilter">
         <translation language="en"><![CDATA[No results for search term &ldquo;%1$s&rdquo;.]]></translation>
@@ -646,6 +699,7 @@
         <translation language="fr"><![CDATA[Pas de résultat pour le terme recherché  &ldquo;%1$s&rdquo;.]]></translation>
         <translation language="hu"><![CDATA[Nincs keresési találat a “%1$s” kifejezésre.]]></translation>
         <translation language="es"><![CDATA[Sin resultados para el término de busqueda &ldquo;%1$s&rdquo;.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν αποτελέσματα γιά τον όρο αναζήτησης &ldquo;%1$s&rdquo;.]]></translation>
       </item>
       <item type="message" name="NoUnsentMailings">
         <translation language="en"><![CDATA[There are no concepts available.]]></translation>
@@ -657,6 +711,7 @@
         <translation language="fr"><![CDATA[Il n'y a pas de concept disponible.]]></translation>
         <translation language="hu"><![CDATA[Nem áll rendelkezésre koncepció.]]></translation>
         <translation language="es"><![CDATA[No hay conceptos disponibles.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν μη απεσταλμένες ταχυδρομήσεις.]]></translation>
       </item>
       <item type="message" name="NumberOfRecipients">
         <translation language="en"><![CDATA[This group contains %1$s address(es).]]></translation>
@@ -668,6 +723,7 @@
         <translation language="fr"><![CDATA[Ce groupe contient "%1$s" adresse(s).]]></translation>
         <translation language="de"><![CDATA[Diese Gruppe beinhaltet %1$s Adresse(n).]]></translation>
         <translation language="es"><![CDATA[Este grupo contiene %1$s dirección(es).]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ομάδα περιέχει  %1$s διευθύνσεις.]]></translation>
       </item>
       <item type="message" name="PeopleGroups">
         <translation language="en"><![CDATA[These people come from the following groups:]]></translation>
@@ -679,6 +735,7 @@
         <translation language="hu"><![CDATA[Ezek az emberek vannak a csoportban:]]></translation>
         <translation language="de"><![CDATA[Diese Personen kommen aus den folgenden Gruppen:]]></translation>
         <translation language="es"><![CDATA[Estas personas provienen de los siguientes grupos:]]></translation>
+        <translation language="el"><![CDATA[Αυτοί οι άνθρωποι προέρχονται από τις ακόλουθες ομάδες:]]></translation>
       </item>
       <item type="message" name="PlainTextEditable">
         <translation language="en"><![CDATA[Make the textual version of each individual mail adjustable.]]></translation>
@@ -701,6 +758,7 @@
         <translation language="fr"><![CDATA[L'aperçu de l'e-mail a été envoyé à %1$s.]]></translation>
         <translation language="hu"><![CDATA[Az előnézet-levél elküldve %1$s-nek/nak.]]></translation>
         <translation language="es"><![CDATA[La vista previa del mail ha sido enviada a %1$s.]]></translation>
+        <translation language="el"><![CDATA[Το email προεπισκόπισης έχει αποσταλεί σε %1$s.]]></translation>
       </item>
       <item type="message" name="Reason">
         <translation language="en"><![CDATA[reason]]></translation>
@@ -712,6 +770,7 @@
         <translation language="fr"><![CDATA[raison]]></translation>
         <translation language="hu"><![CDATA[indok]]></translation>
         <translation language="es"><![CDATA[razón]]></translation>
+        <translation language="el"><![CDATA[Αιτιολογία]]></translation>
       </item>
       <item type="message" name="RecipientStatisticsCampaign">
         <translation language="en"><![CDATA[You are about to send the mailing "%1$s" from campaign "%2$s" to %3$s %4$s.]]></translation>
@@ -734,6 +793,7 @@
         <translation language="hu"><![CDATA[Elküldöd a(z) "%1$s" levelet %2$s %3$s.]]></translation>
         <translation language="de"><![CDATA[Du bist gerade dabei den Newsletter "%1$s" an %2$s %3$s zu verschicken.]]></translation>
         <translation language="es"><![CDATA[Esta a punto de enviar el envio "%1$s" a %2$s %3$s.]]></translation>
+        <translation language="el"><![CDATA[Είστε έτοιμοι να αποστείλετε την ταχυδρόμηση "%1$s" to %2$s %3$s.]]></translation>
       </item>
       <item type="message" name="ResetCampaigns">
         <translation language="en"><![CDATA[campaigns]]></translation>
@@ -745,6 +805,7 @@
         <translation language="hu"><![CDATA[kampányok]]></translation>
         <translation language="de"><![CDATA[Kampagnen zurücksetzen]]></translation>
         <translation language="es"><![CDATA[campañas]]></translation>
+        <translation language="el"><![CDATA[Καμπάνιες]]></translation>
       </item>
       <item type="message" name="ResetDone">
         <translation language="en"><![CDATA[Don't forget to remove the client in the CampaignMonitor backend if it's no longer to be used.<br />This is done because there is a limit to the number of clients you can add through the API.<br /><br />Use the following client ID if you don't wish to remove your client: <strong>%1$s</strong>]]></translation>
@@ -767,6 +828,7 @@
         <translation language="hu"><![CDATA[csoportok (címmel)]]></translation>
         <translation language="de"><![CDATA[Gruppen (mit Adressen) zurücksetzen]]></translation>
         <translation language="es"><![CDATA[grupos (con direcciones)]]></translation>
+        <translation language="el"><![CDATA[ομάδες (με διευθύνσεις)]]></translation>
       </item>
       <item type="message" name="ResetLabels">
         <translation language="en"><![CDATA[labels]]></translation>
@@ -778,6 +840,7 @@
         <translation language="fr"><![CDATA[étiquettes]]></translation>
         <translation language="hu"><![CDATA[címkék]]></translation>
         <translation language="es"><![CDATA[etiquetas]]></translation>
+        <translation language="el"><![CDATA[Ετικέτες]]></translation>
       </item>
       <item type="message" name="ResetMailings">
         <translation language="en"><![CDATA[mailings]]></translation>
@@ -789,6 +852,7 @@
         <translation language="hu"><![CDATA[levelek]]></translation>
         <translation language="de"><![CDATA[Newsletter zurücksetzen]]></translation>
         <translation language="es"><![CDATA[envios]]></translation>
+        <translation language="el"><![CDATA[λίστες παραληπτών]]></translation>
       </item>
       <item type="message" name="ResetSettings">
         <translation language="en"><![CDATA[module settings]]></translation>
@@ -800,6 +864,7 @@
         <translation language="hu"><![CDATA[modul beállításai]]></translation>
         <translation language="de"><![CDATA[Modul-Einstellungen zurücksetzen]]></translation>
         <translation language="es"><![CDATA[configuración de módulo]]></translation>
+        <translation language="el"><![CDATA[Ρυθμίσεις ενότητας]]></translation>
       </item>
       <item type="message" name="SendOn">
         <translation language="en"><![CDATA[The mailing will be sent on %1$s at %2$s.]]></translation>
@@ -811,6 +876,7 @@
         <translation language="hu"><![CDATA[A levél elküldve %1$s-nak/nek %2$s-kor.]]></translation>
         <translation language="de"><![CDATA[Der Newsletter wird am %1$s um %2$s verschickt.]]></translation>
         <translation language="es"><![CDATA[Los envios seran enviados en %1$s en %2$s.]]></translation>
+        <translation language="el"><![CDATA[Η ταχυδρόμηση θα αποσταλεί την %1$s στις %2$s.]]></translation>
       </item>
       <item type="message" name="TemplateLanguage">
         <translation language="en"><![CDATA[language of the template]]></translation>
@@ -822,6 +888,7 @@
         <translation language="fr"><![CDATA[language du template]]></translation>
         <translation language="hu"><![CDATA[nyelv sablonja]]></translation>
         <translation language="es"><![CDATA[idioma de la plantilla]]></translation>
+        <translation language="el"><![CDATA[Γλώσσα του προτύπου]]></translation>
       </item>
       <item type="message" name="UnlinkCMAccount">
         <translation language="en"><![CDATA[Unlink CampaignMonitor account]]></translation>
@@ -833,6 +900,7 @@
         <translation language="hu"><![CDATA[CampaignMonitor fiók összeköttetés törlése]]></translation>
         <translation language="de"><![CDATA[Verbindung zum CampaignMonitor-Konto entfernen.]]></translation>
         <translation language="es"><![CDATA[Desvincular cuenta CampaignMonitor]]></translation>
+        <translation language="el"><![CDATA[Αποσύνδεση λογαριασμού MailMonitor]]></translation>
       </item>
       <item type="message" name="Unlinked">
         <translation language="en"><![CDATA[The CampaignMonitor account has been unlinked.]]></translation>
@@ -844,6 +912,7 @@
         <translation language="hu"><![CDATA[A CampaignMonitor fiók összeköttetése törölve.]]></translation>
         <translation language="de"><![CDATA[Die Verbindung zum CampaignMonitor-Konto wurde entfernt.]]></translation>
         <translation language="es"><![CDATA[La cuenta CampaignMonitor ha sido desvinculada.]]></translation>
+        <translation language="el"><![CDATA[Ο λογαριασμός MailMonitor έχει αποσυνδεθεί.]]></translation>
       </item>
       <item type="message" name="ViewMailings">
         <translation language="en"><![CDATA[Go to your mailings overview]]></translation>
@@ -855,6 +924,7 @@
         <translation language="hu"><![CDATA[Levelezés áttekintése]]></translation>
         <translation language="de"><![CDATA[Gehe zur Newsletterübersicht.]]></translation>
         <translation language="es"><![CDATA[Ir al resumen de envios]]></translation>
+        <translation language="el"><![CDATA[Πηγαίνετε στην προεπισκόπιση των ταχυδρομήσεων.]]></translation>
       </item>
       <item type="label" name="AddCampaign">
         <translation language="en"><![CDATA[add campaign]]></translation>
@@ -868,6 +938,7 @@
         <translation language="es"><![CDATA[agregar camapaña]]></translation>
         <translation language="uk"><![CDATA[Додати кампанію]]></translation>
         <translation language="lt"><![CDATA[nauja kampanija]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη καμπάνιας]]></translation>
       </item>
       <item type="label" name="AddCustomField">
         <translation language="en"><![CDATA[add custom field]]></translation>
@@ -881,6 +952,7 @@
         <translation language="es"><![CDATA[agregar campo personalizado]]></translation>
         <translation language="uk"><![CDATA[Додати власне поле]]></translation>
         <translation language="lt"><![CDATA[naujas laukelis]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη κατασκευασμένου (custom) πεδίου]]></translation>
       </item>
       <item type="label" name="AddEmail">
         <translation language="en"><![CDATA[add e-mail address]]></translation>
@@ -894,6 +966,7 @@
         <translation language="es"><![CDATA[agregar una dirección e-mail]]></translation>
         <translation language="uk"><![CDATA[Додати e-mail]]></translation>
         <translation language="lt"><![CDATA[naujas el.paštas]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη διεύθυνσης email]]></translation>
       </item>
       <item type="label" name="AddGroup">
         <translation language="en"><![CDATA[add group]]></translation>
@@ -907,6 +980,7 @@
         <translation language="es"><![CDATA[agregar grupo]]></translation>
         <translation language="uk"><![CDATA[Додати групу]]></translation>
         <translation language="lt"><![CDATA[nauja grupė]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη ομάδας]]></translation>
       </item>
       <item type="label" name="AddMailing">
         <translation language="en"><![CDATA[add mailing]]></translation>
@@ -920,6 +994,7 @@
         <translation language="es"><![CDATA[agregar mailing]]></translation>
         <translation language="uk"><![CDATA[Додати розсилку]]></translation>
         <translation language="lt"><![CDATA[naujas naujienlaiškis]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη λίστας παραληπτών]]></translation>
       </item>
       <item type="label" name="AddNewMailing">
         <translation language="en"><![CDATA[create new mailing]]></translation>
@@ -933,6 +1008,7 @@
         <translation language="es"><![CDATA[crear nuevo envio]]></translation>
         <translation language="uk"><![CDATA[Додати розсилку]]></translation>
         <translation language="lt"><![CDATA[sukurti naujienlaiškį]]></translation>
+        <translation language="el"><![CDATA[Δημιουργία νέας λίστας παραληπτών]]></translation>
       </item>
       <item type="label" name="AddressList">
         <translation language="en"><![CDATA[mailinglist]]></translation>
@@ -946,6 +1022,7 @@
         <translation language="es"><![CDATA[lista de mailing]]></translation>
         <translation language="uk"><![CDATA[Адреси]]></translation>
         <translation language="lt"><![CDATA[naujienlaiškis]]></translation>
+        <translation language="el"><![CDATA[Λίστα Παραληπτών]]></translation>
       </item>
       <item type="label" name="BounceRate">
         <translation language="en"><![CDATA[bounce-rate]]></translation>
@@ -959,6 +1036,7 @@
         <translation language="es"><![CDATA[promedio-de-rebotes]]></translation>
         <translation language="uk"><![CDATA[Показник відмов]]></translation>
         <translation language="lt"><![CDATA[atsisakymo-lygis]]></translation>
+        <translation language="el"><![CDATA[Ρυθμός επιστροφών email]]></translation>
       </item>
       <item type="label" name="Campaign">
         <translation language="en"><![CDATA[campaign]]></translation>
@@ -972,6 +1050,7 @@
         <translation language="es"><![CDATA[campaña]]></translation>
         <translation language="uk"><![CDATA[Кампанія]]></translation>
         <translation language="lt"><![CDATA[kampanija]]></translation>
+        <translation language="el"><![CDATA[Καμπάνια (διαφημιστική εκστρατεία)]]></translation>
       </item>
       <item type="label" name="CampaignName">
         <translation language="en"><![CDATA[campaign name]]></translation>
@@ -985,6 +1064,7 @@
         <translation language="es"><![CDATA[nombre de campaña]]></translation>
         <translation language="uk"><![CDATA[Кампанія]]></translation>
         <translation language="lt"><![CDATA[kampanijos pavadinimas]]></translation>
+        <translation language="el"><![CDATA[Όνομα καμπάνιας]]></translation>
       </item>
       <item type="label" name="ChooseTemplate">
         <translation language="en"><![CDATA[choose a template]]></translation>
@@ -998,6 +1078,7 @@
         <translation language="es"><![CDATA[elegir una plantilla]]></translation>
         <translation language="uk"><![CDATA[Обрати шаблон]]></translation>
         <translation language="lt"><![CDATA[pasirikite šabloną]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε ένα πρότυπο]]></translation>
       </item>
       <item type="label" name="ClickRate">
         <translation language="en"><![CDATA[click-rate]]></translation>
@@ -1011,6 +1092,7 @@
         <translation language="es"><![CDATA[promedio de click]]></translation>
         <translation language="uk"><![CDATA[Показник переходів]]></translation>
         <translation language="lt"><![CDATA[paspaudymų-reitingas]]></translation>
+        <translation language="el"><![CDATA[Ρυθμός κλικαρισμάτων]]></translation>
       </item>
       <item type="label" name="Clicks">
         <translation language="en"><![CDATA[clicks]]></translation>
@@ -1024,6 +1106,7 @@
         <translation language="es"><![CDATA[clicks]]></translation>
         <translation language="uk"><![CDATA[Переходи]]></translation>
         <translation language="lt"><![CDATA[paspaudimai]]></translation>
+        <translation language="el"><![CDATA[Κλικαρίσματα]]></translation>
       </item>
       <item type="label" name="Client">
         <translation language="en"><![CDATA[client]]></translation>
@@ -1037,6 +1120,7 @@
         <translation language="es"><![CDATA[cliente]]></translation>
         <translation language="uk"><![CDATA[Клієнт]]></translation>
         <translation language="lt"><![CDATA[klientas]]></translation>
+        <translation language="el"><![CDATA[Πελάτης]]></translation>
       </item>
       <item type="label" name="ClientID">
         <translation language="en"><![CDATA[client ID]]></translation>
@@ -1050,6 +1134,7 @@
         <translation language="es"><![CDATA[ID de cliente]]></translation>
         <translation language="uk"><![CDATA[ID клієнта]]></translation>
         <translation language="lt"><![CDATA[kliento ID]]></translation>
+        <translation language="el"><![CDATA[ID πελάτη]]></translation>
       </item>
       <item type="label" name="CompanyName">
         <translation language="en"><![CDATA[company name]]></translation>
@@ -1063,6 +1148,7 @@
         <translation language="es"><![CDATA[nombre de compañia]]></translation>
         <translation language="uk"><![CDATA[Назва компанії]]></translation>
         <translation language="lt"><![CDATA[įmonės pavadinimas]]></translation>
+        <translation language="el"><![CDATA[Επωνυμία εταιρείας]]></translation>
       </item>
       <item type="label" name="ContactName">
         <translation language="en"><![CDATA[contact]]></translation>
@@ -1076,6 +1162,7 @@
         <translation language="es"><![CDATA[contacto]]></translation>
         <translation language="uk"><![CDATA[Контакти]]></translation>
         <translation language="lt"><![CDATA[vardas]]></translation>
+        <translation language="el"><![CDATA[Επαφή]]></translation>
       </item>
       <item type="label" name="CreateNewClient">
         <translation language="en"><![CDATA[create a new client]]></translation>
@@ -1089,6 +1176,7 @@
         <translation language="es"><![CDATA[crear un nuevo cliente]]></translation>
         <translation language="uk"><![CDATA[Додати клієнта]]></translation>
         <translation language="lt"><![CDATA[naujas klientas]]></translation>
+        <translation language="el"><![CDATA[Δημιουργία νέου πελάτη]]></translation>
       </item>
       <item type="label" name="CustomFields">
         <translation language="en"><![CDATA[custom fields]]></translation>
@@ -1102,6 +1190,7 @@
         <translation language="es"><![CDATA[campos personalizados]]></translation>
         <translation language="uk"><![CDATA[Власні поля]]></translation>
         <translation language="lt"><![CDATA[konfigūruojamas laukelis]]></translation>
+        <translation language="el"><![CDATA[Κατασκευασμένα πεδία]]></translation>
       </item>
       <item type="label" name="EditCampaign">
         <translation language="en"><![CDATA[edit campaign]]></translation>
@@ -1114,6 +1203,7 @@
         <translation language="de"><![CDATA[Kampagne bearbeiten]]></translation>
         <translation language="es"><![CDATA[editar campaña]]></translation>
         <translation language="uk"><![CDATA[Редагувати кампанію]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή καμπάνιας]]></translation>
       </item>
       <item type="label" name="EditCustomField">
         <translation language="en"><![CDATA[edit custom field]]></translation>
@@ -1126,6 +1216,7 @@
         <translation language="hu"><![CDATA[egyéni mező szerkesztése]]></translation>
         <translation language="es"><![CDATA[editar campo personalizado]]></translation>
         <translation language="uk"><![CDATA[Редагувати власне поле]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή κατασκευασμένου πεδίου]]></translation>
       </item>
       <item type="label" name="EditEmail">
         <translation language="en"><![CDATA[edit e-mail address]]></translation>
@@ -1138,6 +1229,7 @@
         <translation language="hu"><![CDATA[e-mail cím szerkesztése]]></translation>
         <translation language="es"><![CDATA[editar dirección e-mail]]></translation>
         <translation language="uk"><![CDATA[Редагувати e-mail]]></translation>
+        <translation language="el"><![CDATA[Αλλαγή διεύθυνσης email]]></translation>
       </item>
       <item type="label" name="EditGroup">
         <translation language="en"><![CDATA[edit group]]></translation>
@@ -1150,6 +1242,7 @@
         <translation language="hu"><![CDATA[csoport szerkesztése]]></translation>
         <translation language="es"><![CDATA[editar grupo]]></translation>
         <translation language="uk"><![CDATA[Редагувати групу]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή ομάδας]]></translation>
       </item>
       <item type="label" name="EditMailingCampaign">
         <translation language="en"><![CDATA[edit campaign]]></translation>
@@ -1162,6 +1255,7 @@
         <translation language="de"><![CDATA[Kampagne bearbeiten]]></translation>
         <translation language="es"><![CDATA[editar campaña]]></translation>
         <translation language="uk"><![CDATA[Редагувати кампанію]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή καμπάνιας με email]]></translation>
       </item>
       <item type="label" name="EmailAddress">
         <translation language="en"><![CDATA[e-mail address]]></translation>
@@ -1174,6 +1268,7 @@
         <translation language="hu"><![CDATA[e-mail cím]]></translation>
         <translation language="es"><![CDATA[dirección e-mail]]></translation>
         <translation language="uk"><![CDATA[E-Mail адреса]]></translation>
+        <translation language="el"><![CDATA[Διεύθυνση email]]></translation>
       </item>
       <item type="label" name="EmailAddresses">
         <translation language="en"><![CDATA[e-mail addresses]]></translation>
@@ -1186,6 +1281,7 @@
         <translation language="hu"><![CDATA[e-mail címek]]></translation>
         <translation language="es"><![CDATA[direcciones e-mail]]></translation>
         <translation language="uk"><![CDATA[E-Mail адреси]]></translation>
+        <translation language="el"><![CDATA[Διευθύνσεις email]]></translation>
       </item>
       <item type="label" name="ExampleFile">
         <translation language="en"><![CDATA[an example file]]></translation>
@@ -1198,6 +1294,7 @@
         <translation language="hu"><![CDATA[példa fájl]]></translation>
         <translation language="es"><![CDATA[un archivo de ejemplo]]></translation>
         <translation language="uk"><![CDATA[Приклад файла]]></translation>
+        <translation language="el"><![CDATA[ένα αρχείο παράδειγμα]]></translation>
       </item>
       <item type="label" name="ExportAddresses">
         <translation language="en"><![CDATA[export addresses]]></translation>
@@ -1210,6 +1307,7 @@
         <translation language="hu"><![CDATA[címek exportálása]]></translation>
         <translation language="es"><![CDATA[exportar direcciones]]></translation>
         <translation language="uk"><![CDATA[Експорт адрес]]></translation>
+        <translation language="el"><![CDATA[Εξαγωγή διευθύνσεων]]></translation>
       </item>
       <item type="label" name="ExportStatistics">
         <translation language="en"><![CDATA[export statistics]]></translation>
@@ -1222,6 +1320,7 @@
         <translation language="hu"><![CDATA[statisztikák exportálása]]></translation>
         <translation language="es"><![CDATA[exportar estadisticas]]></translation>
         <translation language="uk"><![CDATA[Експорт адрес]]></translation>
+        <translation language="el"><![CDATA[Εξαγωγή στατιστικών]]></translation>
       </item>
       <item type="label" name="Group">
         <translation language="en"><![CDATA[group]]></translation>
@@ -1235,6 +1334,7 @@
         <translation language="es"><![CDATA[grupo]]></translation>
         <translation language="uk"><![CDATA[Група]]></translation>
         <translation language="lt"><![CDATA[grupė]]></translation>
+        <translation language="el"><![CDATA[Ομάδα]]></translation>
       </item>
       <item type="label" name="Groups">
         <translation language="en"><![CDATA[groups]]></translation>
@@ -1248,6 +1348,7 @@
         <translation language="es"><![CDATA[grupos]]></translation>
         <translation language="uk"><![CDATA[Групи]]></translation>
         <translation language="lt"><![CDATA[grupės]]></translation>
+        <translation language="el"><![CDATA[Ομάδες]]></translation>
       </item>
       <item type="label" name="ImportAddresses">
         <translation language="en"><![CDATA[import addresses]]></translation>
@@ -1261,6 +1362,7 @@
         <translation language="es"><![CDATA[importar direcciones]]></translation>
         <translation language="uk"><![CDATA[Імпорт адрес]]></translation>
         <translation language="lt"><![CDATA[importuoti adresus]]></translation>
+        <translation language="el"><![CDATA[Εισαγωγή διευθύνσεων]]></translation>
       </item>
       <item type="label" name="IpAddress">
         <translation language="en"><![CDATA[IP address]]></translation>
@@ -1273,6 +1375,7 @@
         <translation language="hu"><![CDATA[IP cím]]></translation>
         <translation language="es"><![CDATA[direccion IP]]></translation>
         <translation language="uk"><![CDATA[IP-адреса]]></translation>
+        <translation language="el"><![CDATA[Διευθύνσεις IP]]></translation>
       </item>
       <item type="label" name="MailingsWithoutCampaign">
         <translation language="en"><![CDATA[mailings without campaign]]></translation>
@@ -1285,6 +1388,7 @@
         <translation language="de"><![CDATA[Newsletter ohne Kampagne]]></translation>
         <translation language="es"><![CDATA[mailings sin camapaña]]></translation>
         <translation language="uk"><![CDATA[Розсилки без кампанії]]></translation>
+        <translation language="el"><![CDATA[Λίστες παραληπτών χωρίς καμπάνια]]></translation>
       </item>
       <item type="label" name="Manual">
         <translation language="en"><![CDATA[manual]]></translation>
@@ -1297,6 +1401,7 @@
         <translation language="hu"><![CDATA[kézi]]></translation>
         <translation language="es"><![CDATA[manual]]></translation>
         <translation language="uk"><![CDATA[Посібник]]></translation>
+        <translation language="el"><![CDATA[Εγχειρίδιο]]></translation>
       </item>
       <item type="label" name="NoCampaign">
         <translation language="en"><![CDATA[no campaign]]></translation>
@@ -1309,6 +1414,7 @@
         <translation language="de"><![CDATA[keine Kampagne]]></translation>
         <translation language="es"><![CDATA[sin camapaña]]></translation>
         <translation language="uk"><![CDATA[Немає кампаній]]></translation>
+        <translation language="el"><![CDATA[Καμμία καμπάνια]]></translation>
       </item>
       <item type="label" name="OpenedMailings">
         <translation language="en"><![CDATA[opened mailings]]></translation>
@@ -1321,6 +1427,7 @@
         <translation language="de"><![CDATA[geöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[mailings abiertos]]></translation>
         <translation language="uk"><![CDATA[Відкриті розсилки]]></translation>
+        <translation language="el"><![CDATA[Ανοιγμένες ταχυδρομήσεις]]></translation>
       </item>
       <item type="label" name="PerCampaign">
         <translation language="en"><![CDATA[per campaign]]></translation>
@@ -1330,6 +1437,8 @@
         <translation language="es"><![CDATA[por campaña]]></translation>
         <translation language="uk"><![CDATA[За кампанію]]></translation>
         <translation language="hu"><![CDATA[per kampány]]></translation>
+        <translation language="el"><![CDATA[Ανά καμπάνια]]></translation>
+        <translation language="zh"><![CDATA[每个活动]]></translation>
       </item>
       <item type="label" name="PerSentMailing">
         <translation language="en"><![CDATA[per sent mailing]]></translation>
@@ -1342,6 +1451,7 @@
         <translation language="de"><![CDATA[pro versandtem Newsletter]]></translation>
         <translation language="es"><![CDATA[por mailing enviado]]></translation>
         <translation language="uk"><![CDATA[Ціна за розсилку]]></translation>
+        <translation language="el"><![CDATA[Ανά αποσταλείσα ταχυδρόμηση]]></translation>
       </item>
       <item type="label" name="PlainTextVersion">
         <translation language="en"><![CDATA[plain text version]]></translation>
@@ -1354,6 +1464,7 @@
         <translation language="hu"><![CDATA[egyszerű szöveg verzió]]></translation>
         <translation language="es"><![CDATA[versión en texto plano]]></translation>
         <translation language="uk"><![CDATA[Текстова версія]]></translation>
+        <translation language="el"><![CDATA[Έκδοση απλού κειμένου]]></translation>
       </item>
       <item type="label" name="PricePerSentMailing">
         <translation language="en"><![CDATA[price per sent mailing]]></translation>
@@ -1366,6 +1477,7 @@
         <translation language="hu"><![CDATA[ár per küldött levél]]></translation>
         <translation language="de"><![CDATA[Preis pro versandtem Newsletter]]></translation>
         <translation language="uk"><![CDATA[Ціна за розсилку]]></translation>
+        <translation language="el"><![CDATA[Τιμή ανά αποσταλείσα λίστα παραληπτών]]></translation>
       </item>
       <item type="label" name="Prices">
         <translation language="en"><![CDATA[prices]]></translation>
@@ -1375,6 +1487,8 @@
         <translation language="es"><![CDATA[precios]]></translation>
         <translation language="uk"><![CDATA[Ціни]]></translation>
         <translation language="hu"><![CDATA[árak]]></translation>
+        <translation language="el"><![CDATA[Τιμές]]></translation>
+        <translation language="zh"><![CDATA[价钱]]></translation>
       </item>
       <item type="label" name="QueuedMailings">
         <translation language="en"><![CDATA[queued mailings]]></translation>
@@ -1387,6 +1501,7 @@
         <translation language="de"><![CDATA[Newsletter in der Warteschlange]]></translation>
         <translation language="es"><![CDATA[envios en cola]]></translation>
         <translation language="uk"><![CDATA[Розсилки у черзі]]></translation>
+        <translation language="el"><![CDATA[Ταχυδρομήσεις στην ουρά αναμονής]]></translation>
       </item>
       <item type="label" name="Recipients">
         <translation language="en"><![CDATA[groups]]></translation>
@@ -1399,6 +1514,7 @@
         <translation language="hu"><![CDATA[csoportok]]></translation>
         <translation language="es"><![CDATA[grupos]]></translation>
         <translation language="uk"><![CDATA[Групи]]></translation>
+        <translation language="el"><![CDATA[Ομάδες]]></translation>
       </item>
       <item type="label" name="ReplyTo">
         <translation language="en"><![CDATA[reply-to address]]></translation>
@@ -1411,6 +1527,7 @@
         <translation language="hu"><![CDATA[válaszcím]]></translation>
         <translation language="es"><![CDATA[dirección de respuesta]]></translation>
         <translation language="uk"><![CDATA[Адреса для відповіді]]></translation>
+        <translation language="el"><![CDATA[Διεύθυνση απάντησης]]></translation>
       </item>
       <item type="label" name="Reset">
         <translation language="en"><![CDATA[reset]]></translation>
@@ -1423,6 +1540,7 @@
         <translation language="hu"><![CDATA[reset]]></translation>
         <translation language="es"><![CDATA[resetear]]></translation>
         <translation language="uk"><![CDATA[Скидання]]></translation>
+        <translation language="el"><![CDATA[Επαναφορά]]></translation>
       </item>
       <item type="label" name="SendDate">
         <translation language="en"><![CDATA[send date]]></translation>
@@ -1435,7 +1553,7 @@
         <translation language="de"><![CDATA[Versanddatum]]></translation>
         <translation language="es"><![CDATA[fecha de envio]]></translation>
         <translation language="uk"><![CDATA[Дата відправки]]></translation>
-        <translation language="tr"><![CDATA[Gönderme tarihi]]></translation>
+        <translation language="el"><![CDATA[Ημερομηνία αποστολής]]></translation>
       </item>
       <item type="label" name="Sender">
         <translation language="en"><![CDATA[sender]]></translation>
@@ -1448,7 +1566,7 @@
         <translation language="hu"><![CDATA[küldő]]></translation>
         <translation language="es"><![CDATA[remitente]]></translation>
         <translation language="uk"><![CDATA[Відправник]]></translation>
-        <translation language="tr"><![CDATA[Gönderen]]></translation>
+        <translation language="el"><![CDATA[Αποστολέας]]></translation>
       </item>
       <item type="label" name="SendMailing">
         <translation language="en"><![CDATA[send mailing]]></translation>
@@ -1461,6 +1579,7 @@
         <translation language="de"><![CDATA[Newsletter versenden]]></translation>
         <translation language="es"><![CDATA[enviar envio]]></translation>
         <translation language="uk"><![CDATA[Надіслати розсилку]]></translation>
+        <translation language="el"><![CDATA[Αποστολή στους παραλήπτες της λίστας]]></translation>
       </item>
       <item type="label" name="SendOn">
         <translation language="en"><![CDATA[send on]]></translation>
@@ -1473,6 +1592,7 @@
         <translation language="hu"><![CDATA[továbbít]]></translation>
         <translation language="es"><![CDATA[enviar el]]></translation>
         <translation language="uk"><![CDATA[Надіслати до]]></translation>
+        <translation language="el"><![CDATA[Αποστολή στις]]></translation>
       </item>
       <item type="label" name="SendPreview">
         <translation language="en"><![CDATA[send preview]]></translation>
@@ -1485,6 +1605,7 @@
         <translation language="hu"><![CDATA[előnézet küldése]]></translation>
         <translation language="es"><![CDATA[enviar vista previa]]></translation>
         <translation language="uk"><![CDATA[Предперегляд]]></translation>
+        <translation language="el"><![CDATA[Προεπισκόπιση αποστολής]]></translation>
       </item>
       <item type="label" name="Sent">
         <translation language="en"><![CDATA[sent]]></translation>
@@ -1497,7 +1618,7 @@
         <translation language="hu"><![CDATA[elküldött]]></translation>
         <translation language="es"><![CDATA[enviado]]></translation>
         <translation language="uk"><![CDATA[Надіслано]]></translation>
-        <translation language="tr"><![CDATA[Gönderildi]]></translation>
+        <translation language="el"><![CDATA[Απεστάλη]]></translation>
       </item>
       <item type="label" name="SentMailings">
         <translation language="en"><![CDATA[sent mailings]]></translation>
@@ -1510,6 +1631,7 @@
         <translation language="de"><![CDATA[versandte Newsletter]]></translation>
         <translation language="es"><![CDATA[mailings enviados]]></translation>
         <translation language="uk"><![CDATA[Надіслані розсилки]]></translation>
+        <translation language="el"><![CDATA[Απεσταλμένες ταχυδρομήσεις]]></translation>
       </item>
       <item type="label" name="SettingsAccount">
         <translation language="en"><![CDATA[account settings]]></translation>
@@ -1522,6 +1644,7 @@
         <translation language="hu"><![CDATA[fiók beállítás]]></translation>
         <translation language="es"><![CDATA[configuración de cuenta]]></translation>
         <translation language="uk"><![CDATA[Налаштування аккаунта]]></translation>
+        <translation language="el"><![CDATA[Ρυθμίσεις λογαριασμού]]></translation>
       </item>
       <item type="label" name="SettingsClient">
         <translation language="en"><![CDATA[client settings]]></translation>
@@ -1534,6 +1657,7 @@
         <translation language="de"><![CDATA[Kundeneinstellungen]]></translation>
         <translation language="es"><![CDATA[configuracion de cliente]]></translation>
         <translation language="uk"><![CDATA[Налаштування клієнта]]></translation>
+        <translation language="el"><![CDATA[Ρυθμίσεις πελάτη]]></translation>
       </item>
       <item type="label" name="Subject">
         <translation language="en"><![CDATA[subject]]></translation>
@@ -1546,6 +1670,7 @@
         <translation language="hu"><![CDATA[tárgy]]></translation>
         <translation language="es"><![CDATA[asunto]]></translation>
         <translation language="uk"><![CDATA[Тема]]></translation>
+        <translation language="el"><![CDATA[Θέμα]]></translation>
       </item>
       <item type="label" name="TemplateDefault">
         <translation language="en"><![CDATA[default template]]></translation>
@@ -1558,6 +1683,7 @@
         <translation language="hu"><![CDATA[alapértelmezett sablon]]></translation>
         <translation language="es"><![CDATA[plantilla por defecto]]></translation>
         <translation language="uk"><![CDATA[Стандартна тема]]></translation>
+        <translation language="el"><![CDATA[Εξορισμού πρότυπο]]></translation>
       </item>
       <item type="label" name="TemplateEmpty">
         <translation language="en"><![CDATA[empty template]]></translation>
@@ -1570,6 +1696,7 @@
         <translation language="hu"><![CDATA[üres sablon]]></translation>
         <translation language="es"><![CDATA[plantilla vacía]]></translation>
         <translation language="uk"><![CDATA[Порожня тема]]></translation>
+        <translation language="el"><![CDATA[Άδειο πρότυπο]]></translation>
       </item>
       <item type="label" name="TemplateFork">
         <translation language="en"><![CDATA[Fork CMS template]]></translation>
@@ -1582,6 +1709,7 @@
         <translation language="hu"><![CDATA[Fork CMS sablon]]></translation>
         <translation language="es"><![CDATA[plantilla Fork CMS]]></translation>
         <translation language="uk"><![CDATA[Тема Fork CMS]]></translation>
+        <translation language="el"><![CDATA[Πρότυπο του Fork CMS]]></translation>
       </item>
       <item type="label" name="TemplateLanguage">
         <translation language="en"><![CDATA[template language]]></translation>
@@ -1594,6 +1722,7 @@
         <translation language="hu"><![CDATA[sablon nyelv]]></translation>
         <translation language="es"><![CDATA[idioma de la plantilla]]></translation>
         <translation language="uk"><![CDATA[Мова шаблона]]></translation>
+        <translation language="el"><![CDATA[Γλώσσα προτύπου]]></translation>
       </item>
       <item type="label" name="TotalSentMailings">
         <translation language="en"><![CDATA[sent mailings]]></translation>
@@ -1606,6 +1735,7 @@
         <translation language="de"><![CDATA[versandte Newsletter]]></translation>
         <translation language="es"><![CDATA[envios enviados]]></translation>
         <translation language="uk"><![CDATA[Відправлені розсилки]]></translation>
+        <translation language="el"><![CDATA[Σύνολο απεσταλμένων ταχυδρομήσεων]]></translation>
       </item>
       <item type="label" name="UnopenedMailings">
         <translation language="en"><![CDATA[unopened mailings]]></translation>
@@ -1618,6 +1748,7 @@
         <translation language="de"><![CDATA[ungeöffnete Newsletter]]></translation>
         <translation language="es"><![CDATA[envios sin abrir]]></translation>
         <translation language="uk"><![CDATA[Не відкриті розсилки]]></translation>
+        <translation language="el"><![CDATA[Μη ανοιγμένες ταχυδρομήσεις]]></translation>
       </item>
       <item type="label" name="UnsentMailings">
         <translation language="en"><![CDATA[concepts]]></translation>
@@ -1630,6 +1761,7 @@
         <translation language="hu"><![CDATA[fogalmak]]></translation>
         <translation language="es"><![CDATA[conceptos]]></translation>
         <translation language="uk"><![CDATA[Не надіслані розсилки]]></translation>
+        <translation language="el"><![CDATA[Μη απεσταλμένες λίστες παραληπτών]]></translation>
       </item>
       <item type="label" name="Who">
         <translation language="en"><![CDATA[who?]]></translation>
@@ -1642,7 +1774,7 @@
         <translation language="hu"><![CDATA[ki?]]></translation>
         <translation language="es"><![CDATA[quien?]]></translation>
         <translation language="uk"><![CDATA[Хто?]]></translation>
-        <translation language="tr"><![CDATA[Kim?]]></translation>
+        <translation language="el"><![CDATA[ποιός;]]></translation>
       </item>
       <item type="label" name="WillBeSentOn">
         <translation language="en"><![CDATA[will be sent on]]></translation>
@@ -1655,6 +1787,7 @@
         <translation language="hu"><![CDATA[küldi a]]></translation>
         <translation language="es"><![CDATA[será enviado en]]></translation>
         <translation language="uk"><![CDATA[Буде надіслано]]></translation>
+        <translation language="el"><![CDATA[Θα αποσταλεί στις]]></translation>
       </item>
       <item type="label" name="WizardContent">
         <translation language="en"><![CDATA[content]]></translation>
@@ -1667,6 +1800,7 @@
         <translation language="hu"><![CDATA[tartalom]]></translation>
         <translation language="es"><![CDATA[contenido]]></translation>
         <translation language="uk"><![CDATA[Зміст]]></translation>
+        <translation language="el"><![CDATA[Περιεχόμενο]]></translation>
       </item>
       <item type="label" name="WizardInformation">
         <translation language="en"><![CDATA[configuration]]></translation>
@@ -1679,6 +1813,7 @@
         <translation language="hu"><![CDATA[konfigurál]]></translation>
         <translation language="es"><![CDATA[configuración]]></translation>
         <translation language="uk"><![CDATA[Налаштування]]></translation>
+        <translation language="el"><![CDATA[Διαμόρφωση]]></translation>
       </item>
       <item type="label" name="WizardSend">
         <translation language="en"><![CDATA[send]]></translation>
@@ -1691,6 +1826,7 @@
         <translation language="hu"><![CDATA[küld]]></translation>
         <translation language="es"><![CDATA[enviar]]></translation>
         <translation language="uk"><![CDATA[Надіслати]]></translation>
+        <translation language="el"><![CDATA[Αποστολή]]></translation>
       </item>
       <item type="label" name="WizardTemplate">
         <translation language="en"><![CDATA[template]]></translation>
@@ -1703,6 +1839,7 @@
         <translation language="hu"><![CDATA[sablon]]></translation>
         <translation language="es"><![CDATA[plantilla]]></translation>
         <translation language="uk"><![CDATA[Шаблон]]></translation>
+        <translation language="el"><![CDATA[Πρότυπο]]></translation>
       </item>
       <item type="error" name="AddMailingNoGroups">
         <translation language="en"><![CDATA[There are no groups to put subscribers in yet. Create a group first.]]></translation>
@@ -1714,6 +1851,7 @@
         <translation language="de"><![CDATA[Es gibt keine Gruppen um Abonnementen ]]></translation>
         <translation language="hu"><![CDATA[Nincsen még csoportok feliratkózókkal. Hozz létre előszőr egyet.]]></translation>
         <translation language="es"><![CDATA[No hay grupos en los que poner subscriptores. Crear un grupo primero.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ομάδες γιά να γράψετε συνδρομητές σε αυτές. Δημιουργήστε πρώτα μία ομάδα.]]></translation>
       </item>
       <item type="error" name="AddressDoesNotExist">
         <translation language="en"><![CDATA[The given e-mail address does not exist.]]></translation>
@@ -1725,6 +1863,7 @@
         <translation language="de"><![CDATA[Die angegebene E-Mail-Adresse existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[A megadott e-mail cím nem létezik.]]></translation>
         <translation language="es"><![CDATA[El e-mail dado no existe.]]></translation>
+        <translation language="el"><![CDATA[Η διεύθυνση email που δόθηκε δεν υπάρχει.]]></translation>
       </item>
       <item type="error" name="AlreadySubscribed">
         <translation language="en"><![CDATA[This e-mail address is already subscribed to the mailinglist.]]></translation>
@@ -1736,6 +1875,7 @@
         <translation language="hu"><![CDATA[Ez az e-mail cím már feliratkozott a levelezőlistára.]]></translation>
         <translation language="de"><![CDATA[Diese E-Mail-Adresse hat den Newsletter bereits abonniert.]]></translation>
         <translation language="es"><![CDATA[Esta dirección e-mail esta subscrita actualmente en la lista de mailing.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η διεύθυνση email έχει ήδη εγγραφεί στη λίστα ταχυδρομήσεων.]]></translation>
       </item>
       <item type="error" name="AnalysisNoCMAccount">
         <translation language="en"><![CDATA[There is no link with a CampaignMonitor account yet. <a href="%1$s">Configure</a>]]></translation>
@@ -1748,6 +1888,7 @@
         <translation language="de"><![CDATA[Es gibt noch keine Verbindung zu einem CampaignMonitor-Konto. <a href="%1$s">Konfigurieren</a>]]></translation>
         <translation language="es"><![CDATA[No hay vínculo con una cuenta CampaignMonitor aun. <a href="%1$s">Configurar</a>]]></translation>
         <translation language="lt"><![CDATA[Nei vienas profilis ne susietas su CampaignMonitor sąskaita, <a href="%1$s">susieti</a> ]]></translation>
+        <translation language="el"><![CDATA[Ακόμη δεν υπάρχει καμμία σύνδεση με κάποιο λογαριασμό του CampaignMonitor. <a href="%1$s">Ρύθμιση</a>]]></translation>
       </item>
       <item type="error" name="AnalysisNoCMClientID">
         <translation language="en"><![CDATA[There is no client linked to the CampaignMonitor account yet. <a href="%1$s">Configure</a>]]></translation>
@@ -1759,6 +1900,7 @@
         <translation language="hu"><![CDATA[Nincs még kliens összekapcsolva a CampaingMonitor fiókkal. <a href="%1$s">Beállítás</a>]]></translation>
         <translation language="de"><![CDATA[Es ist noch kein Kunde zum CampaignMonitor-Konto verbunden. <a href="%1$s">Konfigurieren</a>]]></translation>
         <translation language="es"><![CDATA[No hay cliente vinculado a la cuenta CampaignMonitor aun. <a href="%1$s">Configurar</a>]]></translation>
+        <translation language="el"><![CDATA[Κανείς πελάτης δεν έχει ακόμη συνδεθεί με το λογαριασμό του CampaignMonitor. <a href="%1$s">Ρύθμιση</a>]]></translation>
       </item>
       <item type="error" name="CampaignDoesNotExist">
         <translation language="en"><![CDATA[The given campaign does not exist.]]></translation>
@@ -1770,6 +1912,7 @@
         <translation language="de"><![CDATA[Die angegebene Kampagne existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Az adott kampány nem létezik.]]></translation>
         <translation language="es"><![CDATA[La campaña dada no existe.]]></translation>
+        <translation language="el"><![CDATA[Η δεδομένη καμπάνια δεν υπάρχει.]]></translation>
       </item>
       <item type="error" name="CampaignExists">
         <translation language="en"><![CDATA[This campaign name already exists.]]></translation>
@@ -1781,6 +1924,7 @@
         <translation language="de"><![CDATA[Der Kampagnenname existiert bereits.]]></translation>
         <translation language="hu"><![CDATA[Ez a kampány már létezik.]]></translation>
         <translation language="es"><![CDATA[Este nombre de camapaña ya existe.]]></translation>
+        <translation language="el"><![CDATA[Αυτό το όνομα καμπάνιας υπάρχει ήδη.]]></translation>
       </item>
       <item type="error" name="CampaignMonitorError">
         <translation language="en"><![CDATA[CampaignMonitor error: %1$s]]></translation>
@@ -1792,6 +1936,7 @@
         <translation language="de"><![CDATA[CampaignMonitor Error: %1$s]]></translation>
         <translation language="hu"><![CDATA[CampaignMonitor hiba: %1$s]]></translation>
         <translation language="es"><![CDATA[Error CampaignMonitor: %1$s]]></translation>
+        <translation language="el"><![CDATA[Λάθος του CampaignMonitor: %1$s]]></translation>
       </item>
       <item type="error" name="CampaignNotEdited">
         <translation language="en"><![CDATA[The campaign wasn't edited.]]></translation>
@@ -1803,6 +1948,7 @@
         <translation language="de"><![CDATA[Die Kampagne wurde nicht editiert.]]></translation>
         <translation language="hu"><![CDATA[A kampány nem szerkeszthető.]]></translation>
         <translation language="es"><![CDATA[La campaña no ha sido editada.]]></translation>
+        <translation language="el"><![CDATA[Η καμπάνια δεν μεταβλήθηκε.]]></translation>
       </item>
       <item type="error" name="ChooseAtLeastOneGroup">
         <translation language="en"><![CDATA[You need to choose at least one group.]]></translation>
@@ -1814,6 +1960,7 @@
         <translation language="fr"><![CDATA[Vous devze choisir au moins un groupe.]]></translation>
         <translation language="hu"><![CDATA[Ki kell választani legalább egy csoportot.]]></translation>
         <translation language="es"><![CDATA[Necesitas elegir al menos un grupo.]]></translation>
+        <translation language="el"><![CDATA[Πρέπει να επιλέξετε τουλάχιστον μία ομάδα.]]></translation>
       </item>
       <item type="error" name="ChooseTemplateLanguage">
         <translation language="en"><![CDATA[Choose the language of the template to use.]]></translation>
@@ -1825,6 +1972,7 @@
         <translation language="de"><![CDATA[Wähle die Sprache des Templates.]]></translation>
         <translation language="hu"><![CDATA[Válaszd ki a nyelvet a sablon használatához.]]></translation>
         <translation language="es"><![CDATA[Elige el idioma de la plantilla a usar.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε τη γλώσσα του προτύπου που θα χρησιμοποιήσετε.]]></translation>
       </item>
       <item type="error" name="ClassDoesNotExist">
         <translation language="en"><![CDATA[The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external]]></translation>
@@ -1847,6 +1995,7 @@
         <translation language="de"><![CDATA[Konnte keine Verbindung mit CampaignMonitor herstellen, versuch's bitte erneut.]]></translation>
         <translation language="hu"><![CDATA[Nem lehet kapcsolódni a CampaignMonitor-ral, próbáld újból.]]></translation>
         <translation language="es"><![CDATA[No se ha podido hacer conexión con CampaignMonitor, intentalo de nuevo.]]></translation>
+        <translation language="el"><![CDATA[Δεν ήταν δυνατόν να γίνει σύνδεση με το CampaignMonitor, προσπαθήστε πάλι.]]></translation>
       </item>
       <item type="error" name="CompleteStep2">
         <translation language="en"><![CDATA[Complete step 2 first]]></translation>
@@ -1858,6 +2007,7 @@
         <translation language="de"><![CDATA[Vollende Schritt 2 zuerst]]></translation>
         <translation language="hu"><![CDATA[Előbb a 2. lépést fejezd be]]></translation>
         <translation language="es"><![CDATA[Completa primero el paso 2]]></translation>
+        <translation language="el"><![CDATA[Ολοκληρώστε πρώτα το βήμα 2]]></translation>
       </item>
       <item type="error" name="CompleteStep3">
         <translation language="en"><![CDATA[Complete step 3 first]]></translation>
@@ -1869,6 +2019,7 @@
         <translation language="de"><![CDATA[Vollende Schritt 3 zuerst]]></translation>
         <translation language="hu"><![CDATA[Előbb a 3. lépést fejezd be]]></translation>
         <translation language="es"><![CDATA[Completa primero el paso 3]]></translation>
+        <translation language="el"><![CDATA[Ολοκληρώστε πρώτα το βήμα 3]]></translation>
       </item>
       <item type="error" name="ContainsInvalidEmail">
         <translation language="en"><![CDATA[This field contains an invalid emailaddress.]]></translation>
@@ -1880,6 +2031,7 @@
         <translation language="fr"><![CDATA[Ce champ contient une adresse e-mail invalide.]]></translation>
         <translation language="hu"><![CDATA[Ez a mező érvénytelen e-mail címet tartalmaz.]]></translation>
         <translation language="es"><![CDATA[Este campo contiene una dirección e-mail no válida.]]></translation>
+        <translation language="el"><![CDATA[Το πεδίο αυτό περιέχει μία μη έγκυρη διεύθυνση email.]]></translation>
       </item>
       <item type="error" name="CouldNotConnect">
         <translation language="en"><![CDATA[Could not connect to CampaignMonitor]]></translation>
@@ -1891,6 +2043,7 @@
         <translation language="de"><![CDATA[Konnte nicht zum CampaignMonitor verbinden]]></translation>
         <translation language="hu"><![CDATA[Nem sikerült csatlakozni a CampaignMonitor-hoz]]></translation>
         <translation language="es"><![CDATA[No se puedo conectar a CampaignMonitor]]></translation>
+        <translation language="el"><![CDATA[Αποτυχία σύνδεσης με το CampaignMonitor]]></translation>
       </item>
       <item type="error" name="CSVIsRequired">
         <translation language="en"><![CDATA[Choose a .csv file to upload.]]></translation>
@@ -1902,6 +2055,7 @@
         <translation language="de"><![CDATA[Wähle eine .csv Datei zum uploaden.]]></translation>
         <translation language="hu"><![CDATA[Válaszd ki a .csv fáljt feltölteni.]]></translation>
         <translation language="es"><![CDATA[Elige un archivo .csv para subir.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε ένα αρχείο τύπου .csv γιά μεταφόρτωση.]]></translation>
       </item>
       <item type="error" name="CustomFieldExists">
         <translation language="en"><![CDATA[This field name is already in use.]]></translation>
@@ -1913,6 +2067,7 @@
         <translation language="de"><![CDATA[Dieser Feldname wird bereits verwendet.]]></translation>
         <translation language="hu"><![CDATA[Ez a mezőnév már használatban van.]]></translation>
         <translation language="es"><![CDATA[Este nombre de campo está ya en uso.]]></translation>
+        <translation language="el"><![CDATA[Αυτό το όνομα πεδίου χρησιμοποιείται ήδη.]]></translation>
       </item>
       <item type="error" name="DuplicateCampaignName">
         <translation language="en"><![CDATA[The name of this mailing already exists in the archives of CampaignMonitor. Change the name before sending.]]></translation>
@@ -1924,6 +2079,7 @@
         <translation language="de"><![CDATA[Der Name für diesen Newsletter existiert bereits in den Archiven von CampaignMonitor. Ändere den Namen vorm Senden.]]></translation>
         <translation language="hu"><![CDATA[A levelezőlista neve már létezik a CampaignMonitor archívumában. Változtasd meg a nevet a küldés előtt.]]></translation>
         <translation language="es"><![CDATA[El nombre de este mailing esta actualmente en uso en los archivos de CampaignMonitor. Cambia el nombre antes de enviarlo.]]></translation>
+        <translation language="el"><![CDATA[Το όνομα αυτής της ταχυδρόμησης υπάρχει ήδη στα αρχεία του CampaignMonitor. Αλλάξτε το όνομά της πριν την αποστολή.]]></translation>
       </item>
       <item type="error" name="GroupAlreadyExists">
         <translation language="en"><![CDATA[This group already exists]]></translation>
@@ -1935,6 +2091,7 @@
         <translation language="de"><![CDATA[Diese Gruppe gibt es bereits.]]></translation>
         <translation language="hu"><![CDATA[Ez a csoport már létezik]]></translation>
         <translation language="es"><![CDATA[Este grupo ya existe]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ομάδα υπάρχει ήδη]]></translation>
       </item>
       <item type="error" name="GroupsNoRecipients">
         <translation language="en"><![CDATA[The selected group(s) don't contain any addresses.]]></translation>
@@ -1946,6 +2103,7 @@
         <translation language="de"><![CDATA[Die ausgewählte(n) Gruppe(n) beinhalten keine Adressen.]]></translation>
         <translation language="hu"><![CDATA[A kiválasztott csoport(ok) nem tartalmaznak címet.]]></translation>
         <translation language="es"><![CDATA[el grupo(s) seleccionado no contiene direcciones.]]></translation>
+        <translation language="el"><![CDATA[Η επιλεγμένη ομάδα (ή ομάδες) δεν περιέχει καμμία διεύθυνση.]]></translation>
       </item>
       <item type="error" name="HTMLContentURLRequired">
         <translation language="en"><![CDATA[CampaignMonitor could not find an URL to the HTML content. (The URL needs to be accessible)]]></translation>
@@ -1957,6 +2115,7 @@
         <translation language="de"><![CDATA[CampaignMonitor konnte keine URL zum HTML-Inhalt finden. (Die URL muss erreichbar sein)]]></translation>
         <translation language="hu"><![CDATA[A CampaignMonitor nem talált URL-t a HTML tartalomban. (Az URL-nek hozzaférhetőnek kell lennie.)]]></translation>
         <translation language="es"><![CDATA[CampaignMonitor no pudo encontrar una URL a el contenido HTML. (La URL necesita ser accesible)]]></translation>
+        <translation language="el"><![CDATA[Το CampaignMonitor δεν μπόρεσε να βρεί κάποια διεύθυνση URL στα περιεχόμενα τύπου HTML. (Η διεύθυνση URL πρέπει να είναι προσβάσιμη).]]></translation>
       </item>
       <item type="error" name="ImportedAddresses">
         <translation language="en"><![CDATA[%1$s addresses are imported in %2$s group(s)]]></translation>
@@ -1968,6 +2127,7 @@
         <translation language="de"><![CDATA[%1$s Adressen in %2$s Gruppe(n) wurden importiert]]></translation>
         <translation language="hu"><![CDATA[%1$s cím importálva a %2$s csoportba]]></translation>
         <translation language="es"><![CDATA[%1$s direcciones son importadas en %2$s grupo(s)]]></translation>
+        <translation language="el"><![CDATA[%1$s διευθύνσεις εισήχθησαν σε %2$s ομάδες(δα).]]></translation>
       </item>
       <item type="error" name="InvalidAccountCredentials">
         <translation language="en"><![CDATA[The CampaignMonitor account credentials are invalid.]]></translation>
@@ -1979,6 +2139,7 @@
         <translation language="de"><![CDATA[Die CampaignMonitor-Benutzerdaten sind nicht korrekt.]]></translation>
         <translation language="hu"><![CDATA[A CampaignMonitor fiók hitelesítése érvénytelen.]]></translation>
         <translation language="es"><![CDATA[Las credenciales de la cuenta CampaignMonitor son invalidas.]]></translation>
+        <translation language="el"><![CDATA[Τα διαπιστευτήρια του λογαριασμού Campaignmonitor δεν είναι έγκυρα.]]></translation>
       </item>
       <item type="error" name="InvalidCSV">
         <translation language="en"><![CDATA[The CSV file is empty]]></translation>
@@ -1990,6 +2151,7 @@
         <translation language="de"><![CDATA[Die CSV Datei ist leer.]]></translation>
         <translation language="hu"><![CDATA[A CSV fájl üres]]></translation>
         <translation language="es"><![CDATA[El archivo CSV está vacio]]></translation>
+        <translation language="el"><![CDATA[Το αρχείο τύπου CSV είναι άδειο.]]></translation>
       </item>
       <item type="error" name="InvalidPrice">
         <translation language="en"><![CDATA[Invalid price.]]></translation>
@@ -1997,6 +2159,8 @@
         <translation language="de"><![CDATA[Ungültiger Preis.]]></translation>
         <translation language="es"><![CDATA[Precio inválido.]]></translation>
         <translation language="hu"><![CDATA[Érvénytelen ár.]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρη τιμή.]]></translation>
+        <translation language="zh"><![CDATA[无效的价钱]]></translation>
       </item>
       <item type="error" name="LinkDoesNotExist">
         <translation language="en"><![CDATA[This link doesn't exists.]]></translation>
@@ -2008,6 +2172,7 @@
         <translation language="de"><![CDATA[Dieser Link existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Ez a link nem létezik.]]></translation>
         <translation language="es"><![CDATA[Este enlace no existe.]]></translation>
+        <translation language="el"><![CDATA[Αυτός ο σύνδεσμος δεν υπάρχει.]]></translation>
       </item>
       <item type="error" name="LinkDoesNotExists">
         <translation language="en"><![CDATA[This link doesn't exists.]]></translation>
@@ -2019,6 +2184,7 @@
         <translation language="de"><![CDATA[Dieser Link existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Ez a link nem létezik.]]></translation>
         <translation language="es"><![CDATA[Estos enlaces no existen.]]></translation>
+        <translation language="el"><![CDATA[Αυτός ο σύνδεσμος δεν υπάρχει.]]></translation>
       </item>
       <item type="error" name="MailingAlreadyExists">
         <translation language="en"><![CDATA[This mailing already exists]]></translation>
@@ -2030,6 +2196,7 @@
         <translation language="de"><![CDATA[Dieser Newsletter existiert bereits]]></translation>
         <translation language="hu"><![CDATA[Ez a levelezés már létezik]]></translation>
         <translation language="es"><![CDATA[Este envio ya existe]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ταχυδρόμηση υπάρχει ήδη.]]></translation>
       </item>
       <item type="error" name="MailingAlreadySent">
         <translation language="en"><![CDATA[The given mailing has already been sent!]]></translation>
@@ -2041,6 +2208,7 @@
         <translation language="de"><![CDATA[Der angegebene Newsletter wurde bereits verschickt!]]></translation>
         <translation language="hu"><![CDATA[A megadott levél már elküldve!]]></translation>
         <translation language="es"><![CDATA[¡El envio dado ya ha sido enviado!]]></translation>
+        <translation language="el"><![CDATA[Η δεδομένη ταχυδρόμηση έχει ήδη αποσταλεί!]]></translation>
       </item>
       <item type="error" name="MailingDoesNotExist">
         <translation language="en"><![CDATA[The given mailing does not exist.]]></translation>
@@ -2052,6 +2220,7 @@
         <translation language="de"><![CDATA[Der angegebene Newsletter existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[A megadott levél nem létezik.]]></translation>
         <translation language="es"><![CDATA[El mailing dado no existe.]]></translation>
+        <translation language="el"><![CDATA[Η δεδομένη ταχυδρόμηση δεν υπάρχει.]]></translation>
       </item>
       <item type="error" name="NoActionSelected">
         <translation language="en"><![CDATA[No action selected.]]></translation>
@@ -2063,6 +2232,7 @@
         <translation language="de"><![CDATA[Keine Aktion gewählt.]]></translation>
         <translation language="hu"><![CDATA[Nincs kiválasztott művelet.]]></translation>
         <translation language="es"><![CDATA[Ninguna acción seleccionada.]]></translation>
+        <translation language="el"><![CDATA[Δεν επελέγη κάποια ενέργεια.]]></translation>
       </item>
       <item type="error" name="NoBounces">
         <translation language="en"><![CDATA[There are no bounces for this mailing.]]></translation>
@@ -2074,6 +2244,7 @@
         <translation language="de"><![CDATA[Es gibt keine Bounces für diesen Newsletter.]]></translation>
         <translation language="hu"><![CDATA[There are no bounces for this mailing.]]></translation>
         <translation language="es"><![CDATA[No hay rebotes para este mailing.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν επιστροφές email σε αυτή την ταχυδρόμηση.]]></translation>
       </item>
       <item type="error" name="NoCMAccount">
         <translation language="en"><![CDATA[There is no link with a CampaignMonitor account yet.]]></translation>
@@ -2086,6 +2257,7 @@
         <translation language="hu"><![CDATA[Nincs még összekapcsolva a CampaignMonitor fiókkal.]]></translation>
         <translation language="es"><![CDATA[No hay vínculo con una cuenta CampaignMonitor aun.]]></translation>
         <translation language="lt"><![CDATA[Nei vienas profilis ne susietas su CampaignMonitor sąskaita.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει καμμία σύνδεση με κάποιον λογαριασμό του CampaignMonitor ακόμη.]]></translation>
       </item>
       <item type="error" name="NoCMAccountCredentials">
         <translation language="en"><![CDATA[Please enter your CampaignMonitor credentials.]]></translation>
@@ -2097,6 +2269,7 @@
         <translation language="de"><![CDATA[Bitte gibt deine CampaignMonitor-Benutzerdaten an.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg a CampaignMonitor adatokat.]]></translation>
         <translation language="es"><![CDATA[Por favor introduce tus credenciales CampaignMonitor.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε τα διαπιστευτήριά σας στο Campaignmonitor.]]></translation>
       </item>
       <item type="error" name="NoCMClientID">
         <translation language="en"><![CDATA[There is no client linked to the CampaignMonitor account yet.]]></translation>
@@ -2119,6 +2292,7 @@
         <translation language="de"><![CDATA[Wähle eine Gruppe.]]></translation>
         <translation language="hu"><![CDATA[Válassz egy csoportot.]]></translation>
         <translation language="es"><![CDATA[Seleccionar un grupo.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε μία ομάδα.]]></translation>
       </item>
       <item type="error" name="NoPreviewSent">
         <translation language="en"><![CDATA[The preview-mail to %1$s was not sent.]]></translation>
@@ -2130,6 +2304,7 @@
         <translation language="de"><![CDATA[Die Vorschau-Mail an %1$s wurde nicht versandt.]]></translation>
         <translation language="hu"><![CDATA[Az előnézet-levél nincs elküldve %1$s-nak/nek.]]></translation>
         <translation language="es"><![CDATA[La vista previa del mail no ha sido enviada a %1$s.]]></translation>
+        <translation language="el"><![CDATA[Το mail-προεπισκόπηση προς %1$s δεν απεστάλη.]]></translation>
       </item>
       <item type="error" name="NoPricePerEmail">
         <translation language="en"><![CDATA[No price per sent mail has been set yet.]]></translation>
@@ -2141,6 +2316,7 @@
         <translation language="de"><![CDATA[Ein Preis pro versandter E-Mail wurde noch nicht gesetzt.]]></translation>
         <translation language="hu"><![CDATA[Nincs még megadva a darab per küldött levél.]]></translation>
         <translation language="es"><![CDATA[No se ha configurado precio aun para enviar mail aun.]]></translation>
+        <translation language="el"><![CDATA[Δεν έχει ορισθεί ακόμη η τιμή ανά απεσταλμένο email.]]></translation>
       </item>
       <item type="error" name="NoStatisticsLoaded">
         <translation language="en"><![CDATA[There are no statistics available yet for mailing &ldquo;%1$s&rdquo;.]]></translation>
@@ -2163,6 +2339,7 @@
         <translation language="de"><![CDATA[Trage einen Betreff für diesen Newsletter ein.]]></translation>
         <translation language="hu"><![CDATA[Add meg a levél tárgyát.]]></translation>
         <translation language="es"><![CDATA[Inserta un asunto para este envio.]]></translation>
+        <translation language="el"><![CDATA[Γράψτε ένα θέμα γιά αυτή την ταχυδρόμηση.]]></translation>
       </item>
       <item type="error" name="NoSubscribers">
         <translation language="en"><![CDATA[None of your groups have subscribers yet! You can import your current subscriber list by uploading a .csv-file.]]></translation>
@@ -2185,6 +2362,7 @@
         <translation language="de"><![CDATA[Für diese Sprache sind keine Templates vorhanden]]></translation>
         <translation language="hu"><![CDATA[Nincs sablon kiválasztva a nyelvhez.]]></translation>
         <translation language="es"><![CDATA[No hay plantillas disponibles para este idioma]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν πρότυπα γιά αυτή τη γλώσσα]]></translation>
       </item>
       <item type="error" name="PaymentDetailsRequired">
         <translation language="en"><![CDATA[The payment details of the active user (%1$s) are not yet set in the CampaignMonitor backend.]]></translation>
@@ -2208,6 +2386,7 @@
         <translation language="de"><![CDATA[Dieses Template existiert nicht.]]></translation>
         <translation language="hu"><![CDATA[Ez a sablon nem létezik]]></translation>
         <translation language="es"><![CDATA[Esta plantilla no existe]]></translation>
+        <translation language="el"><![CDATA[Αυτό το πρότυπο δεν υπάρχει]]></translation>
       </item>
       <item type="error" name="TemplateIsRequired">
         <translation language="en"><![CDATA[Choose a template first before proceeding to the next step.]]></translation>
@@ -2219,6 +2398,7 @@
         <translation language="de"><![CDATA[Wähle ein Template bevor du zum nächsten Schritt fortfährst.]]></translation>
         <translation language="hu"><![CDATA[Válaszd ki a sablont a következő lépés előtt.]]></translation>
         <translation language="es"><![CDATA[Primero elige una plantilla antes de proceder con el siguiente paso.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε ένα πρότυπο πριν προχωρήσετε στο επόμενο βήμα.]]></translation>
       </item>
     </mailmotor>
   </backend>

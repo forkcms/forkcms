@@ -43,5 +43,5 @@ require_once __DIR__ . '/app/AppKernel.php';
 
 $kernel = new AppKernel();
 $response = $kernel->handle($request);
-if($response->getCharset() === null) $response->setCharset($kernel->getContainer()->getParameter('kernel.charset'));
+if($response->getCharset() === null && $kernel->getContainer() != null) $response->setCharset($kernel->getContainer()->getParameter('kernel.charset'));
 $response->send();
