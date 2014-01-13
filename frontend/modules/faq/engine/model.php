@@ -124,6 +124,24 @@ class FrontendFaqModel implements FrontendTagsInterface
 	}
 
 	/**
+	 * Get a category by id
+	 *
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getCategoryById($id)
+	{
+		return (array) FrontendModel::getContainer()->get('database')->getRecord(
+			'SELECT i.*, m.url
+			 FROM faq_categories AS i
+			 INNER JOIN meta AS m ON i.meta_id = m.id
+			 WHERE i.id = ? AND i.language = ?
+			 ORDER BY i.sequence',
+			array((int) $id, FRONTEND_LANGUAGE)
+		);
+	}
+
+	/**
 	 * Fetch the list of tags for a list of items
 	 *
 	 * @param array $ids
@@ -191,6 +209,32 @@ class FrontendFaqModel implements FrontendTagsInterface
 	/**
 	 * Get the all questions for selected category
 	 * 
+	 * @param int $id
+	 * @return array
+	 */
+	public static function getFaqsForCategory($id)
+	{
+		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+				'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
+				 FROM faq_questions AS i
+				 INNER JOIN meta AS m ON i.meta_id = m.id
+				 WHERE i.language = ? AND i.category_id = ?
+				 ORDER BY i.sequence ASC',
+				array(FRONTEND_LANGUAGE, (int) $id)
+		);
+
+		$link = FrontendNavigation::getURLForBlock('faq', 'detail');
+
+		foreach($items as &$item) {
+			$item['full_url'] = $link . '/' . $item['url'];
+		}
+
+		return $items;
+	}
+
+	/**
+	 * Get the all questions for selected category
+	 *
 	 * @param int $id
 	 * @return array
 	 */

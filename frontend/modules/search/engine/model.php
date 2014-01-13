@@ -148,7 +148,7 @@ class FrontendSearchModel
 				 FROM search_statistics AS s1
 				 INNER JOIN
 				 (
-			 		SELECT term, MAX(id) AS id, language
+				 	SELECT term, MAX(id) AS id, language
 				 	FROM search_statistics
 				 	WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
 				 	GROUP BY term

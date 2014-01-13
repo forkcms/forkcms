@@ -1,5 +1,5 @@
 <div id="error">
 <p>De opgevraagde pagina bestaat niet of is niet beschikbaar op dit ogenblik.</p>
 <a href="/">Ga naar home</a>
-<h2>404</2>
+<h2>404</h2>
 </div>

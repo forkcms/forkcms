@@ -108,7 +108,7 @@ class BackendMeta
 		if(!is_callable(array($this->callback['class'], $this->callback['method']))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// build parameters for use in the callback
-		$parameters[] = SpoonFilter::urlise($URL);
+		$parameters[] = CommonUri::getUrl($URL);
 
 		// add parameters set by user
 		if(!empty($this->callback['parameters']))

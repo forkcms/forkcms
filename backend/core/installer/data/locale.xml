@@ -87,6 +87,23 @@
         <translation language="pl"><![CDATA[artykuły w kategorii]]></translation>
         <translation language="tr"><![CDATA[kategorilerdeki yazılar]]></translation>
       </item>
+      <item type="label" name="Avatar">
+        <translation language="nl"><![CDATA[avatar]]></translation>
+        <translation language="en"><![CDATA[avatar]]></translation>
+        <translation language="hu"><![CDATA[avatar]]></translation>
+        <translation language="it"><![CDATA[avatar]]></translation>
+        <translation language="ru"><![CDATA[Аватар]]></translation>
+        <translation language="zh"><![CDATA[头像]]></translation>
+        <translation language="de"><![CDATA[Avatar]]></translation>
+        <translation language="fr"><![CDATA[avatar]]></translation>
+        <translation language="es"><![CDATA[avatar]]></translation>
+        <translation language="lt"><![CDATA[ikona]]></translation>
+        <translation language="uk"><![CDATA[Аватар]]></translation>
+        <translation language="sv"><![CDATA[avatar]]></translation>
+        <translation language="el"><![CDATA[αβατάρα]]></translation>
+        <translation language="pl"><![CDATA[avatar]]></translation>
+        <translation language="tr"><![CDATA[Avatar]]></translation>
+      </item>
       <item type="label" name="BirthDate">
         <translation language="nl"><![CDATA[geboortedatum]]></translation>
         <translation language="en"><![CDATA[birth date]]></translation>
@@ -1742,6 +1759,10 @@
         <translation language="el"><![CDATA[βρίσκεσθε εδώ]]></translation>
         <translation language="pl"><![CDATA[jesteś tutaj]]></translation>
         <translation language="tr"><![CDATA[buradasınız]]></translation>
+      </item>
+      <item type="label" name="YourAvatar">
+          <translation language="nl"><![CDATA[jouw avatar]]></translation>
+          <translation language="en"><![CDATA[your avatar]]></translation>
       </item>
       <item type="label" name="YourData">
         <translation language="nl"><![CDATA[uw gegevens]]></translation>

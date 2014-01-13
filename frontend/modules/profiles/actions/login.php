@@ -29,7 +29,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 	{
 		parent::execute();
 
- 		// profile not logged in
+		// profile not logged in
 		if(!FrontendProfilesAuthentication::isLoggedIn())
 		{
 			$this->loadTemplate();

@@ -401,26 +401,47 @@ class FrontendBlockWidget extends FrontendBaseObject
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = 'Frontend' . SpoonFilter::toCamelCase($this->getModule() . '_widget_' . $this->getAction());
+		$actionClassName = 'Frontend' . SpoonFilter::toCamelCase(
+			$this->getModule() . '_widget_' . $this->getAction()
+		);
 
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// when including a widget from the template modifier, this wasn't checked yet
-		if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php')) throw new FrontendException('The action file is not present');
+		if(!file_exists($frontendModulePath . '/widgets/' . $this->getAction() . '.php'))
+		{
+			throw new FrontendException(
+				'The action file "' . $frontendModulePath . '/widgets/' .
+				$this->getAction() . '.php' . '"" is not present'
+			);
+		}
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
+		// require the config file, we know it is there because we validated it before
+		// (possible actions are defined by existance off the file).
 		require_once $frontendModulePath . '/widgets/' . $this->getAction() . '.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName)) throw new FrontendException('The action file is present, but the class name should be: ' . $actionClassName . '.');
-
+		if(!class_exists($actionClassName))
+		{
+			throw new FrontendException(
+				'The action file is present, but the class name should be: ' .
+				$actionClassName . '.'
+			);
+		}
 		// create action-object
-		$this->object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+		$this->object = new $actionClassName(
+			$this->getModule(), $this->getAction(), $this->getData()
+		);
 		$this->object->setKernel($this->getKernel());
 
 		// validate if the execute-method is callable
-		if(!is_callable(array($this->object, 'execute'))) throw new FrontendException('The action file should contain a callable method "execute".');
+		if(!is_callable(array($this->object, 'execute')))
+		{
+			throw new FrontendException(
+				'The action file should contain a callable method "execute".'
+			);
+		}
 
 		// call the execute method of the real action (defined in the module)
 		$this->output = $this->object->execute();

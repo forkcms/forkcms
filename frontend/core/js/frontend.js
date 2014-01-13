@@ -662,13 +662,15 @@ jsFrontend.statistics =
 		{
 			// create a new selector
 			$.expr[':'].external = function(obj) {
-				return (typeof obj.href != 'undefined');
+				return (typeof obj.href != 'undefined') && !obj.href.match(/^mailto:/) && (obj.hostname != location.hostname);
 			};
 
 			// bind on all links that don't have the class noTracking
 			$(document).on('click', 'a:external:not(.noTracking)', function(e)
 			{
-				e.preventDefault();
+				// only simulate direct links
+				var hasTarget = (typeof $(this).attr('target') != 'undefined');
+				if(!hasTarget) e.preventDefault();
 
 				var link = $(this).attr('href');
 
@@ -677,14 +679,14 @@ jsFrontend.statistics =
 				var pageView = '/Outbound Links/' + link;
 
 				// set mailto
-				if(link.match(/^mailto\:/))
+				if(link.match(/^mailto:/))
 				{
 					type = 'Mailto';
 					pageView = '/Mailto/' + link.substring(7);
 				}
 
 				// set anchor
-				if(link.match(/^\#/))
+				if(link.match(/^#/))
 				{
 					type = 'Anchors';
 					pageView = '/Anchor/' + link.substring(1);
@@ -694,7 +696,7 @@ jsFrontend.statistics =
 				_gaq.push(['_trackEvent', type, pageView]);
 
 				// set time out
-				setTimeout(function() { document.location.href = link; }, 100);
+				if(!hasTarget) setTimeout(function() { document.location.href = link; }, 100);
 			});
 		}
 	}

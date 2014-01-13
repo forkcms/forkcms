@@ -513,7 +513,7 @@ class BackendLocaleModel
 										$count = 0;
 
 										// replace
-										$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+										$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 										// validate
 										if($count == 1)
@@ -655,7 +655,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
@@ -703,7 +703,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
@@ -760,7 +760,7 @@ class BackendLocaleModel
 									$count = 0;
 
 									// replace
-									$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+									$modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
 
 									// validate
 									if($count == 1)
@@ -916,22 +916,22 @@ class BackendLocaleModel
 				{
 					case 'act':
 						// if the action isn't available add it to the list
-						if(FL::act($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::act($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'err':
 						// if the error isn't available add it to the list
-						if(FL::err($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::err($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'lbl':
 						// if the label isn't available add it to the list
-						if(FL::lbl($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::lbl($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 
 					case 'msg':
 						// if the message isn't available add it to the list
-						if(FL::msg($key) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::msg($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 						break;
 				}
 			}
@@ -1259,7 +1259,7 @@ class BackendLocaleModel
 	public static function insert(array $item)
 	{
 		// actions should be urlized
-		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
+		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
 
 		// insert item
 		$item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
@@ -1279,7 +1279,7 @@ class BackendLocaleModel
 	public static function update(array $item)
 	{
 		// actions should be urlized
-		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = SpoonFilter::urlise($item['value']);
+		if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
 
 		// update category
 		$updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));

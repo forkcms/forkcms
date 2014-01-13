@@ -14,7 +14,7 @@ should install our dependencies. The dependencies are handled by [composer](http
 
 To install the dependencies, you can run the command below in the document-root:
 
-	composer install
+	composer install -o
 
 ## Bugs
 
