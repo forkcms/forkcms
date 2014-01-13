@@ -81,7 +81,7 @@ class DefaultTheme extends Theme
       false
   
   removeImageHeight: ->
-    $('img').css(height: 'auto')
+    $('img').css(height: 'auto').addClass('img-responsive')
 
 class SpecificTheme extends DefaultTheme
   @events
