@@ -90,23 +90,23 @@ the src directory. This makes sure they can be autoloaded with the composer auto
 
 Before:
 
-frontend
--- modules
-  |-- your_module
-     |-- actions
-     |  |-- index.php
-     |-- engine
-        |-- model.php
+    frontend
+    -- modules
+      |-- your_module
+         |-- actions
+         |  |-- index.php
+         |-- engine
+            |-- model.php
 
 after:
 
-src
-–– Frontend
-  |-- YourModule
-     |-- Actions
-     |  |-- Index.php
-     |-- Engine
-        |-- Model.php
+    src
+    –– Frontend
+      |-- YourModule
+         |-- Actions
+         |  |-- Index.php
+         |-- Engine
+            |-- Model.php
 
 ### Namespaces and use statements
 
