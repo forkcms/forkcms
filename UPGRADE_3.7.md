@@ -108,6 +108,8 @@ after:
           |–– Engine
              |–– Model.php
 
+* The extensions/upload_module action now requires this folder structure (as root the src and if necessary the library folder)
+
 ### Namespaces and use statements
 
 * Every class name is now the exact same as the class itself
