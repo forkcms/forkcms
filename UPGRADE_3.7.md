@@ -133,6 +133,26 @@ after
 
     class Model
 
+* Class names in the global namespaces should be escaped or have a usestatement
+
+Before
+
+    $url = CommonUri::getUrl($nameOfMyObject);
+
+After
+
+    use CommonUri
+
+    class Foo
+    {
+        ...
+        $url = CommonUri::getUrl($nameOfMyObject);
+    }
+
+or
+
+    $url = \CommonUri::getUrl($nameOfMyObject);
+
 ### Autoloading
 
 * To autoload a class in another directory, you need to add use statements in
