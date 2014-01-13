@@ -133,7 +133,7 @@ after
 
     class Model
 
-* Class names in the global namespaces should be escaped or have a usestatement
+* Class names in the global namespaces should be escaped or have a usestatement.
 
 Before
 
@@ -195,3 +195,12 @@ or
 
     $dg->setColumnFunction('Backend\\Core\\Engine\\DatagridFunctions', 'getTimeAgo', '[time]', 'time');
 
+* Cronjobs now have a different url
+
+Before
+
+    fork.dev/backend/cronjob.php?module=core&action=send_queued_emails
+
+After
+
+    fork.dev/src/Backend/Cronjob.php?module=Core&action=SendQueuedEmails
