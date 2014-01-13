@@ -14,7 +14,6 @@
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dave Lens <dave.lens@wijs.be>
- * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class FrontendBlockExtra extends FrontendBaseObject
 {

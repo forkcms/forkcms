@@ -19,6 +19,7 @@
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class FrontendTemplate extends SpoonTemplate
 {
