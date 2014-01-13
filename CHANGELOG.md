@@ -3,6 +3,20 @@
 Improvements:
 
 * Template: {$var|parsewidget:'module':'action':'id'} now listens to the id and gets the data from the database.
+* Blog: Import wordpress action added.
+* Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+* Users: event ‚after_undelete’ triggered when a deleted user was restored.
+* Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
+* Core: Better error handling for module rights.
+* Various dutch translations updated.
+* Extensions: add export of theme templates (XML).
+
+Bugfixes:
+
+* BackendModel: getURLForBlock can now return the url when locale is not yet activated.
+* Urls containing md threw a 403 forbidden error.
+* Syntax error in FrontendBlockWidget fixed.
+* Some ajax files gave a syntax error as a result of merge conflicts.
 
 
 3.6.5 (2013-10-09)
@@ -19,6 +33,7 @@ Bugfixes:
 Bugfixes:
 
 * Couldn't use terminate function not yet.
+* CamelCased API functions for Apple and Microsoft.
 
 
 3.6.3 (2013-09-25)
@@ -132,6 +147,7 @@ Bugfixes:
 --
 Improvements:
 
+* Core: CommonUri added so we can generate a safe filename and url. Tx to Jeroen Desloovere
 * Core: Upgraded to CKEditor 3.6.6
 * Core: Upgraded to CKFinder 2.3.1
 * Core: added utils.string.sprintf to backend and frontend.
