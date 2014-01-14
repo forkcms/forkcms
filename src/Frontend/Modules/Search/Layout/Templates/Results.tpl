@@ -35,5 +35,5 @@
 			{/option:searchResults}
 		</div>
 	</section>
-	{include:core/layout/templates/pagination.tpl}
+	{include:core/Layout/Templates/Pagination.tpl}
 {/option:searchTerm}

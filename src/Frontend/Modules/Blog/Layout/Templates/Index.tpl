@@ -61,5 +61,5 @@
 			</article>
 		{/iteration:items}
 	</div>
-	{include:core/layout/templates/pagination.tpl}
+	{include:core/Layout/Templates/Pagination.tpl}
 {/option:items}
