@@ -107,6 +107,7 @@ class BackendMailmotorCMHelper
 	 * Deletes one or more groups
 	 *
 	 * @param  mixed $ids The ids to delete.
+	 * @throws CampaignMonitorException
 	 */
 	public static function deleteGroups($ids)
 	{
@@ -124,15 +125,27 @@ class BackendMailmotorCMHelper
 		foreach($ids as $id)
 		{
 			// a list was deleted
-			if(self::getCM()->deleteList(self::getCampaignMonitorID('list', $id)))
+			try
 			{
-				// delete group
-				BackendMailmotorModel::deleteGroups($id);
-
-				// delete CampaignMonitor reference
-				$db->delete('mailmotor_campaignmonitor_ids', 'type = ? AND other_id = ?', array('list', $id));
+				self::getCM()->deleteList(self::getCampaignMonitorID('list', $id));
 			}
+			catch (CampaignMonitorException $e)
+			{
+				// if list doesn't exist anymore in CM, delete our list anyway
+				if($e->getMessage() != "400: Invalid ListID")
+				{
+					throw $e;
+				}
+			}
+
+			// delete group
+			BackendMailmotorModel::deleteGroups($id);
+
+			// delete CampaignMonitor reference
+			$db->delete('mailmotor_campaignmonitor_ids', 'type = ? AND other_id = ?', array('list', $id));
+
 		}
+
 	}
 
 	/**
