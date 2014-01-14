@@ -141,7 +141,7 @@ jsBackend.location =
 	{
 		$.ajax(
 		{
-           data:
+			data:
 			{
 				fork: { module: 'location', action: 'save_live_location' },
 				zoom: jsBackend.location.zoomLevel,
