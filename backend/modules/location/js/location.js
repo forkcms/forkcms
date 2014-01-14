@@ -217,7 +217,7 @@ jsBackend.location =
 		}
 
 		// set map type
-		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
+		jsBackend.location.map.setMapTypeId(jsBackend.location.type);
 	},
 
 	/**
