@@ -58,18 +58,18 @@ jsBackend.location =
 			map: map,
 			title: object.title
 		});
-		
+
 		if(typeof object.dragable != 'undefined' && object.dragable)
 		{
 			marker.setDraggable(true);
-			
+
 			// add event listener
 			google.maps.event.addListener(marker, 'dragend', function()
 			{
 				jsBackend.location.updateMarker(marker);
 			});
 		}
-		
+
 		// add click event on marker
 		google.maps.event.addListener(marker, 'click', function()
 		{
@@ -141,7 +141,7 @@ jsBackend.location =
 	{
 		$.ajax(
 		{
-			data:
+           data:
 			{
 				fork: { module: 'location', action: 'save_live_location' },
 				zoom: jsBackend.location.zoomLevel,
@@ -303,10 +303,10 @@ console.log(jsBackend.location.map);
 	updateMarker: function(marker)
 	{
 		jsBackend.location.getMapData();
-		
+
 		var lat = marker.getPosition().lat();
 		var lng = marker.getPosition().lng();
-		
+
 		$.ajax(
 		{
 			data:
