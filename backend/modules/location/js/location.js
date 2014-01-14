@@ -9,7 +9,7 @@ jsBackend.location =
 {
 	// base values
 	bounds: null, center: null, centerLat: null, centerLng: null, height: null,  
-	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
+	map: null, mapId: null, panorama: null, showDirections: false, showLink: false, showOverview: true,
 	type: null, width: null, zoomLevel: null,
 
 	init: function()
