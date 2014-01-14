@@ -286,8 +286,9 @@ jsBackend.location =
 
 		// define heading (horizontal °) and pitch (vertical °)
 		jsBackend.location.panorama.setPov({
-		  heading: 200,
-		  pitch: 8
+			heading: 200,
+			pitch: 8,
+           zoom: 1
 		});
 
 		// bind event listeners (possible functions: pano_changed, position_changed, pov_changed, links_changed, visible_changed)
