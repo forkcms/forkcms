@@ -216,7 +216,6 @@ jsBackend.location =
 			jsBackend.location.panorama.setVisible((jsBackend.location.type == 'street_view'));
 		}
 
-console.log(jsBackend.location.map);
 		// set map type
 		jsBackend.location.map.setMapTypeId(jsBackend.location.type.toLowerCase());
 	},
