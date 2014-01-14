@@ -532,7 +532,7 @@ class ModuleInstaller
 			'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
 			'title' => (string) $title,
 			'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-			'url' => SpoonFilter::urlise((string) $url, SPOON_CHARSET),
+			'url' => CommonUri::getUrl((string) $url, SPOON_CHARSET),
 			'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
 			'custom' => (!is_null($custom) ? (string) $custom : null),
 			'data' => (!is_null($data)) ? serialize($data) : null
