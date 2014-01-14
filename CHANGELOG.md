@@ -3,6 +3,7 @@
 
 Improvements:
 
+* Faq: bugfix #537 - own_question widget now notifies the admin.
 * Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
 * Users: event ‚after_undelete’ triggered when a deleted user was restored.
