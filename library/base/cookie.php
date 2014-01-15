@@ -7,6 +7,8 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
+
 /**
  * This is our extended version of SpoonCookie
  *

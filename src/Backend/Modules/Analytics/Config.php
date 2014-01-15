@@ -1,0 +1,61 @@
+<?php
+
+namespace Backend\Modules\Analytics;
+
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use Backend\Core\Engine\Model as BackendModel;
+use \Symfony\Component\HttpKernel\KernelInterface;
+
+/**
+ * This is the configuration-object for the analytics module
+ *
+ * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ */
+class Config extends BackendBaseConfig
+{
+    /**
+     * The default action
+     *
+     * @var	string
+     */
+    protected $defaultAction = 'Index';
+
+    /**
+     * The disabled actions
+     *
+     * @var	array
+     */
+    protected $disabledActions = array();
+
+    /**
+     * Check if all required settings have been set
+     *
+     * @param \Symfony\Component\HttpKernel\KernelInterface $kernel
+     * @param string $module The module.
+     */
+    public function __construct(KernelInterface $kernel, $module)
+    {
+        parent::__construct($kernel, $module);
+
+        $error = false;
+        $action = $this->getContainer()->has('url') ? $this->getContainer()->get('url')->getAction() : null;
+
+        // analytics session token
+        if(BackendModel::getModuleSetting('Analytics', 'session_token') === null) $error = true;
+
+        // analytics table id
+        if(BackendModel::getModuleSetting('Analytics', 'table_id') === null) $error = true;
+
+        // missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
+        if($error && $action != 'Settings' && $action != 'Index') {
+            \SpoonHTTP::redirect(BackendModel::createURLForAction('Index'));
+        }
+    }
+}

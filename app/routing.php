@@ -8,6 +8,8 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Backend\Init as BackendInit;
+use Frontend\Init as FrontendInit;
 
 /**
  * Application routing
@@ -20,7 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApplicationRouting
 {
-    const DEFAULT_APPLICATION = 'frontend';
+    const DEFAULT_APPLICATION = 'Frontend';
 
     /**
      * Virtual folders mappings
@@ -29,10 +31,10 @@ class ApplicationRouting
      */
     private static $routes = array(
         '' => self::DEFAULT_APPLICATION,
-        'private' => 'backend',
-        'backend' => 'backend',
-        'api' => 'api',
-        'install' => 'install'
+        'private' => 'Backend',
+        'Backend' => 'Backend',
+        'api' => 'Api',
+        'install' => 'Install'
     );
 
     /**
@@ -86,30 +88,30 @@ class ApplicationRouting
          * Our ajax and cronjobs don't go trough the index.php file at the
          * moment. Because of this we need to add some extra validation.
          */
-        if (strpos($this->request->getRequestUri(), 'ajax.php') !== false) {
-            $applicationName .= '_ajax';
-        } elseif (strpos($this->request->getRequestUri(), 'cronjob.php') !== false) {
-            $applicationName .= '_cronjob';
+        if (strpos($this->request->getRequestUri(), 'Ajax.php') !== false) {
+            $applicationName .= 'Ajax';
+        } elseif (strpos($this->request->getRequestUri(), 'Cronjob.php') !== false) {
+            $applicationName .= 'Cronjob';
         }
 
         // Pave the way for the application we'll need to load.
         // This initializes basic functionality and retrieves the correct class to instantiate.
         switch ($applicationName) {
-            case 'frontend':
-            case 'frontend_ajax':
+            case 'Frontend':
+            case 'FrontendAjax':
                 $applicationClass = $this->initializeFrontend($applicationName);
                 break;
-            case 'backend':
-            case 'backend_ajax':
-            case 'backend_cronjob':
+            case 'Backend':
+            case 'BackendAjax':
+            case 'BackendCronjob':
                 $applicationClass = $this->initializeBackend($applicationName);
                 break;
-            case 'api':
+            case 'Api':
                 $applicationClass = $this->initializeAPI($applicationName);
                 break;
-            case 'install':
+            case 'Install':
                 // install directory might be deleted after install, handle it as a normal frontend request
-                if (file_exists(__DIR__ . '/../install')) {
+                if (file_exists(__DIR__ . '/../src/Install')) {
                     $applicationClass = $this->initializeInstaller();
                 } else {
                     $applicationClass = 'Frontend';
@@ -142,24 +144,24 @@ class ApplicationRouting
     {
         $queryString = $this->getQueryString();
         $chunks = explode('/', $queryString);
-        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
+        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : 'v1';
+        $apiVersion = strtok($apiVersion, '?');
+        $apiClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Init';
 
         // validate
-        if (!file_exists(__DIR__ . '/../api/' . $apiVersion . '/init.php')) {
+        if (!class_exists($apiClass)) {
             throw new Exception('This version of the API does not exists.');
         }
 
-        require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
-        $init = new APIInit($this->kernel);
+        $init = new $apiClass($this->kernel);
         $init->initialize($app);
 
         // The client was requested
         if (array_key_exists(2, $chunks) && $chunks[2] === 'client') {
-            require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
-            $applicationClass = 'ApiClient';
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Client';
         } else {
             // The regular API was requested
-            $applicationClass = 'API';
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Api';
         }
 
         return $applicationClass;
@@ -177,13 +179,10 @@ class ApplicationRouting
             date_default_timezone_set('Europe/Brussels');
         }
 
-        // require the installer class
-        require_once __DIR__ . '/../install/engine/installer.php';
-
         // we'll be using utf-8
         header('Content-type: text/html;charset=utf8');
 
-        return 'Installer';
+        return 'Install\Engine\Installer';
     }
 
     /**
@@ -192,19 +191,18 @@ class ApplicationRouting
      */
     protected function initializeBackend($app)
     {
-        require_once __DIR__ . '/../backend/init.php';
         $init = new BackendInit($this->kernel);
         $init->initialize($app);
 
         switch ($app) {
-            case 'backend_ajax':
-                $applicationClass = 'BackendAJAX';
+            case 'BackendAjax':
+                $applicationClass = 'Backend\Core\Engine\Ajax';
                 break;
-            case 'backend_cronjob':
-                $applicationClass = 'BackendCronjob';
+            case 'BackendCronjob':
+                $applicationClass = 'Backend\Core\Engine\Cronjob';
                 break;
             default:
-                $applicationClass = 'Backend';
+                $applicationClass = 'Backend\Core\Engine\Backend';
         }
 
         return $applicationClass;
@@ -216,11 +214,10 @@ class ApplicationRouting
      */
     protected function initializeFrontend($app)
     {
-        require_once __DIR__ . '/../frontend/init.php';
         $init = new FrontendInit($this->kernel);
         $init->initialize($app);
 
-        return ($app === 'frontend_ajax') ? 'FrontendAJAX' : 'Frontend';
+        return ($app === 'FrontendAjax') ? 'Frontend\Core\Engine\Ajax' : 'Frontend\Core\Engine\Frontend';
     }
 
     /**
@@ -243,10 +240,18 @@ class ApplicationRouting
         // split into chunks
         $chunks = explode('/', $queryString);
 
+        // remove the src part if necessary. This is needed for backend ajax/cronjobs
+        if(isset($chunks[0]) && $chunks[0] == 'src')
+        {
+            unset($chunks[0]);
+            $chunks = array_values($chunks);
+        }
+
         // is there a application specified
         if (isset($chunks[0])) {
             // cleanup
             $proposedApplication = (string) $chunks[0];
+            $proposedApplication = strtok($proposedApplication, '?');
 
             // set real application
             if (isset(self::$routes[$proposedApplication])) {

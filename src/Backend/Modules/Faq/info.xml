@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Faq</name>
+	<version>2.0.1</version>
+	<requirements>
+		<minimum_version>3.0.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			Creating a place on your website where visitors find their answers fast and accurate, not always an easy task. The FAQ modules gives you a head start.
+			This module allows you to collect the questions you answer into categories creating a clear and easy to browse overview of knowledge. We present the most read questions beside this, creating a very quick answer to most frequently asked questions.
+			We've created separated pages for every Q&A. Doing so we can easily implement four extra features within this module:
+			* Go deep into the answer: you have the place to explain through text and images what your costumers want to know.
+			* Answer related questions: based on the categories the FAQ modules offers the user a range of related questions, so bringing him/her closer to what they're looking for.
+			* Improve you documentation: underneath the answer you find a form for feedback. Who didn't find what they were looking for is given the possibility to relief his or her grieves.
+			* Contact us: Found no answer at all? We link the FAQ module to your contactpage so every question gets answered.
+			* Display questions from a FAQ category on a selected page
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Lester Lievens]]></name>
+			<url><![CDATA[http://www.twitter.com/ElLesso]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.com]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a faq is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a faq is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a faq is edited.]]></event>
+		<event application="backend" name="after_add_category"><![CDATA[Triggered when a category is added.]]></event>
+		<event application="backend" name="after_delete_category"><![CDATA[Triggered when a category is deleted.]]></event>
+		<event application="backend" name="after_edit_category"><![CDATA[Triggered when a category is edited.]]></event>
+		<event application="backend" name="after_add_feedback"><![CDATA[Triggered when a feedback comment is added.]]></event>
+		<event application="backend" name="after_delete_feedback"><![CDATA[Triggered when a feedback comment is deleted.]]></event>
+	</events>
+</module>

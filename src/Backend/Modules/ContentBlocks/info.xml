@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>ContentBlocks</name>
+	<version>2.0.0</version>
+	<requirements>
+		<minimum_version>2.4.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			The content blocks module provides the possibility to re-use content on multiple pages, wherefore the content can be managed in 1 single point, but the changes are immediately visible on all pages it occurs.
+			Content blocks are exceptionally well-suited for recurring content like contact details or call-to-actions.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Davy Hellemans]]></name>
+			<url><![CDATA[http://blog.bauffman.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Tijs Verkoyen]]></name>
+			<url><![CDATA[http://www.sumocoders.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a content block is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a content block is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a content block is edited.]]></event>
+	</events>
+</module>

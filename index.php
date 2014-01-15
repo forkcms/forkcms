@@ -21,11 +21,11 @@ require_once __DIR__ . '/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
 
 // Fork has not yet been installed
-$installer = dirname(__FILE__) . '/install/cache';
+$installer = dirname(__FILE__) . '/src/Install/Cache';
 $request = Request::createFromGlobals();
 if (file_exists($installer) &&
     is_dir($installer) &&
-    !file_exists($installer . '/installed.txt') &&
+    !file_exists($installer . '/Installed.txt') &&
     substr($request->getRequestURI(), 0, 8) != '/install'
 ) {
     // check .htaccess
