@@ -18,7 +18,7 @@
 							{$txtEmail}{$txtEmailError}
 						</div>
 					</div>
-					<div class="form-group{option:txtPasswordError} has-error{option:txtPasswordError}">
+					<div class="form-group{option:txtPasswordError} has-error{/option:txtPasswordError}">
 						<label class="control-label col-sm-2" for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						<div class="col-sm-6">
 							{$txtPassword}{$txtPasswordError}
