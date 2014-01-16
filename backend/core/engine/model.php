@@ -1049,7 +1049,7 @@ class BackendModel extends BaseModel
         // get database
         $db = self::getContainer()->get('database');
 
-        // sequence not inserted
+        // sequence not given
         if($sequence == null)
         {
             // redefine sequence: get maximum sequence for module
