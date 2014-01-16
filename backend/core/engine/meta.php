@@ -464,13 +464,13 @@ class BackendMeta
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
-			$URL = $this->frm->getField('url')->getValue();
+			$URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
 
 			// get the real url
 			$generatedUrl = $this->generateURL($URL);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
+			if(SpoonFilter::urlise($URL) != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated
