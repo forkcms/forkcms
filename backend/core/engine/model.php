@@ -1061,7 +1061,7 @@ class BackendModel extends BaseModel
             );
 
             // sequence could not be found for module 
-            if (is_null($sequence')) {
+            if (is_null($sequence)) {
                 // redefine sequence: maximum sequence overall
                 $sequence = $db->getVar(
                     'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
