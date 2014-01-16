@@ -470,7 +470,7 @@ class BackendMeta
 			$generatedUrl = $this->generateURL($URL);
 
 			// check if urls are different
-			if(SpoonFilter::urlise($URL) != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
+			if(CommonUri::getUrl($URL) != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated
