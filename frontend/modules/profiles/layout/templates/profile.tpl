@@ -1,4 +1,4 @@
-<aside id="userActions">
+<section>
 	{option:isLoggedIn}
 		<p>
 			<strong>{$msgWelcomeUserX|sprintf:{$profileDisplayName}}</strong>
@@ -14,4 +14,4 @@
 			<a href="{$loginUrl}"><span class="icon userIcon"></span><span class="iconWrapper">{$lblLogin|ucfirst}</span></a>
 		</p>
 	{/option:!isLoggedIn}
-</aside>
+</section>
