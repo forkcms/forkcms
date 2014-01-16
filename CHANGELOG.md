@@ -1,3 +1,10 @@
+3.6.7 (xxxx-xx-xx)
+--
+
+Improvements:
+
+* Location: Street view added.
+
 3.6.6 (2014-01-15)
 --
 
