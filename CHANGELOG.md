@@ -3,6 +3,7 @@
 
 Improvements:
 
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
 * Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
 * Users: event ‚after_undelete’ triggered when a deleted user was restored.
