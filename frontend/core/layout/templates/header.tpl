@@ -20,6 +20,9 @@
 		{$var|getnavigation:'meta':0:1}
 	</nav>
 
+	{* Skip link *}
+	<p><a href="#main">{$lblSkipToContent|ucfirst}</a></p>
+
 	{* Languages *}
 	{option:languages}
 		<nav>
