@@ -1,9 +1,15 @@
-3.6.6 (2014-01-15)
+3.6.7 (xxxx-xx-xx)
 --
 
 Improvements:
 
 * Faq: bugfix #537 - own_question widget now notifies the admin.
+
+3.6.6 (2014-01-15)
+--
+
+Improvements:
+
 * Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
 * Users: event ‚after_undelete’ triggered when a deleted user was restored.
