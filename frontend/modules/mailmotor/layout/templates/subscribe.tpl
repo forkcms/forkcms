@@ -5,7 +5,7 @@
 
 	{option:!subscribeHideForm}
 		{form:subscribe}
-			<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
+			<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
 				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
 			</p>

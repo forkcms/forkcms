@@ -84,12 +84,12 @@
 	</ul>
 
 	<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
-		<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
+		<p{option:txtMessageError} class="form-error"{/option:txtMessageError}>
 			<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtMessage} {$txtMessageError}
 		</p>
 		<p>
-			<input class="inputSubmit" type="submit" name="comment" value="{$lblSend|ucfirst}" />
+			<input type="submit" name="comment" value="{$lblSend|ucfirst}" />
 		</p>
 	</div>
 	{/form:feedback}

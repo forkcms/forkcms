@@ -4,7 +4,7 @@
 *}
 
 {option:widgetFaqMostRead}
-	<section id="faqMostReadWidget">
+	<section>
 		<header>
 			<h2>{$lblMostReadQuestions|ucfirst}</h2>
 		</header>

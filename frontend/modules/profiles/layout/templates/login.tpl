@@ -1,6 +1,6 @@
 {* Error *}
 {option:formError}
-	<div class="message error">
+	<div class="alert-box error">
 		{option:loginError}
 			<p>{$loginError}</p>
 		{/option:loginError}
@@ -14,11 +14,11 @@
 <section>
 	{form:login}
 		<fieldset>
-			<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
+			<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
 				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail}{$txtEmailError}
 			</p>
-			<p{option:txtPasswordError} class="errorArea"{/option:txtPasswordError}>
+			<p{option:txtPasswordError} class="form-error"{/option:txtPasswordError}>
 				<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtPassword}{$txtPasswordError}
 			</p>
@@ -27,7 +27,7 @@
 				{$chkRememberError}
 			</p>
 			<p>
-				<input class="inputSubmit" type="submit" value="{$lblLogin|ucfirst}" />
+				<input type="submit" value="{$lblLogin|ucfirst}" />
 			</p>
 		</fieldset>
 	{/form:login}

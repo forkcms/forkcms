@@ -22,18 +22,18 @@
 
 				{* Input fields, textareas and drop downs *}
 				{option:fields.simple}
-					<p{option:fields.error} class="errorArea"{/option:fields.error}>
+					<p{option:fields.error} class="form-error"{/option:fields.error}>
 						<label for="{$fields.name}">
 							{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 						</label>
 						{$fields.html}
-						{option:fields.error}<span class="formError inlineError">{$fields.error}</span>{/option:fields.error}
+						{option:fields.error}<span class="inline form-error">{$fields.error}</span>{/option:fields.error}
 					</p>
 				{/option:fields.simple}
 
 				{* Radio buttons and checkboxes *}
 				{option:fields.multiple}
-					<div class="inputList{option:fields.error} errorArea{/option:fields.error}">
+					<div class="input-list{option:fields.error} form-error{/option:fields.error}">
 						<p>
 							{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 						</p>
@@ -42,7 +42,7 @@
 								<li><label for="{$fields.html.id}">{$fields.html.field} {$fields.html.label}</label></li>
 							{/iteration:fields.html}
 						</ul>
-						{option:fields.error}<span class="formError inlineError">{$fields.error}</span>{/option:fields.error}
+						{option:fields.error}<span class="inline form-error">{$fields.error}</span>{/option:fields.error}
 					</div>
 				{/option:fields.multiple}
 			{/iteration:fields}

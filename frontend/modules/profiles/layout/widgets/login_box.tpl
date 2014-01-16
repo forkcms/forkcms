@@ -17,11 +17,11 @@
 		</header>
 		{form:login}
 			<fieldset>
-				<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
+				<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
 					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtEmail}{$txtEmailError}
 				</p>
-				<p{option:txtPasswordError} class="errorArea"{/option:txtPasswordError}>
+				<p{option:txtPasswordError} class="form-error"{/option:txtPasswordError}>
 					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtPassword}{$txtPasswordError}
 				</p>
