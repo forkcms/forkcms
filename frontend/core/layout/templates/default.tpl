@@ -1,63 +1,40 @@
 {include:core/layout/templates/head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	<div id="container">
-		<header id="header">
-			{* Logo *}
-			<h2>
-				<a href="/">{$siteTitle}</a>
-			</h2>
+	<!--[if lt IE 8]>
+		<div class="alert-box">
+			<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser to improve your experience.</p>
+		</div>
+	<![endif]-->
 
-			{* Language *}
-			<div>
-				{include:core/layout/templates/languages.tpl}
-			</div>
-		</header>
+	{* Header *}
+	{include:core/layout/templates/header.tpl}
 
-		{* Navigation *}
-		<nav>
-			{$var|getnavigation:'page':0:1}
-		</nav>
+	<main id="main" role="main">
+		{include:core/layout/templates/breadcrumb.tpl}
 
-		<section>
-			{* Breadcrumb *}
-			{include:core/layout/templates/breadcrumb.tpl}
+		{* Page title *}
+		{option:!hideContentTitle}
+			<header>
+				<h1>{$page.title}</h1>
+			</header>
+		{/option:!hideContentTitle}
 
-			{* Page title *}
-			{option:!hideContentTitle}
-				<header class="mainTitle">
-					<h1>{$page.title}</h1>
-				</header>
-			{/option:!hideContentTitle}
-
-			{* Main position *}
+		{* Main position *}
+		{option:positionMain}
 			{iteration:positionMain}
-				{option:positionMain.blockIsHTML}
-					<section class="mod">
-						<div class="inner">
-							<div class="bd content">
-								{$positionMain.blockContent}
-							</div>
-						</div>
-					</section>
-				{/option:positionMain.blockIsHTML}
-				{option:!positionMain.blockIsHTML}
-					{$positionMain.blockContent}
-				{/option:!positionMain.blockIsHTML}
+			{option:!positionMain.blockIsHTML}
+				{$positionMain.blockContent}
+			{/option:!positionMain.blockIsHTML}
+			{option:positionMain.blockIsHTML}
+				{$positionMain.blockContent}
+			{/option:positionMain.blockIsHTML}
 			{/iteration:positionMain}
-		</section>
+		{/option:positionMain}
+	</main>
 
-		<footer>
-			{include:core/layout/templates/footer.tpl}
-		</footer>
-	</div>
+	{* Footer *}
+	{include:core/layout/templates/footer.tpl}
 
-	{* General Javascript *}
-	{iteration:jsFiles}
-		<script src="{$jsFiles.file}"></script>
-	{/iteration:jsFiles}
-
-	{* Site wide HTML *}
-	{$siteHTMLFooter}
 </body>
 </html>

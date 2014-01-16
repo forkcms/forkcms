@@ -89,6 +89,7 @@ variables that are available:
 	{/option:item.allow_comments}
 {/option:comments}
 {option:item.allow_comments}
+	{* don't remove id, it's used as an anchor *}
 	<section id="{$actComment}">
 		<header>
 			<h1 >{$msgComment|ucfirst}</h1>
