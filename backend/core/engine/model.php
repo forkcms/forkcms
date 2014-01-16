@@ -1043,7 +1043,7 @@ class BackendModel extends BaseModel
         // check if type exists
         if(!in_array($type, array('homepage', 'block', 'widget')))
         {
-            throw new Exception('Type not supported. Choose from "homepage", "block" or "widget".');
+            throw new BackendException('Type not supported. Choose from "homepage", "block" or "widget".');
         }
 
         // get database
