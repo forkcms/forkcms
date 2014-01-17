@@ -21,12 +21,7 @@
 		{* Main position *}
 		{option:positionMain}
 			{iteration:positionMain}
-			{option:!positionMain.blockIsHTML}
 				{$positionMain.blockContent}
-			{/option:!positionMain.blockIsHTML}
-			{option:positionMain.blockIsHTML}
-				{$positionMain.blockContent}
-			{/option:positionMain.blockIsHTML}
 			{/iteration:positionMain}
 		{/option:positionMain}
 	</main>
