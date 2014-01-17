@@ -1,3 +1,10 @@
+3.6.7 (xxxx-xx-xx)
+--
+
+Improvements:
+
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
+
 3.6.6 (2014-01-15)
 --
 
