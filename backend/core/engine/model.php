@@ -1081,7 +1081,7 @@ class BackendModel extends BaseModel
             'sequence' => $sequence
         );
 
-        // return extra id for inserted extra
+        // return id for inserted extra
         return $db->insert('modules_extras', $extra);
     }
 
