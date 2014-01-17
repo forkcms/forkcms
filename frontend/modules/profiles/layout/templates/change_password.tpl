@@ -11,11 +11,11 @@
 <section>
 	{form:updatePassword}
 		<fieldset>
-			<p{option:txtOldPasswordError} class="form-error"{/option:txtOldPasswordError}>
+			<p{option:txtOldPasswordError} class="error-area"{/option:txtOldPasswordError}>
 				<label for="oldPassword">{$lblOldPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtOldPassword}{$txtOldPasswordError}
 			</p>
-			<p{option:txtNewPasswordError} class="form-error"{/option:txtNewPasswordError}>
+			<p{option:txtNewPasswordError} class="error-area"{/option:txtNewPasswordError}>
 				<label for="newPassword">{$lblNewPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtNewPassword}{$txtNewPasswordError}
 			</p>

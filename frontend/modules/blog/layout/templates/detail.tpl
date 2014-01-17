@@ -98,19 +98,19 @@ variables that are available:
 		{option:commentIsSpam}<div class="alert-box error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 		{option:commentIsAdded}<div class="alert-box success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 		{form:commentsForm}
-			<p{option:txtAuthorError} class="form-error"{/option:txtAuthorError}>
+			<p{option:txtAuthorError} class="error-area"{/option:txtAuthorError}>
 				<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtAuthor} {$txtAuthorError}
 			</p>
-			<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
+			<p{option:txtEmailError} class="error-area"{/option:txtEmailError}>
 				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
 			</p>
-			<p{option:txtWebsiteError} class="form-error"{/option:txtWebsiteError}>
+			<p{option:txtWebsiteError} class="error-area"{/option:txtWebsiteError}>
 				<label for="website">{$lblWebsite|ucfirst}</label>
 				{$txtWebsite} {$txtWebsiteError}
 			</p>
-			<p{option:txtMessageError} class="form-error"{/option:txtMessageError}>
+			<p{option:txtMessageError} class="error-area"{/option:txtMessageError}>
 				<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMessage} {$txtMessageError}
 			</p>

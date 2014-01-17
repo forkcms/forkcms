@@ -12,15 +12,15 @@
 	{option:success}<div class="alert-box success"><p>{$msgOwnQuestionSuccess}</p></div>{/option:success}
 
 	{form:own_question}
-		<p{option:txtNameError} class="form-error"{/option:txtNameError}>
+		<p{option:txtNameError} class="error-area"{/option:txtNameError}>
 			<label for="name">{$lblYourName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtName} {$txtNameError}
 		</p>
-		<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
+		<p{option:txtEmailError} class="error-area"{/option:txtEmailError}>
 			<label for="email">{$lblYourEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtEmail} {$txtEmailError}
 		</p>
-		<p{option:txtMessageError} class="form-error"{/option:txtMessageError}>
+		<p{option:txtMessageError} class="error-area"{/option:txtMessageError}>
 			<label for="message">{$lblYourQuestion|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtMessage} {$txtMessageError}
 		</p>

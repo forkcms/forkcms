@@ -12,7 +12,7 @@
 	<section>
 		{form:resetPassword}
 			<fieldset>
-				<p{option:txtPasswordError} class="form-error"{/option:txtPasswordError}>
+				<p{option:txtPasswordError} class="error-area"{/option:txtPasswordError}>
 					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtPassword}{$txtPasswordError}
 				</p>

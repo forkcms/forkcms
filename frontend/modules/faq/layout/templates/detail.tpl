@@ -84,7 +84,7 @@
 	</ul>
 
 	<div id="feedbackNoInfo"{option:hideFeedbackNoInfo} style="display: none;"{/option:hideFeedbackNoInfo}>
-		<p{option:txtMessageError} class="form-error"{/option:txtMessageError}>
+		<p{option:txtMessageError} class="error-area"{/option:txtMessageError}>
 			<label for="message">{$msgHowToImprove|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 			{$txtMessage} {$txtMessageError}
 		</p>

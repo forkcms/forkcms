@@ -12,15 +12,15 @@
 	{form:register}
 		<section>
 			<fieldset>
-				<p{option:txtDisplayNameError} class="form-error"{/option:txtDisplayNameError}>
+				<p{option:txtDisplayNameError} class="error-area"{/option:txtDisplayNameError}>
 					<label for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtDisplayName}{$txtDisplayNameError}
 				</p>
-				<p{option:txtEmailError} class="form-error"{/option:txtEmailError}>
+				<p{option:txtEmailError} class="error-area"{/option:txtEmailError}>
 					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtEmail}{$txtEmailError}
 				</p>
-				<p{option:txtPasswordError} class="form-error"{/option:txtPasswordError}>
+				<p{option:txtPasswordError} class="error-area"{/option:txtPasswordError}>
 					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtPassword}{$txtPasswordError}
 				</p>
