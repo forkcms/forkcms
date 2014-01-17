@@ -2,9 +2,7 @@
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	<!--[if lt IE 8]>
-		<div class="alert-box">
-			<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser to improve your experience.</p>
-		</div>
+		<p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser to improve your experience.</p>
 	<![endif]-->
 
 	{* Header *}

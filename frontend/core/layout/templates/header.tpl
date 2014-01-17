@@ -24,11 +24,9 @@
 	<p><a href="#main">{$lblSkipToContent|ucfirst}</a></p>
 
 	{* Languages *}
-	{option:languages}
-		<nav>
-			{include:core/layout/templates/languages.tpl}
-		</nav>
-	{/option:languages}
+	<nav>
+		{include:core/layout/templates/languages.tpl}
+	</nav>
 
 	{* Search widget: so you don't have to make a position *}
 	{$var|parsewidget:'search':'form'}

@@ -15,18 +15,14 @@
 </footer>
 
 <noscript>
-	<div class="alert-box notice">
-		<h4>{$lblEnableJavascript|ucfirst}</h4>
-		<p>{$msgEnableJavascript}</p>
-	</div>
+	<h4>{$lblEnableJavascript|ucfirst}</h4>
+	<p>{$msgEnableJavascript}</p>
 </noscript>
 
 {* General Javascript *}
 {iteration:jsFiles}
 	<script src="{$jsFiles.file}"></script>
 {/iteration:jsFiles}
-
-{* Theme specific Javascript *}
 
 {* Site wide HTML *}
 {$siteHTMLFooter}
