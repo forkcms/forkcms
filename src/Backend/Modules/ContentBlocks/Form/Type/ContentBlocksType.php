@@ -2,6 +2,13 @@
 
 namespace Backend\Modules\ContentBlocks\Form\Type;
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -9,6 +16,11 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Form\Type\BaseType;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
+/**
+ * This is the base form type for adding/editing content blocks
+ *
+ * @author Wouter Sioen <wouter@woutersioen.be>
+ */
 class ContentBlocksType extends BaseType
 {
     /**
