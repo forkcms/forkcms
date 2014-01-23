@@ -5,7 +5,7 @@
 	<h2>{$lblContentBlocks|ucfirst}: {$msgEditContentBlock|sprintf:{$title}}</h2>
 </div>
 
-{form:edit}
+{form:contentBlocks}
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
@@ -74,7 +74,7 @@
 			{$msgConfirmDelete|sprintf:{$title}}
 		</p>
 	</div>
-{/form:edit}
+{/form:contentBlocks}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

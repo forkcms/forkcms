@@ -10,11 +10,10 @@ namespace Backend\Modules\ContentBlocks\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Form\Type\ContentBlocksType;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -38,7 +37,6 @@ class Add extends BackendBaseActionAdd
     public function execute()
     {
         parent::execute();
-        $this->templates = BackendContentBlocksModel::getTemplates();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
@@ -50,15 +48,7 @@ class Add extends BackendBaseActionAdd
      */
     private function loadForm()
     {
-        $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
-        $this->frm->addEditor('text');
-        $this->frm->addCheckbox('hidden', true);
-
-        // if we have multiple templates, add a dropdown to select them
-        if(count($this->templates) > 1) {
-            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates));
-        }
+        $this->frm = $this->createForm(new ContentBlocksType());
     }
 
     /**
@@ -66,38 +56,21 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
+        if ($this->frm->isValid()) {
+            $item = $this->frm->getData();
+            $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
 
-            // validate fields
-            $fields['title']->isFilled(BL::err('TitleIsRequired'));
+            // insert the item
+            $item['revision_id'] = BackendContentBlocksModel::insert($item);
 
-            if($this->frm->isCorrect()) {
-                // build item
-                $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getValue() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate();
-                $item['edited_on'] = BackendModel::getUTCDate();
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
-                // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::insert($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
-                );
-            }
+            // everything is saved, so redirect to the overview
+            $this->redirect(
+                BackendModel::createURLForAction('Index') . '&report=added&var=' .
+                urlencode($item['title']) . '&highlight=row-' . $item['id']
+            );
         }
     }
 }

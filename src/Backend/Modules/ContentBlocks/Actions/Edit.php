@@ -12,11 +12,11 @@ namespace Backend\Modules\ContentBlocks\Actions;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
 use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Form\Type\ContentBlocksType;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
@@ -92,15 +92,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function loadForm()
     {
-        $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-        $this->frm->addEditor('text', $this->record['text']);
-        $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
-
-        // if we have multiple templates, add a dropdown to select them
-        if(count($this->templates) > 1) {
-            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
-        }
+        $this->frm = $this->createForm(new ContentBlocksType(), $this->record);
     }
 
     /**
@@ -175,38 +167,22 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
-            $this->frm->cleanupFields();
-            $fields = $this->frm->getFields();
+        if ($this->frm->isValid()) {
+            $item = $this->frm->getData();
+            $item['id'] = $this->id;
+            $item['extra_id'] = $this->record['extra_id'];
 
-            // validate fields
-            $fields['title']->isFilled(BL::err('TitleIsRequired'));
+            // insert the item
+            $item['revision_id'] = BackendContentBlocksModel::update($item);
 
-            if($this->frm->isCorrect()) {
-                $item['id'] = $this->id;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = $this->record['language'];
-                $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getChecked() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
-                $item['edited_on'] = BackendModel::getUTCDate();
+            // trigger event
+            BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
-                // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::update($item);
-
-                // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
-
-                // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=edited&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
-                );
-            }
+            // everything is saved, so redirect to the overview
+            $this->redirect(
+                BackendModel::createURLForAction('Index') . '&report=edited&var=' .
+                urlencode($item['title']) . '&highlight=row-' . $item['id']
+            );
         }
     }
 }
