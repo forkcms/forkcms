@@ -9,7 +9,6 @@ namespace Backend\Core\Form\Type;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Exception;
 
 /**
@@ -21,7 +20,7 @@ use Backend\Core\Engine\Exception;
 class BaseType
 {
     /**
-     * @var BackendForm
+     * @var Backend\Core\Engine\Form
      */
     protected $form;
 
