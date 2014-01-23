@@ -2,9 +2,22 @@
 
 namespace Backend\Core\Form\Type;
 
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Exception;
 
+/**
+ * This is the base form type, it will allow us to create reusable
+ * forms
+ *
+ * @author Wouter Sioen <wouter@woutersioen.be>
+ */
 class BaseType
 {
     /**
