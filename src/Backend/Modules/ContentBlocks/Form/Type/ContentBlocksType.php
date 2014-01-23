@@ -49,7 +49,7 @@ class ContentBlocksType extends BaseType
         );
         $this->form->addCheckbox(
             'hidden',
-            ($data) ? $data['hidden'] == 'Y' : true
+            ($data) ? $data['hidden'] == 'N' : true
         );
 
         // if we have multiple templates, add a dropdown to select them
@@ -100,7 +100,7 @@ class ContentBlocksType extends BaseType
         $data['edited_on'] = $data['created_on'] = BackendModel::getUTCDate();
 
         // our hidden column is a checkbox. Convert to 'Y' or 'N'
-        $data['hidden'] = $data['hidden'] ? 'Y' : 'N';
+        $data['hidden'] = $data['hidden'] ? 'N' : 'Y';
 
         return $data;
     }
