@@ -5,7 +5,7 @@
 	<h2>{$lblContentBlocks|ucfirst}: {$lblAdd}</h2>
 </div>
 
-{form:add}
+{form:contentBlocks}
 	<p>
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
@@ -34,7 +34,7 @@
 			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 		</div>
 	</div>
-{/form:add}
+{/form:contentBlocks}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

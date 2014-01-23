@@ -104,6 +104,21 @@ class Action extends Object
     }
 
     /**
+     * Creates and returns a Form instance from the type of the form.
+     *
+     * @param string|FormTypeInterface $type    The built type of the form
+     * @param mixed                    $data    The initial data for the form
+     * @param array                    $options Options for the form
+     *
+     * @return Form
+     */
+    public function createForm($type, $data = null, array $options = array())
+    {
+        $type->buildForm($data);
+        return $type;
+    }
+
+    /**
      * Display, this wil output the template to the browser
      * If no template is specified we build the path form the current module and action
      *
