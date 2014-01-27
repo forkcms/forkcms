@@ -507,6 +507,10 @@
         <translation language="es"><![CDATA[No hay grupos aun.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ομάδες.]]></translation>
       </item>
+      <item type="message" name="OverwriteExisting">
+        <translation language="nl"><![CDATA[Bestaande profielen overschrijven?]]></translation>
+        <translation language="en"><![CDATA[Overwrite existing profiles?]]></translation>
+      </item>
       <item type="message" name="ProfileAddedToGroup">
         <translation language="nl"><![CDATA[Het profiel werd toegevoegd aan de groep.]]></translation>
         <translation language="en"><![CDATA[The profile was added to the group.]]></translation>
@@ -554,6 +558,14 @@
         <translation language="hu"><![CDATA[A profilok hozzáadva a csoporthoz.]]></translation>
         <translation language="es"><![CDATA[Los perfiles fueron agregados al grupo.]]></translation>
         <translation language="el"><![CDATA[Τα προφίλ προστέθηκαν στην ομάδα.]]></translation>
+      </item>
+      <item type="message" name="ProfilesImported">
+        <translation language="nl"><![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn niet ge-updated.]]></translation>
+        <translation language="en"><![CDATA[There have been added %1$s profiles, %2$s already existed and are not updated.]]></translation>
+      </item>
+      <item type="message" name="ProfilesImportedAndUpdated">
+        <translation language="nl"><![CDATA[Er zijn %1$s profielen toegevoegd, %2$s bestonden reeds en zijn ge-updated.]]></translation>
+        <translation language="en"><![CDATA[There have been added %1$s profiles, %2$s already existed and are updated.]]></translation>
       </item>
       <item type="message" name="ProfileUnblocked">
         <translation language="nl"><![CDATA[Het profiel "%1$s" werd opnieuw geactiveerd.]]></translation>
