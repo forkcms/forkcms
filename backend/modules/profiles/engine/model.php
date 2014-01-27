@@ -569,88 +569,88 @@ class BackendProfilesModel
 	 */
 	public static function importCsv($data, $groupId = null, $overwriteExisting = false)
 	{
-	    // init statistics
-	    $statistics = array('count' => array('exists' => 0, 'inserted' => 0));
+		// init statistics
+		$statistics = array('count' => array('exists' => 0, 'inserted' => 0));
 
-	    // loop data
-	    foreach ($data as $item) {
-	        // field checking
-	        if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
-	            throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
-	        }
+		// loop data
+		foreach ($data as $item) {
+			// field checking
+			if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
+				throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
+			}
 
-	        // init $insert
-	        $values = array();
+			// init $insert
+			$values = array();
 
-	        // define exists
-	        $exists = self::existsByEmail($item['email']);
+			// define exists
+			$exists = self::existsByEmail($item['email']);
 
-	        // do not overwrite existing profiles
-	        if ($exists && !$overwriteExisting) {
-	            // adding to exists
-	            $statistics['count']['exists'] += 1;
+			// do not overwrite existing profiles
+			if ($exists && !$overwriteExisting) {
+				// adding to exists
+				$statistics['count']['exists'] += 1;
 
-	            // skip this item
-	            continue;
-	        }
+				// skip this item
+				continue;
+			}
 
-	        // build item
-    		$values = array(
-    			'email' => $item['email'],
-    			'registered_on' => BackendModel::getUTCDate(),
-    			'display_name' => $item['display_name'],
-    			'url' => self::getUrl($item['display_name'])
-    		);
+			// build item
+			$values = array(
+				'email' => $item['email'],
+				'registered_on' => BackendModel::getUTCDate(),
+				'display_name' => $item['display_name'],
+				'url' => self::getUrl($item['display_name'])
+			);
 
-            // does not exists
-    		if (!$exists) {
-    		    // import
-    		    $id = self::insert($values);
+			// does not exists
+			if (!$exists) {
+				// import
+				$id = self::insert($values);
 
-                // update counter
-        		$statistics['count']['inserted'] += 1;
-    		// already exists
-    		} else {
-    		    // get profile
-    		    $profile = self::getByEmail($item['email']);
-    		    $id = $profile['id'];
+				// update counter
+				$statistics['count']['inserted'] += 1;
+			// already exists
+			} else {
+				// get profile
+				$profile = self::getByEmail($item['email']);
+				$id = $profile['id'];
 
-    		    // exists
-    		    $statistics['count']['exists'] += 1;
-    		}
+				// exists
+				$statistics['count']['exists'] += 1;
+			}
 
-    		// new password filled in?
-    		if($item['password'])
-    		{
-    			// get new salt
-    			$salt = self::getRandomString();
+			// new password filled in?
+			if($item['password'])
+			{
+				// get new salt
+				$salt = self::getRandomString();
 
-    			// update salt
-    			self::setSetting($id, 'salt', $salt);
+				// update salt
+				self::setSetting($id, 'salt', $salt);
 
-    			// build password
-    			$values['password'] = self::getEncryptedString($item['password'], $salt);
-    		}
+				// build password
+				$values['password'] = self::getEncryptedString($item['password'], $salt);
+			}
 
-    		// update values
-    		self::update($id, $values);
+			// update values
+			self::update($id, $values);
 
-    		// we have a group id
-    		if ($groupId) {
-    		    // init values
-    		    $values = array();
-    		
-    		    // build item
+			// we have a group id
+			if ($groupId) {
+				// init values
+				$values = array();
+			
+				// build item
 				$values['profile_id'] = $id;
 				$values['group_id'] = $groupId;
 				$values['starts_on'] = BackendModel::getUTCDate();
 
 				// insert values
 				$id = BackendProfilesModel::insertProfileGroup($values);
-    		}
-	    }
+			}
+		}
 
-	    return $statistics;
+		return $statistics;
 	}
 
 	/**

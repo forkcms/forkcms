@@ -42,10 +42,10 @@ class BackendProfilesImport extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('import');
 
-        // create elements
-        $this->frm->addDropdown('group', $ddmValues);
-        $this->frm->addFile('file');
-        $this->frm->addCheckbox('overwrite_existing');
+		// create elements
+		$this->frm->addDropdown('group', $ddmValues);
+		$this->frm->addFile('file');
+		$this->frm->addCheckbox('overwrite_existing');
 	}
 
 	/**
@@ -83,11 +83,11 @@ class BackendProfilesImport extends BackendBaseActionAdd
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-			    // should we overwrite existing?
-			    $overwrite = ($this->frm->getField('overwrite_existing')->isChecked());
+				// should we overwrite existing?
+				$overwrite = ($this->frm->getField('overwrite_existing')->isChecked());
 
-			    // import csv
-			    $statistics = BackendProfilesModel::importCsv($csv, $ddmGroup->getValue(), $overwrite);
+				// import csv
+				$statistics = BackendProfilesModel::importCsv($csv, $ddmGroup->getValue(), $overwrite);
 
 				// trigger event
 				BackendModel::triggerEvent($this->getModule(), 'after_import', array('statistics' => $statistics));
