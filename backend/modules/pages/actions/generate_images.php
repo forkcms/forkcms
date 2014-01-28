@@ -8,11 +8,10 @@
  */
 
 /**
- * BackendPagesCopy
- * This is the copy-action, it will copy pages from one language to another
- * @remark:    IMPORTANT existing data will be removed, this feature is also experimental!
+ * BackendPagesGenerateImages
+ * This action searches for every modules if there are files, and checks if the images in the source-folder also are generated in the size-folders
  *
- * @author Waldo Cosman <waldo@comsa.be>
+ * @author Waldo Cosman <waldo@comsa.be> <waldo_cosman@hotmail.com>
  */
 
 use Symfony\Component\Filesystem\Filesystem;
@@ -47,8 +46,6 @@ class BackendPagesGenerateImages extends BackendBaseActionIndex
 				//--Check if dir exists
 				if($filesystem->exists($dir . 'source/'))
 				{
-					echo "<h1>" . $module . "</h1><hr/>";
-
 					//--Create Finder object
 					$finderDir = new Finder();
 
