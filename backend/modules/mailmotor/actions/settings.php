@@ -184,10 +184,10 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 		// sender info
 		$this->frmGeneral->addText('from_name', $this->settings['from_name']);
-		$this->frmGeneral->addText('from_email', $this->settings['from_email']);
+		$this->frmGeneral->addTrimmedText('from_email', $this->settings['from_email']);
 
 		// reply to address
-		$this->frmGeneral->addText('reply_to_email', $this->settings['reply_to_email']);
+		$this->frmGeneral->addTrimmedText('reply_to_email', $this->settings['reply_to_email']);
 
 		// add fields for comments
 		$this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);

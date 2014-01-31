@@ -117,7 +117,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
-		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addTrimmedText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addText('website', $website, null);
 		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}

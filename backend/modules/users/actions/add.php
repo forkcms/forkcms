@@ -43,7 +43,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 
 		// create elements
 		// profile
-		$this->frm->addText('email', null, 255);
+		$this->frm->addTrimmedText('email', null, 255);
 		$this->frm->addPassword('password', null, 75, 'inputText inputPassword passwordGenerator', 'inputTextError inputPasswordError passwordGenerator')->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->addText('name', null, 255);
