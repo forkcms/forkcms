@@ -276,6 +276,22 @@ class BackendProfilesModel
 	}
 
 	/**
+	 * Get information about a profile, by email
+	 *
+	 * @param  string $email The profile email to get the information for.
+	 * @return array
+	 */
+	public static function getByEmail($email)
+	{
+		return (array) BackendModel::getDB()->getRecord(
+			'SELECT p.id, p.email, p.status, p.display_name, p.url
+			 FROM profiles AS p
+			 WHERE p.email = ?',
+			(string) $email
+		);
+	}
+
+	/**
 	 * Encrypt a string with a salt.
 	 *
 	 * @param string $string String to encrypt.
