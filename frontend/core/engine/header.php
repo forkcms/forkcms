@@ -980,10 +980,14 @@ class FrontendHeader extends FrontendBaseObject
      */
     public function setTwitterCardSite($site)
     {
-        if (substr(0, 1, $site) === '@') {
-            $this->twitterCardExtra['site'] = $site;
-        } elseif (is_numeric($site)) {
+        if (is_numeric($site)) {
             $this->twitterCardExtra['site:id'] = $site;
+        }
+        else {
+            if (strpos($site, '@') !== 0) {
+                $site = "@$site";
+            }
+            $this->twitterCardExtra['site'] = $site;
         }
     }
 
@@ -995,10 +999,14 @@ class FrontendHeader extends FrontendBaseObject
      */
     public function setTwitterCardCreator($creator)
     {
-        if (substr(0, 1, $creator) === '@') {
-            $this->twitterCardExtra['creator'] = $creator;
-        } elseif (is_numeric($creator)) {
+        if (is_numeric($creator)) {
             $this->twitterCardExtra['creator:id'] = $creator;
+        }
+        else {
+            if (strpos($creator, '@') !== 0) {
+                $creator = "@$creator";
+            }
+            $this->twitterCardExtra['creator'] = $creator;
         }
     }
 
