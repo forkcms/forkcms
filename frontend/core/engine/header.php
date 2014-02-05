@@ -960,6 +960,36 @@ class FrontendHeader extends FrontendBaseObject
 
 
     /**
+     * Fix path to url
+     *
+     * @param string $path
+     * @return string
+     */
+    protected function fixPathToUrl($path)
+    {
+        # Already url
+        if(preg_match('`^https?://`', $path)) {
+            return $path;
+        }
+        # Protocol relative url
+        if(strpos($path, '//') === 0) {
+            return SITE_PROTOCOL . ':' . $path; # Expecting SITE_PROTOCOL to be "http" or "https"
+        }
+        # Absolute path
+        if(strpos($path, '/') === 0) {
+            return SITE_URL . $path;
+        }
+        # Relative path
+        $currentPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $last = explode('/', $currentPath);
+        $last = end($last);
+        if($last && strpos($last, '.') !== false) {
+            $currentPath = dirname($currentPath);
+        }
+        return SITE_URL . $currentPath . '/' . $path;
+    }
+
+    /**
      * Parse the Twitter cards
      */
     protected function parseTwitterCards()
@@ -1026,6 +1056,7 @@ class FrontendHeader extends FrontendBaseObject
             'description' => $description,
         );
         if ($imageUrl) {
+            $imageUrl = $this->fixPathToUrl($imageUrl);
             $this->twitterCard['image'] = $imageUrl;
         }
     }
@@ -1040,6 +1071,7 @@ class FrontendHeader extends FrontendBaseObject
      */
     public function setTwitterCardSummaryImage($title, $description, $imageUrl)
     {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
         $this->twitterCard = array(
             'card' => 'summary_large_image',
             'title' => $title,
@@ -1058,6 +1090,7 @@ class FrontendHeader extends FrontendBaseObject
      */
     public function setTwitterCardPhoto($imageUrl, $title = null)
     {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
         $this->twitterCard = array(
             'card' => 'photo',
             'image' => $imageUrl,
@@ -1087,7 +1120,7 @@ class FrontendHeader extends FrontendBaseObject
             'card' => 'gallery',
         );
         for ($i = 0; $i < 4; ++$i) {
-            $this->twitterCard["image$i"] = (!empty($imageUrls[$i]) ? $imageUrls[$i] : '');
+            $this->twitterCard["image$i"] = (!empty($imageUrls[$i]) ? $this->fixPathToUrl($imageUrls[$i]) : '');
         }
         if ($title) {
             $this->twitterCard['title'] = $title;
@@ -1112,6 +1145,7 @@ class FrontendHeader extends FrontendBaseObject
      */
     public function setTwitterCardProduct($title, $description, $imageUrl, $label1, $data1, $label2, $data2)
     {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
         $this->twitterCard = array(
             'card' => 'product',
             'title' => $title,
@@ -1198,6 +1232,8 @@ class FrontendHeader extends FrontendBaseObject
         $stream = null,
         $streamContentType = null
     ) {
+        $playerUrl = $this->fixPathToUrl($playerUrl);
+        $imageUrl = $this->fixPathToUrl($imageUrl);
         $this->twitterCard = array(
             'card' => 'player',
             'title' => $title,
