@@ -84,6 +84,8 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 		$this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
 		$this->frm->addEditor('text', $this->record['text']);
+		$this->frm->addText('class', $this->record['class']);
+		$this->frm->addDropdown('wrapper', array('div' => 'div','section' => 'section','aside' => 'aside'), $this->record['wrapper']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
 		// if we have multiple templates, add a dropdown to select them
@@ -134,6 +136,9 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 		$this->tpl->assign('id', $this->record['id']);
 		$this->tpl->assign('title', $this->record['title']);
+		$this->tpl->assign('class', $this->record['class']);
+		$this->tpl->assign('wrapper', $this->record['wrapper']);
+
 		$this->tpl->assign('revision_id', $this->record['revision_id']);
 
 		// assign revisions-datagrid
@@ -151,6 +156,11 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			if(
+				$this->frm->getField('class')->isFilled()
+			) {
+				$this->frm->getField('wrapper')->isFilled(BL::err('FieldIsRequired'));
+			}
 
 			if($this->frm->isCorrect())
 			{
@@ -161,6 +171,8 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
+				$item['class'] = $this->frm->getField('class')->getValue();
+				$item['wrapper'] = $this->frm->getField('wrapper')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
 				$item['status'] = 'active';
 				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);

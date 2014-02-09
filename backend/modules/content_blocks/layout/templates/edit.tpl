@@ -28,6 +28,14 @@
 					<div class="optionsRTE">
 						{$txtText} {$txtTextError}
 					</div>
+					<div class="options">
+						<p>
+							<label for="class">{$lblClass|ucfirst}</label>
+							<span class="helpTxt">{$msgHelpClass}</span>
+						</p>
+						{$ddmWrapper} {$ddmWrapperError}
+						{$txtClass} {$txtClassError}
+					</div>
 				</div>
 				{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
 				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
