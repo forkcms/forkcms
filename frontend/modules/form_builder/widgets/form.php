@@ -429,16 +429,22 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['name'] = $this->item['name'];
 					$variables['fields'] = $emailFields;
 
-					// check if we have a replyTo email set
-					$replyTo = null;
-					foreach($this->item['fields'] as $field)
+                    // check if we have a replyTo email set or a mailCopyTo
+                    $replyTo = $mailCopyTo = null;
+                    foreach($this->item['fields'] as $field)
 					{
 						if(array_key_exists('reply_to', $field['settings']) && $field['settings']['reply_to'] === true)
 						{
 							$email = $this->frm->getField('field' . $field['id'])->getValue();
 							if(SpoonFilter::isEmail($email)) $replyTo = $email;
 						}
-					}
+                        if (isset($field['settings']['mailCopyTo']) && $field['settings']['mailCopyTo'] == 'Y') {
+                            $email = $this->frm->getField('field' . $field['id'])->getValue();
+                            if (SpoonFilter::isEmail($email)) {
+                                $mailCopyTo = $email;
+                            }
+                        }
+                    }
 
 					// loop recipients
 					foreach($this->item['email'] as $address)
@@ -450,7 +456,20 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 							$variables, $address, $this->item['name'], null, null, $replyTo
 						);
 					}
-				}
+
+                    # Mail copy
+                    if ($mailCopyTo) {
+                        $variables = array_replace($variables, array('mailCopyTo' => true));
+                        FrontendMailer::addEmail(
+                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+                            FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+                            $variables,
+                            $mailCopyTo,
+                            $this->item['name']
+                        );
+                    }
+
+                }
 
 				// trigger event
 				FrontendModel::triggerEvent('form_builder', 'after_submission', array('form_id' => $this->item['id'], 'data_id' => $dataId, 'data' => $data, 'fields' => $fields, 'visitorId' => FrontendModel::getVisitorId()));
