@@ -222,7 +222,7 @@ class BlogInstaller extends ModuleInstaller
 				'edited_on' => gmdate('Y-m-d H:i:00'),
 				'hidden' => 'N',
 				'allow_comments' => 'Y',
-				'num_comments' => '3'
+				'num_comments' => '2'
 			));
 
 			// insert sample blogpost 2
@@ -244,7 +244,7 @@ class BlogInstaller extends ModuleInstaller
 				'num_comments' => '0'
 			));
 
-			// insert example comment 2
+			// insert example comment 1
 			$db->insert('blog_comments', array(
 				'post_id' => 1,
 				'language' => $language,
@@ -258,7 +258,7 @@ class BlogInstaller extends ModuleInstaller
 				'data' => null
 			));
 
-			// insert example comment 3
+			// insert example comment 2
 			$db->insert('blog_comments', array(
 				'post_id' => 1,
 				'language' => $language,

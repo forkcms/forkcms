@@ -1,4 +1,12 @@
-3.6.6 (xxxx-xx-xx)
+3.6.7 (xxxx-xx-xx)
+--
+
+Bugfixes:
+
+* Correct amount of sample comments in blog
+
+
+3.6.6 (2014-01-15)
 --
 
 Improvements:
@@ -18,6 +26,7 @@ Bugfixes:
 * Syntax error in FrontendBlockWidget fixed.
 * Some ajax files gave a syntax error as a result of merge conflicts.
 * Mailmotor: Form token for widget fixed.
+
 
 3.6.5 (2013-10-09)
 --
