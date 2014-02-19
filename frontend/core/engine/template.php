@@ -710,7 +710,7 @@ class FrontendTemplateModifiers
 		// we have an id
 		if($id !== null)
 		{
-			// we should get the unserialized data we don't have yet
+			// we should get the serialized data we don't have yet
 			$data = (string) FrontendModel::getContainer()->get('database')->getVar(
 				'SELECT i.data
 				 FROM modules_extras AS i
