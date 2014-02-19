@@ -22,6 +22,7 @@ Improvements:
 
 Bugfixes:
 
+* Share with linkedin, fixed double url encoding.
 * Faq: getByTags did not work in backend.
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
 * Urls containing md threw a 403 forbidden error.

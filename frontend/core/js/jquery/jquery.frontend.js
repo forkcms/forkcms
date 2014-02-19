@@ -164,7 +164,7 @@
 						case 'linkedin':
 							if(!linkedInLoaded)
 							{
-								// loop all script to check if the twitter-widget is already loaded
+								// loop all script to check if the Linkedin widget is already loaded
 								$('script').each(function()
 								{
 									if($(this).attr('src') == 'http://platform.linkedin.com/in.js') linkedInLoaded = true;
@@ -185,12 +185,9 @@
 								}
 							}
 
-							// build url
-							var url = encodeURIComponent(link);
-
 							// add html
 							html += '<li class="shareMenuLinkedin">' +
-									'	<script type="IN/Share" data-url="' + url + '" data-counter="right"></script>' +
+									'	<script type="IN/Share" data-url="' + link + '" data-counter="right"></script>' +
 									'</li>' + "\n";
 						break;
 
