@@ -4,6 +4,7 @@
 Bugfixes:
 
 * Correct amount of sample comments in blog
+* msgSequenceSaved was missing from core installer.
 
 
 3.6.6 (2014-01-15)

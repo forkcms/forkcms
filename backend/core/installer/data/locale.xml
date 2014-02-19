@@ -10712,6 +10712,15 @@
         <translation language="tr"><![CDATA["%1$s" taslak olarak kaydedildi.]]></translation>
         <translation language="pl"><![CDATA[	"%1$s" zapisany jako szkic.]]></translation>
       </item>
+      <item type="message" name="SequenceSaved">
+        <translation language="nl"><![CDATA[Volgorde opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[Sequence saved]]></translation>
+        <translation language="it"><![CDATA[Sequenza salvato.]]></translation>
+        <translation language="ru"><![CDATA[Последовательность сохранены.]]></translation>
+        <translation language="de"><![CDATA[Sequence gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Séquence enregistrée.]]></translation>
+        <translation language="es"><![CDATA[Secuencia salvó.]]></translation>
+      </item>
       <item type="message" name="TR">
         <translation language="hu"><![CDATA[török]]></translation>
         <translation language="ru"><![CDATA[Турецкий]]></translation>
