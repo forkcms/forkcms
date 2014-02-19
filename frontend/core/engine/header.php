@@ -480,13 +480,13 @@ class FrontendHeader extends FrontendBaseObject
 	private function minifyCSS($file)
 	{
 		// create unique filename
-		$fileName = md5($file) . '.css';
+		$fileName = md5($file. '-'. filemtime(PATH_WWW . $file)) . '.css';
 		$finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
 		$fs = new Filesystem();
-		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!$fs->exists($finalPath))
 		{
 			// create directory if it does not exist
 			if(!$fs->exists(dirname($finalPath)))
@@ -511,13 +511,13 @@ class FrontendHeader extends FrontendBaseObject
 	private function minifyJS($file)
 	{
 		// create unique filename
-		$fileName = md5($file) . '.js';
+		$fileName = md5($file. '-'. filemtime(PATH_WWW . $file)) . '.js';
 		$finalURL = FRONTEND_CACHE_URL . '/minified_js/' . $fileName;
 		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// check that file does not yet exist or has been updated already
 		$fs = new Filesystem();
-		if(!$fs->exists($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath))
+		if(!$fs->exists($finalPath))
 		{
 			// create directory if it does not exist
 			if(!$fs->exists(dirname($finalPath)))
