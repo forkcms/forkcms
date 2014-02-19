@@ -1,6 +1,10 @@
 3.6.7 (xxxx-xx-xx)
 --
 
+Improvements:
+
+* Prevent browsers from caching updated (minified) CSS/JS files in non-debug mode.
+
 Bugfixes:
 
 * Correct amount of sample comments in blog

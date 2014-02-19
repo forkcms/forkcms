@@ -109,10 +109,13 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		// add timestamp by default, when debug mode is off
+		if (!SPOON_DEBUG && $addTimestamp == null) $addTimestamp = true;
 		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
 		$file = FrontendTheme::getPath($file);
+		$lastModifiedTimestamp = filemtime(PATH_WWW . $file);
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
@@ -132,6 +135,7 @@ class FrontendHeader extends FrontendBaseObject
 			// build temporary array
 			$temp['file'] = (string) $file;
 			$temp['add_timestamp'] = $addTimestamp;
+			$temp['timestamp'] = $lastModifiedTimestamp;
 
 			// add to files
 			$this->cssFiles[] = $temp;
@@ -149,10 +153,17 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		// add timestamp by default, when debug mode is off
+		if (!SPOON_DEBUG && $addTimestamp == null) $addTimestamp = true;
 		$addTimestamp = (bool) $addTimestamp;
+		$lastModifiedTimestamp = null;
 
 		// get file path
-		if(substr($file, 0, 4) != 'http') $file = FrontendTheme::getPath($file);
+		if(substr($file, 0, 4) != 'http')
+		{
+			$file = FrontendTheme::getPath($file);
+			$lastModifiedTimestamp = filemtime(PATH_WWW . $file);
+		}
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
@@ -161,10 +172,10 @@ class FrontendHeader extends FrontendBaseObject
 		if($minify) $file = $this->minifyJS($file);
 
 		// already in array?
-		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles))
+		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp, 'timestamp' => $lastModifiedTimestamp), $this->jsFiles))
 		{
 			// add to files
-			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+			$this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp, 'timestamp' => $lastModifiedTimestamp);
 		}
 	}
 
@@ -581,7 +592,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&' : '?' . 'm='. $file['timestamp'];
 
 				// add
 				$cssFiles[] = $file;
@@ -767,7 +778,7 @@ class FrontendHeader extends FrontendBaseObject
 					// add last modified time
 					else
 					{
-						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;' : '?' . 'm=' . $file['timestamp'];
 						$file = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
