@@ -43,6 +43,9 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 	{
 		$this->frm = new BackendForm('add');
 		$this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+		$this->frm->addText('class', null, null, 'inputText inputMedium');
+		$this->frm->addDropdown('wrapper', array('div' => 'div','section' => 'section','aside' => 'aside'));
+		$this->frm->getField('wrapper')->setDefaultElement('');
 		$this->frm->addEditor('text');
 		$this->frm->addCheckbox('hidden', true);
 
@@ -64,6 +67,11 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			if(
+				$this->frm->getField('class')->isFilled()
+			) {
+				$this->frm->getField('wrapper')->isFilled(BL::err('FieldIsRequired'));
+			}
 
 			if($this->frm->isCorrect())
 			{
@@ -74,6 +82,8 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
+				$item['class'] = $this->frm->getField('class')->getValue();
+				$item['wrapper'] = $this->frm->getField('wrapper')->getValue();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue() ? 'N' : 'Y';
 				$item['status'] = 'active';
 				$item['created_on'] = BackendModel::getUTCDate();

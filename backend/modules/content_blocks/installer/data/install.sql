@@ -7,6 +7,8 @@ CREATE TABLE IF NOT EXISTS `content_blocks` (
  `language` varchar(10) NOT NULL,
  `title` varchar(255) NOT NULL,
  `text` text,
+ `class` varchar(255) NOT NULL,
+ `wrapper` varchar(255) NOT NULL,
  `hidden` enum('N','Y') NOT NULL default 'N',
  `status` enum('active','archived') NOT NULL default 'active',
  `created_on` datetime NOT NULL,
