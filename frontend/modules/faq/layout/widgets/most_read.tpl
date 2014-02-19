@@ -4,18 +4,14 @@
 *}
 
 {option:widgetFaqMostRead}
-	<section id="faqMostReadWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{$lblMostReadQuestions|ucfirst}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:widgetFaqMostRead}
-						<li><a href="{$widgetFaqMostRead.full_url}" title="{$widgetFaqMostRead.question}">{$widgetFaqMostRead.question}</a></li>
-					{/iteration:widgetFaqMostRead}
-				</ul>
-			</div>
-		</div>
+	<section>
+		<header>
+			<h2>{$lblMostReadQuestions|ucfirst}</h2>
+		</header>
+		<ul>
+			{iteration:widgetFaqMostRead}
+				<li><a href="{$widgetFaqMostRead.full_url}" title="{$widgetFaqMostRead.question}">{$widgetFaqMostRead.question}</a></li>
+			{/iteration:widgetFaqMostRead}
+		</ul>
 	</section>
 {/option:widgetFaqMostRead}

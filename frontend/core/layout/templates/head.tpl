@@ -1,17 +1,23 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="{$LANGUAGE}" class="ie6"> <![endif]-->
-<!--[if IE 7 ]> <html lang="{$LANGUAGE}" class="ie7"> <![endif]-->
-<!--[if IE 8 ]> <html lang="{$LANGUAGE}" class="ie8"> <![endif]-->
-<!--[if IE 9 ]> <html lang="{$LANGUAGE}" class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{$LANGUAGE}"> <!--<![endif]-->
+<!--[if IE 7]>         <html lang="{$LANGUAGE}" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="{$LANGUAGE}" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="{$LANGUAGE}" class="no-js"> <!--<![endif]-->
+
 <head>
 	{* Meta *}
 	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="cleartype" content="on">
 	<meta name="generator" content="Fork CMS" />
 	{$meta}
 	{$metaCustom}
 
 	<title>{$pageTitle}</title>
+
+	<!-- Mobile settings http://t.co/dKP3o1e -->
+	<meta name="HandheldFriendly" content="True">
+	<meta name="MobileOptimized" content="320">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	{* Favicon and Apple touch icon *}
 	<link rel="shortcut icon" href="/favicon.ico" />
@@ -27,8 +33,8 @@
 		<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
+	{* HTML5 shim and Respond.js: "IE8 and below" support of HTML5 elements and media queries *}
+	<!--[if lt IE 9  & (!IEMobile)]
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 

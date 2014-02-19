@@ -4,22 +4,18 @@
 *}
 
 {option:widgetTagsRelated}
-	<section id="tagRelatedWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{$lblRelated|ucfirst}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:widgetTagsRelated}
-						<li>
-							<a href="{$widgetTagsRelated.full_url}" title="{$widgetTagsRelated.title}">
-								{$widgetTagsRelated.title}
-							</a>
-						</li>
-					{/iteration:widgetTagsRelated}
-				</ul>
-			</div>
-		</div>
+	<section>
+		<header>
+			<h2>{$lblRelated|ucfirst}</h2>
+		</header>
+		<ul>
+			{iteration:widgetTagsRelated}
+				<li>
+					<a href="{$widgetTagsRelated.full_url}" title="{$widgetTagsRelated.title}">
+						{$widgetTagsRelated.title}
+					</a>
+				</li>
+			{/iteration:widgetTagsRelated}
+		</ul>
 	</section>
 {/option:widgetTagsRelated}

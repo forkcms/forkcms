@@ -1,3 +1,3 @@
 {option:activationSuccess}
-	<div class="message success"><p>{$msgActivationIsSuccess}</p></div>
+	<div class="alert-box success"><p>{$msgActivationIsSuccess}</p></div>
 {/option:activationSuccess}

@@ -4,22 +4,16 @@
 *}
 
 {option:widgetTagsTagCloud}
-	<section id="tagCloudWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{$lblTags|ucfirst}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:widgetTagsTagCloud}
-						<li>
-							<a href="{$widgetTagsTagCloud.url}">
-								{$widgetTagsTagCloud.name}&nbsp;({$widgetTagsTagCloud.number})
-							</a>
-						</li>
-					{/iteration:widgetTagsTagCloud}
-				</ul>
-			</div>
-		</div>
+	<section>
+		<header>
+			<h2>{$lblTags|ucfirst}</h2>
+		</header>
+		<p>
+			{iteration:widgetTagsTagCloud}
+				<a href="{$widgetTagsTagCloud.url}">
+					{$widgetTagsTagCloud.name}&nbsp;({$widgetTagsTagCloud.number})
+				</a>
+			{/iteration:widgetTagsTagCloud}
+		</p>
 	</section>
 {/option:widgetTagsTagCloud}

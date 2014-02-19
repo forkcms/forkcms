@@ -3,32 +3,19 @@
 	- {$tagsModules}: contains all tags, grouped per module
 *}
 
-<section id="tagsDetail" class="mod">
-	<div class="inner">
-		<header class="hd">
-			<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
-		</header>
-		<div class="bd">
-			{option:tagsModules}
-				{iteration:tagsModules}
-					<section class="mod">
-						<div class="inner">
-							<header class="hd">
-								<h3>{$tagsModules.label}</h3>
-							</header>
-							<div class="bd content">
-								<ul>
-									{iteration:tagsModules.items}
-										<li><a href="{$tagsModules.items.full_url}">{$tagsModules.items.title}</a></li>
-									{/iteration:tagsModules.items}
-								</ul>
-							</div>
-						</div>
-					</section>
-				{/iteration:tagsModules}
-			{/option:tagsModules}
-			<p><a href="{$var|geturlforblock:'tags'}" title="{$lblToTagsOverview|ucfirst}">{$lblToTagsOverview|ucfirst}</a></p>
-			
-		</div>
-	</div>
+<section>
+	<header>
+		<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
+	</header>
+	{option:tagsModules}
+		{iteration:tagsModules}
+			<header>
+				<h2>{$tagsModules.label}</h2>
+			</header>
+			{iteration:tagsModules.items}
+				<p><a href="{$tagsModules.items.full_url}">{$tagsModules.items.title}</a></p>
+			{/iteration:tagsModules.items}
+		{/iteration:tagsModules}
+	{/option:tagsModules}
+	<p><a href="{$var|geturlforblock:'tags'}" title="{$lblToTagsOverview|ucfirst}">{$lblToTagsOverview|ucfirst}</a></p>
 </section>

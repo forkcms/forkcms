@@ -4,18 +4,14 @@
 *}
 
 {option:widgetFaqCategoryList}
-	<section id="faqCategoryListWidget" class="mod">
-		<div class="inner">
-			<header class="hd">
-				<h3>{$lblFaq}: {$widgetFaqCategory.title}</h3>
-			</header>
-			<div class="bd content">
-				<ul>
-					{iteration:widgetFaqCategoryList}
-						<li><a href="{$widgetFaqCategoryList.full_url}" title="{$widgetFaqCategoryList.question}">{$widgetFaqCategoryList.question}</a></li>
-					{/iteration:widgetFaqCategoryList}
-				</ul>
-			</div>
-		</div>
+	<section>
+		<header>
+			<h2>{$lblFaq}: {$widgetFaqCategory.title}</h2>
+		</header>
+		<ul>
+			{iteration:widgetFaqCategoryList}
+				<li><a href="{$widgetFaqCategoryList.full_url}" title="{$widgetFaqCategoryList.question}">{$widgetFaqCategoryList.question}</a></li>
+			{/iteration:widgetFaqCategoryList}
+		</ul>
 	</section>
 {/option:widgetFaqCategoryList}

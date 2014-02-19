@@ -4,7 +4,7 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 <title>Fork CMS</title>
 <style>
-	body { background-color:#ebf3f9 }
+	body { background-color:#CCCCCC }
 	h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
 	h3 {font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #000000; margin: 12px 0 6px 0; padding: 0; text-align: left;}
 	h4 {font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #000000; margin: 0 0 6px 0; padding: 0; text-align: left;}
@@ -18,7 +18,7 @@
 </head>
 <body style="margin: 0; padding: 0; background-color: #EBF3F9">
 <style>
-	body { background-color:#ebf3f9 }
+	body { background-color:#CCCCCC }
 	h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
 	h3 {font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #000000; margin: 12px 0 6px 0; padding: 0; text-align: left;}
 	h4 {font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #000000; margin: 0 0 6px 0; padding: 0; text-align: left;}
@@ -29,7 +29,7 @@
 	small a {color: #7f7f7f;}
 	img {border: 0; display: block;}
 </style>
-	<table border="0" cellpadding="0" width="100%" style="margin:0; padding:0; background-color: #EBF3F9">
+	<table border="0" cellpadding="0" width="100%" style="margin:0; padding:0; background-color: #CCCCCC">
 		<tr>
 			<td width="100%" align="center" valign="top">
 				<table width="580" cellpadding="0" cellspacing="0" border="0">
@@ -39,7 +39,7 @@
 					</tr>
 					<tr>
 						<td align="center" valign="top">
-							<table border="0" cellpadding="0" cellspacing="0" width="580" style="border: 1px solid #BED7E9; background-color:#ffffff;">
+							<table border="0" cellpadding="0" cellspacing="0" width="580" style="border: 1px solid #999999; background-color:#ffffff;">
 								<tr>
 									<td colspan="3" height="12">
 									</td>
