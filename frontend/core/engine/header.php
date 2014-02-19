@@ -592,7 +592,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&' : '?' . 'm='. $file['timestamp'];
+				if($file['add_timestamp'] !== false) $file['file'] .= ((strpos($file['file'], '?') !== false) ? '&' : '?') . 'm='. $file['timestamp'];
 
 				// add
 				$cssFiles[] = $file;
@@ -778,7 +778,7 @@ class FrontendHeader extends FrontendBaseObject
 					// add last modified time
 					else
 					{
-						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;' : '?' . 'm=' . $file['timestamp'];
+						$modifiedTime = ((strpos($file['file'], '?') !== false) ? '&amp;' : '?') . 'm=' . $file['timestamp'];
 						$file = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
