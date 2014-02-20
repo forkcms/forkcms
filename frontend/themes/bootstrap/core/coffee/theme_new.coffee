@@ -110,6 +110,7 @@ class SpecificTheme extends DefaultTheme
   # Define functions here
 
 
+
 SpecificTheme.current = new SpecificTheme()
 
 $ ->

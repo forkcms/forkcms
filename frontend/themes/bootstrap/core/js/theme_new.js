@@ -157,7 +157,7 @@
     DefaultTheme.prototype.removeImageHeight = function() {
       return $('img').css({
         height: 'auto'
-      });
+      }).addClass('img-responsive');
     };
 
     DefaultTheme.prototype.initCarouselWithSwipe = function() {
