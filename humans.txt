@@ -1,16 +1,4 @@
 /* TEAM */
-	Developer: Sam Tubbax
-	Contact: sam-is-a-human [at] sumocoders.be
-	Twitter: @el_sakke
-	Github: https://github.com/samtubbax
-	From: Belgium, Leuven
-
-	Developer: Tijs Verkoyen
-	Contact: tijs-is-a-human [at] sumocoders.be
-	Twitter: @tijsverkoyen
-	Github: https://github.com/tijsverkoyen
-	From: Belgium, Ghent
-
 	Frontender: Mathias Helin
 	Contact: mathias-is-a-human [at] sumocoders.be
 	Twitter: @mathiashelin
@@ -21,6 +9,21 @@
 	Contact: niels-is-a-human [at] sumocoders.be
 	Twitter: @nielsdepaepe
 	From: Belgium, Merelbeke
+
+	Developer: Jonas De Keukelaere
+	Contact: jonas-is-a-human [at] sumocoders.be
+	Twitter: @jonasdk89
+	From: Belgium, Aalter
+
+	Developer: Toon Daelman
+	Contact: toon-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Tijs Verkoyen
+	Contact: tijs-is-a-human [at] sumocoders.be
+	Twitter: @tijsverkoyen
+	Github: https://github.com/tijsverkoyen
+	From: Belgium, Ghent
 
 /* SITE */
 	Doctype: HTML5
