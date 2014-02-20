@@ -7,6 +7,9 @@
  * file that was distributed with this source code.
  */
 
+// CLI/Nginx/Cron: We need to set the "current working directory" to this folder
+chdir(dirname(__FILE__));
+
 // vendors not installed
 if(!is_dir(__DIR__ . '/vendor'))
 {

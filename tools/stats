@@ -3,29 +3,32 @@
 # This script will run some other scripts to generate reports.
 #
 # @later	find a decent way to run multiple processes at once (maybe use `wait`)
-# @version	1.0.0
+# @version	1.0.1
+# @author	Yohann Bianchi <nstCactus@gmail.com>
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
+SCRIPT_PATH="`dirname \"$0\"`"
+
 # create folder
-mkdir -p reports
+mkdir -p ${SCRIPT_PATH}/reports
 
 # tell user
 echo "* Running PHP Mess Detection (will take a while)"
 
 # run PHP Mess Detection
-phpmd ../ xml codesize,unusedcode,naming --exclude ../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external --reportfile ./reports/phpmd.xml
+phpmd ${SCRIPT_PATH}/../ xml codesize,unusedcode,naming --exclude ${SCRIPT_PATH}/../backend/core/js/ckeditor,${SCRIPT_PATH}/../backend/core/js/ckfinder,${SCRIPT_PATH}/../frontend/cache,${SCRIPT_PATH}/../backend/cache,${SCRIPT_PATH}/../install/cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external --reportfile ${SCRIPT_PATH}/reports/phpmd.xml
 
 # tell user
 echo "* Running PHP Depend (will take a while)"
 
 # run PHP Depend
-pdepend --jdepend-chart=./reports/pdepend_chart.svg --overview-pyramid=./reports/pdepend_pyramid.svg --summary-xml=./reports/pdepend.xml --suffix=php --ignore=../backend/core/js/ckeditor,../backend/core/js/ckfinder,../frontend/cache,../backend/cache,../install/cache,../tools,../library/external ../ > /dev/null
+pdepend --jdepend-chart=${SCRIPT_PATH}/reports/pdepend_chart.svg --overview-pyramid=${SCRIPT_PATH}/reports/pdepend_pyramid.svg --summary-xml=${SCRIPT_PATH}/reports/pdepend.xml --suffix=php --ignore=${SCRIPT_PATH}/../backend/core/js/ckeditor,${SCRIPT_PATH}/../backend/core/js/ckfinder,${SCRIPT_PATH}/../frontend/cache,${SCRIPT_PATH}/../backend/cache,${SCRIPT_PATH}/../install/cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external ${SCRIPT_PATH}/../ > /dev/null
 
 # tell user
 echo "* Running PHP Loc"
 
 # run PHP Loc
-phploc --log-xml ./reports/phploc.xml --suffixes php ../ > /dev/null
+phploc --log-xml ${SCRIPT_PATH}/reports/phploc.xml --names php ${SCRIPT_PATH}/../ > /dev/null
 
 # tell user
 echo "Done"

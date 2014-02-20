@@ -139,7 +139,7 @@ class InstallerStep2 extends InstallerStep
 		// define constants
 		if(!defined('PATH_WWW'))
 		{
-			define('PATH_WWW', dirname(realpath($_SERVER['SCRIPT_FILENAME'])));
+			define('PATH_WWW', getcwd());
 		}
 
 		if(!defined('PATH_LIBRARY'))

@@ -578,7 +578,7 @@ class FrontendHeader extends FrontendBaseObject
 		$cssFiles = array();
 		$existingCSSFiles = $this->getCSSFiles();
 
-		// if there aren't any JS-files added we don't need to do something
+		// if there aren't any CSS-files added we don't need to do something
 		if(!empty($existingCSSFiles))
 		{
 			foreach($existingCSSFiles as $file)
