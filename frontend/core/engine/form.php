@@ -344,7 +344,7 @@ class FrontendForm extends CommonForm
 	 * @param bool[optional] $HTML Will this element contain HTML?
 	 * @return SpoonFormText
 	 */
-	public function addTrimedText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
+	public function addTrimmedText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
 	{
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;

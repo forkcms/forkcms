@@ -62,6 +62,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addText('textbox_value');
 		$this->frm->addCheckbox('textbox_required');
 		$this->frm->addCheckbox('textbox_reply_to');
+        $this->frm->addCheckbox('textbox_mail_copy_to');
 		$this->frm->addText('textbox_required_error_message');
 		$this->frm->addDropdown('textbox_validation', array('' => '', 'email' => BL::getLabel('Email'), 'numeric' => BL::getLabel('Numeric')));
 		$this->frm->addText('textbox_validation_parameter');

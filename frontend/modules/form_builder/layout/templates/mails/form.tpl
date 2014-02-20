@@ -52,7 +52,12 @@
 										<h3>{$lblSenderInformation|ucfirst}</h3>
 										<p><strong>{$lblSentOn|ucfirst}:</strong><br /> {$sentOn|date:{$dateFormatLong}:{$LANGUAGE}}</p>
 
-										<h3>{$lblContent|ucfirst}</h3>
+                                        {option:mailCopyTo}
+                                            <p>{$msgFormBuilderMailCopyTo|sprintf:{$SITE_URL}}</p>
+                                        {/option:mailCopyTo}
+
+
+                                        <h3>{$lblContent|ucfirst}</h3>
 										{iteration:fields}
 											<p><strong>{$fields.label}:</strong><br /> {$fields.value}</p>
 										{/iteration:fields}
