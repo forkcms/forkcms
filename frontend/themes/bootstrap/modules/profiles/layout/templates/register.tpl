@@ -1,5 +1,5 @@
 {option:registerIsSuccess}<div class="alert alert-success" role="alert">{$msgRegisterIsSuccess}</div>{/option:registerIsSuccess}
-{option:registerHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:registerHasFormError}
+{option:registerHasFormError}<div class="alert alert-danger" role="alert">{$errFormError}</div>{/option:registerHasFormError}
 
 {option:!registerHideForm}
 	{form:register}

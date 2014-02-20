@@ -1,5 +1,5 @@
 {option:resendActivationSuccess}<div class="alert alert-success" role="alert">{$msgResendActivationIsSuccess}</div>{/option:resendActivationSuccess}
-{option:resendActivationHasError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:resendActivationHasError}
+{option:resendActivationHasError}<div class="alert alert-danger" role="alert">{$errFormError}</div>{/option:resendActivationHasError}
 
 {option:!resendActivationHideForm}
 	<section id="resendActivationForm" class="profiles">

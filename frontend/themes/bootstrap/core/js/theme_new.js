@@ -127,7 +127,7 @@
     };
 
     DefaultTheme.prototype.hijackSubmit = function(e) {
-      return $(this).addClass('loading disabled');
+      return $(this).addClass('loading');
     };
 
     DefaultTheme.prototype.scrollToTop = function(e) {
@@ -173,7 +173,6 @@
       if ($(hash).find('.nonVisibleAnchor').length > 0) {
         return $(hash).find('.nonVisibleAnchor').focus();
       } else {
-        console.log("Dear developer, watch out, you have not set a .nonVisibleAnchor! (Don't forget to remove this console.log when you've set all hidden anchors)");
         return false;
       }
     };
@@ -193,6 +192,21 @@
     SpecificTheme.events;
 
     SpecificTheme.onDomReady([]);
+
+    window.requestAnimationFrame = (function() {
+      var lastTime;
+      lastTime = 0;
+      return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+        var curTime, id, timeToCall;
+        curTime = new Date().getTime();
+        timeToCall = Math.max(0, 16 - (curTime - lastTime));
+        id = window.setTimeout(function() {
+          return callback(curTime + timeToCall);
+        }, timeToCall);
+        lastTime = curTime + timeToCall;
+        return id;
+      };
+    })();
 
     return SpecificTheme;
 

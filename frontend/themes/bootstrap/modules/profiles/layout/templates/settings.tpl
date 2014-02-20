@@ -1,5 +1,5 @@
 {option:updateSettingsSuccess}<div class="alert alert-success" role="alert">{$msgUpdateSettingsIsSuccess}</div>{/option:updateSettingsSuccess}
-{option:updateSettingsHasFormError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:updateSettingsHasFormError}
+{option:updateSettingsHasFormError}<div class="alert alert-danger" role="alert">{$errFormError}</div>{/option:updateSettingsHasFormError}
 
 <section id="settingsForm" class="profiles">
 	<div class="bd">

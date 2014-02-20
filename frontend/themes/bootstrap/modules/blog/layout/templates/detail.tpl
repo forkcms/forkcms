@@ -128,7 +128,7 @@ variables that are available:
             <div class="alert" role="alert">{$msgBlogCommentInModeration}</div>
             {/option:commentIsInModeration}
             {option:commentIsSpam}
-            <div class="alert alert-error" role="alert">{$msgBlogCommentIsSpam}</div>
+            <div class="alert alert-danger" role="alert">{$msgBlogCommentIsSpam}</div>
             {/option:commentIsSpam}
             {option:commentIsAdded}
             <div class="alert alert-success" role="alert">{$msgBlogCommentIsAdded}</div>

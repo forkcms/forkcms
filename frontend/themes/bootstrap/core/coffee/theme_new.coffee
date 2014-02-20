@@ -58,7 +58,7 @@ class DefaultTheme extends Theme
     false
 
   hijackSubmit: (e) ->
-    $(@).addClass('loading disabled')
+    $(@).addClass('loading')
 
   scrollToTop: (e) ->
     $('html, body').stop().animate(scrollTop: 0, 600)
@@ -96,7 +96,6 @@ class DefaultTheme extends Theme
     if $(hash).find('.nonVisibleAnchor').length > 0
       $(hash).find('.nonVisibleAnchor').focus()
     else
-      console.log "Dear developer, watch out, you have not set a .nonVisibleAnchor! (Don't forget to remove this console.log when you've set all hidden anchors)"
       false
 
 class SpecificTheme extends DefaultTheme
@@ -106,6 +105,26 @@ class SpecificTheme extends DefaultTheme
   @onDomReady [
     #'functionName'
   ]
+
+  # Request AnimationFrame Polyfill
+
+  window.requestAnimationFrame = (->
+    lastTime = 0
+
+    window.requestAnimationFrame ||
+    window.webkitRequestAnimationFrame ||
+    window.mozRequestAnimationFrame ||
+    window.oRequestAnimationFrame ||
+    window.msRequestAnimationFrame ||
+    (callback, element) ->
+      curTime = new Date().getTime()
+      timeToCall = Math.max(0, 16 - (curTime - lastTime))
+      id = window.setTimeout(
+        -> callback(curTime + timeToCall)
+      , timeToCall)
+      lastTime = curTime + timeToCall
+      return id
+  )()
 
   # Define functions here
 

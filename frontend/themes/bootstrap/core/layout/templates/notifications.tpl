@@ -19,10 +19,12 @@
 {option:!cookieBarHide}
 	<div id="cookieBar" class="fullWidthAlert alert">
 		<button type="button" class="close" data-dismiss="alert">×</button>
-		<strong>{$lblWarning|ucfirst}:</strong> {$msgCookies}
+		<div class="container">
+            <strong>{$lblWarning|ucfirst}:</strong> {$msgCookies}
 
-		<a href="#" id="cookieBarAgree" class="btn btn-mini">{$lblIAgree|ucfirst}</a>
-		<a href="#" id="cookieBarDisagree" class="btn btn-mini">{$lblIDisagree|ucfirst}</a>
+            <a href="#" id="cookieBarAgree" class="btn btn-primary btn-xs">{$lblIAgree|ucfirst}</a>
+            <a href="#" id="cookieBarDisagree" class="btn btn-primary btn-xs">{$lblIDisagree|ucfirst}</a>
+		</div>
 	</div>
 {/option:!cookieBarHide}
 

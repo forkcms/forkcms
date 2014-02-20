@@ -1,5 +1,5 @@
 {option:forgotPasswordSuccess}<div class="alert alert-success" role="alert">{$msgForgotPasswordIsSuccess}</div>{/option:forgotPasswordSuccess}
-{option:forgotPasswordHasError}<div class="alert alert-error" role="alert">{$errFormError}</div>{/option:forgotPasswordHasError}
+{option:forgotPasswordHasError}<div class="alert alert-danger" role="alert">{$errFormError}</div>{/option:forgotPasswordHasError}
 
 {option:!forgotPasswordHideForm}
 	<section id="forgotPasswordForm" class="profiles">

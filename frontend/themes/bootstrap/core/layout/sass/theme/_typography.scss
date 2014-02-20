@@ -38,11 +38,14 @@ h6 {
 /* Links */
 
 a {
-
+  color: $linkColor;
+  border-bottom: 1px solid $linkColor;
+  @include transition(all 150ms);
 
   &:hover,
   &:focus {
-
+    color: $linkColorHover;
+    border-bottom-color: $linkColorHover;
   }
 
   &:focus {

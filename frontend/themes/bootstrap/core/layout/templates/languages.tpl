@@ -1,5 +1,5 @@
 {option:languages}
-	<ul class="nav navbar-nav pull-right">
+	<ul class="nav navbar-nav">
 		{iteration:languages}
 			<li{option:languages.current} class="active"{/option:languages.current}>
 				<a href="{$languages.url}">{$languages.label|uppercase}</a>

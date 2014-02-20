@@ -1,5 +1,8 @@
 //@import: "fonts:*"; // Uncomment to import all custom fonts
 
+// Colors
+
+
 // Scaffolding
 $bodyBackground: #FFF;
 $textColor: #333;
@@ -16,6 +19,11 @@ $boldFontFamily: false;
 $italicFontFamily: false;
 $boldItalicFontFamily: false;
 
+// Extra font variations
+
+
+
+// Base Font size and Line height
 $baseFontSize: 14px;
 $baseLineHeight: 20px;
 
@@ -23,3 +31,12 @@ $baseLineHeight: 20px;
 // Margins and paddings
 $baseMargin: ($baseFontSize * 2);
 $basePadding: $baseFontSize;
+
+// Grid
+$gutterWidth: 20px;
+$containerWidth: 940px;
+
+// Breakpoints
+$breakpointSmall: 768px;
+$breakpointMedium: $containerWidth + 40;
+$breakpointLarge: 1170px;

@@ -21,18 +21,11 @@ a {
 	border-bottom: 1px solid $linkColor;	/* Border instead of text-decoration */
 
 	&:hover {
-		text-decoration: none;
-		@include transition-property("color");
-		@include transition-duration(500ms);
-		@include transition-timing-function(ease-in);
+
 	}
 
 	&:focus {
-		/* Use a huge contrast and make it slightly larger for disabled people */
-		color: #FFF;
-		background-color: rgba(0, 0, 0, 0.4);
-		padding: 3px 5px;
-		@include border-radius();
+
 	}
 }
 

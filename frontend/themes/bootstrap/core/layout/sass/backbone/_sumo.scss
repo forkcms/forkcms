@@ -63,3 +63,28 @@ body {
 .featurette-image.pull-left { margin-right: 40px; }
 .featurette-image.pull-right { margin-left: 40px; }
 .featurette-heading { font-size: 50px; font-weight: 300; line-height: 1; letter-spacing: -1px; }
+
+
+@mixin media($media) {
+
+  @if $media == sm {
+
+    @media screen and (min-width: $breakpointSmall) {
+      @content;
+    }
+  }
+
+  @else if $media == md {
+
+    @media screen and (min-width: $breakpointMedium) {
+      @content;
+    }
+  }
+
+  @else if $media == lg {
+
+    @media screen and (min-width: $breakpointLarge) {
+      @content;
+    }
+  }
+}

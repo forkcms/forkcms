@@ -3,7 +3,7 @@
 <section class="row" id="formbuilder{$formName|camelcase}">
 	<div class="col-xs-12">
 		{option:successMessage}<div class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
-		{option:formBuilderError}<div class="alert alert-error" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
+		{option:formBuilderError}<div class="alert alert-danger" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
 
 		{option:fields}
 			<form id="{$formName}" method="post" action="{$formAction}">

@@ -5,25 +5,26 @@
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	{include:core/layout/templates/notifications.tpl}
 
-  <nav class="navbar navbar-default navbar-static-top" role="navigation">
-    <div class="navbar-header"><button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-        <span class="sr-only"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <h1>
-        <a href="/" class="navbar-brand">{$siteTitle}</a>
-      </h1>
-    </div>
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      {$var|getnavigation:'page':0:1}
-      {iteration:positionTop}
-				{$positionTop.blockContent}
-			{/iteration:positionTop}
-			{include:core/layout/templates/languages.tpl}
-    </div>
-  </nav>
+    <nav class="navbar navbar-default navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <h1>
+                <a href="/" class="navbar-brand">{$siteTitle}</a>
+            </h1>
+        </div>
+        <div class="collapse navbar-collapse navbar-ex1-collapse">
+            {$var|getnavigation:'page':0:1}
+            {iteration:positionTop}
+                {$positionTop.blockContent}
+            {/iteration:positionTop}
+            {include:core/layout/templates/languages.tpl}
+        </div>
+    </nav>
 
 	{option:positionSlideshow}
 		<div id="myCarousel" class="carousel slide">
@@ -41,33 +42,34 @@
 		</div>
 	{/option:positionSlideshow}
 
-	<div id="main" class="container">
+	<section id="main">
 
-		{option:positionFeatures}
-			<div class="row marketing">
-				{iteration:positionFeatures}
-					{option:positionFeatures.blockIsHTML}
-						{$positionFeatures.blockContent}
-					{/option:positionFeatures.blockIsHTML}
-					{option:!positionFeatures.blockIsHTML}
-						{$positionFeatures.blockContent}
-					{/option:!positionFeatures.blockIsHTML}
-				{/iteration:positionFeatures}
-			</div>
-		{/option:positionFeatures}
+        <div class="container">
+            {option:positionFeatures}
+                <div class="row marketing">
+                    {iteration:positionFeatures}
+                        {option:positionFeatures.blockIsHTML}
+                            {$positionFeatures.blockContent}
+                        {/option:positionFeatures.blockIsHTML}
+                        {option:!positionFeatures.blockIsHTML}
+                            {$positionFeatures.blockContent}
+                        {/option:!positionFeatures.blockIsHTML}
+                    {/iteration:positionFeatures}
+                </div>
+            {/option:positionFeatures}
 
-		{* Main position *}
-		{iteration:positionMain}
-			{option:positionMain.blockIsHTML}
-				<hr class="featurette-divider">
-				{$positionMain.blockContent}
-			{/option:positionMain.blockIsHTML}
-			{option:!positionMain.blockIsHTML}
-				{$positionMain.blockContent}
-			{/option:!positionMain.blockIsHTML}
-		{/iteration:positionMain}
-
-		{include:core/layout/templates/footer.tpl}
-	</div>
+            {* Main position *}
+            {iteration:positionMain}
+                {option:positionMain.blockIsHTML}
+                    <hr class="featurette-divider">
+                    {$positionMain.blockContent}
+                {/option:positionMain.blockIsHTML}
+                {option:!positionMain.blockIsHTML}
+                    {$positionMain.blockContent}
+                {/option:!positionMain.blockIsHTML}
+            {/iteration:positionMain}
+        </div>
+	</section>
+    {include:core/layout/templates/footer.tpl}
 </body>
 </html>

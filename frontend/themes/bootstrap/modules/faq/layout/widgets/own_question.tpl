@@ -8,7 +8,7 @@
 		<header role="banner">
 			<h3 id="{$actOwnQuestion}">{$msgAskOwnQuestion|ucfirst}</h3>
 		</header>
-		{option:ownQuestionerrorSpam}<div class="alert alert-error" role="alert">{$errOwnQuestionSpam}</div>{/option:ownQuestionerrorSpam}
+		{option:ownQuestionerrorSpam}<div class="alert alert-danger" role="alert">{$errOwnQuestionSpam}</div>{/option:ownQuestionerrorSpam}
 		{option:ownQuestionsuccess}<div class="alert alert-success" role="alert">{$msgOwnQuestionSuccess}</div>{/option:ownQuestionsuccess}
 
 		{form:own_question}

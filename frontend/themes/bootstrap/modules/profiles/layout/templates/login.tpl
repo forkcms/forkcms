@@ -1,6 +1,6 @@
 {* Error *}
 {option:formError}
-	<div class="alert alert-error" role="alert">
+	<div class="alert alert-danger" role="alert">
 		{option:loginError}{$loginError}{/option:loginError}
 		{option:!loginError}{$errFormError}{/option:!loginError}
 	</div>
