@@ -3,7 +3,7 @@
 
 Improvements:
 
-* Prevent browsers from caching updated (minified) CSS/JS files in non-debug mode.
+* The time-stamping feature is now used by default when in non-debug mode for JS/CSS files.
 
 Bugfixes:
 
