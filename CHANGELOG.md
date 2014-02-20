@@ -5,6 +5,8 @@ Bugfixes:
 
 * Correct amount of sample comments in blog
 * msgSequenceSaved was missing from core installer.
+* Share with linkedin, fixed double url encoding.
+* Faq: getByTags did not work in backend.
 
 
 3.6.6 (2014-01-15)
@@ -22,8 +24,6 @@ Improvements:
 
 Bugfixes:
 
-* Share with linkedin, fixed double url encoding.
-* Faq: getByTags did not work in backend.
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
 * Urls containing md threw a 403 forbidden error.
 * Syntax error in FrontendBlockWidget fixed.
