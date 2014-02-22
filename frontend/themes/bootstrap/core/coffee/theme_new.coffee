@@ -29,6 +29,7 @@ class Theme
 
 class DefaultTheme extends Theme
   @events
+    '#cookieBar .close' : click : 'cookieBarHide'
     '#cookieBarAgree' : click : 'cookieBarAgree'
     '#cookieBarDisagree' : click : 'cookieBarDisagree'
     'input:submit' : click : 'hijackSubmit'
@@ -49,12 +50,34 @@ class DefaultTheme extends Theme
     utils.cookies.setCookie('cookie_bar_agree', 'b:1;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
+    if _gaq
+      _gaq.push([
+        '_trackEvent',
+        'cookiebar',
+        'agree'
+      ]);
     false
 
   cookieBarDisagree: ->
     utils.cookies.setCookie('cookie_bar_agree', 'b:0;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
+    if _gaq
+      _gaq.push([
+        '_trackEvent',
+        'cookiebar',
+        'disagree'
+      ]);
+
+    false
+
+  cookieBarHide: ->
+    if _gaq
+      _gaq.push([
+        '_trackEvent',
+        'cookiebar',
+        'hide'
+      ]);
     false
 
   hijackSubmit: (e) ->
