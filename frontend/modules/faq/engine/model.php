@@ -205,7 +205,7 @@ class FrontendFaqModel implements FrontendTagsInterface
 
 		return $items;
 	}
-
+	
 	/**
 	 * Get the all questions for selected category
 	 *

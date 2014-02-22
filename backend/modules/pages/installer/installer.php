@@ -103,6 +103,7 @@ class PagesInstaller extends ModuleInstaller
 					array(
 						'id' => 404,
 						'title' => '404',
+						'template_id' => $this->getTemplateId('error'),
 						'type' => 'root',
 						'language' => $language,
 						'allow_move' => 'N',

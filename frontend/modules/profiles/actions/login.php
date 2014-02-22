@@ -55,7 +55,7 @@ class FrontendProfilesLogin extends FrontendBaseBlock
 	private function loadForm()
 	{
 		$this->frm = new FrontendForm('login', null, null, 'loginForm');
-		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addTrimmedText('email')->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addPassword('password')->setAttributes(array('required' => null));
 		$this->frm->addCheckbox('remember', true);
 	}

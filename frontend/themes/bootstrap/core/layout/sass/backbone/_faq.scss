@@ -1,0 +1,49 @@
+#faqDetail {
+	
+	header {
+		border-bottom: 1px solid #e6e6e6;
+		padding: 0 0 20px 0;
+		margin: 0 0 20px 0;
+		
+		h3 {
+			line-height: 1em;
+			margin-bottom: 0;
+		}
+	}
+	
+	label {
+		margin-bottom: 0;
+	}
+	
+	.bd {
+		padding: 0 0 20px 0;
+	}
+	
+	.row-fluid [class*="span"] {
+		min-height: 0;
+	}
+	
+	.options {
+		@include clearfix;
+	}
+	
+	#feedbackNoInfo {
+		margin: 20px 0 0 0;
+		padding: 20px 0 0 0;
+		border-top: 1px solid #aaa;
+		
+		textarea {
+			width: 100%;
+			margin-top: 10px;
+			@include box-sizing(border-box);
+		}
+	}
+}
+
+@media screen and (min-width: 1200px) {
+	
+	.faqOtherQuestions,
+	.faqAlsoRead {
+		width: 75%;
+	}
+}

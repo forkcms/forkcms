@@ -1,0 +1,5 @@
+#tagCloudWidget {
+	ul {
+		@include horizontal-list();
+	}
+}

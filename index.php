@@ -45,6 +45,17 @@ if(
 require_once __DIR__ . '/app/AppKernel.php';
 
 $kernel = new AppKernel();
+
+/**
+ * @remark only for SumoCoders
+ *
+ * Here we initialize our Sumo class, which will add some Sumo specific stuff
+ * into this Fork instance.
+ */
+$sumo = new SumoCoders\SumoForkClass\SumoForkClass();
+$sumo->setContainer($kernel->getContainer());
+$sumo->init();
+
 $response = $kernel->handle($request);
 if($response->getCharset() === null && $kernel->getContainer() != null) $response->setCharset($kernel->getContainer()->getParameter('kernel.charset'));
 $response->send();

@@ -74,6 +74,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('core', 'facebook_app_id', null));
 		$this->frm->addText('facebook_application_secret', BackendModel::getModuleSetting('core', 'facebook_app_secret', null));
 
+        // twitter settings
+        $this->frm->addText('twitter_site_name', ltrim(BackendModel::getModuleSetting('core', 'twitter_site_name', null), '@'));
+
 		// ckfinder
 		$this->frm->addText('ckfinder_license_name', BackendModel::getModuleSetting('core', 'ckfinder_license_name', null));
 		$this->frm->addText('ckfinder_license_key', BackendModel::getModuleSetting('core', 'ckfinder_license_key', null));
@@ -237,6 +240,13 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
 				BackendModel::setModuleSetting('core', 'facebook_app_id', ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField('facebook_application_id')->getValue() : null);
 				BackendModel::setModuleSetting('core', 'facebook_app_secret', ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField('facebook_application_secret')->getValue() : null);
+
+                // twitter settings
+                /** @var SpoonFormText $txt */
+                $txt = $this->frm->getField('twitter_site_name');
+                if($txt->isFilled()) {
+                    BackendModel::setModuleSetting('core', 'twitter_site_name', '@' . ltrim($txt->getValue(), '@'));
+                }
 
 				// ckfinder settings
 				BackendModel::setModuleSetting('core', 'ckfinder_license_name', ($this->frm->getField('ckfinder_license_name')->isFilled()) ? $this->frm->getField('ckfinder_license_name')->getValue() : null);

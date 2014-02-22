@@ -50,7 +50,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		$this->frm->addPassword('backend_password');
 
 		$this->frmForgotPassword = new BackendForm('forgotPassword');
-		$this->frmForgotPassword->addText('backend_email_forgot');
+		$this->frmForgotPassword->addTrimmedText('backend_email_forgot');
 	}
 
 	/**

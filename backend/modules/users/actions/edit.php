@@ -90,7 +90,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 		// create elements
 		// profile
-		$this->frm->addText('email', $this->record['email'], 255);
+		$this->frm->addTrimmedText('email', $this->record['email'], 255);
 		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);

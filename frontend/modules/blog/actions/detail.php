@@ -117,7 +117,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// create elements
 		$this->frm->addText('author', $author)->setAttributes(array('required' => null));
-		$this->frm->addText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addTrimmedText('email', $email)->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addText('website', $website, null);
 		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
@@ -152,6 +152,16 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
 		$this->header->addOpenGraphData('site_name', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE), true);
 		$this->header->addOpenGraphData('description', ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'], true);
+
+        // Twitter card
+        $twitterSiteName = FrontendModel::getModuleSetting('core', 'twitter_site_name');
+        if ($twitterSiteName) {
+            $this->header->setTwitterCardSite($twitterSiteName);
+        }
+        $this->header->setTwitterCardSummary(
+            strip_tags($this->record['title']),
+            strip_tags($this->record['meta_description_overwrite'] === 'Y' ? $this->record['meta_description'] : $this->record['text'])
+        );
 
 		// when there are 2 or more categories with at least one item in it, the category will be added in the breadcrumb
 		if(count(FrontendBlogModel::getAllCategories()) > 1) $this->breadcrumb->addElement($this->record['category_title'], FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url']);

@@ -196,7 +196,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(!SpoonFilter::getGetValue('q', null, '')) $_GET['q'] = SpoonFilter::getGetValue('q_widget', null, '');
 
 		// create elements
-		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
+		$this->frm->addText('q', null, 255, 'form-control liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
 
 		// since we know the term just here we should set the canonical url here
 		$canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('search');

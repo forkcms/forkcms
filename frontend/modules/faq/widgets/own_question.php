@@ -52,7 +52,7 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 		// create form
 		$this->frm = new FrontendForm('own_question', '#' . FL::getAction('OwnQuestion'));
 		$this->frm->addText('name')->setAttributes(array('required' => null));
-		$this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+		$this->frm->addTrimmedText('email')->setAttributes(array('required' => null, 'type' => 'email'));
 		$this->frm->addTextarea('message')->setAttributes(array('required' => null));
 	}
 
@@ -63,7 +63,7 @@ class FrontendFaqWidgetOwnQuestion extends FrontendBaseWidget
 	{
 		// parse the form or a status
 		if(empty($this->status)) $this->frm->parse($this->tpl);
-		else $this->tpl->assign($this->status, true);
+		else $this->tpl->assign('ownQuestion' . $this->status, true);
 
 		// parse an option so the stuff can be shown
 		$this->tpl->assign('widgetFaqOwnQuestion', true);

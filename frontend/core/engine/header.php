@@ -85,7 +85,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// add some default CSS files
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css', false);
-		$this->addCSS('/frontend/core/layout/css/screen.css');
+		$this->addCSS('/frontend/core/layout/css/screen.css', true, true);
 
 		// debug stylesheet
 		if(SPOON_DEBUG) $this->addCSS('/frontend/core/layout/css/debug.css');
@@ -541,6 +541,9 @@ class FrontendHeader extends FrontendBaseObject
 		// parse Facebook
 		$this->parseFacebook();
 
+        // Parse the Twitter Card
+        $this->parseTwitterCards();
+
 		// parse SEO
 		$this->parseSeo();
 
@@ -602,6 +605,7 @@ class FrontendHeader extends FrontendBaseObject
 		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
 		$webPropertyId = FrontendModel::getModuleSetting('analytics', 'web_property_id', null);
 		$type = FrontendModel::getModuleSetting('analytics', 'tracking_type', 'universal_analytics');
+		$this->tpl->assign('cookieBarHide', CommonCookie::hasHiddenCookieBar());
 
 		// search for the webpropertyId in the header and footer, if not found we should build the GA-code
 		if(
@@ -941,4 +945,308 @@ class FrontendHeader extends FrontendBaseObject
 			}
 		}
 	}
+
+
+
+    #
+    # Twitter Cards
+    #
+
+    /** @var array */
+    protected $twitterCard = array();
+
+    /** @var array */
+    protected $twitterCardExtra = array();
+
+
+    /**
+     * Fix path to url
+     *
+     * @param string $path
+     * @return string
+     */
+    protected function fixPathToUrl($path)
+    {
+        # Already url
+        if(preg_match('`^https?://`', $path)) {
+            return $path;
+        }
+        # Protocol relative url
+        if(strpos($path, '//') === 0) {
+            return SITE_PROTOCOL . ':' . $path; # Expecting SITE_PROTOCOL to be "http" or "https"
+        }
+        # Absolute path
+        if(strpos($path, '/') === 0) {
+            return SITE_URL . $path;
+        }
+        # Relative path
+        $currentPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
+        $last = explode('/', $currentPath);
+        $last = end($last);
+        if($last && strpos($last, '.') !== false) {
+            $currentPath = dirname($currentPath);
+        }
+        return SITE_URL . $currentPath . '/' . $path;
+    }
+
+    /**
+     * Parse the Twitter cards
+     */
+    protected function parseTwitterCards()
+    {
+        foreach (array($this->twitterCard, $this->twitterCardExtra) as $twitterCard) {
+            foreach ($twitterCard as $name => $content) {
+                $name = "twitter:$name";
+                $this->addMetaData(array('name' => $name, 'content' => $content));
+            }
+        }
+    }
+
+    /**
+     * Set the twitter "@username" or ID of the website
+     * @link https://dev.twitter.com/docs/cards/markup-reference
+     *
+     * @param string | int $site
+     */
+    public function setTwitterCardSite($site)
+    {
+        if (is_numeric($site)) {
+            $this->twitterCardExtra['site:id'] = $site;
+        }
+        else {
+            if (strpos($site, '@') !== 0) {
+                $site = "@$site";
+            }
+            $this->twitterCardExtra['site'] = $site;
+        }
+    }
+
+    /**
+     * Set the twitter "@username" or ID of the content creator
+     * @link https://dev.twitter.com/docs/cards/markup-reference
+     *
+     * @param string | int $creator
+     */
+    public function setTwitterCardCreator($creator)
+    {
+        if (is_numeric($creator)) {
+            $this->twitterCardExtra['creator:id'] = $creator;
+        }
+        else {
+            if (strpos($creator, '@') !== 0) {
+                $creator = "@$creator";
+            }
+            $this->twitterCardExtra['creator'] = $creator;
+        }
+    }
+
+    /**
+     * Set a Summary Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/summary-card
+     *
+     * @param string $title            Max 70 chars
+     * @param string $description      Max 200 chars, must be different than title
+     * @param string $imageUrl = null  Minimum 120x120px, Max 1MB
+     */
+    public function setTwitterCardSummary($title, $description, $imageUrl = null)
+    {
+        $this->twitterCard = array(
+            'card' => 'summary',
+            'title' => $title,
+            'description' => $description,
+        );
+        if ($imageUrl) {
+            $imageUrl = $this->fixPathToUrl($imageUrl);
+            $this->twitterCard['image'] = $imageUrl;
+        }
+    }
+
+    /**
+     * Set a Summary with large image Twitter card
+     * @link https://dev.twitter.com/docs/cards/large-image-summary-card
+     *
+     * @param string $title        Max 70 chars
+     * @param string $description  Max 200 chars, must be different than title
+     * @param string $imageUrl     Minimum 280x150px, Max 1MB
+     */
+    public function setTwitterCardSummaryImage($title, $description, $imageUrl)
+    {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
+        $this->twitterCard = array(
+            'card' => 'summary_large_image',
+            'title' => $title,
+            'description' => $description,
+            'image' => $imageUrl,
+        );
+    }
+
+
+    /**
+     * Set a Photo Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/photo-card
+     *
+     * @param string $imageUrl      Max 1MB
+     * @param string $title = null  Max 70 chars
+     */
+    public function setTwitterCardPhoto($imageUrl, $title = null)
+    {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
+        $this->twitterCard = array(
+            'card' => 'photo',
+            'image' => $imageUrl,
+        );
+        if ($title) {
+            $this->twitterCard['title'] = $title;
+        }
+        $size = getimagesize($imageUrl);
+        if (!empty($size[0]) && !empty($size[1])) {
+            $this->twitterCard['image:width'] = $size[0];
+            $this->twitterCard['image:height'] = $size[1];
+        }
+    }
+
+
+    /**
+     * Set a Gallery Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/gallery-card
+     *
+     * @param array  $imageUrls           An array of up to 4 image urls, must be less than 1MB
+     * @param string $title       = null  Max 70 chars
+     * @param string $description = null  Max 200 chars, must be different than title
+     */
+    public function setTwitterCardGallery(array $imageUrls, $title = null, $description = null)
+    {
+        $this->twitterCard = array(
+            'card' => 'gallery',
+        );
+        for ($i = 0; $i < 4; ++$i) {
+            $this->twitterCard["image$i"] = (!empty($imageUrls[$i]) ? $this->fixPathToUrl($imageUrls[$i]) : '');
+        }
+        if ($title) {
+            $this->twitterCard['title'] = $title;
+        }
+        if ($description) {
+            $this->twitterCard['description'] = $description;
+        }
+    }
+
+
+    /**
+     * Set a Product Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/product-card
+     *
+     * @param string $title        Max 70 chars
+     * @param string $description  Max 200 chars, must be different than title
+     * @param string $imageUrl     Max 1MB
+     * @param string $label1
+     * @param string $data1
+     * @param string $label2
+     * @param string $data2
+     */
+    public function setTwitterCardProduct($title, $description, $imageUrl, $label1, $data1, $label2, $data2)
+    {
+        $imageUrl = $this->fixPathToUrl($imageUrl);
+        $this->twitterCard = array(
+            'card' => 'product',
+            'title' => $title,
+            'description' => $description,
+            'image' => $imageUrl,
+            'label1' => $label1,
+            'data1' => $data1,
+            'label2' => $label2,
+            'data2' => $data2,
+        );
+        $size = getimagesize($imageUrl);
+        if (!empty($size[0]) && !empty($size[1])) {
+            $this->twitterCard['image:width'] = $size[0];
+            $this->twitterCard['image:height'] = $size[1];
+        }
+    }
+
+    /**
+     * Set a Product Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/app-card
+     *
+     * @param int    $iphoneAppStoreId
+     * @param int    $ipadAppStoreId
+     * @param string $googlePlayId
+     * @param string $description         = null
+     * @param string $iphoneUrlScheme     = null
+     * @param string $ipadUrlScheme       = null
+     * @param string $googlePlayUrlScheme = null
+     * @param string $country             = null
+     */
+    public function setTwitterCardApp(
+        $iphoneAppStoreId,
+        $ipadAppStoreId,
+        $googlePlayId,
+        $description = null,
+        $iphoneUrlScheme = null,
+        $ipadUrlScheme = null,
+        $googlePlayUrlScheme = null,
+        $country = null
+    ) {
+        $this->twitterCard = array(
+            'card' => 'app',
+            'app:id:iphone' => $iphoneAppStoreId,
+            'app:id:ipad' => $ipadAppStoreId,
+            'app:id:googleplay' => $googlePlayId,
+        );
+        if ($description) {
+            $this->twitterCard['description'] = $description;
+        }
+        if ($iphoneUrlScheme) {
+            $this->twitterCard['app:url:iphone'] = $iphoneUrlScheme;
+        }
+        if ($ipadUrlScheme) {
+            $this->twitterCard['app:url:ipad'] = $ipadUrlScheme;
+        }
+        if ($googlePlayUrlScheme) {
+            $this->twitterCard['app:url:googleplay'] = $googlePlayUrlScheme;
+        }
+        if ($country) {
+            $this->twitterCard['app:country'] = $country;
+        }
+    }
+
+    /**
+     * Set a Product Twitter card
+     * @link https://dev.twitter.com/docs/cards/types/player-card
+     *
+     * @param string $title                     Max 70 chars
+     * @param string $description               Max 200 chars, must be different than title
+     * @param string $playerUrl
+     * @param int    $width
+     * @param int    $height
+     * @param string $imageUrl
+     * @param string $stream            = null
+     * @param string $streamContentType = null  Must be set if $stream is set
+     */
+    public function setTwitterCardPlayer(
+        $title,
+        $description,
+        $playerUrl,
+        $width,
+        $height,
+        $imageUrl,
+        $stream = null,
+        $streamContentType = null
+    ) {
+        $playerUrl = $this->fixPathToUrl($playerUrl);
+        $imageUrl = $this->fixPathToUrl($imageUrl);
+        $this->twitterCard = array(
+            'card' => 'player',
+            'title' => $title,
+            'description' => $description,
+            'player' => $playerUrl,
+            'player:width' => $width,
+            'player:height' => $height,
+            'image' => $imageUrl,
+        );
+        if($stream && $streamContentType) {
+            $this->twitterCard['player:stream'] = $stream;
+            $this->twitterCard['player:stream:content_type'] = $streamContentType;
+        }
+    }
+
 }

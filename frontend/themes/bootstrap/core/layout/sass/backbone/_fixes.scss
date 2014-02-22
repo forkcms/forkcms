@@ -1,0 +1,98 @@
+.navbar {
+  margin-bottom: 0;
+
+	h1 {
+		/* Main title needs to be h1-tag. This fix is for text logo */
+		margin: 0;
+		line-height: 1;
+	}
+	
+	.navbar-brand {
+  	border: none;
+	}
+}
+
+.breadcrumb {
+  margin-top: 20px;
+}
+
+a {
+	text-decoration: none;
+	border-bottom: 1px solid $linkColor;	/* Border instead of text-decoration */
+
+	&:hover {
+
+	}
+
+	&:focus {
+
+	}
+}
+
+
+
+.nav {
+	a {
+		border: none;
+	}
+}
+
+h1, h2, h3, h4 {
+	margin-top: 0;
+}
+
+.alert {
+	&.fullWidthAlert {
+		margin: 0;
+		width: 100%; /* Reset the width, make sure we use the full available width */
+	}
+}
+
+.formError {
+	@extend .help-inline !optional;
+}
+
+abbr[title],
+abbr[data-original-title] {
+	border-bottom: none;
+}
+
+#cookieBar {
+  @include box-sizing(border-box);
+}
+
+.carousel-control {
+  border: none;
+}
+
+// THE ALMIGHTY NON-VISIBLE ANCHOR!! OUR SECRET WEAPON FOR BETTER KEYBOARD NAVIGATION ON ONEPAGERS
+
+.nonVisibleAnchor {
+  color: inherit;
+  border: inherit;
+  text-align: inherit;
+  background: inherit;
+  @include border-radius(inherit);
+  outline: inherit;
+  text-decoration: inherit;
+  padding: inherit;
+  margin: inherit;
+  pointer-events: none;
+  cursor: text;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: inherit;
+    border: inherit;
+    text-align: inherit;
+    background: inherit;
+    @include border-radius(inherit);
+    outline: inherit;
+    text-decoration: inherit;
+    padding: inherit;
+    margin: inherit;
+    pointer-events: none;
+    cursor: text;
+  }
+}

@@ -87,13 +87,62 @@ class ExtensionsInstaller extends ModuleInstaller
 		// insert templates
 		$this->getDB()->insert('themes_templates', $templates['triton']['default']);
 		$this->getDB()->insert('themes_templates', $templates['triton']['home']);
+		
+		/*
+		 * Bootstrap templates
+		 */
+
+		// search will be installed by default; already link it to this template
+		$extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+
+		// build templates
+		$templates['bootstrap']['default'] = array(
+			'theme' => 'bootstrap',
+			'label' => 'Default',
+			'path' => 'core/layout/templates/default.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+				'names' => array('main', 'top'),
+				'default_extras' => array('top' => array($extras['search_form']))
+			))
+		);
+		
+		$templates['bootstrap']['error'] = array(
+			'theme' => 'bootstrap',
+			'label' => 'Error',
+			'path' => 'core/layout/templates/error.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[/,/,/,top,/],[/,main,main,main,/]',
+				'names' => array('main', 'top'),
+				'default_extras' => array('top' => array($extras['search_form']))
+			))
+		);
+
+		$templates['bootstrap']['home'] = array(
+			'theme' => 'bootstrap',
+			'label' => 'Home',
+			'path' => 'core/layout/templates/home.tpl',
+			'active' => 'Y',
+			'data' => serialize(array(
+				'format' => '[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]',
+				'names' => array('slideshow', 'features', 'main', 'top'),
+				'default_extras' => array('top' => array($extras['search_form']))
+			))
+		);
+
+		// insert templates
+		$this->getDB()->insert('themes_templates', $templates['bootstrap']['default']);
+		$this->getDB()->insert('themes_templates', $templates['bootstrap']['home']);
+		$this->getDB()->insert('themes_templates', $templates['bootstrap']['error']);
 
 		/*
 		 * General theme settings
 		 */
 
 		// set default theme
-		$this->setSetting('core', 'theme', 'triton', true);
+		$this->setSetting('core', 'theme', 'bootstrap', true);
 
 		// set default template
 		$this->setSetting('pages', 'default_template', $this->getTemplateId('default'));
