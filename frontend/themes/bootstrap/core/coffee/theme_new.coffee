@@ -50,7 +50,7 @@ class DefaultTheme extends Theme
     utils.cookies.setCookie('cookie_bar_agree', 'b:1;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
-    if _gaq
+    if _gaq?
       _gaq.push([
         '_trackEvent',
         'cookiebar',
@@ -62,7 +62,7 @@ class DefaultTheme extends Theme
     utils.cookies.setCookie('cookie_bar_agree', 'b:0;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
-    if _gaq
+    if _gaq?
       _gaq.push([
         '_trackEvent',
         'cookiebar',
@@ -72,7 +72,7 @@ class DefaultTheme extends Theme
     false
 
   cookieBarHide: ->
-    if _gaq
+    if _gaq?
       _gaq.push([
         '_trackEvent',
         'cookiebar',
