@@ -50,6 +50,14 @@ class DefaultTheme extends Theme
     utils.cookies.setCookie('cookie_bar_agree', 'b:1;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
+    if ga?
+      ga(
+          'send',
+          'event',
+          'cookiebar',
+          'agree'
+      )
+
     if _gaq?
       _gaq.push([
         '_trackEvent',
@@ -62,6 +70,14 @@ class DefaultTheme extends Theme
     utils.cookies.setCookie('cookie_bar_agree', 'b:0;')
     utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
     $('#cookieBar').alert('close')
+    if ga?
+      ga(
+          'send',
+          'event',
+          'cookiebar',
+          'disagree'
+      )
+
     if _gaq?
       _gaq.push([
         '_trackEvent',
@@ -72,6 +88,14 @@ class DefaultTheme extends Theme
     false
 
   cookieBarHide: ->
+    if ga?
+      ga(
+        'send',
+        'event',
+        'cookiebar',
+        'hide'
+      )
+
     if _gaq?
       _gaq.push([
         '_trackEvent',
