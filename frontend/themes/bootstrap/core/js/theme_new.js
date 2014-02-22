@@ -87,6 +87,9 @@
     }
 
     DefaultTheme.events({
+      '#cookieBar .close': {
+        click: 'cookieBarHide'
+      },
       '#cookieBarAgree': {
         click: 'cookieBarAgree'
       },
@@ -116,6 +119,12 @@
       utils.cookies.setCookie('cookie_bar_agree', 'b:1;');
       utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
       $('#cookieBar').alert('close');
+      if (typeof ga !== "undefined" && ga !== null) {
+        ga('send', 'event', 'cookiebar', 'agree');
+      }
+      if (typeof _gaq !== "undefined" && _gaq !== null) {
+        _gaq.push(['_trackEvent', 'cookiebar', 'agree']);
+      }
       return false;
     };
 
@@ -123,6 +132,22 @@
       utils.cookies.setCookie('cookie_bar_agree', 'b:0;');
       utils.cookies.setCookie('cookie_bar_hide', 'b:1;');
       $('#cookieBar').alert('close');
+      if (typeof ga !== "undefined" && ga !== null) {
+        ga('send', 'event', 'cookiebar', 'disagree');
+      }
+      if (typeof _gaq !== "undefined" && _gaq !== null) {
+        _gaq.push(['_trackEvent', 'cookiebar', 'disagree']);
+      }
+      return false;
+    };
+
+    DefaultTheme.prototype.cookieBarHide = function() {
+      if (typeof ga !== "undefined" && ga !== null) {
+        ga('send', 'event', 'cookiebar', 'hide');
+      }
+      if (typeof _gaq !== "undefined" && _gaq !== null) {
+        _gaq.push(['_trackEvent', 'cookiebar', 'hide']);
+      }
       return false;
     };
 
