@@ -2993,14 +2993,14 @@
       </item>
       <item type="error" name="EmailIsInvalid">
         <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
-        <translation language="en"><![CDATA[Please provide a valid e-email.]]></translation>
+        <translation language="en"><![CDATA[Please provide a valid e-mail address.]]></translation>
         <translation language="hu"><![CDATA[Kérlek érvényes e-mail-t adj meg.]]></translation>
         <translation language="it"><![CDATA[Devi fornire una email valida.]]></translation>
         <translation language="fr"><![CDATA[Veuillez fournir une adresse e-mail valide.]]></translation>
         <translation language="ru"><![CDATA[Введите правильный E-mail.]]></translation>
         <translation language="zh"><![CDATA[请提供一个有效扼Email地址。]]></translation>
         <translation language="de"><![CDATA[Bitte gib eine gültige E-Mail-Adresse an.]]></translation>
-        <translation language="es"><![CDATA[Por favor escribe un e-email correcto.]]></translation>
+        <translation language="es"><![CDATA[Por favor escribe un e-mail correcto.]]></translation>
         <translation language="lt"><![CDATA[Įrašykite galiojantį el.paštą.]]></translation>
         <translation language="uk"><![CDATA[Введіт правильний e-mail]]></translation>
         <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
