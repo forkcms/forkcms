@@ -18,7 +18,7 @@ class FrontendContentBlocksModel
 	public static function get($id)
 	{
 		return (array) FrontendModel::getContainer()->get('database')->getRecord(
-			'SELECT i.*
+			'SELECT i.template, i.title, i.text
 			 FROM content_blocks AS i
 			 WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',
 			array((int) $id, 'active', 'N', FRONTEND_LANGUAGE)
