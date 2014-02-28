@@ -1,6 +1,10 @@
 3.6.7 (xxxx-xx-xx)
 --
 
+Improvements:
+
+* Core: use correct/new Facebook-js-snippet.
+
 Bugfixes:
 
 * Correct amount of sample comments in blog
