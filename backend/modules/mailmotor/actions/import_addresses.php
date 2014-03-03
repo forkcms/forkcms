@@ -267,7 +267,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				else
 				{
 					// write a CSV file to the cache
-					$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
+					$csvFile = 'import-report-' . CommonUri::getUrl(BackendModel::getUTCDate()) . '.csv';
 					BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers, null, null, ';', '"');
 
 					// trigger event

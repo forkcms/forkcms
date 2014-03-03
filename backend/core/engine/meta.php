@@ -108,7 +108,7 @@ class BackendMeta
 		if(!is_callable(array($this->callback['class'], $this->callback['method']))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// build parameters for use in the callback
-		$parameters[] = SpoonFilter::urlise($URL);
+		$parameters[] = CommonUri::getUrl($URL);
 
 		// add parameters set by user
 		if(!empty($this->callback['parameters']))
@@ -464,13 +464,13 @@ class BackendMeta
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
-			$URL = $this->frm->getField('url')->getValue();
+			$URL = SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
 
 			// get the real url
 			$generatedUrl = $this->generateURL($URL);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
+			if(CommonUri::getUrl($URL) != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated

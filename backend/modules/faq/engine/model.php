@@ -196,7 +196,7 @@ class BackendFaqModel
 	public static function getByTag($tagId)
 	{
 		$items = (array) BackendModel::getContainer()->get('database')->getRecords(
-			'SELECT i.id AS url, i.question, mt.module
+			'SELECT i.id AS url, i.question AS name, mt.module
 			 FROM modules_tags AS mt
 			 INNER JOIN tags AS t ON mt.tag_id = t.id
 			 INNER JOIN faq_questions AS i ON mt.other_id = i.id
@@ -321,7 +321,7 @@ class BackendFaqModel
 	 */
 	public static function getURL($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = CommonUri::getUrl((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
 		// new item
@@ -369,7 +369,7 @@ class BackendFaqModel
 	 */
 	public static function getURLForCategory($url, $id = null)
 	{
-		$url = SpoonFilter::urlise((string) $url);
+		$url = CommonUri::getUrl((string) $url);
 		$db = BackendModel::getContainer()->get('database');
 
 		// new category

@@ -134,7 +134,7 @@ class BackendModel extends BaseModel
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
 		// add at least one parameter
-		if(empty($parameters)) $parameters['token'] = self::getToken();
+		$parameters['token'] = self::getToken();
 
 		// init counter
 		$i = 1;
@@ -886,8 +886,8 @@ class BackendModel extends BaseModel
 		// build URL
 		$URL = self::getURL($pageIdForURL, $language);
 
-		// set locale
-		FrontendLanguage::setLocale($language);
+		// set locale with force
+		FrontendLanguage::setLocale($language, true);
 
 		// append action
 		$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));

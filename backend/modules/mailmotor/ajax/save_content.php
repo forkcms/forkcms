@@ -126,6 +126,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 					// output
 					$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', $this->getModule()));
+					return;
 				}
 			}
 
