@@ -142,11 +142,15 @@ class BackendModel extends BaseModel
 		// add parameters
 		foreach($parameters as $key => $value)
 		{
-			// first element
-			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			if ($i == 1) {
+				// first element
+				$querystring .= '?';
+			} else {
+				// other elements
+				$querystring .= '&';
+			}
 
-			// other elements
-			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			$querystring .= $key . '=' . $value;
 
 			// update counter
 			$i++;
@@ -155,6 +159,11 @@ class BackendModel extends BaseModel
 		// some applications aren't real separate applications, they are virtual applications inside the backend.
 		$namedApplication = NAMED_APPLICATION;
 		if(in_array($namedApplication, array('backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob'))) $namedApplication = 'backend';
+
+		// Should we urlencode the querystring?
+		if ($urlencode === true) {
+			$querystring = urlencode($querystring);
+		}
 
 		// build the URL and return it
 		return '/' . $namedApplication . '/' . $language . '/' . $module . '/' . $action . $querystring;
