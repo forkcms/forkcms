@@ -146,7 +146,7 @@ class BackendModel extends BaseModel
 			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			else $querystring .= (($urlencode) ? '&amp;' : '&') . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
