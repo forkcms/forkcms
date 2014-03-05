@@ -104,6 +104,10 @@ class Page extends FrontendBaseObject
         // set headers if this is a 404 page
         if ($this->pageId == 404) {
             $this->statusCode = 404;
+            
+            if (extension_loaded('newrelic')) {
+                newrelic_name_transaction('404');
+            } 
         }
 
         // create breadcrumb instance
