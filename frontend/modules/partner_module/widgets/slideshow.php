@@ -29,6 +29,6 @@ class FrontendPartnerModuleWidgetSlideshow extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('widgetSlideshow', FrontendPartnerModuleModel::getAll());
+		$this->tpl->assign('partners', FrontendPartnerModuleModel::getAll());
 	}
 }

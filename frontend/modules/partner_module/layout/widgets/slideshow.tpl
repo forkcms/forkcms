@@ -9,9 +9,10 @@
             {iteration:partners}
                 <li>
                     <ul>
-                        <li>Name: partners.name</li>
-                        <li>Img: partners.img</li>
-                        <li>Link: partners.link</li>
+                        <li>ID: {$partners.id}</li>
+                        <li>Name: {$partners.name}</li>
+                        <li>Img: {$partners.img}</li>
+                        <li>Link: {$partners.url}</li>
                     </ul>
                 </li>
             {/iteration:partners}
