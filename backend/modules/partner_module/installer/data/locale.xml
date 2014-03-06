@@ -2,6 +2,10 @@
 <locale>
   <backend>
   	<partner_module>
+      <item type="label" name="Partners">
+        <translation language="nl"><![CDATA[Partners]]></translation>
+        <translation language="en"><![CDATA[Partners]]></translation>
+      </item>
   	</partner_module>
     <core>
       <item type="label" name="PartnerModule">
