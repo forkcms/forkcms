@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>partner module</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.5.0</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			This is a slider to show the partners on a company website.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Jelmer Prins]]></name>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when a partner is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a partner is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a partner is edited.]]></event>
+	</events>
+</module>
