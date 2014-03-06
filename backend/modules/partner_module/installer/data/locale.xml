@@ -6,8 +6,16 @@
         <translation language="nl"><![CDATA[Partners]]></translation>
         <translation language="en"><![CDATA[Partners]]></translation>
       </item>
+      <item type="label" name="Partner">
+        <translation language="nl"><![CDATA[Partner]]></translation>
+        <translation language="en"><![CDATA[Partner]]></translation>
+      </item>
   	</partner_module>
     <core>
+      <item type="label" name="Slideshow">
+        <translation language="nl"><![CDATA[Slideshow]]></translation>
+        <translation language="en"><![CDATA[Slideshow]]></translation>
+      </item>
       <item type="label" name="PartnerModule">
         <translation language="nl"><![CDATA[Partner Module]]></translation>
         <translation language="en"><![CDATA[Partner Module]]></translation>
