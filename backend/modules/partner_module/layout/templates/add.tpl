@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblPartnerModule|ucfirst}: {$lblAdd}</h2>
+	<h2>{$lblPartner|ucfirst}: {$lblAdd}</h2>
 </div>
 
 {form:add}
