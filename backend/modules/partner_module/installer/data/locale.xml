@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+  	<partner_module>
+  	</partner_module>
+    <core>
+      <item type="label" name="PartnerModule">
+        <translation language="nl"><![CDATA[Partner Module]]></translation>
+        <translation language="en"><![CDATA[Partner Module]]></translation>
+      </item>
+    </core>
+  </backend>
+</locale>
