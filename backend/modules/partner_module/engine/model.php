@@ -15,7 +15,7 @@
 class BackendPartnerModuleModel
 {
 	const QRY_DATAGRID_BROWSE =
-		'SELECT i.id, i.name, i.img, i.url
+		'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
 		 FROM partner_module AS i';
 
 	/**
@@ -44,7 +44,7 @@ class BackendPartnerModuleModel
 	public static function get($id)
 	{
 		return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.name, i.img, i.url
+            'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
              FROM partner_module AS i
              WHERE i.id = ?',
 			array((int) $id)
@@ -60,6 +60,22 @@ class BackendPartnerModuleModel
 	{
 		return (int) BackendModel::getContainer()->get('database')->getVar('SELECT MAX(id) FROM partner_module LIMIT 1');
 	}
+
+    /**
+     * Checks if an item exists
+     *
+     * @param int $id
+     * @return bool
+     */
+    public static function exists($id)
+    {
+        return (bool) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT i.id
+             FROM partner_module AS i
+             WHERE i.id = ?',
+            array((int) $id)
+        );
+    }
 
 	/**
 	 * Inserts an item into the database

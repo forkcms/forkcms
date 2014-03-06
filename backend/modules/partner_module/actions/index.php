@@ -37,8 +37,6 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 
     /**
      * Loads the datagrid with the post
-     *
-     * @internal param string $published 'Y' or 'N'.
      * @return the datagrid
      */
 	private function loadDataGrid()
@@ -47,17 +45,20 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 		$dg = new BackendDataGridDB(BackendPartnerModuleModel::QRY_DATAGRID_BROWSE);
 
 		// set headers
-		$dg->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author'))));
+		$dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
+        $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('website'))));
+        $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
 		// sorting columns
-		$dg->setSortingColumns(array('name', 'user_id'), 'name');
+		$dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
 		$dg->setSortParameter('asc');
 
 		// set colum URLs
 		$dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set column functions
-		$dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'user_id', true);
+		$dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
+        $dg->setColumnFunction(array('BackendPartnerModuleIndex', 'previewImage'), array('[img]'), 'img', true);
 
 		// add edit column
 		$dg->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
@@ -74,7 +75,16 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 	protected function parse()
 	{
 		// parse the datagrid for all blogposts
-		if($this->dgPartners->getNumResults() != 0) $this->tpl->assign('dgPartners', $this->dgPublished->getContent());
+		if($this->dgPartners->getNumResults() != 0) $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
 		if($this->dgPartners->getNumResults() == 0) $this->tpl->assign('noItems', 1);
 	}
+
+    /**
+     * @param $img the url of the image
+     * @return the image wrapped in an image tag with limited height so we avoid stretch marks
+     */
+    public static function previewImage($img)
+    {
+        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . '/partner_module/images/' . $img . '" />';
+    }
 }
