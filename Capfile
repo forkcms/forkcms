@@ -1,8 +1,8 @@
 load "deploy" if respond_to?(:namespace) # cap2 differentiator
 
 # development information
-set :client,  "sumocoders"					# eg: "dev"
-set :project, "forkcms"					# eg: "site"
+set :client,  "sumocoders"                                                  # eg: "dev"
+set :project, "forkcms"                                                     # eg: "site"
 
 # production information, ignore these items during development
 set :production_url, ""				# eg: "http://fork.sumocoders.be"
