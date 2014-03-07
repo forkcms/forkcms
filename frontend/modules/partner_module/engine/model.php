@@ -26,9 +26,6 @@ class FrontendPartnerModuleModel
              FROM partner_module AS i'
 		);
 
-		// no results?
-		if(empty($items)) return array();
-
 		return $items;
 	}
 }
