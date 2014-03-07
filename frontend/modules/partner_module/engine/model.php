@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the frontend model voor the partner module.
+ * This is the frontend model for the partner module.
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class FrontendPartnerModuleModel
