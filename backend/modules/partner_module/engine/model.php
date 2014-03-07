@@ -62,7 +62,9 @@ class BackendPartnerModuleModel
 	 */
 	public static function getMaximumId()
 	{
-		return (int) BackendModel::getContainer()->get('database')->getVar('SELECT MAX(id) FROM partner_module LIMIT 1');
+		return (int) BackendModel::getContainer()->get('database')->getVar(
+			'SELECT MAX(id) FROM partner_module LIMIT 1'
+		);
 	}
 
 	/**
@@ -131,5 +133,4 @@ class BackendPartnerModuleModel
 
 		return $item['id'];
 	}
-
 }

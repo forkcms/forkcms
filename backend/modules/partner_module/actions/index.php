@@ -14,70 +14,85 @@
  */
 class BackendPartnerModuleIndex extends BackendBaseActionIndex
 {
-	/**
-	 * datagrid with partners
-	 *
-	 * @var	SpoonDataGrid
-	 */
-	private $dgPartners;
+    /**
+     * datagrid with partners
+     *
+     * @var    SpoonDataGrid
+     */
+    private $dgPartners;
 
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        parent::execute();
 
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		parent::execute();
+        $this->dgPartners = $this->loadDataGrid();
 
-		$this->dgPartners = $this->loadDataGrid();
-
-		$this->parse();
-		$this->display();
-	}
+        $this->parse();
+        $this->display();
+    }
 
     /**
      * Loads the datagrid with the post
      * @return BackendDataGridDB
      */
-	private function loadDataGrid()
-	{
-		// create datagrid
-		$dg = new BackendDataGridDB(BackendPartnerModuleModel::QRY_DATAGRID_BROWSE);
+    private function loadDataGrid()
+    {
+        // create datagrid
+        $dg = new BackendDataGridDB(BackendPartnerModuleModel::QRY_DATAGRID_BROWSE);
 
-		// set headers
-		$dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
+        // set headers
+        $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
         $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('website'))));
         $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
-		// sorting columns
-		$dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
-		$dg->setSortParameter('asc');
+        // sorting columns
+        $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
+        $dg->setSortParameter('asc');
 
-		// set colum URLs
-		$dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+        // set colum URLs
+        $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
-		// set column functions
-		$dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
+        // set column functions
+        $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
         $dg->setColumnFunction(array('BackendPartnerModuleIndex', 'previewImage'), array('[img]'), 'img', true);
 
-		// add edit column
-		$dg->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+        // add edit column
+        $dg->addColumn(
+            'edit',
+            null,
+            BL::lbl('Edit'),
+            BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+            BL::lbl('Edit')
+        );
 
-		// add delete column
-		$dg->addColumn('delete', null, BL::lbl('Delete'), BackendModel::createURLForAction('delete') . '&amp;id=[id]', BL::lbl('Delete'));
+        // add delete column
+        $dg->addColumn(
+            'delete',
+            null,
+            BL::lbl('Delete'),
+            BackendModel::createURLForAction('delete') . '&amp;id=[id]',
+            BL::lbl('Delete')
+        );
 
-		return $dg;
-	}
+        return $dg;
+    }
 
-	/**
-	 * Parse all datagrids
-	 */
-	protected function parse()
-	{
-		// parse the datagrid for all blogposts
-		if($this->dgPartners->getNumResults() != 0) $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
-		if($this->dgPartners->getNumResults() == 0) $this->tpl->assign('noItems', 1);
-	}
+    /**
+     * Parse datagrid
+     */
+    protected function parse()
+    {
+        // parse the datagrid for all blogposts
+        if ($this->dgPartners->getNumResults() != 0) {
+            $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
+        }
+        if ($this->dgPartners->getNumResults() == 0) {
+            $this->tpl->assign('noItems', 1);
+        }
+    }
 
     /**
      * @param $img the url of the image

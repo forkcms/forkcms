@@ -36,7 +36,9 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 		$this->frm->addText('name', null, 255, 'inputText name', 'inputTextError name')->setAttribute('required');
 		$this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
-		$this->frm->addText('url', null, 255, 'inputText url', 'inputTextError url')->setAttributes(array('type' => 'url', 'required'));
+		$this->frm->addText('url', null, 255, 'inputText url', 'inputTextError url')->setAttributes(
+			array('type' => 'url', 'required')
+		);
 	}
 
 	/**
@@ -44,8 +46,7 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if ($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
 			// validation
@@ -53,8 +54,7 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 			$this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 			// no errors?
-			if($this->frm->isCorrect())
-			{
+			if ($this->frm->isCorrect()) {
 				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['url'] = $this->frm->getField('url')->getValue();
 				$item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
@@ -64,7 +64,11 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 				$item['id'] = BackendPartnerModuleModel::insert($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
+				$this->redirect(
+					BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
+						$item['name']
+					) . '&highlight=row-' . $item['id']
+				);
 			}
 		}
 	}

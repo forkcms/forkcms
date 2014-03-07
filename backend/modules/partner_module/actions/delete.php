@@ -21,8 +21,7 @@ class BackendPartnerModuleDelete extends BackendBaseActionDelete
 	{
 		$this->id = $this->getParameter('id', 'int');
 		// does the item exist
-		if($this->id !== null && BackendPartnerModuleModel::exists($this->id))
-		{
+		if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
 			// call parent, this will probably add some general CSS/JS or other required files
 
 
@@ -34,10 +33,12 @@ class BackendPartnerModuleDelete extends BackendBaseActionDelete
 			//delete the image
 			SpoonFile::delete(FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']);
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));
+			$this->redirect(
+				BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])
+			);
+		} // something went wrong
+		else {
+			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 		}
-
-		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }

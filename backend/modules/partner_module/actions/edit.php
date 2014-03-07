@@ -22,8 +22,7 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if($this->id !== null && BackendPartnerModuleModel::exists($this->id))
-		{
+		if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
 			parent::execute();
 			$this->getData();
 
@@ -32,8 +31,9 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 
 			$this->parse();
 			$this->display();
+		} else {
+			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 		}
-		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 	/**
@@ -44,7 +44,9 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 		$this->record = (array) BackendPartnerModuleModel::get($this->id);
 
 		// no item found, redirect to index
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		if (empty($this->record)) {
+			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+		}
 	}
 
 	/**
@@ -53,10 +55,13 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		$this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name'], 255, 'inputText name', 'inputTextError name')->setAttribute('required');
-        $this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
-        $this->frm->addText('url', $this->record['url'], 255, 'inputText url', 'inputTextError url')->setAttributes(array('type' => 'url', 'required'));
-
+		$this->frm->addText('name', $this->record['name'], 255, 'inputText name', 'inputTextError name')->setAttribute(
+			'required'
+		);
+		$this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
+		$this->frm->addText('url', $this->record['url'], 255, 'inputText url', 'inputTextError url')->setAttributes(
+			array('type' => 'url', 'required')
+		);
 	}
 
 	/**
@@ -75,37 +80,42 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 	 */
 	private function validateForm()
 	{
-		if($this->frm->isSubmitted())
-		{
+		if ($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
 
-            // validation
-            $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-            if ($this->frm->getField('img')->isFilled())
-            {
-                // image has the jpg/png extension
-                $this->frm->getField('img')->isAllowedExtension(array('jpg', 'png', 'gif'), BL::err('JPGGIFAndPNGOnly'));
-            }
+			// validation
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			if ($this->frm->getField('img')->isFilled()) {
+				// image has the jpg/png extension
+				$this->frm->getField('img')->isAllowedExtension(
+					array('jpg', 'png', 'gif'),
+					BL::err('JPGGIFAndPNGOnly')
+				);
+			}
 
-            $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
-            // no errors?
-            if($this->frm->isCorrect())
-            {
+			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
+			// no errors?
+			if ($this->frm->isCorrect()) {
 				$item['id'] = $this->record['id'];
-                $item['name'] = $this->frm->getField('name')->getValue();
-                $item['url'] = $this->frm->getField('url')->getValue();
-                if ($this->frm->getField('img')->isFilled())
-                {
-                    SpoonFile::delete(FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']);
-                    $item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
-                    $this->frm->getField('img')->moveFile(
-                        FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
-                    );
-                }
+				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['url'] = $this->frm->getField('url')->getValue();
+				if ($this->frm->getField('img')->isFilled()) {
+					SpoonFile::delete(
+						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']
+					);
+					$item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
+					$this->frm->getField('img')->moveFile(
+						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
+					);
+				}
 				BackendPartnerModuleModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+				$this->redirect(
+					BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
+						$item['title']
+					) . '&highlight=row-' . $item['id']
+				);
 			}
 		}
 	}
