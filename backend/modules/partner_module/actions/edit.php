@@ -103,7 +103,7 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 					SpoonFile::delete(
 						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']
 					);
-					$item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
+					$item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
 					$this->frm->getField('img')->moveFile(
 						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
 					);

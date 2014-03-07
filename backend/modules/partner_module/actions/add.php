@@ -48,21 +48,20 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 	{
 		if ($this->frm->isSubmitted()) {
 			$this->frm->cleanupFields();
-
 			// validation
 			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 			$this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 			// no errors?
 			if ($this->frm->isCorrect()) {
+
 				$item['name'] = $this->frm->getField('name')->getValue();
 				$item['url'] = $this->frm->getField('url')->getValue();
-				$item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
+				$item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
 				$this->frm->getField('img')->moveFile(
 					FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
 				);
 				$item['id'] = BackendPartnerModuleModel::insert($item);
-
 				// everything is saved, so redirect to the overview
 				$this->redirect(
 					BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
