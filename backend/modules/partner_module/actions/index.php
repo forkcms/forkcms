@@ -68,15 +68,6 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
             BL::lbl('Edit')
         );
 
-        // add delete column
-        $dg->addColumn(
-            'delete',
-            null,
-            BL::lbl('Delete'),
-            BackendModel::createURLForAction('delete') . '&amp;id=[id]',
-            BL::lbl('Delete')
-        );
-
         return $dg;
     }
 

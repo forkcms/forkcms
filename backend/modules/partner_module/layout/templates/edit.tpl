@@ -21,7 +21,15 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+				<span>{$lblDelete|ucfirst}</span>
+			</a>
+			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+				<p>
+					{$msgConfirmDelete|sprintf:{$item.name}}
+				</p>
+			</div>
 		</div>
 	</div>
 {/form:edit}
