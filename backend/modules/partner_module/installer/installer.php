@@ -8,7 +8,7 @@
  */
 
 /**
- * This action will install the partner_module.
+ * This class will install the partner_module.
  *
  * @author Jelmer Prins <jelmer@cumocoders.be>
  */
