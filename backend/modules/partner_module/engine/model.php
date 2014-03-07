@@ -14,6 +14,9 @@
  */
 class BackendPartnerModuleModel
 {
+	/**
+	 * The browse query for the datagrid
+	 */
 	const QRY_DATAGRID_BROWSE =
 		'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
 		 FROM partner_module AS i';
@@ -44,10 +47,10 @@ class BackendPartnerModuleModel
 	public static function get($id)
 	{
 		return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
-             FROM partner_module AS i
-             WHERE i.id = ?
-             LIMIT 1',
+			'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
+			 FROM partner_module AS i
+			 WHERE i.id = ?
+			 LIMIT 1',
 			array((int) $id)
 		);
 	}
@@ -62,22 +65,22 @@ class BackendPartnerModuleModel
 		return (int) BackendModel::getContainer()->get('database')->getVar('SELECT MAX(id) FROM partner_module LIMIT 1');
 	}
 
-    /**
-     * Checks if an item exists
-     *
-     * @param int $id
-     * @return bool
-     */
-    public static function exists($id)
-    {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM partner_module AS i
-             WHERE i.id = ?
-             LIMIT 1',
-            array((int) $id)
-        );
-    }
+	/**
+	 * Checks if an item exists
+	 *
+	 * @param int $id
+	 * @return bool
+	 */
+	public static function exists($id)
+	{
+		return (bool) BackendModel::getContainer()->get('database')->getVar(
+			'SELECT i.id
+			 FROM partner_module AS i
+			 WHERE i.id = ?
+			 LIMIT 1',
+			array((int) $id)
+		);
+	}
 
 	/**
 	 * Inserts an item into the database
@@ -87,16 +90,16 @@ class BackendPartnerModuleModel
 	 */
 	public static function insert(array $item)
 	{
-        //set extra details
-        $item['created_by'] = BackendAuthentication::getUser()->getUserId();
-        $item['created_on'] = date('Y-m-d H:i:s');
-        $item['edited_on'] = date('Y-m-d H:i:s');
+		//set extra details
+		$item['created_by'] = BackendAuthentication::getUser()->getUserId();
+		$item['created_on'] = date('Y-m-d H:i:s');
+		$item['edited_on'] = date('Y-m-d H:i:s');
 
 		// insert and return the new partner id
 		$item['id'] = BackendModel::getContainer()->get('database')->insert(
-            'partner_module',
-            $item
-        );
+			'partner_module',
+			$item
+		);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('partner_module');
@@ -112,16 +115,16 @@ class BackendPartnerModuleModel
 	 */
 	public static function update(array $item)
 	{
-        //set update time
-        $item['edited_on'] = date('Y-m-d H:i:s');
-        
+		//set update time
+		$item['edited_on'] = date('Y-m-d H:i:s');
+
 		// update
 		BackendModel::getContainer()->get('database')->update(
-            'partner_module',
-            $item,
-            'id = ?',
-            array($item['id'])
-        );
+			'partner_module',
+			$item,
+			'id = ?',
+			array($item['id'])
+		);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('partner_module');
