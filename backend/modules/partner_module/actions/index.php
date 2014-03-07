@@ -37,7 +37,7 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 
     /**
      * Loads the datagrid with the post
-     * @return the datagrid
+     * @return BackendDataGridDB
      */
 	private function loadDataGrid()
 	{
@@ -85,6 +85,6 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
      */
     public static function previewImage($img)
     {
-        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . '/partner_module/images/' . $img . '" />';
+        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . FrontendPartnerModuleModel::IMAGE_PATH . $img . '" />';
     }
 }
