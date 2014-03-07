@@ -50,25 +50,18 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 
 			// validation
 			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-            if ($this->frm->getField('img')->isFilled(BL::err('FieldIsRequired')))
-            {
-                // image has the jpg/png extension
-                $this->frm->getField('img')->isAllowedExtension(array('jpg', 'png', 'gif'), BL::err('JPGGIFAndPNGOnly'));
-            }
-
+            $this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				$item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
-				$item['id'] = BackendPartnerModuleModel::insert($item);
+                $item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
                 $this->frm->getField('img')->moveFile(
-                    FRONTEND_FILES_PATH . '/partner_module/images/' . $item['id'] . '.' . $this->frm->getField('img')->getExtension()
+                    FRONTEND_FILES_PATH . '/partner_module/images/' . $item['img']
                 );
-
-                $item['img'] = $item['id'] . '.' . $this->frm->getField('img')->getExtension();
-                BackendPartnerModuleModel::update($item);
+                $item['id'] = BackendPartnerModuleModel::insert($item);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
