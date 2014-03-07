@@ -36,7 +36,7 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 		$this->frm->addText('name', null, 255, 'inputText name', 'inputTextError name')->setAttribute('required');
 		$this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
-        $this->frm->addText('url', null, 255, 'inputText url', 'inputTextError url')->setAttributes(array('type' => 'url', 'required'));
+		$this->frm->addText('url', null, 255, 'inputText url', 'inputTextError url')->setAttributes(array('type' => 'url', 'required'));
 	}
 
 	/**
@@ -50,18 +50,18 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 
 			// validation
 			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-            $this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				$item['name'] = $this->frm->getField('name')->getValue();
-                $item['url'] = $this->frm->getField('url')->getValue();
-                $item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
-                $this->frm->getField('img')->moveFile(
-                    FRONTEND_FILES_PATH . '/partner_module/images/' . $item['img']
-                );
-                $item['id'] = BackendPartnerModuleModel::insert($item);
+				$item['url'] = $this->frm->getField('url')->getValue();
+				$item['img'] = Site::getFilename() . '.' . $this->frm->getField('img')->getExtension();
+				$this->frm->getField('img')->moveFile(
+					FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
+				);
+				$item['id'] = BackendPartnerModuleModel::insert($item);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);

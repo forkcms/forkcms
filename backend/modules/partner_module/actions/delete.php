@@ -31,7 +31,8 @@ class BackendPartnerModuleDelete extends BackendBaseActionDelete
 
 			// delete item
 			BackendPartnerModuleModel::delete($this->id);
-
+			//delete the image
+			SpoonFile::delete(FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']);
 			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name']));
 		}
