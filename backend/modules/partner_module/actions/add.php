@@ -62,9 +62,6 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 			{
 				$item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
-				$item['created_by'] = BackendAuthentication::getUser()->getUserId();
-                $item['created_on'] = date('Y-m-d H:i:s');
-                $item['edited_on'] = date('Y-m-d H:i:s');
 				$item['id'] = BackendPartnerModuleModel::insert($item);
                 $this->frm->getField('img')->moveFile(
                     FRONTEND_FILES_PATH . '/partner_module/images/' . $item['id'] . '.' . $this->frm->getField('img')->getExtension()

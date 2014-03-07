@@ -94,7 +94,6 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 				$item['id'] = $this->record['id'];
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
-                $item['edited_on'] = date('Y-m-d H:i:s');
                 if ($this->frm->getField('img')->isFilled())
                 {
                     FRONTEND_FILES_PATH . '/partner_module/images/' . $item['id'] . '.' . $this->frm->getField('img')->getExtension();

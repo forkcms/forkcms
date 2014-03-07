@@ -87,6 +87,11 @@ class BackendPartnerModuleModel
 	 */
 	public static function insert(array $item)
 	{
+        //set extra details
+        $item['created_by'] = BackendAuthentication::getUser()->getUserId();
+        $item['created_on'] = date('Y-m-d H:i:s');
+        $item['edited_on'] = date('Y-m-d H:i:s');
+
 		// insert and return the new partner id
 		$item['id'] = BackendModel::getContainer()->get('database')->insert(
             'partner_module',
@@ -107,8 +112,16 @@ class BackendPartnerModuleModel
 	 */
 	public static function update(array $item)
 	{
+        //set update time
+        $item['edited_on'] = date('Y-m-d H:i:s');
+        
 		// update
-		BackendModel::getContainer()->get('database')->update('partner_module', $item, 'id = ?', array($item['id']));
+		BackendModel::getContainer()->get('database')->update(
+            'partner_module',
+            $item,
+            'id = ?',
+            array($item['id'])
+        );
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('partner_module');
