@@ -5,6 +5,7 @@ Bugfixes:
 
 * Correct amount of sample comments in blog
 * msgSequenceSaved was missing from core installer.
+* Core: Modified misleading text about CKFinder maximum image size setting.
 * Share with linkedin, fixed double url encoding.
 * Faq: getByTags did not work in backend.
 

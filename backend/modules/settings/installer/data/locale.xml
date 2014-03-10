@@ -133,24 +133,24 @@
         <translation language="el"><![CDATA[Κωδικοί πρόσβασης γιά υπηρεσίες web.]]></translation>
       </item>
       <item type="message" name="HelpCkfinderMaximumHeight">
-        <translation language="nl"><![CDATA[Stel de maximale hoogte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum height (in pixels) that CKFinder can be opened at.]]></translation>
-        <translation language="ru"><![CDATA[Настроить максимальную высоту (в пикселях) можно в CKFinder.]]></translation>
-        <translation language="de"><![CDATA[Stelle die maximale Höhe (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
-        <translation language="es"><![CDATA[Configura la máxima altura (en pixeles) en que puede abrirse CKFinder.]]></translation>
-        <translation language="hu"><![CDATA[A maximum magasság (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
-        <translation language="el"><![CDATA[Ρυθμίστε το μέγιστο ύψος (σε πίξελ) στο οποίο μπορεί να ανοίξει ο CKFinder.]]></translation>
-        <translation language="zh"><![CDATA[设置CKFinder可以打开的最大高度(以px为单位）。]]></translation>
+        <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum height (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
+        <translation language="ru"><![CDATA[Наладзьце максімальную вышыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Höhe (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
+        <translation language="es"><![CDATA[Configure la altura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
+        <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
+        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο ύψος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
+        <translation language="zh"><![CDATA[配置上载的图像的最大高度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
       </item>
       <item type="message" name="HelpCkfinderMaximumWidth">
-        <translation language="nl"><![CDATA[Stel de maximale breedte (in pixels) in waarin CKFinder mag worden geopend.]]></translation>
-        <translation language="en"><![CDATA[Configure the maximum width (in pixels) that CKFinder can be opened at.]]></translation>
-        <translation language="ru"><![CDATA[Настроить максимальную ширину (в пикселях) можно в CKFinder.]]></translation>
-        <translation language="de"><![CDATA[Stelle die maximale Breite (in Pixeln) ein, in der CKFinder geöffnet werden kann.]]></translation>
-        <translation language="es"><![CDATA[Configura el ancho máximo (en pixeles) en que puede abrirse CKFinder.]]></translation>
-        <translation language="hu"><![CDATA[A maximum szélesség (pixelben) beállítása, hogy hogy nyiljon meg a CKFinder.]]></translation>
-        <translation language="el"><![CDATA[Ρυθμίστε το μέγιστο πλάτος (σε πίξελ) στο οποίο μπορεί να ανοίξει ο CKFinder.]]></translation>
-        <translation language="zh"><![CDATA[设置CKFinder可以打开的最大宽度(以px为单位）。]]></translation>
+        <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum width (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
+        <translation language="ru"><![CDATA[Наладзьце максімальную шырыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Breite (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
+        <translation language="es"><![CDATA[Configure la anchura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
+        <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
+        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο πλάτος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
+        <translation language="zh"><![CDATA[配置上载的图像的最大宽度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
       </item>
       <item type="message" name="HelpDateFormatLong">
         <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
