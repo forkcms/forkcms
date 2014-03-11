@@ -333,7 +333,8 @@ class BackendBlogModel
 			'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 			 FROM blog_posts AS i
 			 INNER JOIN meta AS m ON m.id = i.meta_id
-			 WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
+			 WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?
+			 ORDER BY i.revision_id DESC',
 			array((int) $id, 'active', 'draft', BL::getWorkingLanguage())
 		);
 	}
