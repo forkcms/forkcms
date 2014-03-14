@@ -81,7 +81,7 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
             $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
         }
         if ($this->dgPartners->getNumResults() == 0) {
-            $this->tpl->assign('noItems', 1);
+            $this->tpl->assign('noItems', true);
         }
     }
 }
