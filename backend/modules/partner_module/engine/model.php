@@ -76,8 +76,8 @@ class BackendPartnerModuleModel
     public static function exists($id)
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM partner_module AS i
+            'SELECT 1
+             FROM partner_module
              WHERE i.id = ?
              LIMIT 1',
             array((int) $id)
