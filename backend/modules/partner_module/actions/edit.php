@@ -101,19 +101,12 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
                 $item['url'] = $this->frm->getField('url')->getValue();
                 if ($this->frm->getField('img')->isFilled()) {
                     SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/' . $this->record['img']
-                    );
-                    SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH . '/' . $this->record['img']
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/source/' . $this->record['img']
                     );
                     $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
-                    $this->frm->getField('img')->createThumbnail(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH . '/' . $item['img'],
-                        180,
-                        180
-                    );
-                    $this->frm->getField('img')->moveFile(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/' . $item['img']
+                    $this->frm->getField('img')->generateThumbnails(
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH,
+                        $item['img']
                     );
                 }
                 BackendPartnerModuleModel::update($item);
