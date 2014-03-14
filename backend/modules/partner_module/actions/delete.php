@@ -22,9 +22,6 @@ class BackendPartnerModuleDelete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
         // does the item exist
         if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
-            // call parent, this will probably add some general CSS/JS or other required files
-
-
             // get data
             $this->record = (array) BackendPartnerModuleModel::get($this->id);
 
