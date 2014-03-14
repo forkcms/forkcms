@@ -42,5 +42,7 @@ class PartnerModuleInstaller extends ModuleInstaller
             'partner_module/index',
             array('partner_module/add', 'partner_module/edit')
         );
+
+        SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH);
     }
 }
