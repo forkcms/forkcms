@@ -16,7 +16,7 @@ class FrontendPartnerModuleModel
     /**
      * The location where the images are stored within the files directory
      */
-    const IMAGE_PATH =  '/partner_module/images/';
+    const IMAGE_PATH =  'partner_module/images';
 	/**
 	 * Get all items
      *

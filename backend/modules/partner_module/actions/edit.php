@@ -101,11 +101,11 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
 				$item['url'] = $this->frm->getField('url')->getValue();
 				if ($this->frm->getField('img')->isFilled()) {
 					SpoonFile::delete(
-						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $this->record['img']
+						FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH  . '/' . $this->record['img']
 					);
 					$item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
 					$this->frm->getField('img')->moveFile(
-						FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
+						FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH  . '/' . $item['img']
 					);
 				}
 				BackendPartnerModuleModel::update($item);

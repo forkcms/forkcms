@@ -59,7 +59,7 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
 				$item['url'] = $this->frm->getField('url')->getValue();
 				$item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
 				$this->frm->getField('img')->moveFile(
-					FRONTEND_FILES_PATH . FrontendPartnerModuleModel::IMAGE_PATH . $item['img']
+					FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH  . '/' . $item['img']
 				);
 				$item['id'] = BackendPartnerModuleModel::insert($item);
 				// everything is saved, so redirect to the overview
