@@ -14,36 +14,36 @@
  */
 class BackendPartnerModuleDelete extends BackendBaseActionDelete
 {
-	/**
-	 * Execute the action
-	 */
-	public function execute()
-	{
-		$this->id = $this->getParameter('id', 'int');
-		// does the item exist
-		if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
-			// call parent, this will probably add some general CSS/JS or other required files
+    /**
+     * Execute the action
+     */
+    public function execute()
+    {
+        $this->id = $this->getParameter('id', 'int');
+        // does the item exist
+        if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
+            // call parent, this will probably add some general CSS/JS or other required files
 
 
-			// get data
-			$this->record = (array) BackendPartnerModuleModel::get($this->id);
+            // get data
+            $this->record = (array) BackendPartnerModuleModel::get($this->id);
 
-			// delete item
-			BackendPartnerModuleModel::delete($this->id);
-			//delete the image
-			SpoonFile::delete(
-				FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH  . '/' . $this->record['img']
-			);
-			SpoonFile::delete(
-				FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH  . '/' . $this->record['img']
-			);
-			// item was deleted, so redirect
-			$this->redirect(
-				BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])
-			);
-		} // something went wrong
-		else {
-			$this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-		}
-	}
+            // delete item
+            BackendPartnerModuleModel::delete($this->id);
+            //delete the image
+            SpoonFile::delete(
+                FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/' . $this->record['img']
+            );
+            SpoonFile::delete(
+                FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH . '/' . $this->record['img']
+            );
+            // item was deleted, so redirect
+            $this->redirect(
+                BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])
+            );
+        } // something went wrong
+        else {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
+    }
 }

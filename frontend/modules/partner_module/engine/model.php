@@ -16,25 +16,25 @@ class FrontendPartnerModuleModel
     /**
      * The location where the images are stored within the files directory
      */
-    const IMAGE_PATH =  'partner_module/source';
+    const IMAGE_PATH = 'partner_module/source';
 
     /**
      * The location where the thumbnails are stored within the files directory
      */
-    const THUMBNAIL_PATH =  'partner_module/180x180';
+    const THUMBNAIL_PATH = 'partner_module/180x180';
 
-	/**
-	 * Get all items
+    /**
+     * Get all items
      *
-	 * @return array
-	 */
-	public static function getAll()
-	{
-		$items = (array) FrontendModel::getContainer()->get('database')->getRecords(
+     * @return array
+     */
+    public static function getAll()
+    {
+        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name, i.img, i.url
              FROM partner_module AS i'
-		);
+        );
 
-		return $items;
-	}
+        return $items;
+    }
 }

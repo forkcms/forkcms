@@ -14,21 +14,21 @@
  */
 class FrontendPartnerModuleWidgetSlideshow extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-		$this->tpl->assign('partners', FrontendPartnerModuleModel::getAll());
-	}
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        $this->tpl->assign('partners', FrontendPartnerModuleModel::getAll());
+    }
 }

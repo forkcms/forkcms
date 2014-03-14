@@ -91,6 +91,6 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
      */
     public static function previewImage($img)
     {
-        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . '/' . FrontendPartnerModuleModel::IMAGE_PATH  . '/' . $img . '" />';
+        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/' . $img . '" />';
     }
 }

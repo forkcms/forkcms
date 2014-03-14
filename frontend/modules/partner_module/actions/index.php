@@ -14,38 +14,38 @@
  */
 class FrontendPartnerModuleIndex extends FrontendBaseBlock
 {
-	/**
-	 * The articles
-	 *
-	 * @var	array
-	 */
-	private $items;
+    /**
+     * The articles
+     *
+     * @var    array
+     */
+    private $items;
 
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->getData();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->getData();
+        $this->parse();
+    }
 
-	/**
-	 * Load the data, don't forget to validate the incoming data
-	 */
-	private function getData()
-	{
-		$this->items = FrontendPartnerModuleModel::getAll();
-	}
+    /**
+     * Load the data, don't forget to validate the incoming data
+     */
+    private function getData()
+    {
+        $this->items = FrontendPartnerModuleModel::getAll();
+    }
 
-	/**
-	 * Parse the data into the template
-	 */
-	protected function parse()
-	{
-		$this->tpl->assign('items', $this->items);
-		$this->parsePagination();
-	}
+    /**
+     * Parse the data into the template
+     */
+    protected function parse()
+    {
+        $this->tpl->assign('items', $this->items);
+        $this->parsePagination();
+    }
 }
