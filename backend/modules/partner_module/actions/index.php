@@ -57,7 +57,7 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 
         // set column functions
         $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
-        $dg->setColumnFunction(array('BackendPartnerModuleIndex', 'previewImage'), array('[img]'), 'img', true);
+        $dg->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array(FRONTEND_FILES_URL . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH, '[img]'), 'img', true);
 
         // add edit column
         $dg->addColumn(
@@ -83,14 +83,5 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
         if ($this->dgPartners->getNumResults() == 0) {
             $this->tpl->assign('noItems', 1);
         }
-    }
-
-    /**
-     * @param $img the url of the image
-     * @return the image wrapped in an image tag with limited height so we avoid stretch marks
-     */
-    public static function previewImage($img)
-    {
-        return '<img style="max-height:6em" src="' . FRONTEND_FILES_URL . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/' . $img . '" />';
     }
 }

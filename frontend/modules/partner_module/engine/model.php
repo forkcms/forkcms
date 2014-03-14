@@ -21,7 +21,7 @@ class FrontendPartnerModuleModel
     /**
      * The location where the thumbnails are stored within the files directory
      */
-    const THUMBNAIL_PATH = 'partner_module/180x180';
+    const THUMBNAIL_PATH = 'partner_module/48x48';
 
     /**
      * Get all items
