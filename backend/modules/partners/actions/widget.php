@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class BackendPartnersIndex extends BackendBaseActionIndex
+class BackendPartnersWidget extends BackendBaseActionIndex
 {
     /**
      * datagrid with partners
@@ -20,6 +20,13 @@ class BackendPartnersIndex extends BackendBaseActionIndex
      * @var    SpoonDataGrid
      */
     private $dgPartners;
+
+    /**
+     * current id
+     *
+     * @var    int
+     */
+    private $id;
 
     /**
      * Execute the action
@@ -40,8 +47,9 @@ class BackendPartnersIndex extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
+        $this->id = $this->getParameter('id', 'int');
         // create datagrid
-        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE);
+        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_PARTNERS, $this->id);
 
         // set headers
         $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
@@ -76,6 +84,7 @@ class BackendPartnersIndex extends BackendBaseActionIndex
      */
     protected function parse()
     {
+        $this->tpl->assign('widgetId', $this->id);
         // parse the datagrid for all blogposts
         if ($this->dgPartners->getNumResults() != 0) {
             $this->tpl->assign('dgPartners', $this->dgPartners->getContent());

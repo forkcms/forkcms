@@ -15,6 +15,13 @@
 class BackendPartnersEdit extends BackendBaseActionEdit
 {
     /**
+     * current id
+     *
+     * @var    int
+     */
+    private $id;
+
+    /**
      * Execute the action
      */
     public function execute()

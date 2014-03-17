@@ -15,6 +15,13 @@
 class BackendPartnersEditWidget extends BackendBaseActionEdit
 {
     /**
+     * current id
+     *
+     * @var    int
+     */
+    private $id;
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -92,7 +99,7 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
                         $item['title']
                     ) . '&highlight=row-' . $item['id']
                 );

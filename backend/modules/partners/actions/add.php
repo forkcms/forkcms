@@ -15,12 +15,19 @@
 class BackendPartnersAdd extends BackendBaseActionAdd
 {
     /**
+     * id of the widget
+     *
+     * @var    int
+     */
+    private $widgetId;
+
+    /**
      * Execute the action
      */
     public function execute()
     {
         parent::execute();
-
+        $this->widgetId = $this->getParameter('id', 'int');
         $this->loadForm();
         $this->validateForm();
 
@@ -58,14 +65,15 @@ class BackendPartnersAdd extends BackendBaseActionAdd
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
                 $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
+                $item['widget'] = $this->widgetId;
                 $this->frm->getField('img')->generateThumbnails(
                     FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
                     $item['img']
                 );
-                $item['id'] = BackendPartnersModel::insert($item);
+                $item['id'] = BackendPartnersModel::insertPartner($item);
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('widget') . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
                         $item['name']
                     ) . '&highlight=row-' . $item['id']
                 );
