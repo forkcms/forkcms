@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
     <backend>
-        <partner_module>
+        <partners>
             <item type="label" name="Partners">
                 <translation language="nl"><![CDATA[Partners]]></translation>
                 <translation language="en"><![CDATA[Partners]]></translation>
@@ -10,15 +10,15 @@
                 <translation language="nl"><![CDATA[Partner]]></translation>
                 <translation language="en"><![CDATA[Partner]]></translation>
             </item>
-        </partner_module>
+        </partners>
         <core>
             <item type="label" name="Slideshow">
                 <translation language="nl"><![CDATA[Slideshow]]></translation>
                 <translation language="en"><![CDATA[Slideshow]]></translation>
             </item>
-            <item type="label" name="PartnerModule">
-                <translation language="nl"><![CDATA[Partner Module]]></translation>
-                <translation language="en"><![CDATA[Partner Module]]></translation>
+            <item type="label" name="Partners">
+                <translation language="nl"><![CDATA[Partners]]></translation>
+                <translation language="en"><![CDATA[Partners]]></translation>
             </item>
         </core>
     </backend>
