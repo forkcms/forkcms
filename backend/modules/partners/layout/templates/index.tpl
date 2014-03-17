@@ -2,23 +2,23 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblPartners|ucfirst}</h2>
+	<h2>{$lblPartnerWidgets|ucfirst}</h2>
 
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+		<a href="{$var|geturl:'add_widget'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
 </div>
 
-{option:dgPartners}
+{option:dgWidgets}
 	<div class="dataGridHolder">
 		<div class="tableHeading">
-			<h3>Partners</h3>
+			<h3>{$lblPartnerWidgets|ucfirst}</h3>
 		</div>
-		{$dgPartners}
+		{$dgWidgets}
 	</div>
-{/option:dgPartners}
+{/option:dgWidgets}
 
 {option:noItems}<p>{$msgNoItems}</p>{/option:noItems}
 
