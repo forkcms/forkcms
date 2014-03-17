@@ -73,7 +73,9 @@ class BackendPartnersAdd extends BackendBaseActionAdd
                 $item['id'] = BackendPartnersModel::insertPartner($item);
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('widget') . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction(
+                        'widget'
+                    ) . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
                         $item['name']
                     ) . '&highlight=row-' . $item['id']
                 );

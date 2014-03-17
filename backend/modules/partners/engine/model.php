@@ -59,7 +59,11 @@ class BackendPartnersModel
 
         // delete records
         $db->delete('partners_widgets', 'id = ?', $id);
-        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($widgetId, 'partners', 'widget', 'Slideshow'));
+        $db->delete(
+            'modules_extras',
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            array($widgetId, 'partners', 'widget', 'Slideshow')
+        );
 
         // invalidate the cache for partners module
         BackendModel::invalidateFrontendCache('partners');
@@ -206,10 +210,17 @@ class BackendPartnersModel
         //add widget to widget list
 
         // set next sequence number for this module
-        $sequence = $db->getVar('SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?', array((string) 'partners'));
+        $sequence = $db->getVar(
+            'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
+            array((string) 'partners')
+        );
 
         // this is the first extra for this module: generate new 1000-series
-        if(is_null($sequence)) $sequence = $sequence = $db->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
+        if (is_null($sequence)) {
+            $sequence = $sequence = $db->getVar(
+                'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
+            );
+        }
 
         $data = array();
         $data['partners_widget_id'] = $item['id'];
@@ -234,12 +245,11 @@ class BackendPartnersModel
         $widgetId = (int) $db->getVar($query, $parameters);
 
         // doesn't already exist
-        if($widgetId === 0)
-        {
+        if ($widgetId === 0) {
             $widgetId = $db->insert('modules_extras', $widget);
         }
         // add widget id to widget so we can update the widget
-        $db->update('partners_widgets', array('widget_id' => $widgetId), 'id = ?', $item['id'] );
+        $db->update('partners_widgets', array('widget_id' => $widgetId), 'id = ?', $item['id']);
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('partners');
@@ -307,7 +317,12 @@ class BackendPartnersModel
         );
 
         // update extra
-        $db->update('modules_extras', $widget, 'id = ? AND module = ? AND type = ? AND action = ?', array($item['widget_id'], $widget['module'], $widget['type'], $widget['action']));
+        $db->update(
+            'modules_extras',
+            $widget,
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            array($item['widget_id'], $widget['module'], $widget['type'], $widget['action'])
+        );
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('partners');

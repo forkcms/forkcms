@@ -12,7 +12,6 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-
 class BackendPartnersAjaxSequence extends BackendBaseAJAXAction
 {
     /**
@@ -28,8 +27,7 @@ class BackendPartnersAjaxSequence extends BackendBaseAJAXAction
         $count = 0;
 
         // loop id's and set new sequence
-        foreach($ids as $i => $id)
-        {
+        foreach ($ids as $i => $id) {
             // build item
             $item['id'] = (int) $id;
 
@@ -37,7 +35,9 @@ class BackendPartnersAjaxSequence extends BackendBaseAJAXAction
             $item['sequence'] = ++$count;
 
             // update sequence
-            if(BackendPartnersModel::partnerExists($item['id'])) BackendPartnersModel::updatePartner($item);
+            if (BackendPartnersModel::partnerExists($item['id'])) {
+                BackendPartnersModel::updatePartner($item);
+            }
         }
 
         // success output

@@ -65,7 +65,12 @@ class BackendPartnersWidget extends BackendBaseActionIndex
 
         // set column functions
         $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
-        $dg->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::THUMBNAIL_PATH, '[img]'), 'img', true);
+        $dg->setColumnFunction(
+            array('BackendDataGridFunctions', 'showImage'),
+            array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::THUMBNAIL_PATH, '[img]'),
+            'img',
+            true
+        );
 
         // add edit column
         $dg->addColumn(
