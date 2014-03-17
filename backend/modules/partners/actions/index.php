@@ -51,7 +51,7 @@ class BackendPartnersIndex extends BackendBaseActionIndex
         $dg->setSortParameter('asc');
 
         // set colum URLs
-        $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+        $dg->setColumnURL('name', BackendModel::createURLForAction('widget') . '&amp;id=[id]');
 
         // set column functions
         $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
