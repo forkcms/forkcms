@@ -25,7 +25,7 @@ class BackendPartnersDelete extends BackendBaseActionDelete
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
         // get data
-        $this->record = (array) BackendPartnersModel::get($this->id);
+        $this->record = (array) BackendPartnersModel::getPartner($this->id);
 
         // delete item
         BackendPartnersModel::deletePartner($this->id);
