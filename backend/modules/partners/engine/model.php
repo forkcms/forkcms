@@ -27,7 +27,7 @@ class BackendPartnersModel
     const QRY_DATAGRID_BROWSE_PARTNERS =
         'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
          FROM partners AS i
-         WHERE slider = ?';
+         WHERE widget = ?';
 
     /**
      * Deletes one or more partners
@@ -51,13 +51,14 @@ class BackendPartnersModel
      *
      * @param int $id
      */
-    public static function deleteWidget($id)
+    public static function deleteWidget($id, $widgetId)
     {
         $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
 
         // delete records
-        $db->delete('partner_widgets', 'id = ?', $id);
+        $db->delete('partners_widgets', 'id = ?', $id);
+        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($widgetId, 'partners', 'widget', 'Slideshow'));
 
         // invalidate the cache for partners module
         BackendModel::invalidateFrontendCache('partners');
