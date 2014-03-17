@@ -12,7 +12,7 @@
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
-class BackendPartnerModuleEdit extends BackendBaseActionEdit
+class BackendPartnersEdit extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -22,7 +22,7 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if ($this->id !== null && BackendPartnerModuleModel::exists($this->id)) {
+        if ($this->id !== null && BackendPartnersModel::exists($this->id)) {
             parent::execute();
             $this->getData();
 
@@ -41,7 +41,7 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnerModuleModel::get($this->id);
+        $this->record = (array) BackendPartnersModel::get($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -101,15 +101,15 @@ class BackendPartnerModuleEdit extends BackendBaseActionEdit
                 $item['url'] = $this->frm->getField('url')->getValue();
                 if ($this->frm->getField('img')->isFilled()) {
                     SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/source/' . $this->record['img']
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
                     );
                     $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                     $this->frm->getField('img')->generateThumbnails(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH,
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
                         $item['img']
                     );
                 }
-                BackendPartnerModuleModel::update($item);
+                BackendPartnersModel::update($item);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

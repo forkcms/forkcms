@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-final class FrontendPartnerModuleConfig extends FrontendBaseConfig
+final class FrontendPartnersConfig extends FrontendBaseConfig
 {
     /**
      * The default action

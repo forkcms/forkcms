@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class FrontendPartnerModuleWidgetSlideshow extends FrontendBaseWidget
+class FrontendPartnersWidgetSlideshow extends FrontendBaseWidget
 {
     /**
      * Execute the extra
@@ -29,6 +29,6 @@ class FrontendPartnerModuleWidgetSlideshow extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->tpl->assign('partners', FrontendPartnerModuleModel::getAll());
+        $this->tpl->assign('partners', FrontendPartnersModel::getAll());
     }
 }

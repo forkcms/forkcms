@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@ubuntu.com>
  */
-class BackendPartnerModuleDelete extends BackendBaseActionDelete
+class BackendPartnersDelete extends BackendBaseActionDelete
 {
     /**
      * Execute the action
@@ -21,17 +21,17 @@ class BackendPartnerModuleDelete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
         // does the item exist
-        if ($this->id == null || !BackendPartnerModuleModel::exists($this->id)) {
+        if ($this->id == null || !BackendPartnersModel::exists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
         // get data
-        $this->record = (array) BackendPartnerModuleModel::get($this->id);
+        $this->record = (array) BackendPartnersModel::get($this->id);
 
         // delete item
-        BackendPartnerModuleModel::delete($this->id);
+        BackendPartnersModel::delete($this->id);
         //delete the image
         SpoonFile::delete(
-            FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH . '/source/' . $this->record['img']
+            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
         );
         // item was deleted, so redirect
         $this->redirect(

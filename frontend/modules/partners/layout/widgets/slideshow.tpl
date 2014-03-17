@@ -5,15 +5,12 @@
 <section id="blogRecentCommentsWidget" class="mod">
 	<div class="inner">
 		{option:partners}
-			<ul>
+			<ul class="bxslider">
 				{iteration:partners}
 					<li>
-						<ul>
-							<li>ID: {$partners.id}</li>
-							<li>Name: {$partners.name}</li>
-							<li>Img: {$partners.img}</li>
-							<li>Link: {$partners.url}</li>
-						</ul>
+						<a href="{$partners.url}">
+							<img src="{$FRONTEND_FILES_URL}/partners/source{$partners.img}" alt="{$partners.name}" />
+						</a>
 					</li>
 				{/iteration:partners}
 			</ul>

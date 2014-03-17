@@ -8,11 +8,11 @@
  */
 
 /**
- * This action will add a post to the blog module.
+ * Config for the Partners module
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-final class BackendPartnerModuleConfig extends BackendBaseConfig
+final class BackendPartnersConfig extends BackendBaseConfig
 {
     /**
      * The default action

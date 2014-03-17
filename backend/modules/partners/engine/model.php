@@ -8,11 +8,11 @@
  */
 
 /**
- * This is the model voor the partner module.
+ * This is the model voor the partners module.
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class BackendPartnerModuleModel
+class BackendPartnersModel
 {
     /**
      * The browse query for the datagrid

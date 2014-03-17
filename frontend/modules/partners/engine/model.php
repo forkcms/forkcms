@@ -11,7 +11,7 @@
  * This is the frontend model for the partner module.
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class FrontendPartnerModuleModel
+class FrontendPartnersModel
 {
     /**
      * The location where the images are stored within the files directory

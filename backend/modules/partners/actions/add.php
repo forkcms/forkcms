@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class BackendPartnerModuleAdd extends BackendBaseActionAdd
+class BackendPartnersAdd extends BackendBaseActionAdd
 {
     /**
      * Execute the action
@@ -59,10 +59,10 @@ class BackendPartnerModuleAdd extends BackendBaseActionAdd
                 $item['url'] = $this->frm->getField('url')->getValue();
                 $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                 $this->frm->getField('img')->generateThumbnails(
-                    FRONTEND_FILES_PATH . '/' . FrontendPartnerModuleModel::IMAGE_PATH,
+                    FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
                     $item['img']
                 );
-                $item['id'] = BackendPartnerModuleModel::insert($item);
+                $item['id'] = BackendPartnersModel::insert($item);
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(

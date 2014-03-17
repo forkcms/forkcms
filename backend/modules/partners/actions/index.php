@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class BackendPartnerModuleIndex extends BackendBaseActionIndex
+class BackendPartnersIndex extends BackendBaseActionIndex
 {
     /**
      * datagrid with partners
@@ -41,7 +41,7 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $dg = new BackendDataGridDB(BackendPartnerModuleModel::QRY_DATAGRID_BROWSE);
+        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE);
 
         // set headers
         $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
@@ -57,7 +57,7 @@ class BackendPartnerModuleIndex extends BackendBaseActionIndex
 
         // set column functions
         $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
-        $dg->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array(FRONTEND_FILES_URL . '/' . FrontendPartnerModuleModel::THUMBNAIL_PATH, '[img]'), 'img', true);
+        $dg->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::THUMBNAIL_PATH, '[img]'), 'img', true);
 
         // add edit column
         $dg->addColumn(

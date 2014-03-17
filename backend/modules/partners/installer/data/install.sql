@@ -1,4 +1,4 @@
-CREATE TABLE `partner_module` (
+CREATE TABLE `partners` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `img` varchar(255) NOT NULL DEFAULT '',
