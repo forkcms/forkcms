@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the frontend model for the partner module.
+ * This is the frontend model for the partners module.
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class FrontendPartnersModel
@@ -16,12 +16,12 @@ class FrontendPartnersModel
     /**
      * The location where the images are stored within the files directory
      */
-    const IMAGE_PATH = 'partner_module';
+    const IMAGE_PATH = 'partners';
 
     /**
      * The location where the thumbnails are stored within the files directory
      */
-    const THUMBNAIL_PATH = 'partner_module/48x48';
+    const THUMBNAIL_PATH = 'partners/48x48';
 
     /**
      * Get all items
@@ -32,7 +32,7 @@ class FrontendPartnersModel
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name, i.img, i.url
-             FROM partner_module AS i'
+             FROM partners AS i'
         );
 
         return $items;

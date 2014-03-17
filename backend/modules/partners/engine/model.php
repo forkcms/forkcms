@@ -19,7 +19,7 @@ class BackendPartnersModel
      */
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
-         FROM partner_module AS i';
+         FROM partners AS i';
 
     /**
      * Deletes one or more items
@@ -48,7 +48,7 @@ class BackendPartnersModel
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
-             FROM partner_module AS i
+             FROM partners AS i
              WHERE i.id = ?
              LIMIT 1',
             array((int) $id)
@@ -63,7 +63,7 @@ class BackendPartnersModel
     public static function getMaximumId()
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(id) FROM partner_module LIMIT 1'
+            'SELECT MAX(id) FROM partners LIMIT 1'
         );
     }
 
@@ -77,7 +77,7 @@ class BackendPartnersModel
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
-             FROM partner_module
+             FROM partners
              WHERE i.id = ?
              LIMIT 1',
             array((int) $id)
@@ -99,7 +99,7 @@ class BackendPartnersModel
 
         // insert and return the new partner id
         $item['id'] = BackendModel::getContainer()->get('database')->insert(
-            'partner_module',
+            'partners',
             $item
         );
 
@@ -122,7 +122,7 @@ class BackendPartnersModel
 
         // update
         BackendModel::getContainer()->get('database')->update(
-            'partner_module',
+            'partners',
             $item,
             'id = ?',
             array($item['id'])
