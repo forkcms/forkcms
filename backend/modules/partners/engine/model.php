@@ -199,12 +199,56 @@ class BackendPartnersModel
             $item
         );
 
+        //add widget to widget list
+        self::addWidget($item['name'], $item['id']);
+
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('partners');
 
         return $item['id'];
     }
 
+    public static function addWidget($name, $id)
+    {
+        $DB = BackendModel::getContainer()->get('database');
+        // set next sequence number for this module
+        $sequence = $DB->getVar('SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?', array((string) 'partners'));
+
+        // this is the first extra for this module: generate new 1000-series
+        if(is_null($sequence)) $sequence = $sequence = $DB->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
+
+        $data = array();
+        $data['partners_widget_id'] = $id;
+        $data['extra_label'] = $name;
+        $sequence = (int) $sequence;
+
+        // build item
+        $item = array(
+            'module' => 'partners',
+            'type' => 'widget',
+            'label' => 'slideshow',
+            'action' => 'Slideshow',
+            'data' => serialize($data),
+            'sequence' => $sequence
+        );
+
+        // build query
+        $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?  AND data = ?';
+        $parameters = array($item['module'], $item['type'], $item['label'], $data);
+
+        // get id (if its already exists)
+        $extraId = (int) $DB->getVar($query, $parameters);
+
+        // doesn't already exist
+        if($extraId === 0)
+        {
+            // insert extra and return id
+            return (int) $DB->insert('modules_extras', $item);
+        }
+
+        // exists so return id
+        return $extraId;
+    }
     /**
      * Update a partner
      *
