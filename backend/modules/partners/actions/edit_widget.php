@@ -12,7 +12,7 @@
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
-class BackendPartnersEdit extends BackendBaseActionEdit
+class BackendPartnersEditWidget extends BackendBaseActionEdit
 {
     /**
      * Execute the action
@@ -22,7 +22,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if ($this->id !== null && BackendPartnersModel::exists($this->id)) {
+        if ($this->id !== null && BackendPartnersModel::widgetExists($this->id)) {
             parent::execute();
             $this->getData();
 
@@ -41,7 +41,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnersModel::get($this->id);
+        $this->record = (array) BackendPartnersModel::getWidget($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -57,10 +57,6 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
         $this->frm->addText('name', $this->record['name'], 255, 'inputText name', 'inputTextError name')->setAttribute(
             'required'
-        );
-        $this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
-        $this->frm->addText('url', $this->record['url'], 255, 'inputText url', 'inputTextError url')->setAttributes(
-            array('type' => 'url', 'required')
         );
     }
 
@@ -85,31 +81,14 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
             // validation
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-            if ($this->frm->getField('img')->isFilled()) {
-                // image has the jpg/png extension
-                $this->frm->getField('img')->isAllowedExtension(
-                    array('jpg', 'png', 'gif'),
-                    BL::err('JPGGIFAndPNGOnly')
-                );
-            }
 
-            $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
             // no errors?
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->record['id'];
+                $item['widget_id'] = $this->record['widget_id'];
                 $item['name'] = $this->frm->getField('name')->getValue();
-                $item['url'] = $this->frm->getField('url')->getValue();
-                if ($this->frm->getField('img')->isFilled()) {
-                    SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
-                    );
-                    $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
-                    $this->frm->getField('img')->generateThumbnails(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
-                        $item['img']
-                    );
-                }
-                BackendPartnersModel::update($item);
+
+                BackendPartnersModel::updateWidget($item);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(

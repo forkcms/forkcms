@@ -89,7 +89,7 @@ class BackendPartnersModel
     public static function getWidget($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
+            'SELECT i.id, i.name, i.widget_id, i.created_by, i.created_on, i.edited_on
              FROM partners_widgets AS i
              WHERE i.id = ?
              LIMIT 1',
@@ -132,7 +132,7 @@ class BackendPartnersModel
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM partners
-             WHERE i.id = ?
+             WHERE id = ?
              LIMIT 1',
             array((int) $id)
         );
@@ -149,7 +149,7 @@ class BackendPartnersModel
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM partners_widgets
-             WHERE i.id = ?
+             WHERE id = ?
              LIMIT 1',
             array((int) $id)
         );
@@ -196,7 +196,7 @@ class BackendPartnersModel
         $item['edited_on'] = date('Y-m-d H:i:s');
 
         // insert and return the new partner id
-        $item['id'] = $db->get('database')->insert(
+        $item['id'] = $db->insert(
             'partners_widgets',
             $item
         );
@@ -210,12 +210,12 @@ class BackendPartnersModel
         if(is_null($sequence)) $sequence = $sequence = $db->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
 
         $data = array();
-        $data['partners_widget_id'] = $item['id';
-        $data['extra_label'] = $item['name';
+        $data['partners_widget_id'] = $item['id'];
+        $data['extra_label'] = $item['name'];
         $sequence = (int) $sequence;
 
-        // build item
-        $item = array(
+        // build widget
+        $widget = array(
             'module' => 'partners',
             'type' => 'widget',
             'label' => 'slideshow',
@@ -226,7 +226,7 @@ class BackendPartnersModel
 
         // build query
         $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?  AND data = ?';
-        $parameters = array($item['module'], $item['type'], $item['label'], $data);
+        $parameters = array($widget['module'], $widget['type'], $widget['label'], $data);
 
         // get id (if its already exists)
         $widgetId = (int) $db->getVar($query, $parameters);
@@ -234,8 +234,10 @@ class BackendPartnersModel
         // doesn't already exist
         if($widgetId === 0)
         {
-            $db->insert('modules_extras', $item);
+            $widgetId = $db->insert('modules_extras', $widget);
         }
+        // add widget id to widget so we can update the widget
+        $db->update('partners_widgets', array('widget_id' => $widgetId), 'id = ?', $item['id'] );
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('partners');
@@ -267,27 +269,46 @@ class BackendPartnersModel
 
         return $item['id'];
     }
+
     /**
-     * Update a slider
+     * Update a widget
      *
      * @param array $item
      * @return int
      */
     public static function updateWidget(array $item)
     {
+        $db = BackendModel::getContainer()->get('database');
+
         //set update time
         $item['edited_on'] = date('Y-m-d H:i:s');
 
         // update
-        BackendModel::getContainer()->get('database')->update(
+        $db->update(
             'partners_widgets',
             $item,
             'id = ?',
             array($item['id'])
         );
 
+        $data = array();
+        $data['partners_widget_id'] = $item['id'];
+        $data['extra_label'] = $item['name'];
+
+        // build widget
+        $widget = array(
+            'module' => 'partners',
+            'type' => 'widget',
+            'label' => 'slideshow',
+            'action' => 'Slideshow',
+            'data' => serialize($data)
+        );
+
+        // update extra
+        $db->update('modules_extras', $widget, 'id = ? AND module = ? AND type = ? AND action = ?', array($item['widget_id'], $widget['module'], $widget['type'], $widget['action']));
+
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partner_module');
+        BackendModel::invalidateFrontendCache('partners');
 
         return $item['id'];
     }

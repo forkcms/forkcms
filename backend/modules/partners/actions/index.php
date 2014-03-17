@@ -61,7 +61,7 @@ class BackendPartnersIndex extends BackendBaseActionIndex
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('editWidget') . '&amp;id=[id]',
+            BackendModel::createURLForAction('edit_widget') . '&amp;id=[id]',
             BL::lbl('Edit')
         );
 
