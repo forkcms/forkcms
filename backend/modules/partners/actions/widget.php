@@ -57,7 +57,7 @@ class BackendPartnersWidget extends BackendBaseActionIndex
         $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
         // sorting columns
-        $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
+        $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'sequence');
         $dg->setSortParameter('asc');
 
         // set colum URLs
@@ -75,6 +75,7 @@ class BackendPartnersWidget extends BackendBaseActionIndex
             BackendModel::createURLForAction('edit') . '&amp;id=[id]',
             BL::lbl('Edit')
         );
+        $dg->enableSequenceByDragAndDrop();
 
         return $dg;
     }
