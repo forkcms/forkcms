@@ -19,7 +19,7 @@ class BackendPartnersIndex extends BackendBaseActionIndex
      *
      * @var    SpoonDataGrid
      */
-    private $dgPartners;
+    private $dgWidgets;
 
     /**
      * Execute the action
@@ -28,7 +28,7 @@ class BackendPartnersIndex extends BackendBaseActionIndex
     {
         parent::execute();
 
-        $this->dgPartners = $this->loadDataGrid();
+        $this->dgWidgets = $this->loadDataGrid();
 
         $this->parse();
         $this->display();
@@ -41,12 +41,10 @@ class BackendPartnersIndex extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE);
+        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_SLIDERS);
 
         // set headers
         $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
-        $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('website'))));
-        $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
         // sorting columns
         $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
@@ -57,14 +55,13 @@ class BackendPartnersIndex extends BackendBaseActionIndex
 
         // set column functions
         $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
-        $dg->setColumnFunction(array('BackendDataGridFunctions', 'showImage'), array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::THUMBNAIL_PATH, '[img]'), 'img', true);
 
         // add edit column
         $dg->addColumn(
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+            BackendModel::createURLForAction('editWidget') . '&amp;id=[id]',
             BL::lbl('Edit')
         );
 
@@ -76,11 +73,11 @@ class BackendPartnersIndex extends BackendBaseActionIndex
      */
     protected function parse()
     {
-        // parse the datagrid for all blogposts
-        if ($this->dgPartners->getNumResults() != 0) {
-            $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
+        // parse the datagrid for all sliders
+        if ($this->dgWidgets->getNumResults() != 0) {
+            $this->tpl->assign('dgWidgets', $this->dgWidgets->getContent());
         }
-        if ($this->dgPartners->getNumResults() == 0) {
+        if ($this->dgWidgets->getNumResults() == 0) {
             $this->tpl->assign('noItems', true);
         }
     }
