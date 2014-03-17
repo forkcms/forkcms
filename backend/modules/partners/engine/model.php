@@ -8,7 +8,7 @@
  */
 
 /**
- * This is the model voor the partners module.
+ * This is the model for the partners module.
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
