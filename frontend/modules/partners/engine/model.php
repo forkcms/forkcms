@@ -24,15 +24,18 @@ class FrontendPartnersModel
     const THUMBNAIL_PATH = 'partners/48x48';
 
     /**
-     * Get all items
+     * Get all items of a specific slider
      *
-     * @return array
+     * @param   int       $id       slider id
+     * @return  array
      */
-    public static function getAll()
+    public static function getSlidersPartners($id)
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name, i.img, i.url
-             FROM partners AS i'
+             FROM partners AS i
+             WHERE widget = ?',
+            $id
         );
 
         return $items;
