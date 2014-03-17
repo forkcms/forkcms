@@ -28,6 +28,9 @@ class BackendPartnersAdd extends BackendBaseActionAdd
     {
         parent::execute();
         $this->widgetId = $this->getParameter('id', 'int');
+        if (!BackendPartnersModel::widgetExists($this->id)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
         $this->loadForm();
         $this->validateForm();
 

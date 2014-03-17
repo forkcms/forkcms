@@ -34,7 +34,10 @@ class BackendPartnersWidget extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-
+        $this->id = $this->getParameter('id', 'int');
+        if (!BackendPartnersModel::widgetExists($this->id)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
         $this->dgPartners = $this->loadDataGrid();
 
         $this->parse();
@@ -47,7 +50,6 @@ class BackendPartnersWidget extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->id = $this->getParameter('id', 'int');
         // create datagrid
         $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_PARTNERS, $this->id);
 
@@ -77,7 +79,7 @@ class BackendPartnersWidget extends BackendBaseActionIndex
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit') . '&amp;id=[id]',
+            BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;widget_id=' . $this->id,
             BL::lbl('Edit')
         );
         $dg->enableSequenceByDragAndDrop();

@@ -29,7 +29,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if ($this->id !== null && BackendPartnersModel::exists($this->id)) {
+        if ($this->id !== null && BackendPartnersModel::partnerExists($this->id)) {
             parent::execute();
             $this->getData();
 
@@ -48,7 +48,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnersModel::get($this->id);
+        $this->record = (array) BackendPartnersModel::getPartner($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -80,6 +80,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
         // assign this variable so it can be used in the template
         $this->tpl->assign('item', $this->record);
+        $this->tpl->assign('widgetId', $this->getParameter('widget_id', 'int') );
     }
 
     /**
@@ -116,11 +117,11 @@ class BackendPartnersEdit extends BackendBaseActionEdit
                         $item['img']
                     );
                 }
-                BackendPartnersModel::update($item);
+                BackendPartnersModel::updatePartner($item);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('widget') . '&id=' . $this->getParameter('widget_id', 'int') . '&report=added&var=' . urlencode(
                         $item['title']
                     ) . '&highlight=row-' . $item['id']
                 );
