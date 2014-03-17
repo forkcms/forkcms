@@ -32,7 +32,6 @@ class PartnersInstaller extends ModuleInstaller
         $this->setActionRights(1, 'partners', 'add');
         $this->setActionRights(1, 'partners', 'edit');
         $this->setActionRights(1, 'partners', 'delete');
-        $this->insertExtra('partners', 'widget', 'Slideshow', 'slideshow');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');

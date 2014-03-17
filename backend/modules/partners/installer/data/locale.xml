@@ -12,6 +12,10 @@
             </item>
         </partners>
         <core>
+            <item type="label" name="PartnerWidgets">
+                <translation language="nl"><![CDATA[Partner widgets]]></translation>
+                <translation language="en"><![CDATA[Partner widgets]]></translation>
+            </item>
             <item type="label" name="Slideshow">
                 <translation language="nl"><![CDATA[Slideshow]]></translation>
                 <translation language="en"><![CDATA[Slideshow]]></translation>
