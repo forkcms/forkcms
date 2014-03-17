@@ -15,27 +15,52 @@
 class BackendPartnersModel
 {
     /**
-     * The browse query for the datagrid
+     * The browse widgets query for the datagrid
      */
-    const QRY_DATAGRID_BROWSE =
-        'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
-         FROM partners AS i';
+    const QRY_DATAGRID_BROWSE_SLIDERS =
+        'SELECT i.id, i.name, i.created_by, i.created_on, i.edited_on
+         FROM partners_widgets AS i';
 
     /**
-     * Deletes one or more items
+     * The browse partners of a slider query for the datagrid
+     */
+    const QRY_DATAGRID_BROWSE_PARTNERS =
+        'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
+         FROM partners AS i
+         WHERE slider = ?';
+
+    /**
+     * Deletes one or more partners
      *
      * @param int $id
      */
-    public static function delete($id)
+    public static function deletePartner($id)
     {
         $id = (int) $id;
         $db = BackendModel::getContainer()->get('database');
 
         // delete records
-        $db->delete('partner_module', 'id = ?', $id);
+        $db->delete('partners', 'id = ? && slider = ?', array($id));
 
         // invalidate the cache for partner_module
-        BackendModel::invalidateFrontendCache('partner_module');
+        BackendModel::invalidateFrontendCache('partners');
+    }
+
+    /**
+     * Deletes one or more widgets
+     *
+     * @param int $id
+     */
+    public static function deleteWidget($id)
+    {
+        $id = (int) $id;
+        $db = BackendModel::getContainer()->get('database');
+
+        // delete records
+        $db->delete('partner_widgets', 'id = ?', $id);
+
+        // invalidate the cache for partners module
+        BackendModel::invalidateFrontendCache('partners');
     }
 
     /**
@@ -44,7 +69,7 @@ class BackendPartnersModel
      * @param int $id
      * @return array
      */
-    public static function get($id)
+    public static function getPartner($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
@@ -56,11 +81,28 @@ class BackendPartnersModel
     }
 
     /**
-     * Get the maximum id
+     * Get all data for a given id
+     *
+     * @param int $id
+     * @return array
+     */
+    public static function getWidget($id)
+    {
+        return (array) BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT i.id, i.name, i.img, i.url, i.created_by, i.created_on, i.edited_on
+             FROM partners_widgets AS i
+             WHERE i.id = ?
+             LIMIT 1',
+            array((int) $id)
+        );
+    }
+
+    /**
+     * Get the maximum partner id
      *
      * @return int
      */
-    public static function getMaximumId()
+    public static function getMaximumPartnerId()
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(id) FROM partners LIMIT 1'
@@ -68,12 +110,24 @@ class BackendPartnersModel
     }
 
     /**
-     * Checks if an item exists
+     * Get the maximum slide id
+     *
+     * @return int
+     */
+    public static function getMaximumWidgetId()
+    {
+        return (int) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT MAX(id) FROM partners_widgets LIMIT 1'
+        );
+    }
+
+    /**
+     * Checks if a partner exists
      *
      * @param int $id
      * @return bool
      */
-    public static function exists($id)
+    public static function partnerExists($id)
     {
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -85,12 +139,29 @@ class BackendPartnersModel
     }
 
     /**
-     * Inserts an item into the database
+     * Checks if a slider exists
+     *
+     * @param int $id
+     * @return bool
+     */
+    public static function sliderExists($id)
+    {
+        return (bool) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT 1
+             FROM partners_widgets
+             WHERE i.id = ?
+             LIMIT 1',
+            array((int) $id)
+        );
+    }
+
+    /**
+     * Inserts a partner into the database
      *
      * @param array $item
      * @return int
      */
-    public static function insert(array $item)
+    public static function insertPartner(array $item)
     {
         //set extra details
         $item['created_by'] = BackendAuthentication::getUser()->getUserId();
@@ -104,18 +175,43 @@ class BackendPartnersModel
         );
 
         // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partner_module');
+        BackendModel::invalidateFrontendCache('partners');
 
         return $item['id'];
     }
 
     /**
-     * Update an existing item
+     * Inserts a slider into the database
      *
      * @param array $item
      * @return int
      */
-    public static function update(array $item)
+    public static function insertWidget(array $item)
+    {
+        //set extra details
+        $item['created_by'] = BackendAuthentication::getUser()->getUserId();
+        $item['created_on'] = date('Y-m-d H:i:s');
+        $item['edited_on'] = date('Y-m-d H:i:s');
+
+        // insert and return the new partner id
+        $item['id'] = BackendModel::getContainer()->get('database')->insert(
+            'partners_widgets',
+            $item
+        );
+
+        // invalidate the cache for blog
+        BackendModel::invalidateFrontendCache('partners');
+
+        return $item['id'];
+    }
+
+    /**
+     * Update a partner
+     *
+     * @param array $item
+     * @return int
+     */
+    public static function updatePartner(array $item)
     {
         //set update time
         $item['edited_on'] = date('Y-m-d H:i:s');
@@ -123,6 +219,30 @@ class BackendPartnersModel
         // update
         BackendModel::getContainer()->get('database')->update(
             'partners',
+            $item,
+            'id = ?',
+            array($item['id'])
+        );
+
+        // invalidate the cache for blog
+        BackendModel::invalidateFrontendCache('partner_module');
+
+        return $item['id'];
+    }
+    /**
+     * Update a slider
+     *
+     * @param array $item
+     * @return int
+     */
+    public static function updateWidget(array $item)
+    {
+        //set update time
+        $item['edited_on'] = date('Y-m-d H:i:s');
+
+        // update
+        BackendModel::getContainer()->get('database')->update(
+            'partners_widgets',
             $item,
             'id = ?',
             array($item['id'])
