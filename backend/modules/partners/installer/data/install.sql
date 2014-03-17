@@ -15,5 +15,6 @@ CREATE TABLE `partners_widgets` (
   `created_by` int(11) NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

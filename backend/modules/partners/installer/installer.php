@@ -19,27 +19,30 @@ class PartnersInstaller extends ModuleInstaller
      */
     public function install()
     {
-        $this->importSQL(dirname(__FILE__) . '/data/install.sql');
+        //$this->importSQL(dirname(__FILE__) . '/data/install.sql');@todo uncomment this when finished
 
         $this->addModule('partners');
 
         $this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
-        $this->makeSearchable('partner_module');
+        $this->makeSearchable('partners');
         $this->setModuleRights(1, 'partners');
 
         $this->setActionRights(1, 'partners', 'index');
+        $this->setActionRights(1, 'partners', 'addWidget');
+        $this->setActionRights(1, 'partners', 'editWidget');
+        $this->setActionRights(1, 'partners', 'deleteWidget');
+        $this->setActionRights(1, 'partners', 'widget');
         $this->setActionRights(1, 'partners', 'add');
         $this->setActionRights(1, 'partners', 'edit');
         $this->setActionRights(1, 'partners', 'delete');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigationBlogId = $this->setNavigation(
+        $this->setNavigation(
             $navigationModulesId,
             'Partners',
-            'partners/index',
-            array('partners/add', 'partners/edit')
+            'partners/index'
         );
 
         SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::THUMBNAIL_PATH);

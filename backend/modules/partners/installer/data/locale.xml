@@ -10,16 +10,16 @@
                 <translation language="nl"><![CDATA[Partner]]></translation>
                 <translation language="en"><![CDATA[Partner]]></translation>
             </item>
-        </partners>
-        <core>
             <item type="label" name="PartnerWidgets">
                 <translation language="nl"><![CDATA[Partner widgets]]></translation>
                 <translation language="en"><![CDATA[Partner widgets]]></translation>
             </item>
-            <item type="label" name="Slideshow">
-                <translation language="nl"><![CDATA[Slideshow]]></translation>
-                <translation language="en"><![CDATA[Slideshow]]></translation>
+            <item type="label" name="PartnerWidget">
+                <translation language="nl"><![CDATA[Partner widget]]></translation>
+                <translation language="en"><![CDATA[Partner widget]]></translation>
             </item>
+        </partners>
+        <core>
             <item type="label" name="Partners">
                 <translation language="nl"><![CDATA[Partners]]></translation>
                 <translation language="en"><![CDATA[Partners]]></translation>
