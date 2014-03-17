@@ -4,17 +4,19 @@ CREATE TABLE `partners` (
   `name` varchar(255) NOT NULL DEFAULT '',
   `img` varchar(255) NOT NULL DEFAULT '',
   `url` varchar(255) NOT NULL DEFAULT '',
+  `sequence` int(11) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 CREATE TABLE `partners_widgets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `widget_id` int(11) DEFAULT NULL,
   `name` varchar(255) NOT NULL DEFAULT '',
   `created_by` int(11) NOT NULL,
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
