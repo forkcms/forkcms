@@ -107,7 +107,7 @@ class Page extends FrontendBaseObject
             
             if (extension_loaded('newrelic')) {
                 newrelic_name_transaction('404');
-            } 
+            }
         }
 
         // create breadcrumb instance
