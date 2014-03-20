@@ -69,8 +69,9 @@ class BackendPartnersAdd extends BackendBaseActionAdd
                 $item['url'] = $this->frm->getField('url')->getValue();
                 $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                 $item['widget'] = $this->widgetId;
+
                 $this->frm->getField('img')->generateThumbnails(
-                    FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
+                    FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->widgetId,
                     $item['img']
                 );
                 $item['id'] = BackendPartnersModel::insertPartner($item);

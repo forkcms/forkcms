@@ -30,6 +30,9 @@ class BackendPartnersDeleteWidget extends BackendBaseActionDelete
         // delete item
         BackendPartnersModel::deleteWidget($this->record['id'], $this->record['widget_id']);
 
+        // delete files
+        SpoonDirectory::delete(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->id);
+
         // item was deleted, so redirect
         $this->redirect(
             BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])

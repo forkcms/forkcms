@@ -50,6 +50,10 @@ class BackendPartnersAddWidget extends BackendBaseActionAdd
             if ($this->frm->isCorrect()) {
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['id'] = BackendPartnersModel::insertWidget($item);
+
+                //create img dir
+                SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $item['id'] . '/48x48');
+
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(

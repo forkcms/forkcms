@@ -14,6 +14,10 @@
  */
 class BackendPartnersEdit extends BackendBaseActionEdit
 {
+    /**
+     * @var int widgetId the id of the widge
+     */
+    private $widgetId;
 
     /**
      * Execute the action
@@ -21,6 +25,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
     public function execute()
     {
         $this->id = $this->getParameter('id', 'int');
+        $this->widgetId = $this->getParameter('widget_id', 'int');
 
         // does the item exists
         if ($this->id !== null && BackendPartnersModel::partnerExists($this->id)) {
@@ -74,7 +79,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
         // assign this variable so it can be used in the template
         $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('widgetId', $this->getParameter('widget_id', 'int') );
+        $this->tpl->assign('widgetId', $this->widgetId );
     }
 
     /**
@@ -103,11 +108,14 @@ class BackendPartnersEdit extends BackendBaseActionEdit
                 $item['url'] = $this->frm->getField('url')->getValue();
                 if ($this->frm->getField('img')->isFilled()) {
                     SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->widgetId  . '/source/' . $this->record['img']
+                    );
+                    SpoonFile::delete(
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->widgetId  . '/48x48/' . $this->record['img']
                     );
                     $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                     $this->frm->getField('img')->generateThumbnails(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH,
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->widgetId,
                         $item['img']
                     );
                 }
@@ -115,7 +123,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('widget') . '&id=' . $this->getParameter('widget_id', 'int') . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('widget') . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
                         $item['title']
                     ) . '&highlight=row-' . $item['id']
                 );

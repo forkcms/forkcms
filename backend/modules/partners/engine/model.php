@@ -25,7 +25,7 @@ class BackendPartnersModel
      * The browse partners of a slider query for the datagrid
      */
     const QRY_DATAGRID_BROWSE_PARTNERS =
-        'SELECT i.id, i.name, i.img, i.url, i.sequence, i.created_by, i.created_on, i.edited_on
+        'SELECT i.id, i.name, i.img, i.url, i.sequence, i.widget, i.created_by, i.created_on, i.edited_on
          FROM partners AS i
          WHERE widget = ?';
 
