@@ -54,7 +54,7 @@ class BackendPartnersWidget extends BackendBaseActionIndex
         $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_PARTNERS, $this->id);
 
         // set headers
-        $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('website'))));
+        $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('URL'))));
         $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
         // hide columns
