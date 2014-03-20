@@ -43,18 +43,12 @@ class BackendPartnersIndex extends BackendBaseActionIndex
         // create datagrid
         $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_SLIDERS);
 
-        // set headers
-        $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
-
         // sorting columns
-        $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'name');
+        $dg->setSortingColumns(array('name'), 'name');
         $dg->setSortParameter('asc');
 
         // set colum URLs
         $dg->setColumnURL('name', BackendModel::createURLForAction('widget') . '&amp;id=[id]');
-
-        // set column functions
-        $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
 
         // add edit column
         $dg->addColumn(

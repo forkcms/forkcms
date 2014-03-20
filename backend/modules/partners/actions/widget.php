@@ -54,21 +54,16 @@ class BackendPartnersWidget extends BackendBaseActionIndex
         $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_PARTNERS, $this->id);
 
         // set headers
-        $dg->setHeaderLabels(array('created_by' => ucfirst(BL::lbl('Author'))));
         $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('website'))));
         $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
 
         // hide columns
         $dg->setColumnHidden('widget');
-        // sorting columns
-        $dg->setSortingColumns(array('name', 'created_by', 'created_on', 'edited_on'), 'sequence');
-        $dg->setSortParameter('asc');
 
         // set colum URLs
         $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
-        // set column functions
-        $dg->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[created_by]'), 'created_by', true);
+        // set column function
         $dg->setColumnFunction(
             array('BackendDataGridFunctions', 'showImage'),
             array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::IMAGE_PATH . '/[widget]/48x48', '[img]'),
