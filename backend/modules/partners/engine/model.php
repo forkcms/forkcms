@@ -30,7 +30,7 @@ class BackendPartnersModel
          WHERE widget = ?';
 
     /**
-     * Deletes one or more partners
+     * Deletes a partner
      *
      * @param int $id
      */
@@ -63,7 +63,7 @@ class BackendPartnersModel
     }
 
     /**
-     * Deletes one or more widgets
+     * Deletes a widgets
      *
      * @param int $id
      * @param int $widgetId
