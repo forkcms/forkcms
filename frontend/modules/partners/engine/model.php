@@ -32,7 +32,7 @@ class FrontendPartnersModel
     public static function getSlidersPartners($id)
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.name, i.img, i.url
+            'SELECT i.id, i.name, i.img, i.url, i.widget
              FROM partners AS i
              WHERE widget = ?',
             $id
