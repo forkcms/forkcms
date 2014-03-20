@@ -41,9 +41,6 @@ class BackendPartnersModel
 
         // delete records
         $db->delete('partners', 'id = ?', array($id));
-
-        // invalidate the cache for partner_module
-        BackendModel::invalidateFrontendCache('partners');
     }
 
     /**
@@ -57,9 +54,6 @@ class BackendPartnersModel
 
         // delete records
         BackendModel::getContainer()->get('database')->delete('partners', 'id = ?', array($id));
-
-        // invalidate the cache for partner_module
-        BackendModel::invalidateFrontendCache('partners');
     }
 
     /**
@@ -82,9 +76,6 @@ class BackendPartnersModel
         );
 
         self::deleteWidgetPartners($widgetId);
-
-        // invalidate the cache for partners module
-        BackendModel::invalidateFrontendCache('partners');
     }
 
     /**
@@ -202,9 +193,6 @@ class BackendPartnersModel
             $item
         );
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partners');
-
         return $item['id'];
     }
 
@@ -273,9 +261,6 @@ class BackendPartnersModel
         // add widget id to widget so we can update the widget
         $db->update('partners_widgets', array('widget_id' => $widgetId), 'id = ?', $item['id']);
 
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partners');
-
         return $item['id'];
     }
 
@@ -297,9 +282,6 @@ class BackendPartnersModel
             'id = ?',
             array($item['id'])
         );
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partner_module');
 
         return $item['id'];
     }
@@ -345,9 +327,6 @@ class BackendPartnersModel
             'id = ? AND module = ? AND type = ? AND action = ?',
             array($item['widget_id'], $widget['module'], $widget['type'], $widget['action'])
         );
-
-        // invalidate the cache for blog
-        BackendModel::invalidateFrontendCache('partners');
 
         return $item['id'];
     }
