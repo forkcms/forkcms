@@ -40,7 +40,23 @@ class BackendPartnersModel
         $db = BackendModel::getContainer()->get('database');
 
         // delete records
-        $db->delete('partners', 'id = ? && slider = ?', array($id));
+        $db->delete('partners', 'id = ?', array($id));
+
+        // invalidate the cache for partner_module
+        BackendModel::invalidateFrontendCache('partners');
+    }
+
+    /**
+     * Deletes the partners of a widget
+     *
+     * @param int $id
+     */
+    public static function deleteWidgetPartners($id)
+    {
+        $id = (int) $id;
+
+        // delete records
+        BackendModel::getContainer()->get('database')->delete('partners', 'id = ?', array($id));
 
         // invalidate the cache for partner_module
         BackendModel::invalidateFrontendCache('partners');
@@ -64,6 +80,8 @@ class BackendPartnersModel
             'id = ? AND module = ? AND type = ? AND action = ?',
             array($widgetId, 'partners', 'widget', 'Slideshow')
         );
+
+        self::deleteWidgetPartners($widgetId);
 
         // invalidate the cache for partners module
         BackendModel::invalidateFrontendCache('partners');
