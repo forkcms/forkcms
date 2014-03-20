@@ -22,7 +22,7 @@ class BackendPartnersModel
          FROM partners_widgets AS i';
 
     /**
-     * The browse partners of a slider query for the datagrid
+     * The browse partners of a widget query for the datagrid
      */
     const QRY_DATAGRID_BROWSE_PARTNERS =
         'SELECT i.id, i.name, i.img, i.url, i.sequence, i.widget
@@ -124,24 +124,28 @@ class BackendPartnersModel
     /**
      * Get the maximum partner id
      *
+     * @param $widgetId
      * @return int
      */
-    public static function getMaximumPartnerId()
+    public static function getMaximumPartnerId($widgetId)
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(id) FROM partners LIMIT 1'
+            'SELECT MAX(id) FROM partners WHERE widget = ?',
+            array(
+                $widgetId
+            )
         );
     }
 
     /**
-     * Get the maximum slide id
+     * Get the maximum widget id
      *
      * @return int
      */
     public static function getMaximumWidgetId()
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(id) FROM partners_widgets LIMIT 1'
+            'SELECT MAX(id) FROM partners_widgets'
         );
     }
 
@@ -163,7 +167,7 @@ class BackendPartnersModel
     }
 
     /**
-     * Checks if a slider exists
+     * Checks if a widget exists
      *
      * @param int $id
      * @return bool
@@ -205,7 +209,7 @@ class BackendPartnersModel
     }
 
     /**
-     * Inserts a slider into the database
+     * Inserts a widget into the database
      *
      * @param array $item
      * @return int
