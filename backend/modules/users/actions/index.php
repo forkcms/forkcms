@@ -41,7 +41,10 @@ class BackendUsersIndex extends BackendBaseActionIndex
 			$this->dataGrid->addColumn('nickname', SpoonFilter::ucfirst(BL::lbl('Nickname')), null, BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 			// add edit column
-			$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			if(BackendAuthentication::isAllowedAction('add') || BackendAuthentication::getUser()->isGod())
+			{
+				$this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+			}
 		}
 
 		// show the user's nickname
