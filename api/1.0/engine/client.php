@@ -67,7 +67,7 @@ class APIClient extends API
 			 * check if the api.php file exists for this module, and load it so our methods are
 			 * accessible by the Reflection API.
 			 */
-			$moduleAPIFile = BACKEND_MODULES_PATH . '/' . $module . '/engine/api.php';
+			$moduleAPIFile = BACKEND_MODULES_PATH . DIRECTORY_SEPARATOR . $module . '/engine/api.php';
 			if(!file_exists($moduleAPIFile)) continue;
 			require_once $moduleAPIFile;
 
