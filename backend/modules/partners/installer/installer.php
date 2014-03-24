@@ -29,13 +29,12 @@ class PartnersInstaller extends ModuleInstaller
         $this->setModuleRights(1, 'partners');
 
         $this->setActionRights(1, 'partners', 'index');
-        $this->setActionRights(1, 'partners', 'addWidget');
-        $this->setActionRights(1, 'partners', 'editWidget');
-        $this->setActionRights(1, 'partners', 'deleteWidget');
-        $this->setActionRights(1, 'partners', 'widget');
         $this->setActionRights(1, 'partners', 'add');
         $this->setActionRights(1, 'partners', 'edit');
         $this->setActionRights(1, 'partners', 'delete');
+        $this->setActionRights(1, 'partners', 'addPartner');
+        $this->setActionRights(1, 'partners', 'editPartner');
+        $this->setActionRights(1, 'partners', 'deletePartner');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
@@ -45,11 +44,10 @@ class PartnersInstaller extends ModuleInstaller
             'partners/index',
             array(
                 'partners/add',
-                'partners/add_widget',
+                'partners/add_partner',
                 'partners/edit',
-                'partners/edit_widget',
-                'partners/index',
-                'partners/widget',
+                'partners/edit_partner',
+                'partners/index'
             )
         );
 
