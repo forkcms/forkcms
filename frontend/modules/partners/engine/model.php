@@ -19,11 +19,6 @@ class FrontendPartnersModel
     const IMAGE_PATH = 'partners';
 
     /**
-     * The location where the thumbnails are stored within the files directory
-     */
-    const THUMBNAIL_PATH = 'partners/48x48';
-
-    /**
      * Get all items of a specific slider
      *
      * @param   int       $id       slider id

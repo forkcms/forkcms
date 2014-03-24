@@ -51,6 +51,6 @@ class PartnersInstaller extends ModuleInstaller
             )
         );
 
-        SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::THUMBNAIL_PATH);
+        SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH);
     }
 }
