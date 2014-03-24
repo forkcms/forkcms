@@ -13,6 +13,7 @@
 	<p>
 		<label for="img">{$lblImage|ucfirst}</label>
 		{$fileImg} {$fileImgError}
+		<img class="av128" src="{$FRONTEND_FILES_URL}/partners/{$item.widget}/source/{$item.img}" alt="{$item.name}" />
 	</p>
 	<p>
 		<label for="url">{$lblWebsite|ucfirst}<abbr>*</abbr></label>
