@@ -7,7 +7,7 @@
 
 {form:edit}
 	<p>
-		<label for="name">{$lblName|ucfirst}</label>
+		<label for="name">{$lblName|ucfirst}<abbr>*</abbr></label>
 		{$txtName} {$txtNameError}
 	</p>
 	<p>
@@ -15,8 +15,8 @@
 		{$fileImg} {$fileImgError}
 	</p>
 	<p>
-		<label for="url">{$lblWebsite|ucfirst}</label>
-		{$txtUrl} {$txturlError}
+		<label for="url">{$lblWebsite|ucfirst}<abbr>*</abbr></label>
+		{$txtUrl} {$txtUrlError}
 	</p>
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">

@@ -7,7 +7,7 @@
 
 {form:add}
 	<p>
-		<label for="name">{$lblName|ucfirst}</label>
+		<label for="name">{$lblName|ucfirst}<abbr>*</abbr></label>
 		{$txtName} {$txtNameError}
 	</p>
 	<div class="fullwidthOptions">
