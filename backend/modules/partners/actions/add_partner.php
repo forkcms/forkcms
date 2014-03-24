@@ -12,7 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-class BackendPartnersAdd extends BackendBaseActionAdd
+class BackendPartnersAddPartner extends BackendBaseActionAdd
 {
     /**
      * id of the widget
@@ -78,7 +78,7 @@ class BackendPartnersAdd extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'widget'
+                        'edit'
                     ) . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
                         $item['name']
                     ) . '&highlight=row-' . $item['id']

@@ -35,7 +35,7 @@ class BackendPartnersDeletePartner extends BackendBaseActionDelete
         );
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('widget') . '&id=' . $this->getParameter('widget_id', 'int') . '&report=deleted&var=' . urlencode($this->record['name'])
+            BackendModel::createURLForAction('edit') . '&id=' . $this->record['widget'] . '&report=deleted&var=' . urlencode($this->record['name'])
         );
     }
 }
