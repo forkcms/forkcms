@@ -61,7 +61,7 @@ class BackendPartnersWidget extends BackendBaseActionIndex
         $dg->setColumnHidden('widget');
 
         // set colum URLs
-        $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+        $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;widget_id=' . $this->id);
 
         // set column function
         $dg->setColumnFunction(
