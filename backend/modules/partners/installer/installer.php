@@ -42,7 +42,15 @@ class PartnersInstaller extends ModuleInstaller
         $this->setNavigation(
             $navigationModulesId,
             'Partners',
-            'partners/index'
+            'partners/index',
+            array(
+                'partners/add',
+                'partners/add_widget',
+                'partners/edit',
+                'partners/edit_widget',
+                'partners/index',
+                'partners/widget',
+            )
         );
 
         SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::THUMBNAIL_PATH);
