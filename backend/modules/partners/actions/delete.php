@@ -21,21 +21,21 @@ class BackendPartnersDelete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
         // does the item exist
-        if ($this->id == null || !BackendPartnersModel::partnerExists($this->id)) {
+        if ($this->id == null || !BackendPartnersModel::widgetExists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
         // get data
-        $this->record = (array) BackendPartnersModel::getPartner($this->id);
+        $this->record = (array) BackendPartnersModel::getWidget($this->id);
 
         // delete item
-        BackendPartnersModel::deletePartner($this->id);
-        //delete the image
-        SpoonFile::delete(
-            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
-        );
+        BackendPartnersModel::deleteWidget($this->record['id'], $this->record['widget_id']);
+
+        // delete files
+        SpoonDirectory::delete(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->id);
+
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('widget') . '&id=' . $this->getParameter('widget_id', 'int') . '&report=deleted&var=' . urlencode($this->record['name'])
+            BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])
         );
     }
 }

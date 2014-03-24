@@ -12,8 +12,12 @@
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
-class BackendPartnersEditWidget extends BackendBaseActionEdit
+class BackendPartnersEdit extends BackendBaseActionEdit
 {
+    /**
+     * @var int widgetId the id of the widge
+     */
+    private $widgetId;
 
     /**
      * Execute the action
@@ -21,9 +25,10 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
     public function execute()
     {
         $this->id = $this->getParameter('id', 'int');
+        $this->widgetId = $this->getParameter('widget_id', 'int');
 
         // does the item exists
-        if ($this->id !== null && BackendPartnersModel::widgetExists($this->id)) {
+        if ($this->id !== null && BackendPartnersModel::partnerExists($this->id)) {
             parent::execute();
             $this->getData();
 
@@ -42,7 +47,7 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnersModel::getWidget($this->id);
+        $this->record = (array) BackendPartnersModel::getPartner($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -59,6 +64,10 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
         $this->frm->addText('name', $this->record['name'], 255, 'inputText name', 'inputTextError name')->setAttribute(
             'required'
         );
+        $this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
+        $this->frm->addText('url', $this->record['url'], 255, 'inputText url', 'inputTextError url')->setAttributes(
+            array('type' => 'url', 'required')
+        );
     }
 
     /**
@@ -70,6 +79,7 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
 
         // assign this variable so it can be used in the template
         $this->tpl->assign('item', $this->record);
+        $this->tpl->assign('widgetId', $this->widgetId );
     }
 
     /**
@@ -82,18 +92,38 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
 
             // validation
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+            if ($this->frm->getField('img')->isFilled()) {
+                // image has the jpg/png extension
+                $this->frm->getField('img')->isAllowedExtension(
+                    array('jpg', 'png', 'gif'),
+                    BL::err('JPGGIFAndPNGOnly')
+                );
+            }
 
+            $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
             // no errors?
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->record['id'];
-                $item['widget_id'] = $this->record['widget_id'];
                 $item['name'] = $this->frm->getField('name')->getValue();
-
-                BackendPartnersModel::updateWidget($item);
+                $item['url'] = $this->frm->getField('url')->getValue();
+                if ($this->frm->getField('img')->isFilled()) {
+                    SpoonFile::delete(
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->widgetId  . '/source/' . $this->record['img']
+                    );
+                    SpoonFile::delete(
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->widgetId  . '/48x48/' . $this->record['img']
+                    );
+                    $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
+                    $this->frm->getField('img')->generateThumbnails(
+                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->widgetId,
+                        $item['img']
+                    );
+                }
+                BackendPartnersModel::updatePartner($item);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
+                    BackendModel::createURLForAction('widget') . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
                         $item['title']
                     ) . '&highlight=row-' . $item['id']
                 );
