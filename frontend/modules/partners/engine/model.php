@@ -34,7 +34,8 @@ class FrontendPartnersModel
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name, i.img, i.url, i.widget
              FROM partners AS i
-             WHERE widget = ?',
+             WHERE widget = ?
+             ORDER BY sequence',
             $id
         );
 

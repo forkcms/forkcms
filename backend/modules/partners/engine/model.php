@@ -27,7 +27,8 @@ class BackendPartnersModel
     const QRY_DATAGRID_BROWSE_PARTNERS =
         'SELECT i.id, i.name, i.img, i.url, i.sequence, i.widget
          FROM partners AS i
-         WHERE widget = ?';
+         WHERE widget = ?
+         ORDER BY sequence';
 
     /**
      * Deletes a partner
