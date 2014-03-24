@@ -8,29 +8,19 @@
  */
 
 /**
- * This action will add a post to the blog module.
+ * This action will add a widget to the partners module.
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
 class BackendPartnersAdd extends BackendBaseActionAdd
 {
     /**
-     * id of the widget
-     *
-     * @var    int
-     */
-    private $widgetId;
-
-    /**
      * Execute the action
      */
     public function execute()
     {
         parent::execute();
-        $this->widgetId = $this->getParameter('id', 'int');
-        if (!BackendPartnersModel::widgetExists($this->widgetId)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
-        }
+
         $this->loadForm();
         $this->validateForm();
 
@@ -45,10 +35,6 @@ class BackendPartnersAdd extends BackendBaseActionAdd
     {
         $this->frm = new BackendForm('add');
         $this->frm->addText('name', null, 255, 'inputText name', 'inputTextError name')->setAttribute('required');
-        $this->frm->addImage('img', 'inputImage img', 'inputImageError img')->setAttribute('required');
-        $this->frm->addText('url', null, 255, 'inputText url', 'inputTextError url')->setAttributes(
-            array('type' => 'url', 'required')
-        );
     }
 
     /**
@@ -60,26 +46,17 @@ class BackendPartnersAdd extends BackendBaseActionAdd
             $this->frm->cleanupFields();
             // validation
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
-            $this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
-            $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
             // no errors?
             if ($this->frm->isCorrect()) {
-
                 $item['name'] = $this->frm->getField('name')->getValue();
-                $item['url'] = $this->frm->getField('url')->getValue();
-                $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
-                $item['widget'] = $this->widgetId;
+                $item['id'] = BackendPartnersModel::insertWidget($item);
 
-                $this->frm->getField('img')->generateThumbnails(
-                    FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->widgetId,
-                    $item['img']
-                );
-                $item['id'] = BackendPartnersModel::insertPartner($item);
+                //create img dir
+                SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $item['id'] . '/48x48');
+
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction(
-                        'widget'
-                    ) . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
+                    BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
                         $item['name']
                     ) . '&highlight=row-' . $item['id']
                 );

@@ -5,7 +5,7 @@
 	<h2>{$lblPartnerWidgets|ucfirst}</h2>
 
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_widget'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
