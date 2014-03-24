@@ -19,7 +19,7 @@ class PartnersInstaller extends ModuleInstaller
      */
     public function install()
     {
-        //$this->importSQL(dirname(__FILE__) . '/data/install.sql');@todo uncomment this when finished
+        $this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
         $this->addModule('partners');
 
