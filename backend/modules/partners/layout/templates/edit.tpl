@@ -21,20 +21,20 @@
 
 	{option:!dgPartners}<p>{$msgNoPartners}</p>{/option:!dgPartners}
 	<div class="fullwidthOptions">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<span>{$lblDelete|ucfirst}</span>
+		</a>
+
+		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+			<p>
+				{$msgConfirmDelete|sprintf:{$item.name}}
+			</p>
+		</div>
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 			<a href="{$var|geturl:'add_partner'}&amp;id={$item.id}" class="button linkButton icon iconAdd">
 				<span>{$lblAddPartner|ucfirst}</span>
 			</a>
-			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-				<span>{$lblDelete|ucfirst}</span>
-			</a>
-
-			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-				<p>
-					{$msgConfirmDelete|sprintf:{$item.name}}
-				</p>
-			</div>
 		</div>
 	</div>
 {/form:edit}
