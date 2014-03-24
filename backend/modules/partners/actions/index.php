@@ -48,14 +48,14 @@ class BackendPartnersIndex extends BackendBaseActionIndex
         $dg->setSortParameter('asc');
 
         // set colum URLs
-        $dg->setColumnURL('name', BackendModel::createURLForAction('widget') . '&amp;id=[id]');
+        $dg->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
         // add edit column
         $dg->addColumn(
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit_widget') . '&amp;id=[id]',
+            BackendModel::createURLForAction('edit') . '&amp;id=[id]',
             BL::lbl('Edit')
         );
 

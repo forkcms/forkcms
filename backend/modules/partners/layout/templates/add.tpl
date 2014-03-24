@@ -12,7 +12,7 @@
 	</p>
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblNext|ucfirst}" />
 		</div>
 	</div>
 {/form:add}

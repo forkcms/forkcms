@@ -12,8 +12,14 @@
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
-class BackendPartnersEditWidget extends BackendBaseActionEdit
+class BackendPartnersEdit extends BackendBaseActionEdit
 {
+    /**
+     * datagrid with partners
+     *
+     * @var    SpoonDataGrid
+     */
+    private $dgPartners;
 
     /**
      * Execute the action
@@ -29,6 +35,8 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
 
             $this->loadForm();
             $this->validateForm();
+
+            $this->dgPartners = $this->loadDataGrid();
 
             $this->parse();
             $this->display();
@@ -62,6 +70,46 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
     }
 
     /**
+     * Loads the datagrid with the post
+     * @return BackendDataGridDB
+     */
+    private function loadDataGrid()
+    {
+        // create datagrid
+        $dg = new BackendDataGridDB(BackendPartnersModel::QRY_DATAGRID_BROWSE_PARTNERS, $this->id);
+
+        // set headers
+        $dg->setHeaderLabels(array('url' => ucfirst(BL::lbl('URL'))));
+        $dg->setHeaderLabels(array('img' => ucfirst(BL::lbl('image'))));
+
+        // hide columns
+        $dg->setColumnHidden('widget');
+
+        // set colum URLs
+        $dg->setColumnURL('name', BackendModel::createURLForAction('edit_partner') . '&amp;id=[id]');
+
+        // set column function
+        $dg->setColumnFunction(
+            array('BackendDataGridFunctions', 'showImage'),
+            array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::IMAGE_PATH . '/[widget]/48x48', '[img]'),
+            'img',
+            true
+        );
+
+        // add edit column
+        $dg->addColumn(
+            'edit',
+            null,
+            BL::lbl('Edit'),
+            BackendModel::createURLForAction('edit_partner') . '&amp;id=[id]',
+            BL::lbl('Edit')
+        );
+        $dg->enableSequenceByDragAndDrop();
+
+        return $dg;
+    }
+
+    /**
      * Parse the form
      */
     protected function parse()
@@ -70,6 +118,11 @@ class BackendPartnersEditWidget extends BackendBaseActionEdit
 
         // assign this variable so it can be used in the template
         $this->tpl->assign('item', $this->record);
+
+        // parse the datagrid for all blogposts
+        if ($this->dgPartners->getNumResults() != 0) {
+            $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
+        }
     }
 
     /**

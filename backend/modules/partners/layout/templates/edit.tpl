@@ -10,10 +10,23 @@
 		<label for="name">{$lblName|ucfirst}<abbr>*</abbr></label>
 		{$txtName} {$txtNameError}
 	</p>
+	{option:dgPartners}
+		<div class="dataGridHolder">
+			<div class="tableHeading">
+				<h3>Partners</h3>
+			</div>
+			{$dgPartners}
+		</div>
+	{/option:dgPartners}
+
+	{option:!dgPartners}<p>{$msgNoPartners}</p>{/option:!dgPartners}
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
-			<a href="{$var|geturl:'delete_widget'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<a href="{$var|geturl:'add_partner'}&amp;id={$item.id}" class="button linkButton icon iconAdd">
+				<span>{$lblAddPartner|ucfirst}</span>
+			</a>
+			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 

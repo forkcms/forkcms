@@ -56,9 +56,7 @@ class BackendPartnersAdd extends BackendBaseActionAdd
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode(
-                        $item['name']
-                    ) . '&highlight=row-' . $item['id']
+                    BackendModel::createURLForAction('edit') . '&id=' . $item['id']
                 );
             }
         }
