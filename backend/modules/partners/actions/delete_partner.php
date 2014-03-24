@@ -31,7 +31,10 @@ class BackendPartnersDeletePartner extends BackendBaseActionDelete
         BackendPartnersModel::deletePartner($this->id);
         //delete the image
         SpoonFile::delete(
-            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/source/' . $this->record['img']
+            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' .  $this->record['widget'] . '/source/' . $this->record['img']
+        );
+        SpoonFile::delete(
+            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' .  $this->record['widget'] . '/48x48/' . $this->record['img']
         );
         // item was deleted, so redirect
         $this->redirect(
