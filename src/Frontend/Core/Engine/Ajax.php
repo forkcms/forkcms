@@ -92,6 +92,10 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
             $this->setModule($module);
             $this->setAction($action);
             $this->setLanguage($language);
+            
+            if (extension_loaded('newrelic')) {
+                newrelic_name_transaction('ajax::' . $module . '::' . $action);
+            }
 
             $this->ajaxAction = new AjaxAction($this->getKernel(), $this->getAction(), $this->getModule());
             $this->output = $this->ajaxAction->execute();
