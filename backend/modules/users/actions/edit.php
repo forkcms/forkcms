@@ -71,10 +71,10 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// create user objects
 		$this->user = new BackendUser($this->id);
 		$this->authenticatedUser = BackendAuthentication::getUser();
-		$this->allowUserRights = ((BackendAuthentication::isAllowedAction('index') || $this->authenticatedUser->getUserId() != $this->id) || $this->authenticatedUser->isGod());
+		$this->allowUserRights = ((BackendAuthentication::isAllowedAction('add') || $this->authenticatedUser->getUserId() != $this->id) || $this->authenticatedUser->isGod());
 
 		// redirect to error page when not allowed to edit other profiles
-		if(!$this->authenticatedUser->isGod() && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('index')))
+		if(!$this->authenticatedUser->isGod() && ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('add')))
 		{
 			$this->redirect(BackendModel::createURLForAction('error') . '&type=not-allowed');
 		}
