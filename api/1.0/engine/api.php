@@ -68,7 +68,7 @@ class API extends KernelLoader implements ApplicationInterface
 
 		// build the path to the backend API file
 		if($chunks[0] == 'core') $path = BACKEND_CORE_PATH . '/engine/api.php';
-		else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
+		else $path = BACKEND_MODULES_PATH . DIRECTORY_SEPARATOR . $chunks[0] . '/engine/api.php';
 
 		// check if the file is present? If it isn't present there is a problem
 		if(!is_file($path)) return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
@@ -439,7 +439,7 @@ class API extends KernelLoader implements ApplicationInterface
 		$statusCode = (int) $statusCode;
 
 		// init vars
-		$pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+		$pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
 		$version = $pathChunks[count($pathChunks) - 2];
 
 		// build array
@@ -472,7 +472,7 @@ class API extends KernelLoader implements ApplicationInterface
 		$statusCode = (int) $statusCode;
 
 		// init vars
-		$pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+		$pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
 		$version = $pathChunks[count($pathChunks) - 2];
 
 		// init XML
