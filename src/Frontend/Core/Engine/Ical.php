@@ -9,6 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Uri as CommonUri;
+
 /**
  * Frontend Ical class.
  *

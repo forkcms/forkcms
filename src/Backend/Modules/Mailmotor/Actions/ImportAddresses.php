@@ -16,6 +16,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
+use Common\Uri as CommonUri;
 
 /**
  * This is the import-action, it will import records from a CSV file

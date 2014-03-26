@@ -12,6 +12,7 @@ namespace Backend\Modules\Tags\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\Uri as CommonUri;
 
 /**
  * In this file we store all generic functions that we will be using in the TagsModule
@@ -157,7 +158,7 @@ class Model
      */
     public static function getURL($URL, $id = null)
     {
-        $URL = \CommonUri::getUrl((string) $URL);
+        $URL = CommonUri::getUrl((string) $URL);
         $language = BL::getWorkingLanguage();
 
         // get db

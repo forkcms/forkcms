@@ -12,6 +12,7 @@ namespace Backend\Modules\Locale\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
+use Common\Uri as CommonUri;
 use Frontend\Core\Engine\Language as FL;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;

@@ -14,6 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\Uri as CommonUri;
 
 /**
  * This action will update a translation using AJAX
@@ -47,7 +48,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if($type == 'act' && !isset($error)) if(urlencode($value) != \CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
+        if($type == 'act' && !isset($error)) if(urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
 
         // no error?
         if(!isset($error)) {

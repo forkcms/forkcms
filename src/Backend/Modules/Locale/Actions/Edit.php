@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\Uri as CommonUri;
 
 /**
  * This is the edit action, it will display a form to edit an existing locale item.
@@ -149,7 +150,7 @@ class Edit extends BackendBaseActionEdit
             if($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
                 if($this->frm->getField('type')->getValue() == 'act') {
-                    if(urlencode($txtValue->getValue()) != \CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                    if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
                 }
             }
 

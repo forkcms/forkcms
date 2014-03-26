@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Uri as CommonUri;
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 /**
@@ -63,7 +64,7 @@ class Mailer
         $to = Model::getModuleSetting('Core', 'mailer_to');
         $from = Model::getModuleSetting('Core', 'mailer_from');
         $replyTo = Model::getModuleSetting('Core', 'mailer_reply_to');
-        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => \CommonUri::getUrl($subject));
+        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => CommonUri::getUrl($subject));
 
         // set recipient/sender headers
         $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;

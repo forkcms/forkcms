@@ -1,5 +1,7 @@
 <?php
 
+namespace Common;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -14,7 +16,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class CommonCookie extends SpoonCookie
+class Cookie extends \SpoonCookie
 {
     /**
      * Stores a value in a cookie, by default the cookie will expire in one day.
