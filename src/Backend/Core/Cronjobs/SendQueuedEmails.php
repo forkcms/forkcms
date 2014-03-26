@@ -29,7 +29,7 @@ class BackendCoreCronjobSendQueuedEmails extends Cronjob
         $this->setBusyFile();
 
         // send all queued e-mails
-        foreach(Mailer::getQueuedMailIds() as $id) {
+        foreach (Mailer::getQueuedMailIds() as $id) {
             Mailer::send($id);
         }
 

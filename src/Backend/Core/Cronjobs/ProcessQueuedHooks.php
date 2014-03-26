@@ -122,8 +122,7 @@ class BackendCoreCronjobProcessQueuedHooks extends Cronjob
                 if (SPOON_DEBUG) {
                     $log->write('Callback (' . serialize($item['callback']) . ') finished.');
                 }
-            } // stop it
-            else {
+            } else {
                 $fs = new Filesystem();
                 $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');
 

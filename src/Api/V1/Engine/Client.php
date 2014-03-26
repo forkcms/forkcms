@@ -66,7 +66,9 @@ class Client extends Api
 
             // class names of the API file are always based on the name o/t module
             $className = 'Backend\\Modules\\' . $module . '\\Engine\\Api';
-            if($module == 'Core') $className = 'Backend\\Core\\Engine\\Api';
+            if ($module == 'Core') {
+                $className = 'Backend\\Core\\Engine\\Api';
+            }
 
             /*
              * check if the api.php file exists for this module, and load it so our methods are
