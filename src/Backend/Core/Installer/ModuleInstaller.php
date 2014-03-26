@@ -13,6 +13,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\Uri as CommonUri;
 
 /**
  * The base-class for the installer
@@ -582,7 +583,7 @@ class ModuleInstaller
             'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
             'title' => (string) $title,
             'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-            'url' => \CommonUri::getUrl((string) $url, SPOON_CHARSET),
+            'url' => CommonUri::getUrl((string) $url, SPOON_CHARSET),
             'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
             'custom' => (!is_null($custom) ? (string) $custom : null),
             'data' => (!is_null($data)) ? serialize($data) : null

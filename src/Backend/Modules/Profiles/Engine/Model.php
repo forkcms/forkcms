@@ -12,6 +12,7 @@ namespace Backend\Modules\Profiles\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
+use Common\Uri as CommonUri;
 
 /**
  * In this file we store all generic functions that we will be using in the profiles module.
@@ -494,7 +495,7 @@ class Model
         $displayName = \SpoonFilter::htmlspecialcharsDecode((string) $displayName);
 
         // urlise
-        $url = \CommonUri::getUrl($displayName);
+        $url = CommonUri::getUrl($displayName);
 
         // get db
         $db = BackendModel::getContainer()->get('database');

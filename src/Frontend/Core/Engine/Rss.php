@@ -2,12 +2,14 @@
 
 namespace Frontend\Core\Engine;
 
-    /*
-     * This file is part of Fork CMS.
-     *
-     * For the full copyright and license information, please view the license
-     * file that was distributed with this source code.
-     */
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+use Common\Uri as CommonUri;
 
 /**
  * Frontend RSS class.
@@ -37,7 +39,7 @@ class Rss extends \SpoonFeedRSS
             $title,
             Model::addURLParameters(
                 $link,
-                array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => \CommonUri::getUrl($title))
+                array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title))
             ),
             $description,
             $items
@@ -88,7 +90,7 @@ class Rss extends \SpoonFeedRSS
             array(
                 'utm_source' => 'feed',
                 'utm_medium' => 'rss',
-                'utm_campaign' => \CommonUri::getUrl($this->getTitle())
+                'utm_campaign' => CommonUri::getUrl($this->getTitle())
             )
         );
 

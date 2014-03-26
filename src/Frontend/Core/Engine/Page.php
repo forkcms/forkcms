@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -173,7 +174,7 @@ class Page extends FrontendBaseObject
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
             'cookieBarHide',
-            (!Model::getModuleSetting('Core', 'show_cookie_bar', false) || \CommonCookie::hasHiddenCookieBar())
+            (!Model::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
 
         // the the positions to the template

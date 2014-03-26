@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as CommonCookie;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -245,7 +246,7 @@ class Url extends \KernelLoader
                 // try to set a cookie with the language
                 try {
                     // set cookie
-                    \CommonCookie::set('frontend_language', $language);
+                    CommonCookie::set('frontend_language', $language);
                 } catch (\SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }
@@ -255,11 +256,11 @@ class Url extends \KernelLoader
 
                 // remove the language part
                 array_shift($chunks);
-            } elseif (\CommonCookie::exists('frontend_language') &&
-                      in_array(\CommonCookie::get('frontend_language'), $redirectLanguages)
+            } elseif (CommonCookie::exists('frontend_language') &&
+                      in_array(CommonCookie::get('frontend_language'), $redirectLanguages)
             ) {
                 // set languageId
-                $language = (string) \CommonCookie::get('frontend_language');
+                $language = (string) CommonCookie::get('frontend_language');
 
                 // redirect is needed
                 $mustRedirect = true;
@@ -271,7 +272,7 @@ class Url extends \KernelLoader
                 // try to set a cookie with the language
                 try {
                     // set cookie
-                    \CommonCookie::set('frontend_language', $language);
+                    CommonCookie::set('frontend_language', $language);
                 } catch (\SpoonCookieException $e) {
                     // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
                 }

@@ -12,6 +12,7 @@ namespace Backend\Modules\Tags\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Uri as CommonUri;
 
 /**
  * This edit-action will update tags using Ajax
@@ -46,7 +47,7 @@ class Edit extends BackendBaseAJAXAction
                     $item['id'] = $id;
                     $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
                     $item['url'] = BackendTagsModel::getURL(
-                        \CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                         $id
                     );
 

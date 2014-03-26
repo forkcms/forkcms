@@ -1,5 +1,7 @@
 <?php
 
+namespace Common;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -12,7 +14,7 @@
  *
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class CommonUri
+class Uri
 {
     /**
      * Prepares a string for a filename so that it can be used in urls.
@@ -24,14 +26,14 @@ class CommonUri
     public static function getFilename($value, $charset = null)
     {
         // define charset
-        $charset = ($charset !== null) ? SpoonFilter::getValue(
+        $charset = ($charset !== null) ? \SpoonFilter::getValue(
             $charset,
-            Spoon::getCharsets(),
+            \Spoon::getCharsets(),
             SPOON_CHARSET
         ) : SPOON_CHARSET;
 
         // decode htmlspecial characters
-        $value = SpoonFilter::htmlspecialcharsDecode($value);
+        $value = \SpoonFilter::htmlspecialcharsDecode($value);
 
         // decode as url
         $value = urldecode($value);
@@ -77,7 +79,7 @@ class CommonUri
         $value = mb_strtolower($value, $charset);
 
         // replace special characters by their normal character
-        $value = SpoonFilter::htmlentities($value, $charset);
+        $value = \SpoonFilter::htmlentities($value, $charset);
         $value = preg_replace(
             '/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i',
             '\\1',

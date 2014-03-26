@@ -274,6 +274,8 @@ class Navigation extends \Backend\Core\Engine\Base\Object
 
             // split up chunks
             list($module, $action) = explode('/', $value['url']);
+            $module = \SpoonFilter::toCamelCase($module);
+            $action = \SpoonFilter::toCamelCase($action);
 
             // no rights for this module?
             if (!Authentication::isAllowedModule($module)) $allowed = false;
@@ -296,6 +298,8 @@ class Navigation extends \Backend\Core\Engine\Base\Object
 
                     // split up chunks
                     list($module, $action) = explode('/', $valueB['url']);
+                    $module = \SpoonFilter::toCamelCase($module);
+                    $action = \SpoonFilter::toCamelCase($action);
 
                     // no rights for this module?
                     if (!Authentication::isAllowedModule($module)) $allowed = false;
@@ -315,6 +319,8 @@ class Navigation extends \Backend\Core\Engine\Base\Object
 
                             // split up chunks
                             list($module, $action) = explode('/', $valueC['url']);
+                            $module = \SpoonFilter::toCamelCase($module);
+                            $action = \SpoonFilter::toCamelCase($action);
 
                             // no rights for this module?
                             if (!Authentication::isAllowedModule($module)) $allowed = false;

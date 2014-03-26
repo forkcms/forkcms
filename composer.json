@@ -31,7 +31,8 @@
             "Backend": "src/",
             "Frontend": "src/",
             "Install": "src/",
-            "Api": "src/"
+            "Api": "src/",
+            "Common": "src/"
         }
     }
 }

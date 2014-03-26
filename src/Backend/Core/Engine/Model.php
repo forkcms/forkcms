@@ -1020,42 +1020,6 @@ class Model extends \BaseModel
     }
 
     /**
-     * Image Save
-     *
-     * @param \SpoonFormImage $imageFile    ImageFile.
-     * @param string          $module       Module name.
-     * @param string          $filename     Filename.
-     * @param string          $subDirectory Subdirectory.
-     * @param array           $fileSizes    Possible file sizes.
-     */
-    public static function imageSave($imageFile, $module, $filename, $subDirectory = '', $fileSizes = null)
-    {
-        // get fileSizes var from model
-        if (empty($fileSizes)) {
-            $model = get_class_vars('Backend\\Modules\\' . \SpoonFilter::toCamelCase($module) . '\\Engine\\Model');
-            $fileSizes = $model['fileSizes'];
-        }
-
-        // loop all directories and create
-        foreach ($fileSizes as $sizeDir => $size) {
-            // set parameters
-            $filepath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
-            $width = $size['width'];
-            $height = $size['height'];
-            $allowEnlargement = (empty($size['allowEnlargement']) ? null : $size['allowEnlargement']);
-            $forceOriginalAspectRatio = (empty($size['forceOriginalAspectRatio']) ? null : $size['forceOriginalAspectRatio']);
-
-            // create
-            $imageFile->createThumbnail($filepath, $width, $height, $allowEnlargement, $forceOriginalAspectRatio);
-        }
-
-        // save original
-        $imageFile->moveFile(
-            FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename
-        );
-    }
-
-    /**
      * Invalidate cache
      *
      * @param string $module   A specific module to clear the cache for.

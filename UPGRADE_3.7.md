@@ -216,3 +216,15 @@ After
     use Api\V1\Engine\Api;
     ...
     Api::isAuthorized();
+
+## CommonUri and CommonCookie are placed in the src/Common folder
+
+Before
+
+    \CommonUri::getUrl();
+
+After
+
+    use Common\Uri;
+    ...
+    Uri::getUrl();
