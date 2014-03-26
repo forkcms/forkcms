@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Common\Uri as CommonUri;
 
 /**
  * This class represents a META-object
@@ -121,7 +122,7 @@ class Meta
         }
 
         // build parameters for use in the callback
-        $parameters[] = \CommonUri::getUrl($URL);
+        $parameters[] = CommonUri::getUrl($URL);
 
         // add parameters set by user
         if (!empty($this->callback['parameters'])) {

@@ -12,6 +12,7 @@ namespace Backend\Modules\Faq\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Uri as CommonUri;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
@@ -348,7 +349,7 @@ class Model
      */
     public static function getURL($url, $id = null)
     {
-        $url = \CommonUri::getUrl((string) $url);
+        $url = CommonUri::getUrl((string) $url);
         $db = BackendModel::get('database');
 
         // new item
@@ -395,7 +396,7 @@ class Model
      */
     public static function getURLForCategory($url, $id = null)
     {
-        $url = \CommonUri::getUrl((string) $url);
+        $url = CommonUri::getUrl((string) $url);
         $db = BackendModel::get('database');
 
         // new category

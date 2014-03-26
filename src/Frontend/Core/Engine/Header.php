@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use \MatthiasMullie\Minify;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -601,7 +602,7 @@ class Header extends FrontendBaseObject
         ) {
             $anonymize = (
                 Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
-                !\CommonCookie::hasAllowedCookies()
+                !CommonCookie::hasAllowedCookies()
             );
 
             switch ($type) {

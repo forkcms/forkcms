@@ -9,6 +9,7 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -130,9 +131,9 @@ class Detail extends FrontendBaseBlock
         $this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
         // init vars
-        $author = (\CommonCookie::exists('comment_author')) ? \CommonCookie::get('comment_author') : null;
-        $email = (\CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(\CommonCookie::get('comment_email'))) ? \CommonCookie::get('comment_email') : null;
-        $website = (\CommonCookie::exists('comment_website') && \SpoonFilter::isURL(\CommonCookie::get('comment_website'))) ? \CommonCookie::get('comment_website') : 'http://';
+        $author = (CommonCookie::exists('comment_author')) ? CommonCookie::get('comment_author') : null;
+        $email = (CommonCookie::exists('comment_email') && \SpoonFilter::isEmail(CommonCookie::get('comment_email'))) ? CommonCookie::get('comment_email') : null;
+        $website = (CommonCookie::exists('comment_website') && \SpoonFilter::isURL(CommonCookie::get('comment_website'))) ? CommonCookie::get('comment_website') : 'http://';
 
         // create elements
         $this->frm->addText('author', $author)->setAttributes(array('required' => null));
@@ -433,9 +434,9 @@ class Detail extends FrontendBaseBlock
 
                 // store author-data in cookies
                 try {
-                    \CommonCookie::set('comment_author', $author);
-                    \CommonCookie::set('comment_email', $email);
-                    \CommonCookie::set('comment_website', $website);
+                    CommonCookie::set('comment_author', $author);
+                    CommonCookie::set('comment_email', $email);
+                    CommonCookie::set('comment_website', $website);
                 } catch (\Exception $e) {
                     // settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
                 }

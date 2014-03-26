@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Core\Engine\Model as BackendModel;
+use Common\Cookie as CommonCookie;
 
 /**
  * This class will handle the incoming URL.
@@ -283,8 +284,8 @@ class Url extends \Backend\Core\Engine\Base\Object
         }
 
         // no authenticated user, but available from a cookie
-        elseif(\CommonCookie::exists('interface_language')) {
-            $locale = \CommonCookie::get('interface_language');
+        elseif(CommonCookie::exists('interface_language')) {
+            $locale = CommonCookie::get('interface_language');
         }
 
         // validate if the requested locale is possible

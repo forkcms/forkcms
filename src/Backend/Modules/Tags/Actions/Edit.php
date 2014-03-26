@@ -15,6 +15,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Common\Uri as CommonUri;
 
 /**
  * This is the edit action, it will display a form to edit an existing tag.
@@ -150,7 +151,7 @@ class Edit extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['tag'] = $this->frm->getField('name')->getValue();
                 $item['url'] = BackendTagsModel::getURL(
-                    \CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
                     $this->id
                 );
 

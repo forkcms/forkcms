@@ -11,6 +11,7 @@ namespace Backend\Core\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Common\Cookie as CommonCookie;
 
 /**
  * This class will store the language-dependant content for the Backend, it will also store the
@@ -294,7 +295,7 @@ class Language
         // attempt to set a cookie
         try {
             // store in cookie
-            \CommonCookie::set('interface_language', $language);
+            CommonCookie::set('interface_language', $language);
         }
 
         // catch exceptions

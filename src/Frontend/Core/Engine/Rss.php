@@ -9,6 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Uri as CommonUri;
+
 /**
  * Frontend RSS class.
  *
@@ -37,7 +39,7 @@ class Rss extends \SpoonFeedRSS
             $title,
             Model::addURLParameters(
                 $link,
-                array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => \CommonUri::getUrl($title))
+                array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($title))
             ),
             $description,
             $items
@@ -81,7 +83,7 @@ class Rss extends \SpoonFeedRSS
         // add UTM-parameters
         $link = Model::addURLParameters(
             $link,
-            array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => \CommonUri::getUrl($this->getTitle()))
+            array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => CommonUri::getUrl($this->getTitle()))
         );
 
         // call the parent
