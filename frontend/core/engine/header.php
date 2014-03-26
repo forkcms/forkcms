@@ -109,6 +109,8 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		// add timestamp by default, when debug mode is off
+		if (!SPOON_DEBUG && $addTimestamp == null) $addTimestamp = true;
 		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
@@ -149,6 +151,8 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		$file = (string) $file;
 		$minify = (bool) $minify;
+		// add timestamp by default, when debug mode is off
+		if (!SPOON_DEBUG && $addTimestamp == null) $addTimestamp = true;
 		$addTimestamp = (bool) $addTimestamp;
 
 		// get file path
