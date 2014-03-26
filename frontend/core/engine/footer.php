@@ -82,16 +82,24 @@ class FrontendFooter extends FrontendBaseObject
 			if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 			{
 				$siteHTMLFooter .= '	window.fbAsyncInit = function() {' . "\n";
-				$siteHTMLFooter .= '		FB.init({ appId: "' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '", status: true, cookie: true, xfbml: true, oauth: true });' . "\n";
+				$siteHTMLFooter .= '		FB.init({' . "\n";
+				$siteHTMLFooter .= '			appId: "' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '",' . "\n";
+				$siteHTMLFooter .= '			status: true,' . "\n";
+				$siteHTMLFooter .= '			cookie: true,' . "\n";
+				$siteHTMLFooter .= '			xfbml: true,' . "\n";
+				$siteHTMLFooter .= '			oauth: true' . "\n";
+				$siteHTMLFooter .= '		});' . "\n";
 				$siteHTMLFooter .= '		jsFrontend.facebook.afterInit();' . "\n";
 				$siteHTMLFooter .= '	};' . "\n";
 			}
-			$siteHTMLFooter .= '	(function(d){' . "\n";
-			$siteHTMLFooter .= '		var js, id = \'facebook-jssdk\', ref = d.getElementsByTagName(\'script\')[0];' . "\n";
-			$siteHTMLFooter .= '		if(d.getElementById(id)) { return; }' . "\n";
-			$siteHTMLFooter .= '		js = d.createElement(\'script\'); js.id = id; js.async = true; js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
-			$siteHTMLFooter .= '		ref.parentNode.insertBefore(js, ref);' . "\n";
-			$siteHTMLFooter .= '	}(document));' . "\n";
+
+			$siteHTMLFooter .= '	(function(d, s, id){' . "\n";
+			$siteHTMLFooter .= '		var js, fjs = d.getElementsByTagName(s)[0];' . "\n";
+			$siteHTMLFooter .= '		if (d.getElementById(id)) {return;}' . "\n";
+			$siteHTMLFooter .= '		js = d.createElement(s); js.id = id;' . "\n";
+			$siteHTMLFooter .= '		js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+			$siteHTMLFooter .= '		fjs.parentNode.insertBefore(js, fjs);' . "\n";
+			$siteHTMLFooter .= '	}(document, \'script\', \'facebook-jssdk\'));' . "\n";
 			$siteHTMLFooter .= '</script>';
 		}
 
