@@ -4,6 +4,10 @@
 Improvements:
 
 * Core: use correct/new Facebook-js-snippet.
+* Users: more logical way of handling user-permissions, see #684.
+* Content blocks: only grab needed fields, see #669.
+* Core: better description for CKFinder maximum image size settings.
+
 
 Bugfixes:
 
@@ -12,6 +16,8 @@ Bugfixes:
 * Core: Modified misleading text about CKFinder maximum image size setting.
 * Share with linkedin, fixed double url encoding.
 * Faq: getByTags did not work in backend.
+* Blog: fixes an issue where an incorrect revision could be used instead of the most recent one, see #680.
+* API: use DIRECTORY_SEPARATOR instead of hardcoded /, fixes #682.
 
 
 3.6.6 (2014-01-15)
