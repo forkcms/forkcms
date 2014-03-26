@@ -85,7 +85,7 @@ class Extra extends FrontendBaseObject
      * @param KernelInterface $kernel
      * @param string          $module The module to load.
      * @param string          $action The action to load.
-     * @param                 mixed   [optional] $data The data that was passed from the database.
+     * @param mixed           $data   The data that was passed from the database.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -118,7 +118,9 @@ class Extra extends FrontendBaseObject
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Actions\\' . $this->getAction();
-        if($this->getModule() == 'Core') $actionClass = 'Frontend\\Core\\Actions\\' . $this->getAction();
+        if ($this->getModule() == 'Core') {
+            $actionClass = 'Frontend\\Core\\Actions\\' . $this->getAction();
+        }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
@@ -274,7 +276,9 @@ class Extra extends FrontendBaseObject
     public function loadConfig()
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Frontend\\Core\\Config';
+        }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
@@ -290,7 +294,7 @@ class Extra extends FrontendBaseObject
     /**
      * Set the action
      *
-     * @param string [optional] $action The action to load.
+     * @param string $action The action to load.
      */
     private function setAction($action = null)
     {

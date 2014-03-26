@@ -80,10 +80,10 @@ class Header extends \Backend\Core\Engine\Base\Object
      * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
      *
      * @param string $file The name of the file to load.
-     * @param string[optional] $module The module wherein the file is located.
-     * @param bool[optional] $overwritePath Should we overwrite the full path?
-     * @param bool[optional] $minify Should the CSS be minified?
-     * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $module The module wherein the file is located.
+     * @param bool $overwritePath Should we overwrite the full path?
+     * @param bool $minify Should the CSS be minified?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = false)
     {
@@ -131,10 +131,10 @@ class Header extends \Backend\Core\Engine\Base\Object
      * If you set overwritePath to true we expect a full path (It has to start with a /)
      *
      * @param string $file The file to load.
-     * @param string[optional] $module The module wherein the file is located.
-     * @param bool[optional] $minify Should the module be minified?
-     * @param bool[optional] $overwritePath Should we overwrite the full path?
-     * @param bool[optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $module The module wherein the file is located.
+     * @param bool $minify Should the module be minified?
+     * @param bool $overwritePath Should we overwrite the full path?
+     * @param bool $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addJS($file, $module = null, $minify = true, $overwritePath = false, $addTimestamp = false)
     {

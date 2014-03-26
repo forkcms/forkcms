@@ -66,22 +66,29 @@ class Cronjob extends Object
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $action The action to load.
-     * @param string[optional] $module The module to load.
+     * @param string $module The module to load.
      */
     public function setAction($action, $module = null)
     {
         // set module
-        if($module !== null) $this->setModule($module);
+        if ($module !== null) {
+            $this->setModule($module);
+        }
 
         // check if module is set
-        if($this->getModule() === null) throw new BackendException('Module has not yet been set.');
+        if ($this->getModule() === null) {
+            throw new BackendException('Module has not yet been set.');
+        }
 
         // path to look for actions based on the module
-        if($this->getModule() == 'Core') $path = BACKEND_CORE_PATH . '/Cronjobs';
-        else $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Cronjobs';
+        if ($this->getModule() == 'Core') {
+            $path = BACKEND_CORE_PATH . '/Cronjobs';
+        } else {
+            $path = BACKEND_MODULES_PATH . '/' . $this->getModule() . '/Cronjobs';
+        }
 
         // check if file exists
-        if(!is_file($path . '/' . $action . '.php')) {
+        if (!is_file($path . '/' . $action . '.php')) {
             \SpoonHTTP::setHeadersByCode(403);
             throw new BackendException('Action not allowed.');
         }
@@ -96,7 +103,9 @@ class Cronjob extends Object
     protected function setBusyFile()
     {
         // do not set busy file in debug mode
-        if(SPOON_DEBUG) return;
+        if (SPOON_DEBUG) {
+            return;
+        }
 
         // build path
         $fs = new Filesystem();
@@ -106,25 +115,27 @@ class Cronjob extends Object
         $isBusy = false;
 
         // does the busy file already exists.
-        if($fs->exists($path)) {
+        if ($fs->exists($path)) {
             $isBusy = true;
 
             // grab counter
             $counter = (int) file_get_contents($path);
 
             // check the counter
-            if($counter > 9) {
+            if ($counter > 9) {
                 // build class name
                 $class = 'Backend\\Modules\\' . $this->getModule() . '\\Cronjobs\\' . $this->getAction();
-                if($this->getModule() == 'Core') $class = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
+                if ($this->getModule() == 'Core') {
+                    $class = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
+                }
 
                 // notify user
                 throw new BackendException('Cronjob (' . $class . ') is still busy after 10 runs, check it out!');
             }
+        } // set counter
+        else {
+            $counter = 0;
         }
-
-        // set counter
-        else $counter = 0;
 
         // increment counter
         $counter++;
@@ -133,7 +144,9 @@ class Cronjob extends Object
         $fs->dumpFile($path, $counter);
 
         // if the cronjob is busy we should NOT proceed
-        if($isBusy) exit;
+        if ($isBusy) {
+            exit;
+        }
     }
 
     /**
@@ -147,7 +160,7 @@ class Cronjob extends Object
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if(!in_array($module, $modules)) {
+        if (!in_array($module, $modules)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(403);
 

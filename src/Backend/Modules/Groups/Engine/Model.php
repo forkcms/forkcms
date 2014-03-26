@@ -88,7 +88,7 @@ class Model
     /**
      * Delete action permissions
      *
-     * @param  array $actionPermissions The action permissions to delete.
+     * @param array $actionPermissions The action permissions to delete.
      */
     public static function deleteActionPermissions($actionPermissions)
     {
@@ -106,7 +106,7 @@ class Model
     /**
      * Delete module permissions
      *
-     * @param  array $modulePermissions The module permissions to delete.
+     * @param array $modulePermissions The module permissions to delete.
      */
     public static function deleteModulePermissions($modulePermissions)
     {
@@ -124,7 +124,7 @@ class Model
     /**
      * Delete a user's multiple groups
      *
-     * @param  int $userId The id of the user.
+     * @param int $userId The id of the user.
      */
     public static function deleteMultipleGroups($userId)
     {
@@ -150,7 +150,7 @@ class Model
     /**
      * Check if a action permission exists
      *
-     * @param  array $permission The permission to check upon.
+     * @param array $permission The permission to check upon.
      * @return bool
      */
     public static function existsActionPermission($permission)
@@ -166,7 +166,7 @@ class Model
     /**
      * Check if a module permission exists
      *
-     * @param  array $permission The permission to check upon.
+     * @param array $permission The permission to check upon.
      * @return bool
      */
     public static function existsModulePermission($permission)
@@ -226,7 +226,7 @@ class Model
     /**
      * Get all groups of one user
      *
-     * @param  int $id
+     * @param int $id
      * @return array
      */
     public static function getGroupsByUser($id)
@@ -243,7 +243,7 @@ class Model
     /**
      * Get group module permissions
      *
-     * @param  int $id The id of the group.
+     * @param int $id The id of the group.
      * @return array
      */
     public static function getModulePermissions($id)
@@ -280,7 +280,7 @@ class Model
     /**
      * Get all users in a group
      *
-     * @param  int $groupId The id of the group.
+     * @param int $groupId The id of the group.
      * @return array
      */
     public static function getUsers($groupId)
@@ -297,7 +297,7 @@ class Model
     /**
      * Insert a group and a setting
      *
-     * @param  array $group The group to insert.
+     * @param array $group The group to insert.
      * @param array $setting The setting to insert.
      */
     public static function insert($group, $setting)
@@ -318,8 +318,8 @@ class Model
     /**
      * Insert a user's multiple groups
      *
-     * @param  int $userId The id of the user.
-     * @param  array $groups The groups.
+     * @param int $userId The id of the user.
+     * @param array $groups The groups.
      */
     public static function insertMultipleGroups($userId, array $groups)
     {

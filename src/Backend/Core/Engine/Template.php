@@ -14,10 +14,10 @@ use Backend\Core\Engine\Model as BackendModel;
 /**
  * This is our extended version of \SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
- * 	- it will assign all labels
- * 	- it will map some modifiers
- * 	- it will assign a lot of constants
- * 	- ...
+ *    - it will assign all labels
+ *    - it will map some modifiers
+ *    - it will assign a lot of constants
+ *    - ...
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -34,24 +34,28 @@ class Template extends \SpoonTemplate
     /**
      * URL instance
      *
-     * @var	BackendURL
+     * @var    BackendURL
      */
     private $URL;
 
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
-     * @param bool[optional] $addToReference Should the instance be added into the reference.
+     * @param bool $addToReference Should the instance be added into the reference.
      */
     public function __construct($addToReference = true)
     {
         parent::__construct();
 
         // get URL instance
-        if(BackendModel::getContainer()->has('url')) $this->URL = BackendModel::getContainer()->get('url');
+        if (BackendModel::getContainer()->has('url')) {
+            $this->URL = BackendModel::getContainer()->get('url');
+        }
 
         // store in reference so we can access it from everywhere
-        if($addToReference) BackendModel::getContainer()->set('template', $this);
+        if ($addToReference) {
+            BackendModel::getContainer()->set('template', $this);
+        }
 
         // set cache directory
         $this->setCacheDirectory(BACKEND_CACHE_PATH . '/CachedTemplates');
@@ -74,7 +78,6 @@ class Template extends \SpoonTemplate
      * Will also assign the interfacelabels and all user-defined constants.
      *
      * @param string $template The path for the template.
-     * @param bool[optional] $customHeaders Are there custom headers set?
      */
     public function display($template)
     {
@@ -132,14 +135,14 @@ class Template extends \SpoonTemplate
     private function parseAuthenticatedUser()
     {
         // check if the current user is authenticated
-        if(Authentication::getUser()->isAuthenticated()) {
+        if (Authentication::getUser()->isAuthenticated()) {
             // show stuff that only should be visible if authenticated
             $this->assign('isAuthenticated', true);
 
             // get authenticated user-settings
             $settings = (array) Authentication::getUser()->getSettings();
 
-            foreach($settings as $key => $setting) {
+            foreach ($settings as $key => $setting) {
                 // redefine setting
                 $setting = ($setting === null) ? '' : $setting;
 
@@ -148,7 +151,7 @@ class Template extends \SpoonTemplate
             }
 
             // check if this action is allowed
-            if(Authentication::isAllowedAction('Edit', 'Users')) {
+            if (Authentication::isAllowedAction('Edit', 'Users')) {
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
@@ -184,8 +187,16 @@ class Template extends \SpoonTemplate
         );
 
         // loop actions and assign to template
-        foreach($allowedActions as $action) {
-            if($action['level'] == '7') $this->assign('show' . \SpoonFilter::toCamelCase($action['module'], '_') . \SpoonFilter::toCamelCase($action['action'], '_'), true);
+        foreach ($allowedActions as $action) {
+            if ($action['level'] == '7') {
+                $this->assign(
+                    'show' . \SpoonFilter::toCamelCase($action['module'], '_') . \SpoonFilter::toCamelCase(
+                        $action['action'],
+                        '_'
+                    ),
+                    true
+                );
+            }
         }
     }
 
@@ -204,26 +215,32 @@ class Template extends \SpoonTemplate
         $realConstants = array();
 
         // remove protected constants aka constants that should not be used in the template
-        foreach($constants['user'] as $key => $value) {
-            if(!in_array($key, $notPublicConstants)) $realConstants[$key] = $value;
+        foreach ($constants['user'] as $key => $value) {
+            if (!in_array($key, $notPublicConstants)) {
+                $realConstants[$key] = $value;
+            }
         }
 
         // we should only assign constants if there are constants to assign
-        if(!empty($realConstants)) $this->assign($realConstants);
+        if (!empty($realConstants)) {
+            $this->assign($realConstants);
+        }
 
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
 
-        if($this->URL instanceof Url) {
+        if ($this->URL instanceof Url) {
             // assign the current module
             $this->assign('MODULE', $this->URL->getModule());
 
             // assign the current action
-            if($this->URL->getAction() != '') $this->assign('ACTION', $this->URL->getAction());
+            if ($this->URL->getAction() != '') {
+                $this->assign('ACTION', $this->URL->getAction());
+            }
         }
 
         // is the user object filled?
-        if(Authentication::getUser()->isAuthenticated()) {
+        if (Authentication::getUser()->isAuthenticated()) {
             // assign the authenticated users secret key
             $this->assign('SECRET_KEY', Authentication::getUser()->getSecretKey());
 
@@ -232,7 +249,10 @@ class Template extends \SpoonTemplate
         }
 
         // assign some variable constants (such as site-title)
-        $this->assign('SITE_TITLE', BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+        $this->assign(
+            'SITE_TITLE',
+            BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+        );
     }
 
     /**
@@ -249,9 +269,15 @@ class Template extends \SpoonTemplate
     private function parseLabels()
     {
         // grab the current module
-        if(BackendModel::getContainer()->has('url')) $currentModule = BackendModel::getContainer()->get('url')->getModule();
-        elseif(isset($_GET['module']) && $_GET['module'] != '') $currentModule = (string) $_GET['module'];
-        else $currentModule = 'Core';
+        if (BackendModel::getContainer()->has('url')) {
+            $currentModule = BackendModel::getContainer()->get(
+                'url'
+            )->getModule();
+        } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+            $currentModule = (string) $_GET['module'];
+        } else {
+            $currentModule = 'Core';
+        }
 
         $errors = Language::getErrors();
         $labels = Language::getLabels();
@@ -264,33 +290,51 @@ class Template extends \SpoonTemplate
 
         // loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
         // template to use the Core-value instead of the one set by the module
-        foreach($errors['Core'] as $key => $value) $realErrors['Core' . $key] = $value;
-        foreach($labels['Core'] as $key => $value) $realLabels['Core' . $key] = $value;
-        foreach($messages['Core'] as $key => $value) $realMessages['Core' . $key] = $value;
+        foreach ($errors['Core'] as $key => $value) {
+            $realErrors['Core' . $key] = $value;
+        }
+        foreach ($labels['Core'] as $key => $value) {
+            $realLabels['Core' . $key] = $value;
+        }
+        foreach ($messages['Core'] as $key => $value) {
+            $realMessages['Core' . $key] = $value;
+        }
 
         // are there errors for the current module?
-        if(isset($errors[$currentModule])) {
+        if (isset($errors[$currentModule])) {
             // loop the module-specific errors and reset them in the array with values we will use
-            foreach($errors[$currentModule] as $key => $value) $realErrors[$key] = $value;
+            foreach ($errors[$currentModule] as $key => $value) {
+                $realErrors[$key] = $value;
+            }
         }
 
         // are there labels for the current module?
-        if(isset($labels[$currentModule])) {
+        if (isset($labels[$currentModule])) {
             // loop the module-specific labels and reset them in the array with values we will use
-            foreach($labels[$currentModule] as $key => $value) $realLabels[$key] = $value;
+            foreach ($labels[$currentModule] as $key => $value) {
+                $realLabels[$key] = $value;
+            }
         }
 
         // are there messages for the current module?
-        if(isset($messages[$currentModule])) {
+        if (isset($messages[$currentModule])) {
             // loop the module-specific errors and reset them in the array with values we will use
-            foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
+            foreach ($messages[$currentModule] as $key => $value) {
+                $realMessages[$key] = $value;
+            }
         }
 
         // execute addslashes on the values for the locale, will be used in JS
-        if($this->addSlashes) {
-            foreach($realErrors as &$value) $value = addslashes($value);
-            foreach($realLabels as &$value) $value = addslashes($value);
-            foreach($realMessages as &$value) $value = addslashes($value);
+        if ($this->addSlashes) {
+            foreach ($realErrors as &$value) {
+                $value = addslashes($value);
+            }
+            foreach ($realLabels as &$value) {
+                $value = addslashes($value);
+            }
+            foreach ($realMessages as &$value) {
+                $value = addslashes($value);
+            }
         }
 
         // sort the arrays (just to make it look beautiful)
@@ -325,10 +369,20 @@ class Template extends \SpoonTemplate
         $daysShort = \SpoonLocale::getWeekDays(Language::getInterfaceLanguage(), true, 'sunday');
 
         // build labels
-        foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . \SpoonFilter::ucfirst($key)] = $value;
+        foreach ($monthsLong as $key => $value) {
+            $localeToAssign['locMonthLong' . \SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($monthsShort as $key => $value) {
+            $localeToAssign['locMonthShort' . \SpoonFilter::ucfirst(
+                $key
+            )] = $value;
+        }
+        foreach ($daysLong as $key => $value) {
+            $localeToAssign['locDayLong' . \SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($daysShort as $key => $value) {
+            $localeToAssign['locDayShort' . \SpoonFilter::ucfirst($key)] = $value;
+        }
 
         // assign
         $this->assignArray($localeToAssign);
@@ -346,14 +400,17 @@ class Template extends \SpoonTemplate
         $this->assign('timestamp', time());
 
         // assign body ID
-        if($this->URL instanceof Url) {
+        if ($this->URL instanceof Url) {
             $this->assign('bodyID', \SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
 
             // build classes
             $bodyClass = \SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true);
 
             // special occasions
-            if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() . 'AddEdit';
+            if ($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit'
+            ) {
+                $bodyClass = $this->URL->getModule() . 'AddEdit';
+            }
 
             // assign
             $this->assign('bodyClass', $bodyClass);
@@ -363,7 +420,7 @@ class Template extends \SpoonTemplate
     /**
      * Should we execute addSlashed on the locale?
      *
-     * @param bool[optional] $on Enable addslashes.
+     * @param bool $on Enable addslashes.
      */
     public function setAddSlashes($on = true)
     {

@@ -28,9 +28,11 @@ class Api
     public static function entriesDelete($id)
     {
         // authorize
-        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('POST')) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('POST')) {
             // redefine
-            if(!is_array($id)) $id = (array) explode(',', $id);
+            if (!is_array($id)) {
+                $id = (array) explode(',', $id);
+            }
 
             // update statuses
             BackendFormBuilderModel::deleteData($id);
@@ -40,21 +42,21 @@ class Api
     /**
      * Get the entries for a form
      *
-     * @param int $id The id of the form.
-     * @param int[optional] $limit The maximum number of items to retrieve.
-     * @param int[optional] $offset The offset.
+     * @param int $id     The id of the form.
+     * @param int $limit  The maximum number of items to retrieve.
+     * @param int $offset The offset.
      * @return array
      */
     public static function entriesGet($id, $limit = 30, $offset = 0)
     {
-        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
             // redefine
             $id = (int) $id;
             $limit = (int) $limit;
             $offset = (int) $offset;
 
             // validate
-            if($limit > 10000) {
+            if ($limit > 10000) {
                 return BaseAPI::output(BaseAPI::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
             }
 
@@ -67,7 +69,9 @@ class Api
                 array($id, $offset, $limit)
             );
 
-            if(empty($dataIDs)) return array();
+            if (empty($dataIDs)) {
+                return array();
+            }
 
             $fields = (array) BackendModel::getContainer()->get('database')->getRecords(
                 'SELECT i.type, i.settings
@@ -77,10 +81,10 @@ class Api
             );
 
             $fieldTypes = array();
-            foreach($fields as $row) {
+            foreach ($fields as $row) {
                 $row['settings'] = unserialize($row['settings']);
 
-                if(isset($row['settings']['label'])) {
+                if (isset($row['settings']['label'])) {
                     $fieldTypes[$row['settings']['label']] = $row['type'];
                 }
             }
@@ -89,25 +93,27 @@ class Api
                 'SELECT i.*, f.data_id, f.label, f.value, UNIX_TIMESTAMP(i.sent_on) AS sent_on
                  FROM forms_data AS i
                  INNER JOIN forms_data_fields AS f ON i.id = f.data_id
-                 WHERE i.id IN('. implode(',', $dataIDs) .')
+                 WHERE i.id IN(' . implode(',', $dataIDs) . ')
                  ORDER BY i.sent_on DESC'
             );
 
             $return = array('entries' => null);
 
             // any entries?
-            if(empty($entries)) return $return;
+            if (empty($entries)) {
+                return $return;
+            }
 
             $data = array();
-            foreach($entries as $row) {
-                if(!isset($data[$row['data_id']])) {
+            foreach ($entries as $row) {
+                if (!isset($data[$row['data_id']])) {
                     $data[$row['data_id']] = $row;
                 }
 
                 $data[$row['data_id']]['fields'][$row['label']] = unserialize($row['value']);
             }
 
-            foreach($data as $row) {
+            foreach ($data as $row) {
                 $item['entry'] = array();
 
                 // set attributes
@@ -116,12 +122,14 @@ class Api
                 $item['entry']['@attributes']['sent_on'] = date('c', $row['sent_on']);
 
                 // set content
-                foreach($row['fields'] as $key => $value) {
-                    $item['entry']['fields']['fields'][] = array('field' => array(
-                        'name' => $key,
-                        'value' => $value,
-                        'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
-                    ));
+                foreach ($row['fields'] as $key => $value) {
+                    $item['entry']['fields']['fields'][] = array(
+                        'field' => array(
+                            'name' => $key,
+                            'value' => $value,
+                            'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
+                        )
+                    );
                 }
 
                 $return['entries'][$row['id']] = $item;
@@ -141,7 +149,7 @@ class Api
      */
     public static function entriesGetById($id)
     {
-        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
             // redefine
             $id = (int) $id;
 
@@ -154,15 +162,17 @@ class Api
             );
 
             // any entries?
-            if(empty($entries)) {
+            if (empty($entries)) {
                 return BaseAPI::output(BaseAPI::ERROR, array('message' => 'Not found.'));
             }
 
             $return = array('entry' => null);
 
             $data = array();
-            foreach($entries as $row) {
-                if(!isset($data['id'])) $data = $row;
+            foreach ($entries as $row) {
+                if (!isset($data['id'])) {
+                    $data = $row;
+                }
 
                 $data['fields'][$row['label']] = unserialize($row['value']);
             }
@@ -174,10 +184,10 @@ class Api
                 array($data['form_id'])
             );
             $fieldTypes = array();
-            foreach($fields as $row) {
+            foreach ($fields as $row) {
                 $row['settings'] = unserialize($row['settings']);
 
-                if(isset($row['settings']['label'])) {
+                if (isset($row['settings']['label'])) {
                     $fieldTypes[$row['settings']['label']] = $row['type'];
                 }
             }
@@ -187,12 +197,14 @@ class Api
             $return['entry']['id'] = $data['id'];
             $return['entry']['sent_on'] = date('c', $data['sent_on']);
 
-            foreach($data['fields'] as $key => $value) {
-                $return['entry']['fields'][] = array('field' => array(
-                    'name' => $key,
-                    'value' => $value,
-                    'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
-                ));
+            foreach ($data['fields'] as $key => $value) {
+                $return['entry']['fields'][] = array(
+                    'field' => array(
+                        'name' => $key,
+                        'value' => $value,
+                        'guessed_type' => (isset($fieldTypes[$key])) ? $fieldTypes[$key] : 'textbox'
+                    )
+                );
             }
 
             return $return;
@@ -202,19 +214,19 @@ class Api
     /**
      * Get a list of all the forms
      *
-     * @param int[optional] $limit The maximum number of items to retrieve.
-     * @param int[optional] $offset The offset.
+     * @param int $limit  The maximum number of items to retrieve.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAll($limit = 30, $offset = 0)
     {
-        if(BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET')) {
             // redefine
             $limit = (int) $limit;
             $offset = (int) $offset;
 
             // validate
-            if($limit > 10000) {
+            if ($limit > 10000) {
                 return BaseAPI::output(BaseAPI::ERROR, array('message' => 'Limit can\'t be larger than 10000.'));
             }
 
@@ -228,7 +240,7 @@ class Api
 
             $return = array('forms' => null);
 
-            foreach($forms as $row) {
+            foreach ($forms as $row) {
                 $item['form'] = array();
 
                 // set attributes

@@ -77,10 +77,10 @@ class Widget extends Object
     public $URL;
 
     /**
-     * @param KernelInterface        $kernel
-     * @param string                 $module The module to use.
-     * @param string                 $action The action to use.
-     * @param                 string $data   The data that should be available.
+     * @param KernelInterface $kernel
+     * @param string          $module The module to use.
+     * @param string          $action The action to use.
+     * @param string          $data   The data that should be available.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -100,10 +100,10 @@ class Widget extends Object
     /**
      * Add a CSS file into the array
      *
-     * @param  string $file          The path for the CSS-file that should be loaded.
-     * @param  bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param  bool   $minify        Should the CSS be minified?
-     * @param  bool   $addTimestamp  May we add a timestamp for caching purposes?
+     * @param string $file          The path for the CSS-file that should be loaded.
+     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool   $minify        Should the CSS be minified?
+     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
     {
@@ -123,9 +123,9 @@ class Widget extends Object
     /**
      * Add a javascript file into the array
      *
-     * @param  string $file          The path to the javascript-file that should be loaded.
-     * @param  bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
-     * @param  bool   $minify        Should the file be minified?
+     * @param string $file          The path to the javascript-file that should be loaded.
+     * @param bool   $overwritePath Whether or not to add the module to this path. Module path is added by default.
+     * @param bool   $minify        Should the file be minified?
      */
     public function addJS($file, $overwritePath = false, $minify = true)
     {

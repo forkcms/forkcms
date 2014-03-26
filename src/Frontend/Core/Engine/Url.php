@@ -166,7 +166,7 @@ class Url extends \KernelLoader
     /**
      * Return all the parameters
      *
-     * @param bool [optional] $includeGET Should the GET-parameters be included?
+     * @param bool $includeGET Should the GET-parameters be included?
      * @return array
      */
     public function getParameters($includeGET = true)
@@ -419,7 +419,7 @@ class Url extends \KernelLoader
     /**
      * Set the pages
      *
-     * @param array [optional] $pages An array of all the pages to set.
+     * @param array $pages An array of all the pages to set.
      */
     private function setPages(array $pages = array())
     {
@@ -429,7 +429,7 @@ class Url extends \KernelLoader
     /**
      * Set the parameters
      *
-     * @param array [optional] $parameters An array of all the parameters to set.
+     * @param array $parameters An array of all the parameters to set.
      */
     private function setParameters(array $parameters = array())
     {

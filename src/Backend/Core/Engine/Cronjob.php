@@ -71,7 +71,7 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
         $this->cronjob = new $actionClass($this->getKernel());
         $this->cronjob->setModule($this->getModule());
         $this->cronjob->setAction($this->getAction());
-            
+
         if (extension_loaded('newrelic')) {
             newrelic_name_transaction('cronjob::' . $this->getModule() . '::' . $this->getAction());
         }
@@ -180,7 +180,7 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
      * We can't rely on the parent setModule function, because a cronjob requires no login
      *
      * @param string $action The action to load.
-     * @param string[optional] $module The module to load.
+     * @param string $module The module to load.
      */
     public function setAction($action, $module = null)
     {

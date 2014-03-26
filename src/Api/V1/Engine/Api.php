@@ -113,7 +113,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
                 foreach ($matches[0] as $i => $row) {
                     // set documentation
                     $parameterDocumentation[$matches[2][$i]] = array(
-                        'type' => str_replace('[optional]', '', $matches[1][$i]),
+                        'type' => $matches[1][$i],
                         'optional' => (substr_count($matches[1][$i], '[optional]') > 0),
                         'description' => $matches[3][$i]
                     );
@@ -380,8 +380,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
     /**
      * Output the return
      *
-     * @param int $statusCode The status code.
-     * @param     array       [optional] $data The data to return.
+     * @param int   $statusCode The status code.
+     * @param array $data       The data to return.
      * @return bool
      */
     public static function output($statusCode, array $data = null)
@@ -433,8 +433,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
     /**
      * Output as JSON
      *
-     * @param int $statusCode The status code.
-     * @param     array       [optional] $data The data to return.
+     * @param int   $statusCode The status code.
+     * @param array $data       The data to return.
      */
     private static function outputJSON($statusCode, array $data = null)
     {
@@ -470,8 +470,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
     /**
      * Output as XML
      *
-     * @param int $statusCode The status code.
-     * @param     array       [optional] $data The data to return.
+     * @param int   $statusCode The status code.
+     * @param array $data       The data to return.
      */
     private static function outputXML($statusCode, array $data = null)
     {

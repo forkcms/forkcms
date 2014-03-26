@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * FrontendRSSItem, this is our extended version of SpoonRSSItem
@@ -133,8 +133,8 @@ class RssItem extends \SpoonFeedRSSItem
      * Set the guid.
      * If the link is an internal link the sites URL will be prepended.
      *
-     * @param string $link The guid for an item.
-     * @param        bool  [optional] $isPermaLink Is this link permanent?
+     * @param string $link        The guid for an item.
+     * @param bool   $isPermaLink Is this link permanent?
      */
     public function setGuid($link, $isPermaLink = true)
     {

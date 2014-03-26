@@ -54,7 +54,7 @@ class Model
      * Build HTML for a template (visual representation)
      *
      * @param array $format The template format.
-     * @param       bool    [optional] $large Will the HTML be used in a large version?
+     * @param bool  $large  Will the HTML be used in a large version?
      * @return string
      */
     public static function buildTemplateHTML($format, $large = false)
@@ -638,7 +638,7 @@ class Model
     /**
      * Get templates
      *
-     * @param string [optional] $theme The theme we want to fetch the templates from.
+     * @param string $theme The theme we want to fetch the templates from.
      * @return array
      */
     public static function getTemplates($theme = null)

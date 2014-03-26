@@ -43,7 +43,7 @@ class Model
     /**
      * Delete the given profiles.
      *
-     * @param  mixed $ids One ID, or an array of IDs.
+     * @param mixed $ids One ID, or an array of IDs.
      */
     public static function delete($ids)
     {
@@ -69,7 +69,7 @@ class Model
     /**
      * Delete a profile group.
      *
-     * @param  int $id Id of the group.
+     * @param int $id Id of the group.
      */
     public static function deleteGroup($id)
     {
@@ -86,7 +86,7 @@ class Model
     /**
      * Delete a membership of a profile in a group.
      *
-     * @param  int $id Id of the membership.
+     * @param int $id Id of the membership.
      */
     public static function deleteProfileGroup($id)
     {
@@ -96,7 +96,7 @@ class Model
     /**
      * Delete a sessions of a profile.
      *
-     * @param  int $id Profile id.
+     * @param int $id Profile id.
      */
     public static function deleteSession($id)
     {
@@ -106,7 +106,7 @@ class Model
     /**
      * Check if a profile exists.
      *
-     * @param  int $id Profile id.
+     * @param int $id Profile id.
      * @return bool
      */
     public static function exists($id)
@@ -123,8 +123,8 @@ class Model
     /**
      * Check if a profile exists by email address.
      *
-     * @param  string $email Email address to check for existence.
-     * @param         int    [optional] $id Profile id to ignore.
+     * @param string $email Email address to check for existence.
+     * @param int    $id    Profile id to ignore.
      * @return bool
      */
     public static function existsByEmail($email, $id = null)
@@ -141,8 +141,8 @@ class Model
     /**
      * Check if a display name exists.
      *
-     * @param  string $displayName The display name to check.
-     * @param         int          [optional] $id  Profile id to ignore.
+     * @param string $displayName The display name to check.
+     * @param int    $id          Profile id to ignore.
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -177,7 +177,7 @@ class Model
      * Check if a group name exists.
      *
      * @param string $groupName Group name.
-     * @param        int        [optional] $id Group id to ignore.
+     * @param int    $id        Group id to ignore.
      * @return bool
      */
     public static function existsGroupName($groupName, $id = null)
@@ -211,7 +211,7 @@ class Model
     /**
      * Get information about a profile.
      *
-     * @param  int $id The profile id to get the information for.
+     * @param int $id The profile id to get the information for.
      * @return array
      */
     public static function get($id)
@@ -227,8 +227,8 @@ class Model
     /**
      * Get avatar
      *
-     * @param int $id    The id for the profile we want to get the avatar from.
-     * @param     string [optional] $email    The email from the user we can use for gravatar.
+     * @param int    $id    The id for the profile we want to get the avatar from.
+     * @param string $email The email from the user we can use for gravatar.
      * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null)
@@ -296,7 +296,7 @@ class Model
     /**
      * Get information about a profile group.
      *
-     * @param  int $id Id of the group.
+     * @param int $id Id of the group.
      * @return array
      */
     public static function getGroup($id)
@@ -325,7 +325,7 @@ class Model
      * Get profile groups for dropdown not yet linked to a profile
      *
      * @param int $profileId Profile id.
-     * @param     int        [optional] $includeId Group id to always include.
+     * @param int $includeId Group id to always include.
      * @return array
      */
     public static function getGroupsForDropDown($profileId, $includeId = null)
@@ -395,11 +395,11 @@ class Model
     /**
      * Generate a random string.
      *
-     * @param int  [optional] $length Length of random string.
-     * @param bool [optional] $numeric Use numeric characters.
-     * @param bool [optional] $lowercase Use alphanumeric lowercase characters.
-     * @param bool [optional] $uppercase Use alphanumeric uppercase characters.
-     * @param bool [optional] $special Use special characters.
+     * @param int  $length    Length of random string.
+     * @param bool $numeric   Use numeric characters.
+     * @param bool $lowercase Use alphanumeric lowercase characters.
+     * @param bool $uppercase Use alphanumeric uppercase characters.
+     * @param bool $special   Use special characters.
      * @return string
      */
     public static function getRandomString(
@@ -485,7 +485,7 @@ class Model
      * Retrieve a unique URL for a profile based on the display name.
      *
      * @param string $displayName The display name to base on.
-     * @param        int          [optional] $id The id of the profile to ignore.
+     * @param int    $id          The id of the profile to ignore.
      * @return string
      */
     public static function getUrl($displayName, $id = null)
@@ -606,7 +606,7 @@ class Model
     /**
      * Insert a new group.
      *
-     * @param  array $values Group data.
+     * @param array $values Group data.
      * @return int
      */
     public static function insertGroup(array $values)
@@ -617,7 +617,7 @@ class Model
     /**
      * Add a profile to a group.
      *
-     * @param  array $values Membership data.
+     * @param array $values Membership data.
      * @return int
      */
     public static function insertProfileGroup(array $values)

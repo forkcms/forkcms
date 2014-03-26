@@ -39,8 +39,8 @@ class Model
     /**
      * Copy content blocks
      *
-     * @param string $from 	The language code to copy the content blocks from.
-     * @param string $to 	The language code we want to copy the content blocks to.
+     * @param string $from The language code to copy the content blocks from.
+     * @param string $to   The language code we want to copy the content blocks to.
      * @return array
      */
     public static function copy($from, $to)
@@ -61,7 +61,7 @@ class Model
         $i = 1;
 
         // loop existing content blocks
-        foreach($contentBlocks as $contentBlock) {
+        foreach ($contentBlocks as $contentBlock) {
             // define old id
             $oldId = $contentBlock['extra_id'];
 
@@ -92,16 +92,18 @@ class Model
         }
 
         // get the extra Ids for the content blocks
-        if(!empty($newIds)) {
+        if (!empty($newIds)) {
             // get content block extra ids
             $contentBlockExtraIds = (array) $db->getRecords(
                 'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
             );
 
             // loop new ids
-            foreach($newIds as $oldId => $newId) {
-                foreach($contentBlockExtraIds as $extraId) {
-                    if($extraId['revision_id'] == $newId) $contentBlockIds[$oldId] = $extraId['extra_id'];
+            foreach ($newIds as $oldId => $newId) {
+                foreach ($contentBlockExtraIds as $extraId) {
+                    if ($extraId['revision_id'] == $newId) {
+                        $contentBlockIds[$oldId] = $extraId['extra_id'];
+                    }
                 }
             }
         }
@@ -124,13 +126,19 @@ class Model
         $item = self::get($id);
 
         // build extra
-        $extra = array('id' => $item['extra_id'],
-                        'module' => 'ContentBlocks',
-                        'type' => 'widget',
-                        'action' => 'detail');
+        $extra = array(
+            'id' => $item['extra_id'],
+            'module' => 'ContentBlocks',
+            'type' => 'widget',
+            'action' => 'detail'
+        );
 
         // delete extra
-        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        $db->delete(
+            'modules_extras',
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        );
 
         // update blocks with this item linked
         $db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
@@ -142,8 +150,8 @@ class Model
     /**
      * Does the item exist.
      *
-     * @param int $id The id of the record to check for existence.
-     * @param bool[optional] $activeOnly Only check in active items?
+     * @param int  $id         The id of the record to check for existence.
+     * @param bool $activeOnly Only check in active items?
      * @return bool
      */
     public static function exists($id, $activeOnly = true)
@@ -151,7 +159,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // if the item should also be active, there should be at least one row to return true
-        if((bool) $activeOnly) return (bool) $db->getVar(
+        if ((bool) $activeOnly) return (bool) $db->getVar(
             'SELECT 1
              FROM content_blocks AS i
              WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -202,7 +210,7 @@ class Model
     /**
      * Get all data for a given revision.
      *
-     * @param int $id The Id for the item wherefore you want a revision.
+     * @param int $id         The Id for the item wherefore you want a revision.
      * @param int $revisionId The Id of the revision.
      * @return array
      */
@@ -231,9 +239,9 @@ class Model
 
         // if there is a custom theme we should include the templates there also
         $theme = BackendModel::getModuleSetting('Core', 'theme', 'core');
-        if($theme != 'core') {
+        if ($theme != 'core') {
             $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/ContentBlocks/Layout/Widgets';
-            if(is_dir($path)) {
+            if (is_dir($path)) {
                 $finder->in($path);
             }
         }
@@ -264,14 +272,14 @@ class Model
             'data' => null,
             'hidden' => 'N',
             'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?',
-                array('ContentBlocks')
-            )
+                    'SELECT MAX(i.sequence) + 1
+                     FROM modules_extras AS i
+                     WHERE i.module = ?',
+                    array('ContentBlocks')
+                )
         );
 
-        if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar(
+        if (is_null($extra['sequence'])) $extra['sequence'] = $db->getVar(
             'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
              FROM modules_extras AS i'
         );
@@ -284,11 +292,17 @@ class Model
         $item['revision_id'] = $db->insert('content_blocks', $item);
 
         // update extra (item id is now known)
-        $extra['data'] = serialize(array(
-            'id' => $item['id'],
-            'extra_label' => $item['title'],
-            'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('Edit', 'ContentBlocks', $item['language']) . '&id=' . $item['id'])
+        $extra['data'] = serialize(
+            array(
+                'id' => $item['id'],
+                'extra_label' => $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction(
+                                  'Edit',
+                                  'ContentBlocks',
+                                  $item['language']
+                              ) . '&id=' . $item['id']
+            )
         );
         $db->update(
             'modules_extras',
@@ -317,19 +331,32 @@ class Model
             'type' => 'widget',
             'label' => 'ContentBlocks',
             'action' => 'detail',
-            'data' => serialize(array(
-                'id' => $item['id'],
-                'extra_label' => $item['title'],
-                'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
-                ),
-            'hidden' => 'N');
+            'data' => serialize(
+                array(
+                    'id' => $item['id'],
+                    'extra_label' => $item['title'],
+                    'language' => $item['language'],
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                )
+            ),
+            'hidden' => 'N'
+        );
 
         // update extra
-        $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        $db->update(
+            'modules_extras',
+            $extra,
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        );
 
         // archive all older versions
-        $db->update('content_blocks', array('status' => 'archived'), 'id = ? AND language = ?', array($item['id'], BL::getWorkingLanguage()));
+        $db->update(
+            'content_blocks',
+            array('status' => 'archived'),
+            'id = ? AND language = ?',
+            array($item['id'], BL::getWorkingLanguage())
+        );
 
         // insert new version
         $item['revision_id'] = $db->insert('content_blocks', $item);
@@ -348,7 +375,11 @@ class Model
         );
 
         // delete other revisions
-        if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], BL::getWorkingLanguage(), 'archived'));
+        if (!empty($revisionIdsToKeep)) $db->delete(
+            'content_blocks',
+            'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+            array($item['id'], BL::getWorkingLanguage(), 'archived')
+        );
 
         // return the new revision_id
         return $item['revision_id'];

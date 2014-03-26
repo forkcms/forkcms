@@ -81,7 +81,7 @@ class Profile
     /**
      * Constructor.
      *
-     * @param int [optional] $profileId The profile id to load data from.
+     * @param int $profileId The profile id to load data from.
      */
     public function __construct($profileId = null)
     {
@@ -133,8 +133,8 @@ class Profile
     /**
      * Get a profile setting by name.
      *
-     * @param string $name  Setting name.
-     * @param        string [optional] $defaultValue Default value is used when the setting does not exist.
+     * @param string        $name         Setting name.
+     * @param string $defaultValue Default value is used when the setting does not exist.
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)

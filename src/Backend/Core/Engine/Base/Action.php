@@ -75,7 +75,9 @@ class Action extends Object
         $this->setAction($this->URL->getAction());
 
         // populate the parameter array, we loop GET and urldecode the values for usage later on
-        foreach((array) $_GET as $key => $value) $this->parameters[$key] = $value;
+        foreach ((array) $_GET as $key => $value) {
+            $this->parameters[$key] = $value;
+        }
     }
 
     /**
@@ -86,7 +88,9 @@ class Action extends Object
         $fromSession = (\SpoonSession::exists('csrf_token')) ? \SpoonSession::get('csrf_token') : '';
         $fromGet = \SpoonFilter::getGetValue('token', null, '');
 
-        if($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) return;
+        if ($fromSession != '' && $fromGet != '' && $fromSession == $fromGet) {
+            return;
+        }
 
         // clear the token
         \SpoonSession::set('csrf_token', '');
@@ -97,7 +101,7 @@ class Action extends Object
                 null,
                 null,
                 array(
-                     'error' => 'csrf'
+                    'error' => 'csrf'
                 )
             )
         );
@@ -107,7 +111,7 @@ class Action extends Object
      * Display, this wil output the template to the browser
      * If no template is specified we build the path form the current module and action
      *
-     * @param string[optional] $template The template to use, if not provided it will be based on the action.
+     * @param string $template The template to use, if not provided it will be based on the action.
      */
     public function display($template = null)
     {
@@ -118,7 +122,7 @@ class Action extends Object
          * If no template is specified, we have to build the path ourself. The default template is
          * based on the name of the current action
          */
-        if($template === null) {
+        if ($template === null) {
             $template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
         }
 
@@ -142,12 +146,12 @@ class Action extends Object
         $this->header->addJS('backend.js', 'Core');
 
         // add module js
-        if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) {
+        if (is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) {
             $this->header->addJS($this->getModule() . '.js');
         }
 
         // add action js
-        if(is_file(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) {
+        if (is_file(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) {
             $this->header->addJS($this->getAction() . '.js');
         }
 
@@ -158,7 +162,7 @@ class Action extends Object
         $this->header->addCSS('debug.css', 'Core');
 
         // add module specific css
-        if(is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) {
+        if (is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) {
             $this->header->addCSS($this->getModule() . '.css');
         }
 
@@ -166,7 +170,7 @@ class Action extends Object
         $var = array_map('strip_tags', $this->getParameter('var', 'array', array()));
 
         // is there a report to show?
-        if($this->getParameter('report') !== null) {
+        if ($this->getParameter('report') !== null) {
             // show the report
             $this->tpl->assign('report', true);
 
@@ -174,23 +178,29 @@ class Action extends Object
             $messageName = strip_tags(\SpoonFilter::toCamelCase($this->getParameter('report'), '-'));
 
             // if we have data to use it will be passed as the var parameter
-            if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
-            else $this->tpl->assign('reportMessage', BL::msg($messageName));
+            if (!empty($var)) {
+                $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+            } else {
+                $this->tpl->assign('reportMessage', BL::msg($messageName));
+            }
 
             // highlight an element with the given id if needed
-            if($this->getParameter('highlight')) {
+            if ($this->getParameter('highlight')) {
                 $this->tpl->assign('highlight', strip_tags($this->getParameter('highlight')));
             }
         }
 
         // is there an error to show?
-        if($this->getParameter('error') !== null) {
+        if ($this->getParameter('error') !== null) {
             // camelcase the string
             $errorName = strip_tags(\SpoonFilter::toCamelCase($this->getParameter('error'), '-'));
 
             // if we have data to use it will be passed as the var parameter
-            if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
-            else $this->tpl->assign('errorMessage', BL::err($errorName));
+            if (!empty($var)) {
+                $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+            } else {
+                $this->tpl->assign('errorMessage', BL::err($errorName));
+            }
         }
     }
 
@@ -199,9 +209,9 @@ class Action extends Object
      * The function will return null if the key is not available
      * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
      *
-     * @param string $key The name of the parameter.
-     * @param string[optional] $type The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
-     * @param mixed[optional] $defaultValue The value that should be returned if the key is not available.
+     * @param string $key          The name of the parameter.
+     * @param string $type         The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
+     * @param mixed  $defaultValue The value that should be returned if the key is not available.
      * @return mixed
      */
     public function getParameter($key, $type = 'string', $defaultValue = null)
@@ -209,7 +219,7 @@ class Action extends Object
         $key = (string) $key;
 
         // parameter exists
-        if(isset($this->parameters[$key]) && $this->parameters[$key] != '') {
+        if (isset($this->parameters[$key]) && $this->parameters[$key] != '') {
             return \SpoonFilter::getValue($this->parameters[$key], null, null, $type);
         }
 
@@ -221,7 +231,6 @@ class Action extends Object
      */
     protected function parse()
     {
-
     }
 
     /**

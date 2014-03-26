@@ -38,9 +38,9 @@ class GetData extends BackendBaseCronjob
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach($finder->files()->in($this->cachePath) as $file) {
+        foreach ($finder->files()->in($this->cachePath) as $file) {
             // delete file if more than 1 week old
-            if($file->getMTime() < strtotime('-1 week')) {
+            if ($file->getMTime() < strtotime('-1 week')) {
                 $fs->remove($file->getRealPath());
             }
         }
@@ -76,39 +76,36 @@ class GetData extends BackendBaseCronjob
         $filename = null;
 
         // no parameters given? cronjob called
-        if($page == '' && $identifier == '' && $startTimestamp === 0 && $endTimestamp === 0) {
+        if ($page == '' && $identifier == '' && $startTimestamp === 0 && $endTimestamp === 0) {
             // is everything still set?
-            if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED') {
+            if (BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED') {
                 $interval = BackendModel::getModuleSetting('Analytics', 'interval', 'week');
-                if($interval == 'week') $interval .= ' -2 days';
+                if ($interval == 'week') {
+                    $interval .= ' -2 days';
+                }
 
                 $page = 'all';
                 $startTimestamp = strtotime('-1' . $interval);
                 $endTimestamp = time();
             }
-        }
-
-        // all parameters given? curl called
-        elseif($page != '' && $identifier != '' && $startTimestamp !== 0 && $endTimestamp !== 0) {
+        } // all parameters given? curl called
+        elseif ($page != '' && $identifier != '' && $startTimestamp !== 0 && $endTimestamp !== 0) {
             // init vars
             $filename = $this->cachePath . '/' . $page . ($pageId != '' ? '_' . $pageId : '') . '_' . $identifier . '.txt';
             $fs = new Filesystem();
 
             // is everything still set?
-            if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED') {
+            if (BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED') {
                 // create temporary file to indicate we're getting data
                 $fs->dumpFile($filename, 'busy1');
-            }
-
-            // no longer authorized
+            } // no longer authorized
             else {
                 // set status in cache
                 $fs->dumpFile($filename, 'unauthorized');
+
                 return;
             }
-        }
-
-        // some parameters aren't given? throw exception
+        } // some parameters aren't given? throw exception
         else throw new \SpoonException('Some parameters are missing.');
 
         $this->getDashboardData();
@@ -130,13 +127,16 @@ class GetData extends BackendBaseCronjob
             $data = BackendAnalyticsModel::getDashboardDataFromCache($startTimestamp, $endTimestamp);
 
             // nothing in cache - fetch from google and set cache
-            if(!isset($data['dashboard_data'])) {
-                $data['dashboard_data']['entries'] = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);
+            if (!isset($data['dashboard_data'])) {
+                $data['dashboard_data']['entries'] = BackendAnalyticsHelper::getDashboardData(
+                    $startTimestamp,
+                    $endTimestamp
+                );
             }
 
             // update cache file
             BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \SpoonException('Something went wrong while getting dashboard data.');
         }
     }
@@ -144,15 +144,21 @@ class GetData extends BackendBaseCronjob
     /**
      * Get data from analytics
      *
-     * @param int $startTimestamp The start timestamp for the data to collect.
-     * @param int $endTimestamp The end timestamp for the data to collect.
-     * @param bool[optional] $force Force getting data. Don't rely on cache.
-     * @param string[optional] $page The page to get data for.
-     * @param string[optional] $pageId The id of the page to get data for.
-     * @param string[optional] $filename The name of the cache file.
+     * @param int    $startTimestamp The start timestamp for the data to collect.
+     * @param int    $endTimestamp   The end timestamp for the data to collect.
+     * @param bool   $force          Force getting data. Don't rely on cache.
+     * @param string $page           The page to get data for.
+     * @param string $pageId         The id of the page to get data for.
+     * @param string $filename       The name of the cache file.
      */
-    private function getData($startTimestamp, $endTimestamp, $force = false, $page = 'all', $pageId = null, $filename = null)
-    {
+    private function getData(
+        $startTimestamp,
+        $endTimestamp,
+        $force = false,
+        $page = 'all',
+        $pageId = null,
+        $filename = null
+    ) {
         $fs = new Filesystem();
 
         try {
@@ -160,40 +166,66 @@ class GetData extends BackendBaseCronjob
             $data = BackendAnalyticsModel::getDataFromCache($startTimestamp, $endTimestamp);
 
             // nothing in cache - fetch from google and set cache
-            if(!isset($data['aggregates']) || $force) $data['aggregates'] = BackendAnalyticsHelper::getAggregates($startTimestamp, $endTimestamp);
+            if (!isset($data['aggregates']) || $force) $data['aggregates'] = BackendAnalyticsHelper::getAggregates(
+                $startTimestamp,
+                $endTimestamp
+            );
 
             // nothing in cache - fetch from google and set cache
-            if(!isset($data['aggregates_total']) || $force) $data['aggregates_total'] = BackendAnalyticsHelper::getAggregates(mktime(0, 0, 0, 1, 1, 2005), mktime(0, 0, 0));
+            if (!isset($data['aggregates_total']) || $force) $data['aggregates_total'] = BackendAnalyticsHelper::getAggregates(
+                mktime(0, 0, 0, 1, 1, 2005),
+                mktime(0, 0, 0)
+            );
 
             // nothing in cache - fetch from google and set cache
-            if(!isset($data['metrics_per_day']) || $force) $data['metrics_per_day']['entries'] = BackendAnalyticsHelper::getMetricsPerDay($startTimestamp, $endTimestamp);
+            if (!isset($data['metrics_per_day']) || $force) $data['metrics_per_day']['entries'] = BackendAnalyticsHelper::getMetricsPerDay(
+                $startTimestamp,
+                $endTimestamp
+            );
 
             // @todo refactor the code below. Isnt a switch statement more suitable?
 
             // traffic sources, top keywords and top referrals on index page
-            if($page == 'all' || $page == 'index') {
+            if ($page == 'all' || $page == 'index') {
                 // nothing in cache - fetch from google and set cache
-                if(!isset($data['traffic_sources']) || $force) $data['traffic_sources']['entries'] = BackendAnalyticsHelper::getTrafficSourcesGrouped(array('pageviews'), $startTimestamp, $endTimestamp, 'pageviews');
+                if (!isset($data['traffic_sources']) || $force) $data['traffic_sources']['entries'] = BackendAnalyticsHelper::getTrafficSourcesGrouped(
+                    array('pageviews'),
+                    $startTimestamp,
+                    $endTimestamp,
+                    'pageviews'
+                );
 
                 // nothing in cache
-                if(!isset($data['top_keywords']) || $force) {
+                if (!isset($data['top_keywords']) || $force) {
                     // fetch from google and use a safe limit
-                    $gaResults = BackendAnalyticsHelper::getKeywords('pageviews', $startTimestamp, $endTimestamp, 'pageviews', 50);
+                    $gaResults = BackendAnalyticsHelper::getKeywords(
+                        'pageviews',
+                        $startTimestamp,
+                        $endTimestamp,
+                        'pageviews',
+                        50
+                    );
 
                     // set cache
                     $data['top_keywords']['entries'] = $gaResults['entries'];
                 }
 
                 // nothing in cache
-                if(!isset($data['top_referrals']) || $force) {
+                if (!isset($data['top_referrals']) || $force) {
                     // fetch from google and use a safe limit
-                    $gaResults = BackendAnalyticsHelper::getReferrals('pageviews', $startTimestamp, $endTimestamp, 'pageviews', 50);
+                    $gaResults = BackendAnalyticsHelper::getReferrals(
+                        'pageviews',
+                        $startTimestamp,
+                        $endTimestamp,
+                        'pageviews',
+                        50
+                    );
 
                     // init vars
                     $topReferrals = array();
 
                     // add entries to items
-                    foreach($gaResults['entries'] as $entry) {
+                    foreach ($gaResults['entries'] as $entry) {
                         $topReferrals[] = array(
                             'referrer' => $entry['source'] . $entry['referralPath'],
                             'pageviews' => $entry['pageviews']
@@ -206,11 +238,17 @@ class GetData extends BackendBaseCronjob
             }
 
             // top pages on index and content page
-            if($page == 'all' || $page == 'index' || $page == 'content') {
+            if ($page == 'all' || $page == 'index' || $page == 'content') {
                 // nothing in cache
-                if(!isset($data['top_pages']) || $force) {
+                if (!isset($data['top_pages']) || $force) {
                     // fetch from google and use a safe limit
-                    $gaResults = BackendAnalyticsHelper::getPages('pageviews', $startTimestamp, $endTimestamp, 'pageviews', 50);
+                    $gaResults = BackendAnalyticsHelper::getPages(
+                        'pageviews',
+                        $startTimestamp,
+                        $endTimestamp,
+                        'pageviews',
+                        50
+                    );
 
                     // set cache
                     $data['top_pages']['entries'] = $gaResults['entries'];
@@ -218,11 +256,17 @@ class GetData extends BackendBaseCronjob
             }
 
             // top exit pages on content page
-            if($page == 'all' || $page == 'content') {
+            if ($page == 'all' || $page == 'content') {
                 // nothing in cache
-                if(!isset($data['top_exit_pages']) || $force) {
+                if (!isset($data['top_exit_pages']) || $force) {
                     // fetch from google
-                    $gaResults = BackendAnalyticsHelper::getPages(array('exits', 'pageviews'), $startTimestamp, $endTimestamp, 'exits', 50);
+                    $gaResults = BackendAnalyticsHelper::getPages(
+                        array('exits', 'pageviews'),
+                        $startTimestamp,
+                        $endTimestamp,
+                        'exits',
+                        50
+                    );
 
                     // set cache
                     $data['top_exit_pages']['entries'] = $gaResults['entries'];
@@ -230,11 +274,17 @@ class GetData extends BackendBaseCronjob
             }
 
             // top exit pages on all pages page
-            if($page == 'all' || $page == 'all_pages') {
+            if ($page == 'all' || $page == 'all_pages') {
                 // nothing in cache
-                if(!isset($data['pages']) || $force) {
+                if (!isset($data['pages']) || $force) {
                     // fetch from google
-                    $gaResults = BackendAnalyticsHelper::getPages(array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnSite', 'visits'), $startTimestamp, $endTimestamp, 'pageviews', 50);
+                    $gaResults = BackendAnalyticsHelper::getPages(
+                        array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnSite', 'visits'),
+                        $startTimestamp,
+                        $endTimestamp,
+                        'pageviews',
+                        50
+                    );
 
                     // set cache
                     $data['pages']['entries'] = $gaResults['entries'];
@@ -243,11 +293,17 @@ class GetData extends BackendBaseCronjob
             }
 
             // exit pages on exit pages page
-            if($page == 'all' || $page == 'exit_pages') {
+            if ($page == 'all' || $page == 'exit_pages') {
                 // nothing in cache
-                if(!isset($data['exit_pages']) || $force) {
+                if (!isset($data['exit_pages']) || $force) {
                     // fetch from google
-                    $gaResults = BackendAnalyticsHelper::getExitPages(array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnSite', 'visits'), $startTimestamp, $endTimestamp, 'exits', 50);
+                    $gaResults = BackendAnalyticsHelper::getExitPages(
+                        array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnSite', 'visits'),
+                        $startTimestamp,
+                        $endTimestamp,
+                        'exits',
+                        50
+                    );
 
                     // set cache
                     $data['exit_pages']['entries'] = $gaResults['entries'];
@@ -255,9 +311,9 @@ class GetData extends BackendBaseCronjob
             }
 
             // detail page
-            if($page == 'detail_page') {
+            if ($page == 'detail_page') {
                 // nothing in cache
-                if(!isset($data['page' . $pageId]) || $force) {
+                if (!isset($data['page' . $pageId]) || $force) {
                     // fetch from google
                     $gaResults = BackendAnalyticsHelper::getDataForPage($pageId, $startTimestamp, $endTimestamp);
 
@@ -268,13 +324,13 @@ class GetData extends BackendBaseCronjob
 
             // update cache file
             BackendAnalyticsModel::writeCacheFile($data, $startTimestamp, $endTimestamp);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             // set file content to indicate something went wrong if needed
-            if(isset($filename)) $fs->dumpFile($filename, 'error');
+            if (isset($filename)) $fs->dumpFile($filename, 'error');
             else throw new \SpoonException('Something went wrong while getting data.');
         }
 
         // remove temporary file if needed
-        if(isset($filename)) $fs->dumpFile($filename, 'done');
+        if (isset($filename)) $fs->dumpFile($filename, 'done');
     }
 }

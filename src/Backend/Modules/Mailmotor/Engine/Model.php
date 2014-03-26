@@ -127,7 +127,7 @@ class Model
     /**
      * Deletes one or more mailings
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function delete($ids)
     {
@@ -157,7 +157,7 @@ class Model
     /**
      * Deletes one or more e-mail addresses
      *
-     * @param  mixed $emails The emails to delete.
+     * @param mixed $emails The emails to delete.
      */
     public static function deleteAddresses($emails)
     {
@@ -180,7 +180,7 @@ class Model
     /**
      * Deletes one or more campaigns
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function deleteCampaigns($ids)
     {
@@ -205,7 +205,7 @@ class Model
     /**
      * Deletes one or more groups
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function deleteGroups($ids)
     {
@@ -640,7 +640,7 @@ class Model
     /**
      * Get all e-mail addresses
      *
-     * @param int [optional] $limit Maximum number of addresses to get.
+     * @param int $limit Maximum number of addresses to get.
      * @return array
      */
     public static function getAddresses($limit = null)
@@ -679,9 +679,9 @@ class Model
     /**
      * Get the e-mail addresses by group ID(s)
      *
-     * @param array $ids The ids of the groups.
-     * @param       bool [optional] $getColumn If this is true, the function returns a column of addresses instead.
-     * @param       int  [optional] $limit Maximum number if addresses to return.
+     * @param array $ids       The ids of the groups.
+     * @param bool  $getColumn If this is true, the function returns a column of addresses instead.
+     * @param int   $limit     Maximum number if addresses to return.
      * @return array
      */
     public static function getAddressesByGroupID($ids, $getColumn = false, $limit = null)
@@ -828,7 +828,9 @@ class Model
         $groupIds = self::getGroupIDs();
 
         // no groups found = stop here
-        if (empty($groupIds)) return array();
+        if (empty($groupIds)) {
+            return array();
+        }
 
         // fetch address group records
         $records = BackendModel::getContainer()->get('database')->getRecords(
@@ -857,7 +859,7 @@ class Model
     /**
      * Returns the default group ID
      *
-     * @param string [optional] $language The language wherefore the default should be returned.
+     * @param string $language The language wherefore the default should be returned.
      * @return int
      */
     public static function getDefaultGroupID($language = null)
@@ -1069,7 +1071,9 @@ class Model
     public static function getGroupsByIds($ids)
     {
         // no ids set = stop here
-        if (empty($ids)) return false;
+        if (empty($ids)) {
+            return false;
+        }
 
         // check if an array was given
         $ids = (array) $ids;
@@ -1117,7 +1121,9 @@ class Model
         );
 
         // no records found
-        if (empty($records)) return array();
+        if (empty($records)) {
+            return array();
+        }
 
         foreach ($records as &$record) {
             // store variables array
@@ -1144,7 +1150,9 @@ class Model
         $languages = BL::getActiveLanguages();
 
         // no languages found
-        if (empty($languages)) return array();
+        if (empty($languages)) {
+            return array();
+        }
 
         // init results
         $results = array();
@@ -1175,7 +1183,9 @@ class Model
         );
 
         // stop here if record is empty
-        if (empty($record)) return array();
+        if (empty($record)) {
+            return array();
+        }
 
         // get groups for this mailing ID
         $record['groups'] = self::getGroupIDsByMailingID($id);
@@ -1206,9 +1216,9 @@ class Model
     /**
      * Get a preview URL to the specific mailing
      *
-     * @param int $id    The id of the mailing.
-     * @param     string [optional] $contentType The content-type, possible values are: html, plain.
-     * @param     bool   [optional] $forCM Is the URL intended for Campaign Monitor.
+     * @param int    $id          The id of the mailing.
+     * @param string $contentType The content-type, possible values are: html, plain.
+     * @param bool   $forCM       Is the URL intended for Campaign Monitor.
      * @return string
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
@@ -1250,7 +1260,7 @@ class Model
     /**
      * Get all recent subscriptions
      *
-     * @param int [optional] $limit
+     * @param int $limit
      * @return array
      */
     public static function getRecentSubscriptions($limit = null)
@@ -1279,7 +1289,7 @@ class Model
     /**
      * Get all recent unsubscriptions
      *
-     * @param int [optional] $limit
+     * @param int $limit
      * @return array
      */
     public static function getRecentUnsubscriptions($limit = null)
@@ -1308,7 +1318,7 @@ class Model
     /**
      * Get all sent mailings
      *
-     * @param int [optional] $limit The maximum number of items to retrieve.
+     * @param int $limit The maximum number of items to retrieve.
      * @return array
      */
     public static function getSentMailings($limit = null)
@@ -1405,7 +1415,9 @@ class Model
             $item = array();
             $item['language'] = $language;
             $item['value'] = $directory->getBaseName();
-            $item['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_')));
+            $item['label'] = BL::lbl(
+                'Template' . \SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_'))
+            );
 
             $records[$item['value']] = $item;
         }
@@ -1422,7 +1434,9 @@ class Model
     public static function getUnsubscribedAddressesByGroupID($ids)
     {
         // check input
-        if (empty($ids)) return array();
+        if (empty($ids)) {
+            return array();
+        }
 
         // check if an array was given
         $ids = (array) $ids;
@@ -1459,7 +1473,9 @@ class Model
         $db->insert('mailmotor_addresses', $record);
 
         // no groups = stop here
-        if (empty($item['groups'])) return;
+        if (empty($item['groups'])) {
+            return;
+        }
 
         // check if groups was an array or not
         $item['groups'] = (array) $item['groups'];
@@ -1510,7 +1526,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // no fields given
-        if (empty($fields)) return false;
+        if (empty($fields)) {
+            return false;
+        }
 
         // no email address set means we just update the custom fields (ie adding new ones)
         if (!empty($email) && \SpoonFilter::isEmail($email)) {
@@ -1525,12 +1543,12 @@ class Model
                  VALUES (?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE custom_fields = ?',
                 array(
-                     $subscription['email'],
-                     $subscription['custom_fields'],
-                     $subscription['group_id'],
-                     'subscribed',
-                     BackendModel::getUTCDate('Y-m-d H:i:s'),
-                     $subscription['custom_fields']
+                    $subscription['email'],
+                    $subscription['custom_fields'],
+                    $subscription['group_id'],
+                    'subscribed',
+                    BackendModel::getUTCDate('Y-m-d H:i:s'),
+                    $subscription['custom_fields']
                 )
             );
         }
@@ -1593,8 +1611,8 @@ class Model
     /**
      * Inserts a new subscription into the database
      *
-     * @param array $item The data to insert for the address.
-     * @param       array [optional] $fields The custom field values for this user.
+     * @param array $item   The data to insert for the address.
+     * @param array $fields The custom field values for this user.
      * @return bool
      */
     public static function insertSubscription(array $item, array $fields = null)
@@ -1603,7 +1621,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // if groups are empty, add the user to the default group for this working language
-        if (empty($item['groups'])) return array();
+        if (empty($item['groups'])) {
+            return array();
+        }
 
         // insert record(s)
         foreach ($item['groups'] as $id) {
@@ -1625,8 +1645,8 @@ class Model
     /**
      * Checks if a given e-mail address is subscribed in our database
      *
-     * @param string $email The email address to check.
-     * @param        int    [optional] $groupId The id of the group.
+     * @param string $email   The email address to check.
+     * @param int    $groupId The id of the group.
      * @return bool
      */
     public static function isSubscribed($email, $groupId = null)
@@ -1648,7 +1668,7 @@ class Model
      *
      * @param array $item    The data to update for the e-mail address.
      * @param int   $groupId The group to subscribe the address to.
-     * @param       array    [optional] $fields The custom fields for the address in the given group.
+     * @param array $fields  The custom fields for the address in the given group.
      * @return bool
      */
     public static function saveAddress(array $item, $groupId, $fields = array())
@@ -1666,10 +1686,10 @@ class Model
              VALUES (?, ?, ?)
              ON DUPLICATE KEY UPDATE email = ?',
             array(
-                 $record['email'],
-                 $record['source'],
-                 $record['created_on'],
-                 $record['email']
+                $record['email'],
+                $record['source'],
+                $record['created_on'],
+                $record['email']
             )
         );
 
@@ -1684,12 +1704,12 @@ class Model
              VALUES (?, ?, ?, ?, ?)
              ON DUPLICATE KEY UPDATE custom_fields = ?',
             array(
-                 $subscription['email'],
-                 $subscription['custom_fields'],
-                 $subscription['group_id'],
-                 'subscribed',
-                 BackendModel::getUTCDate(),
-                 $subscription['custom_fields']
+                $subscription['email'],
+                $subscription['custom_fields'],
+                $subscription['group_id'],
+                'subscribed',
+                BackendModel::getUTCDate(),
+                $subscription['custom_fields']
             )
         );
     }
@@ -1781,7 +1801,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // stop here if groups are empty
-        if (empty($groupIds)) return false;
+        if (empty($groupIds)) {
+            return false;
+        }
 
         // check if $groupIds is an array or not, make it one if it isn't
         $groupIds = (array) $groupIds;
@@ -1815,7 +1837,9 @@ class Model
         $db->delete('mailmotor_mailings_groups', 'mailing_id = ?', array((int) $mailingId));
 
         // stop here if groups are empty
-        if (empty($groupIds)) return false;
+        if (empty($groupIds)) {
+            return false;
+        }
 
         // insert record(s)
         foreach ($groupIds as $id) {
@@ -1858,7 +1882,9 @@ class Model
         $records = $db->getRecords(self::QRY_DATAGRID_BROWSE_SENT, array('queued'));
 
         // no records found, so stop here
-        if (empty($records)) return false;
+        if (empty($records)) {
+            return false;
+        }
 
         // reserve update stack
         $updateIds = array();

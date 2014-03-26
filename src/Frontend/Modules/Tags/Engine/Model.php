@@ -24,10 +24,10 @@ class Model
     /**
      * Calls a method that has to be implemented though the tags interface
      *
-     * @param string $module The module wherein to search.
-     * @param string $class  The class that should contain the method.
-     * @param string $method The method to call.
-     * @param        mixed   [optional] $parameter The parameters to pass.
+     * @param string       $module    The module wherein to search.
+     * @param string       $class     The class that should contain the method.
+     * @param string       $method    The method to call.
+     * @param mixed $parameter The parameters to pass.
      * @return mixed
      */
     public static function callFromInterface($module, $class, $method, $parameter = null)
@@ -56,8 +56,8 @@ class Model
     /**
      * Get the tag for a given URL
      *
-     * @param string $URL   The URL to get the tag for.
-     * @param        string [optional] $language
+     * @param string        $URL The URL to get the tag for.
+     * @param string $language
      * @return array
      */
     public static function get($URL, $language = null)
@@ -234,10 +234,10 @@ class Model
     /**
      * Get all related items
      *
-     * @param int $id          The id of the item in the source-module.
-     * @param int $module      The source module.
-     * @param int $otherModule The module wherein the related items should appear.
-     * @param     int          [optional] $limit The maximum of related items to grab.
+     * @param int     $id          The id of the item in the source-module.
+     * @param int     $module      The source module.
+     * @param int     $otherModule The module wherein the related items should appear.
+     * @param int $limit       The maximum of related items to grab.
      * @return array
      */
     public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)

@@ -68,7 +68,7 @@ class Widget extends FrontendBaseObject
      * @param KernelInterface $kernel
      * @param string          $module The module to load.
      * @param string          $action The action to load.
-     * @param                 mixed   [optional] $data The data that was passed from the database.
+     * @param mixed           $data   The data that was passed from the database.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -93,7 +93,9 @@ class Widget extends FrontendBaseObject
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Widgets\\' . $this->getAction();
-        if($this->getModule() == 'Core') $actionClass = 'Frontend\\Core\\Widgets\\' . $this->getAction();
+        if ($this->getModule() == 'Core') {
+            $actionClass = 'Frontend\\Core\\Widgets\\' . $this->getAction();
+        }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
@@ -103,8 +105,7 @@ class Widget extends FrontendBaseObject
             );
         }
         // create action-object
-        $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData(
-        ));
+        $this->object = new $actionClass($this->getKernel(), $this->getModule(), $this->getAction(), $this->getData());
 
         // validate if the execute-method is callable
         if (!is_callable(array($this->object, 'execute'))) {
@@ -192,7 +193,9 @@ class Widget extends FrontendBaseObject
     public function loadConfig()
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Frontend\\Core\\Config';
+        }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
@@ -208,7 +211,7 @@ class Widget extends FrontendBaseObject
     /**
      * Set the action
      *
-     * @param string [optional] $action The action to load.
+     * @param string $action The action to load.
      */
     private function setAction($action = null)
     {

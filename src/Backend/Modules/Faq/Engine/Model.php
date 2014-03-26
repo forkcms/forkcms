@@ -235,7 +235,7 @@ class Model
     /**
      * Get all the categories
      *
-     * @param bool [optional] $includeCount
+     * @param bool $includeCount
      * @return array
      */
     public static function getCategories($includeCount = false)
@@ -343,7 +343,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $url
-     * @param        int [optional] $id    The id of the item to ignore.
+     * @param int    $id The id of the item to ignore.
      * @return string
      */
     public static function getURL($url, $id = null)
@@ -390,7 +390,7 @@ class Model
      * Retrieve the unique URL for a category
      *
      * @param string $url
-     * @param        int [optional] $id The id of the category to ignore.
+     * @param int    $id The id of the category to ignore.
      * @return string
      */
     public static function getURLForCategory($url, $id = null)
@@ -452,7 +452,7 @@ class Model
      * Insert a category in the database
      *
      * @param array $item
-     * @param       array [optional] $meta The metadata for the category to insert.
+     * @param array $meta The metadata for the category to insert.
      * @return int
      */
     public static function insertCategory(array $item, $meta = null)
@@ -469,8 +469,8 @@ class Model
             'hidden' => 'N',
             'sequence' => $db->getVar(
                     'SELECT MAX(i.sequence) + 1
-             FROM modules_extras AS i
-             WHERE i.module = ?',
+                     FROM modules_extras AS i
+                     WHERE i.module = ?',
                     array('Faq')
                 )
         );

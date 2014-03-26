@@ -530,7 +530,7 @@ class CKFinder_Connector_CommandHandler_CreateZip extends CKFinder_Connector_Com
   /**
    * Checks given file for security
    *
-   * @param  SplFileInfo $file
+   * @param SplFileInfo $file
    * @access protected
    * @return bool
    */

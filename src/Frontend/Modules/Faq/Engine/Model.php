@@ -46,9 +46,9 @@ class Model implements FrontendTagsInterface
     /**
      * Get all items in a category
      *
-     * @param int $categoryId
-     * @param     int   [optional] $limit
-     * @param     mixed [optional] $excludeIds
+     * @param int   $categoryId
+     * @param int   $limit
+     * @param mixed $excludeIds
      * @return array
      */
     public static function getAllForCategory($categoryId, $limit = null, $excludeIds = null)
@@ -254,7 +254,7 @@ class Model implements FrontendTagsInterface
      * Get related items based on tags
      *
      * @param int $id
-     * @param     int [optional] $limit
+     * @param int $limit
      * @return array
      */
     public static function getRelated($id, $limit = 5)
@@ -348,9 +348,9 @@ class Model implements FrontendTagsInterface
     /**
      * Increase the number of views for this item
      *
-     * @param int  $id
-     * @param bool $useful
-     * @param      mixed [optional] $previousFeedback
+     * @param int        $id
+     * @param bool       $useful
+     * @param mixed $previousFeedback
      * @return array
      */
     public static function updateFeedback($id, $useful, $previousFeedback = null)

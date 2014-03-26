@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * Frontend Ical class.
@@ -69,7 +69,7 @@ class FrontendIcal extends SpoonIcal
     /**
      * Parse the iCal and output into the browser.
      *
-     * @param bool [optional] $headers Should the headers be set? (Use false if you're debugging).
+     * @param bool $headers Should the headers be set? (Use false if you're debugging).
      */
     public function parse($headers = true)
     {

@@ -66,11 +66,11 @@ class Navigation extends FrontendBaseObject
      * Creates a Backend URL for a given action and module
      * If you don't specify a language the current language will be used.
      *
-     * @param string $action The action to build the URL for.
-     * @param string $module The module to build the URL for.
-     * @param        string  [optional] $language The language to use, if not provided we will use the working language.
-     * @param        array   [optional] $parameters GET-parameters to use.
-     * @param        bool    [optional] $urlencode Should the parameters be urlencoded?
+     * @param string $action     The action to build the URL for.
+     * @param string $module     The module to build the URL for.
+     * @param string $language   The language to use, if not provided we will use the working language.
+     * @param array  $parameters GET-parameters to use.
+     * @param bool   $urlencode  Should the parameters be urlencoded?
      * @return string
      */
     public static function getBackendURLForBlock(
@@ -262,12 +262,12 @@ class Navigation extends FrontendBaseObject
     /**
      * Get navigation HTML
      *
-     * @param string [optional] $type The type of navigation the HTML should be build for.
-     * @param int    [optional] $parentId The parentID to start of.
-     * @param int    [optional] $depth The maximum depth to parse.
-     * @param array  [optional] $excludeIds PageIDs to be excluded.
-     * @param string [optional] $tpl The template that will be used.
-     * @param int    [optional] $depthCounter A counter that will hold the current depth.
+     * @param string $type         The type of navigation the HTML should be build for.
+     * @param int    $parentId     The parentID to start of.
+     * @param int    $depth        The maximum depth to parse.
+     * @param array  $excludeIds   PageIDs to be excluded.
+     * @param string $tpl          The template that will be used.
+     * @param int    $depthCounter A counter that will hold the current depth.
      * @return string
      */
     public static function getNavigationHTML(
@@ -426,8 +426,8 @@ class Navigation extends FrontendBaseObject
     /**
      * Get a menuId for an specified URL
      *
-     * @param  string $URL      The URL wherefore you want a pageID.
-     * @param  string $language The language wherefore the pageID should be retrieved,
+     * @param string $URL      The URL wherefore you want a pageID.
+     * @param string $language The language wherefore the pageID should be retrieved,
      *                          if not provided we will load the language that was provided in the URL.
      * @return int
      */

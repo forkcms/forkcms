@@ -30,7 +30,7 @@ class Object extends \KernelLoader
     /**
      * The current action
      *
-     * @var	string
+     * @var    string
      */
     protected $action;
 
@@ -44,7 +44,7 @@ class Object extends \KernelLoader
     /**
      * The current module
      *
-     * @var	string
+     * @var    string
      */
     protected $module;
 
@@ -72,18 +72,22 @@ class Object extends \KernelLoader
      * Set the action
      *
      * @param string $action The action to load.
-     * @param string[optional] $module The module to load.
+     * @param string $module The module to load.
      */
     public function setAction($action, $module = null)
     {
         // set module
-        if($module !== null) $this->setModule($module);
+        if ($module !== null) {
+            $this->setModule($module);
+        }
 
         // check if module is set
-        if($this->getModule() === null) throw new Exception('Module has not yet been set.');
+        if ($this->getModule() === null) {
+            throw new Exception('Module has not yet been set.');
+        }
 
         // is this action allowed?
-        if(!Authentication::isAllowedAction($action, $this->getModule())) {
+        if (!Authentication::isAllowedAction($action, $this->getModule())) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(403);
 
@@ -103,7 +107,7 @@ class Object extends \KernelLoader
     public function setModule($module)
     {
         // is this module allowed?
-        if(!Authentication::isAllowedModule($module)) {
+        if (!Authentication::isAllowedModule($module)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(403);
 

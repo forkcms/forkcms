@@ -32,7 +32,7 @@ class Model
     /**
      * Delete one or more tags.
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function delete($ids)
     {
@@ -71,7 +71,10 @@ class Model
      */
     public static function existsTag($tag)
     {
-        return (BackendModel::getContainer()->get('database')->getVar('SELECT i.tag FROM tags AS i  WHERE i.tag = ?', array((string) $tag)) != '');
+        return (BackendModel::getContainer()->get('database')->getVar(
+                    'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
+                    array((string) $tag)
+                ) != '');
     }
 
     /**
@@ -93,9 +96,9 @@ class Model
     /**
      * Get tags that start with the given string
      *
-     * @param string $term     The searchstring.
-     * @param        string    [optional] $language The language to use, if not provided
-     *                         use the working language.
+     * @param string $term            The searchstring.
+     * @param string $language        The language to use, if not provided
+     *                                use the working language.
      * @return array
      */
     public static function getStartsWith($term, $language = null)
@@ -152,7 +155,7 @@ class Model
      * Get a unique URL for a tag
      *
      * @param string $URL The URL to use as a base.
-     * @param        int  [optional] $id The ID to ignore.
+     * @param int    $id  The ID to ignore.
      * @return string
      */
     public static function getURL($URL, $id = null)

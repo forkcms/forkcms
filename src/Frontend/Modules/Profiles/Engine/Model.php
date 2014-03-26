@@ -50,8 +50,8 @@ class Model
     /**
      * Check if a profile exists by email address.
      *
-     * @param string $email Email to check for existence.
-     * @param        int    [optional] $ignoreId Profile id to ignore.
+     * @param string     $email    Email to check for existence.
+     * @param int $ignoreId Profile id to ignore.
      * @return bool
      */
     public static function existsByEmail($email, $ignoreId = null)
@@ -68,8 +68,8 @@ class Model
     /**
      * Check if a display name exists.
      *
-     * @param string $displayName Display name to check for existence.
-     * @param        int          [optional] $id Profile id to ignore.
+     * @param string     $displayName Display name to check for existence.
+     * @param int $id          Profile id to ignore.
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -97,9 +97,9 @@ class Model
     /**
      * Get avatar
      *
-     * @param int $id    The id for the profile we want to get the avatar from.
-     * @param     string [optional] $email    The email from the user we can use for gravatar.
-     * @param     string [optional] $size    The resolution you want to use. Default: 240x240 pixels.
+     * @param int        $id    The id for the profile we want to get the avatar from.
+     * @param string $email The email from the user we can use for gravatar.
+     * @param string $size  The resolution you want to use. Default: 240x240 pixels.
      * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null, $size = '240x240')
@@ -198,11 +198,11 @@ class Model
     /**
      * Generate a random string.
      *
-     * @param int  [optional] $length Length of random string.
-     * @param bool [optional] $numeric Use numeric characters.
-     * @param bool [optional] $lowercase Use alphanumeric lowercase characters.
-     * @param bool [optional] $uppercase Use alphanumeric uppercase characters.
-     * @param bool [optional] $special Use special characters.
+     * @param int  $length    Length of random string.
+     * @param bool $numeric   Use numeric characters.
+     * @param bool $lowercase Use alphanumeric lowercase characters.
+     * @param bool $uppercase Use alphanumeric uppercase characters.
+     * @param bool $special   Use special characters.
      * @return string
      */
     public static function getRandomString(
@@ -289,8 +289,8 @@ class Model
     /**
      * Retrieve a unique URL for a profile based on the display name.
      *
-     * @param string $displayName The display name to base on.
-     * @param        int          [optional] $id The id of the profile to ignore.
+     * @param string     $displayName The display name to base on.
+     * @param int $id          The id of the profile to ignore.
      * @return string
      */
     public static function getUrl($displayName, $id = null)

@@ -46,25 +46,30 @@ class Model
         $todayStart = (int) strtotime(date('d F Y'));
 
         // today
-        if($timestamp >= $todayStart) {
+        if ($timestamp >= $todayStart) {
             // today
-            if($hours >= 1) return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
+            if ($hours >= 1) return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
 
             // more than one minute
-            elseif($minutes > 1) return sprintf(BL::getLabel('MinutesAgo'), $minutes);
+            elseif ($minutes > 1) {
+                return sprintf(BL::getLabel('MinutesAgo'), $minutes);
+            }
 
             // one minute
-            elseif($minutes == 1) return BL::getLabel('OneMinuteAgo');
+            elseif ($minutes == 1) return BL::getLabel('OneMinuteAgo');
 
             // more than one second
-            elseif($seconds > 1) return sprintf(BL::getLabel('SecondsAgo'), $seconds);
+            elseif ($seconds > 1) return sprintf(BL::getLabel('SecondsAgo'), $seconds);
 
             // one second
-            elseif($seconds <= 1) return BL::getLabel('OneSecondAgo');
-        }
-
-        // yesterday
-        elseif($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
+            elseif ($seconds <= 1) return BL::getLabel('OneSecondAgo');
+        } // yesterday
+        elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) return BL::getLabel(
+                                                                                            'Yesterday'
+                                                                                        ) . ' ' . date(
+                                                                                            'H:i',
+                                                                                            $timestamp
+                                                                                        );
 
         // older
         else return date('d/m/Y H:i', $timestamp);
@@ -78,7 +83,9 @@ class Model
     public static function createIdentifier()
     {
         // get last id
-        $id = (int) BackendModel::getContainer()->get('database')->getVar('SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1');
+        $id = (int) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1'
+        );
 
         // create identifier
         do {
@@ -86,14 +93,15 @@ class Model
             $identifier = 'form' . $id;
         }
 
-        // @todo refactor me...
-        // keep trying till its unique
-        while((int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM forms AS i
-             WHERE i.identifier = ?
-             LIMIT 1',
-            $identifier) > 0);
+            // @todo refactor me...
+            // keep trying till its unique
+        while ((int) BackendModel::getContainer()->get('database')->getVar(
+                'SELECT 1
+                 FROM forms AS i
+                 WHERE i.identifier = ?
+                 LIMIT 1',
+                $identifier
+            ) > 0);
 
         return $identifier;
     }
@@ -112,7 +120,7 @@ class Model
         $fieldIds = (array) $db->getColumn('SELECT i.id FROM forms_fields AS i WHERE i.form_id = ?', $id);
 
         // we have items to be deleted
-        if(!empty($fieldIds)) {
+        if (!empty($fieldIds)) {
             // delete all fields
             $db->delete('forms_fields', 'form_id = ?', $id);
             $db->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ')');
@@ -122,7 +130,7 @@ class Model
         $dataIds = (array) $db->getColumn('SELECT i.id FROM forms_data AS i WHERE i.form_id = ?', $id);
 
         // we have items to be deleted
-        if(!empty($dataIds)) self::deleteData($dataIds);
+        if (!empty($dataIds)) self::deleteData($dataIds);
 
         // delete extra
         BackendModel::deleteExtra('form_builder', 'widget', array('id' => $id));
@@ -183,7 +191,8 @@ class Model
              FROM forms AS f
              WHERE f.id = ?
              LIMIT 1',
-            (int) $id);
+            (int) $id
+        );
     }
 
     /**
@@ -199,14 +208,15 @@ class Model
              FROM forms_data AS fd
              WHERE fd.id = ?
              LIMIT 1',
-            (int) $id);
+            (int) $id
+        );
     }
 
     /**
      * Does a field exist (within a form).
      *
-     * @param int $id Id of a field.
-     * @param int[optional] $formId Id of a form.
+     * @param int $id     Id of a field.
+     * @param int $formId Id of a form.
      * @return bool
      */
     public static function existsField($id, $formId = null)
@@ -214,13 +224,14 @@ class Model
         $id = (int) $id;
 
         // exists
-        if($formId === null) {
+        if ($formId === null) {
             return (bool) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms_fields AS ff
                  WHERE ff.id = ?
                  LIMIT 1',
-                $id);
+                $id
+            );
         }
 
         // exists and ignore an id
@@ -229,14 +240,15 @@ class Model
              FROM forms_fields AS ff
              WHERE ff.id = ? AND ff.form_id = ?
              LIMIT 1',
-            array($id, (int) $formId));
+            array($id, (int) $formId)
+        );
     }
 
     /**
      * Does an identifier exist.
      *
      * @param string $identifier Identifier.
-     * @param in[optional] $ignoreId Field id to ignore.
+     * @param in     $ignoreId   Field id to ignore.
      * @return bool
      */
     public static function existsIdentifier($identifier, $ignoreId = null)
@@ -244,13 +256,14 @@ class Model
         $identifier = (string) $identifier;
 
         // exists
-        if($ignoreId === null) {
+        if ($ignoreId === null) {
             return (bool) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms AS f
                  WHERE f.identifier = ?
                  LIMIT 1',
-                $identifier);
+                $identifier
+            );
         }
 
         // exists and ignore an id
@@ -259,7 +272,8 @@ class Model
              FROM forms AS f
              WHERE f.identifier = ? AND f.id != ?
              LIMIT 1',
-            array($identifier, (int) $ignoreId));
+            array($identifier, (int) $ignoreId)
+        );
     }
 
     /**
@@ -281,10 +295,13 @@ class Model
      */
     public static function get($id)
     {
-        $return = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT f.*	FROM forms AS f WHERE f.id = ?', (int) $id);
+        $return = (array) BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT f.*	FROM forms AS f WHERE f.id = ?',
+            (int) $id
+        );
 
         // unserialize the emailaddresses
-        if(isset($return['email'])) $return['email'] = (array) unserialize($return['email']);
+        if (isset($return['email'])) $return['email'] = (array) unserialize($return['email']);
 
         return $return;
     }
@@ -315,8 +332,8 @@ class Model
         );
 
         // unserialize values
-        foreach($data['fields'] as &$field) {
-            if($field['value'] !== null) {
+        foreach ($data['fields'] as &$field) {
+            if ($field['value'] !== null) {
                 $field['value'] = unserialize($field['value']);
             }
         }
@@ -327,7 +344,7 @@ class Model
     /**
      * Get errors (optional by type).
      *
-     * @param string[optional] $type Type of error.
+     * @param string $type Type of error.
      * @return mixed
      */
     public static function getErrors($type = null)
@@ -337,17 +354,16 @@ class Model
         $errors['numeric'] = FL::getError('NumericCharactersOnly');
 
         // specific type
-        if($type !== null) {
+        if ($type !== null) {
             $type = (string) $type;
-            return $errors[$type];
-        }
 
-        // all errors
+            return $errors[$type];
+        } // all errors
         else {
             $return = array();
 
             // loop errors
-            foreach($errors as $key => $error) $return[] = array('type' => $key, 'message' => $error);
+            foreach ($errors as $key => $error) $return[] = array('type' => $key, 'message' => $error);
 
             return $return;
         }
@@ -369,14 +385,15 @@ class Model
         );
 
         // unserialize settings
-        if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+        if ($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
 
         // get validation
         $field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT ffv.type, ffv.parameter, ffv.error_message
              FROM forms_fields_validation AS ffv
              WHERE ffv.field_id = ?',
-            $field['id'], 'type'
+            $field['id'],
+            'type'
         );
 
         return $field;
@@ -398,15 +415,16 @@ class Model
             (int) $id
         );
 
-        foreach($fields as &$field) {
+        foreach ($fields as &$field) {
             // unserialize
-            if($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+            if ($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
 
             // get validation
             $field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(
                 'SELECT ffv.type, ffv.parameter, ffv.error_message
                  FROM forms_fields_validation AS ffv
-                 WHERE ffv.field_id = ?', $field['id'],
+                 WHERE ffv.field_id = ?',
+                $field['id'],
                 'type'
             );
         }
@@ -418,9 +436,9 @@ class Model
      * Get a label/action/message from locale.
      * Used as datagridfunction.
      *
-     * @param string $name Name of the locale item.
-     * @param string[optional] $type Type of locale item.
-     * @param string[optional] $application Name of the application.
+     * @param string $name        Name of the locale item.
+     * @param string $type        Type of locale item.
+     * @param string $application Name of the application.
      * @return string
      */
     public static function getLocale($name, $type = 'label', $application = 'backend')
@@ -464,12 +482,14 @@ class Model
         $extra['type'] = 'widget';
         $extra['label'] = 'FormBuilder';
         $extra['action'] = 'form';
-        $extra['data'] = serialize(array(
-            'language' => $values['language'],
-            'extra_label' => $values['name'],
-            'id' => $insertId,
-            'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
-        ));
+        $extra['data'] = serialize(
+            array(
+                'language' => $values['language'],
+                'extra_label' => $values['name'],
+                'id' => $insertId,
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
+            )
+        );
         $extra['hidden'] = 'N';
         $extra['sequence'] = '400' . $insertId;
 
@@ -504,7 +524,7 @@ class Model
     /**
      * Update an existing item.
      *
-     * @param int $id The id for the item to update.
+     * @param int   $id     The id for the item to update.
      * @param array $values The new data.
      * @return int
      */
@@ -517,10 +537,17 @@ class Model
         $db->update('forms', $values, 'id = ?', $id);
 
         // build array
-        $extra['data'] = serialize(array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id));
+        $extra['data'] = serialize(
+            array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id)
+        );
 
         // update extra
-        $db->update('modules_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));
+        $db->update(
+            'modules_extras',
+            $extra,
+            'module = ? AND type = ? AND sequence = ?',
+            array('form_builder', 'widget', '400' . $id)
+        );
 
         return $id;
     }
@@ -528,13 +555,14 @@ class Model
     /**
      * Update a field.
      *
-     * @param int $id The id for the item to update.
+     * @param int   $id     The id for the item to update.
      * @param array $values The new data.
      * @return int
      */
     public static function updateField($id, array $values)
     {
         BackendModel::getContainer()->get('database')->update('forms_fields', $values, 'id = ?', (int) $id);
+
         return $id;
     }
 }

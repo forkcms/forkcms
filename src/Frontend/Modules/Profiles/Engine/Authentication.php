@@ -190,9 +190,9 @@ class Authentication
                 FrontendModel::getContainer()->get('database')->update(
                     'profiles_sessions',
                     array(
-                         'session_id' => \SpoonSession::getSessionId(),
-                         'secret_key' => $profileSecret,
-                         'date' => FrontendModel::getUTCDate()
+                        'session_id' => \SpoonSession::getSessionId(),
+                        'secret_key' => $profileSecret,
+                        'date' => FrontendModel::getUTCDate()
                     ),
                     'secret_key = ?',
                     $secret
@@ -225,8 +225,8 @@ class Authentication
     /**
      * Login a profile.
      *
-     * @param int $profileId Login the profile with this id in.
-     * @param     bool       [optional] $remember Should we set a cookie for later?
+     * @param int      $profileId Login the profile with this id in.
+     * @param bool $remember  Should we set a cookie for later?
      * @return bool
      */
     public static function login($profileId, $remember = false)
@@ -265,10 +265,10 @@ class Authentication
         FrontendModel::getContainer()->get('database')->insert(
             'profiles_sessions',
             array(
-                 'profile_id' => $profileId,
-                 'session_id' => \SpoonSession::getSessionId(),
-                 'secret_key' => $secretKey,
-                 'date' => FrontendModel::getUTCDate()
+                'profile_id' => $profileId,
+                'session_id' => \SpoonSession::getSessionId(),
+                'secret_key' => $secretKey,
+                'date' => FrontendModel::getUTCDate()
             )
         );
 

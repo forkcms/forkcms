@@ -65,8 +65,8 @@ class Form extends \SpoonForm
      *
      * @param string $name  Name of the button.
      * @param string $value The value (or label) that will be printed.
-     * @param        string [optional] $type The type of the button (submit is default).
-     * @param        string [optional] $class Class(es) that will be applied on the button.
+     * @param string $type  The type of the button (submit is default).
+     * @param string $class Class(es) that will be applied on the button.
      * @return \SpoonFormButton
      */
     public function addButton($name, $value, $type = 'submit', $class = null)
@@ -92,10 +92,10 @@ class Form extends \SpoonForm
     /**
      * Adds a single checkbox.
      *
-     * @param string $name  The name of the element.
-     * @param        bool   [optional] $checked Should the checkbox be checked?
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       The name of the element.
+     * @param bool   $checked    Should the checkbox be checked?
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
@@ -205,12 +205,12 @@ class Form extends \SpoonForm
     /**
      * Adds a single dropdown.
      *
-     * @param string $name  Name of the element.
-     * @param        array  [optional] $values Values for the dropdown.
-     * @param        string [optional] $selected The selected elements.
-     * @param        bool   [optional] $multipleSelection Is it possible to select multiple items?
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name              Name of the element.
+     * @param array  $values            Values for the dropdown.
+     * @param string $selected          The selected elements.
+     * @param bool   $multipleSelection Is it possible to select multiple items?
+     * @param string $class             Class(es) that will be applied on the element.
+     * @param string $classError        Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormDropdown
      */
     public function addDropdown(
@@ -241,9 +241,9 @@ class Form extends \SpoonForm
     /**
      * Adds a single file field.
      *
-     * @param string $name  Name of the element.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       Name of the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormFile
      */
     public function addFile($name, $class = null, $classError = null)
@@ -259,9 +259,9 @@ class Form extends \SpoonForm
     /**
      * Adds a single image field.
      *
-     * @param string $name  The name of the element.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       The name of the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormImage
      */
     public function addImage($name, $class = null, $classError = null)
@@ -279,11 +279,11 @@ class Form extends \SpoonForm
     /**
      * Adds a multiple checkbox.
      *
-     * @param string $name   The name of the element.
-     * @param array  $values The values for the checkboxes.
-     * @param        mixed   [optional] $checked Should the checkboxes be checked?
-     * @param        string  [optional] $class Class(es) that will be applied on the element.
-     * @param        string  [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       The name of the element.
+     * @param array  $values     The values for the checkboxes.
+     * @param mixed  $checked    Should the checkboxes be checked?
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormMultiCheckbox
      */
     public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
@@ -301,12 +301,12 @@ class Form extends \SpoonForm
     /**
      * Adds a single password field.
      *
-     * @param string $name  The name of the field.
-     * @param        string [optional] $value The value for the field.
-     * @param        int    [optional] $maxLength The maximum length for the field.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
-     * @param        bool   [optional] $HTML Will the field contain HTML?
+     * @param string $name       The name of the field.
+     * @param string $value      The value for the field.
+     * @param int    $maxLength  The maximum length for the field.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will the field contain HTML?
      * @return \SpoonFormPassword
      */
     public function addPassword(
@@ -331,11 +331,11 @@ class Form extends \SpoonForm
     /**
      * Adds a single radio button.
      *
-     * @param string $name   The name of the element.
-     * @param array  $values The possible values for the radio button.
-     * @param        string  [optional] $checked Should the element be checked?
-     * @param        string  [optional] $class Class(es) that will be applied on the element.
-     * @param        string  [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       The name of the element.
+     * @param array  $values     The possible values for the radio button.
+     * @param string $checked    Should the element be checked?
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormRadiobutton
      */
     public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
@@ -353,12 +353,12 @@ class Form extends \SpoonForm
     /**
      * Adds a single textfield.
      *
-     * @param string $name  The name of the element.
-     * @param        string [optional] $value The value inside the element.
-     * @param        int    [optional] $maxLength The maximum length for the value.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
-     * @param        bool   [optional] $HTML Will this element contain HTML?
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param int    $maxLength  The maximum length for the value.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will this element contain HTML?
      * @return \SpoonFormText
      */
     public function addText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
@@ -377,11 +377,11 @@ class Form extends \SpoonForm
     /**
      * Adds a single textarea.
      *
-     * @param string $name  The name of the element.
-     * @param        string [optional] $value The value inside the element.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
-     * @param        bool   [optional] $HTML Will the element contain HTML?
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
+     * @param bool   $HTML       Will the element contain HTML?
      * @return \SpoonFormTextarea
      */
     public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
@@ -399,10 +399,10 @@ class Form extends \SpoonForm
     /**
      * Adds a single time field.
      *
-     * @param string $name  The name of the element.
-     * @param        string [optional] $value The value inside the element.
-     * @param        string [optional] $class Class(es) that will be applied on the element.
-     * @param        string [optional] $classError Class(es) that will be applied on the element when an error occurs.
+     * @param string $name       The name of the element.
+     * @param string $value      The value inside the element.
+     * @param string $class      Class(es) that will be applied on the element.
+     * @param string $classError Class(es) that will be applied on the element when an error occurs.
      * @return \SpoonFormTime
      */
     public function addTime($name, $value = null, $class = null, $classError = null)
@@ -575,7 +575,7 @@ class Form extends \SpoonForm
     /**
      * Fetches all the values for this form as key/value pairs
      *
-     * @param mixed [optional] $excluded Which elements should be excluded?
+     * @param mixed $excluded Which elements should be excluded?
      * @return array
      */
     public function getValues($excluded = array('form', 'save', '_utf8'))
@@ -613,7 +613,7 @@ class FrontendFormDate extends \SpoonFormDate
     /**
      * Checks if this field is correctly submitted.
      *
-     * @param string [optional] $error The error message to set.
+     * @param string $error The error message to set.
      * @return bool
      */
     public function isValid($error = null)

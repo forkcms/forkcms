@@ -34,7 +34,7 @@ class Model
     /**
      * Deletes one or more e-mail addresses
      *
-     * @param  mixed $emails The emails to delete.
+     * @param mixed $emails The emails to delete.
      */
     public static function deleteAddresses($emails)
     {
@@ -137,8 +137,8 @@ class Model
     /**
      * Get all groups for a given e-mail address
      *
-     * @param string $email The e-email address to use.
-     * @param        int    [optional] $excludeId The id off the group to exclude.
+     * @param string     $email     The e-email address to use.
+     * @param int $excludeId The id off the group to exclude.
      * @return array
      */
     public static function getGroupIDsByEmail($email, $excludeId = null)
@@ -171,9 +171,9 @@ class Model
     /**
      * Get a preview URL to the specific mailing
      *
-     * @param int $id    The id of the mailing.
-     * @param     string [optional] $contentType The content-type to set.
-     * @param     bool   [optional] $forCM Will this URL be used in Campaign Monitor?
+     * @param int        $id          The id of the mailing.
+     * @param string $contentType The content-type to set.
+     * @param bool   $forCM       Will this URL be used in Campaign Monitor?
      * @return string
      */
     public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
@@ -286,8 +286,8 @@ class Model
     /**
      * Checks if a given e-mail address is subscribed in our database
      *
-     * @param string $email The e-mail address to check.
-     * @param        int    [optional] $groupId The id of the group that has to be checked.
+     * @param string     $email   The e-mail address to check.
+     * @param int $groupId The id of the group that has to be checked.
      * @return bool
      */
     public static function isSubscribed($email, $groupId = null)
@@ -311,8 +311,8 @@ class Model
     /**
      * Subscribes an e-mail address
      *
-     * @param string $email The e-mail address to subscribe.
-     * @param        string [optional] $groupId The id of the group to subscribe to.
+     * @param string        $email   The e-mail address to subscribe.
+     * @param string $groupId The id of the group to subscribe to.
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -336,11 +336,11 @@ class Model
                  VALUES (?, ?, ?)
                  ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
                 array(
-                     $subscriber['email'],
-                     $subscriber['source'],
-                     $subscriber['created_on'],
-                     $subscriber['source'],
-                     $subscriber['created_on']
+                    $subscriber['email'],
+                    $subscriber['source'],
+                    $subscriber['created_on'],
+                    $subscriber['source'],
+                    $subscriber['created_on']
                 )
             );
 
@@ -356,13 +356,13 @@ class Model
                  VALUES (?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
                 array(
-                     $subscriberGroup['email'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on']
+                    $subscriberGroup['email'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on']
                 )
             );
 
@@ -377,8 +377,8 @@ class Model
     /**
      * Unsubscribes an e-mail address
      *
-     * @param string $email The mail address to unsubscribe.
-     * @param        string [optional] $groupId The id of the group to unsubscribe from.
+     * @param string        $email   The mail address to unsubscribe.
+     * @param string $groupId The id of the group to unsubscribe from.
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)

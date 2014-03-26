@@ -134,7 +134,7 @@ class Authentication
      * 	The salt is an optional extra string you can strengthen your encryption with
      *
      * @param string $string The string to encrypt.
-     * @param string[optional] $salt The salt to use.
+     * @param string $salt The salt to use.
      * @return string
      */
     public static function getEncryptedString($string, $salt = null)

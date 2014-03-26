@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * This is our extended version of SpoonTemplate
@@ -34,7 +34,7 @@ class Template extends \SpoonTemplate
     /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
-     * @param bool [optional] $addToReference Should the instance be added into the reference.
+     * @param bool $addToReference Should the instance be added into the reference.
      */
     public function __construct($addToReference = true)
     {
@@ -54,7 +54,7 @@ class Template extends \SpoonTemplate
      * Compile a given template.
      *
      * @param string  $path     The path to the template, excluding the template filename.
-     * @param  string $template The filename of the template within the path.
+     * @param string $template The filename of the template within the path.
      * @return bool
      */
     public function compile($path, $template)
@@ -90,9 +90,9 @@ class Template extends \SpoonTemplate
      * Will also assign the labels and all user-defined constants.
      * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
      *
-     * @param string $template The path of the template to use.
-     * @param        bool      [optional] $customHeaders Deprecated variable.
-     * @param        bool      [optional] $parseCustom Parse custom template.
+     * @param string $template      The path of the template to use.
+     * @param bool   $customHeaders Deprecated variable.
+     * @param bool   $parseCustom   Parse custom template.
      */
     public function display($template, $customHeaders = false, $parseCustom = false)
     {
@@ -167,9 +167,9 @@ class Template extends \SpoonTemplate
     /**
      * Fetch the parsed content from this template.
      *
-     * @param string $template The location of the template file, used to display this template.
-     * @param        bool      [optional] $customHeaders Are custom headers already set?
-     * @param        bool      [optional] $parseCustom Parse custom template.
+     * @param string $template      The location of the template file, used to display this template.
+     * @param bool   $customHeaders Are custom headers already set?
+     * @param bool   $parseCustom   Parse custom template.
      * @return string The actual parsed content after executing this template.
      */
     public function getContent($template, $customHeaders = false, $parseCustom = false)
@@ -413,7 +413,7 @@ class Template extends \SpoonTemplate
     /**
      * Should we execute addSlashed on the locale?
      *
-     * @param bool [optional] $on Enable addslashes.
+     * @param bool $on Enable addslashes.
      */
     public function setAddSlashes($on = true)
     {

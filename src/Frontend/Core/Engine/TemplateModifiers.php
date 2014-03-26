@@ -68,9 +68,9 @@ class TemplateModifiers
      * Format a number as currency
      *    syntax: {$var|formatcurrency[:currency[:decimals]]}
      *
-     * @param string $var   The string to form.
-     * @param        string [optional] $currency The currency to will be used to format the number.
-     * @param        int    [optional] $decimals The number of decimals to show.
+     * @param string $var      The string to form.
+     * @param string $currency The currency to will be used to format the number.
+     * @param int    $decimals The number of decimals to show.
      * @return string
      */
     public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
@@ -90,8 +90,8 @@ class TemplateModifiers
      * Format a number as a float
      *    syntax: {$var|formatfloat[:decimals]}
      *
-     * @param float $number The number to format.
-     * @param       int     [optional] $decimals The number of decimals.
+     * @param float $number   The number to format.
+     * @param int   $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -131,12 +131,12 @@ class TemplateModifiers
      * Get the navigation html
      *    syntax: {$var|getnavigation[:type[:parentId[:depth[:excludeIds-splitted-by-dash[:tpl]]]]}
      *
-     * @param string [optional] $var The variable.
-     * @param string [optional] $type The type of navigation, possible values are: page, footer.
-     * @param int    [optional] $parentId The parent wherefore the navigation should be build.
-     * @param int    [optional] $depth The maximum depth that has to be build.
-     * @param string [optional] $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string [optional] $tpl The template that will be used.
+     * @param string $var        The variable.
+     * @param string $type       The type of navigation, possible values are: page, footer.
+     * @param int    $parentId   The parent wherefore the navigation should be build.
+     * @param int    $depth      The maximum depth that has to be build.
+     * @param string $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string $tpl        The template that will be used.
      * @return string
      */
     public static function getNavigation(
@@ -168,10 +168,10 @@ class TemplateModifiers
      * Get a given field for a page-record
      *    syntax: {$var|getpageinfo:pageId[:field[:language]]}
      *
-     * @param     string  [optional] $var The string passed from the template.
-     * @param int $pageId The id of the page to build the URL for.
-     * @param     string  [optional] $field The field to get.
-     * @param     string  [optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var      The string passed from the template.
+     * @param int    $pageId   The id of the page to build the URL for.
+     * @param string $field    The field to get.
+     * @param string $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
@@ -214,13 +214,13 @@ class TemplateModifiers
      *
      *   NOTE: When supplying more than 1 ID to exclude, the single quotes around the dash-separated list are mandatory.
      *
-     * @param string [optional] $var The variable.
-     * @param string [optional] $type The type of navigation, possible values are: page, footer.
-     * @param int    [optional] $pageId The parent wherefore the navigation should be build.
-     * @param int    [optional] $startDepth The depth to start from.
-     * @param int    [optional] $endDepth The maximum depth that has to be build.
-     * @param string [optional] $excludeIds Which pageIds should be excluded (split them by -).
-     * @param string [optional] $tpl The template that will be used.
+     * @param string $var        The variable.
+     * @param string $type       The type of navigation, possible values are: page, footer.
+     * @param int    $pageId     The parent wherefore the navigation should be build.
+     * @param int    $startDepth The depth to start from.
+     * @param int    $endDepth   The maximum depth that has to be build.
+     * @param string $excludeIds Which pageIds should be excluded (split them by -).
+     * @param string $tpl        The template that will be used.
      * @return string
      */
     public static function getSubNavigation(
@@ -291,9 +291,9 @@ class TemplateModifiers
      * Get the URL for a given pageId & language
      *    syntax: {$var|geturl:pageId[:language]}
      *
-     * @param string $var    The string passed from the template.
-     * @param int    $pageId The id of the page to build the URL for.
-     * @param        string  [optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var      The string passed from the template.
+     * @param int    $pageId   The id of the page to build the URL for.
+     * @param string $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getURL($var, $pageId, $language = null)
@@ -325,9 +325,9 @@ class TemplateModifiers
      * Fetch an URL based on an extraId
      *    syntax: {$var|geturlforextraid:extraId[:language]}
      *
-     * @param string $var     The string passed from the template.
-     * @param int    $extraId The id of the extra.
-     * @param        string   [optional] $language The language to use, if not provided we will use the loaded language.
+     * @param string $var      The string passed from the template.
+     * @param int    $extraId  The id of the extra.
+     * @param string $language The language to use, if not provided we will use the loaded language.
      * @return string
      */
     public static function getURLForExtraId($var, $extraId, $language = null)
@@ -430,9 +430,9 @@ class TemplateModifiers
      * Get a random var between a min and max
      *    syntax: {$var|rand:min:max}
      *
-     * @param     string [optional] $var The string passed from the template.
-     * @param int $min   The minimum random number.
-     * @param int $max   The maximum random number.
+     * @param string $var The string passed from the template.
+     * @param int    $min The minimum random number.
+     * @param int    $max The maximum random number.
      * @return int
      */
     public static function random($var = null, $min, $max)
@@ -459,7 +459,7 @@ class TemplateModifiers
      * Formats a timestamp as a string that indicates the time ago
      *    syntax: {$var|timeago}
      *
-     * @param string [optional] $var A UNIX-timestamp that will be formatted as a time-ago-string.
+     * @param string $var A UNIX-timestamp that will be formatted as a time-ago-string.
      * @return string
      */
     public static function timeAgo($var = null)
@@ -486,9 +486,9 @@ class TemplateModifiers
      * Truncate a string
      *    syntax: {$var|truncate:max-length[:append-hellip]}
      *
-     * @param     string  [optional] $var The string passed from the template.
-     * @param int $length The maximum length of the truncated string.
-     * @param     bool    [optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param string $var       The string passed from the template.
+     * @param int    $length    The maximum length of the truncated string.
+     * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true)
@@ -526,9 +526,9 @@ class TemplateModifiers
      * Get the value for a user-setting
      *    syntax {$var|usersetting:setting[:userId]}
      *
-     * @param        string   [optional] $var The string passed from the template.
+     * @param string $var     The string passed from the template.
      * @param string $setting The name of the setting you want.
-     * @param        int      [optional] $userId The userId, if not set by $var.
+     * @param int    $userId  The userId, if not set by $var.
      * @return string
      */
     public static function userSetting($var = null, $setting, $userId = null)

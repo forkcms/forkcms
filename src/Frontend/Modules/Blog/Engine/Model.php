@@ -75,8 +75,8 @@ class Model implements FrontendTagsInterface
     /**
      * Get all items (at least a chunk)
      *
-     * @param int [optional] $limit The number of items to get.
-     * @param int [optional] $offset The offset.
+     * @param int $limit  The number of items to get.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAll($limit = 10, $offset = 0)
@@ -94,12 +94,12 @@ class Model implements FrontendTagsInterface
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?, ?',
             array(
-                 'active',
-                 FRONTEND_LANGUAGE,
-                 'N',
-                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
-                 (int) $offset,
-                 (int) $limit
+                'active',
+                FRONTEND_LANGUAGE,
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                (int) $offset,
+                (int) $limit
             ),
             'id'
         );
@@ -189,8 +189,8 @@ class Model implements FrontendTagsInterface
     /**
      * Get all comments (at least a chunk)
      *
-     * @param int [optional] $limit The number of items to get.
-     * @param int [optional] $offset The offset.
+     * @param int $limit  The number of items to get.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAllComments($limit = 10, $offset = 0)
@@ -228,8 +228,8 @@ class Model implements FrontendTagsInterface
      * Get all items in a category (at least a chunk)
      *
      * @param string $categoryURL The URL of the category to retrieve the posts for.
-     * @param        int          [optional] $limit The number of items to get.
-     * @param        int          [optional] $offset The offset.
+     * @param int    $limit       The number of items to get.
+     * @param int    $offset      The offset.
      * @return array
      */
     public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
@@ -247,13 +247,13 @@ class Model implements FrontendTagsInterface
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
             array(
-                 'active',
-                 FRONTEND_LANGUAGE,
-                 'N',
-                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
-                 (string) $categoryURL,
-                 (int) $offset,
-                 (int) $limit
+                'active',
+                FRONTEND_LANGUAGE,
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                (string) $categoryURL,
+                (int) $offset,
+                (int) $limit
             ),
             'id'
         );
@@ -332,10 +332,10 @@ class Model implements FrontendTagsInterface
     /**
      * Get all items between a start and end-date
      *
-     * @param int $start The start date as a UNIX-timestamp.
-     * @param int $end   The end date as a UNIX-timestamp.
-     * @param     int    [optional] $limit The number of items to get.
-     * @param     int    [optional] $offset The offset.
+     * @param int $start  The start date as a UNIX-timestamp.
+     * @param int $end    The end date as a UNIX-timestamp.
+     * @param int $limit  The number of items to get.
+     * @param int $offset The offset.
      * @return array
      */
     public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
@@ -359,13 +359,13 @@ class Model implements FrontendTagsInterface
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
             array(
-                 'active',
-                 FRONTEND_LANGUAGE,
-                 'N',
-                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
-                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
-                 $offset,
-                 $limit
+                'active',
+                FRONTEND_LANGUAGE,
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i', $start),
+                FrontendModel::getUTCDate('Y-m-d H:i', $end),
+                $offset,
+                $limit
             ),
             'id'
         );
@@ -439,11 +439,11 @@ class Model implements FrontendTagsInterface
              FROM blog_posts AS i
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
             array(
-                 'active',
-                 FRONTEND_LANGUAGE,
-                 'N',
-                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
-                 FrontendModel::getUTCDate('Y-m-d H:i:s', $end)
+                'active',
+                FRONTEND_LANGUAGE,
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
+                FrontendModel::getUTCDate('Y-m-d H:i:s', $end)
             )
         );
     }
@@ -691,7 +691,7 @@ class Model implements FrontendTagsInterface
     /**
      * Get recent comments
      *
-     * @param int [optional] $limit The number of comments to get.
+     * @param int $limit The number of comments to get.
      * @return array
      */
     public static function getRecentComments($limit = 5)
@@ -737,8 +737,8 @@ class Model implements FrontendTagsInterface
     /**
      * Get related items based on tags
      *
-     * @param int $id The id of the item to get related items for.
-     * @param     int [optional] $limit The maximum number of items to retrieve.
+     * @param int $id    The id of the item to get related items for.
+     * @param int $limit The maximum number of items to retrieve.
      * @return array
      */
     public static function getRelated($id, $limit = 5)

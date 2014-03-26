@@ -29,7 +29,7 @@ class Model
     /**
      * Google authentication url and scope
      *
-     * @var	string
+     * @var    string
      */
     const GOOGLE_ACCOUNT_AUTHENTICATION_URL = 'https://www.google.com/accounts/AuthSubRequest?next=%1$s&scope=%2$s&secure=0&session=1';
     const GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE = 'https://www.google.com/analytics/feeds/';
@@ -37,14 +37,14 @@ class Model
     /**
      * Google analytics url
      *
-     * @var	string
+     * @var    string
      */
     const GOOGLE_ANALYTICS_URL = 'https://www.google.com/analytics/reporting';
 
     /**
      * Cached data
      *
-     * @var	array
+     * @var    array
      */
     private static $data = array(), $dashboardData = array();
 
@@ -58,17 +58,27 @@ class Model
         $warnings = array();
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
+        if (BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
             // analytics session token
-            if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
+            if (BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'Analytics'), BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))));
+                $warnings[] = array(
+                    'message' => sprintf(
+                        BL::err('AnalyseNoSessionToken', 'Analytics'),
+                        BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))
+                    )
+                );
             }
 
             // analytics table id (only show this error if no other exist)
-            if(empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
+            if (empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
                 // add warning
-                $warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'Analytics'), BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))));
+                $warnings[] = array(
+                    'message' => sprintf(
+                        BL::err('AnalyseNoTableId', 'Analytics'),
+                        BackendModel::createURLForAction('Settings', 'Analytics', null, array('ga' => 1))
+                    )
+                );
             }
         }
 
@@ -97,7 +107,10 @@ class Model
      */
     public static function deleteLandingPage($ids)
     {
-        BackendModel::getContainer()->get('database')->delete('analytics_landing_pages', 'id IN (' . implode(',', (array) $ids) . ')');
+        BackendModel::getContainer()->get('database')->delete(
+            'analytics_landing_pages',
+            'id IN (' . implode(',', (array) $ids) . ')'
+        );
     }
 
     /**
@@ -120,9 +133,9 @@ class Model
     /**
      * Get an aggregate
      *
-     * @param string $name The name of the aggregate to look for.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param string $name           The name of the aggregate to look for.
+     * @param int    $startTimestamp The start timestamp for the cache file.
+     * @param int    $endTimestamp   The end timestamp for the cache file.
      * @return string
      */
     public static function getAggregate($name, $startTimestamp, $endTimestamp)
@@ -130,7 +143,9 @@ class Model
         $aggregates = self::getAggregates($startTimestamp, $endTimestamp);
 
         // aggregate exists
-        if(isset($aggregates[$name])) return $aggregates[$name];
+        if (isset($aggregates[$name])) {
+            return $aggregates[$name];
+        }
 
         // doesn't exist
         return '';
@@ -140,7 +155,7 @@ class Model
      * Get the aggregates between 2 dates
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getAggregates($startTimestamp, $endTimestamp)
@@ -152,7 +167,7 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($aggregates === false) self::redirectToLoadingPage($action);
+        if ($aggregates === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -163,15 +178,15 @@ class Model
     /**
      * Get data by type from the cache
      *
-     * @param string $type The type of data to get.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param string $type           The type of data to get.
+     * @param int    $startTimestamp The start timestamp for the cache file.
+     * @param int    $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getAggregatesFromCacheByType($type, $startTimestamp, $endTimestamp)
     {
         // doesnt exist in cache - load cache xml file
-        if(!isset(self::$data[$type]['aggregates'])) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+        if (!isset(self::$data[$type]['aggregates'])) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
         // return data is exists and false if not to get live data
         return (isset(self::$data[$type]['aggregates']) ? self::$data[$type]['aggregates'] : false);
@@ -184,7 +199,7 @@ class Model
      * They are not used when fetching the data from google.
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getAggregatesTotal($startTimestamp, $endTimestamp)
@@ -196,7 +211,7 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($aggregates === false) self::redirectToLoadingPage($action);
+        if ($aggregates === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -207,20 +222,20 @@ class Model
     /**
      * Get attributes by type from the cache
      *
-     * @param string $type The type of data of which to get the attributes.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param string $type           The type of data of which to get the attributes.
+     * @param int    $startTimestamp The start timestamp for the cache file.
+     * @param int    $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     private static function getAttributesFromCache($type, $startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache
-        if(!isset(self::$data[$type]['attributes'])) {
+        if (!isset(self::$data[$type]['attributes'])) {
             // load cache xml file
             self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
             // doesn't exist in cache after loading the xml file so set to empty
-            if(!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
+            if (!isset(self::$data[$type]['attributes'])) self::$data[$type]['attributes'] = array();
         }
 
         return self::$data[$type]['attributes'];
@@ -230,7 +245,7 @@ class Model
      * Get cache file
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     private static function getCacheFile($startTimestamp, $endTimestamp)
@@ -238,9 +253,13 @@ class Model
         $filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
         // file exists
-        if(is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
+        if (is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
             // get the xml (cast is important otherwise we cant use array_walk_recursive)
-            $xml = simplexml_load_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename, '\SimpleXMLElement', LIBXML_NOCDATA);
+            $xml = simplexml_load_file(
+                BACKEND_CACHE_PATH . '/Analytics/' . $filename,
+                '\SimpleXMLElement',
+                LIBXML_NOCDATA
+            );
 
             // parse xml to array
             return self::parseXMLToArray($xml);
@@ -253,10 +272,10 @@ class Model
     /**
      * Fetch dashboard data grouped by day
      *
-     * @param array $metrics The metrics to collect.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param bool[optional] $forceCache Should the data be forced from cache.
+     * @param array $metrics        The metrics to collect.
+     * @param int   $startTimestamp The start timestamp for the cache file.
+     * @param int   $endTimestamp   The end timestamp for the cache file.
+     * @param bool  $forceCache     Should the data be forced from cache.
      * @return array
      */
     public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
@@ -268,13 +287,13 @@ class Model
      * Get dashboard data from the cache
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache - load cache xml file
-        if(!isset(self::$dashboardData) || empty(self::$dashboardData)) {
+        if (!isset(self::$dashboardData) || empty(self::$dashboardData)) {
             self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
         }
 
@@ -284,9 +303,9 @@ class Model
     /**
      * Get the top exit pages
      *
-     * @param string $page The page.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param string $page           The page.
+     * @param int    $startTimestamp The start timestamp for the cache file.
+     * @param int    $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getDataForPage($page, $startTimestamp, $endTimestamp)
@@ -302,7 +321,7 @@ class Model
         );
 
         // no id? insert this page
-        if($id === 0) $id = $db->insert('analytics_pages', array('page' => (string) $page));
+        if ($id === 0) $id = $db->insert('analytics_pages', array('page' => (string) $page));
 
         // get data from cache
         $items = array();
@@ -313,7 +332,10 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
+        if ($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage(
+            $action,
+            array('page_id' => $id)
+        );
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -328,13 +350,13 @@ class Model
      * Get data from the cache
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getDataFromCache($startTimestamp, $endTimestamp)
     {
         // doesnt exist in cache - load cache xml file
-        if(!isset(self::$data) || empty(self::$data)) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+        if (!isset(self::$data) || empty(self::$data)) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
         return self::$data;
     }
@@ -342,20 +364,20 @@ class Model
     /**
      * Get data by type from the cache
      *
-     * @param string $type The type of data to get.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param string $type           The type of data to get.
+     * @param int    $startTimestamp The start timestamp for the cache file.
+     * @param int    $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache
-        if(!isset(self::$data[$type])) {
+        if (!isset(self::$data[$type])) {
             // load cache xml file
             self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
             // doesn't exist in cache after loading the xml file so set to false to get live data
-            if(!isset(self::$data[$type])) return false;
+            if (!isset(self::$data[$type])) return false;
         }
 
         return (isset(self::$data[$type]['entries']) ? self::$data[$type]['entries'] : self::$data[$type]);
@@ -365,7 +387,7 @@ class Model
      * Get the exit pages
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end Timestamp for the cache file.
+     * @param int $endTimestamp   The end Timestamp for the cache file.
      * @return array
      */
     public static function getExitPages($startTimestamp, $endTimestamp)
@@ -377,7 +399,7 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -386,14 +408,17 @@ class Model
         $results = array();
 
         // build top pages
-        foreach($items as $i => $pageData) {
+        foreach ($items as $i => $pageData) {
             // build array
             $results[$i] = array();
             $results[$i]['page'] = $pageData['pagePath'];
             $results[$i]['page_encoded'] = urlencode($pageData['pagePath']);
             $results[$i]['exits'] = (int) $pageData['exits'];
             $results[$i]['pageviews'] = (int) $pageData['pageviews'];
-            $results[$i]['exit_rate'] = ($pageData['pageviews'] == 0 ? 0 : number_format(((int) $pageData['exits'] / $pageData['pageviews']) * 100, 2)) . '%';
+            $results[$i]['exit_rate'] = ($pageData['pageviews'] == 0 ? 0 : number_format(
+                    ((int) $pageData['exits'] / $pageData['pageviews']) * 100,
+                    2
+                )) . '%';
         }
 
         return $results;
@@ -403,8 +428,8 @@ class Model
      * Fetch landing pages
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param int[optional] $limit An optional limit of the number of landing pages to get.
+     * @param int $endTimestamp   The end timestamp for the cache file.
+     * @param int $limit          An optional limit of the number of landing pages to get.
      * @return array
      */
     public static function getLandingPages($startTimestamp, $endTimestamp, $limit = null)
@@ -413,7 +438,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // get data from database
-        if($limit === null) $items = (array) $db->getRecords(
+        if ($limit === null) $items = (array) $db->getRecords(
             'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
              FROM analytics_landing_pages
              ORDER BY entrances DESC'
@@ -427,30 +452,37 @@ class Model
             array((int) $limit)
         );
 
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $result = array();
             $startDate = date('Y-m-d', $startTimestamp) . ' 00:00:00';
             $endDate = date('Y-m-d', $endTimestamp) . ' 00:00:00';
 
             // no longer up to date, not for the period we need - get new one
-            if($item['updated_on'] < time() - 43200 || $item['start_date'] != $startDate || $item['end_date'] != $endDate) {
+            if ($item['updated_on'] < time(
+                                      ) - 43200 || $item['start_date'] != $startDate || $item['end_date'] != $endDate
+            ) {
                 // get metrics
-                $metrics = BackendAnalyticsHelper::getMetricsForPage($item['page_path'], $startTimestamp, $endTimestamp);
+                $metrics = BackendAnalyticsHelper::getMetricsForPage(
+                    $item['page_path'],
+                    $startTimestamp,
+                    $endTimestamp
+                );
 
                 // build item
                 $result['page_path'] = $item['page_path'];
                 $result['entrances'] = (isset($metrics['entrances']) ? $metrics['entrances'] : 0);
                 $result['bounces'] = (isset($metrics['bounces']) ? $metrics['bounces'] : 0);
-                $result['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) . '%';
+                $result['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(
+                        ((int) $metrics['bounces'] / $metrics['entrances']) * 100,
+                        2
+                    )) . '%';
                 $result['start_date'] = $startDate;
                 $result['end_date'] = $endDate;
                 $result['updated_on'] = date('Y-m-d H:i:s');
 
                 // update record
                 $db->update('analytics_landing_pages', $result, 'id = ?', $item['id']);
-            }
-
-            // correct data
+            } // correct data
             else $result = $item;
 
             // add encoded page path
@@ -466,7 +498,7 @@ class Model
     /**
      * Get all data for a given revision.
      *
-     * @param string[optional] $language The language to use.
+     * @param string $language The language to use.
      * @return array
      */
     public static function getLinkList($language = null)
@@ -474,7 +506,7 @@ class Model
         $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
         // there is no cache file
-        if(!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) return array();
+        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) return array();
 
         // read the cache file
         $cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js');
@@ -483,7 +515,7 @@ class Model
         preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
 
         // no matched
-        if(empty($matches)) return array();
+        if (empty($matches)) return array();
 
         // create array
         $matches = explode('],', str_replace('[', '', $matches[count($matches) - 1]));
@@ -492,9 +524,9 @@ class Model
         $cacheList = array();
 
         // loop list
-        foreach($matches as $item) {
+        foreach ($matches as $item) {
             // trim item
-            $item = explode('", "', trim($item," \n\r\t\"]"));
+            $item = explode('", "', trim($item, " \n\r\t\"]"));
 
             // build cache list
             $cacheList[$item[1]] = $item[0];
@@ -506,10 +538,10 @@ class Model
     /**
      * Fetch metrics grouped by day
      *
-     * @param array $metrics The metrics to collect.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param boolean[optional] $forceCache Should the data be forced from cache.
+     * @param array   $metrics        The metrics to collect.
+     * @param int     $startTimestamp The start timestamp for the cache file.
+     * @param int     $endTimestamp   The end timestamp for the cache file.
+     * @param boolean $forceCache     Should the data be forced from cache.
      * @return array
      */
     public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
@@ -518,13 +550,13 @@ class Model
         $items = self::getDataFromCacheByType('metrics_per_day', $startTimestamp, $endTimestamp);
 
         // force retrieval from cache
-        if($forceCache) return $items;
+        if ($forceCache) return $items;
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -568,7 +600,7 @@ class Model
      * Get pages
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getPages($startTimestamp, $endTimestamp)
@@ -580,7 +612,7 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -589,16 +621,27 @@ class Model
         $results = array();
 
         // build pages array
-        foreach($items as $i => $item) {
+        foreach ($items as $i => $item) {
             // build array
             $results[$i] = array();
             $results[$i]['page'] = $item['pagePath'];
             $results[$i]['page_encoded'] = urlencode($item['pagePath']);
             $results[$i]['pageviews'] = (int) $item['pageviews'];
-            $results[$i]['pages_per_visit'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['pageviews'] / $item['visits']), 2));
-            $results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2)));
-            $results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['newVisits'] / $item['visits']) * 100, 2)) . '%';
-            $results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) . '%';
+            $results[$i]['pages_per_visit'] = ($item['visits'] == 0 ? 0 : number_format(
+                ((int) $item['pageviews'] / $item['visits']),
+                2
+            ));
+            $results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(
+                ($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2))
+            );
+            $results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(
+                    ((int) $item['newVisits'] / $item['visits']) * 100,
+                    2
+                )) . '%';
+            $results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(
+                    ((int) $item['bounces'] / $item['entrances']) * 100,
+                    2
+                )) . '%';
         }
 
         return $results;
@@ -631,7 +674,7 @@ class Model
              ORDER BY entrances DESC, id'
         );
 
-        foreach($items as $key => $item) {
+        foreach ($items as $key => $item) {
             // assign URL
             $items[$key]['url'] = 'http://' . $item['referrer'];
 
@@ -668,15 +711,20 @@ class Model
         $timeSeconds = (int) floor($seconds - ($timeHours * 3600) - ($timeMinutes * 60));
 
         // return formatted time
-        return str_pad($timeHours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeMinutes, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
+        return str_pad($timeHours, 2, '0', STR_PAD_LEFT) . ':' . str_pad(
+            $timeMinutes,
+            2,
+            '0',
+            STR_PAD_LEFT
+        ) . ':' . str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
     }
 
     /**
      * Get the top exit pages
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param int[optional] $limit An optional limit of the number of exit pages to get.
+     * @param int $endTimestamp   The end timestamp for the cache file.
+     * @param int $limit          An optional limit of the number of exit pages to get.
      * @return array
      */
     public static function getTopExitPages($startTimestamp, $endTimestamp, $limit = 5)
@@ -685,13 +733,13 @@ class Model
         $items = self::getDataFromCacheByType('top_exit_pages', $startTimestamp, $endTimestamp);
 
         // limit data
-        if(!empty($items)) $items = array_slice($items, 0, $limit, true);
+        if (!empty($items)) $items = array_slice($items, 0, $limit, true);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -700,7 +748,7 @@ class Model
         $results = array();
 
         // build top pages
-        foreach($items as $i => $pageData) {
+        foreach ($items as $i => $pageData) {
             // build array
             $results[$i] = array();
             $results[$i]['page'] = $pageData['pagePath'];
@@ -716,8 +764,8 @@ class Model
      * Get the top keywords
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param int[optional] $limit An optional limit of the number of keywords to get.
+     * @param int $endTimestamp   The end timestamp for the cache file.
+     * @param int $limit          An optional limit of the number of keywords to get.
      * @return array
      */
     public static function getTopKeywords($startTimestamp, $endTimestamp, $limit = 5)
@@ -726,13 +774,13 @@ class Model
         $items = self::getDataFromCacheByType('top_keywords', $startTimestamp, $endTimestamp);
 
         // limit data
-        if(!empty($items)) $items = array_slice($items, 0, $limit, true);
+        if (!empty($items)) $items = array_slice($items, 0, $limit, true);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -743,12 +791,19 @@ class Model
         $totalPageviews = (int) self::getAggregate('keywordPageviews', $startTimestamp, $endTimestamp);
 
         // build top keywords
-        foreach($items as $i => $keywordData) {
+        foreach ($items as $i => $keywordData) {
             // build array
             $results[$i] = array();
-            $results[$i]['keyword'] = (mb_strlen($keywordData['keyword']) <= 45 ? $keywordData['keyword'] : mb_substr($keywordData['keyword'], 0, 45) . '…');
+            $results[$i]['keyword'] = (mb_strlen($keywordData['keyword']) <= 45 ? $keywordData['keyword'] : mb_substr(
+                                                                                                                $keywordData['keyword'],
+                                                                                                                0,
+                                                                                                                45
+                                                                                                            ) . '…');
             $results[$i]['pageviews'] = (int) $keywordData['pageviews'];
-            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $keywordData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
+            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(
+                    ((int) $keywordData['pageviews'] / $totalPageviews) * 100,
+                    2
+                )) . '%';
         }
 
         return $results;
@@ -758,8 +813,8 @@ class Model
      * Get the top pages
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param int[optional] $limit An optional limit of the number of pages to get.
+     * @param int $endTimestamp   The end timestamp for the cache file.
+     * @param int $limit          An optional limit of the number of pages to get.
      * @return array
      */
     public static function getTopPages($startTimestamp, $endTimestamp, $limit = 5)
@@ -768,13 +823,13 @@ class Model
         $items = self::getDataFromCacheByType('top_pages', $startTimestamp, $endTimestamp);
 
         // limit data
-        if(!empty($items)) $items = array_slice($items, 0, $limit, true);
+        if (!empty($items)) $items = array_slice($items, 0, $limit, true);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -786,13 +841,16 @@ class Model
         $totalPageviews = (int) self::getAggregate('pageviews', $startTimestamp, $endTimestamp);
 
         // build top pages
-        foreach($items as $i => $pageData) {
+        foreach ($items as $i => $pageData) {
             // build array
             $results[$i] = array();
             $results[$i]['page'] = $pageData['pagePath'];
             $results[$i]['page_encoded'] = urlencode($pageData['pagePath']);
             $results[$i]['pageviews'] = (int) $pageData['pageviews'];
-            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(($pageData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
+            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(
+                    ($pageData['pageviews'] / $totalPageviews) * 100,
+                    2
+                )) . '%';
         }
 
         return $results;
@@ -802,8 +860,8 @@ class Model
      * Get the top referrals
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
-     * @param int[optional] $limit An optional limit of the number of referrals to get.
+     * @param int $endTimestamp   The end timestamp for the cache file.
+     * @param int $limit          An optional limit of the number of referrals to get.
      * @return array
      */
     public static function getTopReferrals($startTimestamp, $endTimestamp, $limit = 5)
@@ -812,13 +870,13 @@ class Model
         $items = self::getDataFromCacheByType('top_referrals', $startTimestamp, $endTimestamp);
 
         // limit data
-        if(!empty($items)) $items = array_slice($items, 0, $limit, true);
+        if (!empty($items)) $items = array_slice($items, 0, $limit, true);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -830,13 +888,19 @@ class Model
         $totalPageviews = (int) self::getAggregate('pageviews', $startTimestamp, $endTimestamp);
 
         // build top keywords
-        foreach($items as $i => $referrerData) {
+        foreach ($items as $i => $referrerData) {
             // build array
             $results[$i] = array();
-            $results[$i]['referral'] = (mb_strlen($referrerData['referrer']) <= 45 ? trim($referrerData['referrer'], '/') : trim(mb_substr($referrerData['referrer'], 0, 45), '/') . '…');
+            $results[$i]['referral'] = (mb_strlen($referrerData['referrer']) <= 45 ? trim(
+                $referrerData['referrer'],
+                '/'
+            ) : trim(mb_substr($referrerData['referrer'], 0, 45), '/') . '…');
             $results[$i]['referral_long'] = trim($referrerData['referrer'], '/');
             $results[$i]['pageviews'] = (int) $referrerData['pageviews'];
-            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $referrerData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
+            $results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(
+                    ((int) $referrerData['pageviews'] / $totalPageviews) * 100,
+                    2
+                )) . '%';
         }
 
         return $results;
@@ -846,7 +910,7 @@ class Model
      * Get the traffic sources grouped by medium
      *
      * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      * @return array
      */
     public static function getTrafficSourcesGrouped($startTimestamp, $endTimestamp)
@@ -858,7 +922,7 @@ class Model
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
-        if($items === false) self::redirectToLoadingPage($action);
+        if ($items === false) self::redirectToLoadingPage($action);
 
         // reset loop counter for the current action if we got data from cache
         \SpoonSession::set($action . 'Loop', null);
@@ -889,36 +953,39 @@ class Model
         $xml = (array) $xml;
 
         // loop children
-        foreach($xml as $name => $children) {
+        foreach ($xml as $name => $children) {
             $children = (array) $children;
 
             // skip attributes
-            if($name == '@attributes') continue;
+            if ($name == '@attributes') continue;
 
             // empty item
-            if(empty($children)) {
+            if (empty($children)) {
                 // save empty array
                 $data[$name] = array();
                 continue;
             }
 
             // save attributes
-            if(isset($children['@attributes']) && is_array($children['@attributes'])) $data[$name]['attributes'] = $children['@attributes'];
+            if (isset($children['@attributes']) && is_array(
+                    $children['@attributes']
+                )
+            ) $data[$name]['attributes'] = $children['@attributes'];
 
             // page details
-            if(strpos($name, 'page_') !== false) {
+            if (strpos($name, 'page_') !== false) {
                 // loop entries
-                foreach($children as $pageKey => $pageChildren) {
+                foreach ($children as $pageKey => $pageChildren) {
                     // this is the hostname - add to data
-                    if($pageKey == 'hostname') $data[$name][$pageKey] = trim($pageChildren);
+                    if ($pageKey == 'hostname') $data[$name][$pageKey] = trim($pageChildren);
 
                     // cast children to array
                     $pageChildren = (array) $pageChildren;
 
                     // dig deeper
-                    if(isset($pageChildren['entry']) && is_array($pageChildren['entry'])) {
+                    if (isset($pageChildren['entry']) && is_array($pageChildren['entry'])) {
                         // loop entries
-                        foreach($pageChildren['entry'] as $entry) {
+                        foreach ($pageChildren['entry'] as $entry) {
                             // cast to array
                             $entry = (array) $entry;
 
@@ -926,31 +993,27 @@ class Model
                             $entryCasted = array();
 
                             // cast and add each element
-                            foreach($entry as $entryName => $entryValue) $entryCasted[$entryName] = (string) $entryValue;
+                            foreach ($entry as $entryName => $entryValue) $entryCasted[$entryName] = (string) $entryValue;
 
                             // add to data
                             $data[$name][$pageKey][] = $entryCasted;
                         }
-                    }
-
-                    // normal item
+                    } // normal item
                     else {
                         // loop children
-                        foreach($pageChildren as $childName => $childValue) {
+                        foreach ($pageChildren as $childName => $childValue) {
                             // empty item - skip
-                            if($childName == '@attributes' || trim((string) $childValue) == '') continue;
+                            if ($childName == '@attributes' || trim((string) $childValue) == '') continue;
 
                             // cast and add item
                             $data[$name][$pageKey][$childName] = (string) $childValue;
                         }
                     }
                 }
-            }
-
-            // dig deeper
-            elseif(isset($children['entry']) && is_array($children['entry'])) {
+            } // dig deeper
+            elseif (isset($children['entry']) && is_array($children['entry'])) {
                 // loop entries
-                foreach($children['entry'] as $entry) {
+                foreach ($children['entry'] as $entry) {
                     // cast to array
                     $entry = (array) $entry;
 
@@ -958,22 +1021,20 @@ class Model
                     $entryCasted = array();
 
                     // cast and add each element
-                    foreach($entry as $entryName => $entryValue) $entryCasted[$entryName] = (string) $entryValue;
+                    foreach ($entry as $entryName => $entryValue) $entryCasted[$entryName] = (string) $entryValue;
 
                     // add to data
                     $data[$name]['entries'][] = $entryCasted;
                 }
-            }
-
-            // normal item
+            } // normal item
             else {
                 // loop children
-                foreach($children as $childName => $childValue) {
+                foreach ($children as $childName => $childValue) {
                     // attributes - skip
-                    if($childName === '@attributes') continue;
+                    if ($childName === '@attributes') continue;
 
                     // empty item
-                    if(trim((string) $childValue) == '') {
+                    if (trim((string) $childValue) == '') {
                         // save empty array
                         $data[$name] = array();
 
@@ -993,8 +1054,8 @@ class Model
     /**
      * Redirect to the loading page after checking for infinite loops.
      *
-     * @param string $action The action to check for infinite loops.
-     * @param array[optional] $extraParameters The extra parameters to append to the redirect url.
+     * @param string $action          The action to check for infinite loops.
+     * @param array  $extraParameters The extra parameters to append to the redirect url.
      */
     public static function redirectToLoadingPage($action, array $extraParameters = array())
     {
@@ -1002,7 +1063,7 @@ class Model
         $counter = (\SpoonSession::exists($action . 'Loop') ? \SpoonSession::get($action . 'Loop') : 0);
 
         // loop has run too long - throw exception
-        if($counter > 2) throw new BackendException('An infinite loop has been detected while getting data from cache for the action "' . $action . '".');
+        if ($counter > 2) throw new BackendException('An infinite loop has been detected while getting data from cache for the action "' . $action . '".');
 
         // set new counter
         \SpoonSession::set($action . 'Loop', ++$counter);
@@ -1011,9 +1072,11 @@ class Model
         $extraParameters = (empty($extraParameters) ? '' : '&' . http_build_query($extraParameters));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
+        if (BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
             // redirect to loading page which will get the needed data based on the current action
-            \SpoonHTTP::redirect(BackendModel::createURLForAction('Loading') . '&redirect_action=' . $action . $extraParameters);
+            \SpoonHTTP::redirect(
+                BackendModel::createURLForAction('Loading') . '&redirect_action=' . $action . $extraParameters
+            );
         }
     }
 
@@ -1024,7 +1087,7 @@ class Model
     {
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach($finder->files()->in(BACKEND_CACHE_PATH . '/Analytics') as $file) {
+        foreach ($finder->files()->in(BACKEND_CACHE_PATH . '/Analytics') as $file) {
             $fs->remove($file->getRealPath());
         }
     }
@@ -1047,9 +1110,9 @@ class Model
     /**
      * Write data to cache file
      *
-     * @param array $data The data to write to the cache file.
-     * @param int $startTimestamp The start timestamp for the cache file.
-     * @param int $endTimestamp The end timestamp for the cache file.
+     * @param array $data           The data to write to the cache file.
+     * @param int   $startTimestamp The start timestamp for the cache file.
+     * @param int   $endTimestamp   The end timestamp for the cache file.
      */
     public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
     {
@@ -1057,13 +1120,13 @@ class Model
         $xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
         // loop data
-        foreach($data as $type => $records) {
+        foreach ($data as $type => $records) {
             $attributes = array();
 
             // there are some attributes
-            if(isset($records['attributes']) && !empty($records['attributes'])) {
+            if (isset($records['attributes']) && !empty($records['attributes'])) {
                 // loop em
-                foreach($records['attributes'] as $key => $value) {
+                foreach ($records['attributes'] as $key => $value) {
                     // add to the attributes string
                     $attributes[] = $key . '="' . $value . '"';
                 }
@@ -1072,24 +1135,24 @@ class Model
             $xml .= "\t<" . $type . (!empty($attributes) ? ' ' . implode(' ', $attributes) : '') . ">\n";
 
             // we're not dealing with a page detail
-            if(strpos($type, 'page_') === false) {
+            if (strpos($type, 'page_') === false) {
                 // get items
                 $items = (isset($records['entries']) ? $records['entries'] : $records);
 
                 // loop data
-                foreach($items as $key => $value) {
+                foreach ($items as $key => $value) {
                     // skip empty items
-                    if((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
+                    if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) continue;
 
                     // value contains an array
-                    if(is_array($value)) {
+                    if (is_array($value)) {
                         // there are values
-                        if(!empty($value)) {
+                        if (!empty($value)) {
                             // build xml
                             $xml .= "\t\t<entry>\n";
 
                             // loop data
-                            foreach($value as $entryKey => $entryValue) {
+                            foreach ($value as $entryKey => $entryValue) {
                                 // build xml
                                 $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
                             }
@@ -1097,36 +1160,32 @@ class Model
                             // end xml element
                             $xml .= "\t\t</entry>\n";
                         }
-                    }
-
-                    // build xml
+                    } // build xml
                     else $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
                 }
-            }
-
-            // we're dealing with a page detail
+            } // we're dealing with a page detail
             else {
                 // loop data
-                foreach($records as $subKey => $subItems) {
+                foreach ($records as $subKey => $subItems) {
                     // build xml
                     $xml .= "\t\t<" . $subKey . ">\n";
 
                     // sub items is an array
-                    if(is_array($subItems)) {
+                    if (is_array($subItems)) {
                         // loop data
-                        foreach($subItems as $key => $value) {
+                        foreach ($subItems as $key => $value) {
                             // skip empty items
-                            if((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
+                            if ((is_array($value) && empty($value)) || trim((string) $value) === '') continue;
 
                             // value contains an array
-                            if(is_array($value)) {
+                            if (is_array($value)) {
                                 // there are values
-                                if(!empty($value)) {
+                                if (!empty($value)) {
                                     // build xml
                                     $xml .= "\t\t\t<entry>\n";
 
                                     // loop data
-                                    foreach($value as $entryKey => $entryValue) {
+                                    foreach ($value as $entryKey => $entryValue) {
                                         // build xml
                                         $xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
                                     }
@@ -1134,14 +1193,10 @@ class Model
                                     // end xml element
                                     $xml .= "\t\t\t</entry>\n";
                                 }
-                            }
-
-                            // build xml
+                            } // build xml
                             else $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
                         }
-                    }
-
-                    // not an array
+                    } // not an array
                     else $xml .= "<![CDATA[" . (string) $subItems . "]]>";
 
                     // end xml element
@@ -1158,7 +1213,7 @@ class Model
 
         // perform checks for valid xml and throw exception if needed
         $simpleXml = @simplexml_load_string($xml);
-        if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
+        if ($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
         // store
         $fs = new Filesystem();

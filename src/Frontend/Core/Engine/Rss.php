@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * Frontend RSS class.
@@ -24,7 +24,7 @@ class Rss extends \SpoonFeedRSS
      * @param string $title       The title off the feed.
      * @param string $link        The link of the feed.
      * @param string $description The description of the feed.
-     * @param        array        [optional] $items An array with SpoonRSSItems.
+     * @param array  $items       An array with SpoonRSSItems.
      */
     public function __construct($title, $link, $description, array $items = array())
     {
@@ -61,7 +61,11 @@ class Rss extends \SpoonFeedRSS
             // theme rss image exists
             if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/core/images/rss_image.png')) {
                 // set rss image
-                $this->setImage(SITE_URL . '/src/Frontend/Themes/' . $theme . '/core/images/rss_image.png', $title, $link);
+                $this->setImage(
+                    SITE_URL . '/src/Frontend/Themes/' . $theme . '/core/images/rss_image.png',
+                    $title,
+                    $link
+                );
             }
         }
     }
@@ -69,19 +73,23 @@ class Rss extends \SpoonFeedRSS
     /**
      * Set the image for the feed.
      *
-     * @param string $URL   URL of the image.
-     * @param string $title Title of the image.
-     * @param string $link  Link of the image.
-     * @param        int    [optional] $width Width of the image.
-     * @param        int    [optional] $height Height of the image.
-     * @param        string [optional] $description Description of the image.
+     * @param string $URL         URL of the image.
+     * @param string $title       Title of the image.
+     * @param string $link        Link of the image.
+     * @param int    $width       Width of the image.
+     * @param int    $height      Height of the image.
+     * @param string $description Description of the image.
      */
     public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
     {
         // add UTM-parameters
         $link = Model::addURLParameters(
             $link,
-            array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => \CommonUri::getUrl($this->getTitle()))
+            array(
+                'utm_source' => 'feed',
+                'utm_medium' => 'rss',
+                'utm_campaign' => \CommonUri::getUrl($this->getTitle())
+            )
         );
 
         // call the parent

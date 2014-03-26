@@ -31,7 +31,7 @@ class Model
     /**
      * Build the language files
      *
-     * @param string $language The language to build the locale-file for.
+     * @param string $language    The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
     public static function buildCache($language, $application)
@@ -66,7 +66,7 @@ class Model
         $value .= ' */' . "\n";
         $value .= "\n";
 
-        foreach($types as $type) {
+        foreach ($types as $type) {
             // default module
             $modules = array('Core');
 
@@ -77,21 +77,29 @@ class Model
             $value .= '$' . $type . '[\'Core\'] = array();' . "\n";
 
             // loop locale
-            foreach($locale as $i => $item) {
+            foreach ($locale as $i => $item) {
                 // types match
-                if($item['type'] == $type) {
+                if ($item['type'] == $type) {
                     // new module
-                    if(!in_array($item['module'], $modules)) {
+                    if (!in_array($item['module'], $modules)) {
                         $value .= '$' . $type . '[\'' . $item['module'] . '\'] = array();' . "\n";
                         $modules[] = $item['module'];
                     }
 
                     // parse
-                    if($application == 'Backend') {
-                        $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                    if ($application == 'Backend') {
+                        $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' . str_replace(
+                                '\"',
+                                '"',
+                                addslashes($item['value'])
+                            ) . '\';' . "\n";
                         $json[$type][$item['module']][$item['name']] = $item['value'];
                     } else {
-                        $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace('\"', '"', addslashes($item['value'])) . '\';' . "\n";
+                        $value .= '$' . $type . '[\'' . $item['name'] . '\'] = \'' . str_replace(
+                                '\"',
+                                '"',
+                                addslashes($item['value'])
+                            ) . '\';' . "\n";
                         $json[$type][$item['name']] = $item['value'];
                     }
 
@@ -119,10 +127,12 @@ class Model
         $daysShort = \SpoonLocale::getWeekDays($language, true, 'sunday');
 
         // build labels
-        foreach($monthsLong as $key => $value) $json['loc']['MonthLong' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($monthsShort as $key => $value) $json['loc']['MonthShort' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysLong as $key => $value) $json['loc']['DayLong' . \SpoonFilter::ucfirst($key)] = $value;
-        foreach($daysShort as $key => $value) $json['loc']['DayShort' . \SpoonFilter::ucfirst($key)] = $value;
+        foreach ($monthsLong as $key => $value) {
+            $json['loc']['MonthLong' . \SpoonFilter::ucfirst($key)] = $value;
+        }
+        foreach ($monthsShort as $key => $value) $json['loc']['MonthShort' . \SpoonFilter::ucfirst($key)] = $value;
+        foreach ($daysLong as $key => $value) $json['loc']['DayLong' . \SpoonFilter::ucfirst($key)] = $value;
+        foreach ($daysShort as $key => $value) $json['loc']['DayShort' . \SpoonFilter::ucfirst($key)] = $value;
 
         $fs->dumpFile(
             constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
@@ -139,7 +149,7 @@ class Model
     public static function buildURLQueryByFilter($filter)
     {
         $query = http_build_query($filter);
-        if($query != '') $query = '&' . $query;
+        if ($query != '') $query = '&' . $query;
 
         return $query;
     }
@@ -163,21 +173,21 @@ class Model
         $xml->appendChild($root);
 
         // loop applications
-        foreach($items as $application => $modules) {
+        foreach ($items as $application => $modules) {
             // create application element
             $applicationElement = $xml->createElement($application);
             $root->appendChild($applicationElement);
 
             // loop modules
-            foreach($modules as $module => $types) {
+            foreach ($modules as $module => $types) {
                 // create application element
                 $moduleElement = $xml->createElement($module);
                 $applicationElement->appendChild($moduleElement);
 
                 // loop types
-                foreach($types as $type => $items) {
+                foreach ($types as $type => $items) {
                     // loop items
-                    foreach($items as $name => $translations) {
+                    foreach ($items as $name => $translations) {
                         // create application element
                         $itemElement = $xml->createElement('item');
                         $moduleElement->appendChild($itemElement);
@@ -187,7 +197,7 @@ class Model
                         $itemElement->setAttribute('name', $name);
 
                         // loop translations
-                        foreach($translations as $translation) {
+                        foreach ($translations as $translation) {
                             // create translation
                             $translationElement = $xml->createElement('translation');
                             $itemElement->appendChild($translationElement);
@@ -214,13 +224,17 @@ class Model
     public static function delete(array $ids)
     {
         // loop and cast to integers
-        foreach($ids as &$id) $id = (int) $id;
+        foreach ($ids as &$id) $id = (int) $id;
 
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
 
         // delete records
-        BackendModel::getContainer()->get('database')->delete('locale', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
+        BackendModel::getContainer()->get('database')->delete(
+            'locale',
+            'id IN (' . implode(', ', $idPlaceHolders) . ')',
+            $ids
+        );
 
         // rebuild cache
         self::buildCache(BL::getWorkingLanguage(), 'Backend');
@@ -247,12 +261,12 @@ class Model
     /**
      * Does a locale exists by its name.
      *
-     * @param string $name The name of the locale.
-     * @param string $type The type of the locale.
-     * @param string $module The module wherein will be searched.
-     * @param string $language The language to use.
+     * @param string $name        The name of the locale.
+     * @param string $type        The type of the locale.
+     * @param string $module      The module wherein will be searched.
+     * @param string $language    The language to use.
      * @param string $application The application wherein will be searched.
-     * @param int[optional] $id The id to exclude in the check.
+     * @param int    $id          The id to exclude in the check.
      * @return bool
      */
     public static function existsByName($name, $type, $module, $language, $application, $id = null)
@@ -268,7 +282,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // return
-        if($id !== null) return (bool) $db->getVar(
+        if ($id !== null) return (bool) $db->getVar(
             'SELECT 1
              FROM locale
              WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?
@@ -294,10 +308,13 @@ class Model
     public static function get($id)
     {
         // fetch record from db
-        $record = (array) BackendModel::getContainer()->get('database')->getRecord('SELECT * FROM locale WHERE id = ?', array((int) $id));
+        $record = (array) BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT * FROM locale WHERE id = ?',
+            array((int) $id)
+        );
 
         // actions are urlencoded
-        if($record['type'] == 'act') $record['value'] = urldecode($record['value']);
+        if ($record['type'] == 'act') $record['value'] = urldecode($record['value']);
 
         return $record;
     }
@@ -305,10 +322,10 @@ class Model
     /**
      * Get a locale by its name
      *
-     * @param string $name The name of the locale.
-     * @param string $type The type of the locale.
-     * @param string $module The module wherein will be searched.
-     * @param string $language The language to use.
+     * @param string $name        The name of the locale.
+     * @param string $type        The type of the locale.
+     * @param string $module      The module wherein will be searched.
+     * @param string $language    The language to use.
      * @param string $application The application wherein will be searched.
      * @return bool
      */
@@ -341,7 +358,7 @@ class Model
     /**
      * Get the languages for a multicheckbox.
      *
-     * @param bool[optional] $includeInterfaceLanguages Should we also get the interfacelanguages?
+     * @param bool $includeInterfaceLanguages Should we also get the interfacelanguages?
      * @return array
      */
     public static function getLanguagesForMultiCheckbox($includeInterfaceLanguages = false)
@@ -350,13 +367,13 @@ class Model
         $aLanguages = BL::getWorkingLanguages();
 
         // add the interface languages if needed
-        if($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
+        if ($includeInterfaceLanguages) $aLanguages = array_merge($aLanguages, BL::getInterfaceLanguages());
 
         // create a new array to redefine the languages for the multicheckbox
         $languages = array();
 
         // loop the languages
-        foreach($aLanguages as $key => $lang) {
+        foreach ($aLanguages as $key => $lang) {
             // add to array
             $languages[$key]['value'] = $key;
             $languages[$key]['label'] = $lang;
@@ -379,17 +396,23 @@ class Model
         $key = array_search('error', $modules);
 
         // remove error module
-        if($key !== false) unset($modules[$key]);
+        if ($key !== false) unset($modules[$key]);
 
         $used = array();
 
         // get labels from navigation
         $lbl = self::getLabelsFromBackendNavigation();
-        foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
+        foreach ((array) $lbl as $label) $used['lbl'][$label] = array(
+            'files' => array('<small>used in navigation</small>'),
+            'module_specific' => array()
+        );
 
         // get labels from table
         $lbl = (array) BackendModel::getContainer()->get('database')->getColumn('SELECT label FROM modules_extras');
-        foreach((array) $lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
+        foreach ((array) $lbl as $label) $used['lbl'][$label] = array(
+            'files' => array('<small>used in database</small>'),
+            'module_specific' => array()
+        );
 
         $finder = new Finder();
         $finder->notPath('Cache')
@@ -399,12 +422,12 @@ class Model
             ->name('*.tpl')
             ->name('*.js');
 
-        foreach($finder->files()->in(BACKEND_PATH) as $file) {
+        foreach ($finder->files()->in(BACKEND_PATH) as $file) {
             // grab content
             $content = $file->getContents();
 
             // process based on extension
-            switch($file->getExtension()) {
+            switch ($file->getExtension()) {
                 // javascript file
                 case 'js':
                     $matches = array();
@@ -413,21 +436,27 @@ class Model
                     preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $content, $matches);
 
                     // any matches?
-                    if(isset($matches[2])) {
+                    if (isset($matches[2])) {
                         // loop matches
-                        foreach($matches[2] as $key => $match) {
+                        foreach ($matches[2] as $key => $match) {
                             // set type
                             $type = $matches[1][$key];
 
                             // loop modules
-                            foreach($modules as $module) {
+                            foreach ($modules as $module) {
                                 // determine if this is a module specific locale
-                                if(substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module)) {
+                                if (substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase(
+                                        $module
+                                    ) && mb_strlen($match) > mb_strlen($module)
+                                ) {
                                     // cleanup
                                     $match = str_replace(\SpoonFilter::toCamelCase($module), '', $match);
 
                                     // init if needed
-                                    if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                                    if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                        'files' => array(),
+                                        'module_specific' => array()
+                                    );
 
                                     // add module
                                     $used[$type][$match]['module_specific'][] = $module;
@@ -435,10 +464,17 @@ class Model
                             }
 
                             // init if needed
-                            if(!isset($used[$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                            if (!isset($used[$match])) $used[$type][$match] = array(
+                                'files' => array(),
+                                'module_specific' => array()
+                            );
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) $used[$type][$match]['files'][] = $file->getRealPath();
+                            if (!in_array(
+                                $file->getRealPath(),
+                                $used[$type][$match]['files']
+                            )
+                            ) $used[$type][$match]['files'][] = $file->getRealPath();
                         }
                     }
                     break;
@@ -449,18 +485,22 @@ class Model
                     $matchesURL = array();
 
                     // get matches
-                    preg_match_all('/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
+                    preg_match_all(
+                        '/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
+                        $content,
+                        $matches
+                    );
 
                     // match errors
                     preg_match_all('/&(amp;)?(error|report)=([A-Z0-9-_]+)/i', $content, $matchesURL);
 
                     // any errormessages
-                    if(!empty($matchesURL[0])) {
+                    if (!empty($matchesURL[0])) {
                         // loop matches
-                        foreach($matchesURL[3] as $key => $match) {
+                        foreach ($matchesURL[3] as $key => $match) {
                             $type = 'lbl';
-                            if($matchesURL[2][$key] == 'error') $type = 'Error';
-                            if($matchesURL[2][$key] == 'report') $type = 'Message';
+                            if ($matchesURL[2][$key] == 'error') $type = 'Error';
+                            if ($matchesURL[2][$key] == 'report') $type = 'Message';
 
                             $matches[0][] = '';
                             $matches[1][] = 'BL';
@@ -472,37 +512,42 @@ class Model
                     }
 
                     // any matches?
-                    if(!empty($matches[4])) {
+                    if (!empty($matches[4])) {
                         // loop matches
-                        foreach($matches[4] as $key => $match) {
+                        foreach ($matches[4] as $key => $match) {
                             // set type
                             $type = 'lbl';
-                            if($matches[3][$key] == 'Error' || $matches[2][$key] == 'err') $type = 'err';
-                            if($matches[3][$key] == 'Message' || $matches[2][$key] == 'msg') $type = 'msg';
+                            if ($matches[3][$key] == 'Error' || $matches[2][$key] == 'err') $type = 'err';
+                            if ($matches[3][$key] == 'Message' || $matches[2][$key] == 'msg') $type = 'msg';
 
                             // specific module?
-                            if(isset($matches[5][$key]) && $matches[5][$key] != '') {
+                            if (isset($matches[5][$key]) && $matches[5][$key] != '') {
                                 // try to grab the module
                                 $specificModule = $matches[5][$key];
                                 $specificModule = trim(str_replace(array(',', '\''), '', $specificModule));
 
                                 // not core?
-                                if($specificModule != 'core') {
+                                if ($specificModule != 'core') {
                                     // dynamic module
-                                    if($specificModule == '$this->URL->getModule(' || $specificModule == '$this->getModule(') {
+                                    if ($specificModule == '$this->URL->getModule(' || $specificModule == '$this->getModule(') {
                                         // init var
                                         $count = 0;
 
                                         // replace
-                                        $modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
+                                        $modulePath = str_replace(
+                                            realpath(BACKEND_MODULES_PATH),
+                                            '',
+                                            realpath($file),
+                                            $count
+                                        );
 
                                         // validate
-                                        if($count == 1) {
+                                        if ($count == 1) {
                                             // split into chunks
                                             $chunks = (array) explode('/', trim($modulePath, '/'));
 
                                             // set specific module
-                                            if(isset($chunks[0])) $specificModule = $chunks[0];
+                                            if (isset($chunks[0])) $specificModule = $chunks[0];
 
                                             // skip
                                             else continue;
@@ -510,21 +555,32 @@ class Model
                                     }
 
                                     // init if needed
-                                    if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                                    if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                        'files' => array(),
+                                        'module_specific' => array()
+                                    );
 
                                     // add module
                                     $used[$type][$match]['module_specific'][] = $specificModule;
                                 }
                             } else {
                                 // loop modules
-                                foreach($modules as $module) {
+                                foreach ($modules as $module) {
                                     // determine if this is a module specific locale
-                                    if(substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module) && ctype_upper(substr($match, mb_strlen($module) + 1, 1))) {
+                                    if (substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase(
+                                            $module
+                                        ) && mb_strlen($match) > mb_strlen($module) && ctype_upper(
+                                            substr($match, mb_strlen($module) + 1, 1)
+                                        )
+                                    ) {
                                         // cleanup
                                         $match = str_replace(\SpoonFilter::toCamelCase($module), '', $match);
 
                                         // init if needed
-                                        if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                                        if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                            'files' => array(),
+                                            'module_specific' => array()
+                                        );
 
                                         // add module
                                         $used[$type][$match]['module_specific'][] = $module;
@@ -533,10 +589,13 @@ class Model
                             }
 
                             // init if needed
-                            if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                            if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                'files' => array(),
+                                'module_specific' => array()
+                            );
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+                            if (!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
                                 $used[$type][$match]['files'][] = $file->getRealPath();
                             }
                         }
@@ -551,21 +610,27 @@ class Model
                     preg_match_all('/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U', $content, $matches);
 
                     // any matches?
-                    if(isset($matches[2])) {
+                    if (isset($matches[2])) {
                         // loop matches
-                        foreach($matches[2] as $key => $match) {
+                        foreach ($matches[2] as $key => $match) {
                             // set type
                             $type = $matches[1][$key];
 
                             // loop modules
-                            foreach($modules as $module) {
+                            foreach ($modules as $module) {
                                 // determine if this is a module specific locale
-                                if(substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module)) {
+                                if (substr($match, 0, mb_strlen($module)) == \SpoonFilter::toCamelCase(
+                                        $module
+                                    ) && mb_strlen($match) > mb_strlen($module)
+                                ) {
                                     // cleanup
                                     $match = str_replace(\SpoonFilter::toCamelCase($module), '', $match);
 
                                     // init if needed
-                                    if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                                    if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                        'files' => array(),
+                                        'module_specific' => array()
+                                    );
 
                                     // add module
                                     $used[$type][$match]['module_specific'][] = $module;
@@ -573,10 +638,13 @@ class Model
                             }
 
                             // init if needed
-                            if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+                            if (!isset($used[$type][$match])) $used[$type][$match] = array(
+                                'files' => array(),
+                                'module_specific' => array()
+                            );
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+                            if (!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
                                 $used[$type][$match]['files'][] = $file->getRealPath();
                             }
                         }
@@ -589,49 +657,80 @@ class Model
         $nonExisting = array();
 
         // check if the locale is present in the current language
-        foreach($used as $type => $items) {
+        foreach ($used as $type => $items) {
             // loop items
-            foreach($items as $key => $data) {
+            foreach ($items as $key => $data) {
                 // process based on type
-                switch($type) {
+                switch ($type) {
                     // error
                     case 'err':
                         // module specific?
-                        if(!empty($data['module_specific'])) {
+                        if (!empty($data['module_specific'])) {
                             // loop modules
-                            foreach($data['module_specific'] as $module) {
+                            foreach ($data['module_specific'] as $module) {
                                 // if the error isn't found add it to the list
-                                if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'Backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if (substr_count(
+                                        BL::err($key, $module),
+                                        '{$' . $type
+                                    ) > 0
+                                ) $nonExisting['backend' . $key . $type . $module] = array(
+                                    'language' => $language,
+                                    'application' => 'Backend',
+                                    'module' => $module,
+                                    'type' => $type,
+                                    'name' => $key,
+                                    'used_in' => serialize(
+                                        $data['files']
+                                    )
+                                );
                             }
-                        }
-
-                        // not specific
+                        } // not specific
                         else {
                             // if the error isn't found add it to the list
-                            if(substr_count(BL::err($key), '{$' . $type) > 0) {
+                            if (substr_count(BL::err($key), '{$' . $type) > 0) {
                                 // init var
                                 $exists = false;
 
                                 // loop files
-                                foreach($data['files'] as $file) {
+                                foreach ($data['files'] as $file) {
                                     // init var
                                     $count = 0;
 
                                     // replace
-                                    $modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
+                                    $modulePath = str_replace(
+                                        realpath(BACKEND_MODULES_PATH),
+                                        '',
+                                        realpath($file),
+                                        $count
+                                    );
 
                                     // validate
-                                    if($count == 1) {
+                                    if ($count == 1) {
                                         // split into chunks
                                         $chunks = (array) explode('/', trim($modulePath, '/'));
 
                                         // first part is the module
-                                        if(isset($chunks[0]) && BL::err($key, $chunks[0]) != '{$' . $type . \SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+                                        if (isset($chunks[0]) && BL::err(
+                                                                     $key,
+                                                                     $chunks[0]
+                                                                 ) != '{$' . $type . \SpoonFilter::toCamelCase(
+                                                $chunks[0]
+                                            ) . $key . '}'
+                                        ) $exists = true;
                                     }
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                    'language' => $language,
+                                    'application' => 'Backend',
+                                    'module' => 'Core',
+                                    'type' => $type,
+                                    'name' => $key,
+                                    'used_in' => serialize(
+                                        $data['files']
+                                    )
+                                );
                             }
                         }
                         break;
@@ -639,41 +738,72 @@ class Model
                     // label
                     case 'lbl':
                         // module specific?
-                        if(!empty($data['module_specific'])) {
+                        if (!empty($data['module_specific'])) {
                             // loop modules
-                            foreach($data['module_specific'] as $module) {
+                            foreach ($data['module_specific'] as $module) {
                                 // if the label isn't found add it to the list
-                                if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting['backend' . $key . $type . $module] = array('language' => $language, 'application' => 'Backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if (substr_count(
+                                        BL::lbl($key, $module),
+                                        '{$' . $type
+                                    ) > 0
+                                ) $nonExisting['backend' . $key . $type . $module] = array(
+                                    'language' => $language,
+                                    'application' => 'Backend',
+                                    'module' => $module,
+                                    'type' => $type,
+                                    'name' => $key,
+                                    'used_in' => serialize(
+                                        $data['files']
+                                    )
+                                );
                             }
-                        }
-
-                        // not specific
+                        } // not specific
                         else {
                             // if the label isn't found, check in the specific module
-                            if(substr_count(BL::lbl($key), '{$' . $type) > 0) {
+                            if (substr_count(BL::lbl($key), '{$' . $type) > 0) {
                                 // init var
                                 $exists = false;
 
                                 // loop files
-                                foreach($data['files'] as $file) {
+                                foreach ($data['files'] as $file) {
                                     // init var
                                     $count = 0;
 
                                     // replace
-                                    $modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
+                                    $modulePath = str_replace(
+                                        realpath(BACKEND_MODULES_PATH),
+                                        '',
+                                        realpath($file),
+                                        $count
+                                    );
 
                                     // validate
-                                    if($count == 1) {
+                                    if ($count == 1) {
                                         // split into chunks
                                         $chunks = (array) explode('/', trim($modulePath, '/'));
 
                                         // first part is the module
-                                        if(isset($chunks[0]) && BL::lbl($key, $chunks[0]) != '{$' . $type . \SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+                                        if (isset($chunks[0]) && BL::lbl(
+                                                                     $key,
+                                                                     $chunks[0]
+                                                                 ) != '{$' . $type . \SpoonFilter::toCamelCase(
+                                                $chunks[0]
+                                            ) . $key . '}'
+                                        ) $exists = true;
                                     }
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                    'language' => $language,
+                                    'application' => 'Backend',
+                                    'module' => 'Core',
+                                    'type' => $type,
+                                    'name' => $key,
+                                    'used_in' => serialize(
+                                        $data['files']
+                                    )
+                                );
                             }
                         }
                         break;
@@ -681,11 +811,11 @@ class Model
                     // message
                     case 'msg':
                         // module specific?
-                        if(!empty($data['module_specific'])) {
+                        if (!empty($data['module_specific'])) {
                             // loop modules
-                            foreach($data['module_specific'] as $module) {
+                            foreach ($data['module_specific'] as $module) {
                                 // if the message isn't found add it to the list
-                                if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) {
+                                if (substr_count(BL::msg($key, $module), '{$' . $type) > 0) {
                                     $nonExisting['backend' . $key . $type . $module] = array(
                                         'language' => $language,
                                         'application' => 'Backend',
@@ -696,35 +826,53 @@ class Model
                                     );
                                 }
                             }
-                        }
-
-                        // not specific
+                        } // not specific
                         else {
                             // if the message isn't found add it to the list
-                            if(substr_count(BL::msg($key), '{$' . $type) > 0) {
+                            if (substr_count(BL::msg($key), '{$' . $type) > 0) {
                                 // init var
                                 $exists = false;
 
                                 // loop files
-                                foreach($data['files'] as $file) {
+                                foreach ($data['files'] as $file) {
                                     // init var
                                     $count = 0;
 
                                     // replace
-                                    $modulePath = str_replace(realpath(BACKEND_MODULES_PATH), '', realpath($file), $count);
+                                    $modulePath = str_replace(
+                                        realpath(BACKEND_MODULES_PATH),
+                                        '',
+                                        realpath($file),
+                                        $count
+                                    );
 
                                     // validate
-                                    if($count == 1) {
+                                    if ($count == 1) {
                                         // split into chunks
                                         $chunks = (array) explode('/', trim($modulePath, '/'));
 
                                         // first part is the module
-                                        if(isset($chunks[0]) && BL::msg($key, $chunks[0]) != '{$' . $type . \SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
+                                        if (isset($chunks[0]) && BL::msg(
+                                                                     $key,
+                                                                     $chunks[0]
+                                                                 ) != '{$' . $type . \SpoonFilter::toCamelCase(
+                                                $chunks[0]
+                                            ) . $key . '}'
+                                        ) $exists = true;
                                     }
                                 }
 
                                 // doesn't exists
-                                if(!$exists) $nonExisting['backend' . $key . $type . 'core'] = array('language' => $language, 'application' => 'Backend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                    'language' => $language,
+                                    'application' => 'Backend',
+                                    'module' => 'Core',
+                                    'type' => $type,
+                                    'name' => $key,
+                                    'used_in' => serialize(
+                                        $data['files']
+                                    )
+                                );
                             }
                         }
                         break;
@@ -759,7 +907,7 @@ class Model
             $content = $file->getContents();
 
             // process the file based on extension
-            switch($file->getExtension()) {
+            switch ($file->getExtension()) {
                 // javascript file
                 case 'js':
                     $matches = array();
@@ -768,17 +916,17 @@ class Model
                     preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $content, $matches);
 
                     // any matches?
-                    if(isset($matches[2])) {
+                    if (isset($matches[2])) {
                         // loop matches
-                        foreach($matches[2] as $key => $match) {
+                        foreach ($matches[2] as $key => $match) {
                             // set type
                             $type = $matches[1][$key];
 
                             // init if needed
-                            if(!isset($used[$match])) $used[$type][$match] = array('files' => array());
+                            if (!isset($used[$match])) $used[$type][$match] = array('files' => array());
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+                            if (!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
                                 $used[$type][$match]['files'][] = $file->getRealPath();
                             }
                         }
@@ -790,25 +938,29 @@ class Model
                     $matches = array();
 
                     // get matches
-                    preg_match_all('/(FrontendLanguage|FL)::(get(Action|Label|Error|Message)|act|lbl|err|msg)\(\'(.*)\'\)/iU', $content, $matches);
+                    preg_match_all(
+                        '/(FrontendLanguage|FL)::(get(Action|Label|Error|Message)|act|lbl|err|msg)\(\'(.*)\'\)/iU',
+                        $content,
+                        $matches
+                    );
 
                     // any matches?
-                    if(!empty($matches[4])) {
+                    if (!empty($matches[4])) {
                         // loop matches
-                        foreach($matches[4] as $key => $match) {
+                        foreach ($matches[4] as $key => $match) {
                             $type = 'lbl';
-                            if($matches[3][$key] == 'Action') $type = 'act';
-                            if($matches[2][$key] == 'act') $type = 'act';
-                            if($matches[3][$key] == 'Error') $type = 'err';
-                            if($matches[2][$key] == 'err') $type = 'err';
-                            if($matches[3][$key] == 'Message') $type = 'msg';
-                            if($matches[2][$key] == 'msg') $type = 'msg';
+                            if ($matches[3][$key] == 'Action') $type = 'act';
+                            if ($matches[2][$key] == 'act') $type = 'act';
+                            if ($matches[3][$key] == 'Error') $type = 'err';
+                            if ($matches[2][$key] == 'err') $type = 'err';
+                            if ($matches[3][$key] == 'Message') $type = 'msg';
+                            if ($matches[2][$key] == 'msg') $type = 'msg';
 
                             // init if needed
-                            if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
+                            if (!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+                            if (!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
                                 $used[$type][$match]['files'][] = $file->getRealPath();
                             }
                         }
@@ -823,17 +975,17 @@ class Model
                     preg_match_all('/\{\$(act|err|lbl|msg)([a-z-_]*)(\|.*)?\}/iU', $content, $matches);
 
                     // any matches?
-                    if(isset($matches[2])) {
+                    if (isset($matches[2])) {
                         // loop matches
-                        foreach($matches[2] as $key => $match) {
+                        foreach ($matches[2] as $key => $match) {
                             // set type
                             $type = $matches[1][$key];
 
                             // init if needed
-                            if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
+                            if (!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
 
                             // add file
-                            if(!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
+                            if (!in_array($file->getRealPath(), $used[$type][$match]['files'])) {
                                 $used[$type][$match]['files'][] = $file->getRealPath();
                             }
                         }
@@ -849,29 +1001,73 @@ class Model
         FL::setLocale($language);
 
         // check if the locale is present in the current language
-        foreach($used as $type => $items) {
+        foreach ($used as $type => $items) {
             // loop items
-            foreach($items as $key => $data) {
+            foreach ($items as $key => $data) {
                 // process based on type
-                switch($type) {
+                switch ($type) {
                     case 'act':
                         // if the action isn't available add it to the list
-                        if(FL::act($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if (FL::act(
+                                $key,
+                                false
+                            ) == '{$' . $type . $key . '}'
+                        ) $nonExisting['frontend' . $key . $type] = array(
+                            'language' => $language,
+                            'application' => 'Frontend',
+                            'module' => 'Core',
+                            'type' => $type,
+                            'name' => $key,
+                            'used_in' => serialize($data['files'])
+                        );
                         break;
 
                     case 'err':
                         // if the error isn't available add it to the list
-                        if(FL::err($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if (FL::err(
+                                $key,
+                                false
+                            ) == '{$' . $type . $key . '}'
+                        ) $nonExisting['frontend' . $key . $type] = array(
+                            'language' => $language,
+                            'application' => 'Frontend',
+                            'module' => 'Core',
+                            'type' => $type,
+                            'name' => $key,
+                            'used_in' => serialize($data['files'])
+                        );
                         break;
 
                     case 'lbl':
                         // if the label isn't available add it to the list
-                        if(FL::lbl($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if (FL::lbl(
+                                $key,
+                                false
+                            ) == '{$' . $type . $key . '}'
+                        ) $nonExisting['frontend' . $key . $type] = array(
+                            'language' => $language,
+                            'application' => 'Frontend',
+                            'module' => 'Core',
+                            'type' => $type,
+                            'name' => $key,
+                            'used_in' => serialize($data['files'])
+                        );
                         break;
 
                     case 'msg':
                         // if the message isn't available add it to the list
-                        if(FL::msg($key, false) == '{$' . $type . $key . '}') $nonExisting['frontend' . $key . $type] = array('language' => $language, 'application' => 'Frontend', 'module' => 'Core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+                        if (FL::msg(
+                                $key,
+                                false
+                            ) == '{$' . $type . $key . '}'
+                        ) $nonExisting['frontend' . $key . $type] = array(
+                            'language' => $language,
+                            'application' => 'Frontend',
+                            'module' => 'Core',
+                            'type' => $type,
+                            'name' => $key,
+                            'used_in' => serialize($data['files'])
+                        );
                         break;
                 }
             }
@@ -886,11 +1082,11 @@ class Model
      * Get the translations
      *
      * @param string $application The application.
-     * @param string $module The module.
-     * @param array $types The types of the translations to get.
-     * @param array $languages The languages of the translations to get.
-     * @param string $name The name.
-     * @param string $value The value.
+     * @param string $module      The module.
+     * @param array  $types       The types of the translations to get.
+     * @param array  $languages   The languages of the translations to get.
+     * @param string $name        The name.
+     * @param string $value       The value.
      * @return array
      */
     public static function getTranslations($application, $module, $types, $languages, $name, $value)
@@ -899,10 +1095,10 @@ class Model
 
         // create an array for the languages, surrounded by quotes (example: 'en')
         $aLanguages = array();
-        foreach($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+        foreach ($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
 
         // surround the types with quotes
-        foreach($types as $key => $val) $types[$key] = '\'' . $val . '\'';
+        foreach ($types as $key => $val) $types[$key] = '\'' . $val . '\'';
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -922,7 +1118,7 @@ class Model
         $parameters = array($application, '%' . $name . '%', '%' . $value . '%');
 
         // add module to the query if needed
-        if($module) {
+        if ($module) {
             $query .= ' AND l.module = ?';
             $parameters[] = $module;
         }
@@ -934,9 +1130,12 @@ class Model
         $sortedTranslations = array();
 
         // loop translations
-        foreach($translations as $translation) {
+        foreach ($translations as $translation) {
             // add to the sorted array
-            $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array('id' => $translation['id'], 'value' => $translation['value']);
+            $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array(
+                'id' => $translation['id'],
+                'value' => $translation['value']
+            );
         }
 
         // create an array to use in the datagrid
@@ -946,19 +1145,19 @@ class Model
         $id = 0;
 
         // loop the sorted translations
-        foreach($sortedTranslations as $type => $references) {
+        foreach ($sortedTranslations as $type => $references) {
             // create array for each type
             $dataGridTranslations[$type] = array();
 
-            foreach($references as $reference => $translation) {
+            foreach ($references as $reference => $translation) {
                 // loop modules
-                foreach($translation as $module => $t) {
+                foreach ($translation as $module => $t) {
                     // create translation (and increase id)
                     $trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
 
                     // is there a translation? else empty string
-                    foreach($languages as $lang) {
-                        if(count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                    foreach ($languages as $lang) {
+                        if (count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
                     }
 
@@ -980,7 +1179,7 @@ class Model
     public static function getTypeName($type)
     {
         // get full type name
-        switch($type) {
+        switch ($type) {
             case 'act':
                 $type = 'action';
                 break;
@@ -1012,7 +1211,7 @@ class Model
         $labels = $types;
 
         // loop and build labels
-        foreach($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
         // build array
         return array_combine($types, $labels);
@@ -1032,7 +1231,7 @@ class Model
         $labels = $aTypes;
 
         // loop and build labels
-        foreach($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
         // build array
         $aTypes = array_combine($aTypes, $labels);
@@ -1041,7 +1240,7 @@ class Model
         $types = array();
 
         // loop the languages
-        foreach($aTypes as $key => $type) {
+        foreach ($aTypes as $key => $type) {
             // add to array
             $types[$key]['value'] = $key;
             $types[$key]['label'] = $type;
@@ -1054,16 +1253,22 @@ class Model
     /**
      * Import a locale XML file.
      *
-     * @param \SimpleXMLElement $xml The locale XML.
-     * @param bool[optional] $overwriteConflicts Should we overwrite when there is a conflict?
-     * @param array[optional] $frontendLanguages The frontend languages to install locale for.
-     * @param array[optional] $backendLanguages The backend languages to install locale for.
-     * @param int[optional] $userId Id of the user these translations should be inserted for.
-     * @param int[optional] $date The date the translation has been inserted.
+     * @param \SimpleXMLElement $xml                The locale XML.
+     * @param bool              $overwriteConflicts Should we overwrite when there is a conflict?
+     * @param array             $frontendLanguages  The frontend languages to install locale for.
+     * @param array             $backendLanguages   The backend languages to install locale for.
+     * @param int               $userId             Id of the user these translations should be inserted for.
+     * @param int               $date               The date the translation has been inserted.
      * @return array The import statistics
      */
-    public static function importXML(\SimpleXMLElement $xml, $overwriteConflicts = false, $frontendLanguages = null, $backendLanguages = null, $userId = null, $date = null)
-    {
+    public static function importXML(
+        \SimpleXMLElement $xml,
+        $overwriteConflicts = false,
+        $frontendLanguages = null,
+        $backendLanguages = null,
+        $userId = null,
+        $date = null
+    ) {
         $overwriteConflicts = (bool) $overwriteConflicts;
         $statistics = array(
             'total' => 0,
@@ -1072,10 +1277,10 @@ class Model
 
         // set defaults if necessary
         // we can't simply use these right away, because this function is also calls by the installer, which does not have Backend-functions
-        if($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
-        if($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
-        if($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
-        if($date === null) $date = BackendModel::getUTCDate();
+        if ($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
+        if ($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
+        if ($userId === null) $userId = BackendAuthentication::getUser()->getUserId();
+        if ($date === null) $date = BackendModel::getUTCDate();
 
         // get database instance
         $db = BackendModel::getContainer()->get('database');
@@ -1086,7 +1291,7 @@ class Model
 
         // types
         $typesShort = (array) $db->getEnumValues('locale', 'type');
-        foreach($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
+        foreach ($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
 
         // install English translations anyhow, they're fallback
         $possibleLanguages = array(
@@ -1101,39 +1306,43 @@ class Model
         );
 
         // applications
-        foreach($xml as $application => $modules) {
+        foreach ($xml as $application => $modules) {
             // application does not exist
-            if(!in_array($application, $possibleApplications)) continue;
+            if (!in_array($application, $possibleApplications)) continue;
 
             // modules
-            foreach($modules as $module => $items) {
+            foreach ($modules as $module => $items) {
                 // module does not exist
-                if(!in_array($module, $possibleModules)) continue;
+                if (!in_array($module, $possibleModules)) continue;
 
                 // items
-                foreach($items as $item) {
+                foreach ($items as $item) {
                     // attributes
                     $attributes = $item->attributes();
                     $type = \SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
                     $name = \SpoonFilter::getValue($attributes['name'], null, '');
 
                     // missing attributes
-                    if($type == '' || $name == '') continue;
+                    if ($type == '' || $name == '') continue;
 
                     // real type (shortened)
                     $type = array_search($type, $possibleTypes);
 
                     // translations
-                    foreach($item->translation as $translation) {
+                    foreach ($item->translation as $translation) {
                         // statistics
                         $statistics['total']++;
 
                         // attributes
                         $attributes = $translation->attributes();
-                        $language = \SpoonFilter::getValue($attributes['language'], $possibleLanguages[$application], '');
+                        $language = \SpoonFilter::getValue(
+                            $attributes['language'],
+                            $possibleLanguages[$application],
+                            ''
+                        );
 
                         // language does not exist
-                        if($language == '') continue;
+                        if ($language == '') continue;
 
                         // the actual translation
                         $translation = (string) $translation;
@@ -1149,15 +1358,28 @@ class Model
                         $locale['edited_on'] = $date;
 
                         // check if translation does not yet exist, or if the translation can be overridden
-                        if(!in_array($application . $module . $type . $language . $name, $currentLocale) || $overwriteConflicts) {
+                        if (!in_array(
+                                $application . $module . $type . $language . $name,
+                                $currentLocale
+                            ) || $overwriteConflicts
+                        ) {
                             $db->execute(
                                 'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
                                  VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                                  ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',
                                 array(
-                                    $locale['user_id'], $locale['language'], $locale['application'], $locale['module'],
-                                    $locale['type'], $locale['name'], $locale['value'], $locale['edited_on'],
-                                    $locale['user_id'], $locale['value'], $locale['edited_on'])
+                                    $locale['user_id'],
+                                    $locale['language'],
+                                    $locale['application'],
+                                    $locale['module'],
+                                    $locale['type'],
+                                    $locale['name'],
+                                    $locale['value'],
+                                    $locale['edited_on'],
+                                    $locale['user_id'],
+                                    $locale['value'],
+                                    $locale['edited_on']
+                                )
                             );
 
                             // statistics
@@ -1169,8 +1391,8 @@ class Model
         }
 
         // rebuild cache
-        foreach($possibleApplications as $application) {
-            foreach($possibleLanguages[$application] as $language) self::buildCache($language, $application);
+        foreach ($possibleApplications as $application) {
+            foreach ($possibleLanguages[$application] as $language) self::buildCache($language, $application);
         }
 
         return $statistics;
@@ -1185,7 +1407,9 @@ class Model
     public static function insert(array $item)
     {
         // actions should be urlized
-        if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
+            $item['value']
+        );
 
         // insert item
         $item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
@@ -1205,7 +1429,9 @@ class Model
     public static function update(array $item)
     {
         // actions should be urlized
-        if($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl($item['value']);
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
+            $item['value']
+        );
 
         // update category
         $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));

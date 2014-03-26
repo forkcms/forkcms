@@ -2,12 +2,12 @@
 
 namespace Backend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * This is our extended version of SpoonFileCSV
@@ -19,10 +19,10 @@ class Csv extends \SpoonFileCSV
     /**
      * Output a CSV-file as a download
      *
-     * @param string $filename					The name of the file.
-     * @param array $array						The array to convert.
-     * @param array[optional] $columns			The column names you want to use.
-     * @param array[optional] $excludeColumns	The columns you want to exclude.
+     * @param string $filename       The name of the file.
+     * @param array  $array          The array to convert.
+     * @param array  $columns        The column names you want to use.
+     * @param array  $excludeColumns The columns you want to exclude.
      */
     public static function outputCSV($filename, array $array, array $columns = null, array $excludeColumns = null)
     {
@@ -31,8 +31,12 @@ class Csv extends \SpoonFileCSV
         $lineEnding = Authentication::getUser()->getSetting('csv_line_ending');
 
         // reformat
-        if($lineEnding == '\n') $lineEnding = "\n";
-        if($lineEnding == '\r\n') $lineEnding = "\r\n";
+        if ($lineEnding == '\n') {
+            $lineEnding = "\n";
+        }
+        if ($lineEnding == '\r\n') {
+            $lineEnding = "\r\n";
+        }
 
         // convert into CSV
         $csv = \SpoonFileCSV::arrayToString($array, $columns, $excludeColumns, $splitCharacter, '"', $lineEnding);

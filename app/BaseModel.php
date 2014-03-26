@@ -56,7 +56,7 @@ class BaseModel
     }
 
     /**
-     * @param ContainerInterface[optional] $container
+     * @param ContainerInterface $container
      */
     public static function setContainer(ContainerInterface $container = null)
     {

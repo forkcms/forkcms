@@ -23,28 +23,28 @@ class Language
     /**
      * The labels
      *
-     * @var	array
+     * @var    array
      */
     protected static $err = array(), $lbl = array(), $msg = array();
 
     /**
      * The active languages
      *
-     * @var	array
+     * @var    array
      */
     protected static $activeLanguages;
 
     /**
      * The current interface-language
      *
-     * @var	string
+     * @var    string
      */
     protected static $currentInterfaceLanguage;
 
     /**
      * The current language that the user is working with
      *
-     * @var	string
+     * @var    string
      */
     protected static $currentWorkingLanguage;
 
@@ -56,7 +56,7 @@ class Language
     public static function getActiveLanguages()
     {
         // validate the cache
-        if(empty(self::$activeLanguages)) {
+        if (empty(self::$activeLanguages)) {
             // grab from settings
             $activeLanguages = (array) BackendModel::getModuleSetting('Core', 'active_languages');
 
@@ -79,10 +79,12 @@ class Language
         $results = array();
 
         // stop here if no languages are present
-        if(empty($languages)) return array();
+        if (empty($languages)) {
+            return array();
+        }
 
         // addRadioButton requires an array with keys 'value' and 'label'
-        foreach($languages as $abbreviation) {
+        foreach ($languages as $abbreviation) {
             $results[] = array(
                 'value' => $abbreviation,
                 'label' => self::lbl(strtoupper($abbreviation))
@@ -95,27 +97,35 @@ class Language
     /**
      * Get an error from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function getError($key, $module = null)
     {
         // do we know the module
-        if($module === null) {
-            if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
-            elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'Core';
+        if ($module === null) {
+            if (BackendModel::getContainer()->has('url')) {
+                $module = BackendModel::getContainer()->get('url')->getModule();
+            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+                $module = (string) $_GET['module'];
+            } else {
+                $module = 'Core';
+            }
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
         $module = (string) $module;
 
         // check if the error exists
-        if(isset(self::$err[$module][$key])) return self::$err[$module][$key];
+        if (isset(self::$err[$module][$key])) {
+            return self::$err[$module][$key];
+        }
 
         // check if the error exists in the Core
-        if(isset(self::$err['Core'][$key])) return self::$err['Core'][$key];
+        if (isset(self::$err['Core'][$key])) {
+            return self::$err['Core'][$key];
+        }
 
         // otherwise return the key in label-format
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -151,7 +161,7 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach((array) BackendModel::getModuleSetting('Core', 'interface_languages', array('en')) as $key) {
+        foreach ((array) BackendModel::getModuleSetting('Core', 'interface_languages', array('en')) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -166,27 +176,35 @@ class Language
     /**
      * Get a label from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function getLabel($key, $module = null)
     {
         // do we know the module
-        if($module === null) {
-            if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
-            elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'Core';
+        if ($module === null) {
+            if (BackendModel::getContainer()->has('url')) {
+                $module = BackendModel::getContainer()->get('url')->getModule();
+            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+                $module = (string) $_GET['module'];
+            } else {
+                $module = 'Core';
+            }
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
         $module = (string) $module;
 
         // check if the label exists
-        if(isset(self::$lbl[$module][$key])) return self::$lbl[$module][$key];
+        if (isset(self::$lbl[$module][$key])) {
+            return self::$lbl[$module][$key];
+        }
 
         // check if the label exists in the Core
-        if(isset(self::$lbl['Core'][$key])) return self::$lbl['Core'][$key];
+        if (isset(self::$lbl['Core'][$key])) {
+            return self::$lbl['Core'][$key];
+        }
 
         // otherwise return the key in label-format
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -205,26 +223,34 @@ class Language
     /**
      * Get a message from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function getMessage($key, $module = null)
     {
-        if($module === null) {
-            if(BackendModel::getContainer()->has('url')) $module = BackendModel::getContainer()->get('url')->getModule();
-            elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
-            else $module = 'Core';
+        if ($module === null) {
+            if (BackendModel::getContainer()->has('url')) {
+                $module = BackendModel::getContainer()->get('url')->getModule();
+            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+                $module = (string) $_GET['module'];
+            } else {
+                $module = 'Core';
+            }
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
         $module = (string) $module;
 
         // check if the message exists
-        if(isset(self::$msg[$module][$key])) return self::$msg[$module][$key];
+        if (isset(self::$msg[$module][$key])) {
+            return self::$msg[$module][$key];
+        }
 
         // check if the message exists in the Core
-        if(isset(self::$msg['Core'][$key])) return self::$msg['Core'][$key];
+        if (isset(self::$msg['Core'][$key])) {
+            return self::$msg['Core'][$key];
+        }
 
         // otherwise return the key in label-format
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
@@ -260,13 +286,14 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach((array) BackendModel::getModuleSetting('Core', 'languages', array('en')) as $key) {
+        foreach ((array) BackendModel::getModuleSetting('Core', 'languages', array('en')) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
 
         // sort alphabetically
         asort($languages);
+
         return $languages;
     }
 
@@ -281,10 +308,10 @@ class Language
         $language = (string) $language;
 
         // validate file, generate it if needed
-        if(!is_file(BACKEND_CACHE_PATH . '/Locale/en.php')) {
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.php')) {
             BackendLocaleModel::buildCache('en', APPLICATION);
         }
-        if(!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
             BackendLocaleModel::buildCache($language, APPLICATION);
         }
 
@@ -295,10 +322,8 @@ class Language
         try {
             // store in cookie
             \CommonCookie::set('interface_language', $language);
-        }
-
-        // catch exceptions
-        catch(\SpoonCookieException $e) {
+        } // catch exceptions
+        catch (\SpoonCookieException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
@@ -315,16 +340,22 @@ class Language
 
         // overwrite with the requested language's translations
         require BACKEND_CACHE_PATH . '/Locale/' . $language . '.php';
-        foreach($err as $module => $translations) {
-            if(!isset(self::$err[$module])) self::$err[$module] = array();
+        foreach ($err as $module => $translations) {
+            if (!isset(self::$err[$module])) {
+                self::$err[$module] = array();
+            }
             self::$err[$module] = array_merge(self::$err[$module], $translations);
         }
-        foreach($lbl as $module => $translations) {
-            if(!isset(self::$lbl[$module])) self::$lbl[$module] = array();
+        foreach ($lbl as $module => $translations) {
+            if (!isset(self::$lbl[$module])) {
+                self::$lbl[$module] = array();
+            }
             self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
         }
-        foreach($msg as $module => $translations) {
-            if(!isset(self::$msg[$module])) self::$msg[$module] = array();
+        foreach ($msg as $module => $translations) {
+            if (!isset(self::$msg[$module])) {
+                self::$msg[$module] = array();
+            }
             self::$msg[$module] = array_merge(self::$msg[$module], $translations);
         }
     }
@@ -338,11 +369,12 @@ class Language
     {
         self::$currentWorkingLanguage = (string) $language;
     }
+
     /**
      * Get an error from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function err($key, $module = null)
@@ -353,8 +385,8 @@ class Language
     /**
      * Get a label from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function lbl($key, $module = null)
@@ -365,8 +397,8 @@ class Language
     /**
      * Get a message from the language-file
      *
-     * @param string $key The key to get.
-     * @param string[optional] $module The module wherein we should search.
+     * @param string $key    The key to get.
+     * @param string $module The module wherein we should search.
      * @return string
      */
     public static function msg($key, $module = null)

@@ -41,8 +41,8 @@ class CMHelper
      * Creates a new client
      *
      * @param string $companyName The client company name.
-     * @param        string       [optional] $country This client’s country.
-     * @param        string       [optional] $timezone Client timezone for tracking and reporting data.
+     * @param string $country     This client’s country.
+     * @param string $timezone    Client timezone for tracking and reporting data.
      */
     public static function createClient(
         $companyName,
@@ -95,7 +95,7 @@ class CMHelper
     /**
      * Deletes one or more groups
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      * @throws \CampaignMonitorException
      */
     public static function deleteGroups($ids)
@@ -131,7 +131,7 @@ class CMHelper
     /**
      * Deletes one or more mailings
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function deleteMailings($ids)
     {
@@ -207,7 +207,7 @@ class CMHelper
     /**
      * Returns the CM IDs for a given list of group IDs
      *
-     * @param  array $groupIds The IDs of the groups.
+     * @param array $groupIds The IDs of the groups.
      * @return array
      */
     public static function getCampaignMonitorIDsForGroups(array $groupIds)
@@ -227,7 +227,7 @@ class CMHelper
     /**
      * Returns the CM IDs for a given list of template IDs
      *
-     * @param  array $templateIds The ids of the templates.
+     * @param array $templateIds The ids of the templates.
      * @return array
      */
     public static function getCampaignMonitorIDsForTemplates($templateIds)
@@ -405,9 +405,9 @@ class CMHelper
     /**
      * Returns the statistics for a given mailing
      *
-     * @param int $id  The id of the mailing.
-     * @param     bool [optional] $fetchClicks If the click-count should be included.
-     * @param     bool [optional] $fetchOpens If the open-count should be included.
+     * @param int  $id          The id of the mailing.
+     * @param bool $fetchClicks If the click-count should be included.
+     * @param bool $fetchOpens  If the open-count should be included.
      * @return array
      */
     public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
@@ -433,11 +433,21 @@ class CMHelper
             $stats['clicks_total'] = 0;
 
             // add percentages to these stats
-            $stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
-            $stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
-            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
-            $stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
-            $stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
+            $stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
+                                                                                 ($stats['bounces'] / $stats['recipients_total']) * 100
+                                                                             ) . '%';
+            $stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
+                                                                                    ($stats['recipients'] / $stats['recipients_total']) * 100
+                                                                                ) . '%';
+            $stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
+                                                                                      ($stats['unique_opens'] / $stats['recipients']) * 100
+                                                                                  ) . '%';
+            $stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(
+                                                                                 ($stats['unopens'] / $stats['recipients']) * 100
+                                                                             ) . '%';
+            $stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(
+                                                                                ($stats['clicks'] / $stats['recipients']) * 100
+                                                                            ) . '%';
 
             // fetch clicks or not?
             if ($fetchClicks) {
@@ -821,9 +831,9 @@ class CMHelper
     /**
      * Subscribes an e-mail address and send him/her to CampaignMonitor
      *
-     * @param string $email The emailaddress.
-     * @param        string [optional] $groupId The group wherein the emailaddress should be added.
-     * @param        array  [optional] $customFields Any optional custom fields.
+     * @param string $email        The emailaddress.
+     * @param string $groupId      The group wherein the emailaddress should be added.
+     * @param array  $customFields Any optional custom fields.
      * @return bool
      */
     public static function subscribe($email, $groupId = null, $customFields = null)
@@ -893,8 +903,8 @@ class CMHelper
     /**
      * Unsubscribes an e-mail address from CampaignMonitor and our database
      *
-     * @param string $email The emailaddress to unsubscribe.
-     * @param        string [optional] $groupId The group wherefrom the emailaddress should be unsubscribed.
+     * @param string $email   The emailaddress to unsubscribe.
+     * @param string $groupId The group wherefrom the emailaddress should be unsubscribed.
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)
@@ -927,8 +937,8 @@ class CMHelper
      * Updates a client
      *
      * @param string $companyName The client company name.
-     * @param        string       [optional] $country This client’s country.
-     * @param        string       [optional] $timezone Client timezone for tracking and reporting data.
+     * @param string $country     This client’s country.
+     * @param string $timezone    Client timezone for tracking and reporting data.
      */
     public static function updateClient(
         $companyName,

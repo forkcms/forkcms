@@ -66,8 +66,8 @@ class TemplateModifiers
      * Format a number as a float
      * syntax: {$var|formatfloat}
      *
-     * @param float $number The number to format.
-     * @param int[optional] $decimals The number of decimals.
+     * @param float $number   The number to format.
+     * @param int   $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -135,7 +135,7 @@ class TemplateModifiers
      * Convert a var into main-navigation-html
      *  syntax: {$var|getmainnavigation}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
+     * @param string $var A placeholder var, will be replaced with the generated HTML.
      * @return string
      */
     public static function getMainNavigation($var = null)
@@ -147,9 +147,9 @@ class TemplateModifiers
      * Convert a var into navigation-html
      * syntax: {$var|getnavigation:startdepth[:maximumdepth]}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
-     * @param int[optional] $startDepth The start depth of the navigation to get.
-     * @param int[optional] $endDepth The ending depth of the navigation to get.
+     * @param string $var        A placeholder var, will be replaced with the generated HTML.
+     * @param int    $startDepth The start depth of the navigation to get.
+     * @param int    $endDepth   The ending depth of the navigation to get.
      * @return string
      */
     public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
@@ -165,16 +165,17 @@ class TemplateModifiers
      * Convert a var into a URL
      * syntax: {$var|geturl:<action>[:<module>]}
      *
-     * @param string[optional] $var A placeholder variable, it will be replaced with the URL.
-     * @param string[optional] $action The action to build the URL for.
-     * @param string[optional] $module The module to build the URL for.
-     * @param string[optional] $suffix A string to append.
+     * @param string $var    A placeholder variable, it will be replaced with the URL.
+     * @param string $action The action to build the URL for.
+     * @param string $module The module to build the URL for.
+     * @param string $suffix A string to append.
      * @return string
      */
     public static function getURL($var = null, $action = null, $module = null, $suffix = null)
     {
         $action = ($action !== null) ? (string) $action : null;
         $module = ($module !== null) ? (string) $module : null;
+
         return BackendModel::createURLForAction($action, $module, Language::getWorkingLanguage()) . $suffix;
     }
 
@@ -182,9 +183,9 @@ class TemplateModifiers
      * Get a random var between a min and max
      * syntax: {$var|rand:min:max}
      *
-     * @param string[optional] $var The string passed from the template.
-     * @param int $min The minimum number.
-     * @param int $max The maximum number.
+     * @param string $var The string passed from the template.
+     * @param int    $min The minimum number.
+     * @param int    $max The maximum number.
      * @return int
      */
     public static function random($var = null, $min, $max)
@@ -220,9 +221,9 @@ class TemplateModifiers
      * Truncate a string
      *  syntax: {$var|truncate:max-length[:append-hellip]}
      *
-     * @param string[optional] $var A placeholder var, will be replaced with the generated HTML.
-     * @param int $length The maximum length of the truncated string.
-     * @param bool[optional] $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param string $var       A placeholder var, will be replaced with the generated HTML.
+     * @param int    $length    The maximum length of the truncated string.
+     * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @return string
      */
     public static function truncate($var = null, $length, $useHellip = true)
@@ -234,18 +235,22 @@ class TemplateModifiers
         $var = strip_tags($var);
 
         // less characters
-        if(mb_strlen($var) <= $length) return \SpoonFilter::htmlspecialchars($var);
-
-        // more characters
+        if (mb_strlen($var) <= $length) {
+            return \SpoonFilter::htmlspecialchars($var);
+        } // more characters
         else {
             // hellip is seen as 1 char, so remove it from length
-            if($useHellip) $length = $length - 1;
+            if ($useHellip) {
+                $length = $length - 1;
+            }
 
             // get the amount of requested characters
             $var = mb_substr($var, 0, $length);
 
             // add hellip
-            if($useHellip) $var .= '…';
+            if ($useHellip) {
+                $var .= '…';
+            }
 
             return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }

@@ -50,7 +50,7 @@ class DataGridFunctions
      * Format a number as a float
      *
      * @param float $number The number to format.
-     * @param int[optional] $decimals The number of decimals.
+     * @param int $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -214,7 +214,7 @@ class DataGridFunctions
      *
      * @param string $path The path to the image.
      * @param string $image The filename of the image.
-     * @param string[optional] $title The title (will be used as alt).
+     * @param string $title The title (will be used as alt).
      * @return string
      */
     public static function showImage($path, $image, $title = '')
@@ -229,9 +229,9 @@ class DataGridFunctions
     /**
      * Truncate a string
      *
-     * @param string[optional] $string The string to truncate.
+     * @param string $string The string to truncate.
      * @param int $length The maximumlength for the string.
-     * @param bool[optional] $useHellip Should a hellip be appended?
+     * @param bool $useHellip Should a hellip be appended?
      * @return string
      */
     public static function truncate($string = null, $length, $useHellip = true)

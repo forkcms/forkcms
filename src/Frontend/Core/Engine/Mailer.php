@@ -232,8 +232,8 @@ class Mailer
     /**
      * Returns the content from a given template
      *
-     * @param string       $template  The template to use.
-     * @param        array $variables The variables to assign.
+     * @param string $template  The template to use.
+     * @param array  $variables The variables to assign.
      * @return string
      */
     private static function getTemplateContent($template, $variables = null)

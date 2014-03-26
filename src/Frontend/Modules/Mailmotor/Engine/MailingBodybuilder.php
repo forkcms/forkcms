@@ -267,9 +267,9 @@ class MailingBodyBuilder
     /**
      * Set the Google UTM GET parameters.
      *
-     * @param string $campaign What the user entered in the editor in the CMS.
-     * @param        string    [optional] $source
-     * @param        string    [optional] $medium
+     * @param string        $campaign What the user entered in the editor in the CMS.
+     * @param string $source
+     * @param string $medium
      */
     public function setUTMParameters($campaign, $source = 'mailmotor', $medium = 'email')
     {

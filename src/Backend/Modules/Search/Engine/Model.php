@@ -67,8 +67,8 @@ class Model
     /**
      * Check if a synonym exists
      *
-     * @param string $term The term we're looking for.
-     * @param        int   [optional] $exclude Exclude a certain id.
+     * @param string $term    The term we're looking for.
+     * @param int    $exclude Exclude a certain id.
      * @return bool
      */
     public static function existsSynonymByTerm($term, $exclude = null)
@@ -177,9 +177,9 @@ class Model
     /**
      * Remove an index
      *
-     * @param string $module  The module wherein will be searched.
-     * @param int    $otherId The id of the record.
-     * @param        string   [optional] $language The language to use.
+     * @param string $module   The module wherein will be searched.
+     * @param int    $otherId  The id of the record.
+     * @param string $language The language to use.
      */
     public static function removeIndex($module, $otherId, $language = null)
     {
@@ -207,10 +207,10 @@ class Model
     /**
      * Edit an index
      *
-     * @param string $module  The module wherein will be searched.
-     * @param int    $otherId The id of the record.
-     * @param  array $fields  A key/value pair of fields to index.
-     * @param        string   [optional] $language The frontend language for this entry.
+     * @param string $module   The module wherein will be searched.
+     * @param int    $otherId  The id of the record.
+     * @param array  $fields   A key/value pair of fields to index.
+     * @param string $language The frontend language for this entry.
      */
     public static function saveIndex($module, $otherId, array $fields, $language = null)
     {

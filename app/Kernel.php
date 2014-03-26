@@ -85,8 +85,8 @@ abstract class Kernel implements KernelInterface
      *
      * Debugging is added to mirror Symfony, but does not actually do anything at this moment.
      *
-     * @param string [optional] $environment
-     * @param bool   [optional] $debug
+     * @param string $environment
+     * @param bool   $debug
      */
     public function __construct($environment = null, $debug = false)
     {
@@ -241,12 +241,12 @@ abstract class Kernel implements KernelInterface
          */
         $locator = new FileLocator($this);
         $resolver = new LoaderResolver(array(
-                                            new XmlFileLoader($container, $locator),
-                                            new YamlFileLoader($container, $locator),
-                                            new IniFileLoader($container, $locator),
-                                            new PhpFileLoader($container, $locator),
-                                            new ClosureLoader($container),
-                                       ));
+            new XmlFileLoader($container, $locator),
+            new YamlFileLoader($container, $locator),
+            new IniFileLoader($container, $locator),
+            new PhpFileLoader($container, $locator),
+            new ClosureLoader($container),
+        ));
 
         return new DelegatingLoader($resolver);
     }
@@ -540,8 +540,8 @@ abstract class Kernel implements KernelInterface
      * We intercept this object so we can load all functionality involved with Fork.
      *
      * @param Request $request
-     * @param         int  [optional] $type
-     * @param         bool [optional] $catch
+     * @param int     $type
+     * @param bool    $catch
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true)

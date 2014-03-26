@@ -114,9 +114,9 @@ class Model extends \BaseModel
     /**
      * Get plain text for a given text
      *
-     * @param string $text The text to convert.
-     * @param        bool  [optional] $includeAHrefs Should the url be appended after the link-text?
-     * @param        bool  [optional] $includeImgAlts Should the alt tag be inserted for images?
+     * @param string $text           The text to convert.
+     * @param bool   $includeAHrefs  Should the url be appended after the link-text?
+     * @param bool   $includeImgAlts Should the alt tag be inserted for images?
      * @return string
      */
     public static function convertToPlainText($text, $includeAHrefs = true, $includeImgAlts = true)
@@ -181,9 +181,9 @@ class Model extends \BaseModel
     /**
      * Generate a totally random but readable/speakable password
      *
-     * @param int  [optional] $length The maximum length for the password to generate.
-     * @param bool [optional] $uppercaseAllowed Are uppercase letters allowed?
-     * @param bool [optional] $lowercaseAllowed Are lowercase letters allowed?
+     * @param int  $length           The maximum length for the password to generate.
+     * @param bool $uppercaseAllowed Are uppercase letters allowed?
+     * @param bool $lowercaseAllowed Are lowercase letters allowed?
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -312,9 +312,9 @@ class Model extends \BaseModel
     /**
      * Get a module setting
      *
-     * @param string $module The module wherefore a setting has to be retrieved.
-     * @param string $name   The name of the setting to be retrieved.
-     * @param        mixed   [optional] $defaultValue A value that will be stored if the setting isn't present.
+     * @param string $module       The module wherefore a setting has to be retrieved.
+     * @param string $name         The name of the setting to be retrieved.
+     * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
      * @return mixed
      */
     public static function getModuleSetting($module, $name, $defaultValue = null)
@@ -546,8 +546,8 @@ class Model extends \BaseModel
     /**
      * Get the thumbnail folders
      *
-     * @param string $path The path
-     * @param        bool  [optional] $includeSource Should the source-folder be included in the return-array.
+     * @param string $path          The path
+     * @param bool   $includeSource Should the source-folder be included in the return-array.
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
@@ -615,8 +615,8 @@ class Model extends \BaseModel
     /**
      * Get the UTC timestamp for a date/time object combination.
      *
-     * @param SpoonFormDate $date         An instance of SpoonFormDate.
-     * @param               SpoonFormTime [optional] $time An instance of SpoonFormTime.
+     * @param SpoonFormDate $date An instance of SpoonFormDate.
+     * @param SpoonFormTime $time An instance of SpoonFormTime.
      * @return int
      */
     public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
@@ -717,10 +717,10 @@ class Model extends \BaseModel
     /**
      * Push a notification to Apple's notifications-server
      *
-     * @param mixed $alert The message/dictionary to send.
-     * @param       int    [optional] $badge The number for the badge.
-     * @param       string [optional] $sound The sound that should be played.
-     * @param       array  [optional] $extraDictionaries Extra dictionaries.
+     * @param mixed  $alert             The message/dictionary to send.
+     * @param int    $badge             The number for the badge.
+     * @param string $sound             The sound that should be played.
+     * @param array  $extraDictionaries Extra dictionaries.
      */
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
@@ -990,7 +990,7 @@ class Model extends \BaseModel
      *
      * @param string $module    The module that triggers the event.
      * @param string $eventName The name of the event.
-     * @param        mixed      [optional] $data The data that should be send to subscribers.
+     * @param mixed  $data      The data that should be send to subscribers.
      */
     public static function triggerEvent($module, $eventName, $data = null)
     {

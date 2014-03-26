@@ -14,9 +14,9 @@ use Backend\Core\Engine\Model as BackendModel;
 /**
  * This is our extended version of \SpoonDataGrid
  * This class will handle a lot of stuff for you, for example:
- * 	- it will set debug mode
- *	- it will set the compile-directory
- * 	- ...
+ *    - it will set debug mode
+ *    - it will set the compile-directory
+ *    - ...
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
@@ -42,7 +42,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
         // id gets special treatment
-        if(in_array('id', $this->getColumns())) {
+        if (in_array('id', $this->getColumns())) {
             // hide the id by defaults
             $this->setColumnsHidden('id');
 
@@ -54,12 +54,14 @@ class DataGrid extends \SpoonDataGrid
         $this->setSortingOptions();
 
         // add classes on headers
-        foreach($this->getColumns() as $column) {
+        foreach ($this->getColumns() as $column) {
             // set class
             $this->setColumnHeaderAttributes($column, array('class' => $column));
 
             // set default label
-            $this->setHeaderLabels(array($column => \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($column)))));
+            $this->setHeaderLabels(
+                array($column => \SpoonFilter::ucfirst(Language::lbl(\SpoonFilter::toCamelCase($column))))
+            );
         }
 
         // set paging class
@@ -72,18 +74,29 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Adds a new column
      *
-     * @param string $name The name for the new column.
-     * @param string[optional] $label The label for the column.
-     * @param string[optional] $value The value for the column.
-     * @param string[optional] $URL The URL for the link inside the column.
-     * @param string[optional] $title A title for the image inside the column.
-     * @param string[optional] $image An URL to the image inside the column.
-     * @param int[optional] $sequence The sequence for the column.
+     * @param string $name     The name for the new column.
+     * @param string $label    The label for the column.
+     * @param string $value    The value for the column.
+     * @param string $URL      The URL for the link inside the column.
+     * @param string $title    A title for the image inside the column.
+     * @param string $image    An URL to the image inside the column.
+     * @param int    $sequence The sequence for the column.
      */
-    public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
-    {
+    public function addColumn(
+        $name,
+        $label = null,
+        $value = null,
+        $URL = null,
+        $title = null,
+        $image = null,
+        $sequence = null
+    ) {
         // known actions that should have a button
-        if(in_array($name, array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install'))) {
+        if (in_array(
+            $name,
+            array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install')
+        )
+        ) {
             // rebuild value, it should have special markup
             $value = '<a href="' . $URL . '" class="button icon icon' . \SpoonFilter::toCamelCase($name) . ' linkButton">
                         <span>' . $value . '</span>
@@ -93,9 +106,11 @@ class DataGrid extends \SpoonDataGrid
             $URL = null;
         }
 
-        if(in_array($name, array('use_revision', 'use_draft'))) {
+        if (in_array($name, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' . \SpoonFilter::toCamelCase($name) . '">
+            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' . \SpoonFilter::toCamelCase(
+                    $name
+                ) . '">
                         <span>' . $value . '</span>
                     </a>';
 
@@ -107,7 +122,22 @@ class DataGrid extends \SpoonDataGrid
         parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
         // known actions
-        if(in_array($name, array('add', 'edit', 'delete', 'detail', 'details', 'approve', 'mark_as_spam', 'install', 'use_revision', 'use_draft'))) {
+        if (in_array(
+            $name,
+            array(
+                'add',
+                'edit',
+                'delete',
+                'detail',
+                'details',
+                'approve',
+                'mark_as_spam',
+                'install',
+                'use_revision',
+                'use_draft'
+            )
+        )
+        ) {
             // add special attributes for actions we know
             $this->setColumnAttributes($name, array('class' => 'action action' . \SpoonFilter::toCamelCase($name)));
         }
@@ -119,25 +149,37 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Adds a new column with a custom action button
      *
-     * @param string $name The name for the new column.
-     * @param string[optional] $label The label for the column.
-     * @param string[optional] $value The value for the column.
-     * @param string[optional] $URL The URL for the link inside the column.
-     * @param string[optional] $title The title for the link inside the column.
-     * @param array[optional] $anchorAttributes The attributes for the anchor inside the column.
-     * @param string[optional] $image An URL to the image inside the column.
-     * @param int[optional] $sequence The sequence for the column.
+     * @param string $name             The name for the new column.
+     * @param string $label            The label for the column.
+     * @param string $value            The value for the column.
+     * @param string $URL              The URL for the link inside the column.
+     * @param string $title            The title for the link inside the column.
+     * @param array  $anchorAttributes The attributes for the anchor inside the column.
+     * @param string $image            An URL to the image inside the column.
+     * @param int    $sequence         The sequence for the column.
      */
-    public function addColumnAction($name, $label = null, $value = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
-    {
+    public function addColumnAction(
+        $name,
+        $label = null,
+        $value = null,
+        $URL = null,
+        $title = null,
+        $anchorAttributes = null,
+        $image = null,
+        $sequence = null
+    ) {
         // reserve var for attributes
         $attributes = '';
 
         // no anchorAttributes set means we set the default class attribute for the anchor
-        if(empty($anchorAttributes)) $anchorAttributes['class'] = 'button icon icon' . \SpoonFilter::toCamelCase($name) . ' linkButton';
+        if (empty($anchorAttributes)) {
+            $anchorAttributes['class'] = 'button icon icon' . \SpoonFilter::toCamelCase(
+                    $name
+                ) . ' linkButton';
+        }
 
         // loop the attributes, build our attributes string
-        foreach($anchorAttributes as $attribute => $attributeValue) $attributes .= ' ' . $attribute . '="' . $attributeValue . '"';
+        foreach ($anchorAttributes as $attribute => $attributeValue) $attributes .= ' ' . $attribute . '="' . $attributeValue . '"';
 
         // rebuild value
         $value = '<a href="' . $URL . '"' . $attributes . '>
@@ -148,10 +190,13 @@ class DataGrid extends \SpoonDataGrid
         parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
 
         // set column attributes
-        $this->setColumnAttributes($name, array(
-            'class' => 'action action' . \SpoonFilter::toCamelCase($name),
-            'style' => 'width: 10%;'
-        ));
+        $this->setColumnAttributes(
+            $name,
+            array(
+                'class' => 'action action' . \SpoonFilter::toCamelCase($name),
+                'style' => 'width: 10%;'
+            )
+        );
 
         // set header attributes
         $this->setColumnHeaderAttributes($name, array('class' => $name));
@@ -166,11 +211,15 @@ class DataGrid extends \SpoonDataGrid
         $allowedColumns = array('hidden', 'visible', 'active', 'published');
         $allColumns = $this->getColumns();
 
-        foreach($allowedColumns as $column) {
+        foreach ($allowedColumns as $column) {
             // we have a match, set the row function
-            if(array_search($column, $allColumns) !== false) {
+            if (array_search($column, $allColumns) !== false) {
                 $this->setColumnHidden($column);
-                $this->setRowFunction(array(new DatagridFunctions(), 'greyOut'), array($column, '[' . $column . ']'), array($column));
+                $this->setRowFunction(
+                    array(new DatagridFunctions(), 'greyOut'),
+                    array($column, '[' . $column . ']'),
+                    array($column)
+                );
             }
         }
     }
@@ -210,10 +259,13 @@ class DataGrid extends \SpoonDataGrid
     public function getContent()
     {
         // mass action was set
-        if($this->tpl->getAssignedValue('massAction') !== null) $this->tpl->assign('footer', true);
+        if ($this->tpl->getAssignedValue('massAction') !== null) $this->tpl->assign('footer', true);
 
         // has paging & more than 1 page
-        elseif($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign('footer', true);
+        elseif ($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign(
+            'footer',
+            true
+        );
 
         // set the odd and even classes
         $this->setOddRowAttributes(array('class' => 'odd'));
@@ -239,11 +291,11 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Set a custom column confirm message.
      *
-     * @param string $column The name of the column to set the confirm for.
-     * @param string $message The message to use as a confirmmessage.
-     * @param string[optional] $custom Unused parameter.
-     * @param string[optional] $title The title for the column.
-     * @param string[optional] $uniqueId A unique ID that will be uses.
+     * @param string $column   The name of the column to set the confirm for.
+     * @param string $message  The message to use as a confirmmessage.
+     * @param string $custom   Unused parameter.
+     * @param string $title    The title for the column.
+     * @param string $uniqueId A unique ID that will be uses.
      */
     public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
     {
@@ -253,9 +305,9 @@ class DataGrid extends \SpoonDataGrid
         $uniqueId = (string) $uniqueId;
 
         // has results
-        if($this->source->getNumResults() > 0) {
+        if ($this->source->getNumResults() > 0) {
             // column doesn't exist
-            if(!isset($this->columns[$column])) throw new \SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.');
+            if (!isset($this->columns[$column])) throw new \SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.');
 
             // exists
             else {
@@ -263,7 +315,7 @@ class DataGrid extends \SpoonDataGrid
                 $URL = $this->columns[$column]->getURL();
 
                 // URL provided?
-                if($URL != '') {
+                if ($URL != '') {
                     // grab current value
                     $currentValue = $this->columns[$column]->getValue();
 
@@ -278,18 +330,24 @@ class DataGrid extends \SpoonDataGrid
                 $id = 'confirm-' . (string) $uniqueId;
 
                 // set title if there wasn't one provided
-                if($title === null) $title = \SpoonFilter::ucfirst(Language::lbl('Delete') . '?');
+                if ($title === null) $title = \SpoonFilter::ucfirst(Language::lbl('Delete') . '?');
 
                 // grab current value
                 $value = $this->columns[$column]->getValue();
 
                 // add class for confirmation
-                if(substr_count($value, '<a') > 0) {
-                    if(substr_count($value, 'class="') > 0) $value = str_replace('class="', 'data-message-id="' . $id . '" class="askConfirmation ', $value);
-                    else $value = str_replace('<a ', '<a data-message-id="' . $id . '" class="askConfirmation" ', $value);
-                }
-
-                // is it a link?
+                if (substr_count($value, '<a') > 0) {
+                    if (substr_count($value, 'class="') > 0) $value = str_replace(
+                        'class="',
+                        'data-message-id="' . $id . '" class="askConfirmation ',
+                        $value
+                    );
+                    else $value = str_replace(
+                        '<a ',
+                        '<a data-message-id="' . $id . '" class="askConfirmation" ',
+                        $value
+                    );
+                } // is it a link?
                 else throw new Exception('The column doesn\'t contain a link.');
 
                 // append message
@@ -304,10 +362,10 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Sets the column function to be executed for every row
      *
-     * @param mixed $function The function to execute.
-     * @param mixed[optional] $arguments The arguments to pass to the function.
-     * @param mixed $columns The column wherein the result will be printed.
-     * @param bool[optional] $overwrite Should the original value be overwritten.
+     * @param mixed $function  The function to execute.
+     * @param mixed $arguments The arguments to pass to the function.
+     * @param mixed $columns   The column wherein the result will be printed.
+     * @param bool  $overwrite Should the original value be overwritten.
      */
     public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
     {
@@ -319,7 +377,7 @@ class DataGrid extends \SpoonDataGrid
         $attributes = null;
 
         // based on the function we should prepopulate the attributes array
-        switch($function) {
+        switch ($function) {
             // timeAgo
             case array('DataGridFunctions', 'getTimeAgo'):
                 $attributes = array('class' => 'date');
@@ -328,15 +386,15 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // add attributes if they are given
-        if(!empty($attributes)) {
+        if (!empty($attributes)) {
             // loop and set attributes
-            foreach($columns as $column) $this->setColumnAttributes($column, $attributes);
+            foreach ($columns as $column) $this->setColumnAttributes($column, $attributes);
         }
 
         // add attributes if they are given
-        if(!empty($headerAttributes)) {
+        if (!empty($headerAttributes)) {
             // loop and set attributes
-            foreach($columns as $column) $this->setColumnHeaderAttributes($column, $attributes);
+            foreach ($columns as $column) $this->setColumnHeaderAttributes($column, $attributes);
         }
     }
 
@@ -348,7 +406,9 @@ class DataGrid extends \SpoonDataGrid
     public function setMassAction(\SpoonFormDropdown $actionDropDown)
     {
         // build HTML
-        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . \SpoonFilter::ucfirst(Language::lbl('WithSelected')) . '</label></p>
+        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . \SpoonFilter::ucfirst(
+                Language::lbl('WithSelected')
+            ) . '</label></p>
                 <p>
                     ' . $actionDropDown->parse() . '
                 </p>
@@ -365,10 +425,10 @@ class DataGrid extends \SpoonDataGrid
     /**
      * Sets the checkboxes for the mass action
      *
-     * @param string $column The name for the column that will hold the checkboxes.
-     * @param string $value The value for the checkbox.
-     * @param array[optional] $excludedValues The values that should be excluded.
-     * @param array[optional] $checkedValues The values that should be checked.
+     * @param string $column         The name for the column that will hold the checkboxes.
+     * @param string $value          The value for the checkbox.
+     * @param array  $excludedValues The values that should be excluded.
+     * @param array  $checkedValues  The values that should be checked.
      */
     public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
     {
@@ -383,12 +443,12 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnsSequence($column);
 
         // excluded IDs found
-        if(!empty($excludedValues)) {
+        if (!empty($excludedValues)) {
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
 
             // set if needed
-            if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
+            if (!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
 
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
@@ -402,12 +462,12 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // checked IDs found
-        if(!empty($checkedValues)) {
+        if (!empty($checkedValues)) {
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
 
             // set if needed
-            if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
+            if (!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
 
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
@@ -427,18 +487,31 @@ class DataGrid extends \SpoonDataGrid
     private function setSortingOptions()
     {
         // default URL
-        if(BackendModel::getContainer()->get('url')) {
-            $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+        if (BackendModel::getContainer()->get('url')) {
+            $this->setURL(
+                BackendModel::createURLForAction(
+                    null,
+                    null,
+                    null,
+                    array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'),
+                    false
+                )
+            );
         }
 
         // sorting labels
-        $this->setSortingLabels(Language::lbl('SortAscending'), Language::lbl('SortedAscending'), Language::lbl('SortDescending'), Language::lbl('SortedDescending'));
+        $this->setSortingLabels(
+            Language::lbl('SortAscending'),
+            Language::lbl('SortedAscending'),
+            Language::lbl('SortDescending'),
+            Language::lbl('SortedDescending')
+        );
     }
 
     /**
      * Set a tooltip
      *
-     * @param string $column The name of the column to set the tooltop for.
+     * @param string $column  The name of the column to set the tooltop for.
      * @param string $message The key for the message (will be parsed through Language::msg).
      */
     public function setTooltip($column, $message)
@@ -450,18 +523,21 @@ class DataGrid extends \SpoonDataGrid
         $value = Language::msg($message);
 
         // reset the label
-        $instance->setLabel($instance->getLabel() . '<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">' . $value . '</span>');
+        $instance->setLabel(
+            $instance->getLabel(
+            ) . '<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">' . $value . '</span>'
+        );
     }
 
     /**
      * Sets an URL, optionally only appending the provided piece
      *
-     * @param string $URL The URL to set.
-     * @param bool[optional] $append Should it be appended to the existing URL.
+     * @param string $URL    The URL to set.
+     * @param bool   $append Should it be appended to the existing URL.
      */
     public function setURL($URL, $append = false)
     {
-        if($append) parent::setURL(parent::getURL() . $URL);
+        if ($append) parent::setURL(parent::getURL() . $URL);
         else parent::setURL($URL);
     }
 }

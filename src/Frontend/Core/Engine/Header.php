@@ -108,9 +108,9 @@ class Header extends FrontendBaseObject
     /**
      * Add a CSS file into the array
      *
-     * @param string $file The path for the CSS-file that should be loaded.
-     * @param        bool  [optional] $minify Should the CSS be minified?
-     * @param        bool  [optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $file         The path for the CSS-file that should be loaded.
+     * @param bool   $minify       Should the CSS be minified?
+     * @param bool   $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $minify = true, $addTimestamp = null)
     {
@@ -146,9 +146,9 @@ class Header extends FrontendBaseObject
     /**
      * Add a javascript file into the array
      *
-     * @param  string $file The path to the javascript-file that should be loaded.
-     * @param         bool  [optional] $minify Should the file be minified?
-     * @param         bool  [optional] $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $file         The path to the javascript-file that should be loaded.
+     * @param bool   $minify       Should the file be minified?
+     * @param bool   $addTimestamp May we add a timestamp for caching purposes?
      */
     public function addJS($file, $minify = true, $addTimestamp = null)
     {
@@ -192,8 +192,8 @@ class Header extends FrontendBaseObject
      * Add link
      *
      * @param array $attributes The attributes to parse.
-     * @param       bool        [optional] $overwrite Should we overwrite the current value?
-     * @param       mixed       [optional] $uniqueKeys Which keys can we use to decide if an item is unique.
+     * @param bool  $overwrite  Should we overwrite the current value?
+     * @param mixed $uniqueKeys Which keys can we use to decide if an item is unique.
      */
     public function addLink(array $attributes, $overwrite = false, $uniqueKeys = null)
     {
@@ -232,8 +232,8 @@ class Header extends FrontendBaseObject
      * Add meta data
      *
      * @param array $attributes The attributes to parse.
-     * @param       bool        [optional] $overwrite Should we overwrite the current value?
-     * @param       mixed       [optional] $uniqueKeys Which keys can we use to decide if an item is unique.
+     * @param bool  $overwrite  Should we overwrite the current value?
+     * @param mixed $uniqueKeys Which keys can we use to decide if an item is unique.
      */
     public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
     {
@@ -282,8 +282,8 @@ class Header extends FrontendBaseObject
     /**
      * Add meta-description, somewhat a shortcut for the addMetaData-method
      *
-     * @param string $value The description.
-     * @param        bool   [optional] $overwrite Should we overwrite the previous value?
+     * @param string $value     The description.
+     * @param bool   $overwrite Should we overwrite the previous value?
      */
     public function addMetaDescription($value, $overwrite = false)
     {
@@ -293,8 +293,8 @@ class Header extends FrontendBaseObject
     /**
      * Add meta-keywords, somewhat a shortcut for the addMetaData-method
      *
-     * @param string $value The description.
-     * @param        bool   [optional] $overwrite Should we overwrite the previous value?
+     * @param string $value     The description.
+     * @param bool   $overwrite Should we overwrite the previous value?
      */
     public function addMetaKeywords($value, $overwrite = false)
     {
@@ -304,9 +304,9 @@ class Header extends FrontendBaseObject
     /**
      * Add Open Graph data
      *
-     * @param string $key   The key (without og:).
-     * @param string $value The value.
-     * @param        bool   [optional] $overwrite Should we overwrite the previous value?
+     * @param string $key       The key (without og:).
+     * @param string $value     The value.
+     * @param bool   $overwrite Should we overwrite the previous value?
      */
     public function addOpenGraphData($key, $value, $overwrite = false)
     {
@@ -316,8 +316,8 @@ class Header extends FrontendBaseObject
     /**
      * Add Open Graph image
      *
-     * @param string $image The path to the image.
-     * @param        bool   [optional] $overwrite Should we overwrite the previous value?
+     * @param string $image     The path to the image.
+     * @param bool   $overwrite Should we overwrite the previous value?
      */
     public function addOpenGraphImage($image, $overwrite = false)
     {
@@ -573,7 +573,10 @@ class Header extends FrontendBaseObject
         if (!empty($existingCSSFiles)) {
             foreach ($existingCSSFiles as $file) {
                 if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                    $file['file'] .= (strpos(
+                                          $file['file'],
+                                          '?'
+                                      ) !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                 }
                 $cssFiles[] = $file;
             }
@@ -777,7 +780,10 @@ class Header extends FrontendBaseObject
                     $file = array('file' => $file['file']);
                 } else {
                     // add last modified time
-                    $modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                    $modifiedTime = (strpos(
+                                         $file['file'],
+                                         '?'
+                                     ) !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 
@@ -913,8 +919,8 @@ class Header extends FrontendBaseObject
     /**
      * Set the page title
      *
-     * @param string $value The page title to be set or to be prepended.
-     * @param        bool   [optional] $overwrite Should the existing page title be overwritten?
+     * @param string $value     The page title to be set or to be prepended.
+     * @param bool   $overwrite Should the existing page title be overwritten?
      */
     public function setPageTitle($value, $overwrite = false)
     {

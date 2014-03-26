@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * The class below will handle all stuff relates to users
@@ -45,7 +45,7 @@ class User
     private $email;
 
     /**
-     * @param int [optional] $userId If you provide a userId, the object will be loaded with the data for this user.
+     * @param int $userId If you provide a userId, the object will be loaded with the data for this user.
      */
     public function __construct($userId = null)
     {

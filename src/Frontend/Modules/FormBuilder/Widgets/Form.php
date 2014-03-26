@@ -254,7 +254,7 @@ class Form extends FrontendBaseWidget
      * Every form needs to have its own scope so error messages stay within the current scope.
      * (Without an own scope the successMessage would show in all forms instead of just 1 form.)
      *
-     * @param string [optional] $path Unused parameter but needed because parent function uses it.
+     * @param string $path Unused parameter but needed because parent function uses it.
      */
     protected function loadTemplate($path = null)
     {
@@ -282,7 +282,9 @@ class Form extends FrontendBaseWidget
                     $field['plaintext'] = true;
                 } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                     // name (prefixed by type)
-                    $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::toCamelCase($field['name']) : 'rbt' . \SpoonFilter::toCamelCase($field['name']);
+                    $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::toCamelCase(
+                            $field['name']
+                        ) : 'rbt' . \SpoonFilter::toCamelCase($field['name']);
 
                     // rebuild so the html is stored in a general name (and not rbtName)
                     foreach ($field['html'] as &$item) {
@@ -413,7 +415,9 @@ class Form extends FrontendBaseWidget
                         // add field for email
                         $emailFields[] = array(
                             'label' => $field['settings']['label'],
-                            'value' => (is_array($fieldData['value']) ? implode(',', $fieldData['value']) : nl2br($fieldData['value']))
+                            'value' => (is_array($fieldData['value']) ? implode(',', $fieldData['value']) : nl2br(
+                                    $fieldData['value']
+                                ))
                         );
                     }
 
@@ -437,8 +441,8 @@ class Form extends FrontendBaseWidget
                 // notify the admin
                 FrontendFormBuilderModel::notifyAdmin(
                     array(
-                         'form_id' => $this->item['id'],
-                         'entry_id' => $dataId
+                        'form_id' => $this->item['id'],
+                        'entry_id' => $dataId
                     )
                 );
 
@@ -483,11 +487,11 @@ class Form extends FrontendBaseWidget
                     'FormBuilder',
                     'after_submission',
                     array(
-                         'form_id' => $this->item['id'],
-                         'data_id' => $dataId,
-                         'data' => $data,
-                         'fields' => $fields,
-                         'visitorId' => FrontendModel::getVisitorId()
+                        'form_id' => $this->item['id'],
+                        'data_id' => $dataId,
+                        'data' => $data,
+                        'fields' => $fields,
+                        'visitorId' => FrontendModel::getVisitorId()
                     )
                 );
 

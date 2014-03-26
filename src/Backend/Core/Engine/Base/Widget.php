@@ -83,11 +83,13 @@ class Widget extends \KernelLoader
      * Display, this wil output the template to the browser
      * If no template is specified we build the path form the current module and action
      *
-     * @param string[optional] $template The template to use.
+     * @param string $template The template to use.
      */
     protected function display($template = null)
     {
-        if($template !== null) $this->templatePath = (string) $template;
+        if ($template !== null) {
+            $this->templatePath = (string) $template;
+        }
     }
 
     /**
@@ -127,12 +129,14 @@ class Widget extends \KernelLoader
      */
     public function isAllowed()
     {
-        foreach($this->rights as $rights) {
+        foreach ($this->rights as $rights) {
             list($module, $action) = explode('/', $rights);
 
             // check action rights
-            if(isset($module) && isset($action)) {
-                if(!BackendAuthentication::isAllowedAction($action, $module)) return false;
+            if (isset($module) && isset($action)) {
+                if (!BackendAuthentication::isAllowedAction($action, $module)) {
+                    return false;
+                }
             }
         }
 

@@ -76,14 +76,19 @@ class ModuleInstaller
     private $warnings = array();
 
     /**
-     * @param \SpoonDatabase $db The database-connection.
-     * @param array $languages The selected frontend languages.
-     * @param array $interfaceLanguages The selected backend languages.
-     * @param bool[optional] $example Should example data be installed.
-     * @param array[optional] $variables The passed variables.
+     * @param \SpoonDatabase $db                 The database-connection.
+     * @param array          $languages          The selected frontend languages.
+     * @param array          $interfaceLanguages The selected backend languages.
+     * @param bool           $example            Should example data be installed.
+     * @param array          $variables          The passed variables.
      */
-    public function __construct(\SpoonDatabase $db, array $languages, array $interfaceLanguages, $example = false, array $variables = array())
-    {
+    public function __construct(
+        \SpoonDatabase $db,
+        array $languages,
+        array $interfaceLanguages,
+        $example = false,
+        array $variables = array()
+    ) {
         $this->db = $db;
         $this->languages = $languages;
         $this->interfaceLanguages = $interfaceLanguages;
@@ -94,7 +99,7 @@ class ModuleInstaller
     /**
      * Adds a default extra to the stack of extras
      *
-     * @param int $extraId The extra id to add to every page.
+     * @param int    $extraId  The extra id to add to every page.
      * @param string $position The position to put the default extra.
      */
     protected function addDefaultExtra($extraId, $position)
@@ -112,27 +117,28 @@ class ModuleInstaller
         $name = (string) $name;
 
         // module does not yet exists
-        if(!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $name)) {
+        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $name)) {
             // build item
             $item = array(
                 'name' => $name,
-                'installed_on' => gmdate('Y-m-d H:i:s'));
+                'installed_on' => gmdate('Y-m-d H:i:s')
+            );
 
             // insert module
             $this->getDB()->insert('modules', $item);
+        } // activate and update description
+        else {
+            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
         }
-
-        // activate and update description
-        else $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
     }
 
     /**
      * Add a search index
      *
-     * @param string $module The module wherin will be searched.
-     * @param int $otherId The id of the record.
-     * @param  array $fields A key/value pair of fields to index.
-     * @param string[optional] $language The frontend language for this entry.
+     * @param string $module   The module wherin will be searched.
+     * @param int    $otherId  The id of the record.
+     * @param array $fields   A key/value pair of fields to index.
+     * @param string $language The frontend language for this entry.
      */
     protected function addSearchIndex($module, $otherId, array $fields, $language)
     {
@@ -140,19 +146,23 @@ class ModuleInstaller
         $db = $this->getDB();
 
         // validate cache
-        if(empty(self::$modules)) {
+        if (empty(self::$modules)) {
             // get all modules
             self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
         }
 
         // module exists?
-        if(!in_array('search', self::$modules)) return;
+        if (!in_array('search', self::$modules)) {
+            return;
+        }
 
         // no fields?
-        if(empty($fields)) return;
+        if (empty($fields)) {
+            return;
+        }
 
         // insert search index
-        foreach($fields as $field => $value) {
+        foreach ($fields as $field => $value) {
             // reformat value
             $value = strip_tags((string) $value);
 
@@ -168,7 +178,7 @@ class ModuleInstaller
         // invalidate the cache for search
         $finder = new Finder();
         $fs = new Filesystem();
-        foreach($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
+        foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
             $fs->remove($file->getRealPath());
         }
     }
@@ -227,7 +237,7 @@ class ModuleInstaller
                  ORDER BY id ASC',
                 array('Y', 'Y', 'N')
             );
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return 1;
         }
     }
@@ -252,10 +262,10 @@ class ModuleInstaller
      * Get a locale item.
      *
      * @param string $name
-     * @param string[optional] $module
-     * @param string[optional] $language The language abbreviation.
-     * @param string[optional] $type The type of locale.
-     * @param string[optional] $application
+     * @param string $module
+     * @param string $language The language abbreviation.
+     * @param string $type     The type of locale.
+     * @param string $application
      * @return mixed
      */
     protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
@@ -274,16 +284,18 @@ class ModuleInstaller
      * Get a setting
      *
      * @param string $module The name of the module.
-     * @param string $name The name of the setting.
+     * @param string $name   The name of the setting.
      * @return mixed
      */
     protected function getSetting($module, $name)
     {
-        return unserialize($this->getDB()->getVar(
-            'SELECT value
-             FROM modules_settings
-             WHERE module = ? AND name = ?',
-            array((string) $module, (string) $name))
+        return unserialize(
+            $this->getDB()->getVar(
+                'SELECT value
+                 FROM modules_settings
+                 WHERE module = ? AND name = ?',
+                array((string) $module, (string) $name)
+            )
         );
     }
 
@@ -291,13 +303,15 @@ class ModuleInstaller
      * Get the id of the requested template of the active theme.
      *
      * @param string $template
-     * @param string[optional] $theme
+     * @param string $theme
      * @return int
      */
     protected function getTemplateId($template, $theme = null)
     {
         // no theme set = default theme
-        if($theme === null) $theme = $this->getSetting('core', 'theme');
+        if ($theme === null) {
+            $theme = $this->getSetting('core', 'theme');
+        }
 
         // return best matching template id
         return (int) $this->getDB()->getVar(
@@ -305,7 +319,8 @@ class ModuleInstaller
              WHERE theme = ?
              ORDER BY path LIKE ? DESC, id ASC
              LIMIT 1',
-            array((string) $theme, '%' . (string) $template . '%'));
+            array((string) $theme, '%' . (string) $template . '%')
+        );
     }
 
     /**
@@ -332,8 +347,8 @@ class ModuleInstaller
     /**
      * Imports the locale XML file
      *
-     * @param string $filename The full path for the XML-file.
-     * @param bool[optional] $overwriteConflicts Should we overwrite when there is a conflict?
+     * @param string $filename           The full path for the XML-file.
+     * @param bool   $overwriteConflicts Should we overwrite when there is a conflict?
      */
     protected function importLocale($filename, $overwriteConflicts = false)
     {
@@ -344,14 +359,21 @@ class ModuleInstaller
         $content = trim(file_get_contents($filename));
 
         // file actually has content
-        if(!empty($content)) {
+        if (!empty($content)) {
             // load xml
             $xml = @simplexml_load_string($content);
 
             // import if it's valid xml
-            if($xml !== false) {
+            if ($xml !== false) {
                 // import locale
-                BackendLocaleModel::importXML($xml, $overwriteConflicts, $this->getLanguages(), $this->getInterfaceLanguages(), $this->getDefaultUserID(), gmdate('Y-m-d H:i:s'));
+                BackendLocaleModel::importXML(
+                    $xml,
+                    $overwriteConflicts,
+                    $this->getLanguages(),
+                    $this->getInterfaceLanguages(),
+                    $this->getDefaultUserID(),
+                    gmdate('Y-m-d H:i:s')
+                );
             }
         }
     }
@@ -367,7 +389,7 @@ class ModuleInstaller
         $content = trim(file_get_contents($filename));
 
         // file actually has content
-        if(!empty($content)) {
+        if (!empty($content)) {
             /**
              * Some versions of PHP can't handle multiple statements at once, so split them
              * We know this isn't the best solution, but we couldn't find a beter way.
@@ -375,7 +397,9 @@ class ModuleInstaller
             $queries = preg_split("/;(\r)?\n/", $content);
 
             // loop queries and execute them
-            foreach($queries as $query) $this->getDB()->execute($query);
+            foreach ($queries as $query) {
+                $this->getDB()->execute($query);
+            }
         }
     }
 
@@ -392,11 +416,17 @@ class ModuleInstaller
         $db = $this->getDB();
 
         // fetch current settings
-        $groupSettings = (array) $db->getRecords('SELECT * FROM groups_settings WHERE name = ?', array('dashboard_sequence'));
-        $userSettings = (array) $db->getRecords('SELECT * FROM users_settings WHERE name = ?', array('dashboard_sequence'));
+        $groupSettings = (array) $db->getRecords(
+            'SELECT * FROM groups_settings WHERE name = ?',
+            array('dashboard_sequence')
+        );
+        $userSettings = (array) $db->getRecords(
+            'SELECT * FROM users_settings WHERE name = ?',
+            array('dashboard_sequence')
+        );
 
         // loop group settings
-        foreach($groupSettings as $settings) {
+        foreach ($groupSettings as $settings) {
             // unserialize data
             $settings['value'] = unserialize($settings['value']);
 
@@ -407,11 +437,16 @@ class ModuleInstaller
             $settings['value'] = serialize($settings['value']);
 
             // update in db
-            $db->update('groups_settings', $settings, 'group_id = ? AND name = ?', array($settings['group_id'], $settings['name']));
+            $db->update(
+                'groups_settings',
+                $settings,
+                'group_id = ? AND name = ?',
+                array($settings['group_id'], $settings['name'])
+            );
         }
 
         // loop user settings
-        foreach($userSettings as $settings) {
+        foreach ($userSettings as $settings) {
             // unserialize data
             $settings['value'] = unserialize($settings['value']);
 
@@ -422,31 +457,50 @@ class ModuleInstaller
             $settings['value'] = serialize($settings['value']);
 
             // update in db
-            $db->update('users_settings', $settings, 'user_id = ? AND name = ?', array($settings['user_id'], $settings['name']));
+            $db->update(
+                'users_settings',
+                $settings,
+                'user_id = ? AND name = ?',
+                array($settings['user_id'], $settings['name'])
+            );
         }
     }
 
     /**
      * Insert an extra
      *
-     * @param string $module The module for the extra.
-     * @param string $type The type, possible values are: homepage, widget, block.
-     * @param string $label The label for the extra.
-     * @param string[optional] $action The action.
-     * @param string[optional] $data Optional data, will be passed in the extra.
-     * @param bool[optional] $hidden Is this extra hidden?
-     * @param int[optional] $sequence The sequence for the extra.
+     * @param string $module   The module for the extra.
+     * @param string $type     The type, possible values are: homepage, widget, block.
+     * @param string $label    The label for the extra.
+     * @param string $action   The action.
+     * @param string $data     Optional data, will be passed in the extra.
+     * @param bool   $hidden   Is this extra hidden?
+     * @param int    $sequence The sequence for the extra.
      * @return int
      */
-    protected function insertExtra($module, $type, $label, $action = null, $data = null, $hidden = false, $sequence = null)
-    {
+    protected function insertExtra(
+        $module,
+        $type,
+        $label,
+        $action = null,
+        $data = null,
+        $hidden = false,
+        $sequence = null
+    ) {
         // no sequence set
-        if(is_null($sequence)) {
+        if (is_null($sequence)) {
             // set next sequence number for this module
-            $sequence = $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?', array((string) $module));
+            $sequence = $this->getDB()->getVar(
+                'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
+                array((string) $module)
+            );
 
             // this is the first extra for this module: generate new 1000-series
-            if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras');
+            if (is_null($sequence)) {
+                $sequence = $sequence = $this->getDB()->getVar(
+                    'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
+                );
+            }
         }
 
         $module = (string) $module;
@@ -473,19 +527,19 @@ class ModuleInstaller
         $parameters = array($item['module'], $item['type'], $item['label']);
 
         // data parameter must match
-        if($data !== null) {
+        if ($data !== null) {
             $query .= ' AND data = ?';
             $parameters[] = $data;
+        } // we need a nullio
+        else {
+            $query .= ' AND data IS NULL';
         }
-
-        // we need a nullio
-        else $query .= ' AND data IS NULL';
 
         // get id (if its already exists)
         $extraId = (int) $this->getDB()->getVar($query, $parameters);
 
         // doesn't already exist
-        if($extraId === 0) {
+        if ($extraId === 0) {
             // insert extra and return id
             return (int) $this->getDB()->insert('modules_extras', $item);
         }
@@ -497,20 +551,30 @@ class ModuleInstaller
     /**
      * Insert a meta item
      *
-     * @param string $keywords The keyword of the item.
-     * @param string $description A description of the item.
-     * @param string $title The page title for the item.
-     * @param string $url The unique URL.
-     * @param bool[optional] $keywordsOverwrite Should the keywords be overwritten?
-     * @param bool[optional] $descriptionOverwrite Should the descriptions be overwritten?
-     * @param bool[optional] $titleOverwrite Should the pagetitle be overwritten?
-     * @param bool[optional] $urlOverwrite Should the URL be overwritten?
-     * @param string[optional] $custom Any custom meta-data.
-     * @param array[optional] $data Any custom meta-data.
+     * @param string $keywords             The keyword of the item.
+     * @param string $description          A description of the item.
+     * @param string $title                The page title for the item.
+     * @param string $url                  The unique URL.
+     * @param bool   $keywordsOverwrite    Should the keywords be overwritten?
+     * @param bool   $descriptionOverwrite Should the descriptions be overwritten?
+     * @param bool   $titleOverwrite       Should the pagetitle be overwritten?
+     * @param bool   $urlOverwrite         Should the URL be overwritten?
+     * @param string $custom               Any custom meta-data.
+     * @param array  $data                 Any custom meta-data.
      * @return int
      */
-    protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null, $data = null)
-    {
+    protected function insertMeta(
+        $keywords,
+        $description,
+        $title,
+        $url,
+        $keywordsOverwrite = false,
+        $descriptionOverwrite = false,
+        $titleOverwrite = false,
+        $urlOverwrite = false,
+        $custom = null,
+        $data = null
+    ) {
         $item = array(
             'keywords' => (string) $keywords,
             'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
@@ -531,8 +595,8 @@ class ModuleInstaller
      * Insert a page
      *
      * @param array $revision An array with the revision data.
-     * @param array[optional] $meta The meta-data.
-     * @param array[optional] $block The blocks.
+     * @param array $meta     The meta-data.
+     * @param array $block    The blocks.
      * @return int
      */
     protected function insertPage(array $revision, array $meta = null, array $block = null)
@@ -541,47 +605,133 @@ class ModuleInstaller
         $meta = (array) $meta;
 
         // deactive previous revisions
-        if(isset($revision['id']) && isset($revision['language'])) $this->getDB()->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array($revision['id'], $revision['language']));
+        if (isset($revision['id']) && isset($revision['language'])) {
+            $this->getDB()->update(
+                'pages',
+                array('status' => 'archive'),
+                'id = ? AND language = ?',
+                array($revision['id'], $revision['language'])
+            );
+        }
 
         // build revision
-        if(!isset($revision['language'])) throw new \SpoonException('language is required for installing pages');
-        if(!isset($revision['title'])) throw new \SpoonException('title is required for installing pages');
-        if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
-        if(!$revision['id']) $revision['id'] = 1;
-        if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-        if(!isset($revision['template_id'])) $revision['template_id'] = $this->getTemplateId('default');
-        if(!isset($revision['type'])) $revision['type'] = 'page';
-        if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
-        if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
-        if(!isset($revision['navigation_title_overwrite'])) $revision['navigation_title_overwrite'] = 'N';
-        if(!isset($revision['hidden'])) $revision['hidden'] = 'N';
-        if(!isset($revision['status'])) $revision['status'] = 'active';
-        if(!isset($revision['publish_on'])) $revision['publish_on'] = gmdate('Y-m-d H:i:s');
-        if(!isset($revision['created_on'])) $revision['created_on'] = gmdate('Y-m-d H:i:s');
-        if(!isset($revision['edited_on'])) $revision['edited_on'] = gmdate('Y-m-d H:i:s');
-        if(!isset($revision['data'])) $revision['data'] = null;
-        if(!isset($revision['allow_move'])) $revision['allow_move'] = 'Y';
-        if(!isset($revision['allow_children'])) $revision['allow_children'] = 'Y';
-        if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
-        if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
-        if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
+        if (!isset($revision['language'])) {
+            throw new \SpoonException('language is required for installing pages');
+        }
+        if (!isset($revision['title'])) {
+            throw new \SpoonException('title is required for installing pages');
+        }
+        if (!isset($revision['id'])) {
+            $revision['id'] = (int) $this->getDB()->getVar(
+                'SELECT MAX(id) + 1 FROM pages WHERE language = ?',
+                array($revision['language'])
+            );
+        }
+        if (!$revision['id']) {
+            $revision['id'] = 1;
+        }
+        if (!isset($revision['user_id'])) {
+            $revision['user_id'] = $this->getDefaultUserID();
+        }
+        if (!isset($revision['template_id'])) {
+            $revision['template_id'] = $this->getTemplateId('default');
+        }
+        if (!isset($revision['type'])) {
+            $revision['type'] = 'page';
+        }
+        if (!isset($revision['parent_id'])) {
+            $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
+        }
+        if (!isset($revision['navigation_title'])) {
+            $revision['navigation_title'] = $revision['title'];
+        }
+        if (!isset($revision['navigation_title_overwrite'])) {
+            $revision['navigation_title_overwrite'] = 'N';
+        }
+        if (!isset($revision['hidden'])) {
+            $revision['hidden'] = 'N';
+        }
+        if (!isset($revision['status'])) {
+            $revision['status'] = 'active';
+        }
+        if (!isset($revision['publish_on'])) {
+            $revision['publish_on'] = gmdate('Y-m-d H:i:s');
+        }
+        if (!isset($revision['created_on'])) {
+            $revision['created_on'] = gmdate('Y-m-d H:i:s');
+        }
+        if (!isset($revision['edited_on'])) {
+            $revision['edited_on'] = gmdate('Y-m-d H:i:s');
+        }
+        if (!isset($revision['data'])) {
+            $revision['data'] = null;
+        }
+        if (!isset($revision['allow_move'])) {
+            $revision['allow_move'] = 'Y';
+        }
+        if (!isset($revision['allow_children'])) {
+            $revision['allow_children'] = 'Y';
+        }
+        if (!isset($revision['allow_edit'])) {
+            $revision['allow_edit'] = 'Y';
+        }
+        if (!isset($revision['allow_delete'])) {
+            $revision['allow_delete'] = 'Y';
+        }
+        if (!isset($revision['sequence'])) {
+            $revision['sequence'] = (int) $this->getDB()->getVar(
+                'SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?',
+                array($revision['language'], $revision['parent_id'], $revision['type'])
+            );
+        }
 
         // meta needs to be inserted
-        if(!isset($revision['meta_id'])) {
+        if (!isset($revision['meta_id'])) {
             // build meta
-            if(!isset($meta['keywords'])) $meta['keywords'] = $revision['title'];
-            if(!isset($meta['keywords_overwrite'])) $meta['keywords_overwrite'] = false;
-            if(!isset($meta['description'])) $meta['description'] = $revision['title'];
-            if(!isset($meta['description_overwrite'])) $meta['description_overwrite'] = false;
-            if(!isset($meta['title'])) $meta['title'] = $revision['title'];
-            if(!isset($meta['title_overwrite'])) $meta['title_overwrite'] = false;
-            if(!isset($meta['url'])) $meta['url'] = $revision['title'];
-            if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
-            if(!isset($meta['custom'])) $meta['custom'] = null;
-            if(!isset($meta['data'])) $meta['data'] = null;
+            if (!isset($meta['keywords'])) {
+                $meta['keywords'] = $revision['title'];
+            }
+            if (!isset($meta['keywords_overwrite'])) {
+                $meta['keywords_overwrite'] = false;
+            }
+            if (!isset($meta['description'])) {
+                $meta['description'] = $revision['title'];
+            }
+            if (!isset($meta['description_overwrite'])) {
+                $meta['description_overwrite'] = false;
+            }
+            if (!isset($meta['title'])) {
+                $meta['title'] = $revision['title'];
+            }
+            if (!isset($meta['title_overwrite'])) {
+                $meta['title_overwrite'] = false;
+            }
+            if (!isset($meta['url'])) {
+                $meta['url'] = $revision['title'];
+            }
+            if (!isset($meta['url_overwrite'])) {
+                $meta['url_overwrite'] = false;
+            }
+            if (!isset($meta['custom'])) {
+                $meta['custom'] = null;
+            }
+            if (!isset($meta['data'])) {
+                $meta['data'] = null;
+            }
 
             // insert meta
-            $revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom'], $meta['data']);
+            $revision['meta_id'] = $this->insertMeta(
+                $meta['keywords'],
+                $meta['description'],
+                $meta['title'],
+                $meta['url'],
+                $meta['keywords_overwrite'],
+                $meta['description_overwrite'],
+                $meta['title_overwrite'],
+                $meta['url_overwrite'],
+                $meta['custom'],
+                $meta['data']
+            );
         }
 
         // insert page
@@ -591,25 +741,45 @@ class ModuleInstaller
         $positions = array();
 
         // loop blocks: get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
-        for($i = 0; $i < func_num_args() - 2; $i++) {
+        for ($i = 0; $i < func_num_args() - 2; $i++) {
             // get block
             $block = @func_get_arg($i + 2);
-            if($block === false) $block = array();
-            else $block = (array) $block;
+            if ($block === false) {
+                $block = array();
+            } else {
+                $block = (array) $block;
+            }
 
             // save block position
-            if(!isset($block['position'])) $block['position'] = 'main';
+            if (!isset($block['position'])) {
+                $block['position'] = 'main';
+            }
             $positions[$block['position']][] = $block;
 
             // build block
-            if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
-            if(!isset($block['html'])) $block['html'] = '';
-            elseif(file_exists($block['html'])) $block['html'] = file_get_contents($block['html']);
-            if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
-            if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
-            if(!isset($block['extra_id'])) $block['extra_id'] = null;
-            if(!isset($block['visible'])) $block['visible'] = 'Y';
-            if(!isset($block['sequence'])) $block['sequence'] = count($positions[$block['position']]) - 1;
+            if (!isset($block['revision_id'])) {
+                $block['revision_id'] = $revision['revision_id'];
+            }
+            if (!isset($block['html'])) {
+                $block['html'] = '';
+            } elseif (file_exists($block['html'])) {
+                $block['html'] = file_get_contents($block['html']);
+            }
+            if (!isset($block['created_on'])) {
+                $block['created_on'] = gmdate('Y-m-d H:i:s');
+            }
+            if (!isset($block['edited_on'])) {
+                $block['edited_on'] = gmdate('Y-m-d H:i:s');
+            }
+            if (!isset($block['extra_id'])) {
+                $block['extra_id'] = null;
+            }
+            if (!isset($block['visible'])) {
+                $block['visible'] = 'Y';
+            }
+            if (!isset($block['sequence'])) {
+                $block['sequence'] = count($positions[$block['position']]) - 1;
+            }
 
             $this->getDB()->insert('pages_blocks', $block);
         }
@@ -631,9 +801,9 @@ class ModuleInstaller
     /**
      * Make a module searchable
      *
-     * @param string $module The module to make searchable.
-     * @param bool[optional] $searchable Enable/disable search for this module by default?
-     * @param int[optional] $weight Set default search weight for this module.
+     * @param string $module     The module to make searchable.
+     * @param bool   $searchable Enable/disable search for this module by default?
+     * @param int    $weight     Set default search weight for this module.
      */
     protected function makeSearchable($module, $searchable = true, $weight = 1)
     {
@@ -652,10 +822,10 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @param int $groupId The group wherefor the rights will be set.
-     * @param string $module The module wherin the action appears.
-     * @param string $action The action wherefor the rights have to set.
-     * @param int[optional] $level The leve, default is 7 (max).
+     * @param int    $groupId The group wherefor the rights will be set.
+     * @param string $module  The module wherin the action appears.
+     * @param string $action  The action wherefor the rights have to set.
+     * @param int    $level   The leve, default is 7 (max).
      */
     protected function setActionRights($groupId, $module, $action, $level = 7)
     {
@@ -674,12 +844,14 @@ class ModuleInstaller
         );
 
         // action doesn't exist
-        if(!$exists) {
+        if (!$exists) {
             // build item
-            $item = array('group_id' => $groupId,
-                            'module' => $module,
-                            'action' => $action,
-                            'level' => $level);
+            $item = array(
+                'group_id' => $groupId,
+                'module' => $module,
+                'action' => $action,
+                'level' => $level
+            );
 
             $this->getDB()->insert('groups_rights_actions', $item);
         }
@@ -688,8 +860,8 @@ class ModuleInstaller
     /**
      * Sets the rights for a module
      *
-     * @param int $groupId The group wherefor the rights will be set.
-     * @param string $module The module too set the rights for.
+     * @param int    $groupId The group wherefor the rights will be set.
+     * @param string $module  The module too set the rights for.
      */
     protected function setModuleRights($groupId, $module)
     {
@@ -697,13 +869,14 @@ class ModuleInstaller
         $module = (string) $module;
 
         // module doesn't exist
-        if(!(bool) $this->getDB()->getVar(
+        if (!(bool) $this->getDB()->getVar(
             'SELECT 1
              FROM groups_rights_modules
              WHERE group_id = ? AND module = ?
              LIMIT 1',
-            array((int) $groupId, (string) $module)))
-        {
+            array((int) $groupId, (string) $module)
+        )
+        ) {
             $item = array(
                 'group_id' => $groupId,
                 'module' => $module
@@ -716,11 +889,11 @@ class ModuleInstaller
     /**
      * Set a new navigation item.
      *
-     * @param int $parentId Id of the navigation item under we should add this.
-     * @param string $label Label for the item.
-     * @param string[optional] $url Url for the item. If ommitted the first child is used.
-     * @param array[optional] $selectedFor Set selected when these actions are active.
-     * @param int[optional] $sequence Sequence to use for this item.
+     * @param int    $parentId    Id of the navigation item under we should add this.
+     * @param string $label       Label for the item.
+     * @param string $url         Url for the item. If ommitted the first child is used.
+     * @param array  $selectedFor Set selected when these actions are active.
+     * @param int    $sequence    Sequence to use for this item.
      * @return int
      */
     protected function setNavigation($parentId, $label, $url = '', array $selectedFor = null, $sequence = null)
@@ -731,7 +904,7 @@ class ModuleInstaller
         $selectedFor = ($selectedFor !== null && is_array($selectedFor)) ? serialize($selectedFor) : null;
 
         // no custom sequence
-        if($sequence === null) {
+        if ($sequence === null) {
             // get maximum sequence for this parent
             $maxSequence = (int) $this->getDB()->getVar(
                 'SELECT MAX(sequence)
@@ -742,10 +915,10 @@ class ModuleInstaller
 
             // add at the end
             $sequence = $maxSequence + 1;
+        } // a custom sequence was set
+        else {
+            $sequence = (int) $sequence;
         }
-
-        // a custom sequence was set
-        else $sequence = (int) $sequence;
 
         // get the id for this url
         $id = (int) $this->getDB()->getVar(
@@ -756,13 +929,16 @@ class ModuleInstaller
         );
 
         // doesn't exist yet, add it
-        if($id === 0) {
-            return $this->getDB()->insert('backend_navigation', array(
-                'parent_id' => $parentId,
-                'label' => $label,
-                'url' => $url,
-                'selected_for' => $selectedFor,
-                'sequence' => $sequence)
+        if ($id === 0) {
+            return $this->getDB()->insert(
+                'backend_navigation',
+                array(
+                    'parent_id' => $parentId,
+                    'label' => $label,
+                    'url' => $url,
+                    'selected_for' => $selectedFor,
+                    'sequence' => $sequence
+                )
             );
         }
 
@@ -773,10 +949,10 @@ class ModuleInstaller
     /**
      * Stores a module specific setting in the database.
      *
-     * @param string $module The module wherefore the setting will be set.
-     * @param string $name The name of the setting.
-     * @param mixed[optional] $value The optional value.
-     * @param bool[optional] $overwrite Overwrite no matter what.
+     * @param string $module    The module wherefore the setting will be set.
+     * @param string $name      The name of the setting.
+     * @param mixed  $value     The optional value.
+     * @param bool   $overwrite Overwrite no matter what.
      */
     protected function setSetting($module, $name, $value = null, $overwrite = false)
     {
@@ -785,16 +961,14 @@ class ModuleInstaller
         $value = serialize($value);
         $overwrite = (bool) $overwrite;
 
-        if($overwrite) {
+        if ($overwrite) {
             $this->getDB()->execute(
                 'INSERT INTO modules_settings (module, name, value)
                  VALUES (?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?',
                 array($module, $name, $value, $value)
             );
-        }
-
-        // don't overwrite
+        } // don't overwrite
         else {
             // check if this setting already exists
             $exists = (bool) $this->getDB()->getVar(
@@ -806,7 +980,7 @@ class ModuleInstaller
             );
 
             // does not yet exist
-            if(!$exists) {
+            if (!$exists) {
                 // build item
                 $item = array(
                     'module' => $module,
@@ -823,9 +997,9 @@ class ModuleInstaller
      * Subscribe to an event, when the subsription already exists, the callback will be updated.
      *
      * @param string $eventModule The module that triggers the event.
-     * @param string $eventName The name of the event.
-     * @param string $module The module that subsribes to the event.
-     * @param mixed $callback The callback that should be executed when the event is triggered.
+     * @param string $eventName   The name of the event.
+     * @param string $module      The module that subsribes to the event.
+     * @param mixed  $callback    The callback that should be executed when the event is triggered.
      */
     public function subscribeToEvent($eventModule, $eventName, $module, $callback)
     {
@@ -849,9 +1023,16 @@ class ModuleInstaller
         );
 
         // update
-        if($exists) $db->update('hooks_subscriptions', $item, 'event_module = ? AND event_name = ? AND module = ?', array($eventModule, $eventName, $module));
-
-        // insert
-        else $db->insert('hooks_subscriptions', $item);
+        if ($exists) {
+            $db->update(
+                'hooks_subscriptions',
+                $item,
+                'event_module = ? AND event_name = ? AND module = ?',
+                array($eventModule, $eventName, $module)
+            );
+        } // insert
+        else {
+            $db->insert('hooks_subscriptions', $item);
+        }
     }
 }

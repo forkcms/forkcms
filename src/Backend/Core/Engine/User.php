@@ -22,74 +22,78 @@ class User
     /**
      * The group id
      *
-     * @var	int
+     * @var    int
      */
     private $groupId;
 
     /**
      * Is the user-object a valid one? As in: is the user authenticated
      *
-     * @var	bool
+     * @var    bool
      */
     private $isAuthenticated = false;
 
     /**
      * Is the authenticated user a god?
      *
-     * @var	bool
+     * @var    bool
      */
     private $isGod = false;
 
     /**
      * Last timestamp the user logged in
      *
-     * @var	int
+     * @var    int
      */
     private $lastLoggedInDate;
 
     /**
      * The secret key for the user
      *
-     * @var	string
+     * @var    string
      */
     private $secretKey;
 
     /**
      * The session id for the user
      *
-     * @var	string
+     * @var    string
      */
     private $sessionId;
 
     /**
      * All settings
      *
-     * @var	array
+     * @var    array
      */
     private $settings = array();
 
     /**
      * The users id
      *
-     * @var	int
+     * @var    int
      */
     private $userId;
 
     /**
      * The email
      *
-     * @var	string
+     * @var    string
      */
     private $email;
 
     /**
-     * @param int[optional] $userId The id of the user.
-     * @param string[optional] $email The e-mail address of the user.
+     * @param int    $userId The id of the user.
+     * @param string $email  The e-mail address of the user.
      */
     public function __construct($userId = null, $email = null)
     {
-        if($userId !== null) $this->loadUser((int) $userId);
-        if($email !== null) $this->loadUserByEmail($email);
+        if ($userId !== null) {
+            $this->loadUser((int) $userId);
+        }
+        if ($email !== null) {
+            $this->loadUserByEmail($email);
+        }
     }
 
     /**
@@ -145,8 +149,8 @@ class User
     /**
      * Get a setting
      *
-     * @param string $key The key for the setting to get.
-     * @param mixed[optional] $defaultValue Default value, will be stored if the setting isn't set.
+     * @param string $key          The key for the setting to get.
+     * @param mixed  $defaultValue Default value, will be stored if the setting isn't set.
      * @return mixed
      */
     public function getSetting($key, $defaultValue = null)
@@ -154,7 +158,9 @@ class User
         $key = (string) $key;
 
         // if the value isn't present we should set a defaultvalue
-        if(!isset($this->settings[$key])) $this->setSetting($key, $defaultValue);
+        if (!isset($this->settings[$key])) {
+            $this->setSetting($key, $defaultValue);
+        }
 
         // return
         return $this->settings[$key];
@@ -223,7 +229,9 @@ class User
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if(empty($userData)) throw new Exception('user (' . $userId . ') can\'t be loaded.');
+        if (empty($userData)) {
+            throw new Exception('user (' . $userId . ') can\'t be loaded.');
+        }
 
         // set properties
         $this->setUserId($userData['id']);
@@ -243,12 +251,12 @@ class User
         );
 
         // loop settings and store them in the object
-        foreach($settings as $key => $value) {
+        foreach ($settings as $key => $value) {
             $this->settings[$key] = unserialize($value);
         }
 
         // nickname available?
-        if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
+        if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
     }
@@ -274,7 +282,9 @@ class User
         );
 
         // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if(empty($userData)) throw new Exception('user (' . $email . ') can\'t be loaded.');
+        if (empty($userData)) {
+            throw new Exception('user (' . $email . ') can\'t be loaded.');
+        }
 
         // set properties
         $this->setUserId($userData['id']);
@@ -295,12 +305,12 @@ class User
         );
 
         // loop settings and store them in the object
-        foreach($settings as $key => $value) {
+        foreach ($settings as $key => $value) {
             $this->settings[$key] = unserialize($value);
         }
 
         // nickname available?
-        if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
+        if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
     }
@@ -358,8 +368,8 @@ class User
     /**
      * Set a setting
      *
-     * @param string $key The key of the setting.
-     * @param mixed $value The value to store.
+     * @param string $key   The key of the setting.
+     * @param mixed  $value The value to store.
      */
     public function setSetting($key, $value)
     {

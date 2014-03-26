@@ -121,11 +121,11 @@ class Model extends \BaseModel
      * If you don't specify a module the current module will be used.
      * If you don't specify a language the current language will be used.
      *
-     * @param string [optional] $action The action to build the URL for.
-     * @param string [optional] $module The module to build the URL for.
-     * @param string [optional] $language The language to use, if not provided we will use the working language.
-     * @param array  [optional] $parameters GET-parameters to use.
-     * @param bool   [optional] $urlencode Should the parameters be urlencoded?
+     * @param string $action     The action to build the URL for.
+     * @param string $module     The module to build the URL for.
+     * @param string $language   The language to use, if not provided we will use the working language.
+     * @param array  $parameters GET-parameters to use.
+     * @param bool   $urlencode  Should the parameters be urlencoded?
      * @return string
      */
     public static function createURLForAction(
@@ -196,9 +196,9 @@ class Model extends \BaseModel
      *
      * Data is a key/value array. Example: array(id => 23, language => nl);
      *
-     * @param string [optional] $module The module wherefore the extra exists.
-     * @param string [optional] $type The type of extra, possible values are block, homepage, widget.
-     * @param array  [optional] $data Extra data that exists.
+     * @param string $module The module wherefore the extra exists.
+     * @param string $type   The type of extra, possible values are block, homepage, widget.
+     * @param array  $data   Extra data that exists.
      */
     public static function deleteExtra($module = null, $type = null, array $data = null)
     {
@@ -271,7 +271,7 @@ class Model extends \BaseModel
      * @param string $module The module for the extra.
      * @param string $field  The field of the data you want to check the value for.
      * @param string $value  The value to check the field for.
-     * @param        string  [optional] $action    In case you want to search for a certain action.
+     * @param string $action In case you want to search for a certain action.
      */
     public static function deleteExtrasForData($module, $field, $value, $action = null)
     {
@@ -313,9 +313,9 @@ class Model extends \BaseModel
     /**
      * Generate a totally random but readable/speakable password
      *
-     * @param int  [optional] $length The maximum length for the password to generate.
-     * @param bool [optional] $uppercaseAllowed Are uppercase letters allowed?
-     * @param bool [optional] $lowercaseAllowed Are lowercase letters allowed?
+     * @param int  $length           The maximum length for the password to generate.
+     * @param bool $uppercaseAllowed Are uppercase letters allowed?
+     * @param bool $lowercaseAllowed Are lowercase letters allowed?
      * @return string
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
@@ -389,11 +389,11 @@ class Model extends \BaseModel
     /**
      * Generate a random string
      *
-     * @param int  [optional] $length Length of random string.
-     * @param bool [optional] $numeric Use numeric characters.
-     * @param bool [optional] $lowercase Use alphanumeric lowercase characters.
-     * @param bool [optional] $uppercase Use alphanumeric uppercase characters.
-     * @param bool [optional] $special Use special characters.
+     * @param int  $length    Length of random string.
+     * @param bool $numeric   Use numeric characters.
+     * @param bool $lowercase Use alphanumeric lowercase characters.
+     * @param bool $uppercase Use alphanumeric uppercase characters.
+     * @param bool $special   Use special characters.
      * @return string
      */
     public static function generateRandomString(
@@ -540,7 +540,7 @@ class Model extends \BaseModel
      * @param string $module The module for the extra.
      * @param string $key    The key of the data you want to check the value for.
      * @param string $value  The value to check the key for.
-     * @param        string  [optional] $action    In case you want to search for a certain action.
+     * @param string $action In case you want to search for a certain action.
      * @return array                    The ids for the extras.
      */
     public static function getExtrasForData($module, $key, $value, $action = null)
@@ -587,7 +587,7 @@ class Model extends \BaseModel
     /**
      * Get the page-keys
      *
-     * @param string [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return array
      */
     public static function getKeys($language = null)
@@ -628,7 +628,7 @@ class Model extends \BaseModel
     /**
      * Get the modules that are available on the filesystem
      *
-     * @param bool [optional] $includeCore   Should core be included as a module?
+     * @param bool $includeCore Should core be included as a module?
      * @return array
      */
     public static function getModulesOnFilesystem($includeCore = true)
@@ -649,9 +649,9 @@ class Model extends \BaseModel
     /**
      * Get a certain module-setting
      *
-     * @param string $module The module in which the setting is stored.
-     * @param string $key    The name of the setting.
-     * @param        mixed   [optional] $defaultValue The value to return if the setting isn't present.
+     * @param string $module       The module in which the setting is stored.
+     * @param string $key          The name of the setting.
+     * @param mixed  $defaultValue The value to return if the setting isn't present.
      * @return mixed
      */
     public static function getModuleSetting($module, $key, $defaultValue = null)
@@ -670,7 +670,7 @@ class Model extends \BaseModel
     /**
      * Get all module settings at once
      *
-     * @param string [optional] $module You can get all settings for a module.
+     * @param string $module You can get all settings for a module.
      * @return array
      */
     public static function getModuleSettings($module = null)
@@ -737,7 +737,7 @@ class Model extends \BaseModel
     /**
      * Get the navigation-items
      *
-     * @param string [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return array
      */
     public static function getNavigation($language = null)
@@ -778,8 +778,8 @@ class Model extends \BaseModel
     /**
      * Get the thumbnail folders
      *
-     * @param string $path The path
-     * @param        bool  [optional] $includeSource Should the source-folder be included in the return-array.
+     * @param string $path          The path
+     * @param bool   $includeSource Should the source-folder be included in the return-array.
      * @return array
      */
     public static function getThumbnailFolders($path, $includeSource = false)
@@ -858,8 +858,8 @@ class Model extends \BaseModel
     /**
      * Get URL for a given pageId
      *
-     * @param int $pageId The id of the page to get the URL for.
-     * @param     string  [optional] $language The language to use, if not provided we will use the working language.
+     * @param int    $pageId   The id of the page to get the URL for.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return string
      */
     public static function getURL($pageId, $language = null)
@@ -887,9 +887,9 @@ class Model extends \BaseModel
     /**
      * Get the URL for a give module & action combination
      *
-     * @param string $module The module to get the URL for.
-     * @param        string  [optional] $action The action to get the URL for.
-     * @param        string  [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $module   The module to get the URL for.
+     * @param string $action   The action to get the URL for.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return string
      */
     public static function getURLForBlock($module, $action = null, $language = null)
@@ -943,8 +943,8 @@ class Model extends \BaseModel
     /**
      * Get the UTC date in a specific format. Use this method when inserting dates in the database!
      *
-     * @param string [optional] $format The format to return the timestamp in. Default is MySQL datetime format.
-     * @param int    [optional] $timestamp The timestamp to use, if not provided the current time will be used.
+     * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
+     * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
      * @return string
      */
     public static function getUTCDate($format = null, $timestamp = null)
@@ -1022,11 +1022,11 @@ class Model extends \BaseModel
     /**
      * Image Save
      *
-     * @param \SpoonFormImage $imageFile ImageFile.
-     * @param string          $module    Module name.
-     * @param string          $filename  Filename.
-     * @param                 string     [optional] $subDirectory Subdirectory.
-     * @param                 array      [optional] $fileSizes Possible file sizes.
+     * @param \SpoonFormImage $imageFile    ImageFile.
+     * @param string          $module       Module name.
+     * @param string          $filename     Filename.
+     * @param string          $subDirectory Subdirectory.
+     * @param array           $fileSizes    Possible file sizes.
      */
     public static function imageSave($imageFile, $module, $filename, $subDirectory = '', $fileSizes = null)
     {
@@ -1058,8 +1058,8 @@ class Model extends \BaseModel
     /**
      * Invalidate cache
      *
-     * @param string [optional] $module A specific module to clear the cache for.
-     * @param string [optional] $language The language to use.
+     * @param string $module   A specific module to clear the cache for.
+     * @param string $language The language to use.
      */
     public static function invalidateFrontendCache($module = null, $language = null)
     {
@@ -1109,8 +1109,8 @@ class Model extends \BaseModel
     /**
      * Ping the known webservices
      *
-     * @param string [optional] $pageOrFeedURL The page/feed that has changed.
-     * @param string [optional] $category An optional category for the site.
+     * @param string $pageOrFeedURL The page/feed that has changed.
+     * @param string $category      An optional category for the site.
      * @return bool If everything went fne true will, otherwise false.
      */
     public static function ping($pageOrFeedURL = null, $category = null)
@@ -1310,14 +1310,14 @@ class Model extends \BaseModel
      *
      * @param string $userIp    IP address of the comment submitter.
      * @param string $userAgent User agent information.
-     * @param        string     [optional] $content The content that was submitted.
-     * @param        string     [optional] $author Submitted name with the comment.
-     * @param        string     [optional] $email Submitted email address.
-     * @param        string     [optional] $url Commenter URL.
-     * @param        string     [optional] $permalink The permanent location of the entry the comment was submitted to.
-     * @param        string     [optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
-     * @param        string     [optional] $referrer The content of the HTTP_REFERER header should be sent here.
-     * @param        array      [optional] $others Other data (the variables from $_SERVER).
+     * @param string $content   The content that was submitted.
+     * @param string $author    Submitted name with the comment.
+     * @param string $email     Submitted email address.
+     * @param string $url       Commenter URL.
+     * @param string $permalink The permanent location of the entry the comment was submitted to.
+     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
+     * @param array  $others    Other data (the variables from $_SERVER).
      * @return bool If everything went fine, true will be returned, otherwise an exception will be triggered.
      */
     public static function submitHam(
@@ -1372,14 +1372,14 @@ class Model extends \BaseModel
      *
      * @param string $userIp    IP address of the comment submitter.
      * @param string $userAgent User agent information.
-     * @param        string     [optional] $content The content that was submitted.
-     * @param        string     [optional] $author Submitted name with the comment.
-     * @param        string     [optional] $email Submitted email address.
-     * @param        string     [optional] $url Commenter URL.
-     * @param        string     [optional] $permalink The permanent location of the entry the comment was submitted to.
-     * @param        string     [optional] $type May be blank, comment, trackback, pingback, or a made up value like "registration".
-     * @param        string     [optional] $referrer The content of the HTTP_REFERER header should be sent here.
-     * @param        array      [optional] $others Other data (the variables from $_SERVER).
+     * @param string $content   The content that was submitted.
+     * @param string $author    Submitted name with the comment.
+     * @param string $email     Submitted email address.
+     * @param string $url       Commenter URL.
+     * @param string $permalink The permanent location of the entry the comment was submitted to.
+     * @param string $type      May be blank, comment, trackback, pingback, or a made up value like "registration".
+     * @param string $referrer  The content of the HTTP_REFERER header should be sent here.
+     * @param array  $others    Other data (the variables from $_SERVER).
      * @return bool If everything went fine true will be returned, otherwise an exception will be triggered.
      */
     public static function submitSpam(
@@ -1477,7 +1477,7 @@ class Model extends \BaseModel
      *
      * @param string $module    The module that triggers the event.
      * @param string $eventName The name of the event.
-     * @param        mixed      [optional] $data The data that should be send to subscribers.
+     * @param mixed  $data      The data that should be send to subscribers.
      */
     public static function triggerEvent($module, $eventName, $data = null)
     {

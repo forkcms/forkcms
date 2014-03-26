@@ -621,10 +621,10 @@ class Model
     /**
      * Creates the html for the menu
      *
-     * @param string [optional] $type The type of navigation.
-     * @param int    [optional] $depth The maximum depth to show.
-     * @param int    [optional] $parentId The Id to start from.
-     * @param string [optional] $html Will hold the created HTML.
+     * @param string $type     The type of navigation.
+     * @param int    $depth    The maximum depth to show.
+     * @param int    $parentId The Id to start from.
+     * @param string $html     Will hold the created HTML.
      * @return string
      */
     public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
@@ -759,9 +759,9 @@ class Model
     /**
      * Get the data for a record
      *
-     * @param int $id    The Id of the page to fetch.
-     * @param     int    [optional] $revisionId
-     * @param     string [optional] $language The language to use while fetching the page.
+     * @param int    $id       The Id of the page to fetch.
+     * @param int    $revisionId
+     * @param string $language The language to use while fetching the page.
      * @return mixed False if the record can't be found, otherwise an array with all data.
      */
     public static function get($id, $revisionId = null, $language = null)
@@ -828,9 +828,9 @@ class Model
     /**
      * Get blocks for a certain page/revision
      *
-     * @param  int $id    The id of the page.
-     * @param      int    [optional] $revisionId The revision to grab.
-     * @param      string [optional] $language The language to use.
+     * @param int    $id         The id of the page.
+     * @param int    $revisionId The revision to grab.
+     * @param string $language   The language to use.
      * @return array
      */
     public static function getBlocks($id, $revisionId = null, $language = null)
@@ -974,8 +974,8 @@ class Model
     /**
      * Get latest revision id for a page.
      *
-     * @param int $id    The id of the page.
-     * @param     string [optional] $language The language to use.
+     * @param int    $id       The id of the page.
+     * @param string $language The language to use.
      * @return int
      */
     public static function getLatestRevision($id, $language = null)
@@ -1007,7 +1007,7 @@ class Model
     /**
      * Get the maximum unique id for pages
      *
-     * @param string [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return int
      */
     public static function getMaximumPageId($language = null)
@@ -1034,8 +1034,8 @@ class Model
     /**
      * Get the maximum sequence inside a leaf
      *
-     * @param int $parentId The Id of the parent.
-     * @param     string    [optional] $language The language to use, if not provided we will use the working language.
+     * @param int    $parentId The Id of the parent.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return int
      */
     public static function getMaximumSequence($parentId, $language = null)
@@ -1055,10 +1055,10 @@ class Model
     /**
      * Get the order
      *
-     * @param array $navigation The navigation array.
-     * @param       string      [optional] $type The type of navigation.
-     * @param       int         [optional] $parentId The Id to start from.
-     * @param       array       [optional] $order The array to hold the order.
+     * @param array  $navigation The navigation array.
+     * @param string $type       The type of navigation.
+     * @param int    $parentId   The Id to start from.
+     * @param array  $order      The array to hold the order.
      * @return array
      */
     private static function getOrder($navigation, $type = 'page', $parentId = 0, $order = array())
@@ -1085,7 +1085,7 @@ class Model
     /**
      * Get the pages for usage in a dropdown menu
      *
-     * @param string [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return array
      */
     public static function getPagesForDropdown($language = null)
@@ -1161,9 +1161,9 @@ class Model
     /**
      * Get the subtree for a root element
      *
-     * @param array $navigation The navigation array.
-     * @param  int  $parentId   The id of the parent.
-     * @param       string      [optional] $html A holder for the generated HTML.
+     * @param array  $navigation The navigation array.
+     * @param int    $parentId   The id of the parent.
+     * @param string $html       A holder for the generated HTML.
      * @return string
      */
     public static function getSubtree($navigation, $parentId, $html = '')
@@ -1209,10 +1209,10 @@ class Model
     /**
      * Get all pages/level
      *
-     * @param array $ids   The parentIds.
-     * @param       array  [optional] $data A holder for the generated data.
-     * @param       int    [optional] $level The counter for the level.
-     * @param       string [optional] $language The language.
+     * @param array  $ids      The parentIds.
+     * @param array  $data     A holder for the generated data.
+     * @param int    $level    The counter for the level.
+     * @param string $language The language.
      * @return array
      */
     private static function getTree(array $ids, array $data = null, $level = 1, $language = null)
@@ -1427,10 +1427,10 @@ class Model
     /**
      * Get an unique URL for a page
      *
-     * @param string $URL The URL to base on.
-     * @param        int  [optional] $id The id to ignore.
-     * @param        int  [optional] $parentId The parent for the page to create an url for.
-     * @param        bool [optional] $isAction Is this page an action.
+     * @param string $URL      The URL to base on.
+     * @param int    $id       The id to ignore.
+     * @param int    $parentId The parent for the page to create an url for.
+     * @param bool   $isAction Is this page an action.
      * @return string
      */
     public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
@@ -1642,11 +1642,11 @@ class Model
         if ($typeOfDrop == 'inside') {
             // get highest sequence + 1
             $newSequence = (int) $db->getVar(
-                'SELECT MAX(i.sequence)
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                array($newParent, $language, 'active')
-            ) + 1;
+                    'SELECT MAX(i.sequence)
+                     FROM pages AS i
+                     WHERE i.id = ? AND i.language = ? AND i.status = ?',
+                    array($newParent, $language, 'active')
+                ) + 1;
 
             // update
             $db->update(
@@ -1659,12 +1659,12 @@ class Model
             // calculate new sequence for items that should be moved before
             // get new sequence
             $newSequence = (int) $db->getVar(
-                'SELECT i.sequence
-                 FROM pages AS i
-                 WHERE i.id = ? AND i.language = ? AND i.status = ?
-                 LIMIT 1',
-                array($droppedOnPage['id'], $language, 'active')
-            ) - 1;
+                    'SELECT i.sequence
+                     FROM pages AS i
+                     WHERE i.id = ? AND i.language = ? AND i.status = ?
+                     LIMIT 1',
+                    array($droppedOnPage['id'], $language, 'active')
+                ) - 1;
 
             // increment all pages with a sequence that is higher or equal to the current sequence;
             $db->execute(
@@ -1685,12 +1685,12 @@ class Model
             // calculate new sequence for items that should be moved after
             // get new sequence
             $newSequence = (int) $db->getVar(
-                'SELECT i.sequence
-                FROM pages AS i
-                WHERE i.id = ? AND i.language = ? AND i.status = ?
-                LIMIT 1',
-                array($droppedOnPage['id'], $language, 'active')
-            ) + 1;
+                    'SELECT i.sequence
+                    FROM pages AS i
+                    WHERE i.id = ? AND i.language = ? AND i.status = ?
+                    LIMIT 1',
+                    array($droppedOnPage['id'], $language, 'active')
+                ) + 1;
 
             // increment all pages with a sequence that is higher then the current sequence;
             $db->execute(
@@ -1801,9 +1801,9 @@ class Model
     /**
      * Switch templates for all existing pages
      *
-     * @param int $oldTemplateId The id of the new template to replace.
-     * @param int $newTemplateId The id of the new template to use.
-     * @param     bool           [optional] $overwrite Overwrite all pages with default blocks.
+     * @param int  $oldTemplateId The id of the new template to replace.
+     * @param int  $newTemplateId The id of the new template to use.
+     * @param bool $overwrite     Overwrite all pages with default blocks.
      */
     public static function updatePagesTemplates($oldTemplateId, $newTemplateId, $overwrite = false)
     {

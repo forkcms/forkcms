@@ -99,10 +99,10 @@ class Block extends Object
     public $URL;
 
     /**
-     * @param KernelInterface        $kernel
-     * @param string                 $module The name of the module.
-     * @param string                 $action The name of the action.
-     * @param                 string $data   The data that should be available in this block.
+     * @param KernelInterface $kernel
+     * @param string          $module The name of the module.
+     * @param string          $action The name of the action.
+     * @param string          $data   The data that should be available in this block.
      */
     public function __construct(KernelInterface $kernel, $module, $action, $data = null)
     {
@@ -392,8 +392,8 @@ class Block extends Object
             // flip ahead
             $this->header->addLink(
                 array(
-                     'rel' => 'prev',
-                     'href' => SITE_URL . $URL . $anchor,
+                    'rel' => 'prev',
+                    'href' => SITE_URL . $URL . $anchor,
                 )
             );
         }
@@ -470,8 +470,8 @@ class Block extends Object
             // flip ahead
             $this->header->addLink(
                 array(
-                     'rel' => 'next',
-                     'href' => SITE_URL . $URL . $anchor,
+                    'rel' => 'next',
+                    'href' => SITE_URL . $URL . $anchor,
                 )
             );
         }
@@ -486,8 +486,8 @@ class Block extends Object
     /**
      * Redirect to a given URL
      *
-     * @param string     $URL  The URL whereto will be redirected.
-     * @param        int $code The redirect code, default is 302 which means this is a temporary redirect.
+     * @param string $URL  The URL whereto will be redirected.
+     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
      */
     public function redirect($URL, $code = 302)
     {

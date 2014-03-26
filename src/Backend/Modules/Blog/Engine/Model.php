@@ -140,7 +140,7 @@ class Model
     /**
      * Deletes one or more items
      *
-     * @param  mixed $ids The ids to delete.
+     * @param mixed $ids The ids to delete.
      */
     public static function delete($ids)
     {
@@ -376,9 +376,9 @@ class Model
     /**
      * Get the comments
      *
-     * @param string [optional] $status The type of comments to get.
-     * @param int    [optional] $limit The maximum number of items to retrieve.
-     * @param int    [optional] $offset The offset.
+     * @param string $status The type of comments to get.
+     * @param int    $limit  The maximum number of items to retrieve.
+     * @param int    $offset The offset.
      * @return array
      */
     public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
@@ -445,7 +445,7 @@ class Model
     /**
      * Get all categories
      *
-     * @param bool [optional] $includeCount Include the count?
+     * @param bool $includeCount Include the count?
      * @return array
      */
     public static function getCategories($includeCount = false)
@@ -490,8 +490,8 @@ class Model
     /**
      * Get a category id by title
      *
-     * @param string $title The title of the category.
-     * @param        string [optional] $language The language to use, if not provided we will use the working language.
+     * @param string $title    The title of the category.
+     * @param string $language The language to use, if not provided we will use the working language.
      * @return int
      */
     public static function getCategoryId($title, $language = null)
@@ -563,7 +563,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param        int     [optional] $limit The maximum number of items to retrieve.
+     * @param int    $limit  The maximum number of items to retrieve.
      * @return array
      */
     public static function getLatestComments($status, $limit = 10)
@@ -623,7 +623,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $URL The URL to base on.
-     * @param        int  [optional] $id The id of the item to ignore.
+     * @param int    $id  The id of the item to ignore.
      * @return string
      */
     public static function getURL($URL, $id = null)
@@ -675,7 +675,7 @@ class Model
      * Retrieve the unique URL for a category
      *
      * @param string $URL The string whereon the URL will be based.
-     * @param        int  [optional] $id The id of the category to ignore.
+     * @param int    $id  The id of the category to ignore.
      * @return string
      */
     public static function getURLForCategory($URL, $id = null)
@@ -888,7 +888,7 @@ class Model
      * Inserts a new category into the database
      *
      * @param array $item The data for the category to insert.
-     * @param       array [optional] $meta The metadata for the category to insert.
+     * @param array $meta The metadata for the category to insert.
      * @return int
      */
     public static function insertCategory(array $item, $meta = null)
@@ -1065,8 +1065,8 @@ class Model
     /**
      * Update an existing category
      *
-     * @param array $item The new data.
-     * @param       array [optional] $meta The new meta-data.
+     * @param array       $item The new data.
+     * @param array $meta The new meta-data.
      * @return int
      */
     public static function updateCategory(array $item, $meta = null)

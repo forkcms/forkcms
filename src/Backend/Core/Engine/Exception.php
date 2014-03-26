@@ -18,7 +18,7 @@ class Exception extends \SpoonException
 {
     /**
      * @param string $message The message of the exception.
-     * @param int[optional] $code The numeric code of the exception.
+     * @param int $code The numeric code of the exception.
      */
     public function __construct($message, $code = 0)
     {

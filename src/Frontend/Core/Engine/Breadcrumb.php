@@ -92,7 +92,7 @@ class Breadcrumb extends FrontendBaseObject
      * Add an element
      *
      * @param string $title The label that will be used in the breadcrumb.
-     * @param        string [optional] $URL The URL for this item.
+     * @param string $URL   The URL for this item.
      */
     public function addElement($title, $URL = null)
     {

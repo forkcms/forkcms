@@ -68,7 +68,7 @@ class CMHelper
     /**
      * Returns the CampaignMonitor object
      *
-     * @param int [optional] $listId The default list id to use.
+     * @param int $listId The default list id to use.
      * @return CampaignMonitor
      */
     public static function getCM($listId = null)
@@ -126,8 +126,8 @@ class CMHelper
     /**
      * Subscribes an e-mail address and send him/her to CampaignMonitor
      *
-     * @param string $email The e-mail address to subscribe.
-     * @param        string [optional] $groupId The id of the group to subscribe to.
+     * @param string        $email   The e-mail address to subscribe.
+     * @param string $groupId The id of the group to subscribe to.
      * @return bool
      */
     public static function subscribe($email, $groupId = null)
@@ -155,11 +155,11 @@ class CMHelper
                  VALUES (?, ?, ?)
                  ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
                 array(
-                     $subscriber['email'],
-                     $subscriber['source'],
-                     $subscriber['created_on'],
-                     $subscriber['source'],
-                     $subscriber['created_on']
+                    $subscriber['email'],
+                    $subscriber['source'],
+                    $subscriber['created_on'],
+                    $subscriber['source'],
+                    $subscriber['created_on']
                 )
             );
 
@@ -175,13 +175,13 @@ class CMHelper
                  VALUES (?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
                 array(
-                     $subscriberGroup['email'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on']
+                    $subscriberGroup['email'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on']
                 )
             );
 
@@ -196,8 +196,8 @@ class CMHelper
     /**
      * Unsubscribes an e-mail address from CampaignMonitor and our database
      *
-     * @param string $email The e-mail address to unsubscribe.
-     * @param        string [optional] $groupId The id of the group to unsubscribe from.
+     * @param string        $email   The e-mail address to unsubscribe.
+     * @param string $groupId The id of the group to unsubscribe from.
      * @return bool
      */
     public static function unsubscribe($email, $groupId = null)

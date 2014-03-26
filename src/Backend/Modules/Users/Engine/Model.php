@@ -76,8 +76,8 @@ class Model
     /**
      * Does the user exist.
      *
-     * @param int $id  The userId to check for existence.
-     * @param     bool [optional] $active Should the user be active also?
+     * @param int  $id     The userId to check for existence.
+     * @param bool $active Should the user be active also?
      * @return bool
      */
     public static function exists($id, $active = true)
@@ -114,7 +114,7 @@ class Model
      * If you specify a userId, the email with the given id will be ignored.
      *
      * @param string $email The email to check for.
-     * @param        int    [optional] $id The userId to be ignored.
+     * @param int    $id    The userId to be ignored.
      * @return bool
      */
     public static function existsEmail($email, $id = null)

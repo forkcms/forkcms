@@ -292,9 +292,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the exit pages.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of exit pages to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of exit pages to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getExitPages($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -346,9 +346,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the keywords.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of keywords to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of keywords to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getKeywords($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -447,9 +447,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the pages.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of pages to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of pages to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getPages($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -573,9 +573,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the referrals.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of referrals to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of referrals to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getReferrals($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -621,9 +621,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the traffic sources.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of traffic sources to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of traffic sources to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getTrafficSources($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -651,9 +651,9 @@ class Helper
      * @param mixed $metrics The metrics to get for the traffic sources.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param string[optional] $sort The metric to sort on.
-     * @param int[optional] $limit An optional limit of the number of traffic sources to get.
-     * @param int[optional] $index The index to start getting data from.
+     * @param string $sort The metric to sort on.
+     * @param int $limit An optional limit of the number of traffic sources to get.
+     * @param int $index The index to start getting data from.
      * @return array
      */
     public static function getTrafficSourcesGrouped($metrics, $startTimestamp, $endTimestamp, $sort = null, $limit = null, $index = 1)
@@ -703,7 +703,7 @@ class Helper
      * @param BackendTemplate $tpl The template to parse the period picker in.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
-     * @param array[optional] $parameters The extra GET parameters to set on redirect.
+     * @param array $parameters The extra GET parameters to set on redirect.
      */
     public static function parsePeriodPicker(BackendTemplate $tpl, $startTimestamp, $endTimestamp, $parameters = array())
     {

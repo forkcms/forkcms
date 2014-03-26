@@ -68,10 +68,10 @@ class Meta
     protected $URL;
 
     /**
-     * @param Form $form  An instance of Form, the elements will be parsed in here.
-     * @param      int    [optional] $metaId The metaID to load.
-     * @param      string [optional] $baseFieldName The field where the URL should be based on.
-     * @param      bool   [optional] $custom Add/show custom-meta.
+     * @param Form   $form          An instance of Form, the elements will be parsed in here.
+     * @param int    $metaId        The metaID to load.
+     * @param string $baseFieldName The field where the URL should be based on.
+     * @param bool   $custom        Add/show custom-meta.
      */
     public function __construct(Form $form, $metaId = null, $baseFieldName = 'title', $custom = false)
     {
@@ -410,7 +410,7 @@ class Meta
     /**
      * Saves the meta object
      *
-     * @param bool [optional] $update Should we update the record or insert a new one.
+     * @param bool $update Should we update the record or insert a new one.
      * @return int
      */
     public function save($update = false)
@@ -499,7 +499,7 @@ class Meta
      *
      * @param string $className  Name of the class to use.
      * @param string $methodName Name of the method to use.
-     * @param        array       [optional] $parameters Parameters to parse, they will be passed after ours.
+     * @param array  $parameters Parameters to parse, they will be passed after ours.
      */
     public function setURLCallback($className, $methodName, $parameters = array())
     {
@@ -591,9 +591,11 @@ class Meta
 
             // set data
             $this->data['keywords'] = $keywords;
-            $this->data['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
+            $this->data['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked(
+            )) ? 'Y' : 'N';
             $this->data['description'] = $description;
-            $this->data['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
+            $this->data['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked(
+            )) ? 'Y' : 'N';
             $this->data['title'] = $title;
             $this->data['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
             $this->data['url'] = $URL;
