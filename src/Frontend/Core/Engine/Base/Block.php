@@ -9,13 +9,13 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Breadcrumb;
+use Frontend\Core\Engine\Exception;
+use Frontend\Core\Engine\Header;
+use Frontend\Core\Engine\Url;
 use Frontend\Core\Engine\Template as FrontendTemplate;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
@@ -38,7 +38,7 @@ class Block extends Object
     /**
      * The breadcrumb object
      *
-     * @var    FrontendBreadcrumb
+     * @var    Breadcrumb
      */
     protected $breadcrumb;
 
@@ -52,7 +52,7 @@ class Block extends Object
     /**
      * The header object
      *
-     * @var    FrontendHeader
+     * @var    Header
      */
     protected $header;
 
@@ -94,7 +94,7 @@ class Block extends Object
     /**
      * A reference to the URL-instance
      *
-     * @var    FrontendURL
+     * @var    Url
      */
     public $URL;
 
@@ -298,22 +298,22 @@ class Block extends Object
 
         // validate pagination array
         if (!isset($this->pagination['limit'])) {
-            throw new FrontendException('no limit in the pagination-property.');
+            throw new Exception('no limit in the pagination-property.');
         }
         if (!isset($this->pagination['offset'])) {
-            throw new FrontendException('no offset in the pagination-property.');
+            throw new Exception('no offset in the pagination-property.');
         }
         if (!isset($this->pagination['requested_page'])) {
-            throw new FrontendException('no requested_page available in the pagination-property.');
+            throw new Exception('no requested_page available in the pagination-property.');
         }
         if (!isset($this->pagination['num_items'])) {
-            throw new FrontendException('no num_items available in the pagination-property.');
+            throw new Exception('no num_items available in the pagination-property.');
         }
         if (!isset($this->pagination['num_pages'])) {
-            throw new FrontendException('no num_pages available in the pagination-property.');
+            throw new Exception('no num_pages available in the pagination-property.');
         }
         if (!isset($this->pagination['url'])) {
-            throw new FrontendException('no URL available in the pagination-property.');
+            throw new Exception('no URL available in the pagination-property.');
         }
 
         // should we use a questionmark or an ampersand

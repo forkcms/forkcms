@@ -497,7 +497,7 @@ class Model
     public static function getCategoryId($title, $language = null)
     {
         $title = (string) $title;
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT i.id

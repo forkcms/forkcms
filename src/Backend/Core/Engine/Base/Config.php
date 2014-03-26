@@ -133,6 +133,7 @@ class Config extends Object
         if(is_dir($path . '/Actions')) {
             $finder = new Finder();
             foreach($finder->files()->name('*.php')->in($path . '/Actions') as $file) {
+                /** @var $file \SplFileInfo */
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions
@@ -143,6 +144,7 @@ class Config extends Object
         if(is_dir($path . '/Ajax')) {
             $finder = new Finder();
             foreach($finder->files()->name('*.php')->in($path . '/Ajax') as $file) {
+                /** @var $file \SplFileInfo */
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions

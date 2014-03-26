@@ -1102,7 +1102,7 @@ class Model extends \BaseModel
             require_once PATH_LIBRARY . '/external/fork_api.php';
 
             // create instance
-            $forkAPI = new ForkAPI($publicKey, $privateKey);
+            $forkAPI = new \ForkAPI($publicKey, $privateKey);
 
             // try to get the services
             try {

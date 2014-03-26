@@ -12,7 +12,7 @@ namespace Frontend\Modules\Profiles\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication
+use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 
 /**
  * This is a widget with a login form
@@ -64,12 +64,7 @@ class LoginBox extends FrontendBaseWidget
         $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
         if (FrontendProfilesAuthentication::isLoggedIn()) {
-            // get the profile
-            /**
-             * @var FrontendProfilesProfile
-             */
             $profile = FrontendProfilesAuthentication::getProfile();
-
             $this->tpl->assign('profile', $profile->toArray());
         }
     }

@@ -2,21 +2,22 @@
 
 namespace Frontend\Core\Engine;
 
-    /*
-     * This file is part of Fork CMS.
-     *
-     * For the full copyright and license information, please view the license
-     * file that was distributed with this source code.
-     */
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
 
 use Common\Uri as CommonUri;
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * Frontend Ical class.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendIcal extends SpoonIcal
+class FrontendIcal extends \SpoonICal
 {
     /**
      * The title
@@ -33,28 +34,14 @@ class FrontendIcal extends SpoonIcal
      */
     public function __construct($title, $description)
     {
-        // redefine
-        $title = (string) $title;
-        $description = (string) $description;
-
-        // convert to plain text
         $description = FrontendModel::convertToPlainText($description);
-
-        // set some basic stuff
-        $this->setProductIdentifier('Fork v' . FORK_VERSION);
-
-        // build properties
         $properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
         $properties['X-WR-CALDESC'] = $description;
         $properties['X-WR-TIMEZONE'] = date_default_timezone_get();
 
-        // set the title
-        $this->setTitle($title);
-
-        // set properties
+        $this->setProductIdentifier('Fork v' . FORK_VERSION);
         $this->setXProperties($properties);
-
-        // set the filename
+        $this->setTitle($title);
         $this->setFilename(str_replace('-', '_', CommonUri::getUrl($title)) . '.ics');
     }
 
@@ -77,7 +64,7 @@ class FrontendIcal extends SpoonIcal
     {
         // set headers
         if ((bool) $headers) {
-            SpoonHTTP::setHeaders(
+            \SpoonHTTP::setHeaders(
                 'Content-Disposition: inline; filename=' . CommonUri::getUrl($this->getTitle()) . '.ics'
             );
         }
@@ -102,7 +89,7 @@ class FrontendIcal extends SpoonIcal
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class FrontendIcalEvent extends SpoonIcalEvent
+class FrontendIcalEvent extends \SpoonICalEvent
 {
     /**
      * Initial values for UTM-parameters

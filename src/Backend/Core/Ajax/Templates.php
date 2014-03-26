@@ -9,6 +9,8 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -17,7 +19,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.eu>
  */
-class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
+class BackendCoreAjaxTemplates extends AjaxAction
 {
     /**
      * Execute the action
@@ -33,19 +35,21 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
         $files[] = BACKEND_PATH . '/Core/Layout/editor_templates/templates.js';
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/editor_templates/templates.js';
 
-        if(is_file($themePath)) $files[] = $themePath;
+        if (is_file($themePath)) {
+            $files[] = $themePath;
+        }
 
         // loop all files
-        foreach($files as $file) {
+        foreach ($files as $file) {
             // process file
             $templates = array_merge($templates, $this->processFile($file));
         }
 
         // set headers
-        SpoonHTTP::setHeaders('Content-type: text/javascript');
+        \SpoonHTTP::setHeaders('Content-type: text/javascript');
 
         // output the templates
-        if(!empty($templates)) {
+        if (!empty($templates)) {
             echo 'CKEDITOR.addTemplates(\'default\', { imagesPath: \'/\', templates:' . "\n";
             echo json_encode($templates) . "\n";
             echo '});';
@@ -64,33 +68,41 @@ class BackendCoreAjaxTemplates extends BackendBaseAJAXAction
         $fs = new Filesystem();
 
         // if the files doesn't exists we can stop here and just return an empty string
-        if(!$fs->exists($file)) return array();
+        if (!$fs->exists($file)) {
+            return array();
+        }
 
         // fetch content from file
         $content = file_get_contents($file);
         $json = @json_decode($content, true);
 
         // skip invalid JSON
-        if($json === false || $json === null) return array();
+        if ($json === false || $json === null) {
+            return array();
+        }
 
         $return = array();
 
         // loop templates
-        foreach($json as $template) {
+        foreach ($json as $template) {
             // skip items without a title
-            if(!isset($template['title'])) continue;
+            if (!isset($template['title'])) {
+                continue;
+            }
 
-            if(isset($template['file'])) {
-                if($fs->exists(PATH_WWW . $template['file'])) {
+            if (isset($template['file'])) {
+                if ($fs->exists(PATH_WWW . $template['file'])) {
                     $template['html'] = file_get_contents(PATH_WWW . $template['file']);
                 }
             }
 
             // skip items without HTML
-            if(!isset($template['html'])) continue;
+            if (!isset($template['html'])) {
+                continue;
+            }
 
             $image = '';
-            if(isset($template['image'])) {
+            if (isset($template['image'])) {
                 // we have to remove the first slash, because that is set in the wrapper. Otherwise the images don't work
                 $image = ltrim($template['image'], '/');
             }

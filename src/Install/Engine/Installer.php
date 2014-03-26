@@ -27,7 +27,7 @@ class Installer extends \KernelLoader implements \ApplicationInterface
     /**
      * Only checks if this Fork is already installed
      *
-     * @param Kernel $kernel
+     * @param \Kernel $kernel
      */
     public function __construct($kernel)
     {
@@ -62,6 +62,7 @@ class Installer extends \KernelLoader implements \ApplicationInterface
         $class = 'Install\\Engine\\Step' . $this->step;
 
         // create & execute instance
+        /* @var $instance Step */
         $instance = new $class($this->step);
         $instance->setKernel($this->getKernel());
         $instance->initialize();

@@ -9,12 +9,9 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Frontend\Core\Engine\Template;
+use Frontend\Core\Engine\Url;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Finder\Finder;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will be the base of the objects used in on-site
@@ -27,14 +24,14 @@ class Object extends \KernelLoader
     /**
      * Template instance
      *
-     * @var    FrontendTemplate
+     * @var    Template
      */
     protected $tpl;
 
     /**
      * URL instance
      *
-     * @var    FrontendURL
+     * @var    Url
      */
     protected $URL;
 

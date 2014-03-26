@@ -63,6 +63,7 @@ class UploadModule extends BackendBaseActionAdd
         $files = array();
 
         // shorten field variables
+        /** @var $fileFile \SpoonFormFile */
         $fileFile = $this->frm->getField('file');
 
         // create \ziparchive instance

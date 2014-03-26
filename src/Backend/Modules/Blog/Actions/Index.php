@@ -31,21 +31,21 @@ class Index extends BackendBaseActionIndex
     /**
      * The category where is filtered on
      *
-     * @var	array
+     * @var    array
      */
     private $category;
 
     /**
      * The id of the category where is filtered on
      *
-     * @var	int
+     * @var    int
      */
     private $categoryId;
 
     /**
      * DataGrids
      *
-     * @var	SpoonDataGrid
+     * @var    BackendDataGridDB
      */
     private $dgDrafts, $dgPosts, $dgRecent;
 
@@ -58,13 +58,14 @@ class Index extends BackendBaseActionIndex
 
         // set category id
         $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-        if($this->categoryId == 0) $this->categoryId = null;
-        else {
+        if ($this->categoryId == 0) {
+            $this->categoryId = null;
+        } else {
             // get category
             $this->category = BackendBlogModel::getCategory($this->categoryId);
 
             // reset
-            if(empty($this->category)) {
+            if (empty($this->category)) {
                 // reset GET to trick Spoon
                 $_GET['category'] = null;
 
@@ -84,7 +85,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridAllPosts()
     {
         // filter on category?
-        if($this->categoryId != null) {
+        if ($this->categoryId != null) {
             // create datagrid
             $this->dgPosts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
@@ -102,10 +103,12 @@ class Index extends BackendBaseActionIndex
         }
 
         // set headers
-        $this->dgPosts->setHeaderLabels(array(
-            'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
-            'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn'))
-        ));
+        $this->dgPosts->setHeaderLabels(
+            array(
+                'user_id' => \SpoonFilter::ucfirst(BL::lbl('Author')),
+                'publish_on' => \SpoonFilter::ucfirst(BL::lbl('PublishedOn'))
+            )
+        );
 
         // hide columns
         $this->dgPosts->setColumnsHidden(array('revision_id'));
@@ -117,18 +120,22 @@ class Index extends BackendBaseActionIndex
         // set column functions
         $this->dgPosts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[publish_on]'), 'publish_on', true
+            array('[publish_on]'),
+            'publish_on',
+            true
         );
         $this->dgPosts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id', true
+            array('[user_id]'),
+            'user_id',
+            true
         );
 
         // our JS needs to know an id, so we can highlight it
         $this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgPosts->setColumnURL(
                 'title',
@@ -138,7 +145,9 @@ class Index extends BackendBaseActionIndex
 
             // add edit column
             $this->dgPosts->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
@@ -152,12 +161,13 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridDrafts()
     {
         // filter on category?
-        if($this->categoryId != null) {
+        if ($this->categoryId != null) {
             // create datagrid
             $this->dgDrafts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY,
                 array(
-                    $this->categoryId, 'draft',
+                    $this->categoryId,
+                    'draft',
                     BackendAuthentication::getUser()->getUserId(),
                     BL::getWorkingLanguage()
                 )
@@ -186,18 +196,22 @@ class Index extends BackendBaseActionIndex
         // set column functions
         $this->dgDrafts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'), 'edited_on', true
+            array('[edited_on]'),
+            'edited_on',
+            true
         );
         $this->dgDrafts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id', true
+            array('[user_id]'),
+            'user_id',
+            true
         );
 
         // our JS needs to know an id, so we can highlight it
         $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
@@ -208,10 +222,13 @@ class Index extends BackendBaseActionIndex
 
             // add edit column
             $this->dgDrafts->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' .
-                $this->categoryId, BL::lbl('Edit')
+                $this->categoryId,
+                BL::lbl('Edit')
             );
         }
     }
@@ -222,7 +239,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGridRecentPosts()
     {
         // filter on category?
-        if($this->categoryId != null) {
+        if ($this->categoryId != null) {
             // create datagrid
             $this->dgRecent = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
@@ -251,18 +268,22 @@ class Index extends BackendBaseActionIndex
         // set column functions
         $this->dgRecent->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getLongDate'),
-            array('[edited_on]'), 'edited_on', true
+            array('[edited_on]'),
+            'edited_on',
+            true
         );
         $this->dgRecent->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id', true
+            array('[user_id]'),
+            'user_id',
+            true
         );
 
         // our JS needs to know an id, so we can highlight it
         $this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set colum URLs
             $this->dgRecent->setColumnURL(
                 'title',
@@ -272,7 +293,9 @@ class Index extends BackendBaseActionIndex
 
             // add edit column
             $this->dgRecent->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;category=' . $this->categoryId,
                 BL::lbl('Edit')
@@ -289,7 +312,9 @@ class Index extends BackendBaseActionIndex
         $this->loadDataGridDrafts();
 
         // the most recent blogposts, only shown when we have more than 1 page in total
-        if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDataGridRecentPosts();
+        if ($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) {
+            $this->loadDataGridRecentPosts();
+        }
     }
 
     /**
@@ -312,7 +337,7 @@ class Index extends BackendBaseActionIndex
         $categories = BackendBlogModel::getCategories(true);
 
         // multiple categories?
-        if(count($categories) > 1) {
+        if (count($categories) > 1) {
             // create form
             $frm = new BackendForm('filter', null, 'get', false);
 
@@ -325,6 +350,8 @@ class Index extends BackendBaseActionIndex
         }
 
         // parse category
-        if(!empty($this->category)) $this->tpl->assign('filterCategory', $this->category);
+        if (!empty($this->category)) {
+            $this->tpl->assign('filterCategory', $this->category);
+        }
     }
 }

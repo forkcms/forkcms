@@ -341,7 +341,7 @@ class Model
         \SpoonSession::set($action . 'Loop', null);
 
         // update date_viewed for this page
-        BackendAnalyticsModel::updatePageDateViewed($id);
+        self::updatePageDateViewed($id);
 
         return $items;
     }
@@ -503,7 +503,7 @@ class Model
      */
     public static function getLinkList($language = null)
     {
-        $language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // there is no cache file
         if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) return array();
@@ -631,7 +631,7 @@ class Model
                 ((int) $item['pageviews'] / $item['visits']),
                 2
             ));
-            $results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(
+            $results[$i]['time_on_site'] = self::getTimeFromSeconds(
                 ($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2))
             );
             $results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(

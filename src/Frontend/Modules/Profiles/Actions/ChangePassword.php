@@ -15,6 +15,7 @@ use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
+use Frontend\Modules\Profiles\Engine\Profile;
 
 /**
  * Change the password of the current logged in profile.
@@ -34,7 +35,7 @@ class ChangePassword extends FrontendBaseBlock
     /**
      * The current profile.
      *
-     * @var FrontendProfilesProfile
+     * @var Profile
      */
     private $profile;
 

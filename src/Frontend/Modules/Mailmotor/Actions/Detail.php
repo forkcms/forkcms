@@ -15,13 +15,6 @@ use Frontend\Modules\Mailmotor\Engine\MailingBodyBuilder;
 class Detail extends FrontendBaseBlock
 {
     /**
-     * The mailing's body to assign in the template
-     *
-     * @var string
-     */
-    private $body;
-
-    /**
      * Whether this is CM requesting the information
      *
      * @var    bool

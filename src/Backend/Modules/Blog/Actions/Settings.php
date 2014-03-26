@@ -135,7 +135,7 @@ class Settings extends BackendBaseActionEdit
                 $feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://' . $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
                 // check if feedburner URL is valid
-                if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
+                if(!\SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
             }
 
             // init variable

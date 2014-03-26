@@ -64,7 +64,7 @@ class Meta
     /**
      * The URL-instance
      *
-     * @var    BackendURL
+     * @var    Url
      */
     protected $URL;
 

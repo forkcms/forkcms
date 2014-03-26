@@ -9,6 +9,9 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Header;
+use Backend\Core\Engine\Template;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -33,7 +36,7 @@ class Widget extends \KernelLoader
     /**
      * The header object
      *
-     * @var BackendHeader
+     * @var Header
      */
     protected $header;
 
@@ -61,7 +64,7 @@ class Widget extends \KernelLoader
     /**
      * A reference to the current template
      *
-     * @var BackendTemplate
+     * @var Template
      */
     public $tpl;
 

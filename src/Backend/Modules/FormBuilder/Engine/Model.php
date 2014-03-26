@@ -48,31 +48,35 @@ class Model
         // today
         if ($timestamp >= $todayStart) {
             // today
-            if ($hours >= 1) return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
-
-            // more than one minute
+            if ($hours >= 1) {
+                return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
+            } // more than one minute
             elseif ($minutes > 1) {
                 return sprintf(BL::getLabel('MinutesAgo'), $minutes);
+            } // one minute
+            elseif ($minutes == 1) {
+                return BL::getLabel('OneMinuteAgo');
+            } // more than one second
+            elseif ($seconds > 1) {
+                return sprintf(BL::getLabel('SecondsAgo'), $seconds);
+            } // one second
+            elseif ($seconds <= 1) {
+                return BL::getLabel('OneSecondAgo');
             }
-
-            // one minute
-            elseif ($minutes == 1) return BL::getLabel('OneMinuteAgo');
-
-            // more than one second
-            elseif ($seconds > 1) return sprintf(BL::getLabel('SecondsAgo'), $seconds);
-
-            // one second
-            elseif ($seconds <= 1) return BL::getLabel('OneSecondAgo');
         } // yesterday
-        elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) return BL::getLabel(
-                                                                                            'Yesterday'
-                                                                                        ) . ' ' . date(
-                                                                                            'H:i',
-                                                                                            $timestamp
-                                                                                        );
+        elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
+            return BL::getLabel(
+                       'Yesterday'
+                   ) . ' ' . date(
+                       'H:i',
+                       $timestamp
+                   );
+        }
 
         // older
-        else return date('d/m/Y H:i', $timestamp);
+        else {
+            return date('d/m/Y H:i', $timestamp);
+        }
     }
 
     /**
@@ -130,7 +134,9 @@ class Model
         $dataIds = (array) $db->getColumn('SELECT i.id FROM forms_data AS i WHERE i.form_id = ?', $id);
 
         // we have items to be deleted
-        if (!empty($dataIds)) self::deleteData($dataIds);
+        if (!empty($dataIds)) {
+            self::deleteData($dataIds);
+        }
 
         // delete extra
         BackendModel::deleteExtra('form_builder', 'widget', array('id' => $id));
@@ -248,7 +254,7 @@ class Model
      * Does an identifier exist.
      *
      * @param string $identifier Identifier.
-     * @param in     $ignoreId   Field id to ignore.
+     * @param int    $ignoreId   Field id to ignore.
      * @return bool
      */
     public static function existsIdentifier($identifier, $ignoreId = null)
@@ -301,7 +307,9 @@ class Model
         );
 
         // unserialize the emailaddresses
-        if (isset($return['email'])) $return['email'] = (array) unserialize($return['email']);
+        if (isset($return['email'])) {
+            $return['email'] = (array) unserialize($return['email']);
+        }
 
         return $return;
     }
@@ -363,7 +371,9 @@ class Model
             $return = array();
 
             // loop errors
-            foreach ($errors as $key => $error) $return[] = array('type' => $key, 'message' => $error);
+            foreach ($errors as $key => $error) {
+                $return[] = array('type' => $key, 'message' => $error);
+            }
 
             return $return;
         }
@@ -385,7 +395,9 @@ class Model
         );
 
         // unserialize settings
-        if ($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+        if ($field['settings'] !== null) {
+            $field['settings'] = unserialize($field['settings']);
+        }
 
         // get validation
         $field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -417,7 +429,9 @@ class Model
 
         foreach ($fields as &$field) {
             // unserialize
-            if ($field['settings'] !== null) $field['settings'] = unserialize($field['settings']);
+            if ($field['settings'] !== null) {
+                $field['settings'] = unserialize($field['settings']);
+            }
 
             // get validation
             $field['validations'] = (array) BackendModel::getContainer()->get('database')->getRecords(

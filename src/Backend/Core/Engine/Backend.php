@@ -9,6 +9,8 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
@@ -21,12 +23,12 @@ namespace Backend\Core\Engine;
 class Backend extends \KernelLoader implements \ApplicationInterface
 {
     /**
-     * @var BackendAction
+     * @var Base\Action
      */
     private $action;
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {

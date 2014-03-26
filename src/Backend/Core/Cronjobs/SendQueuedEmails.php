@@ -9,13 +9,16 @@ namespace Backend\Core\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Base\Cronjob;
+use Backend\Core\Engine\Mailer;
+
 /**
  * This is the cronjob to send the queued emails.
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob
+class BackendCoreCronjobSendQueuedEmails extends Cronjob
 {
     /**
      * Execute the action
@@ -26,8 +29,8 @@ class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob
         $this->setBusyFile();
 
         // send all queued e-mails
-        foreach(BackendMailer::getQueuedMailIds() as $id) {
-            BackendMailer::send($id);
+        foreach(Mailer::getQueuedMailIds() as $id) {
+            Mailer::send($id);
         }
 
         // remove busy file

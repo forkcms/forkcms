@@ -14,6 +14,8 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Language AS FL;
+use Frontend\Core\Engine\Mailer AS FrontendMailer;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module

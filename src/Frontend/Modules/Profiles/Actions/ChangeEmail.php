@@ -16,6 +16,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
+use Frontend\Modules\Profiles\Engine\Profile;
 
 /**
  * Change the e-mail of the current logged in profile.
@@ -35,7 +36,7 @@ class ChangeEmail extends FrontendBaseBlock
     /**
      * The current profile.
      *
-     * @var FrontendProfilesProfile
+     * @var Profile
      */
     private $profile;
 

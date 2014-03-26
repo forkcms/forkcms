@@ -201,7 +201,7 @@ class Livesuggest extends FrontendBaseAJAXAction
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            $this->redirect(
+            \SpoonHTTP::redirect(
                 FrontendNavigation::getURL(404)
             );
         }

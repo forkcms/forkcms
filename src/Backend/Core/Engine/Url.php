@@ -18,7 +18,7 @@ use Common\Cookie as CommonCookie;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class Url extends \Backend\Core\Engine\Base\Object
+class Url extends Base\Object
 {
     /**
      * The host, will be used for cookies

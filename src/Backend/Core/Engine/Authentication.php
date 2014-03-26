@@ -149,7 +149,7 @@ class Authentication
     /**
      * Returns the current authenticated user
      *
-     * @return BackendUser
+     * @return User
      */
     public static function getUser()
     {

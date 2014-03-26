@@ -20,9 +20,16 @@ class Modules extends BackendBaseActionIndex
     /**
      * Data grids.
      *
-     * @var BackendDataGrid
+     * @var BackendDataGridArray
      */
-    private $dataGridInstalledModules, $dataGridInstallableModules;
+    private $dataGridInstalledModules;
+
+    /**
+     * Data grids.
+     *
+     * @var BackendDataGridArray
+     */
+    private $dataGridInstallableModules;
 
     /**
      * Modules that are or or not installed.

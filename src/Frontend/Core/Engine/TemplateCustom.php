@@ -2,12 +2,12 @@
 
 namespace Frontend\Core\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * Add all custom stuff here.
@@ -19,12 +19,12 @@ class TemplateCustom
     /**
      * Template instance
      *
-     * @var	FrontendTemplate
+     * @var    Template
      */
     private $tpl;
 
     /**
-     * @param FrontendTemplate $tpl The template instance.
+     * @param Template $tpl The template instance.
      */
     public function __construct($tpl)
     {

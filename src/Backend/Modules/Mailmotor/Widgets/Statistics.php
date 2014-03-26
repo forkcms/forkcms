@@ -29,13 +29,6 @@ class Statistics extends BackendBaseWidget
     const PAGING_LIMIT = 10;
 
     /**
-     * the default group ID
-     *
-     * @var    int
-     */
-    private $groupId;
-
-    /**
      * Execute the widget
      */
     public function execute()

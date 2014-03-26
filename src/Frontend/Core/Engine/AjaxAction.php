@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
+use Frontend\Core\Engine\Exception;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
@@ -31,7 +32,7 @@ class AjaxAction extends FrontendBaseAJAXAction
     /**
      * The config file
      *
-     * @var    FrontendBaseConfig
+     * @var    Base\Config
      */
     protected $config;
 
@@ -143,7 +144,7 @@ class AjaxAction extends FrontendBaseAJAXAction
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
-            throw new FrontendException(
+            throw new Exception(
                 'The config file is present, but the class name should be: ' . $configClass . '.'
             );
         }

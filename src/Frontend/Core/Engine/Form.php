@@ -11,6 +11,8 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Frontend\Core\Engine\Language AS FL;
+
 
 /**
  * This is our extended version of SpoonForm.
@@ -23,14 +25,14 @@ class Form extends \SpoonForm
     /**
      * The header instance
      *
-     * @var    FrontendHeader
+     * @var    Header
      */
     private $header;
 
     /**
      * The URL instance
      *
-     * @var    FrontendURL
+     * @var    Url
      */
     private $URL;
 

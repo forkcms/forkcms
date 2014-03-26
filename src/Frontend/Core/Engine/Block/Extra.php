@@ -10,6 +10,8 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Theme as FrontendTheme;
 use Frontend\Core\Engine\Language as FL;
@@ -35,7 +37,7 @@ class Extra extends FrontendBaseObject
     /**
      * The config file
      *
-     * @var    FrontendBaseConfig
+     * @var    Config
      */
     private $config;
 

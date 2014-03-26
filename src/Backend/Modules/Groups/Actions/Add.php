@@ -141,6 +141,7 @@ class Add extends BackendBaseActionAdd
             ->in(BACKEND_MODULES_PATH . '/*/Actions')
             ->in(BACKEND_MODULES_PATH . '/*/Ajax');
         foreach($finder->files() as $file) {
+            /** @var $file \SplFileInfo */
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
 
             // skip some modules
@@ -197,9 +198,9 @@ class Add extends BackendBaseActionAdd
     private function getWidgets()
     {
         $finder = new Finder();
-        $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/widgets');
+        $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/widgets');
         foreach($finder->files() as $file) {
+            /** @var $file \SplFileInfo */
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if(BackendAuthentication::isAllowedModule($module)) {
                 $widgetName = $file->getBasename('.php');

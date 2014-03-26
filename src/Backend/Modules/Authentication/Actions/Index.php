@@ -15,6 +15,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Mailer as BackendMailer;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\User;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
@@ -218,7 +219,7 @@ class Index extends BackendBaseActionIndex
 
                 // insert the key and the timestamp into the user settings
                 $userId = BackendUsersModel::getIdByEmail($email);
-                $user = new BackendUser($userId);
+                $user = new User($userId);
                 $user->setSetting('reset_password_key', $key);
                 $user->setSetting('reset_password_timestamp', time());
 

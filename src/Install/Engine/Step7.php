@@ -10,6 +10,7 @@ namespace Install\Engine;
  */
 
 use Backend\Core\Installer\CoreInstaller;
+use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -80,6 +81,7 @@ class Step7 extends Step
         $finder = new Finder();
         $fs = new Filesystem();
         foreach ($finder->files()->in(BACKEND_CACHE_PATH)->in(FRONTEND_CACHE_PATH) as $file) {
+            /** @var $file \SplFileInfo */
             $fs->remove($file->getRealPath());
         }
     }
@@ -94,7 +96,7 @@ class Step7 extends Step
 
         // validate all previous steps
         if (!$this->validateForm()) {
-            SpoonHTTP::redirect('/install?step=1');
+            \SpoonHTTP::redirect('/install?step=1');
         }
 
         // define paths
@@ -190,6 +192,7 @@ class Step7 extends Step
                 }
 
                 // create installer
+                /** @var $install ModuleInstaller */
                 $installer = new $class(
                     $this->getContainer()->get('database'),
                     \SpoonSession::get('languages'),

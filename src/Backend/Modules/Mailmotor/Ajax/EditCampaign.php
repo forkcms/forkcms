@@ -10,6 +10,7 @@ namespace Backend\Modules\Mailmotor\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 

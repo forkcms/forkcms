@@ -143,7 +143,7 @@ class Settings extends BackendBaseActionEdit
 
             try {
                 $this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
-            } catch (GoogleAnalyticsException $e) {
+            } catch (\GoogleAnalyticsException $e) {
                 // bad request, probably means the API key is wrong
                 if ($e->getCode() == '400') {
                     // reset token so we can alter the API key

@@ -64,7 +64,7 @@ class Model extends \BaseModel
         $last = $chunks[$count - 1];
 
         // is numeric
-        if (SpoonFilter::isNumeric($last)) {
+        if (\SpoonFilter::isNumeric($last)) {
             // remove last chunk
             array_pop($chunks);
 
@@ -278,7 +278,7 @@ class Model extends \BaseModel
         // loop folders
         foreach ($folders as $folder) {
             // generate the thumbnail
-            $thumbnail = new SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
+            $thumbnail = new \SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
             $thumbnail->setAllowEnlargement(true);
 
             // if the width & height are specified we should ignore the aspect ratio
@@ -616,16 +616,16 @@ class Model extends \BaseModel
     /**
      * Get the UTC timestamp for a date/time object combination.
      *
-     * @param SpoonFormDate $date An instance of SpoonFormDate.
-     * @param SpoonFormTime $time An instance of SpoonFormTime.
+     * @param \SpoonFormDate $date An instance of SpoonFormDate.
+     * @param \SpoonFormTime $time An instance of SpoonFormTime.
      * @return int
      */
-    public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
+    public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
     {
         // validate date/time object
         if (!$date->isValid() || ($time !== null && !$time->isValid())
         ) {
-            throw new FrontendException('You need to provide two objects that actually contain valid data.');
+            throw new Exception('You need to provide two objects that actually contain valid data.');
         }
 
         // init vars
@@ -771,7 +771,7 @@ class Model extends \BaseModel
         require_once PATH_LIBRARY . '/external/fork_api.php';
 
         // create instance
-        $forkAPI = new ForkAPI($publicKey, $privateKey);
+        $forkAPI = new \ForkAPI($publicKey, $privateKey);
 
         try {
             // push
@@ -950,7 +950,7 @@ class Model extends \BaseModel
     {
         // validate
         if (!is_callable($callback)) {
-            throw new FrontendException('Invalid callback!');
+            throw new Exception('Invalid callback!');
         }
 
         // build record

@@ -180,6 +180,7 @@ class ModuleInstaller
         $finder = new Finder();
         $fs = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
+            /** @var $file \SplFileInfo */
             $fs->remove($file->getRealPath());
         }
     }
@@ -605,7 +606,7 @@ class ModuleInstaller
         $revision = (array) $revision;
         $meta = (array) $meta;
 
-        // deactive previous revisions
+        // deactived previous revisions
         if (isset($revision['id']) && isset($revision['language'])) {
             $this->getDB()->update(
                 'pages',

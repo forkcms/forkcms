@@ -19,10 +19,10 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationInterface
+class Cronjob extends Object implements \ApplicationInterface
 {
     /**
-     * @var BackendBaseCronjob
+     * @var Base\Cronjob
      */
     private $cronjob;
 
@@ -32,7 +32,7 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
     private $language;
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {

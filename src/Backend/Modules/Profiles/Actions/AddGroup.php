@@ -55,6 +55,7 @@ class AddGroup extends BackendBaseActionAdd
             $this->frm->cleanupFields();
 
             // get field
+            /** @var $txtName \SpoonFormText */
             $txtName = $this->frm->getField('name');
 
             // name filled in?

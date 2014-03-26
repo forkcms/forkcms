@@ -39,6 +39,7 @@ class GetData extends BackendBaseCronjob
         $finder = new Finder();
         $fs = new Filesystem();
         foreach ($finder->files()->in($this->cachePath) as $file) {
+            /** @var $file \SplFileInfo */
             // delete file if more than 1 week old
             if ($file->getMTime() < strtotime('-1 week')) {
                 $fs->remove($file->getRealPath());

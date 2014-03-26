@@ -42,7 +42,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * DataGrid for the drafts
      *
-     * @var    BackendDataGrid
+     * @var    BackendDataGridDB
      */
     private $dgDrafts;
 

@@ -18,12 +18,12 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  */
-class AjaxAction extends \Backend\Core\Engine\Base\Object
+class AjaxAction extends Base\Object
 {
     /**
      * The config file
      *
-     * @var	BackendBaseConfig
+     * @var    Base\Config
      */
     private $config;
 
@@ -31,7 +31,7 @@ class AjaxAction extends \Backend\Core\Engine\Base\Object
      * Execute the action
      * We will build the classname, require the class and call the execute method.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function execute()
     {
@@ -39,10 +39,17 @@ class AjaxAction extends \Backend\Core\Engine\Base\Object
 
         // build action-class-name
         $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
-        if($this->getModule() == 'Core') $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
+        if ($this->getModule() == 'Core') {
+            $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
+        }
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClass)) throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
+        if (!class_exists(
+            $actionClass
+        )
+        ) {
+            throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
+        }
 
         // create action-object
         $object = new $actionClass($this->getKernel(), $this->getAction(), $this->getModule());
@@ -60,20 +67,29 @@ class AjaxAction extends \Backend\Core\Engine\Base\Object
     public function loadConfig()
     {
         // check if module path is not yet defined
-        if(!defined('BACKEND_MODULE_PATH')) {
+        if (!defined('BACKEND_MODULE_PATH')) {
             // build path for core
-            if($this->getModule() == 'Core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
-
-            // build path to the module and define it. This is a constant because we can use this in templates.
-            else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+            if ($this->getModule() == 'Core') {
+                define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
+            } // build path to the module and define it. This is a constant because we can use this in templates.
+            else {
+                define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+            }
         }
 
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Backend\\Core\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Backend\\Core\\Config';
+        }
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($configClass)) throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        if (!class_exists(
+            $configClass
+        )
+        ) {
+            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        }
 
         // create config-object, the constructor will do some magic
         $this->config = new $configClass($this->getKernel(), $this->getModule());

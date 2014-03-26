@@ -280,7 +280,7 @@ class CMHelper
     /**
      * Returns the CampaignMonitor object.
      *
-     * @return CampaignMonitor
+     * @return \CampaignMonitor
      */
     public static function getCM()
     {

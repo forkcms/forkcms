@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Frontend\Core\Engine\Model as FrontendModel;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class defines the frontend, it is the core. Everything starts here.
@@ -22,12 +23,12 @@ use Frontend\Core\Engine\Model as FrontendModel;
 class Frontend extends \KernelLoader implements \ApplicationInterface
 {
     /**
-     * @var FrontendPage
+     * @var Page
      */
     private $page;
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {
@@ -68,7 +69,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
             );
 
             // create instance
-            $facebook = new Facebook($config);
+            $facebook = new \Facebook($config);
 
             // grab the signed request, if a user is logged in the access token will be set
             $facebook->getSignedRequest();

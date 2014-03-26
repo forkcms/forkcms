@@ -1,5 +1,7 @@
 <?php
 
+namespace Frontend\Core;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -7,24 +9,26 @@
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+
 /**
  * This is the configuration-object
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-final class FrontendCoreConfig extends FrontendBaseConfig
+final class Config extends FrontendBaseConfig
 {
     /**
      * The default action
      *
-     * @var	string
+     * @var    string
      */
     protected $defaultAction = 'index';
 
     /**
      * The disabled actions
      *
-     * @var	array
+     * @var    array
      */
     protected $disabledActions = array();
 }

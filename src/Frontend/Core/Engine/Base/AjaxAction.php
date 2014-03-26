@@ -87,7 +87,7 @@ class AjaxAction extends \KernelLoader
      * With this function we'll be able to get the content and return it as a
      * Symfony output object.
      *
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function getContent()
     {

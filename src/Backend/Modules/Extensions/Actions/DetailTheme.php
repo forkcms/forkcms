@@ -19,28 +19,28 @@ class DetailTheme extends BackendBaseActionIndex
     /**
      * Theme we request the details of.
      *
-     * @var	string
+     * @var    string
      */
     private $currentTheme;
 
     /**
      * Datagrids.
      *
-     * @var	BackendDataGrid
+     * @var    BackendDataGridArray
      */
     private $dataGridTemplates;
 
     /**
      * Information fetched from the info.xml.
      *
-     * @var	array
+     * @var    array
      */
     private $information = array();
 
     /**
      * List of warnings.
      *
-     * @var	array
+     * @var    array
      */
     private $warnings = array();
 
@@ -53,16 +53,16 @@ class DetailTheme extends BackendBaseActionIndex
         $this->currentTheme = $this->getParameter('theme', 'string');
 
         // does the item exist
-        if($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
+        if ($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
             parent::execute();
             $this->loadData();
             $this->loadDataGridTemplates();
             $this->parse();
             $this->display();
+        } // no item found, redirect to index, because somebody is fucking with our url
+        else {
+            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
     }
 
     /**
@@ -72,7 +72,7 @@ class DetailTheme extends BackendBaseActionIndex
     private function loadData()
     {
         // inform that the theme is not installed yet
-        if(!BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
+        if (!BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
             $this->warnings[] = array('message' => BL::getMessage('InformationThemeIsNotInstalled'));
         }
 
@@ -80,7 +80,7 @@ class DetailTheme extends BackendBaseActionIndex
         $pathInfoXml = FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml';
 
         // information needs to exists
-        if(is_file($pathInfoXml)) {
+        if (is_file($pathInfoXml)) {
             try {
                 // load info.xml
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
@@ -89,17 +89,21 @@ class DetailTheme extends BackendBaseActionIndex
                 $this->information = BackendExtensionsModel::processThemeXml($infoXml);
 
                 // empty data (nothing useful)
-                if(empty($this->information)) $this->warnings[] = array('message' => BL::getMessage('InformationFileIsEmpty'));
-            }
-
-            // warning that the information file is corrupt
-            catch(\Exception $e) {
+                if (empty($this->information)) {
+                    $this->warnings[] = array(
+                        'message' => BL::getMessage(
+                                'InformationFileIsEmpty'
+                            )
+                    );
+                }
+            } // warning that the information file is corrupt
+            catch (\Exception $e) {
                 $this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
             }
+        } // warning that the information file is missing
+        else {
+            $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
         }
-
-        // warning that the information file is missing
-        else $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
     }
 
     /**
@@ -108,18 +112,22 @@ class DetailTheme extends BackendBaseActionIndex
     private function loadDataGridTemplates()
     {
         // no hooks so don't bother
-        if(!isset($this->information['templates'])) return;
+        if (!isset($this->information['templates'])) {
+            return;
+        }
 
         // build data for display in datagrid
         $templates = array();
-        foreach($this->information['templates'] as $template) {
+        foreach ($this->information['templates'] as $template) {
             // set template name & path
             $record['name'] = $template['label'];
             $record['path'] = $template['path'];
 
             // set positions
             $record['positions'] = array();
-            foreach($template['positions'] as $position) $record['positions'][] = $position['name'];
+            foreach ($template['positions'] as $position) {
+                $record['positions'][] = $position['name'];
+            }
             $record['positions'] = implode(', ', $record['positions']);
 
             // add template to list
@@ -147,9 +155,18 @@ class DetailTheme extends BackendBaseActionIndex
         $this->tpl->assign('name', $this->currentTheme);
         $this->tpl->assign('warnings', $this->warnings);
         $this->tpl->assign('information', $this->information);
-        $this->tpl->assign('showExtensionsInstallTheme', !BackendExtensionsModel::isThemeInstalled($this->currentTheme) && BackendAuthentication::isAllowedAction('InstallTheme'));
+        $this->tpl->assign(
+            'showExtensionsInstallTheme',
+            !BackendExtensionsModel::isThemeInstalled($this->currentTheme) && BackendAuthentication::isAllowedAction(
+                'InstallTheme'
+            )
+        );
 
         // data grids
-        $this->tpl->assign('dataGridTemplates', (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0) ? $this->dataGridTemplates->getContent() : false);
+        $this->tpl->assign(
+            'dataGridTemplates',
+            (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults(
+                                                ) > 0) ? $this->dataGridTemplates->getContent() : false
+        );
     }
 }

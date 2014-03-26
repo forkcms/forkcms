@@ -39,10 +39,22 @@ class Index extends BackendBaseActionIndex
     /**
      * DataGrids
      *
-     * @var    BackendDataGrid
+     * @var    BackendDataGridDB
      */
     private $dgQueuedMailings;
+
+    /**
+     * DataGrids
+     *
+     * @var    BackendDataGridDB
+     */
     private $dgSentMailings;
+
+    /**
+     * DataGrids
+     *
+     * @var    BackendDataGridDB
+     */
     private $dgUnsentMailings;
 
     /**
@@ -412,6 +424,8 @@ class Index extends BackendBaseActionIndex
      */
     public static function setCampaignLink($id, $name)
     {
-        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('Index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
+        return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction(
+                'Index'
+            ) . '&amp;campaign=' . $id . '">' . $name . '</a>' : \SpoonFilter::ucfirst(BL::lbl('NoCampaign'));
     }
 }

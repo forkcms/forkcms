@@ -22,7 +22,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  */
-class Navigation extends \Backend\Core\Engine\Base\Object
+class Navigation extends Base\Object
 {
     /**
      * The navigation array, will be used to build the navigation
@@ -34,10 +34,13 @@ class Navigation extends \Backend\Core\Engine\Base\Object
     /**
      * URL-instance
      *
-     * @var    BackendURL
+     * @var    Url
      */
     protected $URL;
 
+    /**
+     * @param KernelInterface $kernel
+     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);

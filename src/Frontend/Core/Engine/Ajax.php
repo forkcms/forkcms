@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * FrontendAJAX
@@ -58,7 +59,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
     private $output;
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {
@@ -92,7 +93,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
             $this->setModule($module);
             $this->setAction($action);
             $this->setLanguage($language);
-            
+
             if (extension_loaded('newrelic')) {
                 newrelic_name_transaction('ajax::' . $module . '::' . $action);
             }

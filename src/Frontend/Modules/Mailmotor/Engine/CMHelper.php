@@ -69,7 +69,7 @@ class CMHelper
      * Returns the CampaignMonitor object
      *
      * @param int $listId The default list id to use.
-     * @return CampaignMonitor
+     * @return \CampaignMonitor
      */
     public static function getCM($listId = null)
     {

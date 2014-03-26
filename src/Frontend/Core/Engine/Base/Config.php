@@ -135,6 +135,7 @@ class Config extends \KernelLoader
             $finder = new Finder();
             $finder->name('*.php');
             foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+                /** @var $file \SplFileInfo */
                 $action = $file->getBasename('.php');
                 if (!in_array($action, $this->disabledActions)) {
                     $this->possibleActions[$file->getBasename()] = $action;
@@ -147,6 +148,7 @@ class Config extends \KernelLoader
             $finder = new Finder();
             $finder->name('*.php');
             foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+                /** @var $file \SplFileInfo */
                 $action = $file->getBasename('.php');
                 if (!in_array($action, $this->disabledAJAXActions)) {
                     $this->possibleAJAXActions[$file->getBasename()] = $action;

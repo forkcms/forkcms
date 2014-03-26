@@ -9,6 +9,8 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Form;
+use Backend\Core\Engine\Meta;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -27,14 +29,14 @@ class ActionAdd extends Action
     /**
      * The form instance
      *
-     * @var BackendForm
+     * @var Form
      */
     protected $frm;
 
     /**
      * The backends meta-object
      *
-     * @var BackendMeta
+     * @var Meta
      */
     protected $meta;
 

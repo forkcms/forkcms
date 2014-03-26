@@ -174,7 +174,7 @@ class Config extends BackendBaseConfig
                 try {
                     // insert the group in CampaignMonitor
                     BackendMailmotorCMHelper::insertGroup($group);
-                } catch (CampaignMonitorException $e) {
+                } catch (\CampaignMonitorException $e) {
                     // ignore
                 }
             }

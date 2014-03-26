@@ -12,6 +12,7 @@ namespace Frontend\Modules\Faq\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Mailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
@@ -119,7 +120,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                 }
 
                 $this->status = 'success';
-                FrontendMailer::addEmail(
+                Mailer::addEmail(
                     sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']),
                     FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/own_question.tpl',
                     $variables,

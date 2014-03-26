@@ -85,6 +85,7 @@ class Index extends BackendBaseActionIndex
         // loop the datagrids (as references)
         foreach($dataGrids as $type => &$dataGrid) {
             // set sorting
+            /** @var $dataGrid BackendDataGridArray */
             $dataGrid->setSortingColumns(array('module', 'name'), 'name');
 
             // disable paging

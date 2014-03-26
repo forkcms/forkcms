@@ -101,7 +101,7 @@ class Step extends \KernelLoader
     }
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {

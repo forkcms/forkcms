@@ -2,12 +2,12 @@
 
 namespace Install\Engine;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
+    /*
+     * This file is part of Fork CMS.
+     *
+     * For the full copyright and license information, please view the license
+     * file that was distributed with this source code.
+     */
 
 /**
  * Step 2 of the Fork installer
@@ -225,8 +225,6 @@ class Step2 extends Step
 
     /**
      * Define path constants
-     *
-     * @param int $step The step wherefore the constant should be defined.
      */
     private static function defineConstants()
     {

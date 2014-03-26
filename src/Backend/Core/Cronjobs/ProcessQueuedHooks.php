@@ -9,6 +9,9 @@ namespace Backend\Core\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Exception;
+use Backend\Core\Engine\Base\Cronjob;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
@@ -17,7 +20,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
+class BackendCoreCronjobProcessQueuedHooks extends Cronjob
 {
     /**
      * Execute the action
@@ -43,7 +46,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
             $pid
         );
 
-        while(true) {
+        while (true) {
             // get 1 item
             $item = $db->getRecord(
                 'SELECT *
@@ -54,7 +57,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
             );
 
             // any item?
-            if(!empty($item)) {
+            if (!empty($item)) {
                 // init var
                 $processedSuccessfully = true;
 
@@ -66,9 +69,11 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
                 $item['data'] = unserialize($item['data']);
 
                 // check if the item is callable
-                if(!is_callable($item['callback'])) {
+                if (!is_callable($item['callback'])) {
                     // in debug mode we want to know if there are errors
-                    if(SPOON_DEBUG) throw new BackendException('Invalid callback!');
+                    if (SPOON_DEBUG) {
+                        throw new Exception('Invalid callback!');
+                    }
 
                     // set to error state
                     $db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
@@ -86,7 +91,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
                     $return = call_user_func($item['callback'], $item['data']);
 
                     // failed?
-                    if($return === false) {
+                    if ($return === false) {
                         // set to error state
                         $db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
@@ -95,7 +100,7 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 
                         $log->info('Callback (' . serialize($item['callback']) . ') failed.');
                     }
-                } catch(Exception $e) {
+                } catch (Exception $e) {
                     // set to error state
                     $db->update('hooks_queue', array('status' => 'error'), 'id = ?', $item['id']);
 
@@ -103,17 +108,21 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
                     $processedSuccessfully = false;
 
                     // logging when we are in debugmode
-                    if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+                    if (SPOON_DEBUG) {
+                        $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+                    }
                 }
 
                 // everything went fine so delete the item
-                if($processedSuccessfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
+                if ($processedSuccessfully) {
+                    $db->delete('hooks_queue', 'id = ?', $item['id']);
+                }
 
                 // logging when we are in debugmode
-                if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');
-            }
-
-            // stop it
+                if (SPOON_DEBUG) {
+                    $log->write('Callback (' . serialize($item['callback']) . ') finished.');
+                }
+            } // stop it
             else {
                 $fs = new Filesystem();
                 $fs->remove(BACKEND_CACHE_PATH . '/Hooks/pid');

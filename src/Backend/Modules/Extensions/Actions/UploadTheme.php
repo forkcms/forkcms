@@ -78,6 +78,7 @@ class UploadTheme extends BackendBaseActionAdd
         // the form is submitted
         if($this->frm->isSubmitted()) {
             // shorten field variables
+            /** @var $fileFile \SpoonFormFile */
             $fileFile = $this->frm->getField('file');
 
             // validate the file

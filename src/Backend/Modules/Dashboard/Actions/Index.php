@@ -10,10 +10,12 @@ namespace Backend\Modules\Dashboard\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
+use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Language as BL;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
@@ -76,6 +78,7 @@ class Index extends BackendBaseActionIndex
 
                 // loop widgets
                 foreach($finder->files()->in($pathName . '/widgets') as $file) {
+                    /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBaseName('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
                     if($module == 'Core') $className = 'Backend\\Core\\Widgets\\' . $widgetName;
@@ -91,6 +94,7 @@ class Index extends BackendBaseActionIndex
                     if(!$present) continue;
 
                     // create instance
+                    /** @var $instance BackendBaseWidget */
                     $instance = new $className($this->getKernel());
 
                     // has rights

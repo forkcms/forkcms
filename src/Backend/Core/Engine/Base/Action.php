@@ -9,6 +9,9 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Header;
+use Backend\Core\Engine\Template;
+use Backend\Core\Engine\Url;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,21 +40,21 @@ class Action extends Object
     /**
      * The header object
      *
-     * @var BackendHeader
+     * @var Header
      */
     protected $header;
 
     /**
      * A reference to the current template
      *
-     * @var BackendTemplate
+     * @var Template
      */
     public $tpl;
 
     /**
      * A reference to the URL-instance
      *
-     * @var BackendURL
+     * @var Url
      */
     public $URL;
 

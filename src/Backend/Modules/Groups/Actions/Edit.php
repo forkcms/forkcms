@@ -53,7 +53,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * The users datagrid
      *
-     * @var	BackendDataGrid
+     * @var	BackendDataGridDB
      */
     private $dataGridUsers;
 
@@ -146,6 +146,7 @@ class Edit extends BackendBaseActionEdit
             ->in(BACKEND_MODULES_PATH . '/*/Actions')
             ->in(BACKEND_MODULES_PATH . '/*/Ajax');
         foreach($finder->files() as $file) {
+            /** @var $file \SplFileInfo */
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
 
             // skip some modules

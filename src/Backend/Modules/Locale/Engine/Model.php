@@ -904,6 +904,7 @@ class Model
 
         // loop files
         foreach ($finder->files()->in(FRONTEND_PATH) as $file) {
+            /** @var $file \SplFileInfo */
             // grab content
             $content = $file->getContents();
 

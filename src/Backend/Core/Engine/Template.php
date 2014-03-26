@@ -34,7 +34,7 @@ class Template extends \SpoonTemplate
     /**
      * URL instance
      *
-     * @var    BackendURL
+     * @var    Url
      */
     private $URL;
 

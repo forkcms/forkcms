@@ -321,7 +321,7 @@ class Helper
     /**
      * Get Google Analytics instance
      *
-     * @return GoogleAnalytics
+     * @return \GoogleAnalytics
      */
     public static function getGoogleAnalyticsInstance()
     {
@@ -771,7 +771,7 @@ class Helper
                 $redirect = html_entity_decode(BackendModel::createURLForAction(null, null, null, $parameters));
 
                 // redirect
-                SpoonHTTP::redirect($redirect);
+                \SpoonHTTP::redirect($redirect);
             }
         }
 

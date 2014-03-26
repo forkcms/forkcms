@@ -20,7 +20,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Header extends \Backend\Core\Engine\Base\Object
+class Header extends Base\Object
 {
     /**
      * All added CSS-files
@@ -57,6 +57,9 @@ class Header extends \Backend\Core\Engine\Base\Object
      */
     private $URL;
 
+    /**
+     * @param KernelInterface $kernel
+     */
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);

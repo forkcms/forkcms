@@ -81,6 +81,7 @@ class Import extends BackendBaseActionAdd
             $this->frm->cleanupFields();
 
             // redefine fields
+            /** @var $fileFile \SpoonFormFile */
             $fileFile = $this->frm->getField('file');
             $chkOverwrite = $this->frm->getField('overwrite');
 

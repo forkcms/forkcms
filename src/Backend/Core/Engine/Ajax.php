@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class will handle AJAX-related stuff
@@ -19,15 +20,17 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
  * @author Dave Lens <dave.lens@wijs.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
  */
-class Ajax extends \Backend\Core\Engine\Base\Object implements \ApplicationInterface
+
+/** @noinspection PhpUndefinedClassInspection */
+class Ajax extends Base\Object implements \ApplicationInterface
 {
     /**
-     * @var BackendAJAXAction
+     * @var AjaxAction
      */
     private $ajaxAction;
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {

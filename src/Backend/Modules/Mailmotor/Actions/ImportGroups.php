@@ -25,7 +25,7 @@ class ImportGroups extends BackendBaseActionAdd
     /**
      * CampaignMonitor object
      *
-     * @var    CampaignMonitor
+     * @var    \CampaignMonitor
      */
     private $cm;
 

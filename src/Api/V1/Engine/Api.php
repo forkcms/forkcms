@@ -271,13 +271,13 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
             // is there are named keys they should be handles as elements
             if ($isNonNumeric) {
-                array_walk($input, array('Api', 'arrayToXML'), $element);
+                array_walk($input, array('Api\\V1\\Engine\\Api', 'arrayToXML'), $element);
             } else {
                 // numeric elements means this a list of items
                 // handle the value as an element
                 foreach ($input as $value) {
                     if (is_array($value)) {
-                        array_walk($value, array('Api', 'arrayToXML'), $element);
+                        array_walk($value, array('Api\\V1\\Engine\\Api', 'arrayToXML'), $element);
                     }
                 }
             }
@@ -352,7 +352,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
     }
 
     /**
-     * @return Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
     public function display()
     {
