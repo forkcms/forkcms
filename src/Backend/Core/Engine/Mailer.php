@@ -265,7 +265,9 @@ class Mailer
             $email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
 
             // set authentication if needed
-            if ($SMTPUsername !== null && $SMTPPassword !== null) $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+            if ($SMTPUsername !== null && $SMTPPassword !== null) {
+                $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+            }
         }
 
         // set some properties
@@ -276,7 +278,9 @@ class Mailer
         $email->setHTMLContent($emailRecord['html']);
         $email->setCharset(SPOON_CHARSET);
         $email->setContentTransferEncoding('base64');
-        if ($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
+        if ($emailRecord['plain_text'] != '') {
+            $email->setPlainContent($emailRecord['plain_text']);
+        }
 
         // attachments added
         if (isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null) {
@@ -284,7 +288,9 @@ class Mailer
             $attachments = (array) unserialize($emailRecord['attachments']);
 
             // add attachments to email
-            foreach ($attachments as $attachment) $email->addAttachment($attachment);
+            foreach ($attachments as $attachment) {
+                $email->addAttachment($attachment);
+            }
         }
 
         // send the email

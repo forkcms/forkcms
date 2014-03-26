@@ -278,8 +278,6 @@ class Mailer
     public static function send($id)
     {
         $id = (int) $id;
-
-        // get db
         $db = Model::getContainer()->get('database');
 
         // get record
