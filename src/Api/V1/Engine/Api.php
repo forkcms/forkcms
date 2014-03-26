@@ -179,8 +179,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
     /**
      * Callback-method for elements in the return-array
      *
-     * @param mixed      $input The value.
-     * @param string     $key   The key.
+     * @param mixed       $input The value.
+     * @param string      $key   The key.
      * @param \DOMElement $XML   The root-element.
      */
     private static function arrayToXML(&$input, $key, $XML)
@@ -442,7 +442,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
-        $pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = strtolower($version);
@@ -479,7 +479,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
-        $pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+        $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = strtolower($version);

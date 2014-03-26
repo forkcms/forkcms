@@ -86,8 +86,6 @@ class Header extends FrontendBaseObject
     public function __construct(KernelInterface $kernel)
     {
         parent::__construct($kernel);
-
-        // store in reference
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
@@ -119,8 +117,6 @@ class Header extends FrontendBaseObject
         $file = (string) $file;
         $minify = (bool) $minify;
         $addTimestamp = (bool) $addTimestamp;
-
-        // get file path
         $file = Theme::getPath($file);
 
         // no minifying when debugging
@@ -128,15 +124,11 @@ class Header extends FrontendBaseObject
             $minify = false;
         }
 
-        // try to minify
         if ($minify) {
             $file = $this->minifyCSS($file);
         }
 
-        // in array
         $inArray = false;
-
-        // check if the file already exists in the array
         foreach ($this->cssFiles as $row) {
             if ($row['file'] == $file) {
                 $inArray = true;
@@ -145,11 +137,8 @@ class Header extends FrontendBaseObject
 
         // add to array if it isn't there already
         if (!$inArray) {
-            // build temporary array
             $temp['file'] = (string) $file;
             $temp['add_timestamp'] = $addTimestamp;
-
-            // add to files
             $this->cssFiles[] = $temp;
         }
     }
@@ -177,14 +166,12 @@ class Header extends FrontendBaseObject
             $minify = false;
         }
 
-        // try to minify
         if ($minify) {
             $file = $this->minifyJS($file);
         }
 
         // already in array?
         if (!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
-            // add to files
             $this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
         }
     }
@@ -222,10 +209,8 @@ class Header extends FrontendBaseObject
             return;
         }
 
-        // sort the keys
         ksort($uniqueKeys);
 
-        // build key
         $uniqueKey = '';
         foreach ($uniqueKeys as $key) {
             if (isset($attributes[$key])) {
@@ -235,12 +220,10 @@ class Header extends FrontendBaseObject
 
         // is the metadata already available?
         if (isset($this->links[$uniqueKey])) {
-            // should we overwrite the key?
             if ($overwrite) {
                 $this->links[$uniqueKey] = $attributes;
             }
         } else {
-            // add into the array
             $this->links[$uniqueKey] = $attributes;
         }
     }
@@ -254,7 +237,6 @@ class Header extends FrontendBaseObject
      */
     public function addMetaData(array $attributes, $overwrite = false, $uniqueKeys = null)
     {
-        // redefine
         $overwrite = (bool) $overwrite;
         $uniqueKeys = (array) $uniqueKeys;
         if ($uniqueKeys == null) {
@@ -266,10 +248,8 @@ class Header extends FrontendBaseObject
             return;
         }
 
-        // sort the keys
         ksort($uniqueKeys);
 
-        // build key
         $uniqueKey = '';
         foreach ($uniqueKeys as $key) {
             if (isset($attributes[$key])) {
@@ -295,7 +275,6 @@ class Header extends FrontendBaseObject
                 }
             }
         } else {
-            // add into the array
             $this->meta[$uniqueKey] = $attributes;
         }
     }
@@ -347,12 +326,9 @@ class Header extends FrontendBaseObject
 
         // check if it no longer points to an absolute uri
         if (substr($image, 0, 7) != SITE_PROTOCOL . '://') {
-            // check if image exists
             if (!is_file(PATH_WWW . $image)) {
                 return;
             }
-
-            // convert to absolute path
             $image = SITE_URL . $image;
         }
 
@@ -381,39 +357,29 @@ class Header extends FrontendBaseObject
     {
         $cssFiles = (array) $cssFiles;
 
-        // init vars
         $i = 0;
         $aTemp = array();
 
-        // loop files
         foreach ($cssFiles as $file) {
             // debug should be the last file
             if (strpos($file['file'], 'debug.css') !== false) {
                 $aTemp['e' . $i][] = $file;
             } else {
-                // add file
                 $aTemp['a' . $i][] = $file;
-
-                // increase
                 $i++;
             }
         }
 
-        // key sort
         ksort($aTemp);
 
-        // init var
         $return = array();
 
-        // loop by key
         foreach ($aTemp as $aFiles) {
-            // loop files
             foreach ($aFiles as $file) {
                 $return[] = $file;
             }
         }
 
-        // reset property
         return $return;
     }
 
@@ -424,10 +390,9 @@ class Header extends FrontendBaseObject
      */
     public function extractOpenGraphImages($content)
     {
-        // try to get an image in the content
         $matches = array();
 
-        // check if images are present in the content
+        // check if any img-tags are present in the content
         if (preg_match_all('/<img.*?src="(.*?)".*?\/>/i', $content, $matches)) {
             // loop all found images and add to Open Graph metadata
             foreach ($matches[1] as $image) {
@@ -443,10 +408,8 @@ class Header extends FrontendBaseObject
      */
     public function getCSSFiles()
     {
-        // sort the css files
         $this->cssFiles = $this->cssSort($this->cssFiles);
 
-        // fetch files
         return $this->cssFiles;
     }
 
@@ -499,7 +462,6 @@ class Header extends FrontendBaseObject
      */
     public function getMetaValue($attribute, $attributeValue)
     {
-        // loop all meta data
         foreach ($this->meta as $item) {
             // if the key and the value match we return the item
             if (isset($item[$attribute]) && $item[$attribute] == $attributeValue) {
@@ -526,7 +488,6 @@ class Header extends FrontendBaseObject
      */
     private function minifyCSS($file)
     {
-        // create unique filename
         $fileName = md5($file) . '.css';
         $finalURL = FRONTEND_CACHE_URL . '/MinifiedCss/' . $fileName;
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
@@ -555,7 +516,6 @@ class Header extends FrontendBaseObject
      */
     private function minifyJS($file)
     {
-        // create unique filename
         $fileName = md5($file) . '.js';
         $finalURL = FRONTEND_CACHE_URL . '/MinifiedJs/' . $fileName;
         $finalPath = FRONTEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
@@ -581,10 +541,7 @@ class Header extends FrontendBaseObject
      */
     public function parse()
     {
-        // parse Facebook
         $this->parseFacebook();
-
-        // parse SEO
         $this->parseSeo();
 
         // in debug mode we don't want our pages to be indexed.
@@ -592,22 +549,12 @@ class Header extends FrontendBaseObject
             $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
         }
 
-        // parse meta tags
         $this->parseMetaAndLinks();
-
-        // parse CSS
         $this->parseCSS();
-
-        // parse JS
         $this->parseJS();
-
-        // parse custom header HTML and Google Analytics
         $this->parseCustomHeaderHTMLAndGoogleAnalytics();
 
-        // assign page title
         $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
-
-        // assign site title
         $this->tpl->assign(
             'siteTitle',
             (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
@@ -619,24 +566,19 @@ class Header extends FrontendBaseObject
      */
     private function parseCSS()
     {
-        // init var
         $cssFiles = array();
         $existingCSSFiles = $this->getCSSFiles();
 
-        // if there aren't any JS-files added we don't need to do something
+        // if there aren't any CSS-files added we don't need to do something
         if (!empty($existingCSSFiles)) {
             foreach ($existingCSSFiles as $file) {
-                // add lastmodified time
                 if ($file['add_timestamp'] !== false) {
                     $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                 }
-
-                // add
                 $cssFiles[] = $file;
             }
         }
 
-        // css-files
         $this->tpl->assign('cssFiles', $cssFiles);
     }
 
@@ -652,10 +594,16 @@ class Header extends FrontendBaseObject
         $type = Model::getModuleSetting('Analytics', 'tracking_type', 'universal_analytics');
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
-        if ($webPropertyId != '' &&
+        if (
+            $webPropertyId != '' &&
             strpos($siteHTMLHeader, $webPropertyId) === false &&
             strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
+            $anonymize = (
+                Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
+                !\CommonCookie::hasAllowedCookies()
+            );
+
             switch ($type) {
                 case 'classic_analytics':
                     $trackingCode = '<script>
@@ -664,9 +612,7 @@ class Header extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
-                        !\CommonCookie::hasAllowedCookies()
-                    ) {
+                    if ($anonymize) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
                     }
                     $trackingCode .= '
@@ -684,9 +630,7 @@ class Header extends FrontendBaseObject
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
-                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
-                        !\CommonCookie::hasAllowedCookies()
-                    ) {
+                    if ($anonymize) {
                         $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
                     }
                     $trackingCode .= '
@@ -707,9 +651,7 @@ class Header extends FrontendBaseObject
                                       ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
                                     ';
 
-                    if (Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
-                        !\CommonCookie::hasAllowedCookies()
-                    ) {
+                    if ($anonymize) {
                         $trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
                     } else {
                         $trackingCode .= 'ga(\'send\', \'pageview\');';
@@ -740,13 +682,15 @@ class Header extends FrontendBaseObject
     private function parseFacebook()
     {
         $parseFacebook = false;
+        $facebookAdminIds = Model::getModuleSetting('Core', 'facebook_admin_ids', null);
+        $facebookAppId = Model::getModuleSetting('Core', 'facebook_app_id', null);
 
         // check if facebook admins are set
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
+        if ($facebookAdminIds !== null) {
             $this->addMetaData(
                 array(
-                     'property' => 'fb:admins',
-                     'content' => Model::getModuleSetting('Core', 'facebook_admin_ids', null)
+                    'property' => 'fb:admins',
+                    'content' => $facebookAdminIds
                 ),
                 true,
                 array('property')
@@ -755,13 +699,11 @@ class Header extends FrontendBaseObject
         }
 
         // check if no facebook admin is set but an app is configured we use the application as an admin
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) == '' &&
-            Model::getModuleSetting('Core', 'facebook_app_id', null) !== null
-        ) {
+        if ($facebookAdminIds == '' && $facebookAppId !== null) {
             $this->addMetaData(
                 array(
-                     'property' => 'fb:app_id',
-                     'content' => Model::getModuleSetting('Core', 'facebook_app_id', null)
+                    'property' => 'fb:app_id',
+                    'content' => $facebookAppId
                 ),
                 true,
                 array('property')
@@ -805,7 +747,6 @@ class Header extends FrontendBaseObject
                     $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
             }
 
-            // add the locale property
             $this->addOpenGraphData('locale', $locale);
 
             // if a default image has been set for facebook, assign it
@@ -819,7 +760,6 @@ class Header extends FrontendBaseObject
      */
     private function parseJS()
     {
-        // init var
         $jsFiles = array();
         $existingJSFiles = $this->getJSFiles();
 
@@ -831,29 +771,20 @@ class Header extends FrontendBaseObject
                 '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
             );
 
-            // loop the JS-files
             foreach ($existingJSFiles as $file) {
                 // some files shouldn't be uncacheable
                 if (in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) {
                     $file = array('file' => $file['file']);
                 } else {
-                    // make the file uncacheable
-                    // if the file is processed by PHP we don't want any caching
-                    if (substr($file['file'], 0, 11) == '/frontend/js') {
-                        $file = array('file' => $file['file'] . '&amp;m=' . time());
-                    } else {
-                        // add last modified time
-                        $modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
-                        $file = array('file' => $file['file'] . $modifiedTime);
-                    }
+                    // add last modified time
+                    $modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                    $file = array('file' => $file['file'] . $modifiedTime);
                 }
 
-                // add
                 $jsFiles[] = $file;
             }
         }
 
-        // js-files
         $this->tpl->assign('jsFiles', $jsFiles);
     }
 
@@ -862,47 +793,26 @@ class Header extends FrontendBaseObject
      */
     private function parseMetaAndLinks()
     {
-        // build meta
         $meta = '';
-
-        // loop meta
         foreach ($this->meta as $attributes) {
-            // start html
             $meta .= '<meta ';
-
-            // add attributes
             foreach ($attributes as $key => $value) {
                 $meta .= $key . '="' . $value . '" ';
             }
-
-            // remove last space
             $meta = trim($meta);
-
-            // close html
             $meta .= '>' . "\n";
         }
 
-        // build link
         $link = '';
-
-        // loop links
         foreach ($this->links as $attributes) {
-            // start html
             $link .= '<link ';
-
-            // add attributes
             foreach ($attributes as $key => $value) {
                 $link .= $key . '="' . $value . '" ';
             }
-
-            // remove last space
             $link = trim($link);
-
-            // close html
             $link .= '>' . "\n";
         }
 
-        // assign meta
         $this->tpl->assign('meta', $meta . "\n" . $link);
         $this->tpl->assign('metaCustom', $this->getMetaCustom());
     }
@@ -958,11 +868,8 @@ class Header extends FrontendBaseObject
 
         // prevent against xss
         $url = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
-
-        // canonical
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
-        // noodp, noydir
         if (Model::getModuleSetting('Core', 'seo_noodp', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noodp')

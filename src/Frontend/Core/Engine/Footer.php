@@ -34,17 +34,16 @@ class Footer extends FrontendBaseObject
      */
     public function parse()
     {
-        // get footer links
         $footerLinks = (array) Navigation::getFooterLinks();
-
-        // assign footer links
         $this->tpl->assign('footerLinks', $footerLinks);
 
-        // initial value for footer HTML
         $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
 
+        $facebookAdminIds = Model::getModuleSetting('Core', 'facebook_admin_ids', null);
+        $facebookAppId = Model::getModuleSetting('Core', 'facebook_app_id', null);
+
         // facebook admins given?
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null || Model::getModuleSetting('core', 'facebook_app_id', null) !== null) {
+        if ($facebookAdminIds !== null || $facebookAppId !== null) {
             // build correct locale
             switch (FRONTEND_LANGUAGE) {
                 case 'en':
@@ -84,20 +83,26 @@ class Footer extends FrontendBaseObject
 
             // add facebook JS
             $siteHTMLFooter .= '<script>' . "\n";
-            if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
-                $siteHTMLFooter .= '  window.fbAsyncInit = function() {' . "\n";
-                $siteHTMLFooter .= '    FB.init({ appId: "' .
-                                   Model::getModuleSetting('Core', 'facebook_app_id', null) .
-                                   '", status: true, cookie: true, xfbml: true, oauth: true });' . "\n";
-                $siteHTMLFooter .= '  jsFrontend.facebook.afterInit();' . "\n";
-                $siteHTMLFooter .= '  };' . "\n";
+            if ($facebookAppId !== null) {
+                $siteHTMLFooter .= '	window.fbAsyncInit = function() {' . "\n";
+                $siteHTMLFooter .= '		FB.init({' . "\n";
+                $siteHTMLFooter .= '			appId: "' . $facebookAppId . '",' . "\n";
+                $siteHTMLFooter .= '			status: true,' . "\n";
+                $siteHTMLFooter .= '			cookie: true,' . "\n";
+                $siteHTMLFooter .= '			xfbml: true,' . "\n";
+                $siteHTMLFooter .= '			oauth: true' . "\n";
+                $siteHTMLFooter .= '		});' . "\n";
+                $siteHTMLFooter .= '		jsFrontend.facebook.afterInit();' . "\n";
+                $siteHTMLFooter .= '	};' . "\n";
             }
-            $siteHTMLFooter .= '  (function(d){' . "\n";
-            $siteHTMLFooter .= '    var js, id = \'facebook-jssdk\', ref = d.getElementsByTagName(\'script\')[0];' . "\n";
-            $siteHTMLFooter .= '    if(d.getElementById(id)) { return; }' . "\n";
-            $siteHTMLFooter .= '    js = d.createElement(\'script\'); js.id = id; js.async = true; js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
-            $siteHTMLFooter .= '    ref.parentNode.insertBefore(js, ref);' . "\n";
-            $siteHTMLFooter .= '  }(document));' . "\n";
+
+            $siteHTMLFooter .= '	(function(d, s, id){' . "\n";
+            $siteHTMLFooter .= '		var js, fjs = d.getElementsByTagName(s)[0];' . "\n";
+            $siteHTMLFooter .= '		if (d.getElementById(id)) {return;}' . "\n";
+            $siteHTMLFooter .= '		js = d.createElement(s); js.id = id;' . "\n";
+            $siteHTMLFooter .= '		js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+            $siteHTMLFooter .= '		fjs.parentNode.insertBefore(js, fjs);' . "\n";
+            $siteHTMLFooter .= '	}(document, \'script\', \'facebook-jssdk\'));' . "\n";
             $siteHTMLFooter .= '</script>';
         }
 

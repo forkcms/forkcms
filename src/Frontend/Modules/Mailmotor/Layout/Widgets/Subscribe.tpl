@@ -2,6 +2,7 @@
 	<div class="inner">
 		<div class="bd">
 			{form:subscribe}
+				<input type="hidden" name="form_token" id="formToken" value="{$formToken}" />
 				<p>
 					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtEmail} {$txtEmailError}

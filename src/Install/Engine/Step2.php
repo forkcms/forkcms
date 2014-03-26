@@ -113,7 +113,10 @@ class Step2 extends Step
         self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
         self::checkRequirement(
             'settingsDateTimezone',
-            (ini_get('date.timezone') == '' || (in_array(date_default_timezone_get(), \DateTimeZone::listIdentifiers()))),
+            (ini_get('date.timezone') == '' || (in_array(
+                    date_default_timezone_get(),
+                    \DateTimeZone::listIdentifiers()
+                ))),
             self::STATUS_WARNING
         );
 

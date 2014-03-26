@@ -2,21 +2,46 @@
 --
 Improvements:
 
-* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3_7.md for more info.
-* Don't throw exceptions in production mode on non-existing files.
-* Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
+* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3.7.md for more info.
+* Core: Don't throw exceptions in production mode on non-existing files.
+* Core: Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
+* Core: use correct/new Facebook-js-snippet.
+* Users: more logical way of handling user-permissions, see #684.
+* Content blocks: only grab needed fields, see #669.
+* Core: better description for CKFinder maximum image size settings.
+* Core: used namespaces, see UPGRADE_3.7.md for more info
+* API: use isAuthorized() instead of authorize(), see UPGRADE_3.7.md for more info.
+
+Bugfixes:
+
+* Correct amount of sample comments in blog
+* msgSequenceSaved was missing from core installer.
+* Core: Modified misleading text about CKFinder maximum image size setting.
+* Share with linkedin, fixed double url encoding.
+* Faq: getByTags did not work in backend.
+* Blog: fixes an issue where an incorrect revision could be used instead of the most recent one, see #680.
+* API: use DIRECTORY_SEPARATOR instead of hardcoded /, fixes #682.
 
 
-3.6.6 (xxxx-xx-xx)
-—
+3.6.6 (2014-01-15)
+--
 Improvements:
 
+* Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
+* Users: event ‚after_undelete’ triggered when a deleted user was restored.
 * Core: Don't expose the path when calling ajax.php directly in non-debug-mode.
+* Core: Better error handling for module rights.
+* Various dutch translations updated.
+* Extensions: add export of theme templates (XML).
 
 Bugfixes:
 
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
+* Urls containing md threw a 403 forbidden error.
+* Syntax error in FrontendBlockWidget fixed.
+* Some ajax files gave a syntax error as a result of merge conflicts.
+* Mailmotor: Form token for widget fixed.
 
 
 3.6.5 (2013-10-09)

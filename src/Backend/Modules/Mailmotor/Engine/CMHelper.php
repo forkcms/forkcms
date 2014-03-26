@@ -34,7 +34,6 @@ class CMHelper
             return false;
         }
 
-        // if we made it here, the account was valid
         return true;
     }
 
@@ -50,10 +49,7 @@ class CMHelper
         $country = 'Belgium',
         $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris'
     ) {
-        // create client
         $clientId = self::getCM()->createClient($companyName, $country, $timezone);
-
-        // add client ID as a module setting for mailmotor
         BackendModel::setModuleSetting('Mailmotor', 'cm_client_id', $clientId);
     }
 
@@ -66,19 +62,14 @@ class CMHelper
      */
     public static function createCustomField($name, $groupId)
     {
-        // get CM ID for this list
         $listId = self::getCampaignMonitorID('list', $groupId);
 
-        // list ID found
         if (!empty($listId)) {
-            // create the field
             self::getCM()->createCustomField($name, 'text', null, $listId);
 
-            // return true
             return true;
         }
 
-        // if we made it here, return false
         return false;
     }
 
@@ -91,19 +82,13 @@ class CMHelper
      */
     public static function deleteCustomField($name, $groupId)
     {
-        // get CM ID for this list
         $listId = self::getCampaignMonitorID('list', $groupId);
-
-        // list ID found
         if (!empty($listId)) {
-            // create the field
             self::getCM()->deleteCustomField($name, $listId);
 
-            // return true
             return true;
         }
 
-        // if we made it here, return false
         return false;
     }
 
@@ -111,6 +96,7 @@ class CMHelper
      * Deletes one or more groups
      *
      * @param  mixed $ids The ids to delete.
+     * @throws \CampaignMonitorException
      */
     public static function deleteGroups($ids)
     {
@@ -128,13 +114,17 @@ class CMHelper
         // loop the list
         foreach ($ids as $id) {
             // a list was deleted
-            if (self::getCM()->deleteList(self::getCampaignMonitorID('list', $id))) {
-                // delete group
-                BackendMailmotorModel::deleteGroups($id);
-
-                // delete CampaignMonitor reference
-                $db->delete('mailmotor_campaignmonitor_ids', 'type = ? AND other_id = ?', array('list', $id));
+            try {
+                self::getCM()->deleteList(self::getCampaignMonitorID('list', $id));
+            } catch (\CampaignMonitorException $e) {
+                // if list doesn't exist anymore in CM, delete our list anyway
+                if ($e->getMessage() != "400: Invalid ListID") {
+                    throw $e;
+                }
             }
+
+            BackendMailmotorModel::deleteGroups($id);
+            $db->delete('mailmotor_campaignmonitor_ids', 'type = ? AND other_id = ?', array('list', $id));
         }
     }
 
@@ -166,7 +156,6 @@ class CMHelper
                 // ignore exception
             }
 
-            // delete group
             BackendMailmotorModel::delete($id);
         }
     }
@@ -179,16 +168,10 @@ class CMHelper
      */
     public static function getBounces($id)
     {
-        // get campaignmonitor ID
         $cmId = self::getCampaignMonitorID('campaign', $id);
-
-        // get all bounces from CM
         $bounces = self::getCM()->getCampaignBounces($cmId);
-
-        // get all addresses
         $addresses = BackendMailmotorModel::getAddressesAsPairs();
 
-        // no bounces found
         if (empty($bounces)) {
             return array();
         }
@@ -201,7 +184,6 @@ class CMHelper
             }
         }
 
-        // return the bounces
         return (array) $bounces;
     }
 
@@ -230,12 +212,10 @@ class CMHelper
      */
     public static function getCampaignMonitorIDsForGroups(array $groupIds)
     {
-        // stop here if no groups are found
         if (empty($groupIds)) {
             return array();
         }
 
-        // fetch campaignmonitor IDs
         return (array) BackendModel::getContainer()->get('database')->getColumn(
             'SELECT mci.cm_id
              FROM mailmotor_campaignmonitor_ids AS mci
@@ -252,10 +232,8 @@ class CMHelper
      */
     public static function getCampaignMonitorIDsForTemplates($templateIds)
     {
-        // check if templates are set,
         $templates = (empty($templateIds)) ? array(BackendMailmotorModel::getDefaultTemplateID()) : $templateIds;
 
-        // fetch campaignmonitor IDs
         return (array) BackendModel::getContainer()->get('database')->getColumn(
             'SELECT mci.cm_id
              FROM mailmotor_campaignmonitor_ids AS mci
@@ -284,7 +262,6 @@ class CMHelper
         // get the base stack of clients
         $clients = self::getCM()->getClients();
 
-        // stop here if no clients were found
         if (empty($clients)) {
             return array();
         }
@@ -293,7 +270,6 @@ class CMHelper
         $results = array();
         $results[0] = \SpoonFilter::ucfirst(BL::lbl('CreateNewClient', 'Mailmotor'));
 
-        // loop the clients
         foreach ($clients as $client) {
             $results[$client['id']] = $client['name'];
         }
@@ -341,15 +317,12 @@ class CMHelper
      */
     public static function getCountriesAsPairs()
     {
-        // get the countries
         $records = self::getCM()->getCountries();
 
-        // loop and make em pairs
         foreach ($records as &$record) {
             $records[$record] = $record;
         }
 
-        // return the countries
         return $records;
     }
 
@@ -386,15 +359,12 @@ class CMHelper
      */
     public static function getMailingOpens($cmId, $getColumn = false)
     {
-        // fetch the campaign opens from CM
         $records = self::getCM()->getCampaignOpens($cmId);
 
-        // check we have records
         if (empty($records)) {
             return false;
         }
 
-        // return the records
         if (!$getColumn) {
             return (array) $records;
         }
@@ -407,7 +377,6 @@ class CMHelper
             $results[] = $record['email'];
         }
 
-        // return the results
         return (array) $results;
     }
 
@@ -419,7 +388,6 @@ class CMHelper
      */
     private static function getNameFieldValue($fields)
     {
-        // check input
         $name = null;
 
         // set the name if it is present in the custom fields
@@ -431,7 +399,6 @@ class CMHelper
             $name = $fields[BL::lbl('Name')];
         }
 
-        // return the value
         return $name;
     }
 
@@ -445,25 +412,17 @@ class CMHelper
      */
     public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
     {
-        // check if the mailing exists
         if (!BackendMailmotorModel::existsMailing($id)) {
             throw new \SpoonException('No mailing found for id ' . $id);
         }
 
-        // fetch cmID
         $cmId = self::getCampaignMonitorID('campaign', $id);
-
-        // fetch the CM ID
         if ($cmId) {
-            // fetch the statistics
             $stats = self::getCM()->getCampaignSummary($cmId);
-
-            // stop here if no recipients were found
             if ($stats['recipients'] == 0) {
                 return false;
             }
 
-            // reset the bounces to match the real ones
             $bounces = self::getBounces($id);
 
             // re-calculate base stats to match CM's
@@ -482,58 +441,30 @@ class CMHelper
 
             // fetch clicks or not?
             if ($fetchClicks) {
-                // get detailed click reports
                 $subscriberClicks = self::getCM()->getCampaignClicks($cmId);
 
                 // links have been clicked
                 if (!empty($subscriberClicks)) {
-                    // declare array
                     $stats['clicked_links'] = array();
                     $stats['clicked_links_by'] = $subscriberClicks;
 
                     // filter out the clicked links
                     foreach ($subscriberClicks as $link => $clickers) {
-                        // count the clickers
                         $clickerCount = count($clickers);
                         $stats['clicked_links'][] = array('link' => $link, 'clicks' => $clickerCount);
                         $stats['clicks_total'] += $clickerCount;
                     }
-                    /*
-                    // re-loop so we can fix the keys
-                    foreach($stats['clicked_links'] as $link) {
-                        // store the link data
-                        $stats['clicked_links'][] = array('link' => urlencode($link['link']));
-
-                        // unset the record with the link as key
-                        unset($stats['clicked_links'][$link['link']]);
-                    }
-
-                    // re-loop so we can fix the keys
-                    foreach($stats['clicked_links_by'] as $link => $clicks) {
-                        // loop the clicks
-                        foreach($clicks as $click) {
-                            // store the link data
-                            $stats['clicked_links_by'][$link][] = array('email' => $click['email']);
-
-                            // unset the record with the link as key
-                            unset($stats['clicked_links_by'][$link][$click['email']]);
-                        }
-                    }
-                    */
                 }
             }
 
             // fetch opened stats or not?
             if ($fetchOpens) {
-                // fetch opens
                 $stats['opens'] = self::getMailingOpens($cmId);
             }
 
-            // return the results
             return $stats;
         }
 
-        // at this point, return false
         return false;
     }
 
@@ -562,14 +493,11 @@ class CMHelper
             array('sent', $email)
         );
 
-        // no mailings found
         if (empty($mailings)) {
             return array();
         }
 
-        // loop the mailings
         foreach ($mailings as $mailing) {
-            // store the statistics in a separate array
             $mailingStats = self::getStatistics($mailing['id']);
 
             // add all stats to the totals
@@ -590,7 +518,6 @@ class CMHelper
         $stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
         $stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
-        // return the stats
         return (array) $stats;
     }
 
@@ -619,12 +546,10 @@ class CMHelper
             array('sent', $id)
         );
 
-        // no mailings found
         if (empty($mailings)) {
             return array();
         }
 
-        // loop the mailings
         foreach ($mailings as $mailing) {
             // store the statistics in a separate array
             $mailingStats = self::getStatistics($mailing['id'], false);
@@ -675,10 +600,7 @@ class CMHelper
 
             // loop the total amount of pages and fetch the subscribers accordingly
             for ($i = $pageCount; $i != 0; $i--) {
-                // get the subscribers
                 $subscribers = self::getCM()->getSubscribers($listId, null, $i, 1000);
-
-                // add the subscribers to the result stack
                 $results = array_merge($results, $subscribers);
             }
         }
@@ -693,15 +615,11 @@ class CMHelper
      */
     public static function getTimezonesAsPairs()
     {
-        // get the timezones
         $records = self::getCM()->getTimezones();
-
-        // loop and make em pairs
         foreach ($records as &$record) {
             $records[$record] = $record;
         }
 
-        // return the timezones
         return $records;
     }
 
@@ -715,15 +633,11 @@ class CMHelper
      */
     public static function insertCampaignMonitorID($type, $id, $otherId)
     {
-        // check input
         $type = \SpoonFilter::getValue($type, array('campaign', 'list', 'template'), '');
-
-        // no valid type given
         if ($type == '') {
             throw new \CampaignMonitorException('No valid CM ID type given (only campaign, list, template).');
         }
 
-        // insert the campaignmonitor ID
         BackendModel::getContainer()->get('database')->insert(
             'mailmotor_campaignmonitor_ids',
             array('type' => $type, 'cm_id' => $id, 'other_id' => $otherId)
@@ -749,7 +663,6 @@ class CMHelper
         // predict the next insert ID for the mailmotor_groups table
         $groupId = BackendMailmotorModel::getMaximumIdForGroups() + 1;
 
-        // create list
         $cmId = self::getCM()->createList($item['name'], $unsubscribeLink . '/?group=' . $groupId . '&email=[email]');
 
         // a list was created
@@ -765,13 +678,9 @@ class CMHelper
                 );
             }
 
-            // insert in database
             $id = BackendMailmotorModel::insertGroup($item);
-
-            // insert in campaignmonitor
             self::insertCampaignMonitorID('list', $cmId, $id);
 
-            // return the group ID
             return (int) $id;
         }
     }
@@ -798,14 +707,11 @@ class CMHelper
 
         // a campaign was created
         if ($cmId) {
-            // insert in campaignmonitor
             self::insertCampaignMonitorID('campaign', $cmId, $item['id']);
 
-            // return the campaign CM ID
             return $cmId;
         }
 
-        // no campaign created at this point
         return false;
     }
 
@@ -844,7 +750,6 @@ class CMHelper
             self::insertCampaignMonitorID('campaign', $campaignID, $item['id']);
         }
 
-        // return the campaign CM ID
         return $campaignID;
     }
 
@@ -910,7 +815,6 @@ class CMHelper
     public static function sendPreviewMailing($id, $recipient)
     {
         $campaignID = self::getCampaignMonitorID('campaign', $id);
-
         self::getCM()->sendCampaignPreview($campaignID, $recipient);
     }
 
@@ -924,14 +828,10 @@ class CMHelper
      */
     public static function subscribe($email, $groupId = null, $customFields = null)
     {
-        // get objects
         $db = BackendModel::getContainer()->get('database');
         $cm = self::getCM();
 
-        // set groupID
         $groupId = !empty($groupId) ? $groupId : BackendMailmotorModel::getDefaultGroupID();
-
-        // get group CM ID
         $groupCMId = self::getCampaignMonitorID('list', $groupId);
 
         // see if the name is present in the custom fields
@@ -941,26 +841,23 @@ class CMHelper
         if (BackendMailmotorModel::existsGroup($groupId) &&
             $cm->subscribe($email, $name, $customFields, true, $groupCMId)
         ) {
-            // set variables
             $subscriber['email'] = $email;
             $subscriber['source'] = 'CMS';
             $subscriber['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
-            // insert/update the user
             $db->execute(
                 'INSERT INTO mailmotor_addresses(email, source, created_on)
                                             VALUES (?, ?, ?)
                                             ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
                 array(
-                     $subscriber['email'],
-                     $subscriber['source'],
-                     $subscriber['created_on'],
-                     $subscriber['source'],
-                     $subscriber['created_on']
+                    $subscriber['email'],
+                    $subscriber['source'],
+                    $subscriber['created_on'],
+                    $subscriber['source'],
+                    $subscriber['created_on']
                 )
             );
 
-            // set variables
             $subscriberGroup['email'] = $email;
             $subscriberGroup['group_id'] = $groupId;
             $subscriberGroup['status'] = 'subscribed';
@@ -972,13 +869,13 @@ class CMHelper
                  VALUES (?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
                 array(
-                     $subscriberGroup['email'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on'],
-                     $subscriberGroup['group_id'],
-                     $subscriberGroup['status'],
-                     $subscriberGroup['subscribed_on']
+                    $subscriberGroup['email'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on'],
+                    $subscriberGroup['group_id'],
+                    $subscriberGroup['status'],
+                    $subscriberGroup['subscribed_on']
                 )
             );
 
@@ -987,11 +884,9 @@ class CMHelper
                 BackendMailmotorModel::updateCustomFields($customFields, $groupId, $email);
             }
 
-            // user subscribed
             return true;
         }
 
-        // user not subscribed
         return false;
     }
 
@@ -1009,15 +904,12 @@ class CMHelper
 
         // group exists
         if (BackendMailmotorModel::existsGroup($groupId)) {
-            // unsubscribe the email from this group
             self::getCM()->unsubscribe($email, $groupCMId);
 
-            // set variables
             $subscriber = array();
             $subscriber['status'] = 'unsubscribed';
             $subscriber['unsubscribed_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
-            // unsubscribe the user
             BackendModel::getContainer()->get('database')->update(
                 'mailmotor_addresses_groups',
                 $subscriber,
@@ -1025,11 +917,9 @@ class CMHelper
                 array($email, $groupId)
             );
 
-            // user unsubscribed
             return true;
         }
 
-        // user not unsubscribed
         return false;
     }
 
@@ -1095,10 +985,7 @@ class CMHelper
      */
     public static function updateMailing(array $item)
     {
-        // local item
         $local = $item;
-
-        // delete the mailing
         self::deleteMailings($item['id']);
 
         // fetch the CM IDs for each group if this field is not set yet
@@ -1154,13 +1041,9 @@ class CMHelper
      */
     public static function updateMailingDraft(array $item)
     {
-        // get the DB
         $db = BackendModel::getContainer()->get('database');
-
-        // get the CM campaign ID for this campaign
         $campaignID = self::getCampaignMonitorID('campaign', $item['id']);
 
-        // if the campaign ID
         if (is_string($campaignID)) {
             // first we insert the new campaign draft and store the CM ID
             $newCampaignID = self::insertMailingDraft($item);

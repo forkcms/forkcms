@@ -31,10 +31,9 @@ class AddCategory extends BackendBaseAJAXAction
         $categoryTitle = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate
-        if($categoryTitle === '') $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
-
-        // validated
-        else {
+        if ($categoryTitle === '') {
+            $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
+        } else {
             // get the data
             // build array
             $item['title'] = \SpoonFilter::htmlspecialchars($categoryTitle);

@@ -80,14 +80,14 @@ class Edit extends BackendBaseActionEdit
         $this->user = new BackendUser($this->id);
         $this->authenticatedUser = BackendAuthentication::getUser();
         $this->allowUserRights = (
-            (BackendAuthentication::isAllowedAction('Index') ||
-             $this->authenticatedUser->getUserId() != $this->id) ||
+            (BackendAuthentication::isAllowedAction('Add') || $this->authenticatedUser->getUserId() != $this->id) ||
             $this->authenticatedUser->isGod()
         );
 
         // redirect to error page when not allowed to edit other profiles
-        if (!$this->authenticatedUser->isGod() &&
-            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Index'))
+        if (
+            !$this->authenticatedUser->isGod() &&
+            ($this->authenticatedUser->getUserId() != $this->id && !BackendAuthentication::isAllowedAction('Add'))
         ) {
             $this->redirect(BackendModel::createURLForAction('Error') . '&type=not-allowed');
         }
@@ -252,7 +252,8 @@ class Edit extends BackendBaseActionEdit
             }
 
             // required fields
-            if ($this->user->isGod() && $fields['email']->getValue() != '' &&
+            if (
+                $this->user->isGod() && $fields['email']->getValue() != '' &&
                 $this->user->getEmail() != $fields['email']->getValue()
             ) {
                 $fields['email']->addError(BL::err('CantChangeGodsEmail'));
@@ -381,7 +382,8 @@ class Edit extends BackendBaseActionEdit
                     $avatarsPath = FRONTEND_FILES_PATH . '/backend_users/avatars';
 
                     // delete old avatar if it isn't the default-image
-                    if ($this->record['settings']['avatar'] != 'no-avatar.jpg' &&
+                    if (
+                        $this->record['settings']['avatar'] != 'no-avatar.jpg' &&
                         $this->record['settings']['avatar'] != ''
                     ) {
                         $fs = new Filesystem();

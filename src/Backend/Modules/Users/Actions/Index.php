@@ -55,17 +55,19 @@ class Index extends BackendBaseActionIndex
             );
 
             // add edit column
-            $this->dataGrid->addColumn(
-                'edit',
-                null,
-                BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
-            );
+            if (BackendAuthentication::isAllowedAction('Add') || BackendAuthentication::getUser()->isGod()) {
+                $this->dataGrid->addColumn(
+                    'edit',
+                    null,
+                    BL::lbl('Edit'),
+                    BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                );
+            }
         }
 
         // show the user's nickname
         $this->dataGrid->setColumnFunction(
-            array(new BackendUsersModel(), 'getSetting'),
+            array('Backend\\Modules\\Users\\Engine\\Model', 'getSetting'),
             array('[id]', 'nickname'),
             'nickname',
             false

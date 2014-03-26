@@ -23,7 +23,7 @@ class Installer extends ModuleInstaller
     /**
      * Default category id
      *
-     * @var	int
+     * @var    int
      */
     private $defaultCategoryId;
 
@@ -31,8 +31,8 @@ class Installer extends ModuleInstaller
      * Add a category for a language
      *
      * @param string $language The language to use.
-     * @param string $title The title of the category.
-     * @param string $url The URL for the category.
+     * @param string $title    The title of the category.
+     * @param string $url      The URL for the category.
      * @return int
      */
     private function addCategory($language, $title, $url)
@@ -53,7 +53,10 @@ class Installer extends ModuleInstaller
      */
     private function getCategory($language)
     {
-        return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
+        return (int) $this->getDB()->getVar(
+            'SELECT id FROM blog_categories WHERE language = ?',
+            array((string) $language)
+        );
     }
 
     /**
@@ -112,6 +115,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Blog', 'EditCategory');
         $this->setActionRights(1, 'Blog', 'EditComment');
         $this->setActionRights(1, 'Blog', 'Edit');
+        $this->setActionRights(1, 'Blog', 'ImportWordpress');
         $this->setActionRights(1, 'Blog', 'Index');
         $this->setActionRights(1, 'Blog', 'MassCommentAction');
         $this->setActionRights(1, 'Blog', 'Settings');
@@ -122,9 +126,19 @@ class Installer extends ModuleInstaller
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
-        $this->setNavigation($navigationBlogId, 'Articles', 'blog/index', array('blog/add',	'blog/edit'));
+        $this->setNavigation(
+            $navigationBlogId,
+            'Articles',
+            'blog/index',
+            array('blog/add', 'blog/edit', 'blog/import_wordpress')
+        );
         $this->setNavigation($navigationBlogId, 'Comments', 'blog/comments', array('blog/edit_comment'));
-        $this->setNavigation($navigationBlogId, 'Categories', 'blog/categories', array('blog/add_category',	'blog/edit_category'));
+        $this->setNavigation(
+            $navigationBlogId,
+            'Categories',
+            'blog/categories',
+            array('blog/add_category', 'blog/edit_category')
+        );
 
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
@@ -147,12 +161,12 @@ class Installer extends ModuleInstaller
         );
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // fetch current categoryId
             $this->defaultCategoryId = $this->getCategory($language);
 
             // no category exists
-            if($this->defaultCategoryId == 0) {
+            if ($this->defaultCategoryId == 0) {
                 // add category
                 $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
             }
@@ -166,14 +180,15 @@ class Installer extends ModuleInstaller
             $this->setSetting('Blog', 'rss_description_' . $language, '');
 
             // check if a page for blog already exists in this language
-            if(!(bool) $this->getDB()->getVar(
+            if (!(bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                array($blogId, $language)))
-            {
+                array($blogId, $language)
+            )
+            ) {
                 $this->insertPage(
                     array('title' => 'Blog', 'language' => $language),
                     null,
@@ -182,7 +197,7 @@ class Installer extends ModuleInstaller
                 );
             }
 
-            if($this->installExample()) {
+            if ($this->installExample()) {
                 $this->installExampleData($language);
             }
         }
@@ -199,92 +214,104 @@ class Installer extends ModuleInstaller
         $db = $this->getDB();
 
         // check if blogposts already exist in this language
-        if(!(bool) $db->getVar(
+        if (!(bool) $db->getVar(
             'SELECT 1
              FROM blog_posts
              WHERE language = ?
              LIMIT 1',
-            array($language)))
-        {
+            array($language)
+        )
+        ) {
             // insert sample blogpost 1
-            $db->insert('blog_posts', array(
-                'id' => 1,
-                'category_id' => $this->defaultCategoryId,
-                'user_id' => $this->getDefaultUserID(),
-                'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
-                'language' => $language,
-                'title' => 'Nunc sediam est',
-                'introduction' => file_get_contents(PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'),
-                'text' => file_get_contents(PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'),
-                'status' => 'active',
-                'publish_on' => gmdate('Y-m-d H:i:00'),
-                'created_on' => gmdate('Y-m-d H:i:00'),
-                'edited_on' => gmdate('Y-m-d H:i:00'),
-                'hidden' => 'N',
-                'allow_comments' => 'Y',
-                'num_comments' => '3'
-            ));
+            $db->insert(
+                'blog_posts',
+                array(
+                    'id' => 1,
+                    'category_id' => $this->defaultCategoryId,
+                    'user_id' => $this->getDefaultUserID(),
+                    'meta_id' => $this->insertMeta(
+                            'Nunc sediam est',
+                            'Nunc sediam est',
+                            'Nunc sediam est',
+                            'nunc-sediam-est'
+                        ),
+                    'language' => $language,
+                    'title' => 'Nunc sediam est',
+                    'introduction' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    ),
+                    'text' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    ),
+                    'status' => 'active',
+                    'publish_on' => gmdate('Y-m-d H:i:00'),
+                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'edited_on' => gmdate('Y-m-d H:i:00'),
+                    'hidden' => 'N',
+                    'allow_comments' => 'Y',
+                    'num_comments' => '2'
+                )
+            );
 
             // insert sample blogpost 2
-            $db->insert('blog_posts', array(
-                'id' => 2,
-                'category_id' => $this->defaultCategoryId,
-                'user_id' => $this->getDefaultUserID(),
-                'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
-                'language' => $language,
-                'title' => 'Lorem ipsum',
-                'introduction' => file_get_contents(PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'),
-                'text' => file_get_contents(PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'),
-                'status' => 'active',
-                'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-                'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-                'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-                'hidden' => 'N',
-                'allow_comments' => 'Y',
-                'num_comments' => '0'
-            ));
+            $db->insert(
+                'blog_posts',
+                array(
+                    'id' => 2,
+                    'category_id' => $this->defaultCategoryId,
+                    'user_id' => $this->getDefaultUserID(),
+                    'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
+                    'language' => $language,
+                    'title' => 'Lorem ipsum',
+                    'introduction' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    ),
+                    'text' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    ),
+                    'status' => 'active',
+                    'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+                    'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+                    'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+                    'hidden' => 'N',
+                    'allow_comments' => 'Y',
+                    'num_comments' => '0'
+                )
+            );
 
             // insert example comment 1
-            $db->insert('blog_comments', array(
-                'post_id' => 1,
-                'language' => $language,
-                'created_on' => gmdate('Y-m-d H:i:00'),
-                'author' => 'Matthias Mullie',
-                'email' => 'forkcms-sample@mullie.eu',
-                'website' => 'http://www.mullie.eu',
-                'text' => 'cool!',
-                'type' => 'comment',
-                'status' => 'published',
-                'data' => null
-            ));
+            $db->insert(
+                'blog_comments',
+                array(
+                    'post_id' => 1,
+                    'language' => $language,
+                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'author' => 'Davy Hellemans',
+                    'email' => 'forkcms-sample@spoon-library.com',
+                    'website' => 'http://www.spoon-library.com',
+                    'text' => 'awesome!',
+                    'type' => 'comment',
+                    'status' => 'published',
+                    'data' => null
+                )
+            );
 
             // insert example comment 2
-            $db->insert('blog_comments', array(
-                'post_id' => 1,
-                'language' => $language,
-                'created_on' => gmdate('Y-m-d H:i:00'),
-                'author' => 'Davy Hellemans',
-                'email' => 'forkcms-sample@spoon-library.com',
-                'website' => 'http://www.spoon-library.com',
-                'text' => 'awesome!',
-                'type' => 'comment',
-                'status' => 'published',
-                'data' => null
-            ));
-
-            // insert example comment 3
-            $db->insert('blog_comments', array(
-                'post_id' => 1,
-                'language' => $language,
-                'created_on' => gmdate('Y-m-d H:i:00'),
-                'author' => 'Tijs Verkoyen',
-                'email' => 'forkcms-sample@sumocoders.be',
-                'website' => 'http://www.sumocoders.be',
-                'text' => 'wicked!',
-                'type' => 'comment',
-                'status' => 'published',
-                'data' => null
-            ));
+            $db->insert(
+                'blog_comments',
+                array(
+                    'post_id' => 1,
+                    'language' => $language,
+                    'created_on' => gmdate('Y-m-d H:i:00'),
+                    'author' => 'Tijs Verkoyen',
+                    'email' => 'forkcms-sample@sumocoders.be',
+                    'website' => 'http://www.sumocoders.be',
+                    'text' => 'wicked!',
+                    'type' => 'comment',
+                    'status' => 'published',
+                    'data' => null
+                )
+            );
         }
     }
 }

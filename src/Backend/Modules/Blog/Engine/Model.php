@@ -9,6 +9,7 @@ namespace Backend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
@@ -111,15 +112,25 @@ class Model
         $warnings = array();
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
+        if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if(BackendModel::getModuleSetting('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'Blog'), BackendModel::createURLForAction('Settings', 'Blog')));
+            if (BackendModel::getModuleSetting('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+                $warnings[] = array(
+                    'message' => sprintf(
+                        BL::err('RSSTitle', 'Blog'),
+                        BackendModel::createURLForAction('Settings', 'Blog')
+                    )
+                );
             }
 
             // rss description
-            if(BackendModel::getModuleSetting('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
-                $warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'Blog'), BackendModel::createURLForAction('Settings', 'Blog')));
+            if (BackendModel::getModuleSetting('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+                $warnings[] = array(
+                    'message' => sprintf(
+                        BL::err('RSSDescription', 'Blog'),
+                        BackendModel::createURLForAction('Settings', 'Blog')
+                    )
+                );
             }
         }
 
@@ -137,7 +148,9 @@ class Model
         $ids = (array) $ids;
 
         // loop and cast to integers
-        foreach($ids as &$id) $id = (int) $id;
+        foreach ($ids as &$id) {
+            $id = (int) $id;
+        }
 
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
@@ -154,14 +167,26 @@ class Model
         );
 
         // delete meta
-        if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+        if (!empty($metaIds)) {
+            $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
+        }
 
         // delete records
-        $db->delete('blog_posts', 'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
-        $db->delete('blog_comments', 'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?', array_merge($ids, array(BL::getWorkingLanguage())));
+        $db->delete(
+            'blog_posts',
+            'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            array_merge($ids, array(BL::getWorkingLanguage()))
+        );
+        $db->delete(
+            'blog_comments',
+            'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            array_merge($ids, array(BL::getWorkingLanguage()))
+        );
 
         // delete tags
-        foreach($ids as $id) BackendTagsModel::saveTags($id, '', 'Blog');
+        foreach ($ids as $id) {
+            BackendTagsModel::saveTags($id, '', 'Blog');
+        }
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
@@ -180,7 +205,7 @@ class Model
         // get item
         $item = self::getCategory($id);
 
-        if(!empty($item)) {
+        if (!empty($item)) {
             // delete meta
             $db->delete('meta', 'id = ?', array($item['meta_id']));
 
@@ -223,7 +248,9 @@ class Model
         $ids = (array) $ids;
 
         // loop and cast to integers
-        foreach($ids as &$id) $id = (int) $id;
+        foreach ($ids as &$id) {
+            $id = (int) $id;
+        }
 
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
@@ -243,7 +270,9 @@ class Model
         $db->delete('blog_comments', 'id IN (' . implode(', ', $idPlaceHolders) . ')', $ids);
 
         // recalculate the comment count
-        if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
+        if (!empty($itemIds)) {
+            self::reCalculateCommentCount($itemIds);
+        }
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
@@ -268,7 +297,9 @@ class Model
         $db->delete('blog_comments', 'status = ? AND language = ?', array('spam', BL::getWorkingLanguage()));
 
         // recalculate the comment count
-        if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
+        if (!empty($itemIds)) {
+            self::reCalculateCommentCount($itemIds);
+        }
 
         // invalidate the cache for blog
         BackendModel::invalidateFrontendCache('Blog', BL::getWorkingLanguage());
@@ -336,7 +367,8 @@ class Model
             'SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?',
+             WHERE i.id = ? AND (i.status = ? OR i.status = ?) AND i.language = ?
+             ORDER BY i.revision_id DESC',
             array((int) $id, 'active', 'draft', BL::getWorkingLanguage())
         );
     }
@@ -344,19 +376,21 @@ class Model
     /**
      * Get the comments
      *
-     * @param string[optional] $status The type of comments to get.
-     * @param int[optional] $limit The maximum number of items to retrieve.
-     * @param int[optional] $offset The offset.
+     * @param string [optional] $status The type of comments to get.
+     * @param int    [optional] $limit The maximum number of items to retrieve.
+     * @param int    [optional] $offset The offset.
      * @return array
      */
     public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
     {
-        if($status !== null) $status = (string) $status;
+        if ($status !== null) {
+            $status = (string) $status;
+        }
         $limit = (int) $limit;
         $offset = (int) $offset;
 
         // no status passed
-        if($status === null) {
+        if ($status === null) {
             return (array) BackendModel::getContainer()->get('database')->getRecords(
                 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
                  p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
@@ -401,7 +435,7 @@ class Model
         );
 
         // overwrite the url
-        foreach($items as &$row) {
+        foreach ($items as &$row) {
             $row['url'] = BackendModel::createURLForAction('Edit', 'Blog', null, array('id' => $row['url']));
         }
 
@@ -411,14 +445,14 @@ class Model
     /**
      * Get all categories
      *
-     * @param bool[optional] $includeCount Include the count?
+     * @param bool [optional] $includeCount Include the count?
      * @return array
      */
     public static function getCategories($includeCount = false)
     {
         $db = BackendModel::getContainer()->get('database');
 
-        if($includeCount) {
+        if ($includeCount) {
             return (array) $db->getPairs(
                 'SELECT i.id, CONCAT(i.title, " (", COUNT(p.category_id) ,")") AS title
                  FROM blog_categories AS i
@@ -457,7 +491,7 @@ class Model
      * Get a category id by title
      *
      * @param string $title The title of the category.
-     * @param string[optional] $language The language to use, if not provided we will use the working language.
+     * @param        string [optional] $language The language to use, if not provided we will use the working language.
      * @return int
      */
     public static function getCategoryId($title, $language = null)
@@ -529,7 +563,7 @@ class Model
      * Get the latest comments for a given type
      *
      * @param string $status The status for the comments to retrieve.
-     * @param int[optional] $limit The maximum number of items to retrieve.
+     * @param        int     [optional] $limit The maximum number of items to retrieve.
      * @return array
      */
     public static function getLatestComments($status, $limit = 10)
@@ -548,8 +582,10 @@ class Model
         );
 
         // overwrite url
-        foreach($comments as &$row) {
-            $row['full_url'] = BackendModel::getURLForBlock('Blog', 'detail', $row['language']) . '/' . $row['url'];
+        $baseUrl = BackendModel::getURLForBlock('Blog', 'detail');
+
+        foreach ($comments as &$row) {
+            $row['full_url'] = $baseUrl . '/' . $row['url'];
         }
 
         return $comments;
@@ -568,7 +604,7 @@ class Model
     /**
      * Get all data for a given revision
      *
-     * @param int $id The id of the item.
+     * @param int $id         The id of the item.
      * @param int $revisionId The revision to get.
      * @return array
      */
@@ -587,7 +623,7 @@ class Model
      * Retrieve the unique URL for an item
      *
      * @param string $URL The URL to base on.
-     * @param int[optional] $id The id of the item to ignore.
+     * @param        int  [optional] $id The id of the item to ignore.
      * @return string
      */
     public static function getURL($URL, $id = null)
@@ -598,34 +634,36 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // new item
-        if($id === null) {
+        if ($id === null) {
             // already exists
-            if((bool) $db->getVar(
+            if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_posts AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)))
-            {
+                array(BL::getWorkingLanguage(), $URL)
+            )
+            ) {
                 $URL = BackendModel::addNumber($URL);
+
                 return self::getURL($URL);
             }
-        }
-
-        // current category should be excluded
+        } // current category should be excluded
         else {
             // already exists
-            if((bool) $db->getVar(
+            if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_posts AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)))
-            {
+                array(BL::getWorkingLanguage(), $URL, $id)
+            )
+            ) {
 
                 $URL = BackendModel::addNumber($URL);
+
                 return self::getURL($URL, $id);
             }
         }
@@ -637,7 +675,7 @@ class Model
      * Retrieve the unique URL for a category
      *
      * @param string $URL The string whereon the URL will be based.
-     * @param int[optional] $id The id of the category to ignore.
+     * @param        int  [optional] $id The id of the category to ignore.
      * @return string
      */
     public static function getURLForCategory($URL, $id = null)
@@ -649,33 +687,35 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // new category
-        if($id === null) {
+        if ($id === null) {
             // already exists
-            if((bool) $db->getVar(
+            if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL)))
-            {
+                array(BL::getWorkingLanguage(), $URL)
+            )
+            ) {
                 $URL = BackendModel::addNumber($URL);
+
                 return self::getURLForCategory($URL);
             }
-        }
-
-        // current category should be excluded
+        } // current category should be excluded
         else {
             // already exists
-            if((bool) $db->getVar(
+            if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
                  WHERE i.language = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $URL, $id)))
-            {
+                array(BL::getWorkingLanguage(), $URL, $id)
+            )
+            ) {
                 $URL = BackendModel::addNumber($URL);
+
                 return self::getURLForCategory($URL, $id);
             }
         }
@@ -702,10 +742,153 @@ class Model
     }
 
     /**
+     * Inserts a complete post item based on some arrays of data
+     *
+     * This method's purpose is to be able to insert a post (possibly with all its metadata, tags, and comments)
+     * in one method call. As much data as possible has been made optional, to be able to do imports where only
+     * fractions of the data we need are known.
+     *
+     * The item array should have at least a 'title' and a 'text' property other properties are optional.
+     * The meta array has only optional properties. You can use these to override the defaults.
+     * The tags array is just a list of tagnames as string.
+     * The comments array is an array of arrays with comment properties. A comment should have
+     * at least 'author', 'email', and 'text' properties.
+     *
+     * @param array $item     The data to insert.
+     * @param array $meta     The metadata to insert.
+     * @param array $tags     The tags to connect to this post.
+     * @param array $comments The comments attached to this post.
+     * @return int
+     */
+    public static function insertCompletePost($item, $meta = array(), $tags = array(), $comments = array())
+    {
+        // Build item
+        if (!isset($item['id'])) {
+            $item['id'] = (int) self::getMaximumId() + 1;
+        }
+        if (!isset($item['user_id'])) {
+            $item['user_id'] = BackendAuthentication::getUser()->getUserId();
+        }
+        if (!isset($item['hidden'])) {
+            $item['hidden'] = 'N';
+        }
+        if (!isset($item['allow_comments'])) {
+            $item['allow_comments'] = 'Y';
+        }
+        if (!isset($item['num_comments'])) {
+            $item['num_comments'] = 0;
+        }
+        if (!isset($item['status'])) {
+            $item['status'] = 'active';
+        }
+        if (!isset($item['language'])) {
+            $item['language'] = BL::getWorkingLanguage();
+        }
+        if (!isset($item['publish_on'])) {
+            $item['publish_on'] = BackendModel::getUTCDate();
+        }
+        if (!isset($item['created_on'])) {
+            $item['created_on'] = BackendModel::getUTCDate();
+        }
+        if (!isset($item['edited_on'])) {
+            $item['edited_on'] = BackendModel::getUTCDate();
+        }
+        if (!isset($item['category_id'])) {
+            $item['category_id'] = 1;
+        }
+        if (!isset($item['title']) || !isset($item['text'])) {
+            throw new Exception('$item should at least have a title and a text property');
+        }
+
+        // Set drafts hidden
+        if (strtotime((string) $item['publish_on']) > time()) {
+            $item['hidden'] = 'Y';
+            $item['status'] = 'draft';
+        }
+
+        // Build meta
+        if (!is_array($meta)) {
+            $meta = array();
+        }
+        if (!isset($meta['keywords'])) {
+            $meta['keywords'] = $item['title'];
+        }
+        if (!isset($meta['keywords_overwrite'])) {
+            $meta['keywords_overwrite'] = 'N';
+        }
+        if (!isset($meta['description'])) {
+            $meta['description'] = $item['title'];
+        }
+        if (!isset($meta['description_overwrite'])) {
+            $meta['description_overwrite'] = 'N';
+        }
+        if (!isset($meta['title'])) {
+            $meta['title'] = $item['title'];
+        }
+        if (!isset($meta['title_overwrite'])) {
+            $meta['title_overwrite'] = 'N';
+        }
+        if (!isset($meta['url'])) {
+            $meta['url'] = self::getURL($item['title']);
+        }
+        if (!isset($meta['url_overwrite'])) {
+            $meta['url_overwrite'] = 'N';
+        }
+        if (!isset($meta['data'])) {
+            $meta['data'] = serialize(array('seo_index' => 'index', 'seo_follow' => 'follow'));
+        }
+
+        // Write meta to db
+        $item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
+
+        // Write post to db
+        $item['revision_id'] = self::insert($item);
+
+        // Any tags?
+        if (!empty($tags)) {
+            BackendTagsModel::saveTags($item['id'], implode(',', $tags), 'blog');
+        }
+
+        // Any comments?
+        foreach ($comments as $comment) {
+            // We require some fields (author, email, text)
+            if (!isset($comment['author']) || !isset($comment['email']) || !isset($comment['text'])) {
+                continue;
+            }
+
+            // Set some defaults
+            if (!isset($comment['language'])) {
+                $comment['language'] = BL::getWorkingLanguage();
+            }
+            if (!isset($comment['created_on'])) {
+                $comment['created_on'] = BackendModel::getUTCDate();
+            }
+            if (!isset($comment['status'])) {
+                $comment['status'] = 'published';
+            }
+            if (!isset($comment['data'])) {
+                $comment['data'] = serialize(array('server' => $_SERVER));
+            }
+            if (!isset($comment['website'])) {
+                $comment['website'] = '';
+            }
+
+            $comment['post_id'] = $item['id'];
+            $comment['data'] = serialize(array('server' => $_SERVER));
+
+            // Insert the comment
+            self::insertComment($comment);
+        }
+
+        // Return
+        return $item['revision_id'];
+    }
+
+    /**
      * Inserts a new category into the database
      *
      * @param array $item The data for the category to insert.
-     * @param array[optional] $meta The metadata for the category to insert.
+     * @param       array [optional] $meta The metadata for the category to insert.
      * @return int
      */
     public static function insertCategory(array $item, $meta = null)
@@ -714,7 +897,9 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // meta given?
-        if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+        if ($meta !== null) {
+            $item['meta_id'] = $db->insert('meta', $meta);
+        }
 
         // create category
         $item['id'] = $db->insert('blog_categories', $item);
@@ -727,6 +912,39 @@ class Model
     }
 
     /**
+     * Inserts a new comment (Taken from FrontendBlogModel)
+     *
+     * @param array $comment The comment to add.
+     * @return int
+     */
+    public static function insertComment(array $comment)
+    {
+        // get db
+        $db = BackendModel::getContainer()->get('database');
+
+        // insert comment
+        $comment['id'] = (int) $db->insert('blog_comments', $comment);
+
+        // recalculate if published
+        if ($comment['status'] == 'published') {
+            // num comments
+            $numComments = (int) BackendModel::getContainer()->get('database')->getVar(
+                'SELECT COUNT(i.id) AS comment_count
+                 FROM blog_comments AS i
+                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
+                 GROUP BY i.post_id',
+                array('published', $comment['post_id'], BL::getWorkingLanguage(), 'active')
+            );
+
+            // update num comments
+            $db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+        }
+
+        return $comment['id'];
+    }
+
+    /**
      * Recalculate the commentcount
      *
      * @param array $ids The id(s) of the post wherefore the commentcount should be recalculated.
@@ -735,7 +953,9 @@ class Model
     public static function reCalculateCommentCount(array $ids)
     {
         // validate
-        if(empty($ids)) return false;
+        if (empty($ids)) {
+            return false;
+        }
 
         // make unique ids
         $ids = array_unique($ids);
@@ -753,12 +973,17 @@ class Model
             array('published', BL::getWorkingLanguage(), 'active')
         );
 
-        foreach($ids as $id) {
+        foreach ($ids as $id) {
             // get count
             $count = (isset($commentCounts[$id])) ? (int) $commentCounts[$id] : 0;
 
             // update
-            $db->update('blog_posts', array('num_comments' => $count), 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
+            $db->update(
+                'blog_posts',
+                array('num_comments' => $count),
+                'id = ? AND language = ?',
+                array($id, BL::getWorkingLanguage())
+            );
         }
 
         return true;
@@ -773,9 +998,14 @@ class Model
     public static function update(array $item)
     {
         // check if new version is active
-        if($item['status'] == 'active') {
+        if ($item['status'] == 'active') {
             // archive all older active versions
-            BackendModel::getContainer()->get('database')->update('blog_posts', array('status' => 'archived'), 'id = ? AND status = ?', array($item['id'], $item['status']));
+            BackendModel::getContainer()->get('database')->update(
+                'blog_posts',
+                array('status' => 'archived'),
+                'id = ? AND status = ?',
+                array($item['id'], $item['status'])
+            );
 
             // get the record of the exact item we're editing
             $revision = self::getRevision($item['id'], $item['revision_id']);
@@ -785,7 +1015,13 @@ class Model
             $item['num_comments'] = $revision['num_comments'];
 
             // if it used to be a draft that we're now publishing, remove drafts
-            if($revision['status'] == 'draft') BackendModel::getContainer()->get('database')->delete('blog_posts', 'id = ? AND status = ?', array($item['id'], $revision['status']));
+            if ($revision['status'] == 'draft') {
+                BackendModel::getContainer()->get('database')->delete(
+                    'blog_posts',
+                    'id = ? AND status = ?',
+                    array($item['id'], $revision['status'])
+                );
+            }
         }
 
         // don't want revision id
@@ -808,7 +1044,13 @@ class Model
         );
 
         // delete other revisions
-        if(!empty($revisionIdsToKeep)) BackendModel::getContainer()->get('database')->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], $archiveType));
+        if (!empty($revisionIdsToKeep)) {
+            BackendModel::getContainer()->get('database')->delete(
+                'blog_posts',
+                'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'], $archiveType)
+            );
+        }
 
         // insert new version
         $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('blog_posts', $item);
@@ -824,7 +1066,7 @@ class Model
      * Update an existing category
      *
      * @param array $item The new data.
-     * @param array[optional] $meta The new meta-data.
+     * @param       array [optional] $meta The new meta-data.
      * @return int
      */
     public static function updateCategory(array $item, $meta = null)
@@ -836,7 +1078,7 @@ class Model
         $updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
 
         // meta passed?
-        if($meta !== null) {
+        if ($meta !== null) {
             // get current category
             $category = self::getCategory($item['id']);
 
@@ -859,13 +1101,18 @@ class Model
     public static function updateComment(array $item)
     {
         // update category
-        return BackendModel::getContainer()->get('database')->update('blog_comments', $item, 'id = ?', array((int) $item['id']));
+        return BackendModel::getContainer()->get('database')->update(
+            'blog_comments',
+            $item,
+            'id = ?',
+            array((int) $item['id'])
+        );
     }
 
     /**
      * Updates one or more comments' status
      *
-     * @param array $ids The id(s) of the comment(s) to change the status for.
+     * @param array  $ids    The id(s) of the comment(s) to change the status for.
      * @param string $status The new status.
      */
     public static function updateCommentStatuses($ids, $status)
@@ -874,7 +1121,9 @@ class Model
         $ids = (array) $ids;
 
         // loop and cast to integers
-        foreach($ids as &$id) $id = (int) $id;
+        foreach ($ids as &$id) {
+            $id = (int) $id;
+        }
 
         // create an array with an equal amount of questionmarks as ids provided
         $idPlaceHolders = array_fill(0, count($ids), '?');
@@ -884,11 +1133,12 @@ class Model
             'SELECT i.post_id, i.language
              FROM blog_comments AS i
              WHERE i.id IN (' . implode(', ', $idPlaceHolders) . ')',
-            $ids, 'post_id'
+            $ids,
+            'post_id'
         );
 
         // only proceed if there are items
-        if(!empty($items)) {
+        if (!empty($items)) {
             // get the ids
             $itemIds = array_keys($items);
 
@@ -907,7 +1157,9 @@ class Model
             self::reCalculateCommentCount($itemIds);
 
             // invalidate the cache for blog
-            foreach($languages as $language) BackendModel::invalidateFrontendCache('Blog', $language);
+            foreach ($languages as $language) {
+                BackendModel::invalidateFrontendCache('Blog', $language);
+            }
         }
     }
 }

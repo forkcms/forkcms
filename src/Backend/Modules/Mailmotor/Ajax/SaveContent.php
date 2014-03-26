@@ -10,6 +10,7 @@ namespace Backend\Modules\Mailmotor\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
+use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
@@ -94,7 +95,7 @@ class SaveContent extends BackendBaseAJAXAction
 
                     try {
                         BackendMailmotorCMHelper::saveMailingDraft($item);
-                    } catch (\Exception $e) {
+                    } catch (Exception $e) {
                         // CM did not receive a valid URL
                         if (strpos($e->getMessage(), 'HTML Content URL Required')) {
                             $message = BL::err('HTMLContentURLRequired', $this->getModule());
@@ -126,6 +127,8 @@ class SaveContent extends BackendBaseAJAXAction
                         array('mailing_id' => $mailingId),
                         BL::msg('MailingEdited', $this->getModule())
                     );
+
+                    return;
                 }
             }
 
@@ -134,39 +137,5 @@ class SaveContent extends BackendBaseAJAXAction
 
             return;
         }
-    }
-
-    /**
-     * Returns the text between 2 tags
-     *
-     * @param string $tag  The tag.
-     * @param string $html The HTML to search in.
-     * @param        bool  [optional] $strict Use strictmode?
-     * @return array
-     */
-    private function getTextBetweenTags($tag, $html, $strict = false)
-    {
-        // new dom document
-        $dom = new \domDocument;
-
-        // load HTML
-        ($strict == true) ? $dom->loadXML($html) : $dom->loadHTML($html);
-
-        // discard whitespace
-        $dom->preserveWhiteSpace = false;
-
-        // the array with results
-        $results = array();
-
-        // fetch the tag by name
-        $content = $dom->getElementsByTagname($tag);
-
-        // loop the content
-        foreach ($content as $item) {
-            // add node value to results
-            $results[] = $item->nodeValue;
-        }
-
-        return $results;
     }
 }

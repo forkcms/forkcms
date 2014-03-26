@@ -17,6 +17,10 @@
         <translation language="sv"><![CDATA[lägg till artikel]]></translation>
         <translation language="el"><![CDATA[Προσθήκη άρθρου]]></translation>
       </item>
+      <item type="label" name="WordpressFilter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
@@ -227,6 +231,14 @@
         <translation language="sv"><![CDATA[Skriv en introduktion eller summering för långa artiklar. Det kommer visas på hemsidan eller artikelöversikten.]]></translation>
         <translation language="el"><![CDATA[Γράψτε μιά εισαγωγή ή περίληψη γιά μακροσκελή άρθρα. Θα εμφανίζεται στην αρχική σελίδα ή την προεπισκόπηση του άρθρου.]]></translation>
       </item>
+      <item type="message" name="HelpWordpress">
+        <translation language="nl"><![CDATA[You can upload an export file from a wordpress site here.]]></translation>
+        <translation language="en"><![CDATA[Hier kan je een export bestand vanuit een wordpress site uploaden.]]></translation>
+      </item>
+      <item type="message" name="HelpWordpressFilter">
+        <translation language="nl"><![CDATA[The searchterm that identifies links in an existing blogpost so that we can transfer them to active links on the fork blog module.]]></translation>
+        <translation language="en"><![CDATA[De zoekterm die in bestaande blogposts in een link voor moet komen, alvorens wij de link kunnen omzetten naar een actieve link op de fork blog module.]]></translation>
+      </item>
       <item type="message" name="NoCategoryItems">
         <translation language="nl"><![CDATA[Er zijn nog geen categorieën. <a href="%1$s">Maak een eerste categorie</a>.]]></translation>
         <translation language="en"><![CDATA[There are no categories yet. <a href="%1$s">Create the first category</a>.]]></translation>
@@ -306,7 +318,7 @@
         <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (λίστα).]]></translation>
       </item>
       <item type="message" name="ShowImageForm">
-        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding.]]></translation>
+        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
         <translation language="en"><![CDATA[The user can upload a file.]]></translation>
         <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
         <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
@@ -355,6 +367,10 @@
         <translation language="lt"><![CDATA[Tinklaraščio RSS nenustatytas, <a href="%1$s">nustatyti</a>]]></translation>
         <translation language="sv"><![CDATA[Blogg RSS beskrivning är ännu inte tillagd. <en href="%1$s">Konfigurera</en>]]></translation>
         <translation language="el"><![CDATA[Δεν έχει δοθεί ακόμη η περιγραφή γιά τη ροή RSS του ιστολογίου. <a href="%1$s">Ρυθμίστε την</a>]]></translation>
+      </item>
+      <item type="error" name="XMLFilesOnly">
+        <translation language="nl"><![CDATA[Enkel XML bestanden kunnen worden geupload.]]></translation>
+        <translation language="en"><![CDATA[Only XML files can be uploaded.]]></translation>
       </item>
     </Blog>
   </Backend>

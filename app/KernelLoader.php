@@ -35,7 +35,7 @@ class KernelLoader
     /**
      * Gets a service by id.
      *
-     * @param string $id The service id
+     * @param string $reference The service id
      * @return object The service
      */
     public function get($reference)
@@ -44,7 +44,7 @@ class KernelLoader
     }
 
     /**
-     * @return ContainerInterface
+     * @return Symfony\Component\DependencyInjection\ContainerInterface
      */
     public function getContainer()
     {
@@ -62,10 +62,10 @@ class KernelLoader
     /**
      * Returns true if the service id is defined.
      *
-     * @param string $id The service id
+     * @param string $reference The service id
      * @return Boolean true if the service id is defined, false otherwise
      */
-    public static function has($reference)
+    public function has($reference)
     {
         return $this->getKernel()->getContainer()->has($reference);
     }

@@ -341,8 +341,7 @@ class Model
              FROM users AS i
              INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
              WHERE i.active = ? AND i.deleted = ?',
-            array('nickname', 'Y', 'N'),
-            'id'
+            array('nickname', 'Y', 'N')
         );
 
         // loop users & unserialize

@@ -630,7 +630,7 @@ jsBackend.formBuilder.fields =
 	{
 		// get dropdown
 		var required = $(wrapper).find('input:checkbox');
-		var validation = $(wrapper).find('select:first');
+		var validation = $(wrapper).find('select').first();
 
 		// toggle required error message
 		if($(required).is(':checked'))
