@@ -54,6 +54,7 @@ class ProfilesInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'profiles', 'edit');
 		$this->setActionRights(1, 'profiles', 'groups');
 		$this->setActionRights(1, 'profiles', 'index');
+		$this->setActionRights(1, 'profiles', 'import');
 		$this->setActionRights(1, 'profiles', 'mass_action');
 
 		// set navigation

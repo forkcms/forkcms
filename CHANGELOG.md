@@ -1,6 +1,10 @@
 3.6.7 (xxxx-xx-xx)
 --
 
+Improvements:
+
+* Profiles: import function added.
+
 Bugfixes:
 
 * Correct amount of sample comments in blog
