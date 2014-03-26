@@ -49,6 +49,9 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
      */
     protected function execute()
     {
+        if (extension_loaded('newrelic')) {
+            newrelic_background_job();
+        }
         $this->loadConfig();
 
         // build action-class-name
@@ -68,6 +71,10 @@ class Cronjob extends \Backend\Core\Engine\Base\Object implements \ApplicationIn
         $this->cronjob = new $actionClass($this->getKernel());
         $this->cronjob->setModule($this->getModule());
         $this->cronjob->setAction($this->getAction());
+            
+        if (extension_loaded('newrelic')) {
+            newrelic_name_transaction('cronjob::' . $this->getModule() . '::' . $this->getAction());
+        }
     }
 
     /**

@@ -44,6 +44,10 @@ if (file_exists($installer) &&
 
 require_once __DIR__ . '/app/AppKernel.php';
 
+if (extension_loaded('newrelic')) {
+    newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
+}
+
 $kernel = new AppKernel();
 $response = $kernel->handle($request);
 if ($response->getCharset() === null && $kernel->getContainer() != null) {

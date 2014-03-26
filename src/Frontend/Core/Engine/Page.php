@@ -104,6 +104,10 @@ class Page extends FrontendBaseObject
         // set headers if this is a 404 page
         if ($this->pageId == 404) {
             $this->statusCode = 404;
+            
+            if (extension_loaded('newrelic')) {
+                newrelic_name_transaction('404');
+            }
         }
 
         // create breadcrumb instance
@@ -458,6 +462,10 @@ class Page extends FrontendBaseObject
                         // create new instance
                         $extra = new FrontendBlockExtra($this->getKernel(
                         ), $block['extra_module'], $block['extra_action'], $block['extra_data']);
+                        
+                        if (extension_loaded('newrelic')) {
+                            newrelic_name_transaction($block['extra_module'] . '::' . $block['extra_action']);
+                        }
                     } else {
                         // widget
                         $extra = new FrontendBlockWidget(
