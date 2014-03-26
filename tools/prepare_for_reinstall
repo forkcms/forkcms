@@ -8,24 +8,24 @@
 
 SCRIPT_PATH="`dirname \"$0\"`"
 
-rm -f `find ${SCRIPT_PATH}/../Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
 rm -f ${SCRIPT_PATH}/../app/config/parameters.yml
 
