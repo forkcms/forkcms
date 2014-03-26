@@ -11,6 +11,7 @@ Improvements:
 * Core: better description for CKFinder maximum image size settings.
 * Core: used namespaces, see UPGRADE_3.7.md for more info
 * API: use isAuthorized() instead of authorize(), see UPGRADE_3.7.md for more info.
+* Core: CommonCookie and CommonUri are now in the src/Common folder
 
 Bugfixes:
 
