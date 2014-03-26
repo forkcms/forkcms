@@ -1,6 +1,10 @@
 3.6.7 (xxxx-xx-xx)
 --
 
+Improvements:
+
+* Profiles: login_link added, which you can use in a navigation.
+
 Bugfixes:
 
 * Correct amount of sample comments in blog
