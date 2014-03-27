@@ -85,7 +85,7 @@
         <translation language="sv"><![CDATA[artiklar i kategorin]]></translation>
         <translation language="el"><![CDATA[άρθρα στην κατηγορία]]></translation>
         <translation language="pl"><![CDATA[artykuły w kategorii]]></translation>
-        <translation language="tr"><![CDATA[kategorilerdeki yazılar]]></translation>
+        <translation language="tr"><![CDATA[kategorideki yazılar]]></translation>
       </item>
       <item type="label" name="Avatar">
         <translation language="nl"><![CDATA[avatar]]></translation>
@@ -463,6 +463,7 @@
       <item type="label" name="ES">
         <translation language="lt"><![CDATA[Ispaniškai]]></translation>
         <translation language="ru"><![CDATA[Испанский]]></translation>
+        <translation language="tr"><![CDATA[İspanyolca]]></translation>
       </item>
       <item type="label" name="Faq">
         <translation language="nl"><![CDATA[FAQ]]></translation>
@@ -543,6 +544,7 @@
         <translation language="sv"><![CDATA[sidfotsnavigering]]></translation>
         <translation language="el"><![CDATA[μενού πλοήγησης στο υποσέλιδο]]></translation>
         <translation language="pl"><![CDATA[Menu dolne]]></translation>
+        <translation language="tr"><![CDATA[Alt menü]]></translation>
       </item>
       <item type="label" name="FR">
         <translation language="nl"><![CDATA[Frans]]></translation>
@@ -642,6 +644,7 @@
         <translation language="sv"><![CDATA[i]]></translation>
         <translation language="el"><![CDATA[σε]]></translation>
         <translation language="pl"><![CDATA[w]]></translation>
+        <translation language="tr"><![CDATA[içinde]]></translation>
       </item>
       <item type="label" name="InTheCategory">
         <translation language="nl"><![CDATA[in de categorie]]></translation>
@@ -658,6 +661,7 @@
         <translation language="sv"><![CDATA[i kategori]]></translation>
         <translation language="el"><![CDATA[στην κατηγορία]]></translation>
         <translation language="pl"><![CDATA[w kategorii]]></translation>
+        <translation language="tr"><![CDATA[Kategori:]]></translation>
       </item>
       <item type="label" name="ItemsWithTag">
         <translation language="nl"><![CDATA[items met tag "%1$s"]]></translation>
@@ -764,6 +768,7 @@
       <item type="label" name="LT">
         <translation language="lt"><![CDATA[Lietuviškai]]></translation>
         <translation language="ru"><![CDATA[Литовский]]></translation>
+        <translation language="tr"><![CDATA[Litvanca]]></translation>
       </item>
       <item type="label" name="MainNavigation">
         <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
@@ -914,7 +919,7 @@
         <translation language="sv"><![CDATA[nästa artikel]]></translation>
         <translation language="el"><![CDATA[επόμενο άρθρο]]></translation>
         <translation language="pl"><![CDATA[następny artykuł]]></translation>
-        <translation language="tr"><![CDATA[Sonraki makalede]]></translation>
+        <translation language="tr"><![CDATA[Sonraki makale]]></translation>
       </item>
       <item type="label" name="NextPage">
         <translation language="nl"><![CDATA[volgende pagina]]></translation>
@@ -947,7 +952,7 @@
         <translation language="el"><![CDATA[Ολλανδικά]]></translation>
         <translation language="zh"><![CDATA[荷兰语]]></translation>
         <translation language="pl"><![CDATA[Niemiecki]]></translation>
-        <translation language="tr"><![CDATA[Flemenkçe]]></translation>
+        <translation language="tr"><![CDATA[Felemenkçe]]></translation>
       </item>
       <item type="label" name="No">
         <translation language="nl"><![CDATA[nee]]></translation>
@@ -962,6 +967,7 @@
         <translation language="hu"><![CDATA[no]]></translation>
         <translation language="el"><![CDATA[όχι]]></translation>
         <translation language="zh"><![CDATA[不]]></translation>
+        <translation language="tr"><![CDATA[Hayır]]></translation>
       </item>
       <item type="label" name="OldPassword">
         <translation language="nl"><![CDATA[oud wachtwoord]]></translation>
@@ -978,6 +984,7 @@
         <translation language="sv"><![CDATA[gammalt lösenord]]></translation>
         <translation language="el"><![CDATA[παλαιός κωδικός]]></translation>
         <translation language="pl"><![CDATA[stare hasło]]></translation>
+        <translation language="tr"><![CDATA[Önceki şifre]]></translation>
       </item>
       <item type="label" name="On">
         <translation language="nl"><![CDATA[op]]></translation>
@@ -1038,6 +1045,7 @@
         <translation language="hu"><![CDATA[szülő]]></translation>
         <translation language="zh"><![CDATA[父级]]></translation>
         <translation language="de"><![CDATA[Parent]]></translation>
+        <translation language="tr"><![CDATA[Ana]]></translation>
       </item>
       <item type="label" name="ParentPage">
         <translation language="nl"><![CDATA[bovenliggende pagina]]></translation>
@@ -1047,6 +1055,7 @@
         <translation language="hu"><![CDATA[szülő oldal]]></translation>
         <translation language="zh"><![CDATA[父级页面]]></translation>
         <translation language="de"><![CDATA[Übergeordnete Seite]]></translation>
+        <translation language="tr"><![CDATA[Ebeveyn sayfa]]></translation>
       </item>
       <item type="label" name="Password">
         <translation language="nl"><![CDATA[wachtwoord]]></translation>
@@ -1097,6 +1106,7 @@
         <translation language="sv"><![CDATA[föregående arktikel]]></translation>
         <translation language="el"><![CDATA[προηγούμενο άρθρο]]></translation>
         <translation language="pl"><![CDATA[poprzedni artykuł]]></translation>
+        <translation language="tr"><![CDATA[önceki makale]]></translation>
       </item>
       <item type="label" name="PreviousPage">
         <translation language="nl"><![CDATA[vorige pagina]]></translation>
@@ -1113,6 +1123,7 @@
         <translation language="sv"><![CDATA[föregående sida]]></translation>
         <translation language="el"><![CDATA[προηγούμενη σελίδα]]></translation>
         <translation language="pl"><![CDATA[poprzednia strona]]></translation>
+        <translation language="tr"><![CDATA[önceki sayfa]]></translation>
       </item>
       <item type="label" name="ProfileSettings">
         <translation language="nl"><![CDATA[instellingen]]></translation>
@@ -1144,6 +1155,7 @@
         <translation language="hu"><![CDATA[kérdés]]></translation>
         <translation language="el"><![CDATA[ερώτηση]]></translation>
         <translation language="zh"><![CDATA[问题]]></translation>
+        <translation language="tr"><![CDATA[soru]]></translation>
       </item>
       <item type="label" name="Questions">
         <translation language="nl"><![CDATA[vragen]]></translation>
@@ -1158,6 +1170,7 @@
         <translation language="hu"><![CDATA[kérdések]]></translation>
         <translation language="el"><![CDATA[ερωτήσεις]]></translation>
         <translation language="zh"><![CDATA[问题]]></translation>
+        <translation language="tr"><![CDATA[sorular]]></translation>
       </item>
       <item type="label" name="RecentArticles">
         <translation language="nl"><![CDATA[recente artikels]]></translation>
@@ -1208,6 +1221,7 @@
         <translation language="sv"><![CDATA[registrera]]></translation>
         <translation language="el"><![CDATA[εγγραφή]]></translation>
         <translation language="pl"><![CDATA[Zarejestruj]]></translation>
+        <translation language="tr"><![CDATA[kayıt ol]]></translation>
       </item>
       <item type="label" name="Related">
         <translation language="nl"><![CDATA[gerelateerd]]></translation>
@@ -1359,7 +1373,7 @@
         <translation language="uk"><![CDATA[Відправник]]></translation>
         <translation language="sv"><![CDATA[avsändarinformation]]></translation>
         <translation language="el"><![CDATA[στοιχεία αποστολέα]]></translation>
-        <translation language="tr"><![CDATA[gönderenin bilgi]]></translation>
+        <translation language="tr"><![CDATA[gönderen bilgisi]]></translation>
         <translation language="pl"><![CDATA[Informacja o wysyłającym]]></translation>
       </item>
       <item type="label" name="Sent">
@@ -1394,6 +1408,7 @@
         <translation language="sv"><![CDATA[skickade e-postmeddelande]]></translation>
         <translation language="el"><![CDATA[απεσταλμένη αλληλογραφία]]></translation>
         <translation language="pl"><![CDATA[Wyślij listy]]></translation>
+        <translation language="tr"><![CDATA[gönderilen e-postalar]]></translation>
       </item>
       <item type="label" name="SentOn">
         <translation language="nl"><![CDATA[verstuurd op]]></translation>
@@ -1421,6 +1436,7 @@
         <translation language="hu"><![CDATA[beállítások]]></translation>
         <translation language="zh"><![CDATA[设置]]></translation>
         <translation language="de"><![CDATA[Einstellungen]]></translation>
+        <translation language="tr"><![CDATA[ayarlar]]></translation>
       </item>
       <item type="label" name="Share">
         <translation language="nl"><![CDATA[delen]]></translation>
@@ -1434,6 +1450,7 @@
         <translation language="hu"><![CDATA[megosztás]]></translation>
         <translation language="el"><![CDATA[μοιράστε]]></translation>
         <translation language="zh"><![CDATA[分享]]></translation>
+        <translation language="tr"><![CDATA[paylaş]]></translation>
       </item>
       <item type="label" name="ShowDirections">
         <translation language="nl"><![CDATA[Route berekenen]]></translation>
@@ -1444,6 +1461,7 @@
         <translation language="hu"><![CDATA[Irányok mutatása]]></translation>
         <translation language="zh"><![CDATA[显示指南]]></translation>
         <translation language="de"><![CDATA[Route planen]]></translation>
+        <translation language="tr"><![CDATA[Yol tarifi göster]]></translation>
       </item>
       <item type="label" name="ShowPassword">
         <translation language="nl"><![CDATA[toon wachtwoord]]></translation>
@@ -1477,7 +1495,7 @@
         <translation language="sv"><![CDATA[webbplatskarta]]></translation>
         <translation language="el"><![CDATA[χάρτης ιστοχώρου]]></translation>
         <translation language="pl"><![CDATA[mapa strony]]></translation>
-        <translation language="tr"><![CDATA[sitemap]]></translation>
+        <translation language="tr"><![CDATA[site haritası]]></translation>
       </item>
       <item type="label" name="SkipToContent">
         <translation language="nl"><![CDATA[ga naar de inhoud]]></translation>
@@ -1505,6 +1523,7 @@
         <translation language="hu"><![CDATA[kezdőpont]]></translation>
         <translation language="zh"><![CDATA[起始点]]></translation>
         <translation language="de"><![CDATA[Start]]></translation>
+        <translation language="tr"><![CDATA[başlangıç noktası]]></translation>
       </item>
       <item type="label" name="Subnavigation">
         <translation language="nl"><![CDATA[subnavigatie]]></translation>
@@ -1521,6 +1540,7 @@
         <translation language="sv"><![CDATA[undernavigering]]></translation>
         <translation language="el"><![CDATA[υποπλοήγηση]]></translation>
         <translation language="pl"><![CDATA[(Pod)nawigacja]]></translation>
+        <translation language="tr"><![CDATA[alt navigasyon]]></translation>
       </item>
       <item type="label" name="Subscribe">
         <translation language="en"><![CDATA[subscribe]]></translation>
@@ -1554,6 +1574,7 @@
         <translation language="sv"><![CDATA[prenumerera på RSS flödet]]></translation>
         <translation language="el"><![CDATA[εγγραφή στη ροή RSS]]></translation>
         <translation language="pl"><![CDATA[subskrybuj kanał rss]]></translation>
+        <translation language="tr"><![CDATA[RSS abonesi ol]]></translation>
       </item>
       <item type="label" name="Tags">
         <translation language="nl"><![CDATA[tags]]></translation>
@@ -1587,6 +1608,7 @@
         <translation language="sv"><![CDATA[de]]></translation>
         <translation language="el"><![CDATA[το]]></translation>
         <translation language="pl"><![CDATA[-]]></translation>
+        <translation language="tr"><![CDATA[-]]></translation>
       </item>
       <item type="label" name="Title">
         <translation language="nl"><![CDATA[titel]]></translation>
@@ -1618,6 +1640,7 @@
         <translation language="el"><![CDATA[στην ανασκόπηση των Συχνών Ερωτήσεων]]></translation>
         <translation language="uk"><![CDATA[до перегляду ЧаПів]]></translation>
         <translation language="zh"><![CDATA[去到FAQ概览页面]]></translation>
+        <translation language="tr"><![CDATA[sss önizlemesi]]></translation>
       </item>
       <item type="label" name="ToTagsOverview">
         <translation language="nl"><![CDATA[naar het tags overzicht]]></translation>
@@ -1634,6 +1657,7 @@
         <translation language="sv"><![CDATA[till taggöversikt]]></translation>
         <translation language="el"><![CDATA[στην ανασκόπηση των ετικετών]]></translation>
         <translation language="pl"><![CDATA[Przegląd tagów]]></translation>
+        <translation language="tr"><![CDATA[etiket önizlemesi]]></translation>
       </item>
       <item type="label" name="Unsubscribe">
         <translation language="en"><![CDATA[unsubscribe]]></translation>
@@ -1661,6 +1685,7 @@
         <translation language="hu"><![CDATA[Nagyobb méretű térkép]]></translation>
         <translation language="zh"><![CDATA[显示大地图]]></translation>
         <translation language="de"><![CDATA[Große Karte anzeigen]]></translation>
+        <translation language="tr"><![CDATA[Haritayı büyüt]]></translation>
       </item>
       <item type="label" name="Website">
         <translation language="nl"><![CDATA[website]]></translation>
@@ -1711,6 +1736,7 @@
         <translation language="sv"><![CDATA[skrivet den]]></translation>
         <translation language="el"><![CDATA[γράφτηκε στις]]></translation>
         <translation language="pl"><![CDATA[napisane]]></translation>
+        <translation language="tr"><![CDATA[-]]></translation>
       </item>
       <item type="label" name="Wrote">
         <translation language="nl"><![CDATA[schreef]]></translation>
@@ -1727,6 +1753,7 @@
         <translation language="sv"><![CDATA[skrev]]></translation>
         <translation language="el"><![CDATA[έγραψε]]></translation>
         <translation language="pl"><![CDATA[napisał(a)]]></translation>
+        <translation language="tr"><![CDATA[yazdı]]></translation>
       </item>
       <item type="label" name="Yes">
         <translation language="nl"><![CDATA[ja]]></translation>
@@ -1763,6 +1790,7 @@
       <item type="label" name="YourAvatar">
           <translation language="nl"><![CDATA[jouw avatar]]></translation>
           <translation language="en"><![CDATA[your avatar]]></translation>
+          <translation language="tr"><![CDATA[avatarınız]]></translation>
       </item>
       <item type="label" name="YourData">
         <translation language="nl"><![CDATA[uw gegevens]]></translation>
@@ -1779,7 +1807,7 @@
         <translation language="sv"><![CDATA[din data]]></translation>
         <translation language="el"><![CDATA[τα στοιχεία σας]]></translation>
         <translation language="pl"><![CDATA[dane]]></translation>
-        <translation language="tr"><![CDATA[sizin bilgileriniz]]></translation>
+        <translation language="tr"><![CDATA[bilgileriniz]]></translation>
       </item>
       <item type="label" name="YourEmail">
         <translation language="nl"><![CDATA[jouw e-mailadres]]></translation>
@@ -1794,6 +1822,7 @@
         <translation language="hu"><![CDATA[e-mail címed]]></translation>
         <translation language="el"><![CDATA[η ηλεκτρονική σας διεύθυνση]]></translation>
         <translation language="zh"><![CDATA[你的Email地址]]></translation>
+        <translation language="tr"><![CDATA[e-posta adresiniz]]></translation>
       </item>
       <item type="label" name="YourLocationData">
         <translation language="nl"><![CDATA[uw locatie]]></translation>
@@ -1825,6 +1854,7 @@
         <translation language="hu"><![CDATA[neved]]></translation>
         <translation language="el"><![CDATA[το όνομά σας]]></translation>
         <translation language="zh"><![CDATA[你的名字]]></translation>
+        <translation language="tr"><![CDATA[isminiz]]></translation>
       </item>
       <item type="label" name="YourQuestion">
         <translation language="nl"><![CDATA[jouw vraag]]></translation>
@@ -1839,6 +1869,7 @@
         <translation language="hu"><![CDATA[kérdésed]]></translation>
         <translation language="el"><![CDATA[η ερώτησή σας]]></translation>
         <translation language="zh"><![CDATA[你的问题]]></translation>
+        <translation language="tr"><![CDATA[sorunuz]]></translation>
       </item>
       <item type="message" name="ActivationIsSuccess">
         <translation language="nl"><![CDATA[Je profiel werd geactiveerd.]]></translation>
@@ -1870,6 +1901,7 @@
         <translation language="hu"><![CDATA[Szintén érdekes neked]]></translation>
         <translation language="el"><![CDATA[Ίσως σας ενδιαφέρουν ακόμα]]></translation>
         <translation language="zh"><![CDATA[你可能对这些也感兴趣]]></translation>
+        <translation language="tr"><![CDATA[Bunlar da ilginizi çekebilir]]></translation>
       </item>
       <item type="message" name="AskOwnQuestion">
         <translation language="nl"><![CDATA[Antwoord niet gevonden? Stel zelf een vraag!]]></translation>
@@ -1884,6 +1916,7 @@
         <translation language="hu"><![CDATA[Nem találod, amit keresel? Kérdezd meg!]]></translation>
         <translation language="el"><![CDATA[Δεν βρήκατε αυτό που ψάχνατε; Κάντε τη δική σας ερώτηση!]]></translation>
         <translation language="zh"><![CDATA[没有找到你要找的答案？提个问题吧。]]></translation>
+        <translation language="tr"><![CDATA[Aradığınızı bulamadınız mı? Kendi sorunuzu sorun!]]></translation>
       </item>
       <item type="message" name="BlogAllComments">
         <translation language="nl"><![CDATA[Alle reacties op je blog.]]></translation>
@@ -1900,6 +1933,7 @@
         <translation language="sv"><![CDATA[All kommentarer på din blogg.]]></translation>
         <translation language="el"><![CDATA[Όλα τα σχόλια στο ιστολόγιό σας]]></translation>
         <translation language="pl"><![CDATA[Wszystkie komentarze na twoim blogu]]></translation>
+        <translation language="tr"><![CDATA[Blogdaki tüm yorumlar]]></translation>
       </item>
       <item type="message" name="BlogCommentInModeration">
         <translation language="nl"><![CDATA[Je reactie wacht op goedkeuring.]]></translation>
@@ -1916,6 +1950,7 @@
         <translation language="sv"><![CDATA[Din kommentar inväntar granskning.]]></translation>
         <translation language="el"><![CDATA[Το σχόλιό σας αναμένει έγκριση.]]></translation>
         <translation language="pl"><![CDATA[Twój komentarz oczekuje na moderację]]></translation>
+        <translation language="tr"><![CDATA[Yorumunuz onay bekliyor.]]></translation>
       </item>
       <item type="message" name="BlogCommentIsAdded">
         <translation language="nl"><![CDATA[Je reactie werd toegevoegd.]]></translation>
@@ -1932,6 +1967,7 @@
         <translation language="sv"><![CDATA[Din kommentar har lagts till.]]></translation>
         <translation language="el"><![CDATA[Το σχόλιό σας προστέθηκε]]></translation>
         <translation language="pl"><![CDATA[Twój komentarz został dodany]]></translation>
+        <translation language="tr"><![CDATA[Yorumunuz eklendi]]></translation>
       </item>
       <item type="message" name="BlogCommentIsSpam">
         <translation language="nl"><![CDATA[Je reactie werd gemarkeerd als spam.]]></translation>
@@ -1948,6 +1984,7 @@
         <translation language="sv"><![CDATA[Din kommentar markerades som skräp,]]></translation>
         <translation language="el"><![CDATA[Το σχόλιό σας χαρακτηρίσθηκε ανεπιθύμητη αλληλογραφία (spam)]]></translation>
         <translation language="pl"><![CDATA[Twój komentarz został oznaczony jako spam]]></translation>
+        <translation language="tr"><![CDATA[Yorumunuz spam olarak işaretlendi]]></translation>
       </item>
       <item type="message" name="BlogEmailNotificationsNewComment">
         <translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>.]]></translation>
@@ -1964,6 +2001,7 @@
         <translation language="sv"><![CDATA[%1$s kommenterade på <a href="%2$s">%3$s</a>.]]></translation>
         <translation language="el"><![CDATA[Ο %1$s σχολίασε το <a href="%2$s">%3$s</a>.]]></translation>
         <translation language="pl"><![CDATA[%1$s skomentował(a) w <a href="%2$s">%3$s</a>.]]></translation>
+        <translation language="tr"><![CDATA[%1$s, <a href="%2$s">%3$s</a> sayfasına yorum yaptı.]]></translation>
       </item>
       <item type="message" name="BlogEmailNotificationsNewCommentToModerate">
         <translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.]]></translation>
@@ -1979,6 +2017,7 @@
         <translation language="sv"><![CDATA[%1$s kommenterade på <a href="%2$s">%3$s</a>. <a href="%4$s">Moderera</a> kommentaren för att publicera den.]]></translation>
         <translation language="el"><![CDATA[Ο %1$s σχολίασε το <a href="%2$s">%3$s</a>. <a href="%4$s">Εγκρίνατε</a> το σχόλιο προς δημοσίευση.]]></translation>
         <translation language="pl"><![CDATA[%1$s skomentował <a href="%2$s>%3$s</a>.<a href="%4$s">Moderuj</a> ten komentarz aby go opublikować.]]></translation>
+        <translation language="tr"><![CDATA[%1$s, <a href="%2$s">%3$s</a> sayfasına yorum yaptı. Yayınlamak için <a href="%4$s">yönetim</a> sayfasına gidin.]]></translation>
       </item>
       <item type="message" name="BlogNoComments">
         <translation language="nl"><![CDATA[Reageer als eerste]]></translation>
@@ -1995,6 +2034,7 @@
         <translation language="sv"><![CDATA[Bli först att kommentera]]></translation>
         <translation language="el"><![CDATA[Σχολιάστε, είστε ο πρώτος!]]></translation>
         <translation language="pl"><![CDATA[Brak komentarzy]]></translation>
+        <translation language="tr"><![CDATA[İlk yorumu siz yapın]]></translation>
       </item>
       <item type="message" name="BlogNoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen blogposts.]]></translation>
@@ -2011,7 +2051,7 @@
         <translation language="sv"><![CDATA[Det finns inga artiklar än]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη άρθρα.]]></translation>
         <translation language="pl"><![CDATA[Brak artykułów]]></translation>
-        <translation language="tr"><![CDATA[Henüz hiç makaleleri bulunmamaktadır.]]></translation>
+        <translation language="tr"><![CDATA[Henüz hiç makale bulunmamaktadır.]]></translation>
       </item>
       <item type="message" name="BlogNumberOfComments">
         <translation language="nl"><![CDATA[Al %1$s reacties]]></translation>
@@ -2062,6 +2102,7 @@
         <translation language="sv"><![CDATA[ändra din e-postadress]]></translation>
         <translation language="el"><![CDATA[Αλλάξτε τη διεύθυνση email σας]]></translation>
         <translation language="pl"><![CDATA[Zmień swój adres e-mail]]></translation>
+        <translation language="tr"><![CDATA[e-posta adresinizi değiştirin]]></translation>
       </item>
       <item type="message" name="Comment">
         <translation language="nl"><![CDATA[reageer]]></translation>
@@ -2095,6 +2136,7 @@
         <translation language="sv"><![CDATA[Kommentarer på %1$s]]></translation>
         <translation language="el"><![CDATA[Σχόλια γιά %1$s]]></translation>
         <translation language="pl"><![CDATA[Komentarze w %1$s]]></translation>
+        <translation language="tr"><![CDATA[%1$s için yorumlar]]></translation>
       </item>
       <item type="message" name="ContactMessageSent">
         <translation language="nl"><![CDATA[Uw e-mail werd verzonden.]]></translation>
@@ -2111,6 +2153,7 @@
         <translation language="sv"><![CDATA[Ditt meddelande skickades.]]></translation>
         <translation language="el"><![CDATA[Το email σας απεστάλη.]]></translation>
         <translation language="pl"><![CDATA[Twój e-mail został wysłany]]></translation>
+        <translation language="tr"><![CDATA[E-postanız gönderildi.]]></translation>
       </item>
       <item type="message" name="ContactSubject">
         <translation language="nl"><![CDATA[E-mail via contactformulier]]></translation>
@@ -2127,6 +2170,7 @@
         <translation language="sv"><![CDATA[E-post via kontaktformulär.]]></translation>
         <translation language="el"><![CDATA[Στείλτε email από τη φόρμα επικοινωνίας.]]></translation>
         <translation language="pl"><![CDATA[E-mail poprzez formularz kontaktowy.]]></translation>
+        <translation language="tr"><![CDATA[İletişim formu ile e-posta]]></translation>
       </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
@@ -2174,6 +2218,7 @@
         <translation language="hu"><![CDATA[Van visszajelzés a(z) "%1$s"-hoz/hez.]]></translation>
         <translation language="el"><![CDATA[Υπάρχουν γνώμες επάνω στο "%1$s"]]></translation>
         <translation language="zh"><![CDATA["%1$s"有一条回复]]></translation>
+        <translation language="tr"><![CDATA["%1$s" hakkında geribildirim var]]></translation>
       </item>
       <item type="message" name="FaqNoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen vragen.]]></translation>
@@ -2188,6 +2233,7 @@
         <translation language="hu"><![CDATA[Nincs még kérdés.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη ερωτήσεις.]]></translation>
         <translation language="zh"><![CDATA[还没有人提问。]]></translation>
+        <translation language="tr"><![CDATA[Henüz soru yok.]]></translation>
       </item>
       <item type="message" name="FaqOwnQuestionSubject">
         <translation language="nl"><![CDATA[Een vraag van %1$s.]]></translation>
@@ -2202,6 +2248,7 @@
         <translation language="hu"><![CDATA[Egy kérdés: %1$s.]]></translation>
         <translation language="el"><![CDATA[Μία ερώτηση από %1$s.]]></translation>
         <translation language="zh"><![CDATA[一条来自 %1$s 的问题。]]></translation>
+        <translation language="tr"><![CDATA[%1$s tarafından soru]]></translation>
       </item>
       <item type="message" name="Feedback">
         <translation language="nl"><![CDATA[Ben je geholpen met dit antwoord?]]></translation>
@@ -2216,6 +2263,7 @@
         <translation language="hu"><![CDATA[Hasznos volt a válasz?]]></translation>
         <translation language="el"><![CDATA[Σας βοήθησε αυτή η απάντηση;]]></translation>
         <translation language="zh"><![CDATA[这个答案有用吗？]]></translation>
+        <translation language="tr"><![CDATA[Bu cevap faydalı oldu mu?]]></translation>
       </item>
       <item type="message" name="FeedbackSuccess">
         <translation language="nl"><![CDATA[Je feedback werd verstuurd.]]></translation>
@@ -2230,6 +2278,7 @@
         <translation language="hu"><![CDATA[A visszajelzés elküldve.]]></translation>
         <translation language="el"><![CDATA[Η γνώμη σας απεστάλη.]]></translation>
         <translation language="zh"><![CDATA[你的反馈已发送成功。]]></translation>
+        <translation language="tr"><![CDATA[Geribildiriminiz gönderildi.]]></translation>
       </item>
       <item type="message" name="ForgotPassword">
         <translation language="nl"><![CDATA[Wachtwoord vergeten?]]></translation>
@@ -2263,6 +2312,7 @@
         <translation language="sv"><![CDATA[Du frågade precis efter att återställa ditt lösenord på <a href="%1$s">Fork CMS</a>. Följ länken nedan för att återställa ditt lösenord.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
         <translation language="el"><![CDATA[Έχετε αιτηθεί την αλλαγή του κωδικού σας στο <a href="%1$s">Fork CMS</a>. Ακολουθήστε τον παρακάτω σύνδεσμο.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
         <translation language="pl"><![CDATA[Poprosiłeś o zmianę hasła na <a href="%1$s">Fork CMS</a>. Kliknij link poniżej aby rozpocząc procedurę zmiany hasła<br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="tr"><![CDATA[<a href="%1$s">Fork CMS</a> adresindeki şifrenizi sıfırlamak için bildirimde bulundunuz. Şifrenizi sıfırlamak için linke tıklayınız.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
       </item>
       <item type="message" name="ForgotPasswordClosure">
         <translation language="nl"><![CDATA[Met vriendelijke groeten,<br/><br/>Het Fork CMS team]]></translation>
@@ -2279,6 +2329,7 @@
         <translation language="sv"><![CDATA[Med vänliga hälsningar,<br/><br/>Fork CMS gänget]]></translation>
         <translation language="el"><![CDATA[Με τιμή,<br/><br/>η ομάδα του Fork CMS]]></translation>
         <translation language="pl"><![CDATA[Z pozdrowieniami,<br/><br/>The Fork CMS team]]></translation>
+        <translation language="en"><![CDATA[Saygılarımızla,<br/><br/>Fork CMS takımı]]></translation>
       </item>
       <item type="message" name="ForgotPasswordIsSuccess">
         <translation language="nl"><![CDATA[Je ontvangt binnen de tien minuten een e-mail waarmee je je wachtwoord opnieuw kan instellen.]]></translation>
@@ -2295,6 +2346,7 @@
         <translation language="sv"><![CDATA[Inom 10 minuter kommer du få ett meddelande för att återställa ditt lösenord.]]></translation>
         <translation language="el"><![CDATA[Σε λίγα λεπτά θα λάβετε ένα email γιά να αλλάξετε τον Κωδικό σας.]]></translation>
         <translation language="pl"><![CDATA[W mniej niż dziesięć minut otrzymasz e-mail, aby zresetować hasło.]]></translation>
+        <translation language="tr"><![CDATA[10 dakika içinde parolanızı sıfırlamak için bir e-posta alacaksınız.]]></translation>
       </item>
       <item type="message" name="ForgotPasswordSalutation">
         <translation language="nl"><![CDATA[Beste,]]></translation>
@@ -2344,6 +2396,7 @@
         <translation language="sv"><![CDATA[Nya inskick för formuläret "%1$s".]]></translation>
         <translation language="el"><![CDATA[Νέα υποβολή γιά τη φόρμα "%1$s".]]></translation>
         <translation language="pl"><![CDATA[Nowe zgłoszenie dla formularza "%1$s".]]></translation>
+        <translation language="tr"><![CDATA["%1$s" formuna yeni gönderi.]]></translation>
       </item>
       <item type="message" name="FR">
         <translation language="nl"><![CDATA[Frans]]></translation>
@@ -2393,6 +2446,7 @@
         <translation language="sv"><![CDATA[Antalet ändringar av ditt visningsnamn är begränsat till %1$s. Du har %2$s ändring(ar) kvar..]]></translation>
         <translation language="el"><![CDATA[Οι επιτρεπόμενες αλλαγές στο όνομα οθόνης είναι %1$s. Σας απέμειναν  %2$s αλλαγές.]]></translation>
         <translation language="pl"><![CDATA[Ilość zmian wyświetlanej nazwy jest ograniczona do %1$s. Pozostały ci %2$s zmiany.]]></translation>
+        <translation language="tr"><![CDATA[İsim değiştirme hakkı %1$s ile sınırlıdır. %2$s hakkınız kaldı.]]></translation>
       </item>
       <item type="message" name="HelpImageField">
         <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
@@ -2409,6 +2463,7 @@
         <translation language="sv"><![CDATA[Endast jp(e)g, gif eller png-filer är tillåtna.]]></translation>
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία εικόνας jp(e)g, gif ή png-files.]]></translation>
         <translation language="pl"><![CDATA[Dozwolone są pliki w formacie jp(e)g, gif i png.]]></translation>
+        <translation language="tr"><![CDATA[Sadece jp(e)g, gif ve png dosyaları izinlidir.]]></translation>
       </item>
       <item type="message" name="HelpTimeField">
         <translation language="nl"><![CDATA[vb. 14:35]]></translation>
@@ -2436,10 +2491,11 @@
         <translation language="de"><![CDATA[Wie können wir diese Antwort besser machen?]]></translation>
         <translation language="lt"><![CDATA[Kaip galėtume patobulinti šį atsakymą?]]></translation>
         <translation language="uk"><![CDATA[Як можна покращити цю відповідь?]]></translation>
-        <translation language="sv"><![CDATA[Hr kan vi förbättra detta svar?]]></translation>
+        <translation language="sv"><![CDATA[Hur kan vi förbättra detta svar?]]></translation>
         <translation language="hu"><![CDATA[Hogyan tudjuk javítani ezt a választ?]]></translation>
         <translation language="el"><![CDATA[Πως μπορούμε να βελτιώσουμε αυτή την απάντηση;]]></translation>
         <translation language="zh"><![CDATA[我们该如何改进这个答案？]]></translation>
+        <translation language="tr"><![CDATA[Bu cevabı nasıl geliştirebiliriz?]]></translation>
       </item>
       <item type="message" name="MoreResults">
         <translation language="nl"><![CDATA[Vind meer resultaten…]]></translation>
@@ -2456,7 +2512,7 @@
         <translation language="sv"><![CDATA[Hitta flera resultat...]]></translation>
         <translation language="el"><![CDATA[Αναζήτηση περισσοτέρων αποτελεσμάτων...]]></translation>
         <translation language="pl"><![CDATA[Więcej wyników]]></translation>
-        <translation language="tr"><![CDATA[Daha fazla sonuç bul...]]></translation>
+        <translation language="tr"><![CDATA[Daha fazla sonuç bul…]]></translation>
       </item>
       <item type="message" name="NL">
         <translation language="nl"><![CDATA[Nederlands]]></translation>
@@ -2472,7 +2528,7 @@
         <translation language="el"><![CDATA[Ολλανδικά]]></translation>
         <translation language="zh"><![CDATA[荷兰语]]></translation>
         <translation language="pl"><![CDATA[Duński]]></translation>
-        <translation language="tr"><![CDATA[Flemenkçe]]></translation>
+        <translation language="tr"><![CDATA[Felemenkçe]]></translation>
       </item>
       <item type="message" name="NoQuestionsInCategory">
         <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
@@ -2506,11 +2562,13 @@
         <translation language="sv"><![CDATA[Än så länge]]></translation>
         <translation language="el"><![CDATA[Μέχρι τώρα]]></translation>
         <translation language="pl"><![CDATA[Jak dotąd]]></translation>
+        <translation language="tr"><![CDATA[Henüz]]></translation>
       </item>
       <item type="message" name="NoSlideshowInCategory">
         <translation language="de"><![CDATA[Es gibt keine Slideshows in dieser Kategorie.]]></translation>
         <translation language="ru"><![CDATA[Нет слайдов в этой категории.]]></translation>
         <translation language="lt"><![CDATA[Nėra skaidrių demonstracijų šioje kategorijoje.]]></translation>
+        <translation language="tr"><![CDATA[Bu kategoride hiç slayt gösterisi yok.]]></translation>
       </item>
       <item type="message" name="NotificationSubject">
         <translation language="nl"><![CDATA[Verwittiging]]></translation>
@@ -2527,6 +2585,7 @@
         <translation language="sv"><![CDATA[Meddelande]]></translation>
         <translation language="el"><![CDATA[Ειδοποίηση]]></translation>
         <translation language="pl"><![CDATA[Powiadomienie]]></translation>
+        <translation language="tr"><![CDATA[Bildirim]]></translation>
       </item>
       <item type="message" name="OtherQuestions">
         <translation language="nl"><![CDATA[Andere vragen]]></translation>
@@ -2536,6 +2595,7 @@
         <translation language="hu"><![CDATA[További kérdések]]></translation>
         <translation language="zh"><![CDATA[其他问题]]></translation>
         <translation language="de"><![CDATA[Andere Fragen]]></translation>
+        <translation language="tr"><![CDATA[Diğer sorular]]></translation>
       </item>
       <item type="message" name="OwnQuestionSuccess">
         <translation language="nl"><![CDATA[Je vraag werd verzonden. We geven je zo snel mogelijk een antwoord.]]></translation>
@@ -2550,6 +2610,7 @@
         <translation language="hu"><![CDATA[A kérdésed elküldve. Hamarosan válaszolunk.]]></translation>
         <translation language="el"><![CDATA[Η ερώτησή σας απεστάλη. Θα σας απαντήσουμε το συντομότερο δυνατόν.]]></translation>
         <translation language="zh"><![CDATA[你的问题已发送。我们将尽快给你答复。]]></translation>
+        <translation language="tr"><![CDATA[Sorunuz gönderildi. Size en kısa zamanda cevap vereceğiz.]]></translation>
       </item>
       <item type="message" name="ProfilesLoggedInAs">
         <translation language="nl"><![CDATA[Je bent aangemeld als <a href="%2$s">%1$s</a>.]]></translation>
@@ -2560,6 +2621,7 @@
         <translation language="hu"><![CDATA[Beléptél mint <a href="%2$s">%1$s</a>.]]></translation>
         <translation language="zh"><![CDATA[你已作为 <a href="%2$s">%1$s</a> 登入。]]></translation>
         <translation language="de"><![CDATA[Du bist eingeloggt als <a href="%2$s">%1$s</a>.]]></translation>
+        <translation language="tr"><![CDATA[<a href="%2$s">%1$s</a> olarak giriş yaptınız.]]></translation>
       </item>
       <item type="message" name="QuestionsInSameCategory">
         <translation language="nl"><![CDATA[Andere vragen in deze categorie]]></translation>
@@ -2574,6 +2636,7 @@
         <translation language="hu"><![CDATA[További kérdések ebben a kategóriában]]></translation>
         <translation language="el"><![CDATA[Άλλες ερωτήσεις σε αυτή την κατηγορία]]></translation>
         <translation language="zh"><![CDATA[这个分类下的其他问题]]></translation>
+        <translation language="tr"><![CDATA[Bu kategorideki diğer sorular]]></translation>
       </item>
       <item type="message" name="RegisterBody">
         <translation language="nl"><![CDATA[Je hebt je zojuist geregistreerd op de site van <a href="%1$s">Fork CMS</a>. Om je profiel te activeren dien je op onderstaande link te klikken.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
@@ -2590,6 +2653,7 @@
         <translation language="sv"><![CDATA[Du har just registrerat dig på en <a href="%1$s">Fork CMS</a> webbplats.  För att aktivera din profil måste du följa länken nedan.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
         <translation language="el"><![CDATA[Μόλις έχετε εγγραφεί στον ιστοχώρο του <a href="%1$s">Fork CMS</a>. Γιά να ενεργοποιήσετε το προφίλ σας ακολουθήστε τον παρακάτω σύνδεσμο.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
         <translation language="pl"><![CDATA[Zarejestrowałeś się na <a href="%1$s">Fork CMS</a>. Aby aktywować profil musisz kliknąć poniższy link <br /><br /><a href="%2$s">%2$s</a>]]></translation>
+        <translation language="tr"><![CDATA[<a href="%1$s">Fork CMS</a> sitesine kayıt oldunuz. Üyeliğinizi aktifleştirmek için aşağıdaki linke tıklayın.<br /><br /><a href="%2$s">%2$s</a>]]></translation>
       </item>
       <item type="message" name="RegisterClosure">
         <translation language="nl"><![CDATA[Met vriendelijke groeten,<br/><br/>Het Fork CMS team]]></translation>
@@ -2606,6 +2670,7 @@
         <translation language="sv"><![CDATA[Med vänlig hälsning,<br/><br/>The Fork CMS teamet]]></translation>
         <translation language="el"><![CDATA[Με τιμή,<br/><br/>η ομάδα του Fork CMS]]></translation>
         <translation language="pl"><![CDATA[Z poważaniem,<br /><br />Zespół Fork CMS]]></translation>
+        <translation language="tr"><![CDATA[Saygılarımızla,<br/><br/>Fork CMS takımı]]></translation>
       </item>
       <item type="message" name="RegisterIsSuccess">
         <translation language="nl"><![CDATA[Welkom! Je ontvangt binnen de tien minuten een e-mail waarmee je je profiel kan activeren. Ondertussen kan je de website al gebruiken, zij het iets gelimiteerder.]]></translation>
@@ -2622,6 +2687,7 @@
         <translation language="sv"><![CDATA[Välkommen! Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande. Under tiden kan du besöka en begränsad version av webbplatsen.]]></translation>
         <translation language="el"><![CDATA[Καλωσήλθατε! Σε λίγη ώρα θα λάβετε ένα email ενεργοποίησης. Στο μεταξύ μπορείτε να χρησιμοποιήσετε τον ιστοχώρο, αλλά με κάποιους περιορισμούς.]]></translation>
         <translation language="pl"><![CDATA[Witamy! W mniej niż dziesięć minut otrzymasz mail aktywacyjny. W międzyczasie możesz korzystac z witryny w formie ograniczonej.]]></translation>
+        <translation language="tr"><![CDATA[Hoşgeldiniz! 10 dakika içinde hesabınızı aktifleştirmek için bir e-posta alacaksınız. Bu sırada siteyi limitli olarak kullanabilirsiniz.]]></translation>
       </item>
       <item type="message" name="RegisterSalutation">
         <translation language="nl"><![CDATA[Beste,]]></translation>
@@ -2655,6 +2721,7 @@
         <translation language="sv"><![CDATA[Aktivera din Fork CMS-profil]]></translation>
         <translation language="el"><![CDATA[Ενεργοποιείστε το προφίλ σας στο Fork CMS]]></translation>
         <translation language="pl"><![CDATA[Aktywuj swój profil Fork CMS]]></translation>
+        <translation language="tr"><![CDATA[Fork CMS profilinizi aktifleştirin]]></translation>
       </item>
       <item type="message" name="RelatedQuestions">
         <translation language="nl"><![CDATA[Lees ook]]></translation>
@@ -2669,6 +2736,7 @@
         <translation language="el"><![CDATA[Επιπλέον διαβάστε]]></translation>
         <translation language="uk"><![CDATA[Також читають]]></translation>
         <translation language="zh"><![CDATA[相关问题]]></translation>
+        <translation language="tr"><![CDATA[Bunları da okuyun]]></translation>
       </item>
       <item type="message" name="ResendActivationIsSuccess">
         <translation language="en"><![CDATA[In less than ten minutes you will receive an new activation mail. A simple click on the link and you will be able to log in.]]></translation>
@@ -2685,6 +2753,7 @@
         <translation language="sv"><![CDATA[Om mindre än 10 minuter kommer du få ett aktiveringsmeddelande. Ett enkelt klick på länken så kan du logga in.]]></translation>
         <translation language="el"><![CDATA[Σε λίγη ώρα θα λάβετε ένα νέο email ενεργοποίησης. Κάντε κλικ στο σύνδεσμο μέσα του και θα μπορείτε πλέον να συνδεθείτε.]]></translation>
         <translation language="pl"><![CDATA[W mniej niż dziesięć minut otrzymasz nowy mail aktywacyjny.Wystarczy kliknąć na link i będziesz mógł się zalogować.]]></translation>
+        <translation language="tr"><![CDATA[10 dakika içinde hesabınızı aktifleştirmek için yeni bir e-posta alacaksınız. Linke tıkladıktan sonra giriş yapabilirsiniz.]]></translation>
       </item>
       <item type="message" name="ResetPasswordIsSuccess">
         <translation language="nl"><![CDATA[Je wachtwoord werd gewijzigd.]]></translation>
@@ -2701,6 +2770,7 @@
         <translation language="sv"><![CDATA[Ditt lösenord har sparats.]]></translation>
         <translation language="el"><![CDATA[Ο κωδικός σας αποθηκεύτηκε]]></translation>
         <translation language="pl"><![CDATA[Twoje hasło zostało zapisane]]></translation>
+        <translation language="tr"><![CDATA[Şireniz kaydedildi.]]></translation>
       </item>
       <item type="message" name="SearchNoItems">
         <translation language="nl"><![CDATA[Er zijn geen resultaten.]]></translation>
@@ -2717,6 +2787,7 @@
         <translation language="sv"><![CDATA[Det fanns inga resultat.]]></translation>
         <translation language="el"><![CDATA[Δεν υπάρχουν αποτελέσματα.]]></translation>
         <translation language="pl"><![CDATA[Brak wyników.]]></translation>
+        <translation language="tr"><![CDATA[Sonuç bulunamadı.]]></translation>
       </item>
       <item type="message" name="SubscribeSuccess">
         <translation language="en"><![CDATA[You have successfully subscribed to the newsletter.]]></translation>
@@ -2733,6 +2804,7 @@
         <translation language="sv"><![CDATA[Du prenumererar nu på nyhetsbrevet.]]></translation>
         <translation language="el"><![CDATA[Έχετε εγγραφεί με επιτυχία συνδρομητής στο ενημερωτικό φυλλάδιο.]]></translation>
         <translation language="pl"><![CDATA[Udało Ci się zapisac do newslettera.]]></translation>
+        <translation language="tr"><![CDATA[Bildirimlere abone oldunuz.]]></translation>
       </item>
       <item type="message" name="TagsNoItems">
         <translation language="nl"><![CDATA[Er werden nog geen tags gebruikt.]]></translation>
@@ -2749,6 +2821,7 @@
         <translation language="sv"><![CDATA[Inga taggar användes.]]></translation>
         <translation language="el"><![CDATA[Δεν χρησιμοποιήθηκαν καθόλου ετικέτες.]]></translation>
         <translation language="pl"><![CDATA[Nie wykorzystano jeszcze tagów]]></translation>
+        <translation language="tr"><![CDATA[Hiç etiket kullanılmamış.]]></translation>
       </item>
       <item type="message" name="UnsubscribeSuccess">
         <translation language="en"><![CDATA[You have successfully unsubscribed from the newsletter.]]></translation>
@@ -2765,6 +2838,7 @@
         <translation language="sv"><![CDATA[Du har nu avanmält dig från nyhetsbrevet.]]></translation>
         <translation language="el"><![CDATA[Έχετε επιτυχώς διαγράψει τη συνδρομή σας από το ενημερωτικό φυλλάδιο.]]></translation>
         <translation language="pl"><![CDATA[Udało Ci się wypisać z newslettera.]]></translation>
+        <translation language="tr"><![CDATA[Bildirim aboneliğiniz iptal edildi.]]></translation>
       </item>
       <item type="message" name="UpdateEmailIsSuccess">
         <translation language="nl"><![CDATA[Je e-mail werd gewijzigd.]]></translation>
@@ -2781,6 +2855,7 @@
         <translation language="sv"><![CDATA[Din e-post sparades]]></translation>
         <translation language="el"><![CDATA[Το email σας αποθηκεύτηκε.]]></translation>
         <translation language="pl"><![CDATA[Twój e-mail został zapisany]]></translation>
+        <translation language="tr"><![CDATA[E-postanız kaydedildi.]]></translation>
       </item>
       <item type="message" name="UpdatePasswordIsSuccess">
         <translation language="nl"><![CDATA[Je wachtwoord werd gewijzigd.]]></translation>
@@ -2797,6 +2872,7 @@
         <translation language="sv"><![CDATA[Ditt lösenord har sparats.]]></translation>
         <translation language="el"><![CDATA[Ο κωδικός σας αποθηκεύτηκε.]]></translation>
         <translation language="pl"><![CDATA[Twoje hasło zostało zapisane]]></translation>
+        <translation language="tr"><![CDATA[Şireniz kaydedildi.]]></translation>
       </item>
       <item type="message" name="UpdateSettingsIsSuccess">
         <translation language="nl"><![CDATA[De instellingen werden gewijzigd.]]></translation>
@@ -2813,6 +2889,7 @@
         <translation language="sv"><![CDATA[Dina inställningar har sparats.]]></translation>
         <translation language="el"><![CDATA[Οι ρυθμίσεις σας αποθηκεύτηκαν.]]></translation>
         <translation language="pl"><![CDATA[Ustawienia zostały zapisane]]></translation>
+        <translation language="tr"><![CDATA[Ayarlarınız kaydedildi.]]></translation>
       </item>
       <item type="message" name="WelcomeUserX">
         <translation language="nl"><![CDATA[Welkom, %1$s]]></translation>
@@ -2829,6 +2906,7 @@
         <translation language="sv"><![CDATA[Välkommen, %1$s]]></translation>
         <translation language="el"><![CDATA[Καλωσήλθες, %1$s]]></translation>
         <translation language="pl"><![CDATA[Witaj, %1$s]]></translation>
+        <translation language="tr"><![CDATA[Merhaba, %1$s]]></translation>
       </item>
       <item type="message" name="WrittenBy">
         <translation language="nl"><![CDATA[geschreven door %1$s]]></translation>
@@ -2845,6 +2923,7 @@
         <translation language="sv"><![CDATA[skrivet av %1$s]]></translation>
         <translation language="el"><![CDATA[γράφτηκε από τον %1$s]]></translation>
         <translation language="pl"><![CDATA[napisane przez %1$s]]></translation>
+        <translation language="tr"><![CDATA[%1$s tarafından yazıldı]]></translation>
       </item>
       <item type="error" name="AlreadySubscribed">
         <translation language="en"><![CDATA[This e-mail address is already subscribed to the newsletter.]]></translation>
@@ -2861,6 +2940,7 @@
         <translation language="sv"><![CDATA[Denna e-postadress prenummererar redan på nyhetsbrevet.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email έχει ήδη συνδρομή στο ενημερωτικό φυλλάδιο.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail jest już zapisany do newslettera.]]></translation>
+        <translation language="tr"><![CDATA[Bu e-posta adresi bildirimlere zaten üye.]]></translation>
       </item>
       <item type="error" name="AlreadyUnsubscribed">
         <translation language="en"><![CDATA[This e-mail address is already unsubscribed from the newsletter]]></translation>
@@ -2877,6 +2957,7 @@
         <translation language="sv"><![CDATA[Denna e-postadress är har redan avanmält sig från nyhetsbrevet]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email έχει ακυρώσει τη συνδρομή της στο ενημερωτικό φυλλάδιο.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail  wypisał się już z newslettera]]></translation>
+        <translation language="tr"><![CDATA[Bu e-posta adresi zaten bildirim listesinden çıkmış.]]></translation>
       </item>
       <item type="error" name="AuthorIsRequired">
         <translation language="nl"><![CDATA[Auteur is een verplicht veld.]]></translation>
@@ -2893,6 +2974,7 @@
         <translation language="sv"><![CDATA[Författare är ett obligatoriskt fält.]]></translation>
         <translation language="el"><![CDATA[Ο Συγγραφέας είναι υποχρεωτικό πεδίο.]]></translation>
         <translation language="pl"><![CDATA[Pole Autor jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[Yazar, gerekli alandır.]]></translation>
       </item>
       <item type="error" name="CommentTimeout">
         <translation language="nl"><![CDATA[Slow down cowboy]]></translation>
@@ -2909,6 +2991,7 @@
         <translation language="sv"><![CDATA[Sakta ner cowboy]]></translation>
         <translation language="el"><![CDATA[Λίγο πιό αργά...]]></translation>
         <translation language="pl"><![CDATA[zwolnij kowboju]]></translation>
+        <translation language="tr"><![CDATA[Ağır ol bakalım.]]></translation>
       </item>
       <item type="error" name="ContactErrorWhileSending">
         <translation language="nl"><![CDATA[Er ging iets mis tijdens het verzenden]]></translation>
@@ -2925,6 +3008,7 @@
         <translation language="sv"><![CDATA[Någonting gick fel vid sändningen]]></translation>
         <translation language="el"><![CDATA[Συνέβη ένα σφάλμα κατά την αποστολή]]></translation>
         <translation language="pl"><![CDATA[Coś poszło nie tak podczas próby wysłania]]></translation>
+        <translation language="tr"><![CDATA[Göndermeye çalışırken bir şeyler ters gitti.]]></translation>
       </item>
       <item type="error" name="DateIsInvalid">
         <translation language="nl"><![CDATA[Ongeldige datum.]]></translation>
@@ -2958,6 +3042,7 @@
         <translation language="sv"><![CDATA[Detta visningsnamn används redan.]]></translation>
         <translation language="el"><![CDATA[Αυτό το όνομα οθόνης είναι ήδη σε χρήση.]]></translation>
         <translation language="pl"><![CDATA[Ta nazwa jest już zajęta.]]></translation>
+        <translation language="tr"><![CDATA[Bu görüntü ismi zaten kullanılıyor.]]></translation>
       </item>
       <item type="error" name="DisplayNameIsRequired">
         <translation language="nl"><![CDATA[Weergave naam is een verplicht veld.]]></translation>
@@ -2974,6 +3059,7 @@
         <translation language="sv"><![CDATA[Visningsnamn är ett obligatoriskt fält.]]></translation>
         <translation language="el"><![CDATA[Το όνομα οθόνης που θα εμφανίζεται είναι υποχρεωτικό πεδίο.]]></translation>
         <translation language="pl"><![CDATA[Pole Wyświetlane imię jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[Görüntü ismi, gerekli alandır.]]></translation>
       </item>
       <item type="error" name="EmailExists">
         <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
@@ -2990,6 +3076,7 @@
         <translation language="sv"><![CDATA[Denna e-postadress används redan.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email είναι ήδη σε χρήση.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail jest już zajęty]]></translation>
+        <translation language="tr"><![CDATA[Bu e-posta adresi zaten kullanımda.]]></translation>
       </item>
       <item type="error" name="EmailIsInvalid">
         <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
@@ -3006,6 +3093,7 @@
         <translation language="sv"><![CDATA[Vänligen ange en giltig e-postadress.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη διεύθυνση email.]]></translation>
         <translation language="pl"><![CDATA[Proszę podac poprawny adres e-mail.]]></translation>
+        <translation language="tr"><![CDATA[Lütfen geçerli bir e-posta adresi girin.]]></translation>
       </item>
       <item type="error" name="EmailIsRequired">
         <translation language="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
@@ -3022,6 +3110,7 @@
         <translation language="sv"><![CDATA[E-post är ett obligatoriskt fält.]]></translation>
         <translation language="el"><![CDATA[Το Email είναι υποχρεωτικό πεδίο.]]></translation>
         <translation language="pl"><![CDATA[Pole e-mail jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[E-posta, gerekli alandır.]]></translation>
       </item>
       <item type="error" name="EmailIsUnknown">
         <translation language="nl"><![CDATA[Dit e-mailadres is onbekend in onze database.]]></translation>
@@ -3038,6 +3127,7 @@
         <translation language="sv"><![CDATA[Denna e-postadress är okänd för vår databas.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email δεν υπάρχει στα αρχεία μας.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail nie jest znany w naszej bazie danych.]]></translation>
+        <translation language="tr"><![CDATA[Bu e-posta adresi veritabanımızda bilinmiyor.]]></translation>
       </item>
       <item type="error" name="EmailNotInDatabase">
         <translation language="en"><![CDATA[This e-mail address does not exist in the database.]]></translation>
@@ -3054,6 +3144,7 @@
         <translation language="sv"><![CDATA[Denna e-postadress finns inte i databasen.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση email δεν υπάρχει στα αρχεία μας.]]></translation>
         <translation language="pl"><![CDATA[Ten adres e-mail nie istnieje w bazie danych.]]></translation>
+        <translation language="tr"><![CDATA[Bu e-posta adresi veritabanımızda yok.]]></translation>
       </item>
       <item type="error" name="FeedbackIsRequired">
         <translation language="nl"><![CDATA[Gelieve feedback te geven.]]></translation>
@@ -3068,6 +3159,7 @@
         <translation language="hu"><![CDATA[Kérlek adj visszajelzést.]]></translation>
         <translation language="el"><![CDATA[Παρακλώ πείτε τη γνώμη σας]]></translation>
         <translation language="zh"><![CDATA[请回复。]]></translation>
+        <translation language="tr"><![CDATA[Lütfen geribildirim verin.]]></translation>
       </item>
       <item type="error" name="FeedbackSpam">
         <translation language="nl"><![CDATA[Jouw feedback werd als spam gemarkeerd.]]></translation>
@@ -3082,6 +3174,7 @@
         <translation language="hu"><![CDATA[A visszajelzésed spamnak jelölve.]]></translation>
         <translation language="el"><![CDATA[Η γνώμη σας χαρακτηρίστηκε ανεπιθύμητο μήνυμα (spam)]]></translation>
         <translation language="zh"><![CDATA[你的回复被标记为垃圾信息。]]></translation>
+        <translation language="tr"><![CDATA[Geribildiriminiz spam olarak işaretlendi.]]></translation>
       </item>
       <item type="error" name="FieldIsRequired">
         <translation language="nl"><![CDATA[Dit veld is verplicht.]]></translation>
@@ -3098,6 +3191,7 @@
         <translation language="sv"><![CDATA[Detta fält är obligatoriskt.]]></translation>
         <translation language="el"><![CDATA[Αυτό το πεδίο είναι υποχρεωτικό]]></translation>
         <translation language="pl"><![CDATA[To pole jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[Bu alan gereklidir.]]></translation>
       </item>
       <item type="error" name="FormError">
         <translation language="nl"><![CDATA[Er ging iets mis]]></translation>
@@ -3114,6 +3208,7 @@
         <translation language="sv"><![CDATA[Något gick fel]]></translation>
         <translation language="el"><![CDATA[Συνέβη κάποιο σφάλμα]]></translation>
         <translation language="pl"><![CDATA[coś poszło nie tak]]></translation>
+        <translation language="tr"><![CDATA[Bir şeyler ters gitti.]]></translation>
       </item>
       <item type="error" name="FormTimeout">
         <translation language="nl"><![CDATA[Slow down cowboy]]></translation>
@@ -3130,12 +3225,14 @@
         <translation language="sv"><![CDATA[Sakta ner cowboy]]></translation>
         <translation language="el"><![CDATA[Λίγο πιό αργά...]]></translation>
         <translation language="pl"><![CDATA[zwolnij kowboju]]></translation>
+        <translation language="tr"><![CDATA[Ağır ol bakalım]]></translation>
       </item>
       <item type="error" name="InvalidNumber">
         <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
         <translation language="de"><![CDATA[Bitte trag eine gültige Nummer ein.]]></translation>
         <translation language="ru"><![CDATA[Пожалуйста, укажите число.]]></translation>
         <translation language="lt"><![CDATA[Neteisingas numeris.]]></translation>
+        <translation language="tr"><![CDATA[Geçersiz numara.]]></translation>
       </item>
       <item type="error" name="InvalidPassword">
         <translation language="nl"><![CDATA[Ongeldig wachtwoord.]]></translation>
@@ -3152,6 +3249,7 @@
         <translation language="sv"><![CDATA[Ogiltigt lösenord.]]></translation>
         <translation language="el"><![CDATA[Λανθασμένος Κωδικός.]]></translation>
         <translation language="pl"><![CDATA[złe hasło]]></translation>
+        <translation language="tr"><![CDATA[Geçersiz şifre.]]></translation>
       </item>
       <item type="error" name="InvalidPrice">
         <translation language="nl"><![CDATA[Gelieve een geldig bedrag in te geven.]]></translation>
@@ -3164,6 +3262,7 @@
         <translation language="hu"><![CDATA[Kérlek érvényes árat ajd meg.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία έγκυρη τιμή.]]></translation>
         <translation language="zh"><![CDATA[请填写有效的价格。]]></translation>
+        <translation language="tr"><![CDATA[Şütfen geçerli bir fiyat giriniz.]]></translation>
       </item>
       <item type="error" name="InvalidURL">
         <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
@@ -3180,6 +3279,7 @@
         <translation language="sv"><![CDATA[Detta är en ogiltig URL.]]></translation>
         <translation language="el"><![CDATA[Αυτή η διεύθυνση internet (URL) δεν ισχύει.]]></translation>
         <translation language="pl"><![CDATA[To jest nieprawidłowy adres URL.]]></translation>
+        <translation language="tr"><![CDATA[Geçersiz bir URL.]]></translation>
       </item>
       <item type="error" name="JPGGIFAndPNGOnly">
         <translation language="nl"><![CDATA[Enkel jpg, gif, png]]></translation>
@@ -3212,6 +3312,7 @@
         <translation language="sv"><![CDATA[Meddelande är ett obligatoriskt fält.]]></translation>
         <translation language="el"><![CDATA[Το Μήνυμα είναι υποχρεωτικό πεδίο]]></translation>
         <translation language="pl"><![CDATA[pole wiadomość jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[Mesaj, gerekli alandır.]]></translation>
       </item>
       <item type="error" name="NameIsRequired">
         <translation language="nl"><![CDATA[Gelieve een naam in te geven.]]></translation>
@@ -3228,6 +3329,7 @@
         <translation language="sv"><![CDATA[Vänligen ange ett namn.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε ένα όνομα]]></translation>
         <translation language="pl"><![CDATA[Prosze podać imię.]]></translation>
+        <translation language="tr"><![CDATA[Lütfen isim giriniz.]]></translation>
       </item>
       <item type="error" name="NumericCharactersOnly">
         <translation language="nl"><![CDATA[Enkel numerieke karakters zijn toegestaan.]]></translation>
@@ -3244,6 +3346,7 @@
         <translation language="sv"><![CDATA[Endast numeriska tecken är tillåtna.]]></translation>
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αριθμοί]]></translation>
         <translation language="pl"><![CDATA[Dozwolone sa tylko znaki numeryczne.]]></translation>
+        <translation language="tr"><![CDATA[Sadece rakam girilebilir.]]></translation>
       </item>
       <item type="error" name="OwnQuestionSpam">
         <translation language="nl"><![CDATA[Jouw vraag werd als spam gemarkeerd.]]></translation>
@@ -3258,6 +3361,7 @@
         <translation language="hu"><![CDATA[A kérdésed spamnak jelölve.]]></translation>
         <translation language="el"><![CDATA[Η ερώτησή σας χαρακτηρίστηκε ανεπιθύμητο μήνυμα (spam)]]></translation>
         <translation language="zh"><![CDATA[你的问题被标记为垃圾内容。]]></translation>
+        <translation language="tr"><![CDATA[Sorunuz spam olarak işaretlendi.]]></translation>
       </item>
       <item type="error" name="PasswordIsRequired">
         <translation language="nl"><![CDATA[Wachtwoord is een verplicht veld.]]></translation>
@@ -3274,6 +3378,7 @@
         <translation language="sv"><![CDATA[Lösenord är ett obligatoriskt fält.]]></translation>
         <translation language="el"><![CDATA[Ο Κωδικός είναι υποχρεωτικό πεδίο.]]></translation>
         <translation language="pl"><![CDATA[Pole hasło jest wymagane.]]></translation>
+        <translation language="tr"><![CDATA[Şifre, gerekli alandır.]]></translation>
       </item>
       <item type="error" name="ProfileIsActive">
         <translation language="en"><![CDATA[This profile is already activated.]]></translation>
@@ -3291,6 +3396,7 @@
         <translation language="el"><![CDATA[Αυτό το προφίλ είναι ήδη ενεργοποιημένο.]]></translation>
         <translation language="tr"><![CDATA[Bu profil daha önce etkinleştirildi.]]></translation>
         <translation language="pl"><![CDATA[Ten profil został już aktywowany.]]></translation>
+        <translation language="tr"><![CDATA[Bu profil zaten aktifleştirilmiş.]]></translation>
       </item>
       <item type="error" name="ProfilesBlockedLogin">
         <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is geblokkeerd.]]></translation>
@@ -3307,6 +3413,7 @@
         <translation language="sv"><![CDATA[Inloggningen misslyckades. Denna profil är blockerad.]]></translation>
         <translation language="el"><![CDATA[Η Σύνδεση απέτυχε. Αυτό το προφίλ είναι μπλοκαρισμένο.]]></translation>
         <translation language="pl"><![CDATA[Logowanie nie powiodło sie. Profil jest zablokowany.]]></translation>
+        <translation language="tr"><![CDATA[Giriş yapılamadı. Bu profil engellenmiş.]]></translation>
       </item>
       <item type="error" name="ProfilesDeletedLogin">
         <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is verwijderd.]]></translation>
@@ -3315,6 +3422,7 @@
         <translation language="hu"><![CDATA[Belépés megtagadva. Ez a profil törölve lett.]]></translation>
         <translation language="it"><![CDATA[Login fallito. Questo profilo è stato eliminato.]]></translation>
         <translation language="ru"><![CDATA[Ошибка входа. Профиль удален.]]></translation>
+        <translation language="tr"><![CDATA[Giriş yapılmadı, bu profil silinmiş.]]></translation>
         <translation language="zh"><![CDATA[登录失败，这个帐户已被删除。]]></translation>
         <translation language="de"><![CDATA[Anmeldung fehlgeschlagen. Dieses Profil wurde gelöscht.]]></translation>
         <translation language="es"><![CDATA[Falló login. Este perfil ha sido eliminado.]]></translation>
@@ -3327,6 +3435,7 @@
       <item type="error" name="ProfilesInactiveLogin">
         <translation language="nl"><![CDATA[Aanmelden mislukt. Dit profiel is nog niet geactiveerd. <a href="%1$s">Verstuur activatie e-mail opnieuw</a>.]]></translation>
         <translation language="en"><![CDATA[Login failed. This profile is not yet activated. <a href="%1$s">Resend activation e-mail</a>.]]></translation>
+        <translation language="tr"><![CDATA[Giriş başarısız. Bu profil henüz aktifleştirilmemiş. <a href="%1$s">Aktivasyon e-postasını tekrar gönder</a>.]]></translation>
         <translation language="fr"><![CDATA[Echec de la connexion. Ce profil n'est pas encore activé. <a href="%1$s">Envoyez à nouveau le-mail d'activation</a>.]]></translation>
         <translation language="hu"><![CDATA[Belépés megtagadva. Ez a profil nincs aktiválva. <a href="%1$s">Aktivációs e-mail újraküldése.</a>]]></translation>
         <translation language="it"><![CDATA[Login fallito. Questo profilo non è stato ancora attivato. <a href="%1$s">Resend activation e-mail</a>]]></translation>
@@ -3343,6 +3452,7 @@
       <item type="error" name="ProfilesInvalidLogin">
         <translation language="nl"><![CDATA[Aanmelden mislukt. Controleer je e-mail en je wachtwoord.]]></translation>
         <translation language="en"><![CDATA[Login failed. Please check your e-mail and your password.]]></translation>
+        <translation language="tr"><![CDATA[Giriş başarısız. Lütfen e-posta adresinizi ve şifrenizi kontrol ediniz.]]></translation>
         <translation language="fr"><![CDATA[Echec de la connexion. V&eacute;rifiez votre e-mail et votre mot de passe.]]></translation>
         <translation language="hu"><![CDATA[Belépés megtagadva. Kérlek ellenőrizd az e-mail-t és a jelszót.]]></translation>
         <translation language="it"><![CDATA[Login fallito. Ricontrolla la tua e-mail e la password per favore.]]></translation>
@@ -3359,6 +3469,7 @@
       <item type="error" name="QuestionIsRequired">
         <translation language="nl"><![CDATA[Gelieve een vraag te formuleren.]]></translation>
         <translation language="en"><![CDATA[Please provide a question.]]></translation>
+        <translation language="tr"><![CDATA[Lütfen bir soru sorun.]]></translation>
         <translation language="ru"><![CDATA[Пожалуйста, укажите ваш вопрос.]]></translation>
         <translation language="fr"><![CDATA[S'il vous plaît fournir une question.]]></translation>
         <translation language="es"><![CDATA[Por favor escribe una pregunta.]]></translation>
@@ -3373,6 +3484,7 @@
       <item type="error" name="SomethingWentWrong">
         <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
         <translation language="en"><![CDATA[Something went wrong.]]></translation>
+        <translation language="tr"><![CDATA[Bir şeyler ters gitti.]]></translation>
         <translation language="hu"><![CDATA[Valami elromlott.]]></translation>
         <translation language="it"><![CDATA[Qualcosa è andato storto.]]></translation>
         <translation language="fr"><![CDATA[Un erreur est survenue.]]></translation>
@@ -3388,6 +3500,7 @@
       </item>
       <item type="error" name="SubscribeFailed">
         <translation language="en"><![CDATA[Subscribing failed]]></translation>
+        <translation language="tr"><![CDATA[Abonelik başarısız.]]></translation>
         <translation language="nl"><![CDATA[Het inschrijven is niet gelukt]]></translation>
         <translation language="hu"><![CDATA[Feliratkozás sikertelen]]></translation>
         <translation language="it"><![CDATA[Abbonamento fallito]]></translation>
@@ -3405,6 +3518,7 @@
       <item type="error" name="TermIsRequired">
         <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
         <translation language="en"><![CDATA[The searchterm is required.]]></translation>
+        <translation language="tr"><![CDATA[Arama terimi gereklidir.]]></translation>
         <translation language="hu"><![CDATA[A keresési feltétel közelető.]]></translation>
         <translation language="it"><![CDATA[Il termine di ricerca è obbligatorio.]]></translation>
         <translation language="fr"><![CDATA[Le terme recherché est requis.]]></translation>
@@ -3420,6 +3534,7 @@
       </item>
       <item type="error" name="UnsubscribeFailed">
         <translation language="en"><![CDATA[Unsubscribing failed]]></translation>
+        <translation language="tr"><![CDATA[Abonelik iptali başarısız]]></translation>
         <translation language="nl"><![CDATA[Het uitschrijven is niet gelukt]]></translation>
         <translation language="hu"><![CDATA[Leiratkozás sikertelen]]></translation>
         <translation language="it"><![CDATA[Cancellazione abbonamento fallita]]></translation>
@@ -3447,7 +3562,7 @@
         <translation language="sv"><![CDATA[arkivera]]></translation>
         <translation language="el"><![CDATA[αρχειοθέτηση]]></translation>
         <translation language="pl"><![CDATA[archiwum]]></translation>
-        <translation language="tr"><![CDATA[arsiv]]></translation>
+        <translation language="tr"><![CDATA[arşiv]]></translation>
       </item>
       <item type="action" name="ArticleCommentsRss">
         <translation language="nl"><![CDATA[reacties-op-rss]]></translation>
@@ -3463,6 +3578,7 @@
         <translation language="sv"><![CDATA[kommentarer-på-rss]]></translation>
         <translation language="el"><![CDATA[σχόλια-στο-rss]]></translation>
         <translation language="pl"><![CDATA[komentarze-w-rss]]></translation>
+        <translation language="tr"><![CDATA[rss-ile-yorumlar]]></translation>
       </item>
       <item type="action" name="Category">
         <translation language="nl"><![CDATA[categorie]]></translation>
@@ -3556,6 +3672,7 @@
         <translation language="hu"><![CDATA[visszajelzes]]></translation>
         <translation language="el"><![CDATA[γνώμες]]></translation>
         <translation language="zh"><![CDATA[回复]]></translation>
+        <translation language="tr"><![CDATA[geribildirim]]></translation>
       </item>
       <item type="action" name="OwnQuestion">
         <translation language="nl"><![CDATA[stel-jouw-vraag]]></translation>
@@ -3569,6 +3686,7 @@
         <translation language="hu"><![CDATA[kerdezz]]></translation>
         <translation language="el"><![CDATA[κάντε-την-ερώτησή-σας]]></translation>
         <translation language="zh"><![CDATA[提问]]></translation>
+        <translation language="tr"><![CDATA[sorunu-sor]]></translation>
       </item>
       <item type="action" name="Preview">
         <translation language="en"><![CDATA[preview]]></translation>
@@ -3584,7 +3702,7 @@
         <translation language="sv"><![CDATA[förhandsvisning]]></translation>
         <translation language="el"><![CDATA[προεπισκόπιση]]></translation>
         <translation language="pl"><![CDATA[podglad]]></translation>
-        <translation language="tr"><![CDATA[onizleme]]></translation>
+        <translation language="tr"><![CDATA[önizleme]]></translation>
       </item>
       <item type="action" name="Rss">
         <translation language="nl"><![CDATA[rss]]></translation>
@@ -3614,6 +3732,7 @@
         <translation language="hu"><![CDATA[spam]]></translation>
         <translation language="el"><![CDATA[ανεπιθύμητη-αλληλογραφία]]></translation>
         <translation language="zh"><![CDATA[举报]]></translation>
+        <translation language="tr"><![CDATA[spam]]></translation>
       </item>
       <item type="action" name="Subscribe">
         <translation language="en"><![CDATA[subscribe]]></translation>
@@ -3629,7 +3748,7 @@
         <translation language="sv"><![CDATA[prenumerera]]></translation>
         <translation language="el"><![CDATA[εγγραφή-συνδρομής]]></translation>
         <translation language="pl"><![CDATA[subskrybuj]]></translation>
-        <translation language="tr"><![CDATA[abone-ol]]></translation>
+        <translation language="tr"><![CDATA[abone ol]]></translation>
       </item>
       <item type="action" name="Success">
         <translation language="nl"><![CDATA[succes]]></translation>
@@ -3643,6 +3762,7 @@
         <translation language="hu"><![CDATA[vegrehajtva]]></translation>
         <translation language="el"><![CDATA[επιτυχία]]></translation>
         <translation language="zh"><![CDATA[成功]]></translation>
+        <translation language="tr"><![CDATA[başarılı]]></translation>
       </item>
       <item type="action" name="Unsubscribe">
         <translation language="en"><![CDATA[unsubscribe]]></translation>
@@ -3658,6 +3778,7 @@
         <translation language="sv"><![CDATA[avanmäl]]></translation>
         <translation language="el"><![CDATA[διαγραφή-συνδρομής]]></translation>
         <translation language="pl"><![CDATA[nie-subskrybuj]]></translation>
+        <translation language="tr"><![CDATA[aboneliği iptal et]]></translation>
       </item>
     </core>
   </frontend>
@@ -3852,6 +3973,7 @@
       <item type="label" name="Aktivera">
         <translation language="sv"><![CDATA[aktivera]]></translation>
         <translation language="ru"><![CDATA[активировать]]></translation>
+        <translation language="tr"><![CDATA[aktifleştir]]></translation>
       </item>
       <item type="label" name="AllAddresses">
         <translation language="en"><![CDATA[all e-mail addresses]]></translation>
@@ -4172,6 +4294,7 @@
         <translation language="sv"><![CDATA[ställa en egen fråga]]></translation>
         <translation language="el"><![CDATA[κάντε την ερώτησή σας]]></translation>
         <translation language="zh"><![CDATA[提出你的问题]]></translation>
+        <translation language="tr"><![CDATA[kendi sorunu sor]]></translation>
       </item>
       <item type="label" name="At">
         <translation language="nl"><![CDATA[om]]></translation>
@@ -4202,6 +4325,7 @@
         <translation language="uk"><![CDATA[Аутентифікація]]></translation>
         <translation language="sv"><![CDATA[autentisering]]></translation>
         <translation language="el"><![CDATA[πιστοποίηση]]></translation>
+        <translation language="tr"><![CDATA[doğrulama]]></translation>
       </item>
       <item type="label" name="Author">
         <translation language="nl"><![CDATA[auteur]]></translation>
@@ -4246,6 +4370,7 @@
         <translation language="hu"><![CDATA[közepes]]></translation>
         <translation language="zh"><![CDATA[平均]]></translation>
         <translation language="de"><![CDATA[Durchschnitt]]></translation>
+        <translation language="tr"><![CDATA[ortalama]]></translation>
       </item>
       <item type="label" name="Back">
         <translation language="nl"><![CDATA[terug]]></translation>
@@ -4479,6 +4604,7 @@
         <translation language="uk"><![CDATA[Змінити e-mail]]></translation>
         <translation language="sv"><![CDATA[ända e-post]]></translation>
         <translation language="el"><![CDATA[αλλαγή email]]></translation>
+        <translation language="tr"><![CDATA[e-posta değiştir]]></translation>
       </item>
       <item type="label" name="ChangePassword">
         <translation language="nl"><![CDATA[wijzig wachtwoord]]></translation>
@@ -4495,7 +4621,7 @@
         <translation language="sv"><![CDATA[ändra lösenord]]></translation>
         <translation language="el"><![CDATA[αλλαγή κωδικού]]></translation>
         <translation language="pl"><![CDATA[zmień hasło]]></translation>
-        <translation language="tr"><![CDATA[şifreyi güncelleyiniz]]></translation>
+        <translation language="tr"><![CDATA[şifre değiştir]]></translation>
       </item>
       <item type="label" name="ChooseALanguage">
         <translation language="nl"><![CDATA[kies een taal]]></translation>
@@ -4575,6 +4701,7 @@
         <translation language="uk"><![CDATA[Обрати тип]]></translation>
         <translation language="sv"><![CDATA[välj en typ]]></translation>
         <translation language="el"><![CDATA[επιλογή τύπου]]></translation>
+        <translation language="tr"><![CDATA[tür seç]]></translation>
       </item>
       <item type="label" name="ChooseContent">
         <translation language="nl"><![CDATA[kies inhoud]]></translation>
@@ -4623,6 +4750,7 @@
         <translation language="uk"><![CDATA[Налаштування клієнта]]></translation>
         <translation language="sv"><![CDATA[klientinställningar]]></translation>
         <translation language="el"><![CDATA[ρυθμίσεις πελάτη]]></translation>
+        <translation language="tr"><![CDATA[kullanıcı ayarları]]></translation>
       </item>
       <item type="label" name="CN">
         <translation language="ru"><![CDATA[Китайский]]></translation>
@@ -4755,6 +4883,7 @@
         <translation language="uk"><![CDATA[Блоки контента]]></translation>
         <translation language="sv"><![CDATA[innehållsblock]]></translation>
         <translation language="el"><![CDATA[μπλοκ περιεχομένου]]></translation>
+        <translation language="tr"><![CDATA[içerik blokları]]></translation>
       </item>
       <item type="label" name="Copy">
         <translation language="en"><![CDATA[copy]]></translation>
@@ -4788,7 +4917,7 @@
         <translation language="sv"><![CDATA[kärna]]></translation>
         <translation language="el"><![CDATA[πυρήνας]]></translation>
         <translation language="pl"><![CDATA[rdzeń]]></translation>
-        <translation language="tr"><![CDATA[core]]></translation>
+        <translation language="tr"><![CDATA[çekirdek]]></translation>
       </item>
       <item type="label" name="Country">
         <translation language="nl"><![CDATA[land]]></translation>
@@ -4821,6 +4950,7 @@
         <translation language="uk"><![CDATA[Створено]]></translation>
         <translation language="sv"><![CDATA[skapad]]></translation>
         <translation language="el"><![CDATA[δημιουργήθηκε]]></translation>
+        <translation language="tr"><![CDATA[yaratıldı]]></translation>
       </item>
       <item type="label" name="CreatedOn">
         <translation language="en"><![CDATA[created on]]></translation>
@@ -4836,6 +4966,7 @@
         <translation language="uk"><![CDATA[Створено в]]></translation>
         <translation language="sv"><![CDATA[skapad av]]></translation>
         <translation language="el"><![CDATA[δημιουργήθηκε στις]]></translation>
+        <translation language="tr"><![CDATA[yaratılma tarihi]]></translation>
       </item>
       <item type="label" name="Cronjob">
         <translation language="en"><![CDATA[cronjob]]></translation>
@@ -4849,6 +4980,7 @@
         <translation language="sv"><![CDATA[cronjob]]></translation>
         <translation language="el"><![CDATA[χρονοπρογραμματισμός]]></translation>
         <translation language="zh"><![CDATA[cronjob]]></translation>
+        <translation language="tr"><![CDATA[cronjob]]></translation>
       </item>
       <item type="label" name="Cronjobs">
         <translation language="en"><![CDATA[cronjobs]]></translation>
@@ -4862,6 +4994,7 @@
         <translation language="sv"><![CDATA[cronjobs]]></translation>
         <translation language="el"><![CDATA[εργασίες χρονικά προγραμματισμένες]]></translation>
         <translation language="zh"><![CDATA[cronjobs]]></translation>
+        <translation language="tr"><![CDATA[cronjoblar]]></translation>
       </item>
       <item type="label" name="CS">
         <translation language="nl"><![CDATA[Tsjechisch]]></translation>
@@ -4875,6 +5008,7 @@
         <translation language="sv"><![CDATA[Tjeckiska]]></translation>
         <translation language="el"><![CDATA[Τσέχικα]]></translation>
         <translation language="zh"><![CDATA[捷克语]]></translation>
+        <translation language="tr"><![CDATA[Çek]]></translation>
       </item>
       <item type="label" name="CSV">
         <translation language="nl"><![CDATA[CSV]]></translation>
@@ -4901,6 +5035,7 @@
         <translation language="hu"><![CDATA[jelenlegi jelszó]]></translation>
         <translation language="zh"><![CDATA[当前密码]]></translation>
         <translation language="de"><![CDATA[aktuelles Passwort]]></translation>
+        <translation language="tr"><![CDATA[şimdiki şifre]]></translation>
       </item>
       <item type="label" name="CustomURL">
         <translation language="nl"><![CDATA[aangepaste URL]]></translation>
@@ -4917,6 +5052,7 @@
         <translation language="sv"><![CDATA[anpassad webbadress]]></translation>
         <translation language="el"><![CDATA[φτιαχτή διεύθυνση URL]]></translation>
         <translation language="pl"><![CDATA[własny adres URL]]></translation>
+        <translation language="tr"><![CDATA[özel URL]]></translation>
       </item>
       <item type="label" name="Dashboard">
         <translation language="nl"><![CDATA[dashboard]]></translation>
@@ -5050,6 +5186,7 @@
         <translation language="sv"><![CDATA[standard]]></translation>
         <translation language="el"><![CDATA[εξορισμού]]></translation>
         <translation language="pl"><![CDATA[domyślne]]></translation>
+        <translation language="tr"><![CDATA[varsayılan]]></translation>
       </item>
       <item type="label" name="Delete">
         <translation language="nl"><![CDATA[verwijderen]]></translation>
@@ -5066,6 +5203,7 @@
         <translation language="sv"><![CDATA[ta bort]]></translation>
         <translation language="el"><![CDATA[διαγραφή]]></translation>
         <translation language="pl"><![CDATA[usuń]]></translation>
+        <translation language="tr"><![CDATA[sil]]></translation>
       </item>
       <item type="label" name="DeleteThisTag">
         <translation language="nl"><![CDATA[verwijder deze tag]]></translation>
@@ -5082,6 +5220,7 @@
         <translation language="sv"><![CDATA[ta bort denna tagg]]></translation>
         <translation language="el"><![CDATA[διαγραφή ετικέτας]]></translation>
         <translation language="pl"><![CDATA[usuń ten tag]]></translation>
+        <translation language="tr"><![CDATA[etiketi sil]]></translation>
       </item>
       <item type="label" name="Description">
         <translation language="nl"><![CDATA[beschrijving]]></translation>
@@ -5098,6 +5237,7 @@
         <translation language="sv"><![CDATA[beskrivning]]></translation>
         <translation language="el"><![CDATA[περιγραφή]]></translation>
         <translation language="pl"><![CDATA[opis]]></translation>
+        <translation language="tr"><![CDATA[açıklama]]></translation>
       </item>
       <item type="label" name="Details">
         <translation language="nl"><![CDATA[details]]></translation>
@@ -5113,6 +5253,7 @@
         <translation language="uk"><![CDATA[Деталі]]></translation>
         <translation language="sv"><![CDATA[detaljer]]></translation>
         <translation language="el"><![CDATA[λεπτομέρειες]]></translation>
+        <translation language="tr"><![CDATA[detaylar]]></translation>
       </item>
       <item type="label" name="Developer">
         <translation language="nl"><![CDATA[developer]]></translation>
@@ -5145,6 +5286,7 @@
         <translation language="sv"><![CDATA[domäner]]></translation>
         <translation language="el"><![CDATA[τομείς]]></translation>
         <translation language="pl"><![CDATA[domeny]]></translation>
+        <translation language="tr"><![CDATA[domainler]]></translation>
       </item>
       <item type="label" name="Done">
         <translation language="nl"><![CDATA[klaar]]></translation>
@@ -5161,6 +5303,7 @@
         <translation language="sv"><![CDATA[utfört]]></translation>
         <translation language="el"><![CDATA[ολοκληρώθηκε]]></translation>
         <translation language="pl"><![CDATA[zrobione]]></translation>
+        <translation language="tr"><![CDATA[tamamlandı]]></translation>
       </item>
       <item type="label" name="Draft">
         <translation language="nl"><![CDATA[kladversie]]></translation>
@@ -5211,6 +5354,7 @@
         <translation language="sv"><![CDATA[ändra]]></translation>
         <translation language="el"><![CDATA[μεταβολή]]></translation>
         <translation language="pl"><![CDATA[edytuj]]></translation>
+        <translation language="tr"><![CDATA[düzenle]]></translation>
       </item>
       <item type="label" name="EditedOn">
         <translation language="nl"><![CDATA[bewerkt op]]></translation>
@@ -5227,6 +5371,7 @@
         <translation language="sv"><![CDATA[redigeras på]]></translation>
         <translation language="el"><![CDATA[μεταβλήθηκε στις]]></translation>
         <translation language="pl"><![CDATA[edytowane w]]></translation>
+        <translation language="tr"><![CDATA[düzenleme tarihi:]]></translation>
       </item>
       <item type="label" name="Editor">
         <translation language="nl"><![CDATA[editor]]></translation>
@@ -5243,6 +5388,7 @@
         <translation language="sv"><![CDATA[redaktör]]></translation>
         <translation language="el"><![CDATA[επεξεργαστής κειμένου]]></translation>
         <translation language="pl"><![CDATA[edytor]]></translation>
+        <translation language="tr"><![CDATA[editör]]></translation>
       </item>
       <item type="label" name="EditProfile">
         <translation language="nl"><![CDATA[bewerk profiel]]></translation>
@@ -5259,6 +5405,7 @@
         <translation language="sv"><![CDATA[ändra profil]]></translation>
         <translation language="el"><![CDATA[μεταβολή προφίλ]]></translation>
         <translation language="pl"><![CDATA[edytuj profil]]></translation>
+        <translation language="tr"><![CDATA[profili düzenle]]></translation>
       </item>
       <item type="label" name="EditTemplate">
         <translation language="nl"><![CDATA[template wijzigen]]></translation>
@@ -5275,6 +5422,7 @@
         <translation language="sv"><![CDATA[ändra mall]]></translation>
         <translation language="el"><![CDATA[μεταβολή προτύπου]]></translation>
         <translation language="pl"><![CDATA[edytuj szablon]]></translation>
+        <translation language="tr"><![CDATA[şablon düzenle]]></translation>
       </item>
       <item type="label" name="EL">
         <translation language="nl"><![CDATA[Grieks]]></translation>
@@ -5288,6 +5436,7 @@
         <translation language="sv"><![CDATA[Grekiska]]></translation>
         <translation language="el"><![CDATA[Ελληνικά]]></translation>
         <translation language="zh"><![CDATA[希腊语]]></translation>
+        <translation language="tr"><![CDATA[Yunanca]]></translation>
       </item>
       <item type="label" name="Email">
         <translation language="nl"><![CDATA[e-mail]]></translation>
@@ -5304,6 +5453,7 @@
         <translation language="sv"><![CDATA[e-post]]></translation>
         <translation language="el"><![CDATA[διεύθυνση email]]></translation>
         <translation language="pl"><![CDATA[e-mail]]></translation>
+        <translation language="tr"><![CDATA[e-posta]]></translation>
       </item>
       <item type="label" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
@@ -5320,6 +5470,7 @@
         <translation language="sv"><![CDATA[Engelska]]></translation>
         <translation language="el"><![CDATA[Αγγλικά]]></translation>
         <translation language="pl"><![CDATA[angielski]]></translation>
+        <translation language="tr"><![CDATA[İngilizce]]></translation>
       </item>
       <item type="label" name="EnableModeration">
         <translation language="nl"><![CDATA[moderatie inschakelen]]></translation>
@@ -5336,6 +5487,7 @@
         <translation language="sv"><![CDATA[aktivera granskning]]></translation>
         <translation language="el"><![CDATA[ενεργοποίηση εγκρίσεων]]></translation>
         <translation language="pl"><![CDATA[włącz moderacje]]></translation>
+        <translation language="tr"><![CDATA[moderasyonu aç]]></translation>
       </item>
       <item type="label" name="EndDate">
         <translation language="nl"><![CDATA[einddatum]]></translation>
@@ -5352,6 +5504,7 @@
         <translation language="sv"><![CDATA[slutdatum]]></translation>
         <translation language="el"><![CDATA[καταληκτική ημερομηνία]]></translation>
         <translation language="pl"><![CDATA[data zakończenia]]></translation>
+        <translation language="tr"><![CDATA[bitiş tarihi]]></translation>
       </item>
       <item type="label" name="Error">
         <translation language="nl"><![CDATA[error]]></translation>
@@ -5368,6 +5521,7 @@
         <translation language="sv"><![CDATA[fel]]></translation>
         <translation language="el"><![CDATA[σφάλμα]]></translation>
         <translation language="pl"><![CDATA[błąd]]></translation>
+        <translation language="tr"><![CDATA[hata]]></translation>
       </item>
       <item type="label" name="ES">
         <translation language="nl"><![CDATA[Spaans]]></translation>
@@ -5401,6 +5555,7 @@
         <translation language="sv"><![CDATA[exempel]]></translation>
         <translation language="el"><![CDATA[παράδειγμα]]></translation>
         <translation language="pl"><![CDATA[przykład]]></translation>
+        <translation language="tr"><![CDATA[örnek]]></translation>
       </item>
       <item type="label" name="Execute">
         <translation language="nl"><![CDATA[uitvoeren]]></translation>
@@ -5416,6 +5571,7 @@
         <translation language="uk"><![CDATA[Виконати]]></translation>
         <translation language="sv"><![CDATA[utföra]]></translation>
         <translation language="el"><![CDATA[εκτέλεση]]></translation>
+        <translation language="tr"><![CDATA[çalıştır]]></translation>
       </item>
       <item type="label" name="ExitPages">
         <translation language="nl"><![CDATA[uitstappagina's]]></translation>
@@ -5431,6 +5587,7 @@
         <translation language="uk"><![CDATA[Сторінки виходу]]></translation>
         <translation language="sv"><![CDATA[stäng sidor]]></translation>
         <translation language="el"><![CDATA[σελίδες εξόδου]]></translation>
+        <translation language="tr"><![CDATA[sayfaları kapat]]></translation>
       </item>
       <item type="label" name="Export">
         <translation language="nl"><![CDATA[exporteer]]></translation>
@@ -5447,6 +5604,7 @@
         <translation language="sv"><![CDATA[exportera]]></translation>
         <translation language="el"><![CDATA[εξαγωγή]]></translation>
         <translation language="pl"><![CDATA[eksportuj]]></translation>
+        <translation language="tr"><![CDATA[dışa aktar]]></translation>
       </item>
       <item type="label" name="Extensions">
         <translation language="nl"><![CDATA[extensions]]></translation>
@@ -5460,6 +5618,7 @@
         <translation language="sv"><![CDATA[tillägg]]></translation>
         <translation language="el"><![CDATA[επεκτάσεις]]></translation>
         <translation language="zh"><![CDATA[扩展插件]]></translation>
+        <translation language="tr"><![CDATA[eklentiler]]></translation>
       </item>
       <item type="label" name="ExtraMetaTags">
         <translation language="nl"><![CDATA[extra metatags]]></translation>
@@ -5506,6 +5665,7 @@
         <translation language="sv"><![CDATA[feedback]]></translation>
         <translation language="el"><![CDATA[γνώμες]]></translation>
         <translation language="zh"><![CDATA[回复]]></translation>
+        <translation language="tr"><![CDATA[geri bildirim]]></translation>
       </item>
       <item type="label" name="FeedburnerURL">
         <translation language="nl"><![CDATA[feedburner URL]]></translation>
@@ -5521,6 +5681,7 @@
         <translation language="uk"><![CDATA[FeedBurner URL]]></translation>
         <translation language="sv"><![CDATA[feedburner webbadress]]></translation>
         <translation language="el"><![CDATA[διεύθυνση URL στο feedburner]]></translation>
+        <translation language="tr"><![CDATA[feedburner URL]]></translation>
       </item>
       <item type="label" name="File">
         <translation language="nl"><![CDATA[bestand]]></translation>
@@ -5537,6 +5698,7 @@
         <translation language="sv"><![CDATA[fil]]></translation>
         <translation language="el"><![CDATA[αρχείο]]></translation>
         <translation language="pl"><![CDATA[plik]]></translation>
+        <translation language="tr"><![CDATA[dosya]]></translation>
       </item>
       <item type="label" name="Filename">
         <translation language="nl"><![CDATA[bestandsnaam]]></translation>
@@ -5553,6 +5715,7 @@
         <translation language="sv"><![CDATA[filnamn]]></translation>
         <translation language="el"><![CDATA[όνομα αρχείου]]></translation>
         <translation language="pl"><![CDATA[nazwa pliku]]></translation>
+        <translation language="tr"><![CDATA[dosya adı]]></translation>
       </item>
       <item type="label" name="FilterCommentsForSpam">
         <translation language="nl"><![CDATA[filter reacties op spam]]></translation>
@@ -5568,6 +5731,7 @@
         <translation language="uk"><![CDATA[Фільтрувати коментарі від спаму]]></translation>
         <translation language="sv"><![CDATA[filtrera kommentarer för spam]]></translation>
         <translation language="el"><![CDATA[σχόλια φίλτρου γιά ανεπιθύμητη αλληλογραφία]]></translation>
+        <translation language="tr"><![CDATA[yorumları spam'a karşı filtrele]]></translation>
       </item>
       <item type="label" name="Follow">
         <translation language="nl"><![CDATA[follow]]></translation>
@@ -5584,6 +5748,7 @@
         <translation language="sv"><![CDATA[följer]]></translation>
         <translation language="el"><![CDATA[ακολούθα]]></translation>
         <translation language="pl"><![CDATA[podążaj]]></translation>
+        <translation language="tr"><![CDATA[takip et]]></translation>
       </item>
       <item type="label" name="For">
         <translation language="en"><![CDATA[for]]></translation>
@@ -5600,6 +5765,7 @@
         <translation language="sv"><![CDATA[för]]></translation>
         <translation language="el"><![CDATA[γιά]]></translation>
         <translation language="pl"><![CDATA[dla]]></translation>
+        <translation language="tr"><![CDATA[için]]></translation>
       </item>
       <item type="label" name="ForgotPassword">
         <translation language="nl"><![CDATA[wachtwoord vergeten]]></translation>
@@ -5616,6 +5782,7 @@
         <translation language="sv"><![CDATA[glömt lösenord]]></translation>
         <translation language="el"><![CDATA[ξέχασα τον κωδικό]]></translation>
         <translation language="pl"><![CDATA[zapomniałeś hasło]]></translation>
+        <translation language="tr"><![CDATA[şifremi unuttum]]></translation>
       </item>
       <item type="label" name="FormBuilder">
         <translation language="nl"><![CDATA[formbuilder]]></translation>
@@ -5632,6 +5799,7 @@
         <translation language="sv"><![CDATA[formulärbyggare]]></translation>
         <translation language="el"><![CDATA[σχεδιαστής φορμών]]></translation>
         <translation language="pl"><![CDATA[Kreator formularzy]]></translation>
+        <translation language="tr"><![CDATA[form oluşturucu]]></translation>
       </item>
       <item type="label" name="FR">
         <translation language="nl"><![CDATA[Frans]]></translation>
@@ -5665,6 +5833,7 @@
         <translation language="sv"><![CDATA[från]]></translation>
         <translation language="el"><![CDATA[από]]></translation>
         <translation language="pl"><![CDATA[od]]></translation>
+        <translation language="tr"><![CDATA[tarafından]]></translation>
       </item>
       <item type="label" name="Frontend">
         <translation language="nl"><![CDATA[frontend]]></translation>
@@ -5680,6 +5849,7 @@
         <translation language="uk"><![CDATA[Сайт]]></translation>
         <translation language="sv"><![CDATA[framsida]]></translation>
         <translation language="el"><![CDATA[εμπρός όψη]]></translation>
+        <translation language="tr"><![CDATA[frontend]]></translation>
       </item>
       <item type="label" name="General">
         <translation language="nl"><![CDATA[algemeen]]></translation>
@@ -5695,6 +5865,7 @@
         <translation language="uk"><![CDATA[Основні]]></translation>
         <translation language="sv"><![CDATA[allmänna]]></translation>
         <translation language="el"><![CDATA[γενικά]]></translation>
+        <translation language="tr"><![CDATA[genel]]></translation>
       </item>
       <item type="label" name="GeneralSettings">
         <translation language="nl"><![CDATA[algemene instellingen]]></translation>
@@ -5711,6 +5882,7 @@
         <translation language="sv"><![CDATA[allmänna inställningar]]></translation>
         <translation language="el"><![CDATA[γενικές ρυθμίσεις]]></translation>
         <translation language="pl"><![CDATA[ogólne ustawienia]]></translation>
+        <translation language="tr"><![CDATA[genel ayarlar]]></translation>
       </item>
       <item type="label" name="Generate">
         <translation language="nl"><![CDATA[genereer]]></translation>
@@ -5726,6 +5898,7 @@
         <translation language="uk"><![CDATA[Генерувати]]></translation>
         <translation language="sv"><![CDATA[generera]]></translation>
         <translation language="el"><![CDATA[δημιούργησέ το]]></translation>
+        <translation language="tr"><![CDATA[oluştur]]></translation>
       </item>
       <item type="label" name="GoToPage">
         <translation language="nl"><![CDATA[ga naar pagina]]></translation>
@@ -5742,6 +5915,7 @@
         <translation language="sv"><![CDATA[gå till sida]]></translation>
         <translation language="el"><![CDATA[πήγαινε στη σελίδα]]></translation>
         <translation language="pl"><![CDATA[przejdź do strony]]></translation>
+        <translation language="tr"><![CDATA[sayfaya git]]></translation>
       </item>
       <item type="label" name="Group">
         <translation language="nl"><![CDATA[groep]]></translation>
@@ -5758,6 +5932,7 @@
         <translation language="sv"><![CDATA[grupp]]></translation>
         <translation language="el"><![CDATA[ομάδα]]></translation>
         <translation language="pl"><![CDATA[grupa]]></translation>
+        <translation language="tr"><![CDATA[grup]]></translation>
       </item>
       <item type="label" name="GroupMap">
         <translation language="nl"><![CDATA[algemene kaart: alle locaties]]></translation>
