@@ -168,6 +168,11 @@ class Model
             array($id)
         );
 
+        // Don't add a settings element, just return an empty array here if no user is found.
+        if (empty($user)) {
+            return array();
+        }
+
         // get user-settings
         $user['settings'] = (array) $db->getPairs(
             'SELECT s.name, s.value
