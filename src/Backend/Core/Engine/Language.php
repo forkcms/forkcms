@@ -26,7 +26,9 @@ class Language
      *
      * @var    array
      */
-    protected static $err = array(), $lbl = array(), $msg = array();
+    protected static $err = array();
+    protected static $lbl = array();
+    protected static $msg = array();
 
     /**
      * The active languages
@@ -321,12 +323,8 @@ class Language
 
         // attempt to set a cookie
         try {
-            // store in cookie
             CommonCookie::set('interface_language', $language);
-        }
-
-        // catch exceptions
-        catch(\SpoonCookieException $e) {
+        } catch (\SpoonCookieException $e) {
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 

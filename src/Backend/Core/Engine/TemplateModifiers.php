@@ -237,8 +237,7 @@ class TemplateModifiers
         // less characters
         if (mb_strlen($var) <= $length) {
             return \SpoonFilter::htmlspecialchars($var);
-        } // more characters
-        else {
+        } else {
             // hellip is seen as 1 char, so remove it from length
             if ($useHellip) {
                 $length = $length - 1;

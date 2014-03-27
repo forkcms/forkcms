@@ -145,10 +145,13 @@ class Navigation extends Base\Object
             // que? let's call this piece magic
             if ($currentDepth >= $startDepth - 1) {
                 // start li
-                if ($selected) $HTML .= '<li class="selected">' . "\n";
-                else $HTML .= '<li>' . "\n";
-                $HTML .= '	<a href="/' . NAMED_APPLICATION . '/' . Language::getWorkingLanguage(
-                    ) . '/' . $url . '">' . $label . '</a>' . "\n";
+                if ($selected) {
+                    $HTML .= '<li class="selected">' . "\n";
+                } else {
+                    $HTML .= '<li>' . "\n";
+                }
+                $HTML .= '	<a href="/' . NAMED_APPLICATION . '/' .
+                         Language::getWorkingLanguage() . '/' . $url . '">' . $label . '</a>' . "\n";
             }
 
             // children?
@@ -156,27 +159,34 @@ class Navigation extends Base\Object
                 // end depth not passed or isn't reached
                 if ($endDepth === null || $currentDepth < $endDepth) {
                     // start ul if needed
-                    if ($currentDepth != 0) $HTML .= '<ul>' . "\n";
+                    if ($currentDepth != 0) {
+                        $HTML .= '<ul>' . "\n";
+                    }
 
                     // loop children
                     foreach ($value['children'] as $subKey => $row) {
-                        $HTML .= '	' . $this->buildHTML(
-                                $row,
-                                $subKey,
-                                $selectedKeys,
-                                $startDepth,
-                                $endDepth,
-                                $currentDepth + 1
-                            );
+                        $HTML .= '	' .
+                                 $this->buildHTML(
+                                     $row,
+                                     $subKey,
+                                     $selectedKeys,
+                                     $startDepth,
+                                     $endDepth,
+                                     $currentDepth + 1
+                                 );
                     }
 
                     // end ul if needed
-                    if ($currentDepth != 0) $HTML .= '</ul>' . "\n";
+                    if ($currentDepth != 0) {
+                        $HTML .= '</ul>' . "\n";
+                    }
                 }
             }
 
             // end
-            if ($currentDepth >= $startDepth - 1) $HTML .= '</li>' . "\n";
+            if ($currentDepth >= $startDepth - 1) {
+                $HTML .= '</li>' . "\n";
+            }
         }
 
         return $HTML;
@@ -212,12 +222,15 @@ class Navigation extends Base\Object
             $hasSelectedFor = $item['selected_for'] !== null;
 
             // no url set, fetch the url of the first child
-            if ($item['url'] == '') $item['url'] = $this->getNavigationUrl($item['id']);
+            if ($item['url'] == '') {
+                $item['url'] = $this->getNavigationUrl($item['id']);
+            }
 
             // general
             $output .= $prefix . "array(\n";
             $output .= $prefix . "\t'url' => '" . $item['url'] . "',\n";
-            $output .= $prefix . "\t'label' => '" . $item['label'] . "'" . (($hasChildren || $hasSelectedFor) ? ',' : '') . "\n";
+            $output .= $prefix . "\t'label' => '" . $item['label'] . "'" .
+                       (($hasChildren || $hasSelectedFor) ? ',' : '') . "\n";
 
             // selected for
             if ($hasSelectedFor) {
@@ -231,9 +244,8 @@ class Navigation extends Base\Object
 
                     // add each item
                     foreach ($selectedFor as $ii => $selectedItem) {
-                        $output .= $prefix . "\t\t'" . $selectedItem . "'" . ($ii < (count(
-                                                                                         $selectedFor
-                                                                                     ) - 1) ? ',' : '') . "\n";
+                        $output .= $prefix . "\t\t'" . $selectedItem .
+                                   "'" . ($ii < (count($selectedFor) - 1) ? ',' : '') . "\n";
                     }
 
                     // close
@@ -268,95 +280,99 @@ class Navigation extends Base\Object
     {
         foreach ($navigation as $key => $value) {
             $allowedChildren = array();
-
-            // error?
             $allowed = true;
 
-            // get rid of invalid items
-            if (!isset($value['url']) || !isset($value['label'])) $allowed = false;
+            if (!isset($value['url']) || !isset($value['label'])) {
+                $allowed = false;
+            }
 
-            // split up chunks
             list($module, $action) = explode('/', $value['url']);
             $module = \SpoonFilter::toCamelCase($module);
             $action = \SpoonFilter::toCamelCase($action);
 
-            // no rights for this module?
-            if (!Authentication::isAllowedModule($module)) $allowed = false;
+            if (!Authentication::isAllowedModule($module)) {
+                $allowed = false;
+            }
 
-            // no rights for this action?
-            if (!Authentication::isAllowedAction($action, $module)) $allowed = false;
+            if (!Authentication::isAllowedAction($action, $module)) {
+                $allowed = false;
+            }
 
-            // has children
             if (isset($value['children']) && is_array($value['children']) && !empty($value['children'])) {
-                // loop children
                 foreach ($value['children'] as $keyB => $valueB) {
-                    // error?
                     $allowed = true;
-
-                    // init var
                     $allowedChildrenB = array();
 
-                    // get rid of invalid items
-                    if (!isset($valueB['url']) || !isset($valueB['label'])) $allowed = false;
+                    if (!isset($valueB['url']) || !isset($valueB['label'])) {
+                        $allowed = false;
+                    }
 
-                    // split up chunks
                     list($module, $action) = explode('/', $valueB['url']);
                     $module = \SpoonFilter::toCamelCase($module);
                     $action = \SpoonFilter::toCamelCase($action);
 
-                    // no rights for this module?
-                    if (!Authentication::isAllowedModule($module)) $allowed = false;
+                    if (!Authentication::isAllowedModule($module)) {
+                        $allowed = false;
+                    }
 
-                    // no rights for this action?
-                    if (!Authentication::isAllowedAction($action, $module)) $allowed = false;
+                    if (!Authentication::isAllowedAction($action, $module)) {
+                        $allowed = false;
+                    }
 
                     // has children
                     if (isset($valueB['children']) && is_array($valueB['children']) && !empty($valueB['children'])) {
                         // loop children
                         foreach ($valueB['children'] as $keyC => $valueC) {
-                            // error?
                             $allowed = true;
 
-                            // get rid of invalid items
-                            if (!isset($valueC['url']) || !isset($valueC['label'])) $allowed = false;
+                            if (!isset($valueC['url']) || !isset($valueC['label'])) {
+                                $allowed = false;
+                            }
 
-                            // split up chunks
                             list($module, $action) = explode('/', $valueC['url']);
                             $module = \SpoonFilter::toCamelCase($module);
                             $action = \SpoonFilter::toCamelCase($action);
 
-                            // no rights for this module?
-                            if (!Authentication::isAllowedModule($module)) $allowed = false;
+                            if (!Authentication::isAllowedModule($module)) {
+                                $allowed = false;
+                            }
 
-                            // no rights for this action?
-                            if (!Authentication::isAllowedAction($action, $module)) $allowed = false;
+                            if (!Authentication::isAllowedAction($action, $module)) {
+                                $allowed = false;
+                            }
 
-                            // error occurred
                             if (!$allowed) {
                                 unset($navigation[$key]['children'][$keyB]['children'][$keyC]);
                                 continue;
-                            } // store allowed children
-                            elseif (!in_array(
+                            } elseif (!in_array(
                                 $navigation[$key]['children'][$keyB]['children'][$keyC],
                                 $allowedChildrenB
                             )
-                            ) $allowedChildrenB[] = $navigation[$key]['children'][$keyB]['children'][$keyC];
+                            ) {
+                                // store allowed children
+                                $allowedChildrenB[] = $navigation[$key]['children'][$keyB]['children'][$keyC];
+                            }
                         }
                     }
 
-                    // error occurred and no allowed children on level B
+
                     if (!$allowed && empty($allowedChildrenB)) {
+                        // error occurred and no allowed children on level B
                         unset($navigation[$key]['children'][$keyB]);
                         continue;
-                    } // store allowed children on level B
-                    elseif (!in_array(
+                    } elseif (!in_array(
                         $navigation[$key]['children'][$keyB],
                         $allowedChildren
                     )
-                    ) $allowedChildren[] = $navigation[$key]['children'][$keyB];
+                    ) {
+                        // store allowed children on level B
+                        $allowedChildren[] = $navigation[$key]['children'][$keyB];
+                    }
 
                     // assign new base url for level B
-                    if (!empty($allowedChildrenB)) $navigation[$key]['children'][$keyB]['url'] = $allowedChildrenB[0]['url'];
+                    if (!empty($allowedChildrenB)) {
+                        $navigation[$key]['children'][$keyB]['url'] = $allowedChildrenB[0]['url'];
+                    }
                 }
             }
 
@@ -364,29 +380,22 @@ class Navigation extends Base\Object
             if (!$allowed && empty($allowedChildren)) {
                 unset($navigation[$key]);
                 continue;
-            } // assign new base url
-            elseif (!empty($allowedChildren)) {
-                // init var
+            } elseif (!empty($allowedChildren)) {
                 $allowed = true;
-
-                // split up chunks
                 list($module, $action) = explode('/', $allowedChildren[0]['url']);
 
-                // no rights for this module?
-                if (!Authentication::isAllowedModule($module)) $allowed = false;
+                if (!Authentication::isAllowedModule($module)) {
+                    $allowed = false;
+                }
 
-                // no rights for this action?
-                if (!Authentication::isAllowedAction($action, $module)) $allowed = false;
+                if (!Authentication::isAllowedAction($action, $module)) {
+                    $allowed = false;
+                }
 
-                // allowed? assign base URL
-                if ($allowed) $navigation[$key]['url'] = $allowedChildren[0]['url'];
-
-                // not allowed?
-                else {
-                    // get first child
+                if ($allowed) {
+                    $navigation[$key]['url'] = $allowedChildren[0]['url'];
+                } else {
                     $child = reset($navigation[$key]['children']);
-
-                    // assign base URL
                     $navigation[$key]['url'] = $child['url'];
                 }
             }
@@ -415,7 +424,9 @@ class Navigation extends Base\Object
         $keys[] = $key;
 
         // sub action?
-        if (isset($value['selected_for']) && in_array($activeURL, (array) $value['selected_for'])) return $keys;
+        if (isset($value['selected_for']) && in_array($activeURL, (array) $value['selected_for'])) {
+            return $keys;
+        }
 
         // if the URL is available and same as the active one we have what we need.
         if (isset($value['url']) && $value['url'] == $activeURL) {
@@ -426,7 +437,9 @@ class Navigation extends Base\Object
                     $subKeys = $this->compareURL($value, $key, $keys);
 
                     // wrap it up
-                    if (!empty($subKeys)) return $subKeys;
+                    if (!empty($subKeys)) {
+                        return $subKeys;
+                    }
                 }
             }
 
@@ -442,7 +455,9 @@ class Navigation extends Base\Object
                 $subKeys = $this->compareURL($value, $key, $keys);
 
                 // wrap it up
-                if (!empty($subKeys)) return $subKeys;
+                if (!empty($subKeys)) {
+                    return $subKeys;
+                }
             }
         }
     }
@@ -491,14 +506,11 @@ class Navigation extends Base\Object
             array($id)
         );
 
-        // item doesn't exist
-        if (empty($item)) return '';
-
-        // yay, has a url
-        elseif ($item['url'] != '') return $item['url'];
-
-        // lets get it from a child
-        else {
+        if (empty($item)) {
+            return '';
+        } elseif ($item['url'] != '') {
+            return $item['url'];
+        } else {
             // get the first child
             $childId = (int) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT id FROM backend_navigation WHERE parent_id = ? ORDER BY sequence ASC LIMIT 1',
@@ -522,7 +534,9 @@ class Navigation extends Base\Object
             $keys = $this->compareURL($value, $key, array());
 
             // stop when we found something
-            if (!empty($keys)) break;
+            if (!empty($keys)) {
+                break;
+            }
         }
 
         return $keys;

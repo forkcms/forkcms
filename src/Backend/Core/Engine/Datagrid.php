@@ -98,9 +98,8 @@ class DataGrid extends \SpoonDataGrid
         )
         ) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button icon icon' . \SpoonFilter::toCamelCase($name) . ' linkButton">
-                        <span>' . $value . '</span>
-                    </a>';
+            $value = '<a href="' . $URL . '" class="button icon icon' .
+                     \SpoonFilter::toCamelCase($name) . ' linkButton"><span>' . $value . '</span></a>';
 
             // reset URL
             $URL = null;
@@ -108,9 +107,8 @@ class DataGrid extends \SpoonDataGrid
 
         if (in_array($name, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' . \SpoonFilter::toCamelCase(
-                    $name
-                ) . '">
+            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' .
+                     \SpoonFilter::toCamelCase($name) . '">
                         <span>' . $value . '</span>
                     </a>';
 
@@ -173,13 +171,14 @@ class DataGrid extends \SpoonDataGrid
 
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
-            $anchorAttributes['class'] = 'button icon icon' . \SpoonFilter::toCamelCase(
-                    $name
-                ) . ' linkButton';
+            $anchorAttributes['class'] = 'button icon icon' .
+                                         \SpoonFilter::toCamelCase($name) . ' linkButton';
         }
 
         // loop the attributes, build our attributes string
-        foreach ($anchorAttributes as $attribute => $attributeValue) $attributes .= ' ' . $attribute . '="' . $attributeValue . '"';
+        foreach ($anchorAttributes as $attribute => $attributeValue) {
+            $attributes .= ' ' . $attribute . '="' . $attributeValue . '"';
+        }
 
         // rebuild value
         $value = '<a href="' . $URL . '"' . $attributes . '>
@@ -259,13 +258,15 @@ class DataGrid extends \SpoonDataGrid
     public function getContent()
     {
         // mass action was set
-        if ($this->tpl->getAssignedValue('massAction') !== null) $this->tpl->assign('footer', true);
-
-        // has paging & more than 1 page
-        elseif ($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign(
-            'footer',
-            true
-        );
+        if ($this->tpl->getAssignedValue('massAction') !== null) {
+            $this->tpl->assign('footer', true);
+        } elseif ($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) {
+            // has paging & more than 1 page
+            $this->tpl->assign(
+                'footer',
+                true
+            );
+        }
 
         // set the odd and even classes
         $this->setOddRowAttributes(array('class' => 'odd'));
@@ -307,10 +308,11 @@ class DataGrid extends \SpoonDataGrid
         // has results
         if ($this->source->getNumResults() > 0) {
             // column doesn't exist
-            if (!isset($this->columns[$column])) throw new \SpoonDataGridException('The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.');
-
-            // exists
-            else {
+            if (!isset($this->columns[$column])) {
+                throw new \SpoonDataGridException(
+                    'The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.'
+                );
+            } else {
                 // get URL
                 $URL = $this->columns[$column]->getURL();
 
@@ -330,28 +332,36 @@ class DataGrid extends \SpoonDataGrid
                 $id = 'confirm-' . (string) $uniqueId;
 
                 // set title if there wasn't one provided
-                if ($title === null) $title = \SpoonFilter::ucfirst(Language::lbl('Delete') . '?');
+                if ($title === null) {
+                    $title = \SpoonFilter::ucfirst(Language::lbl('Delete') . '?');
+                }
 
                 // grab current value
                 $value = $this->columns[$column]->getValue();
 
                 // add class for confirmation
                 if (substr_count($value, '<a') > 0) {
-                    if (substr_count($value, 'class="') > 0) $value = str_replace(
-                        'class="',
-                        'data-message-id="' . $id . '" class="askConfirmation ',
-                        $value
-                    );
-                    else $value = str_replace(
-                        '<a ',
-                        '<a data-message-id="' . $id . '" class="askConfirmation" ',
-                        $value
-                    );
-                } // is it a link?
-                else throw new Exception('The column doesn\'t contain a link.');
+                    if (substr_count($value, 'class="') > 0) {
+                        $value = str_replace(
+                            'class="',
+                            'data-message-id="' . $id . '" class="askConfirmation ',
+                            $value
+                        );
+                    } else {
+                        $value = str_replace(
+                            '<a ',
+                            '<a data-message-id="' . $id . '" class="askConfirmation" ',
+                            $value
+                        );
+                    }
+                } else {
+                    // is it a link?
+                    throw new Exception('The column doesn\'t contain a link.');
+                }
 
                 // append message
-                $value .= '<div id="' . $id . '" title="' . $title . '" style="display: none;"><p>' . $message . '</p></div>';
+                $value .= '<div id="' . $id . '" title="' . $title . '" style="display: none;"><p>' .
+                          $message . '</p></div>';
 
                 // reset value
                 $this->columns[$column]->setValue($value);
@@ -388,13 +398,17 @@ class DataGrid extends \SpoonDataGrid
         // add attributes if they are given
         if (!empty($attributes)) {
             // loop and set attributes
-            foreach ($columns as $column) $this->setColumnAttributes($column, $attributes);
+            foreach ($columns as $column) {
+                $this->setColumnAttributes($column, $attributes);
+            }
         }
 
         // add attributes if they are given
         if (!empty($headerAttributes)) {
             // loop and set attributes
-            foreach ($columns as $column) $this->setColumnHeaderAttributes($column, $attributes);
+            foreach ($columns as $column) {
+                $this->setColumnHeaderAttributes($column, $attributes);
+            }
         }
     }
 
@@ -406,9 +420,8 @@ class DataGrid extends \SpoonDataGrid
     public function setMassAction(\SpoonFormDropdown $actionDropDown)
     {
         // build HTML
-        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . \SpoonFilter::ucfirst(
-                Language::lbl('WithSelected')
-            ) . '</label></p>
+        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' .
+                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) . '</label></p>
                 <p>
                     ' . $actionDropDown->parse() . '
                 </p>
@@ -433,7 +446,8 @@ class DataGrid extends \SpoonDataGrid
     public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
     {
         // build label and value
-        $label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>';
+        $label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />' .
+                 '</span>';
         $value = '<input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" />';
 
         // add the column
@@ -448,7 +462,9 @@ class DataGrid extends \SpoonDataGrid
             $attributes = $this->getAttributes();
 
             // set if needed
-            if (!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
+            if (!isset($attributes['id'])) {
+                $this->setAttributes(array('id' => 'table_' . time()));
+            }
 
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
@@ -467,7 +483,9 @@ class DataGrid extends \SpoonDataGrid
             $attributes = $this->getAttributes();
 
             // set if needed
-            if (!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
+            if (!isset($attributes['id'])) {
+                $this->setAttributes(array('id' => 'table_' . time()));
+            }
 
             // fetch the datagrid attributes
             $attributes = $this->getAttributes();
@@ -537,7 +555,10 @@ class DataGrid extends \SpoonDataGrid
      */
     public function setURL($URL, $append = false)
     {
-        if ($append) parent::setURL(parent::getURL() . $URL);
-        else parent::setURL($URL);
+        if ($append) {
+            parent::setURL(parent::getURL() . $URL);
+        } else {
+            parent::setURL($URL);
+        }
     }
 }

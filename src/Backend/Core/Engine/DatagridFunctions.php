@@ -49,8 +49,8 @@ class DataGridFunctions
     /**
      * Format a number as a float
      *
-     * @param float $number The number to format.
-     * @param int $decimals The number of decimals.
+     * @param float $number   The number to format.
+     * @param int   $decimals The number of decimals.
      * @return string
      */
     public static function formatFloat($number, $decimals = 2)
@@ -72,7 +72,9 @@ class DataGridFunctions
         $timestamp = (int) $timestamp;
 
         // if invalid timestamp return an empty string
-        if($timestamp <= 0) return '';
+        if ($timestamp <= 0) {
+            return '';
+        }
 
         // get user setting for long dates
         $format = Authentication::getUser()->getSetting('date_format');
@@ -92,7 +94,9 @@ class DataGridFunctions
         $timestamp = (int) $timestamp;
 
         // if invalid timestamp return an empty string
-        if($timestamp <= 0) return '';
+        if ($timestamp <= 0) {
+            return '';
+        }
 
         // get user setting for long dates
         $format = Authentication::getUser()->getSetting('datetime_format');
@@ -112,7 +116,9 @@ class DataGridFunctions
         $timestamp = (int) $timestamp;
 
         // if invalid timestamp return an empty string
-        if($timestamp <= 0) return '';
+        if ($timestamp <= 0) {
+            return '';
+        }
 
         // get user setting for long dates
         $format = Authentication::getUser()->getSetting('time_format');
@@ -137,7 +143,11 @@ class DataGridFunctions
         // get the time ago as a string
         $timeAgo = \SpoonDate::getTimeAgo($timestamp, Language::getInterfaceLanguage(), $format);
 
-        return '<abbr title="' . \SpoonDate::getDate($format, $timestamp, Language::getInterfaceLanguage()) . '">' . $timeAgo . '</abbr>';
+        return '<abbr title="' . \SpoonDate::getDate(
+            $format,
+            $timestamp,
+            Language::getInterfaceLanguage()
+        ) . '">' . $timeAgo . '</abbr>';
     }
 
     /**
@@ -161,11 +171,24 @@ class DataGridFunctions
         // build html
         $html = '<div class="dataGridAvatar">' . "\n";
         $html .= '  <div class="avatar av24">' . "\n";
-        if($allowed) $html .= '     <a href="' . BackendModel::createURLForAction('Edit', 'Users') . '&amp;id=' . $id . '">' . "\n";
-        $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-        if($allowed) $html .= '     </a>' . "\n";
+        if ($allowed) {
+            $html .= '     <a href="' .
+                     BackendModel::createURLForAction(
+                         'Edit',
+                         'Users'
+                     ) . '&amp;id=' . $id . '">' . "\n";
+        }
+        $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+        if ($allowed) {
+            $html .= '     </a>' . "\n";
+        }
         $html .= '  </div>';
-        $html .= '  <p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+        $html .= '  <p><a href="' .
+                 BackendModel::createURLForAction(
+                     'edit',
+                     'users'
+                 ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
         $html .= '</div>';
 
         return $html;
@@ -178,7 +201,7 @@ class DataGridFunctions
      *
      * @param string $type The type of column. This is given since some columns can have different meanings than others.
      * @param string $value
-     * @param array $attributes
+     * @param array  $attributes
      * @return array
      */
     public static function greyOut($type, $value, array $attributes = array())
@@ -186,20 +209,24 @@ class DataGridFunctions
         $grayedOutClass = 'grayedOut';
         $greyOut = false;
 
-        switch($type) {
+        switch ($type) {
             case 'visible':
             case 'active':
             case 'published':
-                if($value == 'N') $greyOut = true;
+                if ($value == 'N') {
+                    $greyOut = true;
+                }
                 break;
             case 'hidden':
-                if($value == 'Y') $greyOut = true;
+                if ($value == 'Y') {
+                    $greyOut = true;
+                }
                 break;
         }
 
         // add the grayedOut class to any existing attributes
-        if($greyOut) {
-            if(array_key_exists('class', $attributes)) {
+        if ($greyOut) {
+            if (array_key_exists('class', $attributes)) {
                 $attributes['class'] .= ' ' . $grayedOutClass;
             } else {
                 $attributes['class'] = $grayedOutClass;
@@ -212,7 +239,7 @@ class DataGridFunctions
     /**
      * Returns an image tag
      *
-     * @param string $path The path to the image.
+     * @param string $path  The path to the image.
      * @param string $image The filename of the image.
      * @param string $title The title (will be used as alt).
      * @return string
@@ -229,9 +256,9 @@ class DataGridFunctions
     /**
      * Truncate a string
      *
-     * @param string $string The string to truncate.
-     * @param int $length The maximumlength for the string.
-     * @param bool $useHellip Should a hellip be appended?
+     * @param string $string    The string to truncate.
+     * @param int    $length    The maximumlength for the string.
+     * @param bool   $useHellip Should a hellip be appended?
      * @return string
      */
     public static function truncate($string = null, $length, $useHellip = true)
@@ -240,18 +267,22 @@ class DataGridFunctions
         $string = htmlspecialchars_decode($string);
 
         // less characters
-        if(mb_strlen($string) <= $length) return \SpoonFilter::htmlspecialchars($string);
-
-        // more characters
-        else {
+        if (mb_strlen($string) <= $length) {
+            return \SpoonFilter::htmlspecialchars($string);
+        } else {
+            // more characters
             // hellip is seen as 1 char, so remove it from length
-            if($useHellip) $length = $length - 1;
+            if ($useHellip) {
+                $length = $length - 1;
+            }
 
             // get the amount of requested characters
             $string = mb_substr($string, 0, $length);
 
             // add hellip
-            if($useHellip) $string .= '…';
+            if ($useHellip) {
+                $string .= '…';
+            }
 
             return \SpoonFilter::htmlspecialchars($string);
         }

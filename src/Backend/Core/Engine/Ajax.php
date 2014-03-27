@@ -43,7 +43,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
         $this->validateLogin();
 
         // named application
-        if(!defined('NAMED_APPLICATION')) {
+        if (!defined('NAMED_APPLICATION')) {
             define('NAMED_APPLICATION', 'backend_ajax');
         }
 
@@ -70,7 +70,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
             $this->ajaxAction = new AjaxAction($this->getKernel());
             $this->ajaxAction->setModule($this->getModule());
             $this->ajaxAction->setAction($this->getAction());
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->ajaxAction = new BackendBaseAJAXAction($this->getKernel());
             $this->ajaxAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
         }
@@ -85,7 +85,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
         $possibleLanguages = Language::getWorkingLanguages();
 
         // validate
-        if(!in_array($language, array_keys($possibleLanguages))) {
+        if (!in_array($language, array_keys($possibleLanguages))) {
             throw new Exception('Language invalid.');
         }
 
@@ -100,7 +100,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
     private function validateLogin()
     {
         // check if the user is logged on, if not he shouldn't load any JS-file
-        if(!Authentication::isLoggedIn()) {
+        if (!Authentication::isLoggedIn()) {
             throw new Exception('Not logged in.');
         }
 

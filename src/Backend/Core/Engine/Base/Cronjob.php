@@ -132,8 +132,7 @@ class Cronjob extends Object
                 // notify user
                 throw new BackendException('Cronjob (' . $class . ') is still busy after 10 runs, check it out!');
             }
-        } // set counter
-        else {
+        } else {
             $counter = 0;
         }
 

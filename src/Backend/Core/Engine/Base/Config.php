@@ -15,7 +15,8 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception as BackendException;
 
 /**
- * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
+ * This is the base-object for config-files. The module-specific config-files
+ * can extend the functionality from this class
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
@@ -58,7 +59,7 @@ class Config extends Object
 
     /**
      * @param KernelInterface $kernel
-     * @param string $module The module wherefore this is the configuration-file.
+     * @param string          $module The module wherefore this is the configuration-file.
      */
     public function __construct(KernelInterface $kernel, $module)
     {
@@ -103,7 +104,8 @@ class Config extends Object
     /**
      * Set the module
      *
-     * We can't rely on the parent setModule function, because config could be called before any authentication is required.
+     * We can't rely on the parent setModule function, because config could be
+     * called before any authentication is required.
      *
      * @param string $module The module to load.
      */
@@ -111,7 +113,7 @@ class Config extends Object
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if(!in_array($module, $modules)) {
+        if (!in_array($module, $modules)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(403);
 
@@ -130,25 +132,29 @@ class Config extends Object
     public function setPossibleActions()
     {
         $path = BACKEND_MODULES_PATH . '/' . $this->getModule();
-        if(is_dir($path . '/Actions')) {
+        if (is_dir($path . '/Actions')) {
             $finder = new Finder();
-            foreach($finder->files()->name('*.php')->in($path . '/Actions') as $file) {
+            foreach ($finder->files()->name('*.php')->in($path . '/Actions') as $file) {
                 /** @var $file \SplFileInfo */
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions
-                if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file->getBasename()] = $action;
+                if (!in_array($action, $this->disabledActions)) {
+                    $this->possibleActions[$file->getBasename()] = $action;
+                }
             }
         }
 
-        if(is_dir($path . '/Ajax')) {
+        if (is_dir($path . '/Ajax')) {
             $finder = new Finder();
-            foreach($finder->files()->name('*.php')->in($path . '/Ajax') as $file) {
+            foreach ($finder->files()->name('*.php')->in($path . '/Ajax') as $file) {
                 /** @var $file \SplFileInfo */
                 $action = str_replace('.php', '', $file->getBasename());
 
                 // if the action isn't disabled add it to the possible actions
-                if(!in_array($action, $this->disabledAJAXActions)) $this->possibleAJAXActions[$file->getBasename()] = $action;
+                if (!in_array($action, $this->disabledAJAXActions)) {
+                    $this->possibleAJAXActions[$file->getBasename()] = $action;
+                }
             }
         }
     }

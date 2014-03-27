@@ -25,21 +25,21 @@ class Authentication
     /**
      * All allowed modules
      *
-     * @var	array
+     * @var    array
      */
     private static $allowedActions = array();
 
     /**
      * All allowed modules
      *
-     * @var	array
+     * @var    array
      */
     private static $allowedModules = array();
 
     /**
      * A userobject for the current authenticated user
      *
-     * @var	User
+     * @var    User
      */
     private static $user;
 
@@ -56,38 +56,56 @@ class Authentication
         $uniqueChars = array();
 
         // less then 4 chars is just a weak password
-        if(mb_strlen($password) <= 4) return 'weak';
+        if (mb_strlen($password) <= 4) {
+            return 'weak';
+        }
 
         // loop chars and add unique chars
         $passwordChars = str_split($password);
-        foreach($passwordChars as $char) {
+        foreach ($passwordChars as $char) {
             $uniqueChars[$char] = $char;
         }
 
         // less then 3 unique chars is just weak
-        if(count($uniqueChars) < 3) return 'weak';
+        if (count($uniqueChars) < 3) {
+            return 'weak';
+        }
 
         // more then 6 chars is good
-        if(mb_strlen($password) >= 6) $score++;
+        if (mb_strlen($password) >= 6) {
+            $score++;
+        }
 
         // more then 8 is better
-        if(mb_strlen($password) >= 8) $score++;
+        if (mb_strlen($password) >= 8) {
+            $score++;
+        }
 
         // @todo
         // upper and lowercase?
-        if(preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) $score += 2;
+        if (preg_match('/[a-z]/', $password) && preg_match('/[A-Z]/', $password)) {
+            $score += 2;
+        }
 
         // number?
-        if(preg_match('/\d+/', $password)) $score++;
+        if (preg_match('/\d+/', $password)) {
+            $score++;
+        }
 
         // special char?
-        if(preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) $score++;
+        if (preg_match('/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/', $password)) {
+            $score++;
+        }
 
         // strong password
-        if($score >= 4) return 'strong';
+        if ($score >= 4) {
+            return 'strong';
+        }
 
         // ok
-        if($score >= 2) return 'average';
+        if ($score >= 2) {
+            return 'average';
+        }
 
         // fallback
         return 'weak';
@@ -106,7 +124,7 @@ class Authentication
      * Returns the encrypted password for a user by giving a email/password
      * Returns false if no user was found for this user/pass combination
      *
-     * @param string $email The email.
+     * @param string $email    The email.
      * @param string $password The password.
      * @return string
      */
@@ -119,7 +137,9 @@ class Authentication
         $userId = BackendUsersModel::getIdByEmail($email);
 
         // check if a user ID was found, return false if no user exists
-        if($userId === false) return false;
+        if ($userId === false) {
+            return false;
+        }
 
         // fetch user record
         $user = new User($userId);
@@ -131,10 +151,10 @@ class Authentication
 
     /**
      * Returns a string encrypted like sha1(md5($salt) . md5($string))
-     * 	The salt is an optional extra string you can strengthen your encryption with
+     *    The salt is an optional extra string you can strengthen your encryption with
      *
      * @param string $string The string to encrypt.
-     * @param string $salt The salt to use.
+     * @param string $salt   The salt to use.
      * @return string
      */
     public static function getEncryptedString($string, $salt = null)
@@ -154,7 +174,10 @@ class Authentication
     public static function getUser()
     {
         // if the user-object doesn't exist create a new one
-        if(self::$user === null) self::$user = new User();
+        if (self::$user === null) {
+            self::$user = new User();
+        }
+
         return self::$user;
     }
 
@@ -182,18 +205,22 @@ class Authentication
         $module = ($module !== null) ? (string) $module : $URL->getModule();
 
         // is this action an action that doesn't require authentication?
-        if(isset($alwaysAllowed[$module][$action])) return true;
+        if (isset($alwaysAllowed[$module][$action])) {
+            return true;
+        }
 
         // get modules
         $modules = BackendModel::getModules();
 
         // we will cache everything
-        if(empty(self::$allowedActions)) {
+        if (empty(self::$allowedActions)) {
             // init var
             $db = BackendModel::get('database');
 
             // add always allowed
-            foreach($alwaysAllowed as $allowedModule => $actions) $modules[] = $allowedModule;
+            foreach ($alwaysAllowed as $allowedModule => $actions) {
+                $modules[] = $allowedModule;
+            }
 
             // get allowed actions
             $allowedActionsRows = (array) $db->getRecords(
@@ -208,19 +235,29 @@ class Authentication
             );
 
             // add all actions and there level
-            foreach($allowedActionsRows as $row) {
+            foreach ($allowedActionsRows as $row) {
                 // add if the module is installed
-                if(in_array($row['module'], $modules)) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+                if (in_array(
+                    $row['module'],
+                    $modules
+                )
+                ) {
+                    self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+                }
             }
         }
 
         // module exists and God user is enough to be allowed
-        if(in_array($module, $modules) && self::getUser()->isGod()) return true;
+        if (in_array($module, $modules) && self::getUser()->isGod()) {
+            return true;
+        }
 
         // do we know a level for this action
-        if(isset(self::$allowedActions[$module][$action])) {
+        if (isset(self::$allowedActions[$module][$action])) {
             // is the level greater than zero? aka: do we have access?
-            if((int) self::$allowedActions[$module][$action] > 0) return true;
+            if ((int) self::$allowedActions[$module][$action] > 0) {
+                return true;
+            }
         }
 
         // fallback
@@ -240,13 +277,17 @@ class Authentication
         $module = (string) $module;
 
         // is this module a module that doesn't require user level authentication?
-        if(in_array($module, $alwaysAllowed)) return true;
+        if (in_array($module, $alwaysAllowed)) {
+            return true;
+        }
 
         // module is active and God user, good enough
-        if(in_array($module, $modules) && self::getUser()->isGod()) return true;
+        if (in_array($module, $modules) && self::getUser()->isGod()) {
+            return true;
+        }
 
         // do we already know something?
-        if(empty(self::$allowedModules)) {
+        if (empty(self::$allowedModules)) {
             // init var
             $db = BackendModel::get('database');
 
@@ -262,14 +303,18 @@ class Authentication
             );
 
             // add all modules
-            foreach($allowedModules as $row) self::$allowedModules[$row] = true;
+            foreach ($allowedModules as $row) {
+                self::$allowedModules[$row] = true;
+            }
         }
 
         // not available in our cache
-        if(!isset(self::$allowedModules[$module])) return false;
-
-        // return value that was stored in cache
-        else return self::$allowedModules[$module];
+        if (!isset(self::$allowedModules[$module])) {
+            return false;
+        } else {
+            // return value that was stored in cache
+            return self::$allowedModules[$module];
+        }
     }
 
     /**
@@ -281,7 +326,10 @@ class Authentication
     {
         // check if all needed values are set in the session
         // @todo could be written by SpoonSession::get (since that no longer throws exceptions)
-        if(\SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) \SpoonSession::get('backend_logged_in') && (string) \SpoonSession::get('backend_secret_key') != '') {
+        if (\SpoonSession::exists('backend_logged_in', 'backend_secret_key') &&
+            (bool) \SpoonSession::get('backend_logged_in') &&
+            (string) \SpoonSession::get('backend_secret_key') != ''
+        ) {
             // get database instance
             $db = BackendModel::get('database');
 
@@ -295,26 +343,31 @@ class Authentication
             );
 
             // if we found a matching row, we know the user is logged in, so we update his session
-            if($sessionData !== null) {
+            if ($sessionData !== null) {
                 // update the session in the table
-                $db->update('users_sessions', array('date' => BackendModel::getUTCDate()), 'id = ?', (int) $sessionData['id']);
+                $db->update(
+                    'users_sessions',
+                    array('date' => BackendModel::getUTCDate()),
+                    'id = ?',
+                    (int) $sessionData['id']
+                );
 
                 // create a user object, it will handle stuff related to the current authenticated user
                 self::$user = new User($sessionData['user_id']);
 
                 // the user is logged on
                 return true;
+            } else {
+                // no data found, so fuck up the session, will be handled later on in the code
+                \SpoonSession::set('backend_logged_in', false);
             }
-
+        } else {
             // no data found, so fuck up the session, will be handled later on in the code
-            else \SpoonSession::set('backend_logged_in', false);
+            \SpoonSession::set('backend_logged_in', false);
         }
 
-        // no data found, so fuck up the session, will be handled later on in the code
-        else \SpoonSession::set('backend_logged_in', false);
-
         // reset values for invalid users. We can't destroy the session because session-data can be used on the site.
-        if((bool) \SpoonSession::get('backend_logged_in') === false) {
+        if ((bool) \SpoonSession::get('backend_logged_in') === false) {
             // reset some values
             \SpoonSession::set('backend_logged_in', false);
             \SpoonSession::set('backend_secret_key', '');
@@ -328,7 +381,7 @@ class Authentication
      * Login the user with the given credentials.
      * Will return a boolean that indicates if the user is logged in.
      *
-     * @param string $login The users login.
+     * @param string $login    The users login.
      * @param string $password The password provided by the user.
      * @return bool
      */
@@ -352,7 +405,7 @@ class Authentication
         );
 
         // not 0 = valid user!
-        if($userId !== 0) {
+        if ($userId !== 0) {
             // cleanup old sessions
             self::cleanupOldSessions();
 
@@ -372,11 +425,10 @@ class Authentication
 
             // return result
             return true;
-        }
-
-        // userId 0 will not exist, so it means that this isn't a valid combination
-        else {
-            // reset values for invalid users. We can't destroy the session because session-data can be used on the site.
+        } else {
+            // userId 0 will not exist, so it means that this isn't a valid combination
+            // reset values for invalid users. We can't destroy the session
+            // because session-data can be used on the site.
             \SpoonSession::set('backend_logged_in', false);
             \SpoonSession::set('backend_secret_key', '');
 

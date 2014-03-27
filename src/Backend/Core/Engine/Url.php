@@ -23,14 +23,14 @@ class Url extends Base\Object
     /**
      * The host, will be used for cookies
      *
-     * @var	string
+     * @var    string
      */
     private $host;
 
     /**
      * The querystring
      *
-     * @var	string
+     * @var    string
      */
     private $queryString;
 
@@ -96,8 +96,9 @@ class Url extends Base\Object
 
         // separate the GET-chunk from the parameters
         $getParameters = '';
-        if($positionQuestionMark === false) $processedQueryString = $queryString;
-        else {
+        if ($positionQuestionMark === false) {
+            $processedQueryString = $queryString;
+        } else {
             $processedQueryString = substr($queryString, 0, $positionQuestionMark);
             $getParameters = substr($queryString, $positionQuestionMark);
         }
@@ -106,8 +107,7 @@ class Url extends Base\Object
         $chunks = (array) explode('/', trim($processedQueryString, '/'));
 
         // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if(isset($chunks[0]) && $chunks[0] == 'src')
-        {
+        if (isset($chunks[0]) && $chunks[0] == 'src') {
             unset($chunks[0]);
             $chunks = array_values($chunks);
         }
@@ -117,17 +117,19 @@ class Url extends Base\Object
 
         // get the language, this will always be in front
         $language = '';
-        if(isset($chunks[1]) && $chunks[1] != '') {
+        if (isset($chunks[1]) && $chunks[1] != '') {
             $language = \SpoonFilter::getValue($chunks[1], array_keys(Language::getWorkingLanguages()), '');
         }
 
         // no language provided?
-        if($language == '' && !$isAJAX) {
+        if ($language == '' && !$isAJAX) {
             // remove first element
             array_shift($chunks);
 
             // redirect to login
-            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters);
+            \SpoonHTTP::redirect(
+                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters
+            );
         }
 
         // get the module, null will be the default
@@ -135,37 +137,37 @@ class Url extends Base\Object
         $module = \SpoonFilter::toCamelCase($module);
 
         // get the requested action, if it is passed
-        if(isset($chunks[3]) && $chunks[3] != '') $action = \SpoonFilter::toCamelCase($chunks[3]);
-
-        // no action passed through URL
-        elseif(!$isAJAX) {
+        if (isset($chunks[3]) && $chunks[3] != '') {
+            $action = \SpoonFilter::toCamelCase($chunks[3]);
+        } elseif (!$isAJAX) {
             // check if module path is not yet defined
-            if(!defined('BACKEND_MODULE_PATH')) {
+            if (!defined('BACKEND_MODULE_PATH')) {
                 // build path for core
-                if($module == 'Core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
-
-                // build path to the module and define it. This is a constant because we can use this in templates.
-                else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
+                if ($module == 'Core') {
+                    define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
+                } else {
+                    // build path to the module and define it. This is a constant because we can use this in templates.
+                    define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
+                }
             }
 
             /**
              * Check if we can load the config file
              */
             $configClass = 'Backend\\Modules\\' . $module . '\\Config';
-            if($module == 'Core') $configClass = 'Backend\\Core\\Config';
+            if ($module == 'Core') {
+                $configClass = 'Backend\\Core\\Config';
+            }
 
-            try
-            {
+            try {
                 $config = new $configClass($this->getKernel(), $module);
 
                 // set action
                 $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
-            }
-            catch(Exception $ex)
-            {
-                if(SPOON_DEBUG) throw new Exception('The configfile for the module (' . $module . ') can\'t be found.');
-
-                else {
+            } catch (Exception $ex) {
+                if (SPOON_DEBUG) {
+                    throw new Exception('The configfile for the module (' . $module . ') can\'t be found.');
+                } else {
                     // @todo    don't use redirects for error, we should have something like an invoke method.
 
                     // build the url
@@ -181,7 +183,7 @@ class Url extends Base\Object
         }
 
         // AJAX parameters are passed via GET or POST
-        if($isAJAX) {
+        if ($isAJAX) {
             $module = (isset($_GET['fork']['module'])) ? $_GET['fork']['module'] : '';
             $action = (isset($_GET['fork']['action'])) ? $_GET['fork']['action'] : '';
             $language = (isset($_GET['fork']['language'])) ? $_GET['fork']['language'] : SITE_DEFAULT_LANGUAGE;
@@ -192,62 +194,64 @@ class Url extends Base\Object
             $this->setModule($module);
             $this->setAction($action);
             Language::setWorkingLanguage($language);
+        } else {
+            $this->processRegularRequest($module, $action, $language);
         }
-
-        // regular request
-        else $this->processRegularRequest($module, $action, $language);
     }
 
     /**
      * Process a regular request
      *
-     * @param string $module The requested module.
-     * @param string $action The requested action.
+     * @param string $module   The requested module.
+     * @param string $action   The requested action.
      * @param string $language The requested language.
      */
     private function processRegularRequest($module, $action, $language)
     {
         // the person isn't logged in? or the module doesn't require authentication
-        if(!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
+        if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
-            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
-        }
-
-        // the person is logged in
-        else {
-            // does our user has access to this module?
-            if(!Authentication::isAllowedModule($module)) {
+            \SpoonHTTP::redirect(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode(
+                    '/' . $this->getQueryString()
+                )
+            );
+        } else {
+            // the person is logged in, does our user has access to this module?
+            if (!Authentication::isAllowedModule($module)) {
                 // if the module is the dashboard redirect to the first allowed module
-                if($module == 'Dashboard') {
+                if ($module == 'Dashboard') {
                     // require navigation-file
                     require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
                     // loop the navigation to find the first allowed module
-                    foreach($navigation as $value) {
+                    foreach ($navigation as $value) {
                         // split up chunks
                         list($module, $action) = explode('/', $value['url']);
 
                         // user allowed?
-                        if(Authentication::isAllowedModule($module)) {
+                        if (Authentication::isAllowedModule($module)) {
                             // redirect to the page
                             \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
                         }
                     }
                 }
                 // the user doesn't have access, redirect to error page
-                \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
-            }
-
-            // we have access
-            else {
+                \SpoonHTTP::redirect(
+                    '/' . NAMED_APPLICATION . '/' . $language .
+                    '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                    307
+                );
+            } else {
                 // can our user execute the requested action?
-                if(!Authentication::isAllowedAction($action, $module)) {
+                if (!Authentication::isAllowedAction($action, $module)) {
                     // the user hasn't access, redirect to error page
-                    \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()), 307);
-                }
-
-                // let's do it
-                else {
+                    \SpoonHTTP::redirect(
+                        '/' . NAMED_APPLICATION . '/' . $language .
+                        '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                        307
+                    );
+                } else {
                     // set the working language, this is not the interface language
                     Language::setWorkingLanguage($language);
 
@@ -279,17 +283,17 @@ class Url extends Base\Object
         $possibleLocale = array_keys(Language::getInterfaceLanguages());
 
         // is the user authenticated
-        if(Authentication::getUser()->isAuthenticated()) {
+        if (Authentication::getUser()->isAuthenticated()) {
             $locale = Authentication::getUser()->getSetting('interface_language', $default);
-        }
-
-        // no authenticated user, but available from a cookie
-        elseif(CommonCookie::exists('interface_language')) {
+        } elseif (CommonCookie::exists('interface_language')) {
+            // no authenticated user, but available from a cookie
             $locale = CommonCookie::get('interface_language');
         }
 
         // validate if the requested locale is possible
-        if(!in_array($locale, $possibleLocale)) $locale = $default;
+        if (!in_array($locale, $possibleLocale)) {
+            $locale = $default;
+        }
 
         Language::setLocale($locale);
     }
@@ -304,7 +308,7 @@ class Url extends Base\Object
         $queryString = trim((string) $queryString, '/');
 
         // replace GET with encoded GET in the queryString to prevent XSS
-        if(isset($_GET) && !empty($_GET)) {
+        if (isset($_GET) && !empty($_GET)) {
             // strip GET from the queryString
             list($queryString) = explode('?', $queryString, 2);
 

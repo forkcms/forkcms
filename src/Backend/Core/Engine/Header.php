@@ -39,21 +39,21 @@ class Header extends Base\Object
     /**
      * All added JS-files
      *
-     * @var	array
+     * @var    array
      */
     private $jsFiles = array();
 
     /**
      * Template instance
      *
-     * @var	Template
+     * @var    Template
      */
     private $tpl;
 
     /**
      * URL-instance
      *
-     * @var	Url
+     * @var    Url
      */
     private $URL;
 
@@ -82,11 +82,11 @@ class Header extends Base\Object
      * If you set overwritePath to true, the above-described automatic path creation will not happen, instead the
      * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
      *
-     * @param string $file The name of the file to load.
-     * @param string $module The module wherein the file is located.
-     * @param bool $overwritePath Should we overwrite the full path?
-     * @param bool $minify Should the CSS be minified?
-     * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $file          The name of the file to load.
+     * @param string $module        The module wherein the file is located.
+     * @param bool   $overwritePath Should we overwrite the full path?
+     * @param bool   $minify        Should the CSS be minified?
+     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addCSS($file, $module = null, $overwritePath = false, $minify = true, $addTimestamp = false)
     {
@@ -97,28 +97,38 @@ class Header extends Base\Object
         $addTimestamp = (bool) $addTimestamp;
 
         // no actual path given: create
-        if(!$overwritePath) {
+        if (!$overwritePath) {
             // we have to build the path, but core is a special one
-            if($module !== 'Core') $file = '/src/Backend/Modules/' . $module . '/Layout/css/' . $file;
-
-            // core is special because it isn't a real module
-            else $file = '/src/Backend/Core/Layout/css/' . $file;
+            if ($module !== 'Core') {
+                $file = '/src/Backend/Modules/' . $module . '/Layout/css/' . $file;
+            } else {
+                // core is special because it isn't a real module
+                $file = '/src/Backend/Core/Layout/css/' . $file;
+            }
         }
 
         // no minifying when debugging
-        if(SPOON_DEBUG) $minify = false;
+        if (SPOON_DEBUG) {
+            $minify = false;
+        }
 
         // try to minify
-        if($minify) $file = $this->minifyCSS($file);
+        if ($minify) {
+            $file = $this->minifyCSS($file);
+        }
 
         // in array
         $inArray = false;
 
         // check if the file already exists in the array
-        foreach($this->cssFiles as $row) if($row['file'] == $file) $inArray = true;
+        foreach ($this->cssFiles as $row) {
+            if ($row['file'] == $file) {
+                $inArray = true;
+            }
+        }
 
         // add to array if it isn't there already
-        if(!$inArray) {
+        if (!$inArray) {
             // build temporary array
             $temp['file'] = (string) $file;
             $temp['add_timestamp'] = $addTimestamp;
@@ -133,11 +143,11 @@ class Header extends Base\Object
      * If you don't specify a module, the current one will be used
      * If you set overwritePath to true we expect a full path (It has to start with a /)
      *
-     * @param string $file The file to load.
-     * @param string $module The module wherein the file is located.
-     * @param bool $minify Should the module be minified?
-     * @param bool $overwritePath Should we overwrite the full path?
-     * @param bool $addTimestamp May we add a timestamp for caching purposes?
+     * @param string $file          The file to load.
+     * @param string $module        The module wherein the file is located.
+     * @param bool   $minify        Should the module be minified?
+     * @param bool   $overwritePath Should we overwrite the full path?
+     * @param bool   $addTimestamp  May we add a timestamp for caching purposes?
      */
     public function addJS($file, $module = null, $minify = true, $overwritePath = false, $addTimestamp = false)
     {
@@ -148,22 +158,28 @@ class Header extends Base\Object
         $addTimestamp = (bool) $addTimestamp;
 
         // no minifying when debugging
-        if(SPOON_DEBUG) $minify = false;
+        if (SPOON_DEBUG) {
+            $minify = false;
+        }
 
         // is the given path the real path?
-        if(!$overwritePath) {
+        if (!$overwritePath) {
             // we have to build the path, but core is a special one
-            if($module !== 'Core') $file = '/src/Backend/Modules/' . $module . '/Js/' . $file;
-
-            // core is special because it isn't a real module
-            else $file = '/src/Backend/Core/Js/' . $file;
+            if ($module !== 'Core') {
+                $file = '/src/Backend/Modules/' . $module . '/Js/' . $file;
+            } else {
+                // core is special because it isn't a real module
+                $file = '/src/Backend/Core/Js/' . $file;
+            }
         }
 
         // try to minify
-        if($minify) $file = $this->minifyJS($file);
+        if ($minify) {
+            $file = $this->minifyJS($file);
+        }
 
         // already in array?
-        if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
+        if (!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
             // add to files
             $this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
         }
@@ -172,9 +188,9 @@ class Header extends Base\Object
     /**
      * Add data into the jsData
      *
-     * @param string $module	The name of the module.
-     * @param string $key		The key whereunder the value will be stored.
-     * @param mixed $value		The value
+     * @param string $module The name of the module.
+     * @param string $key    The key whereunder the value will be stored.
+     * @param mixed  $value  The value
      */
     public function addJsData($module, $key, $value)
     {
@@ -216,7 +232,7 @@ class Header extends Base\Object
         $finalPath = BACKEND_CACHE_PATH . '/MinifiedCss/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // minify the file
             $css = new Minify\CSS(PATH_WWW . $file);
             $css->minify($finalPath);
@@ -239,7 +255,7 @@ class Header extends Base\Object
         $finalPath = BACKEND_CACHE_PATH . '/MinifiedJs/' . $fileName;
 
         // check that file does not yet exist or has been updated already
-        if(!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
+        if (!is_file($finalPath) || filemtime(PATH_WWW . $file) > filemtime($finalPath)) {
             // minify the file
             $js = new Minify\JS(PATH_WWW . $file);
             $js->minify($finalPath);
@@ -270,10 +286,12 @@ class Header extends Base\Object
         $existingCSSFiles = $this->getCSSFiles();
 
         // if there aren't any JS-files added we don't need to do something
-        if(!empty($existingCSSFiles)) {
-            foreach($existingCSSFiles as $file) {
+        if (!empty($existingCSSFiles)) {
+            foreach ($existingCSSFiles as $file) {
                 // add lastmodified time
-                if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                if ($file['add_timestamp'] !== false) {
+                    $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                }
 
                 // add
                 $cssFiles[] = $file;
@@ -293,7 +311,7 @@ class Header extends Base\Object
         $existingJSFiles = $this->getJSFiles();
 
         // if there aren't any JS-files added we don't need to do something
-        if(!empty($existingJSFiles)) {
+        if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
                 '/src/Backend/Core/Js/jquery/jquery.js',
@@ -306,17 +324,16 @@ class Header extends Base\Object
                 '/src/Backend/Core/Js/ckfinder/ckfinder.js'
             );
 
-            foreach($existingJSFiles as $file) {
+            foreach ($existingJSFiles as $file) {
                 // some files shouldn't be uncachable
-                if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $file = array('file' => $file['file']);
-
-                // make the file uncachable
-                else {
-                    // if the file is processed by PHP we don't want any caching @todo: why a reference to the frontend?
-                    if(substr($file['file'], 0, 11) == '/frontend/js') $file = array('file' => $file['file'] . '&amp;m=' . time());
-
-                    // add lastmodified time
-                    else {
+                if (in_array($file['file'], $ignoreCache)
+                    || $file['add_timestamp'] === false
+                ) {
+                    $file = array('file' => $file['file']);
+                } else {
+                    if (substr($file['file'], 0, 11) == '/frontend/js') {
+                        $file = array('file' => $file['file'] . '&amp;m=' . time());
+                    } else {
                         $modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
                         $file = array('file' => $file['file'] . $modifiedTime);
                     }
@@ -331,9 +348,11 @@ class Header extends Base\Object
         $this->tpl->assign('jsFiles', $jsFiles);
 
         // fetch preferred interface language
-        if(Authentication::getUser()->isAuthenticated()) {
+        if (Authentication::getUser()->isAuthenticated()) {
             $interfaceLanguage = (string) Authentication::getUser()->getSetting('interface_language');
-        } else $interfaceLanguage = Language::getInterfaceLanguage();
+        } else {
+            $interfaceLanguage = Language::getInterfaceLanguage();
+        }
 
         // some default stuff
         $this->jsData['debug'] = SPOON_DEBUG;
@@ -342,19 +361,37 @@ class Header extends Base\Object
         $this->jsData['interface_language'] = $interfaceLanguage;
 
         // is the user object filled?
-        if(Authentication::getUser()->isAuthenticated()) {
+        if (Authentication::getUser()->isAuthenticated()) {
             $this->jsData['editor']['language'] = (string) Authentication::getUser()->getSetting('interface_language');
         }
 
         // CKeditor has support for simplified Chinese, but the language is called zh-cn instead of zn
-        if($this->jsData['editor']['language'] == 'zh') $this->jsData['editor']['language'] = 'zh-cn';
+        if ($this->jsData['editor']['language'] == 'zh') {
+            $this->jsData['editor']['language'] = 'zh-cn';
+        }
 
         // theme
-        if(BackendModel::getModuleSetting('Core', 'theme') !== null) {
+        if (BackendModel::getModuleSetting('Core', 'theme') !== null) {
             $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('Core', 'theme');
-            $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme');
-            $this->jsData['theme']['has_css'] = (is_file(FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/screen.css'));
-            $this->jsData['theme']['has_editor_css'] = (is_file(FRONTEND_PATH . '/Themes/' . BackendModel::getModuleSetting('Core', 'theme') . '/Core/Layout/css/editor_content.css'));
+            $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' .
+                                             BackendModel::getModuleSetting(
+                                                 'Core',
+                                                 'theme'
+                                             );
+            $this->jsData['theme']['has_css'] = (is_file(
+                FRONTEND_PATH . '/Themes/' .
+                BackendModel::getModuleSetting(
+                    'Core',
+                    'theme'
+                ) . '/Core/Layout/css/screen.css'
+            ));
+            $this->jsData['theme']['has_editor_css'] = (is_file(
+                FRONTEND_PATH . '/Themes/' .
+                BackendModel::getModuleSetting(
+                    'Core',
+                    'theme'
+                ) . '/Core/Layout/css/editor_content.css'
+            ));
         }
 
         // encode and add

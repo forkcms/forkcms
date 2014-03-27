@@ -27,7 +27,7 @@ class Cronjob extends Object implements \ApplicationInterface
     private $cronjob;
 
     /**
-     * @var	string
+     * @var    string
      */
     private $language;
 
@@ -56,10 +56,12 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // build action-class-name
         $actionClass = 'Backend\\Modules\\' . $this->getModule() . '\\Cronjobs\\' . $this->getAction();
-        if($this->getModule() == 'Core') $actionClass = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
+        if ($this->getModule() == 'Core') {
+            $actionClass = 'Backend\\Core\\Cronjobs\\' . $this->getAction();
+        }
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($actionClass)) {
+        if (!class_exists($actionClass)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(500);
 
@@ -84,14 +86,14 @@ class Cronjob extends Object implements \ApplicationInterface
     public function initialize()
     {
         // because some cronjobs will be run on the command line we should pass parameters
-        if(isset($_SERVER['argv'])) {
+        if (isset($_SERVER['argv'])) {
             // init var
             $first = true;
 
             // loop all passes arguments
-            foreach($_SERVER['argv'] as $parameter) {
+            foreach ($_SERVER['argv'] as $parameter) {
                 // ignore first, because this is the scripts name.
-                if($first) {
+                if ($first) {
                     // reset
                     $first = false;
 
@@ -103,19 +105,23 @@ class Cronjob extends Object implements \ApplicationInterface
                 $chunks = explode('=', $parameter, 2);
 
                 // valid parameters?
-                if(count($chunks) == 2) {
+                if (count($chunks) == 2) {
                     // build key and value
                     $key = trim($chunks[0], '--');
                     $value = $chunks[1];
 
                     // set in GET
-                    if($key != '' && $value != '') $_GET[$key] = $value;
+                    if ($key != '' && $value != '') {
+                        $_GET[$key] = $value;
+                    }
                 }
             }
         }
 
         // define the Named Application
-        if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
+        if (!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', 'backend');
+        }
 
         // set the module
         $this->setModule(\SpoonFilter::toCamelCase(\SpoonFilter::getGetValue('module', null, '')));
@@ -124,7 +130,9 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->setAction(\SpoonFilter::toCamelCase(\SpoonFilter::getGetValue('action', null, '')));
 
         // set the language
-        $this->setLanguage(\SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+        $this->setLanguage(
+            \SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE)
+        );
 
         // mark cronjob as run
         $cronjobs = (array) BackendModel::getModuleSetting('Core', 'cronjobs');
@@ -146,26 +154,36 @@ class Cronjob extends Object implements \ApplicationInterface
 
     /**
      * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
     public function loadConfig()
     {
         // check if module path is not yet defined
-        if(!defined('BACKEND_MODULE_PATH')) {
+        if (!defined('BACKEND_MODULE_PATH')) {
             // build path for core
-            if($this->getModule() == 'Core') define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
-
-            // build path to the module and define it. This is a constant because we can use this in templates.
-            else define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+            if ($this->getModule() == 'Core') {
+                define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
+            } else {
+                // build path to the module and define it. This is a constant because we can use this in templates.
+                define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
+            }
         }
 
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Backend\\Core\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Backend\\Core\\Config';
+        }
 
         // validate if class exists (aka has correct name)
-        if(!class_exists($configClass)) throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        if (!class_exists(
+            $configClass
+        )
+        ) {
+            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        }
 
         // create config-object, the constructor will do some magic
         $this->config = new $configClass($this->getKernel(), $this->getModule());
@@ -185,10 +203,14 @@ class Cronjob extends Object implements \ApplicationInterface
     public function setAction($action, $module = null)
     {
         // set module
-        if($module !== null) $this->setModule($module);
+        if ($module !== null) {
+            $this->setModule($module);
+        }
 
         // check if module is set
-        if($this->getModule() === null) throw new Exception('Module has not yet been set.');
+        if ($this->getModule() === null) {
+            throw new Exception('Module has not yet been set.');
+        }
 
         // set property
         $this->action = (string) $action;
@@ -205,7 +227,9 @@ class Cronjob extends Object implements \ApplicationInterface
         $possibleLanguages = Language::getWorkingLanguages();
 
         // validate
-        if(!in_array($value, array_keys($possibleLanguages))) throw new Exception('Invalid language.');
+        if (!in_array($value, array_keys($possibleLanguages))) {
+            throw new Exception('Invalid language.');
+        }
 
         // set property
         $this->language = $value;
@@ -228,7 +252,7 @@ class Cronjob extends Object implements \ApplicationInterface
     {
         // does this module exist?
         $modules = BackendModel::getModulesOnFilesystem();
-        if(!in_array($module, $modules)) {
+        if (!in_array($module, $modules)) {
             // set correct headers
             \SpoonHTTP::setHeadersByCode(403);
 

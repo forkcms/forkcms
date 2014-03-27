@@ -37,7 +37,8 @@ class Mailer
      * @param string $replyToName  The replyto-name for the mail.
      * @param bool   $queue        Should the mail be queued?
      * @param int    $sendOn       When should the email be send, only used when $queue is true.
-     * @param bool   $isRawHTML    If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
+     * @param bool   $isRawHTML    If this is true $template will be handled as raw HTML, so no parsing of
+     *                             $variables is done.
      * @param string $plainText    The plain text version.
      * @param array  $attachments  Paths to attachments to include.
      * @return int The id of the inserted mail.
@@ -78,20 +79,29 @@ class Mailer
         if (!\SpoonFilter::isEmail($email['to_email'])) {
             throw new Exception('Invalid e-mail address for recipient.');
         }
-        if (!\SpoonFilter::isEmail($email['from_email'])) throw new Exception('Invalid e-mail address for sender.');
+        if (!\SpoonFilter::isEmail($email['from_email'])) {
+            throw new Exception('Invalid e-mail address for sender.');
+        }
         if (!\SpoonFilter::isEmail(
             $email['reply_to_email']
         )
-        ) throw new Exception('Invalid e-mail address for reply-to address.');
+        ) {
+            throw new Exception('Invalid e-mail address for reply-to address.');
+        }
 
         // build array
         $email['to_name'] = \SpoonFilter::htmlentitiesDecode($email['to_name']);
         $email['from_name'] = \SpoonFilter::htmlentitiesDecode($email['from_name']);
         $email['reply_to_name'] = \SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
         $email['subject'] = \SpoonFilter::htmlentitiesDecode($subject);
-        if ($isRawHTML) $email['html'] = $template;
-        else $email['html'] = self::getTemplateContent($template, $variables);
-        if ($plainText !== null) $email['plain_text'] = $plainText;
+        if ($isRawHTML) {
+            $email['html'] = $template;
+        } else {
+            $email['html'] = self::getTemplateContent($template, $variables);
+        }
+        if ($plainText !== null) {
+            $email['plain_text'] = $plainText;
+        }
         $email['created_on'] = BackendModel::getUTCDate();
 
         // init var
@@ -143,17 +153,24 @@ class Mailer
             // add attachments one by one
             foreach ($attachments as $attachment) {
                 // only add existing files
-                if (is_file($attachment)) $email['attachments'][] = $attachment;
+                if (is_file($attachment)) {
+                    $email['attachments'][] = $attachment;
+                }
             }
 
             // serialize :)
-            if (!empty($email['attachments'])) $email['attachments'] = serialize($email['attachments']);
+            if (!empty($email['attachments'])) {
+                $email['attachments'] = serialize($email['attachments']);
+            }
         }
 
         // set send date
         if ($queue) {
-            if ($sendOn === null) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') . ':00:00';
-            else $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
+            if ($sendOn === null) {
+                $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') . ':00:00';
+            } else {
+                $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
+            }
         }
 
         // insert the email into the database
@@ -163,7 +180,9 @@ class Mailer
         BackendModel::triggerEvent('Core', 'after_email_queued', array('id' => $id));
 
         // if queue was not enabled, send this mail right away
-        if (!$queue) self::send($id);
+        if (!$queue) {
+            self::send($id);
+        }
 
         // return
         return $id;
@@ -200,7 +219,9 @@ class Mailer
         $tpl->setForceCompile(true);
 
         // variables were set
-        if (!empty($variables)) $tpl->assign($variables);
+        if (!empty($variables)) {
+            $tpl->assign($variables);
+        }
 
         // grab the content
         $content = $tpl->getContent($template);

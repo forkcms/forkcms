@@ -57,7 +57,8 @@ class Action extends Base\Object
     {
         $this->loadConfig();
 
-        // is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
+        // is the requested action possible? If not we throw an exception.
+        // We don't redirect because that could trigger a redirect loop
         if (!in_array($this->getAction(), $this->config->getPossibleActions())) {
             throw new Exception('This is an invalid action (' . $this->getAction() . ').');
         }
@@ -105,7 +106,8 @@ class Action extends Base\Object
 
     /**
      * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
      * Other configurations will be stored in it also.
      */
     public function loadConfig()
@@ -115,8 +117,8 @@ class Action extends Base\Object
             // build path for core
             if ($this->getModule() == 'Core') {
                 define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
-            } // build path to the module and define it. This is a constant because we can use this in templates.
-            else {
+            } else {
+                // build path to the module and define it. This is a constant because we can use this in templates.
                 define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
             }
         }

@@ -96,8 +96,7 @@ class Model extends \BaseModel
         // check if this action is allowed
         if (Authentication::isAllowedAction('Index', 'Settings')) {
             // check if the fork API keys are available
-            if (
-                self::getModuleSetting('Core', 'fork_api_private_key') == '' ||
+            if (self::getModuleSetting('Core', 'fork_api_private_key') == '' ||
                 self::getModuleSetting('Core', 'fork_api_public_key') == ''
             ) {
                 $warnings[] = array(
@@ -435,9 +434,12 @@ class Model extends \BaseModel
     /**
      * Generate thumbnails based on the folders in the path
      * Use
-     *  - 128x128 as foldername to generate an image where the width will be 128px and the height will be 128px
-     *  - 128x as foldername to generate an image where the width will be 128px, the height will be calculated based on the aspect ratio.
-     *  - x128 as foldername to generate an image where the height will be 128px, the width will be calculated based on the aspect ratio.
+     *  - 128x128 as foldername to generate an image where the width will be
+     *      128px and the height will be 128px
+     *  - 128x as foldername to generate an image where the width will be
+     *      128px, the height will be calculated based on the aspect ratio.
+     *  - x128 as foldername to generate an image where the height will be
+     *      128px, the width will be calculated based on the aspect ratio.
      *
      * @param string $path       The path wherein the thumbnail-folders will be stored.
      * @param string $sourceFile The location of the source file.
@@ -704,12 +706,11 @@ class Model extends \BaseModel
             }
         }
 
-        // you want module settings
         if ($module) {
             // return module settings if there are some, if not return empty array
             return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
-        } // else return all settings
-        else {
+        } else {
+            // else return all settings
             return self::$moduleSettings;
         }
     }
@@ -977,12 +978,11 @@ class Model extends \BaseModel
         $month = gmdate('m', $date->getTimestamp());
         $day = gmdate('j', $date->getTimestamp());
 
-        // time object was given
         if ($time !== null) {
-            // define hour & minute
+            // time object was given
             list($hour, $minute) = explode(':', $time->getValue());
-        } // user default time
-        else {
+        } else {
+            // user default time
             $hour = 0;
             $minute = 0;
         }
@@ -1008,12 +1008,14 @@ class Model extends \BaseModel
 
         $fs = new Filesystem();
         foreach (array_keys($fileSizes) as $sizeDir) {
-            $fullPath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+            $fullPath = FRONTEND_FILES_PATH . '/' . $module .
+                        (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
                 $fs->remove($fullPath);
             }
         }
-        $fullPath = FRONTEND_FILES_PATH . '/' . $module . (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+        $fullPath = FRONTEND_FILES_PATH . '/' . $module .
+                    (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
             $fs->remove($fullPath);
         }
@@ -1110,8 +1112,7 @@ class Model extends \BaseModel
                 $pingServices['date'] = time();
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (
-                    strpos($e->getMessage(), 'Operation timed out') === false &&
+                if (strpos($e->getMessage(), 'Operation timed out') === false &&
                     strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (SPOON_DEBUG) {
@@ -1155,8 +1156,8 @@ class Model extends \BaseModel
                     }
 
                     $client->execute('weblogUpdates.extendedPing', $parameters);
-                } // default ping
-                else {
+                } else {
+                    // default ping
                     $parameters[] = array('type' => 'string', 'value' => $siteTitle);
                     $parameters[] = array('type' => 'string', 'value' => $siteURL);
 
@@ -1164,8 +1165,7 @@ class Model extends \BaseModel
                 }
             } catch (Exception $e) {
                 // check if the error should not be ignored
-                if (
-                    strpos($e->getMessage(), 'Operation timed out') === false &&
+                if (strpos($e->getMessage(), 'Operation timed out') === false &&
                     strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
                     if (SPOON_DEBUG) {
@@ -1270,7 +1270,8 @@ class Model extends \BaseModel
     }
 
     /**
-     * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as spam.
+     * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as
+     * spam.
      *
      * @param string $userIp    IP address of the comment submitter.
      * @param string $userAgent User agent information.
@@ -1474,7 +1475,8 @@ class Model extends \BaseModel
                 $queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
 
                 $log->info(
-                    'Callback (' . $subscription['callback'] . ') is subscribed to event (' . $module . '/' . $eventName . ').'
+                    'Callback (' . $subscription['callback'] . ') is
+                    subscribed to event (' . $module . '/' . $eventName . ').'
                 );
             }
 

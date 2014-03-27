@@ -103,7 +103,8 @@ class BackendCoreAjaxTemplates extends AjaxAction
 
             $image = '';
             if (isset($template['image'])) {
-                // we have to remove the first slash, because that is set in the wrapper. Otherwise the images don't work
+                // we have to remove the first slash, because that is set in the wrapper.
+                // Otherwise the images don't work
                 $image = ltrim($template['image'], '/');
             }
 

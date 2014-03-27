@@ -22,8 +22,8 @@ class DataGridPaging implements \iSpoonDataGridPaging
      *
      * @param string $URL
      * @param int    $offset
-     * @param string $order The name of the column to sort on.
-     * @param string $sort The sorting method, possible values are: asc, desc.
+     * @param string $order      The name of the column to sort on.
+     * @param string $sort       The sorting method, possible values are: asc, desc.
      * @param int    $numResults
      * @param int    $numPerPage The items per page.
      * @param bool   $debug
@@ -88,17 +88,17 @@ class DataGridPaging implements \iSpoonDataGridPaging
             if ($numPages > 7) {
                 $showFirstPages = true;
             }
-        } // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-        elseif ($currentPage <= 5) {
-            // init vars
+        } elseif ($currentPage <= 5) {
+            // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
             $pagesStart = 1;
             $pagesEnd = 6;
 
-            // when we have 7 pages, show 7 as end
+
             if ($numPages == 7) {
+                // when we have 7 pages, show 7 as end
                 $pagesEnd = 7;
-            } // when we have less then 6 pages, show the maximum page
-            elseif ($numPages <= 6) {
+            } elseif ($numPages <= 6) {
+                // when we have less then 6 pages, show the maximum page
                 $pagesEnd = $numPages;
             }
 
@@ -106,9 +106,8 @@ class DataGridPaging implements \iSpoonDataGridPaging
             if ($numPages > 7) {
                 $showLastPages = true;
             }
-        } // page 6
-        else {
-            // init vars
+        } else {
+            // page 6
             $pagesStart = $currentPage - 2;
             $pagesEnd = $currentPage + 2;
             $showFirstPages = true;
