@@ -44,13 +44,21 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 			$this->mailing = BackendMailmotorModel::getMailing($mailingId);
 
 			// check if record is empty
-			if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', $this->getModule()));
+			if(empty($this->mailing))
+			{
+				$this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', $this->getModule()));
+				return;
+			}
 
 			// record is filled
 			else
 			{
 				// validate subject
-				if($subject == '') $this->output(500, array('element' => 'subject', 'element_error' => BL::err('NoSubject', $this->getModule())), BL::err('FormError'));
+				if($subject == '')
+				{
+					$this->output(500, array('element' => 'subject', 'element_error' => BL::err('NoSubject', $this->getModule())), BL::err('FormError'));
+					return;
+				}
 
 				// validated subject
 				else
@@ -129,10 +137,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 					return;
 				}
 			}
-
-			// error
-			$this->output(500, null, $message);
-			return;
 		}
 	}
 

@@ -50,11 +50,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function createClient($record)
 	{
-		// get the account settings
-		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
-
 		// create a client
 		try
 		{
@@ -62,7 +57,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10);
+			$cm = BackendMailmotorCMHelper::getCM();
 
 			// create client
 			$clientID = $cm->createClient($record['company_name'], $record['country'], $timezones[$record['timezone']]);
@@ -85,11 +80,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		$this->processAuthenticationCallback();
 		$this->getData();
 		$this->loadAccountForm();
 		$this->loadClientForm();
 		$this->loadGeneralForm();
-		$this->validateAccountForm();
+		if(isset($this->frmAccount)) $this->validateAccountForm();
 		$this->validateClientForm();
 		$this->validateGeneralForm();
 		$this->parse();
@@ -114,19 +110,31 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function loadAccountForm()
 	{
-		// init account settings form
-		$this->frmAccount = new BackendForm('settingsAccount');
-
-		// add fields for campaignmonitor API
-		$this->frmAccount->addText('url', $this->settings['cm_url']);
-		$this->frmAccount->addText('username', $this->settings['cm_username']);
-		$this->frmAccount->addPassword('password', $this->settings['cm_password']);
-
+		// account already linked?
 		if($this->accountLinked)
 		{
-			$this->frmAccount->getField('url')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('username')->setAttributes(array('disabled' => 'disabled'));
-			$this->frmAccount->getField('password')->setAttributes(array('disabled' => 'disabled'));
+			// do we want to disconnect the account?
+			if($this->getParameter('disconnect', 'bool', false) === true)
+			{
+				BackendMailmotorModel::unlinkAccount();
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
+
+				// redirect to the settings page
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
+			}
+		}
+
+		// no account connected yet
+		else
+		{
+			// init account settings form
+			$this->frmAccount = new BackendForm('settingsAccount');
+
+			// add fields for campaignmonitor API
+			$this->frmAccount->addText('app_client_id');
+			$this->frmAccount->addText('app_client_secret');
 		}
 	}
 
@@ -146,11 +154,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 			// add field for client ID
 			$this->frmClient->addDropdown('client_id', $clients, $this->clientID);
-		}
 
-		// account was made
-		if($this->accountLinked)
-		{
 			// fetch CM countries
 			$countries = BackendMailmotorCMHelper::getCountriesAsPairs();
 
@@ -161,6 +165,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$this->frmClient->addText('company_name', $this->settings['cm_client_company_name']);
 			$this->frmClient->addDropdown('countries', $countries, $this->settings['cm_client_country']);
 			$this->frmClient->addDropdown('timezones', $timezones, $this->settings['cm_client_timezone']);
+
+			// disable the client dropdown if a client has already been linked
+			if(!empty($this->settings['cm_client_id']))
+			{
+				$this->frmClient->getField('client_id')->setAttributes(array('disabled' => 'disabled'));
+			}
 		}
 
 		// sender info
@@ -219,10 +229,32 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// parse god status
 		$this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
 
-		// add all forms to template
-		$this->frmAccount->parse($this->tpl);
+		if(isset($this->frmAccount))
+		{
+			$this->frmAccount->parse($this->tpl);
+
+			/**
+			 * Assign the redirect URI.
+			 * Not using BackendModel::createURLForAction because we don't want a token
+			 * to be added.
+			 */
+			$this->tpl->assign('redirectURI', '/private/' . BL::getWorkingLanguage() . '/mailmotor/settings');
+		}
 		$this->frmClient->parse($this->tpl);
 		$this->frmGeneral->parse($this->tpl);
+	}
+
+	/**
+	 * Process the authorization parameters we got from the campaign monitor callback after authorization
+	 */
+	public function processAuthenticationCallback()
+	{
+		// process code if given
+		$code = $this->getParameter('code');
+		if($code != null)
+		{
+			BackendMailmotorCMHelper::getAccessToken($code);
+		}
 	}
 
 	/**
@@ -234,9 +266,8 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	private function updateClient($record)
 	{
 		// get the account settings
-		$url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-		$username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-		$password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
+		$appClientId = BackendModel::getModuleSetting($this->getModule(), 'cm_app_client_id');
+		$accessToken = BackendModel::getModuleSetting($this->getModule(), 'cm_access_token');
 
 		// try and update the client info
 		try
@@ -245,10 +276,10 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
 
 			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 10, $this->clientID);
+			$cm = BackendMailmotorCMHelper::getCM();
 
 			// update the client
-			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']]);
+			$cm->updateClientBasics($record['company_name'], $record['country'], $timezones[$record['timezone']], $this->clientID);
 		}
 		catch(Exception $e)
 		{
@@ -262,24 +293,22 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	 */
 	private function validateAccountForm()
 	{
-		// form is submitted
+		// form exists and is submitted
 		if($this->frmAccount->isSubmitted())
 		{
+			$fields = $this->frmAccount->getFields();
+			$fields['app_client_id']->isFilled(BL::err('FieldIsRequired'));
+			$fields['app_client_secret']->isFilled(BL::err('FieldIsRequired'));
+
 			// form is validated
 			if($this->frmAccount->isCorrect())
 			{
-				// unlink the account and client ID
 				BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_url', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_username', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_password', null);
-				BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_id', $fields['app_client_id']->getValue());
+				BackendModel::setModuleSetting($this->getModule(), 'cm_app_client_secret', $fields['app_client_secret']->getValue());
 
-				// trigger event
-				BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
-
-				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings') . '&report=unlinked#tabSettingsAccount');
+				// start the authorization precess
+				BackendMailmotorCMHelper::authorize($fields['app_client_id']->getValue());
 			}
 		}
 	}
@@ -311,41 +340,41 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					// attempt to create the client
 					$this->createClient($client);
 
-					// store the client info in our database
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
-					// trigger event
-					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
 					// redirect to a custom success message
-					$this->redirect(BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue());
+					$redirectURL = BackendModel::createURLForAction('settings') . '&report=client-linked&var=' . $this->frmClient->getField('company_name')->getValue();
 				}
 
 				// client ID was already set
 				else
 				{
-					// overwrite the client ID
-					$this->clientID = $this->frmClient->getField('client_id')->getValue();
+					if(empty($this->settings['cm_client_id']))
+					{
+						// overwrite the client ID
+						$this->clientID = $this->frmClient->getField('client_id')->getValue();
+
+						// update the client ID in settings
+						BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
+					}
 
 					// update the client record
 					$this->updateClient($client);
 
-					// store the client info in our database
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-					BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
-
 					// update the client ID in settings
 					BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
 
-					// trigger event
-					BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
-
 					// redirect to the settings page
-					$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient');
+					$redirectURL = BackendModel::createURLForAction('settings') . '&report=saved#tabSettingsClient';
 				}
+
+				// store the client info in our database
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_company_name', $client['company_name']);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
+				BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
+
+				// trigger event
+				BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
+
+				$this->redirect($redirectURL);
 			}
 		}
 	}

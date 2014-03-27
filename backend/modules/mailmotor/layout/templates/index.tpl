@@ -2,6 +2,21 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <form action="{$var|geturl:'mass_mailing_action'}" method="get" class="forkForms submitWithLink" id="mailings">
+	{option:accessTokenExpirationDate}
+		<div class="generalMessage infoMessage content">
+			<p>
+				<strong>
+					{$msgAccessTokenExpirationWarning|sprintf:{$accessTokenExpirationDate|date:'d/m/Y H:i'}}
+				</strong>
+			</p>
+			<p class="p0">
+				<a href="{$var|geturl:'refresh_token'}" title="{$lblRefreshToken|ucfirst}" class="button">
+					{$lblRefreshToken|ucfirst}
+				</a>
+			</p>
+		</div>
+	{/option:accessTokenExpirationDate}
+
 	{option:dgUnsentMailings}
 	<div class="pageTitle">
 		<h2>{$lblUnsentMailings|ucfirst}{option:name} {$lblIn} {$lblCampaign} &ldquo;{$name}&rdquo;{/option:name}</h2>

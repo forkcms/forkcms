@@ -1192,6 +1192,21 @@ class BackendModel extends BaseModel
 	}
 
 	/**
+	 * Redirect to a given URL
+	 *
+	 * @param string $URL The URL to redirect to.
+	 */
+	public static function redirect($URL)
+	{
+		$response = new \Symfony\Component\HttpFoundation\RedirectResponse(
+			$URL, 302
+		);
+
+		$response->send();
+		exit;
+	}
+
+	/**
 	 * Saves a module-setting into the DB and the cached array
 	 *
 	 * @param string $module The module to set the setting for.

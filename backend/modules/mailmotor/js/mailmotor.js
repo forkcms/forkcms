@@ -10,7 +10,7 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.charts.init();
 		jsBackend.mailmotor.chartPieChart.init();
 		jsBackend.mailmotor.changeGroup.init();
-		jsBackend.mailmotor.linkAccount.init();
+		jsBackend.mailmotor.linkClient.init();
 		jsBackend.mailmotor.resizing.init();
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
@@ -127,43 +127,10 @@ jsBackend.mailmotor.changeGroup =
 	}
 }
 
-jsBackend.mailmotor.linkAccount =
+jsBackend.mailmotor.linkClient =
 {
 	init: function()
 	{
-		// cache objects
-		$confirm = $('#linkAccount');
-		$url = $('#url');
-		$username = $('#username');
-		$password = $('#password');
-
-		// prevent submit on keyup
-		$('#accountBox input').on('keypress', function(e)
-		{
-			if(e.keyCode == 13)
-			{
-				// prevent the default action
-				e.preventDefault();
-
-				// if all fields are set
-				if($url.val() != '' && $username.val() != '' && $password.val() != '')
-				{
-					// do the call to link the account
-					jsBackend.mailmotor.linkAccount.doCall();
-				}
-			}
-		});
-
-		// link account button clicked
-		$(document).on('click', '#linkAccount', function(e)
-		{
-			// prevent default
-			e.preventDefault();
-
-			// do the call to link the account
-			jsBackend.mailmotor.linkAccount.doCall();
-		});
-
 		// create client is checked
 		$('#clientId').on('change', function(e)
 		{
@@ -213,46 +180,6 @@ jsBackend.mailmotor.linkAccount =
 						$contactEmail.val(data.data.email);
 					}
 				});
-			}
-		});
-	},
-
-	doCall: function()
-	{
-		$url = $('#url');
-		$username = $('#username');
-		$password = $('#password');
-
-		// make the call
-		$.ajax(
-		{
-			data:
-			{
-				fork: { action: 'link_account' },
-				url: $url.val(),
-				username: $username.val(),
-				password: $password.val()
-			},
-			success: function(data, textStatus)
-			{
-				// remove all previous errors
-				$('.formError').remove();
-
-				// success!
-				if(data.code == 200)
-				{
-					// client_id field is set
-					window.location = window.location.pathname + '?token=true&report=' + data.data.message + '#tabSettingsClient';
-				}
-				else
-				{
-					// field was set
-					if(data.data.field)
-					{
-						// add error to the field respective field
-						$('#'+ data.data.field).after('<span class="formError">'+ data.message +'</span>');
-					}
-				}
 			}
 		});
 	}

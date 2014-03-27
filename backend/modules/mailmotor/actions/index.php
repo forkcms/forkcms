@@ -294,6 +294,29 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// parse the datagrid for all queued mailings
 		$this->tpl->assign('dgQueuedMailings', ($this->dgQueuedMailings->getNumResults() != 0) ? $this->dgQueuedMailings->getContent() : false);
+
+		// parse access token expiration warning
+		$this->parseAccessTokenExpirationWarning();
+	}
+
+	/**
+	 * Check how long the CM access token is still valid.
+	 * Show a warning if necessary
+	 */
+	public function parseAccessTokenExpirationWarning()
+	{
+		$expiresOn = BackendModel::getModuleSetting('mailmotor', 'cm_expires_on');
+
+		if($expiresOn != null)
+		{
+			$timeDiff = $expiresOn - time();
+
+			// expires in less than 5 days
+			if($timeDiff < 5 * 24 * 60 * 60)
+			{
+				$this->tpl->assign('accessTokenExpirationDate', $expiresOn);
+			}
+		}
 	}
 
 	/**

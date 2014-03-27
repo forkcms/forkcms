@@ -41,7 +41,7 @@ class BackendMailmotorConfig extends BackendBaseConfig
 		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
-		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'link_account', 'load_client_info')))
+		if($url != null && !in_array($url->getAction(), array('settings', 'import_groups', 'load_client_info')))
 		{
 			$this->checkForAccount();
 			$this->checkForClientID();
@@ -157,12 +157,12 @@ class BackendMailmotorConfig extends BackendBaseConfig
 	 */
 	private function checkForSettings()
 	{
-		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
-		$clientID = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+		$appClientId = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_id');
+		$appClientSecret = BackendModel::getModuleSetting('mailmotor', 'cm_app_client_secret');
+		$accessToken = BackendModel::getModuleSetting('mailmotor', 'cm_access_token');
+		$clientId = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
 
-		return (!empty($url) && !empty($username) && !empty($password) && !empty($clientID));
+		return (!empty($appClientId) && !empty($appClientSecret) && !empty($accessToken) && !empty($clientId));
 	}
 
 	/**

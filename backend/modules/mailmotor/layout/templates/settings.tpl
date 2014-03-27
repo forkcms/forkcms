@@ -100,34 +100,52 @@
 
 	<div id="tabSettingsAccount">
 		{form:settingsAccount}
-		<div class="box horizontal" id="accountBox">
-			<div class="heading">
-				<h3>CampaignMonitor - Account</h3>
-			</div>
-			<div class="options">
-				<p>
-					<label for="url">{$lblURL|uppercase}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtUrl} {$txtUrlError}
-					<span class="helpTxt">{$msgHelpCMURL}</span>
-				</p>
-				<p>
-					<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtUsername} {$txtUsernameError}
-				</p>
-				<p>
-					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtPassword} {$txtPasswordError}
-				</p>
-				<div class="buttonHolder">
-					{option:!account}<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>{/option:!account}
-					{option:account}
-					<a id="unlinkAccount" href="#" class="askConfirmation submitButton button inputButton"><span>{$msgUnlinkCMAccount}</span></a>
-					{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
-					{/option:account}
+			<div class="box horizontal" id="accountBox">
+				<div class="heading">
+					<h3>CampaignMonitor - Account</h3>
+				</div>
+				<div class="options longHelpTxt">
+					<p>
+						{$msgCMAppSettings}:
+					</p>
+					<ul>
+						<li><strong>{$lblDomain|ucfirst}:</strong> {$SITE_URL}</li>
+						<li><strong>{$lblRedirectURI|ucfirst}:</strong> {$SITE_URL}{$redirectURI}</strong></li>
+					</ul>
+				</div>
+				<div class="options">
+					<p>
+						<label for="appClientId">{$lblClientID|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtAppClientId} {$txtAppClientIdError}
+					</p>
+					<p>
+						<label for="appClientSecret">{$lblClientSecret|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						{$txtAppClientSecret} {$txtAppClientSecretError}
+					</p>
+					<div class="buttonHolder">
+						{option:!account}
+							<input id="linkAccount" class="inputButton button mainButton" type="submit" name="linkAccount" value="{$msgLinkCMAccount}" />
+						{/option:!account}
+					</div>
 				</div>
 			</div>
-		</div>
 		{/form:settingsAccount}
+
+		{option:account}
+			<div class="buttonHolder">
+				<a id="unlinkAccount" href="{$var|geturl:'settings'}&amp;disconnect=true" data-message-id="confirmUnlinkAccount" class="askConfirmation button"><span>{$msgUnlinkCMAccount}</span></a>
+				{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
+			</div>
+
+			<div id="confirmUnlinkAccount" title="{$msgUnlinkCMAccount}?" style="display: none;">
+				<p>
+					{$msgConfirmUnlinkCMAccount}
+				</p>
+				<p>
+					<strong>{$msgConfirmUnlinkCMAccountDataWarning}</strong>
+				</p>
+			</div>
+		{/option:account}
 	</div>
 
 	{option:account}
@@ -142,6 +160,7 @@
 					<label for="clientId">{$lblClient|ucfirst}</label>
 					{$ddmClientId}
 				</p>
+				{option:clientId}<span class="helpTxt">{$msgChangeCMClientInfo}</span>{/option:clientId}
 				{option:!clientId}<p class="formError"><strong>{$msgNoClientID}</strong></p>{/option:!clientId}
 			</div>
 

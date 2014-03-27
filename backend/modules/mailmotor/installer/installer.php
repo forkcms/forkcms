@@ -125,7 +125,6 @@ class MailmotorInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'mailmotor', 'import_addresses');
 		$this->setActionRights(1, 'mailmotor', 'import_groups');
 		$this->setActionRights(1, 'mailmotor', 'index');
-		$this->setActionRights(1, 'mailmotor', 'link_account');
 		$this->setActionRights(1, 'mailmotor', 'load_client_info');
 		$this->setActionRights(1, 'mailmotor', 'mass_address_action');
 		$this->setActionRights(1, 'mailmotor', 'mass_campaign_action');
@@ -140,6 +139,7 @@ class MailmotorInstaller extends ModuleInstaller
 		$this->setActionRights(1, 'mailmotor', 'statistics_bounces');
 		$this->setActionRights(1, 'mailmotor', 'statistics_campaign');
 		$this->setActionRights(1, 'mailmotor', 'statistics_link');
+		$this->setActionRights(1, 'mailmotor', 'refresh_token');
 	}
 
 	/**
@@ -217,8 +217,8 @@ class MailmotorInstaller extends ModuleInstaller
 
 		// pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
 		$this->setSetting('mailmotor', 'cm_url', '');
-		$this->setSetting('mailmotor', 'cm_username', '');
-		$this->setSetting('mailmotor', 'cm_password', '');
+		$this->setSetting('mailmotor', 'cm_client_id', '');
+		$this->setSetting('mailmotor', 'cm_client_secret', '');
 		$this->setSetting('mailmotor', 'cm_client_company_name', $from['name']);
 		$this->setSetting('mailmotor', 'cm_client_contact_email', $from['email']);
 		$this->setSetting('mailmotor', 'cm_client_contact_name', $from['name']);
