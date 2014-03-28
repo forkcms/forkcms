@@ -22,9 +22,9 @@ Bugfixes:
 
 3.6.6 (2014-01-15)
 --
-
 Improvements:
 
+* Template: {$var|parsewidget:'module':'action':'id'} now listens to the id and gets the data from the database.
 * Blog: Import wordpress action added.
 * Profiles: event ‚after_logged_in’ triggered when profile has logged in.
 * Users: event ‚after_undelete’ triggered when a deleted user was restored.

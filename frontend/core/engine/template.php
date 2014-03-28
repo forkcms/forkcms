@@ -19,6 +19,7 @@
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class FrontendTemplate extends SpoonTemplate
 {
@@ -706,7 +707,20 @@ class FrontendTemplateModifiers
 	 */
 	public static function parseWidget($var, $module, $action, $id = null)
 	{
-		$data = $id !== null ? serialize(array('id' => $id)) : null;
+		// we have an id
+		if($id !== null)
+		{
+			// we should get the serialized data we don't have yet
+			$data = (string) FrontendModel::getContainer()->get('database')->getVar(
+				'SELECT i.data
+				 FROM modules_extras AS i
+				 WHERE i.module = ? AND i.action = ? AND i.id = ?',
+				array($module, $action, $id)
+			);
+		}
+
+		// we don't have an id
+		else $data = null;
 
 		// create new widget instance and return parsed content
 		$extra = new FrontendBlockWidget($module, $action, $data);
