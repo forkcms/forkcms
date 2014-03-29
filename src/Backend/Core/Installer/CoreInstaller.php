@@ -29,12 +29,24 @@ class CoreInstaller extends ModuleInstaller
     public function install()
     {
         // validate variables
-        if($this->getVariable('default_language') === null) throw new \SpoonException('Default frontend language is not provided.');
-        if($this->getVariable('default_interface_language') === null) throw new \SpoonException('Default backend language is not provided.');
-        if($this->getVariable('site_domain') === null) throw new \SpoonException('Site domain is not provided.');
-        if($this->getVariable('spoon_debug_email') === null) throw new \SpoonException('Spoon debug email is not provided.');
-        if($this->getVariable('api_email') === null) throw new \SpoonException('API email is not provided.');
-        if($this->getVariable('site_title') === null) throw new \SpoonException('Site title is not provided.');
+        if ($this->getVariable('default_language') === null) {
+            throw new \SpoonException('Default frontend language is not provided.');
+        }
+        if ($this->getVariable('default_interface_language') === null) {
+            throw new \SpoonException('Default backend language is not provided.');
+        }
+        if ($this->getVariable('site_domain') === null) {
+            throw new \SpoonException('Site domain is not provided.');
+        }
+        if ($this->getVariable('spoon_debug_email') === null) {
+            throw new \SpoonException('Spoon debug email is not provided.');
+        }
+        if ($this->getVariable('api_email') === null) {
+            throw new \SpoonException('API email is not provided.');
+        }
+        if ($this->getVariable('site_title') === null) {
+            throw new \SpoonException('Site title is not provided.');
+        }
 
         // import SQL
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
@@ -88,20 +100,91 @@ class CoreInstaller extends ModuleInstaller
 
         // date & time
         $this->setSetting('Core', 'date_format_short', 'j.n.Y');
-        $this->setSetting('Core', 'date_formats_short', array('j/n/Y', 'j-n-Y', 'j.n.Y', 'n/j/Y', 'n/j/Y', 'n/j/Y', 'd/m/Y', 'd-m-Y', 'd.m.Y', 'm/d/Y', 'm-d-Y', 'm.d.Y', 'j/n/y', 'j-n-y', 'j.n.y', 'n/j/y', 'n-j-y', 'n.j.y', 'd/m/y', 'd-m-y', 'd.m.y', 'm/d/y', 'm-d-y', 'm.d.y'));
+        $this->setSetting(
+            'Core',
+            'date_formats_short',
+            array(
+                'j/n/Y',
+                'j-n-Y',
+                'j.n.Y',
+                'n/j/Y',
+                'n/j/Y',
+                'n/j/Y',
+                'd/m/Y',
+                'd-m-Y',
+                'd.m.Y',
+                'm/d/Y',
+                'm-d-Y',
+                'm.d.Y',
+                'j/n/y',
+                'j-n-y',
+                'j.n.y',
+                'n/j/y',
+                'n-j-y',
+                'n.j.y',
+                'd/m/y',
+                'd-m-y',
+                'd.m.y',
+                'm/d/y',
+                'm-d-y',
+                'm.d.y'
+            )
+        );
         $this->setSetting('Core', 'date_format_long', 'l j F Y');
-        $this->setSetting('Core', 'date_formats_long', array('j F Y', 'D j F Y', 'l j F Y', 'j F, Y', 'D j F, Y', 'l j F, Y', 'd F Y', 'd F, Y', 'F j Y', 'D F j Y', 'l F j Y', 'F d, Y', 'D F d, Y', 'l F d, Y'));
+        $this->setSetting(
+            'Core',
+            'date_formats_long',
+            array(
+                'j F Y',
+                'D j F Y',
+                'l j F Y',
+                'j F, Y',
+                'D j F, Y',
+                'l j F, Y',
+                'd F Y',
+                'd F, Y',
+                'F j Y',
+                'D F j Y',
+                'l F j Y',
+                'F d, Y',
+                'D F d, Y',
+                'l F d, Y'
+            )
+        );
         $this->setSetting('Core', 'time_format', 'H:i');
         $this->setSetting('Core', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
 
         // number formats
         $this->setSetting('Core', 'number_format', 'dot_nothing');
-        $this->setSetting('Core', 'number_formats', array('comma_nothing' => '10000,25', 'dot_nothing' => '10000.25', 'dot_comma' => '10,000.25', 'comma_dot' => '10.000,25', 'dot_space' => '10000.25', 'comma_space' => '10 000,25'));
+        $this->setSetting(
+            'Core',
+            'number_formats',
+            array(
+                'comma_nothing' => '10000,25',
+                'dot_nothing' => '10000.25',
+                'dot_comma' => '10,000.25',
+                'comma_dot' => '10.000,25',
+                'dot_space' => '10000.25',
+                'comma_space' => '10 000,25'
+            )
+        );
 
         // e-mail settings
-        $this->setSetting('Core', 'mailer_from', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
-        $this->setSetting('Core', 'mailer_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
-        $this->setSetting('Core', 'mailer_reply_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
+        $this->setSetting(
+            'Core',
+            'mailer_from',
+            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+        );
+        $this->setSetting(
+            'Core',
+            'mailer_to',
+            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+        );
+        $this->setSetting(
+            'Core',
+            'mailer_reply_to',
+            array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email'))
+        );
 
         // stmp settings
         $this->setSetting('Core', 'smtp_server', $this->getVariable('smtp_server'));
@@ -133,9 +216,13 @@ class CoreInstaller extends ModuleInstaller
         );
 
         // language specific
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // set title
-            $this->setSetting('Core', 'site_title_' . $language, (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'));
+            $this->setSetting(
+                'Core',
+                'site_title_' . $language,
+                (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title')
+            );
         }
 
         // create new instance
@@ -158,11 +245,14 @@ class CoreInstaller extends ModuleInstaller
             $services = (array) $api->pingGetServices();
 
             // set services
-            if(!empty($services)) $this->setSetting('Core', 'ping_services', array('services' => $services, 'date' => time()));
-        }
-
-        // catch exceptions
-        catch(\Exception $e) {
+            if (!empty($services)) {
+                $this->setSetting(
+                    'Core',
+                    'ping_services',
+                    array('services' => $services, 'date' => time())
+                );
+            }
+        } catch (\Exception $e) {
             // we don't need those keys.
         }
 

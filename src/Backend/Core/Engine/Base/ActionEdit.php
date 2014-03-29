@@ -63,6 +63,8 @@ class ActionEdit extends Action
     {
         parent::parse();
 
-        if($this->frm) $this->frm->parse($this->tpl);
+        if ($this->frm) {
+            $this->frm->parse($this->tpl);
+        }
     }
 }

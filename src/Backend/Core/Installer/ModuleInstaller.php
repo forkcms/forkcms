@@ -127,8 +127,8 @@ class ModuleInstaller
 
             // insert module
             $this->getDB()->insert('modules', $item);
-        } // activate and update description
-        else {
+        } else {
+            // activate and update description
             $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
         }
     }
@@ -138,7 +138,7 @@ class ModuleInstaller
      *
      * @param string $module   The module wherin will be searched.
      * @param int    $otherId  The id of the record.
-     * @param array $fields   A key/value pair of fields to index.
+     * @param array  $fields   A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
      */
     protected function addSearchIndex($module, $otherId, array $fields, $language)
@@ -528,12 +528,10 @@ class ModuleInstaller
         $query = 'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND label = ?';
         $parameters = array($item['module'], $item['type'], $item['label']);
 
-        // data parameter must match
         if ($data !== null) {
             $query .= ' AND data = ?';
             $parameters[] = $data;
-        } // we need a nullio
-        else {
+        } else {
             $query .= ' AND data IS NULL';
         }
 
@@ -742,7 +740,8 @@ class ModuleInstaller
         // array of positions and linked blocks (will be used to automatically set block sequence)
         $positions = array();
 
-        // loop blocks: get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
+        // loop blocks: get arguments (this function has a variable length
+        // argument list, to allow multiple blocks to be added)
         for ($i = 0; $i < func_num_args() - 2; $i++) {
             // get block
             $block = @func_get_arg($i + 2);
@@ -917,8 +916,7 @@ class ModuleInstaller
 
             // add at the end
             $sequence = $maxSequence + 1;
-        } // a custom sequence was set
-        else {
+        } else {
             $sequence = (int) $sequence;
         }
 
@@ -970,8 +968,7 @@ class ModuleInstaller
                  ON DUPLICATE KEY UPDATE value = ?',
                 array($module, $name, $value, $value)
             );
-        } // don't overwrite
-        else {
+        } else {
             // check if this setting already exists
             $exists = (bool) $this->getDB()->getVar(
                 'SELECT 1
@@ -1032,8 +1029,7 @@ class ModuleInstaller
                 'event_module = ? AND event_name = ? AND module = ?',
                 array($eventModule, $eventName, $module)
             );
-        } // insert
-        else {
+        } else {
             $db->insert('hooks_subscriptions', $item);
         }
     }

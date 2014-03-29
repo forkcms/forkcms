@@ -210,11 +210,15 @@ class Action extends Object
     /**
      * Get a parameter for a given key
      * The function will return null if the key is not available
-     * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
+     * By default we will cast the return value into a string, if you want
+     * something else specify it by passing the wanted type.
      *
      * @param string $key          The name of the parameter.
-     * @param string $type         The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
-     * @param mixed  $defaultValue The value that should be returned if the key is not available.
+     * @param string $type         The return-type, possible values are: bool,
+     *                             boolean, int, integer, float, double,
+     *                             string, array.
+     * @param mixed  $defaultValue The value that should be returned if the key
+     *                             is not available.
      * @return mixed
      */
     public function getParameter($key, $type = 'string', $defaultValue = null)
@@ -243,9 +247,7 @@ class Action extends Object
      */
     public function redirect($URL)
     {
-        $response = new RedirectResponse(
-            $URL, 302
-        );
+        $response = new RedirectResponse($URL, 302);
 
         /*
          * Since we've got some nested action structure, we'll send this
