@@ -9,9 +9,9 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to build the navigation

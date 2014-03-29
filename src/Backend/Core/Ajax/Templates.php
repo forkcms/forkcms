@@ -9,10 +9,11 @@ namespace Backend\Core\Ajax;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Base\AjaxAction;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Backend\Core\Engine\Base\AjaxAction;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This action will generate JS that represents the templates that will be available in CK Editor

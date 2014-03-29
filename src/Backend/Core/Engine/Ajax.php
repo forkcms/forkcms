@@ -9,8 +9,9 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Symfony\Component\HttpFoundation\Response;
+
+use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 
 /**
  * This class will handle AJAX-related stuff

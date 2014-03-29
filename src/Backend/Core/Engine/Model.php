@@ -9,12 +9,15 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use \TijsVerkoyen\Akismet\Akismet;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
+
+use \TijsVerkoyen\Akismet\Akismet;
+
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+
 use Frontend\Core\Engine\Language as FrontendLanguage;
 
 require_once __DIR__ . '/../../../../app/BaseModel.php';

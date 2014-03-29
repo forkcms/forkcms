@@ -9,8 +9,9 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Symfony\Component\HttpKernel\KernelInterface;
+
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.

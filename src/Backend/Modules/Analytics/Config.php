@@ -9,9 +9,10 @@ namespace Backend\Modules\Analytics;
  * file that was distributed with this source code.
  */
 
+use \Symfony\Component\HttpKernel\KernelInterface;
+
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
 use Backend\Core\Engine\Model as BackendModel;
-use \Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This is the configuration-object for the analytics module

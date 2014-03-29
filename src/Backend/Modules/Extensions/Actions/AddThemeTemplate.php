@@ -9,12 +9,13 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
-use Symfony\Component\Finder\Finder;
 
 /**
  * This is the add-action, it will display a form to create a new item

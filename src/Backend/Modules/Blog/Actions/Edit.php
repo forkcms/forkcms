@@ -9,6 +9,10 @@ namespace Backend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\HttpFoundation\File\File;
+
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
@@ -21,9 +25,6 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\HttpFoundation\File\File;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item

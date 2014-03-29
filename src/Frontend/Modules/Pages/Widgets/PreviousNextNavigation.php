@@ -10,8 +10,8 @@ namespace Frontend\Modules\Pages\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Theme AS FrontendTheme;
 use Frontend\Core\Engine\Exception AS FrontendException;
+use Frontend\Core\Engine\Theme AS FrontendTheme;
 use Frontend\Core\Engine\Navigation AS FrontendNavigation;
 
 /**

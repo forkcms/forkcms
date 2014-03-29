@@ -9,13 +9,13 @@ namespace Frontend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
-use Frontend\Core\Engine\Url AS FrontendURL;
 use Frontend\Core\Engine\Language AS FL;
 use Frontend\Core\Engine\Mailer AS FrontendMailer;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the blog module

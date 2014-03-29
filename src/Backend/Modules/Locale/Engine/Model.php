@@ -9,14 +9,17 @@ namespace Backend\Modules\Locale\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Language as BL;
-use Common\Uri as CommonUri;
-use Frontend\Core\Engine\Language as FL;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
+use Common\Uri as CommonUri;
+
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+
+use Frontend\Core\Engine\Language as FL;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module

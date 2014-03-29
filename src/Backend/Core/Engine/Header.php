@@ -2,8 +2,10 @@
 
 namespace Backend\Core\Engine;
 
-use \MatthiasMullie\Minify;
 use \Symfony\Component\HttpKernel\KernelInterface;
+
+use \MatthiasMullie\Minify;
+
 use Backend\Core\Engine\Model as BackendModel;
 
 /*

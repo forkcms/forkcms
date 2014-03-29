@@ -9,12 +9,13 @@ namespace Install\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\CoreInstaller;
-use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
+
+use Backend\Core\Installer\CoreInstaller;
+use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * Step 7 of the Fork installer

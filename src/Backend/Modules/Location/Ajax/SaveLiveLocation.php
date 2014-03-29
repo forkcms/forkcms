@@ -10,8 +10,8 @@ namespace Backend\Modules\Location\Ajax;
  */
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
 
 /**

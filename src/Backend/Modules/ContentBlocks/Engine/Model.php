@@ -9,10 +9,11 @@ namespace Backend\Modules\ContentBlocks\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Symfony\Component\Finder\Finder;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module

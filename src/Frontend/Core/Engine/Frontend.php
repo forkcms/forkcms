@@ -9,8 +9,9 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Model as FrontendModel;
 use Symfony\Component\HttpFoundation\Response;
+
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class defines the frontend, it is the core. Everything starts here.

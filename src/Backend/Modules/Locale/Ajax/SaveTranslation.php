@@ -9,12 +9,13 @@ namespace Backend\Modules\Locale\Ajax;
  * file that was distributed with this source code.
  */
 
+use Common\Uri as CommonUri;
+
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\Uri as CommonUri;
 
 /**
  * This action will update a translation using AJAX

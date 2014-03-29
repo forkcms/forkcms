@@ -9,13 +9,14 @@ namespace Backend\Modules\Analytics\Cronjobs;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 use Backend\Core\Engine\Base\Cronjob as BackendBaseCronjob;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Finder\Finder;
 
 /**
  * This cronjob will fetch the requested data

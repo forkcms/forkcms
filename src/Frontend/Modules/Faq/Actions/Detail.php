@@ -10,8 +10,8 @@ namespace Frontend\Modules\Faq\Actions;
  */
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Form as FrontendForm;
+use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Mailer as FrontendMailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;

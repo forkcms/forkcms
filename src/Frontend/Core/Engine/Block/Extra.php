@@ -9,13 +9,14 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Symfony\Component\HttpKernel\KernelInterface;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Frontend\Core\Engine\Theme as FrontendTheme;
 use Frontend\Core\Engine\Language as FL;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Frontend\Core\Engine\Theme as FrontendTheme;
 
 /**
  * This class will handle all stuff related to blocks

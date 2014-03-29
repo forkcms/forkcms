@@ -9,8 +9,9 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
 use Common\Uri as CommonUri;
+
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class represents a META-object

@@ -9,16 +9,17 @@ namespace Backend\Modules\Users\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\User as BackendUser;
-use Backend\Core\Engine\Language as BL;
-use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
-use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\User as BackendUser;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
  * This is the edit-action, it will display a form to alter the user-details and settings

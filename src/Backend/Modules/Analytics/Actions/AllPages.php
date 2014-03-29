@@ -9,12 +9,12 @@ namespace Backend\Modules\Analytics\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
+use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 
 /**
  * This is the all-pages-action, it will display the overview of analytics posts

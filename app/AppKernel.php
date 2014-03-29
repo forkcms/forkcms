@@ -7,8 +7,8 @@
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 // hardcoded this for now, this should be autoloaded
 require_once __DIR__ . '/Kernel.php';

@@ -9,9 +9,10 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\User as BackendUser;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * This class defines the API.

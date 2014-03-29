@@ -9,11 +9,11 @@ namespace Frontend\Modules\Faq\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
-use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module

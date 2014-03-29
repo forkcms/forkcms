@@ -9,8 +9,9 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Common\Uri as CommonUri;
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
+use Common\Uri as CommonUri;
 
 /**
  * This class will send mails

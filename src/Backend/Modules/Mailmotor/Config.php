@@ -9,12 +9,13 @@ namespace Backend\Modules\Mailmotor;
  * file that was distributed with this source code.
  */
 
+use \Symfony\Component\HttpKernel\KernelInterface;
+
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
-use \Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This is the configuration-object for the mailmotor module

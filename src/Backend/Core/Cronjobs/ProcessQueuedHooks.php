@@ -9,11 +9,12 @@ namespace Backend\Core\Cronjobs;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Base\Cronjob;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Backend\Core\Engine\Base\Cronjob;
+use Backend\Core\Engine\Exception;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the cronjob that processes the queued hooks.

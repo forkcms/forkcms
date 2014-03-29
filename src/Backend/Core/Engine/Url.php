@@ -10,8 +10,10 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Backend\Core\Engine\Model as BackendModel;
+
 use Common\Cookie as CommonCookie;
+
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class will handle the incoming URL.

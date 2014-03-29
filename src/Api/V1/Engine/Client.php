@@ -9,8 +9,9 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
+
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Client for the Fork CMS API.

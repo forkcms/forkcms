@@ -9,8 +9,9 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie as CommonCookie;
 use Symfony\Component\HttpKernel\KernelInterface;
+
+use Common\Cookie as CommonCookie;
 
 /**
  * This class will handle the incoming URL.

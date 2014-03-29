@@ -9,15 +9,16 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Template;
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Header;
+use Backend\Core\Engine\Template;
 
 /**
  * This is the base-object for widgets

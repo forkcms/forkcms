@@ -9,9 +9,10 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;
 use Frontend\Core\Engine\Exception;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * FrontendAJAXAction

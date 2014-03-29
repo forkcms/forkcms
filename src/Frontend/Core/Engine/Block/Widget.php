@@ -9,11 +9,12 @@ namespace Frontend\Core\Engine\Block;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Exception as FrontendException;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will handle all stuff related to widgets

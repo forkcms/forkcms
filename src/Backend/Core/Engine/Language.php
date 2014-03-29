@@ -9,9 +9,10 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Cookie as CommonCookie;
+
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
-use Common\Cookie as CommonCookie;
 
 /**
  * This class will store the language-dependant content for the Backend, it will also store the

@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+
 use Backend\Core\Engine\Model as BackendModel;
 
 /**

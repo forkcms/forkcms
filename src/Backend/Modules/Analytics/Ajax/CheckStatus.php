@@ -9,11 +9,12 @@ namespace Backend\Modules\Analytics\Ajax;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOException;
+
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This edit-action will check the status using Ajax

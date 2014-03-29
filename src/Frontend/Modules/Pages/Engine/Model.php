@@ -9,10 +9,10 @@ namespace Frontend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 use Frontend\Core\Engine\Model AS FrontendModel;
 use Frontend\Core\Engine\Navigation AS FrontendNavigation;
 use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
  * In this file we store all generic functions that we will be using in the pages module

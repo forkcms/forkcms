@@ -9,10 +9,11 @@ namespace Frontend\Modules\Mailmotor\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * In this file we store all generic functions that we will be using in the mailmotor module

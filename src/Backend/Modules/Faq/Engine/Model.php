@@ -9,10 +9,11 @@ namespace Backend\Modules\Faq\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Common\Uri as CommonUri;
+
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module

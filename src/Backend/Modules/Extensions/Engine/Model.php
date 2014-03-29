@@ -9,14 +9,15 @@ namespace Backend\Modules\Extensions\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\Exception;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
-use Backend\Core\Engine\Language as BL;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
+
+use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\Exception;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the extensions module.

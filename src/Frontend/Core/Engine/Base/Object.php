@@ -9,9 +9,10 @@ namespace Frontend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
+
 use Frontend\Core\Engine\Template;
 use Frontend\Core\Engine\Url;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will be the base of the objects used in on-site

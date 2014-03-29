@@ -9,11 +9,13 @@ namespace Backend\Core\Installer;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Symfony\Component\Finder\Finder;
+
 use Common\Uri as CommonUri;
+
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * The base-class for the installer

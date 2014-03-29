@@ -9,12 +9,14 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
+
 use Common\Cookie as CommonCookie;
+
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Frontend page class, this class will handle everything on a page

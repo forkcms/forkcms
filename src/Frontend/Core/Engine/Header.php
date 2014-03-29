@@ -9,12 +9,15 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Common\Cookie as CommonCookie;
-use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
-use \MatthiasMullie\Minify;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use \MatthiasMullie\Minify;
+
+use Common\Cookie as CommonCookie;
+
+use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend

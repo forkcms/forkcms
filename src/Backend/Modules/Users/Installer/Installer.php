@@ -9,9 +9,10 @@ namespace Backend\Modules\Users\Installer;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Installer\ModuleInstaller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+
+use Backend\Core\Installer\ModuleInstaller;
 
 /**
  * Installer for the contact module

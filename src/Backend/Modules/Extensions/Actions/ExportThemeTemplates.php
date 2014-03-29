@@ -9,8 +9,8 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Base\ActionEdit;
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
 
 

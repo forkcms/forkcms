@@ -9,10 +9,11 @@ namespace Backend\Modules\Profiles\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
+use Common\Uri as CommonUri;
+
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
-use Common\Uri as CommonUri;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * In this file we store all generic functions that we will be using in the profiles module.

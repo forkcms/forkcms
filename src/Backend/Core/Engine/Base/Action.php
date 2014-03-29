@@ -9,17 +9,18 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Header;
-use Backend\Core\Engine\Template;
-use Backend\Core\Engine\Url;
-use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Finder\Finder;
+
+use Backend\Core\Engine\Header;
+use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Template;
+use Backend\Core\Engine\Url;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific action
