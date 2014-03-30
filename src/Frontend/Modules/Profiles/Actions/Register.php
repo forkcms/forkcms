@@ -168,7 +168,7 @@ class Register extends FrontendBaseBlock
                                                    . '/' . $settings['activation_key'];
 
                     // send email
-                    FrontendModel::get('mailer')->addEmail(
+                    $this->get('mailer')->addEmail(
                         FL::getMessage('RegisterSubject'),
                         FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
                         $mailValues,

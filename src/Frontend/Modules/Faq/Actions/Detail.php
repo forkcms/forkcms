@@ -268,7 +268,7 @@ class Detail extends FrontendBaseBlock
                         $variables['question'] = $this->record['question'];
 
                         // add the email
-                        FrontendModel::get('mailer')->addEmail(
+                        $this->get('mailer')->addEmail(
                             sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question']),
                             FRONTEND_MODULES_PATH . '/faq/layout/templates/mails/feedback.tpl',
                             $variables,

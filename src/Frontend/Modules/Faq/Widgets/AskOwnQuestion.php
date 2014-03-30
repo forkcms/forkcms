@@ -119,7 +119,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                 }
 
                 $this->status = 'success';
-                FrontendModel::get('mailer')->addEmail(
+                $this->get('mailer')->addEmail(
                     sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']),
                     FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/own_question.tpl',
                     $variables,

@@ -122,7 +122,7 @@ class ForgotPassword extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_forgot_password', array('id' => $profileId));
 
                 // send email
-                FrontendModel::get('mailer')->addEmail(
+                $this->get('mailer')->addEmail(
                     FL::getMessage('ForgotPasswordSubject'),
                     FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/forgot_password.tpl',
                     $mailValues,

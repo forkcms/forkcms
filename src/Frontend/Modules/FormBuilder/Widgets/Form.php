@@ -468,7 +468,7 @@ class Form extends FrontendBaseWidget
                     // loop recipients
                     foreach ($this->item['email'] as $address) {
                         // add email
-                        FrontendModel::get('mailer')->addEmail(
+                        $this->get('mailer')->addEmail(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
                             FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
                             $variables,
