@@ -170,7 +170,7 @@ class Mailer
         }
 
         // insert the email into the database
-        $id = Model::getContainer()->get('database')->insert('emails', $email);
+        $id = $this->database->insert('emails', $email);
 
         // trigger event
         Model::triggerEvent('Core', 'after_email_queued', array('id' => $id));
