@@ -21,6 +21,7 @@ use Frontend\Core\Engine\Template;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Sam Tubbax <sam@sumocoders.be>
+ * @author Wouter Sioen <wouter@wijs.be>
  */
 class Mailer
 {
