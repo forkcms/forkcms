@@ -83,10 +83,7 @@ class Mailer
         if (!\SpoonFilter::isEmail($email['from_email'])) {
             throw new Exception('Invalid e-mail address for sender.');
         }
-        if (!\SpoonFilter::isEmail(
-            $email['reply_to_email']
-        )
-        ) {
+        if (!\SpoonFilter::isEmail($email['reply_to_email'])) {
             throw new Exception('Invalid e-mail address for reply-to address.');
         }
 

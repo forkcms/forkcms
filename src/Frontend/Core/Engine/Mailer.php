@@ -65,7 +65,6 @@ class Mailer
         $to = Model::getModuleSetting('Core', 'mailer_to');
         $from = Model::getModuleSetting('Core', 'mailer_from');
         $replyTo = Model::getModuleSetting('Core', 'mailer_reply_to');
-        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => CommonUri::getUrl($subject));
 
         // set recipient/sender headers
         $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
@@ -76,22 +75,13 @@ class Mailer
         $email['reply_to_name'] = ($replyToName === null) ? (string) $replyTo['name'] : $replyToName;
 
         // validate
-        if (!\SpoonFilter::isEmail(
-            $email['to_email']
-        )
-        ) {
+        if (!\SpoonFilter::isEmail($email['to_email'])) {
             throw new Exception('Invalid e-mail address for recipient.');
         }
-        if (!\SpoonFilter::isEmail(
-            $email['from_email']
-        )
-        ) {
+        if (!\SpoonFilter::isEmail($email['from_email'])) {
             throw new Exception('Invalid e-mail address for sender.');
         }
-        if (!\SpoonFilter::isEmail(
-            $email['reply_to_email']
-        )
-        ) {
+        if (!\SpoonFilter::isEmail($email['reply_to_email'])) {
             throw new Exception('Invalid e-mail address for reply-to address.');
         }
 
@@ -161,6 +151,7 @@ class Mailer
         preg_match_all('/href="(http:\/\/(.*))"/iU', $email['html'], $matches);
 
         // any links?
+        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => CommonUri::getUrl($subject));
         if (isset($matches[0]) && !empty($matches[0])) {
             // init vars
             $searchLinks = array();
@@ -223,11 +214,11 @@ class Mailer
      */
     public static function getQueuedMailIds()
     {
-        return (array) Model::getContainer()->get('database')->getColumn(
+        return (array) BackendModel::getContainer()->get('database')->getColumn(
             'SELECT e.id
              FROM emails AS e
-             WHERE e.send_on < ?',
-            array(Model::getUTCDate())
+             WHERE e.send_on < ? OR e.send_on IS NULL',
+            array(BackendModel::getUTCDate())
         );
     }
 
