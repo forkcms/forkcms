@@ -10,7 +10,6 @@ namespace Backend\Core\Cronjobs;
  */
 
 use Backend\Core\Engine\Base\Cronjob;
-use Common\Mailer;
 
 /**
  * This is the cronjob to send the queued emails.
