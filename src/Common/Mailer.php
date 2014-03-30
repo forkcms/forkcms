@@ -117,29 +117,8 @@ class Mailer
         }
         $email['created_on'] = Model::getUTCDate();
 
-        // init var
-        $matches = array();
-
-        // get internal links
-        preg_match_all('|href="/(.*)"|i', $email['html'], $matches);
-
-        // any links?
-        if (!empty($matches[0])) {
-            // init vars
-            $search = array();
-            $replace = array();
-
-            // loop the links
-            foreach ($matches[0] as $key => $link) {
-                $search[] = $link;
-                $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
-            }
-
-            // replace
-            $email['html'] = str_replace($search, $replace, $email['html']);
-        }
-
-        // init var
+        // replace url's in the html content
+        $email['html'] = $this->relativeToAbsolute($email['html']);
         if ($addUTM === true) {
             $email['html'] = $this->addUTM($email['html'], $subject);
         }
@@ -184,6 +163,11 @@ class Mailer
         return $id;
     }
 
+    /**
+     * @param string $html    The html to convert links in.
+     * @param string $subject The subject of the mail
+     * @return string
+     */
     private function addUTM($html, $subject)
     {
         // init var
@@ -265,6 +249,37 @@ class Mailer
 
         // return the content
         return (string) $cssToInlineStyles->convert();
+    }
+
+    /**
+     * @param string $html  The html to convert links in.
+     * @return string
+     */
+    private function relativeToAbsolute($html)
+    {
+        // init var
+        $matches = array();
+
+        // get internal links
+        preg_match_all('|href="/(.*)"|i', $html, $matches);
+
+        // any links?
+        if (!empty($matches[0])) {
+            // init vars
+            $search = array();
+            $replace = array();
+
+            // loop the links
+            foreach ($matches[0] as $key => $link) {
+                $search[] = $link;
+                $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
+            }
+
+            // replace
+            $html = str_replace($search, $replace, $html);
+        }
+
+        return $html;
     }
 
     /**
