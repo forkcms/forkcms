@@ -13,6 +13,7 @@ Improvements:
 * API: use isAuthorized() instead of authorize(), see UPGRADE_3.7.md for more info.
 * Core: CommonCookie and CommonUri are now in the src/Common folder
 * Core: unused function BackendModel::imageSave is removed in favor of generateThumbnails().
+* Core: removed duplicate mailer code and make the mailer a service
 
 Bugfixes:
 
