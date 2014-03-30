@@ -25,6 +25,19 @@ use Frontend\Core\Engine\Template;
 class Mailer
 {
     /**
+     * @var \SpoonDatabase
+     */
+    private $database;
+
+    /**
+     * @param \SpoonDatabase $database
+     */
+    public function __construct($database)
+    {
+        $this->database = $database;
+    }
+
+    /**
      * Adds an email to the queue.
      *
      * @param string $subject      The subject for the email.
@@ -45,7 +58,7 @@ class Mailer
      * @param bool   $addUTM       Add UTM tracking to the urls.
      * @return int
      */
-    public static function addEmail(
+    public function addEmail(
         $subject,
         $template,
         array $variables = null,
@@ -97,7 +110,7 @@ class Mailer
         if ($isRawHTML) {
             $email['html'] = $template;
         } else {
-            $email['html'] = self::getTemplateContent($template, $variables);
+            $email['html'] = $this->getTemplateContent($template, $variables);
         }
         if ($plainText !== null) {
             $email['plain_text'] = $plainText;
@@ -128,9 +141,9 @@ class Mailer
 
         // init var
         if ($addUTM === true) {
-            $email['html'] = self::addUTM($email['html'], $subject);
+            $email['html'] = $this->addUTM($email['html'], $subject);
         }
-var_dump($email);exit;
+
         // attachments added
         if (!empty($attachments)) {
             // add attachments one by one
@@ -164,14 +177,14 @@ var_dump($email);exit;
 
         // if queue was not enabled, send this mail right away
         if (!$queue) {
-            self::send($id);
+            $this->send($id);
         }
 
         // return
         return $id;
     }
 
-    private static function addUTM($html, $subject)
+    private function addUTM($html, $subject)
     {
         // init var
         $matches = array();
@@ -204,9 +217,9 @@ var_dump($email);exit;
      *
      * @return array
      */
-    public static function getQueuedMailIds()
+    public function getQueuedMailIds()
     {
-        return (array) BackendModel::getContainer()->get('database')->getColumn(
+        return (array) $this->database->getColumn(
             'SELECT e.id
              FROM emails AS e
              WHERE e.send_on < ? OR e.send_on IS NULL',
@@ -221,7 +234,7 @@ var_dump($email);exit;
      * @param array  $variables The variables to assign.
      * @return string
      */
-    private static function getTemplateContent($template, $variables = null)
+    private function getTemplateContent($template, $variables = null)
     {
         // new template instance
         $tpl = new Template(false);
@@ -259,13 +272,12 @@ var_dump($email);exit;
      *
      * @param int $id The id of the mail to send.
      */
-    public static function send($id)
+    public function send($id)
     {
         $id = (int) $id;
-        $db = Model::getContainer()->get('database');
 
         // get record
-        $emailRecord = (array) $db->getRecord(
+        $emailRecord = (array) $this->database->getRecord(
             'SELECT *
              FROM emails AS e
              WHERE e.id = ?',
@@ -328,7 +340,7 @@ var_dump($email);exit;
         // send the email
         if ($email->send()) {
             // remove the email
-            $db->delete('emails', 'id = ?', array($id));
+            $this->database->delete('emails', 'id = ?', array($id));
 
             // trigger event
             Model::triggerEvent('Core', 'after_email_sent', array('id' => $id));

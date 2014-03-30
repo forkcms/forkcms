@@ -926,7 +926,7 @@ class Model implements FrontendTagsInterface
         $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
 
         // notify on all comments
-        if ($notifyByMailOnComment) {
+        if (true) {
             // init var
             $variables = null;
 
