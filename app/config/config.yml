@@ -20,3 +20,5 @@ services:
             - %database.port%
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+    mailer:
+        class: Common\Mailer

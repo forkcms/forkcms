@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Mailer as FrontendMailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -169,12 +168,13 @@ class Register extends FrontendBaseBlock
                                                    . '/' . $settings['activation_key'];
 
                     // send email
-                    FrontendMailer::addEmail(
+                    FrontendModel::get('mailer')->addEmail(
                         FL::getMessage('RegisterSubject'),
                         FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
                         $mailValues,
                         $values['email'],
-                        ''
+                        '',
+                        null, null, null, null, null, null, null, null, null, true
                     );
 
                     // redirect

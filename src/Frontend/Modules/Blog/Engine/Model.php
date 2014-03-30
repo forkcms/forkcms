@@ -10,7 +10,6 @@ namespace Frontend\Modules\Blog\Engine;
  */
 
 use Frontend\Core\Engine\Language AS FL;
-use Frontend\Core\Engine\Mailer AS FrontendMailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url AS FrontendURL;
@@ -946,10 +945,11 @@ class Model implements FrontendTagsInterface
             }
 
             // send the mail
-            FrontendMailer::addEmail(
+            FrontendModel::get('mailer')->addEmail(
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl',
-                $variables
+                $variables,
+                null, null, null, null, null, null, null, null, null, null, null, true
             );
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
@@ -960,10 +960,11 @@ class Model implements FrontendTagsInterface
             );
 
             // send the mail
-            FrontendMailer::addEmail(
+            FrontendModel::get('mailer')->addEmail(
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl',
-                $variables
+                $variables,
+                null, null, null, null, null, null, null, null, null, null, null, true
             );
         }
     }

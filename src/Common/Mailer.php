@@ -16,8 +16,10 @@ use Frontend\Core\Engine\Template;
 /**
  * This class will send mails
  *
+ * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
- * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Dave Lens <dave.lens@netlash.com>
+ * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Sam Tubbax <sam@sumocoders.be>
  */
 class Mailer
@@ -128,7 +130,7 @@ class Mailer
         if ($addUTM === true) {
             $email['html'] = self::addUTM($email['html'], $subject);
         }
-
+var_dump($email);exit;
         // attachments added
         if (!empty($attachments)) {
             // add attachments one by one

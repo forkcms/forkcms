@@ -25,6 +25,8 @@ class Mailer extends \Common\Mailer
     /**
      * Adds an email to the queue.
      *
+     * @deprecated Use the mailer service
+     *
      * @param string $subject      The subject for the email.
      * @param string $template     The template to use.
      * @param array  $variables    Variables that should be assigned in the email.
