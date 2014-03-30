@@ -170,16 +170,13 @@ class Mailer
      */
     private function addUTM($html, $subject)
     {
-        // init var
-        $matches = array();
-
         // match links
+        $matches = array();
         preg_match_all('/href="(http:\/\/(.*))"/iU', $html, $matches);
 
         // any links?
         $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => Uri::getUrl($subject));
         if (isset($matches[0]) && !empty($matches[0])) {
-            // init vars
             $searchLinks = array();
             $replaceLinks = array();
 
@@ -189,7 +186,6 @@ class Mailer
                 $replaceLinks[] = 'href="' . Model::addURLParameters($link, $utm) . '"';
             }
 
-            // replace
             $html = str_replace($searchLinks, $replaceLinks, $html);
         }
 
@@ -257,15 +253,12 @@ class Mailer
      */
     private function relativeToAbsolute($html)
     {
-        // init var
-        $matches = array();
-
         // get internal links
+        $matches = array();
         preg_match_all('|href="/(.*)"|i', $html, $matches);
 
         // any links?
         if (!empty($matches[0])) {
-            // init vars
             $search = array();
             $replace = array();
 
@@ -275,7 +268,6 @@ class Mailer
                 $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
             }
 
-            // replace
             $html = str_replace($search, $replace, $html);
         }
 
