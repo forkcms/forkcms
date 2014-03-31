@@ -5,7 +5,6 @@ namespace Frontend\Modules\FormBuilder\Widgets;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Mailer as FrontendMailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Template as FrontendTemplate;
@@ -469,7 +468,7 @@ class Form extends FrontendBaseWidget
                     // loop recipients
                     foreach ($this->item['email'] as $address) {
                         // add email
-                        FrontendMailer::addEmail(
+                        $this->get('mailer')->addEmail(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
                             FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
                             $variables,
@@ -477,7 +476,8 @@ class Form extends FrontendBaseWidget
                             $this->item['name'],
                             null,
                             null,
-                            $replyTo
+                            $replyTo,
+                            null, null, null, null, null, null, true
                         );
                     }
                 }

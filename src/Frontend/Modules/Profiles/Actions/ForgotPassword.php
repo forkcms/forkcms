@@ -12,7 +12,6 @@ namespace Frontend\Modules\Profiles\Actions;
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
-use Frontend\Core\Engine\Mailer as FrontendMailer;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
@@ -123,12 +122,13 @@ class ForgotPassword extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_forgot_password', array('id' => $profileId));
 
                 // send email
-                FrontendMailer::addEmail(
+                $this->get('mailer')->addEmail(
                     FL::getMessage('ForgotPasswordSubject'),
                     FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/forgot_password.tpl',
                     $mailValues,
                     $txtEmail->getValue(),
-                    ''
+                    '',
+                    null, null, null, null, null, null, null, null, null, true
                 );
 
                 // redirect

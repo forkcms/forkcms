@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine;
+namespace Common;
 
 /*
  * This file is part of Fork CMS.
@@ -10,8 +10,8 @@ namespace Backend\Core\Engine;
  */
 
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
-
-use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Core\Engine\Model;
+use Frontend\Core\Engine\Template;
 
 /**
  * This class will send mails
@@ -21,9 +21,23 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Sam Tubbax <sam@sumocoders.be>
+ * @author Wouter Sioen <wouter@wijs.be>
  */
 class Mailer
 {
+    /**
+     * @var \SpoonDatabase
+     */
+    private $database;
+
+    /**
+     * @param \SpoonDatabase $database
+     */
+    public function __construct($database)
+    {
+        $this->database = $database;
+    }
+
     /**
      * Adds an email to the queue.
      *
@@ -34,17 +48,18 @@ class Mailer
      * @param string $toName       The to-name for the email.
      * @param string $fromEmail    The from-address for the mail.
      * @param string $fromName     The from-name for the mail.
-     * @param string $replyToEmail The replyto-address for the mail.
-     * @param string $replyToName  The replyto-name for the mail.
+     * @param string $replyToEmail The reply to-address for the mail.
+     * @param string $replyToName  The reply to-name for the mail.
      * @param bool   $queue        Should the mail be queued?
      * @param int    $sendOn       When should the email be send, only used when $queue is true.
      * @param bool   $isRawHTML    If this is true $template will be handled as raw HTML, so no parsing of
      *                             $variables is done.
      * @param string $plainText    The plain text version.
      * @param array  $attachments  Paths to attachments to include.
-     * @return int The id of the inserted mail.
+     * @param bool   $addUTM       Add UTM tracking to the urls.
+     * @return int
      */
-    public static function addEmail(
+    public function addEmail(
         $subject,
         $template,
         array $variables = null,
@@ -58,15 +73,16 @@ class Mailer
         $sendOn = null,
         $isRawHTML = false,
         $plainText = null,
-        array $attachments = null
+        array $attachments = null,
+        $addUTM = false
     ) {
         $subject = (string) strip_tags($subject);
         $template = (string) $template;
 
         // set defaults
-        $to = BackendModel::getModuleSetting('Core', 'mailer_to');
-        $from = BackendModel::getModuleSetting('Core', 'mailer_from');
-        $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
+        $to = Model::getModuleSetting('Core', 'mailer_to');
+        $from = Model::getModuleSetting('Core', 'mailer_from');
+        $replyTo = Model::getModuleSetting('Core', 'mailer_reply_to');
 
         // set recipient/sender headers
         $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
@@ -83,10 +99,7 @@ class Mailer
         if (!\SpoonFilter::isEmail($email['from_email'])) {
             throw new Exception('Invalid e-mail address for sender.');
         }
-        if (!\SpoonFilter::isEmail(
-            $email['reply_to_email']
-        )
-        ) {
+        if (!\SpoonFilter::isEmail($email['reply_to_email'])) {
             throw new Exception('Invalid e-mail address for reply-to address.');
         }
 
@@ -98,55 +111,17 @@ class Mailer
         if ($isRawHTML) {
             $email['html'] = $template;
         } else {
-            $email['html'] = self::getTemplateContent($template, $variables);
+            $email['html'] = $this->getTemplateContent($template, $variables);
         }
         if ($plainText !== null) {
             $email['plain_text'] = $plainText;
         }
-        $email['created_on'] = BackendModel::getUTCDate();
+        $email['created_on'] = Model::getUTCDate();
 
-        // init var
-        $matches = array();
-
-        // get internal links
-        preg_match_all('|href="/(.*)"|i', $email['html'], $matches);
-
-        // any links?
-        if (!empty($matches[0])) {
-            // init vars
-            $search = array();
-            $replace = array();
-
-            // loop the links
-            foreach ($matches[0] as $key => $link) {
-                $search[] = $link;
-                $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
-            }
-
-            // replace
-            $email['html'] = str_replace($search, $replace, $email['html']);
-        }
-
-        // init var
-        $matches = array();
-
-        // get internal urls
-        preg_match_all('|src="/(.*)"|i', $email['html'], $matches);
-
-        // any links?
-        if (!empty($matches[0])) {
-            // init vars
-            $search = array();
-            $replace = array();
-
-            // loop the links
-            foreach ($matches[0] as $key => $link) {
-                $search[] = $link;
-                $replace[] = 'src="' . SITE_URL . '/' . $matches[1][$key] . '"';
-            }
-
-            // replace
-            $email['html'] = str_replace($search, $replace, $email['html']);
+        // replace url's in the html content
+        $email['html'] = $this->relativeToAbsolute($email['html']);
+        if ($addUTM === true) {
+            $email['html'] = $this->addUTM($email['html'], $subject);
         }
 
         // attachments added
@@ -168,21 +143,21 @@ class Mailer
         // set send date
         if ($queue) {
             if ($sendOn === null) {
-                $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') . ':00:00';
+                $email['send_on'] = Model::getUTCDate('Y-m-d H') . ':00:00';
             } else {
-                $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
+                $email['send_on'] = Model::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
             }
         }
 
         // insert the email into the database
-        $id = BackendModel::getContainer()->get('database')->insert('emails', $email);
+        $id = $this->database->insert('emails', $email);
 
         // trigger event
-        BackendModel::triggerEvent('Core', 'after_email_queued', array('id' => $id));
+        Model::triggerEvent('Core', 'after_email_queued', array('id' => $id));
 
         // if queue was not enabled, send this mail right away
         if (!$queue) {
-            self::send($id);
+            $this->send($id);
         }
 
         // return
@@ -190,13 +165,42 @@ class Mailer
     }
 
     /**
+     * @param string $html    The html to convert links in.
+     * @param string $subject The subject of the mail
+     * @return string
+     */
+    private function addUTM($html, $subject)
+    {
+        // match links
+        $matches = array();
+        preg_match_all('/href="(http:\/\/(.*))"/iU', $html, $matches);
+
+        // any links?
+        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => Uri::getUrl($subject));
+        if (isset($matches[0]) && !empty($matches[0])) {
+            $searchLinks = array();
+            $replaceLinks = array();
+
+            // loop old links
+            foreach ($matches[1] as $i => $link) {
+                $searchLinks[] = $matches[0][$i];
+                $replaceLinks[] = 'href="' . Model::addURLParameters($link, $utm) . '"';
+            }
+
+            $html = str_replace($searchLinks, $replaceLinks, $html);
+        }
+
+        return $html;
+    }
+
+    /**
      * Get all queued mail ids
      *
      * @return array
      */
-    public static function getQueuedMailIds()
+    public function getQueuedMailIds()
     {
-        return (array) BackendModel::getContainer()->get('database')->getColumn(
+        return (array) $this->database->getColumn(
             'SELECT e.id
              FROM emails AS e
              WHERE e.send_on < ? OR e.send_on IS NULL',
@@ -211,7 +215,7 @@ class Mailer
      * @param array  $variables The variables to assign.
      * @return string
      */
-    private static function getTemplateContent($template, $variables = null)
+    private function getTemplateContent($template, $variables = null)
     {
         // new template instance
         $tpl = new Template(false);
@@ -245,17 +249,43 @@ class Mailer
     }
 
     /**
+     * @param string $html  The html to convert links in.
+     * @return string
+     */
+    private function relativeToAbsolute($html)
+    {
+        // get internal links
+        $matches = array();
+        preg_match_all('|href="/(.*)"|i', $html, $matches);
+
+        // any links?
+        if (!empty($matches[0])) {
+            $search = array();
+            $replace = array();
+
+            // loop the links
+            foreach ($matches[0] as $key => $link) {
+                $search[] = $link;
+                $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
+            }
+
+            $html = str_replace($search, $replace, $html);
+        }
+
+        return $html;
+    }
+
+    /**
      * Send an email
      *
      * @param int $id The id of the mail to send.
      */
-    public static function send($id)
+    public function send($id)
     {
         $id = (int) $id;
-        $db = BackendModel::getContainer()->get('database');
 
         // get record
-        $emailRecord = (array) $db->getRecord(
+        $emailRecord = (array) $this->database->getRecord(
             'SELECT *
              FROM emails AS e
              WHERE e.id = ?',
@@ -263,22 +293,22 @@ class Mailer
         );
 
         // mailer type
-        $mailerType = BackendModel::getModuleSetting('Core', 'mailer_type', 'mail');
+        $mailerType = Model::getModuleSetting('Core', 'mailer_type', 'mail');
 
         // create new \SpoonEmail-instance
         $email = new \SpoonEmail();
-        $email->setTemplateCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
+        $email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
 
         // send via SMTP
         if ($mailerType == 'smtp') {
             // get settings
-            $SMTPServer = BackendModel::getModuleSetting('Core', 'smtp_server');
-            $SMTPPort = BackendModel::getModuleSetting('Core', 'smtp_port', 25);
-            $SMTPUsername = BackendModel::getModuleSetting('Core', 'smtp_username');
-            $SMTPPassword = BackendModel::getModuleSetting('Core', 'smtp_password');
+            $SMTPServer = Model::getModuleSetting('Core', 'smtp_server');
+            $SMTPPort = Model::getModuleSetting('Core', 'smtp_port', 25);
+            $SMTPUsername = Model::getModuleSetting('Core', 'smtp_username');
+            $SMTPPassword = Model::getModuleSetting('Core', 'smtp_password');
 
             // set security if needed
-            $secureLayer = BackendModel::getModuleSetting('Core', 'smtp_secure_layer');
+            $secureLayer = Model::getModuleSetting('Core', 'smtp_secure_layer');
             if (in_array($secureLayer, array('ssl', 'tls'))) {
                 $email->setSMTPSecurity($secureLayer);
             }
@@ -318,10 +348,10 @@ class Mailer
         // send the email
         if ($email->send()) {
             // remove the email
-            $db->delete('emails', 'id = ?', array($id));
+            $this->database->delete('emails', 'id = ?', array($id));
 
             // trigger event
-            BackendModel::triggerEvent('Core', 'after_email_sent', array('id' => $id));
+            Model::triggerEvent('Core', 'after_email_sent', array('id' => $id));
         }
     }
 }

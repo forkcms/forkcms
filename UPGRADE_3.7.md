@@ -228,3 +228,24 @@ After
     use Common\Uri;
     ...
     Uri::getUrl();
+
+## Mailer is now a service
+
+The mailer can now be fetched from the container with this code:
+
+    // in actions, widgets, ...
+    $mailer = $this->getContainer()->get('mailer');
+
+    // or shorter
+    $mailer = $this->get('mailer');
+
+    // in models or static functions
+    $mailer = FrontendModel::getContainer()->get('mailer');
+
+    // or shorter
+    $mailer = FrontendModel::get('mailer');
+
+    // adding an email is now not a static call anymore
+    $mailer->addEmail($subject, $template, $variables);
+
+The FrontendMailer and BackendMailer classes are removed in favor of this service.
