@@ -245,6 +245,30 @@ class BackendGroupsModel
 	}
 
 	/**
+	 * Check if a certain user is in a certain group
+	 *
+	 * @param int $userId  The user id
+	 * @param int $groupId The group id
+	 *
+	 * @return bool
+	 */
+	public static function isUserInGroup($userId, $groupId)
+	{
+		$groupsByUser = static::getGroupsByUser($userId);
+
+		$userInGroup = false;
+
+		foreach ($groupsByUser as $group) {
+			if ((int) $group['id'] === (int) $groupId) {
+				$userInGroup = true;
+				break;
+			}
+		}
+
+		return $userInGroup;
+	}
+
+	/**
 	 * Get group module permissions
 	 *
 	 * @param  int $id The id of the group.
