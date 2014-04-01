@@ -102,11 +102,12 @@ after:
 
     src
     |–– Frontend
-       |–– YourModule
-          |–– Actions
-          |  |–– Index.php
-          |–– Engine
-             |–– Model.php
+       |–– Modules
+          |–– YourModule
+             |–– Actions
+                |–– Index.php
+             |–– Engine
+                |–– Model.php
 
 * The extensions/upload_module action now requires this folder structure (as root the src and if necessary the library folder)
 
