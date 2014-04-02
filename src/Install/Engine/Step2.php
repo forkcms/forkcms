@@ -255,8 +255,8 @@ class Step2 extends Step
         self::$variables = array();
 
         // head
-        self::$variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/head.tpl');
-        self::$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/foot.tpl');
+        self::$variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Head.tpl');
+        self::$variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Foot.tpl');
 
         // next step
         self::$variables['step3'] = '/install?step=3';

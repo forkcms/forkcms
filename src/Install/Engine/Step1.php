@@ -27,8 +27,8 @@ class Step1 extends Step
         $variables = array();
 
         // head
-        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/head.tpl');
-        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/foot.tpl');
+        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Head.tpl');
+        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Foot.tpl');
 
         // this should be the path
         $path = realpath(dirname(__FILE__) . '/../../../library');
