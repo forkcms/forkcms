@@ -1,0 +1,14 @@
+/*
+		Faq
+		
+		@author Jelmer Snoeck <jelmer@siphoc.com>
+ */
+	/*
+		Feedback
+	*/
+	#faq span.positiveFeedback {
+		color: green;
+	}
+	#faq span.negativeFeedback {
+		color: red;
+	}

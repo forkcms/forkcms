@@ -137,7 +137,7 @@ class Block extends Object
 
         // use module path
         if (!$overwritePath) {
-            $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/css/' . $file;
+            $file = '/src/Frontend/Modules/' . $this->getModule() . '/Layout/Css/' . $file;
         }
 
         // add css to the header

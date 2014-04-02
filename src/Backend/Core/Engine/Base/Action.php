@@ -166,7 +166,7 @@ class Action extends Object
         $this->header->addCSS('debug.css', 'Core');
 
         // add module specific css
-        if (is_file(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) {
+        if (is_file(BACKEND_MODULE_PATH . '/Layout/Css/' . $this->getModule() . '.css')) {
             $this->header->addCSS($this->getModule() . '.css');
         }
 

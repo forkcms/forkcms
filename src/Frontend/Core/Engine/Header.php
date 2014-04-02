@@ -93,12 +93,12 @@ class Header extends FrontendBaseObject
         $this->getContainer()->set('header', $this);
 
         // add some default CSS files
-        $this->addCSS('/src/Frontend/Core/Layout/css/jquery_ui/jquery_ui.css', false);
-        $this->addCSS('/src/Frontend/Core/Layout/css/screen.css');
+        $this->addCSS('/src/Frontend/Core/Layout/Css/jquery_ui/jquery_ui.css', false);
+        $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
         if (SPOON_DEBUG) {
-            $this->addCSS('/src/Frontend/Core/Layout/css/debug.css');
+            $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css');
         }
 
         // add default javascript-files

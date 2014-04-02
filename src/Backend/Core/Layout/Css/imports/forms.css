@@ -1,0 +1,383 @@
+/*
+
+    Forms
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Yoni De Beule <yoni@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+/* Modify input[type="text"] and textareas */
+
+.inputText,
+.inputPassword,
+textarea {
+	font-size: 12px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+	background: #FFF url(../../images/ds.png) repeat-x;
+	border: 1px solid #BBB;
+	border-color: #888 #BABABA #BABABA #CDCDCD;
+	-webkit-transition: background-color 0.28s linear;
+	-moz-transition: background-color 0.28s linear;
+	-o-transition: background-color 0.28s linear;
+	transition: background-color 0.28s linear;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	textarea.inputEditor {
+		/* Reset border-radius for editor textareas */
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+	}
+
+/* Disabled fields */
+input.inputText[disabled="disabled"],
+input.inputPassword[disabled="disabled"],
+input.disabled {
+	background: #EEE;
+	color: #666 !important;
+}
+
+.inputText,
+.inputPassword,
+textarea {
+	padding: 3px 2px;
+	color: #333;
+}
+
+.inputText:focus,
+.inputPassword:focus,
+textarea:focus {
+	color: #000;
+	border-color: #666 #999 #999 #AAA;
+}
+
+/*
+	Inputs with a .code class get a monospaced font
+*/
+
+input.code,
+textarea.code {
+	font-family: "Consolas", "Menlo", "Monaco", "Courier New", Courier, monospace;
+	font-size: 11px;
+}
+
+/* Selects should be left alone (not stylable without troubles) */
+select {
+	/* Nothing */
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+}
+
+/* Input type file should be left alone */
+.inputFile {
+	font-size: 11px;
+}
+
+/* Input submit gets replaced by a button, yet some styles here for better buildup */
+
+input[type="submit"] {
+	font-size: 11px;
+}
+
+	/*
+		Focus outline; Mozilla specific since Safari implements this right
+	*/
+
+	@-moz-document url-prefix() {
+
+		input[type="text"]:focus,
+		input[type="password"]:focus,
+		textarea:focus {
+			-moz-outline-radius: 5px;
+			outline: 2px solid #C2DEFF;
+			border-color: #456b99;
+		}
+
+	}
+
+.helpTxt {
+	display: block;
+	font-size: 11px;
+	color: #808080;
+}
+
+	.helpTxt a {
+		font-weight: 700;
+	}
+
+.longHelpTxt {
+	color: #808080;
+	font-size: 11px;
+}
+
+	.longHelpTxt ol,
+	.longHelpTxt ul {
+		list-style: disc;
+		margin-left: 15px;
+	}
+
+.forkForms .inputList {
+	padding: 0 0 12px 0;
+}
+
+	.forkForms .inputList .inputList {
+		margin-top: 3px;
+	}
+
+.forkForms .inputList li {
+	position: relative;
+	padding: 0 0 4px 24px;
+}
+
+	.forkForms .inputList li ul {
+		padding-bottom: 0;
+	}
+
+.forkForms .inputListHorizontal li {
+	float: left;
+	margin-right: 12px;
+}
+
+
+/*
+	Horizontal forms
+*/
+
+/* Fix alignment in Chrome/Saf */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.forkForms .horizontal select {
+		position: relative;
+		top: 1px;
+	}
+}
+
+/* Fix alignment in FF */
+@-moz-document url-prefix() {
+	.forkForms .horizontal select {
+		margin-top: 3px;
+	}
+}
+
+.forkForms .horizontal .inputList label {
+	float: none;
+	width: auto;
+	padding: 0;
+}
+
+	.forkForms .inputList li .inputRadio,
+	.forkForms .inputList li .inputCheckbox {
+		position: absolute;
+		left: 0;
+		top: 0;
+		*top: -1px; /* IE7 */
+	}
+
+	/* Don't use position absolute when these inputs are used in a datagridHolder inside an inputList */
+	.forkForms .inputList .datagridHolder .inputRadio,
+	.forkForms .inputList .datagridHolder .inputCheckbox {
+		position: static;
+	}
+
+	#urlManager ul {
+		margin: 0 0 8px;
+	}
+
+		#urlManager ul .inputText {
+			font-size: 11px;
+			width: 210px;
+		}
+
+.forkForms .section {
+	clear: both;
+	padding: 6px 0;
+	border-bottom: 1px solid #E2E2E2;
+}
+
+	/* Clearfix */
+	.forkForms .section { zoom: 1; }
+	.forkForms  .section:after { /* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+.forkForms p,
+.forkForms .fakeP,
+.forkForms .textareaHolder {
+	padding: 0 0 12px;
+}
+
+.forkForms label {
+	font-weight: 700;
+	color: #4A4A4A;
+	font-size: 11px;
+}
+
+/* "Fake" label */
+.forkForms p.label {
+	padding-bottom: 2px;
+	border: none;
+	font-size: 11px;
+	font-weight: 700;
+	color: #4A4A4A;
+}
+
+	.forkForms .dataGrid td label {
+		font-weight: normal;
+		width: auto;
+		line-height: inherit;
+		display: inline;
+		float: none;
+		padding-right: inherit;
+		font-size: inherit;
+		color: inherit;
+	}
+
+.forkForms p label {
+	display: block;
+	padding: 0 0 2px 0;
+}
+
+.forkForms .horizontal textarea {
+	width: auto;
+}
+
+.forkForms .horizontal .mceEditor {
+	float: left;
+	width: 600px;
+}
+
+
+.forkForms .horizontal p label,
+.forkForms .horizontal .fakeP label {
+	display: inline;
+	padding: 0 10px 0 0;
+}
+
+.forkForms .horizontal .helpTxt {
+	display: block;
+	padding: 1px 0 1px 116px;
+}
+
+.forkForms .horizontal label,
+.forkForms .horizontal p.label {
+	float: left;
+	width: 105px;
+	padding-right: 10px;
+	line-height: 23px;
+	display: block;
+}
+
+	/* Alternate label widths */
+
+	.forkForms .labelWidthLong label,
+	.forkForms .labelWidthLong p.label {
+		width: 145px;
+	}
+
+	.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 155px; }
+	.forkForms .labelWidthLong .spacing { padding-left: 155px; }
+
+.forkForms .horizontal p.label {
+	margin: 0;
+}
+
+.forkForms .spacing,
+.forkForms .horizontal span.formError {
+	padding-left: 115px;
+}
+
+.forkForms .labelWidthLong span.formError  {
+	padding-left: 155px;
+}
+
+.forkForms abbr { cursor: help; border: none; }
+
+.forkForms .fakeP:after,
+.forkForms p:after,
+.forkForms .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+.forkForms p,
+.forkForms .fakeP,
+.forkForms .inputList { zoom: 1; }
+
+/*
+	The Magic One Liner
+	----
+	General method to wrap form and other elements on one line
+	Gets cleared see clearing section of this css file
+*/
+
+.oneLiner p,
+.oneLiner .buttonHolder,
+.oneLiner .oneLinerElement {
+	float: left;
+	margin-right: 4px;
+}
+
+	.oneLiner p,
+	.oneLiner .oneLinerElement {
+		padding-bottom: 0;
+		line-height: 22px;
+		/* Same height as button height */
+	}
+
+	.oneLiner select {
+		margin-top: 1px;
+		margin-right: 3px;
+	}
+
+	.oneLiner label,
+	.oneLiner p.label,
+	.oneLiner p label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
+
+	.oneLiner input.inputText,
+	.oneLiner input.inputPassword,
+	.oneLiner input[type="text"],
+	.oneLiner input[type="password"],
+	.oneLiner input.inputDatefieldRange { float: left; }
+
+	/* Clearfix */
+	.oneLiner { zoom: 1; }
+	.oneLiner:after { /* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+/*
+	Item adder
+*/
+
+.horizontal .itemAdder {
+	float: left;
+}
+
+.horizontal .multipleTextWrapper .helpTxt {
+	padding: 0;
+}
+
+.horizontal .itemAdder .formError {
+	clear: both;
+	padding: 0 !important;
+}
+
+@-moz-document url-prefix() {
+	input[type="text"], input[type="password"], textarea {
+		overflow: auto !important;
+	}
+}
+
+.multipleSelectWrapper .multipleSelectList { padding-bottom: 12px; }
+.multipleSelectWrapper label { font-size: 11px; }
+.multipleSelectWrapper ul { padding: 4px 0 0; }
+.multipleSelectWrapper li { margin: 0 4px 4px 0; }
+.multipleSelectWrapper ul, .multipleSelectWrapper li { zoom: 1; }
+.multipleSelectWrapper ul:after, .multipleSelectWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.multipleSelectWrapper ul li span { float: left; display: block; padding-right: 18px; line-height: 25px; }
+
+.placeholder { color: #AAA !important; }
+
+.forkForms .imageHolder { float: left; margin-right: 12px; padding: 0; }

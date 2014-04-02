@@ -1,0 +1,226 @@
+/*
+
+    Messaging system
+    Includes Growl-like messaging stack,
+    styles for errors warning and notices
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+/*
+	Messages stack
+*/
+
+#messaging {
+	position: fixed;
+	right: 50%;
+	left: 50%;
+	top: 50%;
+	bottom: 50%;
+	z-index: 1010;
+}
+
+#messaging .formMessage {
+	width: 240px;
+	position: relative;
+	right: 120px;
+	bottom: 46px;
+	font-size: 11px;
+	margin-top: 20px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-size: 12px;
+	z-index: 1002;
+	text-align: center;
+
+	/* @inc .boxShadow */
+	-moz-box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	box-shadow: 0 2px 6px #AAA;
+}
+
+#messaging .errorMessage .iconClose span span span {
+	background-position: 0 -242px !important;
+}
+
+	#messaging .buttonHolderRight {
+		position: absolute;
+		top: 2px;
+		right: 2px;
+		z-index: 1003;
+	}
+
+/* Form messages */
+
+/* Inline error */
+.formError {
+	color: #E2001A;
+	display: block;
+	font-size: 11px;
+	clear: left;
+}
+
+	.errorMessage .formError {
+		color: #FFF;
+		display: block;
+		font-size: 11px;
+	}
+
+/* Inline success */
+.formSuccess {
+	color: #4f6d2c;
+	display: block;
+	font-size: 11px;
+}
+
+.singleMessage {
+	border: 1px solid #CCC;
+}
+
+.formMessage {
+	font-weight: 700;
+	border: 1px solid #CCC;
+	margin: 0 0 10px;
+	background: #FFF;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	.formMessage p {
+		padding: 6px 36px;
+	}
+
+.errorMessage {
+	/* @inc .errorColors */
+	color: #FFF;
+	font-weight: 700;
+	background: #de3636;
+	background: -moz-linear-gradient(top, #de3636 0%, #ff2626 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#de3636), color-stop(100%,#ff2626));
+	background: -webkit-linear-gradient(top, #de3636 0%,#ff2626 100%);
+	background: -o-linear-gradient(top, #de3636 0%,#ff2626 100%);
+	background: -ms-linear-gradient(top, #de3636 0%,#ff2626 100%);
+	background: linear-gradient(top, #de3636 0%,#ff2626 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#de3636', endColorstr='#ff2626',GradientType=0 );
+	border: 1px solid #a60000;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	.errorMessage a:link,
+	.errorMessage a:visited,
+	.errorMessage a:hover,
+	.errorMessage a:active,
+	.errorMessage a:focus {
+		color: #FFF;
+		font-weight: 700;
+		border-bottom: 1px solid #F5ABB4;
+	}
+
+	.errorMessage .iconClose span {
+		background-position: 0 -242px !important;
+	}
+
+.successMessage {
+	color: #4f6d2c;
+	background: #d6efb8;
+	border-color: #91AE8A;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	#report .singleMessage {
+		border-width: 0 0 1px;
+
+		/* @inc .rc */
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+	}
+
+		#report .singleMessage p {
+			padding: 6px 24px;
+			font-size: 11px;
+			font-weight: 700;
+		}
+
+	.successMessage a:link,
+	.successMessage a:visited {
+		color: #005f00;
+		border-color: #8dbd84;
+	}
+
+	.successMessage a:hover,
+	.successMessage a:active,
+	.successMessage a:focus {
+		color: #002f00;
+	}
+
+.generalMessage {
+	font-weight: 700;
+	border: 1px solid #CCC;
+	margin: 0 0 10px;
+	padding: 12px;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+#messaging .loadingMessage {
+	font-weight: 700;
+	margin: 0 0 10px;
+	color: #FFF;
+	font-weight: 700;
+	background: #5c9be0;
+	background: -moz-linear-gradient(top, #5c9be0 0%, #307acb 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5c9be0), color-stop(100%,#307acb));
+	background: -webkit-linear-gradient(top, #5c9be0 0%,#307acb 100%);
+	background: -o-linear-gradient(top, #5c9be0 0%,#307acb 100%);
+	background: -ms-linear-gradient(top, #5c9be0 0%,#307acb 100%);
+	background: linear-gradient(top, #5c9be0 0%,#307acb 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c9be0', endColorstr='#307acb',GradientType=0 );
+	border: 1px solid #366eac;
+	padding: 6px 12px;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	#messaging .loadingMessage p {
+		background: url(../../images/big_spinner.gif) no-repeat center center;
+		min-height: 32px;
+		padding: 16px 0;
+	}
+
+.singleMessage {
+	padding: 0;
+}
+
+.singleMessage p {
+	padding: 6px 12px;
+}
+
+.infoMessage {
+	background-color: #FFA;
+	font-weight: normal;
+	color: #666;
+}

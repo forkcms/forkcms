@@ -1,0 +1,52 @@
+/*
+
+    Balloon
+    Styles for pop out balloons (e.g. forgot password on login)
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+.balloon {
+	display: block;
+	width: 240px;
+	z-index: 2001;
+	padding: 4px 12px;
+	position: relative;
+	border: 1px solid #B8BCC9;
+
+	/* Gradient */
+	background: #eff5fd;
+	background: -moz-linear-gradient(top, #eff5fd 0%, #e9f0f7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eff5fd), color-stop(100%,#e9f0f7));
+	background: -webkit-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: -o-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: -ms-linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	background: linear-gradient(top, #eff5fd 0%,#e9f0f7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eff5fd', endColorstr='#e9f0f7',GradientType=0 );
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+	/* @inc .boxShadow */
+	-moz-box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	box-shadow: 0 2px 6px #AAA;
+}
+
+.balloon .balloonTop {
+	width: 15px;
+	height: 8px;
+	background: url(../../images/balloontop.gif) no-repeat 0 0;
+	display: block;
+	position: absolute;
+	top: -8px;
+	left: 27%;
+}

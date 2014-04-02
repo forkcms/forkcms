@@ -78,8 +78,8 @@ class Header extends Base\Object
      *
      * If you don't specify a module, the current one will be used to automatically create the path to the file.
      * Automatic creation of the filename will result in
-     *   /backend/modules/MODULE/layout/css/FILE (for modules)
-     *   /backend/core/layout/css/FILE (for core)
+     *   src/Backend/Modules/MODULE/Layout/Css/FILE (for modules)
+     *   src/Backend/Core/Layout/Css/FILE (for core)
      *
      * If you set overwritePath to true, the above-described automatic path creation will not happen, instead the
      * file-parameter will be used as path; which we then expect to be a full path (It has to start with a slash '/')
@@ -102,10 +102,10 @@ class Header extends Base\Object
         if (!$overwritePath) {
             // we have to build the path, but core is a special one
             if ($module !== 'Core') {
-                $file = '/src/Backend/Modules/' . $module . '/Layout/css/' . $file;
+                $file = '/src/Backend/Modules/' . $module . '/Layout/Css/' . $file;
             } else {
                 // core is special because it isn't a real module
-                $file = '/src/Backend/Core/Layout/css/' . $file;
+                $file = '/src/Backend/Core/Layout/Css/' . $file;
             }
         }
 
@@ -385,14 +385,14 @@ class Header extends Base\Object
                 BackendModel::getModuleSetting(
                     'Core',
                     'theme'
-                ) . '/Core/Layout/css/screen.css'
+                ) . '/Core/Layout/Css/screen.css'
             ));
             $this->jsData['theme']['has_editor_css'] = (is_file(
                 FRONTEND_PATH . '/Themes/' .
                 BackendModel::getModuleSetting(
                     'Core',
                     'theme'
-                ) . '/Core/Layout/css/editor_content.css'
+                ) . '/Core/Layout/Css/editor_content.css'
             ));
         }
 

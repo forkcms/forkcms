@@ -1,0 +1,134 @@
+/*
+
+    Dashboard
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+#dashboardWidgets {
+	padding: 12px 0;
+	border-top: 1px solid #DDD;
+	zoom: 1;
+
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+	#dashboardWidgets:after {
+		/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+	}
+
+#dashboardWidgets .leftColumn,
+#dashboardWidgets .middleColumn,
+#dashboardWidgets .rightColumn {
+	float: left;
+	max-width: 407px;
+	min-height: 100px;
+	width: 33.3%;
+}
+
+#dashboardWidgets .box {
+	padding: 12px;
+	margin: 0;
+	border: none;
+}
+
+	#dashboardWidgets .box .dataGridHolder {
+		padding: 0;
+		margin: 0;
+		border-width: 0 0 1px 0;
+		background: #FFF;
+	}
+
+		#dashboardWidgets .box .dataGridHolder .dataGrid {
+			border-top: none;
+		}
+
+	#dashboardWidgets .heading a {
+		color: #3A3A3A;
+		border: none;
+	}
+
+#dashboardWidgets .dataGrid td {
+	font-size: 11px;
+}
+
+#dashboardWidgets .dataGrid tr td:first-child {
+	padding-left: 12px;
+}
+
+#dashboardWidgets .dataGrid tr td:last-child {
+	padding-right: 12px;
+}
+
+#dashboardWidgets .dataGrid td a {
+	font-size: 11px;
+	font-weight: 400;
+}
+
+/*
+	Analyse widget
+*/
+
+#widgetSettingsAnalyse ul {
+	padding-bottom: 0;
+}
+
+/*
+	Mailmotor widget
+*/
+
+#widgetMailmotorClassic .ui-tabs .ui-tabs-nav li a {
+	padding: 4px 7px;
+}
+
+	#widgetMailmotorClassic .ui-tabs li {
+		font-weight: 400;
+	}
+
+	#widgetMailmotorClassic .ui-tabs .ui-tabs-selected {
+		font-weight: 700;
+	}
+
+	#dataGridSubscriptions p,
+	#dataGridUnsubscriptions p,
+	#dataGridStatistics p {
+		padding: 0 10px 6px 10px;
+	}
+
+/*
+ 	Drag'n drop for widgets
+ */
+.dragAndDropPlaceholder {
+	margin: 0;
+	border: 1px dotted #999;
+}
+
+.sortableWidget {
+	position: relative;
+}
+
+.isDraggable {
+	cursor: move;
+}
+
+.isRemoved {
+	-ms-filter: "alpha(opacity=40)";
+	filter: alpha(opacity=40);
+	-khtml-opacity: 0.4;
+	-moz-opacity: 0.4;
+	opacity: 0.4;
+}
+
+.editDashboardClose {
+	position: absolute;
+	right: 14px;
+	top: 14px;
+}

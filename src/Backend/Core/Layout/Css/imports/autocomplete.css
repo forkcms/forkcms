@@ -1,0 +1,60 @@
+/*
+
+    Autocomplete search
+    Styles for the autocomplete
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+.ac_results {
+	padding: 0;
+	border: 1px solid #CCC;
+	background-color: #FFF;
+	overflow: hidden;
+
+	/* @inc .boxShadow */
+	-moz-box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	box-shadow: 0 2px 6px #AAA;
+}
+
+.ac_results ul {
+	width: 100%;
+	list-style-position: outside;
+	list-style: none;
+	margin: 0;
+}
+
+.ac_results iframe {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: -1;
+	filter: mask();
+	width: 3000px;
+	height: 3000px;
+}
+
+.ac_results li {
+	margin: 0;
+	padding: 2px 5px;
+	cursor: pointer;
+	display: block;
+ 	font-size: 11px;
+	overflow: hidden;
+}
+
+.ac_loading {
+	background: #FFF url(../../images/spinner.gif) no-repeat right center;
+}
+
+.ac_over {
+	background-color: Highlight;
+	color: HighlightText;
+}

@@ -1,0 +1,43 @@
+/*
+
+    dataFilter
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+.dataFilter {
+	border-bottom: none;
+	margin: 6px 0 12px;
+	border: 1px solid #BDBDBD;
+}
+
+	.dataFilter table {
+		width: 100%;
+	}
+
+	.dataFilter td .options {
+		background: #CECECE;
+		background: rgba(0,0,0,0.07);
+		border-bottom: none;
+		padding: 6px;
+	}
+
+	.dataFilter tfoot td .options {
+		background: #B0B0B0;
+		background: rgba(0,0,0,0.2);
+	}
+
+	/*
+		Better alignment of tooltips in dataFilter
+	*/
+
+	.dataFilter .oneLiner p + p .help {
+		margin-left: 0;
+		top: 4px;
+	}

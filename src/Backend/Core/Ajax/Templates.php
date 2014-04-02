@@ -33,8 +33,8 @@ class BackendCoreAjaxTemplates extends AjaxAction
         // init vars
         $templates = array();
         $theme = BackendModel::getModuleSetting('Core', 'theme');
-        $files[] = BACKEND_PATH . '/Core/Layout/editor_templates/templates.js';
-        $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/editor_templates/templates.js';
+        $files[] = BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js';
+        $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
 
         if (is_file($themePath)) {
             $files[] = $themePath;

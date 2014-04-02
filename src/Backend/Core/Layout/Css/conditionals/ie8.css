@@ -1,0 +1,28 @@
+/*
+
+	IE8 Conditional comments
+
+	@package     backend
+	@subpackage  core
+
+	@author      Matthias Mullie <forkcms@mullie.eu>
+	@since       2.0
+
+*/
+
+/*
+	Pages add/edit
+	:empty is too hard for IE8 to handle, though the padding placed inside this
+	empty element is necessary for the sortable to work.
+ */
+
+#templateVisualLarge .linkedBlocks,
+#templateVisualFallback .linkedBlocks {
+	padding-top: 12px;
+	border-top: 0;
+}
+
+/* IE8 cant target hidden elements */
+.selectThumbList li input {
+	visibility: visible;
+}

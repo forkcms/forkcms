@@ -1,0 +1,39 @@
+/*
+
+	IE7 Conditional comments
+
+	@package     backend
+	@subpackage  core
+
+	@author      Johan Ronsse <johan@netlash.com>
+                 Matthias Mullie <forkcms@mullie.eu>
+	@since       2.0
+
+*/
+
+/*
+	Clearfix
+	@see http://www.positioniseverything.net/easyclearing.html
+*/
+
+.clearfix,
+.columns {
+	zoom: 1;
+}
+
+/*
+	Pages add/edit
+	:empty is too hard for IE7 to handle, though the padding placed inside this
+	empty element is necessary for the sortable to work.
+ */
+
+#templateVisualLarge .linkedBlocks,
+#templateVisualFallback .linkedBlocks {
+	padding-top: 12px;
+	border-top: 0;
+}
+
+/* IE7 cant target hidden elements */
+.selectThumbList li input {
+	visibility: visible;
+}

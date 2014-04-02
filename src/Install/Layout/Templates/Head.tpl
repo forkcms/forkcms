@@ -7,10 +7,10 @@
 
 	<title>Installer - Fork CMS</title>
 	<link rel="shortcut icon" href="/src/Backend/favicon.ico" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/css/reset.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/src/Install/Layout/css/installer.css" />
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/Css/reset.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/Css/screen.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/src/Install/Layout/Css/installer.css" />
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/Css/conditionals/ie7.css" /><![endif]-->
 	<script type="text/javascript" src="/src/Frontend/Core/Js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/src/Install/Js/backend.js"></script>
 	<script type="text/javascript" src="/src/Install/Js/install.js"></script>

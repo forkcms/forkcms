@@ -1,0 +1,562 @@
+/*
+
+    DataGrid
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+.dataGridHolder {
+	margin: 0 0 24px 0;
+	border-bottom: 1px solid #BDBDBD;
+}
+
+	.dataGridInHorizontalForm {
+		width: 80%;
+		float: left;
+	}
+
+	.box .options > *:last-child .dataGridInHorizontalForm {
+		margin: 0;
+	}
+
+.dataGridHolderNoDataGrid {
+	border: none;
+}
+
+	.tableHeading h3 {
+		font-size: 13px;
+		float: left;
+		padding: 0 0 4px 0;
+	}
+
+	.tableHeading .oneLiner h3 + abbr.help {
+		top: 5px;
+	}
+
+	.dataGridHolder .tableHeading .buttonHolderRight {
+		float: right;
+	}
+
+		.tableHeading a.button:link,
+		.tableHeading a.button:visited {
+			margin-bottom: -6px;
+			position: relative;
+			bottom: 4px;
+		}
+
+		.dataGridHolder .tableHeading {
+			zoom: 1;
+		}
+
+		.dataGridHolder .tableHeading:after {
+			/* @inc .clearfix */
+			content: ".";
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+
+.dataGrid {
+	width: 100%;
+	border-collapse: separate;
+	border-top: 1px solid #BDBDBD;
+}
+
+	.dataGrid a {
+		border: none;
+	}
+
+/*
+	Default widths for certain cells
+*/
+
+th.action,
+th.edit,
+td.action {
+	width: 15%;
+}
+
+/* Dates */
+th.publish_on,
+th.edited_on,
+th.date {
+	width: 170px;
+}
+
+/* User name w/ avatar */
+th.user_id,
+th.author {
+	width: 170px;
+}
+
+th.comments {
+	width: 70px;
+}
+
+/* No. of comments*/
+td.comments {
+	text-align: right;
+}
+
+th.num_tags {
+	width: 70px;
+}
+
+/* No. of tags */
+td.num_tags {
+	text-align: right;
+}
+
+/* Fix nasty safari bug when inserting a datagrid into jQuery .tabs */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+	.tabs .dataGridHolder:after {
+		/* @inc .clearfix */
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	.tabs .dataGrid {
+		max-width: 100%;
+		float: left;
+	}
+
+}
+
+/* End bugfix */
+
+/* <td> and <th> */
+
+.dataGrid td,
+.dataGrid th {
+	padding: 4px 6px;
+	vertical-align: middle;
+}
+
+	/* <td> */
+
+	.dataGrid tr td.firstChild,
+	.dataGrid tr td:first-child {
+		border-left: 1px solid #DDD;
+	}
+
+	.dataGrid tr td:last-child,
+	.dataGrid tr td.lastChild {
+		border-right: 1px solid #DDD;
+	}
+
+	/* <th> */
+
+	.dataGrid th {
+		font-weight: 700;
+	}
+
+	.dataGrid tr th:first-child,
+	.dataGrid tr th.firstChild {
+		border-left: 1px solid #BDBDBD;
+	}
+
+	.dataGrid tr th.lastChild,
+	.dataGrid tr th:last-child {
+		border-right: 1px solid #BDBDBD;
+	}
+
+/*
+	Special td types
+*/
+
+	/* Price */
+	.dataGrid td.price {
+		text-align: right;
+		font-family: "Menlo", "Monaco", "Courier New", monospace;
+	}
+
+	/* Title */
+	.dataGrid td.title a,
+	.dataGrid td.title {
+		font-size: 11px;
+		font-weight: 700;
+	}
+
+	/* highlighted */
+	.dataGrid td.highlighted {
+		background-color: #FFF0A5 !important;
+		border: 1px solid #FED22F;
+	}
+
+	/* Goto */
+	.dataGrid td.goto {
+		padding: 1px 5px;
+	}
+
+	.dataGrid p {
+		padding: 0;
+	}
+
+	.dataGrid .content p {
+		padding: 0 0 12px;
+	}
+
+	/* Checkbox */
+	.dataGrid td.checkbox {
+		vertical-align: middle;
+		text-align: center;
+	}
+
+		.dataGrid td.checkbox .inputCheckbox {
+			margin: 0;
+		}
+
+/*
+	Sprite config: th.gif
+
+	0-47 regular th
+	1px checking line
+	49-94 th sorted
+	1px checking line
+	96-142 table heading
+	1px checking line
+	144-191 table tfoot
+
+	193-214 sortable icon
+	215-236 sorted ascending
+	237-xxx sorted descending icon
+*/
+
+.dataGrid th {
+	font-size: 11px;
+	background: url(../../images/sprites/th.gif) repeat-x 0 0;
+	border-bottom: 1px solid #B4B4B4;
+	border-right: 1px solid #BDBDBD;
+	line-height: 22px;
+	padding: 0;
+	font-weight: 400;
+}
+
+.dataGrid td {
+	font-size: 11px;
+}
+
+.dataGrid th a.sortedAsc,
+.dataGrid th a.sortedDesc {
+	background: url(../../images/sprites/th.gif) repeat-x 0 -48px;
+}
+
+.dataGrid th a.sortable:hover {
+	color: #000;
+}
+
+.dataGrid th a,
+.dataGrid th span {
+	padding: 0 18px 0 6px;
+	display: block;
+}
+
+.dataGrid th a.sortable {
+	background: url(../../images/sprites/th.gif) no-repeat right -193px;
+}
+
+.dataGrid th a.sortedAsc {
+	background: url(../../images/sprites/th.gif) no-repeat right -215px;
+}
+
+.dataGrid th a.sortedDesc {
+	background: url(../../images/sprites/th.gif) no-repeat right -237px;
+}
+
+.dataGrid th.checkbox,
+.dataGrid td.checkbox {
+	text-align: center;
+	height: 24px;
+	padding: 0;
+	height: 24px;
+	width: 32px;
+}
+
+	.dataGrid th.checkbox span {
+		padding: 0;
+	}
+
+.dataGrid td.rowMover a {
+	background: url(../../images/move_handle.gif) no-repeat 0 0;
+	width: 6px;
+	height: 14px;
+	display: block;
+	font-size: 0;
+	cursor: move;
+}
+
+.dataGrid tbody tr:hover td,
+.dataGrid tbody tr.selected td {
+	background: #5c93d5;
+	background: -moz-linear-gradient(top, #5c93d5 0%, #1a57ad 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#5c93d5), color-stop(100%,#1a57ad));
+	background: -webkit-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: -o-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: -ms-linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	background: linear-gradient(top, #5c93d5 0%,#1a57ad 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5c93d5', endColorstr='#1a57ad',GradientType=0 );
+}
+
+	.dataGrid tr:hover td,
+	.dataGrid tr.selected td,
+	.dataGrid tr.isDefault:hover td,
+	.dataGrid tr.selected td label,
+	.dataGrid tr:hover td label,
+	#encloser #container .dataGrid tbody tr:hover td a.linkButton span,
+	#encloser #container .dataGrid tbody tr.selected td a.linkButton span {
+		color: #FFF;
+	}
+
+	.dataGrid tbody tr:hover td a,
+	.dataGrid tbody tr.selected td a {
+		color: #F1F5FA;
+	}
+
+.dataGrid tr.odd td {
+	background: #FFF;
+}
+
+.dataGrid tr.even td {
+	background: #F1F5FA;
+}
+
+/* Grayed out */
+
+.dataGrid tr.grayedOut td {
+	-moz-opacity: .60;
+	filter: alpha(opacity=60);
+	opacity: .60;
+}
+
+.dataGrid tr.grayedOut:hover td {
+	-moz-opacity: 1;
+	filter: none;
+	opacity: 1;
+}
+
+.dataGrid tr:last-child td,
+.dataGrid tr.lastChild td {
+	border-bottom: none;
+}
+
+.dataGridHolder .dataGrid tfoot tr td {
+	padding: 0;
+	background: #DDD;
+	border: 1px solid #BDBDBD;
+	border-bottom: none;
+}
+
+.tableOptionsHolder {
+	width: 100%;
+}
+
+.tableOptions {
+	padding: 4px 6px;
+}
+
+	.tableOptions:after {
+		/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+	}
+
+.tableOptions .massAction {
+	float: left;
+}
+
+	.tableOptions .massAction label {
+		/* Don't go white */
+		color: #4A4A4A !important;
+		padding: 2px 0 0;
+	}
+
+.tableOptions .amount {
+	float: right;
+}
+
+	.tableOptions .amount p {
+		padding: 0 12px 0 0;
+		line-height: 22px;
+	}
+
+.tableOptions .pagination {
+	float: right;
+	padding-top: 2px;
+}
+
+	.pagination li {
+		float: left;
+		margin-right: 4px;
+		font-size: 11px;
+	}
+
+	.pagination ul {
+		zoom: 1;
+	}
+
+	.pagination ul:after {
+		/* @inc .clearfix */
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+		.pagination li a:link,
+		.pagination li a:visited,
+		.pagination li span {
+			float: left;
+			display: block;
+			padding: 1px 5px;
+			background: #FFF;
+			background: rgba(255,255,255,0.25);
+			text-align: center;
+			color: #3A3A3A;
+			display: block;
+			background: #ffffff;
+			background: -moz-linear-gradient(top, #ffffff 0%, #fafafa 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#fafafa));
+			background: -webkit-linear-gradient(top, #ffffff 0%,#fafafa 100%);
+			background: -o-linear-gradient(top, #ffffff 0%,#fafafa 100%);
+			background: -ms-linear-gradient(top, #ffffff 0%,#fafafa 100%);
+			background: linear-gradient(top, #ffffff 0%,#fafafa 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#fafafa',GradientType=0 );
+			border: 1px solid #BFBFBF;
+
+			/* @inc .rc */
+			-moz-border-radius: 4px;
+			-webkit-border-radius: 4px;
+			border-radius: 4px;
+		}
+
+		.pagination li a:hover,
+		.pagination li a:active,
+		.pagination li a:focus {
+			border-color: #888;
+			background: #FFF;
+		}
+
+		.pagination li span {
+			background: none;
+			border-color: transparent;
+			color: #666;
+		}
+
+		.pagination li.selected span {
+			/* @inc .navButtonSelected */
+			background: #666666;
+			background: -moz-linear-gradient(top, #666666 0%, #000000 100%);
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#666666), color-stop(100%,#000000));
+			background: -webkit-linear-gradient(top, #666666 0%,#000000 100%);
+			background: -o-linear-gradient(top, #666666 0%,#000000 100%);
+			background: -ms-linear-gradient(top, #666666 0%,#000000 100%);
+			background: linear-gradient(top, #666666 0%,#000000 100%);
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#666666', endColorstr='#000000',GradientType=0 );
+			border: 1px solid #000;
+			color: #FFF;
+		}
+
+			.pagination li.previousPage *,
+			.pagination li.nextPage * {
+				padding-left: 6px;
+				padding-right: 6px;
+			}
+
+		.pagination li a {
+			font-size: 11px;
+		}
+
+/*
+	Infogrid
+*/
+
+.infoGrid {
+	width: 100%;
+	margin: 0 0 24px;
+}
+
+.infoGrid td {
+	width: 100%;
+}
+
+.infoGrid td,
+.infoGrid th {
+	font-size: 11px;
+	padding: 3px;
+}
+
+	.infoGrid tr:last-child td,
+	.infoGrid tr:last-child th {
+		border-bottom: none;
+	}
+
+.infoGrid th {
+	border-right: 1px solid #CCC;
+	padding-right: 6px;
+}
+
+	.infoGrid td {
+		padding-left: 6px;
+	}
+
+/* end infogrid */
+
+/*
+	Inline editing
+*/
+
+.inlineEditTooltip {
+	margin-left: 7px;
+	padding: 2px 6px;
+	font-size: 10px;
+	color: #FFF;
+	background: #005292;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/*
+	Default (e.g. default category)
+*/
+
+tr.isDefault td.name {
+	color: #000;
+	font-weight: 700;
+}
+
+/*
+	DataGrid drag and drop
+*/
+
+.sequenceByDragAndDrop thead th.dragAndDropHandle,
+.sequenceByDragAndDrop tr td.dragAndDropHandle {
+	width: 16px;
+	padding: 0;
+	cursor: move;
+}
+
+.sequenceByDragAndDrop thead th.dragAndDropHandle span {
+	padding: 0;
+}
+
+.sequenceByDragAndDrop tbody td.dragAndDropHandle span {
+	background: url(../../images/move_handle.gif) no-repeat center center;
+	display: block;
+	font-size: 0;
+	cursor: move;
+	height: 20px;
+}

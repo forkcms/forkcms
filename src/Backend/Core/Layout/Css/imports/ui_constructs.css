@@ -1,0 +1,481 @@
+/*
+
+    UI constructs
+    Markup combo's that produce specific layout results
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+/*
+	Box construct
+*/
+
+.box, .widget {
+	color: #333;
+	margin: 0 0 20px;
+}
+
+.box .box,
+.boxLevel2,
+.subtleBox {
+	margin: 0 0 10px;
+}
+
+.subtleBox h3 {
+	font-size: 13px;
+	color: #000;
+	border-bottom: 1px solid #DDD;
+	margin: 0 0 12px;
+}
+
+.subtleBox {
+	margin: 0 0 12px;
+}
+
+.box .box:last-child,
+.box .subtleBox:last-child,
+.ui-tabs-panel .box:last-child {
+	margin-bottom: 0;
+}
+
+.box .subtleBox:last-child,
+.ui-tabs-panel .subtleBox:last-child {
+	border: none;
+}
+
+.box .heading,
+.widget .heading {
+	background: #E4E4E4;
+	background: url(../../images/sprites/th.gif) repeat-x 0 -97px;
+	border: 1px solid #D7D7D7;
+	border-color: #BDBDBD;
+	padding: 6px 12px;
+
+	/* @inc .topRc */
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.box .headingRTE {
+	border-bottom: none;
+}
+
+
+.tableHeading {
+	padding: 6px 0;
+	border-bottom: none;
+}
+
+	.box .box .heading,
+	.boxLevel2 .heading {
+		background: none;
+	}
+
+	.box .heading h3,
+	.box .heading h4 {
+		float: left;
+		padding: 0;
+	}
+
+	.box .heading:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.box .heading { zoom: 1; }
+
+	.box .heading .buttonHolderRight {
+		float: right;
+		height: 0;
+		position: relative;
+		bottom: 4px;
+		left: 11px;
+	}
+
+	tr.sectionRow th {
+		background: #f2f2f2;
+		background: -moz-linear-gradient(top, #f2f2f2 0%, #dadada 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(100%,#dadada));
+		background: -webkit-linear-gradient(top, #f2f2f2 0%,#dadada 100%);
+		background: -o-linear-gradient(top, #f2f2f2 0%,#dadada 100%);
+		background: -ms-linear-gradient(top, #f2f2f2 0%,#dadada 100%);
+		background: linear-gradient(top, #f2f2f2 0%,#dadada 100%);
+		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#dadada',GradientType=0 );
+	}
+
+.box .options,
+.box .content {
+	padding: 12px;
+	background: #FFF;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	border-top: none;
+	border-bottom: 1px solid #DDD;
+}
+
+	.box .last {
+		border-bottom: none;
+	}
+
+	.box .options > div:last-child,
+	.box .options > p:last-child {
+		padding-bottom: 0;
+	}
+
+.box .moderate {
+	background: #FFC;
+	padding: 6px 12px;
+	font-size: 11px;
+	border: 1px solid #b3b78d;
+	border-width: 0 1px 1px 1px;
+
+	/* @inc .noticeColors */
+	color: #3A3A3A;
+	background: #FFA;
+	background: -moz-linear-gradient(top, #ffffdd 0%, #ffffaa 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffdd), color-stop(100%,#ffffaa));
+	background: -webkit-linear-gradient(top, #ffffdd 0%,#ffffaa 100%);
+	background: -o-linear-gradient(top, #ffffdd 0%,#ffffaa 100%);
+	background: -ms-linear-gradient(top, #ffffdd 0%,#ffffaa 100%);
+	background: linear-gradient(top, #ffffdd 0%,#ffffaa 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffdd', endColorstr='#ffffaa',GradientType=0 );
+}
+
+	.box .moderate p {
+		padding: 0;
+	}
+
+.box .options:last-child {
+
+	/* @inc .bottomRc */
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.box input[type="submit"] {
+	font-size: 11px;
+}
+
+.box .footer {
+	border: 1px solid #D7D7D7;
+	border-top: none;
+	background: #F2F2F2;
+	border-color: #AAA #D7D7D7 #C0C0C0 #D7D7D7;
+	padding: 6px 12px;
+}
+
+.box .footer td {
+	width: 55%;
+	padding: 2% 5% 2% 5%;
+}
+
+/*
+	Modal variant of .box
+*/
+
+#modalOverlay {
+	background: rgba(255,255,255,0.44);
+	height: 100%;
+	width: 100%;
+	position: fixed;
+	z-index: 2000;
+}
+
+.modalHolder {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 2200;
+}
+
+.box.modal {
+	width: 550px;
+	position: relative;
+	left: -275px;
+	top: -220px;
+	background: #FFF;
+
+	/* @inc .boxShadow */
+	-moz-box-shadow: rgba(0,0,0,0.33) 0 4px 12px;
+	-webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.33);
+	box-shadow: 0 4px 12px rgba(0,0,0,0.33);
+}
+
+.modal .heading {
+	position: relative;
+}
+
+	.modal .heading .buttonHolder {
+		position: absolute;
+		top: 6px;
+		right: 6px;
+	}
+
+	.modal .heading h4 {
+		padding: 0;
+		line-height: 22px;
+	}
+
+.modalSave {
+	background: #dddddd;
+	background: -moz-linear-gradient(top, #dddddd 0%, #eaeaea 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#dddddd), color-stop(100%,#eaeaea));
+	background: -webkit-linear-gradient(top, #dddddd 0%,#eaeaea 100%);
+	background: -o-linear-gradient(top, #dddddd 0%,#eaeaea 100%);
+	background: -ms-linear-gradient(top, #dddddd 0%,#eaeaea 100%);
+	background: linear-gradient(top, #dddddd 0%,#eaeaea 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#dddddd', endColorstr='#eaeaea',GradientType=0 );
+	padding: 12px;
+}
+
+/*
+	Publish options
+	Right hand side of pages add/edit
+*/
+
+#publishOptions ul {
+	padding-bottom: 0;
+}
+
+#publishOptions li {
+	font-size: 11px;
+}
+
+#publishOptions p.status {
+	padding: 0;
+	font-size: 11px;
+}
+
+#publishOptions li span.collapsed {
+	display: block;
+	padding: 6px 0;
+}
+
+	#publishOptions li li {
+		border: none;
+		margin: 0;
+	}
+
+	#publishOptions .innerForm {
+		padding: 6px;
+		background: #E7E7FF;
+	}
+
+		#publishOptions .innerForm ul {
+			padding: 3px 0;
+		}
+
+			#publishOptions .innerForm input {
+				font-size: 12px;
+			}
+			#publishOptions .innerForm #publishDate { width: 65px; }
+			#publishOptions .innerForm #publishTime { width: 34px; }
+
+	#publishOptions li:last-child {
+		border: none;
+	}
+
+	#publishOptions .footer table {
+		width: 100%;
+	}
+
+	#publishOptions .footer table tr td {
+		padding: 0;
+	}
+
+	#publishOptions .footer table tr td:first-child {
+		font-size: 11px;
+	}
+
+.box h3, .box h3 label {
+	margin: 0;
+	padding: 0;
+	color: #000;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+	.box .box h3,
+	.boxLevel2 h3 {
+		font-size: 11px;
+	}
+
+.boxLevel2 h4 {
+	border: 1px solid #CCC;
+	font-size: 11px;
+	line-height: 19px;
+	padding: 0 0 0 24px;
+	margin: 0 0 4px;
+	background: #EEE;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+	.boxLevel2 h4 + .inputList label {
+		font-weight: 400;
+	}
+
+input.title {
+	font-size: 16px;
+	font-weight: 700;
+	width: 98%;
+	padding: 3px 3px;
+	height: 21px;
+}
+
+#pageTitle p {
+	margin-top: 2px;
+	padding: 0;
+}
+
+div#pageTitle {
+	/* div prefix to prevent conflict with input named #pageTitle */
+	vertical-align: middle;
+	border: 1px solid #999;
+	padding-left: 12px;
+}
+
+#pageUrl {
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	padding: 0 0 24px;
+}
+
+#pageUrl abbr {
+	font-weight: 700;
+}
+
+	#pageUrl p span a {
+		color: #666;
+		padding-right: 3px;
+	}
+
+/* Pages */
+
+/* Advanced options */
+
+#advancedOptions {
+	width: 100%;
+}
+
+#advancedOptions #template {
+	width: 96px;
+	padding-right: 20px;
+}
+
+.fullwidthOptions {
+	margin-top: 12px;
+}
+
+	.fullwidthOptions {
+		zoom: 1;
+	}
+
+	.fullwidthOptions:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	.fullwidthOptions .buttonHolder { float: left;}
+	.fullwidthOptions .buttonHolderRight { float: right; }
+
+#templateDetails {
+	margin: 0;
+}
+
+#templateDetails th {
+	width: 10px;
+}
+
+.contentTypeImageEdit label,
+.contentTypeImageEdit p.label {
+	display: block;
+	font-size: 12px;
+	padding: 0 0 4px;
+}
+
+.contentTypeImageEdit td {
+	padding-right: 20px;
+}
+
+.contentTypeModule a {
+	font-weight: 700;
+}
+
+.contentTypeModule p:first-child {
+	padding: 0 0 4px;
+}
+
+/*
+	Pagetitle
+*/
+
+.pageTitle {
+	margin: 0 0 12px;
+	padding: 6px 0 6px;
+	border-bottom: 1px solid #DDD;
+}
+
+.pageTitle h2 {
+	font-size: 14px;
+	float: left;
+	padding: 2px 0 0;
+	margin: 0;
+	line-height: 22px;
+	letter-spacing: 0;
+	font-weight: 700;
+}
+
+	/* Clear it */
+	.pageTitle {
+		zoom: 1;
+	}
+
+	.pageTitle:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	.pageTitle h2 label {
+		font-size: 14px; 
+		font-weight: 700;
+	}
+	
+/*
+	Center message
+*/
+
+.centerItem {
+	width: 100%;
+	height: 100%;
+}
+.centerItem td {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+
+	.centerItem .formMessage {
+		width: 50%;
+		margin: 0 25%;
+	}

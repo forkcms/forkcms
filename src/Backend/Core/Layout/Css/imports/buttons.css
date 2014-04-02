@@ -1,0 +1,283 @@
+/*
+
+    Buttons
+    Styles for the buttons
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+    @since        2.0
+
+*/
+
+a.button:link,
+a.button:visited {
+	height: 22px;
+	line-height: 22px;
+	white-space: nowrap;
+	text-decoration: none;
+	border: none;
+	color: #3A3A3A;
+	font-weight: 700;
+	float: left;
+	padding: 0 6px;
+	text-shadow: 1px 1px 1px rgba(255,255,255,0.25);
+	background-repeat: repeat-x;
+	background-position: right -132px;
+	overflow: hidden;
+	border: 1px solid #B0B0B0;
+	background: #EEE;
+	background: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 4.5454545%, #dddddd 95.454545%, #c5c5c5 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(4.5454545%,#f7f7f7), color-stop(95.454545%,#dddddd), color-stop(100%,#c5c5c5));
+	background: -webkit-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%);
+	background: linear-gradient(top, #ffffff 0%,#f7f7f7 4.5454545%,#dddddd 95.454545%,#c5c5c5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#c5c5c5',GradientType=0 );
+
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+a.button:hover,
+a.button:active,
+a.button:focus,
+a.button.focus {
+	color: #3A3A3A;
+	background: #FFF;
+	background: -moz-linear-gradient(top, #c5c5c5 0%, #dddddd 4.5454545%, #f7f7f7 95.454545%, #ffffff 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#c5c5c5), color-stop(4.5454545%,#dddddd), color-stop(95.454545%,#f7f7f7), color-stop(100%,#ffffff));
+	background: -webkit-linear-gradient(top, #c5c5c5 0%,#dddddd 4.5454545%,#f7f7f7 95.454545%,#ffffff 100%);
+	background: -o-linear-gradient(top, #c5c5c5 0%,#dddddd 4.5454545%,#f7f7f7 95.454545%,#ffffff 100%);
+	background: -ms-linear-gradient(top, #c5c5c5 0%,#dddddd 4.5454545%,#f7f7f7 95.454545%,#ffffff 100%);
+	background: linear-gradient(top, #c5c5c5 0%,#dddddd 4.5454545%,#f7f7f7 95.454545%,#ffffff 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#c5c5c5', endColorstr='#ffffff',GradientType=0 );
+}
+
+a.mainButton:link,
+a.mainButton:visited {
+	color: #FFF !important;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+	border: 1px solid #366EAC;
+	background: #8db7e7;
+	background: -moz-linear-gradient(top, #8db7e7 0%, #5e9ce1 4.5454545%, #2f79ca 95.454545%, #215996 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#8db7e7), color-stop(4.5454545%,#5e9ce1), color-stop(95.454545%,#2f79ca), color-stop(100%,#215996));
+	background: -webkit-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%);
+	background: -o-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%);
+	background: -ms-linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%);
+	background: linear-gradient(top, #8db7e7 0%,#5e9ce1 4.5454545%,#2f79ca 95.454545%,#215996 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#8db7e7', endColorstr='#215996',GradientType=0 );
+}
+
+a.mainButton:hover,
+a.mainButton:active,
+a.mainButton:focus,
+a.mainButton.focus {
+	background: #215996;
+	background: -moz-linear-gradient(top, #215996 0%, #2f79ca 4.5454545%, #5e9ce1 95.454545%, #8db7e7 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#215996), color-stop(4.5454545%,#2f79ca), color-stop(95.454545%,#5e9ce1), color-stop(100%,#8db7e7));
+	background: -webkit-linear-gradient(top, #215996 0%,#2f79ca 4.5454545%,#5e9ce1 95.454545%,#8db7e7 100%);
+	background: -o-linear-gradient(top, #215996 0%,#2f79ca 4.5454545%,#5e9ce1 95.454545%,#8db7e7 100%);
+	background: -ms-linear-gradient(top, #215996 0%,#2f79ca 4.5454545%,#5e9ce1 95.454545%,#8db7e7 100%);
+	background: linear-gradient(top, #215996 0%,#2f79ca 4.5454545%,#5e9ce1 95.454545%,#8db7e7 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#215996', endColorstr='#8db7e7',GradientType=0 );
+}
+
+a.button span {
+	cursor: pointer;
+}
+
+a.icon span {
+	padding: 0 0 0 18px !important;
+	display: block;
+	background-image: url(../../images/sprites/fork_icons.png);
+	background-repeat: no-repeat;
+	overflow: hidden;
+}
+
+	a.iconAdd span {
+		background-position: 0 0 !important; }
+	a.iconEdit span {
+		background-position: 0 -22px !important; }
+	a.iconDelete span,
+	a.iconMarkAsSpam span {
+		background-position: 0 -44px !important; }
+	a.iconBack span {
+		background-position: 0 -66px !important; }
+	a.mainButton.iconBack span {
+		background-position: 0 -88px !important; }
+	a.iconCollapsed span {
+		background-position: 0 -110px !important; }
+	a.iconExpanded span {
+		background-position: 0 -132px !important; }
+	a.iconZoom span,
+	a.iconDetail span,
+	a.iconDetails span {
+		background-position: 0 -154px !important; }
+	a.iconSettings span {
+		background-position: 0 -176px !important; }
+	a.iconClose span {
+		background-position: 0 -220px !important; }
+	a.iconCloseI span {
+		background-position: 0 -242px !important; }
+	a.iconUsers span {
+		background-position: 0 -264px !important; }
+	a.iconExport span {
+		background-position: 0 -374px !important; }
+	a.iconImport span {
+		background-position: 0 -396px !important; }
+	a.iconStats span {
+		background-position: 0 -420px !important; }
+	a.iconGoto span {
+		background-position: 0 -465px !important; }
+	a.iconMailAdd span {
+		background-position: 0 -513px !important; }
+	a.iconFolderAdd span {
+		background-position: 0 -536px !important; }
+	a.iconFolderEdit span {
+		background-position: 0 -560px !important; }
+	a.iconRefresh span {
+		background-position: 0 -583px !important; }
+	a.iconApprove span {
+		background-position: 0 -607px !important; }
+	a.iconReject span {
+		background-position: 0 -628px !important; }
+	a.iconNext span {
+		background-position: 0 -648px !important; }
+	a.iconVisible span {
+		background-position: 0 -668px !important; }
+	a.iconInvisible span {
+		background-position: 0 -688px !important; }
+
+	a.iconOnly:link,
+	a.iconOnly:visited {
+		padding: 0 3px;
+		width: 16px;
+	}
+
+	a.iconOnly span {
+		width: 16px;
+		display: block;
+		padding: 0 !important;
+		text-indent: -9000px;
+		overflow: hidden;
+	}
+
+	a.iconLink span {
+		width: 16px;
+		height: 22px;
+		padding: 0 !important;
+		text-indent: -9000px;
+		overflow: hidden;
+		display: block;
+		background-image: url(../../images/sprites/fork_icons.png);
+		background-repeat: no-repeat;
+	}
+
+	/*
+		Button that looks like a link
+	*/
+
+	a.linkButton:link,
+	a.linkButton:visited {
+		background: none;
+		color: #085DBD;
+		border: 1px solid transparent !important;
+		font-weight: 400;
+	}
+
+		#encloser #container a.linkButton:link span,
+		#encloser #container a.linkButton:visited span {
+			color: #085DBD;
+		}
+
+	a.linkButton:hover,
+	a.linkButton:active,
+	a.linkButton:focus {
+		background: rgba(0,0,0,0.1);
+		color: #FFF !important;
+	}
+
+	/*
+		Disabled buttons
+	*/
+
+	a.disabledButton:link,
+	a.disabledButton:visited,
+	a.disabledButton:hover,
+	a.disabledButton:active,
+	a.disabledButton:focus,
+	a.disabledButton.focus {
+		/* @inc .opaque */
+		-ms-filter: "alpha(opacity=50)";
+		filter: alpha(opacity=50);
+		-khtml-opacity: 0.5;
+		-moz-opacity: 0.5;
+		opacity: 0.5;
+		cursor: default;
+	}
+
+/* Button positioning */
+
+.buttonHolder .button:link,
+.buttonHolder .button:visited,
+.buttonHolder input {
+	float: left;
+	margin-right: 4px;
+}
+
+.buttonHolderRight .button:link,
+.buttonHolderRight .button:visited,
+.buttonHolderRight input {
+	float: right;
+	margin-left: 4px;
+}
+
+.buttonHolderSingle .button {
+	margin: 0;
+	float: none !important;
+	/* Used for single buttons so the focus lines are nice and clean */
+}
+
+/* end buttons */
+
+/*
+	Delete buttons
+*/
+
+#encloser #container a.iconDelete:link span,
+#encloser #container a.iconDelete:visited span {
+	color: red;
+}
+
+/*
+	jQuery Ui
+*/
+
+.ui-icon-closethick {
+	background: url(../../images/sprites/fork_icons.png) no-repeat 0 -220px;
+}
+
+/*
+	Clearfix
+*/
+
+.buttonHolder,
+.buttonHolderSingle,
+.buttonHolderRight {
+	zoom: 1;
+}
+
+.buttonHolder:after,
+.buttonHolderSingle:after,
+.buttonHolderRight:after {
+	/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}

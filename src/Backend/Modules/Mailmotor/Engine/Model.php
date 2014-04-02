@@ -1372,7 +1372,7 @@ class Model
                 '" exists, but no template.tpl file was found. Please create one.'
             );
         }
-        if (!$fs->exists($path . '/' . $name . '/css/screen.css')) {
+        if (!$fs->exists($path . '/' . $name . '/Css/screen.css')) {
             throw new \SpoonException(
                 'The template folder "' . $name .
                 '" exists, but no screen.css file was found. Please create one in a subfolder "css".'
@@ -1385,9 +1385,9 @@ class Model
         $record['language'] = $language;
         $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase($record, array('-', '_')));
         $record['path_content'] = $path . '/' . $name . '/template.tpl';
-        $record['path_css'] = $path . '/' . $name . '/css/screen.css';
+        $record['path_css'] = $path . '/' . $name . '/Css/screen.css';
         $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' . $language .
-                             '/' . $name . '/css/screen.css';
+                             '/' . $name . '/Css/screen.css';
 
         // check if the template file actually exists
         if ($fs->exists($record['path_content'])) {

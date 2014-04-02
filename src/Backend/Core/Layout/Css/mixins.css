@@ -1,0 +1,97 @@
+/*
+
+	"Fake" includes that have to stay consistent
+    
+	@package      backend
+	@subpackage   core
+    
+	@author       Johan Ronsse <johan@netlash.com>
+                  Thomas Deceuninck <thomas@fronto.be>
+	@since        2.0
+
+*/
+
+/* Rounded corners on all sides */
+.rc {
+	/* @inc .rc */
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+}
+
+/* Rounded corners only on the top sides */
+.topRc {
+	/* @inc .topRc */
+	-webkit-border-top-left-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	-moz-border-radius-topright: 4px;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+/* Rounded corners only on the bottom sides */
+.bottomRc {
+	/* @inc .bottomRc */
+	-webkit-border-bottom-right-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.doubleRc {
+	/* @inc .doubleRc */
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+}
+
+.opaque {
+	/* @inc .opaque */
+	-ms-filter: "alpha(opacity=100)";
+	filter: alpha(opacity=100);
+	-khtml-opacity: 1;
+	-moz-opacity: 1;
+	opacity: 1;
+}
+
+.transparent {
+	/* @inc .transparent */
+	-ms-filter: "alpha(opacity=0)";
+	filter: alpha(opacity=0);
+	-khtml-opacity: 0;
+	-moz-opacity: 0;
+	opacity: 0;
+}
+
+.opacity {
+	/* @inc opacity */
+	-ms-filter: "alpha(opacity=50)";
+	filter: alpha(opacity=50);
+	-khtml-opacity: 0.5;
+	-moz-opacity: 0.5;
+	opacity: 0.5;
+}
+
+.boxShadow {
+	/* @inc .boxShadow */
+	-moz-box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	box-shadow: 0 2px 6px #AAA;
+}
+
+.secondaryContent {
+	/* @inc .secondarycontent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+.accessibility {
+	/* @inc .offScreen */
+	position: absolute;
+	top: -9000px;
+	left: -9000px;
+	/* For screenreaders*/
+}
