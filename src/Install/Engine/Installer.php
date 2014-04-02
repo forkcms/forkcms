@@ -33,7 +33,7 @@ class Installer extends \KernelLoader implements \ApplicationInterface
     {
         if (file_exists(__DIR__ . '/../Cache/installed.txt')) {
             exit('This Fork has already been installed. To reinstall, delete
-                 installed.txt from the install/cache directory. To log in,
+                 installed.txt from the /src/Install/Cache directory. To log in,
                  <a href="/private">click here</a>.');
         }
 
