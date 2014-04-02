@@ -139,7 +139,7 @@ class Step2 extends Step
          */
         self::checkRequirement(
             'fileSystemBackendCache',
-            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/src/Backend/cache/'),
+            defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/src/Backend/Cache/'),
             self::STATUS_ERROR
         );
         self::checkRequirement(
