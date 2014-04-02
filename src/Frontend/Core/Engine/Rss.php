@@ -53,7 +53,7 @@ class Rss extends \SpoonFeedRSS
         $this->setLanguage(FRONTEND_LANGUAGE);
         $this->setCopyright(\SpoonDate::getDate('Y') . ' ' . $siteTitle);
         $this->setGenerator($siteTitle);
-        $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/layout/images/rss_image.png', $title, $link);
+        $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
 
         // theme was set
         if (Model::getModuleSetting('Core', 'theme', null) != null) {
@@ -61,10 +61,10 @@ class Rss extends \SpoonFeedRSS
             $theme = Model::getModuleSetting('Core', 'theme', null);
 
             // theme rss image exists
-            if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/core/images/rss_image.png')) {
+            if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {
                 // set rss image
                 $this->setImage(
-                    SITE_URL . '/src/Frontend/Themes/' . $theme . '/core/images/rss_image.png',
+                    SITE_URL . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png',
                     $title,
                     $link
                 );

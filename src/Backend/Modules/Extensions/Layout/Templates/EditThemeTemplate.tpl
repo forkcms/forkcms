@@ -11,7 +11,7 @@
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
 				<label for="theme" class="visuallyHidden">{$lblTheme|ucfirst}</label>
-				{$ddmTheme}<small><code>/core/layout/templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
+				{$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
 				<span class="helpTxt">{$msgHelpTemplateLocation}</span>
 			</p>
 			<p>

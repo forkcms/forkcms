@@ -947,7 +947,7 @@ class Model implements FrontendTagsInterface
             // send the mail
             FrontendModel::get('mailer')->addEmail(
                 FL::msg('NotificationSubject'),
-                FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl',
+                FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
                 null, null, null, null, null, null, null, null, null, null, null, true
             );
@@ -962,7 +962,7 @@ class Model implements FrontendTagsInterface
             // send the mail
             FrontendModel::get('mailer')->addEmail(
                 FL::msg('NotificationSubject'),
-                FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl',
+                FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
                 null, null, null, null, null, null, null, null, null, null, null, true
             );

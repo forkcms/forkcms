@@ -107,7 +107,7 @@ a.mailAnalyticsBacklink {
 }
 
 .ui-resizable-handle:hover {
-	background: #eaeaea url(../../../../core/layout/images/sprites/th.gif) no-repeat center -199px;
+	background: #eaeaea url(../../../../Core/Layout/images/sprites/th.gif) no-repeat center -199px;
 }
 
 /* Filter */

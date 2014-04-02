@@ -36,7 +36,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
         parent::execute();
         $this->loadData();
 
-        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/pages/layout/widgets';
+        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/Pages/Layout/Widgets';
 
         // check if the given template exists
         try {

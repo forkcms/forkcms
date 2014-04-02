@@ -1,6 +1,6 @@
-{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 <body id="login">
-	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl}
+	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/Layout/Templates/Ie6.tpl}
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
 	<table id="loginHolder">
 		<tr>
@@ -84,4 +84,4 @@
 			</td>
 		</tr>
 	</table>
-{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
+{include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

@@ -1,7 +1,7 @@
-{include:core/layout/templates/head.tpl}
+{include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	{include:core/layout/templates/cookies.tpl}
+	{include:Core/Layout/Templates/Cookies.tpl}
 
 	<div id="topWrapper">
 		<header id="header">
@@ -26,7 +26,7 @@
 				{* Language *}
 				<nav id="headerLanguage">
 					<h4>{$lblLanguage|ucfirst}</h4>
-					{include:core/layout/templates/languages.tpl}
+					{include:Core/Layout/Templates/Languages.tpl}
 				</nav>
 
 				{* Top position *}
@@ -37,7 +37,7 @@
 				{* Breadcrumb *}
 				<div id="breadcrumb">
 					<h4>{$lblBreadcrumb|ucfirst}</h4>
-					{include:core/layout/templates/breadcrumb.tpl}
+					{include:Core/Layout/Templates/Breadcrumb.tpl}
 				</div>
 
 				{* Advertisement position *}
@@ -121,7 +121,7 @@
 		</noscript>
 	</div>
 	<div id="bottomWrapper">
-		{include:core/layout/templates/footer.tpl}
+		{include:Core/Layout/Templates/Footer.tpl}
 	</div>
 
 	{* General Javascript *}
@@ -130,7 +130,7 @@
 	{/iteration:jsFiles}
 
 	{* Theme specific Javascript *}
-	<script src="{$THEME_URL}/core/js/triton.js"></script>
+	<script src="{$THEME_URL}/Core/Js/triton.js"></script>
 
 	{* Site wide HTML *}
 	{$siteHTMLFooter}

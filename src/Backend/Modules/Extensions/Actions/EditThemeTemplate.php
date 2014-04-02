@@ -111,7 +111,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create elements
         $this->frm->addDropdown('theme', $themes, BackendModel::getModuleSetting('Core', 'theme', 'core'));
         $this->frm->addText('label', $this->record['label']);
-        $this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
+        $this->frm->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
         $this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
         $this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
         $this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
@@ -310,7 +310,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
-                $item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
+                $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
                 $item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
 
                 // copy data from previous version, otherwise default_extras from other languages are overwritten

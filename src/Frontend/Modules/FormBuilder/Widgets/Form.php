@@ -119,7 +119,7 @@ class Form extends FrontendBaseWidget
         }
 
         return $this->tpl->getContent(
-            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/layout/widgets/' . $this->getAction() . '.tpl'
+            FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Widgets/' . $this->getAction() . '.tpl'
         );
     }
 

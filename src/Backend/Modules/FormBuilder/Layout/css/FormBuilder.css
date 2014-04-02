@@ -102,7 +102,7 @@
 		}
 
 		#fieldsHolder input.inputText[disabled="disabled"], #fieldsHolder input.inputPassword[disabled="disabled"] {
-			background: url(../../../../core/layout/images/ds.png) repeat-x #fff;
+			background: url(../../../../Core/Layout/images/ds.png) repeat-x #fff;
 			color: #666;
 		}
 

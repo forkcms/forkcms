@@ -276,7 +276,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 // build array
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
-                $item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
+                $item['path'] = 'Core/Layout/Templates/' . $this->frm->getField('file')->getValue();
                 $item['active'] = $this->frm->getField('active')->getChecked() ? 'Y' : 'N';
                 $item['data']['format'] = trim(str_replace(array("\n", "\r", ' '), '', $this->frm->getField('format')->getValue()));
                 $item['data']['names'] = $this->names;

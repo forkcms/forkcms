@@ -15,7 +15,7 @@
 </div>
 
 <div class="box">
-	{include:{$BACKEND_MODULE_PATH}/layout/templates/period.tpl}
+	{include:{$BACKEND_MODULE_PATH}/Layout/Templates/Period.tpl}
 
 	<div class="options content">
 		<form action="{$var|geturl:'mass_landing_page_action'}" method="get" class="forkForms submitWithLink" id="landing_pages">

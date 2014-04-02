@@ -146,17 +146,17 @@
         <translation language="el"><![CDATA[πχ. [left,main,right],[/,main,/]]]></translation>
       </item>
       <item type="message" name="HelpTemplateLocation">
-        <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/layout/templates</code> van je thema.]]></translation>
-        <translation language="en"><![CDATA[Put your templates in the <code>core/layout/templates</code> folder of your theme.]]></translation>
-        <translation language="it"><![CDATA[Metti i tuoi template nella cartella <code>core/layout/templates</code> del tuo tema.]]></translation>
-        <translation language="ru"><![CDATA[Путь для шаблонов <code>core/layout/templates</code>.]]></translation>
-        <translation language="zh"><![CDATA[将你的模板放置在你的主题文件夹<code>core/layout/templates</code> 中。]]></translation>
-        <translation language="de"><![CDATA[Leg deine Templates im Ordner <code>core/layout/templates</code> deines Themes ab.]]></translation>
-        <translation language="fr"><![CDATA[Placez les templates dans le répertoire <code>core/layout/templates</code> de votre thème.]]></translation>
-        <translation language="hu"><![CDATA[Tedd a sablonodad a témád <code>core/layout/templates</code> mappájába.]]></translation>
-        <translation language="es"><![CDATA[Pon tus plantillas en la carpeta <code>core/layout/templates</code> de tu tema.]]></translation>
+        <translation language="nl"><![CDATA[Plaats de templates in de map <code>Core/Layout/Templates</code> van je thema.]]></translation>
+        <translation language="en"><![CDATA[Put your templates in the <code>Core/Layout/Templates</code> folder of your theme.]]></translation>
+        <translation language="it"><![CDATA[Metti i tuoi template nella cartella <code>Core/Layout/Templates</code> del tuo tema.]]></translation>
+        <translation language="ru"><![CDATA[Путь для шаблонов <code>Core/Layout/Templates</code>.]]></translation>
+        <translation language="zh"><![CDATA[将你的模板放置在你的主题文件夹<code>Core/Layout/Templates</code> 中。]]></translation>
+        <translation language="de"><![CDATA[Leg deine Templates im Ordner <code>Core/Layout/Templates</code> deines Themes ab.]]></translation>
+        <translation language="fr"><![CDATA[Placez les templates dans le répertoire <code>Core/Layout/Templates</code> de votre thème.]]></translation>
+        <translation language="hu"><![CDATA[Tedd a sablonodad a témád <code>Core/Layout/Templates</code> mappájába.]]></translation>
+        <translation language="es"><![CDATA[Pon tus plantillas en la carpeta <code>Core/Layout/Templates</code> de tu tema.]]></translation>
         <translation language="sv"><![CDATA[Lägg dina mallar i <code>core/layout/mallar</code> mapp av ditt tema.]]></translation>
-        <translation language="el"><![CDATA[Τοποθετήσατε τα πρότυπά σας στο φάκελο <code>core/layout/templates</code> του θέματός σας.]]></translation>
+        <translation language="el"><![CDATA[Τοποθετήσατε τα πρότυπά σας στο φάκελο <code>Core/Layout/Templates</code> του θέματός σας.]]></translation>
       </item>
       <item type="message" name="HelpThemes">
         <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>

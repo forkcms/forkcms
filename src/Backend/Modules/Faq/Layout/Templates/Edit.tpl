@@ -116,7 +116,7 @@
 		</div>
 
 		<div id="tabSEO">
-			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
+			{include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
 		</div>
 	</div>
 

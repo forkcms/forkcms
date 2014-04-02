@@ -1,7 +1,7 @@
-{include:core/layout/templates/head.tpl}
+{include:core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	{include:core/layout/templates/cookies.tpl}
+	{include:Core/Layout/Templates/Cookies.tpl}
 
 	<div id="container">
 		<header id="header">
@@ -12,7 +12,7 @@
 
 			{* Language *}
 			<div>
-				{include:core/layout/templates/languages.tpl}
+				{include:Core/Layout/Templates/Languages.tpl}
 			</div>
 		</header>
 
@@ -23,7 +23,7 @@
 
 		<section>
 			{* Breadcrumb *}
-			{include:core/layout/templates/breadcrumb.tpl}
+			{include:Core/Layout/Templates/Breadcrumb.tpl}
 
 			{* Page title *}
 			{option:!hideContentTitle}
@@ -50,7 +50,7 @@
 		</section>
 
 		<footer>
-			{include:core/layout/templates/footer.tpl}
+			{include:core/Layout/Templates/Footer.tpl}
 		</footer>
 	</div>
 

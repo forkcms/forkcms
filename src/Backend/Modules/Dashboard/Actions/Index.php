@@ -115,7 +115,7 @@ class Index extends BackendBaseActionIndex
 
                     // reset template path
                     if($templatePath == null) {
-                        $templatePath = BACKEND_PATH . '/modules/' . $module . '/layout/widgets/' . $widgetName . '.tpl';
+                        $templatePath = BACKEND_PATH . '/Modules/' . $module . '/Layout/Widgets/' . $widgetName . '.tpl';
                     }
 
                     // build item
