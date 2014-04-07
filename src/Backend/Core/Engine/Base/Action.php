@@ -150,12 +150,12 @@ class Action extends Object
         $this->header->addJS('backend.js', 'Core');
 
         // add module js
-        if (is_file(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) {
+        if (is_file(BACKEND_MODULE_PATH . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS($this->getModule() . '.js');
         }
 
         // add action js
-        if (is_file(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) {
+        if (is_file(BACKEND_MODULE_PATH . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS($this->getAction() . '.js');
         }
 
@@ -167,7 +167,7 @@ class Action extends Object
 
         // add module specific css
         if (is_file(BACKEND_MODULE_PATH . '/Layout/Css/' . $this->getModule() . '.css')) {
-            $this->header->addCSS(strtolower($this->getModule()) . '.css');
+            $this->header->addCSS($this->getModule() . '.css');
         }
 
         // store var so we don't have to call this function twice
