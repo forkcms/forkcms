@@ -21,7 +21,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class BackendCoreCronjobProcessQueuedHooks extends Cronjob
+class ProcessQueuedHooks extends Cronjob
 {
     /**
      * Execute the action
