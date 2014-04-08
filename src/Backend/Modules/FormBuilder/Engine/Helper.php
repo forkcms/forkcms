@@ -148,7 +148,7 @@ class Helper
                 $tpl->assign('simple', true);
             }
 
-            return $tpl->getContent(BACKEND_MODULE_PATH . '/Layout/templates/field.tpl');
+            return $tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Field.tpl');
         }
 
         // empty field so return empty string
