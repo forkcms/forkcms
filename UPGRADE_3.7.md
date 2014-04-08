@@ -187,14 +187,14 @@ Before
 
 After
 
-    use Backend\Core\Engine\DatagridFunctions;
+    use Backend\Core\Engine\DataGridFunctions;
 
     ...
-    $dg->setColumnFunction(new DatagridFunctions(), 'getTimeAgo', '[time]', 'time');
+    $dg->setColumnFunction(new DataGridFunctions(), 'getTimeAgo', '[time]', 'time');
 
 or
 
-    $dg->setColumnFunction('Backend\\Core\\Engine\\DatagridFunctions', 'getTimeAgo', '[time]', 'time');
+    $dg->setColumnFunction('Backend\\Core\\Engine\\DataGridFunctions', 'getTimeAgo', '[time]', 'time');
 
 * Cronjobs now have a different url
 
