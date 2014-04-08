@@ -17,7 +17,7 @@ use Backend\Core\Engine\Base\Cronjob;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy@spoon-library.com>
  */
-class BackendCoreCronjobSendQueuedEmails extends Cronjob
+class SendQueuedEmails extends Cronjob
 {
     /**
      * Execute the action
