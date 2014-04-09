@@ -470,7 +470,7 @@ class FrontendBaseBlock extends FrontendBaseObject
 		if(!isset($this->pagination['url'])) throw new FrontendException('no URL available in the pagination-property.');
 
 		// should we use a questionmark or an ampersand
-		if(mb_strpos($this->pagination['url'], '?') > 0) $useQuestionMark = false;
+        $useQuestionMark = (mb_strpos($this->pagination['url'], '?') === false);
 
 		// no pagination needed
 		if($this->pagination['num_pages'] < 1) return;
