@@ -110,7 +110,7 @@ class ProcessQueuedHooks extends Cronjob
 
                     // logging when we are in debugmode
                     if (SPOON_DEBUG) {
-                        $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+                        $log->err('Callback (' . serialize($item['callback']) . ') failed.');
                     }
                 }
 
@@ -121,7 +121,7 @@ class ProcessQueuedHooks extends Cronjob
 
                 // logging when we are in debugmode
                 if (SPOON_DEBUG) {
-                    $log->write('Callback (' . serialize($item['callback']) . ') finished.');
+                    $log->info('Callback (' . serialize($item['callback']) . ') finished.');
                 }
             } else {
                 $fs = new Filesystem();
