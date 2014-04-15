@@ -24,6 +24,7 @@ Bugfixes:
 * Faq: getByTags did not work in backend.
 * Blog: fixes an issue where an incorrect revision could be used instead of the most recent one, see #680.
 * API: use DIRECTORY_SEPARATOR instead of hardcoded /, fixes #682.
+* Profiles: logout now listens to queryString for redirecting.
 
 
 3.6.6 (2014-01-15)

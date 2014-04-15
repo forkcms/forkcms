@@ -18,6 +18,7 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Logout extends FrontendBaseBlock
 {
@@ -34,7 +35,10 @@ class Logout extends FrontendBaseBlock
         // trigger event
         FrontendModel::triggerEvent('Profiles', 'after_logout');
 
+        // query string
+        $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
+
         // redirect
-        $this->redirect(SITE_URL);
+        $this->redirect($queryString);
     }
 }
