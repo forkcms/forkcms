@@ -36,7 +36,7 @@ class Logout extends FrontendBaseBlock
         FrontendModel::triggerEvent('Profiles', 'after_logout');
 
         // query string
-        $queryString = urldecode(SpoonFilter::getGetValue('queryString', null, SITE_URL));
+        $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
         // redirect
         $this->redirect($queryString);
