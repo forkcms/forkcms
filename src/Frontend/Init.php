@@ -196,10 +196,10 @@ class Init extends \KernelLoader
     private function requireFrontendClasses()
     {
         switch ($this->type) {
-            case 'frontend':
-            case 'frontend_ajax':
-                require_once FRONTEND_CORE_PATH . '/engine/template_custom.php';
-                require_once FRONTEND_PATH . '/modules/tags/engine/model.php';
+            case 'Frontend':
+            case 'FrontendAjax':
+                require_once FRONTEND_CORE_PATH . '/Engine/TemplateCustom.php';
+                require_once FRONTEND_PATH . '/Modules/Tags/Engine/Model.php';
                 break;
         }
     }
@@ -228,11 +228,11 @@ class Init extends \KernelLoader
             ini_set('display_errors', 'Off');
 
             switch ($this->type) {
-                case 'Backend_ajax':
+                case 'BackendAjax':
                     \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
 
-                case 'Backend_js':
+                case 'BackendJs':
                     \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 

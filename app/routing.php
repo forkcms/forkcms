@@ -139,7 +139,7 @@ class ApplicationRouting
     }
 
     /**
-     * @param string $app The name of the application to load (ex. backend_ajax)
+     * @param string $app The name of the application to load (ex. BackendAjax)
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeAPI($app)
@@ -188,7 +188,7 @@ class ApplicationRouting
     }
 
     /**
-     * @param string $app The name of the application to load (ex. backend_ajax)
+     * @param string $app The name of the application to load (ex. BackendAjax)
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeBackend($app)

@@ -677,7 +677,7 @@ class Model
                                         BL::err($key, $module),
                                         '{$' . $type
                                     ) > 0
-                                ) $nonExisting['backend' . $key . $type . $module] = array(
+                                ) $nonExisting['Backend' . $key . $type . $module] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => $module,
@@ -725,7 +725,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -750,7 +750,7 @@ class Model
                                         BL::lbl($key, $module),
                                         '{$' . $type
                                     ) > 0
-                                ) $nonExisting['backend' . $key . $type . $module] = array(
+                                ) $nonExisting['Backend' . $key . $type . $module] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => $module,
@@ -798,7 +798,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -820,7 +820,7 @@ class Model
                             foreach ($data['module_specific'] as $module) {
                                 // if the message isn't found add it to the list
                                 if (substr_count(BL::msg($key, $module), '{$' . $type) > 0) {
-                                    $nonExisting['backend' . $key . $type . $module] = array(
+                                    $nonExisting['Backend' . $key . $type . $module] = array(
                                         'language' => $language,
                                         'application' => 'Backend',
                                         'module' => $module,
@@ -867,7 +867,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -1017,7 +1017,7 @@ class Model
                                 $key,
                                 false
                             ) == '{$' . $type . $key . '}'
-                        ) $nonExisting['frontend' . $key . $type] = array(
+                        ) $nonExisting['Frontend' . $key . $type] = array(
                             'language' => $language,
                             'application' => 'Frontend',
                             'module' => 'Core',
@@ -1033,7 +1033,7 @@ class Model
                                 $key,
                                 false
                             ) == '{$' . $type . $key . '}'
-                        ) $nonExisting['frontend' . $key . $type] = array(
+                        ) $nonExisting['Frontend' . $key . $type] = array(
                             'language' => $language,
                             'application' => 'Frontend',
                             'module' => 'Core',
@@ -1049,7 +1049,7 @@ class Model
                                 $key,
                                 false
                             ) == '{$' . $type . $key . '}'
-                        ) $nonExisting['frontend' . $key . $type] = array(
+                        ) $nonExisting['Frontend' . $key . $type] = array(
                             'language' => $language,
                             'application' => 'Frontend',
                             'module' => 'Core',
@@ -1065,7 +1065,7 @@ class Model
                                 $key,
                                 false
                             ) == '{$' . $type . $key . '}'
-                        ) $nonExisting['frontend' . $key . $type] = array(
+                        ) $nonExisting['Frontend' . $key . $type] = array(
                             'language' => $language,
                             'application' => 'Frontend',
                             'module' => 'Core',

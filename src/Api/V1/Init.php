@@ -24,7 +24,7 @@ class Init extends \KernelLoader
     private $type;
 
     /**
-     * @param string $type The type of init to load, possible values: backend, backend_ajax, backend_cronjob, backend_js
+     * @param string $type The type of init to load, possible values: Backend, BackendAjax, BackendCronjob, BackendJs
      */
     public function initialize($type)
     {
@@ -202,11 +202,11 @@ class Init extends \KernelLoader
             ini_set('display_errors', 'Off');
 
             switch ($this->type) {
-                case 'backend_ajax':
+                case 'BackendAjax':
                     \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
                     break;
 
-                case 'backend_js':
+                case 'BackendJs':
                     \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 

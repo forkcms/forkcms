@@ -104,7 +104,7 @@ class Language
                     }
 
                     // parse
-                    if ($application == 'backend') {
+                    if ($application == 'Backend') {
                         $value .= '$' . $type . '[\'' . $item['module'] . '\'][\'' . $item['name'] . '\'] = \'' .
                                   str_replace(
                                       '\"',
@@ -425,10 +425,10 @@ class Language
 
         // validate file, generate it if needed
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/en.php')) {
-            self::buildCache('en', 'frontend');
+            self::buildCache('en', 'Frontend');
         }
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
-            self::buildCache($language, 'frontend');
+            self::buildCache($language, 'Frontend');
         }
 
         // init vars

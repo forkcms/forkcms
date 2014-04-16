@@ -87,7 +87,7 @@ class Installer extends ModuleInstaller
                 // insert search
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'root',
                          'language' => $language
                     ),

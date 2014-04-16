@@ -183,10 +183,9 @@ class Model extends \BaseModel
         $namedApplication = NAMED_APPLICATION;
         if (in_array(
             $namedApplication,
-            array('backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob')
-        )
-        ) {
-            $namedApplication = 'backend';
+            array('BackendDirect', 'BackendAjax', 'BackendJs', 'BackendCronjob')
+        )) {
+            $namedApplication = 'Backend';
         }
 
         // build the URL and return it

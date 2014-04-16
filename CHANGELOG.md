@@ -382,7 +382,7 @@ Improvements:
 
 Bugfixes:
 
-* Core: wrong application in the virtual applications, such as backend_ajax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/297.
+* Core: wrong application in the virtual applications, such as BackendAjax, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/297.
 * Pages: fixed an issue where pages that were dropped on an empty footer-tree disappeared, as mentioned on http://forkcms.lighthouseapp.com/projects/61890/tickets/295.
 
 
