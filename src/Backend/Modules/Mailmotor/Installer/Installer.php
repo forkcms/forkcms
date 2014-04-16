@@ -203,7 +203,7 @@ class Installer extends ModuleInstaller
         foreach ($this->getLanguages() as $language) {
             $parentID = $this->insertPage(
                 array(
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('SentMailings', 'Core', $language, 'lbl', 'frontend')),
+                     'title' => \SpoonFilter::ucfirst($this->getLocale('SentMailings', 'Core', $language, 'lbl', 'Frontend')),
                      'type' => 'root',
                      'language' => $language
                 ),
@@ -215,7 +215,7 @@ class Installer extends ModuleInstaller
             $this->insertPage(
                 array(
                      'parent_id' => $parentID,
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('Subscribe', 'Core', $language, 'lbl', 'frontend')),
+                     'title' => \SpoonFilter::ucfirst($this->getLocale('Subscribe', 'Core', $language, 'lbl', 'Frontend')),
                      'language' => $language
                 ),
                 null,
@@ -226,7 +226,7 @@ class Installer extends ModuleInstaller
             $this->insertPage(
                 array(
                      'parent_id' => $parentID,
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'Core', $language, 'lbl', 'frontend')),
+                     'title' => \SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'Core', $language, 'lbl', 'Frontend')),
                      'language' => $language
                 ),
                 null,
