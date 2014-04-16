@@ -378,7 +378,7 @@ class TemplateModifiers
         $data = $id !== null ? serialize(array('id' => $id)) : null;
 
         // create new widget instance and return parsed content
-        $extra = new FrontendBlockWidget(Model::getKernel(), $module, $action, $data);
+        $extra = new FrontendBlockWidget(Model::get('kernel'), $module, $action, $data);
 
         // set parseWidget because we will need it to skip setting headers in the display
         Model::getContainer()->set('parseWidget', true);
