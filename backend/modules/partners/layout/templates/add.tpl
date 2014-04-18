@@ -2,19 +2,19 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblPartnerWidget|ucfirst}: {$lblAdd}</h2>
+    <h2>{$lblPartnerWidget|ucfirst}: {$lblAdd}</h2>
 </div>
 
 {form:add}
-	<p>
-		<label for="name">{$lblName|ucfirst}<abbr>*</abbr></label>
-		{$txtName} {$txtNameError}
-	</p>
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblNext|ucfirst}" />
-		</div>
-	</div>
+    <p>
+        <label for="name">{$lblName|ucfirst}<abbr>*</abbr></label>
+        {$txtName} {$txtNameError}
+    </p>
+    <div class="fullwidthOptions">
+        <div class="buttonHolderRight">
+            <input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblNext|ucfirst}" />
+        </div>
+    </div>
 {/form:add}
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
