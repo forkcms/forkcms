@@ -180,8 +180,8 @@ class BackendPartnersModel
 
         //set extra details
         $item['created_by'] = BackendAuthentication::getUser()->getUserId();
-        $item['created_on'] = date('Y-m-d H:i:s');
-        $item['edited_on'] = date('Y-m-d H:i:s');
+        $item['created_on'] = BackendModel::getUTCDate();
+        $item['edited_on'] = BackendModel::getUTCDate();
         $item['sequence'] = (int) $db->getVar(
             'SELECT MAX(sequence) FROM partners'
         ) + 1;
@@ -206,8 +206,8 @@ class BackendPartnersModel
 
         //set extra details
         $item['created_by'] = BackendAuthentication::getUser()->getUserId();
-        $item['created_on'] = date('Y-m-d H:i:s');
-        $item['edited_on'] = date('Y-m-d H:i:s');
+        $item['created_on'] = BackendModel::getUTCDate();
+        $item['edited_on'] = BackendModel::getUTCDate();
 
         // insert and return the new partner id
         $item['id'] = $db->insert(
@@ -268,7 +268,7 @@ class BackendPartnersModel
     public static function updatePartner(array $item)
     {
         //set update time
-        $item['edited_on'] = date('Y-m-d H:i:s');
+        $item['edited_on'] = BackendModel::getUTCDate();
 
         // update
         BackendModel::getContainer()->get('database')->update(
@@ -292,7 +292,7 @@ class BackendPartnersModel
         $db = BackendModel::getContainer()->get('database');
 
         //set update time
-        $item['edited_on'] = date('Y-m-d H:i:s');
+        $item['edited_on'] = BackendModel::getUTCDate();
 
         // update
         $db->update(
