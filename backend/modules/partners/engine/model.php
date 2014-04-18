@@ -30,6 +30,10 @@ class BackendPartnersModel
          WHERE widget = ?
          ORDER BY sequence';
 
+    public static function getImageDirectory()
+    {
+        return FRONTEND_FILES_URL . '/' . FrontendPartnersModel::IMAGE_PATH . '/[widget]/48x48';
+    }
     /**
      * Deletes a partner
      *

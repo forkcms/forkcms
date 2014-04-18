@@ -97,7 +97,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         // set column function
         $dg->setColumnFunction(
             array('BackendDataGridFunctions', 'showImage'),
-            array(FRONTEND_FILES_URL . '/' . FrontendPartnersModel::IMAGE_PATH . '/[widget]/48x48', '[img]'),
+            array(BackendPartnersModel::getImageDirectory(), '[img]'),
             'img',
             true
         );
