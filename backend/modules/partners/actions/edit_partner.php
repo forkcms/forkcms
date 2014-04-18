@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * This action will load a form with the item data and save the changes.
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
-use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersEditPartner extends BackendBaseActionEdit
 {
     /**

@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * This action will delete a partner
  *
  * @author Jelmer Prins <jelmer@ubuntu.com>
  */
-use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersDeletePartner extends BackendBaseActionDelete
 {
     /**

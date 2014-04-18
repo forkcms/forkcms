@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * This class will install the partners module.
  *
  * @author Jelmer Prins <jelmer@cumocoders.be>
  */
-use Symfony\Component\Filesystem\Filesystem;
 class PartnersInstaller extends ModuleInstaller
 {
     /**

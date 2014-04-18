@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Filesystem\Filesystem;
+
 /**
  * This action will add a widget to the partners module.
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
-use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersAdd extends BackendBaseActionAdd
 {
     /**
