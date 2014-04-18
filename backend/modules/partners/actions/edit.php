@@ -87,7 +87,12 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         $dg->setColumnHidden('widget');
 
         // set colum URLs
-        $dg->setColumnURL('name', BackendModel::createURLForAction('edit_partner') . '&amp;id=[id]');
+        $dg->setColumnURL(
+            'name',
+            BackendModel::createURLForAction('edit-partner', null, null, array(
+                'id' => '[id]'
+            ))
+        );
 
         // set column function
         $dg->setColumnFunction(

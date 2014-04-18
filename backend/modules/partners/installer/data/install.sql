@@ -9,7 +9,7 @@ CREATE TABLE `partners` (
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 CREATE TABLE `partners_widgets` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `widget_id` int(11) DEFAULT NULL,
@@ -18,4 +18,4 @@ CREATE TABLE `partners_widgets` (
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
