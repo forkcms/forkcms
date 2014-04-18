@@ -38,7 +38,9 @@ class BackendPartnersEdit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
     }
 
@@ -51,7 +53,9 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
         // no item found, redirect to index
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
     }
 
@@ -98,7 +102,9 @@ class BackendPartnersEdit extends BackendBaseActionEdit
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit_partner') . '&amp;id=[id]',
+            BackendModel::createURLForAction('edit_partner', null, null, array(
+                'id' => '[id]'
+            )),
             BL::lbl('Edit')
         );
         $dg->enableSequenceByDragAndDrop();
@@ -143,9 +149,13 @@ class BackendPartnersEdit extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode(
-                        $item['title']
-                    ) . '&highlight=row-' . $item['id']
+                    BackendModel::createURLForAction('index', null, null, array(
+                        'report' => 'edited',
+                        'var' => urlencode(
+                            $item['title']
+                        ),
+                        'highlight' => 'row-' . $item['id']
+                    ))
                 );
             }
         }

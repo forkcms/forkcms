@@ -29,7 +29,9 @@ class BackendPartnersAddPartner extends BackendBaseActionAdd
         parent::execute();
         $this->widgetId = $this->getParameter('id', 'int');
         if (!BackendPartnersModel::widgetExists($this->widgetId)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
         $this->loadForm();
         $this->validateForm();
@@ -79,10 +81,14 @@ class BackendPartnersAddPartner extends BackendBaseActionAdd
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(
-                        'edit'
-                    ) . '&id=' . $this->widgetId . '&report=added&var=' . urlencode(
-                        $item['name']
-                    ) . '&highlight=row-' . $item['id']
+                    'edit', null, null, array(
+                        'id' => $this->widgetId,
+                        'report' => 'added',
+                        'var' => urlencode(
+                            $item['name']
+                        ),
+                        'highlight' => 'row-' . $item['id']
+                    ))
                 );
             }
         }

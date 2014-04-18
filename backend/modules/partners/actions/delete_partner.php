@@ -23,7 +23,9 @@ class BackendPartnersDeletePartner extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
         // does the item exist
         if ($this->id == null || !BackendPartnersModel::partnerExists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
 
         // get data

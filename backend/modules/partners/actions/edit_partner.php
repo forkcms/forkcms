@@ -31,7 +31,9 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
     }
 
@@ -44,7 +46,9 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
 
         // no item found, redirect to index
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
     }
 

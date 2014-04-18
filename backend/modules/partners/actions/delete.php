@@ -24,7 +24,9 @@ class BackendPartnersDelete extends BackendBaseActionDelete
 
         // does the item exist
         if ($this->id == null || !BackendPartnersModel::widgetExists($this->id)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index', null, null, array(
+                'error' => 'non-existing'
+            )));
         }
 
         // get data
@@ -41,7 +43,12 @@ class BackendPartnersDelete extends BackendBaseActionDelete
 
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['name'])
+            BackendModel::createURLForAction('index', null, null, array(
+                'report' => 'deleted',
+                'var' => urlencode(
+                    $this->record['name']
+                )
+            ))
         );
     }
 }
