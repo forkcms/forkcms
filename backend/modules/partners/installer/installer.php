@@ -12,6 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@cumocoders.be>
  */
+use Symfony\Component\Filesystem\Filesystem;
 class PartnersInstaller extends ModuleInstaller
 {
     /**
@@ -51,6 +52,9 @@ class PartnersInstaller extends ModuleInstaller
             )
         );
 
-        SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH);
+        $fs = new Filesystem();
+        $fs->mkdir(
+            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH
+        );
     }
 }
