@@ -58,23 +58,24 @@ class BackendPartnersAddPartner extends BackendBaseActionAdd
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
+
             // validation
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
             $this->frm->getField('img')->isFilled(BL::err('FieldIsRequired'));
             $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
+
             // no errors?
             if ($this->frm->isCorrect()) {
-
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
                 $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                 $item['widget'] = $this->widgetId;
-
                 $this->frm->getField('img')->generateThumbnails(
                     FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->widgetId,
                     $item['img']
                 );
                 $item['id'] = BackendPartnersModel::insertPartner($item);
+
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction(

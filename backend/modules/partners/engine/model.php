@@ -37,11 +37,7 @@ class BackendPartnersModel
      */
     public static function deletePartner($id)
     {
-        $id = (int) $id;
-        $db = BackendModel::getContainer()->get('database');
-
-        // delete records
-        $db->delete('partners', 'id = ?', array($id));
+        BackendModel::getContainer()->get('database')->delete('partners', 'id = ?', array((int)$id));
     }
 
     /**
@@ -51,10 +47,7 @@ class BackendPartnersModel
      */
     public static function deleteWidgetPartners($widget)
     {
-        $widget = (int) $widget;
-
-        // delete records
-        BackendModel::getContainer()->get('database')->delete('partners', 'widget = ?', array($widget));
+        BackendModel::getContainer()->get('database')->delete('partners', 'widget = ?', array((int)$widget));
     }
 
     /**
@@ -73,7 +66,7 @@ class BackendPartnersModel
         $db->delete(
             'modules_extras',
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($widgetId, 'partners', 'widget', 'Slideshow')
+            array((int)$widgetId, 'partners', 'widget', 'Slideshow')
         );
 
         self::deleteWidgetPartners($id);
@@ -124,7 +117,7 @@ class BackendPartnersModel
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(id) FROM partners WHERE widget = ?',
             array(
-                $widgetId
+                (int) $widgetId
             )
         );
     }
@@ -184,11 +177,12 @@ class BackendPartnersModel
     public static function insertPartner(array $item)
     {
         $db = BackendModel::getContainer()->get('database');
+
         //set extra details
         $item['created_by'] = BackendAuthentication::getUser()->getUserId();
         $item['created_on'] = date('Y-m-d H:i:s');
         $item['edited_on'] = date('Y-m-d H:i:s');
-        $item['sequence'] = $db->getVar(
+        $item['sequence'] = (int) $db->getVar(
             'SELECT MAX(sequence) FROM partners'
         ) + 1;
         // insert and return the new partner id
@@ -221,17 +215,15 @@ class BackendPartnersModel
             $item
         );
 
-        //add widget to widget list
-
         // set next sequence number for this module
-        $sequence = $db->getVar(
+        $sequence = (int) $db->getVar(
             'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
             array((string) 'partners')
         );
 
         // this is the first extra for this module: generate new 1000-series
         if (is_null($sequence)) {
-            $sequence = $db->getVar(
+            $sequence = (int) $db->getVar(
                 'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
             );
         }
@@ -239,7 +231,6 @@ class BackendPartnersModel
         $data = array();
         $data['partners_widget_id'] = $item['id'];
         $data['extra_label'] = $item['name'];
-        $sequence = (int) $sequence;
 
         // build widget
         $widget = array(

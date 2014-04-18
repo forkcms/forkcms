@@ -28,16 +28,13 @@ class BackendPartnersEdit extends BackendBaseActionEdit
     {
         $this->id = $this->getParameter('id', 'int');
 
-        // does the item exists
+        // does the item exist
         if ($this->id !== null && BackendPartnersModel::widgetExists($this->id)) {
             parent::execute();
             $this->getData();
-
             $this->loadForm();
             $this->validateForm();
-
             $this->dgPartners = $this->loadDataGrid();
-
             $this->parse();
             $this->display();
         } else {
@@ -50,7 +47,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnersModel::getWidget($this->id);
+        $this->record = BackendPartnersModel::getWidget($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -119,7 +116,7 @@ class BackendPartnersEdit extends BackendBaseActionEdit
         // assign this variable so it can be used in the template
         $this->tpl->assign('item', $this->record);
 
-        // parse the datagrid for all blogposts
+        // parse the datagrid for all partners
         if ($this->dgPartners->getNumResults() != 0) {
             $this->tpl->assign('dgPartners', $this->dgPartners->getContent());
         }

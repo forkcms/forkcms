@@ -26,8 +26,8 @@ class PartnersInstaller extends ModuleInstaller
         $this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
         $this->makeSearchable('partners');
-        $this->setModuleRights(1, 'partners');
 
+        $this->setModuleRights(1, 'partners');
         $this->setActionRights(1, 'partners', 'index');
         $this->setActionRights(1, 'partners', 'add');
         $this->setActionRights(1, 'partners', 'edit');

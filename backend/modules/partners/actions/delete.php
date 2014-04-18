@@ -12,6 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@ubuntu.com>
  */
+use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersDelete extends BackendBaseActionDelete
 {
     /**
@@ -20,18 +21,23 @@ class BackendPartnersDelete extends BackendBaseActionDelete
     public function execute()
     {
         $this->id = $this->getParameter('id', 'int');
+
         // does the item exist
         if ($this->id == null || !BackendPartnersModel::widgetExists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
+
         // get data
-        $this->record = (array) BackendPartnersModel::getWidget($this->id);
+        $this->record = BackendPartnersModel::getWidget($this->id);
 
         // delete item
         BackendPartnersModel::deleteWidget($this->record['id'], $this->record['widget_id']);
 
         // delete files
-        SpoonDirectory::delete(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->id);
+        $fs = new Filesystem();
+        $fs->remove(
+            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->id
+        );
 
         // item was deleted, so redirect
         $this->redirect(

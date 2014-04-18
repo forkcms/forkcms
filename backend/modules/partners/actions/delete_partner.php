@@ -12,6 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@ubuntu.com>
  */
+use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersDeletePartner extends BackendBaseActionDelete
 {
     /**
@@ -24,21 +25,30 @@ class BackendPartnersDeletePartner extends BackendBaseActionDelete
         if ($this->id == null || !BackendPartnersModel::partnerExists($this->id)) {
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
+
         // get data
         $this->record = (array) BackendPartnersModel::getPartner($this->id);
 
         // delete item
         BackendPartnersModel::deletePartner($this->id);
+
         //delete the image
-        SpoonFile::delete(
-            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' .  $this->record['widget'] . '/source/' . $this->record['img']
+        $fs = new Filesystem();
+        $basePath = FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' .  $this->record['widget'];
+        $fs->remove(
+            $basePath . '/source/' . $this->record['img']
         );
-        SpoonFile::delete(
-            FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' .  $this->record['widget'] . '/48x48/' . $this->record['img']
+        $fs->remove(
+            $basePath . '/48x48/' . $this->record['img']
         );
+
         // item was deleted, so redirect
         $this->redirect(
-            BackendModel::createURLForAction('edit') . '&id=' . $this->record['widget'] . '&report=deleted&var=' . urlencode($this->record['name'])
+            BackendModel::createURLForAction('edit', null, null, array(
+                'id' => $this->record['widget'],
+                'report' => 'deleted',
+                'var' => urlencode($this->record['name'])
+            ))
         );
     }
 }

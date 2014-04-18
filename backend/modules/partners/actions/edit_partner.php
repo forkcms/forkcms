@@ -12,13 +12,9 @@
  *
  * @author Jelmer <jelmer@sumocoders.be>
  */
+use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersEditPartner extends BackendBaseActionEdit
 {
-    /**
-     * @var int widgetId the id of the widge
-     */
-    private $widgetId;
-
     /**
      * Execute the action
      */
@@ -26,14 +22,12 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
     {
         $this->id = $this->getParameter('id', 'int');
 
-        // does the item exists
+        // does the item exist
         if ($this->id !== null && BackendPartnersModel::partnerExists($this->id)) {
             parent::execute();
             $this->getData();
-
             $this->loadForm();
             $this->validateForm();
-
             $this->parse();
             $this->display();
         } else {
@@ -46,7 +40,7 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendPartnersModel::getPartner($this->id);
+        $this->record = BackendPartnersModel::getPartner($this->id);
 
         // no item found, redirect to index
         if (empty($this->record)) {
@@ -97,20 +91,25 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
                     BL::err('JPGGIFAndPNGOnly')
                 );
             }
-
             $this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
+
             // no errors?
             if ($this->frm->isCorrect()) {
                 $item['id'] = $this->record['id'];
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['url'] = $this->frm->getField('url')->getValue();
+
+                // update image if needed
                 if ($this->frm->getField('img')->isFilled()) {
-                    SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->record['widget']  . '/source/' . $this->record['img']
+                    $fs = new Filesystem();
+                    $basePath = FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->record['widget'];
+                    $fs->remove(
+                        $basePath . '/source/' . $this->record['img']
                     );
-                    SpoonFile::delete(
-                        FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . $this->record['widget']  . '/48x48/' . $this->record['img']
+                    $fs->remove(
+                        $basePath  . '/48x48/' . $this->record['img']
                     );
+
                     $item['img'] = md5(microtime(true)) . '.' . $this->frm->getField('img')->getExtension();
                     $this->frm->getField('img')->generateThumbnails(
                         FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $this->record['widget'],
@@ -121,9 +120,12 @@ class BackendPartnersEditPartner extends BackendBaseActionEdit
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
-                    BackendModel::createURLForAction('edit') . '&id=' . $this->record['widget'] . '&report=added&var=' . urlencode(
-                        $item['title']
-                    ) . '&highlight=row-' . $item['id']
+                    BackendModel::createURLForAction('edit', null, null, array(
+                            'id' => $this->record['widget'],
+                            'report' => 'added',
+                            'var' => urlencode($item['title']),
+                            'highlight' => 'row-' . $item['id']
+                    ))
                 );
             }
         }

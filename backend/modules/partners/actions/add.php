@@ -12,6 +12,7 @@
  *
  * @author Jelmer Prins <jelmer@sumocoders.be>
  */
+use Symfony\Component\Filesystem\Filesystem;
 class BackendPartnersAdd extends BackendBaseActionAdd
 {
     /**
@@ -44,15 +45,20 @@ class BackendPartnersAdd extends BackendBaseActionAdd
     {
         if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
+
             // validation
             $this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+
             // no errors?
             if ($this->frm->isCorrect()) {
                 $item['name'] = $this->frm->getField('name')->getValue();
                 $item['id'] = BackendPartnersModel::insertWidget($item);
 
                 //create img dir
-                SpoonDirectory::create(FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $item['id'] . '/48x48');
+                $fs = new Filesystem();
+                $fs->mkdir(
+                    FRONTEND_FILES_PATH . '/' . FrontendPartnersModel::IMAGE_PATH . '/' . $item['id'] . '/48x48'
+                );
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
