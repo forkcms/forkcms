@@ -134,7 +134,7 @@ class BackendModel extends BaseModel
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
 		// add at least one parameter
-		$parameters['token'] = self::getToken();
+		if(empty($parameters)) $parameters['token'] = self::getToken();
 
 		// init counter
 		$i = 1;
@@ -146,7 +146,7 @@ class BackendModel extends BaseModel
 			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+			else $querystring .= '&' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
@@ -886,8 +886,8 @@ class BackendModel extends BaseModel
 		// build URL
 		$URL = self::getURL($pageIdForURL, $language);
 
-		// set locale with force
-		FrontendLanguage::setLocale($language, true);
+		// set locale
+		FrontendLanguage::setLocale($language);
 
 		// append action
 		$URL .= '/' . urldecode(FL::act(SpoonFilter::toCamelCase($action)));
@@ -1426,9 +1426,9 @@ class BackendModel extends BaseModel
 		$exists = (bool) $db->getVar(
 			'SELECT 1
 			 FROM hooks_subscriptions AS i
-			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+			 WHERE i.event_module = ? AND i.event_name = ? AND i.module = ? AND i.callback = ?
 			 LIMIT 1',
-			array($eventModule, $eventName, $module)
+			array($eventModule, $eventName, $module, $item['callback'])
 		);
 
 		// update
@@ -1474,9 +1474,18 @@ class BackendModel extends BaseModel
 				// build record
 				$item['module'] = $subscription['module'];
 				$item['callback'] = $subscription['callback'];
-				$item['data'] = serialize($data);
+
+				$item['data'] = $data;
+				$item['data']['event_module'] = $module;
+				$item['data']['event_name'] = $eventName;
+				
+				$item['data'] = serialize($item['data']);
 				$item['status'] = 'queued';
 				$item['created_on'] = BackendModel::getUTCDate();
+
+				// build a link between subscription and queue
+				$item['event_module'] = $module;
+				$item['event_name'] = $eventName;
 
 				// add
 				$queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);

@@ -45,8 +45,12 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 		{
 			// get 1 item
 			$item = $db->getRecord(
-				'SELECT *
+				'SELECT hooks_queue.*
 				 FROM hooks_queue
+				 	LEFT JOIN hooks_subscriptions ON 
+				 		hooks_subscriptions.event_module = hooks_queue.event_module AND
+				 		hooks_subscriptions.event_name = hooks_queue.event_name AND
+				 		hooks_subscriptions.module = hooks_queue.module
 				 WHERE status = ?
 				 LIMIT 1',
 				array('queued')
@@ -64,6 +68,10 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 				// unserialize data
 				$item['callback'] = unserialize($item['callback']);
 				$item['data'] = unserialize($item['data']);
+
+				// this will tell us where the event came from
+				$item['data']['event_module'] = $item['event_module'];
+				$item['data']['event_name'] = $item['event_name'];
 
 				// check if the item is callable
 				if(!is_callable($item['callback']))
@@ -108,14 +116,14 @@ class BackendCoreCronjobProcessQueuedHooks extends BackendBaseCronjob
 					$processedSuccessfully = false;
 
 					// logging when we are in debugmode
-					if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') failed.');
+					if(SPOON_DEBUG) $log->info('Callback (' . serialize($item['callback']) . ') failed.');
 				}
 
 				// everything went fine so delete the item
 				if($processedSuccessfully) $db->delete('hooks_queue', 'id = ?', $item['id']);
 
 				// logging when we are in debugmode
-				if(SPOON_DEBUG) $log->write('Callback (' . serialize($item['callback']) . ') finished.');
+				if(SPOON_DEBUG) $log->info('Callback (' . serialize($item['callback']) . ') finished.');
 			}
 
 			// stop it
