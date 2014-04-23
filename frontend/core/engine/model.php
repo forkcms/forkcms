@@ -880,7 +880,7 @@ class FrontendModel extends BaseModel
 
 		// get all items that subscribe to this event
 		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
-			'SELECT i.module, i.callback
+			'SELECT i.module, wi.callback
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ?',
 			array($module, $eventName)
@@ -920,16 +920,16 @@ class FrontendModel extends BaseModel
 	 * @param string $eventName The name of the event.
 	 * @param string $module The module that subscribes to the event.
 	 */
-	public static function unsubscribeFromEvent($eventModule, $eventName, $module)
+	public static function unsubscribeFromEvent($eventModule, $eventName, $module, $callback = null)
 	{
 		$eventModule = (string) $eventModule;
 		$eventName = (string) $eventName;
 		$module = (string) $module;
+		$callback = $callback ? $callback : false;
 
 		self::getContainer()->get('database')->delete(
-			'hooks_subscriptions',
-			'event_module = ? AND event_name = ? AND module = ?',
-			array($eventModule, $eventName, $module)
+			'hooks_subscriptions', 'event_module = ? AND event_name = ? AND module = ?' . ($callback ? ' AND callback = ?' : ''),
+			$callback ? array($eventModule, $eventName, $module, $callback) : array($eventModule, $eventName, $module)
 		);
 	}
 }
