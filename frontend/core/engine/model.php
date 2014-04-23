@@ -880,7 +880,7 @@ class FrontendModel extends BaseModel
 
 		// get all items that subscribe to this event
 		$subscriptions = (array) self::getContainer()->get('database')->getRecords(
-			'SELECT i.module, wi.callback
+			'SELECT i.module, i.callback
 			 FROM hooks_subscriptions AS i
 			 WHERE i.event_module = ? AND i.event_name = ?',
 			array($module, $eventName)
