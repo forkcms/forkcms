@@ -11,7 +11,7 @@ namespace Backend\Modules\Analytics\Widgets;
 
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;

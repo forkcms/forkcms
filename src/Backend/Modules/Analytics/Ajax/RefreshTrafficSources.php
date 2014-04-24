@@ -12,7 +12,7 @@ namespace Backend\Modules\Analytics\Ajax;
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 

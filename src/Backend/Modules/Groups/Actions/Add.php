@@ -13,7 +13,7 @@ use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;

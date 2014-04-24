@@ -10,7 +10,7 @@ namespace Backend\Modules\Analytics\Actions;
  */
 
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 use Backend\Modules\Analytics\Engine\Base as BackendAnalyticsBase;
 
