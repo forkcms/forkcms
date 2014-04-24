@@ -24,7 +24,7 @@ class Init extends \KernelLoader
     private $type;
 
     /**
-     * @param string $type The type of init to load, possible values: Backend, BackendAjax, BackendCronjob, BackendJs
+     * @param string $type The type of init to load, possible values: Backend, BackendAjax, BackendCronjob
      */
     public function initialize($type)
     {
@@ -155,20 +155,6 @@ class Init extends \KernelLoader
     }
 
     /**
-     * This method will be called by the Spoon Exception handler and is specific for exceptions
-     * thrown in JS-files parsed through PHP
-     *
-     * @param object $exception The exception that was thrown.
-     * @param string $output    The output that should be mailed.
-     */
-    public static function exceptionJSHandler($exception, $output)
-    {
-        \SpoonHTTP::setHeaders('content-type: application/javascript');
-        echo '// ' . $exception->getMessage();
-        exit;
-    }
-
-    /**
      * Start session
      */
     private function initSession()
@@ -204,10 +190,6 @@ class Init extends \KernelLoader
             switch ($this->type) {
                 case 'BackendAjax':
                     \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
-                    break;
-
-                case 'BackendJs':
-                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionJSHandler');
                     break;
 
                 default:

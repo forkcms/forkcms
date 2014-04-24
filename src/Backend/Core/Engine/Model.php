@@ -183,7 +183,7 @@ class Model extends \BaseModel
         $namedApplication = NAMED_APPLICATION;
         if (in_array(
             $namedApplication,
-            array('BackendDirect', 'BackendAjax', 'BackendJs', 'BackendCronjob')
+            array('BackendDirect', 'BackendAjax', 'BackendCronjob')
         )) {
             $namedApplication = 'Backend';
         }
