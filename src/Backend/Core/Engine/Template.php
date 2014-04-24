@@ -118,6 +118,7 @@ class Template extends \SpoonTemplate
         $this->mapModifier('dump', array('Backend\Core\Engine\TemplateModifiers', 'dump'));
 
         // dates
+        $this->mapModifier('formatcurrency', array('Backend\Core\Engine\TemplateModifiers', 'formatCurrency'));
         $this->mapModifier('formatdate', array('Backend\Core\Engine\TemplateModifiers', 'formatDate'));
         $this->mapModifier('formattime', array('Backend\Core\Engine\TemplateModifiers', 'formatTime'));
         $this->mapModifier('formatdatetime', array('Backend\Core\Engine\TemplateModifiers', 'formatDateTime'));

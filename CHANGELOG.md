@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: Backend now has the formatcurrency template modifier. Fixes #611.
 * Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3.7.md for more info.
 * Core: Don't throw exceptions in production mode on non-existing files.
 * Core: Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
