@@ -56,9 +56,9 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Profiles', 'EditGroup');
         $this->setActionRights(1, 'Profiles', 'EditProfileGroup');
         $this->setActionRights(1, 'Profiles', 'Edit');
-        $this->setActionRights(1, 'Profiles', 'groups');
-        $this->setActionRights(1, 'Profiles', 'index');
-        $this->setActionRights(1, 'Profiles', 'massAction');
+        $this->setActionRights(1, 'Profiles', 'Groups');
+        $this->setActionRights(1, 'Profiles', 'Index');
+        $this->setActionRights(1, 'Profiles', 'MassAction');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
