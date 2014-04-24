@@ -531,7 +531,7 @@ class Model
                                 $specificModule = trim(str_replace(array(',', '\''), '', $specificModule));
 
                                 // not core?
-                                if ($specificModule != 'core') {
+                                if ($specificModule != 'Core') {
                                     // dynamic module
                                     if ($specificModule == '$this->URL->getModule(' || $specificModule == '$this->getModule(') {
                                         // init var
@@ -725,7 +725,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'Core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -798,7 +798,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'Core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -867,7 +867,7 @@ class Model
                                 }
 
                                 // doesn't exists
-                                if (!$exists) $nonExisting['Backend' . $key . $type . 'core'] = array(
+                                if (!$exists) $nonExisting['Backend' . $key . $type . 'Core'] = array(
                                     'language' => $language,
                                     'application' => 'Backend',
                                     'module' => 'Core',
@@ -1216,7 +1216,7 @@ class Model
         $labels = $types;
 
         // loop and build labels
-        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
 
         // build array
         return array_combine($types, $labels);
@@ -1236,7 +1236,7 @@ class Model
         $labels = $aTypes;
 
         // loop and build labels
-        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+        foreach ($labels as &$row) $row = \SpoonFilter::ucfirst(BL::msg(mb_strtoupper($row), 'Core'));
 
         // build array
         $aTypes = array_combine($aTypes, $labels);
