@@ -72,13 +72,13 @@ class Index extends BackendBaseActionIndex
             // you have sufficient rights?
             if(
                 BackendAuthentication::isAllowedModule($module) &&
-                $fs->exists($pathName . '/widgets')
+                $fs->exists($pathName . '/Widgets')
             ) {
                 $finder = new Finder();
                 $finder->name('*.php');
 
                 // loop widgets
-                foreach($finder->files()->in($pathName . '/widgets') as $file) {
+                foreach($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBaseName('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
