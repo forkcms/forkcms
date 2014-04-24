@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
-use Backend\Core\Engine\DatagridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
