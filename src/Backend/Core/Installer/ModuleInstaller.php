@@ -272,7 +272,7 @@ class ModuleInstaller
      * @param string $application
      * @return mixed
      */
-    protected function getLocale($name, $module = 'core', $language = 'en', $type = 'lbl', $application = 'backend')
+    protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
     {
         $translation = (string) $this->getDB()->getVar(
             'SELECT value
@@ -314,7 +314,7 @@ class ModuleInstaller
     {
         // no theme set = default theme
         if ($theme === null) {
-            $theme = $this->getSetting('core', 'theme');
+            $theme = $this->getSetting('Core', 'theme');
         }
 
         // return best matching template id

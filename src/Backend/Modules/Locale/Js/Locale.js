@@ -46,7 +46,7 @@ jsBackend.translations.controls =
 	enableDisableModules: function()
 	{
 		// frontend can't have specific module
-		if($('select#application').val() == 'frontend')
+		if($('select#application').val() == 'Frontend')
 		{
 			// set all modules disabled
 			$('select#module option').prop('disabled', true);

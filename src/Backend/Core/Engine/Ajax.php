@@ -45,7 +45,7 @@ class Ajax extends Base\Object implements \ApplicationInterface
 
         // named application
         if (!defined('NAMED_APPLICATION')) {
-            define('NAMED_APPLICATION', 'backend_ajax');
+            define('NAMED_APPLICATION', 'BackendAjax');
         }
 
         // get values from the GET-parameters

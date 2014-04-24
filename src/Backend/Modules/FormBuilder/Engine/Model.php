@@ -456,7 +456,7 @@ class Model
      * @param string $application Name of the application.
      * @return string
      */
-    public static function getLocale($name, $type = 'label', $application = 'backend')
+    public static function getLocale($name, $type = 'label', $application = 'Backend')
     {
         $name = \SpoonFilter::toCamelCase($name);
         $class = \SpoonFilter::ucfirst($application) . '\Core\Engine\Language';

@@ -65,7 +65,7 @@ class Installer extends ModuleInstaller
                          'id' => 1,
                          'parent_id' => 0,
                          'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'backend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
                          'language' => $language,
                          'allow_move' => 'N',
                          'allow_delete' => 'N'
@@ -79,7 +79,7 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     array(
                          'id' => 2,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'footer',
                          'language' => $language
                     ),
@@ -93,7 +93,7 @@ class Installer extends ModuleInstaller
                 $this->insertPage(
                     array(
                          'id' => 3,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')),
                          'type' => 'footer',
                          'language' => $language
                     ),
@@ -224,7 +224,7 @@ class Installer extends ModuleInstaller
                          'id' => 1,
                          'parent_id' => 0,
                          'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'backend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
                          'language' => $language,
                          'allow_move' => 'N',
                          'allow_delete' => 'N'
@@ -239,7 +239,7 @@ class Installer extends ModuleInstaller
                 // blog
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')),
                          'language' => $language
                     ),
                     null,
@@ -254,7 +254,7 @@ class Installer extends ModuleInstaller
                 // about us parent
                 $aboutUsId = $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => 1,
                          'language' => $language
                     ),
@@ -266,7 +266,7 @@ class Installer extends ModuleInstaller
                 // location
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => $aboutUsId,
                          'language' => $language
                     ),
@@ -279,7 +279,7 @@ class Installer extends ModuleInstaller
                 // about us child
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => $aboutUsId,
                          'language' => $language
                     ),
@@ -292,7 +292,7 @@ class Installer extends ModuleInstaller
                 // history
                 $this->insertPage(
                     array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'frontend')),
+                         'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')),
                          'parent_id' => 1,
                          'language' => $language
                     ),

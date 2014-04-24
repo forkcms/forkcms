@@ -123,7 +123,7 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // define the Named Application
         if (!defined('NAMED_APPLICATION')) {
-            define('NAMED_APPLICATION', 'backend');
+            define('NAMED_APPLICATION', 'Backend');
         }
 
         // set the module
