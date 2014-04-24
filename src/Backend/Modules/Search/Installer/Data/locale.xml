@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Search>
+      <item type="message" name="AddedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[Il sinonimo per il termine di ricerca "%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Синоним для "%1$s" добавлен. ]]></translation>
+        <translation language="zh"><![CDATA[搜索关键词“％1$s”的同义词已添加。]]></translation>
+        <translation language="fr"><![CDATA[Le synonyme de terme de recherche "%1$s" a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma hozzáadva.]]></translation>
+        <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue agregado.]]></translation>
+        <translation language="uk"><![CDATA[Синонім для "%1$s" додано. ]]></translation>
+        <translation language="el"><![CDATA[Προστέθηκε το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteSynonym">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the synonyms for the searchterm "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare il sinonimo per il termine di ricerca "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Действительно удалить синоним для "%1$s"?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除搜索关键词“％1$s”的同义词吗？]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer les synonymes du terme de recherche  "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" keresési szinonímát?]]></translation>
+        <translation language="de"><![CDATA[Willst du die Synonyme für den Suchbegriff "%1$s" wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el sinonimo para el términ de búsqueda "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε τα συνώνυμα γιά τον όρο αναζήτησης "%1$s";]]></translation>
+      </item>
+      <item type="message" name="DeletedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was deleted.]]></translation>
+        <translation language="it"><![CDATA[Il sinonimo per il termine di ricerca "%1$s" è stato eliminato.]]></translation>
+        <translation language="ru"><![CDATA[Синоним для "%1$s" удален.]]></translation>
+        <translation language="zh"><![CDATA[搜索关键词“％1$s”的同义词已删除。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma törölve.]]></translation>
+        <translation language="fr"><![CDATA[Le synonyme pour le terme "%1$s" a été effacé.]]></translation>
+        <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gelöscht.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue eliminado.]]></translation>
+        <translation language="el"><![CDATA[Διεγράφη το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+      </item>
+      <item type="message" name="EditedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[Il sinonimo per il termine di ricerca "%1$s" è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Синоним для "%1$s" изменен.]]></translation>
+        <translation language="zh"><![CDATA[搜索关键词“％1$s”的同义词已保存。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" keresési szinoníma elmentve.]]></translation>
+        <translation language="fr"><![CDATA[Le synonyme pour le terme "%1$s" a été enregistré.]]></translation>
+        <translation language="de"><![CDATA[Das Synonym für den Suchbegriff "%1$s" wurde gespeichert.]]></translation>
+        <translation language="es"><![CDATA[El sinonimo para el término de búsqueda "%1$s" fue guardado.]]></translation>
+        <translation language="el"><![CDATA[Αποθηκεύτηκε το συνώνυμο γιά τον όρο αναζήτησης "%1$s".]]></translation>
+      </item>
+      <item type="message" name="HelpWeight">
+        <translation language="nl"><![CDATA[Het standaard gewicht is 1. Verhoog deze waarde om de belangrijkheid van de resultaten van een bepaalde module te verhogen.]]></translation>
+        <translation language="en"><![CDATA[The default weight is 1. Increase the value to increase the importance of results from a specific module.]]></translation>
+        <translation language="it"><![CDATA[Il peso di default è 1. Incrementa questo numero se vuoi dare maggiore importanza ad un termine di ricerca.]]></translation>
+        <translation language="ru"><![CDATA[Важность по-умолчанию = 1. Если вы хотите получить больше результатов из другого модуля, выберите большее значение.]]></translation>
+        <translation language="zh"><![CDATA[默认的优先级是1。如果你想从一个特定的模块搜索结果，可以将其的优先级加高。]]></translation>
+        <translation language="hu"><![CDATA[Az alapértelmezett mélység 1. Ha jobb keresési eredményeket akarunk, akkor specifikus modul kell.]]></translation>
+        <translation language="fr"><![CDATA[Le poids par défaut est 1. Si vous souhaitez donner plus d'importance à un module dans les résultats de recherche.]]></translation>
+        <translation language="de"><![CDATA[Das Standard-Gewicht ist 1. Erhöhe den Wert wenn du Suchresultate von bestimmten Modulen mehr Wichtigkeit verleihen willst.]]></translation>
+        <translation language="es"><![CDATA[El peso por defecto es 1. Aumenta el valor para aumentar la importancia de un módulo especifico.]]></translation>
+        <translation language="el"><![CDATA[Το εξορισμού βάρος είναι 1. Αυξήστε την τιμή γιά μεγαλύτερη σπουδαιότητα αποτελεσμάτων από μία ενότητα.]]></translation>
+      </item>
+      <item type="message" name="HelpWeightGeneral">
+        <translation language="nl"><![CDATA[Definieer de belangrijkheid van iedere module in de zoekresultaten.]]></translation>
+        <translation language="en"><![CDATA[Define the importance of each module in search results here.]]></translation>
+        <translation language="it"><![CDATA[Definisci l'importanza di ogni modulo nei risultati di ricerca.]]></translation>
+        <translation language="ru"><![CDATA[Важность каждого модуля для поиске.]]></translation>
+        <translation language="zh"><![CDATA[定义每个模块在搜索结果中显示的优先级。]]></translation>
+        <translation language="hu"><![CDATA[Az egyes modulok keresési eredményeinek a meghatározása itt.]]></translation>
+        <translation language="fr"><![CDATA[Définir l'importance de chaque module dans les résultats de recherche.]]></translation>
+        <translation language="de"><![CDATA[Hier kannst du die Wichtigkeit der einzelnen Module für die Suchresultate bestimmen.]]></translation>
+        <translation language="es"><![CDATA[Define la importancia de cada módulo en los resultados de búsqueda aquí.]]></translation>
+        <translation language="el"><![CDATA[Ορίσατε τη σπουδαιότητα κάθε ενότητας στα αποτελέσματα αναζήτησης εδώ.]]></translation>
+      </item>
+      <item type="message" name="IncludeInSearch">
+        <translation language="nl"><![CDATA[Opnemen in de zoekresultaten?]]></translation>
+        <translation language="en"><![CDATA[Include in search results?]]></translation>
+        <translation language="it"><![CDATA[Includi nei risultati di ricerca.]]></translation>
+        <translation language="ru"><![CDATA[Включить в результаты поиска?]]></translation>
+        <translation language="zh"><![CDATA[包含在搜索结果中？]]></translation>
+        <translation language="hu"><![CDATA[Tartalmazza a keresési eredményeket?]]></translation>
+        <translation language="de"><![CDATA[In Suchergebnissen berücksichtigen?]]></translation>
+        <translation language="fr"><![CDATA[Inclure dans les résultats de recherche ?]]></translation>
+        <translation language="es"><![CDATA[¿Incluir en resultados de búsqueda?]]></translation>
+        <translation language="el"><![CDATA[Να περιληφθεί στα αποτελέσματα αναζήτησης;]]></translation>
+      </item>
+      <item type="message" name="NoStatistics">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken.]]></translation>
+        <translation language="en"><![CDATA[There are no statistics yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora statistiche.]]></translation>
+        <translation language="ru"><![CDATA[Нет статистики.]]></translation>
+        <translation language="zh"><![CDATA[还没有统计数据。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Statistiken.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még statisztikák.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de statistiques.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay estadísticas.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη στατιστικά στοιχεία.]]></translation>
+      </item>
+      <item type="message" name="NoSynonyms">
+        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no synonyms yet. <a href="%1$s">Add the first synonym</a>.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora sinonimi. <a href="%1$s">Aggiungi il primo sinonimo</a>.]]></translation>
+        <translation language="ru"><![CDATA[Нет синонимов. <a href="%1$s">Добавить</a>.]]></translation>
+        <translation language="zh"><![CDATA[还没有同义词。<a href="％1$s">添加第一个同义词</a>]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még szinonímák. <a href="%1$s">Az első hozzáadása</a>.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Synonyme. <a href"%1$s">Erstelle das erste Synonym</a>]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes. <a href="%1$s">Ajoutez le premier synonyme</a>.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay sinónimos <a href="%1$s">Agregar el primer sinónimo</a>.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα. <a href="%1$s">Προσθέστε το πρώτο συνώνυμο</a>.]]></translation>
+      </item>
+      <item type="message" name="NoSynonymsBox">
+        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>
+        <translation language="en"><![CDATA[There are no synonyms yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora sinonimi.]]></translation>
+        <translation language="ru"><![CDATA[Нет синонимов.]]></translation>
+        <translation language="zh"><![CDATA[还没有同义词。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Synonyme.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még szinonímák.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de synonymes.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay sinonimos.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη συνώνυμα.]]></translation>
+      </item>
+      <item type="label" name="AddSynonym">
+        <translation language="nl"><![CDATA[synoniem toevoegen]]></translation>
+        <translation language="en"><![CDATA[add synonym]]></translation>
+        <translation language="it"><![CDATA[aggiungi sinonimo]]></translation>
+        <translation language="ru"><![CDATA[Добавить синоним]]></translation>
+        <translation language="zh"><![CDATA[添加同义词]]></translation>
+        <translation language="de"><![CDATA[Synonym hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un synonyme]]></translation>
+        <translation language="hu"><![CDATA[szinoníma hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar sinónimo]]></translation>
+        <translation language="uk"><![CDATA[Додати синонім]]></translation>
+        <translation language="lt"><![CDATA[naujas sinonimas]]></translation>
+        <translation language="el"><![CDATA[προσθήκη συνώνυμου]]></translation>
+      </item>
+      <item type="label" name="DeleteSynonym">
+        <translation language="nl"><![CDATA[synoniem verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete synonym]]></translation>
+        <translation language="it"><![CDATA[cancella sinonimo]]></translation>
+        <translation language="ru"><![CDATA[Удалить синоним]]></translation>
+        <translation language="zh"><![CDATA[删除同义词]]></translation>
+        <translation language="de"><![CDATA[Synonym löschen]]></translation>
+        <translation language="fr"><![CDATA[efface le synonyme]]></translation>
+        <translation language="hu"><![CDATA[szinoníma törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar sinónimo]]></translation>
+        <translation language="uk"><![CDATA[Видалити синонім]]></translation>
+        <translation language="lt"><![CDATA[trinti sinonimą]]></translation>
+        <translation language="el"><![CDATA[διαγραφή συνώνυμου]]></translation>
+      </item>
+      <item type="label" name="EditSynonym">
+        <translation language="nl"><![CDATA[synoniem bewerken]]></translation>
+        <translation language="en"><![CDATA[edit synonym]]></translation>
+        <translation language="it"><![CDATA[modifica sinonimo]]></translation>
+        <translation language="ru"><![CDATA[Изменить синоним]]></translation>
+        <translation language="zh"><![CDATA[编辑同义词]]></translation>
+        <translation language="de"><![CDATA[Synonym bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[éditer le synonyme]]></translation>
+        <translation language="hu"><![CDATA[szinoníma szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar sinónimo]]></translation>
+        <translation language="uk"><![CDATA[Змінити синонім]]></translation>
+        <translation language="el"><![CDATA[μεταβολή συνώνυμου]]></translation>
+      </item>
+      <item type="label" name="ItemsForAutocomplete">
+        <translation language="nl"><![CDATA[Items in autocomplete (zoekresultaten: suggesties zoekwoorden)]]></translation>
+        <translation language="en"><![CDATA[Items in autocomplete (search results: search term suggestions)]]></translation>
+        <translation language="it"><![CDATA[Elementi nell'autocompletamento (risultati della ricerca: suggerimenti dei termini di ricerca)]]></translation>
+        <translation language="ru"><![CDATA[Значения для автозаполнения (результаты поиска: примеры запросов)]]></translation>
+        <translation language="zh"><![CDATA[自动填充词条（在搜索结果：搜索词条建议）]]></translation>
+        <translation language="fr"><![CDATA[Eléments dans autocomplete (résultats de recherche: suggestion de terme recherché)]]></translation>
+        <translation language="hu"><![CDATA[Autocomplete tételek (keresési találatok: keresési kifejezés javaslat)]]></translation>
+        <translation language="de"><![CDATA[Einträge in der Auto-Vervollständigung (Such Resultate: Suchbegriff Vorschläge)]]></translation>
+        <translation language="es"><![CDATA[Objetos con autocompletado (resultados de búsqueda: sugerencia de términos de búsqueda)]]></translation>
+        <translation language="uk"><![CDATA[Значення для автозаповнення (результати: приклади запитів)]]></translation>
+        <translation language="el"><![CDATA[Πλήθος επιλογών γιά την αυτόματη συμπλήρωση (μικροεφαρμογή αναζήτησης: προτάσεις γιά τον όρο αναζήτησης)]]></translation>
+      </item>
+      <item type="label" name="ItemsForAutosuggest">
+        <translation language="nl"><![CDATA[Items in autosuggest (zoek widget: resultaten)]]></translation>
+        <translation language="en"><![CDATA[Items in autosuggest (search widget: results)]]></translation>
+        <translation language="it"><![CDATA[Elementi nell'autosuggerimento (widget di ricerca: risultati)]]></translation>
+        <translation language="ru"><![CDATA[Значения для автозаполнения (поиск виджета: результаты)]]></translation>
+        <translation language="zh"><![CDATA[自动推荐词条（搜索小工具：结果）]]></translation>
+        <translation language="fr"><![CDATA[Eléments dans suggestion automatique (widget de recherche: résultats)]]></translation>
+        <translation language="hu"><![CDATA[Autosuggest tételek (kereső widget: találatok)]]></translation>
+        <translation language="de"><![CDATA[Einträge im Autosuggest (Such Widget: Resultate)]]></translation>
+        <translation language="es"><![CDATA[Objetos en sugerencia automática (widget de búsqueda: resultados)]]></translation>
+        <translation language="uk"><![CDATA[Значення для автозаповнення (пошук віджета: результати)]]></translation>
+        <translation language="el"><![CDATA[Πλήθος επιλογών γιά την αυτόματη πρόταση (μικροεφαρμογή αναζήτησης : αποτελέσματα)]]></translation>
+      </item>
+      <item type="label" name="ModuleWeight">
+        <translation language="nl"><![CDATA[module gewicht]]></translation>
+        <translation language="en"><![CDATA[module weight]]></translation>
+        <translation language="it"><![CDATA[peso del modulo]]></translation>
+        <translation language="ru"><![CDATA[Важность модуля]]></translation>
+        <translation language="zh"><![CDATA[模块优先级]]></translation>
+        <translation language="de"><![CDATA[Modulgewicht]]></translation>
+        <translation language="fr"><![CDATA[poids du module]]></translation>
+        <translation language="hu"><![CDATA[modul mélység]]></translation>
+        <translation language="es"><![CDATA[peso del modulo]]></translation>
+        <translation language="uk"><![CDATA[Важливість модуля]]></translation>
+        <translation language="el"><![CDATA[βάρος ενότητας]]></translation>
+      </item>
+      <item type="label" name="SearchedOn">
+        <translation language="nl"><![CDATA[gezocht op]]></translation>
+        <translation language="en"><![CDATA[searched on]]></translation>
+        <translation language="it"><![CDATA[cercato su]]></translation>
+        <translation language="ru"><![CDATA[Поиск по]]></translation>
+        <translation language="zh"><![CDATA[搜索于]]></translation>
+        <translation language="fr"><![CDATA[recherché le]]></translation>
+        <translation language="hu"><![CDATA[keresett a]]></translation>
+        <translation language="de"><![CDATA[gesucht am]]></translation>
+        <translation language="es"><![CDATA[búsqueda en]]></translation>
+        <translation language="uk"><![CDATA[Пошук по]]></translation>
+        <translation language="el"><![CDATA[αναζητήθηκε στις]]></translation>
+      </item>
+      <item type="error" name="SynonymIsRequired">
+        <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>
+        <translation language="en"><![CDATA[Synonyms are required.]]></translation>
+        <translation language="it"><![CDATA[I sinonimi sono obbligatori]]></translation>
+        <translation language="ru"><![CDATA[Синонимы - обязательное поле.]]></translation>
+        <translation language="zh"><![CDATA[需要填写同义词。]]></translation>
+        <translation language="fr"><![CDATA[Les synonymes sont requis.]]></translation>
+        <translation language="hu"><![CDATA[A szinoníma kötelező.]]></translation>
+        <translation language="de"><![CDATA[Synonyme werden benötigt.]]></translation>
+        <translation language="es"><![CDATA[Se requieren sinónimos.]]></translation>
+        <translation language="el"><![CDATA[Τα συνώνυμα είναι υποχρεωτικά.]]></translation>
+      </item>
+      <item type="error" name="TermExists">
+        <translation language="nl"><![CDATA[Synoniemen voor deze zoekterm bestaan reeds.]]></translation>
+        <translation language="en"><![CDATA[Synonyms for this searchterm already exist.]]></translation>
+        <translation language="it"><![CDATA[I sinonimi per questo termine di ricerca esistono già.]]></translation>
+        <translation language="ru"><![CDATA[Такой синоним уже есть.]]></translation>
+        <translation language="zh"><![CDATA[这个搜索词条的同义词已存在。]]></translation>
+        <translation language="fr"><![CDATA[Les synonymes du terme recherché existent déjà.]]></translation>
+        <translation language="hu"><![CDATA[Szinonimák erre a keresési kifejezésre már léteznek.]]></translation>
+        <translation language="de"><![CDATA[Synonyme für diesen Suchbegriff existieren bereits.]]></translation>
+        <translation language="es"><![CDATA[Ya existen sinónimos para este término de búsqueda.]]></translation>
+        <translation language="el"><![CDATA[Υπάρχουν ήδη συνώνυμα γιά αυτόν τον όρο αναζήτησης]]></translation>
+      </item>
+      <item type="error" name="TermIsRequired">
+        <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The searchterm is required.]]></translation>
+        <translation language="it"><![CDATA[Il termine di ricerca è obbligatorio.]]></translation>
+        <translation language="ru"><![CDATA[Ключевое слово - обязательное поле.]]></translation>
+        <translation language="zh"><![CDATA[需要填写搜索词条。]]></translation>
+        <translation language="fr"><![CDATA[Le terme recherché est requis.]]></translation>
+        <translation language="hu"><![CDATA[A keresési kifejezés kötelező.]]></translation>
+        <translation language="de"><![CDATA[Der Suchbegriff wird benötigt.]]></translation>
+        <translation language="es"><![CDATA[Se requiere el término de búsqueda.]]></translation>
+        <translation language="el"><![CDATA[Ο όρος αναζήτησης είναι υποχρεωτικός]]></translation>
+      </item>
+      <item type="error" name="WeightNotNumeric">
+        <translation language="nl"><![CDATA[Het gewicht moet numeriek zijn.]]></translation>
+        <translation language="en"><![CDATA[Het gewicht moet numeriek zijn]]></translation>
+        <translation language="it"><![CDATA[Il peso deve essere numerico.]]></translation>
+        <translation language="ru"><![CDATA[Значение - числовое значение.]]></translation>
+        <translation language="zh"><![CDATA[优先级必须为数字。]]></translation>
+        <translation language="fr"><![CDATA[Le poids doit être numérique.]]></translation>
+        <translation language="hu"><![CDATA[A mélység numerikus.]]></translation>
+        <translation language="de"><![CDATA[Das Gewicht muss numerisch sein.]]></translation>
+        <translation language="es"><![CDATA[El peso debe de ser numérico]]></translation>
+        <translation language="el"><![CDATA[Το βάρος δεν είναι αριθμός]]></translation>
+      </item>
+    </Search>
+  </Backend>
+</locale>

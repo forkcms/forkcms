@@ -1,13 +1,19 @@
-3.6.7 (xxxx-xx-xx)
+3.7.0 (xxxx-xx-xx)
 --
-
 Improvements:
 
+* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3.7.md for more info.
+* Core: Don't throw exceptions in production mode on non-existing files.
+* Core: Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
 * Core: use correct/new Facebook-js-snippet.
 * Users: more logical way of handling user-permissions, see #684.
 * Content blocks: only grab needed fields, see #669.
 * Core: better description for CKFinder maximum image size settings.
-
+* Core: used namespaces, see UPGRADE_3.7.md for more info
+* API: use isAuthorized() instead of authorize(), see UPGRADE_3.7.md for more info.
+* Core: CommonCookie and CommonUri are now in the src/Common folder
+* Core: unused function BackendModel::imageSave is removed in favor of generateThumbnails().
+* Core: removed duplicate mailer code and make the mailer a service
 
 Bugfixes:
 
@@ -22,7 +28,6 @@ Bugfixes:
 
 3.6.6 (2014-01-15)
 --
-
 Improvements:
 
 * Blog: Import wordpress action added.
@@ -109,6 +114,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 
 3.6.0 (2013-06-18)
@@ -540,7 +546,7 @@ Bugfixes:
 Bugfixes:
 
 * Core: fixed LFI vulnerability.
-* Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/core/layout/templates/subnavigation.tpl'}
+* Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/Core/Layout/Templates/subnavigation.tpl'}
 * Extensions: installing a pre-uploaded theme from the themes overview now installs the selected theme instead of the last theme.
 * Mailmotor: fix CSV address imports.
 * Pages: include footer/meta subpages in the linkedlist.

@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <FormBuilder>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[formulier toevoegen]]></translation>
+        <translation language="en"><![CDATA[add form]]></translation>
+        <translation language="it"><![CDATA[aggiungi form]]></translation>
+        <translation language="ru"><![CDATA[Добавить форму]]></translation>
+        <translation language="zh"><![CDATA[添加表单]]></translation>
+        <translation language="de"><![CDATA[Formular hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un formulaire]]></translation>
+        <translation language="hu"><![CDATA[űrlap hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar formulario]]></translation>
+        <translation language="uk"><![CDATA[Додати форму]]></translation>
+        <translation language="lt"><![CDATA[nauja forma]]></translation>
+        <translation language="sv"><![CDATA[lägg till formulär]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη φόρμας]]></translation>
+      </item>
+      <item type="label" name="AddFields">
+        <translation language="nl"><![CDATA[velden toevoegen]]></translation>
+        <translation language="en"><![CDATA[add fields]]></translation>
+        <translation language="it"><![CDATA[aggiungi campi]]></translation>
+        <translation language="ru"><![CDATA[Добавить поля]]></translation>
+        <translation language="zh"><![CDATA[添加字段]]></translation>
+        <translation language="de"><![CDATA[Felder hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter des champs]]></translation>
+        <translation language="hu"><![CDATA[mező hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar campos]]></translation>
+        <translation language="uk"><![CDATA[Додати поля]]></translation>
+        <translation language="lt"><![CDATA[nauji laukeliai]]></translation>
+        <translation language="sv"><![CDATA[lägg till fält]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη πεδίων]]></translation>
+      </item>
+      <item type="label" name="BackToData">
+        <translation language="nl"><![CDATA[terug naar inzendingen]]></translation>
+        <translation language="en"><![CDATA[back to submissions]]></translation>
+        <translation language="it"><![CDATA[torna alle richieste]]></translation>
+        <translation language="ru"><![CDATA[Вернуться к аргументам]]></translation>
+        <translation language="zh"><![CDATA[返回提交结果]]></translation>
+        <translation language="fr"><![CDATA[retour aux soumissions]]></translation>
+        <translation language="hu"><![CDATA[back to submissions]]></translation>
+        <translation language="de"><![CDATA[zurück zu den Einsendungen]]></translation>
+        <translation language="es"><![CDATA[volver a envios]]></translation>
+        <translation language="uk"><![CDATA[Повернутися до даних]]></translation>
+        <translation language="lt"><![CDATA[grįžti į pateikimą]]></translation>
+        <translation language="sv"><![CDATA[tillbaka till inskick]]></translation>
+        <translation language="el"><![CDATA[Πίσω στις υποβολές]]></translation>
+      </item>
+      <item type="label" name="Basic">
+        <translation language="nl"><![CDATA[basis]]></translation>
+        <translation language="en"><![CDATA[basic]]></translation>
+        <translation language="it"><![CDATA[base]]></translation>
+        <translation language="ru"><![CDATA[Основной]]></translation>
+        <translation language="zh"><![CDATA[基础]]></translation>
+        <translation language="fr"><![CDATA[basique]]></translation>
+        <translation language="hu"><![CDATA[alap]]></translation>
+        <translation language="de"><![CDATA[Basic]]></translation>
+        <translation language="es"><![CDATA[basico]]></translation>
+        <translation language="uk"><![CDATA[Основний]]></translation>
+        <translation language="lt"><![CDATA[paprastas]]></translation>
+        <translation language="sv"><![CDATA[bas]]></translation>
+        <translation language="el"><![CDATA[Βασική]]></translation>
+      </item>
+      <item type="label" name="Checkbox">
+        <translation language="nl"><![CDATA[selectievakje]]></translation>
+        <translation language="en"><![CDATA[checkbox]]></translation>
+        <translation language="it"><![CDATA[checkbox]]></translation>
+        <translation language="ru"><![CDATA[Чекбокс]]></translation>
+        <translation language="zh"><![CDATA[复选框]]></translation>
+        <translation language="fr"><![CDATA[case à cocher]]></translation>
+        <translation language="hu"><![CDATA[checkbox]]></translation>
+        <translation language="de"><![CDATA[Checkbox]]></translation>
+        <translation language="es"><![CDATA[checkbox]]></translation>
+        <translation language="uk"><![CDATA[Чекбокс]]></translation>
+        <translation language="sv"><![CDATA[checkbox]]></translation>
+        <translation language="lt"><![CDATA[varnelė]]></translation>
+        <translation language="el"><![CDATA[Πεδίο επιλογής]]></translation>
+      </item>
+      <item type="label" name="DefaultValue">
+        <translation language="nl"><![CDATA[standaardwaarde]]></translation>
+        <translation language="en"><![CDATA[default value]]></translation>
+        <translation language="it"><![CDATA[valore di defalut]]></translation>
+        <translation language="ru"><![CDATA[Стандартное значение]]></translation>
+        <translation language="zh"><![CDATA[默认值]]></translation>
+        <translation language="de"><![CDATA[Standardwert]]></translation>
+        <translation language="fr"><![CDATA[valeur par défaut]]></translation>
+        <translation language="hu"><![CDATA[alap érték]]></translation>
+        <translation language="es"><![CDATA[valor por defecto]]></translation>
+        <translation language="uk"><![CDATA[Стандартне значення]]></translation>
+        <translation language="sv"><![CDATA[standardvärde]]></translation>
+        <translation language="lt"><![CDATA[pagrindinė reikšmė]]></translation>
+        <translation language="el"><![CDATA[Τιμή εξορισμού]]></translation>
+      </item>
+      <item type="label" name="Details">
+        <translation language="nl"><![CDATA[details]]></translation>
+        <translation language="en"><![CDATA[details]]></translation>
+        <translation language="ru"><![CDATA[детали]]></translation>
+        <translation language="es"><![CDATA[detalles]]></translation>
+        <translation language="de"><![CDATA[Details]]></translation>
+        <translation language="uk"><![CDATA[Деталі]]></translation>
+        <translation language="hu"><![CDATA[részletek]]></translation>
+        <translation language="sv"><![CDATA[detaljer]]></translation>
+        <translation language="lt"><![CDATA[informacija]]></translation>
+        <translation language="el"><![CDATA[Λεπτομέρειες]]></translation>
+        <translation language="zh"><![CDATA[详细]]></translation>
+      </item>
+      <item type="label" name="Drag">
+        <translation language="nl"><![CDATA[versleep]]></translation>
+        <translation language="en"><![CDATA[move]]></translation>
+        <translation language="it"><![CDATA[muovi]]></translation>
+        <translation language="ru"><![CDATA[Переместить]]></translation>
+        <translation language="zh"><![CDATA[移动]]></translation>
+        <translation language="de"><![CDATA[verschieben]]></translation>
+        <translation language="fr"><![CDATA[déplacer]]></translation>
+        <translation language="hu"><![CDATA[mozgat]]></translation>
+        <translation language="es"><![CDATA[mover]]></translation>
+        <translation language="uk"><![CDATA[Перемістити]]></translation>
+        <translation language="sv"><![CDATA[flytta]]></translation>
+        <translation language="lt"><![CDATA[perkelti]]></translation>
+        <translation language="el"><![CDATA[Μετακίνηση]]></translation>
+      </item>
+      <item type="label" name="Dropdown">
+        <translation language="nl"><![CDATA[keuzemenu]]></translation>
+        <translation language="en"><![CDATA[dropdown]]></translation>
+        <translation language="it"><![CDATA[dropdown]]></translation>
+        <translation language="ru"><![CDATA[Выпадающий список]]></translation>
+        <translation language="zh"><![CDATA[下拉]]></translation>
+        <translation language="de"><![CDATA[Dropdown]]></translation>
+        <translation language="fr"><![CDATA[liste déroulante]]></translation>
+        <translation language="hu"><![CDATA[dropdown]]></translation>
+        <translation language="es"><![CDATA[lista desplegable]]></translation>
+        <translation language="uk"><![CDATA[Випадаючий список]]></translation>
+        <translation language="sv"><![CDATA[dropdown]]></translation>
+        <translation language="lt"><![CDATA[išsiskleidžiantis]]></translation>
+        <translation language="el"><![CDATA[πτυσσόμενη λίστα]]></translation>
+      </item>
+      <item type="label" name="EditForm">
+        <translation language="nl"><![CDATA[bewerk formulier "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit form "%1$s"]]></translation>
+        <translation language="it"><![CDATA[modifica da "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑表单“%1$s”]]></translation>
+        <translation language="de"><![CDATA[Formular "%1$s" bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[éditer le formulaire edit form "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" űrlap szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar formulario "%1$s"]]></translation>
+        <translation language="uk"><![CDATA[Редагувати "%1$s"]]></translation>
+        <translation language="sv"><![CDATA[ändra formulär "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή της φόρμας "%1$s"]]></translation>
+      </item>
+      <item type="label" name="ErrorMessage">
+        <translation language="nl"><![CDATA[foutmelding]]></translation>
+        <translation language="en"><![CDATA[error mesage]]></translation>
+        <translation language="it"><![CDATA[messaggio di errore]]></translation>
+        <translation language="ru"><![CDATA[Сообщение об ошибке]]></translation>
+        <translation language="zh"><![CDATA[错误提示]]></translation>
+        <translation language="fr"><![CDATA[message d'erreur]]></translation>
+        <translation language="hu"><![CDATA[hiba üzenet]]></translation>
+        <translation language="de"><![CDATA[Fehlermeldung]]></translation>
+        <translation language="es"><![CDATA[mensaje de error]]></translation>
+        <translation language="uk"><![CDATA[Повідомлення про помилку]]></translation>
+        <translation language="sv"><![CDATA[felmeddelande]]></translation>
+        <translation language="el"><![CDATA[Μήνυμα λάθους]]></translation>
+      </item>
+      <item type="label" name="Extra">
+        <translation language="nl"><![CDATA[extra]]></translation>
+        <translation language="en"><![CDATA[extra]]></translation>
+        <translation language="it"><![CDATA[extra]]></translation>
+        <translation language="ru"><![CDATA[Дополнительно]]></translation>
+        <translation language="zh"><![CDATA[其他]]></translation>
+        <translation language="fr"><![CDATA[extra]]></translation>
+        <translation language="hu"><![CDATA[extra]]></translation>
+        <translation language="de"><![CDATA[Extra]]></translation>
+        <translation language="es"><![CDATA[extra]]></translation>
+        <translation language="uk"><![CDATA[Додатково]]></translation>
+        <translation language="sv"><![CDATA[extra]]></translation>
+        <translation language="lt"><![CDATA[papildomai]]></translation>
+        <translation language="el"><![CDATA[Επιπλέον]]></translation>
+      </item>
+      <item type="label" name="Fields">
+        <translation language="nl"><![CDATA[velden]]></translation>
+        <translation language="en"><![CDATA[fields]]></translation>
+        <translation language="it"><![CDATA[campi]]></translation>
+        <translation language="ru"><![CDATA[Поля]]></translation>
+        <translation language="zh"><![CDATA[字段]]></translation>
+        <translation language="fr"><![CDATA[champs]]></translation>
+        <translation language="hu"><![CDATA[mezők]]></translation>
+        <translation language="de"><![CDATA[Felder]]></translation>
+        <translation language="es"><![CDATA[campos]]></translation>
+        <translation language="uk"><![CDATA[Поля]]></translation>
+        <translation language="sv"><![CDATA[fält]]></translation>
+        <translation language="lt"><![CDATA[laukeliai]]></translation>
+        <translation language="el"><![CDATA[Πεδία]]></translation>
+      </item>
+      <item type="label" name="FormData">
+        <translation language="nl"><![CDATA[inzendingen van "%1$s"]]></translation>
+        <translation language="en"><![CDATA[submissions for "%1$s"]]></translation>
+        <translation language="it"><![CDATA[richiesta per "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Аргументы для "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[“%1$s”的提交结果]]></translation>
+        <translation language="fr"><![CDATA[soumissions pour "%1$s"]]></translation>
+        <translation language="hu"><![CDATA[submissions for "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Einsendungen für "%1$s"]]></translation>
+        <translation language="es"><![CDATA[envios para "%1$s"]]></translation>
+        <translation language="uk"><![CDATA[Аргументи для "%1$s"]]></translation>
+        <translation language="sv"><![CDATA[inskickat för "%1$s"]]></translation>
+        <translation language="lt"><![CDATA[pateikta "%1$s"]]></translation>
+        <translation language="el"><![CDATA[υποβολές γιά το "%1$s"]]></translation>
+      </item>
+      <item type="label" name="FormElements">
+        <translation language="nl"><![CDATA[formulier elementen]]></translation>
+        <translation language="en"><![CDATA[form elements]]></translation>
+        <translation language="it"><![CDATA[elementi del form]]></translation>
+        <translation language="ru"><![CDATA[Элементы формы]]></translation>
+        <translation language="zh"><![CDATA[表单元素]]></translation>
+        <translation language="fr"><![CDATA[éléments de formulaire]]></translation>
+        <translation language="hu"><![CDATA[űrlapelemek]]></translation>
+        <translation language="de"><![CDATA[Formularelemente]]></translation>
+        <translation language="es"><![CDATA[elementos del formulario]]></translation>
+        <translation language="uk"><![CDATA[Елементи форми]]></translation>
+        <translation language="sv"><![CDATA[formulär element]]></translation>
+        <translation language="lt"><![CDATA[fomros elementai]]></translation>
+        <translation language="el"><![CDATA[Στοιχεία της φόρμας]]></translation>
+      </item>
+      <item type="label" name="Heading">
+        <translation language="nl"><![CDATA[hoofding]]></translation>
+        <translation language="en"><![CDATA[heading]]></translation>
+        <translation language="it"><![CDATA[testata]]></translation>
+        <translation language="ru"><![CDATA[Заголовок]]></translation>
+        <translation language="zh"><![CDATA[头部]]></translation>
+        <translation language="fr"><![CDATA[En-tête]]></translation>
+        <translation language="hu"><![CDATA[cím]]></translation>
+        <translation language="de"><![CDATA[Überschrift]]></translation>
+        <translation language="es"><![CDATA[título]]></translation>
+        <translation language="uk"><![CDATA[Заголовок]]></translation>
+        <translation language="sv"><![CDATA[titel]]></translation>
+        <translation language="lt"><![CDATA[antraštė]]></translation>
+        <translation language="el"><![CDATA[Κεφαλίδα]]></translation>
+      </item>
+      <item type="label" name="Identifier">
+        <translation language="nl"><![CDATA[identifier]]></translation>
+        <translation language="en"><![CDATA[identifier]]></translation>
+        <translation language="it"><![CDATA[identificatore]]></translation>
+        <translation language="ru"><![CDATA[Идентификация]]></translation>
+        <translation language="zh"><![CDATA[鉴别器]]></translation>
+        <translation language="fr"><![CDATA[identifiant]]></translation>
+        <translation language="hu"><![CDATA[azonosító]]></translation>
+        <translation language="de"><![CDATA[Bezeichner]]></translation>
+        <translation language="es"><![CDATA[identificador]]></translation>
+        <translation language="uk"><![CDATA[Ідентицікація]]></translation>
+        <translation language="sv"><![CDATA[identifierare]]></translation>
+        <translation language="lt"><![CDATA[identifikatorius]]></translation>
+        <translation language="el"><![CDATA[Αναγνωριστικό]]></translation>
+      </item>
+      <item type="label" name="Method">
+        <translation language="nl"><![CDATA[methode]]></translation>
+        <translation language="en"><![CDATA[method]]></translation>
+        <translation language="it"><![CDATA[metodo]]></translation>
+        <translation language="ru"><![CDATA[Метод]]></translation>
+        <translation language="zh"><![CDATA[方法]]></translation>
+        <translation language="fr"><![CDATA[méthode]]></translation>
+        <translation language="hu"><![CDATA[módszer]]></translation>
+        <translation language="de"><![CDATA[Methode]]></translation>
+        <translation language="es"><![CDATA[método]]></translation>
+        <translation language="uk"><![CDATA[Метод]]></translation>
+        <translation language="sv"><![CDATA[metod]]></translation>
+        <translation language="el"><![CDATA[Μέθοδος]]></translation>
+      </item>
+      <item type="label" name="MethodDatabase">
+        <translation language="nl"><![CDATA[opslaan in de database]]></translation>
+        <translation language="en"><![CDATA[save in the database]]></translation>
+        <translation language="it"><![CDATA[salva nel database]]></translation>
+        <translation language="ru"><![CDATA[Сохранить в БД]]></translation>
+        <translation language="zh"><![CDATA[保存到数据库]]></translation>
+        <translation language="fr"><![CDATA[sauvegarder en base de donnée]]></translation>
+        <translation language="hu"><![CDATA[adatbázisba mentés]]></translation>
+        <translation language="de"><![CDATA[in der Datenbank speichern]]></translation>
+        <translation language="es"><![CDATA[guardar en base de datos]]></translation>
+        <translation language="uk"><![CDATA[Зберегти в БД]]></translation>
+        <translation language="sv"><![CDATA[spara i databas]]></translation>
+        <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων]]></translation>
+      </item>
+      <item type="label" name="MethodDatabaseEmail">
+        <translation language="nl"><![CDATA[opslaan in de database en email verzenden]]></translation>
+        <translation language="en"><![CDATA[save in the database and send email]]></translation>
+        <translation language="it"><![CDATA[salva nel database e invia mail]]></translation>
+        <translation language="ru"><![CDATA[Сохранить в БД и отправить по E-Mail]]></translation>
+        <translation language="zh"><![CDATA[保存到数据库并发送邮件]]></translation>
+        <translation language="fr"><![CDATA[sauvegarder en base de données et envoyer par e-mail]]></translation>
+        <translation language="hu"><![CDATA[adatbázisba mentés és email-ben küldés]]></translation>
+        <translation language="de"><![CDATA[in der Datenbank speichern und als E-Mail versenden]]></translation>
+        <translation language="es"><![CDATA[guardar en base de datos y enviar un email]]></translation>
+        <translation language="uk"><![CDATA[Зберегти в БД і нідіслати на e-mail]]></translation>
+        <translation language="sv"><![CDATA[spara i databas och skicka e-post]]></translation>
+        <translation language="el"><![CDATA[Αποθήκευση στη Βάση δεδομένων και αποστολή email]]></translation>
+      </item>
+      <item type="label" name="MinutesAgo">
+        <translation language="nl"><![CDATA[%1$s minuten geleden]]></translation>
+        <translation language="en"><![CDATA[%1$s minutes ago]]></translation>
+        <translation language="it"><![CDATA[%1$s minuti fa]]></translation>
+        <translation language="ru"><![CDATA[%1$s минут назад.]]></translation>
+        <translation language="zh"><![CDATA[%1$s 分钟之前]]></translation>
+        <translation language="fr"><![CDATA[il y a %1$s minutes]]></translation>
+        <translation language="hu"><![CDATA[%1$s perce]]></translation>
+        <translation language="de"><![CDATA[vor %1$s Minuten]]></translation>
+        <translation language="es"><![CDATA[hace %1$s minutos]]></translation>
+        <translation language="uk"><![CDATA[%1$s хвилин тому]]></translation>
+        <translation language="sv"><![CDATA[%1$s minuter sen]]></translation>
+        <translation language="el"><![CDATA[Πριν από %1$s λεπτά]]></translation>
+      </item>
+      <item type="label" name="Numeric">
+        <translation language="nl"><![CDATA[numeriek]]></translation>
+        <translation language="en"><![CDATA[numeric]]></translation>
+        <translation language="it"><![CDATA[numerico]]></translation>
+        <translation language="ru"><![CDATA[Числовое значение]]></translation>
+        <translation language="zh"><![CDATA[数值的]]></translation>
+        <translation language="fr"><![CDATA[numérique]]></translation>
+        <translation language="hu"><![CDATA[szám]]></translation>
+        <translation language="de"><![CDATA[numerisch]]></translation>
+        <translation language="es"><![CDATA[numérico]]></translation>
+        <translation language="uk"><![CDATA[Числове значення]]></translation>
+        <translation language="sv"><![CDATA[numeric]]></translation>
+        <translation language="el"><![CDATA[Αριθμητικό]]></translation>
+      </item>
+      <item type="label" name="OneMinuteAgo">
+        <translation language="nl"><![CDATA[1 minuut geleden]]></translation>
+        <translation language="en"><![CDATA[1 minute ago]]></translation>
+        <translation language="it"><![CDATA[1 minuto fa]]></translation>
+        <translation language="ru"><![CDATA[1 минуту назад]]></translation>
+        <translation language="zh"><![CDATA[1分钟之前]]></translation>
+        <translation language="fr"><![CDATA[il y a une minute]]></translation>
+        <translation language="hu"><![CDATA[1 perce]]></translation>
+        <translation language="de"><![CDATA[vor einer Minute]]></translation>
+        <translation language="es"><![CDATA[hace 1 minuto]]></translation>
+        <translation language="uk"><![CDATA[1 хвилину тому]]></translation>
+        <translation language="sv"><![CDATA[1 minut sen]]></translation>
+        <translation language="el"><![CDATA[Πριν 1 λεπτό]]></translation>
+      </item>
+      <item type="label" name="OneSecondAgo">
+        <translation language="nl"><![CDATA[1 seconde geleden]]></translation>
+        <translation language="en"><![CDATA[1 second ago]]></translation>
+        <translation language="it"><![CDATA[1 secondo fa]]></translation>
+        <translation language="ru"><![CDATA[1 секунду назад]]></translation>
+        <translation language="zh"><![CDATA[1秒钟之前]]></translation>
+        <translation language="fr"><![CDATA[il y a une seconde]]></translation>
+        <translation language="hu"><![CDATA[1 másodperce]]></translation>
+        <translation language="de"><![CDATA[vor einer Sekunde]]></translation>
+        <translation language="es"><![CDATA[hace 1 segundo]]></translation>
+        <translation language="uk"><![CDATA[1 секунду тому]]></translation>
+        <translation language="sv"><![CDATA[1 sekund sen]]></translation>
+        <translation language="el"><![CDATA[Πριν 1 δευτερόλεπτο]]></translation>
+      </item>
+      <item type="label" name="Paragraph">
+        <translation language="nl"><![CDATA[paragraaf]]></translation>
+        <translation language="en"><![CDATA[paragraph]]></translation>
+        <translation language="it"><![CDATA[paragrafo]]></translation>
+        <translation language="ru"><![CDATA[Пункт]]></translation>
+        <translation language="zh"><![CDATA[段落]]></translation>
+        <translation language="fr"><![CDATA[paragraphe]]></translation>
+        <translation language="hu"><![CDATA[bekezdés]]></translation>
+        <translation language="de"><![CDATA[Paragraph]]></translation>
+        <translation language="es"><![CDATA[parrafo]]></translation>
+        <translation language="uk"><![CDATA[Пуцнкт]]></translation>
+        <translation language="sv"><![CDATA[paragraf]]></translation>
+        <translation language="el"><![CDATA[Παράγραφος]]></translation>
+      </item>
+      <item type="label" name="Parameter">
+        <translation language="nl"><![CDATA[argument]]></translation>
+        <translation language="en"><![CDATA[parameter]]></translation>
+        <translation language="it"><![CDATA[parametro]]></translation>
+        <translation language="ru"><![CDATA[Параметр]]></translation>
+        <translation language="zh"><![CDATA[参数]]></translation>
+        <translation language="fr"><![CDATA[paramètre]]></translation>
+        <translation language="hu"><![CDATA[paraméter]]></translation>
+        <translation language="de"><![CDATA[Parameter]]></translation>
+        <translation language="es"><![CDATA[parámetro]]></translation>
+        <translation language="uk"><![CDATA[Параметр]]></translation>
+        <translation language="sv"><![CDATA[parameter]]></translation>
+        <translation language="el"><![CDATA[Παράμετρος]]></translation>
+      </item>
+      <item type="label" name="Preview">
+        <translation language="nl"><![CDATA[preview]]></translation>
+        <translation language="en"><![CDATA[preview]]></translation>
+        <translation language="it"><![CDATA[anteprima]]></translation>
+        <translation language="ru"><![CDATA[Предпросмотр]]></translation>
+        <translation language="zh"><![CDATA[预览]]></translation>
+        <translation language="fr"><![CDATA[aperçu]]></translation>
+        <translation language="hu"><![CDATA[előnézet]]></translation>
+        <translation language="de"><![CDATA[Vorschau]]></translation>
+        <translation language="es"><![CDATA[vista previa]]></translation>
+        <translation language="uk"><![CDATA[Предперегляд]]></translation>
+        <translation language="sv"><![CDATA[förhandsvisning]]></translation>
+        <translation language="el"><![CDATA[Προεπισκόπιση]]></translation>
+      </item>
+      <item type="label" name="Properties">
+        <translation language="nl"><![CDATA[eigenschappen]]></translation>
+        <translation language="en"><![CDATA[properties]]></translation>
+        <translation language="it"><![CDATA[proprietà]]></translation>
+        <translation language="ru"><![CDATA[Опции]]></translation>
+        <translation language="zh"><![CDATA[属性]]></translation>
+        <translation language="fr"><![CDATA[propriétés]]></translation>
+        <translation language="hu"><![CDATA[tulajdonságok]]></translation>
+        <translation language="de"><![CDATA[Eigenschaften]]></translation>
+        <translation language="es"><![CDATA[propiedades]]></translation>
+        <translation language="uk"><![CDATA[Опції]]></translation>
+        <translation language="sv"><![CDATA[egenskaper]]></translation>
+        <translation language="el"><![CDATA[Ιδιότητες]]></translation>
+      </item>
+      <item type="label" name="Radiobutton">
+        <translation language="nl"><![CDATA[keuzerondje]]></translation>
+        <translation language="en"><![CDATA[radiobutton]]></translation>
+        <translation language="it"><![CDATA[radiobutton]]></translation>
+        <translation language="ru"><![CDATA[Радио кнопка]]></translation>
+        <translation language="zh"><![CDATA[单选框]]></translation>
+        <translation language="fr"><![CDATA[bouton radio]]></translation>
+        <translation language="hu"><![CDATA[rádiógomb]]></translation>
+        <translation language="de"><![CDATA[Radiobutton]]></translation>
+        <translation language="es"><![CDATA[radiobutton]]></translation>
+        <translation language="uk"><![CDATA[Радіо кнопкаї]]></translation>
+        <translation language="sv"><![CDATA[radiokanpp]]></translation>
+        <translation language="el"><![CDATA[Πλήκτρο μοναδικής επιλογής]]></translation>
+      </item>
+      <item type="label" name="Recipient">
+        <translation language="nl"><![CDATA[bestemmeling]]></translation>
+        <translation language="en"><![CDATA[recipient]]></translation>
+        <translation language="it"><![CDATA[contenitore]]></translation>
+        <translation language="ru"><![CDATA[Получатель]]></translation>
+        <translation language="zh"><![CDATA[容器/输入框]]></translation>
+        <translation language="de"><![CDATA[Empfänger]]></translation>
+        <translation language="fr"><![CDATA[destinataire]]></translation>
+        <translation language="hu"><![CDATA[átvevő]]></translation>
+        <translation language="es"><![CDATA[recipiente]]></translation>
+        <translation language="uk"><![CDATA[Отримувач]]></translation>
+        <translation language="sv"><![CDATA[mottagare]]></translation>
+        <translation language="el"><![CDATA[Παραλήπτης]]></translation>
+      </item>
+      <item type="label" name="ReplyTo">
+        <translation language="nl"><![CDATA[reply to]]></translation>
+        <translation language="en"><![CDATA[reply to]]></translation>
+        <translation language="el"><![CDATA[Απάντηση προς]]></translation>
+        <translation language="zh"><![CDATA[回复给]]></translation>
+        <translation language="de"><![CDATA[Antwort an]]></translation>
+      </item>
+      <item type="label" name="Required">
+        <translation language="nl"><![CDATA[vereist]]></translation>
+        <translation language="en"><![CDATA[required]]></translation>
+        <translation language="it"><![CDATA[obbligatorio]]></translation>
+        <translation language="ru"><![CDATA[Обязательное]]></translation>
+        <translation language="zh"><![CDATA[必填的]]></translation>
+        <translation language="fr"><![CDATA[requis]]></translation>
+        <translation language="hu"><![CDATA[kötelező]]></translation>
+        <translation language="de"><![CDATA[Pflichtangabe]]></translation>
+        <translation language="es"><![CDATA[requerido]]></translation>
+        <translation language="uk"><![CDATA[Обов'язкове]]></translation>
+        <translation language="sv"><![CDATA[obligatoriskt]]></translation>
+        <translation language="el"><![CDATA[Απαιτείται]]></translation>
+      </item>
+      <item type="label" name="SecondsAgo">
+        <translation language="nl"><![CDATA[%1$s seconden geleden]]></translation>
+        <translation language="en"><![CDATA[%1$s seconds ago]]></translation>
+        <translation language="it"><![CDATA[%1$s secondi fa]]></translation>
+        <translation language="ru"><![CDATA[%1$s секунд назад]]></translation>
+        <translation language="zh"><![CDATA[%1$s秒钟之前]]></translation>
+        <translation language="fr"><![CDATA[il y a %1$s secondes]]></translation>
+        <translation language="hu"><![CDATA[%1$s másodperce]]></translation>
+        <translation language="de"><![CDATA[vor %1$s Sekunden]]></translation>
+        <translation language="es"><![CDATA[hace %1$s segundos]]></translation>
+        <translation language="uk"><![CDATA[%1$s секунд тому]]></translation>
+        <translation language="sv"><![CDATA[%1$s sekunder sen]]></translation>
+        <translation language="el"><![CDATA[Πριν από %1$s δευτερόλεπτα]]></translation>
+      </item>
+      <item type="label" name="SenderInformation">
+        <translation language="nl"><![CDATA[afzender informatie]]></translation>
+        <translation language="en"><![CDATA[sender information]]></translation>
+        <translation language="it"><![CDATA[invia informazioni]]></translation>
+        <translation language="ru"><![CDATA[Информация об отправителе]]></translation>
+        <translation language="zh"><![CDATA[发送者信息]]></translation>
+        <translation language="fr"><![CDATA[informations expéditeur]]></translation>
+        <translation language="hu"><![CDATA[küldő információ]]></translation>
+        <translation language="de"><![CDATA[Absenderinformationen]]></translation>
+        <translation language="es"><![CDATA[información del remitente]]></translation>
+        <translation language="uk"><![CDATA[Інформація про відправника]]></translation>
+        <translation language="sv"><![CDATA[avsändar information]]></translation>
+        <translation language="el"><![CDATA[Πληροφορίες αποστολέα]]></translation>
+      </item>
+      <item type="label" name="SentOn">
+        <translation language="nl"><![CDATA[verstuurd op]]></translation>
+        <translation language="en"><![CDATA[sent on]]></translation>
+        <translation language="it"><![CDATA[inviato il]]></translation>
+        <translation language="ru"><![CDATA[Отправлено]]></translation>
+        <translation language="zh"><![CDATA[发送于]]></translation>
+        <translation language="fr"><![CDATA[envoyé le]]></translation>
+        <translation language="hu"><![CDATA[küldve]]></translation>
+        <translation language="de"><![CDATA[versandt am]]></translation>
+        <translation language="es"><![CDATA[enviado en]]></translation>
+        <translation language="uk"><![CDATA[Надіслано до:]]></translation>
+        <translation language="sv"><![CDATA[skickade den]]></translation>
+        <translation language="el"><![CDATA[Απεστάλη την]]></translation>
+      </item>
+      <item type="label" name="SessionId">
+        <translation language="nl"><![CDATA[sessie id]]></translation>
+        <translation language="en"><![CDATA[session id]]></translation>
+        <translation language="it"><![CDATA[id di sessione]]></translation>
+        <translation language="ru"><![CDATA[ИД сессии]]></translation>
+        <translation language="zh"><![CDATA[会话id]]></translation>
+        <translation language="fr"><![CDATA[identifiant de session]]></translation>
+        <translation language="hu"><![CDATA[session id]]></translation>
+        <translation language="de"><![CDATA[Session-ID]]></translation>
+        <translation language="es"><![CDATA[id de sesión]]></translation>
+        <translation language="uk"><![CDATA[ID сесії]]></translation>
+        <translation language="sv"><![CDATA[session id]]></translation>
+        <translation language="el"><![CDATA[ID συνεδρίας]]></translation>
+      </item>
+      <item type="label" name="SubmitButton">
+        <translation language="nl"><![CDATA[verzendknop]]></translation>
+        <translation language="en"><![CDATA[send button]]></translation>
+        <translation language="it"><![CDATA[pulsante di invio]]></translation>
+        <translation language="ru"><![CDATA[Кнопка отправки]]></translation>
+        <translation language="zh"><![CDATA[提交按钮]]></translation>
+        <translation language="fr"><![CDATA[bouton d'envoi]]></translation>
+        <translation language="hu"><![CDATA[küldő gomb]]></translation>
+        <translation language="de"><![CDATA[Sende-Button]]></translation>
+        <translation language="es"><![CDATA[boton de envio]]></translation>
+        <translation language="uk"><![CDATA[Кнопка надсилання]]></translation>
+        <translation language="sv"><![CDATA[skicka knapp]]></translation>
+        <translation language="el"><![CDATA[Υποβολή]]></translation>
+      </item>
+      <item type="label" name="SuccessMessage">
+        <translation language="nl"><![CDATA[succes boodschap]]></translation>
+        <translation language="en"><![CDATA[success message]]></translation>
+        <translation language="it"><![CDATA[messaggio di successo]]></translation>
+        <translation language="ru"><![CDATA[Сообщение об успешном действии]]></translation>
+        <translation language="zh"><![CDATA[成功提示]]></translation>
+        <translation language="fr"><![CDATA[message de succès]]></translation>
+        <translation language="hu"><![CDATA[sikeres üzenet]]></translation>
+        <translation language="de"><![CDATA[Erfolgsmeldung]]></translation>
+        <translation language="es"><![CDATA[mensaje de éxito]]></translation>
+        <translation language="uk"><![CDATA[Повідомлення про вдалу дію]]></translation>
+        <translation language="sv"><![CDATA[lyckat meddelande]]></translation>
+        <translation language="el"><![CDATA[Μήνυμα επιτυχίας]]></translation>
+      </item>
+      <item type="label" name="Textarea">
+        <translation language="nl"><![CDATA[tekstgebied]]></translation>
+        <translation language="en"><![CDATA[textarea]]></translation>
+        <translation language="it"><![CDATA[area di testo]]></translation>
+        <translation language="ru"><![CDATA[textarea]]></translation>
+        <translation language="zh"><![CDATA[多行文本输入框]]></translation>
+        <translation language="fr"><![CDATA[zone de texte]]></translation>
+        <translation language="hu"><![CDATA[textarea]]></translation>
+        <translation language="de"><![CDATA[Textarea]]></translation>
+        <translation language="es"><![CDATA[area de texto]]></translation>
+        <translation language="uk"><![CDATA[Текстова зона]]></translation>
+        <translation language="sv"><![CDATA[textarea]]></translation>
+        <translation language="el"><![CDATA[Περιοχή κειμένου]]></translation>
+      </item>
+      <item type="label" name="Textbox">
+        <translation language="nl"><![CDATA[tekstveld]]></translation>
+        <translation language="en"><![CDATA[textbox]]></translation>
+        <translation language="it"><![CDATA[box di testo]]></translation>
+        <translation language="ru"><![CDATA[textbox]]></translation>
+        <translation language="zh"><![CDATA[文本输入框]]></translation>
+        <translation language="fr"><![CDATA[boîte de texte]]></translation>
+        <translation language="hu"><![CDATA[textbox]]></translation>
+        <translation language="de"><![CDATA[Textfeld]]></translation>
+        <translation language="es"><![CDATA[caja de texto]]></translation>
+        <translation language="uk"><![CDATA[Текстове поле]]></translation>
+        <translation language="sv"><![CDATA[textbox]]></translation>
+        <translation language="el"><![CDATA[Κουτί κειμένου]]></translation>
+      </item>
+      <item type="label" name="TextElements">
+        <translation language="nl"><![CDATA[tekst elementen]]></translation>
+        <translation language="en"><![CDATA[text elements]]></translation>
+        <translation language="it"><![CDATA[elementi di testo]]></translation>
+        <translation language="ru"><![CDATA[Текстовые элементы]]></translation>
+        <translation language="zh"><![CDATA[文本元素]]></translation>
+        <translation language="fr"><![CDATA[éléments texte]]></translation>
+        <translation language="hu"><![CDATA[szövegelemek]]></translation>
+        <translation language="de"><![CDATA[Textelemente]]></translation>
+        <translation language="es"><![CDATA[elementos de texto]]></translation>
+        <translation language="uk"><![CDATA[Текстові елементи]]></translation>
+        <translation language="sv"><![CDATA[text element]]></translation>
+        <translation language="el"><![CDATA[Στοιχεία κειμένου]]></translation>
+      </item>
+      <item type="label" name="Today">
+        <translation language="nl"><![CDATA[vandaag]]></translation>
+        <translation language="en"><![CDATA[today]]></translation>
+        <translation language="it"><![CDATA[oggi]]></translation>
+        <translation language="ru"><![CDATA[Сегодня]]></translation>
+        <translation language="zh"><![CDATA[今天]]></translation>
+        <translation language="fr"><![CDATA[aujourd'hui]]></translation>
+        <translation language="hu"><![CDATA[ma]]></translation>
+        <translation language="de"><![CDATA[heute]]></translation>
+        <translation language="es"><![CDATA[hoy]]></translation>
+        <translation language="uk"><![CDATA[Сьогодні]]></translation>
+        <translation language="sv"><![CDATA[idag]]></translation>
+        <translation language="el"><![CDATA[Σήμερα]]></translation>
+      </item>
+      <item type="label" name="Validation">
+        <translation language="nl"><![CDATA[validatie]]></translation>
+        <translation language="en"><![CDATA[validation]]></translation>
+        <translation language="it"><![CDATA[validazione]]></translation>
+        <translation language="ru"><![CDATA[Обработка]]></translation>
+        <translation language="zh"><![CDATA[验证]]></translation>
+        <translation language="fr"><![CDATA[validation]]></translation>
+        <translation language="hu"><![CDATA[érvényesítés]]></translation>
+        <translation language="de"><![CDATA[Validierung]]></translation>
+        <translation language="es"><![CDATA[validación]]></translation>
+        <translation language="uk"><![CDATA[Обробка]]></translation>
+        <translation language="sv"><![CDATA[validering]]></translation>
+        <translation language="el"><![CDATA[Επαλήθευση]]></translation>
+      </item>
+      <item type="label" name="Values">
+        <translation language="nl"><![CDATA[waarden]]></translation>
+        <translation language="en"><![CDATA[values]]></translation>
+        <translation language="it"><![CDATA[valori]]></translation>
+        <translation language="ru"><![CDATA[Значения]]></translation>
+        <translation language="zh"><![CDATA[值]]></translation>
+        <translation language="fr"><![CDATA[valeurs]]></translation>
+        <translation language="hu"><![CDATA[értékek]]></translation>
+        <translation language="de"><![CDATA[Werte]]></translation>
+        <translation language="es"><![CDATA[valores]]></translation>
+        <translation language="uk"><![CDATA[Значення]]></translation>
+        <translation language="sv"><![CDATA[värden]]></translation>
+        <translation language="el"><![CDATA[Τιμές]]></translation>
+      </item>
+      <item type="label" name="Yesterday">
+        <translation language="nl"><![CDATA[gisteren]]></translation>
+        <translation language="en"><![CDATA[yesterday]]></translation>
+        <translation language="it"><![CDATA[ieri]]></translation>
+        <translation language="ru"><![CDATA[Вчера]]></translation>
+        <translation language="zh"><![CDATA[昨天]]></translation>
+        <translation language="fr"><![CDATA[hier]]></translation>
+        <translation language="hu"><![CDATA[tegnap]]></translation>
+        <translation language="de"><![CDATA[gestern]]></translation>
+        <translation language="es"><![CDATA[ayer]]></translation>
+        <translation language="uk"><![CDATA[Вчора]]></translation>
+        <translation language="sv"><![CDATA[igår]]></translation>
+        <translation language="el"><![CDATA[Χθές]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The form "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[Il form "%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Форма "%1$s" добавлена.]]></translation>
+        <translation language="zh"><![CDATA[表单“%1$s”已添加。]]></translation>
+        <translation language="fr"><![CDATA[Le formulaire "%1$s"  a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" űrlap hozzáadva.]]></translation>
+        <translation language="de"><![CDATA[Das Formular "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue agregado.]]></translation>
+        <translation language="uk"><![CDATA[Форму "%1$s" додана.]]></translation>
+        <translation language="sv"><![CDATA[formulär "%1$s" har lagts till.]]></translation>
+        <translation language="el"><![CDATA[Η φόρμα "%1$s" προσετέθη.]]></translation>
+      </item>
+      <item type="message" name="Borttagen">
+        <translation language="sv"><![CDATA[formulär "%1$s" var borttagen.]]></translation>
+        <translation language="ru"><![CDATA[форма "%1$s" удалена.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je het formulier "%1$s" en al zijn inzendingen wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the form "%1$s" and all its submissons?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare il form "%1$s" e tutte le sue richieste?]]></translation>
+        <translation language="ru"><![CDATA[Действительно удалить форму "%1$s"  и все аргументы?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除表单“%1$s”及它的全部提交结果吗？]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le formulaire "%1$s" et toutes ses soumissions?]]></translation>
+        <translation language="hu"><![CDATA[Are you sure you want to delete the form "%1$s" and all its submissons?]]></translation>
+        <translation language="de"><![CDATA[Willst du das Formular "%1$s" und alle zugehörigen Einsendungen wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estáss seguro de eliminar el formulario "%1$s" y todos sus envios?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill till ta bort formulär "%1$s" och all inskickad data?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε τη φόρμα "%1$s" και όλες τις υποβολές της;]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteData">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze inzending wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this submission?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare questa richiesta?]]></translation>
+        <translation language="ru"><![CDATA[Удалить аргумент?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除这份提交结果吗？]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer cette soumission?]]></translation>
+        <translation language="hu"><![CDATA[Are you sure you want to delete this submission?]]></translation>
+        <translation language="de"><![CDATA[Willst du diese Einsendung wirklich löschen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar este envio?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill till ta bort detta inskick?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτή την υποβολή;]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[Het formulier "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The form "%1$s" was removed.]]></translation>
+        <translation language="it"><![CDATA[Il form "%1$s"è stato rimosso.]]></translation>
+        <translation language="ru"><![CDATA[Форма "%1$s"  удалена.]]></translation>
+        <translation language="zh"><![CDATA[表单“"%1$s”已删除。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" űrlap eltávolítva.]]></translation>
+        <translation language="de"><![CDATA[Das Formular "%1$s" wurde entfernt.]]></translation>
+        <translation language="fr"><![CDATA[Le formulaire "%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue eliminado.]]></translation>
+        <translation language="el"><![CDATA[Η φόρμα "%1$s" διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[Het formulier "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The form "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[Il form "%1$s" è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Форма "%1$s"  изменена.]]></translation>
+        <translation language="zh"><![CDATA[表单“"%1$s”已保存。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" űrlap elmentve.]]></translation>
+        <translation language="fr"><![CDATA[Le formulaire "%1$s" a été enregistré.]]></translation>
+        <translation language="de"><![CDATA[Das Formular "%1$s" wurde gespeichert.]]></translation>
+        <translation language="es"><![CDATA[El formulario "%1$s" fue guardado.]]></translation>
+        <translation language="sv"><![CDATA[formulär "%1$s" sparades.]]></translation>
+        <translation language="el"><![CDATA[Η φόρμα "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="HelpIdentifier">
+        <translation language="nl"><![CDATA[De identifier wordt in de URL geplaatst na het succesvol opslaan van formulier.]]></translation>
+        <translation language="en"><![CDATA[The identifier is placed in the URL after successfully submitting a form.]]></translation>
+        <translation language="it"><![CDATA[L'identificatore viene messo nell'URL dopo aver inviato un form con successo.]]></translation>
+        <translation language="ru"><![CDATA[ИД будет использоваться в URL после успешной отправки.]]></translation>
+        <translation language="zh"><![CDATA[成功提交表单后，鉴别语句将会嵌入到url链接中。]]></translation>
+        <translation language="hu"><![CDATA[Azonosító kerül az URL-be, miután az űrlap sikeresen mentve lett.]]></translation>
+        <translation language="de"><![CDATA[Der Bezeichner wird in der URL eingefügt nachdem das Formular erfolgreich übertragen wurde.]]></translation>
+        <translation language="fr"><![CDATA[Cet identifiant est placé dans l'URL quand un formulaire est envoyé avec succès.]]></translation>
+        <translation language="es"><![CDATA[El identificador es colocado en la URL despues de haber enviado un formulario con éxito.]]></translation>
+        <translation language="sv"><![CDATA[identifierare är placerade i URL efter lyckad skickande av formulär.]]></translation>
+        <translation language="el"><![CDATA[Το αναγνωριστικό εμφανίζεται στο χώρο URL αμέσως μετά την επιτυχή υποβολή της φόρμας.]]></translation>
+      </item>
+      <item type="message" name="HelpReplyTo">
+        <translation language="nl"><![CDATA[Gebruik de ingevulde waarde als 'reply to' emailadres]]></translation>
+        <translation language="en"><![CDATA[Use the value in this field as 'reply to' emailaddress]]></translation>
+        <translation language="zh"><![CDATA[使用这个字段里的值作为“回复给”email地址的对象]]></translation>
+        <translation language="de"><![CDATA[Der Wert dieses Feldes wird als Antwort-Emailadresse verwendet (reply-to)]]></translation>
+        <translation language="el"><![CDATA[Χρήση αυτού του πεδίου σαν διεύθυνση email απάντησης.]]></translation>
+      </item>
+      <item type="message" name="ImportantImmediateUpdate">
+        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: aanpassingen die je hier maakt worden onmiddelijk opgeslaan.]]></translation>
+        <translation language="en"><![CDATA[<strong>Important</strong>: modifications made here are immediately saved.]]></translation>
+        <translation language="it"><![CDATA[<strong>Attenzione</strong>: le modifiche vengono salvate appena fatte.]]></translation>
+        <translation language="ru"><![CDATA[<strong>Важно</strong>: изменения будут сохранены моментально.]]></translation>
+        <translation language="zh"><![CDATA[<strong>重要提示</strong>： 此处的修改已自动保存。]]></translation>
+        <translation language="hu"><![CDATA[<strong>Fontos</strong>: a módosításokat itt azonnal menteni kell.]]></translation>
+        <translation language="de"><![CDATA[<strong>Wichtig</strong>: Hier getätigte Änderungen werden direkt gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[<strong>Important</strong>: Les modifications faites ici sont immédiatement enregistrées.]]></translation>
+        <translation language="es"><![CDATA[<strong>Importante</strong>: las modificaciones hechas aquí son inmediatamente guardadas.]]></translation>
+        <translation language="sv"><![CDATA[<strong>Viktigt</strong>: modifieringar gjorda här sparas direkt.]]></translation>
+        <translation language="el"><![CDATA[<strong>Προσοχή</strong>: οι μεταβολές που γίνονται εδώ, αποθηκεύονται αμέσως.]]></translation>
+      </item>
+      <item type="message" name="ItemDeleted">
+        <translation language="nl"><![CDATA[Inzending verwijderd.]]></translation>
+        <translation language="en"><![CDATA[Submission removed.]]></translation>
+        <translation language="it"><![CDATA[Richiesta rimossa.]]></translation>
+        <translation language="ru"><![CDATA[Аргумент удален.]]></translation>
+        <translation language="zh"><![CDATA[提交结果已删除。]]></translation>
+        <translation language="hu"><![CDATA[Submission removed.]]></translation>
+        <translation language="fr"><![CDATA[Soumission retirée.]]></translation>
+        <translation language="de"><![CDATA[Einsendung entfernt.]]></translation>
+        <translation language="es"><![CDATA[envio eliminado.]]></translation>
+        <translation language="sv"><![CDATA[Inskick borttagen.]]></translation>
+        <translation language="el"><![CDATA[Η υποβολή διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="ItemsDeleted">
+        <translation language="nl"><![CDATA[Inzendingen verwijderd.]]></translation>
+        <translation language="en"><![CDATA[Submissions removed.]]></translation>
+        <translation language="it"><![CDATA[Richieste rimosse.]]></translation>
+        <translation language="ru"><![CDATA[Аргументы удалены.]]></translation>
+        <translation language="zh"><![CDATA[提交结果已删除]]></translation>
+        <translation language="hu"><![CDATA[Submissions removed.]]></translation>
+        <translation language="fr"><![CDATA[Soumissions retirées.]]></translation>
+        <translation language="de"><![CDATA[Einsendungen entfernt.]]></translation>
+        <translation language="es"><![CDATA[envio eliminado.]]></translation>
+        <translation language="sv"><![CDATA[Inskick borttagna.]]></translation>
+        <translation language="el"><![CDATA[Οι υποβολές διεγράφησαν.]]></translation>
+      </item>
+      <item type="message" name="NoData">
+        <translation language="nl"><![CDATA[Er zijn nog geen inzendingen.]]></translation>
+        <translation language="en"><![CDATA[There are no submissions yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora richieste.]]></translation>
+        <translation language="ru"><![CDATA[Нет аргументов.]]></translation>
+        <translation language="zh"><![CDATA[尚无提交结果。]]></translation>
+        <translation language="hu"><![CDATA[There are no submissions yet.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de soumission.]]></translation>
+        <translation language="de"><![CDATA[Noch keine Einsendungen vorhanden.]]></translation>
+        <translation language="es"><![CDATA[No hay envios aun.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga inskick än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη υποβολές.]]></translation>
+      </item>
+      <item type="message" name="NoFields">
+        <translation language="nl"><![CDATA[Er zijn nog geen velden.]]></translation>
+        <translation language="en"><![CDATA[There are no fields yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora campi.]]></translation>
+        <translation language="ru"><![CDATA[Нет полей.]]></translation>
+        <translation language="zh"><![CDATA[尚无字段。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még mezők.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de champs.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Felder.]]></translation>
+        <translation language="es"><![CDATA[No hay campos aun.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga fält än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη πεδία.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen formulieren.]]></translation>
+        <translation language="en"><![CDATA[There are no forms yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora form.]]></translation>
+        <translation language="ru"><![CDATA[Нет форм.]]></translation>
+        <translation language="zh"><![CDATA[尚无表单。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még űrlapok.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Formulare.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de formulaires.]]></translation>
+        <translation language="es"><![CDATA[No hay formularios aun.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga formulär än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη φόρμες.]]></translation>
+      </item>
+      <item type="message" name="NoValues">
+        <translation language="nl"><![CDATA[Er zijn nog geen waarden.]]></translation>
+        <translation language="en"><![CDATA[There are no values yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora valori.]]></translation>
+        <translation language="ru"><![CDATA[Нет значений.]]></translation>
+        <translation language="zh"><![CDATA[尚无值。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még értékek.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Werte.]]></translation>
+        <translation language="fr"><![CDATA[il n'y a pas encore de valeurs.]]></translation>
+        <translation language="es"><![CDATA[No hay volares aun.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga värden än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη τιμές.]]></translation>
+      </item>
+      <item type="message" name="OneSentForm">
+        <translation language="nl"><![CDATA[1 inzending]]></translation>
+        <translation language="en"><![CDATA[1 submission]]></translation>
+        <translation language="it"><![CDATA[1 richiesta]]></translation>
+        <translation language="ru"><![CDATA[1 аргумент]]></translation>
+        <translation language="zh"><![CDATA[１份提交结果]]></translation>
+        <translation language="hu"><![CDATA[1 submission]]></translation>
+        <translation language="fr"><![CDATA[1 soumission]]></translation>
+        <translation language="de"><![CDATA[1 Einsendung]]></translation>
+        <translation language="es"><![CDATA[1 envio]]></translation>
+        <translation language="sv"><![CDATA[1 inskick]]></translation>
+        <translation language="el"><![CDATA[1 υποβολή]]></translation>
+      </item>
+      <item type="message" name="SentForms">
+        <translation language="nl"><![CDATA[%1$s inzendingen]]></translation>
+        <translation language="en"><![CDATA[%1$s submissions]]></translation>
+        <translation language="it"><![CDATA[%1$s richieste]]></translation>
+        <translation language="ru"><![CDATA[%1$s аргументов]]></translation>
+        <translation language="zh"><![CDATA[%1$s份提交结果]]></translation>
+        <translation language="hu"><![CDATA[%1$s submissions]]></translation>
+        <translation language="fr"><![CDATA[%1$s soumissions]]></translation>
+        <translation language="de"><![CDATA[%1$s Einsendungen]]></translation>
+        <translation language="es"><![CDATA[%1$s enviados]]></translation>
+        <translation language="sv"><![CDATA[%1$s inskick]]></translation>
+        <translation language="el"><![CDATA[%1$s υποβολές]]></translation>
+      </item>
+      <item type="error" name="ErrorMessageIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een foutmelding in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide an error message.]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un messaggio di errore.]]></translation>
+        <translation language="ru"><![CDATA[Введите текст сообщения об ошибке.]]></translation>
+        <translation language="zh"><![CDATA[请输入错误提示信息。]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir un message d'erreur.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek add meg a hibaüzenetet.]]></translation>
+        <translation language="de"><![CDATA[Bitte gib eine Fehlermeldung an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introudce un mensaje de error.]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange ett felmeddelande.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε ένα μήνυμα λάθους.]]></translation>
+      </item>
+      <item type="error" name="IdentifierExists">
+        <translation language="nl"><![CDATA[This identifier already exists.]]></translation>
+        <translation language="it"><![CDATA[Questo identificatore è già esistente.]]></translation>
+        <translation language="ru"><![CDATA[Этот ИД уже есть.]]></translation>
+        <translation language="zh"><![CDATA[这个鉴别器已经存在。]]></translation>
+        <translation language="hu"><![CDATA[Ez az azonosító már létezik.]]></translation>
+        <translation language="fr"><![CDATA[Cet identifiant existe déjà.]]></translation>
+        <translation language="de"><![CDATA[Dieser Bezeichner existiert bereits.]]></translation>
+        <translation language="en"><![CDATA[This identifier already exists.]]></translation>
+        <translation language="es"><![CDATA[Este identificador ya existe.]]></translation>
+        <translation language="sv"><![CDATA[Denna identifierare finns redan.]]></translation>
+        <translation language="el"><![CDATA[Το αναγνωριστικό υπάρχει ήδη.]]></translation>
+      </item>
+      <item type="error" name="InvalidIdentifier">
+        <translation language="nl"><![CDATA[Gelieve een geldige identifier op te geven (enkel . - _ en alphanumerieke karakters)]]></translation>
+        <translation language="en"><![CDATA[Please provide a valid identifier. (only . - _ and alphanumeric characters)]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un identificatore. (solo . - _ e caratteri alfanumerici)]]></translation>
+        <translation language="ru"><![CDATA[Введите правильный ИД. (только . - _ и знаки алфавита)]]></translation>
+        <translation language="zh"><![CDATA[请设置验证识别方法。（只允许 .-_数字及字母）]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir un identifiants correct. 5 seulement .-_ et caractères alphanumériques)]]></translation>
+        <translation language="hu"><![CDATA[Kérlek valós azonosítót adj meg. (csak . - _ és betű karakterek)]]></translation>
+        <translation language="de"><![CDATA[Bitte gib einen gültigen Bezeichner an. (nur . - _ und alphanumerische Zeichen)]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un identificador válido. (solo . - _ y carácteres alfanuméricos)]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange en giltig identifierare. (endast . - _ och alfanumerisk tecken)]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε ένα έγκυρο αναγνωριστικό (μόνο -, _ , γράμματα και αριθμοί)]]></translation>
+      </item>
+      <item type="error" name="LabelIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een label in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a label.]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un'etichetta.]]></translation>
+        <translation language="ru"><![CDATA[Введите заголовок.]]></translation>
+        <translation language="zh"><![CDATA[请输入一个标签。]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir une étiquette.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek add meg a címkét.]]></translation>
+        <translation language="de"><![CDATA[Bitte gib ein Label an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce una etiqueta.]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange en label.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε μία ετικέτα.]]></translation>
+      </item>
+      <item type="error" name="SuccessMessageIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een succes boodschap in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a success message.]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un messaggio di successo.]]></translation>
+        <translation language="ru"><![CDATA[Введите текст сообщения об успешном действии.]]></translation>
+        <translation language="zh"><![CDATA[请输入成功提示消息。]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir un message de succès.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek add meg a sikeres üzenetet.]]></translation>
+        <translation language="de"><![CDATA[Bitte gib eine Erfolgsmeldung an.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un mensaje de éxito.]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange ett lyckat meddelande.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε ένα μήνυμα επιτυχίας.]]></translation>
+      </item>
+      <item type="error" name="UniqueIdentifier">
+        <translation language="nl"><![CDATA[Deze identifier is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This identifier is already in use.]]></translation>
+        <translation language="it"><![CDATA[Questo identificatore è già in uso.]]></translation>
+        <translation language="ru"><![CDATA[Этот ИД уже используется.]]></translation>
+        <translation language="zh"><![CDATA[这个鉴别器已在使用。]]></translation>
+        <translation language="fr"><![CDATA[Cet identifiant est déjà utilisé.]]></translation>
+        <translation language="hu"><![CDATA[Ezt az azonosítót már használják.]]></translation>
+        <translation language="de"><![CDATA[Der Bezeichner ist bereits in Gebrauch.]]></translation>
+        <translation language="es"><![CDATA[Este identificador ya está en uso.]]></translation>
+        <translation language="sv"><![CDATA[Denna identifierare är redan använd.]]></translation>
+        <translation language="el"><![CDATA[Το αναγνωριστικό χρησιμοποιείται ήδη.]]></translation>
+      </item>
+      <item type="error" name="ValueIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een waarde in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a value.]]></translation>
+        <translation language="it"><![CDATA[Per favore fornisci un valore.]]></translation>
+        <translation language="ru"><![CDATA[Введите значениею]]></translation>
+        <translation language="zh"><![CDATA[请输入一个值。]]></translation>
+        <translation language="fr"><![CDATA[Veuillez fournir une valeur.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek add meg az értéket.]]></translation>
+        <translation language="de"><![CDATA[Bitte gib einen Wert an.]]></translation>
+        <translation language="es"><![CDATA[Ppor favor introduce un valor.]]></translation>
+        <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
+        <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
+      </item>
+    </FormBuilder>
+  </Backend>
+</locale>

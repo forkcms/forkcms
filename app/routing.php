@@ -9,6 +9,10 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Backend\Init as BackendInit;
+
+use Frontend\Init as FrontendInit;
+
 /**
  * Application routing
  *
@@ -20,247 +24,255 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class ApplicationRouting
 {
-	const DEFAULT_APPLICATION = 'frontend';
+    const DEFAULT_APPLICATION = 'Frontend';
 
-	/**
-	 * Virtual folders mappings
-	 *
-	 * @var	array
-	 */
-	private static $routes = array(
-		'' => self::DEFAULT_APPLICATION,
-		'private' => 'backend',
-		'backend' => 'backend',
-		'api' => 'api',
-		'install' => 'install'
-	);
+    /**
+     * Virtual folders mappings
+     *
+     * @var    array
+     */
+    private static $routes = array(
+        '' => self::DEFAULT_APPLICATION,
+        'private' => 'Backend',
+        'Backend' => 'Backend',
+        'api' => 'Api',
+        'install' => 'Install'
+    );
 
-	/**
-	 * @var Kernel
-	 */
-	private $kernel;
+    /**
+     * @var Kernel
+     */
+    private $kernel;
 
-	/**
-	 * The actual request, formatted as a Symfony object.
-	 *
-	 * @var Request
-	 */
-	private $request;
+    /**
+     * The actual request, formatted as a Symfony object.
+     *
+     * @var Request
+     */
+    private $request;
 
-	/**
-	 * @param Request $request
-	 * @param Kernel $kernel
-	 */
-	public function __construct(Request $request, Kernel $kernel)
-	{
-		// this class is used in most Fork applications to bubble down the Kernel object
-		require_once __DIR__ . '/ApplicationInterface.php';
-		require_once __DIR__ . '/KernelLoader.php';
+    /**
+     * @param Request $request
+     * @param Kernel  $kernel
+     */
+    public function __construct(Request $request, Kernel $kernel)
+    {
+        // this class is used in most Fork applications to bubble down the Kernel object
+        require_once __DIR__ . '/ApplicationInterface.php';
+        require_once __DIR__ . '/KernelLoader.php';
 
-		$this->request = $request;
-		$this->kernel = $kernel;
+        $this->request = $request;
+        $this->kernel = $kernel;
 
-		$this->processQueryString();
-	}
+        $this->processQueryString();
+    }
 
-	/**
-	 * Get the possible routes
-	 *
-	 * @return array
-	 */
-	public static function getRoutes()
-	{
-		return self::$routes;
-	}
+    /**
+     * Get the possible routes
+     *
+     * @return array
+     */
+    public static function getRoutes()
+    {
+        return self::$routes;
+    }
 
-	/**
-	 * Handle the actual request and delegate it to other parts of Fork.
-	 *
-	 * @return Symfony\Component\HttpFoundation\Response
-	 */
-	public function handleRequest()
-	{
-		$applicationName = APPLICATION;
+    /**
+     * Handle the actual request and delegate it to other parts of Fork.
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function handleRequest()
+    {
+        $applicationName = APPLICATION;
 
-		/**
-		 * Our ajax and cronjobs don't go trough the index.php file at the
-		 * moment. Because of this we need to add some extra validation.
-		 */
-		if(strpos($this->request->getRequestUri(), 'ajax.php') !== false)
-		{
-			$applicationName .= '_ajax';
-		}
-		elseif(strpos($this->request->getRequestUri(), 'cronjob.php') !== false)
-		{
-			$applicationName .= '_cronjob';
-		}
+        /**
+         * Our ajax and cronjobs don't go trough the index.php file at the
+         * moment. Because of this we need to add some extra validation.
+         */
+        if (strpos($this->request->getRequestUri(), 'Ajax.php') !== false) {
+            $applicationName .= 'Ajax';
+        } elseif (strpos($this->request->getRequestUri(), 'Cronjob.php') !== false) {
+            $applicationName .= 'Cronjob';
+        }
 
-		// Pave the way for the application we'll need to load.
-		// This initializes basic functionality and retrieves the correct class to instantiate.
-		switch($applicationName)
-		{
-			case 'frontend':
-			case 'frontend_ajax':
-				$applicationClass = $this->initializeFrontend($applicationName);
-				break;
-			case 'backend':
-			case 'backend_ajax':
-			case 'backend_cronjob':
-				$applicationClass = $this->initializeBackend($applicationName);
-				break;
-			case 'api':
-				$applicationClass = $this->initializeAPI($applicationName);
-				break;
-			case 'install':
-				// install directory might be deleted after install, handle it as a normal frontend request
-				if(file_exists(__DIR__ . '/../install'))
-				{
-					$applicationClass = $this->initializeInstaller();
-				}
-				else $applicationClass = 'frontend';
-				break;
-			default:
-				throw new Exception('Unknown application. (' . $applicationName . ')');
-		}
+        // Pave the way for the application we'll need to load.
+        // This initializes basic functionality and retrieves the correct class to instantiate.
+        switch ($applicationName) {
+            case 'Frontend':
+            case 'FrontendAjax':
+                $applicationClass = $this->initializeFrontend($applicationName);
+                break;
+            case 'Backend':
+            case 'BackendAjax':
+            case 'BackendCronjob':
+                $applicationClass = $this->initializeBackend($applicationName);
+                break;
+            case 'Api':
+                $applicationClass = $this->initializeAPI($applicationName);
+                break;
+            case 'Install':
+                // install directory might be deleted after install, handle it as a normal frontend request
+                if (file_exists(__DIR__ . '/../src/Install')) {
+                    $applicationClass = $this->initializeInstaller();
+                } else {
+                    $applicationClass = 'Frontend';
+                }
+                break;
+            default:
+                throw new Exception('Unknown application. (' . $applicationName . ')');
+        }
 
-		/**
-		 * Load the page and pass along the application kernel
-		 * This step is needed to bubble our container all the way to the action.
-		 *
-		 * Once we switch to bundles, the kernel will boot those bundles and pass the container.
-		 * The kernel object itself will then be stored as a singleton in said container, same
-		 * as in Symfony.
-		 */
-		$application = new $applicationClass($this->kernel);
-		$application->passContainerToModels();
-		$application->initialize();
-		return $application->display();
-	}
+        /**
+         * Load the page and pass along the application kernel
+         * This step is needed to bubble our container all the way to the action.
+         *
+         * Once we switch to bundles, the kernel will boot those bundles and pass the container.
+         * The kernel object itself will then be stored as a singleton in said container, same
+         * as in Symfony.
+         */
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
 
-	/**
-	 * @param string $app The name of the application to load (ex. backend_ajax)
-	 * @return string The name of the application class we need to instantiate.
-	 */
-	protected function initializeAPI($app)
-	{
-		$queryString = $this->getQueryString();
-		$chunks = explode('/', $queryString);
-		$apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : '1.0';
+        return $application->display();
+    }
 
-		require_once __DIR__ . '/../api/' . $apiVersion . '/init.php';
-		$init = new APIInit($this->kernel);
-		$init->initialize($app);
+    /**
+     * @param string $app The name of the application to load (ex. BackendAjax)
+     * @return string The name of the application class we need to instantiate.
+     */
+    protected function initializeAPI($app)
+    {
+        $queryString = $this->getQueryString();
+        $chunks = explode('/', $queryString);
+        $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : 'v1';
+        $apiVersion = strtok($apiVersion, '?');
+        $apiClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Init';
 
-		// The client was requested
-		if(array_key_exists(2, $chunks) && $chunks[2] === 'client')
-		{
-			require_once __DIR__ . '/../api/' . $apiVersion . '/engine/client.php';
-			$applicationClass = 'APIClient';
-		}
-		// The regular API was requested
-		else
-		{
-			$applicationClass = 'API';
-		}
+        // validate
+        if (!class_exists($apiClass)) {
+            throw new Exception('This version of the API does not exists.');
+        }
 
-		return $applicationClass;
-	}
+        $init = new $apiClass($this->kernel);
+        $init->initialize($app);
 
-	/**
-	 * @return string The name of the application class we need to instantiate.
-	 */
-	protected function initializeInstaller()
-	{
-		session_start();
+        // The client was requested
+        if (array_key_exists(2, $chunks) && $chunks[2] === 'client') {
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Client';
+        } else {
+            // The regular API was requested
+            $applicationClass = 'Api\\' . SpoonFilter::ucfirst($apiVersion) . '\\Engine\\Api';
+        }
 
-		// set a default timezone if no one was set by PHP.ini
-		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
+        return $applicationClass;
+    }
 
-		// require the installer class
-		require_once __DIR__ . '/../install/engine/installer.php';
+    /**
+     * @return string The name of the application class we need to instantiate.
+     */
+    protected function initializeInstaller()
+    {
+        session_start();
 
-		// we'll be using utf-8
-		header('Content-type: text/html;charset=utf8');
+        // set a default timezone if no one was set by PHP.ini
+        if (ini_get('date.timezone') == '') {
+            date_default_timezone_set('Europe/Brussels');
+        }
 
-		return 'Installer';
-	}
+        // we'll be using utf-8
+        header('Content-type: text/html;charset=utf8');
 
-	/**
-	 * @param string $app The name of the application to load (ex. backend_ajax)
-	 * @return string The name of the application class we need to instantiate.
-	 */
-	protected function initializeBackend($app)
-	{
-		require_once __DIR__ . '/../backend/init.php';
-		$init = new BackendInit($this->kernel);
-		$init->initialize($app);
+        return 'Install\Engine\Installer';
+    }
 
-		switch($app)
-		{
-			case 'backend_ajax':
-				$applicationClass = 'BackendAJAX';
-				break;
-			case 'backend_cronjob':
-				$applicationClass = 'BackendCronjob';
-				break;
-			default:
-				$applicationClass = 'Backend';
-		}
+    /**
+     * @param string $app The name of the application to load (ex. BackendAjax)
+     * @return string The name of the application class we need to instantiate.
+     */
+    protected function initializeBackend($app)
+    {
+        $init = new BackendInit($this->kernel);
+        $init->initialize($app);
 
-		return $applicationClass;
-	}
+        switch ($app) {
+            case 'BackendAjax':
+                $applicationClass = 'Backend\Core\Engine\Ajax';
+                break;
+            case 'BackendCronjob':
+                $applicationClass = 'Backend\Core\Engine\Cronjob';
+                break;
+            default:
+                $applicationClass = 'Backend\Core\Engine\Backend';
+        }
 
-	/**
-	 * @param string $app The name of the application to load (ex. frontend_ajax)
-	 * @return string The name of the application class we need to instantiate.
-	 */
-	protected function initializeFrontend($app)
-	{
-		require_once __DIR__ . '/../frontend/init.php';
-		$init = new FrontendInit($this->kernel);
-		$init->initialize($app);
+        return $applicationClass;
+    }
 
-		return ($app === 'frontend_ajax') ? 'FrontendAJAX' : 'Frontend';
-	}
+    /**
+     * @param string $app The name of the application to load (ex. frontend_ajax)
+     * @return string The name of the application class we need to instantiate.
+     */
+    protected function initializeFrontend($app)
+    {
+        $init = new FrontendInit($this->kernel);
+        $init->initialize($app);
 
-	/**
-	 * Retrieves the request URI from the request object
-	 *
-	 * @return string
-	 */
-	private function getQueryString()
-	{
-		return trim($this->request->getRequestUri(), '/');
-	}
+        return ($app === 'FrontendAjax') ? 'Frontend\Core\Engine\Ajax' : 'Frontend\Core\Engine\Frontend';
+    }
 
-	/**
-	 * Process the query string to define the application
-	 */
-	private function processQueryString()
-	{
-		$queryString = $this->getQueryString();
+    /**
+     * Retrieves the request URI from the request object
+     *
+     * @return string
+     */
+    private function getQueryString()
+    {
+        return trim($this->request->getRequestUri(), '/');
+    }
 
-		// split into chunks
-		$chunks = explode('/', $queryString);
+    /**
+     * Process the query string to define the application
+     */
+    private function processQueryString()
+    {
+        $queryString = $this->getQueryString();
 
-		// is there a application specified
-		if(isset($chunks[0]))
-		{
-			// cleanup
-			$proposedApplication = (string) $chunks[0];
+        // split into chunks
+        $chunks = explode('/', $queryString);
 
-			// set real application
-			$application = (isset(self::$routes[$proposedApplication])) ? self::$routes[$proposedApplication] : self::DEFAULT_APPLICATION;
-		}
+        // remove the src part if necessary. This is needed for backend ajax/cronjobs
+        if(isset($chunks[0]) && $chunks[0] == 'src')
+        {
+            unset($chunks[0]);
+            $chunks = array_values($chunks);
+        }
 
-		// no application
-		else {
-			$application = self::DEFAULT_APPLICATION;
-			$proposedApplication = $application;
-		}
+        // is there a application specified
+        if (isset($chunks[0])) {
+            // cleanup
+            $proposedApplication = (string) $chunks[0];
+            $proposedApplication = strtok($proposedApplication, '?');
 
-		// define APP
-		if(!defined('APPLICATION')) define('APPLICATION', $application);
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', $proposedApplication);
-	}
+            // set real application
+            if (isset(self::$routes[$proposedApplication])) {
+                $application = self::$routes[$proposedApplication];
+            } else {
+                $application = self::DEFAULT_APPLICATION;
+            }
+        } else {
+            // no application
+            $application = self::DEFAULT_APPLICATION;
+            $proposedApplication = $application;
+        }
+
+        // define APP
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', $application);
+        }
+        if (!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', $proposedApplication);
+        }
+    }
 }

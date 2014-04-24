@@ -9,7 +9,7 @@
         "facebook/php-sdk": "3.2.*",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.2.*",
-        "matthiasmullie/minify": "1.1.*",
+        "matthiasmullie/minify": "1.2.*",
         "symfony/dependency-injection": "2.3.*",
         "symfony/http-kernel": "2.3.*",
         "symfony/config": "2.3.*",
@@ -25,5 +25,14 @@
     },
     "scripts": {
         "post-update-cmd": "cd tools && ./remove_cache"
+    },
+    "autoload": {
+        "psr-0": {
+            "Backend": "src/",
+            "Frontend": "src/",
+            "Install": "src/",
+            "Api": "src/",
+            "Common": "src/"
+        }
     }
 }

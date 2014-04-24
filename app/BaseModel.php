@@ -20,47 +20,46 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class BaseModel
 {
-	/**
-	 * @var Symfony\Component\DependencyInjection\ContainerInterface
-	 */
-	private static $container;
+    /**
+     * @var Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    private static $container;
 
-	/**
-	 * Gets a service by id.
-	 * 
-	 * @param string $id The service id
-	 * @return object The service
-	 */
-	public static function get($reference)
-	{
-		return self::$container->get($reference);
-	}
+    /**
+     * Gets a service by id.
+     *
+     * @param string $reference The service id
+     * @return object The service
+     */
+    public static function get($reference)
+    {
+        return self::$container->get($reference);
+    }
 
-	/**
-	 * @return ContainerInterface
-	 */
-	public static function getContainer()
-	{
-		return self::$container;
-	}
+    /**
+     * @return ContainerInterface
+     */
+    public static function getContainer()
+    {
+        return self::$container;
+    }
 
-	/**
-	 * Returns true if the service id is defined.
-	 *
-	 * @param string $id The service id
-	 * @return Boolean true if the service id is defined, false otherwise
-	 */
-	public static function has($reference)
-	{
-		return self::$container->has($reference);
-	}
+    /**
+     * Returns true if the service id is defined.
+     *
+     * @param string $reference The service id
+     * @return Boolean true if the service id is defined, false otherwise
+     */
+    public static function has($reference)
+    {
+        return self::$container->has($reference);
+    }
 
-	/**
-	 * @param ContainerInterface[optional] $container
-	 */
-	public static function setContainer(ContainerInterface $container = null)
-	{
-		self::$container = $container;
-	}
+    /**
+     * @param ContainerInterface $container
+     */
+    public static function setContainer(ContainerInterface $container = null)
+    {
+        self::$container = $container;
+    }
 }
-

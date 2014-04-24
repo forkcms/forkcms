@@ -1,0 +1,886 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Analytics>
+      <item type="label" name="AddLandingPage">
+        <translation language="nl"><![CDATA[landingspagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add landing page]]></translation>
+        <translation language="hu"><![CDATA[céloldal hozzáadása]]></translation>
+        <translation language="it"><![CDATA[aggiungi landing page]]></translation>
+        <translation language="ru"><![CDATA[Добавить целевую страницу]]></translation>
+        <translation language="zh"><![CDATA[添加目标页面]]></translation>
+        <translation language="de"><![CDATA[Eintrittsseite hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une page d'accueil ]]></translation>
+        <translation language="es"><![CDATA[agregar página de destino]]></translation>
+        <translation language="uk"><![CDATA[Додати цільову сторінку]]></translation>
+        <translation language="lt"><![CDATA[naujas nukreipimo puslapis]]></translation>
+        <translation language="sv"><![CDATA[lägg till landingssida]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη σελίδας προσγείωσης]]></translation>
+      </item>
+      <item type="label" name="AllStatistics">
+        <translation language="nl"><![CDATA[alle statistieken]]></translation>
+        <translation language="en"><![CDATA[all statistics]]></translation>
+        <translation language="hu"><![CDATA[minden statisztika]]></translation>
+        <translation language="it"><![CDATA[tutte le statistiche]]></translation>
+        <translation language="ru"><![CDATA[Вся статистика]]></translation>
+        <translation language="zh"><![CDATA[全部统计数据]]></translation>
+        <translation language="de"><![CDATA[alle Statistiken]]></translation>
+        <translation language="fr"><![CDATA[toutes les statistiques]]></translation>
+        <translation language="es"><![CDATA[todas las estadísticas]]></translation>
+        <translation language="uk"><![CDATA[Вся статистика]]></translation>
+        <translation language="lt"><![CDATA[visa statistika]]></translation>
+        <translation language="sv"><![CDATA[alla statistik]]></translation>
+        <translation language="el"><![CDATA[Όλα τα στατιστικά]]></translation>
+      </item>
+      <item type="label" name="ApiKey">
+        <translation language="nl"><![CDATA[API key]]></translation>
+        <translation language="en"><![CDATA[API key]]></translation>
+        <translation language="hu"><![CDATA[API key]]></translation>
+        <translation language="it"><![CDATA[API key]]></translation>
+        <translation language="ru"><![CDATA[API ключ]]></translation>
+        <translation language="zh"><![CDATA[API key]]></translation>
+        <translation language="de"><![CDATA[API key]]></translation>
+        <translation language="fr"><![CDATA[API key]]></translation>
+        <translation language="es"><![CDATA[API key]]></translation>
+        <translation language="uk"><![CDATA[API key]]></translation>
+        <translation language="lt"><![CDATA[API key]]></translation>
+        <translation language="sv"><![CDATA[API key]]></translation>
+        <translation language="el"><![CDATA[Κλειδί API]]></translation>
+      </item>
+      <item type="label" name="AverageTimeOnPage">
+        <translation language="nl"><![CDATA[gemiddelde tijd op pagina]]></translation>
+        <translation language="en"><![CDATA[average time on page]]></translation>
+        <translation language="hu"><![CDATA[átlagos idő az oldalon]]></translation>
+        <translation language="it"><![CDATA[permanenza media sulla pagina]]></translation>
+        <translation language="ru"><![CDATA[Среднее время на странице]]></translation>
+        <translation language="zh"><![CDATA[页面平均访问次数]]></translation>
+        <translation language="de"><![CDATA[durchschnittliche Verweildauer auf der Seite]]></translation>
+        <translation language="fr"><![CDATA[temps moyen passé sur une page]]></translation>
+        <translation language="es"><![CDATA[tiempo promedio en la página]]></translation>
+        <translation language="uk"><![CDATA[Середній час на сторінкці]]></translation>
+        <translation language="lt"><![CDATA[vidutinis laikas puslapyje]]></translation>
+        <translation language="sv"><![CDATA[genomsnitts tid på sida]]></translation>
+        <translation language="el"><![CDATA[Μέσος χρόνος στη σελίδα]]></translation>
+      </item>
+      <item type="label" name="AverageTimeOnSite">
+        <translation language="nl"><![CDATA[gemiddelde tijd op site]]></translation>
+        <translation language="en"><![CDATA[average time on site]]></translation>
+        <translation language="it"><![CDATA[permanenza media sul sito]]></translation>
+        <translation language="ru"><![CDATA[Среднее время на сайте]]></translation>
+        <translation language="zh"><![CDATA[网站平均访问次数]]></translation>
+        <translation language="de"><![CDATA[durchschnittliche Verweildauer auf der Webseite]]></translation>
+        <translation language="hu"><![CDATA[átlagos idő a site-on]]></translation>
+        <translation language="fr"><![CDATA[temps moyen passé sur le site]]></translation>
+        <translation language="es"><![CDATA[tiempo promedio en el sitio]]></translation>
+        <translation language="uk"><![CDATA[Середній час на сайті]]></translation>
+        <translation language="lt"><![CDATA[vidutinis laikas tinklapyje]]></translation>
+        <translation language="sv"><![CDATA[genomsnitts tid på sajt]]></translation>
+        <translation language="el"><![CDATA[Μέσος χρόνος στον ιστοχώρο]]></translation>
+      </item>
+      <item type="label" name="BounceRate">
+        <translation language="nl"><![CDATA[weigeringspercentage]]></translation>
+        <translation language="en"><![CDATA[bounce rate]]></translation>
+        <translation language="it"><![CDATA[frequenza di rimbalzo]]></translation>
+        <translation language="zh"><![CDATA[跳出率]]></translation>
+        <translation language="ru"><![CDATA[Рейтинг отчетов]]></translation>
+        <translation language="de"><![CDATA[Bounce Rate]]></translation>
+        <translation language="hu"><![CDATA[bounce rate]]></translation>
+        <translation language="fr"><![CDATA[taux de rebond]]></translation>
+        <translation language="es"><![CDATA[porcentaje de rebote]]></translation>
+        <translation language="uk"><![CDATA[Показник відмов]]></translation>
+        <translation language="sv"><![CDATA[studs nivå]]></translation>
+        <translation language="lt"><![CDATA[atsisakymo lygis]]></translation>
+        <translation language="el"><![CDATA[Ρυθμός αναπηδήσεων]]></translation>
+      </item>
+      <item type="label" name="Bounces">
+        <translation language="nl"><![CDATA[weigeringen]]></translation>
+        <translation language="en"><![CDATA[bounces]]></translation>
+        <translation language="it"><![CDATA[rimbalzo]]></translation>
+        <translation language="zh"><![CDATA[跳出]]></translation>
+        <translation language="ru"><![CDATA[Отчетов]]></translation>
+        <translation language="de"><![CDATA[Bounces]]></translation>
+        <translation language="hu"><![CDATA[bounces]]></translation>
+        <translation language="fr"><![CDATA[rebonds]]></translation>
+        <translation language="es"><![CDATA[rebotes]]></translation>
+        <translation language="uk"><![CDATA[Відмови]]></translation>
+        <translation language="sv"><![CDATA[studsar]]></translation>
+        <translation language="lt"><![CDATA[atsisakymai]]></translation>
+        <translation language="el"><![CDATA[Αναπηδήσεις]]></translation>
+      </item>
+      <item type="label" name="ChangePeriod">
+        <translation language="nl"><![CDATA[periode aanpassen]]></translation>
+        <translation language="en"><![CDATA[change period]]></translation>
+        <translation language="it"><![CDATA[cambia periodo]]></translation>
+        <translation language="ru"><![CDATA[Период изменений]]></translation>
+        <translation language="zh"><![CDATA[更改时间段]]></translation>
+        <translation language="de"><![CDATA[Zeitraum ändern]]></translation>
+        <translation language="hu"><![CDATA[időszak változtatás]]></translation>
+        <translation language="fr"><![CDATA[changer de période]]></translation>
+        <translation language="es"><![CDATA[cambiar período]]></translation>
+        <translation language="uk"><![CDATA[Період змін]]></translation>
+        <translation language="sv"><![CDATA[ändra period]]></translation>
+        <translation language="lt"><![CDATA[keisti periodą]]></translation>
+        <translation language="el"><![CDATA[Αλλαγή περιόδου]]></translation>
+      </item>
+      <item type="label" name="ChooseThisAccount">
+        <translation language="nl"><![CDATA[kies deze account]]></translation>
+        <translation language="en"><![CDATA[choose this account]]></translation>
+        <translation language="it"><![CDATA[scegli questo account]]></translation>
+        <translation language="ru"><![CDATA[Выбрать этот аккаунт]]></translation>
+        <translation language="zh"><![CDATA[选择这个帐户]]></translation>
+        <translation language="de"><![CDATA[diesen Account auswählen]]></translation>
+        <translation language="hu"><![CDATA[fiók választás]]></translation>
+        <translation language="fr"><![CDATA[choisir ce compte]]></translation>
+        <translation language="es"><![CDATA[elegir esta cuenta]]></translation>
+        <translation language="uk"><![CDATA[Обрати цей акаунт]]></translation>
+        <translation language="sv"><![CDATA[välj detta konto]]></translation>
+        <translation language="lt"><![CDATA[pasirinkite šįą sąskaitą]]></translation>
+        <translation language="el"><![CDATA[Επιλογή αυτού του λογαριασμού]]></translation>
+      </item>
+      <item type="label" name="DirectTraffic">
+        <translation language="nl"><![CDATA[direct verkeer]]></translation>
+        <translation language="en"><![CDATA[direct traffic]]></translation>
+        <translation language="it"><![CDATA[traffico diretto]]></translation>
+        <translation language="ru"><![CDATA[Прямой трафик]]></translation>
+        <translation language="zh"><![CDATA[直接访问]]></translation>
+        <translation language="hu"><![CDATA[direct traffic]]></translation>
+        <translation language="fr"><![CDATA[traffic direct]]></translation>
+        <translation language="de"><![CDATA[direkte Zugriffe]]></translation>
+        <translation language="es"><![CDATA[tráfico directo]]></translation>
+        <translation language="uk"><![CDATA[Прямий трафік]]></translation>
+        <translation language="sv"><![CDATA[direkttrafik]]></translation>
+        <translation language="lt"><![CDATA[tiesioginis srautas]]></translation>
+        <translation language="el"><![CDATA[Κατεύθυνση κυκλοφορίας]]></translation>
+      </item>
+      <item type="label" name="Entrances">
+        <translation language="nl"><![CDATA[instappunten]]></translation>
+        <translation language="en"><![CDATA[entrances]]></translation>
+        <translation language="it"><![CDATA[entrate]]></translation>
+        <translation language="ru"><![CDATA[Вход]]></translation>
+        <translation language="zh"><![CDATA[入口]]></translation>
+        <translation language="hu"><![CDATA[entrances]]></translation>
+        <translation language="fr"><![CDATA[entrées]]></translation>
+        <translation language="de"><![CDATA[Eintrittsseiten]]></translation>
+        <translation language="es"><![CDATA[entradas]]></translation>
+        <translation language="uk"><![CDATA[Вхід]]></translation>
+        <translation language="sv"><![CDATA[ingångar]]></translation>
+        <translation language="el"><![CDATA[Είσοδοι]]></translation>
+      </item>
+      <item type="label" name="ExitRate">
+        <translation language="nl"><![CDATA[uitstappercentage]]></translation>
+        <translation language="en"><![CDATA[exit rate]]></translation>
+        <translation language="it"><![CDATA[tasso di uscita]]></translation>
+        <translation language="ru"><![CDATA[Статистика выхода]]></translation>
+        <translation language="zh"><![CDATA[离开率]]></translation>
+        <translation language="hu"><![CDATA[exit rate]]></translation>
+        <translation language="fr"><![CDATA[taux de sortie]]></translation>
+        <translation language="de"><![CDATA[Ausstiegsrate]]></translation>
+        <translation language="es"><![CDATA[promedio de salida]]></translation>
+        <translation language="uk"><![CDATA[Статистика виходів]]></translation>
+        <translation language="sv"><![CDATA[avsluts nivå]]></translation>
+        <translation language="el"><![CDATA[Ρυθμός εξόδου]]></translation>
+      </item>
+      <item type="label" name="Exits">
+        <translation language="nl"><![CDATA[uitstappunten]]></translation>
+        <translation language="en"><![CDATA[exits]]></translation>
+        <translation language="it"><![CDATA[uscite]]></translation>
+        <translation language="ru"><![CDATA[Выходы]]></translation>
+        <translation language="zh"><![CDATA[离开]]></translation>
+        <translation language="hu"><![CDATA[exits]]></translation>
+        <translation language="fr"><![CDATA[sorties]]></translation>
+        <translation language="de"><![CDATA[Ausstiegsseiten]]></translation>
+        <translation language="es"><![CDATA[salidas]]></translation>
+        <translation language="uk"><![CDATA[Виходи]]></translation>
+        <translation language="sv"><![CDATA[avslut]]></translation>
+        <translation language="el"><![CDATA[Έξοδοι]]></translation>
+      </item>
+      <item type="label" name="GetLiveData">
+        <translation language="nl"><![CDATA[haal live gegevens op]]></translation>
+        <translation language="en"><![CDATA[collect live data]]></translation>
+        <translation language="it"><![CDATA[prendi dati dal vivo]]></translation>
+        <translation language="ru"><![CDATA[Сбор данных в реальном времени]]></translation>
+        <translation language="zh"><![CDATA[收集实时数据]]></translation>
+        <translation language="hu"><![CDATA[collect live data]]></translation>
+        <translation language="fr"><![CDATA[collecter des données en temps réel]]></translation>
+        <translation language="de"><![CDATA[sammle Live-Daten]]></translation>
+        <translation language="es"><![CDATA[recoger datos en tiempo real]]></translation>
+        <translation language="uk"><![CDATA[Збір даних у реальному часі]]></translation>
+        <translation language="sv"><![CDATA[hämta live data]]></translation>
+        <translation language="lt"><![CDATA[rinkti online duomenis]]></translation>
+        <translation language="el"><![CDATA[Συλλογή ενεργών(live) δεδομένων]]></translation>
+      </item>
+      <item type="label" name="GoogleAnalyticsLink">
+        <translation language="nl"><![CDATA[koppeling met Google Analytics]]></translation>
+        <translation language="en"><![CDATA[link to Google Analytics]]></translation>
+        <translation language="it"><![CDATA[collegamento a Google Analytics]]></translation>
+        <translation language="ru"><![CDATA[Соединение с Google Analytics]]></translation>
+        <translation language="zh"><![CDATA[连接到Google Analytics]]></translation>
+        <translation language="hu"><![CDATA[összekötés Google Analytics-szel]]></translation>
+        <translation language="fr"><![CDATA[lien Google Analytics]]></translation>
+        <translation language="de"><![CDATA[Link zu Google-Analytics]]></translation>
+        <translation language="es"><![CDATA[enlace a Google Analytics]]></translation>
+        <translation language="uk"><![CDATA[З'єднання з Google Analytics]]></translation>
+        <translation language="sv"><![CDATA[länk till Google Analytics]]></translation>
+        <translation language="lt"><![CDATA[nurodo į Google Analytics]]></translation>
+        <translation language="el"><![CDATA[Σύνδεση με το Google Analytics]]></translation>
+      </item>
+      <item type="label" name="LinkedAccount">
+        <translation language="nl"><![CDATA[gekoppelde account]]></translation>
+        <translation language="en"><![CDATA[linked account]]></translation>
+        <translation language="it"><![CDATA[account collegato]]></translation>
+        <translation language="ru"><![CDATA[Связанные аккаунты]]></translation>
+        <translation language="zh"><![CDATA[已连接的帐户]]></translation>
+        <translation language="de"><![CDATA[verlinktes Konto]]></translation>
+        <translation language="hu"><![CDATA[összekötött fiók]]></translation>
+        <translation language="fr"><![CDATA[compte lié]]></translation>
+        <translation language="es"><![CDATA[cuenta vinculada]]></translation>
+        <translation language="uk"><![CDATA[Зв'язані аккаунти]]></translation>
+        <translation language="sv"><![CDATA[länkat konto]]></translation>
+        <translation language="el"><![CDATA[Συνδεδεμένος λογαριασμός]]></translation>
+      </item>
+      <item type="label" name="LinkedProfile">
+        <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
+        <translation language="en"><![CDATA[linked profile]]></translation>
+        <translation language="it"><![CDATA[profilo collegato]]></translation>
+        <translation language="ru"><![CDATA[Связанные профили]]></translation>
+        <translation language="zh"><![CDATA[已连接的档案]]></translation>
+        <translation language="de"><![CDATA[verlinktes Profil]]></translation>
+        <translation language="hu"><![CDATA[összekötött profil]]></translation>
+        <translation language="fr"><![CDATA[profil lié]]></translation>
+        <translation language="es"><![CDATA[perfil vinculado]]></translation>
+        <translation language="uk"><![CDATA[Зв'язані профілі]]></translation>
+        <translation language="sv"><![CDATA[länkad profil]]></translation>
+        <translation language="el"><![CDATA[Συνδεδεμένο προφίλ]]></translation>
+      </item>
+      <item type="label" name="LinkThisProfile">
+        <translation language="nl"><![CDATA[koppel dit profiel]]></translation>
+        <translation language="en"><![CDATA[link this profile]]></translation>
+        <translation language="it"><![CDATA[collega questo profilo]]></translation>
+        <translation language="ru"><![CDATA[Связать с профилем]]></translation>
+        <translation language="zh"><![CDATA[连接这个档案]]></translation>
+        <translation language="de"><![CDATA[Profil verlinken]]></translation>
+        <translation language="hu"><![CDATA[összekötés ezzel a profillal]]></translation>
+        <translation language="fr"><![CDATA[lier ce profile]]></translation>
+        <translation language="es"><![CDATA[enlazar este perfil]]></translation>
+        <translation language="uk"><![CDATA[Зв'язати з профілем]]></translation>
+        <translation language="sv"><![CDATA[länka detta profil]]></translation>
+        <translation language="el"><![CDATA[Σύνδεσε αυτό το προφίλ]]></translation>
+      </item>
+      <item type="label" name="NewVisitsPercentage">
+        <translation language="nl"><![CDATA[nieuw bezoekpercentage]]></translation>
+        <translation language="en"><![CDATA[new visits percentage]]></translation>
+        <translation language="it"><![CDATA[percentuale di nuove visite]]></translation>
+        <translation language="ru"><![CDATA[Новые посещения %]]></translation>
+        <translation language="zh"><![CDATA[新访问次数百分比]]></translation>
+        <translation language="hu"><![CDATA[új látogatók aránya]]></translation>
+        <translation language="fr"><![CDATA[pourcentage de nouvelles visites]]></translation>
+        <translation language="de"><![CDATA[Anteil neuer Besucher]]></translation>
+        <translation language="es"><![CDATA[porcertaje de nuevas visitas]]></translation>
+        <translation language="uk"><![CDATA[Нові відвідування %]]></translation>
+        <translation language="sv"><![CDATA[ny besökare procent]]></translation>
+        <translation language="el"><![CDATA[Ποσοστό νέων επισκέψεων]]></translation>
+      </item>
+      <item type="label" name="PagesPerVisit">
+        <translation language="nl"><![CDATA[pagina's per bezoek]]></translation>
+        <translation language="en"><![CDATA[pages per visit]]></translation>
+        <translation language="it"><![CDATA[pagine per visita]]></translation>
+        <translation language="ru"><![CDATA[Страниц за посещение]]></translation>
+        <translation language="zh"><![CDATA[每次访问页数]]></translation>
+        <translation language="de"><![CDATA[Seiten pro Besuch]]></translation>
+        <translation language="hu"><![CDATA[oldal per látogatás]]></translation>
+        <translation language="fr"><![CDATA[pages par visite]]></translation>
+        <translation language="es"><![CDATA[páginaes por visita]]></translation>
+        <translation language="uk"><![CDATA[Сторінок за візит]]></translation>
+        <translation language="sv"><![CDATA[sidor per besök]]></translation>
+        <translation language="el"><![CDATA[Σελίδες ανά επίσκεψη]]></translation>
+      </item>
+      <item type="label" name="Pageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagina]]></translation>
+        <translation language="ru"><![CDATA[Просмотров страниц]]></translation>
+        <translation language="zh"><![CDATA[页面访问量]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés]]></translation>
+        <translation language="fr"><![CDATA[vues de page]]></translation>
+        <translation language="es"><![CDATA[vista de páginas]]></translation>
+        <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
+      </item>
+      <item type="label" name="PageviewsByTrafficSources">
+        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
+        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagine per sorgenti di traffico]]></translation>
+        <translation language="ru"><![CDATA[Просмотров за одно посещение]]></translation>
+        <translation language="zh"><![CDATA[每个来源的访问量]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
+        <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
+        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
+        <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
+      </item>
+      <item type="label" name="PercentageOfSiteTotal">
+        <translation language="nl"><![CDATA[percentage van sitetotaal]]></translation>
+        <translation language="en"><![CDATA[percentage of site total]]></translation>
+        <translation language="it"><![CDATA[percentuale totale del sito]]></translation>
+        <translation language="ru"><![CDATA[Всего %]]></translation>
+        <translation language="zh"><![CDATA[网站访问数百分比]]></translation>
+        <translation language="hu"><![CDATA[percentage of site total]]></translation>
+        <translation language="fr"><![CDATA[pourcentage du total du site]]></translation>
+        <translation language="de"><![CDATA[prozentualer Anteil an der kompletten Website]]></translation>
+        <translation language="es"><![CDATA[Porcentaje total del sitio]]></translation>
+        <translation language="uk"><![CDATA[Всього %]]></translation>
+        <translation language="sv"><![CDATA[procent av sajt total]]></translation>
+        <translation language="el"><![CDATA[Επί τοις εκατό στο σύνολο του ιστοχώρου]]></translation>
+      </item>
+      <item type="label" name="PeriodStatistics">
+        <translation language="nl"><![CDATA[periode statistieken]]></translation>
+        <translation language="en"><![CDATA[period statistics]]></translation>
+        <translation language="it"><![CDATA[statistiche del periodo]]></translation>
+        <translation language="ru"><![CDATA[Период статистики]]></translation>
+        <translation language="zh"><![CDATA[时间段统计]]></translation>
+        <translation language="hu"><![CDATA[időszak statisztika]]></translation>
+        <translation language="fr"><![CDATA[statistiques de période]]></translation>
+        <translation language="de"><![CDATA[Zeitraumstatistik]]></translation>
+        <translation language="es"><![CDATA[estadisticas del periodo]]></translation>
+        <translation language="uk"><![CDATA[Період статистики]]></translation>
+        <translation language="sv"><![CDATA[periodstatistik]]></translation>
+        <translation language="el"><![CDATA[Στατιστικά περιόδου]]></translation>
+      </item>
+      <item type="label" name="Referral">
+        <translation language="nl"><![CDATA[verwijzende site]]></translation>
+        <translation language="en"><![CDATA[referring site]]></translation>
+        <translation language="it"><![CDATA[siti referenti]]></translation>
+        <translation language="ru"><![CDATA[Рефферинг сайта]]></translation>
+        <translation language="zh"><![CDATA[其他网站]]></translation>
+        <translation language="de"><![CDATA[verweisende Seite]]></translation>
+        <translation language="hu"><![CDATA[referring site]]></translation>
+        <translation language="fr"><![CDATA[site de référent]]></translation>
+        <translation language="es"><![CDATA[sitio de referencia]]></translation>
+        <translation language="uk"><![CDATA[Сайти що посилаються]]></translation>
+        <translation language="sv"><![CDATA[refererande sajt]]></translation>
+        <translation language="el"><![CDATA[Αναφέρων ιστοχώρος]]></translation>
+      </item>
+      <item type="label" name="SearchEngines">
+        <translation language="nl"><![CDATA[zoekmachines]]></translation>
+        <translation language="en"><![CDATA[search engines]]></translation>
+        <translation language="it"><![CDATA[motori di ricerca]]></translation>
+        <translation language="ru"><![CDATA[Поисковые системы]]></translation>
+        <translation language="zh"><![CDATA[搜索引擎]]></translation>
+        <translation language="de"><![CDATA[Suchmaschinen]]></translation>
+        <translation language="hu"><![CDATA[kereső motorok]]></translation>
+        <translation language="fr"><![CDATA[moteurs de recherche]]></translation>
+        <translation language="es"><![CDATA[motores de busqueda]]></translation>
+        <translation language="uk"><![CDATA[Пошукові запити]]></translation>
+        <translation language="sv"><![CDATA[sökmotorer]]></translation>
+        <translation language="el"><![CDATA[Μηχανές αναζήτησης]]></translation>
+      </item>
+      <item type="label" name="SiteAverage">
+        <translation language="nl"><![CDATA[sitegemidddelde]]></translation>
+        <translation language="en"><![CDATA[site average]]></translation>
+        <translation language="it"><![CDATA[media del sito]]></translation>
+        <translation language="ru"><![CDATA[В среднем]]></translation>
+        <translation language="zh"><![CDATA[来源网站平均值]]></translation>
+        <translation language="de"><![CDATA[Seitendurchschnitt]]></translation>
+        <translation language="hu"><![CDATA[site átlag]]></translation>
+        <translation language="fr"><![CDATA[moyenne du site]]></translation>
+        <translation language="es"><![CDATA[media del sitio]]></translation>
+        <translation language="uk"><![CDATA[В середньому]]></translation>
+        <translation language="sv"><![CDATA[sajt genomsnitts]]></translation>
+        <translation language="el"><![CDATA[Μέσος όρος ιστοχώρου]]></translation>
+      </item>
+      <item type="label" name="TimeOnSite">
+        <translation language="nl"><![CDATA[bezoekduur]]></translation>
+        <translation language="en"><![CDATA[time on site]]></translation>
+        <translation language="it"><![CDATA[tempo sul sito]]></translation>
+        <translation language="ru"><![CDATA[Времени на сайте]]></translation>
+        <translation language="zh"><![CDATA[网站停留时间]]></translation>
+        <translation language="de"><![CDATA[Besuchsdauer]]></translation>
+        <translation language="hu"><![CDATA[time on site]]></translation>
+        <translation language="fr"><![CDATA[temps passé sur le site]]></translation>
+        <translation language="es"><![CDATA[tiempo en el sitio]]></translation>
+        <translation language="uk"><![CDATA[Часу на сайті]]></translation>
+        <translation language="sv"><![CDATA[tid på sajt]]></translation>
+        <translation language="el"><![CDATA[Χρόνος μέσα στον ιστοχώρο]]></translation>
+      </item>
+      <item type="label" name="TopContent">
+        <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
+        <translation language="en"><![CDATA[top content]]></translation>
+        <translation language="it"><![CDATA[miglior contenuto]]></translation>
+        <translation language="ru"><![CDATA[Топ контента]]></translation>
+        <translation language="zh"><![CDATA[最多访问内容]]></translation>
+        <translation language="de"><![CDATA[wichtigster Inhalt]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb tartalom]]></translation>
+        <translation language="fr"><![CDATA[meilleur contenu]]></translation>
+        <translation language="es"><![CDATA[top contenido]]></translation>
+        <translation language="uk"><![CDATA[Топ контенту]]></translation>
+        <translation language="sv"><![CDATA[topp innehåll]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίο περιεχόμενο]]></translation>
+      </item>
+      <item type="label" name="TopExitPages">
+        <translation language="nl"><![CDATA[belangrijkste uitstappagina's]]></translation>
+        <translation language="en"><![CDATA[top exit pages]]></translation>
+        <translation language="it"><![CDATA[migliori pagine di uscita]]></translation>
+        <translation language="ru"><![CDATA[Топ выхода]]></translation>
+        <translation language="zh"><![CDATA[最易离开页面]]></translation>
+        <translation language="de"><![CDATA[häufigste Ausstiegsseiten]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb kilépő oldal]]></translation>
+        <translation language="fr"><![CDATA[meilleures pages de sortie]]></translation>
+        <translation language="es"><![CDATA[top páginas de salidas]]></translation>
+        <translation language="uk"><![CDATA[Топ сторінок виходу]]></translation>
+        <translation language="sv"><![CDATA[topp avslut sidor]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίες σελίδες εξόδου]]></translation>
+      </item>
+      <item type="label" name="TopKeywords">
+        <translation language="nl"><![CDATA[belangrijkste zoekwoorden]]></translation>
+        <translation language="en"><![CDATA[top keywords]]></translation>
+        <translation language="it"><![CDATA[migliori keyword]]></translation>
+        <translation language="ru"><![CDATA[Топ ключевых слов]]></translation>
+        <translation language="zh"><![CDATA[最多访问关键词]]></translation>
+        <translation language="de"><![CDATA[wichtigste Keywords]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb keresőszavak]]></translation>
+        <translation language="fr"><![CDATA[meilleurs mots-clefs]]></translation>
+        <translation language="es"><![CDATA[top palabras clave]]></translation>
+        <translation language="uk"><![CDATA[Топ ключових слів]]></translation>
+        <translation language="sv"><![CDATA[topp nyckelord]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίες λέξεις κλειδιά]]></translation>
+      </item>
+      <item type="label" name="TopLandingPages">
+        <translation language="nl"><![CDATA[belangrijkste landingspagina's]]></translation>
+        <translation language="en"><![CDATA[top landing pages]]></translation>
+        <translation language="it"><![CDATA[migliori landing page]]></translation>
+        <translation language="ru"><![CDATA[Топ целевых страниц]]></translation>
+        <translation language="zh"><![CDATA[最多着陆页面]]></translation>
+        <translation language="de"><![CDATA[häufigste Eintrittsseiten]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb céloldalak]]></translation>
+        <translation language="fr"><![CDATA[meilleures pages d'aterrissage]]></translation>
+        <translation language="es"><![CDATA[top páginas de destino]]></translation>
+        <translation language="uk"><![CDATA[Топ цільових сторінок]]></translation>
+        <translation language="sv"><![CDATA[topp landingsidor]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίες σελίδες προσγείωσης]]></translation>
+      </item>
+      <item type="label" name="TopPages">
+        <translation language="nl"><![CDATA[belangrijkste pagina's]]></translation>
+        <translation language="en"><![CDATA[top pages]]></translation>
+        <translation language="it"><![CDATA[migliori pagine]]></translation>
+        <translation language="ru"><![CDATA[Топ страниц]]></translation>
+        <translation language="zh"><![CDATA[最多访问页面]]></translation>
+        <translation language="de"><![CDATA[beste Seiten]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb oldal]]></translation>
+        <translation language="fr"><![CDATA[meilleures pages]]></translation>
+        <translation language="es"><![CDATA[top páginas]]></translation>
+        <translation language="uk"><![CDATA[Топ сторінок]]></translation>
+        <translation language="sv"><![CDATA[topp sidor]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίες σελίδες]]></translation>
+      </item>
+      <item type="label" name="TopReferrers">
+        <translation language="nl"><![CDATA[belangrijkste verwijzende sites]]></translation>
+        <translation language="en"><![CDATA[top referrers]]></translation>
+        <translation language="it"><![CDATA[migliori referenti]]></translation>
+        <translation language="ru"><![CDATA[Топ рефереров]]></translation>
+        <translation language="zh"><![CDATA[最多被推荐]]></translation>
+        <translation language="de"><![CDATA[beste verweisende Seiten]]></translation>
+        <translation language="hu"><![CDATA[legnépszerűbb referrerek]]></translation>
+        <translation language="fr"><![CDATA[meilleurs référents]]></translation>
+        <translation language="es"><![CDATA[top referentes]]></translation>
+        <translation language="uk"><![CDATA[Топ реферерів]]></translation>
+        <translation language="sv"><![CDATA[topp refererande]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίοι αναφορείς]]></translation>
+      </item>
+      <item type="label" name="TrackingType">
+        <translation language="en"><![CDATA[tracking type]]></translation>
+        <translation language="nl"><![CDATA[type tracking]]></translation>
+        <translation language="el"><![CDATA[Τύπος ιχνηλάτησης]]></translation>
+        <translation language="zh"><![CDATA[追踪类型]]></translation>
+        <translation language="de"><![CDATA[Tracking-Art]]></translation>
+      </item>
+      <item type="label" name="UniquePageviews">
+        <translation language="nl"><![CDATA[unieke paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[unique pageviews]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagina uniche]]></translation>
+        <translation language="ru"><![CDATA[Уникальных просмотров]]></translation>
+        <translation language="zh"><![CDATA[唯一身份访问者]]></translation>
+        <translation language="hu"><![CDATA[egyéni oldalmegtekintés]]></translation>
+        <translation language="fr"><![CDATA[vues de pages uniques]]></translation>
+        <translation language="de"><![CDATA[einzigartige Seitenaufrufe]]></translation>
+        <translation language="es"><![CDATA[bistas únicas]]></translation>
+        <translation language="uk"><![CDATA[Унікальних переглядів]]></translation>
+        <translation language="sv"><![CDATA[unika sidvisningar]]></translation>
+        <translation language="el"><![CDATA[Μοναδικές εμφανίσεις σελίδων]]></translation>
+      </item>
+      <item type="label" name="Views">
+        <translation language="nl"><![CDATA[weergaves]]></translation>
+        <translation language="en"><![CDATA[views]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni]]></translation>
+        <translation language="ru"><![CDATA[Просмотров]]></translation>
+        <translation language="zh"><![CDATA[视图]]></translation>
+        <translation language="de"><![CDATA[Aufrufe]]></translation>
+        <translation language="hu"><![CDATA[megtekintések]]></translation>
+        <translation language="fr"><![CDATA[vues]]></translation>
+        <translation language="es"><![CDATA[vistas]]></translation>
+        <translation language="uk"><![CDATA[Переглядів]]></translation>
+        <translation language="sv"><![CDATA[visningar]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις]]></translation>
+      </item>
+      <item type="label" name="ViewStatistics">
+        <translation language="nl"><![CDATA[bekijk de statistieken]]></translation>
+        <translation language="en"><![CDATA[view statistics]]></translation>
+        <translation language="it"><![CDATA[vedi statistiche]]></translation>
+        <translation language="ru"><![CDATA[Просмотр статистики]]></translation>
+        <translation language="zh"><![CDATA[查看统计]]></translation>
+        <translation language="de"><![CDATA[Statistik ansehen]]></translation>
+        <translation language="hu"><![CDATA[statisztikák mutatása]]></translation>
+        <translation language="fr"><![CDATA[voir les statistiques]]></translation>
+        <translation language="es"><![CDATA[ver estadísticas]]></translation>
+        <translation language="uk"><![CDATA[Перегляд статистики]]></translation>
+        <translation language="sv"><![CDATA[visa statistik]]></translation>
+        <translation language="el"><![CDATA[Στατιστικά εμφανίσεων]]></translation>
+      </item>
+      <item type="label" name="Visit">
+        <translation language="sv"><![CDATA[besök]]></translation>
+        <translation language="ru"><![CDATA[посетить]]></translation>
+      </item>
+      <item type="label" name="Visits">
+        <translation language="nl"><![CDATA[bezoeken]]></translation>
+        <translation language="en"><![CDATA[visits]]></translation>
+        <translation language="it"><![CDATA[visite]]></translation>
+        <translation language="ru"><![CDATA[Посещений]]></translation>
+        <translation language="zh"><![CDATA[访客]]></translation>
+        <translation language="de"><![CDATA[Besuche]]></translation>
+        <translation language="hu"><![CDATA[látogatások]]></translation>
+        <translation language="fr"><![CDATA[visites]]></translation>
+        <translation language="es"><![CDATA[visitas]]></translation>
+        <translation language="uk"><![CDATA[Відвідувань]]></translation>
+        <translation language="el"><![CDATA[Επισκέψεις]]></translation>
+      </item>
+      <item type="error" name="AnalyseNoSessionToken">
+        <translation language="nl"><![CDATA[Er is nog geen Google analytics account gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[There is no link with a Google analytics account yet. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="it"><![CDATA[Non c'è ancora nessun collegamento ad un account Google Analytics. <a href="%1$s">Aggiungilo</a>]]></translation>
+        <translation language="ru"><![CDATA[Нет соединения с аккаунтом Google Analytics. <a href="%1$s">Настроить</a>]]></translation>
+        <translation language="zh"><![CDATA[尚未连接到任何Google analytics帐户 <a href="%1$s">设置</a>]]></translation>
+        <translation language="hu"><![CDATA[Nincs még összekapcsolva a Google Analytics fiókkal. <a href="%1$s">Beállítás</a>]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un compte Google. <a href="%1$s">Configurer</a>]]></translation>
+        <translation language="de"><![CDATA[Es wurde noch keine Verbindung zu einem Google-Analytics-Konto hergestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ninguna cuenta Google analytics vinculada. <a href="%1$s">Configurar</a>]]></translation>
+        <translation language="lt"><![CDATA[Nieko nesusieta su Google Analytics paskyra, <a href="%1$s">susieti</a>]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen länk med ett Google analytics konto än. <en href="%1$s">Konfigurera</en>]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη σύνδεση με κάποιον λογαριασμό στο Google analytics. <a href="%1$s">Ρύθμιση</a>]]></translation>
+      </item>
+      <item type="error" name="AnalyseNoTableId">
+        <translation language="nl"><![CDATA[Er is nog geen analytics website profiel gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[There is no link with an analytics website profile yet. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="it"><![CDATA[Non c'è ancora nessun collegamento ad un profilo Analytics. <a href="%1$s">Aggiungilo</a>]]></translation>
+        <translation language="ru"><![CDATA[Нет соединения с Аналитикой сайта. <a href="%1$s">Настроить</a>]]></translation>
+        <translation language="zh"><![CDATA[尚未连接到任何统计分析网站档案。 <a href="%1$s">设置</a>]]></translation>
+        <translation language="hu"><![CDATA[Nincs még összekapcsolva az Analytics weboldal profillal. <a href="%1$s">Beállítás</a>]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un site de profil Analytics <a href="%1$s">Configurer</a>]]></translation>
+        <translation language="de"><![CDATA[Es wurde noch keine Verbindung zu einem Analytics-Website-Profil hergestellt. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ningun perfil de sitio web analytics vinculado. <a href="%1$s">Configurar</a>]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen länk med ett analytics webbplats profil än. <en href="%1$s">Konfigurera</en>]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη σύνδεση με κάποιο προφίλ ιστοχώρου στο Google analytics. <a href="%1$s">Ρύθμιση</a>]]></translation>
+      </item>
+      <item type="error" name="InvalidApiKey">
+        <translation language="nl"><![CDATA[Dit is een ongeldige API key.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid API-key]]></translation>
+        <translation language="el"><![CDATA[Το κλειδί API δεν είναι έγκυρο]]></translation>
+        <translation language="zh"><![CDATA[这是一个无效的API密钥]]></translation>
+        <translation language="de"><![CDATA[Dies ist kein gültiger API-Key]]></translation>
+      </item>
+      <item type="error" name="NoSessionToken">
+        <translation language="nl"><![CDATA[Er is nog geen Google account gekoppeld.]]></translation>
+        <translation language="en"><![CDATA[There is no link with a Google analytics account yet.]]></translation>
+        <translation language="it"><![CDATA[Non c'è ancora nessun collegamento ad un account Google Analytics. <a href="%1$s">Aggiungilo</a>]]></translation>
+        <translation language="ru"><![CDATA[Нет соединения с аккаунтом Google Analytics.]]></translation>
+        <translation language="zh"><![CDATA[尚未连接到任何Google analytics帐户。]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de lien avec un compte Google Analytics]]></translation>
+        <translation language="hu"><![CDATA[Nincs még összekapcsolva a Google Analytics fiókkal.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Verbindung zu einem Google-Analytics Konto.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ninguna cuenta Google analytics vinculada.]]></translation>
+        <translation language="lt"><![CDATA[Nieko nesusieta su Google Analytics paskyra.]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen länk med ett Google analytics konto än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη σύνδεση με κάποιον λογαριασμό στο Google Analytics.]]></translation>
+      </item>
+      <item type="error" name="NoTableId">
+        <translation language="nl"><![CDATA[Er is nog geen website profiel gekoppeld.]]></translation>
+        <translation language="en"><![CDATA[There is no link with an analytics website profile yet.]]></translation>
+        <translation language="it"><![CDATA[Non c'è ancora nessun collegamento ad un profilo Analytics.]]></translation>
+        <translation language="ru"><![CDATA[Нет соединения с Аналитикой сайта.]]></translation>
+        <translation language="zh"><![CDATA[尚未连接到任何统计分析网站档案。]]></translation>
+        <translation language="fr"><![CDATA[Aucun site d'analyse n'est lié pour l'instant.]]></translation>
+        <translation language="hu"><![CDATA[Nincs még összekapcsolva az Analytics weboldal profillal.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Verbindung zu einem Analytics-Website-Profil.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ningun perfil de sitio web analytics vinculado.]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen länk med ett analytics webbplats profil än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη σύνδεση με κάποιο προφίλ ιστοχώρου στο Google Analytics.]]></translation>
+      </item>
+      <item type="message" name="AnalyticsDelete">
+        <translation language="nl"><![CDATA[De items zijn verwijderd]]></translation>
+        <translation language="en"><![CDATA[Items are deleted]]></translation>
+        <translation language="ru"><![CDATA[Данные будут удалены]]></translation>
+        <translation language="zh"><![CDATA[项目已经被删除]]></translation>
+        <translation language="de"><![CDATA[Items sind gelöscht]]></translation>
+        <translation language="uk"><![CDATA[Об'єкти видалено]]></translation>
+        <translation language="el"><![CDATA[Τα αντικείμενα διεγράφησαν]]></translation>
+      </item>
+      <item type="message" name="AuthenticateAtGoogle">
+        <translation language="nl"><![CDATA[Koppel uw Google account]]></translation>
+        <translation language="en"><![CDATA[Link your Google account]]></translation>
+        <translation language="it"><![CDATA[Collega il tuo account Google]]></translation>
+        <translation language="ru"><![CDATA[Подключение к профилю Google.]]></translation>
+        <translation language="zh"><![CDATA[链接你的Google帐户]]></translation>
+        <translation language="de"><![CDATA[Verbinde dein Google-Konto]]></translation>
+        <translation language="hu"><![CDATA[Összeköttetés a Google fiókoddal.]]></translation>
+        <translation language="fr"><![CDATA[lier votre compte Google]]></translation>
+        <translation language="es"><![CDATA[Vincular tu cuenta Google]]></translation>
+        <translation language="uk"><![CDATA[Підключення до профіля Google]]></translation>
+        <translation language="sv"><![CDATA[Länk ditt Google konto]]></translation>
+        <translation language="el"><![CDATA[Σύνδεσε το λογαριασμό σου στο Google]]></translation>
+      </item>
+      <item type="message" name="ChooseWebsiteProfile">
+        <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
+        <translation language="en"><![CDATA[Choose an Analytics website profile...]]></translation>
+        <translation language="it"><![CDATA[Scegli un profilo Analytics]]></translation>
+        <translation language="ru"><![CDATA[Выберите профиль Аналитики.]]></translation>
+        <translation language="zh"><![CDATA[选择一个分析网站档案...]]></translation>
+        <translation language="hu"><![CDATA[Analytics weboldal profil választás...]]></translation>
+        <translation language="fr"><![CDATA[Choisissez un profil de site Analytics...]]></translation>
+        <translation language="de"><![CDATA[Wähle ein Analytics-Website-Profil ...]]></translation>
+        <translation language="es"><![CDATA[Elegir un perfil de sitio web Analytics...]]></translation>
+        <translation language="uk"><![CDATA[Виберіть профіль G.Analitycs]]></translation>
+        <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
+        <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteLinkAccount">
+        <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met de account "%1$s" wil verwijderen?<br />Alle opgeslagen statistieken worden dan verwijderd uit het CMS.]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to remove the link with the account "%1$s"?<br />All saves statistics will be deleted from the CMS.]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler rimuovere il collegamento con l'account "%1$s"?<br />Tutte le statistiche salvate saranno rimosse dal CMS.]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите удалить "%1$s"?<br />Вся статистика будет удалена.]]></translation>
+        <translation language="zh"><![CDATA[你确定要移除与帐户“%1$s”的连接吗？<br />所有保存的统计数据将从CMS中删除。]]></translation>
+        <translation language="hu"><![CDATA[Biztos meg akarod szüntetni az összekötést a "%1$s" fiókoddal?<br />Minden mentett statisztika törlődni fog a CMS-ből.]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer le lien avec le compte "%1$s"?<br /> Toute les statistiques sauvegardées seront effacés du CMS Fork.]]></translation>
+        <translation language="de"><![CDATA[Bist du sicher, dass du die Verbindung zum Konto "%1$s" wirklich entfernen möchtest? <br /> Alle gespeicherten Statistiken werden dadurch bei Fork gelöscht werden.]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el vinculo con la cuenta "%1$s"?<br />All saves statistics will be deleted from the CMS.]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill till ta bort länken med the konto "%1$s"?<br />All sparad statistik kommer att tas bort från CMS.]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να αφαιρέσετε το σύνδεσμο με το λογαριασμό "%1$s";<br />Όλα τα αποθηκευμένα στατιστικά θα διαγραφούν από το CMS.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteLinkGoogleAccount">
+        <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met uw Google account wilt verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to remove the link with your Google account?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler rimuovere il collegamento con il tuo account Google?]]></translation>
+        <translation language="ru"><![CDATA[Удалить соединение с профилем Google?]]></translation>
+        <translation language="zh"><![CDATA[你确定要移除与你Google帐户的连接吗？]]></translation>
+        <translation language="hu"><![CDATA[Biztos meg akarod szüntetni az összekötést a Google fiókoddal?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir supprimer le lien avec votre compte Google?]]></translation>
+        <translation language="de"><![CDATA[Willst du die Verbdindung zu deinem Google-Konto wirklich trennen?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de eliminar el vinculo con tu cuenta Google?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill till ta bort länken med ditt Google konto?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να αφαιρέσετε το σύνδεσμο με το λογαριασμό σας στο Google;]]></translation>
+      </item>
+      <item type="message" name="GetDataError">
+        <translation language="nl"><![CDATA[Er liep iets mis bij het ophalen van de gegevens via Google Analytics. Onze excuses voor het ongemak. Probeer het later nog eens.]]></translation>
+        <translation language="en"><![CDATA[Something went wrong while collecting the data from Google Analytics. Our appologies for the inconvenience. Please try again later.]]></translation>
+        <translation language="it"><![CDATA[Qualcosa è andato storto nel prelevare i dati da Google Analytics. Ci scusiamo per l'inconveniente. Per favore riprova più tardi.]]></translation>
+        <translation language="ru"><![CDATA[Ошибка при обновлении информации с Google Analytics. Попробуйте позже.]]></translation>
+        <translation language="zh"><![CDATA[收集Google Analytics数据时出错，对此我们表示抱歉，请稍候重试。]]></translation>
+        <translation language="hu"><![CDATA[Valami hiba lépett fel a Google Analytics adatok összegyűjtése közben. Elnézést a kellemetlenségért. Kérlek próbálkozz később.]]></translation>
+        <translation language="de"><![CDATA[Beim Abrufen der Daten von Google-Analytics ist etwas schief gelaufen. Wir entschuldigen uns für die Umstände. Bitte versuch es später noch einmal.]]></translation>
+        <translation language="fr"><![CDATA[Une erreur est survenue pendant la tentative de récupération de données de Google Analytics. Nous nous excusons pour le désagrément. Veuillez réessayer plus tard.]]></translation>
+        <translation language="es"><![CDATA[Algo salió mal mientras se recogian los datos de Google Analytics. Disculpe las molestias. Por favor intentalo de nuevo.]]></translation>
+        <translation language="sv"><![CDATA[Någonting gick fel vid hämtning av data från Google Analytics. Våra ursäkter för problemet. Vänligen försök igen senare.]]></translation>
+        <translation language="el"><![CDATA[Συνέβη κάποιο σφάλμα κατά τη συλλογή δεδομένων από το Google Analytics. Λυπούμαστε γιά την ενόχληση. Παρακαλώ προσπαθήστε πάλι αργότερα.]]></translation>
+      </item>
+      <item type="message" name="HelpTrackingType">
+        <translation language="en"><![CDATA[If you choose to support Display Advertising, for example to enable Remarketing with Google Analytics, you'll need the doubleclick tracking url.]]></translation>
+        <translation language="zh"><![CDATA[如果你选择支持显示广告，例如启用Google Analytics的Remarketing, 你需要双击追踪的url。]]></translation>
+        <translation language="de"><![CDATA[Wenn du Display Advertising aktivieren möchtest, zum Beispiel um Remarketing mit Google Analytics zu ermöglichen, dann musst du die Tracking-URL Doppelklicken.]]></translation>
+        <translation language="el"><![CDATA[Αν επιθυμείτε να υποστηρίξετε την Εμφάνιση Διαφημίσεων, γιά παράδειγμα γιά να ενεργοποιήσετε το Remarketing με το Google Analytics, πρέπει να κάνετε διπλό κλικ στη διεύθυνση URL ελέγχου.]]></translation>
+      </item>
+      <item type="message" name="LinkGoogleAccount">
+        <translation language="nl"><![CDATA[Koppel uw Google account aan Fork CMS. <br /><br />Een API key kan je verkrijgen op <a href="https://code.google.com/apis/console/">Google API's console</a>.<br />Activeer de "Google Analytics" service onder "Services". <br />Je kan de API key vinden onder "API access".]]></translation>
+        <translation language="en"><![CDATA[Link your Google account to Fork CMS. <br /><br />An API key can be requested on <a href="https://code.google.com/apis/console/">Google API's console</a>.<br />Activate the "Google Analytics" service under "Services". <br />The API key can be found under "API access".]]></translation>
+        <translation language="it"><![CDATA[Collega il tuo account Google a Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="ru"><![CDATA[Подключите профиль Google.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="zh"><![CDATA[连接你的谷歌帐户到Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="hu"><![CDATA[Google fiók összekötése a Fork CMS-ből.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="fr"><![CDATA[Lier votre compte Google à Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="de"><![CDATA[Verbinde dein Google-Konto mit Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="es"><![CDATA[Vincula tu cuenta Google a Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="sv"><![CDATA[Länka ditt Google konto till Fork CMS.<br /><br /><a href="https://code.google.com/apis/console/">Request API key on Google API's console</a>.]]></translation>
+        <translation language="el"><![CDATA[Συνδέστε το λογαρισμό σας στο Google με το Fork CMS. <br /><br />Μπορείτε να αιτηθείτε ένα κλειδί API στο <a href="https://code.google.com/apis/console/">κονσόλα Google API</a>.<br />Ενεργοποιήστε την υπηρεσία "Google Analytics" κάτω από το "Services". <br />Το κλειδί API βρίσκετε κάτω από "API access".]]></translation>
+      </item>
+      <item type="message" name="LinkWebsiteProfile">
+        <translation language="nl"><![CDATA[Koppel een Google Analytics website profiel aan Fork CMS.]]></translation>
+        <translation language="en"><![CDATA[Link your Google Analytics website profile to Fork CMS.]]></translation>
+        <translation language="it"><![CDATA[Collega il profilo Google Analytics del tuo sito web a Fork CMS.]]></translation>
+        <translation language="ru"><![CDATA[Подключите Google Analytics.]]></translation>
+        <translation language="zh"><![CDATA[连接你的Google Analytics网站档案到Fork CMS。]]></translation>
+        <translation language="hu"><![CDATA[Google Analytics weboldal profil összekötése Fork CMS-ből.]]></translation>
+        <translation language="fr"><![CDATA[Lier votre profil Google Analytics à Fork CMS.]]></translation>
+        <translation language="de"><![CDATA[Verbinde dein Google-Analytics Website-Profil mit Fork CMS.]]></translation>
+        <translation language="es"><![CDATA[Vincula tu perfil de web Google Analytics a Fork CMS.]]></translation>
+        <translation language="sv"><![CDATA[Länka ditt Google Analytics webbplats profil till Fork CMS.]]></translation>
+        <translation language="el"><![CDATA[Σύνδεση του προφίλ του ιστοχώρου σας στο Google Analytics με το Fork CMS.]]></translation>
+      </item>
+      <item type="message" name="LoadingData">
+        <translation language="nl"><![CDATA[Fork haalt momenteel de gegevens binnen via Google Analytics.]]></translation>
+        <translation language="en"><![CDATA[Fork is collecting the data from Google Analytics.]]></translation>
+        <translation language="it"><![CDATA[Fork sta prelevando i dati da Google Analytics.]]></translation>
+        <translation language="ru"><![CDATA[Загрузка информации с Google Analytics.]]></translation>
+        <translation language="zh"><![CDATA[Fork正在从Google Analytics收集数据。]]></translation>
+        <translation language="hu"><![CDATA[Fork gyűjti az adatokat a Google Analytics-ből.]]></translation>
+        <translation language="de"><![CDATA[Fork ruft die Daten von Google-Analytics ab.]]></translation>
+        <translation language="fr"><![CDATA[Fork collecte des données de Google Analytics.]]></translation>
+        <translation language="es"><![CDATA[Fork está recogiendo los datos de Google Analytics.]]></translation>
+        <translation language="sv"><![CDATA[Fork hämtar data från Google Analytics.]]></translation>
+        <translation language="el"><![CDATA[Το Fork συλλέγει δεδομένα από το Google Analytics.]]></translation>
+      </item>
+      <item type="message" name="NoAccounts">
+        <translation language="nl"><![CDATA[Er hangen geen website profielen aan deze Google account. Meld je af bij Google en probeer het met een andere account.]]></translation>
+        <translation language="en"><![CDATA[There are no website profiles linked to this Google account. Log off at Google and try with a different account.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono profili di siti web collegati a questo account Google. Disconnettiti da Google e prova con un altro account.]]></translation>
+        <translation language="ru"><![CDATA[Нет профилей, связанных с аккаунтом Google. Выйдите из Google и попробуйте другой аккаунт.]]></translation>
+        <translation language="zh"><![CDATA[尚无任何网站档案连接到这个Google帐户。请登出Google并尝试另一个帐户。]]></translation>
+        <translation language="hu"><![CDATA[Nincs weboldal profil összekötve a Google fiókoddal. Lépj ki a Googleból, majd próbáld egy másik fiókkal.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas de profils de site liés à ce compte Google. Déconnectez-vous de Google et essayer avec un compte différent.]]></translation>
+        <translation language="de"><![CDATA[Mit diesem Google-Konto sind keine Website-Profile verbunden. Melde dich bei Google ab und versuche es mit einem anderen Konto.]]></translation>
+        <translation language="es"><![CDATA[No hay ningún perfil de web vinculado a esta cuenta Google. Desconecta de Google e intenta con una cuenta diferente.]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen webbplats profil länkat till detta Google konto. Logga ut från Google och försök med ett annat konto.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει κανένα προφίλ στον ιστοχώρο που να συνδέεται με αυτό τον λογαριασμό Google. Αποσυνδεθήτε από το Google και δοκιμάστε με έναν διαφορετικό λογαριασμό.]]></translation>
+      </item>
+      <item type="message" name="NoContent">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van inhoud.]]></translation>
+        <translation language="en"><![CDATA[There is no content yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora contenuti.]]></translation>
+        <translation language="ru"><![CDATA[Нет контента.]]></translation>
+        <translation language="zh"><![CDATA[尚无内容。]]></translation>
+        <translation language="hu"><![CDATA[Nincs még tartalom.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keinen Inhalt.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de contenu.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay contenido.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inget innehåll än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη περιεχόμενο.]]></translation>
+      </item>
+      <item type="message" name="NoData">
+        <translation language="nl"><![CDATA[Google heeft nog geen Analytics gegevens van uw website. Dit kan enkele dagen duren. Kijk zeker ook na of al uw instellingen bij Google goedstaan.]]></translation>
+        <translation language="en"><![CDATA[Google has no Analytics data yet for your website. This could take a few days. Also check you Google Analytics account to make sure all settings are correct.]]></translation>
+        <translation language="it"><![CDATA[Google non ha ancora dati Analytics per il tuo sito. Ci potrebbero volere alcuni giorni. Controlla anche il tuo account Google Analytics per essere sicuro di averlo configurato correttamente.]]></translation>
+        <translation language="ru"><![CDATA[Google не имеет информации для вашего сайта. Это может занять несколько дней. Так же проверьте правильность настроек подключения.]]></translation>
+        <translation language="zh"><![CDATA[Google分析数据中尚无你的网站，可能需要登上几天。请同时检查你的Google Analytics帐户，确保全部设置已正确。]]></translation>
+        <translation language="hu"><![CDATA[A Google-nak nincs még Analytics adata az oldaladról. Ez eltarthat néhány napig. Azért ellenőrid a Google Analytics fiókodat, hogy minden beállítás jó e.]]></translation>
+        <translation language="de"><![CDATA[Google hat noch keine Analytics-Daten für deine Website. Es könnte ein paar Tage dauern. Bitte überprüf auch deinen Google-Analytics-Konto um sicherzugehen, dass du alle Einstellungen korrekt gesetzt hast.]]></translation>
+        <translation language="fr"><![CDATA[Google n'a pas encore de données Analytics pour votre site. Ceci peut prendre plusieurs jours. Vérifiez également que tous vos paramètres sont corrects dans votre compte Analytics.]]></translation>
+        <translation language="es"><![CDATA[Google aún no tiene datos de Analytics para tu sitio web. Esto podría tomar unos dias. Tambien comprueba tu cuenta Google Analytics para asegurarte de que este configurada correctamente.]]></translation>
+        <translation language="sv"><![CDATA[Google har ingen Analytics data än för din webbplats. Detta kan ta ett par dagar. Kontrollera även att ditt Google Analytics kontos alla inställningar är korrekta.]]></translation>
+        <translation language="el"><![CDATA[Το Google δεν έχει ακόμη δεδομένα Analytics γιά τον ιστοχώρο σας. Η συλλογή μπορεί να καθυστερήσει μερικές ημέρες. Επιπλέον ελέγξατε το λογαριασμό σας στο Google Analytics γιά να βεβαιωθείτε οτι όλες οι ρυθμίσεις είναι ορθές.]]></translation>
+      </item>
+      <item type="message" name="NoExitPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van uitstappagina's]]></translation>
+        <translation language="en"><![CDATA[There are no exit pages yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora pagine di uscita.]]></translation>
+        <translation language="ru"><![CDATA[Нет страниц выхода.]]></translation>
+        <translation language="zh"><![CDATA[尚无离开页面结果。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még kilépő oldalak.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de pages de sortie.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Ausstiegsseiten.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay páginas de salida.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga avslutssidor än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη σελίδες εξόδου.]]></translation>
+      </item>
+      <item type="message" name="NoKeywords">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
+        <translation language="en"><![CDATA[There are no keywords yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora keyword.]]></translation>
+        <translation language="ru"><![CDATA[Нет ключевых слов.]]></translation>
+        <translation language="zh"><![CDATA[尚无关键词结果。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még keresőszavak.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Keywords.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de mots-clefs.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay palabras clave.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga nyckelord än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη λέξεις κλειδιά.]]></translation>
+      </item>
+      <item type="message" name="NoLandingPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van landingpagina's.]]></translation>
+        <translation language="en"><![CDATA[There are no landing pages yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora landing page.]]></translation>
+        <translation language="ru"><![CDATA[Нет целевых страниц.]]></translation>
+        <translation language="zh"><![CDATA[尚无着陆页面结果。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még céloldalak.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de page d'atterrissage.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Einstiegseiten.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay páginas de destino.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga landingssidor än.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη σελίδες προσγείωσης.]]></translation>
+      </item>
+      <item type="message" name="NoPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van pagina's.]]></translation>
+        <translation language="en"><![CDATA[There are no statistics for any pages.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora statistiche per nessuna pagina.]]></translation>
+        <translation language="ru"><![CDATA[Нет статистики для страниц]]></translation>
+        <translation language="zh"><![CDATA[尚无任何页面的统计数据。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még statisztikák az oldalakon.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas de statistiques pour les pages.]]></translation>
+        <translation language="de"><![CDATA[Es gibt keine Statistiken für eine Seite.]]></translation>
+        <translation language="es"><![CDATA[No hay estadisticas para ninguna página.]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen statistik för någon sida.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν στατιστικά στοιχεία γιά καμμιά σελίδα.]]></translation>
+      </item>
+      <item type="message" name="PagesHaveBeenViewedTimes">
+        <translation language="nl"><![CDATA[Pagina's op deze site zijn in totaal %1$s keer bekeken.]]></translation>
+        <translation language="en"><![CDATA[Pages on this site have been viewed %1$s times.]]></translation>
+        <translation language="it"><![CDATA[Le pagine di questo sito sono state viste %1$s volte.]]></translation>
+        <translation language="ru"><![CDATA[Страницы на сайте были просмотрены %1$s раз.]]></translation>
+        <translation language="zh"><![CDATA[这个网站的页面已被查看 %1$s 次.]]></translation>
+        <translation language="hu"><![CDATA[Ezt az oldalt %1$s alkalommal látogatták meg.]]></translation>
+        <translation language="de"><![CDATA[Seiten dieser Website wurden %1$s mal angesehen.]]></translation>
+        <translation language="fr"><![CDATA[Les pages de ce site ont été vues %1$s fois.]]></translation>
+        <translation language="es"><![CDATA[Las páginas de este sitio han sido vistas %1$s veces.]]></translation>
+        <translation language="sv"><![CDATA[Sidor på denna sajt har visats %1$s gånger.]]></translation>
+        <translation language="el"><![CDATA[Οι σελίδες σε αυτόν τον ιστοχώρο έχουν ειδωθεί %1$s φορές.]]></translation>
+      </item>
+      <item type="message" name="RefreshedTrafficSources">
+        <translation language="nl"><![CDATA[De verkeersbronnen werden vernieuwd.]]></translation>
+        <translation language="en"><![CDATA[The traffic sources have been refreshed.]]></translation>
+        <translation language="it"><![CDATA[Le sorgenti di traffico sono state ricaricate.]]></translation>
+        <translation language="ru"><![CDATA[Трафик обновлен.]]></translation>
+        <translation language="zh"><![CDATA[流量来源已刷新。]]></translation>
+        <translation language="hu"><![CDATA[A forgalom források frissültek.]]></translation>
+        <translation language="fr"><![CDATA[Les sources de traffic ont été rafraîchies.]]></translation>
+        <translation language="de"><![CDATA[Die Traffic-Quellen wurden neu geladen.]]></translation>
+        <translation language="es"><![CDATA[Las fuentes de tráfico han sido refrescadas.]]></translation>
+        <translation language="sv"><![CDATA[Trafikkällor har blivit uppdaterade.]]></translation>
+        <translation language="el"><![CDATA[Οι πηγές κυκλοφορίας έχουν ανανεωθεί.]]></translation>
+      </item>
+      <item type="message" name="RemoveAccountLink">
+        <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>
+        <translation language="en"><![CDATA[Remove the link with your Google account]]></translation>
+        <translation language="it"><![CDATA[Rimuovi il collegamento con il tuo account Google]]></translation>
+        <translation language="ru"><![CDATA[Удалить соединением с профилем  Google.]]></translation>
+        <translation language="zh"><![CDATA[移除与Google帐户的连接]]></translation>
+        <translation language="hu"><![CDATA[Kapcsolat törlése a Google fiókoddal]]></translation>
+        <translation language="fr"><![CDATA[Retirer le lien avec votre compte Google]]></translation>
+        <translation language="de"><![CDATA[Entferne die Verbindung zu deinem Google-Konto.]]></translation>
+        <translation language="es"><![CDATA[Eliminar el vinculo con tu cuenta Google]]></translation>
+        <translation language="sv"><![CDATA[Ta bort länken med ditt Google konto]]></translation>
+        <translation language="el"><![CDATA[Αφαιρέσατε το σύνδεσμο προς το λογαριασμό σας στο Google]]></translation>
+      </item>
+      <item type="message" name="RemoveProfileLink">
+        <translation language="nl"><![CDATA[Verwijder de koppeling met uw Analytics website profiel]]></translation>
+        <translation language="en"><![CDATA[Remove the link with your Analytics website profile]]></translation>
+        <translation language="it"><![CDATA[Rimuovi il collegamento con il profilo Analytics del sito.]]></translation>
+        <translation language="ru"><![CDATA[Удалить соединением с профилем Аналитики сайта.]]></translation>
+        <translation language="zh"><![CDATA[移除与统计分析网站档案的连接]]></translation>
+        <translation language="hu"><![CDATA[Kapcsolat törlése az Analytics weboldal profillal]]></translation>
+        <translation language="fr"><![CDATA[Retirer le lien avec votre profil Analytics]]></translation>
+        <translation language="de"><![CDATA[Entferne die Verbindung mit deinem Analytics-Website-Profil.]]></translation>
+        <translation language="es"><![CDATA[Eliminar el vinculo con tu perfil web de Analytics]]></translation>
+        <translation language="sv"><![CDATA[Ta bort länken från ditt Analytics webbplats profil]]></translation>
+        <translation language="el"><![CDATA[Αφαίρεσε τη σύνδεσή σου με το προφίλ στη σελίδα των Analytics]]></translation>
+      </item>
+    </Analytics>
+  </Backend>
+</locale>

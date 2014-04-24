@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Locale>
+      <item type="label" name="Actions">
+        <translation language="nl"><![CDATA[acties]]></translation>
+        <translation language="en"><![CDATA[actions]]></translation>
+        <translation language="it"><![CDATA[azioni]]></translation>
+        <translation language="ru"><![CDATA[Действия]]></translation>
+        <translation language="zh"><![CDATA[行为]]></translation>
+        <translation language="de"><![CDATA[Aktionen]]></translation>
+        <translation language="hu"><![CDATA[használ]]></translation>
+        <translation language="fr"><![CDATA[actions]]></translation>
+        <translation language="es"><![CDATA[acciones]]></translation>
+        <translation language="uk"><![CDATA[Дії]]></translation>
+        <translation language="lt"><![CDATA[veiksmai]]></translation>
+        <translation language="el"><![CDATA[Ενέργειες]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
+        <translation language="en"><![CDATA[add translation]]></translation>
+        <translation language="hu"><![CDATA[új fordítás]]></translation>
+        <translation language="it"><![CDATA[aggiungi traduzione]]></translation>
+        <translation language="ru"><![CDATA[Добавить перевод]]></translation>
+        <translation language="zh"><![CDATA[添加翻译语言]]></translation>
+        <translation language="de"><![CDATA[Übersetzung hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une traduction]]></translation>
+        <translation language="es"><![CDATA[agregar traducción]]></translation>
+        <translation language="uk"><![CDATA[Додати переклад]]></translation>
+        <translation language="lt"><![CDATA[naujas vertimas]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη μετάφρασης]]></translation>
+      </item>
+      <item type="label" name="Copy">
+        <translation language="nl"><![CDATA[kopieer]]></translation>
+        <translation language="en"><![CDATA[copy]]></translation>
+        <translation language="hu"><![CDATA[másol]]></translation>
+        <translation language="it"><![CDATA[copia]]></translation>
+        <translation language="ru"><![CDATA[Копировать]]></translation>
+        <translation language="zh"><![CDATA[复制]]></translation>
+        <translation language="de"><![CDATA[kopieren]]></translation>
+        <translation language="fr"><![CDATA[copier]]></translation>
+        <translation language="es"><![CDATA[copiar]]></translation>
+        <translation language="uk"><![CDATA[Копіювати]]></translation>
+        <translation language="lt"><![CDATA[kopijuoti]]></translation>
+        <translation language="el"><![CDATA[Αντιγραφή]]></translation>
+      </item>
+      <item type="label" name="EN">
+        <translation language="nl"><![CDATA[engels]]></translation>
+        <translation language="en"><![CDATA[english]]></translation>
+        <translation language="hu"><![CDATA[angol]]></translation>
+        <translation language="it"><![CDATA[inglese]]></translation>
+        <translation language="ru"><![CDATA[Английский]]></translation>
+        <translation language="zh"><![CDATA[英语]]></translation>
+        <translation language="de"><![CDATA[englisch]]></translation>
+        <translation language="fr"><![CDATA[anglais]]></translation>
+        <translation language="es"><![CDATA[inglés]]></translation>
+        <translation language="uk"><![CDATA[англійська]]></translation>
+        <translation language="lt"><![CDATA[anglų]]></translation>
+        <translation language="el"><![CDATA[Αγγλικά]]></translation>
+      </item>
+      <item type="label" name="Errors">
+        <translation language="nl"><![CDATA[foutberichten]]></translation>
+        <translation language="en"><![CDATA[errors]]></translation>
+        <translation language="hu"><![CDATA[hiba]]></translation>
+        <translation language="it"><![CDATA[errori]]></translation>
+        <translation language="ru"><![CDATA[Ошибки]]></translation>
+        <translation language="zh"><![CDATA[错误]]></translation>
+        <translation language="de"><![CDATA[Fehler]]></translation>
+        <translation language="fr"><![CDATA[erreurs]]></translation>
+        <translation language="es"><![CDATA[errores]]></translation>
+        <translation language="uk"><![CDATA[Помилки]]></translation>
+        <translation language="el"><![CDATA[Σφάλματα]]></translation>
+      </item>
+      <item type="label" name="FR">
+        <translation language="nl"><![CDATA[frans]]></translation>
+        <translation language="en"><![CDATA[french]]></translation>
+        <translation language="hu"><![CDATA[francia]]></translation>
+        <translation language="it"><![CDATA[francese]]></translation>
+        <translation language="ru"><![CDATA[Французский]]></translation>
+        <translation language="zh"><![CDATA[法语]]></translation>
+        <translation language="de"><![CDATA[französisch]]></translation>
+        <translation language="fr"><![CDATA[français]]></translation>
+        <translation language="es"><![CDATA[francés]]></translation>
+        <translation language="uk"><![CDATA[французька]]></translation>
+        <translation language="lt"><![CDATA[prancūzų]]></translation>
+        <translation language="el"><![CDATA[Γαλλικά]]></translation>
+      </item>
+      <item type="label" name="Labels">
+        <translation language="nl"><![CDATA[labels]]></translation>
+        <translation language="en"><![CDATA[labels]]></translation>
+        <translation language="hu"><![CDATA[címkék]]></translation>
+        <translation language="it"><![CDATA[etichette]]></translation>
+        <translation language="ru"><![CDATA[Заголовки]]></translation>
+        <translation language="zh"><![CDATA[标签]]></translation>
+        <translation language="de"><![CDATA[Labels]]></translation>
+        <translation language="fr"><![CDATA[labels]]></translation>
+        <translation language="es"><![CDATA[etiquetas]]></translation>
+        <translation language="uk"><![CDATA[Заголовки]]></translation>
+        <translation language="el"><![CDATA[Ετικέτες]]></translation>
+      </item>
+      <item type="label" name="Messages">
+        <translation language="nl"><![CDATA[berichten]]></translation>
+        <translation language="en"><![CDATA[messages]]></translation>
+        <translation language="hu"><![CDATA[üzenet]]></translation>
+        <translation language="it"><![CDATA[messaggi]]></translation>
+        <translation language="ru"><![CDATA[Сообщения]]></translation>
+        <translation language="zh"><![CDATA[消息]]></translation>
+        <translation language="de"><![CDATA[Nachrichten]]></translation>
+        <translation language="fr"><![CDATA[messages]]></translation>
+        <translation language="es"><![CDATA[mensajes]]></translation>
+        <translation language="uk"><![CDATA[Повідомлення]]></translation>
+        <translation language="el"><![CDATA[Μηνύματα]]></translation>
+      </item>
+      <item type="label" name="NL">
+        <translation language="nl"><![CDATA[nederlands]]></translation>
+        <translation language="en"><![CDATA[dutch]]></translation>
+        <translation language="hu"><![CDATA[holland]]></translation>
+        <translation language="it"><![CDATA[olandese]]></translation>
+        <translation language="ru"><![CDATA[Голландский]]></translation>
+        <translation language="zh"><![CDATA[荷兰语]]></translation>
+        <translation language="de"><![CDATA[niederländisch]]></translation>
+        <translation language="fr"><![CDATA[néerlandais]]></translation>
+        <translation language="es"><![CDATA[holandés]]></translation>
+        <translation language="uk"><![CDATA[голандська]]></translation>
+        <translation language="el"><![CDATA[Ολλανδικά]]></translation>
+      </item>
+      <item type="label" name="Types">
+        <translation language="nl"><![CDATA[types]]></translation>
+        <translation language="en"><![CDATA[types]]></translation>
+        <translation language="hu"><![CDATA[típus]]></translation>
+        <translation language="it"><![CDATA[tipologie]]></translation>
+        <translation language="ru"><![CDATA[Типы]]></translation>
+        <translation language="zh"><![CDATA[类型]]></translation>
+        <translation language="de"><![CDATA[Typen]]></translation>
+        <translation language="fr"><![CDATA[types]]></translation>
+        <translation language="es"><![CDATA[tipos]]></translation>
+        <translation language="uk"><![CDATA[Типи]]></translation>
+        <translation language="lt"><![CDATA[Tipai]]></translation>
+        <translation language="el"><![CDATA[Τύποι]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[La traduzione "%1$s" è stata aggiunta.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - добавлено.]]></translation>
+        <translation language="zh"><![CDATA[翻译语言“%1$s”已添加。]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" fordítás hozzáadva.]]></translation>
+        <translation language="fr"><![CDATA[La traduction "%1$s"  a été ajoutée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue agregada.]]></translation>
+        <translation language="uk"><![CDATA["%1$s" - додано]]></translation>
+        <translation language="el"><![CDATA[Προστέθηκε η μετάφραση "%1$s".]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze vertaling wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete this translation?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare questa traduzione?]]></translation>
+        <translation language="ru"><![CDATA[Действительно удалить перевод?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除这个翻译吗？]]></translation>
+        <translation language="de"><![CDATA[Soll diese Übersetzung wirklich gelöscht werden?]]></translation>
+        <translation language="hu"><![CDATA[Biztos vagy benne, hogy törölni akarod ezt a fordítást?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer cette traduction ?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar esta traducción?]]></translation>
+        <translation language="uk"><![CDATA[Ви дійсно бажаєте видалити цей переклад?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτή τη μετάφραση;]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was deleted.]]></translation>
+        <translation language="it"><![CDATA[La traduzione "%1$s" è stata eliminata.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - удалено.]]></translation>
+        <translation language="zh"><![CDATA[翻译语言“%1$s”已删除。]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung "%1$s" wurde gelöscht.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" fordítás törölve.]]></translation>
+        <translation language="fr"><![CDATA[La traduction "%1$s" a été effacée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue eliminada.]]></translation>
+        <translation language="uk"><![CDATA["%1$s" - видалено]]></translation>
+        <translation language="el"><![CDATA[Διεγράφη η μετάφραση "%1$s".]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[La traduzione "%1$s" è stata salvata.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - изменено.]]></translation>
+        <translation language="zh"><![CDATA[翻译语言“%1$s”已保存。]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung Die englische Referenz für diese Übersetzung wurde gespeichert.]]></translation>
+        <translation language="hu"><![CDATA[A "%1$s" fordítás elmentve.]]></translation>
+        <translation language="fr"><![CDATA[La traduction "%1$s" a été enregistrée.]]></translation>
+        <translation language="es"><![CDATA[La traducción "%1$s" fue guardada.]]></translation>
+        <translation language="uk"><![CDATA["%1$s" - змінено]]></translation>
+        <translation language="el"><![CDATA[Η μετάφραση  "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="EditTranslation">
+        <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit translation "%1$s"]]></translation>
+        <translation language="it"><![CDATA[modifica traduzione "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑翻译语言“%1$s”]]></translation>
+        <translation language="de"><![CDATA[bearbeite die Übersetzung "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" fordítás szerkesztése]]></translation>
+        <translation language="fr"><![CDATA[éditer la traduction "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar traducción "%1$s"]]></translation>
+        <translation language="uk"><![CDATA[Редагувати "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Διόρθωση της μετάφρασης "%1$s".]]></translation>
+      </item>
+      <item type="message" name="HelpActionValue">
+        <translation language="nl"><![CDATA[Gebruik enkel alfanumerieke karakters (geen hoofdletters), - en _ bij deze vertalingen, ze zullen namelijk gebruikt worden in URL's.]]></translation>
+        <translation language="en"><![CDATA[Only use alphanumeric characters (no capitals), - and _ for these translations, because they will be used in URLs.]]></translation>
+        <translation language="it"><![CDATA[Utilizza solo caratteri alfanumerici (niente maiuscole), - e _ per queste traduzioni, dato che verranno usate all'interno di URL.]]></translation>
+        <translation language="ru"><![CDATA[Используйте только символы (без заглавных), - и _. Потому что это значения для URL.]]></translation>
+        <translation language="zh"><![CDATA[翻译中只可以使用字母或数字（不可以大写）， -（横杆）或_（下划线），否则他们将无法用于URL连接中]]></translation>
+        <translation language="hu"><![CDATA[Csak betűk (nem nagyok), - és _ használható, mert URL-ben fognak szerepelni.]]></translation>
+        <translation language="de"><![CDATA[Benutze nur alphanumerische Zeichen (keine Großbuchstaben), - und _ für diese Übersetzungen, da sie in URLs verwendet werden. Benutze keine Leerzeichen.]]></translation>
+        <translation language="fr"><![CDATA[Utilisez seulement des caractères alpha-numériques (sans majuscules), - et _ pour ces traductions, car elles seront utilisées dans les URL.]]></translation>
+        <translation language="es"><![CDATA[Usa solo carácteres alfanumericos (no mayusculas), - y _ para estas traducciones, porque serán usadas en URLs.]]></translation>
+        <translation language="uk"><![CDATA[Використовуйте лише символи (без заглавних),- та _ для переладів. Це має значення для URL]]></translation>
+        <translation language="el"><![CDATA[Χρησιμοποιείτε μόνον γράμματα και αριθμούς (όχι κεφαλαία) και τα σύμβολα - και _ γιά τις μεταφράσεις, διότι θα εμφανίζονται στις διευθύνσεις URL.]]></translation>
+      </item>
+      <item type="message" name="HelpAddName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The English reference for the translation]]></translation>
+        <translation language="it"><![CDATA[Il riferimento Inglese per la traduzione]]></translation>
+        <translation language="ru"><![CDATA[Англ.]]></translation>
+        <translation language="zh"><![CDATA[翻译的英语参考版本]]></translation>
+        <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
+        <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
+        <translation language="fr"><![CDATA[La référence anglaise pour la traduction.]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
+        <translation language="uk"><![CDATA[Англ.]]></translation>
+        <translation language="el"><![CDATA[Τα Αγγλικά ως αναφορά γιά τη μετάφραση]]></translation>
+      </item>
+      <item type="message" name="HelpAddValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+        <translation language="it"><![CDATA[La traduzione]]></translation>
+        <translation language="ru"><![CDATA[Перевод]]></translation>
+        <translation language="zh"><![CDATA[译文]]></translation>
+        <translation language="hu"><![CDATA[A fordítás]]></translation>
+        <translation language="fr"><![CDATA[La traduction]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
+        <translation language="uk"><![CDATA[Переклад]]></translation>
+        <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+      </item>
+      <item type="message" name="HelpDateField">
+        <translation language="nl"><![CDATA[vb. 20/06/2011]]></translation>
+        <translation language="en"><![CDATA[eg. 20/06/2011]]></translation>
+        <translation language="it"><![CDATA[es. 20/06/2011]]></translation>
+        <translation language="ru"><![CDATA[прим. 20/06/2011]]></translation>
+        <translation language="zh"><![CDATA[例如：20/06/2011]]></translation>
+        <translation language="de"><![CDATA[z.B. 20/06/2011]]></translation>
+        <translation language="hu"><![CDATA[pl. 20/06/2011]]></translation>
+        <translation language="fr"><![CDATA[ex. 20/06/2011]]></translation>
+        <translation language="es"><![CDATA[ej. 20/06/2011]]></translation>
+        <translation language="uk"><![CDATA[прибл. 20/06/2011]]></translation>
+        <translation language="el"><![CDATA[πχ. 20/06/2011]]></translation>
+      </item>
+      <item type="message" name="HelpEditName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The English reference for the translation]]></translation>
+        <translation language="it"><![CDATA[Il riferimento Inglese per la traduzione]]></translation>
+        <translation language="ru"><![CDATA[Англ.]]></translation>
+        <translation language="zh"><![CDATA[翻译的英语参考版本]]></translation>
+        <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
+        <translation language="fr"><![CDATA[La référence anglaise pour cette traduction]]></translation>
+        <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
+        <translation language="uk"><![CDATA[Англ.]]></translation>
+        <translation language="el"><![CDATA[Τα Αγγλικά ως αναφορά γιά τη μετάφραση]]></translation>
+      </item>
+      <item type="message" name="HelpEditValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+        <translation language="it"><![CDATA[La traduzione]]></translation>
+        <translation language="ru"><![CDATA[Перевод]]></translation>
+        <translation language="zh"><![CDATA[译文]]></translation>
+        <translation language="hu"><![CDATA[A fordítás]]></translation>
+        <translation language="fr"><![CDATA[La traduction]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
+        <translation language="uk"><![CDATA[Переклад]]></translation>
+        <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+      </item>
+      <item type="message" name="HelpImageField">
+        <translation language="nl"><![CDATA[Enkel bestanden met extensie jp(e)g, gif of png zijn toegelaten.]]></translation>
+        <translation language="en"><![CDATA[Only jp(e)g, gif or png-files are allowed.]]></translation>
+        <translation language="it"><![CDATA[Sono consentiti solo file jp(e)g, gif o png.]]></translation>
+        <translation language="ru"><![CDATA[Только jp(e)g, gif или png разрешены.]]></translation>
+        <translation language="zh"><![CDATA[只允许jpg、jpeg、gif和png格式文件。]]></translation>
+        <translation language="hu"><![CDATA[Csak a jp(e)g, gif vagy png fájlok használhatók.]]></translation>
+        <translation language="de"><![CDATA[Nur jp(e)g, gif oder png-Dateien sind erlaubt.]]></translation>
+        <translation language="fr"><![CDATA[Seuls les fichiers jp(e)g, gif ou png sont acceptés.]]></translation>
+        <translation language="es"><![CDATA[Solo jp(e)g, gif o png son aceptados.]]></translation>
+        <translation language="uk"><![CDATA[Дозволені лише - jp(e)g, gif та png.]]></translation>
+        <translation language="el"><![CDATA[Επιτρέπονται αρχεία εικόνας τύπων jp(e)g, gif και png.]]></translation>
+      </item>
+      <item type="message" name="HelpName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The english reference for this translation]]></translation>
+        <translation language="it"><![CDATA[Il riferimento Inglese per la traduzione]]></translation>
+        <translation language="ru"><![CDATA[Англ.]]></translation>
+        <translation language="zh"><![CDATA[翻译的英语参考版本]]></translation>
+        <translation language="de"><![CDATA[Die englische Referenz für diese Übersetzung]]></translation>
+        <translation language="hu"><![CDATA[Az angol fordítás a referencia.]]></translation>
+        <translation language="fr"><![CDATA[La référence anglaise pour cette traduction.]]></translation>
+        <translation language="es"><![CDATA[La referencia inglesa para la traducción]]></translation>
+        <translation language="uk"><![CDATA[Англ]]></translation>
+        <translation language="el"><![CDATA[Η αναφορά στα Αγγλικά γιά τη μετάφραση αυτή]]></translation>
+      </item>
+      <item type="message" name="HelpTimeField">
+        <translation language="nl"><![CDATA[vb. 14:35]]></translation>
+        <translation language="en"><![CDATA[eg. 14:35]]></translation>
+        <translation language="it"><![CDATA[es. 14:35]]></translation>
+        <translation language="ru"><![CDATA[прим. 14:35]]></translation>
+        <translation language="zh"><![CDATA[例如：14:35]]></translation>
+        <translation language="de"><![CDATA[z.B. 13:37]]></translation>
+        <translation language="hu"><![CDATA[pl. 14:35]]></translation>
+        <translation language="fr"><![CDATA[ex. 14:35]]></translation>
+        <translation language="es"><![CDATA[ej. 14:35]]></translation>
+        <translation language="uk"><![CDATA[прибл. 14:35]]></translation>
+        <translation language="el"><![CDATA[πχ. 14:35]]></translation>
+      </item>
+      <item type="message" name="HelpValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+        <translation language="it"><![CDATA[La traduzione]]></translation>
+        <translation language="ru"><![CDATA[Перевод]]></translation>
+        <translation language="zh"><![CDATA[译文]]></translation>
+        <translation language="hu"><![CDATA[A fordítás]]></translation>
+        <translation language="fr"><![CDATA[La traduction]]></translation>
+        <translation language="de"><![CDATA[Die Übersetzung]]></translation>
+        <translation language="es"><![CDATA[La traducción]]></translation>
+        <translation language="uk"><![CDATA[Переклад]]></translation>
+        <translation language="el"><![CDATA[Η μετάφραση]]></translation>
+      </item>
+      <item type="message" name="Imported">
+        <translation language="nl"><![CDATA[%1$s vertalingen werden geimporteerd.]]></translation>
+        <translation language="en"><![CDATA[%1$s translations were imported.]]></translation>
+        <translation language="it"><![CDATA[%1$s traduzioni sono state importate]]></translation>
+        <translation language="ru"><![CDATA[%1$s - успешно импортировано.]]></translation>
+        <translation language="zh"><![CDATA[翻译 %1$s 已导入。]]></translation>
+        <translation language="hu"><![CDATA[%1$s fordítás importálva.]]></translation>
+        <translation language="de"><![CDATA[%1$s Übersetzungen wurden importiert.]]></translation>
+        <translation language="fr"><![CDATA[%1$s traductions ont été importées.]]></translation>
+        <translation language="es"><![CDATA[%1$s traducciones fueron importadas.]]></translation>
+        <translation language="uk"><![CDATA[%1$s - вдало імпортовано]]></translation>
+        <translation language="el"><![CDATA[Εισήχθησαν %1$s μεταφράσεις.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no translations yet. <a href="%1$s">Add the first translation</a>.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora traduzioni. <a href="%1$s">Aggiungi la prima traduzione</a>]]></translation>
+        <translation language="ru"><![CDATA[Нет переводов. <a href="%1$s">Добавить</a>.]]></translation>
+        <translation language="zh"><![CDATA[还没有翻译。There are no translations yet. <a href="%1$s">添加一个新翻译</a>。]]></translation>
+        <translation language="hu"><![CDATA[Még nincsenek fordítások. <a href="%1$s">Első fordítás hozzáadása</a>.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de traduction. <a href="%1$s">Ajouter la première</a>.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Übersetzungen <a href="%1$s">Schreibe die erste Übersetzung</a>.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay traducciones. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
+        <translation language="uk"><![CDATA[Нема перекладів. ]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
+      </item>
+      <item type="message" name="NoItemsAnalyse">
+        <translation language="nl"><![CDATA[Er werden geen ontbrekende vertalingen gevonden.]]></translation>
+        <translation language="en"><![CDATA[No missing translations were found.]]></translation>
+        <translation language="it"><![CDATA[Non sono state trovate traduzioni mancanti.]]></translation>
+        <translation language="ru"><![CDATA[Нет не переведенных значений. ]]></translation>
+        <translation language="zh"><![CDATA[没有找到丢失的翻译。]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek hianyzó fordítások.]]></translation>
+        <translation language="de"><![CDATA[Es wurden keine fehlenden Übersetzungen gefunden.]]></translation>
+        <translation language="fr"><![CDATA[Aucun traduction manquante.]]></translation>
+        <translation language="es"><![CDATA[No se encontraron traducciones]]></translation>
+        <translation language="uk"><![CDATA[Немає перекладених значень]]></translation>
+        <translation language="el"><![CDATA[Δεν βρέθηκαν να λείπουν μεταφράσεις.]]></translation>
+      </item>
+      <item type="message" name="NoItemsFilter">
+        <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no translations yet for this filter. <a href="%1$s">Add the first translation</a>.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora traduzioni per questo filtro. <a href="%1$s">Aggiungi la prima traduzione</a>.]]></translation>
+        <translation language="ru"><![CDATA[Нет значений для этого фильтра. <a href="%1$s">Добавить</a>.]]></translation>
+        <translation language="zh"><![CDATA[这个滤镜结果下还没有翻译。There are no translations yet. <a href="%1$s">添加一个新翻译</a>。]]></translation>
+        <translation language="hu"><![CDATA[Még nincsenek fordítások ebben a szűrőben. <a href="%1$s">Első fordítás hozzáadása</a>.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de traduction pour ce filtre <a href="%1$s">Ajouter la première</a>.]]></translation>
+        <translation language="de"><![CDATA[Mit diesem Filter konnten keine Übersetzungen gefunden werden. <a href="%1$s"> Füge die erste Übersetzung hinzu</a>.]]></translation>
+        <translation language="es"><![CDATA[No hay traducción apra este filtro aun. <a href="%1$s">Agrega la primera traducción</a>.]]></translation>
+        <translation language="uk"><![CDATA[Немає значень для цього фільтра. <a href="%1$s">Додати</a>.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη μεταφράσεις γιά αυτό το φίλτρο. <a href="%1$s">Προσθέστε την πρώτη μετάφραση</a>.]]></translation>
+      </item>
+      <item type="message" name="OverwriteConflicts">
+        <translation language="nl"><![CDATA[Overschrijf indien de vertaling bestaat.]]></translation>
+        <translation language="en"><![CDATA[Overwrite if the translation exists.]]></translation>
+        <translation language="it"><![CDATA[Sovrascrivi la traduzione se esiste.]]></translation>
+        <translation language="ru"><![CDATA[Перезаписать, если перевод существует.]]></translation>
+        <translation language="zh"><![CDATA[如果翻译已经存在，替换它。]]></translation>
+        <translation language="hu"><![CDATA[Létező fordítás felülírása.]]></translation>
+        <translation language="fr"><![CDATA[Ecraser si la traduction existe déjà.]]></translation>
+        <translation language="de"><![CDATA[Überschreiben, falls die Übersetzung bereits existiert.]]></translation>
+        <translation language="es"><![CDATA[Sobreescribir si la traducción existe.]]></translation>
+        <translation language="uk"><![CDATA[Перезаписати, якщо переклад існує.]]></translation>
+        <translation language="el"><![CDATA[Αν η μετάφραση υπάρχει, επικάλυψέ την.]]></translation>
+      </item>
+      <item type="error" name="AlreadyExists">
+        <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
+        <translation language="en"><![CDATA[This translation already exists.]]></translation>
+        <translation language="it"><![CDATA[Questa traduzione è già presente.]]></translation>
+        <translation language="ru"><![CDATA[Перевод уже существует.]]></translation>
+        <translation language="zh"><![CDATA[这个翻译已存在。]]></translation>
+        <translation language="de"><![CDATA[Diese Übersetzung gibt es bereits.]]></translation>
+        <translation language="hu"><![CDATA[Ez a fordítás létezik.]]></translation>
+        <translation language="fr"><![CDATA[Cette traduction existe déjà.]]></translation>
+        <translation language="es"><![CDATA[Esta traducción ya existe.]]></translation>
+        <translation language="uk"><![CDATA[Переклад вже існує]]></translation>
+        <translation language="el"><![CDATA[Αυτή η μετάφραση υπάρχει ήδη.]]></translation>
+      </item>
+      <item type="error" name="InvalidActionValue">
+        <translation language="nl"><![CDATA[De actienaam bevat ongeldige karakters.]]></translation>
+        <translation language="en"><![CDATA[The action name contains invalid characters.]]></translation>
+        <translation language="it"><![CDATA[Il nome dell'azione contiene caratteri non validi.]]></translation>
+        <translation language="ru"><![CDATA[Действие содержит недопустимые знаки.]]></translation>
+        <translation language="zh"><![CDATA[这个动作名包含无效字符。]]></translation>
+        <translation language="hu"><![CDATA[A használt név érvénytelen karaktert tartalmaz.]]></translation>
+        <translation language="fr"><![CDATA[Le nom de l'action contient des caractères non valides.]]></translation>
+        <translation language="de"><![CDATA[Der Aktionsname beinhaltet ungültige Zeichen.]]></translation>
+        <translation language="es"><![CDATA[El nombre de la acción contiene caracteres invalidos.]]></translation>
+        <translation language="uk"><![CDATA[Дія містить неправильні знаки/символи]]></translation>
+        <translation language="el"><![CDATA[Το όνομα της ενέργειας περιέχει μη έγκυρους χαρακτήρες.]]></translation>
+      </item>
+      <item type="error" name="InvalidXML">
+        <translation language="nl"><![CDATA[Het opgegeven XML-bestand bevat foute XML-data.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid XML-file.]]></translation>
+        <translation language="it"><![CDATA[Questo è un file XML non valido.]]></translation>
+        <translation language="ru"><![CDATA[Недопустимый XML файл.]]></translation>
+        <translation language="zh"><![CDATA[这是一个无效的xml文件。]]></translation>
+        <translation language="hu"><![CDATA[Ez egy érvénytelen XML-fájl.]]></translation>
+        <translation language="fr"><![CDATA[Fichier XML non valide]]></translation>
+        <translation language="de"><![CDATA[Die XMl-Datei beinhalte fehlerhafte Daten.]]></translation>
+        <translation language="es"><![CDATA[Este es un archivo XML no válido.]]></translation>
+        <translation language="uk"><![CDATA[Неприпустимий XML-файл]]></translation>
+        <translation language="el"><![CDATA[Αυτό το αρχείο XML δεν είναι έγκυρο.]]></translation>
+      </item>
+      <item type="error" name="ModuleHasToBeCore">
+        <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[The module needs to be core for frontend translations.]]></translation>
+        <translation language="it"><![CDATA[Questo modulo necessita di una traduzione per il frontend.]]></translation>
+        <translation language="ru"><![CDATA[Модуль должен быть ядром - для перевода интерфейса сайта.]]></translation>
+        <translation language="zh"><![CDATA[这个模块需要作为前端翻译的核心。]]></translation>
+        <translation language="hu"><![CDATA[A modulnak kell frontend core fordítás.]]></translation>
+        <translation language="fr"><![CDATA[Le modul doit être coeur pour les traduction du frontend.]]></translation>
+        <translation language="de"><![CDATA[Für Frontend-Übersetzungen muss Core als Modul ausgewählt sein.]]></translation>
+        <translation language="es"><![CDATA[Este módulo requiere una  traducción del frontend.]]></translation>
+        <translation language="uk"><![CDATA[Модуль повинен бути ядром. - для перекладу інтерфейса сайта.]]></translation>
+        <translation language="el"><![CDATA[Η ενότητα πρέπει να είναι στον πυρήνα γιά ]]></translation>
+      </item>
+      <item type="error" name="NoSelection">
+        <translation language="nl"><![CDATA[Er waren geen vertalingen geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No translations were selected.]]></translation>
+        <translation language="it"><![CDATA[Non è stata selezionata nessuna traduzione.]]></translation>
+        <translation language="ru"><![CDATA[Не выбрано переводов.]]></translation>
+        <translation language="zh"><![CDATA[没有翻译语言被选中。]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Übersetzungen ausgewählt.]]></translation>
+        <translation language="hu"><![CDATA[Nincs fordítás kiválasztva.]]></translation>
+        <translation language="fr"><![CDATA[Aucune traduction n'a été sélectionnée.]]></translation>
+        <translation language="es"><![CDATA[Ninguna traducción han sido seleccionada.]]></translation>
+        <translation language="uk"><![CDATA[Не обрано перекладів]]></translation>
+        <translation language="el"><![CDATA[Δεν επελέγη καμμία μετάφραση.]]></translation>
+      </item>
+    </Locale>
+  </Backend>
+</locale>

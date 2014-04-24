@@ -11,10 +11,12 @@
 chdir(dirname(__FILE__));
 
 // vendors not installed
-if(!is_dir(__DIR__ . '/vendor'))
-{
-	echo 'Your install is missing some dependencies. If you have composer installed you should run: <code>composer install</code>. If you don\'t have composer installed you really should, see http://getcomposer.org for more information';
-	exit;
+if (!is_dir(__DIR__ . '/vendor')) {
+    echo 'Your install is missing some dependencies. If you have composer
+         installed you should run: <code>composer install</code>. If you
+         don\'t have composer installed you really should, see
+         http://getcomposer.org for more information';
+    exit;
 }
 
 require_once __DIR__ . '/autoload.php';
@@ -22,29 +24,38 @@ require_once __DIR__ . '/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
 
 // Fork has not yet been installed
-$installer = dirname(__FILE__) . '/install/cache';
+$installer = dirname(__FILE__) . '/src/Install/Cache';
 $request = Request::createFromGlobals();
-if(
-	file_exists($installer) &&
-	is_dir($installer) &&
-	!file_exists($installer . '/installed.txt') &&
-	substr($request->getRequestURI(), 0, 8) != '/install'
-)
-{
-	// check .htaccess
-	if(!file_exists('.htaccess') && !isset($_GET['skiphtaccess']))
-	{
-		echo 'Your install is missing the .htaccess file. Make sure you show hidden files while uploading Fork CMS. Read the article about <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a> for further information. <a href="?skiphtaccess">Skip .htaccess check</a>';
-		exit;
-	}
+if (file_exists($installer) &&
+    is_dir($installer) &&
+    !file_exists($installer . '/Installed.txt') &&
+    substr($request->getRequestURI(), 0, 8) != '/install'
+) {
+    // check .htaccess
+    if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
+        echo 'Your install is missing the .htaccess file. Make sure you show
+             hidden files while uploading Fork CMS. Read the article about
+             <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
+             for further information. <a href="?skiphtaccess">Skip .htaccess
+             check</a>';
+        exit;
+    }
 
-	header('Location: /install');
-	exit;
+    header('Location: /install');
+    exit;
 }
 
 require_once __DIR__ . '/app/AppKernel.php';
 
+if (extension_loaded('newrelic')) {
+    newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
+}
+
 $kernel = new AppKernel();
 $response = $kernel->handle($request);
-if($response->getCharset() === null && $kernel->getContainer() != null) $response->setCharset($kernel->getContainer()->getParameter('kernel.charset'));
+if ($response->getCharset() === null && $kernel->getContainer() != null) {
+    $response->setCharset(
+        $kernel->getContainer()->getParameter('kernel.charset')
+    );
+}
 $response->send();

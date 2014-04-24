@@ -1,0 +1,599 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Pages>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add page]]></translation>
+        <translation language="it"><![CDATA[aggiungi pagina]]></translation>
+        <translation language="ru"><![CDATA[Добавить страницу]]></translation>
+        <translation language="zh"><![CDATA[添加页面]]></translation>
+        <translation language="de"><![CDATA[Seite hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une page]]></translation>
+        <translation language="hu"><![CDATA[oldal hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar página]]></translation>
+        <translation language="uk"><![CDATA[Додати сторінку]]></translation>
+        <translation language="lt"><![CDATA[naujas puslapis]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη σελίδας]]></translation>
+      </item>
+      <item type="label" name="ChangeTemplate">
+        <translation language="nl"><![CDATA[Wijzig template]]></translation>
+        <translation language="en"><![CDATA[Change template]]></translation>
+        <translation language="it"><![CDATA[Cambia template]]></translation>
+        <translation language="ru"><![CDATA[Выбрать шаблон]]></translation>
+        <translation language="zh"><![CDATA[更改模板]]></translation>
+        <translation language="de"><![CDATA[Template wechseln]]></translation>
+        <translation language="fr"><![CDATA[changer de template]]></translation>
+        <translation language="hu"><![CDATA[Sablon váltás]]></translation>
+        <translation language="es"><![CDATA[cambiar plantilla]]></translation>
+        <translation language="uk"><![CDATA[Обрати шаблон]]></translation>
+        <translation language="lt"><![CDATA[keisti šabloną]]></translation>
+        <translation language="el"><![CDATA[Αλλαγή προτύπου]]></translation>
+      </item>
+      <item type="label" name="DeleteBlock">
+        <translation language="nl"><![CDATA[blok verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete block]]></translation>
+        <translation language="it"><![CDATA[elimina blocco]]></translation>
+        <translation language="ru"><![CDATA[Удалить блок]]></translation>
+        <translation language="zh"><![CDATA[删除阻止]]></translation>
+        <translation language="de"><![CDATA[Block löschen]]></translation>
+        <translation language="fr"><![CDATA[effacer le bloc]]></translation>
+        <translation language="hu"><![CDATA[blokk törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar bloque]]></translation>
+        <translation language="uk"><![CDATA[Видалити блок]]></translation>
+        <translation language="lt"><![CDATA[trinti bloką]]></translation>
+        <translation language="el"><![CDATA[Διαγραφή μπλοκ]]></translation>
+      </item>
+      <item type="label" name="EditModuleContent">
+        <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
+        <translation language="en"><![CDATA[edit module content]]></translation>
+        <translation language="it"><![CDATA[modifica il contenuto del modulo]]></translation>
+        <translation language="ru"><![CDATA[Редактировать модуль контента]]></translation>
+        <translation language="zh"><![CDATA[编辑模块内容]]></translation>
+        <translation language="de"><![CDATA[Modulinhalt bearbeiten]]></translation>
+        <translation language="fr"><![CDATA[éditer le contenu du module]]></translation>
+        <translation language="hu"><![CDATA[modul tartalom szerkesztése]]></translation>
+        <translation language="es"><![CDATA[editar contenido de módulo]]></translation>
+        <translation language="uk"><![CDATA[Редагувати модуль контента]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή περιεχομένου της ενότητας]]></translation>
+      </item>
+      <item type="label" name="ExternalLink">
+        <translation language="nl"><![CDATA[externe link]]></translation>
+        <translation language="en"><![CDATA[external link]]></translation>
+        <translation language="it"><![CDATA[link esterno]]></translation>
+        <translation language="ru"><![CDATA[Внешняя ссылка]]></translation>
+        <translation language="zh"><![CDATA[外部链接]]></translation>
+        <translation language="de"><![CDATA[externer Link]]></translation>
+        <translation language="fr"><![CDATA[liens externe]]></translation>
+        <translation language="hu"><![CDATA[external link]]></translation>
+        <translation language="es"><![CDATA[enlace externo]]></translation>
+        <translation language="uk"><![CDATA[Зовнішнє посилання]]></translation>
+        <translation language="lt"><![CDATA[išorinė nuoroda]]></translation>
+        <translation language="el"><![CDATA[Εξωτερικός σύνδεσμος]]></translation>
+      </item>
+      <item type="label" name="ExtraTypeBlock">
+        <translation language="nl"><![CDATA[module]]></translation>
+        <translation language="en"><![CDATA[module]]></translation>
+        <translation language="it"><![CDATA[modulo]]></translation>
+        <translation language="ru"><![CDATA[Модуль]]></translation>
+        <translation language="zh"><![CDATA[模块]]></translation>
+        <translation language="de"><![CDATA[Modul]]></translation>
+        <translation language="fr"><![CDATA[module]]></translation>
+        <translation language="hu"><![CDATA[modul]]></translation>
+        <translation language="es"><![CDATA[módulo]]></translation>
+        <translation language="uk"><![CDATA[Модуль]]></translation>
+        <translation language="lt"><![CDATA[modulis]]></translation>
+        <translation language="el"><![CDATA[Ενότητα]]></translation>
+      </item>
+      <item type="label" name="ExtraTypeWidget">
+        <translation language="nl"><![CDATA[widget]]></translation>
+        <translation language="en"><![CDATA[widget]]></translation>
+        <translation language="it"><![CDATA[widget]]></translation>
+        <translation language="ru"><![CDATA[Виджет]]></translation>
+        <translation language="zh"><![CDATA[小工具]]></translation>
+        <translation language="de"><![CDATA[Widget]]></translation>
+        <translation language="fr"><![CDATA[widget]]></translation>
+        <translation language="hu"><![CDATA[widget]]></translation>
+        <translation language="es"><![CDATA[widget]]></translation>
+        <translation language="uk"><![CDATA[Віджет]]></translation>
+        <translation language="lt"><![CDATA[programėlė]]></translation>
+        <translation language="el"><![CDATA[μικροεφαρμογή]]></translation>
+      </item>
+      <item type="label" name="Fallback">
+        <translation language="nl"><![CDATA[Niet-toegewezen blokken]]></translation>
+        <translation language="en"><![CDATA[Unassigned blocks]]></translation>
+        <translation language="it"><![CDATA[Blocchi non assegnati]]></translation>
+        <translation language="ru"><![CDATA[Не распределенные блоки]]></translation>
+        <translation language="zh"><![CDATA[未分配的组织]]></translation>
+        <translation language="de"><![CDATA[nicht-zugewiesener Block]]></translation>
+        <translation language="fr"><![CDATA[blocs non assignés]]></translation>
+        <translation language="hu"><![CDATA[Unassigned blocks]]></translation>
+        <translation language="es"><![CDATA[Bloques sin asginar]]></translation>
+        <translation language="uk"><![CDATA[Не розподілені блоки]]></translation>
+        <translation language="lt"><![CDATA[nepriskirti blokai]]></translation>
+        <translation language="el"><![CDATA[Μπλοκ που δεν έχουν ανατεθεί.]]></translation>
+      </item>
+      <item type="label" name="Footer">
+        <translation language="nl"><![CDATA[footer navigatie]]></translation>
+        <translation language="en"><![CDATA[footer navigation]]></translation>
+        <translation language="it"><![CDATA[navigazione del footer]]></translation>
+        <translation language="ru"><![CDATA[Навигация подвала]]></translation>
+        <translation language="zh"><![CDATA[底部导航]]></translation>
+        <translation language="de"><![CDATA[Footer-Navigation]]></translation>
+        <translation language="fr"><![CDATA[navigation de pied de page]]></translation>
+        <translation language="hu"><![CDATA[footer navigáció]]></translation>
+        <translation language="es"><![CDATA[navegación de pie de página]]></translation>
+        <translation language="uk"><![CDATA[Навігація підвалу сторінки]]></translation>
+        <translation language="lt"><![CDATA[apačios navigacija]]></translation>
+        <translation language="el"><![CDATA[Πλοήγηση στο υποσέλιδο]]></translation>
+      </item>
+      <item type="label" name="InternalLink">
+        <translation language="nl"><![CDATA[interne link]]></translation>
+        <translation language="en"><![CDATA[internal link]]></translation>
+        <translation language="it"><![CDATA[link interno]]></translation>
+        <translation language="ru"><![CDATA[Внутренняя ссылка]]></translation>
+        <translation language="zh"><![CDATA[内部链接]]></translation>
+        <translation language="de"><![CDATA[interner Link]]></translation>
+        <translation language="fr"><![CDATA[lien interne]]></translation>
+        <translation language="hu"><![CDATA[internal link]]></translation>
+        <translation language="es"><![CDATA[enlace interno]]></translation>
+        <translation language="uk"><![CDATA[Внутрішнє посилання]]></translation>
+        <translation language="el"><![CDATA[Εσωτερικός σύνδεσμος]]></translation>
+      </item>
+      <item type="label" name="MainNavigation">
+        <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
+        <translation language="en"><![CDATA[main navigation]]></translation>
+        <translation language="it"><![CDATA[navigazione principale]]></translation>
+        <translation language="ru"><![CDATA[Главное меню]]></translation>
+        <translation language="zh"><![CDATA[主导航]]></translation>
+        <translation language="de"><![CDATA[Hauptnavigation]]></translation>
+        <translation language="fr"><![CDATA[navigation principale]]></translation>
+        <translation language="hu"><![CDATA[main navigáció]]></translation>
+        <translation language="es"><![CDATA[navegación principal]]></translation>
+        <translation language="uk"><![CDATA[Головне меню]]></translation>
+        <translation language="lt"><![CDATA[pagrindinė navigacija]]></translation>
+        <translation language="el"><![CDATA[Κύρια πλοήγηση]]></translation>
+      </item>
+      <item type="label" name="Meta">
+        <translation language="nl"><![CDATA[metanavigatie]]></translation>
+        <translation language="en"><![CDATA[meta navigation]]></translation>
+        <translation language="it"><![CDATA[meta navigazione]]></translation>
+        <translation language="ru"><![CDATA[Мета]]></translation>
+        <translation language="zh"><![CDATA[元数据导航]]></translation>
+        <translation language="de"><![CDATA[Metanavigation]]></translation>
+        <translation language="fr"><![CDATA[meta navigation]]></translation>
+        <translation language="hu"><![CDATA[meta navigáció]]></translation>
+        <translation language="es"><![CDATA[meta navegación]]></translation>
+        <translation language="uk"><![CDATA[Мета]]></translation>
+        <translation language="el"><![CDATA[μετα-πλοήγηση]]></translation>
+      </item>
+      <item type="label" name="Navigation">
+        <translation language="nl"><![CDATA[navigatie]]></translation>
+        <translation language="en"><![CDATA[navigation]]></translation>
+        <translation language="ru"><![CDATA[навигация]]></translation>
+        <translation language="el"><![CDATA[Πλοήγηση]]></translation>
+        <translation language="zh"><![CDATA[导航]]></translation>
+        <translation language="de"><![CDATA[Navigation]]></translation>
+      </item>
+      <item type="label" name="Redirect">
+        <translation language="nl"><![CDATA[redirect]]></translation>
+        <translation language="en"><![CDATA[redirect]]></translation>
+        <translation language="it"><![CDATA[redirect]]></translation>
+        <translation language="ru"><![CDATA[Редирект]]></translation>
+        <translation language="zh"><![CDATA[重新定向]]></translation>
+        <translation language="de"><![CDATA[Weiterleitungen]]></translation>
+        <translation language="fr"><![CDATA[rediriger]]></translation>
+        <translation language="hu"><![CDATA[átirányítás]]></translation>
+        <translation language="es"><![CDATA[redirección]]></translation>
+        <translation language="uk"><![CDATA[Радірект]]></translation>
+        <translation language="el"><![CDATA[Ανακατεύθυνση]]></translation>
+      </item>
+      <item type="label" name="Root">
+        <translation language="nl"><![CDATA[losse pagina's]]></translation>
+        <translation language="en"><![CDATA[single pages]]></translation>
+        <translation language="it"><![CDATA[pagina singola]]></translation>
+        <translation language="ru"><![CDATA[Отдельные страницы]]></translation>
+        <translation language="zh"><![CDATA[单页]]></translation>
+        <translation language="de"><![CDATA[einzelne Seiten]]></translation>
+        <translation language="fr"><![CDATA[pages uniques]]></translation>
+        <translation language="hu"><![CDATA[egy oldal]]></translation>
+        <translation language="es"><![CDATA[páginas solas]]></translation>
+        <translation language="uk"><![CDATA[Окремі сторінки]]></translation>
+        <translation language="lt"><![CDATA[atskiri puslapiai]]></translation>
+        <translation language="el"><![CDATA[μονές σελίδες]]></translation>
+      </item>
+      <item type="label" name="SentMailings">
+        <translation language="en"><![CDATA[sent mailings]]></translation>
+        <translation language="nl"><![CDATA[verzonden nieuwsbrieven]]></translation>
+        <translation language="it"><![CDATA[mailing inviate]]></translation>
+        <translation language="ru"><![CDATA[Разосланные рассылки]]></translation>
+        <translation language="zh"><![CDATA[已发送的邮件]]></translation>
+        <translation language="de"><![CDATA[versandte Newsletter]]></translation>
+        <translation language="fr"><![CDATA[mailings envoyés]]></translation>
+        <translation language="hu"><![CDATA[küldött levelek]]></translation>
+        <translation language="es"><![CDATA[envios enviados]]></translation>
+        <translation language="uk"><![CDATA[Надіслані розсилки]]></translation>
+        <translation language="el"><![CDATA[απεσταλμένα μηνύματα]]></translation>
+      </item>
+      <item type="label" name="SubscribeForm">
+        <translation language="en"><![CDATA[subscribe form]]></translation>
+        <translation language="nl"><![CDATA[inschrijvingsformulier]]></translation>
+        <translation language="it"><![CDATA[form per iscriversi]]></translation>
+        <translation language="ru"><![CDATA[Форма подписки]]></translation>
+        <translation language="zh"><![CDATA[订阅表单]]></translation>
+        <translation language="de"><![CDATA[Anmeldeformular]]></translation>
+        <translation language="fr"><![CDATA[formulaire d'abonnement]]></translation>
+        <translation language="hu"><![CDATA[feliratkozó űrlap]]></translation>
+        <translation language="es"><![CDATA[formulario de subscripción]]></translation>
+        <translation language="uk"><![CDATA[Форма підписки]]></translation>
+        <translation language="el"><![CDATA[Φόρμα εγγραφής]]></translation>
+      </item>
+      <item type="label" name="UnsubscribeForm">
+        <translation language="en"><![CDATA[unsubscribe form]]></translation>
+        <translation language="nl"><![CDATA[uitschrijvingsformulier]]></translation>
+        <translation language="it"><![CDATA[form per disiscriversi]]></translation>
+        <translation language="ru"><![CDATA[Форма отписки]]></translation>
+        <translation language="zh"><![CDATA[退订表单]]></translation>
+        <translation language="de"><![CDATA[Abmeldeformular]]></translation>
+        <translation language="fr"><![CDATA[formulaire de désabonnement]]></translation>
+        <translation language="hu"><![CDATA[leiratkozó űrlap]]></translation>
+        <translation language="es"><![CDATA[formulario de baja]]></translation>
+        <translation language="uk"><![CDATA[Форма відписки]]></translation>
+        <translation language="el"><![CDATA[Φόρμα αποποίησης εγγραφής]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[La pagina "%1$s" è stata aggiunta.]]></translation>
+        <translation language="ru"><![CDATA[Страница "%1$s" добавлена.]]></translation>
+        <translation language="zh"><![CDATA[页面 “%1$s” 已添加。]]></translation>
+        <translation language="de"><![CDATA[Die Seite "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[La page "%1$s" a été ajoutée.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" oldal hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[la página "%1$s" fue agregada.]]></translation>
+        <translation language="uk"><![CDATA[Сторінку "%1$s" додано.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα "%1$s" προστέθηκε.]]></translation>
+      </item>
+      <item type="message" name="AllowChildren">
+        <translation language="nl"><![CDATA[Deze pagina mag subpagina's bevatten.]]></translation>
+        <translation language="en"><![CDATA[This page can have subpages.]]></translation>
+        <translation language="ru"><![CDATA[Страница может иметь подстраницы.]]></translation>
+        <translation language="de"><![CDATA[Diese Seite kann Unterseiten haben.]]></translation>
+        <translation language="es"><![CDATA[Esta págna puede tener subpáginas.]]></translation>
+        <translation language="hu"><![CDATA[Ezen az oldalon lehetnek aloldalak.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να έχει υποσελίδες.]]></translation>
+        <translation language="zh"><![CDATA[这个页面可以有子页面]]></translation>
+      </item>
+      <item type="message" name="AllowDelete">
+        <translation language="nl"><![CDATA[Deze pagina mag verwijderd worden.]]></translation>
+        <translation language="en"><![CDATA[This page can be deleted.]]></translation>
+        <translation language="ru"><![CDATA[Страница может быть удалена.]]></translation>
+        <translation language="de"><![CDATA[Diese Seite kann gelöscht werden.]]></translation>
+        <translation language="es"><![CDATA[Esta página puede eliminarse.]]></translation>
+        <translation language="hu"><![CDATA[Ez az oldal törölhető.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να διαγραφεί.]]></translation>
+        <translation language="zh"><![CDATA[这个页面已被删除。]]></translation>
+      </item>
+      <item type="message" name="AllowEdit">
+        <translation language="nl"><![CDATA[Deze pagina mag bewerkt worden.]]></translation>
+        <translation language="en"><![CDATA[This page can be edited.]]></translation>
+        <translation language="ru"><![CDATA[Страница может быть отредактирована.]]></translation>
+        <translation language="de"><![CDATA[Diese Seite kann bearbeitet werden.]]></translation>
+        <translation language="es"><![CDATA[Esta página puede editarse.]]></translation>
+        <translation language="hu"><![CDATA[Ez az oldal szerkeszthető.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η σελίδα μπορεί να μεταβληθεί.]]></translation>
+        <translation language="zh"><![CDATA[这个页面可以编辑。]]></translation>
+      </item>
+      <item type="message" name="AllowMove">
+        <translation language="nl"><![CDATA[Deze pagina mag verplaatst worden naar een andere positie.]]></translation>
+        <translation language="en"><![CDATA[The position of this page can be changed.]]></translation>
+        <translation language="ru"><![CDATA[Положение страницы может быть изменено.]]></translation>
+        <translation language="de"><![CDATA[Die Position dieser Seite kann geändert werden.]]></translation>
+        <translation language="es"><![CDATA[La posición de esta página puede cambiarse.]]></translation>
+        <translation language="hu"><![CDATA[A pozíció az oldalon változtatható.]]></translation>
+        <translation language="el"><![CDATA[Η θέση αυτής της σελίδας μπορεί να αλλάξει.]]></translation>
+        <translation language="zh"><![CDATA[这个页面的位置可以改变。]]></translation>
+      </item>
+      <item type="message" name="BlockAttached">
+        <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
+        <translation language="en"><![CDATA[The module <strong>%1$s</strong> is attached to this section.]]></translation>
+        <translation language="it"><![CDATA[Il modulo <strong>%1$s</strong> è stato collegato a questa sezione.]]></translation>
+        <translation language="ru"><![CDATA[Модуль <strong>%1$s</strong> прикреплен к этой секции.]]></translation>
+        <translation language="zh"><![CDATA[模块<strong>%1$s”</strong>已附到这个部分。]]></translation>
+        <translation language="de"><![CDATA[Das Modul <strong>"%1$s"</strong> ist mit dieser Sektion verknüpft.]]></translation>
+        <translation language="fr"><![CDATA[Le module <strong>%1$s</strong> est rattaché à cette section.]]></translation>
+        <translation language="hu"><![CDATA[A(z) <strong>%1$s</strong> modul csatolva a szekcióhoz.]]></translation>
+        <translation language="es"><![CDATA[El módulo <strong>%1$s</strong> se adjunta a esta sección.]]></translation>
+        <translation language="uk"><![CDATA[Модуль <strong>%1$s</strong> закріплений до цієї секції]]></translation>
+        <translation language="el"><![CDATA[Η ενότητα <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de pagina "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the page "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare la pagina "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Удалить страницу "%1$s"?]]></translation>
+        <translation language="zh"><![CDATA[你确认要删除页面“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Soll die Seite "%1$s" wirklich gelöscht werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer la page "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" oldalt?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar la página "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε τη σελίδα "%1$s";]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteBlock">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze blok wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete this block?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare questo blocco?]]></translation>
+        <translation language="ru"><![CDATA[Удалить этот блок?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除这个内容阻止吗？]]></translation>
+        <translation language="de"><![CDATA[Soll dieser Block wirklich gelöscht werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer ce bloc?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törlöd ezt a blokkot?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar este bloque?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το μπλοκ;]]></translation>
+      </item>
+      <item type="message" name="ContentSaveWarning">
+        <translation language="nl"><![CDATA[<p><strong>Belangrijk:</strong> De inhoud wordt pas aangepast nadat de pagina wordt opgeslagen.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Important:</strong> This content will not be updated until the page has been saved.</p>]]></translation>
+        <translation language="it"><![CDATA[<p><strong>Importante:</strong> Questo contenuto non verrà aggiornato finché la pagina non verrà salvata.</p>]]></translation>
+        <translation language="ru"><![CDATA[<p><strong>Важно:</strong> Контент не будет изменен, пока изменения не будут сохранены.</p>]]></translation>
+        <translation language="zh"><![CDATA[<p><strong>重要提示：</strong>该页面保存后，内容才会更新。</p>]]></translation>
+        <translation language="de"><![CDATA[<p><strong> Wichtig:</strong>Änderungen werden erst mit dem Speichern der Seite übernommen.</p>]]></translation>
+        <translation language="fr"><![CDATA[<p><strong>Important:</strong> Ce contenu ne sera pas mis à jour avant l'enregistrement de la page.</p>]]></translation>
+        <translation language="hu"><![CDATA[<p><strong>Fontos:</strong> Ez a tartalom nem frissül, míg az oldalt nem mentetted.</p>]]></translation>
+        <translation language="es"><![CDATA[<p><strong>Importante:</strong> Este contenido no sera actualizado antes de que la página no sea guardada.</p>]]></translation>
+        <translation language="el"><![CDATA[<p><strong>Σημαντικό:</strong> Αυτό το περιεχόμενο δεν θα ενημερωθεί μέχρι να αποθηκευτεί η σελίδα.</p>]]></translation>
+      </item>
+      <item type="message" name="CopyAdded">
+        <translation language="nl"><![CDATA[Kopie toegevoegd]]></translation>
+        <translation language="en"><![CDATA[Copy added]]></translation>
+        <translation language="it"><![CDATA[Copia aggiunto]]></translation>
+        <translation language="ru"><![CDATA[Копировать добавил]]></translation>
+        <translation language="zh"><![CDATA[复制添加]]></translation>
+        <translation language="de"><![CDATA[Kopie hinzugefügt]]></translation>
+        <translation language="fr"><![CDATA[Copier ajoutée]]></translation>
+        <translation language="hu"><![CDATA[Copy hozzáadott]]></translation>
+        <translation language="es"><![CDATA[Copia añadido]]></translation>
+        <translation language="uk"><![CDATA[Копіювати додав]]></translation>
+        <translation language="lt"><![CDATA[Kopija pridėta]]></translation>
+        <translation language="el"><![CDATA[Το αντίγραφο προστέθηκε]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was deleted.]]></translation>
+        <translation language="it"><![CDATA[La pagina "%1$s" è stata eliminata.]]></translation>
+        <translation language="ru"><![CDATA[Страница "%1$s" удалена.]]></translation>
+        <translation language="zh"><![CDATA[页面“%1$s”已删除。]]></translation>
+        <translation language="de"><![CDATA[Die Seite "%1$s" wurde gelöscht]]></translation>
+        <translation language="fr"><![CDATA[La page "%1$s" a été effacée.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" oldal törölve.]]></translation>
+        <translation language="es"><![CDATA[La página "%1$s" ha sido eliminada.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα "%1$s" διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[La pagina "%1$s" è stata salvata.]]></translation>
+        <translation language="ru"><![CDATA[Страница "%1$s" изменена.]]></translation>
+        <translation language="zh"><![CDATA[页面“%1$s”已保存。]]></translation>
+        <translation language="de"><![CDATA[Die Seite "%1$s" wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[La page "%1$s" a été enregistrée.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" oldal elmentve.]]></translation>
+        <translation language="es"><![CDATA[La página "%1$s" ha sido guardada.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="FallbackInfo">
+        <translation language="nl"><![CDATA[<p><strong>Niet elk blok kon automatisch worden toegewezen aan een positie.</strong></p><p>Blokken die toegevoegd werden op posities die in deze template niet beschikbaar zijn worden hier weergegeven. Standaard-blokken uit de vorige template die niet voorkomen in de huidige template worden ook hier getoond.<br />Je kan deze eenvoudig verslepen naar de gewenste positie.</p><p>Deze blokken zullen vervallen bij het opslaan van de pagina of het kiezen van een andere template.</p>]]></translation>
+        <translation language="en"><![CDATA[<p><strong>Not every block could automatically be assigned to a position.</strong></p><p>Blocks that were added to positions that are not available in this template, are shown here. Default blocks from the previous template that are not present in the current template are also displayed here.<br />You can easily drag them to the desired position.</p><p>These blocks will disappear after saving the page or selecting another template.</p>]]></translation>
+        <translation language="it"><![CDATA[<p><strong>Non tutti i blocchi posso essere associati automaticamente ad una posizione.</strong></p><p>I blocchi che erano stati aggiunti a posizioni non disponibili in questo template, sono mostrati di seguito. Anche i blocchi del precedente template che non sono presenti nel template attuale sono mostrati qui.<br /> Puoi trascinarli facilmente nella posizione desiderata</p><p>Questo blocchi scompariranno dopo aver salvato la pagina o aver selezionato un altro template.</p>]]></translation>
+        <translation language="ru"><![CDATA[<p><strong>Не каждый блок автоматически прикрепляется к позиции.</strong></p><p>Скрытые блоки, привязанные к позициям, показаны здесь. Блоки от предыдущей версии шаблона, недоступные в этом шаблоне, так же показаны здесь.<br />Вы можете менять позицию, просто перетаскивая их.</p><p>Эти блоки исчезнут после сохранения или выбора другого шаблона.</p>]]></translation>
+        <translation language="zh"><![CDATA[<p><strong>不是每一个block(内容块）都能自动被应用到每一个位置</strong></p><p>Blocks（内容看如果被添加到模板中一个不可用的位置，将会在这里显示。来自上一个模板的默认的Block（内容块）若不能显示在当前的模板，也会在这里显示。<br />你可以轻松地拖拽他们到你想要的位置</p><p>这些内容块（blocks)将会在页面保存后或选择另一个可用模板后不在这里出现。</p>]]></translation>
+        <translation language="fr"><![CDATA[<p><strong>Tous les blocs ne sont pas automatiquement assignés à une position.</strong></p><p>Les blocs qui ont été assignés à des positions non disponibles dans ce template ne sont pas affichés ici. Les blocs par défaut du template précédent qui ne sont pas affichés ici sont aussi affichés ici.<br /> Vous pouvez facilement les déplacer vers la position désirée.</p><p>Ces blocs apparaitront après avoir enregistré la page ou choisi un autre template.</p>]]></translation>
+        <translation language="de"><![CDATA[<p><strong>Nicht jeder Block konnte automatisch einer Position zugewiesen werden.</strong></p><p>Blöcke, die Positionen zugeordnet waren, die in diesem Template nicht mehr existieren, werden hier gezeigt. Standardblöcke vom vorherigen Template, die in diesem Template nicht vorhanden sind werden auch hier gezeigt.<br /> Du kannst sie einfach an die gewünschte Position ziehen.</p><p>Diese Blöcke werden nach dem Speichern der Seite oder beim Auswählen eines anderen Temples verschwinden.</p>]]></translation>
+        <translation language="hu"><![CDATA[<p><strong>Nem minden blokk adható hozzá autómatikusan az adott pozícióhoz.</strong></p><p>A hozzáadott blokk nem érhető el a sablonban, ez látható. Az előző sablon alapértelmezett blokkjai nem jelennek meg a mostani sablonban.<br />Ezeket könnyen a kívánt helyre húzhatod.</p><p>Ezek a blokkok mentés után vagy másik sablon választáskor elünnek.</p>]]></translation>
+        <translation language="es"><![CDATA[<p><strong>No todos los bloques pudó asignarse a una posición automaticamente.</strong></p><p>Los bloques que fueron agregados a posiciones que no estan disponibles en esta plantilla se muestra aquí. Los bloques por defecto de la plantilla anterior que no estan presentes en esta plantilla también se muestran aquí.<br />Puedes arrastrarlos fácilmente a la posición deseada.</p><p>Estos bloques desaparecerán después de guardar esta página o seleccionar otra plantilla.</p>]]></translation>
+        <translation language="el"><![CDATA[<p><strong>Μερικά μπλοκ δεν μπορούν αυτόματα να ανατεθούν σε κάποια θέση.</strong></p><p>Εδώ εμφανίζονται τα μπλοκ που ανατέθηκαν σε θέσεις που δεν είναι διαθέσιμες σε αυτό το πρότυπο. Ακόμη φαίνονται εδώ τα εξορισμού μπλοκ από το προηγούμενο πρότυπο, που δεν υπάρχουν στο τρέχον πρότυπο.<br />Μπορείτε εύκολα να τα σύρετε στην επιθυμητή θέση.</p><p>Αυτά τα μπλοκ θα εξαφανισθούν όταν αποθηκεύσετε τη σελίδα ή επιλέξετε ένα άλλο πρότυπο.</p>]]></translation>
+      </item>
+      <item type="message" name="HelpBlockContent">
+        <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>
+        <translation language="en"><![CDATA[What kind of content do you want to show here?]]></translation>
+        <translation language="it"><![CDATA[Che tipo di contenuto vuoi mostrare qui?]]></translation>
+        <translation language="ru"><![CDATA[Какой вид контента будет отображен?]]></translation>
+        <translation language="zh"><![CDATA[你想在这里显示哪种类型的内容？]]></translation>
+        <translation language="de"><![CDATA[Welche Art von Inhalt möchtest du hier zeigen?]]></translation>
+        <translation language="fr"><![CDATA[Quel type de contenu souhaitez-vous afficher ici ?]]></translation>
+        <translation language="hu"><![CDATA[Milyen tartalmat szeretnél ide?]]></translation>
+        <translation language="es"><![CDATA[¿Qué tipo de contenido desea mostrar aquí?]]></translation>
+        <translation language="el"><![CDATA[Τι είδος περιεχομένου θέλετε να εμφανίζεται εδώ;]]></translation>
+      </item>
+      <item type="message" name="HelpExternalRedirect">
+        <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een externe website.]]></translation>
+        <translation language="en"><![CDATA[Use this if you need to redirect a menu-item to an external website.]]></translation>
+        <translation language="it"><![CDATA[Utilizza questo campo se necessiti di linkare un elemento del menu su un sito web esterno.]]></translation>
+        <translation language="ru"><![CDATA[Ссылка в меню с ссылкой на другой сайт.]]></translation>
+        <translation language="zh"><![CDATA[在主导航项目中添加一个外部网站链接。]]></translation>
+        <translation language="de"><![CDATA[Hiermit kannst du mit einem Menüpunkt zu einer externen Seite linken.]]></translation>
+        <translation language="fr"><![CDATA[Utilisez ceci si vous souhaitez lier un élément de menu à un site externe.]]></translation>
+        <translation language="hu"><![CDATA[Használd ezt, ha a menü-elemet külső linkre akarod átirányítani.]]></translation>
+        <translation language="es"><![CDATA[Ua esto si tienes que redirigir un elemento del menú al un sitio web externo.]]></translation>
+        <translation language="el"><![CDATA[Χρησιμοποιήστε αυτό αν θέλετε να ανακατευθύνετε μία επιλογή του μενού σε εξωτερικό ιστοχώρο.]]></translation>
+      </item>
+      <item type="message" name="HelpInternalRedirect">
+        <translation language="nl"><![CDATA[Hiermee kan je een item in het menu laten doorverwijzen naar een andere pagina binnen de website.]]></translation>
+        <translation language="en"><![CDATA[Use this if you need to redirect a menu-item to another page on this website.]]></translation>
+        <translation language="it"><![CDATA[Usa questo campo se necessiti di linkare un elemento del menu ad una pagina interna del sito.]]></translation>
+        <translation language="ru"><![CDATA[Ссылка в меню с ссылкой на внутреннюю страницу.]]></translation>
+        <translation language="zh"><![CDATA[在主导航项目中添加一个网站中的页面链接。]]></translation>
+        <translation language="de"><![CDATA[Hiermit kannst du einen Menüpunkt zu einer anderen Seite dieser Website verlinken (interne Links).]]></translation>
+        <translation language="fr"><![CDATA[Utilisez ceci si vous avez besoin de rediriger un élément de menu vers une autre page du site.]]></translation>
+        <translation language="hu"><![CDATA[Használd ezt, ha a menü-elemet ezen az oldalon akarod másik lapra átirányítani.]]></translation>
+        <translation language="es"><![CDATA[Usa esto si tienes que redirigir un elemento de menú a otra página en este sitio web.]]></translation>
+        <translation language="el"><![CDATA[Χρησιμοποιήστε αυτό αν θέλετε να ανακατευθύνετε μία επιλογή του μενού σε μιά άλλη σελίδα αυτού του ιστοχώρου.]]></translation>
+      </item>
+      <item type="message" name="HelpMetaNavigation">
+        <translation language="nl"><![CDATA[Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.]]></translation>
+        <translation language="en"><![CDATA[Extra topnavigation (above/below the menu) on every page.]]></translation>
+        <translation language="it"><![CDATA[Navigazione superiore extra (sopra/sotto il menu) su tutte le pagine.]]></translation>
+        <translation language="ru"><![CDATA[Дополнительная навигация на каждой странице (до/после меню).]]></translation>
+        <translation language="zh"><![CDATA[在每个页面使用额外的顶部导航（可以在主导航的上方或下方）。]]></translation>
+        <translation language="de"><![CDATA[Zusätzliche Top-Navigation (über/unter dem Hauptmenü) auf jeder Seite.]]></translation>
+        <translation language="fr"><![CDATA[Navigation en extra en haut de page (à côté, en dessous du menu) sur chaque page.]]></translation>
+        <translation language="hu"><![CDATA[Extra topnavigation (fenti/lenti menüben) minden oldalon.]]></translation>
+        <translation language="es"><![CDATA[Navegación superior extra (encima/debajo del menú) en cada página.]]></translation>
+        <translation language="el"><![CDATA[Επιπλέον άνω πλοήγηση (πάνω ή κάτω από το μενού), σε κάθε σελίδα.]]></translation>
+      </item>
+      <item type="message" name="HelpNavigationTitle">
+        <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
+        <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
+        <translation language="it"><![CDATA[Il titolo mostrato nel menu.]]></translation>
+        <translation language="ru"><![CDATA[Заголовок меню.]]></translation>
+        <translation language="zh"><![CDATA[标题在菜单里显示。]]></translation>
+        <translation language="de"><![CDATA[Der Titel, der im Menü angezeigt wird.]]></translation>
+        <translation language="fr"><![CDATA[Le titre affiché dans le menu.]]></translation>
+        <translation language="hu"><![CDATA[A cím, amely megjelenik a menüben.]]></translation>
+        <translation language="es"><![CDATA[El título que se muestra en el menú.]]></translation>
+        <translation language="el"><![CDATA[Ο τίτλος ποιυ εμφανίζεται στο μενού.]]></translation>
+      </item>
+      <item type="message" name="HomeNoBlock">
+        <translation language="nl"><![CDATA[Er kan geen module gekoppeld worden aan de home-pagina.]]></translation>
+        <translation language="en"><![CDATA[A module can't be linked to the homepage.]]></translation>
+        <translation language="it"><![CDATA[Un modulo non può essere collegato all'homepage.]]></translation>
+        <translation language="ru"><![CDATA[Модуль не может быть прикреплен к главной странице.]]></translation>
+        <translation language="zh"><![CDATA[一个模块无法连接到首页。]]></translation>
+        <translation language="de"><![CDATA[Es kann kein Modul mit der Startseite verknüpft werden.]]></translation>
+        <translation language="fr"><![CDATA[Un module ne peut pas être relié à la homepage]]></translation>
+        <translation language="hu"><![CDATA[A modul nem kapcsolódik a honlaphoz.]]></translation>
+        <translation language="es"><![CDATA[Un módulo no puede ser vinculado a la página principal.]]></translation>
+        <translation language="el"><![CDATA[Μία ενότητα δεν μπορεί να συνδεθεί με την Αρχική Σελίδα.]]></translation>
+      </item>
+      <item type="message" name="IsAction">
+        <translation language="nl"><![CDATA[Gebruik deze pagina als module-actie.]]></translation>
+        <translation language="en"><![CDATA[Use this page as a module action.]]></translation>
+        <translation language="it"><![CDATA[Usa questa pagina come azione del modulo.]]></translation>
+        <translation language="ru"><![CDATA[Использовать страницу как страницу для модуля.]]></translation>
+        <translation language="zh"><![CDATA[将这个页面作为一个模块使用。]]></translation>
+        <translation language="de"><![CDATA[Benutze diese Seite als Modul-Aktion.]]></translation>
+        <translation language="fr"><![CDATA[Utiliser cette page comme action de module.]]></translation>
+        <translation language="hu"><![CDATA[Használd az oldalt modulként.]]></translation>
+        <translation language="es"><![CDATA[Usar está página como acción del módulo.]]></translation>
+        <translation language="el"><![CDATA[Χρησιμοποίησε αυτή τη σελίδα ως ενέργεια μιάς ενότητας.]]></translation>
+      </item>
+      <item type="message" name="MetaNavigation">
+        <translation language="nl"><![CDATA[Metanavigatie inschakelen voor deze website.]]></translation>
+        <translation language="en"><![CDATA[Enable metanavigation for this website.]]></translation>
+        <translation language="it"><![CDATA[Abilita meta navigazione per questo sito.]]></translation>
+        <translation language="ru"><![CDATA[Включить Мета навигацию.]]></translation>
+        <translation language="zh"><![CDATA[允许在这个网站使用元数据导航。]]></translation>
+        <translation language="de"><![CDATA[Meta-Navigation für diese Seite aktivieren.]]></translation>
+        <translation language="fr"><![CDATA[Activer la navigation meta pour ce site.]]></translation>
+        <translation language="hu"><![CDATA[A metanavigation engedélyezése az oldalon.]]></translation>
+        <translation language="es"><![CDATA[activar meta navegación para este sitio web.]]></translation>
+        <translation language="el"><![CDATA[Ενεργοποίησε τη μετα-πλοήγηση για αυτόν τον ιστοχώρο.]]></translation>
+      </item>
+      <item type="message" name="ModuleBlockAlreadyLinked">
+        <translation language="nl"><![CDATA[Er werd reeds een module gekoppeld aan deze pagina.]]></translation>
+        <translation language="en"><![CDATA[A module has already been linked to this page.]]></translation>
+        <translation language="it"><![CDATA[Un modulo è già stato collegato a questa pagina.]]></translation>
+        <translation language="ru"><![CDATA[Модуль уже привязан к этой странице.]]></translation>
+        <translation language="zh"><![CDATA[一个模块已经链接到这个页面。]]></translation>
+        <translation language="de"><![CDATA[Es wurde bereits ein Modul mit dieser Seite verbunden.]]></translation>
+        <translation language="fr"><![CDATA[Un module a déjà été relié à cette page.]]></translation>
+        <translation language="hu"><![CDATA[A modul már kapcsolódik az oldalhoz.]]></translation>
+        <translation language="es"><![CDATA[Un módulo ya ha sido vinculado a esta página.]]></translation>
+        <translation language="el"><![CDATA[Μία ενότητα έχει ήδη συνδεθεί με αυτή τη σελίδα.]]></translation>
+      </item>
+      <item type="message" name="PageIsMoved">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd verplaatst.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was moved.]]></translation>
+        <translation language="it"><![CDATA[La pagina "%1$s" è stata modificata.]]></translation>
+        <translation language="ru"><![CDATA[Страница "%1$s" перемещена.]]></translation>
+        <translation language="zh"><![CDATA[页面“%1$s”已移动。]]></translation>
+        <translation language="de"><![CDATA[Die Seite "%1$s" wurde verschoben.]]></translation>
+        <translation language="fr"><![CDATA[La page  "%1$s" a été déplacée.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" oldal áthelyezve.]]></translation>
+        <translation language="es"><![CDATA[La página "%1$s" ha sido movida.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα "%1$s" έχει μετακινηθεί.]]></translation>
+      </item>
+      <item type="message" name="RichText">
+        <translation language="nl"><![CDATA[Editor]]></translation>
+        <translation language="en"><![CDATA[Editor]]></translation>
+        <translation language="it"><![CDATA[Editor]]></translation>
+        <translation language="ru"><![CDATA[Редактор]]></translation>
+        <translation language="zh"><![CDATA[编辑器]]></translation>
+        <translation language="fr"><![CDATA[Editeur]]></translation>
+        <translation language="de"><![CDATA[Editor]]></translation>
+        <translation language="hu"><![CDATA[Szerkesztő]]></translation>
+        <translation language="es"><![CDATA[Editor]]></translation>
+        <translation language="el"><![CDATA[Επεξεργαστής κειμένου]]></translation>
+      </item>
+      <item type="message" name="TemplateChangeWarning">
+        <translation language="nl"><![CDATA[<strong>Let op:</strong> Het wijzigen van de template kan als gevolg hebben dat je inhoud op een andere plaats staat niet langer getoond wordt.]]></translation>
+        <translation language="en"><![CDATA[<strong>Warning:</strong> Changing the template can cause existing content to be in another place or no longer be shown.]]></translation>
+        <translation language="it"><![CDATA[<strong>Attenzione:</strong> Modificando il template il contenuto esistente potrebbe essere spostato o non più visualizzato.]]></translation>
+        <translation language="ru"><![CDATA[<strong>Внимание:</strong> Изменение шаблона может стать причиной того, что контент больше не будет показываться, или будет перемещен.]]></translation>
+        <translation language="zh"><![CDATA[<strong>警告：</strong> Changing the template can cause existing content to be in another place or no longer be shown.改变模板会使已存在的内容位置发生变化或不再显示。]]></translation>
+        <translation language="de"><![CDATA[<strong>Warnung:</strong> Bei einem Templatewechsel kann existierender Inhalt an einem anderen Ort landen oder nicht länger sichtbar sein.]]></translation>
+        <translation language="fr"><![CDATA[<strong>Avertissement:</strong> Changer le template peut causer des problèmes de position ou d'affichage du contenu existant.]]></translation>
+        <translation language="hu"><![CDATA[<strong>Figyelmeztetés:</strong> A megváltozott sablon másik helyre mutat vagy nem létezik.]]></translation>
+        <translation language="es"><![CDATA[<strong>Atención:</strong> Cambiar la plantilla puede hacer que el contenido existente esté en otro lugar o que ya no se muestre.]]></translation>
+        <translation language="el"><![CDATA[<strong>Προσοχή:</strong> Αν αλλάξετε το πρότυπο μπορεί το υπάρχον περιεχόμενο να εμφανισθεί σε άλλη περιοχή ή και να μη φαίνεται καθόλου.]]></translation>
+      </item>
+      <item type="message" name="WidgetAttached">
+        <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
+        <translation language="en"><![CDATA[The widget <strong>%1$s</strong> is attached to this section.]]></translation>
+        <translation language="it"><![CDATA[Il widget <strong>%1$s</strong> è stato collegato a questa sezione.]]></translation>
+        <translation language="ru"><![CDATA[Виджет <strong>%1$s</strong> привязан к этой секции.]]></translation>
+        <translation language="zh"><![CDATA[小工具<strong>%1$s</strong>已经附到这个部分。]]></translation>
+        <translation language="de"><![CDATA[Das Widget <strong>%1$s%</strong> ist mit dieser Sektion verknüpft.]]></translation>
+        <translation language="fr"><![CDATA[Le widget <strong>%1$s</strong> est rattaché à cette section.]]></translation>
+        <translation language="hu"><![CDATA[A(z) <strong>%1$s</strong> widget csatolva a szekcióhoz.]]></translation>
+        <translation language="es"><![CDATA[El widget <strong>%1$s</strong> is attached to this section.]]></translation>
+        <translation language="el"><![CDATA[Η μικροεφαρμογή <strong>%1$s</strong> είναι συνημμένη σε αυτό το τμήμα.]]></translation>
+      </item>
+      <item type="error" name="CantAdd2Blocks">
+        <translation language="nl"><![CDATA[Het is onmogelijk om 2 (of meer) modules aan dezelfde pagina te koppelen.]]></translation>
+        <translation language="en"><![CDATA[It isn't possible to link 2 (or more) modules to the same page.]]></translation>
+        <translation language="it"><![CDATA[Non è possibile collegare 2 (o più) moduli alla stessa pagina.]]></translation>
+        <translation language="ru"><![CDATA[Нельзя добавить 2 блока (или более).]]></translation>
+        <translation language="zh"><![CDATA[不能链接两个或两个以上的模块到同一个页面。]]></translation>
+        <translation language="de"><![CDATA[Es ist nicht möglich mehrere Module mit der selben Seite zu verknüpfen.]]></translation>
+        <translation language="fr"><![CDATA[Il n'est pas possible de lier 2 modules (ou plus) à la même page.]]></translation>
+        <translation language="hu"><![CDATA[Nem lehet összekapcsolni 2 (vagy több) modult ugyanazon az oldalon.]]></translation>
+        <translation language="es"><![CDATA[No es posible enlazar 2 (o más) más modulos a la misma pagina.]]></translation>
+        <translation language="el"><![CDATA[Δεν είναι δυνατόν να συνδέσετε 2 (ή περισσότερες) ενότητες με την ίδια σελίδα.]]></translation>
+      </item>
+      <item type="error" name="CantBeMoved">
+        <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
+        <translation language="en"><![CDATA[Page can't be moved.]]></translation>
+        <translation language="it"><![CDATA[La pagina non può essere spostata.]]></translation>
+        <translation language="ru"><![CDATA[Нельзя переместить страницу.]]></translation>
+        <translation language="zh"><![CDATA[页面无法移动。]]></translation>
+        <translation language="de"><![CDATA[Diese Seite kann nicht verschoben werden.]]></translation>
+        <translation language="fr"><![CDATA[La page ne peut pas être déplacée.]]></translation>
+        <translation language="hu"><![CDATA[Az oldalt nem lehet áthelyezni.]]></translation>
+        <translation language="es"><![CDATA[La página no puede ser movida.]]></translation>
+        <translation language="el"><![CDATA[Η σελίδα δεν μπορεί να μετακινηθεί.]]></translation>
+      </item>
+      <item type="error" name="HomeCantHaveBlocks">
+        <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
+        <translation language="en"><![CDATA[You can't link a module to the homepage.]]></translation>
+        <translation language="it"><![CDATA[Non si può collegare un modulo all'homepage.]]></translation>
+        <translation language="ru"><![CDATA[Вы не можете устанавливать модули на главную страницу.]]></translation>
+        <translation language="zh"><![CDATA[你不能链接一个模块到首页。]]></translation>
+        <translation language="de"><![CDATA[Du kannst kein Modul mit der Startseite verknüpfen.]]></translation>
+        <translation language="fr"><![CDATA[Vous ne pouvez pas lier un module à la homepage.]]></translation>
+        <translation language="hu"><![CDATA[Nem kapcsolható össze a modul a honlappal.]]></translation>
+        <translation language="es"><![CDATA[No puedes vincular un módulo a la página principal.]]></translation>
+        <translation language="el"><![CDATA[Δεν επιτρέπεται να συνδέσετε μία ενότητα με την Αρχική Σελίδα.]]></translation>
+      </item>
+    </Pages>
+  </Backend>
+  <Frontend>
+    <Core>
+      <item type="label" name="Parent">
+        <translation language="nl"><![CDATA[ouder]]></translation>
+        <translation language="en"><![CDATA[parent]]></translation>
+        <translation language="ru"><![CDATA[родитель]]></translation>
+      </item>
+    </Core>
+  </Frontend>
+</locale>
