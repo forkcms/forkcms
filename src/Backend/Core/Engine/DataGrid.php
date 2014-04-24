@@ -215,7 +215,7 @@ class DataGrid extends \SpoonDataGrid
             if (array_search($column, $allColumns) !== false) {
                 $this->setColumnHidden($column);
                 $this->setRowFunction(
-                    array(new DatagridFunctions(), 'greyOut'),
+                    array(new DataGridFunctions(), 'greyOut'),
                     array($column, '[' . $column . ']'),
                     array($column)
                 );

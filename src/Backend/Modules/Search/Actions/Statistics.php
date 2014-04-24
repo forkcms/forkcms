@@ -11,7 +11,7 @@ namespace Backend\Modules\Search\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
-use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 

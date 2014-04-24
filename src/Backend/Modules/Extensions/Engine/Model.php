@@ -14,7 +14,7 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Exception;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;

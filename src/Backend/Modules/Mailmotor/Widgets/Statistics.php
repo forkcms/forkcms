@@ -12,7 +12,7 @@ namespace Backend\Modules\Mailmotor\Widgets;
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DatagridArray as BackendDataGridArray;
-use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;

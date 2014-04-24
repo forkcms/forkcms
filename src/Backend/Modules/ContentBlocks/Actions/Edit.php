@@ -15,7 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
-use Backend\Core\Engine\DatagridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
