@@ -178,7 +178,7 @@ class Installer extends ModuleInstaller
             'N',
             1002
         );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
+        $extras['blog_widget_archive'] = $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
         $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
             'Blog',
             'widget',
