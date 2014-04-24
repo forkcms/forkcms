@@ -51,5 +51,5 @@
 			</article>
 		{/iteration:items}
 	</section>
-	{include:core/Layout/Templates/Pagination.tpl}
+	{include:Core/Layout/Templates/Pagination.tpl}
 {/option:items}
