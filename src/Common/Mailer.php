@@ -204,7 +204,7 @@ class Mailer
             'SELECT e.id
              FROM emails AS e
              WHERE e.send_on < ? OR e.send_on IS NULL',
-            array(BackendModel::getUTCDate())
+            array(Model::getUTCDate())
         );
     }
 
