@@ -463,8 +463,12 @@ class Page extends FrontendBaseObject
                     // block
                     if ($block['extra_type'] == 'block') {
                         // create new instance
-                        $extra = new FrontendBlockExtra($this->getKernel(
-                        ), $block['extra_module'], $block['extra_action'], $block['extra_data']);
+                        $extra = new FrontendBlockExtra(
+                            $this->getKernel(),
+                            $block['extra_module'],
+                            $block['extra_action'],
+                            $block['extra_data']
+                        );
 
                         if (extension_loaded('newrelic')) {
                             newrelic_name_transaction($block['extra_module'] . '::' . $block['extra_action']);

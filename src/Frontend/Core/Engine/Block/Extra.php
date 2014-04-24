@@ -175,7 +175,7 @@ class Extra extends FrontendBaseObject
                 // loop possible actions
                 foreach ($this->config->getPossibleActions() as $actionName) {
                     // get action that should be passed as parameter
-                    $actionURL = urlencode(FL::act(\SpoonFilter::toCamelCase($actionName)));
+                    $actionURL = \SpoonFilter::toCamelCase(urlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
 
                     // the action is the requested one
                     if ($actionURL == $actionParameter) {
