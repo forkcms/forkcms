@@ -130,11 +130,11 @@ class Config extends \KernelLoader
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
         $fs = new Filesystem();
 
-        if ($fs->exists($frontendModulePath . '/actions')) {
+        if ($fs->exists($frontendModulePath . '/Actions')) {
             // get regular actions
             $finder = new Finder();
             $finder->name('*.php');
-            foreach ($finder->files()->in($frontendModulePath . '/actions') as $file) {
+            foreach ($finder->files()->in($frontendModulePath . '/Actions') as $file) {
                 /** @var $file \SplFileInfo */
                 $action = $file->getBasename('.php');
                 if (!in_array($action, $this->disabledActions)) {
@@ -143,11 +143,11 @@ class Config extends \KernelLoader
             }
         }
 
-        if ($fs->exists($frontendModulePath . '/ajax')) {
+        if ($fs->exists($frontendModulePath . '/Ajax')) {
             // get ajax-actions
             $finder = new Finder();
             $finder->name('*.php');
-            foreach ($finder->files()->in($frontendModulePath . '/ajax') as $file) {
+            foreach ($finder->files()->in($frontendModulePath . '/Ajax') as $file) {
                 /** @var $file \SplFileInfo */
                 $action = $file->getBasename('.php');
                 if (!in_array($action, $this->disabledAJAXActions)) {
