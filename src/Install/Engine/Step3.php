@@ -64,7 +64,10 @@ class Step3 extends Step
                      'variables' => array('single' => true)
                  )
             ),
-            (\SpoonSession::exists('multiple_languages') && \SpoonSession::get('multiple_languages')) ? 'multiple' : 'single'
+            (
+                \SpoonSession::exists('multiple_languages') &&
+                \SpoonSession::get('multiple_languages')
+            ) ? 'multiple' : 'single'
         );
 
         // multiple languages (frontend)
