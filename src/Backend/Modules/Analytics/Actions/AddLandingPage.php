@@ -35,7 +35,8 @@ class AddLandingPage extends BackendBaseActionAdd
      *
      * @var	int
      */
-    private $startTimestamp, $endTimestamp;
+    private $startTimestamp;
+    private $endTimestamp;
 
     /**
      * Execute the action
@@ -63,7 +64,7 @@ class AddLandingPage extends BackendBaseActionAdd
 
         // create elements
         $this->frm->addText('page_path');
-        if(!empty($this->linkList)) {
+        if (!empty($this->linkList)) {
             $this->frm->addDropdown('page_list', $this->linkList);
             $this->frm->getField('page_list')->setDefaultElement('', 0);
         }
@@ -85,24 +86,36 @@ class AddLandingPage extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // shorten values
             $pagePath = $this->frm->getField('page_path')->getValue();
-            if(count($this->linkList) > 1) $pageList = $this->frm->getField('page_list')->getSelected();
+            if (count($this->linkList) > 1) {
+                $pageList = $this->frm->getField('page_list')->getSelected();
+            }
 
             // get the target
-            if($this->frm->getfield('page_path')->isFilled()) $page = $pagePath;
-            elseif($pageList == '0') $page = null;
-            else $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
+            if ($this->frm->getfield('page_path')->isFilled()) {
+                $page = $pagePath;
+            } elseif ($pageList == '0') {
+                $page = null;
+            } else {
+                $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
+            }
 
             // validate fields
-            if(isset($page) && !\SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
-            if(!isset($page)) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
-            if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
+            if (isset($page) && !\SpoonFilter::isURL(SITE_URL . $page)) {
+                $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
+            }
+            if (!isset($page)) {
+                $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
+            }
+            if (!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) {
+                $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
+            }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // get metrics
                 $metrics = BackendAnalyticsHelper::getMetricsForPage($page, $this->startTimestamp, $this->endTimestamp);
 
@@ -110,7 +123,10 @@ class AddLandingPage extends BackendBaseActionAdd
                 $item['page_path'] = $page;
                 $item['entrances'] = (isset($metrics['entrances']) ? $metrics['entrances'] : 0);
                 $item['bounces'] = (isset($metrics['bounces']) ? $metrics['bounces'] : 0);
-                $item['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) . '%';
+                $item['bounce_rate'] = ($metrics['entrances'] == 0 ?
+                    0 :
+                    number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) . '%'
+                ;
                 $item['start_date'] = date('Y-m-d', $this->startTimestamp) . ' 00:00:00';
                 $item['end_date'] = date('Y-m-d', $this->endTimestamp) . ' 00:00:00';
                 $item['updated_on'] = date('Y-m-d H:i:s');
@@ -122,7 +138,10 @@ class AddLandingPage extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_landing_page', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('LandingPages') . '&report=saved&var=' . urlencode($item['page_path']));
+                $this->redirect(
+                    BackendModel::createURLForAction('LandingPages') .
+                    '&report=saved&var=' . urlencode($item['page_path'])
+                );
             }
         }
     }

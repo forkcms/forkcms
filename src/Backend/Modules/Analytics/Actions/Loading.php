@@ -34,7 +34,8 @@ class Loading extends BackendAnalyticsBase
      *
      * @var	string
      */
-    private $redirectAction, $identifier;
+    private $redirectAction;
+    private $identifier;
 
     /**
      * Execute the action
@@ -59,7 +60,7 @@ class Loading extends BackendAnalyticsBase
         $force = \SpoonFilter::getGetValue('force', null, '');
 
         // no id set but we have a path
-        if($this->pageId == '' && $this->pagePath != '') {
+        if ($this->pageId == '' && $this->pagePath != '') {
             // get page for path
             $page = BackendAnalyticsModel::getPageByPath($this->pagePath);
 
@@ -70,7 +71,9 @@ class Loading extends BackendAnalyticsBase
         // build url
         $URL = SITE_URL . '/src/Backend/Cronjob.php?module=Analytics&action=GetData&id=1';
         $URL .= '&page=' . $this->redirectAction;
-        if($this->pageId != '') $URL .= '&page_id=' . $this->pageId;
+        if ($this->pageId != '') {
+            $URL .= '&page_id=' . $this->pageId;
+        }
         $URL .= '&identifier=' . $this->identifier;
         $URL .= '&start_date=' . $this->startTimestamp;
         $URL .= '&end_date=' . $this->endTimestamp;
@@ -79,7 +82,9 @@ class Loading extends BackendAnalyticsBase
         // set options
         $options = array();
         $options[CURLOPT_URL] = $URL;
-        if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
+        if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) {
+            $options[CURLOPT_FOLLOWLOCATION] = true;
+        }
         $options[CURLOPT_RETURNTRANSFER] = true;
         $options[CURLOPT_TIMEOUT] = 1;
 
@@ -107,12 +112,12 @@ class Loading extends BackendAnalyticsBase
         $data['identifier'] = ($this->pageId != '' ? $this->pageId . '_' : '') . $this->identifier;
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction($this->redirectAction, $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction($this->redirectAction, $this->getModule())) {
             $data['redirect'] = BackendModel::createURLForAction($this->redirectAction);
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Settings', $this->getModule())) {
+        if (BackendAuthentication::isAllowedAction('Settings', $this->getModule())) {
             $data['settingsUrl'] = BackendModel::createURLForAction('Settings');
         }
 

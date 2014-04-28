@@ -42,13 +42,13 @@ class LandingPages extends BackendAnalyticsBase
         parent::parse();
 
         $results = BackendAnalyticsModel::getLandingPages($this->startTimestamp, $this->endTimestamp);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
             $dataGrid->setMassActionCheckboxes('checkbox', '[id]');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 

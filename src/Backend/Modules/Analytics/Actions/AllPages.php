@@ -64,14 +64,14 @@ class AllPages extends BackendAnalyticsBase
 
         $metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-        foreach($metrics as $i => $metric) {
+        foreach ($metrics as $i => $metric) {
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
             $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
             $graphData[$i]['i'] = $i + 1;
             $graphData[$i]['data'] = array();
 
-            foreach($metricsPerDay as $j => $data) {
+            foreach ($metricsPerDay as $j => $data) {
                 // cast SimpleXMLElement to array
                 $data = (array) $data;
 
@@ -82,10 +82,12 @@ class AllPages extends BackendAnalyticsBase
         }
 
         // loop the metrics
-        foreach($graphData as $metric) {
-            foreach($metric['data'] as $data) {
+        foreach ($graphData as $metric) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 
@@ -105,12 +107,16 @@ class AllPages extends BackendAnalyticsBase
 
         // are there some values?
         $dataAvailable = false;
-        foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+        foreach ($resultsTotal as $data) {
+            if ($data != 0) {
+                $dataAvailable = true;
+            }
+        }
 
         // show message if there is no data
         $this->tpl->assign('dataAvailable', $dataAvailable);
 
-        if(!empty($results)) {
+        if (!empty($results)) {
             // pageviews percentage of total
             $pageviewsPercentageOfTotal = ($results['pageviews'] == 0) ? 0 : number_format(($results['allPagesPageviews'] / $results['pageviews']) * 100, 0);
 
@@ -121,19 +127,25 @@ class AllPages extends BackendAnalyticsBase
             $timeOnSite = ($results['entrances'] == 0) ? 0 : ($results['timeOnSite'] / $results['entrances']);
             $timeOnSiteTotal = ($resultsTotal['entrances'] == 0) ? 0 : ($resultsTotal['timeOnSite'] / $resultsTotal['entrances']);
             $timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 0);
-            if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+' . $timeOnSiteDifference;
+            if ($timeOnSiteDifference > 0) {
+                $timeOnSiteDifference = '+' . $timeOnSiteDifference;
+            }
 
             // bounces
             $bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
             $bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
             $bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-            if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
+            if ($bouncesDifference > 0) {
+                $bouncesDifference = '+' . $bouncesDifference;
+            }
 
             // exits percentage
             $exitsPercentage = ($results['allPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['allPagesPageviews']) * 100, 0);
             $exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
             $exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
-            if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
+            if ($exitsPercentageDifference > 0) {
+                $exitsPercentageDifference = '+' . $exitsPercentageDifference;
+            }
 
             $this->tpl->assign('timeOnSite', BackendAnalyticsModel::getTimeFromSeconds($timeOnSite));
             $this->tpl->assign('timeOnSiteTotal', BackendAnalyticsModel::getTimeFromSeconds($timeOnSiteTotal));
@@ -157,13 +169,13 @@ class AllPages extends BackendAnalyticsBase
     private function parsePages()
     {
         $results = BackendAnalyticsModel::getPages($this->startTimestamp, $this->endTimestamp);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
             }
 
