@@ -98,7 +98,9 @@ class ResetPassword extends BackendBaseActionAdd
             }
 
             // check if the provided key matches the one in the user record
-            if ($this->key === $this->user->getSetting('reset_password_key')) return true;
+            if ($this->key === $this->user->getSetting('reset_password_key')) {
+                return true;
+            }
         }
 
         // if we made it here the user is not allowed to access this page

@@ -30,7 +30,7 @@ class Index extends BackendBaseActionIndex
      *
      * @var	BackendForm
      */
-    private $frm
+    private $frm;
     private $frmForgotPassword;
 
     /**
@@ -102,7 +102,9 @@ class Index extends BackendBaseActionIndex
             // invalid form-token?
             if ($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
                 // set a correct header, so bots understand they can't mess with us.
-                if (!headers_sent()) header('400 Bad Request', true, 400);
+                if (!headers_sent()) {
+                    header('400 Bad Request', true, 400);
+                }
             }
 
             // get the user's id
@@ -126,7 +128,9 @@ class Index extends BackendBaseActionIndex
                     \SpoonSession::set('backend_login_attempts', ++$current);
 
                     // save the failed login attempt in the user's settings
-                    if ($userId !== false) BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
+                    if ($userId !== false) {
+                        BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
+                    }
 
                     // show error
                     $this->tpl->assign('hasError', true);
@@ -147,7 +151,9 @@ class Index extends BackendBaseActionIndex
                     sleep($timeout);
 
                     // set a correct header, so bots understand they can't mess with us.
-                    if (!headers_sent()) header('503 Service Unavailable', true, 503);
+                    if (!headers_sent()) {
+                        header('503 Service Unavailable', true, 503);
+                    }
                 } else {
                     // increment and store
                     \SpoonSession::set('backend_last_attempt', time());
@@ -174,21 +180,25 @@ class Index extends BackendBaseActionIndex
                 // save the login timestamp in the user's settings
                 $lastLogin = BackendUsersModel::getSetting($userId, 'current_login');
                 BackendUsersModel::setSetting($userId, 'current_login', time());
-                if ($lastLogin) BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
+                if ($lastLogin) {
+                    BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
+                }
 
                 // create filter with modules which may not be displayed
-                $filter = array('authentication', 'error', 'core');
+                $filter = array('Authentication', 'Error', 'Core');
 
                 // get all modules
                 $modules = array_diff(BackendModel::getModules(), $filter);
 
                 // redirect to the dashboard module if possible
-                if (BackendAuthentication::isAllowedModule('dashboard')) $module = 'dashboard';
-
-                // if not allowed in the dashboard, redirect to the first allowed module
-                else {
+                if (BackendAuthentication::isAllowedModule('Dashboard')) {
+                    $module = 'Dashboard';
+                } else {
+                    // if not allowed in the dashboard, redirect to the first allowed module
                     foreach ($modules as $module) {
-                        if (BackendAuthentication::isAllowedModule($module)) break;
+                        if (BackendAuthentication::isAllowedModule($module)) {
+                            break;
+                        }
                     }
                 }
 
@@ -209,7 +219,9 @@ class Index extends BackendBaseActionIndex
             // required fields
             if ($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
                 // check if there is a user with the given emailaddress
-                if (!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                if (!BackendUsersModel::existsEmail($email)) {
+                    $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                }
             }
 
             // no errors in the form?
@@ -237,10 +249,8 @@ class Index extends BackendBaseActionIndex
 
                 // show form
                 $this->tpl->assign('showForm', true);
-            }
-
-            // errors?
-            else {
+            } else {
+                // errors?
                 $this->tpl->assign('showForm', true);
             }
         }
