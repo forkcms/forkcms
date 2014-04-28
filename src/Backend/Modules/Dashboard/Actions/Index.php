@@ -82,7 +82,9 @@ class Index extends BackendBaseActionIndex
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBaseName('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
-                    if ($module == 'Core') $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                    if ($module == 'Core') {
+                        $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                    }
 
                     if (!class_exists($className)) {
                         throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
@@ -92,20 +94,26 @@ class Index extends BackendBaseActionIndex
                     $present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
 
                     // if not present, continue
-                    if (!$present) continue;
+                    if (!$present) {
+                        continue;
+                    }
 
                     // create instance
                     /** @var $instance BackendBaseWidget */
                     $instance = new $className($this->getKernel());
 
                     // has rights
-                    if (!$instance->isAllowed()) continue;
+                    if (!$instance->isAllowed()) {
+                        continue;
+                    }
 
                     // hidden?
                     $hidden = (isset($userSequence[$module][$widgetName]['hidden'])) ? $userSequence[$module][$widgetName]['hidden'] : false;
 
                     // execute instance if it is not hidden
-                    if (!$hidden) $instance->execute();
+                    if (!$hidden) {
+                        $instance->execute();
+                    }
 
                     // user sequence provided?
                     $column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
@@ -130,15 +138,18 @@ class Index extends BackendBaseActionIndex
                     // add on new position if no position is set or if the position is already used
                     if ($position === null || isset($this->widgets[$column][$position])) {
                         $this->widgets[$column][] = $item;
+                    } else {
+                        // add on requested position
+                        $this->widgets[$column][$position] = $item;
                     }
-                    // add on requested position
-                    else $this->widgets[$column][$position] = $item;
                 }
             }
         }
 
         // sort the widgets
-        foreach ($this->widgets as &$column) ksort($column);
+        foreach ($this->widgets as &$column) {
+            ksort($column);
+        }
     }
 
     /**
