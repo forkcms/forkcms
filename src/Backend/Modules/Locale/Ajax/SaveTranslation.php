@@ -34,7 +34,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         $isGod = BackendAuthentication::getUser()->isGod();
 
         // get possible languages
-        if($isGod) $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
+        if ($isGod) $possibleLanguages = array_unique(array_merge(BL::getWorkingLanguages(), BL::getInterfaceLanguages()));
         else $possibleLanguages = BL::getWorkingLanguages();
 
         // get parameters
@@ -46,13 +46,13 @@ class SaveTranslation extends BackendBaseAJAXAction
         $value = \SpoonFilter::getPostValue('value', null, null, 'string');
 
         // validate values
-        if(trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
+        if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
 
         // in case this is a 'act' type, there are special rules concerning possible values
-        if($type == 'act' && !isset($error)) if(urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
+        if ($type == 'act' && !isset($error)) if (urlencode($value) != CommonUri::getUrl($value)) $error = BL::err('InvalidActionValue', $this->getModule());
 
         // no error?
-        if(!isset($error)) {
+        if (!isset($error)) {
             // build item
             $item['language'] = $language;
             $item['module'] = $module;
@@ -64,7 +64,7 @@ class SaveTranslation extends BackendBaseAJAXAction
             $item['user_id'] = BackendAuthentication::getUser()->getUserId();
 
             // does the translation exist?
-            if(BackendLocaleModel::existsByName($name, $type, $module, $language, $application)) {
+            if (BackendLocaleModel::existsByName($name, $type, $module, $language, $application)) {
                 // add the id to the item
                 $item['id'] = (int) BackendLocaleModel::getByName($name, $type, $module, $language, $application);
 

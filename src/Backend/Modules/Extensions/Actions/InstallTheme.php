@@ -34,7 +34,7 @@ class InstallTheme extends BackendBaseActionIndex
         $this->currentTheme = $this->getParameter('theme', 'string');
 
         // does the item exist
-        if($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
+        if ($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -63,12 +63,12 @@ class InstallTheme extends BackendBaseActionIndex
     private function validateInstall()
     {
         // already installed
-        if(BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
+        if (BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=already-installed&var=' . $this->currentTheme);
         }
 
         // no information file present
-        if(!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
+        if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }

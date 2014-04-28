@@ -49,9 +49,9 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $showOverview = ($showOverview == 'true');
 
         // standard dimensions
-        if($width > 800) $width = 800;
-        if($width < 300) $width = $generalSettings['width'];
-        if($height < 150) $height = $generalSettings['height'];
+        if ($width > 800) $width = 800;
+        if ($width < 300) $width = $generalSettings['width'];
+        if ($height < 150) $height = $generalSettings['height'];
 
         // no id given, this means we should update the main map
         BackendLocationModel::setMapSetting($itemId, 'zoom_level', (string) $zoomLevel);

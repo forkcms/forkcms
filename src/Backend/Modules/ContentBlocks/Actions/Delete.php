@@ -32,7 +32,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
             parent::execute();
             $this->record = (array) BackendContentBlocksModel::get($this->id);
 

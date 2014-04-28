@@ -28,12 +28,12 @@ class DeleteCategory extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
             // get data
             $this->record = (array) BackendBlogModel::getCategory($this->id);
 
             // allowed to delete the category?
-            if(BackendBlogModel::deleteCategoryAllowed($this->id)) {
+            if (BackendBlogModel::deleteCategoryAllowed($this->id)) {
                 // call parent, this will probably add some general CSS/JS or other required files
                 parent::execute();
 

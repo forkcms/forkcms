@@ -30,7 +30,8 @@ class Index extends BackendBaseActionIndex
      *
      * @var	BackendForm
      */
-    private $frm, $frmForgotPassword;
+    private $frm
+    private $frmForgotPassword;
 
     /**
      * Execute the action
@@ -38,7 +39,7 @@ class Index extends BackendBaseActionIndex
     public function execute()
     {
         // check if the user is really logged on
-        if(BackendAuthentication::getUser()->isAuthenticated()) {
+        if (BackendAuthentication::getUser()->isAuthenticated()) {
             $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'Dashboard')));
         }
 
@@ -81,12 +82,12 @@ class Index extends BackendBaseActionIndex
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $txtEmail = $this->frm->getField('backend_email');
             $txtPassword = $this->frm->getField('backend_password');
 
             // required fields
-            if(!$txtEmail->isFilled() || !$txtPassword->isFilled()) {
+            if (!$txtEmail->isFilled() || !$txtPassword->isFilled()) {
                 // add error
                 $this->frm->addError('fields required');
 
@@ -99,18 +100,18 @@ class Index extends BackendBaseActionIndex
             );
 
             // invalid form-token?
-            if($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
+            if ($this->frm->getToken() != $this->frm->getField('form_token')->getValue()) {
                 // set a correct header, so bots understand they can't mess with us.
-                if(!headers_sent()) header('400 Bad Request', true, 400);
+                if (!headers_sent()) header('400 Bad Request', true, 400);
             }
 
             // get the user's id
             $userId = BackendUsersModel::getIdByEmail($txtEmail->getValue());
 
             // all fields are ok?
-            if($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue()) {
+            if ($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue()) {
                 // try to login the user
-                if(!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue())) {
+                if (!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue())) {
                     $this->getContainer()->get('logger')->info(
                         "Failed authenticating user '{$txtEmail->getValue()}'."
                     );
@@ -125,7 +126,7 @@ class Index extends BackendBaseActionIndex
                     \SpoonSession::set('backend_login_attempts', ++$current);
 
                     // save the failed login attempt in the user's settings
-                    if($userId !== false) BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
+                    if ($userId !== false) BackendUsersModel::setSetting($userId, 'last_failed_login_attempt', time());
 
                     // show error
                     $this->tpl->assign('hasError', true);
@@ -133,7 +134,7 @@ class Index extends BackendBaseActionIndex
             }
 
             // check sessions
-            if(\SpoonSession::exists('backend_login_attempts') && (int) \SpoonSession::get('backend_login_attempts') >= 5) {
+            if (\SpoonSession::exists('backend_login_attempts') && (int) \SpoonSession::get('backend_login_attempts') >= 5) {
                 // get previous attempt
                 $previousAttempt = (\SpoonSession::exists('backend_last_attempt')) ? \SpoonSession::get('backend_last_attempt') : time();
 
@@ -141,12 +142,12 @@ class Index extends BackendBaseActionIndex
                 $timeout = 5 * ((\SpoonSession::get('backend_login_attempts') - 4));
 
                 // too soon!
-                if(time() < $previousAttempt + $timeout) {
+                if (time() < $previousAttempt + $timeout) {
                     // sleep until the user can login again
                     sleep($timeout);
 
                     // set a correct header, so bots understand they can't mess with us.
-                    if(!headers_sent()) header('503 Service Unavailable', true, 503);
+                    if (!headers_sent()) header('503 Service Unavailable', true, 503);
                 } else {
                     // increment and store
                     \SpoonSession::set('backend_last_attempt', time());
@@ -165,7 +166,7 @@ class Index extends BackendBaseActionIndex
             }
 
             // no errors in the form?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // cleanup sessions
                 \SpoonSession::delete('backend_login_attempts');
                 \SpoonSession::delete('backend_last_attempt');
@@ -173,7 +174,7 @@ class Index extends BackendBaseActionIndex
                 // save the login timestamp in the user's settings
                 $lastLogin = BackendUsersModel::getSetting($userId, 'current_login');
                 BackendUsersModel::setSetting($userId, 'current_login', time());
-                if($lastLogin) BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
+                if ($lastLogin) BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
 
                 // create filter with modules which may not be displayed
                 $filter = array('authentication', 'error', 'core');
@@ -182,12 +183,12 @@ class Index extends BackendBaseActionIndex
                 $modules = array_diff(BackendModel::getModules(), $filter);
 
                 // redirect to the dashboard module if possible
-                if(BackendAuthentication::isAllowedModule('dashboard')) $module = 'dashboard';
+                if (BackendAuthentication::isAllowedModule('dashboard')) $module = 'dashboard';
 
                 // if not allowed in the dashboard, redirect to the first allowed module
                 else {
-                    foreach($modules as $module) {
-                        if(BackendAuthentication::isAllowedModule($module)) break;
+                    foreach ($modules as $module) {
+                        if (BackendAuthentication::isAllowedModule($module)) break;
                     }
                 }
 
@@ -201,18 +202,18 @@ class Index extends BackendBaseActionIndex
         }
 
         // is the form submitted
-        if($this->frmForgotPassword->isSubmitted()) {
+        if ($this->frmForgotPassword->isSubmitted()) {
             // backend email
             $email = $this->frmForgotPassword->getField('backend_email_forgot')->getValue();
 
             // required fields
-            if($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
+            if ($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid'))) {
                 // check if there is a user with the given emailaddress
-                if(!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
+                if (!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
             }
 
             // no errors in the form?
-            if($this->frmForgotPassword->isCorrect()) {
+            if ($this->frmForgotPassword->isCorrect()) {
                 // generate the key for the reset link and fetch the user ID for this email
                 $key = BackendAuthentication::getEncryptedString($email, uniqid());
 

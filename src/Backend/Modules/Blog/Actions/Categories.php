@@ -69,7 +69,7 @@ class Categories extends BackendBaseActionIndex
         $this->dataGrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('EditCategory')) {
+        if (BackendAuthentication::isAllowedAction('EditCategory')) {
             // set column URLs
             $this->dataGrid->setColumnURL(
                 'title',
@@ -108,8 +108,8 @@ class Categories extends BackendBaseActionIndex
         $link = (string) $link;
         $return = '';
 
-        if($count > 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
-        elseif($count == 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+        if ($count > 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
+        elseif ($count == 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
 
         return $return;
     }

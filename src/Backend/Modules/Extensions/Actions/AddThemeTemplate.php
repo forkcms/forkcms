@@ -81,7 +81,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $this->selectedTheme = $this->getParameter('theme', 'string');
 
         // build available themes
-        foreach(BackendExtensionsModel::getThemes() as $theme) $this->availableThemes[$theme['value']] = $theme['label'];
+        foreach (BackendExtensionsModel::getThemes() as $theme) $this->availableThemes[$theme['value']] = $theme['label'];
 
         // determine selected theme, based upon submitted form or default theme
         $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('Core', 'theme', 'core'));
@@ -110,13 +110,13 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $extras = BackendExtensionsModel::getExtras();
 
         // loop extras to populate the default extras
-        foreach($extras as $item) {
-            if($item['type'] == 'block') {
+        foreach ($extras as $item) {
+            if ($item['type'] == 'block') {
                 $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
-            } elseif($item['type'] == 'widget') {
+                if (isset($item['data']['extra_label'])) $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
+            } elseif ($item['type'] == 'widget') {
                 $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if(isset($item['data']['extra_label'])) $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                if (isset($item['data']['extra_label'])) $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
             }
         }
 
@@ -136,7 +136,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
         $positions[] = $position;
 
         // content has been submitted: re-create submitted content rather than the db-fetched content
-        if(isset($_POST['position_0'])) {
+        if (isset($_POST['position_0'])) {
             // init vars
             $this->names = array();
             $this->extras = array();
@@ -165,13 +165,13 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $i++;
 
                 // position already exists -> error
-                if(in_array($name, $this->names)) $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
+                if (in_array($name, $this->names)) $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
 
                 // position name == fallback -> error
-                if($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
+                if ($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
 
                 // not alphanumeric -> error
-                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
 
                 // save positions
                 $this->names[] = $name;
@@ -179,16 +179,16 @@ class AddThemeTemplate extends BackendBaseActionAdd
             }
 
             // add errors
-            if($errors) $this->frm->addError(implode('<br />', array_unique($errors)));
+            if ($errors) $this->frm->addError(implode('<br />', array_unique($errors)));
         }
 
         // build blocks array
-        foreach($this->names as $i => $name) {
+        foreach ($this->names as $i => $name) {
             // create default position field
             $position = array();
             $position['i'] = $i + 1;
             $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
-            foreach($this->extras[$name] as $extra) $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
+            foreach ($this->extras[$name] as $extra) $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, $extra, false, 'positionBlock', 'positionBlockError');
             $positions[] = $position;
         }
 
@@ -213,7 +213,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -229,7 +229,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if($table === false) $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+            if ($table === false) $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
 
             else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
@@ -238,12 +238,12 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 $errors = array();
 
                 // loop rows
-                foreach($table as $row) {
+                foreach ($table as $row) {
                     // first row defines the cellcount
-                    if($first) $cellCount = count($row);
+                    if ($first) $cellCount = count($row);
 
                     // not same number of cells
-                    if(count($row) != $cellCount) {
+                    if (count($row) != $cellCount) {
                         // add error
                         $errors[] = BL::err('InvalidTemplateSyntax');
 
@@ -252,14 +252,14 @@ class AddThemeTemplate extends BackendBaseActionAdd
                     }
 
                     // doublecheck position names
-                    foreach($row as $cell) {
+                    foreach ($row as $cell) {
                         // ignore unavailable space
-                        if($cell != '/') {
+                        if ($cell != '/') {
                             // not alphanumeric -> error
-                            if(!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+                            if (!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
 
                             // can't build proper html -> error
-                            elseif(substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+                            elseif (substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
                         }
                     }
 
@@ -268,11 +268,11 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 }
 
                 // add errors
-                if($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
+                if ($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
             }
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build array
                 $item['theme'] = $this->frm->getField('theme')->getValue();
                 $item['label'] = $this->frm->getField('label')->getValue();
@@ -293,7 +293,7 @@ class AddThemeTemplate extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add_template', array('item' => $item));
 
                 // set default template
-                if($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('Core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('Core', 'theme', 'core')) BackendModel::setModuleSetting($this->getModule(), 'default_template', $item['id']);
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

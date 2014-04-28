@@ -43,7 +43,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadRevisions();
@@ -69,7 +69,7 @@ class Edit extends BackendBaseActionEdit
         $revisionToLoad = $this->getParameter('revision', 'int');
 
         // if this is a valid revision
-        if($revisionToLoad !== null) {
+        if ($revisionToLoad !== null) {
             // overwrite the current record
             $this->record = BackendContentBlocksModel::getRevision($this->id, $revisionToLoad);
 
@@ -82,7 +82,7 @@ class Edit extends BackendBaseActionEdit
         $this->templates = BackendContentBlocksModel::getTemplates();
 
         // check if selected template is still available
-        if($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
+        if ($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
             $this->record['template'] = '';
         }
     }
@@ -98,7 +98,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
         // if we have multiple templates, add a dropdown to select them
-        if(count($this->templates) > 1) {
+        if (count($this->templates) > 1) {
             $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
         }
     }
@@ -137,7 +137,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
@@ -175,14 +175,14 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
             $fields = $this->frm->getFields();
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];

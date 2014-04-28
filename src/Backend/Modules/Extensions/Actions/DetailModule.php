@@ -54,7 +54,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->currentModule = $this->getParameter('module', 'string');
 
         // does the item exist
-        if($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -83,7 +83,7 @@ class DetailModule extends BackendBaseActionIndex
     private function loadData()
     {
         // inform that the module is not installed yet
-        if(!BackendModel::isModuleInstalled($this->currentModule)) {
+        if (!BackendModel::isModuleInstalled($this->currentModule)) {
             $this->warnings[] = array('message' => BL::getMessage('InformationModuleIsNotInstalled'));
         }
 
@@ -99,7 +99,7 @@ class DetailModule extends BackendBaseActionIndex
     private function loadDataGridCronjobs()
     {
         // no cronjobs = don't bother
-        if(!isset($this->information['cronjobs'])) return;
+        if (!isset($this->information['cronjobs'])) return;
 
         // create data grid
         $this->dataGridCronjobs = new BackendDataGridArray($this->information['cronjobs']);
@@ -120,7 +120,7 @@ class DetailModule extends BackendBaseActionIndex
     private function loadDataGridEvents()
     {
         // no hooks = don't bother
-        if(!isset($this->information['events'])) return;
+        if (!isset($this->information['events'])) return;
 
         // create data grid
         $this->dataGridEvents = new BackendDataGridArray($this->information['events']);

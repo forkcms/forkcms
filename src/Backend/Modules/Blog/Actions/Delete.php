@@ -40,13 +40,13 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendBlogModel::exists($this->id)) {
+        if ($this->id !== null && BackendBlogModel::exists($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
             // set category id
             $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-            if($this->categoryId == 0) $this->categoryId = null;
+            if ($this->categoryId == 0) $this->categoryId = null;
 
             // get data
             $this->record = (array) BackendBlogModel::get($this->id);
@@ -67,7 +67,7 @@ class Delete extends BackendBaseActionDelete
             $redirectUrl = BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['title']);
 
             // append to redirect URL
-            if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+            if ($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
 
             // item was deleted, so redirect
             $this->redirect($redirectUrl);

@@ -60,7 +60,7 @@ class ResetPassword extends BackendBaseActionAdd
         parent::execute();
 
         // the user email and key provided match
-        if(!$this->isUserAllowed()) {
+        if (!$this->isUserAllowed()) {
             $this->redirect(BackendModel::createURLForAction('Index'));
         }
 
@@ -82,14 +82,14 @@ class ResetPassword extends BackendBaseActionAdd
         $this->key = \SpoonFilter::getGetValue('key', null, '');
 
         // if the email or the key aren't set, redirect the user
-        if($this->email !== '' && $this->key !== '') {
+        if ($this->email !== '' && $this->key !== '') {
             // fetch the user
             $userId = BackendUsersModel::getIdByEmail($this->email);
             $this->user = new BackendUser($userId);
             $requestTime = $this->user->getSetting('reset_password_timestamp');
 
             // check if the request was made within 24 hours
-            if((time() - $requestTime) > 86400) {
+            if ((time() - $requestTime) > 86400) {
                 // remove the reset_password_key and reset_password_timestamp usersettings
                 BackendUsersModel::deleteResetPasswordSettings($userId);
 
@@ -98,7 +98,7 @@ class ResetPassword extends BackendBaseActionAdd
             }
 
             // check if the provided key matches the one in the user record
-            if($this->key === $this->user->getSetting('reset_password_key')) return true;
+            if ($this->key === $this->user->getSetting('reset_password_key')) return true;
         }
 
         // if we made it here the user is not allowed to access this page
@@ -123,7 +123,7 @@ class ResetPassword extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // shorten fields
             $newPassword = $this->frm->getField('backend_new_password');
             $newPasswordRepeated = $this->frm->getField('backend_new_password_repeated');
@@ -133,9 +133,9 @@ class ResetPassword extends BackendBaseActionAdd
             $newPasswordRepeated->isFilled(BL::err('PasswordRepeatIsRequired'));
 
             // all fields are ok?
-            if($newPassword->isFilled() && $newPasswordRepeated->isFilled()) {
+            if ($newPassword->isFilled() && $newPasswordRepeated->isFilled()) {
                 // the passwords entered match
-                if($newPassword->getValue() !== $newPasswordRepeated->getValue()) {
+                if ($newPassword->getValue() !== $newPasswordRepeated->getValue()) {
                     // add error
                     $this->frm->addError(BL::err('PasswordsDontMatch'));
 
@@ -144,12 +144,12 @@ class ResetPassword extends BackendBaseActionAdd
                 }
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // change the users password
                 BackendUsersModel::updatePassword($this->user, $newPassword->getValue());
 
                 // attempt to login the user
-                if(!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
+                if (!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue())) {
                     // redirect to the login form with an error
                     $this->redirect(BackendModel::createURLForAction('Index', null, null, array('login' => 'failed')));
                 }

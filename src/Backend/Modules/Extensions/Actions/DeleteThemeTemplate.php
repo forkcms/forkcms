@@ -29,7 +29,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendExtensionsModel::existsTemplate($this->id)) {
+        if ($this->id !== null && BackendExtensionsModel::existsTemplate($this->id)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -40,7 +40,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
             $item = BackendExtensionsModel::getTemplate($this->id);
 
             // valid template?
-            if(!empty($item)) {
+            if (!empty($item)) {
                 // delete the page
                 $success = BackendExtensionsModel::deleteTemplate($this->id);
 
@@ -49,7 +49,7 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
             }
 
             // page is deleted, so redirect to the overview
-            if($success) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
+            if ($success) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
             else $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
         }
 

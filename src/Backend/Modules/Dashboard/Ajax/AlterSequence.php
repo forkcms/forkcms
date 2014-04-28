@@ -31,7 +31,7 @@ class AlterSequence extends BackendBaseAjaxAction
         $newSequence = \SpoonFilter::getPostValue('new_sequence', null, '');
 
         // validate
-        if($newSequence == '') $this->output(self::BAD_REQUEST, null, 'no new_sequence provided');
+        if ($newSequence == '') $this->output(self::BAD_REQUEST, null, 'no new_sequence provided');
 
         // validated
         else {
@@ -39,7 +39,7 @@ class AlterSequence extends BackendBaseAjaxAction
             $json = @json_decode($newSequence, true);
 
             // validate
-            if($json === false) $this->output(self::BAD_REQUEST, null, 'invalid new_sequence provided');
+            if ($json === false) $this->output(self::BAD_REQUEST, null, 'invalid new_sequence provided');
 
             // validated
             else {
@@ -48,18 +48,18 @@ class AlterSequence extends BackendBaseAjaxAction
                 $hiddenItems = array();
 
                 // loop columns
-                foreach($json as $column => $widgets) {
+                foreach ($json as $column => $widgets) {
                     $columnValue = 'left';
-                    if($column == 1) $columnValue = 'middle';
-                    if($column == 2) $columnValue = 'right';
+                    if ($column == 1) $columnValue = 'middle';
+                    if ($column == 2) $columnValue = 'right';
 
                     // loop widgets
-                    foreach($widgets as $sequence => $widget) {
+                    foreach ($widgets as $sequence => $widget) {
                         // store position
                         $userSequence[$widget['module']][$widget['widget']] = array('column' => $columnValue, 'position' => $sequence, 'hidden' => $widget['hidden'], 'present' => $widget['present']);
 
                         // add to array
-                        if($widget['hidden']) $hiddenItems[] = $widget['module'] . '_' . $widget['widget'];
+                        if ($widget['hidden']) $hiddenItems[] = $widget['module'] . '_' . $widget['widget'];
                     }
                 }
 
@@ -68,11 +68,11 @@ class AlterSequence extends BackendBaseAjaxAction
                 $data['reload'] = false;
 
                 // any settings?
-                if($currentSetting !== null) {
+                if ($currentSetting !== null) {
                     // loop modules
-                    foreach($currentSetting as $module => $widgets) {
-                        foreach($widgets as $widget => $values) {
-                            if($values['hidden'] && isset($userSequence[$module][$widget]['hidden']) && !$userSequence[$module][$widget]['hidden']) {
+                    foreach ($currentSetting as $module => $widgets) {
+                        foreach ($widgets as $widget => $values) {
+                            if ($values['hidden'] && isset($userSequence[$module][$widget]['hidden']) && !$userSequence[$module][$widget]['hidden']) {
                                 $data['reload'] = true;
                             }
                         }

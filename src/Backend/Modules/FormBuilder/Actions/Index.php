@@ -64,7 +64,7 @@ class Index extends BackendBaseActionIndex
         );
 
         // check if edit action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'name', BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
@@ -101,16 +101,16 @@ class Index extends BackendBaseActionIndex
         $sentForms = (int) $sentForms;
 
         // one form sent
-        if($sentForms == 1) $output = BL::getMessage('OneSentForm');
+        if ($sentForms == 1) $output = BL::getMessage('OneSentForm');
 
         // multiple forms sent
-        elseif($sentForms > 1) $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+        elseif ($sentForms > 1) $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
         // no forms sent
         else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
 
         // check if data action is allowed
-        if(BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
+        if (BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
             // output
             $output = '<a href="' . BackendModel::createURLForAction('Data') .
                       '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';

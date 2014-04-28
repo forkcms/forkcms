@@ -36,7 +36,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist?
-        if($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
             parent::execute();
 
             $this->getData();
@@ -85,7 +85,7 @@ class EditCategory extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory', array($this->record['id']));
 
             $this->frm->cleanupFields();
@@ -94,7 +94,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['language'] = $this->record['language'];

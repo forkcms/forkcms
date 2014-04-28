@@ -67,12 +67,12 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendBlogModel::exists($this->id)) {
+        if ($this->id !== null && BackendBlogModel::exists($this->id)) {
             parent::execute();
 
             // set category id
             $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-            if($this->categoryId == 0) $this->categoryId = null;
+            if ($this->categoryId == 0) $this->categoryId = null;
 
             $this->getData();
             $this->loadDrafts();
@@ -100,7 +100,7 @@ class Edit extends BackendBaseActionEdit
         $revisionToLoad = $this->getParameter('revision', 'int');
 
         // if this is a valid revision
-        if($revisionToLoad !== null) {
+        if ($revisionToLoad !== null) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $revisionToLoad);
 
@@ -112,7 +112,7 @@ class Edit extends BackendBaseActionEdit
         $draftToLoad = $this->getParameter('draft', 'int');
 
         // if this is a valid revision
-        if($draftToLoad !== null) {
+        if ($draftToLoad !== null) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $draftToLoad);
 
@@ -124,7 +124,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if (empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -164,7 +164,7 @@ class Edit extends BackendBaseActionEdit
         $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
@@ -203,7 +203,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
+        if (count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
         $this->frm->addText(
             'tags', BackendTagsModel::getTags(
@@ -212,7 +212,7 @@ class Edit extends BackendBaseActionEdit
         );
         $this->frm->addDate('publish_on_date', $this->record['publish_on']);
         $this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
-        if($this->imageIsAllowed) {
+        if ($this->imageIsAllowed) {
             $this->frm->addImage('image');
             $this->frm->addCheckbox('delete_image');
         }
@@ -258,7 +258,7 @@ class Edit extends BackendBaseActionEdit
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
@@ -286,7 +286,7 @@ class Edit extends BackendBaseActionEdit
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 
         // fetch proper slug
         $this->record['url'] = $this->meta->getURL();
@@ -302,7 +302,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // assign category
-        if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
+        if ($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
     }
 
     /**
@@ -311,7 +311,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get the status
             $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
@@ -329,7 +329,7 @@ class Edit extends BackendBaseActionEdit
             $this->meta->validate();
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save();
@@ -353,7 +353,7 @@ class Edit extends BackendBaseActionEdit
                 $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
                 $item['status'] = $status;
 
-                if($this->imageIsAllowed) {
+                if ($this->imageIsAllowed) {
                     $item['image'] = $this->record['image'];
 
                     // the image path
@@ -361,13 +361,13 @@ class Edit extends BackendBaseActionEdit
 
                     // create folders if needed
                     $fs = new Filesystem();
-                    if(!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
-                    if(!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
+                    if (!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
+                    if (!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
 
                     // if the image should be deleted
-                    if($this->frm->getField('delete_image')->isChecked()) {
+                    if ($this->frm->getField('delete_image')->isChecked()) {
                         $filename = $imagePath . '/source/' . $item['image'];
-                        if(is_file($filename)) {
+                        if (is_file($filename)) {
                             // delete the image
                             $fs->remove($filename);
                             BackendModel::deleteThumbnails($imagePath, $item['image']);
@@ -378,9 +378,9 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // new image given?
-                    if($this->frm->getField('image')->isFilled()) {
+                    if ($this->frm->getField('image')->isFilled()) {
                         $filename = $imagePath . '/source/' . $this->record['image'];
-                        if(is_file($filename)) {
+                        if (is_file($filename)) {
                             $fs->remove($filename);
                             BackendModel::deleteThumbnails($imagePath, $this->record['image']);
                         }
@@ -393,14 +393,14 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // rename the old image
-                    elseif($item['image'] != null) {
+                    elseif ($item['image'] != null) {
                         $image = new File($imagePath . '/source/' . $item['image']);
                         $newName = $this->meta->getURL() . '.' . $image->getExtension();
 
                         // only change the name if there is a difference
-                        if($newName != $item['image']) {
+                        if ($newName != $item['image']) {
                             // loop folders
-                            foreach(BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
+                            foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
                                 // move the old file to the new name
                                 $fs->rename($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
@@ -424,7 +424,7 @@ class Edit extends BackendBaseActionEdit
                 BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
                 // active
-                if($item['status'] == 'active') {
+                if ($item['status'] == 'active') {
 
                     // edit search index
                     BackendSearchModel::saveIndex(
@@ -433,7 +433,7 @@ class Edit extends BackendBaseActionEdit
                     );
 
                     // ping
-                    if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false))
+                    if (BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false))
                     {
                         BackendModel::ping(
                             SITE_URL .
@@ -449,7 +449,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // draft
-                elseif($item['status'] == 'draft') {
+                elseif ($item['status'] == 'draft') {
                     // everything is saved, so redirect to the edit action
                     $redirectUrl = BackendModel::createURLForAction('Edit') .
                                    '&report=saved-as-draft&var=' . urlencode($item['title']) .
@@ -458,7 +458,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // append to redirect URL
-                if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+                if ($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
 
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);

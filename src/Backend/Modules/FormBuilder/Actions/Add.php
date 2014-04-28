@@ -55,7 +55,7 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // shorten the fields
@@ -70,33 +70,33 @@ class Add extends BackendBaseActionAdd
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
+            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
                 // check the addresses
-                foreach($emailAddresses as $address) {
+                foreach ($emailAddresses as $address) {
                     $address = trim($address);
 
-                    if(!\SpoonFilter::isEmail($address)) {
+                    if (!\SpoonFilter::isEmail($address)) {
                         $error = true;
                         break;
                     }
                 }
 
                 // add error
-                if($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                if ($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
             }
 
             // identifier
-            if($txtIdentifier->isFilled()) {
+            if ($txtIdentifier->isFilled()) {
                 // invalid characters
-                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
 
                 // unique identifier
-                elseif(BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build array
                 $values['language'] = BL::getWorkingLanguage();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();

@@ -29,7 +29,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
 
             // get all data for the item we want to edit

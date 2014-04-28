@@ -66,10 +66,10 @@ class Index extends BackendBaseActionIndex
         $firstMarker = current($this->items);
 
         // if there are no markers we reset it to the birthplace of Fork
-        if($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        if ($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
 
         // load the settings from the general settings
-        if(empty($this->settings)) {
+        if (empty($this->settings)) {
             $this->settings = BackendModel::getModuleSettings('Location');
 
             $this->settings['center']['lat'] = $firstMarker['lat'];
@@ -77,7 +77,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }
@@ -96,7 +96,7 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('ASC');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
                 'title', BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );

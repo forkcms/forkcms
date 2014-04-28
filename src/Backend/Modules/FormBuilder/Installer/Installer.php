@@ -63,7 +63,7 @@ class Installer extends ModuleInstaller
         $searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
 
         // loop languages
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             // create form
             $form = array();
             $form['language'] = $language;

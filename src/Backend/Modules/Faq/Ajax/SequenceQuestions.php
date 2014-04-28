@@ -28,7 +28,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
         $toCategorySequence = \SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
 
         // invalid question id
-        if(!BackendFaqModel::exists($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');
+        if (!BackendFaqModel::exists($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');
 
         // validated
         else {
@@ -37,30 +37,30 @@ class SequenceQuestions extends BackendBaseAJAXAction
             $toCategorySequence = (array) explode(',', ltrim($toCategorySequence, ','));
 
             // is the question moved to a new category?
-            if($fromCategoryId != $toCategoryId) {
+            if ($fromCategoryId != $toCategoryId) {
                 $item['id'] = $questionId;
                 $item['category_id'] = $toCategoryId;
 
                 BackendFaqModel::update($item);
 
                 // loop id's and set new sequence
-                foreach($toCategorySequence as $i => $id) {
+                foreach ($toCategorySequence as $i => $id) {
                     $item = array();
                     $item['id'] = (int) $id;
                     $item['sequence'] = $i + 1;
 
                     // update sequence if the item exists
-                    if(BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
+                    if (BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
                 }
             }
 
             // loop id's and set new sequence
-            foreach($fromCategorySequence as $i => $id) {
+            foreach ($fromCategorySequence as $i => $id) {
                 $item['id'] = (int) $id;
                 $item['sequence'] = $i + 1;
 
                 // update sequence if the item exists
-                if(BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
+                if (BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
             }
 
             // success output

@@ -40,7 +40,7 @@ class InstallModule extends BackendBaseActionIndex
         $this->currentModule = $this->getParameter('module', 'string');
 
         // does the item exist
-        if($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
+        if ($this->currentModule !== null && BackendExtensionsModel::existsModule($this->currentModule)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -64,12 +64,12 @@ class InstallModule extends BackendBaseActionIndex
     private function validateInstall()
     {
         // already installed
-        if(BackendModel::isModuleInstalled($this->currentModule)) {
+        if (BackendModel::isModuleInstalled($this->currentModule)) {
             $this->redirect(BackendModel::createURLForAction('Modules') . '&error=already-installed&var=' . $this->currentModule);
         }
 
         // no installer class present
-        if(!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/Installer/Installer.php')) {
+        if (!is_file(BACKEND_MODULES_PATH . '/' . $this->currentModule . '/Installer/Installer.php')) {
             $this->redirect(BackendModel::createURLForAction('Modules') . '&error=no-installer-file&var=' . $this->currentModule);
         }
     }

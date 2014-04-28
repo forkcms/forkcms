@@ -63,8 +63,8 @@ class Modules extends BackendBaseActionIndex
         $modules = BackendExtensionsModel::getModules();
 
         // split the modules in 2 separate data grid sources
-        foreach($modules as $module) {
-            if($module['installed']) $this->installedModules[] = $module;
+        foreach ($modules as $module) {
+            if ($module['installed']) $this->installedModules[] = $module;
             else $this->installableModules[] = $module;
         }
     }
@@ -82,13 +82,13 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstallableModules->setColumnsHidden(array('installed', 'name', 'cronjobs_active'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('DetailModule')) {
+        if (BackendAuthentication::isAllowedAction('DetailModule')) {
             $this->dataGridInstallableModules->setColumnURL('raw_name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
             $this->dataGridInstallableModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('InstallModule')) {
+        if (BackendAuthentication::isAllowedAction('InstallModule')) {
             // add install column
             $this->dataGridInstallableModules->addColumn('install', null, BL::lbl('Install'), BackendModel::createURLForAction('InstallModule') . '&amp;module=[raw_name]', BL::lbl('Install'));
             $this->dataGridInstallableModules->setColumnConfirm('install', sprintf(BL::msg('ConfirmModuleInstall'), '[raw_name]'), null, \SpoonFilter::ucfirst(BL::lbl('Install')) . '?');
@@ -107,7 +107,7 @@ class Modules extends BackendBaseActionIndex
         $this->dataGridInstalledModules->setColumnsHidden(array('installed', 'raw_name', 'cronjobs_active'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('DetailModule')) {
+        if (BackendAuthentication::isAllowedAction('DetailModule')) {
             $this->dataGridInstalledModules->setColumnURL('name', BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]');
             $this->dataGridInstalledModules->addColumn('details', null, BL::lbl('Details'), BackendModel::createURLForAction('DetailModule') . '&amp;module=[raw_name]', BL::lbl('Details'));
         }

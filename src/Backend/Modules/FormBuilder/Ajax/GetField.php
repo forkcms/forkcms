@@ -31,12 +31,12 @@ class GetField extends BackendBaseAJAXAction
         $fieldId = trim(\SpoonFilter::getPostValue('field_id', null, '', 'int'));
 
         // invalid form id
-        if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
+        if (!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
 
         // validated form
         else {
             // invalid fieldId
-            if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
+            if (!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
 
             // validated field
             else {

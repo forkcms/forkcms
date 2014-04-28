@@ -42,7 +42,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
             parent::execute();
 
             $this->getData();
@@ -94,7 +94,7 @@ class Edit extends BackendBaseActionEdit
         // get url
         $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
         $url404 = BackendModel::getURL(404);
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 
         // assign the active record and additional variables
         $this->tpl->assign('item', $this->record);
@@ -106,7 +106,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
 
             $this->frm->cleanupFields();
@@ -117,7 +117,7 @@ class Edit extends BackendBaseActionEdit
             $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);

@@ -33,13 +33,13 @@ class UploadModule extends BackendBaseActionAdd
         parent::execute();
 
         // zip extension is required for module upload
-        if(!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
+        if (!extension_loaded('zlib')) $this->tpl->assign('zlibIsMissing', true);
 
         // \ZipArchive class is required for module upload
-        if(!class_exists('\ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
+        if (!class_exists('\ZipArchive')) $this->tpl->assign('ZipArchiveIsMissing', true);
 
         // we need write rights to upload files
-        elseif(!$this->isWritable()) $this->tpl->assign('notWritable', true);
+        elseif (!$this->isWritable()) $this->tpl->assign('notWritable', true);
 
         // oke, we can upload
         else {
@@ -70,12 +70,12 @@ class UploadModule extends BackendBaseActionAdd
         $zip = new \ZipArchive();
 
         // try and open it
-        if($zip->open($fileFile->getTempFileName()) !== true) {
+        if ($zip->open($fileFile->getTempFileName()) !== true) {
             $fileFile->addError(BL::getError('CorruptedFile'));
         }
 
         // zip file needs to contain some files
-        if($zip->numFiles == 0) {
+        if ($zip->numFiles == 0) {
             $fileFile->addError(BL::getError('FileIsEmpty'));
             return;
         }
@@ -100,30 +100,30 @@ class UploadModule extends BackendBaseActionAdd
             $fileName = $file['name'];
 
             // check if the file is in one of the valid directories
-            foreach($allowedDirectories as $directory) {
+            foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
-                if(stripos($fileName, $directory) === 0) {
+                if (stripos($fileName, $directory) === 0) {
                     // we have a library file
-                    if($directory == 'library/external/') {
-                        if(!is_file(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
+                    if ($directory == 'library/external/') {
+                        if (!is_file(PATH_WWW . '/' . $fileName)) $files[] = $fileName;
                         else $warnings[] = sprintf(BL::getError('LibraryFileAlreadyExists'), $fileName);
                         break;
                     }
 
                     // extract the module name from the url
                     $tmpName = trim(str_ireplace($directory, '', $fileName), '/');
-                    if($tmpName == '') break;
+                    if ($tmpName == '') break;
                     $chunks = explode('/', $tmpName);
                     $tmpName = $chunks[0];
 
                     // ignore hidden files
-                    if(substr(basename($fileName), 0, 1) == '.') break;
+                    if (substr(basename($fileName), 0, 1) == '.') break;
 
                     // first module we find, store the name
-                    elseif($moduleName === null) $moduleName = $tmpName;
+                    elseif ($moduleName === null) $moduleName = $tmpName;
 
                     // the name does not match the previous module we found, skip the file
-                    elseif($moduleName !== $tmpName) break;
+                    elseif ($moduleName !== $tmpName) break;
 
                     // passed all our tests, store it for extraction
                     $files[] = $fileName;
@@ -135,19 +135,19 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // after filtering no files left (nothing useful found)
-        if(count($files) == 0) {
+        if (count($files) == 0) {
             $fileFile->addError(BL::getError('FileContentsIsUseless'));
             return;
         }
 
         // module already exists on the filesystem
-        if(BackendExtensionsModel::existsModule($moduleName)) {
+        if (BackendExtensionsModel::existsModule($moduleName)) {
             $fileFile->addError(sprintf(BL::getError('ModuleAlreadyExists'), $moduleName));
             return;
         }
 
         // installer in array?
-        if(!in_array('src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
+        if (!in_array('src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
             return;
         }
@@ -170,8 +170,8 @@ class UploadModule extends BackendBaseActionAdd
     private function isWritable()
     {
         // check if writable
-        if(!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) return false;
-        if(!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) return false;
+        if (!BackendExtensionsModel::isWritable(FRONTEND_MODULES_PATH)) return false;
+        if (!BackendExtensionsModel::isWritable(BACKEND_MODULES_PATH)) return false;
 
         // everything is writeable
         return true;
@@ -195,17 +195,17 @@ class UploadModule extends BackendBaseActionAdd
     private function validateForm()
     {
         // the form is submitted
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // shorten field variables
             $fileFile = $this->frm->getField('file');
 
             // validate the file
-            if($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
+            if ($fileFile->isFilled(BL::err('FieldIsRequired')) && $fileFile->isAllowedExtension(array('zip'), sprintf(BL::getError('ExtensionNotAllowed'), 'zip'))) {
                 $moduleName = $this->installModule();
             }
 
             // passed all validation
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // by now, the module has already been installed in processZipFile()
 
                 // redirect with fireworks
