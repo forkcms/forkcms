@@ -29,7 +29,8 @@ class DetailModule extends BackendBaseActionIndex
      *
      * @var BackendDataGridArray
      */
-    private $dataGridCronjobs, $dataGridEvents;
+    private $dataGridCronjobs;
+    private $dataGridEvents;
 
     /**
      * Information fetched from the info.xml.
@@ -70,10 +71,10 @@ class DetailModule extends BackendBaseActionIndex
 
             // display the page
             $this->display();
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
     }
 
     /**
@@ -99,7 +100,9 @@ class DetailModule extends BackendBaseActionIndex
     private function loadDataGridCronjobs()
     {
         // no cronjobs = don't bother
-        if (!isset($this->information['cronjobs'])) return;
+        if (!isset($this->information['cronjobs'])) {
+            return;
+        }
 
         // create data grid
         $this->dataGridCronjobs = new BackendDataGridArray($this->information['cronjobs']);
@@ -120,7 +123,9 @@ class DetailModule extends BackendBaseActionIndex
     private function loadDataGridEvents()
     {
         // no hooks = don't bother
-        if (!isset($this->information['events'])) return;
+        if (!isset($this->information['events'])) {
+            return;
+        }
 
         // create data grid
         $this->dataGridEvents = new BackendDataGridArray($this->information['events']);

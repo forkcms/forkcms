@@ -37,7 +37,8 @@ class Modules extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installedModules = array(), $installableModules = array();
+    private $installedModules = array();
+    private $installableModules = array();
 
     /**
      * Execute the action.
@@ -64,8 +65,11 @@ class Modules extends BackendBaseActionIndex
 
         // split the modules in 2 separate data grid sources
         foreach ($modules as $module) {
-            if ($module['installed']) $this->installedModules[] = $module;
-            else $this->installableModules[] = $module;
+            if ($module['installed']) {
+                $this->installedModules[] = $module;
+            } else {
+                $this->installableModules[] = $module;
+            }
         }
     }
 

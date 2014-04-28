@@ -47,14 +47,14 @@ class InstallTheme extends BackendBaseActionIndex
 
                 // redirect to index with a success message
                 $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->currentTheme);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 // redirect to index with a success message
                 $this->redirect(BackendModel::createURLForAction('Themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
             }
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
     }
 
     /**

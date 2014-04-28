@@ -52,10 +52,10 @@ class InstallModule extends BackendBaseActionIndex
 
             // redirect to index with a success message
             $this->redirect(BackendModel::createURLForAction('Modules') . '&report=module-installed&var=' . $this->currentModule . '&highlight=row-module_' . $this->currentModule);
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Modules') . '&error=non-existing');
     }
 
     /**

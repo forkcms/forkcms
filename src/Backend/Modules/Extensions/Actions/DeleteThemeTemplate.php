@@ -49,11 +49,14 @@ class DeleteThemeTemplate extends BackendBaseActionDelete
             }
 
             // page is deleted, so redirect to the overview
-            if ($success) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
-            else $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+            if ($success) {
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=deleted-template&var=' . urlencode($item['label']));
+            } else {
+                $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+            }
+        } else {
+            // something went wrong
+            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
         }
-
-        // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
     }
 }

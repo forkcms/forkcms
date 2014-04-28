@@ -64,7 +64,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // validate id
-        if ($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+        if ($this->id === null || !BackendExtensionsModel::existsTemplate($this->id)) {
+            $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&error=non-existing');
+        }
 
         // get the record
         $this->record = BackendExtensionsModel::getTemplate($this->id);
@@ -72,8 +74,11 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // unserialize
         $this->record['data'] = unserialize($this->record['data']);
         $this->names = $this->record['data']['names'];
-        if (isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
-        elseif (isset($this->record['data']['default_extras'])) $this->extras = $this->record['data']['default_extras'];
+        if (isset($this->record['data']['default_extras_' . BL::getWorkingLanguage()])) {
+            $this->extras = $this->record['data']['default_extras_' . BL::getWorkingLanguage()];
+        } elseif (isset($this->record['data']['default_extras'])) {
+            $this->extras = $this->record['data']['default_extras'];
+        }
 
         // assign
         $this->tpl->assign('template', $this->record);
@@ -83,10 +88,15 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // determine if deleting is allowed
         $deleteAllowed = true;
-        if ($this->record['id'] == BackendModel::getModuleSetting('Pages', 'default_template')) $deleteAllowed = false;
-        elseif (count(BackendExtensionsModel::getTemplates()) == 1) $deleteAllowed = false;
-        elseif ($inUse) $deleteAllowed = false;
-        elseif (!BackendAuthentication::isAllowedAction('DeleteThemeTemplate')) $deleteAllowed = false;
+        if ($this->record['id'] == BackendModel::getModuleSetting('Pages', 'default_template')) {
+            $deleteAllowed = false;
+        } elseif (count(BackendExtensionsModel::getTemplates()) == 1) {
+            $deleteAllowed = false;
+        } elseif ($inUse) {
+            $deleteAllowed = false;
+        } elseif (!BackendAuthentication::isAllowedAction('DeleteThemeTemplate')) {
+            $deleteAllowed = false;
+        }
 
         // assign
         $this->tpl->assign('inUse', $inUse);
@@ -106,7 +116,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // build available themes
         $themes = array();
-        foreach (BackendExtensionsModel::getThemes() as $theme) $themes[$theme['value']] = $theme['label'];
+        foreach (BackendExtensionsModel::getThemes() as $theme) {
+            $themes[$theme['value']] = $theme['label'];
+        }
 
         // create elements
         $this->frm->addDropdown('theme', $themes, BackendModel::getModuleSetting('Core', 'theme', 'core'));
@@ -138,10 +150,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
         foreach ($extras as $item) {
             if ($item['type'] == 'block') {
                 $blocks[$item['id']] = \SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if (isset($item['data']['extra_label'])) $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
+                if (isset($item['data']['extra_label'])) {
+                    $blocks[$item['id']] = \SpoonFilter::ucfirst($item['data']['extra_label']);
+                }
             } elseif ($item['type'] == 'widget') {
                 $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . \SpoonFilter::ucfirst(BL::lbl($item['label']));
-                if (isset($item['data']['extra_label'])) $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                if (isset($item['data']['extra_label'])) {
+                    $widgets[$item['id']] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
+                }
             }
         }
 
@@ -171,7 +187,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $errors = array();
 
             // loop submitted positions
-            while(isset($_POST['position_' . $i])) {
+            while (isset($_POST['position_' . $i])) {
                 // init vars
                 $j = 0;
                 $extras = array();
@@ -180,7 +196,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $name = $_POST['position_' . $i];
 
                 // loop submitted blocks
-                while(isset($_POST['type_' . $i . '_' . $j])) {
+                while (isset($_POST['type_' . $i . '_' . $j])) {
                     // gather blocks id
                     $extras[] = (int) $_POST['type_' . $i . '_' . $j];
 
@@ -192,13 +208,19 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $i++;
 
                 // position already exists -> error
-                if (in_array($name, $this->names)) $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
+                if (in_array($name, $this->names)) {
+                    $errors[] = sprintf(BL::getError('DuplicatePositionName'), $name);
+                }
 
                 // position name == fallback -> error
-                if ($name == 'fallback') $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
+                if ($name == 'fallback') {
+                    $errors[] = sprintf(BL::getError('ReservedPositionName'), $name);
+                }
 
                 // not alphanumeric -> error
-                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-z0-9]+$/i', $name)) {
+                    $errors[] = sprintf(BL::getError('NoAlphaNumPositionName'), $name);
+                }
 
                 // save positions
                 $this->names[] = $name;
@@ -206,7 +228,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
             }
 
             // add errors
-            if ($errors) $this->frm->addError(implode('<br />', array_unique($errors)));
+            if ($errors) {
+                $this->frm->addError(implode('<br />', array_unique($errors)));
+            }
         }
 
         // build blocks array
@@ -262,9 +286,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $table = BackendExtensionsModel::templateSyntaxToArray($syntax);
 
             // validate the syntax
-            if ($table === false) $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
-
-            else {
+            if ($table === false) {
+                $this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
+            } else {
                 $html = BackendExtensionsModel::buildTemplateHTML($syntax);
                 $cellCount = 0;
                 $first = true;
@@ -273,7 +297,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 // loop rows
                 foreach ($table as $row) {
                     // first row defines the cellcount
-                    if ($first) $cellCount = count($row);
+                    if ($first) {
+                        $cellCount = count($row);
+                    }
 
                     // not same number of cells
                     if (count($row) != $cellCount) {
@@ -289,10 +315,12 @@ class EditThemeTemplate extends BackendBaseActionEdit
                         // ignore unavailable space
                         if ($cell != '/') {
                             // not alphanumeric -> error
-                            if (!in_array($cell, $this->names)) $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
-
-                            // can't build proper html -> error
-                            elseif (substr_count($html, '"#position-' . $cell . '"') != 1) $errors[] = BL::err('InvalidTemplateSyntax');
+                            if (!in_array($cell, $this->names)) {
+                                $errors[] = sprintf(BL::getError('NonExistingPositionName'), $cell);
+                            } elseif (substr_count($html, '"#position-' . $cell . '"') != 1) {
+                                // can't build proper html -> error
+                                $errors[] = BL::err('InvalidTemplateSyntax');
+                            }
                         }
                     }
 
@@ -301,7 +329,9 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 }
 
                 // add errors
-                if ($errors) $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
+                if ($errors) {
+                    $this->frm->getField('format')->addError(implode('<br />', array_unique($errors)));
+                }
             }
 
             // no errors?
@@ -324,10 +354,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['data'] = serialize($item['data']);
 
                 // if this is the default template make the template active
-                if (BackendModel::getModuleSetting('Pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
+                if (BackendModel::getModuleSetting('Pages', 'default_template') == $this->record['id']) {
+                    $item['active'] = 'Y';
+                }
 
                 // if the template is in use we can't de-activate it
-                if (BackendExtensionsModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
+                if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
+                    $item['active'] = 'Y';
+                }
 
                 // insert the item
                 BackendExtensionsModel::updateTemplate($item);
@@ -336,10 +370,14 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
 
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('Core', 'theme', 'core')) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('Core', 'theme', 'core')) {
+                    BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+                }
 
                 // update all existing pages using this template to add the newly inserted block(s)
-                if (BackendExtensionsModel::isTemplateInUse($item['id'])) BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());
+                if (BackendExtensionsModel::isTemplateInUse($item['id'])) {
+                    BackendPagesModel::updatePagesTemplates($item['id'], $item['id'], $this->frm->getField('overwrite')->getChecked());
+                }
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(BackendModel::createURLForAction('ThemeTemplates') . '&theme=' . $item['theme'] . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);

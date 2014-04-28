@@ -67,7 +67,9 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->selectedTheme = $this->getParameter('theme', 'string');
 
         // build available themes
-        foreach (BackendExtensionsModel::getThemes() as $theme) $this->availableThemes[$theme['value']] = $theme['label'];
+        foreach (BackendExtensionsModel::getThemes() as $theme) {
+            $this->availableThemes[$theme['value']] = $theme['label'];
+        }
 
         // determine selected theme, based upon submitted form or default theme
         $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('Core', 'theme', 'core'));

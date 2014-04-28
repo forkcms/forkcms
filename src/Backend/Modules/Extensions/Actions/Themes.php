@@ -37,7 +37,8 @@ class Themes extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installableThemes = array(), $installedThemes = array();
+    private $installableThemes = array();
+    private $installedThemes = array();
 
     /**
      * Execute the action.
@@ -64,10 +65,12 @@ class Themes extends BackendBaseActionIndex
         // loop themes
         foreach (BackendExtensionsModel::getThemes() as $theme) {
             // themes that are already installed = have at least 1 template in DB
-            if ($theme['installed']) $this->installedThemes[] = $theme;
-
-            // themes that are not yet installed, but contain valid info.xml installation data
-            elseif ($theme['installable']) $this->installableThemes[] = $theme;
+            if ($theme['installed']) {
+                $this->installedThemes[] = $theme;
+            } elseif ($theme['installable']) {
+                // themes that are not yet installed, but contain valid info.xml installation data
+                $this->installableThemes[] = $theme;
+            }
         }
     }
 
@@ -85,7 +88,9 @@ class Themes extends BackendBaseActionIndex
         $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('Core', 'theme', 'core');
 
         // no themes found
-        if (empty($themes)) $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+        if (empty($themes)) {
+            $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+        }
 
         // loop the templates
         foreach ($themes as &$record) {
@@ -95,7 +100,9 @@ class Themes extends BackendBaseActionIndex
             $record['variables']['installable'] = $record['installable'];
 
             // set selected template
-            if ($record['value'] == $selected) $record['variables']['selected'] = true;
+            if ($record['value'] == $selected) {
+                $record['variables']['selected'] = true;
+            }
 
             // unset the variable field
             unset($record['thumbnail'], $record['installed'], $record['installable']);
@@ -174,7 +181,9 @@ class Themes extends BackendBaseActionIndex
                         // loop new templates
                         foreach ($newTemplates as $newTemplateId => $newTemplate) {
                             // if the templates don't match we can skip this one
-                            if ($oldTemplate['path'] != $newTemplate['path']) continue;
+                            if ($oldTemplate['path'] != $newTemplate['path']) {
+                                continue;
+                            }
 
                             // switch template
                             BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);

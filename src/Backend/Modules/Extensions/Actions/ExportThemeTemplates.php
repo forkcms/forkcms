@@ -13,7 +13,6 @@ use Backend\Core\Engine\Base\ActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Extensions\Engine\Model;
 
-
 /*
  * This file is part of Fork CMS.
  *
@@ -62,9 +61,7 @@ class ExportThemeTemplates extends ActionEdit
         $this->selectedTheme = $this->getParameter('theme', 'string');
 
         // build available themes
-        foreach (
-            Model::getThemes() as $theme
-        ) {
+        foreach (Model::getThemes() as $theme) {
             $this->availableThemes[$theme['value']] = $theme['label'];
         }
 
