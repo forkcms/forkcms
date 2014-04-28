@@ -54,7 +54,9 @@ class Index extends BackendBaseActionIndex
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );

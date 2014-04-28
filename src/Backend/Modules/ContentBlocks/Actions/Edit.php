@@ -51,10 +51,10 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exceptions, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -129,11 +129,13 @@ class Edit extends BackendBaseActionEdit
         // set column-functions
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id'
+            array('[user_id]'),
+            'user_id'
         );
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'), 'edited_on'
+            array('[edited_on]'),
+            'edited_on'
         );
 
         // check if this action is allowed
@@ -147,7 +149,9 @@ class Edit extends BackendBaseActionEdit
 
             // add use column
             $this->dgRevisions->addColumn(
-                'use_revision', null, BL::lbl('UseThisVersion'),
+                'use_revision',
+                null,
+                BL::lbl('UseThisVersion'),
                 BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
