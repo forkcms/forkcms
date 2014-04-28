@@ -47,7 +47,9 @@ class Index extends BackendBaseActionIndex
      *
      * @var    BackendDataGridDB
      */
-    private $dgDrafts, $dgPosts, $dgRecent;
+    private $dgDrafts;
+    private $dgPosts;
+    private $dgRecent;
 
     /**
      * Execute the action

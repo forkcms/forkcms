@@ -97,11 +97,9 @@ class Api
                 $item['comment']['article']['@attributes']['id'] = $row['post_id'];
                 $item['comment']['article']['@attributes']['lang'] = $row['post_language'];
                 $item['comment']['article']['title'] = $row['post_title'];
-                $item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock(
-                        'blog',
-                        'detail',
-                        $row['post_language']
-                    ) . '/' . $row['post_url'];
+                $item['comment']['article']['url'] = SITE_URL .
+                    BackendModel::getURLForBlock('blog', 'detail', $row['post_language']) . '/' . $row['post_url']
+                ;
 
                 // set attributes
                 $item['comment']['@attributes']['id'] = $row['id'];
@@ -153,11 +151,9 @@ class Api
             $item['comment']['article']['@attributes']['id'] = $comment['post_id'];
             $item['comment']['article']['@attributes']['lang'] = $comment['language'];
             $item['comment']['article']['title'] = $comment['post_title'];
-            $item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock(
-                    'blog',
-                    'detail',
-                    $comment['language']
-                ) . '/' . $comment['post_url'];
+            $item['comment']['article']['url'] = SITE_URL .
+                BackendModel::getURLForBlock('blog', 'detail', $comment['language']) . '/' . $comment['post_url']
+            ;
 
             // set attributes
             $item['comment']['@attributes']['id'] = $comment['id'];

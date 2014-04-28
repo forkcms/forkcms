@@ -44,8 +44,8 @@ class Categories extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES,
-            array('active', BL::getWorkingLanguage()
-            ));
+            array('active', BL::getWorkingLanguage())
+        );
 
         // set headers
         $this->dataGrid->setHeaderLabels(array(
@@ -59,7 +59,8 @@ class Categories extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction(
             array(__CLASS__, 'setClickableCount'),
             array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
-            'num_items', true
+            'num_items',
+            true
         );
 
         // disable paging
@@ -78,7 +79,9 @@ class Categories extends BackendBaseActionIndex
 
             // add column
             $this->dataGrid->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
@@ -108,8 +111,11 @@ class Categories extends BackendBaseActionIndex
         $link = (string) $link;
         $return = '';
 
-        if ($count > 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
-        elseif ($count == 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+        if ($count > 1) {
+            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
+        } elseif ($count == 1) {
+            $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+        }
 
         return $return;
     }

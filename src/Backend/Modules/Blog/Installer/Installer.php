@@ -230,11 +230,11 @@ class Installer extends ModuleInstaller
                     'category_id' => $this->defaultCategoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta(
-                            'Nunc sediam est',
-                            'Nunc sediam est',
-                            'Nunc sediam est',
-                            'nunc-sediam-est'
-                        ),
+                        'Nunc sediam est',
+                        'Nunc sediam est',
+                        'Nunc sediam est',
+                        'nunc-sediam-est'
+                    ),
                     'language' => $language,
                     'title' => 'Nunc sediam est',
                     'introduction' => file_get_contents(

@@ -40,10 +40,10 @@ class EditCategory extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exception, because somebody is fucking with our URL
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**

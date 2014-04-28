@@ -78,8 +78,8 @@ class ImportWordpress extends BackendBaseActionEdit
             // XML provided?
             if ($this->frm->getField('wordpress')->isFilled()) {
                 $this->frm->getField('wordpress')->isAllowedExtension(array('xml'), BL::err('XMLFilesOnly'));
-            } // No file
-            else {
+            } else {
+                 // No file
                 $this->frm->getField('wordpress')->addError(BL::err('FieldIsRequired'));
             }
 
@@ -150,8 +150,8 @@ class ImportWordpress extends BackendBaseActionEdit
                         // Don't do anything
                         break;
                 }
-            } // Process the authors
-            elseif (substr($xmlString, 0, 10) == '<wp:author') {
+            } elseif (substr($xmlString, 0, 10) == '<wp:author') {
+                // Process the authors
                 $this->authors[(string) $xml->children('wp', true)->author_login] = array(
                     'id' => (string) $xml->children('wp', true)->author_id,
                     'login' => (string) $xml->children('wp', true)->author_login,
@@ -261,10 +261,7 @@ class ImportWordpress extends BackendBaseActionEdit
                 'email' => (string) $comment->children('wp', true)->comment_author_email,
                 'text' => filter_var((string) $comment->children('wp', true)->comment_content, FILTER_SANITIZE_STRING),
                 'created_on' => (string) $comment->children('wp', true)->comment_date,
-                'status' => ((string) $comment->children(
-                            'wp',
-                            true
-                        )->comment_approved == '1') ? 'published' : 'moderation',
+                'status' => ((string) $comment->children('wp', true)->comment_approved == '1') ? 'published' : 'moderation',
             );
         }
 

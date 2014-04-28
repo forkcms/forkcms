@@ -102,7 +102,9 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 
         // god user?
-        if ($this->isGod) $this->frm->addCheckbox('show_image_form', BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true));
+        if ($this->isGod) {
+            $this->frm->addCheckbox('show_image_form', BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true));
+        }
     }
 
     /**
@@ -135,11 +137,13 @@ class Settings extends BackendBaseActionEdit
                 $feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://' . $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
                 // check if feedburner URL is valid
-                if (!\SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
+                if (!\SpoonFilter::isURL($feedburner)) {
+                    $feedburnerURL->addError(BL::err('InvalidURL'));
+                }
+            } else {
+                // init variable
+                $feedburner = null;
             }
-
-            // init variable
-            else $feedburner = null;
 
             if ($this->frm->isCorrect()) {
                 // set our settings
@@ -156,8 +160,12 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
-                if ($this->isGod) BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
-                if (BackendModel::getModuleSetting('Core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                if ($this->isGod) {
+                    BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
+                }
+                if (BackendModel::getModuleSetting('Core', 'akismet_key') === null) {
+                    BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

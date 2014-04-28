@@ -37,10 +37,10 @@ class EditComment extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exception, because somebody is fucking with our URL
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -53,7 +53,9 @@ class EditComment extends BackendBaseActionEdit
         $this->record = (array) BackendBlogModel::getComment($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if (empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -92,7 +94,9 @@ class EditComment extends BackendBaseActionEdit
             $this->frm->getField('author')->isFilled(BL::err('AuthorIsRequired'));
             $this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid'));
             $this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
-            if ($this->frm->getField('website')->isFilled()) $this->frm->getField('website')->isURL(BL::err('InvalidURL'));
+            if ($this->frm->getField('website')->isFilled()) {
+                $this->frm->getField('website')->isURL(BL::err('InvalidURL'));
+            }
 
             // no errors?
             if ($this->frm->isCorrect()) {
