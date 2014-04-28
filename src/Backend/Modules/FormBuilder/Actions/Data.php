@@ -166,7 +166,7 @@ class Data extends BackendBaseActionIndex
 
         // date
         $this->dataGrid->setColumnFunction(
-            array(new BackendFormBuilderModel(), 'calculateTimeAgo'),
+            array(new BackendModel(), 'calculateTimeAgo'),
             '[sent_on]', 'sent_on', false
         );
         $this->dataGrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);

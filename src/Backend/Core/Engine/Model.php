@@ -118,6 +118,56 @@ class Model extends \BaseModel
     }
 
     /**
+     * Calculate time ago.
+     *
+     * @param int $timestamp Unix timestamp from the past.
+     * @return string
+     */
+    public static function calculateTimeAgo($timestamp)
+    {
+        $secondsBetween = time() - $timestamp;
+
+        // calculate
+        $hours = floor($secondsBetween / (60 * 60));
+        $minutes = floor($secondsBetween / 60);
+        $seconds = floor($secondsBetween);
+
+        // today start
+        $todayStart = (int) strtotime(date('d F Y'));
+
+        // today
+        if ($timestamp >= $todayStart) {
+            // today
+            if ($hours >= 1) {
+                return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
+            } // more than one minute
+            elseif ($minutes > 1) {
+                return sprintf(BL::getLabel('MinutesAgo'), $minutes);
+            } // one minute
+            elseif ($minutes == 1) {
+                return BL::getLabel('OneMinuteAgo');
+            } // more than one second
+            elseif ($seconds > 1) {
+                return sprintf(BL::getLabel('SecondsAgo'), $seconds);
+            } // one second
+            elseif ($seconds <= 1) {
+                return BL::getLabel('OneSecondAgo');
+            }
+        // yesterday
+        } elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
+            return BL::getLabel(
+                    'Yesterday'
+                ) . ' ' . date(
+                    'H:i',
+                    $timestamp
+                );
+        // older
+        } else {
+            return date('d/m/Y H:i', $timestamp);
+        }
+    }
+
+    /**
      * Creates an URL for a given action and module
      * If you don't specify an action the current action will be used.
      * If you don't specify a module the current module will be used.
