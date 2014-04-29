@@ -1,3 +1,10 @@
+3.7.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Core: Mailer uses \Exception.
+
+
 3.7.0 (2014-04-24)
 --
 Improvements:
