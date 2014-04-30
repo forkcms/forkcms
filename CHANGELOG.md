@@ -1,3 +1,10 @@
+3.7.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: BackendModel::updateExtra() needs a serialization check.
+
+
 3.7.0 (2014-04-24)
 --
 Improvements:
