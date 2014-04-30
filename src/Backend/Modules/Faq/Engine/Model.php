@@ -459,64 +459,45 @@ class Model
      */
     public static function insertCategory(array $item, $meta = null)
     {
+        // define database
         $db = BackendModel::getContainer()->get('database');
 
-        // build extra
-        $extra = array(
-            'module' => 'Faq',
-            'type' => 'widget',
-            'label' => 'Faq',
-            'action' => 'category_list',
-            'data' => null,
-            'hidden' => 'N',
-            'sequence' => $db->getVar(
-                    'SELECT MAX(i.sequence) + 1
-                     FROM modules_extras AS i
-                     WHERE i.module = ?',
-                    array('Faq')
-                )
-        );
-
-        if (is_null($extra['sequence'])) {
-            $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-             FROM modules_extras AS i'
-            );
+        // we have meta given
+        if ($meta !== null) {
+            // insert meta
+            $item['meta_id'] = $db->insert('meta', $meta);
         }
 
         // insert extra
-        $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'Faq',
+            'CategoryList'
+        );
 
-        // Store category
-        if ($meta !== null) {
-            $item['meta_id'] = $db->insert('meta', $meta);
-        }
+        // insert item
         $item['id'] = $db->insert('faq_categories', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
         // update extra (item id is now known)
-        $extra['data'] = serialize(
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
             array(
                 'id' => $item['id'],
-                'extra_label' => 'Category: ' . $item['title'],
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
-                                  'EditCategory',
-                                  'Faq',
-                                  $item['language']
-                              ) . '&id=' . $item['id']
+                    'EditCategory',
+                    'Faq',
+                    $item['language']
+                ) . '&id=' . $item['id']
             )
         );
 
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
-        );
+        // invalidate frontend cache
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
+        // return the new item id
         return $item['id'];
     }
 
