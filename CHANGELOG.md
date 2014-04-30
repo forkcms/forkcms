@@ -3,6 +3,9 @@
 Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+* Faq: BackendFaqModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* ContentBlocks: BackendContentBlocksModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* Location: BackendLocationModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
 
 
 3.7.0 (2014-04-24)
