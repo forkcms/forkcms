@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 
+* Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 
 
