@@ -34,7 +34,7 @@ class InstallTheme extends BackendBaseActionIndex
         $this->currentTheme = $this->getParameter('theme', 'string');
 
         // does the item exist
-        if($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
+        if ($this->currentTheme !== null && BackendExtensionsModel::existsTheme($this->currentTheme)) {
             // call parent, this will probably add some general CSS/JS or other required files
             parent::execute();
 
@@ -47,14 +47,14 @@ class InstallTheme extends BackendBaseActionIndex
 
                 // redirect to index with a success message
                 $this->redirect(BackendModel::createURLForAction('Themes') . '&report=theme-installed&var=' . $this->currentTheme);
-            } catch(Exception $e) {
+            } catch (Exception $e) {
                 // redirect to index with a success message
                 $this->redirect(BackendModel::createURLForAction('Themes') . '&report=information-file-is-empty&var=' . $this->currentTheme);
             }
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
     }
 
     /**
@@ -63,12 +63,12 @@ class InstallTheme extends BackendBaseActionIndex
     private function validateInstall()
     {
         // already installed
-        if(BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
+        if (BackendExtensionsModel::isThemeInstalled($this->currentTheme)) {
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=already-installed&var=' . $this->currentTheme);
         }
 
         // no information file present
-        if(!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
+        if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }

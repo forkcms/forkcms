@@ -30,7 +30,7 @@ class Helper
      */
     public static function parseField(array $field)
     {
-        if(!empty($field)) {
+        if (!empty($field)) {
             // init
             $frm = new BackendForm('tmp', '');
             $tpl = (BackendModel::getContainer()->has('template') ? BackendModel::getContainer()->get('template') : new BackendTemplate());
@@ -43,10 +43,10 @@ class Helper
              * Create form and parse to HTML
              */
             // dropdown
-            if($field['type'] == 'dropdown') {
+            if ($field['type'] == 'dropdown') {
                 // get index of selected item
                 $defaultIndex = array_search($defaultValues, $values, true);
-                if($defaultIndex === false) $defaultIndex = null;
+                if ($defaultIndex === false) $defaultIndex = null;
 
                 // create element
                 $ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
@@ -59,9 +59,9 @@ class Helper
             }
 
             // radiobutton
-            elseif($field['type'] == 'radiobutton') {
+            elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
-                foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
+                foreach ($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
                 // create element
                 $rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
@@ -71,9 +71,9 @@ class Helper
             }
 
             // checkbox
-            elseif($field['type'] == 'checkbox') {
+            elseif ($field['type'] == 'checkbox') {
                 // rebuild values
-                foreach($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
+                foreach ($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
 
                 // create element
                 $chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
@@ -83,7 +83,7 @@ class Helper
             }
 
             // textbox
-            elseif($field['type'] == 'textbox') {
+            elseif ($field['type'] == 'textbox') {
                 // create element
                 $txt = $frm->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
@@ -93,7 +93,7 @@ class Helper
             }
 
             // textarea
-            elseif($field['type'] == 'textarea') {
+            elseif ($field['type'] == 'textarea') {
                 // create element
                 $txt = $frm->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
@@ -104,10 +104,10 @@ class Helper
             }
 
             // heading
-            elseif($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';
+            elseif ($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';
 
             // paragraph
-            elseif($field['type'] == 'paragraph') $fieldHTML = $values;
+            elseif ($field['type'] == 'paragraph') $fieldHTML = $values;
 
             /**
              * Parse the field into the template
@@ -120,19 +120,19 @@ class Helper
             $tpl->assign('required', isset($field['validations']['required']));
 
             // plaintext items
-            if($field['type'] == 'heading' || $field['type'] == 'paragraph') {
+            if ($field['type'] == 'heading' || $field['type'] == 'paragraph') {
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);
             }
 
             // multiple items
-            elseif($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+            elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                 // name (prefixed by type)
                 $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::ucfirst($fieldName) : 'rbt' . \SpoonFilter::ucfirst($fieldName);
 
                 // rebuild so the html is stored in a general name (and not rbtName)
-                foreach($fieldHTML as &$item) $item['field'] = $item[$name];
+                foreach ($fieldHTML as &$item) $item['field'] = $item[$name];
 
                 // show multiple
                 $tpl->assign('label', $field['settings']['label']);

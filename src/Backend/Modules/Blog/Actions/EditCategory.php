@@ -33,17 +33,17 @@ class EditCategory extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exception, because somebody is fucking with our URL
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -93,7 +93,7 @@ class EditCategory extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -103,7 +103,7 @@ class EditCategory extends BackendBaseActionEdit
             // validate meta
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['title'] = $this->frm->getField('title')->getValue();

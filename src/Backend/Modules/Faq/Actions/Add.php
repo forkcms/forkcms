@@ -81,7 +81,7 @@ class Add extends BackendBaseActionAdd
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
     }
 
     /**
@@ -89,7 +89,7 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // validate fields
@@ -98,7 +98,7 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();

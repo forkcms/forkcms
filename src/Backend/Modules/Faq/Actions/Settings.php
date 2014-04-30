@@ -52,7 +52,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox('send_email_on_new_feedback', BackendModel::getModuleSetting($this->URL->getModule(), 'send_email_on_new_feedback', false));
 
         // no Akismet-key, so we can't enable spam-filter
-        if(BackendModel::getModuleSetting('Core', 'akismet_key') == '') {
+        if (BackendModel::getModuleSetting('Core', 'akismet_key') == '') {
             $this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
             $this->tpl->assign('noAkismetKey', true);
         }
@@ -63,8 +63,8 @@ class Settings extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
-            if($this->frm->isCorrect()) {
+        if ($this->frm->isSubmitted()) {
+            if ($this->frm->isCorrect()) {
                 // set our settings
                 BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items_per_category', (int) $this->frm->getField('overview_number_of_items_per_category')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'most_read_num_items', (int) $this->frm->getField('most_read_number_of_items')->getValue());
@@ -74,7 +74,7 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'allow_feedback', (bool) $this->frm->getField('allow_feedback')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'allow_own_question', (bool) $this->frm->getField('allow_own_question')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'send_email_on_new_feedback', (bool) $this->frm->getField('send_email_on_new_feedback')->getValue());
-                if(BackendModel::getModuleSetting('Core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                if (BackendModel::getModuleSetting('Core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
                 // redirect to the settings page
                 $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');

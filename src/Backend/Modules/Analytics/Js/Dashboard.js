@@ -27,9 +27,9 @@ jsBackend.analyticsDashboard =
 				success: function(data, textStatus)
 				{
 					// redirect
-					if(data.data.status == 'unauthorized') window.location = $settingsUrl.html();
+					if (data.data.status == 'unauthorized') window.location = $settingsUrl.html();
 
-					if(data.code == 200)
+					if (data.code == 200)
 					{
 						// show new data
 						$dataGridReferrers.html(data.data.referrersHtml);
@@ -49,7 +49,7 @@ jsBackend.analyticsDashboard =
 					$refreshTrafficSources.removeClass('disabledButton');
 
 					// alert the user
-					if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+					if (data.code != 200 && jsBackend.debug) { alert(data.message); }
 				},
 				error: function(XMLHttpRequest, textStatus, errorThrown)
 				{
@@ -57,7 +57,7 @@ jsBackend.analyticsDashboard =
 					$refreshTrafficSources.removeClass('disabledButton');
 
 					// alert the user
-					if(jsBackend.debug) alert(textStatus);
+					if (jsBackend.debug) alert(textStatus);
 				}
 			});
 		});

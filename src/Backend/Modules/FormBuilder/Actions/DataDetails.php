@@ -46,7 +46,7 @@ class DataDetails extends BackendBaseActionIndex
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFormBuilderModel::existsData($this->id)) {
+        if ($this->id !== null && BackendFormBuilderModel::existsData($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->getData();
@@ -86,9 +86,9 @@ class DataDetails extends BackendBaseActionIndex
         $data = array();
 
         // prepare data
-        foreach($this->data['fields'] as $field) {
+        foreach ($this->data['fields'] as $field) {
             // implode arrays
-            if(is_array($field['value'])) $field['value'] = implode(', ', $field['value']);
+            if (is_array($field['value'])) $field['value'] = implode(', ', $field['value']);
 
             // new lines to line breaks
             else $field['value'] = nl2br($field['value']);
@@ -108,7 +108,7 @@ class DataDetails extends BackendBaseActionIndex
     private function setFilter()
     {
         // start date is set
-        if(isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
             // redefine
             $startDate = (string) $_GET['start_date'];
 
@@ -116,7 +116,7 @@ class DataDetails extends BackendBaseActionIndex
             $chunks = explode('/', $startDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['start_date'] = $startDate;
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['start_date'] = $startDate;
 
             // invalid date
             else $this->filter['start_date'] = '';
@@ -126,7 +126,7 @@ class DataDetails extends BackendBaseActionIndex
         else $this->filter['start_date'] = '';
 
         // end date is set
-        if(isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
             // redefine
             $endDate = (string) $_GET['end_date'];
 
@@ -134,7 +134,7 @@ class DataDetails extends BackendBaseActionIndex
             $chunks = explode('/', $endDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['end_date'] = $endDate;
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['end_date'] = $endDate;
 
             // invalid date
             else $this->filter['end_date'] = '';

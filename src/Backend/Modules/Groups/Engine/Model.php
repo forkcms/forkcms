@@ -38,8 +38,8 @@ class Model
      */
     public static function addActionPermissions($actionPermissions)
     {
-        foreach((array) $actionPermissions as $permission) {
-            if(!self::existsActionPermission($permission)) {
+        foreach ((array) $actionPermissions as $permission) {
+            if (!self::existsActionPermission($permission)) {
                 BackendModel::getContainer()->get('database')->insert('groups_rights_actions', $permission);
             }
         }
@@ -52,8 +52,8 @@ class Model
      */
     public static function addModulePermissions($modulePermissions)
     {
-        foreach((array) $modulePermissions as $permission) {
-            if(!self::existsModulePermission($permission)) {
+        foreach ((array) $modulePermissions as $permission) {
+            if (!self::existsModulePermission($permission)) {
                 BackendModel::getContainer()->get('database')->insert('groups_rights_modules', $permission);
             }
         }
@@ -92,8 +92,8 @@ class Model
      */
     public static function deleteActionPermissions($actionPermissions)
     {
-        foreach((array) $actionPermissions as $permission) {
-            if(self::existsActionPermission($permission)) {
+        foreach ((array) $actionPermissions as $permission) {
+            if (self::existsActionPermission($permission)) {
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_actions',
                     'group_id = ? AND module = ? AND action = ?',
@@ -110,8 +110,8 @@ class Model
      */
     public static function deleteModulePermissions($modulePermissions)
     {
-        foreach((array) $modulePermissions as $permission) {
-            if(self::existsModulePermission($permission)) {
+        foreach ((array) $modulePermissions as $permission) {
+            if (self::existsModulePermission($permission)) {
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_modules',
                     'group_id = ? AND module = ?',
@@ -272,7 +272,7 @@ class Model
             array((int) $groupId, (string) $name)
         );
 
-        if(isset($setting['value'])) {
+        if (isset($setting['value'])) {
             return unserialize($setting['value']);
         }
     }
@@ -330,7 +330,7 @@ class Model
         self::deleteMultipleGroups($userId);
 
         // loop through groups
-        foreach($groups as $group) {
+        foreach ($groups as $group) {
             // add user id
             $item['user_id'] = $userId;
             $item['group_id'] = $group;

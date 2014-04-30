@@ -28,12 +28,12 @@ class DeleteCategory extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendBlogModel::existsCategory($this->id)) {
             // get data
             $this->record = (array) BackendBlogModel::getCategory($this->id);
 
             // allowed to delete the category?
-            if(BackendBlogModel::deleteCategoryAllowed($this->id)) {
+            if (BackendBlogModel::deleteCategoryAllowed($this->id)) {
                 // call parent, this will probably add some general CSS/JS or other required files
                 parent::execute();
 
@@ -48,16 +48,16 @@ class DeleteCategory extends BackendBaseActionDelete
                     BackendModel::createURLForAction('Categories') . '&report=deleted-category&var=' .
                     urlencode($this->record['title'])
                 );
+            } else {
+                $this->redirect(
+                    // delete category not allowed
+                    BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
+                    urlencode($this->record['title'])
+                );
             }
-
-            // delete category not allowed
-            else $this->redirect(
-                BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
-                urlencode($this->record['title'])
-            );
+        } else {
+            // something went wrong
+            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
         }
-
-        // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
     }
 }

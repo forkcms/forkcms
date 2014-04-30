@@ -31,7 +31,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
         parent::execute();
 
         // fork is no longer authorized to collect analytics data
-        if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
+        if (BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
             // remove all parameters from the module settings
             BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
             BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
@@ -41,12 +41,13 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
             BackendAnalyticsModel::removeCacheFiles();
             BackendAnalyticsModel::clearTables();
 
-            $this->output(self::OK, array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')), 'No longer authorized.');
-        }
-
-        // authorized
-        else {
-            // get data
+            $this->output(
+                self::OK,
+                array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')),
+                'No longer authorized.'
+            );
+        } else {
+            // authorized: get data
             $this->getData();
 
             // get html
@@ -76,7 +77,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
         try {
             BackendAnalyticsHelper::getRecentReferrers();
             BackendAnalyticsHelper::getRecentKeywords();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $this->output(self::OK, array('status' => 'error'), 'Something went wrong while getting traffic sources.');
         }
     }
@@ -87,14 +88,17 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
     private function parseKeywords()
     {
         $results = BackendAnalyticsModel::getRecentKeywords();
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
             $dataGrid->setColumnsHidden('id', 'date');
         }
 
         // parse the datagrid
-        return (!empty($results) ? $dataGrid->getContent() : '<table class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>');
+        return (!empty($results) ?
+            $dataGrid->getContent() :
+            '<table class="dataGrid"><tr><td>' . BL::msg('NoKeywords') . '</td></tr></table>')
+        ;
     }
 
     /**
@@ -103,7 +107,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
     private function parseReferrers()
     {
         $results = BackendAnalyticsModel::getRecentReferrers();
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging();
             $dataGrid->setColumnsHidden('id', 'date', 'url');
@@ -111,6 +115,9 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
         }
 
         // parse the datagrid
-        return (!empty($results) ? $dataGrid->getContent() : '<table class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>');
+        return (!empty($results) ?
+            $dataGrid->getContent() :
+            '<table class="dataGrid"><tr><td>' . BL::msg('NoReferrers') . '</td></tr></table>'
+        );
     }
 }

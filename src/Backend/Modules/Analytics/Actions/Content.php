@@ -69,7 +69,7 @@ class Content extends BackendAnalyticsBase
         // get metrics per day
         $metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-        foreach($metrics as $i => $metric) {
+        foreach ($metrics as $i => $metric) {
             // build graph data array
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
@@ -78,7 +78,7 @@ class Content extends BackendAnalyticsBase
             $graphData[$i]['data'] = array();
 
             // loop metrics per day
-            foreach($metricsPerDay as $j => $data) {
+            foreach ($metricsPerDay as $j => $data) {
                 // cast SimpleXMLElement to array
                 $data = (array) $data;
 
@@ -89,10 +89,12 @@ class Content extends BackendAnalyticsBase
         }
 
         // loop the metrics
-        foreach($graphData as $metric) {
-            foreach($metric['data'] as $data) {
+        foreach ($graphData as $metric) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 
@@ -107,12 +109,12 @@ class Content extends BackendAnalyticsBase
     private function parseImportantExitPages()
     {
         $results = BackendAnalyticsModel::getTopExitPages($this->startTimestamp, $this->endTimestamp);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
@@ -127,12 +129,12 @@ class Content extends BackendAnalyticsBase
     private function parseImportantLandingPages()
     {
         $results = BackendAnalyticsModel::getLandingPages($this->startTimestamp, $this->endTimestamp, 5);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page_path', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
@@ -152,12 +154,12 @@ class Content extends BackendAnalyticsBase
     private function parseImportantPages()
     {
         $results = BackendAnalyticsModel::getTopPages($this->startTimestamp, $this->endTimestamp);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
@@ -182,23 +184,31 @@ class Content extends BackendAnalyticsBase
 
         // are there some values?
         $dataAvailable = false;
-        foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+        foreach ($resultsTotal as $data) {
+            if ($data != 0) {
+                $dataAvailable = true;
+            }
+        }
 
         // show message if there is no data
         $this->tpl->assign('dataAvailable', $dataAvailable);
 
-        if(!empty($results)) {
+        if (!empty($results)) {
             // new visitors
             $newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
             $newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
             $newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-            if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
+            if ($newVisitsDifference > 0) {
+                $newVisitsDifference = '+' . $newVisitsDifference;
+            }
 
             // bounces
             $bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
             $bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
             $bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-            if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
+            if ($bouncesDifference > 0) {
+                $bouncesDifference = '+' . $bouncesDifference;
+            }
 
             $this->tpl->assign('pageviews', $results['pageviews']);
             $this->tpl->assign('pageviewsTotal', $resultsTotal['pageviews']);

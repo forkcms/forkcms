@@ -27,8 +27,12 @@ class Visitors extends BackendBaseWidget
     public function execute()
     {
         // analytics session token and analytics table id
-        if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') return;
-        if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') return;
+        if (
+            BackendModel::getModuleSetting('Analytics', 'session_token', null) == '' ||
+            BackendModel::getModuleSetting('Analytics', 'table_id', null) == ''
+        ) {
+            return;
+        }
 
         // settings are ok, set option
         $this->tpl->assign('analyticsValidSettings', true);
@@ -62,9 +66,9 @@ class Visitors extends BackendBaseWidget
         $dashboardData = BackendAnalyticsModel::getDashboardData($metrics, $startTimestamp, $endTimestamp, true);
 
         // there are some metrics
-        if($dashboardData !== false) {
+        if ($dashboardData !== false) {
             // loop metrics
-            foreach($metrics as $i => $metric) {
+            foreach ($metrics as $i => $metric) {
                 // build graph data array
                 $graphData[$i] = array();
                 $graphData[$i]['title'] = $metric;
@@ -73,7 +77,7 @@ class Visitors extends BackendBaseWidget
                 $graphData[$i]['data'] = array();
 
                 // loop metrics per day
-                foreach($dashboardData as $j => $data) {
+                foreach ($dashboardData as $j => $data) {
                     // cast SimpleXMLElement to array
                     $data = (array) $data;
 
@@ -84,10 +88,12 @@ class Visitors extends BackendBaseWidget
             }
         }
 
-        foreach($graphData as $metric) {
-            foreach($metric['data'] as $data) {
+        foreach ($graphData as $metric) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 

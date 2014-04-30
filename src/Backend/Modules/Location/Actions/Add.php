@@ -54,7 +54,7 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // validate fields
@@ -64,7 +64,7 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
             $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['language'] = BL::getWorkingLanguage();
                 $item['title'] = $this->frm->getField('title')->getValue();
@@ -88,7 +88,7 @@ class Add extends BackendBaseActionAdd
                 $item['id'] = BackendLocationModel::insert($item);
 
                 // everything is saved, so redirect to the overview
-                if($item['lat'] && $item['lng']) {
+                if ($item['lat'] && $item['lng']) {
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
                 }

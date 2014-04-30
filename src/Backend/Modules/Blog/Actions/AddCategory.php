@@ -55,7 +55,7 @@ class AddCategory extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
@@ -66,7 +66,7 @@ class AddCategory extends BackendBaseActionAdd
             $this->meta->validate();
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();

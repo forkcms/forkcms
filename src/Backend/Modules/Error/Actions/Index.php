@@ -54,7 +54,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // querystring provided?
-        if($this->getParameter('querystring') !== null) {
+        if ($this->getParameter('querystring') !== null) {
             // split into file and parameters
             $chunks = explode('?', $this->getParameter('querystring'));
 
@@ -62,7 +62,7 @@ class Index extends BackendBaseActionIndex
             $extension = pathinfo($chunks[0], PATHINFO_EXTENSION);
 
             // if the file has an extension it is a non-existing-file
-            if($extension != '' && $extension != $chunks[0]) {
+            if ($extension != '' && $extension != $chunks[0]) {
                 // set correct headers
                 \SpoonHTTP::setHeadersByCode(404);
 

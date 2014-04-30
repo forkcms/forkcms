@@ -147,16 +147,16 @@ class Installer extends ModuleInstaller
         $this->setSetting('Faq', 'allow_multiple_categories', true);
         $this->setSetting('Faq', 'send_email_on_new_feedback', false);
 
-        foreach($this->getLanguages() as $language) {
+        foreach ($this->getLanguages() as $language) {
             $this->defaultCategoryId = $this->getCategory($language);
 
             // no category exists
-            if($this->defaultCategoryId == 0) {
+            if ($this->defaultCategoryId == 0) {
                 $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
             }
 
             // check if a page for the faq already exists in this language
-            if(!(bool) $this->getDB()->getVar(
+            if (!(bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id

@@ -77,7 +77,7 @@ class Import extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // redefine fields
@@ -86,18 +86,18 @@ class Import extends BackendBaseActionAdd
             $chkOverwrite = $this->frm->getField('overwrite');
 
             // name checks
-            if($fileFile->isFilled(BL::err('FieldIsRequired'))) {
+            if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
                 // only xml files allowed
-                if($fileFile->isAllowedExtension(array('xml'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
+                if ($fileFile->isAllowedExtension(array('xml'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml'))) {
                     // load xml
                     $xml = @simplexml_load_file($fileFile->getTempFileName());
 
                     // invalid xml
-                    if($xml === false) $fileFile->addError(BL::getError('InvalidXML'));
+                    if ($xml === false) $fileFile->addError(BL::getError('InvalidXML'));
                 }
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // import
                 $statistics = BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 

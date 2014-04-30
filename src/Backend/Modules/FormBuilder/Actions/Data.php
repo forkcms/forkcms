@@ -60,7 +60,7 @@ class Data extends BackendBaseActionIndex
              WHERE i.form_id = ?';
 
         // add start date
-        if($this->filter['start_date'] !== '') {
+        if ($this->filter['start_date'] !== '') {
             // explode date parts
             $chunks = explode('/', $this->filter['start_date']);
 
@@ -70,7 +70,7 @@ class Data extends BackendBaseActionIndex
         }
 
         // add end date
-        if($this->filter['end_date'] !== '') {
+        if ($this->filter['end_date'] !== '') {
             // explode date parts
             $chunks = explode('/', $this->filter['end_date']);
 
@@ -92,7 +92,7 @@ class Data extends BackendBaseActionIndex
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->loadForm();
@@ -141,7 +141,7 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('DataDetails')) {
+        if (BackendAuthentication::isAllowedAction('DataDetails')) {
             // set colum URLs
             $this->dataGrid->setColumnURL(
                 'sent_on',
@@ -188,16 +188,16 @@ class Data extends BackendBaseActionIndex
         $startDate = '';
         $endDate = '';
 
-        if(isset($this->filter['start_date']) && $this->filter['start_date'] != '') {
+        if (isset($this->filter['start_date']) && $this->filter['start_date'] != '') {
             $chunks = explode('/', $this->filter['start_date']);
             $startDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
-            if($startDate == 0) $startDate = '';
+            if ($startDate == 0) $startDate = '';
         }
 
-        if(isset($this->filter['end_date']) && $this->filter['end_date'] != '') {
+        if (isset($this->filter['end_date']) && $this->filter['end_date'] != '') {
             $chunks = explode('/', $this->filter['end_date']);
             $endDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
-            if($endDate == 0) $endDate = '';
+            if ($endDate == 0) $endDate = '';
         }
 
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
@@ -230,7 +230,7 @@ class Data extends BackendBaseActionIndex
     private function setFilter()
     {
         // start date is set
-        if(isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
             // redefine
             $startDate = (string) $_GET['start_date'];
 
@@ -238,7 +238,7 @@ class Data extends BackendBaseActionIndex
             $chunks = explode('/', $startDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
                 $this->filter['start_date'] = $startDate;
             }
 
@@ -250,7 +250,7 @@ class Data extends BackendBaseActionIndex
         else $this->filter['start_date'] = '';
 
         // end date is set
-        if(isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
             // redefine
             $endDate = (string) $_GET['end_date'];
 
@@ -258,7 +258,7 @@ class Data extends BackendBaseActionIndex
             $chunks = explode('/', $endDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
                 $this->filter['end_date'] = $endDate;
             }
 

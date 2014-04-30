@@ -292,7 +292,10 @@ class Header extends Base\Object
             foreach ($existingCSSFiles as $file) {
                 // add lastmodified time
                 if ($file['add_timestamp'] !== false) {
-                    $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                    $file['file'] .= (strpos($file['file'], '?') !== false) ?
+                        '&m=' . LAST_MODIFIED_TIME :
+                        '?m=' . LAST_MODIFIED_TIME
+                    ;
                 }
 
                 // add
@@ -336,7 +339,10 @@ class Header extends Base\Object
                     if (substr($file['file'], 0, 11) == '/frontend/js') {
                         $file = array('file' => $file['file'] . '&amp;m=' . time());
                     } else {
-                        $modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
+                        $modifiedTime = (strpos($file['file'], '?') !== false) ?
+                            '&amp;m=' . LAST_MODIFIED_TIME :
+                            '?m=' . LAST_MODIFIED_TIME
+                        ;
                         $file = array('file' => $file['file'] . $modifiedTime);
                     }
                 }

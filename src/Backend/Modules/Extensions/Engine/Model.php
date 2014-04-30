@@ -378,11 +378,11 @@ class Model
             // add human readable name
             $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
             $row['human_name'] = \SpoonFilter::ucfirst(
-                                     BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-                                 ) . ': ' . $name;
+                BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
+            ) . ': ' . $name;
             $row['path'] = \SpoonFilter::ucfirst(
-                               BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
-                           ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
+                BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
+            ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
         }
 
         // any items to remove?

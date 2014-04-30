@@ -32,7 +32,7 @@ class AddCategory extends BackendBaseActionAdd
     public function execute()
     {
         // only one category allowed, so we redirect
-        if(!BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('Categories') . '&error=only-one-category-allowed');
+        if (!BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)) $this->redirect(BackendModel::createURLForAction('Categories') . '&error=only-one-category-allowed');
 
         parent::execute();
         $this->loadForm();
@@ -57,7 +57,7 @@ class AddCategory extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->meta->setURLCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory');
 
             $this->frm->cleanupFields();
@@ -66,7 +66,7 @@ class AddCategory extends BackendBaseActionAdd
             $this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();

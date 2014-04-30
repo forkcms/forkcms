@@ -42,7 +42,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod()) {
+        if ($this->id !== null && BackendLocaleModel::exists($this->id) && BackendAuthentication::getUser()->isGod()) {
             parent::execute();
 
             // filter options
