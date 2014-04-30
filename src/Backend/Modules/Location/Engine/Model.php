@@ -17,6 +17,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -38,15 +39,10 @@ class Model
         // get item
         $item = self::get($id);
 
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'Location',
-            'type' => 'widget',
-            'action' => 'Location'
-        );
+        // delete extra by id
+        BackendModel::deleteExtraById($item['extra_id']);
 
-        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        // delete location and its settings
         $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
         $db->delete('location_settings', 'map_id = ?', array((int) $id));
     }
@@ -218,31 +214,30 @@ class Model
      */
     public static function update($item)
     {
-        $db = BackendModel::getContainer()->get('database');
+        // redefine edited on date
         $item['edited_on'] = BackendModel::getUTCDate();
 
+        // we have an extra_id
         if (isset($item['extra_id'])) {
-            // build extra
-            $extra = array(
-                'id' => $item['extra_id'],
-                'module' => 'Location',
-                'type' => 'widget',
-                'label' => 'Location',
-                'action' => 'Location',
-                'data' => serialize(array(
+            // update extra
+            BackendModel::updateExtra(
+                $item['extra_id'],
+                'data',
+                array(
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
-                ),
-                'hidden' => 'N'
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                )
             );
-
-            // update extra
-            $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
         }
 
         // update item
-        return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
+        return BackendModel::getContainer()->get('database')->update(
+            'location',
+            $item,
+            'id = ? AND language = ?',
+            array($item['id'], $item['language'])
+        );
     }
 }
