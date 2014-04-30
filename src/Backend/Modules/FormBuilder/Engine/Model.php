@@ -19,6 +19,7 @@ use Frontend\Core\Engine\Language as FL;
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -490,28 +491,26 @@ class Model
      */
     public static function insert(array $values)
     {
-        $insertId = BackendModel::getContainer()->get('database')->insert('forms', $values);
-
-        // build array
-        $extra['module'] = 'form_builder';
-        $extra['type'] = 'widget';
-        $extra['label'] = 'FormBuilder';
-        $extra['action'] = 'form';
-        $extra['data'] = serialize(
-            array(
-                'language' => $values['language'],
-                'extra_label' => $values['name'],
-                'id' => $insertId,
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
-            )
-        );
-        $extra['hidden'] = 'N';
-        $extra['sequence'] = '400' . $insertId;
+        // define new id
+        $newId = BackendModel::getContainer()->get('database')->insert('forms', $values);
 
         // insert extra
-        BackendModel::getContainer()->get('database')->insert('modules_extras', $extra);
+        BackendModel::insertExtra(
+            'widget',
+            'FormBuilder',
+            'Form',
+            'FormBuilder',
+            array(
+                'id' => $newId,
+                'extra_label' => $values['name'],
+                'language' => $values['language'],
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $newId
+            ),
+            false,
+            '400' . $newId
+        );
 
-        return $insertId;
+        return $newId;
     }
 
     /**
