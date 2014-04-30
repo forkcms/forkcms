@@ -264,40 +264,20 @@ class Model
      */
     public static function insert(array $item)
     {
-        $db = BackendModel::getContainer()->get('database');
-
-        // build extra
-        $extra = array(
-            'module' => 'ContentBlocks',
-            'type' => 'widget',
-            'label' => 'ContentBlocks',
-            'action' => 'detail',
-            'data' => null,
-            'hidden' => 'N',
-            'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?',
-                array('ContentBlocks')
-            )
+        // insert extra
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'ContentBlocks',
+            'Detail'
         );
 
-        if (is_null($extra['sequence'])) {
-            $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-                 FROM modules_extras AS i'
-            );
-        }
-
-        // insert extra
-        $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
-
         // insert and return the new revision id
-        $item['revision_id'] = $db->insert('content_blocks', $item);
+        $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('content_blocks', $item);
 
-        // update extra (item id is now known)
-        $extra['data'] = serialize(
+        // update data for the extra
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
             array(
                 'id' => $item['id'],
                 'extra_label' => $item['title'],
@@ -308,12 +288,6 @@ class Model
                     $item['language']
                 ) . '&id=' . $item['id']
             )
-        );
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
         );
 
         return $item['revision_id'];
