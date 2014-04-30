@@ -1,3 +1,10 @@
+3.7.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks. Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+
+
 3.7.0 (2014-04-24)
 --
 Improvements:
