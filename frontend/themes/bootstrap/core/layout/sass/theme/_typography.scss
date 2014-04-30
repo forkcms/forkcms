@@ -41,11 +41,13 @@ a {
   color: $linkColor;
   border-bottom: 1px solid $linkColor;
   @include transition(all 150ms);
+  text-decoration: none;
 
   &:hover,
   &:focus {
     color: $linkColorHover;
     border-bottom-color: $linkColorHover;
+    text-decoration: none;
   }
 
   &:focus {
@@ -53,6 +55,6 @@ a {
   }
 
   &:active {
-
+    text-decoration: none;
   }
 }
