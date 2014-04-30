@@ -1515,6 +1515,9 @@ class Model extends \BaseModel
      */
     public static function updateExtra($id, $key, $value)
     {
+        // define key
+        $key = (string) $key;
+
         // define allowed keys
         $allowedKeys = array('label', 'action', 'data', 'hidden', 'sequence');
 
@@ -1524,7 +1527,7 @@ class Model extends \BaseModel
         }
 
         // key is 'data' and value is not serialized
-        if ($key == 'data' && is_array($value)) {
+        if ($key === 'data' && is_array($value)) {
             // serialize value
             $value = serialize($value);
         }
