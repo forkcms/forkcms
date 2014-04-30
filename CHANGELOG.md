@@ -1,3 +1,10 @@
+3.7.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+
+
 3.7.0 (2014-04-24)
 --
 Improvements:
