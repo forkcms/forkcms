@@ -67,12 +67,14 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendBlogModel::exists($this->id)) {
+        if ($this->id !== null && BackendBlogModel::exists($this->id)) {
             parent::execute();
 
             // set category id
             $this->categoryId = \SpoonFilter::getGetValue('category', null, null, 'int');
-            if($this->categoryId == 0) $this->categoryId = null;
+            if ($this->categoryId == 0) {
+                $this->categoryId = null;
+            }
 
             $this->getData();
             $this->loadDrafts();
@@ -81,10 +83,10 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exception, because somebody is fucking with our URL
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -100,7 +102,7 @@ class Edit extends BackendBaseActionEdit
         $revisionToLoad = $this->getParameter('revision', 'int');
 
         // if this is a valid revision
-        if($revisionToLoad !== null) {
+        if ($revisionToLoad !== null) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $revisionToLoad);
 
@@ -112,7 +114,7 @@ class Edit extends BackendBaseActionEdit
         $draftToLoad = $this->getParameter('draft', 'int');
 
         // if this is a valid revision
-        if($draftToLoad !== null) {
+        if ($draftToLoad !== null) {
             // overwrite the current record
             $this->record = (array) BackendBlogModel::getRevision($this->id, $draftToLoad);
 
@@ -124,7 +126,9 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -153,18 +157,20 @@ class Edit extends BackendBaseActionEdit
         // set column-functions
         $this->dgDrafts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id'
+            array('[user_id]'),
+            'user_id'
         );
         $this->dgDrafts->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'), 'edited_on'
+            array('[edited_on]'),
+            'edited_on'
         );
 
         // our JS needs to know an id, so we can highlight it
         $this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgDrafts->setColumnURL(
                 'title',
@@ -173,7 +179,9 @@ class Edit extends BackendBaseActionEdit
 
             // add use column
             $this->dgDrafts->addColumn(
-                'use_draft', null, BL::lbl('UseThisDraft'),
+                'use_draft',
+                null,
+                BL::lbl('UseThisDraft'),
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;draft=[revision_id]',
                 BL::lbl('UseThisDraft')
             );
@@ -203,16 +211,20 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
+        if (count($categories) != 2) {
+            $this->frm->getField('category_id')->setDefaultElement('');
+        }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
         $this->frm->addText(
-            'tags', BackendTagsModel::getTags(
-                $this->URL->getModule(), $this->record['id']
-            ), null, 'inputText tagBox', 'inputTextError tagBox'
+            'tags',
+            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            null,
+            'inputText tagBox',
+            'inputTextError tagBox'
         );
         $this->frm->addDate('publish_on_date', $this->record['publish_on']);
         $this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
-        if($this->imageIsAllowed) {
+        if ($this->imageIsAllowed) {
             $this->frm->addImage('image');
             $this->frm->addCheckbox('delete_image');
         }
@@ -250,15 +262,17 @@ class Edit extends BackendBaseActionEdit
         // set column-functions
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id'
+            array('[user_id]'),
+            'user_id'
         );
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'), 'edited_on'
+            array('[edited_on]'),
+            'edited_on'
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
@@ -267,7 +281,9 @@ class Edit extends BackendBaseActionEdit
 
             // add use column
             $this->dgRevisions->addColumn(
-                'use_revision', null, BL::lbl('UseThisVersion'),
+                'use_revision',
+                null,
+                BL::lbl('UseThisVersion'),
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
             );
@@ -286,7 +302,9 @@ class Edit extends BackendBaseActionEdit
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) {
+            $this->tpl->assign('detailURL', SITE_URL . $url);
+        }
 
         // fetch proper slug
         $this->record['url'] = $this->meta->getURL();
@@ -302,7 +320,9 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('imageIsAllowed', $this->imageIsAllowed);
 
         // assign category
-        if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
+        if ($this->categoryId !== null) {
+            $this->tpl->assign('categoryId', $this->categoryId);
+        }
     }
 
     /**
@@ -311,7 +331,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get the status
             $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
@@ -329,7 +349,7 @@ class Edit extends BackendBaseActionEdit
             $this->meta->validate();
 
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save();
@@ -343,7 +363,8 @@ class Edit extends BackendBaseActionEdit
                 $item['introduction'] = $this->frm->getField('introduction')->getValue();
                 $item['text'] = $this->frm->getField('text')->getValue();
                 $item['publish_on'] = BackendModel::getUTCDate(
-                    null, BackendModel::getUTCTimestamp(
+                    null,
+                    BackendModel::getUTCTimestamp(
                         $this->frm->getField('publish_on_date'),
                         $this->frm->getField('publish_on_time')
                     )
@@ -353,7 +374,7 @@ class Edit extends BackendBaseActionEdit
                 $item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
                 $item['status'] = $status;
 
-                if($this->imageIsAllowed) {
+                if ($this->imageIsAllowed) {
                     $item['image'] = $this->record['image'];
 
                     // the image path
@@ -361,13 +382,17 @@ class Edit extends BackendBaseActionEdit
 
                     // create folders if needed
                     $fs = new Filesystem();
-                    if(!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
-                    if(!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
+                    if (!$fs->exists($imagePath . '/source')) {
+                        $fs->mkdir($imagePath . '/source');
+                    }
+                    if (!$fs->exists($imagePath . '/128x128')) {
+                        $fs->mkdir($imagePath . '/128x128');
+                    }
 
                     // if the image should be deleted
-                    if($this->frm->getField('delete_image')->isChecked()) {
+                    if ($this->frm->getField('delete_image')->isChecked()) {
                         $filename = $imagePath . '/source/' . $item['image'];
-                        if(is_file($filename)) {
+                        if (is_file($filename)) {
                             // delete the image
                             $fs->remove($filename);
                             BackendModel::deleteThumbnails($imagePath, $item['image']);
@@ -378,9 +403,9 @@ class Edit extends BackendBaseActionEdit
                     }
 
                     // new image given?
-                    if($this->frm->getField('image')->isFilled()) {
+                    if ($this->frm->getField('image')->isFilled()) {
                         $filename = $imagePath . '/source/' . $this->record['image'];
-                        if(is_file($filename)) {
+                        if (is_file($filename)) {
                             $fs->remove($filename);
                             BackendModel::deleteThumbnails($imagePath, $this->record['image']);
                         }
@@ -390,17 +415,15 @@ class Edit extends BackendBaseActionEdit
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
-                    }
-
-                    // rename the old image
-                    elseif($item['image'] != null) {
+                    } elseif ($item['image'] != null) {
+                        // rename the old image
                         $image = new File($imagePath . '/source/' . $item['image']);
                         $newName = $this->meta->getURL() . '.' . $image->getExtension();
 
                         // only change the name if there is a difference
-                        if($newName != $item['image']) {
+                        if ($newName != $item['image']) {
                             // loop folders
-                            foreach(BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
+                            foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
                                 // move the old file to the new name
                                 $fs->rename($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
@@ -409,7 +432,9 @@ class Edit extends BackendBaseActionEdit
                             $item['image'] = $newName;
                         }
                     }
-                } else $item['image'] = null;
+                } else {
+                    $item['image'] = null;
+                }
 
                 // update the item
                 $item['revision_id'] = BackendBlogModel::update($item);
@@ -424,17 +449,17 @@ class Edit extends BackendBaseActionEdit
                 BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
                 // active
-                if($item['status'] == 'active') {
+                if ($item['status'] == 'active') {
 
                     // edit search index
                     BackendSearchModel::saveIndex(
-                        $this->getModule(), $item['id'],
+                        $this->getModule(),
+                        $item['id'],
                         array('title' => $item['title'], 'text' => $item['text'])
                     );
 
                     // ping
-                    if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false))
-                    {
+                    if (BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) {
                         BackendModel::ping(
                             SITE_URL .
                             BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .
@@ -446,11 +471,8 @@ class Edit extends BackendBaseActionEdit
                     $redirectUrl = BackendModel::createURLForAction('Index') .
                                    '&report=edited&var=' . urlencode($item['title']) .
                                    '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
-                }
-
-                // draft
-                elseif($item['status'] == 'draft') {
-                    // everything is saved, so redirect to the edit action
+                } elseif ($item['status'] == 'draft') {
+                    // draft: everything is saved, so redirect to the edit action
                     $redirectUrl = BackendModel::createURLForAction('Edit') .
                                    '&report=saved-as-draft&var=' . urlencode($item['title']) .
                                    '&id=' . $item['id'] . '&draft=' . $item['revision_id'] .
@@ -458,7 +480,9 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // append to redirect URL
-                if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+                if ($this->categoryId != null) {
+                    $redirectUrl .= '&category=' . $this->categoryId;
+                }
 
                 // everything is saved, so redirect to the overview
                 $this->redirect($redirectUrl);

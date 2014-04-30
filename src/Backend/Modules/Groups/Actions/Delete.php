@@ -28,7 +28,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // group exists and id is not null?
-        if($this->id !== null && BackendGroupsModel::exists($this->id)) {
+        if ($this->id !== null && BackendGroupsModel::exists($this->id)) {
             parent::execute();
 
             // get record

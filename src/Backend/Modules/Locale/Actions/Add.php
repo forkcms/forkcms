@@ -57,12 +57,12 @@ class Add extends BackendBaseActionAdd
      */
     private function loadForm()
     {
-        if($this->getParameter('id') != null) {
+        if ($this->getParameter('id') != null) {
             // get the translation
             $translation = BackendLocaleModel::get($this->getParameter('id', 'int'));
 
             // if not empty, set the filter
-            if(!empty($translation)) {
+            if (!empty($translation)) {
                 // we are copying the given translation
                 $isCopy = true;
             }
@@ -120,7 +120,7 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // redefine fields
@@ -128,16 +128,16 @@ class Add extends BackendBaseActionAdd
             $txtValue = $this->frm->getField('value');
 
             // name checks
-            if($txtName->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
+                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
 
                     // syntax is completely fine
                     else {
                         // this name already exists in this language
-                        if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue())) {
+                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue())) {
                             $txtName->setError(BL::err('AlreadyExists'));
                         }
                     }
@@ -145,19 +145,19 @@ class Add extends BackendBaseActionAdd
             }
 
             // value checks
-            if($txtValue->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
-                if($this->frm->getField('type')->getValue() == 'act') {
-                    if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                if ($this->frm->getField('type')->getValue() == 'act') {
+                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
                 }
             }
 
             // module should be 'core' for any other application than backend
-            if($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
+            if ($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
                 $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore'));
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = $this->frm->getField('language')->getValue();

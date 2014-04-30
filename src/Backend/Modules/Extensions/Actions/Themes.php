@@ -37,7 +37,8 @@ class Themes extends BackendBaseActionIndex
      *
      * @var array
      */
-    private $installableThemes = array(), $installedThemes = array();
+    private $installableThemes = array();
+    private $installedThemes = array();
 
     /**
      * Execute the action.
@@ -62,12 +63,14 @@ class Themes extends BackendBaseActionIndex
     private function loadData()
     {
         // loop themes
-        foreach(BackendExtensionsModel::getThemes() as $theme) {
+        foreach (BackendExtensionsModel::getThemes() as $theme) {
             // themes that are already installed = have at least 1 template in DB
-            if($theme['installed']) $this->installedThemes[] = $theme;
-
-            // themes that are not yet installed, but contain valid info.xml installation data
-            elseif($theme['installable']) $this->installableThemes[] = $theme;
+            if ($theme['installed']) {
+                $this->installedThemes[] = $theme;
+            } elseif ($theme['installable']) {
+                // themes that are not yet installed, but contain valid info.xml installation data
+                $this->installableThemes[] = $theme;
+            }
         }
     }
 
@@ -85,17 +88,21 @@ class Themes extends BackendBaseActionIndex
         $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('Core', 'theme', 'core');
 
         // no themes found
-        if(empty($themes)) $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+        if (empty($themes)) {
+            $this->redirect(BackendModel::createURLForAction('Edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-themes');
+        }
 
         // loop the templates
-        foreach($themes as &$record) {
+        foreach ($themes as &$record) {
             // reformat custom variables
             $record['variables']['thumbnail'] = $record['thumbnail'];
             $record['variables']['installed'] = $record['installed'];
             $record['variables']['installable'] = $record['installable'];
 
             // set selected template
-            if($record['value'] == $selected) $record['variables']['selected'] = true;
+            if ($record['value'] == $selected) {
+                $record['variables']['selected'] = true;
+            }
 
             // unset the variable field
             unset($record['thumbnail'], $record['installed'], $record['installable']);
@@ -124,21 +131,21 @@ class Themes extends BackendBaseActionIndex
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // no errors?
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // determine themes
                 $newTheme = $this->frm->getField('installedThemes')->getValue();
                 $oldTheme = BackendModel::getModuleSetting('Core', 'theme', 'core');
 
                 // check if we actually switched themes
-                if($newTheme != $oldTheme) {
+                if ($newTheme != $oldTheme) {
                     // fetch templates
                     $oldTemplates = BackendExtensionsModel::getTemplates($oldTheme);
                     $newTemplates = BackendExtensionsModel::getTemplates($newTheme);
 
                     // check if templates already exist
-                    if(empty($newTemplates)) {
+                    if (empty($newTemplates)) {
                         // templates do not yet exist; don't switch
                         $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-templates-available');
                         exit;
@@ -148,9 +155,9 @@ class Themes extends BackendBaseActionIndex
                     $oldDefaultTemplatePath = $oldTemplates[BackendModel::getModuleSetting('Pages', 'default_template')]['path'];
 
                     // loop new templates
-                    foreach($newTemplates as $newTemplateId => $newTemplate) {
+                    foreach ($newTemplates as $newTemplateId => $newTemplate) {
                         // check if a a similar default template exists
-                        if($newTemplate['path'] == $oldDefaultTemplatePath) {
+                        if ($newTemplate['path'] == $oldDefaultTemplatePath) {
                             // set new default id
                             $newDefaultTemplateId = (int) $newTemplateId;
                             break;
@@ -158,7 +165,7 @@ class Themes extends BackendBaseActionIndex
                     }
 
                     // no default template was found, set first template as default
-                    if(!isset($newDefaultTemplateId)) {
+                    if (!isset($newDefaultTemplateId)) {
                         $newDefaultTemplateId = array_keys($newTemplates);
                         $newDefaultTemplateId = $newDefaultTemplateId[0];
                     }
@@ -170,11 +177,13 @@ class Themes extends BackendBaseActionIndex
                     BackendModel::setModuleSetting('Pages', 'default_template', $newDefaultTemplateId);
 
                     // loop old templates
-                    foreach($oldTemplates as $oldTemplateId => $oldTemplate) {
+                    foreach ($oldTemplates as $oldTemplateId => $oldTemplate) {
                         // loop new templates
-                        foreach($newTemplates as $newTemplateId => $newTemplate) {
+                        foreach ($newTemplates as $newTemplateId => $newTemplate) {
                             // if the templates don't match we can skip this one
-                            if($oldTemplate['path'] != $newTemplate['path']) continue;
+                            if ($oldTemplate['path'] != $newTemplate['path']) {
+                                continue;
+                            }
 
                             // switch template
                             BackendPagesModel::updatePagesTemplates($oldTemplateId, $newTemplateId);

@@ -52,43 +52,43 @@ class Export extends BackendBaseActionIndex
              WHERE 1';
 
         // add language
-        if($this->filter['language'] !== null) {
+        if ($this->filter['language'] !== null) {
             // create an array for the languages, surrounded by quotes (example: 'en')
             $languages = array();
-            foreach($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
+            foreach ($this->filter['language'] as $key => $val) $languages[$key] = '\'' . $val . '\'';
 
             $query .= ' AND l.language IN (' . implode(',', $languages) . ')';
         }
 
         // add application
-        if($this->filter['application'] !== null) {
+        if ($this->filter['application'] !== null) {
             $query .= ' AND l.application = ?';
             $parameters[] = $this->filter['application'];
         }
 
         // add module
-        if($this->filter['module'] !== null) {
+        if ($this->filter['module'] !== null) {
             $query .= ' AND l.module = ?';
             $parameters[] = $this->filter['module'];
         }
 
         // add type
-        if($this->filter['type'] !== null) {
+        if ($this->filter['type'] !== null) {
             // create an array for the types, surrounded by quotes (example: 'lbl')
             $types = array();
-            foreach($this->filter['type'] as $key => $val) $types[$key] = '\'' . $val . '\'';
+            foreach ($this->filter['type'] as $key => $val) $types[$key] = '\'' . $val . '\'';
 
             $query .= ' AND l.type IN (' . implode(',', $types) . ')';
         }
 
         // add name
-        if($this->filter['name'] !== null) {
+        if ($this->filter['name'] !== null) {
             $query .= ' AND l.name LIKE ?';
             $parameters[] = '%' . $this->filter['name'] . '%';
         }
 
         // add value
-        if($this->filter['value'] !== null) {
+        if ($this->filter['value'] !== null) {
             $query .= ' AND l.value LIKE ?';
             $parameters[] = '%' . $this->filter['value'] . '%';
         }
@@ -159,7 +159,7 @@ class Export extends BackendBaseActionIndex
         $this->locale = array();
 
         // group by application, module, type and name
-        foreach($items as $item) {
+        foreach ($items as $item) {
             $this->locale[$item['application']][$item['module']][$item['type']][$item['name']][] = $item;
         }
 

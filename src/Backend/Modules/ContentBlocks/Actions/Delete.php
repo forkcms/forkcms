@@ -32,7 +32,7 @@ class Delete extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
             parent::execute();
             $this->record = (array) BackendContentBlocksModel::get($this->id);
 
@@ -47,9 +47,9 @@ class Delete extends BackendBaseActionDelete
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
                 urlencode($this->record['title'])
             );
+        } else {
+            // no item found, redirect to the overview with an error
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, redirect to the overview with an error
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 }

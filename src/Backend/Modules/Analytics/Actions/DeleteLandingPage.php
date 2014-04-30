@@ -28,7 +28,7 @@ class DeleteLandingPage extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendAnalyticsModel::existsLandingPage($this->id)) {
+        if ($this->id !== null && BackendAnalyticsModel::existsLandingPage($this->id)) {
             parent::execute();
             $this->record = (array) BackendAnalyticsModel::getLandingPage($this->id);
 
@@ -39,10 +39,13 @@ class DeleteLandingPage extends BackendBaseActionDelete
             BackendModel::triggerEvent($this->getModule(), 'after_delete_landing_page', array('id' => $this->id));
 
             // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['page_path']));
+            $this->redirect(
+                BackendModel::createURLForAction('Index') .
+                '&report=deleted&var=' . urlencode($this->record['page_path'])
+            );
+        } else {
+            // something went wrong
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 }

@@ -33,7 +33,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadForm();
@@ -157,9 +157,9 @@ class Edit extends BackendBaseActionEdit
         $fields = BackendFormBuilderModel::getFields($this->id);
 
         // loop fields
-        foreach($fields as $field) {
+        foreach ($fields as $field) {
             // submit button
-            if($field['type'] == 'submit') {
+            if ($field['type'] == 'submit') {
                 // assign
                 $this->tpl->assign('submitId', $field['id']);
 
@@ -184,7 +184,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // shorten the fields
@@ -199,33 +199,33 @@ class Edit extends BackendBaseActionEdit
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
-            if($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
+            if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
 
                 // check the addresses
-                foreach($emailAddresses as $address) {
+                foreach ($emailAddresses as $address) {
                     $address = trim($address);
 
-                    if(!\SpoonFilter::isEmail($address)) {
+                    if (!\SpoonFilter::isEmail($address)) {
                         $error = true;
                         break;
                     }
                 }
 
                 // add error
-                if($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                if ($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
             }
 
             // identifier
-            if($txtIdentifier->isFilled()) {
+            if ($txtIdentifier->isFilled()) {
                 // invalid characters
-                if(!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
 
                 // unique identifier
-                elseif(BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build array
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();

@@ -28,7 +28,7 @@ class Delete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
 
-        if($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
             parent::execute();
             $this->record = BackendFaqModel::get($this->id);
 

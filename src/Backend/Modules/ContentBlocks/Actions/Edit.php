@@ -43,7 +43,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
             parent::execute();
             $this->getData();
             $this->loadRevisions();
@@ -51,10 +51,10 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exceptions, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -69,7 +69,7 @@ class Edit extends BackendBaseActionEdit
         $revisionToLoad = $this->getParameter('revision', 'int');
 
         // if this is a valid revision
-        if($revisionToLoad !== null) {
+        if ($revisionToLoad !== null) {
             // overwrite the current record
             $this->record = BackendContentBlocksModel::getRevision($this->id, $revisionToLoad);
 
@@ -82,7 +82,7 @@ class Edit extends BackendBaseActionEdit
         $this->templates = BackendContentBlocksModel::getTemplates();
 
         // check if selected template is still available
-        if($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
+        if ($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
             $this->record['template'] = '';
         }
     }
@@ -98,7 +98,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 
         // if we have multiple templates, add a dropdown to select them
-        if(count($this->templates) > 1) {
+        if (count($this->templates) > 1) {
             $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
         }
     }
@@ -129,15 +129,17 @@ class Edit extends BackendBaseActionEdit
         // set column-functions
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getUser'),
-            array('[user_id]'), 'user_id'
+            array('[user_id]'),
+            'user_id'
         );
         $this->dgRevisions->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            array('[edited_on]'), 'edited_on'
+            array('[edited_on]'),
+            'edited_on'
         );
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             // set column URLs
             $this->dgRevisions->setColumnURL(
                 'title',
@@ -147,7 +149,9 @@ class Edit extends BackendBaseActionEdit
 
             // add use column
             $this->dgRevisions->addColumn(
-                'use_revision', null, BL::lbl('UseThisVersion'),
+                'use_revision',
+                null,
+                BL::lbl('UseThisVersion'),
                 BackendModel::createURLForAction('Edit') .
                 '&amp;id=[id]&amp;revision=[revision_id]',
                 BL::lbl('UseThisVersion')
@@ -175,14 +179,14 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
             $fields = $this->frm->getFields();
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];

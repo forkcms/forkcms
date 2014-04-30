@@ -30,7 +30,9 @@ class Comments extends BackendBaseActionIndex
      *
      * @var	BackendDataGridDB
      */
-    private $dgPublished, $dgModeration, $dgSpam;
+    private $dgPublished;
+    private $dgModeration;
+    private $dgSpam;
 
     /**
      * Add postdata into the comment
@@ -92,15 +94,21 @@ class Comments extends BackendBaseActionIndex
         // assign column functions
         $this->dgPublished->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            '[created_on]', 'created_on', true
+            '[created_on]',
+            'created_on',
+            true
         );
         $this->dgPublished->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
-            '[text]', 'text', true
+            '[text]',
+            'text',
+            true
         );
         $this->dgPublished->setColumnFunction(
             array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true
+            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            'text',
+            true
         );
 
         // sorting
@@ -112,11 +120,13 @@ class Comments extends BackendBaseActionIndex
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
-            'action', array(
+            'action',
+            array(
                 'moderation' => BL::lbl('MoveToModeration'),
                 'spam' => BL::lbl('MoveToSpam'),
-                'delete' => BL::lbl('Delete')
-            ), 'spam'
+                'delete' => BL::lbl('Delete'),
+            ),
+            'spam'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
         $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
@@ -124,18 +134,22 @@ class Comments extends BackendBaseActionIndex
         $this->dgPublished->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('EditComment')) {
+        if (BackendAuthentication::isAllowedAction('EditComment')) {
             $this->dgPublished->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
+        if (BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgPublished->addColumn(
-                'mark_as_spam', null, BL::lbl('MarkAsSpam'),
+                'mark_as_spam',
+                null,
+                BL::lbl('MarkAsSpam'),
                 BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=spam',
                 BL::lbl('MarkAsSpam')
@@ -171,15 +185,21 @@ class Comments extends BackendBaseActionIndex
         // assign column functions
         $this->dgModeration->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            '[created_on]', 'created_on', true
+            '[created_on]',
+            'created_on',
+            true
         );
         $this->dgModeration->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
-            '[text]', 'text', true
+            '[text]',
+            'text',
+            true
         );
         $this->dgModeration->setColumnFunction(
             array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true
+            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            'text',
+            true
         );
 
         // sorting
@@ -191,11 +211,13 @@ class Comments extends BackendBaseActionIndex
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
-            'action', array(
+            'action',
+            array(
                 'published' => BL::lbl('MoveToPublished'),
                 'spam' => BL::lbl('MoveToSpam'),
-                'delete' => BL::lbl('Delete')
-            ), 'published'
+                'delete' => BL::lbl('Delete'),
+            ),
+            'published'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
         $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
@@ -203,18 +225,22 @@ class Comments extends BackendBaseActionIndex
         $this->dgModeration->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('EditComment')) {
+        if (BackendAuthentication::isAllowedAction('EditComment')) {
             $this->dgModeration->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('EditComment') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
         }
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
+        if (BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgModeration->addColumn(
-                'approve', null, BL::lbl('Approve'),
+                'approve',
+                null,
+                BL::lbl('Approve'),
                 BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=published&amp;action=published',
                 BL::lbl('Approve')
@@ -248,15 +274,21 @@ class Comments extends BackendBaseActionIndex
         // assign column functions
         $this->dgSpam->setColumnFunction(
             array(new BackendDataGridFunctions(), 'getTimeAgo'),
-            '[created_on]', 'created_on', true
+            '[created_on]',
+            'created_on',
+            true
         );
         $this->dgSpam->setColumnFunction(
             array(new BackendDataGridFunctions(), 'cleanupPlaintext'),
-            '[text]', 'text', true
+            '[text]',
+            'text',
+            true
         );
         $this->dgSpam->setColumnFunction(
             array(__CLASS__, 'addPostData'),
-            array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true
+            array('[text]', '[post_title]', '[post_url]', '[id]'),
+            'text',
+            true
         );
 
         // sorting
@@ -268,20 +300,24 @@ class Comments extends BackendBaseActionIndex
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown(
-            'action', array(
+            'action',
+            array(
                 'published' => BL::lbl('MoveToPublished'),
                 'moderation' => BL::lbl('MoveToModeration'),
-                'delete' => BL::lbl('Delete')
-            ), 'published'
+                'delete' => BL::lbl('Delete'),
+            ),
+            'published'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
         $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
         $this->dgSpam->setMassAction($ddmMassAction);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('MassCommentAction')) {
+        if (BackendAuthentication::isAllowedAction('MassCommentAction')) {
             $this->dgSpam->addColumn(
-                'approve', null, BL::lbl('Approve'),
+                'approve',
+                null,
+                BL::lbl('Approve'),
                 BackendModel::createURLForAction('MassCommentAction') .
                 '&amp;id=[id]&amp;from=spam&amp;action=published',
                 BL::lbl('Approve')

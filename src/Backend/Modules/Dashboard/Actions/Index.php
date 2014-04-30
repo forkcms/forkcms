@@ -56,7 +56,7 @@ class Index extends BackendBaseActionIndex
         $fs = new Filesystem();
 
         // user sequence does not exist?
-        if(!isset($userSequence)) {
+        if (!isset($userSequence)) {
             // get group ID of user
             $groupId = BackendAuthentication::getUser()->getGroupId();
 
@@ -65,12 +65,12 @@ class Index extends BackendBaseActionIndex
         }
 
         // loop all modules
-        foreach($modules as $module) {
+        foreach ($modules as $module) {
             // build pathName
             $pathName = BACKEND_MODULES_PATH . '/' . $module;
 
             // you have sufficient rights?
-            if(
+            if (
                 BackendAuthentication::isAllowedModule($module) &&
                 $fs->exists($pathName . '/Widgets')
             ) {
@@ -78,13 +78,15 @@ class Index extends BackendBaseActionIndex
                 $finder->name('*.php');
 
                 // loop widgets
-                foreach($finder->files()->in($pathName . '/Widgets') as $file) {
+                foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBaseName('.php');
                     $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
-                    if($module == 'Core') $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                    if ($module == 'Core') {
+                        $className = 'Backend\\Core\\Widgets\\' . $widgetName;
+                    }
 
-                    if(!class_exists($className)) {
+                    if (!class_exists($className)) {
                         throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
                     }
 
@@ -92,20 +94,26 @@ class Index extends BackendBaseActionIndex
                     $present = (isset($userSequence[$module][$widgetName]['present'])) ? $userSequence[$module][$widgetName]['present'] : false;
 
                     // if not present, continue
-                    if(!$present) continue;
+                    if (!$present) {
+                        continue;
+                    }
 
                     // create instance
                     /** @var $instance BackendBaseWidget */
                     $instance = new $className($this->getKernel());
 
                     // has rights
-                    if(!$instance->isAllowed()) continue;
+                    if (!$instance->isAllowed()) {
+                        continue;
+                    }
 
                     // hidden?
                     $hidden = (isset($userSequence[$module][$widgetName]['hidden'])) ? $userSequence[$module][$widgetName]['hidden'] : false;
 
                     // execute instance if it is not hidden
-                    if(!$hidden) $instance->execute();
+                    if (!$hidden) {
+                        $instance->execute();
+                    }
 
                     // user sequence provided?
                     $column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
@@ -114,7 +122,7 @@ class Index extends BackendBaseActionIndex
                     $templatePath = $instance->getTemplatePath();
 
                     // reset template path
-                    if($templatePath == null) {
+                    if ($templatePath == null) {
                         $templatePath = BACKEND_PATH . '/Modules/' . $module . '/Layout/Widgets/' . $widgetName . '.tpl';
                     }
 
@@ -128,17 +136,20 @@ class Index extends BackendBaseActionIndex
                     );
 
                     // add on new position if no position is set or if the position is already used
-                    if($position === null || isset($this->widgets[$column][$position])) {
+                    if ($position === null || isset($this->widgets[$column][$position])) {
                         $this->widgets[$column][] = $item;
+                    } else {
+                        // add on requested position
+                        $this->widgets[$column][$position] = $item;
                     }
-                    // add on requested position
-                    else $this->widgets[$column][$position] = $item;
                 }
             }
         }
 
         // sort the widgets
-        foreach($this->widgets as &$column) ksort($column);
+        foreach ($this->widgets as &$column) {
+            ksort($column);
+        }
     }
 
     /**
@@ -149,7 +160,7 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // show report
-        if($this->getParameter('password_reset') == 'success') {
+        if ($this->getParameter('password_reset') == 'success') {
             $this->tpl->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
             $this->tpl->assign('report', true);
         }

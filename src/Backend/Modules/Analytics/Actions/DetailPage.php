@@ -30,7 +30,7 @@ class DetailPage extends BackendAnalyticsBase
 
         // get parameters
         $this->pagePath = $this->getParameter('page', 'string');
-        if($this->pagePath === null) {
+        if ($this->pagePath === null) {
             $this->redirect(BackendModel::createURLForAction('Content'));
         }
 
@@ -59,7 +59,11 @@ class DetailPage extends BackendAnalyticsBase
         $googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
         // parse links to google
-        $this->tpl->assign('googleContentDetailURL', sprintf($googleURL, 'content_detail', $googleTableId, $googleDate) . '&amp;d1=' . urlencode($this->pagePath));
+        $this->tpl->assign(
+            'googleContentDetailURL',
+            sprintf($googleURL, 'content_detail', $googleTableId, $googleDate) .
+            '&amp;d1=' . urlencode($this->pagePath)
+        );
     }
 
     /**
@@ -73,14 +77,14 @@ class DetailPage extends BackendAnalyticsBase
         $metrics = array('pageviews');
         $graphData = array();
 
-        foreach($metrics as $i => $metric) {
+        foreach ($metrics as $i => $metric) {
             // build graph data array
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
             $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
             $graphData[$i]['data'] = array();
 
-            foreach($metricsPerDay as $j => $data) {
+            foreach ($metricsPerDay as $j => $data) {
                 // cast SimpleXMLElement to array
                 $data = (array) $data;
 
@@ -90,10 +94,12 @@ class DetailPage extends BackendAnalyticsBase
         }
 
         // loop the metrics
-        foreach($graphData as $metric) {
-            foreach($metric['data'] as $data) {
+        foreach ($graphData as $metric) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 
@@ -114,35 +120,47 @@ class DetailPage extends BackendAnalyticsBase
 
         // are there some values?
         $dataAvailable = false;
-        foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+        foreach ($resultsTotal as $data) {
+            if ($data != 0) {
+                $dataAvailable = true;
+            }
+        }
 
         // show message if there is no data
         $this->tpl->assign('dataAvailable', $dataAvailable);
 
-        if(!empty($results)) {
+        if (!empty($results)) {
             // time on page values
             $timeOnPage = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($results['timeOnPage'] / ($results['pageviews'] - $results['exits']));
             $timeOnPageTotal = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($resultsTotal['timeOnPage'] / ($resultsTotal['pageviews'] - $resultsTotal['exits']));
             $timeOnPageDifference = ($timeOnPageTotal == 0) ? 0 : number_format((($timeOnPage - $timeOnPageTotal) / $timeOnPageTotal) * 100, 0);
-            if($timeOnPageDifference > 0) $timeOnPageDifference = '+' . $timeOnPageDifference;
+            if ($timeOnPageDifference > 0) {
+                $timeOnPageDifference = '+' . $timeOnPageDifference;
+            }
 
             // pages / visit
             $pagesPerVisit = ($results['visits'] == 0) ? 0 : number_format(($results['pageviews'] / $results['visits']), 2);
             $pagesPerVisitTotal = ($resultsTotal['visits'] == 0) ? 0 : number_format(($resultsTotal['pageviews'] / $resultsTotal['visits']), 2);
             $pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 0);
-            if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
+            if ($pagesPerVisitDifference > 0) {
+                $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
+            }
 
             // new visits
             $newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
             $newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
             $newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-            if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
+            if ($newVisitsDifference > 0) {
+                $newVisitsDifference = '+' . $newVisitsDifference;
+            }
 
             // bounces
             $bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
             $bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
             $bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-            if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
+            if ($bouncesDifference > 0) {
+                $bouncesDifference = '+' . $bouncesDifference;
+            }
 
             $this->tpl->assign('pageviews', $results['pageviews']);
             $this->tpl->assign('visits', $results['visits']);

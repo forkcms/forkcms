@@ -9,10 +9,10 @@ namespace Frontend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Language AS FL;
+use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -949,7 +949,18 @@ class Model implements FrontendTagsInterface
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
-                null, null, null, null, null, null, null, null, null, null, null, true
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true
             );
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
@@ -964,7 +975,18 @@ class Model implements FrontendTagsInterface
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
-                null, null, null, null, null, null, null, null, null, null, null, true
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true
             );
         }
     }

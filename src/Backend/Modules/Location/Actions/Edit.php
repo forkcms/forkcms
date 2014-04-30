@@ -44,7 +44,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendLocationModel::exists($this->id)) {
+        if ($this->id !== null && BackendLocationModel::exists($this->id)) {
             parent::execute();
 
             // add js
@@ -73,12 +73,12 @@ class Edit extends BackendBaseActionEdit
         $this->record = (array) BackendLocationModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if (empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
 
         // load the settings from the general settings
-        if(empty($this->settings)) {
+        if (empty($this->settings)) {
             $settings = BackendModel::getModuleSettings('Location');
 
             $this->settings['width'] = $settings['width_widget'];
@@ -90,7 +90,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // no center point given yet, use the first occurrence
-        if(!isset($this->settings['center'])) {
+        if (!isset($this->settings['center'])) {
             $this->settings['center']['lat'] = $this->record['lat'];
             $this->settings['center']['lng'] = $this->record['lng'];
         }
@@ -159,7 +159,7 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->parse($this->tpl);
 
         // assign message if address was not be geocoded
-        if($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+        if ($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
     }
 
     /**
@@ -167,7 +167,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // validate fields
@@ -177,7 +177,7 @@ class Edit extends BackendBaseActionEdit
             $this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
             $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['language'] = BL::getWorkingLanguage();
@@ -190,7 +190,7 @@ class Edit extends BackendBaseActionEdit
                 $item['country'] = $this->frm->getField('country')->getValue();
 
                 // check if it's necessary to geocode again
-                if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
+                if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
                     // geocode address
                     $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . \SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
                     $geocode = json_decode(\SpoonHTTP::getContent($url));
@@ -208,13 +208,13 @@ class Edit extends BackendBaseActionEdit
                 $id = BackendLocationModel::update($item);
 
                 // everything is saved, so redirect to the overview
-                if($item['lat'] && $item['lng']) {
+                if ($item['lat'] && $item['lng']) {
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
                 }
 
                 // redirect to the overview
-                if($this->frm->getField('redirect')->getValue() == 'overview') {
+                if ($this->frm->getField('redirect')->getValue() == 'overview') {
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
                 }
                 // redirect to the edit action

@@ -115,7 +115,7 @@ class Model
             array((int) $mapId, (string) $name)
         );
 
-        if($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) return unserialize($serializedData);
         return false;
     }
 
@@ -134,7 +134,7 @@ class Model
             array((int) $mapId)
         );
 
-        foreach($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
 
         return $mapSettings;
     }
@@ -165,7 +165,7 @@ class Model
                  WHERE i.module = ?', array('Location')
                 )
             );
-        if(is_null($extra['sequence'])) {
+        if (is_null($extra['sequence'])) {
             $extra['sequence'] = $db->getVar(
                 'SELECT CEILING(MAX(i.sequence) / 1000) * 1000 FROM modules_extras AS i'
             );
@@ -221,7 +221,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
         $item['edited_on'] = BackendModel::getUTCDate();
 
-        if(isset($item['extra_id'])) {
+        if (isset($item['extra_id'])) {
             // build extra
             $extra = array(
                 'id' => $item['extra_id'],

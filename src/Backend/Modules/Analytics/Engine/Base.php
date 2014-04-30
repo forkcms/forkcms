@@ -30,7 +30,8 @@ class Base extends BackendBaseActionIndex
      *
      * @var	int
      */
-    protected $startTimestamp, $endTimestamp;
+    protected $startTimestamp;
+    private $endTimestamp;
 
     /**
      * Execute the action
@@ -48,8 +49,20 @@ class Base extends BackendBaseActionIndex
     protected function parse()
     {
         // period picker
-        if(isset($this->pagePath)) Helper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp, array('page_path' => $this->pagePath));
-        else Helper::parsePeriodPicker($this->tpl, $this->startTimestamp, $this->endTimestamp);
+        if (isset($this->pagePath)) {
+            Helper::parsePeriodPicker(
+                $this->tpl,
+                $this->startTimestamp,
+                $this->endTimestamp,
+                array('page_path' => $this->pagePath)
+            );
+        } else {
+            Helper::parsePeriodPicker(
+                $this->tpl,
+                $this->startTimestamp,
+                $this->endTimestamp
+            );
+        }
     }
 
     /**

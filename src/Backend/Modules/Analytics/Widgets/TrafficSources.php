@@ -29,8 +29,12 @@ class TrafficSources extends BackendBaseWidget
     public function execute()
     {
         // check analytics session token and analytics table id
-        if(BackendModel::getModuleSetting('Analytics', 'session_token', null) == '') return;
-        if(BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') return;
+        if (
+            BackendModel::getModuleSetting('Analytics', 'session_token', null) == '' ||
+            BackendModel::getModuleSetting('Analytics', 'table_id', null) == ''
+        ) {
+            return;
+        }
 
         // settings are ok, set option
         $this->tpl->assign('analyticsValidSettings', true);
@@ -53,7 +57,9 @@ class TrafficSources extends BackendBaseWidget
         // set options
         $options = array();
         $options[CURLOPT_URL] = $URL;
-        if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
+        if (ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) {
+            $options[CURLOPT_FOLLOWLOCATION] = true;
+        }
         $options[CURLOPT_RETURNTRANSFER] = true;
         $options[CURLOPT_TIMEOUT] = 1;
 
@@ -69,7 +75,7 @@ class TrafficSources extends BackendBaseWidget
     private function parse()
     {
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
+        if (BackendAuthentication::isAllowedAction('Settings', 'Analytics')) {
             // parse redirect link
             $this->tpl->assign('settingsUrl', BackendModel::createURLForAction('Settings', 'Analytics'));
         }
@@ -84,7 +90,7 @@ class TrafficSources extends BackendBaseWidget
     private function parseKeywords()
     {
         $results = BackendAnalyticsModel::getRecentKeywords();
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
             $dataGrid->setColumnsHidden('id', 'date');
@@ -107,7 +113,7 @@ class TrafficSources extends BackendBaseWidget
     private function parseReferrers()
     {
         $results = BackendAnalyticsModel::getRecentReferrers();
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging(false);
             $dataGrid->setColumnsHidden('id', 'date', 'url');

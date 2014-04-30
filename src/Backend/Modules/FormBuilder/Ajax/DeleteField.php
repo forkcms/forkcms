@@ -31,12 +31,12 @@ class DeleteField extends BackendBaseAJAXAction
         $fieldId = trim(\SpoonFilter::getPostValue('field_id', null, '', 'int'));
 
         // invalid form id
-        if(!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
+        if (!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
 
         // validated form
         else {
             // invalid fieldId
-            if(!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
+            if (!BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
 
             // validated field
             else {
@@ -44,7 +44,7 @@ class DeleteField extends BackendBaseAJAXAction
                 $field = BackendFormBuilderModel::getField($fieldId);
 
                 // submit button cannot be deleted
-                if($field['type'] == 'submit') $this->output(self::BAD_REQUEST, null, 'submit button cannot be deleted');
+                if ($field['type'] == 'submit') $this->output(self::BAD_REQUEST, null, 'submit button cannot be deleted');
 
                 // delete
                 else {

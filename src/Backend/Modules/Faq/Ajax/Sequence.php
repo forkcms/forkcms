@@ -33,7 +33,7 @@ class Sequence extends BackendBaseAJAXAction
         $ids = (array) explode(',', rtrim($newIdSequence, ','));
 
         // loop id's and set new sequence
-        foreach($ids as $i => $id) {
+        foreach ($ids as $i => $id) {
             // build item
             $item['id'] = (int) $id;
 
@@ -41,7 +41,7 @@ class Sequence extends BackendBaseAJAXAction
             $item['sequence'] = $i + 1;
 
             // update sequence
-            if(BackendFaqModel::existsCategory($item['id'])) BackendFaqModel::updateCategory($item);
+            if (BackendFaqModel::existsCategory($item['id'])) BackendFaqModel::updateCategory($item);
         }
 
         // success output

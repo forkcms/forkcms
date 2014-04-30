@@ -83,7 +83,7 @@ class Index extends BackendBaseActionIndex
         $dataGrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
 
         // loop the datagrids (as references)
-        foreach($dataGrids as $type => &$dataGrid) {
+        foreach ($dataGrids as $type => &$dataGrid) {
             // set sorting
             /** @var $dataGrid BackendDataGridArray */
             $dataGrid->setSortingColumns(array('module', 'name'), 'name');
@@ -95,7 +95,7 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
             // set column attributes for each language
-            foreach($this->filter['language'] as $lang) {
+            foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
                 $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
 
@@ -104,7 +104,7 @@ class Index extends BackendBaseActionIndex
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
-                if($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                if ($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
 
                 // set header labels
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
@@ -113,12 +113,12 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
                 // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-                if(count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
+                if (count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
 
                 // only 1 language selected?
-                if(count($this->filter['language']) == 1) {
+                if (count($this->filter['language']) == 1) {
                     // check if this action is allowed
-                    if(BackendAuthentication::isAllowedAction('Edit')) {
+                    if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
                         $dataGrid->addColumn(
                             'edit', null, BL::lbl('Edit'),
@@ -127,7 +127,7 @@ class Index extends BackendBaseActionIndex
                     }
 
                     // check if this action is allowed
-                    if(BackendAuthentication::isAllowedAction('Add')) {
+                    if (BackendAuthentication::isAllowedAction('Add')) {
                         // add copy button
                         $dataGrid->addColumnAction(
                             'copy', null, BL::lbl('Copy'),
@@ -171,7 +171,7 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('dgActions', ($this->dgActions->getNumResults() != 0) ? $this->dgActions->getContent() : false);
 
         // is filtered?
-        if($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
+        if ($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
 
         // parse filter as query
         $this->tpl->assign('filter', $this->filterQuery);
@@ -192,13 +192,13 @@ class Index extends BackendBaseActionIndex
     private function setFilter()
     {
         // if no language is selected, set the working language as the selected
-        if($this->getParameter('language', 'array') == null) {
+        if ($this->getParameter('language', 'array') == null) {
             $_GET['language'] = array(BL::getWorkingLanguage());
             $this->parameters['language'] = array(BL::getWorkingLanguage());
         }
 
         // if no type is selected, set labels as the selected type
-        if($this->getParameter('type', 'array') == null) {
+        if ($this->getParameter('type', 'array') == null) {
             $_GET['type'] = array('lbl');
             $this->parameters['type'] = array('lbl', 'act', 'err', 'msg');
         }

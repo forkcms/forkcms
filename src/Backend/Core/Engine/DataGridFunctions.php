@@ -261,7 +261,7 @@ class DataGridFunctions
      * @param bool   $useHellip Should a hellip be appended?
      * @return string
      */
-    public static function truncate($string = null, $length, $useHellip = true)
+    public static function truncate($string, $length, $useHellip = true)
     {
         // remove special chars
         $string = htmlspecialchars_decode($string);
