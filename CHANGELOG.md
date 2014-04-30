@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
 * Profiles: mass import for profiles using a .csv added.
 
 
