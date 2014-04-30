@@ -1515,7 +1515,7 @@ class Model extends \BaseModel
      */
     public static function updateExtra($id, $key, $value)
     {
-        // define key
+        // recast key
         $key = (string) $key;
 
         // define allowed keys
