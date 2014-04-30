@@ -120,32 +120,21 @@ class Model
      */
     public static function delete($id)
     {
+        // recast id
         $id = (int) $id;
-        $db = BackendModel::getContainer()->get('database');
 
         // get item
         $item = self::get($id);
 
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'ContentBlocks',
-            'type' => 'widget',
-            'action' => 'detail'
+        // delete extra and pages_blocks
+        BackendModel::deleteExtraById($item['extra_id']);
+
+        // delete the content_block
+        BackendModel::getContainer()->get('database')->delete(
+            'content_blocks',
+            'id = ? AND language = ?',
+            array($id, BL::getWorkingLanguage())
         );
-
-        // delete extra
-        $db->delete(
-            'modules_extras',
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
-        );
-
-        // update blocks with this item linked
-        $db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
-
-        // delete all records
-        $db->delete('content_blocks', 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
     }
 
     /**
@@ -329,33 +318,19 @@ class Model
     {
         $db = BackendModel::getContainer()->get('database');
 
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'ContentBlocks',
-            'type' => 'widget',
-            'label' => 'ContentBlocks',
-            'action' => 'detail',
-            'data' => serialize(
-                array(
-                    'id' => $item['id'],
-                    'extra_label' => $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
-                )
-            ),
-            'hidden' => 'N'
-        );
-
         // update extra
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+            )
         );
 
-        // archive all older versions
+        // archive all older content_block versions
         $db->update(
             'content_blocks',
             array('status' => 'archived'),
