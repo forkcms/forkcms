@@ -1,5 +1,9 @@
 3.7.1 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+
 Bugfixes:
 
 * Core: Mailer uses \Exception.
