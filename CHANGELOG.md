@@ -2,7 +2,7 @@
 --
 Improvements:
 
-* Profiles: import action added.
+* Profiles: mass import for profiles using a .csv added.
 
 
 3.7.0 (2014-04-24)
