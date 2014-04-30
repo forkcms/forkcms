@@ -56,6 +56,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Profiles', 'EditGroup');
         $this->setActionRights(1, 'Profiles', 'EditProfileGroup');
         $this->setActionRights(1, 'Profiles', 'Edit');
+        $this->setActionRights(1, 'Profiles', 'ExportTemplate');
         $this->setActionRights(1, 'Profiles', 'Groups');
         $this->setActionRights(1, 'Profiles', 'Import');
         $this->setActionRights(1, 'Profiles', 'Index');

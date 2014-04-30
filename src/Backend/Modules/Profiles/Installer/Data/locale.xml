@@ -181,6 +181,10 @@
         <translation language="uk"><![CDATA[Збігає]]></translation>
         <translation language="el"><![CDATA[Λήξει στις]]></translation>
       </item>
+      <item type="label" name="ExportTemplate">
+        <translation language="nl"><![CDATA[import template downloaden]]></translation>
+        <translation language="en"><![CDATA[download import template]]></translation>
+      </item>
       <item type="label" name="Female">
         <translation language="nl"><![CDATA[vrouw]]></translation>
         <translation language="en"><![CDATA[female]]></translation>
