@@ -396,7 +396,7 @@ jsFrontend.locale =
 	init: function()
 	{
 		$.ajax({
-			url: '/frontend/cache/locale/' + jsFrontend.current.language + '.json',
+			url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
 			type: 'GET',
 			dataType: 'json',
 			async: false,
