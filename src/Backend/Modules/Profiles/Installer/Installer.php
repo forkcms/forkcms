@@ -122,6 +122,7 @@ class Installer extends ModuleInstaller
         );
 
         $this->insertExtra('Profiles', 'widget', 'LoginBox', 'LoginBox', null, 'N', 5010);
+        $this->insertExtra('Profiles', 'widget', 'LoginLink', 'LoginLink', null, 'N', 5011);
 
         // get search widget id
         $searchId = (int) $this->getDB()->getVar(
