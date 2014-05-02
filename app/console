@@ -5,7 +5,9 @@ require_once __DIR__ . '/../autoload.php';
 
 use Symfony\Component\Console\Application;
 use Common\Tool\Command\ClearCache;
+use Common\Tool\Command\PrepareForReinstall;
 
 $application = new Application();
 $application->add(new ClearCache);
+$application->add(new PrepareForReinstall);
 $application->run();

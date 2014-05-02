@@ -8,13 +8,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
 
-class ClearCache extends Command
+class PrepareForReinstall extends Command
 {
     protected function configure()
     {
         $this
-            ->setName('cache:clear')
-            ->setDescription('Clear the cache')
+            ->setName('install:prepare')
+            ->setDescription('Prepares the Fork install to be reïnstalled')
         ;
     }
 
@@ -27,20 +27,22 @@ class ClearCache extends Command
         $rootDir = __DIR__ . '/../../../';
 
         $foldersToClear = array(
+            'Install/Cache/',
             'Frontend/Cache/CachedTemplates/',
+            'Frontend/Cache/Config/',
             'Frontend/Cache/Locale/',
             'Frontend/Cache/MinifiedCss/',
             'Frontend/Cache/MinifiedJs/',
             'Frontend/Cache/Navigation/',
             'Frontend/Cache/CompiledTemplates/',
             'Backend/Cache/Analytics/',
+            'Backend/Cache/Config/',
             'Backend/Cache/Cronjobs/',
             'Backend/Cache/Locale/',
             'Backend/Cache/Mailmotor/',
             'Backend/Cache/Navigation/',
             'Backend/Cache/CompiledTemplates/',
             'Backend/Cache/Logs/',
-            '../app/cache/',
         );
 
         foreach ($foldersToClear as $folder) {
@@ -51,6 +53,16 @@ class ClearCache extends Command
             }
         }
 
-        $output->writeln('All done! Cache files removed.');
+        $filesToClear = array(
+            '../app/config/parameters.yml',
+        );
+
+        foreach ($filesToClear as $file) {
+            if ($fs->exists($rootDir . $file)) {
+                $fs->remove($rootDir . $file);
+            }
+        }
+
+        $output->writeln('All done! Ready for reinstall.');
     }
 }
