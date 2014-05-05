@@ -377,7 +377,7 @@ class TemplateModifiers
     public static function parseWidget($var, $module, $action, $id = null)
     {
         // we have an id
-        if($id !== null) {
+        if ($id !== null) {
             // we should get the serialized data we don't have yet
             $data = (string) FrontendModel::getContainer()->get('database')->getVar(
                 'SELECT i.data
