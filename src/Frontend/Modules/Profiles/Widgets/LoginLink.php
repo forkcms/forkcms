@@ -19,35 +19,34 @@ use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentic
  */
 class LoginLink extends FrontendBaseWidget
 {
-	/**
-	 * Execute the extra
-	 */
-	public function execute()
-	{
-		parent::execute();
-		$this->loadTemplate();
-		$this->parse();
-	}
+    /**
+     * Execute the extra
+     */
+    public function execute()
+    {
+        parent::execute();
+        $this->loadTemplate();
+        $this->parse();
+    }
 
-	/**
-	 * Parse
-	 */
-	private function parse()
-	{
-	    // assign if logged in
-		$this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
+    /**
+     * Parse
+     */
+    private function parse()
+    {
+        // assign if logged in
+        $this->tpl->assign('isLoggedIn', FrontendProfilesAuthentication::isLoggedIn());
 
         // is logged in
-		if(FrontendProfilesAuthentication::isLoggedIn())
-		{
-			// get the profile
-			/**
-			 * @var FrontendProfilesProfile
-			 */
-			$profile = FrontendProfilesAuthentication::getProfile();
+        if (FrontendProfilesAuthentication::isLoggedIn()) {
+            // get the profile
+            /**
+             * @var FrontendProfilesProfile
+             */
+            $profile = FrontendProfilesAuthentication::getProfile();
 
             // assign logged in profile
-			$this->tpl->assign('profile', $profile->toArray());
-		}
-	}
+            $this->tpl->assign('profile', $profile->toArray());
+        }
+    }
 }

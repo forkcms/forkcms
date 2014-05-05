@@ -37,8 +37,8 @@ class Model
     /**
      * Delete a setting.
      *
-     * @param int    $id   Profile id.
-     * @param string $name Setting name.
+     * @param  int    $id   Profile id.
+     * @param  string $name Setting name.
      * @return int
      */
     public static function deleteSetting($id, $name)
@@ -53,8 +53,8 @@ class Model
     /**
      * Check if a profile exists by email address.
      *
-     * @param string     $email    Email to check for existence.
-     * @param int $ignoreId Profile id to ignore.
+     * @param  string $email    Email to check for existence.
+     * @param  int    $ignoreId Profile id to ignore.
      * @return bool
      */
     public static function existsByEmail($email, $ignoreId = null)
@@ -71,8 +71,8 @@ class Model
     /**
      * Check if a display name exists.
      *
-     * @param string     $displayName Display name to check for existence.
-     * @param int $id          Profile id to ignore.
+     * @param  string $displayName Display name to check for existence.
+     * @param  int    $id          Profile id to ignore.
      * @return bool
      */
     public static function existsDisplayName($displayName, $id = null)
@@ -89,7 +89,7 @@ class Model
     /**
      * Get profile by its id.
      *
-     * @param int $profileId Id of the wanted profile.
+     * @param  int                     $profileId Id of the wanted profile.
      * @return FrontendProfilesProfile
      */
     public static function get($profileId)
@@ -100,9 +100,9 @@ class Model
     /**
      * Get avatar
      *
-     * @param int        $id    The id for the profile we want to get the avatar from.
-     * @param string $email The email from the user we can use for gravatar.
-     * @param string $size  The resolution you want to use. Default: 240x240 pixels.
+     * @param  int    $id    The id for the profile we want to get the avatar from.
+     * @param  string $email The email from the user we can use for gravatar.
+     * @param  string $size  The resolution you want to use. Default: 240x240 pixels.
      * @return string $avatar            The absolute path to the avatar.
      */
     public static function getAvatar($id, $email = null, $size = '240x240')
@@ -158,8 +158,8 @@ class Model
     /**
      * Get an encrypted string.
      *
-     * @param string $string String to encrypt.
-     * @param string $salt   Salt to add to the string.
+     * @param  string $string String to encrypt.
+     * @param  string $salt   Salt to add to the string.
      * @return string
      */
     public static function getEncryptedString($string, $salt)
@@ -170,7 +170,7 @@ class Model
     /**
      * Get profile id by email.
      *
-     * @param string $email Email address.
+     * @param  string $email Email address.
      * @return int
      */
     public static function getIdByEmail($email)
@@ -184,8 +184,8 @@ class Model
     /**
      * Get profile id by setting.
      *
-     * @param string $name  Setting name.
-     * @param string $value Value of the setting.
+     * @param  string $name  Setting name.
+     * @param  string $value Value of the setting.
      * @return int
      */
     public static function getIdBySetting($name, $value)
@@ -201,11 +201,11 @@ class Model
     /**
      * Generate a random string.
      *
-     * @param int  $length    Length of random string.
-     * @param bool $numeric   Use numeric characters.
-     * @param bool $lowercase Use alphanumeric lowercase characters.
-     * @param bool $uppercase Use alphanumeric uppercase characters.
-     * @param bool $special   Use special characters.
+     * @param  int    $length    Length of random string.
+     * @param  bool   $numeric   Use numeric characters.
+     * @param  bool   $lowercase Use alphanumeric lowercase characters.
+     * @param  bool   $uppercase Use alphanumeric uppercase characters.
+     * @param  bool   $special   Use special characters.
      * @return string
      */
     public static function getRandomString(
@@ -248,8 +248,8 @@ class Model
     /**
      * Get a setting for a profile.
      *
-     * @param int    $id   Profile id.
-     * @param string $name Setting name.
+     * @param  int    $id   Profile id.
+     * @param  string $name Setting name.
      * @return string
      */
     public static function getSetting($id, $name)
@@ -267,7 +267,7 @@ class Model
     /**
      * Get all settings for a profile.
      *
-     * @param int $id Profile id.
+     * @param  int   $id Profile id.
      * @return array
      */
     public static function getSettings($id)
@@ -292,8 +292,8 @@ class Model
     /**
      * Retrieve a unique URL for a profile based on the display name.
      *
-     * @param string     $displayName The display name to base on.
-     * @param int $id          The id of the profile to ignore.
+     * @param  string $displayName The display name to base on.
+     * @param  int    $id          The id of the profile to ignore.
      * @return string
      */
     public static function getUrl($displayName, $id = null)
@@ -353,7 +353,7 @@ class Model
     /**
      * Insert a new profile.
      *
-     * @param array $values Profile data.
+     * @param  array $values Profile data.
      * @return int
      */
     public static function insert(array $values)
@@ -460,8 +460,8 @@ class Model
     /**
      * Update a profile.
      *
-     * @param int   $id     The profile id.
-     * @param array $values The values to update.
+     * @param  int   $id     The profile id.
+     * @param  array $values The values to update.
      * @return int
      */
     public static function update($id, array $values)
