@@ -106,11 +106,16 @@ class Import extends BackendBaseActionAdd
 				    array('statistics' => $statistics)
 				);
 
-				// redefined message
-				$msg = ($overwrite) ? 'profiles-imported-and-updated' : 'profiles-imported';
+				// init redirect url
+				$redirectUrl = BackendModel::createURLForAction('index');
+
+				// add message to redirect url
+				$redirectUrl .= '&report=' . (($overwrite) ? 'profiles-imported-and-updated' : 'profiles-imported');
+				$redirectUrl .= '&var[]=' . $statistics['count']['inserted'];
+				$redirectUrl .= '&var[]=' . $statistics['count']['exists'];
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') . '&report=' . $msg . '&var[]=' . $statistics['count']['inserted'] . '&var[]=' . $statistics['count']['exists']);
+				$this->redirect($redirectUrl);
 			}
 		}
 	}
