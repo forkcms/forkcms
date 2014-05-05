@@ -39,6 +39,38 @@ class CacheClearer
         }
     }
 
+    public function invalidateFrontendCache($module = null, $language = null)
+    {
+        $module = ($module !== null) ? (string) $module : null;
+        $language = ($language !== null) ? (string) $language : null;
+
+        // get cache path
+        $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
+
+        if (is_dir($path)) {
+            // build regular expression
+            if ($module !== null) {
+                if ($language === null) {
+                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+                } else {
+                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
+                }
+            } else {
+                if ($language === null) {
+                    $regexp = '/(.*)_cache\.tpl/i';
+                } else {
+                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
+                }
+            }
+
+            $finder = new Finder();
+            $fs = new Filesystem();
+            foreach ($finder->files()->name($regexp)->in($path) as $file) {
+                $fs->remove($file->getRealPath());
+            }
+        }
+    }
+
     public function clearBackendCache()
     {
         $finder = new Finder;

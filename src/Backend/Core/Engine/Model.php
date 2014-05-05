@@ -284,7 +284,7 @@ class Model extends \BaseModel
             self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
 
             // invalidate the cache for the module
-            self::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
+            self::get('forkcms_core.cache_clearer')->invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
         }
     }
 
@@ -1026,39 +1026,15 @@ class Model extends \BaseModel
     /**
      * Invalidate cache
      *
+     * @deprecated You can use the non static invalidateFrontendCache function in
+     * the forkcms_core.cache_clearer service
+     *
      * @param string $module   A specific module to clear the cache for.
      * @param string $language The language to use.
      */
     public static function invalidateFrontendCache($module = null, $language = null)
     {
-        $module = ($module !== null) ? (string) $module : null;
-        $language = ($language !== null) ? (string) $language : null;
-
-        // get cache path
-        $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
-
-        if (is_dir($path)) {
-            // build regular expression
-            if ($module !== null) {
-                if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
-                }
-            } else {
-                if ($language === null) {
-                    $regexp = '/(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
-                }
-            }
-
-            $finder = new Finder();
-            $fs = new Filesystem();
-            foreach ($finder->files()->name($regexp)->in($path) as $file) {
-                $fs->remove($file->getRealPath());
-            }
-        }
+        self::get('forkcms_core.cache_clearer')->invalidateFrontendCache($module, $language);
     }
 
     /**

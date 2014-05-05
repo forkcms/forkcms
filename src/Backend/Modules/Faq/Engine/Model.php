@@ -81,7 +81,7 @@ class Model
             );
 
             // invalidate the cache for the faq
-            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+            self::get('forkcms_core.cache_clearer')->invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
 
@@ -445,7 +445,7 @@ class Model
     {
         $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        self::get('forkcms_core.cache_clearer')->invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         return $insertId;
     }
@@ -494,7 +494,7 @@ class Model
         }
         $item['id'] = $db->insert('faq_categories', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        self::get('forkcms_core.cache_clearer')->invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         // update extra (item id is now known)
         $extra['data'] = serialize(
@@ -533,7 +533,7 @@ class Model
             'id = ?',
             array((int) $item['id'])
         );
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        self::get('forkcms_core.cache_clearer')->invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 
     /**
@@ -546,7 +546,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        self::get('forkcms_core.cache_clearer')->invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         // build extra
         $extra = array(
