@@ -13,7 +13,7 @@ class ClearCache extends Command
     protected function configure()
     {
         $this
-            ->setName('cache:clear')
+            ->setName('fork:cache:clear')
             ->setDescription('Clear the cache')
         ;
     }

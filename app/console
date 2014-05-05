@@ -1,13 +1,23 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__ . '/../autoload.php';
+set_time_limit(0);
 
-use Symfony\Component\Console\Application;
+require_once __DIR__ . '/../autoload.php';
+require_once __DIR__.'/AppKernel.php';
+
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArgvInput;
 use Common\Tool\Command\ClearCache;
 use Common\Tool\Command\PrepareForReinstall;
 
-$application = new Application();
+$input = new ArgvInput();
+$kernel = new AppKernel();
+$application = new Application($kernel);
+
+// add custom commands
 $application->add(new ClearCache);
 $application->add(new PrepareForReinstall);
-$application->run();
+
+// run the application
+$application->run($input);

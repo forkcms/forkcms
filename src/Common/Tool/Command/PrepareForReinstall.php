@@ -13,7 +13,7 @@ class PrepareForReinstall extends Command
     protected function configure()
     {
         $this
-            ->setName('install:prepare')
+            ->setName('fork:install:prepare')
             ->setDescription('Prepares the Fork install to be reïnstalled')
         ;
     }
