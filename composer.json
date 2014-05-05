@@ -29,12 +29,6 @@
         "post-update-cmd": "app/console fork:cache:clear"
     },
     "autoload": {
-        "psr-0": {
-            "Backend": "src/",
-            "Frontend": "src/",
-            "Install": "src/",
-            "Api": "src/",
-            "Common": "src/"
-        }
+        "psr-0": { "": "src/" }
     }
 }
