@@ -17,10 +17,8 @@ class CacheClearer
 
     public function clearFrontendCache()
     {
-        $finder = new Finder;
-        $fs = new Filesystem;
-
-        $foldersToClear = array(
+        $this->emptyCacheFolders(
+            array(
             'src/Frontend/Cache/CachedTemplates/',
             'src/Frontend/Cache/Config/',
             'src/Frontend/Cache/Locale/',
@@ -28,13 +26,85 @@ class CacheClearer
             'src/Frontend/Cache/MinifiedJs/',
             'src/Frontend/Cache/Navigation/',
             'src/Frontend/Cache/CompiledTemplates/',
+            )
         );
+    }
 
-        foreach ($foldersToClear as $folder) {
+    public function clearBackendCache()
+    {
+        $this->emptyCacheFolders(
+            array(
+                'src/Backend/Cache/Analytics/',
+                'src/Backend/Cache/Config/',
+                'src/Backend/Cache/Cronjobs/',
+                'src/Backend/Cache/Locale/',
+                'src/Backend/Cache/Mailmotor/',
+                'src/Backend/Cache/Navigation/',
+                'src/Backend/Cache/CompiledTemplates/',
+                'src/Backend/Cache/Logs/',
+            )
+        );
+    }
+
+    public function clearInstallCache()
+    {
+        $this->emptyCacheFolders(
+            array(
+                'src/Install/Cache/',
+            )
+        );
+    }
+
+    public function clearAppCache()
+    {
+        $this->emptyCacheFolders(
+            array(
+                'app/cache/',
+            )
+        );
+    }
+
+    public function removeParametersFile()
+    {
+        $this->removeCacheFiles(
+            array(
+                'app/config/parameters.yml',
+            )
+        );
+    }
+
+    /**
+     * Empties the folders in the given array
+     *
+     * @param array $folders
+     */
+    public function emptyCacheFolders(array $folders)
+    {
+        $finder = new Finder;
+        $fs = new Filesystem;
+
+        foreach ($folders as $folder) {
             if ($fs->exists($this->rootDir . $folder)) {
                 foreach ($finder->files()->in($this->rootDir . $folder) as $file) {
                     $fs->remove($file->getRealPath());
                 }
+            }
+        }
+    }
+
+    /**
+     * removes the files in the given array
+     *
+     * @param array $files
+     */
+    public function removeCacheFiles(array $files)
+    {
+        $finder = new Finder;
+        $fs = new Filesystem;
+
+        foreach ($files as $file) {
+            if ($fs->exists($this->rootDir . $file)) {
+                $fs->remove($this->rootDir . $file);
             }
         }
     }
@@ -67,83 +137,6 @@ class CacheClearer
             $fs = new Filesystem();
             foreach ($finder->files()->name($regexp)->in($path) as $file) {
                 $fs->remove($file->getRealPath());
-            }
-        }
-    }
-
-    public function clearBackendCache()
-    {
-        $finder = new Finder;
-        $fs = new Filesystem;
-
-        $foldersToClear = array(
-            'src/Backend/Cache/Analytics/',
-            'src/Backend/Cache/Config/',
-            'src/Backend/Cache/Cronjobs/',
-            'src/Backend/Cache/Locale/',
-            'src/Backend/Cache/Mailmotor/',
-            'src/Backend/Cache/Navigation/',
-            'src/Backend/Cache/CompiledTemplates/',
-            'src/Backend/Cache/Logs/',
-        );
-
-        foreach ($foldersToClear as $folder) {
-            if ($fs->exists($this->rootDir . $folder)) {
-                foreach ($finder->files()->in($this->rootDir . $folder) as $file) {
-                    $fs->remove($file->getRealPath());
-                }
-            }
-        }
-    }
-
-    public function clearInstallCache()
-    {
-        $finder = new Finder;
-        $fs = new Filesystem;
-
-        $foldersToClear = array(
-            'src/Install/Cache/',
-        );
-
-        foreach ($foldersToClear as $folder) {
-            if ($fs->exists($this->rootDir . $folder)) {
-                foreach ($finder->files()->in($this->rootDir . $folder) as $file) {
-                    $fs->remove($file->getRealPath());
-                }
-            }
-        }
-    }
-
-    public function clearAppCache()
-    {
-        $finder = new Finder;
-        $fs = new Filesystem;
-
-        $foldersToClear = array(
-            'app/cache/',
-        );
-
-        foreach ($foldersToClear as $folder) {
-            if ($fs->exists($this->rootDir . $folder)) {
-                foreach ($finder->files()->in($this->rootDir . $folder) as $file) {
-                    $fs->remove($file->getRealPath());
-                }
-            }
-        }
-    }
-
-    public function removeParametersFile()
-    {
-        $finder = new Finder;
-        $fs = new Filesystem;
-
-        $filesToClear = array(
-            'app/config/parameters.yml',
-        );
-
-        foreach ($filesToClear as $file) {
-            if ($fs->exists($this->rootDir . $file)) {
-                $fs->remove($this->rootDir . $file);
             }
         }
     }
