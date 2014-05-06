@@ -35,11 +35,11 @@ class PrepareForReinstallCommand extends ContainerAwareCommand
         $finder = new Finder;
         $fs = new Filesystem;
 
-        $cacheClarer = $this->getContainer()->get('forkcms_core.cache_clearer');
-        $cacheClarer->clearInstallCache();
-        $cacheClarer->clearFrontendCache();
-        $cacheClarer->clearBackendCache();
-        $cacheClarer->removeParametersFile();
+        $cacheClearer = $this->getContainer()->get('forkcms_core.cache_clearer');
+        $cacheClearer->clearInstallCache();
+        $cacheClearer->clearFrontendCache();
+        $cacheClearer->clearBackendCache();
+        $cacheClearer->removeParametersFile();
 
         $output->writeln('All done! Ready for reinstall.');
     }

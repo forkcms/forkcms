@@ -30,10 +30,10 @@ class ClearCacheCommand extends ContainerAwareCommand
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $cacheClarer = $this->getContainer()->get('forkcms_core.cache_clearer');
-        $cacheClarer->clearFrontendCache();
-        $cacheClarer->clearBackendCache();
-        $cacheClarer->clearAppCache();
+        $cacheClearer = $this->getContainer()->get('forkcms_core.cache_clearer');
+        $cacheClearer->clearFrontendCache();
+        $cacheClearer->clearBackendCache();
+        $cacheClearer->clearAppCache();
         $output->writeln('All done! Cache files removed.');
     }
 }
