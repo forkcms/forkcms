@@ -52,7 +52,7 @@
 				<translation language="nl"><![CDATA[Je gebruikt een verouderde browser. Indien je de website wil zien zoals deze bedoeld is, kan je beter een nieuwe versie downloaden of een degelijke browser zoals <a href="https://www.google.com/chrome">Google Chrome</a> installeren.]]></translation>
 			</item>
 			<item type="message" name="Cookies">
-				<translation language="en"><![CDATA[To enchance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
+				<translation language="en"><![CDATA[To enhance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
 				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/cookies">cookies</a>.]]></translation>
 			</item>
 		</core>
