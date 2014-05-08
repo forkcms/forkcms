@@ -219,7 +219,7 @@ class Widget extends FrontendBaseObject
     private function setAction($action = null)
     {
         if ($action !== null) {
-            $this->action = (string) $action;
+            $this->action = (string) ucfirst($action);
         }
     }
 
