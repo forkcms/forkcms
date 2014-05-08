@@ -1304,7 +1304,7 @@ class BackendMailmotorModel
 		$record = array();
 		$record['name'] = $name;
 		$record['language'] = $language;
-		$record['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase($record, array('-', '_')));
+		$record['label'] = BL::lbl('Template' . SpoonFilter::toCamelCase(SpoonFilter::toCamelCase($name, '_'), '-'));
 		$record['path_content'] = $path . '/' . $name . '/template.tpl';
 		$record['path_css'] = $path . '/' . $name . '/css/screen.css';
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/' . $language . '/' . $name . '/css/screen.css';
