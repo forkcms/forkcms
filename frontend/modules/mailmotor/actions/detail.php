@@ -68,7 +68,8 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 		// define the key/value replacements to assign in to the mailing body
 		$replacements = array(
 			'{$siteURL}' => SITE_URL,
-			'src="/"' => 'src="' . SITE_URL . '/'
+			'src="/"' => 'src="' . SITE_URL . '/',
+			'{$css}' => $template['css']
 		);
 
 		// build the mailing body
