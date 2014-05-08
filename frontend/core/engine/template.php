@@ -281,6 +281,12 @@ class FrontendTemplate extends SpoonTemplate
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) $this->assign('FACEBOOK_APP_ID', FrontendModel::getModuleSetting('core', 'facebook_app_id', null));
 		if(FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) $this->assign('FACEBOOK_APP_SECRET', FrontendModel::getModuleSetting('core', 'facebook_app_secret', null));
 
+		// twitter stuff
+		if (FrontendModel::getModuleSetting('core', 'twitter_site_name', null) !== null) {
+			// strip @ from twitter username
+			$this->assign('TWITTER_SITE_NAME', substr(FrontendModel::getModuleSetting('core', 'twitter_site_name', null), 1));
+		}
+
 		// theme
 		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
 		{
