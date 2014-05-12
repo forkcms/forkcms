@@ -319,7 +319,7 @@ class Template extends \SpoonTemplate
             // strip @ from twitter username
             $this->assign(
                 'TWITTER_SITE_NAME',
-                substr(Model::getModuleSetting('Core', 'twitter_site_name', null), 1)
+                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
             );
         }
 
