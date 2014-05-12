@@ -284,7 +284,7 @@ class FrontendTemplate extends SpoonTemplate
 		// twitter stuff
 		if (FrontendModel::getModuleSetting('core', 'twitter_site_name', null) !== null) {
 			// strip @ from twitter username
-			$this->assign('TWITTER_SITE_NAME', substr(FrontendModel::getModuleSetting('core', 'twitter_site_name', null), 1));
+			$this->assign('TWITTER_SITE_NAME', ltrim(FrontendModel::getModuleSetting('core', 'twitter_site_name', null), '@'));
 		}
 
 		// theme
