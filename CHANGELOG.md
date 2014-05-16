@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 
+* Locale: problem when saving Frontend locale fixed #744. 
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 
