@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+* Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
 
 Bugfixes:
 
