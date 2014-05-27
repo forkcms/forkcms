@@ -354,10 +354,10 @@ class TemplateModifiers
             // loop matches
             foreach ($matches[0] as $match) {
                 // encase content in highlight_string
-                $content = str_replace($match, highlight_string($match, true), $var);
+                $var = str_replace($match, highlight_string($match, true), $var);
 
-                // replace highlighted code tags in match   @todo    shouldn't this be $var =
-                $content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
+                // replace highlighted code tags in match
+                $var = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
             }
         }
 
