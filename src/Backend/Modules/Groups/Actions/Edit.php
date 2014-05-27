@@ -216,7 +216,7 @@ class Edit extends BackendBaseActionEdit
     {
         $finder = new Finder();
         $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/widgets');
+            ->in(BACKEND_MODULES_PATH . '/*/Widgets');
         foreach ($finder->files() as $file) {
             $module = $file->getPathInfo()->getPathInfo()->getBasename();
             if (BackendAuthentication::isAllowedModule($module)) {
