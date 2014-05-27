@@ -140,7 +140,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('form_builder', 'widget', array('id' => $id));
+        BackendModel::deleteExtra('FormBuilder', 'widget', array('id' => $id));
 
         // delete form
         $db->delete('forms', 'id = ?', $id);
@@ -493,10 +493,10 @@ class Model
         $insertId = BackendModel::getContainer()->get('database')->insert('forms', $values);
 
         // build array
-        $extra['module'] = 'form_builder';
+        $extra['module'] = 'FormBuilder';
         $extra['type'] = 'widget';
         $extra['label'] = 'FormBuilder';
-        $extra['action'] = 'form';
+        $extra['action'] = 'Form';
         $extra['data'] = serialize(
             array(
                 'language' => $values['language'],
@@ -561,7 +561,7 @@ class Model
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',
-            array('form_builder', 'widget', '400' . $id)
+            array('FormBuilder', 'widget', '400' . $id)
         );
 
         return $id;
