@@ -9,7 +9,7 @@ namespace Common;
  * file that was distributed with this source code.
  */
 
-use Gedmo\Sluggable\Util\Urlizer;
+use Behat\Transliterator\Transliterator;
 
 /**
  * This is our Uri generating class
@@ -40,9 +40,9 @@ class Uri
     public static function getUrl($value)
     {
         // convert cyrlic, greek or other caracters to ASCII characters
-        $value = Urlizer::transliterate($value);
+        $value = Transliterator::transliterate($value);
 
         // make a clean url out of it
-        return Urlizer::urlize($value);
+        return Transliterator::urlize($value);
     }
 }
