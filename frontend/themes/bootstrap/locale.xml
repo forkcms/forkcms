@@ -53,7 +53,7 @@
 			</item>
 			<item type="message" name="Cookies">
 				<translation language="en"><![CDATA[To enhance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
-				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/cookies">cookies</a>.]]></translation>
+				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/disclaimer">cookies</a>.]]></translation>
 			</item>
 		</core>
 	</frontend>
