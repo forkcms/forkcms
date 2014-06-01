@@ -93,21 +93,20 @@ class Model
      */
     public static function deleteCategoryAllowed($id)
     {
-        $result = (BackendModel::getContainer()->get('database')->getVar(
-                       'SELECT 1
-                        FROM faq_questions AS i
-                        WHERE i.category_id = ? AND i.language = ?
-                        LIMIT 1',
-                       array((int) $id, BL::getWorkingLanguage())
-                   ) == 0);
-
         if (
             !BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true) &&
             self::getCategoryCount() == 1
         ) {
             return false;
         } else {
-            return $result;
+            // check if the category contains questions
+            return (bool) BackendModel::get('database')->getVar(
+                'SELECT 1
+                 FROM faq_questions AS i
+                 WHERE i.category_id = ? AND i.language = ?
+                 LIMIT 1',
+                array((int) $id, BL::getWorkingLanguage())
+            );
         }
     }
 
@@ -470,11 +469,11 @@ class Model
             'data' => null,
             'hidden' => 'N',
             'sequence' => $db->getVar(
-                    'SELECT MAX(i.sequence) + 1
-                     FROM modules_extras AS i
-                     WHERE i.module = ?',
-                    array('Faq')
-                )
+                'SELECT MAX(i.sequence) + 1
+                 FROM modules_extras AS i
+                 WHERE i.module = ?',
+                array('Faq')
+            )
         );
 
         if (is_null($extra['sequence'])) {
@@ -503,10 +502,10 @@ class Model
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
-                                  'EditCategory',
-                                  'Faq',
-                                  $item['language']
-                              ) . '&id=' . $item['id']
+                    'EditCategory',
+                    'Faq',
+                    $item['language']
+                ) . '&id=' . $item['id']
             )
         );
 

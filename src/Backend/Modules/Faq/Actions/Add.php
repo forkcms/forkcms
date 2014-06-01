@@ -81,7 +81,9 @@ class Add extends BackendBaseActionAdd
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
-        if ($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) {
+            $this->tpl->assign('detailURL', SITE_URL . $url);
+        }
     }
 
     /**
@@ -108,16 +110,32 @@ class Add extends BackendBaseActionAdd
                 $item['answer'] = $this->frm->getField('answer')->getValue(true);
                 $item['created_on'] = BackendModel::getUTCDate();
                 $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['sequence'] = BackendFaqModel::getMaximumSequence($this->frm->getField('category_id')->getValue()) + 1;
+                $item['sequence'] = BackendFaqModel::getMaximumSequence(
+                    $this->frm->getField('category_id')->getValue()
+                ) + 1;
 
                 // save the data
                 $item['id'] = BackendFaqModel::insert($item);
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags(
+                    $item['id'],
+                    $this->frm->getField('tags')->getValue(),
+                    $this->URL->getModule()
+                );
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
 
                 // add search index
-                BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
+                BackendSearchModel::saveIndex(
+                    $this->getModule(),
+                    $item['id'],
+                    array(
+                        'title' => $item['question'],
+                        'text' => $item['answer'],
+                    )
+                );
+                $this->redirect(
+                    BackendModel::createURLForAction('Index') . '&report=added&var=' .
+                    urlencode($item['question']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

@@ -28,10 +28,9 @@ class SequenceQuestions extends BackendBaseAJAXAction
         $toCategorySequence = \SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
 
         // invalid question id
-        if (!BackendFaqModel::exists($questionId)) $this->output(self::BAD_REQUEST, null, 'question does not exist');
-
-        // validated
-        else {
+        if (!BackendFaqModel::exists($questionId)) {
+            $this->output(self::BAD_REQUEST, null, 'question does not exist');
+        } else {
             // list ids
             $fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
             $toCategorySequence = (array) explode(',', ltrim($toCategorySequence, ','));
@@ -50,7 +49,9 @@ class SequenceQuestions extends BackendBaseAJAXAction
                     $item['sequence'] = $i + 1;
 
                     // update sequence if the item exists
-                    if (BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
+                    if (BackendFaqModel::exists($item['id'])) {
+                        BackendFaqModel::update($item);
+                    }
                 }
             }
 
@@ -60,7 +61,9 @@ class SequenceQuestions extends BackendBaseAJAXAction
                 $item['sequence'] = $i + 1;
 
                 // update sequence if the item exists
-                if (BackendFaqModel::exists($item['id'])) BackendFaqModel::update($item);
+                if (BackendFaqModel::exists($item['id'])) {
+                    BackendFaqModel::update($item);
+                }
             }
 
             // success output
