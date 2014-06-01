@@ -60,7 +60,12 @@ class Installer extends ModuleInstaller
         ));
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar('SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?', array('search', 'widget', 'form'));
+        $searchId = (int) $this->getDB()->getVar(
+            'SELECT id
+             FROM modules_extras
+             WHERE module = ? AND type = ? AND action = ?',
+            array('search', 'widget', 'form')
+        );
 
         // loop languages
         foreach ($this->getLanguages() as $language) {
@@ -80,13 +85,21 @@ class Installer extends ModuleInstaller
             // create submit button
             $field['form_id'] = $formId;
             $field['type'] = 'submit';
-            $field['settings'] = serialize(array('values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend'))));
+            $field['settings'] = serialize(
+                array(
+                    'values' => \SpoonFilter::ucfirst($this->getLocale('Send', 'Core', $language, 'lbl', 'Frontend'))
+                )
+            );
             $this->getDB()->insert('forms_fields', $field);
 
             // create name field
             $field['form_id'] = $formId;
             $field['type'] = 'textbox';
-            $field['settings'] = serialize(array('label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend'))));
+            $field['settings'] = serialize(
+                array(
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Name', 'Core', $language, 'lbl', 'Frontend'))
+                )
+            );
             $nameId = $this->getDB()->insert('forms_fields', $field);
 
             // name validation
@@ -98,7 +111,11 @@ class Installer extends ModuleInstaller
             // create email field
             $field['form_id'] = $formId;
             $field['type'] = 'textbox';
-            $field['settings'] = serialize(array('label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend'))));
+            $field['settings'] = serialize(
+                array(
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Email', 'Core', $language, 'lbl', 'Frontend'))
+                )
+            );
             $emailId = $this->getDB()->insert('forms_fields', $field);
 
             // email validation
@@ -110,7 +127,11 @@ class Installer extends ModuleInstaller
             // create message field
             $field['form_id'] = $formId;
             $field['type'] = 'textarea';
-            $field['settings'] = serialize(array('label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend'))));
+            $field['settings'] = serialize(
+                array(
+                    'label' => \SpoonFilter::ucfirst($this->getLocale('Message', 'Core', $language, 'lbl', 'Frontend'))
+                )
+            );
             $messageId = $this->getDB()->insert('forms_fields', $field);
 
             // name validation
@@ -120,13 +141,29 @@ class Installer extends ModuleInstaller
             $this->getDB()->insert('forms_fields_validation', $validate);
 
             // insert extra
-            $extraId = $this->insertExtra('FormBuilder', 'widget', 'FormBuilder', 'Form', serialize(array('language' => $form['language'], 'extra_label' => $form['name'], 'id' => $formId)), 'N', '400' . $formId);
+            $extraId = $this->insertExtra(
+                'FormBuilder',
+                'widget',
+                'FormBuilder',
+                'Form',
+                serialize(
+                    array(
+                        'language' => $form['language'],
+                        'extra_label' => $form['name'],
+                        'id' => $formId,
+                    )
+                ),
+                'N',
+                '400' . $formId
+            );
 
             // insert contact page
             $this->insertPage(
-                array('title' => \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend')),
-                'parent_id' => 1,
-                'language' => $language),
+                array(
+                    'title' => \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend')),
+                    'parent_id' => 1,
+                    'language' => $language,
+                ),
                 null,
                 array('html' => PATH_WWW . '/src/Backend/Modules/Pages/Installer/Data/' . $language . '/contact.txt'),
                 array('extra_id' => $extraId, 'position' => 'main'),
