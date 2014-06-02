@@ -210,9 +210,9 @@
         <div class="options labelWidthLong">
             <p>
                 <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
-                    <span style="float: left;">
-                        @ {$txtTwitterSiteName} {$txtTwitterSiteNameError}
-                    </span>
+                <span style="float: left;">
+                    @ {$txtTwitterSiteName} {$txtTwitterSiteNameError}
+                </span>
             </p>
         </div>
     </div>
