@@ -26,10 +26,9 @@ services:
             - @database
     current_site:
         class: Common\Multisite\CurrentSite
+        arguments:
+            - @multisite
     multisite:
         class: Common\Multisite\Multisite
         arguments:
             - @database
-            - @current_site
-        calls:
-            - [ loadCurrentSite ]

@@ -47,15 +47,12 @@ class CurrentSite
      */
     private $isMainSite;
 
-    /**
-     * Provisions the current site with all its data
-     * This unction is only called once from the multisite service
-     *
-     * @param array
-     * @return self
-     */
-    public function provision(array $currentSiteArray)
+    public function __construct(Multisite $multisite)
     {
+        // fetch the needed data from the multisite object
+        $currentSiteArray = $multisite->loadCurrentSite();
+
+        // Put the fetched data in the properties
         $this->id = $currentSiteArray['id'];
         $this->activeLanguages = $currentSiteArray['active_languages'];
         $this->workingLanguages = $currentSiteArray['working_languages'];
