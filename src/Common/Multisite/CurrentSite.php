@@ -5,6 +5,7 @@ namespace Common\Multisite;
 /**
  * Represents the current site.
  *
+ * @author Wouter Sioen <wouter@wijs.be>
  * @author <per@wijs.be>
  */
 class CurrentSite
