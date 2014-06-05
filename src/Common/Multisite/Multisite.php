@@ -36,9 +36,9 @@ class Multisite
         if ($id) {
             $isDomainSite = true;
             $isMainSite = $this->db->getVar(
-                'SELECT prefix FROM sites WHERE id = ?',
+                'SELECT is_main_site FROM sites WHERE id = ?',
                 array($id)
-            ) == null;
+            ) === 'Y';
         } else {
             $id = $this->getSiteIdForCurrentPrefix();
         }
