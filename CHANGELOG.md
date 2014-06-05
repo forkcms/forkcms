@@ -7,10 +7,11 @@ Improvements:
 
 Bugfixes:
 
-* Locale: problem when saving Frontend locale fixed #744. 
+* Locale: problem when saving Frontend locale fixed #744.
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 * Core: Loading editor templates fixed, see #747
+* Core: Fix generation of url's containing non-ascii characters
 
 
 3.7.0 (2014-04-24)
