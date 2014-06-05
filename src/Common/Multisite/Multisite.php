@@ -99,7 +99,21 @@ class Multisite
 	protected function getMainSiteId()
 	{
 		return $this->db->getVar(
-			'SELECT id FROM sites WHERE prefix IS NULL'
+			'SELECT id FROM sites WHERE is_main_site = ?',
+			array('Y')
+		);
+	}
+
+	/**
+	 * Fetches the domain for the main site
+	 *
+	 * @return string
+	 */
+	public function getMainSiteDomain()
+	{
+		return $this->db->getVar(
+			'SELECT domain FROM sites WHERE is_main_site = ?',
+			array('Y')
 		);
 	}
 

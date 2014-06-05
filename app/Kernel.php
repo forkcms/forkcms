@@ -84,7 +84,15 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
         define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
-        define('SITE_DOMAIN', $container->getParameter('site.domain'));
+
+        // If we're running Fork on a server, use the http host as site domain
+        if (!empty($_SERVER["HTTP_HOST"])) {
+            define('SITE_DOMAIN', $_SERVER["HTTP_HOST"]);
+        } else {
+            // fallback to the main site id
+            define('SITE_DOMAIN', $container->get('multisite')->getMainSiteDomain());
+        }
+
         define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
         define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 
