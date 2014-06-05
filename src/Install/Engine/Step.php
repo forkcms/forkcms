@@ -36,6 +36,7 @@ class Step extends \KernelLoader
      */
     protected $modules = array(
         'required' => array(
+            'Multisite',
             'Locale',
             'Settings',
             'Users',
@@ -44,7 +45,7 @@ class Step extends \KernelLoader
             'Pages',
             'Search',
             'ContentBlocks',
-            'Tags'
+            'Tags',
         ),
         'hidden' => array('Authentication', 'Dashboard', 'Error'),
         'optional' => array()
