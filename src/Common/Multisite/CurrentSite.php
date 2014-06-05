@@ -47,17 +47,6 @@ class CurrentSite
 	private $isMainSite;
 
 	/**
-	 * Initializes the currentSite
-	 *
-	 * @param Multisite $multisite
-	 * @return self
-	 */
-	public function initialize(Multisite $multisite)
-	{
-		$multisite->loadCurrentSite($this);
-	}
-
-	/**
 	 * Provisions the current site with all its data
 	 * This unction is only called once from the multisite service
 	 *
