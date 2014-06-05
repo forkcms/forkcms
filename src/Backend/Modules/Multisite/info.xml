@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Multisite</name>
+	<version>1.0.0</version>
+	<requirements>
+		<minimum_version>3.7.1</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			The multisite module is used to manage all different domains and languages a site can exist on.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Wouter Sioen]]></name>
+			<url><![CDATA[http://www.woutersioen.be]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Per Juchtmans]]></name>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_add"><![CDATA[Triggered when an item is added.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when an item is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when an item is added.]]></event>
+	</events>
+</module>
