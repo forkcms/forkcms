@@ -21,17 +21,17 @@ class Multisite
 	/**
 	 * @param SpoonDatabase $db The database to execute queries on.
 	 */
-	public function __construct(\SpoonDatabase $db)
+	public function __construct(\SpoonDatabase $db, CurrentSite $currentSite)
 	{
 		$this->db = $db;
+		$this->currentSite = $currentSite;
 	}
 
 	/**
 	 * @throws SpoonException If the current site ID cannot be determined.
 	 */
-	public function loadCurrentSite(CurrentSite $currentSite)
+	public function loadCurrentSite()
 	{
-		$this->currentSite = $currentSite;
 		$isDomainSite = false;
 		$isMainSite = false;
 		$id = $this->getSiteIdForCurrentDomain();

@@ -93,6 +93,11 @@ abstract class Kernel extends BaseKernel implements KernelInterface
             define('SITE_DOMAIN', $container->get('multisite')->getMainSiteDomain());
         }
 
+        // Fetch the multisite service from the container
+        // This makes sure the class is instantiated and the currentSite service
+        // is provisioned
+        $container->get('multisite');
+
         define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
         define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 
