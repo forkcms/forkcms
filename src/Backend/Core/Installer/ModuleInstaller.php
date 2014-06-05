@@ -14,6 +14,8 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
+use Common\Multisite\Multisite;
+use Common\Multisite\CurrentSite;
 
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -35,6 +37,13 @@ class ModuleInstaller
      * @var \SpoonDatabase
      */
     private $db;
+
+    /**
+     * Multisite service
+     *
+     * @var Multisite
+     */
+    private $multisite;
 
     /**
      * The default extras that have to be added to every page.
@@ -282,6 +291,20 @@ class ModuleInstaller
         );
 
         return ($translation != '') ? $translation : $name;
+    }
+
+    /**
+     * Get the multisite service
+     *
+     * @return Multisite
+     */
+    protected function getMultisite()
+    {
+        if (empty($this->multisite)) {
+            $multisite = new Multisite($this->getDB());
+        }
+
+        return $this->multisite;
     }
 
     /**
