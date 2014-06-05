@@ -140,14 +140,11 @@ class CurrentSite
 	 */
 	public function getUnprefixedDomain()
 	{
-		if(!$this->isMainSite && !$this->isDomainSite)
-		{
+		if (!$this->isMainSite && !$this->isDomainSite) {
 			$domainParts = explode('.', SITE_DOMAIN);
 			array_shift($domainParts);
 			return implode('.', $domainParts);
-		}
-		else
-		{
+		} else {
 			return SITE_DOMAIN;
 		}
 	}

@@ -137,8 +137,7 @@ class Multisite
 	{
 		$languages = $this->getLanguageList($siteId);
 		$workingLanguages = array();
-		foreach($languages as $language)
-		{
+		foreach ($languages as $language) {
 			$workingLanguages[$language] = $language;
 		}
 		asort($workingLanguages);
