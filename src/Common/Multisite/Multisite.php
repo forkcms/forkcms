@@ -15,16 +15,12 @@ class Multisite
     /** @type SpoonDatabase */
     private $db;
 
-    /** @type CurrentSite */
-    private $currentSite;
-
     /**
      * @param SpoonDatabase $db The database to execute queries on.
      */
-    public function __construct(\SpoonDatabase $db, CurrentSite $currentSite)
+    public function __construct(\SpoonDatabase $db)
     {
         $this->db = $db;
-        $this->currentSite = $currentSite;
     }
 
     /**
@@ -57,8 +53,7 @@ class Multisite
         }
 
         // provision the current site
-        $record = $this->getCurrentSiteRecord($id, $isDomainSite, $isMainSite);
-        $this->currentSite->provision($record);
+        return $this->getCurrentSiteRecord($id, $isDomainSite, $isMainSite);
     }
 
     /**
