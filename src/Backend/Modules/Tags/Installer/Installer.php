@@ -50,9 +50,9 @@ class Installer extends ModuleInstaller
                     'SELECT 1
                      FROM pages AS p
                      INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                     WHERE b.extra_id = ? AND p.language = ?
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
                      LIMIT 1',
-                    array($extras['tags'], $language)
+                    array($extras['tags'], $language, $site['id'])
                 )
                 ) {
                     $this->insertTagsPages($language, $site['id'], $textras);
