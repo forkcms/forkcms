@@ -100,76 +100,104 @@ class Installer extends ModuleInstaller
 
     /**
      * Insert the pages
+     *
+     * @param array $extras
      */
     private function insertPages($extras)
     {
         // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // check if pages already exist for this language
-            if (!(bool) $this->getDB()->getVar('SELECT 1 FROM pages WHERE language = ? LIMIT 1', array($language))) {
-                // insert homepage
-                $this->insertPage(
-                    array(
-                         'id' => 1,
-                         'parent_id' => 0,
-                         'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N'
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // insert sitemap
-                $this->insertPage(
-                    array(
-                         'id' => 2,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'footer',
-                         'language' => $language
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sitemap.txt'),
-                    array('extra_id' => $extras['sitemap_widget_sitemap']),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // insert disclaimer
-                $this->insertPage(
-                    array(
-                         'id' => 3,
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'footer',
-                         'language' => $language
-                    ),
-                    array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
-                    array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language .
-                                   '/disclaimer.txt'
-                    ),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // insert 404
-                $this->insertPage(
-                    array(
-                         'id' => 404,
-                         'title' => '404',
-                         'type' => 'root',
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N'
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/404.txt'),
-                    array('extra_id' => $extras['sitemap_widget_sitemap']),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages() as $language) {
+                // check if pages already exist for this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages
+                     WHERE language = ? AND site_id = ? AND id > ?
+                     LIMIT 1',
+                    array($language, $site['id'], 404)
+                )
+                ) {
+                    $this->insertRequiredPages($language, $site['id'], $extras);
+                }
             }
         }
+    }
+
+    /**
+     * Inserts required pages for a language and a site
+     * Homepage, disclaimer, sitemap and 404
+     *
+     * @param string $language
+     * @param int $siteId
+     * @param array $extras
+     */
+    protected function insertRequiredPages($language, $siteId, $extras)
+    {
+        // insert homepage
+        $this->insertPage(
+            array(
+                 'id' => 1,
+                 'parent_id' => 0,
+                 'template_id' => $this->getTemplateId('home'),
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
+                 'language' => $language,
+                 'site_id' => $siteId,
+                 'allow_move' => 'N',
+                 'allow_delete' => 'N',
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // insert sitemap
+        $this->insertPage(
+            array(
+                 'id' => 2,
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Sitemap', 'Core', $language, 'lbl', 'Frontend')),
+                 'type' => 'footer',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sitemap.txt'),
+            array('extra_id' => $extras['sitemap_widget_sitemap']),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // insert disclaimer
+        $this->insertPage(
+            array(
+                 'id' => 3,
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Disclaimer', 'Core', $language, 'lbl', 'Frontend')),
+                 'type' => 'footer',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
+            array(
+                 'html' => dirname(__FILE__) . '/Data/' . $language .
+                           '/disclaimer.txt'
+            ),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // insert 404
+        $this->insertPage(
+            array(
+                 'id' => 404,
+                 'title' => '404',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+                 'allow_move' => 'N',
+                 'allow_delete' => 'N',
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/404.txt'),
+            array('extra_id' => $extras['sitemap_widget_sitemap']),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
     }
 
     /**
@@ -196,117 +224,142 @@ class Installer extends ModuleInstaller
 
     /**
      * Install example data
+     *
+     * @param array $extras
      */
     private function installExampleData($extras)
     {
-        // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // check if pages already exist for this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1 FROM pages WHERE language = ? AND id > ? LIMIT 1',
-                array($language, 404)
-            )
-            ) {
-                // re-insert homepage
-                $this->insertPage(
-                    array(
-                         'id' => 1,
-                         'parent_id' => 0,
-                         'template_id' => $this->getTemplateId('home'),
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
-                         'language' => $language,
-                         'allow_move' => 'N',
-                         'allow_delete' => 'N'
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
-                    array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // blog
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')),
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $extras['blog_block']),
-                    array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'left'),
-                    array('extra_id' => $extras['blog_widget_categories'], 'position' => 'left'),
-                    array('extra_id' => $extras['blog_widget_archive'], 'position' => 'left'),
-                    array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // about us parent
-                $aboutUsId = $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => 1,
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $extras['subpages_widget']),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // location
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => $aboutUsId,
-                         'language' => $language
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // about us child
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => $aboutUsId,
-                         'language' => $language
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // history
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')),
-                         'parent_id' => 1,
-                         'language' => $language
-                    ),
-                    null,
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
-                    array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
-
-                // insert lorem ipsum test page
-                $this->insertPage(
-                    array(
-                         'title' => 'Lorem ipsum',
-                         'type' => 'root',
-                         'language' => $language,
-                         'hidden' => 'Y'
-                    ),
-                    array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
-                    array(
-                         'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt'
-                    ),
-                    array('extra_id' => $extras['search_form'], 'position' => 'top')
-                );
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages() as $language) {
+                // check if pages already exist for this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages
+                     WHERE language = ? AND site_id = ? AND id > ?
+                     LIMIT 1',
+                    array($language, $site['id'], 404)
+                )
+                ) {
+                    $this->installExamplePages($language, $site['id'], $extras);
+                }
             }
         }
+    }
+
+    /**
+     * Inserts some pages for a language and a site
+     *
+     * @param string $language
+     * @param int $siteId
+     * @param array $extras
+     */
+    protected function installExamplePages($language, $siteId, $extras)
+    {
+        // re-insert homepage
+        $this->insertPage(
+            array(
+                 'id' => 1,
+                 'parent_id' => 0,
+                 'template_id' => $this->getTemplateId('home'),
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Home', 'Core', $language, 'lbl', 'Backend')),
+                 'language' => $language,
+                 'site_id' => $siteId,
+                 'allow_move' => 'N',
+                 'allow_delete' => 'N',
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+            array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
+            array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'right'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // blog
+        $this->insertPage(
+            array(
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Blog', 'Core', $language, 'lbl', 'Frontend')),
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['blog_block']),
+            array('extra_id' => $extras['blog_widget_recent_comments'], 'position' => 'left'),
+            array('extra_id' => $extras['blog_widget_categories'], 'position' => 'left'),
+            array('extra_id' => $extras['blog_widget_archive'], 'position' => 'left'),
+            array('extra_id' => $extras['blog_widget_recent_articles_list'], 'position' => 'left'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // about us parent
+        $aboutUsId = $this->insertPage(
+            array(
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
+                 'parent_id' => 1,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['subpages_widget']),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // location
+        $this->insertPage(
+            array(
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('Location', 'Core', $language, 'lbl', 'Frontend')),
+                 'parent_id' => $aboutUsId,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // about us child
+        $this->insertPage(
+            array(
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('AboutUs', 'Core', $language, 'lbl', 'Frontend')),
+                 'parent_id' => $aboutUsId,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // history
+        $this->insertPage(
+            array(
+                 'title' => \SpoonFilter::ucfirst($this->getLocale('History', 'Core', $language, 'lbl', 'Frontend')),
+                 'parent_id' => 1,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample1.txt'),
+            array('html' => dirname(__FILE__) . '/Data/' . $language . '/sample2.txt'),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
+
+        // insert lorem ipsum test page
+        $this->insertPage(
+            array(
+                 'title' => 'Lorem ipsum',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+                 'hidden' => 'Y',
+            ),
+            array('data' => array('seo_index' => 'noindex', 'seo_follow' => 'nofollow')),
+            array(
+                 'html' => dirname(__FILE__) . '/Data/' . $language . '/lorem_ipsum.txt'
+            ),
+            array('extra_id' => $extras['search_form'], 'position' => 'top')
+        );
     }
 
     /**
