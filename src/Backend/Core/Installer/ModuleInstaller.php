@@ -319,7 +319,7 @@ class ModuleInstaller
     protected function getMultisite()
     {
         if (empty($this->multisite)) {
-            $multisite = new Multisite($this->getDB());
+            $this->multisite = new Multisite($this->getDB());
         }
 
         return $this->multisite;
@@ -342,6 +342,17 @@ class ModuleInstaller
                 array((string) $module, (string) $name)
             )
         );
+    }
+
+    /**
+     * Fetches all possible sites
+     * @note: inactive sites will also be fetched.
+     *
+     * @return array
+     */
+    protected function getSites()
+    {
+        return $this->getMultisite()->getAllSites();
     }
 
     /**

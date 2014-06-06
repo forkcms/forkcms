@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `sites` (
  KEY `idx_sites_is_viewable` (`is_viewable`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
-CREATE TABLE `sites_languages` (
+CREATE TABLE IF NOT EXISTS `sites_languages` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
  `site_id` int(11) NOT NULL COMMENT 'ID of the site this language is for.',
  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Language for a specific site.',

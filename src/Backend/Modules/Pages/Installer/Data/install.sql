@@ -5,6 +5,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `parent_id` int(11) NOT NULL default '0' COMMENT 'the parent_id for the page ',
  `template_id` int(11) NOT NULL default '0' COMMENT 'the template to use',
  `meta_id` int(11) NOT NULL COMMENT 'linked meta information',
+ `site_id` int(11) NOT NULL COMMENT 'the id of the site this page is linked to',
  `language` varchar(5) NOT NULL COMMENT 'language of the content',
  `type` enum('home','root','page','meta','footer') NOT NULL default 'root' COMMENT 'page, header, footer, ...',
  `title` varchar(255) NOT NULL,
@@ -22,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `allow_delete` enum('N','Y') NOT NULL default 'Y',
  `sequence` int(11) NOT NULL,
  PRIMARY KEY (`revision_id`),
- KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
+ KEY `idx_id_status_hidden_site_language` (`id`,`status`,`hidden`, `site_id`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 

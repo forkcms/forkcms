@@ -160,10 +160,21 @@ class Multisite
      */
     public function getLanguageList($siteId)
     {
-        return (array)$this->db->getColumn(
+        return (array) $this->db->getColumn(
             'SELECT language FROM sites_languages
              WHERE site_id = ? AND is_active = ?',
             array((int)$siteId, 'Y')
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllSites()
+    {
+        return (array) $this->db->getRecords(
+            'SELECT *
+             FROM sites'
         );
     }
 }
