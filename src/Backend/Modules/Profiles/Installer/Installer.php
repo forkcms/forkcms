@@ -24,13 +24,11 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'profiles' as a module
         $this->addModule('Profiles');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
@@ -42,10 +40,8 @@ class Installer extends ModuleInstaller
         \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/64x64/');
         \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/32x32/');
 
-        // module rights
+        // rights
         $this->setModuleRights(1, 'Profiles');
-
-        // action rights
         $this->setActionRights(1, 'Profiles', 'Add');
         $this->setActionRights(1, 'Profiles', 'AddGroup');
         $this->setActionRights(1, 'Profiles', 'AddProfileGroup');
@@ -84,9 +80,179 @@ class Installer extends ModuleInstaller
             )
         );
 
+        $extras = $this->insertExtras();
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                // only add pages if profiles isn't linked anywhere
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     INNER JOIN modules_extras AS e ON e.id = b.extra_id
+                     WHERE e.module = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array('Profiles', $language, $site['id'])
+                )
+                ) {
+                    $this->insertProfilePages($language, $site['id'], $extras);
+                }
+            }
+        }
+    }
+
+    protected function insertProfilePages($language, $siteId, $extras)
+    {
+        // activate page
+        $this->insertPage(
+            array(
+                 'title' => 'Activate',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['activate'], 'position' => 'main'),
+            array('extra_id' => $extras['search'], 'position' => 'top')
+        );
+
+        // forgot password page
+        $this->insertPage(
+            array(
+                 'title' => 'Forgot password',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['forgot_password'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // reset password page
+        $this->insertPage(
+            array(
+                 'title' => 'Reset password',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['reset_password'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // resend activation email page
+        $this->insertPage(
+            array(
+                 'title' => 'Resend activation e-mail',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['resend_activation'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // login page
+        $this->insertPage(
+            array(
+                 'title' => 'Login',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['login'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // register page
+        $this->insertPage(
+            array(
+                 'title' => 'Register',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['register'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // logout page
+        $this->insertPage(
+            array(
+                 'title' => 'Logout',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['logout'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // index page
+        $indexPageId = $this->insertPage(
+            array(
+                 'title' => 'Profile',
+                 'type' => 'root',
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['index'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // settings page
+        $this->insertPage(
+            array(
+                 'title' => 'Profile settings',
+                 'parent_id' => $indexPageId,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['settings'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // change email page
+        $this->insertPage(
+            array(
+                 'title' => 'Change email',
+                 'parent_id' => $indexPageId,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['change_email'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+
+        // change password page
+        $this->insertPage(
+            array(
+                 'title' => 'Change password',
+                 'parent_id' => $indexPageId,
+                 'language' => $language,
+                 'site_id' => $siteId,
+            ),
+            null,
+            array('extra_id' => $extras['change_password'], 'position' => 'main'),
+            array('extra_id' => $extras['activate'], 'position' => 'top')
+        );
+    }
+
+    protected function insertExtras()
+    {
+        $extras = array();
+
         // add extra
-        $activateId = $this->insertExtra('Profiles', 'block', 'Activate', 'Activate', null, 'N', 5000);
-        $forgotPasswordId = $this->insertExtra(
+        $extras['activate'] = $this->insertExtra('Profiles', 'block', 'Activate', 'Activate', null, 'N', 5000);
+        $extras['forgot_password'] = $this->insertExtra(
             'Profiles',
             'block',
             'ForgotPassword',
@@ -95,11 +261,11 @@ class Installer extends ModuleInstaller
             'N',
             5001
         );
-        $indexId = $this->insertExtra('Profiles', 'block', 'Dashboard', null, null, 'N', 5002);
-        $loginId = $this->insertExtra('Profiles', 'block', 'Login', 'Login', null, 'N', 5003);
-        $logoutId = $this->insertExtra('Profiles', 'block', 'Logout', 'Logout', null, 'N', 5004);
-        $changeEmailId = $this->insertExtra('Profiles', 'block', 'ChangeEmail', 'ChangeEmail', null, 'N', 5005);
-        $changePasswordId = $this->insertExtra(
+        $extras['index'] = $this->insertExtra('Profiles', 'block', 'Dashboard', null, null, 'N', 5002);
+        $extras['login'] = $this->insertExtra('Profiles', 'block', 'Login', 'Login', null, 'N', 5003);
+        $extras['logout'] = $this->insertExtra('Profiles', 'block', 'Logout', 'Logout', null, 'N', 5004);
+        $extras['change_email'] = $this->insertExtra('Profiles', 'block', 'ChangeEmail', 'ChangeEmail', null, 'N', 5005);
+        $extras['change_password'] = $this->insertExtra(
             'Profiles',
             'block',
             'ChangePassword',
@@ -108,10 +274,10 @@ class Installer extends ModuleInstaller
             'N',
             5006
         );
-        $settingsId = $this->insertExtra('Profiles', 'block', 'Settings', 'Settings', null, 'N', 5007);
-        $registerId = $this->insertExtra('Profiles', 'block', 'Register', 'Register', null, 'N', 5008);
-        $resetPasswordId = $this->insertExtra('Profiles', 'block', 'ResetPassword', 'ResetPassword', null, 'N', 5008);
-        $resendActivationId = $this->insertExtra(
+        $extras['settings'] = $this->insertExtra('Profiles', 'block', 'Settings', 'Settings', null, 'N', 5007);
+        $extras['register'] = $this->insertExtra('Profiles', 'block', 'Register', 'Register', null, 'N', 5008);
+        $extras['reset_password'] = $this->insertExtra('Profiles', 'block', 'ResetPassword', 'ResetPassword', null, 'N', 5008);
+        $extras['resend_activation'] = $this->insertExtra(
             'Profiles',
             'block',
             'ResendActivation',
@@ -125,157 +291,11 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Profiles', 'widget', 'LoginLink', 'LoginLink', null, 'N', 5011);
 
         // get search widget id
-        $searchId = (int) $this->getDB()->getVar(
+        $extras['search'] = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND action = ?',
             array('search', 'form')
         );
 
-        // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // only add pages if profiles isn't linked anywhere
-            // @todo refactor me, syntax sucks atm
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 INNER JOIN modules_extras AS e ON e.id = b.extra_id
-                 WHERE e.module = ? AND p.language = ?
-                 LIMIT 1',
-                array('Profiles', $language)
-            )
-            ) {
-                // activate page
-                $this->insertPage(
-                    array(
-                         'title' => 'Activate',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $activateId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // forgot password page
-                $this->insertPage(
-                    array(
-                         'title' => 'Forgot password',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $forgotPasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // reset password page
-                $this->insertPage(
-                    array(
-                         'title' => 'Reset password',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $resetPasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // resend activation email page
-                $this->insertPage(
-                    array(
-                         'title' => 'Resend activation e-mail',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $resendActivationId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // login page
-                $this->insertPage(
-                    array(
-                         'title' => 'Login',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $loginId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // register page
-                $this->insertPage(
-                    array(
-                         'title' => 'Register',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $registerId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // logout page
-                $this->insertPage(
-                    array(
-                         'title' => 'Logout',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $logoutId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // index page
-                $indexPageId = $this->insertPage(
-                    array(
-                         'title' => 'Profile',
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $indexId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // settings page
-                $this->insertPage(
-                    array(
-                         'title' => 'Profile settings',
-                         'parent_id' => $indexPageId,
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $settingsId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // change email page
-                $this->insertPage(
-                    array(
-                         'title' => 'Change email',
-                         'parent_id' => $indexPageId,
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $changeEmailId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-
-                // change password page
-                $this->insertPage(
-                    array(
-                         'title' => 'Change password',
-                         'parent_id' => $indexPageId,
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $changePasswordId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-            }
-        }
+        return $extras;
     }
 }
