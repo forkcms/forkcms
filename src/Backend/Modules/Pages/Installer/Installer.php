@@ -25,26 +25,66 @@ class Installer extends ModuleInstaller
      */
     private function importData()
     {
+        $extras = $this->insertExtras();
+
         // insert required pages
-        $this->insertPages();
+        $this->insertPages($extras);
 
         // install example data if requested
         if ($this->installExample()) {
-            $this->installExampleData();
+            $this->installExampleData($extras);
         }
     }
 
     /**
-     * Insert the pages
+     * Inserts extras
+     *
+     * @return array Key value pairs presenting widget => extras_id
      */
-    private function insertPages()
+    private function insertExtras()
     {
-        // get extra ids
+        // insert/get extra ids
+        $extras['blog_block'] = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
+        $extras['blog_widget_recent_comments'] = $this->insertExtra(
+            'Blog',
+            'widget',
+            'RecentComments',
+            'RecentComments',
+            null,
+            'N',
+            1001
+        );
+        $extras['blog_widget_categories'] = $this->insertExtra(
+            'Blog',
+            'widget',
+            'Categories',
+            'Categories',
+            null,
+            'N',
+            1002
+        );
+        $extras['blog_widget_archive'] = $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
+        $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
+            'Blog',
+            'widget',
+            'RecentArticlesFull',
+            'RecentArticlesFull',
+            null,
+            'N',
+            1004
+        );
+        $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
+            'Blog',
+            'widget',
+            'RecentArticlesList',
+            'RecentArticlesList',
+            null,
+            'N',
+            1005
+        );
         $extras['search'] = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
         $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
         $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', 'widget', 'Sitemap', 'Sitemap', null, 'N', 1);
-        $this->insertExtra('Pages', 'widget', 'Navigation', 'PreviousNextNavigation');
-
         $extras['subpages_widget'] = $this->insertExtra(
             'Pages',
             'widget',
@@ -55,6 +95,14 @@ class Installer extends ModuleInstaller
             2
         );
 
+        return $extras;
+    }
+
+    /**
+     * Insert the pages
+     */
+    private function insertPages($extras)
+    {
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // check if pages already exist for this language
@@ -129,25 +177,18 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'pages' as a module
         $this->addModule('Pages');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
-        // import data
         $this->importData();
-
-        // set rights
         $this->setRights();
 
-        // set navigation
+        // add Backend navigation
         $this->setNavigation(null, 'Pages', 'pages/index', array('pages/add', 'pages/edit'), 2);
-
-        // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Pages', 'pages/settings');
@@ -156,60 +197,8 @@ class Installer extends ModuleInstaller
     /**
      * Install example data
      */
-    private function installExampleData()
+    private function installExampleData($extras)
     {
-        // insert/get extra ids
-        $extras['blog_block'] = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
-        $extras['blog_widget_recent_comments'] = $this->insertExtra(
-            'Blog',
-            'widget',
-            'RecentComments',
-            'RecentComments',
-            null,
-            'N',
-            1001
-        );
-        $extras['blog_widget_categories'] = $this->insertExtra(
-            'Blog',
-            'widget',
-            'Categories',
-            'Categories',
-            null,
-            'N',
-            1002
-        );
-        $extras['blog_widget_archive'] = $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
-        $extras['blog_widget_recent_articles_full'] = $this->insertExtra(
-            'Blog',
-            'widget',
-            'RecentArticlesFull',
-            'RecentArticlesFull',
-            null,
-            'N',
-            1004
-        );
-        $extras['blog_widget_recent_articles_list'] = $this->insertExtra(
-            'Blog',
-            'widget',
-            'RecentArticlesList',
-            'RecentArticlesList',
-            null,
-            'N',
-            1005
-        );
-        $extras['search'] = $this->insertExtra('Search', 'block', 'Search', null, null, 'N', 2000);
-        $extras['search_form'] = $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
-        $extras['sitemap_widget_sitemap'] = $this->insertExtra('Pages', 'widget', 'Sitemap', 'Sitemap', null, 'N', 1);
-        $extras['subpages_widget'] = $this->insertExtra(
-            'Pages',
-            'widget',
-            'Subpages',
-            'Subpages',
-            serialize(array('template' => 'SubpagesDefault.tpl')),
-            'N',
-            2
-        );
-
         // loop languages
         foreach ($this->getLanguages() as $language) {
             // check if pages already exist for this language
