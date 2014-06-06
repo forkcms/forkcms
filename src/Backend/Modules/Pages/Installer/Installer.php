@@ -107,7 +107,7 @@ class Installer extends ModuleInstaller
     {
         // loop languages
         foreach ($this->getSites() as $site) {
-            foreach ($this->getLanguages() as $language) {
+            foreach ($this->getLanguages($site['id']) as $language) {
                 // check if pages already exist for this language
                 if (!(bool) $this->getDB()->getVar(
                     'SELECT 1
@@ -230,7 +230,7 @@ class Installer extends ModuleInstaller
     private function installExampleData($extras)
     {
         foreach ($this->getSites() as $site) {
-            foreach ($this->getLanguages() as $language) {
+            foreach ($this->getLanguages($site['id']) as $language) {
                 // check if pages already exist for this language
                 if (!(bool) $this->getDB()->getVar(
                     'SELECT 1

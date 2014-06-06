@@ -158,12 +158,14 @@ class Multisite
      * @param int $siteId ID of the site to get the languages for.
      * @return array List of languages for the given site ID.
      */
-    public function getLanguageList($siteId)
+    public function getLanguageList($siteId, $includeNonActive = false)
     {
+        $active = ($includeNonActive) ? '%' : 'Y';
+
         return (array) $this->db->getColumn(
             'SELECT language FROM sites_languages
-             WHERE site_id = ? AND is_active = ?',
-            array((int)$siteId, 'Y')
+             WHERE site_id = ? AND is_active LIKE ?',
+            array((int)$siteId, $active)
         );
     }
 

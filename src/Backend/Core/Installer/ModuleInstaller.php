@@ -283,10 +283,18 @@ class ModuleInstaller
 
     /**
      * Get the selected languages
+     *
+     * @param int $siteId If the site id is given, fetch languages for one site
      */
-    protected function getLanguages()
+    protected function getLanguages($siteId = null)
     {
-        return $this->languages;
+        if (empty($siteId)) {
+            return $this->languages;
+        } else {
+            return $this->getMultisite()
+                ->getLanguageList($siteId, true)
+            ;
+        }
     }
 
     /**
