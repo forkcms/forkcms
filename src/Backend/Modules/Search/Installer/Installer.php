@@ -68,28 +68,20 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
 
         // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // check if a page for search already exists in this language
-            // @todo refactor this nasty if statement...
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($searchId, $language)
-            )
-            ) {
-                // insert search
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $searchId, 'position' => 'main')
-                );
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                // check if a page for search already exists in this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array($searchId, $language, $site['id'])
+                )
+                ) {
+                    $this->insertSearchPage($language, $site['id'], $searchId);
+                }
             }
         }
 
@@ -101,6 +93,38 @@ class Installer extends ModuleInstaller
         if (!$fs->exists(PATH_WWW . '/src/Frontend/Cache/Search')) {
             $fs->mkdir(PATH_WWW . '/src/Frontend/Cache/Search');
         }
+    }
+
+    /**
+     * Inserts page for the search module
+     *
+     * @param string $language
+     * @param int $siteId
+     * @param ing $searchId
+     */
+    protected function insertSearchPage($language, $siteId, $searchId)
+    {
+        $this->insertPage(
+            array(
+                'title'    => \SpoonFilter::ucfirst(
+                    $this->getLocale(
+                        'Search',
+                        'Core',
+                        $language,
+                        'lbl',
+                        'Frontend'
+                    )
+                ),
+                'type'     => 'root',
+                'language' => $language,
+                'site_id'  => $siteId,
+            ),
+            null,
+            array(
+                'extra_id' => $searchId,
+                'position' => 'main',
+            )
+        );
     }
 
     /**
