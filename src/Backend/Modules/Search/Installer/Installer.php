@@ -27,23 +27,19 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'search' as a module
         $this->addModule('Search');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Search', 'overview_num_items', 10);
         $this->setSetting('Search', 'validate_search', true);
 
-        // module rights
+        // rights
         $this->setModuleRights(1, 'Search');
-
-        // action rights
         $this->setActionRights(1, 'Search', 'AddSynonym');
         $this->setActionRights(1, 'Search', 'EditSynonym');
         $this->setActionRights(1, 'Search', 'DeleteSynonym');
@@ -51,7 +47,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Search', 'Statistics');
         $this->setActionRights(1, 'Search', 'Synonyms');
 
-        // set navigation
+        // backend navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
         $this->setNavigation($navigationSearchId, 'Statistics', 'search/statistics');
@@ -98,7 +94,7 @@ class Installer extends ModuleInstaller
         }
 
         // activate search on 'pages'
-        $this->searchPages();
+        $this->makePagesSearchable();
 
         // create module cache path
         $fs = new Filesystem();
@@ -110,15 +106,13 @@ class Installer extends ModuleInstaller
     /**
      * Activate search on pages
      */
-    private function searchPages()
+    private function makePagesSearchable()
     {
         // make 'pages' searchable
         $this->makeSearchable('Pages');
 
-        // get db instance
-        $db = $this->getDB();
-
         // get existing menu items
+        $db = $this->getDB();
         $menu = $db->getRecords(
             'SELECT id, revision_id, language, title
              FROM pages
@@ -130,7 +124,9 @@ class Installer extends ModuleInstaller
         foreach ($menu as $page) {
             // get blocks
             $blocks = $db->getColumn(
-                'SELECT html FROM pages_blocks WHERE revision_id = ?',
+                'SELECT html
+                 FROM pages_blocks
+                 WHERE revision_id = ?',
                 array($page['revision_id'])
             );
 
