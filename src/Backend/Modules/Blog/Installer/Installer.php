@@ -79,13 +79,11 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'blog' as a module
         $this->addModule('Blog');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
@@ -101,10 +99,8 @@ class Installer extends ModuleInstaller
 
         $this->makeSearchable('Blog');
 
-        // module rights
+        // rights
         $this->setModuleRights(1, 'Blog');
-
-        // action rights
         $this->setActionRights(1, 'Blog', 'AddCategory');
         $this->setActionRights(1, 'Blog', 'Add');
         $this->setActionRights(1, 'Blog', 'Categories');
@@ -123,6 +119,13 @@ class Installer extends ModuleInstaller
         // insert dashboard widget
         $this->insertWidget();
 
+        $this->insertBackendNavigation();
+        $extras = $this->insertExtras();
+        $this->insertPages($extras);
+    }
+
+    protected function insertBackendNavigation()
+    {
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
@@ -144,9 +147,14 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
+    }
+
+    protected function insertExtras()
+    {
+        $extras = array();
 
         // add extra's
-        $blogId = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
+        $extras['blog'] = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
         $this->insertExtra('Blog', 'widget', 'RecentComments', 'RecentComments', null, 'N', 1001);
         $this->insertExtra('Blog', 'widget', 'Categories', 'Categories', null, 'N', 1002);
         $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
@@ -154,51 +162,59 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Blog', 'widget', 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar(
+        $extras['search'] = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
             array('Search', 'widget', 'Form')
         );
 
+        return $extras;
+    }
+
+    protected function insertPages($extras)
+    {
         // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // fetch current categoryId
-            $this->defaultCategoryId = $this->getCategory($language);
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                // fetch current categoryId
+                $this->defaultCategoryId = $this->getCategory($language);
 
-            // no category exists
-            if ($this->defaultCategoryId == 0) {
-                // add category
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-            }
+                // add a new category if there is none yet exists
+                if ($this->defaultCategoryId == 0) {
+                    $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+                }
 
-            // feedburner URL
-            $this->setSetting('Blog', 'feedburner_url_' . $language, '');
+                // feedburner URL
+                $this->setSetting('Blog', 'feedburner_url_' . $language, '');
+                $this->setSetting('Blog', 'rss_meta_' . $language, true);
+                $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
+                $this->setSetting('Blog', 'rss_description_' . $language, '');
 
-            // RSS settings
-            $this->setSetting('Blog', 'rss_meta_' . $language, true);
-            $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
-            $this->setSetting('Blog', 'rss_description_' . $language, '');
+                // check if a page for blog already exists in this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array($extras['blog'], $language, $site['id'])
+                )
+                ) {
+                    $this->insertPage(
+                        array(
+                            'title' => 'Blog',
+                            'language' => $language,
+                            'site_id' => $site['id'],
+                        ),
+                        null,
+                        array('extra_id' => $extras['blog'], 'position' => 'main'),
+                        array('extra_id' => $extras['search'], 'position' => 'top')
+                    );
+                }
 
-            // check if a page for blog already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($blogId, $language)
-            )
-            ) {
-                $this->insertPage(
-                    array('title' => 'Blog', 'language' => $language),
-                    null,
-                    array('extra_id' => $blogId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-            }
-
-            if ($this->installExample()) {
-                $this->installExampleData($language);
+                if ($this->installExample()) {
+                    $this->installExampleData($language);
+                }
             }
         }
     }
