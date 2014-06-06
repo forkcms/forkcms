@@ -41,25 +41,127 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
+        // add 'mailmotor' as a module
+        $this->addModule('Mailmotor');
+
         // install settings
         $this->installSettings();
 
-        // install the DB
+        // load database scheme and locale
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
-        // install locale
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
-        // install the mailmotor module
-        $this->installModule();
-
-        // install the pages for the module
+        $this->setRights();
         $this->installPages();
 
         // insert dashboard widget
         $this->insertWidget();
 
         // set navigation
+        $this->insertBackendNavigation();
+    }
+
+    /**
+     * Install the module and it's actions
+     */
+    private function setRights()
+    {
+        // module rights
+        $this->setModuleRights(1, 'Mailmotor');
+
+        // action rights
+        $this->setActionRights(1, 'Mailmotor', 'Add');
+        $this->setActionRights(1, 'Mailmotor', 'AddAddress');
+        $this->setActionRights(1, 'Mailmotor', 'AddCampaign');
+        $this->setActionRights(1, 'Mailmotor', 'AddCustomField');
+        $this->setActionRights(1, 'Mailmotor', 'AddGroup');
+        $this->setActionRights(1, 'Mailmotor', 'Addresses');
+        $this->setActionRights(1, 'Mailmotor', 'Campaigns');
+        $this->setActionRights(1, 'Mailmotor', 'Copy');
+        $this->setActionRights(1, 'Mailmotor', 'CustomFields');
+        $this->setActionRights(1, 'Mailmotor', 'DeleteBounces');
+        $this->setActionRights(1, 'Mailmotor', 'DeleteCustomField');
+        $this->setActionRights(1, 'Mailmotor', 'Edit');
+        $this->setActionRights(1, 'Mailmotor', 'EditAddress');
+        $this->setActionRights(1, 'Mailmotor', 'EditCampaign');
+        $this->setActionRights(1, 'Mailmotor', 'EditCustomField');
+        $this->setActionRights(1, 'Mailmotor', 'EditGroup');
+        $this->setActionRights(1, 'Mailmotor', 'EditMailingCampaign');
+        $this->setActionRights(1, 'Mailmotor', 'EditMailingIframe');
+        $this->setActionRights(1, 'Mailmotor', 'ExportAddresses');
+        $this->setActionRights(1, 'Mailmotor', 'ExportStatistics');
+        $this->setActionRights(1, 'Mailmotor', 'ExportStatisticsCampaign');
+        $this->setActionRights(1, 'Mailmotor', 'Groups');
+        $this->setActionRights(1, 'Mailmotor', 'ImportAddresses');
+        $this->setActionRights(1, 'Mailmotor', 'ImportGroups');
+        $this->setActionRights(1, 'Mailmotor', 'Index');
+        $this->setActionRights(1, 'Mailmotor', 'LinkAccount');
+        $this->setActionRights(1, 'Mailmotor', 'LoadClientInfo');
+        $this->setActionRights(1, 'Mailmotor', 'MassAddressAction');
+        $this->setActionRights(1, 'Mailmotor', 'MassCampaignAction');
+        $this->setActionRights(1, 'Mailmotor', 'MassCustomFieldAction');
+        $this->setActionRights(1, 'Mailmotor', 'MassGroupAction');
+        $this->setActionRights(1, 'Mailmotor', 'MassMailingAction');
+        $this->setActionRights(1, 'Mailmotor', 'SaveContent');
+        $this->setActionRights(1, 'Mailmotor', 'SaveSendDate');
+        $this->setActionRights(1, 'Mailmotor', 'SendMailing');
+        $this->setActionRights(1, 'Mailmotor', 'Settings');
+        $this->setActionRights(1, 'Mailmotor', 'Statistics');
+        $this->setActionRights(1, 'Mailmotor', 'StatisticsBounces');
+        $this->setActionRights(1, 'Mailmotor', 'StatisticsCampaign');
+        $this->setActionRights(1, 'Mailmotor', 'StatisticsLink');
+    }
+
+    /**
+     * Install the pages for this module
+     */
+    private function installPages()
+    {
+        // loop languages
+        $extras = $this->insertExtras();
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                $parentID = $this->insertPage(
+                    array(
+                        'title' => \SpoonFilter::ucfirst($this->getLocale('SentMailings', 'Core', $language, 'lbl', 'Frontend')),
+                        'type' => 'root',
+                        'language' => $language,
+                        'site_id'  => $site['id'],
+                    ),
+                    null,
+                    array('extra_id' => $extras['sent_mailings'], 'position' => 'main'),
+                    array('extra_id' => $extras['search'], 'position' => 'top')
+                );
+
+                $this->insertPage(
+                    array(
+                        'parent_id' => $parentID,
+                        'title' => \SpoonFilter::ucfirst($this->getLocale('Subscribe', 'Core', $language, 'lbl', 'Frontend')),
+                        'language' => $language,
+                        'site_id'  => $site['id'],
+                    ),
+                    null,
+                    array('extra_id' => $extras['subscribe'], 'position' => 'main'),
+                    array('extra_id' => $extras['search'], 'position' => 'top')
+                );
+
+                $this->insertPage(
+                    array(
+                        'parent_id' => $parentID,
+                        'title' => \SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'Core', $language, 'lbl', 'Frontend')),
+                        'language' => $language,
+                        'site_id'  => $site['id'],
+                    ),
+                    null,
+                    array('extra_id' => $extras['unsubscribe'], 'position' => 'main'),
+                    array('extra_id' => $extras['search'], 'position' => 'top')
+                );
+            }
+        }
+    }
+
+    protected function insertBackendNavigation()
+    {
         $navigationMailmotorId = $this->setNavigation(null, 'Mailmotor', null, null, 5);
         $this->setNavigation(
             $navigationMailmotorId,
@@ -115,66 +217,13 @@ class Installer extends ModuleInstaller
         $this->setNavigation($navigationModulesId, 'Mailmotor', 'mailmotor/settings');
     }
 
-    /**
-     * Install the module and it's actions
-     */
-    private function installModule()
+    private function insertExtras()
     {
-        // module rights
-        $this->setModuleRights(1, 'Mailmotor');
+        $extras = array();
 
-        // action rights
-        $this->setActionRights(1, 'Mailmotor', 'Add');
-        $this->setActionRights(1, 'Mailmotor', 'AddAddress');
-        $this->setActionRights(1, 'Mailmotor', 'AddCampaign');
-        $this->setActionRights(1, 'Mailmotor', 'AddCustomField');
-        $this->setActionRights(1, 'Mailmotor', 'AddGroup');
-        $this->setActionRights(1, 'Mailmotor', 'Addresses');
-        $this->setActionRights(1, 'Mailmotor', 'Campaigns');
-        $this->setActionRights(1, 'Mailmotor', 'Copy');
-        $this->setActionRights(1, 'Mailmotor', 'CustomFields');
-        $this->setActionRights(1, 'Mailmotor', 'DeleteBounces');
-        $this->setActionRights(1, 'Mailmotor', 'DeleteCustomField');
-        $this->setActionRights(1, 'Mailmotor', 'Edit');
-        $this->setActionRights(1, 'Mailmotor', 'EditAddress');
-        $this->setActionRights(1, 'Mailmotor', 'EditCampaign');
-        $this->setActionRights(1, 'Mailmotor', 'EditCustomField');
-        $this->setActionRights(1, 'Mailmotor', 'EditGroup');
-        $this->setActionRights(1, 'Mailmotor', 'EditMailingCampaign');
-        $this->setActionRights(1, 'Mailmotor', 'EditMailingIframe');
-        $this->setActionRights(1, 'Mailmotor', 'ExportAddresses');
-        $this->setActionRights(1, 'Mailmotor', 'ExportStatistics');
-        $this->setActionRights(1, 'Mailmotor', 'ExportStatisticsCampaign');
-        $this->setActionRights(1, 'Mailmotor', 'Groups');
-        $this->setActionRights(1, 'Mailmotor', 'ImportAddresses');
-        $this->setActionRights(1, 'Mailmotor', 'ImportGroups');
-        $this->setActionRights(1, 'Mailmotor', 'Index');
-        $this->setActionRights(1, 'Mailmotor', 'LinkAccount');
-        $this->setActionRights(1, 'Mailmotor', 'LoadClientInfo');
-        $this->setActionRights(1, 'Mailmotor', 'MassAddressAction');
-        $this->setActionRights(1, 'Mailmotor', 'MassCampaignAction');
-        $this->setActionRights(1, 'Mailmotor', 'MassCustomFieldAction');
-        $this->setActionRights(1, 'Mailmotor', 'MassGroupAction');
-        $this->setActionRights(1, 'Mailmotor', 'MassMailingAction');
-        $this->setActionRights(1, 'Mailmotor', 'SaveContent');
-        $this->setActionRights(1, 'Mailmotor', 'SaveSendDate');
-        $this->setActionRights(1, 'Mailmotor', 'SendMailing');
-        $this->setActionRights(1, 'Mailmotor', 'Settings');
-        $this->setActionRights(1, 'Mailmotor', 'Statistics');
-        $this->setActionRights(1, 'Mailmotor', 'StatisticsBounces');
-        $this->setActionRights(1, 'Mailmotor', 'StatisticsCampaign');
-        $this->setActionRights(1, 'Mailmotor', 'StatisticsLink');
-    }
-
-    /**
-     * Install the pages for this module
-     */
-    private function installPages()
-    {
-        // add extra's
-        $sentMailingsID = $this->insertExtra('Mailmotor', 'block', 'SentMailings', null, null, 'N', 3000);
-        $subscribeFormID = $this->insertExtra('Mailmotor', 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
-        $unsubscribeFormID = $this->insertExtra(
+        $extras['sent_mailings'] = $this->insertExtra('Mailmotor', 'block', 'SentMailings', null, null, 'N', 3000);
+        $extras['subscribe'] = $this->insertExtra('Mailmotor', 'block', 'SubscribeForm', 'Subscribe', null, 'N', 3001);
+        $extras['unsubscribe'] = $this->insertExtra(
             'Mailmotor',
             'block',
             'UnsubscribeForm',
@@ -183,7 +232,7 @@ class Installer extends ModuleInstaller
             'N',
             3002
         );
-        $widgetSubscribeFormID = $this->insertExtra(
+        $extras['subscribe_form'] = $this->insertExtra(
             'Mailmotor',
             'widget',
             'SubscribeForm',
@@ -194,46 +243,12 @@ class Installer extends ModuleInstaller
         );
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar(
+        $extras['search'] = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras WHERE module = ? AND type = ? AND action = ?',
             array('Search', 'widget', 'Form')
         );
 
-        // loop languages
-        foreach ($this->getLanguages() as $language) {
-            $parentID = $this->insertPage(
-                array(
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('SentMailings', 'Core', $language, 'lbl', 'Frontend')),
-                     'type' => 'root',
-                     'language' => $language
-                ),
-                null,
-                array('extra_id' => $sentMailingsID, 'position' => 'main'),
-                array('extra_id' => $searchId, 'position' => 'top')
-            );
-
-            $this->insertPage(
-                array(
-                     'parent_id' => $parentID,
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('Subscribe', 'Core', $language, 'lbl', 'Frontend')),
-                     'language' => $language
-                ),
-                null,
-                array('extra_id' => $subscribeFormID, 'position' => 'main'),
-                array('extra_id' => $searchId, 'position' => 'top')
-            );
-
-            $this->insertPage(
-                array(
-                     'parent_id' => $parentID,
-                     'title' => \SpoonFilter::ucfirst($this->getLocale('Unsubscribe', 'Core', $language, 'lbl', 'Frontend')),
-                     'language' => $language
-                ),
-                null,
-                array('extra_id' => $unsubscribeFormID, 'position' => 'main'),
-                array('extra_id' => $searchId, 'position' => 'top')
-            );
-        }
+        return $extras;
     }
 
     /**
@@ -241,9 +256,6 @@ class Installer extends ModuleInstaller
      */
     private function installSettings()
     {
-        // add 'blog' as a module
-        $this->addModule('Mailmotor');
-
         // get email from the session
         $email = \SpoonSession::exists('email') ? \SpoonSession::get('email') : null;
 
