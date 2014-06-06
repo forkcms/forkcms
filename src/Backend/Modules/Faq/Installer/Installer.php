@@ -113,15 +113,13 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         $this->addModule('Faq');
 
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         $this->makeSearchable('Faq');
         $this->setModuleRights(1, 'Faq');
-
         $this->setActionRights(1, 'Faq', 'Index');
         $this->setActionRights(1, 'Faq', 'Add');
         $this->setActionRights(1, 'Faq', 'Edit');
@@ -151,40 +149,14 @@ class Installer extends ModuleInstaller
         $this->setSetting('Faq', 'allow_multiple_categories', true);
         $this->setSetting('Faq', 'send_email_on_new_feedback', false);
 
-        foreach ($this->getLanguages() as $language) {
-            $this->defaultCategoryId = $this->getCategory($language);
-
-            // no category exists
-            if ($this->defaultCategoryId == 0) {
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-            }
-
-            // check if a page for the faq already exists in this language
-            $faqPageExists = (bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($faqId, $language)
-            );
-
-            if (!$faqPageExists) {
-                // insert page
-                $this->insertPage(
-                    array(
-                        'title' => 'FAQ',
-                        'language' => $language
-                    ),
-                    null,
-                    array(
-                         'extra_id' => $faqId)
-                );
-            }
-        }
+        $this->insertPages($faqId);
 
         $this->insertWidget();
+        $this->insertBackendNavigation();
+    }
 
+    protected function insertBackendNavigation()
+    {
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
@@ -203,5 +175,42 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
+    }
+
+    protected function insertPages($faqId)
+    {
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                $this->defaultCategoryId = $this->getCategory($language);
+
+                // no category exists
+                if ($this->defaultCategoryId == 0) {
+                    $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+                }
+
+                // check if a page for the faq already exists in this language
+                $faqPageExists = (bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array($faqId, $language, $site['id'])
+                );
+
+                if (!$faqPageExists) {
+                    // insert page
+                    $this->insertPage(
+                        array(
+                            'title' => 'FAQ',
+                            'language' => $language,
+                            'site_id' => $site['id'],
+                        ),
+                        null,
+                        array('extra_id' => $faqId)
+                    );
+                }
+            }
+        }
     }
 }
