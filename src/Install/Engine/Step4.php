@@ -58,7 +58,7 @@ class Step4 extends Step
         foreach ($this->modules['required'] as $module) {
             // add to the list
             $modules[] = array(
-                'label' => \SpoonFilter::toCamelCase($module),
+                'label' => $module,
                 'value' => $module,
                 'attributes' => array('disabled' => 'disabled')
             );
@@ -146,9 +146,9 @@ class Step4 extends Step
 
                 // add blog if example data was checked
                 if ($this->frm->getField('example_data')->getChecked() &&
-                    !in_array('blog', $modules)
+                    !in_array('Blog', $modules)
                 ) {
-                    $modules[] = 'blog';
+                    $modules[] = 'Blog';
                 }
 
                 // set modules and default data
