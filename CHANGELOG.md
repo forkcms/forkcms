@@ -11,6 +11,7 @@ Bugfixes:
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 * Core: Loading editor templates fixed, see #747
+* Content blocks: fixes empty positions for content blocks
 
 
 3.7.0 (2014-04-24)
