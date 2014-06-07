@@ -11,6 +11,7 @@ Bugfixes:
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 * Core: Loading editor templates fixed, see #747
+* Analytics: Fixes action names to get data from Google Analytics, see #755
 
 
 3.7.0 (2014-04-24)
