@@ -195,7 +195,7 @@ class GetData extends BackendBaseCronjob
             // @todo refactor the code below. Isnt a switch statement more suitable?
 
             // traffic sources, top keywords and top referrals on index page
-            if ($page == 'all' || $page == 'index') {
+            if ($page == 'all' || $page == 'Index') {
                 // nothing in cache - fetch from google and set cache
                 if (!isset($data['traffic_sources']) || $force) {
                     $data['traffic_sources']['entries'] = BackendAnalyticsHelper::getTrafficSourcesGrouped(
@@ -249,7 +249,7 @@ class GetData extends BackendBaseCronjob
             }
 
             // top pages on index and content page
-            if ($page == 'all' || $page == 'index' || $page == 'content') {
+            if ($page == 'all' || $page == 'Index' || $page == 'Content') {
                 // nothing in cache
                 if (!isset($data['top_pages']) || $force) {
                     // fetch from google and use a safe limit
@@ -267,7 +267,7 @@ class GetData extends BackendBaseCronjob
             }
 
             // top exit pages on content page
-            if ($page == 'all' || $page == 'content') {
+            if ($page == 'all' || $page == 'Content') {
                 // nothing in cache
                 if (!isset($data['top_exit_pages']) || $force) {
                     // fetch from google
@@ -285,7 +285,7 @@ class GetData extends BackendBaseCronjob
             }
 
             // top exit pages on all pages page
-            if ($page == 'all' || $page == 'all_pages') {
+            if ($page == 'all' || $page == 'AllPages') {
                 // nothing in cache
                 if (!isset($data['pages']) || $force) {
                     // fetch from google
@@ -306,7 +306,7 @@ class GetData extends BackendBaseCronjob
             }
 
             // exit pages on exit pages page
-            if ($page == 'all' || $page == 'exit_pages') {
+            if ($page == 'all' || $page == 'ExitPages') {
                 // nothing in cache
                 if (!isset($data['exit_pages']) || $force) {
                     // fetch from google
@@ -324,7 +324,7 @@ class GetData extends BackendBaseCronjob
             }
 
             // detail page
-            if ($page == 'detail_page') {
+            if ($page == 'DetailPage') {
                 // nothing in cache
                 if (!isset($data['page' . $pageId]) || $force) {
                     // fetch from google
