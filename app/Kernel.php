@@ -193,9 +193,12 @@ abstract class Kernel implements KernelInterface
          * We can add additional non-installer related configuration options here.
          */
         return array(
-            //'kernel.debug' => $this->debug,
-            //'kernel.environment' => $this->environment,
+            'kernel.debug' => $this->debug,
+            'kernel.environment' => $this->environment,
             'kernel.root_dir' => $this->getRootDir(),
+            'kernel.cache_dir' => $this->getCacheDir(),
+            'kernel.secret' => 'i3yxSf49853v279g5V6JR33480LI3907Enwc3GR6', // todo: unique secret for each project
+            'kernel.container_class' => $this->getContainerClass(),
         );
     }
 
