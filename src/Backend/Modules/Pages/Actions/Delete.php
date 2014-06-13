@@ -65,7 +65,10 @@ class Delete extends BackendBaseActionDelete
                 BackendSearchModel::removeIndex($this->getModule(), $this->id);
 
                 // build cache
-                BackendPagesModel::buildCache(BL::getWorkingLanguage());
+                BackendPagesModel::buildCache(
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId()
+                );
             }
 
             // page is deleted, so redirect to the overview
