@@ -285,22 +285,34 @@ class Form extends \SpoonForm
         $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
 
         // add the internal link lists-file
-        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js')) {
+        $this->addLinkList();
+
+        // create and return a textarea for the editor
+        return $this->addTextArea($name, $value, $class, $classError, $HTML);
+    }
+
+    /**
+     * Adds the linklist javascript to the header
+     * @todo: make sure the file gets generated if needed.
+     */
+    protected function addLinkList()
+    {
+        $file =
+            '/editor_link_list_' . Language::getWorkingLanguage() . '_' .
+            BackendModel::get('current_site')->getid() . '.js'
+        ;
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/' . $file)) {
             $timestamp = @filemtime(
-                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . Language::getWorkingLanguage() . '.js'
+                FRONTEND_CACHE_PATH . '/Navigation/' . $file
             );
             $this->header->addJS(
-                '/src/Frontend/Cache/Navigation/editor_link_list_' . Language::getWorkingLanguage(
-                ) . '.js?m=' . $timestamp,
+                FRONTEND_CACHE_URL . '/Navigation/' . $file . '?m=' . $timestamp,
                 null,
                 false,
                 true,
                 false
             );
         }
-
-        // create and return a textarea for the editor
-        return $this->addTextArea($name, $value, $class, $classError, $HTML);
     }
 
     /**

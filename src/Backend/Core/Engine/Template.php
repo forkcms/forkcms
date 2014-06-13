@@ -228,6 +228,7 @@ class Template extends \SpoonTemplate
 
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
+        $this->assign('SITE_ID', BackendModel::get('current_site')->getId());
 
         if ($this->URL instanceof Url) {
             // assign the current module

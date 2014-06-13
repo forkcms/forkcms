@@ -592,24 +592,27 @@ class Model extends \BaseModel
      * Get the page-keys
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int $siteId The siteId to use, if not provided we will use the working site id.
      * @return array
      */
-    public static function getKeys($language = null)
+    public static function getKeys($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getid();
 
         // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
+        if (!isset(self::$keys[$siteId][$language]) || empty(self::$keys[$siteId][$language])) {
+            $file = FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '_' . $siteId . '.php';
+            if (!is_file($file)) {
+                BackendPagesModel::buildCache($language, $siteId);
             }
 
             $keys = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
+            require $file;
+            self::$keys[$siteId][$language] = $keys;
         }
 
-        return self::$keys[$language];
+        return self::$keys[$siteId][$language];
     }
 
     /**
@@ -741,25 +744,27 @@ class Model extends \BaseModel
      * Get the navigation-items
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int $siteId The site id to fetch navigation for
      * @return array
      */
-    public static function getNavigation($language = null)
+    public static function getNavigation($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
+        if (!isset(self::$navigation[$siteId][$language]) || empty(self::$navigation[$siteId][$language])) {
+            $file = FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '_' . $siteId . '.php';
+            if (!is_file($file)) {
                 BackendPagesModel::buildCache($language);
             }
 
             $navigation = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            self::$navigation[$language] = $navigation;
+            require $file;
+            self::$navigation[$siteId][$language] = $navigation;
         }
 
-        return self::$navigation[$language];
+        return self::$navigation[$siteId][$language];
     }
 
     /**
@@ -863,18 +868,20 @@ class Model extends \BaseModel
      *
      * @param int    $pageId   The id of the page to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int    $siteId The siteId to use
      * @return string
      */
-    public static function getURL($pageId, $language = null)
+    public static function getURL($pageId, $language = null, $siteId = null)
     {
         $pageId = (int) $pageId;
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         // init URL
         $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
         // get the menuItems
-        $keys = self::getKeys($language);
+        $keys = self::getKeys($language, $siteId);
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
@@ -893,16 +900,18 @@ class Model extends \BaseModel
      * @param string $module   The module to get the URL for.
      * @param string $action   The action to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int    $siteId The siteId to use
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, $siteId = null)
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         $pageIdForURL = null;
-        $navigation = self::getNavigation($language);
+        $navigation = self::getNavigation($language, $siteId);
 
         // loop types
         foreach ($navigation as $level) {
