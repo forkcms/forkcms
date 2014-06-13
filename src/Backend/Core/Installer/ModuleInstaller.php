@@ -159,39 +159,41 @@ class ModuleInstaller
      * @param int    $otherId  The id of the record.
      * @param array  $fields   A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
+     * @param int    $siteId   The site id for this entry.
      */
-    protected function addSearchIndex($module, $otherId, array $fields, $language)
+    protected function addSearchIndex($module, $otherId, array $fields, $language, $siteId)
     {
         // get db
         $db = $this->getDB();
 
-        // validate cache
+        // get modules from cache if possible
         if (empty(self::$modules)) {
-            // get all modules
             self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
         }
 
-        // module exists?
-        if (!in_array('search', self::$modules)) {
-            return;
-        }
-
-        // no fields?
-        if (empty($fields)) {
+        // module exists or no fields?
+        if (!in_array('search', self::$modules) || empty($fields)) {
             return;
         }
 
         // insert search index
         foreach ($fields as $field => $value) {
-            // reformat value
             $value = strip_tags((string) $value);
-
-            // insert in db
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+                array(
+                    (string) $module,
+                    (int) $otherId,
+                    (string) $language,
+                    (int) $siteId,
+                    (string) $field,
+                    $value,
+                    'Y',
+                    $value,
+                    'Y'
+                )
             );
         }
 
@@ -199,7 +201,6 @@ class ModuleInstaller
         $finder = new Finder();
         $fs = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            /** @var $file \SplFileInfo */
             $fs->remove($file->getRealPath());
         }
     }

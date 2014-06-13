@@ -32,7 +32,7 @@ class Model
     const QRY_DATAGRID_BROWSE_STATISTICS =
         'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
          FROM search_statistics AS i
-         WHERE i.language = ?';
+         WHERE i.language = ? AND i.site_id = ?';
 
     /**
      * Delete a synonym
@@ -181,8 +181,9 @@ class Model
      * @param string $module   The module wherein will be searched.
      * @param int    $otherId  The id of the record.
      * @param string $language The language to use.
+     * @param int    $siteId   The site id to use.
      */
-    public static function removeIndex($module, $otherId, $language = null)
+    public static function removeIndex($module, $otherId, $language = null, $siteId = null)
     {
         // module exists?
         if (!in_array('Search', BackendModel::getModules())) {
@@ -193,12 +194,15 @@ class Model
         if (!$language) {
             $language = BL::getWorkingLanguage();
         }
+        if ($siteId === null) {
+            $siteId = BackendModel::get('current_site')->getId();
+        }
 
         // delete indexes
-        BackendModel::getContainer()->get('database')->delete(
+        BackendModel::get('database')->delete(
             'search_index',
-            'module = ? AND other_id = ? AND language = ?',
-            array((string) $module, (int) $otherId, (string) $language)
+            'module = ? AND other_id = ? AND language = ? AND site_id = ?',
+            array((string) $module, (int) $otherId, (string) $language, $siteId)
         );
 
         // invalidate the cache for search
@@ -212,22 +216,21 @@ class Model
      * @param int    $otherId  The id of the record.
      * @param array  $fields   A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
+     * @param int    $siteId   The site id to use.
      */
-    public static function saveIndex($module, $otherId, array $fields, $language = null)
+    public static function saveIndex($module, $otherId, array $fields, $language = null, $siteId = null)
     {
-        // module exists?
-        if (!in_array('Search', BackendModel::getModules())) {
-            return;
-        }
-
-        // no fields?
-        if (empty($fields)) {
+        // module doesn't exist of there are no added fields?
+        if (!in_array('Search', BackendModel::getModules()) || empty($fields)) {
             return;
         }
 
         // set language
         if (!$language) {
             $language = BL::getWorkingLanguage();
+        }
+        if ($siteId === null) {
+            $siteId = BackendModel::get('current_site')->getId();
         }
 
         // get db
@@ -240,10 +243,20 @@ class Model
 
             // update search index
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+                array(
+                    (string) $module,
+                    (int) $otherId,
+                    (string) $language,
+                    (int) $siteId,
+                    (string) $field,
+                    $value,
+                    'Y',
+                    $value,
+                    'Y',
+                )
             );
         }
 
