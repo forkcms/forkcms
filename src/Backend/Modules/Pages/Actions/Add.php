@@ -379,6 +379,7 @@ class Add extends BackendBaseActionAdd
                 $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
+                $page['site_id'] = $this->get('current_site')->getId();
                 $page['type'] = 'root';
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
@@ -451,7 +452,10 @@ class Add extends BackendBaseActionAdd
                 );
 
                 // build the cache
-                BackendPagesModel::buildCache(BL::getWorkingLanguage());
+                BackendPagesModel::buildCache(
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId()
+                );
 
                 // active
                 if ($page['status'] == 'active') {

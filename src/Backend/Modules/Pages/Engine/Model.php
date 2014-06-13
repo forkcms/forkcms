@@ -35,7 +35,7 @@ class Model
     const QRY_BROWSE_RECENT =
         'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
-         WHERE i.status = ? AND i.language = ?
+         WHERE i.status = ? AND i.language = ? AND i.site_id = ?
          ORDER BY i.edited_on DESC
          LIMIT ?';
 
@@ -46,7 +46,7 @@ class Model
          (
              SELECT MAX(i.revision_id) AS revision_id
              FROM pages AS i
-             WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+             WHERE i.status = ? AND i.user_id = ? AND i.language = ? AND i.site_id = ?
              GROUP BY i.id
          ) AS p
          WHERE i.revision_id = p.revision_id';
@@ -54,13 +54,13 @@ class Model
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
-         WHERE i.id = ? AND i.status = ? AND i.language = ?
+         WHERE i.id = ? AND i.status = ? AND i.language = ? AND i.site_id = ?
          ORDER BY i.edited_on DESC';
 
     const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM pages AS i
-         WHERE i.id = ? AND i.status = ? AND i.language = ?
+         WHERE i.id = ? AND i.status = ? AND i.language = ? AND i.site_id = ?
          ORDER BY i.edited_on DESC';
 
     const QRY_BROWSE_TEMPLATES =

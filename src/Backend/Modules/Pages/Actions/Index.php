@@ -79,7 +79,12 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
-            array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+            array(
+                'draft',
+                BackendAuthentication::getUser()->getUserId(),
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -136,7 +141,12 @@ class Index extends BackendBaseActionIndex
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_RECENT,
-            array('active', BL::getWorkingLanguage(), 7)
+            array(
+                'active',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+                7
+            )
         );
 
         // disable paging
