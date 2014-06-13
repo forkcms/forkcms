@@ -101,7 +101,7 @@ class Model
                                        0,
                                        -4
                                    ) . ') AND i' . $queryNr . '.field = ? AND i' . $queryNr .
-                                   '.language = ? AND i' . $queryNr . '.active = ? AND m' .
+                                   '.language = ? AND i' . $queryNr . '.site_id = ? AND i' . $queryNr . '.active = ? AND m' .
                                    $queryNr . '.searchable = ?';
                 $order[$queryNr] = '(' .
                                    substr(
@@ -119,7 +119,7 @@ class Model
                 $params2 = array_merge(
                     $params2,
                     $terms,
-                    array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y')
+                    array((string) $field, FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'Y', 'Y')
                 );
             }
 
@@ -161,7 +161,7 @@ class Model
                     ),
                     0,
                     -4
-                ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+                ) . ') AND i.language = ? AND i.site_id = ? AND i.active = ? AND m.searchable = ?
                  GROUP BY module, other_id
                  ORDER BY score DESC
                  LIMIT ?, ?';
@@ -169,7 +169,7 @@ class Model
             $params = array_merge(
                 $terms,
                 $terms,
-                array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit)
+                array(FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'Y', 'Y', $offset, $limit)
             );
         }
 
@@ -183,44 +183,27 @@ class Model
      *
      * @param string $term     The first letters of the term we're looking for.
      * @param string $language The language to search in.
+     * @param int    $siteId   The site id to search for
      * @param int    $limit    Limit result set.
      * @return array
      */
-    public static function getStartsWith($term, $language = '', $limit = 10)
+    public static function getStartsWith($term, $language, $siteId, $limit = 10)
     {
-        // language given
-        if ($language) {
-            return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $language, $limit)
-            );
-        } else {
-            // no language given
-            return (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT s1.term, s1.num_results
-                 FROM search_statistics AS s1
-                 INNER JOIN
-                 (
-                     SELECT term, MAX(id) AS id, language
-                     FROM search_statistics
-                     WHERE term LIKE ? AND num_results IS NOT NULL
-                     GROUP BY term
-                 ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-                 ORDER BY s1.num_results ASC
-                 LIMIT ?',
-                array((string) $term . '%', $limit)
-            );
-        }
+        return (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT s1.term, s1.num_results
+             FROM search_statistics AS s1
+             INNER JOIN
+             (
+                 SELECT term, MAX(id) AS id, language
+                 FROM search_statistics
+                 WHERE term LIKE ? AND num_results IS NOT NULL AND language = ? AND site_id = ?
+                 GROUP BY term
+             ) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language
+             AND s1.site_id = s2.site_id AND s1.num_results > 0
+             ORDER BY s1.num_results ASC
+             LIMIT ?',
+            array((string) $term . '%', $language, $siteId, $limit)
+        );
     }
 
     /**
@@ -302,7 +285,7 @@ class Model
                                        0,
                                        -4
                                    ) .
-                                   ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' .
+                                   ') AND i' . $queryNr . '.field = ? AND i' . $queryNr . '.language = ? AND i' . $queryNr .'.site_id = ? AND i' .
                                    $queryNr . '.active = ? AND m' . $queryNr . '.searchable = ?';
                 $join[$queryNr] = 'search_index AS i' . $queryNr . ($join ? ' ON i' . $queryNr . '.module = i0.module AND i' . $queryNr . '.other_id = i0.other_id' : '') . ' INNER JOIN search_modules AS m' . $queryNr . ' ON m' . $queryNr . '.module = i' . $queryNr . '.module';
 
@@ -310,7 +293,7 @@ class Model
                 $params = array_merge(
                     $params,
                     $terms,
-                    array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y')
+                    array((string) $field, FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'Y', 'Y')
                 );
             }
 
@@ -348,11 +331,14 @@ class Model
                     0,
                     -4
                 ) .
-                ') AND i.language = ? AND i.active = ? AND m.searchable = ?
+                ') AND i.language = ? AND i.site_id = ? AND i.active = ? AND m.searchable = ?
                 GROUP BY i.module, i.other_id
             ) AS results';
 
-            $params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
+            $params = array_merge(
+                $terms,
+                array(FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'Y', 'Y')
+            );
         }
 
         // get the search results
@@ -514,10 +500,10 @@ class Model
             $searchResults = (array) FrontendModel::getContainer()->get('database')->getRecords(
                 'SELECT module, other_id
                 FROM search_index
-                WHERE language = ? AND active = ?
+                WHERE language = ? AND site_id = ? AND active = ?
                 GROUP BY module, other_id
                 LIMIT ?, ?',
-                array(FRONTEND_LANGUAGE, 'N', $offset, $limit)
+                array(FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'N', $offset, $limit)
             );
 
             // none found? good news!

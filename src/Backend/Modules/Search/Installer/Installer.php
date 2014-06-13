@@ -138,7 +138,7 @@ class Installer extends ModuleInstaller
         // get existing menu items
         $db = $this->getDB();
         $menu = $db->getRecords(
-            'SELECT id, revision_id, language, title
+            'SELECT id, revision_id, language, site_id, title
              FROM pages
              WHERE status = ?',
             array('active')
@@ -159,25 +159,36 @@ class Installer extends ModuleInstaller
 
             // add page to search index
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
                 array(
                      'Pages',
                      (int) $page['id'],
                      (string) $page['language'],
+                     (int) $page['site_id'],
                      'title',
                      $page['title'],
                      'Y',
                      $page['title'],
-                     'Y'
+                     'Y',
                 )
             );
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array('Pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y')
+                array(
+                    'Pages',
+                    (int) $page['id'],
+                    (string) $page['language'],
+                    (int) $page['site_id'],
+                    'text',
+                    $text,
+                    'Y',
+                    $text,
+                    'Y',
+                )
             );
         }
     }

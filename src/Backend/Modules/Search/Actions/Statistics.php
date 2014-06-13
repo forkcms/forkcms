@@ -41,7 +41,10 @@ class Statistics extends BackendBaseActionIndex
         // create datagrid
         $this->dataGrid = new BackendDataGridDB(
             BackendSearchModel::QRY_DATAGRID_BROWSE_STATISTICS,
-            BL::getWorkingLanguage()
+            array(
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide column

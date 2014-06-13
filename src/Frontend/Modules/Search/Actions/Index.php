@@ -84,13 +84,6 @@ class Index extends FrontendBaseBlock
     private $term = '';
 
     /**
-     * Search statistics
-     *
-     * @var    array
-     */
-    private $statistics;
-
-    /**
      * Display
      */
     private function display()
@@ -291,15 +284,17 @@ class Index extends FrontendBaseBlock
         // save this term?
         if ($previousTerm != $this->term) {
             // format data
-            $this->statistics = array();
-            $this->statistics['term'] = $this->term;
-            $this->statistics['language'] = FRONTEND_LANGUAGE;
-            $this->statistics['time'] = FrontendModel::getUTCDate();
-            $this->statistics['data'] = serialize(array('server' => $_SERVER));
-            $this->statistics['num_results'] = $this->pagination['num_items'];
+            $statistics = array(
+                'term' => $this->term,
+                'language' => FRONTEND_LANGUAGE,
+                'site_id' => $this->get('current_site')->getId(),
+                'time' => FrontendModel::getUTCDate(),
+                'data' => serialize(array('server' => $_SERVER)),
+                'num_results' => $this->pagination['num_items'],
+            );
 
             // save data
-            FrontendSearchModel::save($this->statistics);
+            FrontendSearchModel::save($statistics);
         }
 
         // save current search term in cookie
