@@ -25,9 +25,11 @@ jsFrontend.profiles = {
 			{
 				// clone password and change type
 				$('.showPasswordInput').clone().attr('type', 'input').insertAfter($('.showPasswordInput'));
+				$('.showVerifyPasswordInput').clone().attr('type', 'input').insertAfter($('.showVerifyPasswordInput'));
 
 				// remove original
 				$('.showPasswordInput:first').remove();
+				$('.showVerifyPasswordInput:first').remove();
 			}
 
 			// checkbox not checked
@@ -35,9 +37,11 @@ jsFrontend.profiles = {
 			{
 				// clone password and change type
 				$('.showPasswordInput').clone().attr('type', 'password').insertAfter($('.showPasswordInput'));
+				$('.showVerifyPasswordInput').clone().attr('type', 'password').insertAfter($('.showVerifyPasswordInput'));
 
 				// remove original
 				$('.showPasswordInput:first').remove();
+				$('.showVerifyPasswordInput:first').remove();
 			}
 		});
 	}

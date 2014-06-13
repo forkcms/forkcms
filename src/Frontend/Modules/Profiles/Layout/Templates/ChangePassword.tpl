@@ -21,6 +21,10 @@
 						<label for="newPassword">{$lblNewPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtNewPassword}{$txtNewPasswordError}
 					</p>
+					<p{option:txtVerifyNewPasswordError} class="errorArea"{/option:txtVerifyNewPasswordError}>
+						<label for="verifyNewPassword">{$lblVerifyNewPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						{$txtVerifyNewPassword}{$txtVerifyNewPasswordError}
+					</p>
 					<p>
 						<label for="showPassword">{$chkShowPassword} {$lblShowPassword|ucfirst}</label>
 					</p>
