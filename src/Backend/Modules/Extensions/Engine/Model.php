@@ -361,6 +361,9 @@ class Model
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
                 $itemsToRemove[] = $id;
             }
+            if (isset($row['data']['site_id']) && $row['data']['site_id'] != BackendModel::get('current_site')->getId()) {
+                $itemsToRemove[] = $id;
+            }
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if (!isset($row['data']['url'])) {
