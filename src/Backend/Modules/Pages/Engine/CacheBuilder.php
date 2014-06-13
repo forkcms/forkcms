@@ -249,7 +249,6 @@ class CacheBuilder
         $keysString .= ' * Fork CMS' . "\n";
         $keysString .= ' * @generated   ' . date('Y-m-d H:i:s') . "\n";
         $keysString .= ' */' . "\n\n";
-        $keysString .= '// init var' . "\n";
         $keysString .= '$keys = array();' . "\n\n";
 
         // loop all keys
@@ -276,7 +275,6 @@ class CacheBuilder
         $navigationString .= ' * Fork CMS' . "\n";
         $navigationString .= ' * @generated ' . date('Y-m-d H:i:s') . "\n";
         $navigationString .= ' */' . "\n\n";
-        $navigationString .= '// init var' . "\n";
         $navigationString .= '$navigation = array();' . "\n\n";
 
         // loop all types
@@ -370,7 +368,6 @@ class CacheBuilder
         $editorLinkListString .= ' * Fork CMS' . "\n";
         $editorLinkListString .= ' * @generated ' . date('Y-m-d H:i:s') . "\n";
         $editorLinkListString .= ' */' . "\n\n";
-        $editorLinkListString .= '// init var' . "\n";
 
         // init var
         $links = array();
