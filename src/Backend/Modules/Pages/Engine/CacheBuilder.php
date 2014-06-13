@@ -22,6 +22,9 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class CacheBuilder
 {
+    protected $blocks;
+    protected $siteMapId;
+
     /**
      * Builds the pages cache
      *
@@ -33,19 +36,6 @@ class CacheBuilder
         // get tree
         $levels = Model::getTree(array(0), null, 1, $language, $siteId);
 
-        $extras = $this->getBlocks();
-        $widgets = $this->getWidgets();
-
-        // search sitemap
-        $sitemapID = null;
-
-        foreach ($widgets as $id => $row) {
-            if ($row['action'] == 'Sitemap') {
-                $sitemapID = $id;
-                break;
-            }
-        }
-
         // init vars
         $keys = array();
         $navigation = array();
@@ -53,119 +43,11 @@ class CacheBuilder
         // loop levels
         foreach ($levels as $pages) {
             // loop all items on this level
-            foreach ($pages as $pageID => $page) {
-                // init var
-                $parentID = (int) $page['parent_id'];
-
-                // init URL
-                $languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
-
-                // get URL for parent
-                $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
-
-                // home is special
-                if ($pageID == 1) {
-                    $page['url'] = '';
-                    if (SITE_MULTILANGUAGE) {
-                        $languageURL = rtrim($languageURL, '/');
-                    }
-                }
+            foreach ($pages as $pageId => $page) {
+                $temp = $this->getPageData($keys, $page, $language);
 
                 // add it
-                $keys[$pageID] = trim($URL . '/' . $page['url'], '/');
-
-                // unserialize
-                if (isset($page['meta_data'])) {
-                    $page['meta_data'] = @unserialize($page['meta_data']);
-                }
-
-                // build navigation array
-                $temp = array();
-                $temp['page_id'] = (int) $pageID;
-                $temp['url'] = $page['url'];
-                $temp['full_url'] = $languageURL . $keys[$pageID];
-                $temp['title'] = addslashes($page['title']);
-                $temp['navigation_title'] = addslashes($page['navigation_title']);
-                $temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
-                $temp['no_follow'] = (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow');
-                $temp['hidden'] = (bool) ($page['hidden'] == 'Y');
-                $temp['extra_blocks'] = null;
-
-                // any linked extra's?
-                if ($page['extra_ids'] !== null) {
-                    // get ids
-                    $ids = (array) explode(',', $page['extra_ids']);
-
-                    // loop ids
-                    foreach ($ids as $id) {
-                        // redefine
-                        $id = (int) $id;
-
-                        // available in extras, so add it to the temp-array
-                        if (isset($extras[$id])) {
-                            $temp['extra_blocks'][$id] = $extras[$id];
-                        }
-                    }
-                }
-
-                // calculate tree-type
-                $treeType = 'page';
-                if ($page['hidden'] == 'Y') {
-                    $treeType = 'hidden';
-                }
-
-                // homepage should have a special icon
-                if ($pageID == 1) {
-                    $treeType = 'home';
-                } elseif ($pageID == 404) {
-                    $treeType = 'error';
-                } elseif ($pageID < 404 && substr_count($page['extra_ids'], $sitemapID) > 0) {
-                    // get extras
-                    $extraIDs = explode(',', $page['extra_ids']);
-
-                    // loop extras
-                    foreach ($extraIDs as $id) {
-                        // check if this is the sitemap id
-                        if ($id == $sitemapID) {
-                            // set type
-                            $treeType = 'sitemap';
-
-                            // break it
-                            break;
-                        }
-                    }
-                }
-
-                // any data?
-                if (isset($page['data'])) {
-                    // get data
-                    $data = unserialize($page['data']);
-
-                    // internal alias?
-                    if (isset($data['internal_redirect']['page_id']) && $data['internal_redirect']['page_id'] != '') {
-                        $temp['redirect_page_id'] = $data['internal_redirect']['page_id'];
-                        $temp['redirect_code'] = $data['internal_redirect']['code'];
-                        $treeType = 'redirect';
-                    }
-
-                    // external alias?
-                    if (isset($data['external_redirect']['url']) && $data['external_redirect']['url'] != '') {
-                        $temp['redirect_url'] = $data['external_redirect']['url'];
-                        $temp['redirect_code'] = $data['external_redirect']['code'];
-                        $treeType = 'redirect';
-                    }
-
-                    // direct action?
-                    if (isset($data['is_action']) && $data['is_action']) {
-                        $treeType = 'direct_action';
-                    }
-                }
-
-                // add type
-                $temp['tree_type'] = $treeType;
-
-                // add it
-                $navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
+                $navigation[$page['type']][$page['parent_id']][$pageId] = $temp;
             }
         }
 
@@ -177,19 +59,143 @@ class CacheBuilder
     }
 
     /**
+     * Fetches the pagedata for a certain page array
+     * It also adds the page data to the keys array
+     *
+     * @param array  &$keys
+     * @param array  $page
+     * @param string $language
+     * @return array An array containing more data for the page
+     */
+    protected function getPageData(&$keys, $page, $language)
+    {
+        $parentID = (int) $page['parent_id'];
+        $blocks = $this->getBlocks();
+
+        // init URLs
+        $languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
+        $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+
+        // home is special
+        if ($page['id'] == 1) {
+            $page['url'] = '';
+            if (SITE_MULTILANGUAGE) {
+                $languageURL = rtrim($languageURL, '/');
+            }
+        }
+
+        // add it
+        $keys[$page['id']] = trim($URL . '/' . $page['url'], '/');
+
+        // unserialize
+        if (isset($page['meta_data'])) {
+            $page['meta_data'] = @unserialize($page['meta_data']);
+        }
+
+        // build navigation array
+        $pageData = array(
+            'page_id' => (int) $page['id'],
+            'url' => $page['url'],
+            'full_url' => $languageURL . $keys[$page['id']],
+            'title' => addslashes($page['title']),
+            'navigation_title' => addslashes($page['navigation_title']),
+            'has_extra' => (bool) ($page['has_extra'] == 'Y'),
+            'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
+            'hidden' => (bool) ($page['hidden'] == 'Y'),
+            'extra_blocks' => null,
+        );
+
+        // add extras to the page array
+        if ($page['extra_ids'] !== null) {
+            $ids = (array) explode(',', $page['extra_ids']);
+
+            foreach ($ids as $id) {
+                $id = (int) $id;
+
+                // available in extras, so add it to the pageData-array
+                if (isset($blocks[$id])) {
+                    $pageData['extra_blocks'][$id] = $blocks[$id];
+                }
+            }
+        }
+
+        // calculate tree-type
+        $treeType = 'page';
+        if ($page['hidden'] == 'Y') {
+            $treeType = 'hidden';
+        }
+
+        // homepage should have a special icon
+        if ($page['id'] == 1) {
+            $treeType = 'home';
+        } elseif ($page['id'] == 404) {
+            $treeType = 'error';
+        } elseif ($page['id'] < 404 && substr_count($page['extra_ids'], $this->getSitemapId()) > 0) {
+            // get extras
+            $extraIDs = explode(',', $page['extra_ids']);
+
+            // loop extras
+            foreach ($extraIDs as $id) {
+                // check if this is the sitemap id
+                if ($id == $this->getSitemapId()) {
+                    // set type
+                    $treeType = 'sitemap';
+
+                    // break it
+                    break;
+                }
+            }
+        }
+
+        // any data?
+        if (isset($page['data'])) {
+            // get data
+            $data = unserialize($page['data']);
+
+            // internal alias?
+            if (isset($data['internal_redirect']['page_id']) && $data['internal_redirect']['page_id'] != '') {
+                $pageData['redirect_page_id'] = $data['internal_redirect']['page_id'];
+                $pageData['redirect_code'] = $data['internal_redirect']['code'];
+                $treeType = 'redirect';
+            }
+
+            // external alias?
+            if (isset($data['external_redirect']['url']) && $data['external_redirect']['url'] != '') {
+                $pageData['redirect_url'] = $data['external_redirect']['url'];
+                $pageData['redirect_code'] = $data['external_redirect']['code'];
+                $treeType = 'redirect';
+            }
+
+            // direct action?
+            if (isset($data['is_action']) && $data['is_action']) {
+                $treeType = 'direct_action';
+            }
+        }
+
+        // add type
+        $pageData['tree_type'] = $treeType;
+
+        return $pageData;
+    }
+
+    /**
      * Returns an array containing all extras
      *
      * @return array
      */
     protected function getBlocks()
     {
-        return (array) BackendModel::get('database')->getRecords(
-            'SELECT i.id, i.module, i.action
-             FROM modules_extras AS i
-             WHERE i.type = ? AND i.hidden = ?',
-            array('block', 'N'),
-            'id'
-        );
+        if (empty($this->blocks)) {
+            $this->blocks = (array) BackendModel::get('database')->getRecords(
+                'SELECT i.id, i.module, i.action
+                 FROM modules_extras AS i
+                 WHERE i.type = ? AND i.hidden = ?',
+                array('block', 'N'),
+                'id'
+            );
+        }
+
+        return $this->blocks;
     }
 
     /**
@@ -197,15 +203,27 @@ class CacheBuilder
      *
      * @return array
      */
-    protected function getWidgets()
+    protected function getSitemapId()
     {
-        return (array) BackendModel::get('database')->getRecords(
-            'SELECT i.id, i.module, i.action
-             FROM modules_extras AS i
-             WHERE i.type = ? AND i.hidden = ?',
-            array('widget', 'N'),
-            'id'
-        );
+        if (empty($this->sitemapId)) {
+            $widgets = (array) BackendModel::get('database')->getRecords(
+                'SELECT i.id, i.module, i.action
+                 FROM modules_extras AS i
+                 WHERE i.type = ? AND i.hidden = ?',
+                array('widget', 'N'),
+                'id'
+            );
+
+            // search sitemap
+            foreach ($widgets as $id => $row) {
+                if ($row['action'] == 'Sitemap') {
+                    $this->sitemapId = $id;
+                    break;
+                }
+            }
+        }
+
+        return $this->sitemapId;
     }
 
     /**
@@ -252,8 +270,8 @@ class CacheBuilder
         $keysString .= '$keys = array();' . "\n\n";
 
         // loop all keys
-        foreach ($keys as $pageID => $URL) {
-            $keysString .= '$keys[' . $pageID . '] = \'' . $URL . '\';' . "\n";
+        foreach ($keys as $pageId => $URL) {
+            $keysString .= '$keys[' . $pageId . '] = \'' . $URL . '\';' . "\n";
         }
 
         // end file
@@ -282,28 +300,28 @@ class CacheBuilder
             // loop all parents
             foreach ($pages as $parentID => $page) {
                 // loop all pages
-                foreach ($page as $pageID => $properties) {
+                foreach ($page as $pageId => $properties) {
                     // loop properties
                     foreach ($properties as $key => $value) {
                         // page_id should be an integer
                         if (is_int($value)) {
-                            $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID .
+                            $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
                                     '][\'' . $key . '\'] = ' . $value . ';' . "\n";
                         } elseif (is_bool($value)) {
                             if ($value) {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID .
+                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
                                         '][\'' . $key . '\'] = true;' . "\n";
                             } else {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID .
+                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
                                         '][\'' . $key . '\'] = false;' . "\n";
                             }
                         } elseif ($key == 'extra_blocks') {
                             if ($value === null) {
-                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageID .
+                                $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' . $pageId .
                                         '][\'' . $key . '\'] = null;' . "\n";
                             } else {
                                 // init var
-                                $extras = array();
+                                $blocks = array();
 
                                 foreach ($value as $row) {
                                     // init var
@@ -322,17 +340,17 @@ class CacheBuilder
                                     $temp .= ')';
 
                                     // add into extras
-                                    $extras[] = $temp;
+                                    $blocks[] = $temp;
                                 }
 
                                 // set line
                                 $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' .
-                                        $pageID . '][\'' . $key . '\'] = array(' .
-                                        implode(', ', $extras) . ');' . "\n";
+                                        $pageId . '][\'' . $key . '\'] = array(' .
+                                        implode(', ', $blocks) . ');' . "\n";
                             }
                         } else {
                             $line = '$navigation[\'' . $type . '\'][' . $parentID . '][' .
-                                    $pageID . '][\'' . $key . '\'] = \'' . (string) $value . '\';' . "\n";
+                                    $pageId . '][\'' . $key . '\'] = \'' . (string) $value . '\';' . "\n";
                         }
 
                         // add line
