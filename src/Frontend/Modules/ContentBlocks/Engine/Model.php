@@ -24,8 +24,14 @@ class Model
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT i.title, i.text, i.template
              FROM content_blocks AS i
-             WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',
-            array((int) $id, 'active', 'N', FRONTEND_LANGUAGE)
+             WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.site_id = ?',
+            array(
+                (int) $id,
+                'active',
+                'N',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
     }
 }

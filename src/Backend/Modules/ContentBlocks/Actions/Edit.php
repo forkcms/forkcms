@@ -111,7 +111,12 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
             BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
-            array('archived', $this->record['id'], BL::getWorkingLanguage())
+            array(
+                'archived',
+                $this->record['id'],
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -191,6 +196,7 @@ class Edit extends BackendBaseActionEdit
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
                 $item['language'] = $this->record['language'];
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['title'] = $fields['title']->getValue();
                 $item['text'] = $fields['text']->getValue();
