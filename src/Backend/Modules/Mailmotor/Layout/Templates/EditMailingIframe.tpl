@@ -23,7 +23,7 @@
 	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/ckeditor.js"></script>
 	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/adapters/jquery.js"></script>
 	<script type="text/javascript" src="/src/Backend/Core/Js/ckfinder/ckfinder.js"></script>
-	<script type="text/javascript" src="/src/Frontend/Cache/Navigation/editor_link_list_{$LANGUAGE}.js"></script>
+	<script type="text/javascript" src="/src/Frontend/Cache/Navigation/editor_link_list_{$LANGUAGE}_{$SITE_ID}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			{$jsData}

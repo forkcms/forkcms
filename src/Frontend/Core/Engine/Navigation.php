@@ -190,28 +190,26 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the navigation should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     * @param int    $siteId   The id of the site to use
      * @return array
      */
-    public static function getKeys($language = null)
+    public static function getKeys($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $siteId = ($siteId !== null) ? (int) $siteId : Model::get('current_site')->getId();
 
         // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
+        if (!isset(self::$keys[$siteId][$language]) || empty(self::$keys[$siteId][$language])) {
             // validate file
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                // generate the cache
-                BackendPagesModel::buildCache($language);
-
-                // recall
-                return self::getKeys($language);
+            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '_' . $siteId . '.php')) {
+                // recall after generating the cache
+                BackendPagesModel::buildCache($language, $siteId);
+                return self::getKeys($language, $siteId);
             }
 
-            // init var
             $keys = array();
 
-            // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
+            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '_' . $siteId . '.php';
 
             // validate keys
             if (empty($keys)) {
@@ -219,11 +217,11 @@ class Navigation extends FrontendBaseObject
             }
 
             // store
-            self::$keys[$language] = $keys;
+            self::$keys[$siteId][$language] = $keys;
         }
 
         // return from cache
-        return self::$keys[$language];
+        return self::$keys[$siteId][$language];
     }
 
     /**
@@ -231,32 +229,35 @@ class Navigation extends FrontendBaseObject
      *
      * @param string $language The language wherefore the keys should be loaded,
      *                         if not provided we will load the language that was provided in the URL.
+     * @param int    $siteId   The id of the site to use
      * @return array
      */
-    public static function getNavigation($language = null)
+    public static function getNavigation($language = null, $siteId = null)
     {
         // redefine
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $siteId = ($siteId !== null) ? (int) $siteId : Model::get('current_site')->getId();
 
         // do the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            // validate file @later: the file should be regenerated
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                throw new Exception('No navigation-file (navigation_' . $language . '.php) found.');
+        if (!isset(self::$navigation[$siteId][$language]) || empty(self::$navigation[$siteId][$language])) {
+            // validate file
+            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '_' . $siteId . '.php')) {
+                // recall after generating the cache
+                BackendPagesModel::buildCache($language, $siteId);
+                return self::getNavigation($language, $siteId);
             }
 
-            // init var
             $navigation = array();
 
             // require file
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
+            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '_' . $siteId . '.php';
 
             // store
-            self::$navigation[$language] = $navigation;
+            self::$navigation[$siteId][$language] = $navigation;
         }
 
         // return from cache
-        return self::$navigation[$language];
+        return self::$navigation[$siteId][$language];
     }
 
     /**

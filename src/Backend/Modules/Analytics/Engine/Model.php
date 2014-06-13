@@ -535,22 +535,25 @@ class Model
      * Get all data for a given revision.
      *
      * @param string $language The language to use.
+     * @param int    $siteId The language to use.
      * @return array
      */
-    public static function getLinkList($language = null)
+    public static function getLinkList($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
 
         // there is no cache file
-        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) {
+        $file = FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '_' . $siteId . '.js';
+        if (!is_file($file)) {
             return array();
         }
 
         // read the cache file
-        $cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js');
+        $cacheContent = file_get_contents($file);
 
         // get the array
-        preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
+        preg_match('/new Array\((.*)\);$/s', $cacheContent, $matches);
 
         // no matched
         if (empty($matches)) {
