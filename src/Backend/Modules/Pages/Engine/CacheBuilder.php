@@ -70,7 +70,6 @@ class CacheBuilder
     protected function getPageData(&$keys, $page, $language)
     {
         $parentID = (int) $page['parent_id'];
-        $blocks = $this->getBlocks();
 
         // init URLs
         $languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
@@ -105,20 +104,14 @@ class CacheBuilder
             'extra_blocks' => null,
         );
 
-        // add extras to the page array
-        if ($page['extra_ids'] !== null) {
-            $ids = (array) explode(',', $page['extra_ids']);
+        $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
+        $pageData['tree_type'] = $this->getPageTreeType($page, $pageData);
 
-            foreach ($ids as $id) {
-                $id = (int) $id;
+        return $pageData;
+    }
 
-                // available in extras, so add it to the pageData-array
-                if (isset($blocks[$id])) {
-                    $pageData['extra_blocks'][$id] = $blocks[$id];
-                }
-            }
-        }
-
+    protected function getPageTreeType($page, $pageData)
+    {
         // calculate tree-type
         $treeType = 'page';
         if ($page['hidden'] == 'Y') {
@@ -172,10 +165,28 @@ class CacheBuilder
             }
         }
 
-        // add type
-        $pageData['tree_type'] = $treeType;
+        return $treeType;
+    }
 
-        return $pageData;
+    protected function getPageExtraBlocks($page, $pageData)
+    {
+        // add extras to the page array
+        if ($page['extra_ids'] !== null) {
+            $blocks = $this->getBlocks();
+            $ids = (array) explode(',', $page['extra_ids']);
+            $pageBlocks = array();
+
+            foreach ($ids as $id) {
+                $id = (int) $id;
+
+                // available in extras, so add it to the pageData-array
+                if (isset($blocks[$id])) {
+                    $pageBlocks[$id] = $blocks[$id];
+                }
+            }
+
+            return $pageBlocks;
+        }
     }
 
     /**
