@@ -129,10 +129,12 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = array();
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();
                 $item['language'] = $this->record['language'];
+                $item['site_id'] = $this->record['site_id'];
                 $item['question'] = $this->frm->getField('title')->getValue();
                 $item['answer'] = $this->frm->getField('answer')->getValue(true);
                 $item['hidden'] = $this->frm->getField('hidden')->getValue();

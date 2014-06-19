@@ -70,8 +70,10 @@ class AddCategory extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = array();
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['meta_id'] = $this->meta->save();
                 $item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
 

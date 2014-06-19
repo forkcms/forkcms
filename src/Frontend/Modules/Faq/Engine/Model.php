@@ -37,9 +37,14 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN faq_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE m.url = ? AND i.language = ? AND i.hidden = ?
+             WHERE m.url = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
              ORDER BY i.sequence',
-            array((string) $url, FRONTEND_LANGUAGE, 'N')
+            array(
+                (string) $url,
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+            )
         );
     }
 
@@ -63,21 +68,32 @@ class Model implements FrontendTagsInterface
                 'SELECT i.*, m.url
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
+                 WHERE i.category_id = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
-             ORDER BY i.sequence
-             LIMIT ?',
-                array((int) $categoryId, FRONTEND_LANGUAGE, 'N', (int) $limit)
+                 ORDER BY i.sequence
+                 LIMIT ?',
+                array(
+                    (int) $categoryId,
+                    FRONTEND_LANGUAGE,
+                    FrontendModel::get('current_site')->getId(),
+                    'N',
+                    (int) $limit,
+                )
             );
         } else {
             $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
                 'SELECT i.*, m.url
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.category_id = ? AND i.language = ? AND i.hidden = ?
+                 WHERE i.category_id = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
                  AND i.id NOT IN (' . implode(',', $excludeIds) . ')
-             ORDER BY i.sequence',
-                array((int) $categoryId, FRONTEND_LANGUAGE, 'N')
+                 ORDER BY i.sequence',
+                array(
+                    (int) $categoryId,
+                    FRONTEND_LANGUAGE,
+                    FrontendModel::get('current_site')->getId(),
+                    'N',
+                )
             );
         }
 
@@ -103,9 +119,12 @@ class Model implements FrontendTagsInterface
             'SELECT i.*, m.url
              FROM faq_categories AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ?
+             WHERE i.language = ? AND i.site_id = ?
              ORDER BY i.sequence',
-            array(FRONTEND_LANGUAGE)
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
 
         // init var
@@ -131,9 +150,13 @@ class Model implements FrontendTagsInterface
             'SELECT i.*, m.url
              FROM faq_categories AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE m.url = ? AND i.language = ?
+             WHERE m.url = ? AND i.language = ? AND i.site_id = ?
              ORDER BY i.sequence',
-            array((string) $url, FRONTEND_LANGUAGE)
+            array(
+                (string) $url,
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -149,9 +172,13 @@ class Model implements FrontendTagsInterface
             'SELECT i.*, m.url
              FROM faq_categories AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.id = ? AND i.language = ?
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?
              ORDER BY i.sequence',
-            array((int) $id, FRONTEND_LANGUAGE)
+            array(
+                (int) $id,
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -210,10 +237,15 @@ class Model implements FrontendTagsInterface
             'SELECT i.*, m.url
              FROM faq_questions AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.num_views > 0 AND i.language = ? AND i.hidden = ?
+             WHERE i.num_views > 0 AND i.language = ? AND i.site_id = ? AND i.hidden = ?
              ORDER BY (i.num_usefull_yes + i.num_usefull_no) DESC
              LIMIT ?',
-            array(FRONTEND_LANGUAGE, 'N', (int) $limit)
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                (int) $limit,
+            )
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -236,9 +268,13 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence, m.url
              FROM faq_questions AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ? AND i.category_id = ?
+             WHERE i.language = ? AND i.site_id = ? AND i.category_id = ?
              ORDER BY i.sequence ASC',
-            array(FRONTEND_LANGUAGE, (int) $id)
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                (int) $id,
+            )
         );
 
         $link = FrontendNavigation::getURLForBlock('Faq', 'Detail');
@@ -271,10 +307,16 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.question, m.url
              FROM faq_questions AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ? AND i.hidden = ? AND i.id IN(' . implode(',', $relatedIDs) . ')
+             WHERE i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.id IN(' . implode(',', $relatedIDs) . ')
              ORDER BY i.question
              LIMIT ?',
-            array(FRONTEND_LANGUAGE, 'N', (int) $limit),
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                (int) $limit,
+            ),
             'id'
         );
 
@@ -317,7 +359,8 @@ class Model implements FrontendTagsInterface
      *
      * Note: a module's search function should always:
      *        - accept an array of entry id's
-     *        - return only the entries that are allowed to be displayed, with their array's index being the entry's id
+     *        - return only the entries that are allowed to be displayed,
+     *          with their array's index being the entry's id
      *
      *
      * @param array $ids
@@ -332,14 +375,20 @@ class Model implements FrontendTagsInterface
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN faq_categories AS c ON c.id = i.category_id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.hidden = ? AND i.language = ? AND i.id IN (' . implode(',', $ids) . ')',
-            array('N', FRONTEND_LANGUAGE),
+             WHERE i.hidden = ? AND i.language = ? AND i.site_id = ?
+             AND i.id IN (' . implode(',', $ids) . ')',
+            array(
+                'N',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            ),
             'id'
         );
 
         // prepare items for search
+        $faqDetailUrl = FrontendNavigation::getURLForBlock('Faq', 'Detail');
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Detail') . '/' . $item['url'];
+            $item['full_url'] = $faqDetailUrl . '/' . $item['url'];
         }
 
         return $items;

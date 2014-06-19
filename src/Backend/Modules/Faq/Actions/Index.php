@@ -60,7 +60,11 @@ class Index extends BackendBaseActionIndex
         foreach ($categories as $categoryId => $categoryTitle) {
             $dataGrid = new BackendDataGridDB(
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
-                array(BL::getWorkingLanguage(), $categoryId)
+                array(
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                    $categoryId,
+                )
             );
             $dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
             $dataGrid->setColumnsHidden(array('category_id', 'sequence'));

@@ -102,10 +102,12 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
+                $item = array();
                 $item['meta_id'] = $this->meta->save();
                 $item['category_id'] = $this->frm->getField('category_id')->getValue();
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = BL::getWorkingLanguage();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['question'] = $this->frm->getField('title')->getValue();
                 $item['answer'] = $this->frm->getField('answer')->getValue(true);
                 $item['created_on'] = BackendModel::getUTCDate();

@@ -29,11 +29,12 @@ class Installer extends ModuleInstaller
      * Add a category for a language
      *
      * @param string $language
+     * @param int    $siteId
      * @param string $title
      * @param string $url
      * @return int
      */
-    private function addCategory($language, $title, $url)
+    private function addCategory($language, $siteId, $title, $url)
     {
         // db
         $db = $this->getDB();
@@ -50,6 +51,7 @@ class Installer extends ModuleInstaller
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['extra_id'] = $this->insertExtra('Faq', 'widget', 'Faq', 'CategoryList', null, 'N', $sequenceExtra);
         $item['language'] = (string) $language;
+        $item['site_id'] = (int) $siteId;
         $item['title'] = (string) $title;
         $item['sequence'] = 1;
 
@@ -62,6 +64,7 @@ class Installer extends ModuleInstaller
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
+                'site_id' => $item['site_id'],
                 'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id']
             )
         );
@@ -81,15 +84,16 @@ class Installer extends ModuleInstaller
      * Fetch the id of the first category in this language we come across
      *
      * @param string $language
+     * @param int    $siteId
      * @return int
      */
-    private function getCategory($language)
+    private function getCategory($language, $siteId)
     {
         return (int) $this->getDB()->getVar(
             'SELECT id
              FROM faq_categories
-             WHERE language = ?',
-            array((string) $language)
+             WHERE language = ? AND site_id = ?',
+            array((string) $language, (int) $siteId)
         );
     }
 
@@ -181,11 +185,9 @@ class Installer extends ModuleInstaller
     {
         foreach ($this->getSites() as $site) {
             foreach ($this->getLanguages($site['id']) as $language) {
-                $this->defaultCategoryId = $this->getCategory($language);
-
                 // no category exists
-                if ($this->defaultCategoryId == 0) {
-                    $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+                if ($this->getCategory($language, $site['id']) == 0) {
+                    $defaultCategory = $this->addCategory($language, $site['id'], 'Default', 'default');
                 }
 
                 // check if a page for the faq already exists in this language
