@@ -55,7 +55,7 @@
 							<div class="options clearfix">
 								{option:item.image}
 								<p class="imageHolder">
-									<img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" width="128" height="128" alt="{$lblImage|ucfirst}" />
+									<img src="{$imagePath}/128x128/{$item.image}" width="128" height="128" alt="{$lblImage|ucfirst}" />
 									<label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
 									{$chkDeleteImageError}
 								</p>

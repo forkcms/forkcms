@@ -25,6 +25,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Common\Path;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
@@ -321,6 +322,10 @@ class Edit extends BackendBaseActionEdit
 
         // assign the active record and additional variables
         $this->tpl->assign('item', $this->record);
+        $this->tpl->assign(
+            'imagePath',
+            Path::buildImageUrl($this->getModule(), BL::getWorkingLanguage())
+        );
         $this->tpl->assign('status', BL::lbl(\SpoonFilter::ucfirst($this->record['status'])));
 
         // assign revisions-datagrid
@@ -389,7 +394,7 @@ class Edit extends BackendBaseActionEdit
                     $item['image'] = $this->record['image'];
 
                     // the image path
-                    $imagePath = FRONTEND_FILES_PATH . '/blog/images';
+                    $imagePath = Path::buildImagePath($this->getModule());
 
                     // create folders if needed
                     $fs = new Filesystem();

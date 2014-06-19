@@ -18,6 +18,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Common\Path;
 
 /**
  * This is the detail-action
@@ -182,9 +183,11 @@ class Detail extends FrontendBaseBlock
 
         // add specified image
         if (isset($this->record['image']) && $this->record['image'] != '') {
+            $imageUrl = Path::buildImageUrl($this->getModule(), FRONTEND_LANGUAGE);
             $this->header->addOpenGraphImage(
-                FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']
+                $imageUrl . '/' . $this->record['image']
             );
+            $this->tpl->assign('imageUrl', $imageUrl);
         }
 
         // Open Graph-data: add images from content
