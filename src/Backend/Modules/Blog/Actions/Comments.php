@@ -73,7 +73,12 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgPublished = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('published', BL::getWorkingLanguage(), 'active')
+            array(
+                'published',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+                'active',
+            )
         );
 
         // active tab
@@ -164,7 +169,12 @@ class Comments extends BackendBaseActionIndex
         // datagrid for the comments that are awaiting moderation
         $this->dgModeration = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('moderation', BL::getWorkingLanguage(), 'active')
+            array(
+                'moderation',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+                'active',
+            )
         );
 
         // active tab
@@ -253,7 +263,12 @@ class Comments extends BackendBaseActionIndex
          */
         $this->dgSpam = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS,
-            array('spam', BL::getWorkingLanguage(), 'active')
+            array(
+                'spam',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+                'active',
+            )
         );
 
         // active tab

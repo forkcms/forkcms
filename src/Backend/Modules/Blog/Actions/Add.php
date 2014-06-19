@@ -152,6 +152,7 @@ class Add extends BackendBaseActionAdd
                 $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
                 $item['user_id'] = $this->frm->getField('user_id')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['introduction'] = $this->frm->getField('introduction')->getValue();
                 $item['text'] = $this->frm->getField('text')->getValue();
