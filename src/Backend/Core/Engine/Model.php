@@ -749,6 +749,7 @@ class Model extends \BaseModel
      */
     public static function getNavigation($language = null, $siteId = null)
     {
+        // @note: this looks like a possible bug. FRONTEND_NAVIGATION is not defined in the backend
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
         $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
