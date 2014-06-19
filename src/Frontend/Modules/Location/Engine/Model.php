@@ -76,8 +76,12 @@ class Model
         return (array) FrontendModel::getContainer()->get('database')->getRecord(
             'SELECT *
              FROM location
-             WHERE id = ? AND language = ?',
-            array((int) $id, FRONTEND_LANGUAGE)
+             WHERE id = ? AND language = ? AND site_id = ?',
+            array(
+                (int) $id,
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -89,8 +93,14 @@ class Model
     public static function getAll()
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT * FROM location WHERE language = ? AND show_overview = ?',
-            array(FRONTEND_LANGUAGE, 'Y')
+            'SELECT * FROM
+             location WHERE
+             language = ? AND site_id = ? AND show_overview = ?',
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'Y',
+            )
         );
     }
 
