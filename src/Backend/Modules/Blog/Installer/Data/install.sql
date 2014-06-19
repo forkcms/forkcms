@@ -46,5 +46,5 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
  `allow_comments` enum('N','Y') NOT NULL default 'N',
  `num_comments` int(11) NOT NULL,
  PRIMARY KEY (`revision_id`),
- KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
+ KEY `idx_status_language_site_id_hidden` (`status`,`language`, `site_id`,`hidden`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
