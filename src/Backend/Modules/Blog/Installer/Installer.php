@@ -21,25 +21,20 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /**
-     * Default category id
-     *
-     * @var    int
-     */
-    private $defaultCategoryId;
-
-    /**
      * Add a category for a language
      *
      * @param string $language The language to use.
+     * @param string $siteId   The siteId to use.
      * @param string $title    The title of the category.
      * @param string $url      The URL for the category.
      * @return int
      */
-    private function addCategory($language, $title, $url)
+    private function addCategory($language, $siteId, $title, $url)
     {
         $item = array();
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['language'] = (string) $language;
+        $item['site_id'] = (int) $siteId;
         $item['title'] = (string) $title;
 
         return (int) $this->getDB()->insert('blog_categories', $item);
@@ -51,11 +46,13 @@ class Installer extends ModuleInstaller
      * @param string $language The language to use.
      * @return int
      */
-    private function getCategory($language)
+    private function getCategory($language, $siteId)
     {
         return (int) $this->getDB()->getVar(
-            'SELECT id FROM blog_categories WHERE language = ?',
-            array((string) $language)
+            'SELECT id
+             FROM blog_categories
+             WHERE language = ? AND site_id = ?',
+            array((string) $language, (int) $siteId)
         );
     }
 
@@ -177,11 +174,11 @@ class Installer extends ModuleInstaller
         foreach ($this->getSites() as $site) {
             foreach ($this->getLanguages($site['id']) as $language) {
                 // fetch current categoryId
-                $this->defaultCategoryId = $this->getCategory($language);
+                $categoryId = $this->getCategory($language, $site['id']);
 
                 // add a new category if there is none yet exists
-                if ($this->defaultCategoryId == 0) {
-                    $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+                if ($categoryId == 0) {
+                    $categoryId = $this->addCategory($language, $site['id'], 'Default', 'default');
                 }
 
                 // feedburner URL
@@ -213,7 +210,7 @@ class Installer extends ModuleInstaller
                 }
 
                 if ($this->installExample()) {
-                    $this->installExampleData($language);
+                    $this->installExampleData($language, $site['id'], $categoryId);
                 }
             }
         }
@@ -222,9 +219,11 @@ class Installer extends ModuleInstaller
     /**
      * Install example data
      *
-     * @param string $language The language to use.
+     * @param string $language   The language to use.
+     * @param int    $siteId     The siteid to insert items for.
+     * @param int    $categoryId The categoryId to insert blogposts in
      */
-    private function installExampleData($language)
+    private function installExampleData($language, $siteId, $categoryId)
     {
         // get db instance
         $db = $this->getDB();
@@ -233,9 +232,9 @@ class Installer extends ModuleInstaller
         if (!(bool) $db->getVar(
             'SELECT 1
              FROM blog_posts
-             WHERE language = ?
+             WHERE language = ? AND site_id = ?
              LIMIT 1',
-            array($language)
+            array($language, $siteId)
         )
         ) {
             // insert sample blogpost 1
@@ -243,7 +242,7 @@ class Installer extends ModuleInstaller
                 'blog_posts',
                 array(
                     'id' => 1,
-                    'category_id' => $this->defaultCategoryId,
+                    'category_id' => $categoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta(
                         'Nunc sediam est',
@@ -252,6 +251,7 @@ class Installer extends ModuleInstaller
                         'nunc-sediam-est'
                     ),
                     'language' => $language,
+                    'site_id' => $siteId,
                     'title' => 'Nunc sediam est',
                     'introduction' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
@@ -274,10 +274,11 @@ class Installer extends ModuleInstaller
                 'blog_posts',
                 array(
                     'id' => 2,
-                    'category_id' => $this->defaultCategoryId,
+                    'category_id' => $categoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
                     'language' => $language,
+                    'site_id' => $siteId,
                     'title' => 'Lorem ipsum',
                     'introduction' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
@@ -301,6 +302,7 @@ class Installer extends ModuleInstaller
                 array(
                     'post_id' => 1,
                     'language' => $language,
+                    'site_id' => $siteId,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
                     'email' => 'forkcms-sample@spoon-library.com',
@@ -318,6 +320,7 @@ class Installer extends ModuleInstaller
                 array(
                     'post_id' => 1,
                     'language' => $language,
+                    'site_id' => $siteId,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',
                     'email' => 'forkcms-sample@sumocoders.be',
