@@ -49,7 +49,7 @@
 				</ul>
 			</header>
 			<div class="bd content" itemprop="articleBody">
-				{option:item.image}<img src="{$FRONTEND_FILES_URL}/blog/images/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
+				{option:item.image}<img src="{$imageUrl}/source/{$item.image}" alt="{$item.title}" itemprop="image" />{/option:item.image}
 				{$item.text}
 			</div>
 			<footer class="ft">

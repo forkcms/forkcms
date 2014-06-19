@@ -14,6 +14,7 @@ use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Common\Path;
 
 /**
  * This is the category-action
@@ -160,6 +161,11 @@ class Category extends FrontendBaseBlock
                 array('name' => 'robots', 'content' => $this->category['meta_data']['seo_follow'])
             );
         }
+
+        $this->tpl->assign(
+            'imageUrl',
+            Path::buildImageUrl($this->getModule(), FRONTEND_LANGUAGE)
+        );
 
         // assign category
         $this->tpl->assign('category', $this->category);

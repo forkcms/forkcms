@@ -22,6 +22,7 @@ use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
+use Common\Path;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -156,7 +157,13 @@ class Add extends BackendBaseActionAdd
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['introduction'] = $this->frm->getField('introduction')->getValue();
                 $item['text'] = $this->frm->getField('text')->getValue();
-                $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
+                $item['publish_on'] = BackendModel::getUTCDate(
+                    null,
+                    BackendModel::getUTCTimestamp(
+                        $this->frm->getField('publish_on_date'),
+                        $this->frm->getField('publish_on_time')
+                    )
+                );
                 $item['created_on'] = BackendModel::getUTCDate();
                 $item['edited_on'] = $item['created_on'];
                 $item['hidden'] = $this->frm->getField('hidden')->getValue();
@@ -166,7 +173,7 @@ class Add extends BackendBaseActionAdd
 
                 if ($this->imageIsAllowed) {
                     // the image path
-                    $imagePath = FRONTEND_FILES_PATH . '/blog/images';
+                    $imagePath = Path::buildImagePath($this->getModule());
 
                     // create folders if needed
                     $fs = new Filesystem();
@@ -207,10 +214,18 @@ class Add extends BackendBaseActionAdd
                     }
 
                     // everything is saved, so redirect to the overview
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(
+                        BackendModel::createURLForAction('Index') . '&report=added&var='
+                        . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']
+                    );
                 } elseif ($item['status'] == 'draft') {
                     // draft: everything is saved, so redirect to the edit action
-                    $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+                    $this->redirect(
+                        BackendModel::createURLForAction('Edit')
+                         . '&report=saved-as-draft&var=' . urlencode($item['title'])
+                         . '&id=' . $item['id'] . '&draft=' . $item['revision_id']
+                         . '&highlight=row-' . $item['revision_id']
+                    );
                 }
             }
         }

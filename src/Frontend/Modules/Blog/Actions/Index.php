@@ -13,6 +13,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Common\Path;
 
 /**
  * This is the overview-action
@@ -110,6 +111,11 @@ class Index extends FrontendBaseBlock
                  'href' => $rssLink
             ),
             true
+        );
+
+        $this->tpl->assign(
+            'imageUrl',
+            Path::buildImageUrl($this->getModule(), FRONTEND_LANGUAGE)
         );
 
         // assign articles
