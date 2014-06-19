@@ -6,6 +6,12 @@ use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Exception;
 use Backend\Core\Engine\Language as BL;
 
+/**
+ * Responsible for handling paths in Fork.
+ *
+ * @author <per@wijs.be>
+ * @author <wouter@wijs.be>
+ */
 class Path
 {
     /**
@@ -17,14 +23,7 @@ class Path
      */
     public static function buildImagePath($module, $language = null)
     {
-        if ($language === null) {
-            $language = self::getLanguage();
-        }
-
-        return FRONTEND_FILES_PATH . '/' . $module
-            . '/images/' . Model::get('current_site')->getId() . '/'
-            . $language
-        ;
+        return self::prependImagePath(FRONTEND_FILES_PATH, $module, $language);
     }
 
     /**
@@ -36,11 +35,25 @@ class Path
      */
     public static function buildImageUrl($module, $language = null)
     {
+        return self::prependImagePath(FRONTEND_FILES_URL, $module, $language);
+    }
+
+    /**
+     * Given the prefix for an image path, return the full path.
+     *
+     * @param string $prefix
+     * @param string $module
+     * @param string $language
+     * @return string
+     * @internal This is a helper for buildImage{Path,Url)()
+     */
+    protected static function prependImagePath($prefix, $module, $language = null)
+    {
         if ($language === null) {
             $language = self::getLanguage();
         }
 
-        return FRONTEND_FILES_URL . '/' . $module
+        return $prefix . '/' . $module
             . '/images/' . Model::get('current_site')->getId() . '/'
             . $language
         ;
