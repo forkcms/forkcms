@@ -45,7 +45,7 @@ class Path
      * @param string $module
      * @param string $language
      * @return string
-     * @internal This is a helper for buildImage{Path,Url)()
+     * @internal This is a helper for buildImage{Path,Url}()
      */
     protected static function prependImagePath($prefix, $module, $language = null)
     {
