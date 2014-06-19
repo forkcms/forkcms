@@ -359,6 +359,7 @@ class Detail extends FrontendBaseBlock
                 // build array
                 $comment['post_id'] = $this->record['id'];
                 $comment['language'] = FRONTEND_LANGUAGE;
+                $comment['site_id'] = $this->get('current_site')->getId();
                 $comment['created_on'] = FrontendModel::getUTCDate();
                 $comment['author'] = $author;
                 $comment['email'] = $email;
