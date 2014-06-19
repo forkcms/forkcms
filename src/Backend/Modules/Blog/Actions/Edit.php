@@ -139,7 +139,12 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            array('draft', $this->record['id'], BL::getWorkingLanguage())
+            array(
+                'draft',
+                $this->record['id'],
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -244,7 +249,12 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgRevisions = new BackendDataGridDB(
             BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS,
-            array('archived', $this->record['id'], BL::getWorkingLanguage())
+            array(
+                'archived',
+                $this->record['id'],
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -359,6 +369,7 @@ class Edit extends BackendBaseActionEdit
                 $item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
                 $item['user_id'] = $this->frm->getField('user_id')->getValue();
                 $item['language'] = BL::getWorkingLanguage();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['introduction'] = $this->frm->getField('introduction')->getValue();
                 $item['text'] = $this->frm->getField('text')->getValue();

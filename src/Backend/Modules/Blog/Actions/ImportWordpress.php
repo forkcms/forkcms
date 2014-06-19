@@ -416,8 +416,14 @@ class ImportWordpress extends BackendBaseActionEdit
         /* @var \SpoonDatabase $db */
         $db = BackendModel::getContainer()->get('database');
         $id = (int) $db->getVar(
-            'SELECT id FROM blog_categories WHERE title=? AND language=?',
-            array($category, BL::getWorkingLanguage())
+            'SELECT id
+             FROM blog_categories
+             WHERE title = ? AND language = ? AND site_id = ?',
+            array(
+                $category,
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // We found an id!
@@ -433,6 +439,7 @@ class ImportWordpress extends BackendBaseActionEdit
         // We should create a new category
         $cat = array();
         $cat['language'] = BL::getWorkingLanguage();
+        $cat['site_id'] = $this->get('current_site')->getId();
         $cat['title'] = $category;
         $meta = array();
         $meta['keywords'] = $category;

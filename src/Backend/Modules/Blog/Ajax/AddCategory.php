@@ -38,6 +38,7 @@ class AddCategory extends BackendBaseAJAXAction
             // build array
             $item['title'] = \SpoonFilter::htmlspecialchars($categoryTitle);
             $item['language'] = BL::getWorkingLanguage();
+            $item['site_id'] = $this->get('current_site')->getId();
 
             $meta['keywords'] = $item['title'];
             $meta['keywords_overwrite'] = 'N';
