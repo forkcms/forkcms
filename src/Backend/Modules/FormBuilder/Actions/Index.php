@@ -43,7 +43,10 @@ class Index extends BackendBaseActionIndex
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendFormBuilderModel::QRY_BROWSE,
-            BL::getWorkingLanguage()
+            array(
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
         $this->dataGrid->setHeaderLabels(array(
             'email' => \SpoonFilter::ucfirst(BL::getLabel('Recipient')),

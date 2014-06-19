@@ -26,7 +26,7 @@ class Model
         'SELECT i.id, i.name, i.email, i.method,
          (SELECT COUNT(fd.form_id) FROM forms_data AS fd WHERE fd.form_id = i.id) AS sent_forms
          FROM forms AS i
-         WHERE i.language = ?';
+         WHERE i.language = ? AND i.site_id = ?';
 
     /**
      * Calculate time ago.
@@ -85,21 +85,19 @@ class Model
             'SELECT i.id FROM forms AS i ORDER BY i.id DESC LIMIT 1'
         );
 
-        // create identifier
+        // create identifier and keep trying till its unique
         do {
             $id++;
             $identifier = 'form' . $id;
-        }
-
-            // @todo refactor me...
-            // keep trying till its unique
-        while ((int) BackendModel::getContainer()->get('database')->getVar(
+        } while (
+            (int) BackendModel::getContainer()->get('database')->getVar(
                 'SELECT 1
                  FROM forms AS i
                  WHERE i.identifier = ?
                  LIMIT 1',
                 $identifier
-            ) > 0);
+            ) > 0
+        );
 
         return $identifier;
     }
@@ -492,10 +490,11 @@ class Model
         $extra['action'] = 'Form';
         $extra['data'] = serialize(
             array(
-                'language' => $values['language'],
+                'language'    => $values['language'],
+                'site_id'     => $values['site_id'],
                 'extra_label' => $values['name'],
-                'id' => $insertId,
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
+                'id'          => $insertId,
+                'edit_url'    => BackendModel::createURLForAction('Edit') . '&id=' . $insertId,
             )
         );
         $extra['hidden'] = 'N';
@@ -546,7 +545,12 @@ class Model
 
         // build array
         $extra['data'] = serialize(
-            array('language' => BL::getWorkingLanguage(), 'extra_label' => $values['name'], 'id' => $id)
+            array(
+                'id'          => $id,
+                'language'    => BL::getWorkingLanguage(),
+                'site_id'     => BackendModel::get('current_site')->getId(),
+                'extra_label' => $values['name'],
+            )
         );
 
         // update extra
