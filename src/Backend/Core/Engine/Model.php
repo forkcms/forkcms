@@ -528,6 +528,12 @@ class Model extends \BaseModel
 
         // create an array with an equal amount of questionmarks as ids provided
         $extraIdPlaceHolders = array_fill(0, count($ids), '?');
+        return (array) $db->getRecords(
+            'SELECT i.*
+             FROM modules_extras AS i
+             WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
+            $ids
+        );
 
         // get extras
         return (array) $db->getRecords(
@@ -557,8 +563,8 @@ class Model extends \BaseModel
 
         // init query
         $query = 'SELECT i.id, i.data
-                 FROM modules_extras AS i
-                 WHERE i.module = ? AND i.data != ?';
+            FROM modules_extras AS i
+            WHERE i.module = ? AND i.data != ?';
 
         // init parameters
         $parameters = array($module, 'NULL');
@@ -690,7 +696,7 @@ class Model extends \BaseModel
             // get all settings
             $moduleSettings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
+                FROM modules_settings AS ms'
             );
 
             // loop and store settings in the cache
@@ -1021,13 +1027,13 @@ class Model extends \BaseModel
         $fs = new Filesystem();
         foreach (array_keys($fileSizes) as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                        (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+                (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
                 $fs->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                    (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+            (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
             $fs->remove($fullPath);
         }
@@ -1038,30 +1044,23 @@ class Model extends \BaseModel
      *
      * @param string $module   A specific module to clear the cache for.
      * @param string $language The language to use.
+     * @param int $siteId The ID of the site to clear the cache for.
      */
-    public static function invalidateFrontendCache($module = null, $language = null)
+    public static function invalidateFrontendCache($module = null, $language = null, $siteId = null)
     {
         $module = ($module !== null) ? (string) $module : null;
         $language = ($language !== null) ? (string) $language : null;
+        $siteId = ($siteId !== null) ? (int) $siteId : null;
 
         // get cache path
         $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
 
         if (is_dir($path)) {
-            // build regular expression
-            if ($module !== null) {
-                if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
-                }
-            } else {
-                if ($language === null) {
-                    $regexp = '/(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
-                }
-            }
+            $regexp = self::buildInvalidateCacheRegex(
+                $module,
+                $language,
+                $siteId
+            );
 
             $finder = new Finder();
             $fs = new Filesystem();
@@ -1069,6 +1068,40 @@ class Model extends \BaseModel
                 $fs->remove($file->getRealPath());
             }
         }
+    }
+
+    /**
+     * @param string $module A specific module to clear the cache for.
+     * @param string $language The language to use.
+     * @param int $siteId The ID of the site to clear the cache for.
+     * @return string The regular expression to match cache files.
+     * @internal There is a test for this:
+     *           tests/InvalidateCacheRegexTest.php
+     */
+    public static function buildInvalidateCacheRegex($module, $language, $siteId)
+    {
+        $params = array($siteId, $language, $module);
+        $regex = '/';
+        for ($i = 0; $i < count($params); $i++) {
+            $param = $params[$i];
+            $isFirst = ($i == 0);
+            $previousIsNotNull = ($i != 0 && $params[$i - 1] !== null);
+            if ($param === null) {
+                if (($previousIsNotNull) || $isFirst) {
+                    $regex .= '(.*)';
+                }
+            } else {
+                if ($previousIsNotNull) {
+                    $regex .= '_' . $param;
+                } else {
+                    $regex .= $param;
+                }
+            }
+        }
+        $regexEnd = '(.*)_cache\.tpl/i';
+
+        // Remove too much wildcards, not needed.
+        return rtrim($regex, '(.*)') . $regexEnd;
     }
 
     /**
@@ -1207,8 +1240,8 @@ class Model extends \BaseModel
         // store
         self::getContainer()->get('database')->execute(
             'INSERT INTO modules_settings(module, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
+            VALUES(?, ?, ?)
+            ON DUPLICATE KEY UPDATE value = ?',
             array($module, $key, $valueToStore, $valueToStore)
         );
 
@@ -1431,9 +1464,9 @@ class Model extends \BaseModel
         // check if the subscription already exists
         $exists = (bool) $db->getVar(
             'SELECT 1
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
-             LIMIT 1',
+            FROM hooks_subscriptions AS i
+            WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+            LIMIT 1',
             array($eventModule, $eventName, $module)
         );
 
@@ -1468,8 +1501,8 @@ class Model extends \BaseModel
         // get all items that subscribe to this event
         $subscriptions = (array) self::getContainer()->get('database')->getRecords(
             'SELECT i.module, i.callback
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ?',
+            FROM hooks_subscriptions AS i
+            WHERE i.event_module = ? AND i.event_name = ?',
             array($module, $eventName)
         );
 
@@ -1560,8 +1593,8 @@ class Model extends \BaseModel
 
         $data = (string) $db->getVar(
             'SELECT i.data
-             FROM modules_extras AS i
-             WHERE i.id = ?',
+            FROM modules_extras AS i
+            WHERE i.id = ?',
             array((int) $id)
         );
 
