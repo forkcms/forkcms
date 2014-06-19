@@ -89,7 +89,11 @@ class Model
             );
 
             // invalidate the cache for the faq
-            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+            BackendModel::invalidateFrontendCache(
+                'Faq',
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId()
+            );
         }
     }
 
@@ -101,9 +105,8 @@ class Model
      */
     public static function deleteCategoryAllowed($id)
     {
-        if (
-            !BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true) &&
-            self::getCategoryCount() == 1
+        if (!BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)
+            && self::getCategoryCount() == 1
         ) {
             return false;
         } else {
@@ -512,7 +515,11 @@ class Model
     {
         $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache(
+            'Faq',
+            BL::getWorkingLanguage(),
+            BackendModel::get('current_site')->getId()
+        );
 
         return $insertId;
     }
@@ -561,7 +568,11 @@ class Model
         }
         $item['id'] = $db->insert('faq_categories', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache(
+            'Faq',
+            BL::getWorkingLanguage(),
+            BackendModel::get('current_site')->getId()
+        );
 
         // update extra (item id is now known)
         $extra['data'] = serialize(
@@ -601,7 +612,11 @@ class Model
             'id = ?',
             array((int) $item['id'])
         );
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache(
+            'Faq',
+            BL::getWorkingLanguage(),
+            BackendModel::get('current_site')->getId()
+        );
     }
 
     /**
@@ -619,7 +634,11 @@ class Model
             'id = ?',
             array($item['id'])
         );
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache(
+            'Faq',
+            BL::getWorkingLanguage(),
+            BackendModel::get('current_site')->getId()
+        );
 
         // build extra
         $extra = array(
