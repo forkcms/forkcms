@@ -29,6 +29,7 @@ class Installer extends ModuleInstaller
 
         // import translations and database structure
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // add rights
         $this->setModuleRights(1, 'Multisite');
