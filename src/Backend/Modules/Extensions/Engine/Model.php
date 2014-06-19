@@ -422,6 +422,9 @@ class Model
             if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
                 continue;
             }
+            if (isset($row['data']['site_id']) && $row['data']['site_id'] != BackendModel::get('current_site')->getId()) {
+                continue;
+            }
 
             // set URL if needed
             if (!isset($row['data']['url'])) {
