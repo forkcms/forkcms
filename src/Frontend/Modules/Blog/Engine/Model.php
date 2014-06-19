@@ -50,9 +50,17 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.publish_on <= ? AND m.url = ?
              LIMIT 1',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+            array(
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                (string) $URL,
+            )
         );
 
         // unserialize
@@ -83,20 +91,21 @@ class Model implements FrontendTagsInterface
     public static function getAll($limit = 10, $offset = 0)
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-             c.title AS category_title, m2.url AS category_url, i.image,
-             UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
-             m.url
+            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+             i.num_comments AS comments_count, c.title AS category_title,
+             m2.url AS category_url, i.image, UNIX_TIMESTAMP(i.publish_on) AS publish_on,
+             i.user_id, i.allow_comments, m.url
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?, ?',
             array(
                 'active',
                 FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (int) $offset,
@@ -169,11 +178,19 @@ class Model implements FrontendTagsInterface
         $return = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total, m.data AS meta_data
              FROM blog_categories AS c
-             INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+             INNER JOIN blog_posts AS i ON c.id = i.category_id
+             AND c.language = i.language AND c.language = i.language
              INNER JOIN meta AS m ON c.meta_id = m.id
-             WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+             WHERE c.language = ? AND c.site_id = ? AND i.status = ?
+             AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY c.id',
-            array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'),
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'active',
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            ),
             'id'
         );
 
@@ -200,13 +217,20 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
              p.id AS post_id, p.title AS post_title, m.url AS post_url
              FROM blog_comments AS i
-             INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+             INNER JOIN blog_posts AS p ON i.post_id = p.id
+             AND i.language = p.language AND i.site_id = p.site_id
              INNER JOIN meta AS m ON p.meta_id = m.id
-             WHERE i.status = ? AND i.language = ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ?
              GROUP BY i.id
              ORDER BY i.created_on DESC
              LIMIT ?, ?',
-            array('published', FRONTEND_LANGUAGE, (int) $offset, (int) $limit)
+            array(
+                'published',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                (int) $offset,
+                (int) $limit,
+            )
         );
     }
 
@@ -220,8 +244,15 @@ class Model implements FrontendTagsInterface
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id) AS count
              FROM blog_posts AS i
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ?
+             AND i.hidden = ? AND i.publish_on <= ?',
+            array(
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            )
         );
     }
 
@@ -236,25 +267,27 @@ class Model implements FrontendTagsInterface
     public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
     {
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-             c.title AS category_title, m2.url AS category_url, i.image,
-             UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
-             m.url
+            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+             i.num_comments AS comments_count, c.title AS category_title,
+             m2.url AS category_url, i.image, UNIX_TIMESTAMP(i.publish_on) AS publish_on,
+             i.user_id, i.allow_comments, m.url
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.publish_on <= ? AND m2.url = ?
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
             array(
                 'active',
                 FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
                 (string) $categoryURL,
                 (int) $offset,
-                (int) $limit
+                (int) $limit,
             ),
             'id'
         );
@@ -325,8 +358,16 @@ class Model implements FrontendTagsInterface
              FROM blog_posts AS i
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON c.meta_id = m.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.publish_on <= ? AND m.url = ?',
+            array(
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                (string) $URL,
+            )
         );
     }
 
@@ -348,7 +389,8 @@ class Model implements FrontendTagsInterface
 
         // get the items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+             i.num_comments AS comments_count,
              c.title AS category_title, m2.url AS category_url, i.image,
              UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
              m.url
@@ -356,17 +398,19 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.publish_on BETWEEN ? AND ?
              ORDER BY i.publish_on DESC
              LIMIT ?, ?',
             array(
                 'active',
                 FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i', $start),
                 FrontendModel::getUTCDate('Y-m-d H:i', $end),
                 $offset,
-                $limit
+                $limit,
             ),
             'id'
         );
@@ -438,13 +482,15 @@ class Model implements FrontendTagsInterface
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id)
              FROM blog_posts AS i
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ?
+             AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
             array(
                 'active',
                 FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
                 'N',
                 FrontendModel::getUTCDate('Y-m-d H:i:s', $start),
-                FrontendModel::getUTCDate('Y-m-d H:i:s', $end)
+                FrontendModel::getUTCDate('Y-m-d H:i:s', $end),
             )
         );
     }
@@ -461,9 +507,16 @@ class Model implements FrontendTagsInterface
             'SELECT DATE_FORMAT(i.publish_on, "%Y%m") AS month, COUNT(i.id)
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ?
+             AND i.hidden = ? AND i.publish_on <= ?
              GROUP BY month',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
+            array(
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            )
         );
 
         // init vars
@@ -550,9 +603,14 @@ class Model implements FrontendTagsInterface
             'SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
              c.author, c.email, c.website
              FROM blog_comments AS c
-             WHERE c.post_id = ? AND c.status = ? AND c.language = ?
+             WHERE c.post_id = ? AND c.status = ? AND c.language = ? AND c.site_id = ?
              ORDER BY c.id ASC',
-            array((int) $id, 'published', FRONTEND_LANGUAGE)
+            array(
+                (int) $id,
+                'published',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+            )
         );
 
         // loop comments and create gravatar id
@@ -658,11 +716,21 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND
-                ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
+             WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ?
+             AND i.site_id = ? AND ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array(
+                $detailLink,
+                $id,
+                'active',
+                'N',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                $date,
+                $id,
+                $date,
+            )
         );
 
         // get next post
@@ -670,11 +738,21 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title, CONCAT(?, m.url) AS url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND
-                ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
+             WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ?
+             AND i.site_id = ? AND ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array(
+                $detailLink,
+                $id,
+                'active',
+                'N',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                $date,
+                $id,
+                $date,
+            )
         );
 
         // if empty, unset it
@@ -704,16 +782,25 @@ class Model implements FrontendTagsInterface
 
         // get comments
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
-             i.id AS post_id, i.title AS post_title,
+            'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on,
+             c.text, i.id AS post_id, i.title AS post_title,
              m.url AS post_url
              FROM blog_comments AS c
              INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+             WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.site_id = ?
+             AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
-            array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit)
+            array(
+                'published',
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                $limit,
+            )
         );
 
         // validate
@@ -763,11 +850,19 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' .
+             WHERE i.status = ? AND i.language = ? AND i.site_id = ? AND i.hidden = ?
+             AND i.publish_on <= ? AND i.id IN(' .
             implode(',', $relatedIDs) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit),
+            array(
+                'active',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                'N',
+                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+                $limit,
+            ),
             'id'
         );
 
@@ -802,9 +897,14 @@ class Model implements FrontendTagsInterface
              INNER JOIN blog_categories AS c ON i.category_id = c.id
              INNER JOIN meta AS m ON i.meta_id = m.id
              INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
+             WHERE i.language = ? AND i.site_id = ? AND i.revision_id = ? AND m.url = ?
              LIMIT 1',
-            array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL)
+            array(
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                (int) $revision,
+                (string) $URL,
+            )
         );
 
         // unserialize
@@ -836,14 +936,27 @@ class Model implements FrontendTagsInterface
             $numComments = (int) FrontendModel::getContainer()->get('database')->getVar(
                 'SELECT COUNT(i.id) AS comment_count
                  FROM blog_comments AS i
-                 INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
+                 INNER JOIN blog_posts AS p ON i.post_id = p.id
+                 AND i.language = p.language AND i.site_id = p.site_id
+                 WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND i.site_id = ?
+                 AND p.status = ?
                  GROUP BY i.post_id',
-                array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active')
+                array(
+                    'published',
+                    $comment['post_id'],
+                    FRONTEND_LANGUAGE,
+                    FrontendModel::get('current_site')->getId(),
+                    'active',
+                )
             );
 
             // update num comments
-            $db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+            $db->update(
+                'blog_posts',
+                array('num_comments' => $numComments),
+                'id = ?',
+                $comment['post_id']
+            );
         }
 
         return $comment['id'];
@@ -1008,9 +1121,16 @@ class Model implements FrontendTagsInterface
             'SELECT i.id, i.title, i.introduction, i.text, m.url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' .
+             WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.site_id = ?
+             AND i.publish_on <= ? AND i.id IN (' .
             implode(',', $ids) . ')',
-            array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'),
+            array(
+                'active',
+                'N',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId(),
+                date('Y-m-d H:i') . ':00',
+            ),
             'id'
         );
 
