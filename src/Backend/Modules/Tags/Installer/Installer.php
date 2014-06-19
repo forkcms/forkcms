@@ -55,7 +55,7 @@ class Installer extends ModuleInstaller
                     array($extras['tags'], $language, $site['id'])
                 )
                 ) {
-                    $this->insertTagsPages($language, $site['id'], $textras);
+                    $this->insertTagsPages($language, $site['id'], $extras);
                 }
             }
         }
