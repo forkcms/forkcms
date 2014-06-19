@@ -35,8 +35,10 @@ class Archive extends FrontendBaseWidget
     private function parse()
     {
         // we will cache this widget for 24 hours
-        $cacheName = FRONTEND_LANGUAGE . $this->get('current_site')->getId() .
-            '_blogWidgetArchiveCache'
+        $cacheName = $this->get('current_site')->getId()
+            . '_' . FRONTEND_LANGUAGE
+            . '_' . $this->getModule()
+            . '_' . 'WidgetArchiveCache'
         ;
         $this->tpl->assign('cacheName', $cacheName);
         $this->tpl->cache($cacheName, (24 * 60 * 60));
