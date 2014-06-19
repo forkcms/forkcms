@@ -180,7 +180,8 @@ class Edit extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
-                $item['language'] = BL::getWorkingLanguage();
+                $item['language'] = $this->record['language'];
+                $item['site_id'] = $this->record['site_id'];
                 $item['extra_id'] = $this->record['extra_id'];
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['street'] = $this->frm->getField('street')->getValue();

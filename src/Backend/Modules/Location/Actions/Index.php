@@ -35,7 +35,8 @@ class Index extends BackendBaseActionIndex
     /**
      * @var array
      */
-    protected $items = array(), $settings = array();
+    protected $items = array();
+    protected $settings = array();
 
     /**
      * Execute the action
@@ -66,7 +67,9 @@ class Index extends BackendBaseActionIndex
         $firstMarker = current($this->items);
 
         // if there are no markers we reset it to the birthplace of Fork
-        if ($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        if ($firstMarker === false) {
+            $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        }
 
         // load the settings from the general settings
         if (empty($this->settings)) {
@@ -90,7 +93,10 @@ class Index extends BackendBaseActionIndex
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendLocationModel::QRY_DATAGRID_BROWSE,
-            array(BL::getWorkingLanguage())
+            array(
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
         $this->dataGrid->setSortingColumns(array('address', 'title'), 'address');
         $this->dataGrid->setSortParameter('ASC');
@@ -98,11 +104,15 @@ class Index extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
-                'title', BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                'title',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
-                'edit', null, BL::lbl('Edit'),
-                BackendModel::createURLForAction('Edit') . '&amp;id=[id]', BL::lbl('Edit')
+                'edit',
+                null,
+                BL::lbl('Edit'),
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
+                BL::lbl('Edit')
             );
         }
     }
