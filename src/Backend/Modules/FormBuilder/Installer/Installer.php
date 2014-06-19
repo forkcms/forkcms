@@ -103,12 +103,13 @@ class Installer extends ModuleInstaller
         // create form
         $form = array();
         $form['language'] = $language;
+        $form['site_id'] = $siteId;
         $form['user_id'] = $this->getDefaultUserID();
         $form['name'] = \SpoonFilter::ucfirst($this->getLocale('Contact', 'Core', $language, 'lbl', 'Frontend'));
         $form['method'] = 'database_email';
         $form['email'] = serialize(array($this->getVariable('email')));
         $form['success_message'] = $this->getLocale('ContactMessageSent', 'Core', $language, 'msg', 'Frontend');
-        $form['identifier'] = 'contact-' . $language;
+        $form['identifier'] = 'contact-' . $language . '-' . $siteId;
         $form['created_on'] = gmdate('Y-m-d H:i:s');
         $form['edited_on'] = gmdate('Y-m-d H:i:s');
         $formId = $this->getDB()->insert('forms', $form);

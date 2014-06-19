@@ -1,6 +1,7 @@
 CREATE TABLE IF NOT EXISTS `forms` (
   `id` int(11) unsigned NOT NULL auto_increment,
   `language` varchar(5) NOT NULL,
+  `site_id` int(11) NOT NULL,
   `user_id` int(11) unsigned NOT NULL,
   `name` varchar(255) NOT NULL,
   `method` enum('database','database_email') NOT NULL default 'database_email',
