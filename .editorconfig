@@ -4,7 +4,7 @@
 
 root = true
 
-[*]
+[{*.php,*.js}]
 charset = utf-8
 end_of_line = lf
 indent_size = 4
@@ -13,6 +13,30 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 [{*.xml,*.html,*.tpl}]
-indent_style = space
+charset = utf-8
+end_of_line = lf
 indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
 
+
+#
+# Following languages aren't used at the moment in Fork CMS, but just in case.
+# (for instance: Capistrano is used in a lot of projects for deployment)
+#
+[*.py]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.rb]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
