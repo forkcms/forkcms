@@ -789,7 +789,7 @@ class Model implements FrontendTagsInterface
     public static function getRevision($URL, $revision)
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
              c.title AS category_title, m2.url AS category_url,
              UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
              i.allow_comments,
@@ -810,6 +810,15 @@ class Model implements FrontendTagsInterface
         // unserialize
         if (isset($return['meta_data'])) {
             $return['meta_data'] = @unserialize($return['meta_data']);
+        }
+
+        // image?
+        if (isset($return['image'])) {
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+
+            foreach ($folders as $folder) {
+                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
+            }
         }
 
         // return
