@@ -335,7 +335,7 @@ class Model
      */
     public static function existsTheme($theme)
     {
-        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'Core';
+        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'core';
     }
 
     /**
