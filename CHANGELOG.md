@@ -14,6 +14,7 @@ Bugfixes:
 * Analytics: Fixes action names to get data from Google Analytics, see #755
 * Extensions: you can now install custom themes again.
 * Pages: widget previous-next fixed.
+* Extensions: using 'Core' instead of 'core'.
 
 
 3.7.0 (2014-04-24)

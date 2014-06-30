@@ -335,7 +335,7 @@ class Model
      */
     public static function existsTheme($theme)
     {
-        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'core';
+        return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'Core';
     }
 
     /**
@@ -645,7 +645,7 @@ class Model
     public static function getTemplates($theme = null)
     {
         $db = BackendModel::getContainer()->get('database');
-        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('Core', 'theme', 'core'));
+        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('Core', 'theme', 'Core'));
 
         $templates = (array) $db->getRecords(
             'SELECT i.id, i.label, i.path, i.data
@@ -706,11 +706,11 @@ class Model
     public static function getThemes()
     {
         $records = array();
-        $records['core'] = array(
-            'value' => 'core',
+        $records['Core'] = array(
+            'value' => 'Core',
             'label' => BL::lbl('NoTheme'),
             'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
-            'installed' => self::isThemeInstalled('core'),
+            'installed' => self::isThemeInstalled('Core'),
             'installable' => false,
         );
 
