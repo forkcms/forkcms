@@ -216,9 +216,6 @@ class Init extends \KernelLoader
                 set_error_handler(array(__CLASS__, 'errorHandler'));
             }
 
-            // in debug mode notices are triggered when using non existing
-            // locale, so we use a custom error handler to cleanup the message
-            set_error_handler(array(__CLASS__, 'errorHandler'));
         } else {
             // set error reporting as low as possible
             error_reporting(0);
