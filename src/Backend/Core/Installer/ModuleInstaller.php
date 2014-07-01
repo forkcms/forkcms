@@ -119,7 +119,7 @@ class ModuleInstaller
 
     /**
      * Inserts a new module.
-	 * The getModule method becomes available after using addModule and returns $name parameter.
+     * The getModule method becomes available after using addModule and returns $name parameter.
      *
      * @param string $name The name of the module.
      */
