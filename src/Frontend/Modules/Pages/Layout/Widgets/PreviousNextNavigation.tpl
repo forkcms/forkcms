@@ -1,3 +1,8 @@
+{*
+	variables that are available:
+	- {$widgetPagesNavigation}: An array with all the subpages that should be shown as a block on the current page.
+    - {$widgetPagesNavigationHasSiblings}: A bool that contains if we have a previous or next item?
+*}
 <ul>
 	{option:widgetPagesNavigation.previous}
 		<li class="previousLink">

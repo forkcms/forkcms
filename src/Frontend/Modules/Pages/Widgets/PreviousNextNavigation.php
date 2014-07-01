@@ -97,6 +97,11 @@ class PreviousNextNavigation extends FrontendBaseWidget
      */
     private function parse()
     {
+        // has a value?
+        $hasSiblings = (!empty($this->navigation['previous']) || !empty($this->navigation['next']));
+
+        // assign navigation
+        $this->tpl->assign('widgetPagesNavigationHasSiblings', $hasSiblings);
         $this->tpl->assign('widgetPagesNavigation', $this->navigation);
     }
 }
