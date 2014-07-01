@@ -37,13 +37,6 @@ class ModuleInstaller
     private $db;
 
     /**
-     * The module name.
-     *
-     * @var string
-     */
-    private $name;
-
-    /**
      * The default extras that have to be added to every page.
      *
      * @var array
@@ -118,20 +111,19 @@ class ModuleInstaller
     }
 
     /**
-     * Inserts a new module.
-	 * The getName method becomes available after using addModule and returns $name parameter.
+     * Inserts a new module
      *
      * @param string $name The name of the module.
      */
     protected function addModule($name)
     {
-        $this->name = (string) $name;
+        $name = (string) $name;
 
         // module does not yet exists
-        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->name)) {
+        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $name)) {
             // build item
             $item = array(
-                'name' => $this->name,
+                'name' => $name,
                 'installed_on' => gmdate('Y-m-d H:i:s')
             );
 
@@ -139,7 +131,7 @@ class ModuleInstaller
             $this->getDB()->insert('modules', $item);
         } else {
             // activate and update description
-            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $this->name);
+            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $name);
         }
     }
 
@@ -221,16 +213,6 @@ class ModuleInstaller
     protected function getDB()
     {
         return $this->db;
-    }
-
-    /**
-     * Get the module name
-     *
-     * @return string
-     */
-    protected function getName()
-    {
-        return $this->name;
     }
 
     /**
