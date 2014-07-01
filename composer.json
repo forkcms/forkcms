@@ -17,10 +17,8 @@
         "symfony/filesystem": "2.3.*",
         "symfony/finder": "2.3.*",
         "spoon/library": "1.3.*",
-        "symfony/monolog-bundle": "2.3.*"
-    },
-	"require-dev": {
-		"filp/whoops": "1.2.*@dev"
+        "symfony/monolog-bundle": "2.3.*",
+		"filp/whoops": "1.*"
 	},
     "support": {
         "irc": "irc://irc.freenode.org/forkcms",
