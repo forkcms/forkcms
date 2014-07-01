@@ -511,6 +511,7 @@ abstract class Kernel implements KernelInterface
             define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
             define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
             define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
+            define('DEBUG_WHOOPS', $container->getParameter('fork.debug_whoops'));
             define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
         }
 
