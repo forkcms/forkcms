@@ -23,6 +23,53 @@ class Permissions extends BackendBaseActionEdit
     protected $modules = array();
     protected $widgets = array();
     protected $widgetInstances = array();
+    protected $sites = array();
+
+    /**
+     * @param int[optional] $groupId
+     *
+     * Adds language/site checkboxes to our form
+     */
+    protected function addLanguageFields($groupId = null)
+    {
+        $selectedItems = array();
+        if ($groupId !== null) {
+            $selectedItems = BackendGroupsModel::getAllowedLanguages($groupId);
+        }
+
+        // get multisite instance from the DIC
+        $multisite = $this->get('multisite');
+
+        // build a tree with all sites containing their languages
+        $this->sites = $multisite->getSites();
+        foreach ($this->sites as $siteId => $domain) {
+            $this->sites[$siteId] = array(
+                'siteId' => $siteId,
+                'domain' => $domain,
+                'checkbox' => $this->frm
+                    ->addCheckbox(
+                        'site-' . $siteId,
+                        null,
+                        'inputCheckbox checkBeforeUnload selectAll'
+                    )
+                    ->parse(),
+                'languages' => $multisite->getLanguageList($siteId),
+            );
+
+            foreach ($this->sites[$siteId]['languages'] as $key => $language) {
+                $checkboxName = $siteId . '-' . $language;
+                $this->sites[$siteId]['languages'][$key] = array(
+                    'language' => $language,
+                    'checkbox' => $this->frm
+                        ->addCheckbox(
+                            $siteId . '-' . $language,
+                            in_array($checkboxName, $selectedItems)
+                        )
+                        ->parse(),
+                );
+            }
+        }
+    }
 
     /**
      * Bundle all actions that need to be bundled
@@ -261,5 +308,32 @@ class Permissions extends BackendBaseActionEdit
         // delete denied permissions
         BackendGroupsModel::deleteModulePermissions($modulesDenied);
         BackendGroupsModel::deleteActionPermissions($actionsDenied);
+    }
+
+    /**
+     * Updates the language permissions
+     */
+    protected function updateLanguagePermissions()
+    {
+        // build a list with granted site language combinations
+        $languagesGranted = array();
+        foreach ($this->sites as $site) {
+            foreach ($site['languages'] as $language) {
+                $fieldName = $site['siteId'] . '-' . $language['language'];
+                if ($this->frm->getField($fieldName)->isChecked()) {
+                    $languagesGranted[] = array(
+                        'group_id' => $this->id,
+                        'site_id' => $site['siteId'],
+                        'language' => $language['language'],
+                    );
+                }
+            }
+        }
+
+        // remove all language/site rights for this group
+        BackendGroupsModel::deleteLanguagePermissions($this->id);
+
+        // add the needed permissions
+        BackendGroupsModel::addLanguagePermissions($languagesGranted);
     }
 }
