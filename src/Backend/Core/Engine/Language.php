@@ -109,13 +109,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -198,13 +192,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -222,6 +210,22 @@ class Language
 
         // otherwise return the key in label-format
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
+    }
+
+    /**
+     * Fetches the module from the url or falls back to core
+     *
+     * @return string
+     */
+    public static function getModule()
+    {
+        if (BackendModel::getContainer()->has('url')) {
+            return BackendModel::getContainer()->get('url')->getModule();
+        } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+            return (string) $_GET['module'];
+        } else {
+            return 'Core';
+        }
     }
 
     protected static function addLabels($labels)
@@ -254,13 +258,7 @@ class Language
     public static function getMessage($key, $module = null)
     {
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
