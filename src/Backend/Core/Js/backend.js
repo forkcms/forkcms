@@ -1731,7 +1731,7 @@ jsBackend.locale =
 	init: function()
 	{
 		$.ajax({
-			url: '/src/Backend/Cache/Locale/' + jsBackend.data.get('interface_language') + '.json',
+			url: '/src/Backend/Cache/Locale/' + jsBackend.data.get('site_id') + '_' + jsBackend.data.get('interface_language') + '.json',
 			type: 'GET',
 			dataType: 'json',
 			async: false,

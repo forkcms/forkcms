@@ -165,6 +165,7 @@ class Edit extends BackendBaseActionEdit
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['language'] = $this->frm->getField('language')->getValue();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['application'] = $this->frm->getField('application')->getValue();
                 $item['module'] = $this->frm->getField('module')->getValue();
                 $item['type'] = $this->frm->getField('type')->getValue();

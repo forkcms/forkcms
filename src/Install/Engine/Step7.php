@@ -34,24 +34,30 @@ class Step7 extends Step
     private function createLocaleFiles()
     {
         // all available languages
+        $sites = $this->getContainer()->get('database')->getColumn(
+            'SELECT DISTINCT id
+             FROM sites'
+        );
         $languages = array_unique(
             array_merge(\SpoonSession::get('languages'), \SpoonSession::get('interface_languages'))
         );
 
         // loop all the languages
-        foreach ($languages as $language) {
-            // get applications
-            $applications = $this->getContainer()->get('database')->getColumn(
-                'SELECT DISTINCT application
-                 FROM locale
-                 WHERE language = ?',
-                array((string) $language)
-            );
+        foreach ($sites as $siteId) {
+            foreach ($languages as $language) {
+                // get applications
+                $applications = $this->getContainer()->get('database')->getColumn(
+                    'SELECT DISTINCT application
+                     FROM locale
+                     WHERE language = ? AND site_id = ?',
+                    array((string) $language, (int) $siteId)
+                );
 
-            // loop applications
-            foreach ((array) $applications as $application) {
-                // build application locale cache
-                BackendLocaleModel::buildCache($language, $application);
+                // loop applications
+                foreach ((array) $applications as $application) {
+                    // build application locale cache
+                    BackendLocaleModel::buildCache($language, $siteId, $application);
+                }
             }
         }
     }

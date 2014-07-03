@@ -306,17 +306,19 @@ class Language
      * It will require the correct file and init the needed vars
      *
      * @param string $language The language to load.
+     * @param int $siteId The id of the site to load
      */
-    public static function setLocale($language)
+    public static function setLocale($language, $siteId)
     {
         $language = (string) $language;
+        $siteId = (int) $siteId;
 
         // validate file, generate it if needed
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.php')) {
-            BackendLocaleModel::buildCache('en', APPLICATION);
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
+            BackendLocaleModel::buildCache('en', $siteId, APPLICATION);
         }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
-            BackendLocaleModel::buildCache($language, APPLICATION);
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
+            BackendLocaleModel::buildCache($language, $siteId, APPLICATION);
         }
 
         // store
@@ -335,13 +337,13 @@ class Language
         $msg = array();
 
         // set English translations, they'll be the fallback
-        require BACKEND_CACHE_PATH . '/Locale/en.php';
+        require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php';
         self::$err = (array) $err;
         self::$lbl = (array) $lbl;
         self::$msg = (array) $msg;
 
         // overwrite with the requested language's translations
-        require BACKEND_CACHE_PATH . '/Locale/' . $language . '.php';
+        require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php';
         foreach ($err as $module => $translations) {
             if (!isset(self::$err[$module])) {
                 self::$err[$module] = array();

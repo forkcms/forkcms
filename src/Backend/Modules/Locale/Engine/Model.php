@@ -36,10 +36,10 @@ class Model
      * @param string $language    The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
-    public static function buildCache($language, $application)
+    public static function buildCache($language, $siteId, $application)
     {
         $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
-        $cacheBuilder->buildCache($language, $application);
+        $cacheBuilder->buildCache($language, $siteId, $application);
     }
 
     /**
@@ -139,8 +139,10 @@ class Model
         );
 
         // rebuild cache
-        self::buildCache(BL::getWorkingLanguage(), 'Backend');
-        self::buildCache(BL::getWorkingLanguage(), 'Frontend');
+        $language = BL::getWorkingLanguage();
+        $siteId = BackendModel::get('current_site')->getId();
+        self::buildCache($language, $siteId, 'Backend');
+        self::buildCache($language, $siteId, 'Frontend');
     }
 
     /**
@@ -1253,6 +1255,7 @@ class Model
                         // locale item
                         $locale['user_id'] = $userId;
                         $locale['language'] = $language;
+                        $locale['site_id'] = BackendModel::get('multisite')->getMainSiteId();
                         $locale['application'] = $application;
                         $locale['module'] = $module;
                         $locale['type'] = $type;
@@ -1267,12 +1270,13 @@ class Model
                             ) || $overwriteConflicts
                         ) {
                             $db->execute(
-                                'INSERT INTO locale (user_id, language, application, module, type, name, value, edited_on)
-                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                                'INSERT INTO locale (user_id, language, site_id, application, module, type, name, value, edited_on)
+                                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
                                  ON DUPLICATE KEY UPDATE user_id = ?, value = ?, edited_on = ?',
                                 array(
                                     $locale['user_id'],
                                     $locale['language'],
+                                    $locale['site_id'],
                                     $locale['application'],
                                     $locale['module'],
                                     $locale['type'],
@@ -1295,7 +1299,13 @@ class Model
 
         // rebuild cache
         foreach ($possibleApplications as $application) {
-            foreach ($possibleLanguages[$application] as $language) self::buildCache($language, $application);
+            foreach ($possibleLanguages[$application] as $language) {
+                self::buildCache(
+                    $language,
+                    BackendModel::get('multisite')->getMainSiteId(),
+                    $application
+                );
+            }
         }
 
         return $statistics;
@@ -1310,15 +1320,15 @@ class Model
     public static function insert(array $item)
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
-            $item['value']
-        );
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+            $item['value'] = CommonUri::getUrl($item['value']);
+        }
 
         // insert item
         $item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
 
         // rebuild the cache
-        self::buildCache($item['language'], $item['application']);
+        self::buildCache($item['language'], $item['site_id'], $item['application']);
 
         // return the new id
         return $item['id'];
@@ -1332,15 +1342,15 @@ class Model
     public static function update(array $item)
     {
         // actions should be urlized
-        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) $item['value'] = CommonUri::getUrl(
-            $item['value']
-        );
+        if ($item['type'] == 'act' && urldecode($item['value']) != $item['value']) {
+            $item['value'] = CommonUri::getUrl($item['value']);
+        }
 
         // update category
         $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));
 
         // rebuild the cache
-        self::buildCache($item['language'], $item['application']);
+        self::buildCache($item['language'], $item['site_id'], $item['application']);
 
         return $updated;
     }

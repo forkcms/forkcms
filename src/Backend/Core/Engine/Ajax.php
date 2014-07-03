@@ -106,6 +106,9 @@ class Ajax extends Base\Object implements \ApplicationInterface
         }
 
         // set interface language
-        Language::setLocale(Authentication::getUser()->getSetting('interface_language'));
+        Language::setLocale(
+            Authentication::getUser()->getSetting('interface_language'),
+            Model::get('current_site')->getId()
+        );
     }
 }
