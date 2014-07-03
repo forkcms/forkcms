@@ -6,6 +6,7 @@ use Symfony\Component\Finder\Finder;
 use Common\Classes;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 
 /**
  * In this file we store all generic functions that we will be using in the groups module.
@@ -19,9 +20,9 @@ class Permissions extends BackendBaseActionEdit
      */
     protected $actionGroups = array();
     protected $actions = array();
-    protected $modules;
-    protected $widgets;
-    protected $widgetInstances;
+    protected $modules = array();
+    protected $widgets = array();
+    protected $widgetInstances = array();
 
     /**
      * Bundle all actions that need to be bundled
@@ -168,5 +169,97 @@ class Permissions extends BackendBaseActionEdit
                 'value' => $module
             );
         }
+    }
+
+    /**
+     * Update the permissions
+     *
+     * @param array $actionPermissions The action permissions.
+     * @param array $bundledActionPermissions The bundled action permissions.
+     */
+    protected function updatePermissions($actionPermissions, $bundledActionPermissions)
+    {
+        $modulesDenied = array();
+        $modulesGranted = array();
+        $actionsDenied = array();
+        $actionsGranted = array();
+        $checkedModules = array();
+        $uncheckedModules = array();
+
+        // loop through action permissions
+        foreach ($actionPermissions as $permission) {
+            // get bits
+            $bits = explode('_', $permission->getName());
+
+            // convert camelcasing to underscore notation
+            $module = $bits[1];
+            $action = $bits[2];
+
+            // permission checked?
+            if ($permission->getChecked()) {
+                // add to granted
+                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+
+                // if not yet present, add to checked modules
+                if (!in_array($module, $checkedModules)) $checkedModules[] = $module;
+            }
+
+            // permission not checked?
+            else {
+                // add to denied
+                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+
+                // if not yet present add to unchecked modules
+                if (!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
+            }
+        }
+
+        // loop through bundled action permissions
+        foreach ($bundledActionPermissions as $permission) {
+            // get bits
+            $bits = explode('_', $permission->getName());
+
+            // convert camelcasing to underscore notation
+            $module = $bits[1];
+            $group = $bits[3];
+
+            // create new item
+            $moduleItem = array('group_id' => $this->id, 'module' => $module);
+
+            // loop through actions
+            foreach ($this->actions[$module] as $moduleAction) {
+                // permission checked?
+                if ($permission->getChecked()) {
+                    // add to granted if in the right group
+                    if (in_array($group, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+
+                    // if not yet present, add to checked modules
+                    if (!in_array($module, $checkedModules)) $checkedModules[] = $module;
+                }
+
+                // permission not checked?
+                else {
+                    // add to denied
+                    if (in_array($group, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+
+                    // if not yet present add to unchecked modules
+                    if (!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
+                }
+            }
+        }
+
+        // loop through granted modules and add to array
+        foreach ($checkedModules as $module) $modulesGranted[] = array('group_id' => $this->id, 'module' => $module);
+
+        // loop through denied modules and add to array
+        foreach (array_diff($uncheckedModules, $checkedModules) as $module) $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
+
+        // add granted permissions
+        BackendGroupsModel::addModulePermissions($modulesGranted);
+        BackendGroupsModel::addActionPermissions($actionsGranted);
+
+        // delete denied permissions
+        BackendGroupsModel::deleteModulePermissions($modulesDenied);
+        BackendGroupsModel::deleteActionPermissions($actionsDenied);
     }
 }
