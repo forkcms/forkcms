@@ -11,6 +11,7 @@ use Backend\Core\Engine\Language as BL;
  *
  * @author <per@wijs.be>
  * @author <wouter@wijs.be>
+ * @todo Make the class work for language/site independent modules
  */
 class Path
 {
