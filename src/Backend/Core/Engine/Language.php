@@ -373,8 +373,8 @@ class Language
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php')) {
             BackendLocaleModel::buildCache('en', $mainSiteId, APPLICATION);
         }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
-            BackendLocaleModel::buildCache('en', $siteId, APPLICATION);
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php')) {
+            BackendLocaleModel::buildCache($language, $mainSiteId, APPLICATION);
         }
         if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
             BackendLocaleModel::buildCache($language, $siteId, APPLICATION);
@@ -403,7 +403,7 @@ class Language
         self::addMessages($msg);
 
         // set English translations for this site, they'll be the fallback
-        require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php';
+        require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php';
         self::addErrors($err);
         self::addLabels($lbl);
         self::addMessages($msg);
