@@ -16,15 +16,16 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Wouter Sioen <wouter@wijs.be>
  */
 class User
 {
     /**
-     * The group id
+     * The group ids
      *
-     * @var    int
+     * @var    array
      */
-    private $groupId;
+    private $groups;
 
     /**
      * Is the user-object a valid one? As in: is the user authenticated
@@ -107,13 +108,13 @@ class User
     }
 
     /**
-     * Get groupid
+     * Get groups
      *
-     * @return int
+     * @return array
      */
-    public function getGroupId()
+    public function getGroups()
     {
-        return $this->groupId;
+        return $this->groups;
     }
 
     /**
@@ -259,6 +260,15 @@ class User
         if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
             $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
         }
+
+        // user groups
+        $groups = (array) $db->getColumn(
+            'SELECT DISTINCT group_id
+             FROM users_groups
+             WHERE user_id = ?',
+            array($this->getUserId())
+        );
+        $this->setGroups($groups);
     }
 
     /**
@@ -268,51 +278,17 @@ class User
      */
     public function loadUserByEmail($email)
     {
-        $email = (string) $email;
-        $db = BackendModel::getContainer()->get('database');
-
         // get user-data
-        $userData = (array) $db->getRecord(
-            'SELECT u.id, u.email, u.is_god, us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
+        $userId = (int) BackendModel::get('database')->getVar(
+            'SELECT u.id
              FROM users AS u
              LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
              WHERE u.email = ?
              LIMIT 1',
-            array(\SpoonSession::getSessionId(), $email)
+            array(\SpoonSession::getSessionId(), (string) $email)
         );
 
-        // if there is no data we have to destroy this object, I know this isn't a realistic situation
-        if (empty($userData)) {
-            throw new Exception('user (' . $email . ') can\'t be loaded.');
-        }
-
-        // set properties
-        $this->setUserId($userData['id']);
-        $this->setEmail($userData['email']);
-        $this->setSessionId($userData['session_id']);
-        $this->setSecretKey($userData['secret_key']);
-        $this->setLastloggedInDate($userData['date']);
-        $this->isAuthenticated = true;
-        $this->isGod = ($userData['is_god'] == 'Y');
-
-        // get settings
-        $settings = (array) $db->getPairs(
-            'SELECT us.name, us.value
-             FROM users_settings AS us
-             INNER JOIN users AS u ON us.user_id = u.id
-             WHERE u.email = ?',
-            array($email)
-        );
-
-        // loop settings and store them in the object
-        foreach ($settings as $key => $value) {
-            $this->settings[$key] = unserialize($value);
-        }
-
-        // nickname available?
-        if (!isset($this->settings['nickname']) || $this->settings['nickname'] == '') {
-            $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
-        }
+        $this->loadUser($userId);
     }
 
     /**
@@ -326,13 +302,13 @@ class User
     }
 
     /**
-     * Set groupid
+     * Set groups
      *
-     * @param int $value The id of the group.
+     * @param array $groups The ids of the groups.
      */
-    private function setGroupId($value)
+    private function setGroups($groups)
     {
-        $this->groupId = (int) $value;
+        $this->groups = $groups;
     }
 
     /**
