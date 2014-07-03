@@ -909,6 +909,34 @@ class ModuleInstaller
      * @param int    $groupId The group wherefor the rights will be set.
      * @param string $module  The module too set the rights for.
      */
+    protected function setLanguageRights($groupId, $language, $siteId)
+    {
+        $languageRightExists = (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM groups_rights_languages
+             WHERE group_id = ? AND language = ? AND site_id = ?
+             LIMIT 1',
+            array((int) $groupId, (string) $language, (int) $siteId)
+        );
+
+        if (!$languageRightExists) {
+            $this->getDB()->insert(
+                'groups_rights_languages',
+                array(
+                    'group_id' => (int) $groupId,
+                    'language' => (string) $language,
+                    'site_id'  => (int) $siteId,
+                )
+            );
+        }
+    }
+
+    /**
+     * Sets the rights for a module
+     *
+     * @param int    $groupId The group wherefor the rights will be set.
+     * @param string $module  The module too set the rights for.
+     */
     protected function setModuleRights($groupId, $module)
     {
         $groupId = (int) $groupId;

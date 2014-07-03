@@ -30,13 +30,6 @@ class Installer extends ModuleInstaller
         // import translations and database structure
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
 
-        // add rights
-        $this->setModuleRights(1, 'Multisite');
-        $this->setActionRights(1, 'Multisite', 'Index');
-        $this->setActionRights(1, 'Multisite', 'Add');
-        $this->setActionRights(1, 'Multisite', 'Edit');
-        $this->setActionRights(1, 'Multisite', 'Delete');
-
         // add the module in the backend navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $this->setNavigation(
@@ -54,6 +47,25 @@ class Installer extends ModuleInstaller
             $this->getLanguages(),
             $siteId
         );
+
+        // we do this last, because we need the sites first
+        $this->setRights();
+    }
+
+    protected function setRights()
+    {
+        // add rights
+        $this->setModuleRights(1, 'Multisite');
+        $this->setActionRights(1, 'Multisite', 'Index');
+        $this->setActionRights(1, 'Multisite', 'Add');
+        $this->setActionRights(1, 'Multisite', 'Edit');
+        $this->setActionRights(1, 'Multisite', 'Delete');
+
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                $this->setLanguageRights(1, $language, $site['id']);
+            }
+        }
     }
 
     /**
