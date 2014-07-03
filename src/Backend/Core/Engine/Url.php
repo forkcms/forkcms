@@ -255,6 +255,7 @@ class Url extends Base\Object
                     );
                 } else {
                     if ($module !== 'Error'
+                        && $module !== 'Authentication'
                         && !Authentication::isAllowedLanguage(
                             Model::get('current_site')->getId(),
                             $language
