@@ -9,8 +9,6 @@ namespace Backend\Modules\Locale\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
