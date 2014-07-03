@@ -53,10 +53,10 @@ class Language
      * @param string $language    The language to build the locale-file for.
      * @param string $application The application to build the locale-file for.
      */
-    public static function buildCache($language, $application)
+    public static function buildCache($language, $siteId, $application)
     {
         $cacheBuilder = new CacheBuilder(Model::get('database'));
-        $cacheBuilder->buildCache($language, Model::get('current_site')->getId(), $application);
+        $cacheBuilder->buildCache($language, $siteId, $application);
     }
 
     /**
