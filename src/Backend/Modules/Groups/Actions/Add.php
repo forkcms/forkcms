@@ -9,112 +9,27 @@ namespace Backend\Modules\Groups\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
-
-use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Backend\Modules\Groups\Engine\Permissions as GroupsPermissions;
 
 /**
  * This is the add-action, it will display a form to create a new group
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  */
-class Add extends BackendBaseActionAdd
+class Add extends GroupsPermissions
 {
-    /**
-     * The action groups
-     *
-     * @var array
-     */
-    private $actionGroups = array();
-
-    /**
-     * The actions
-     *
-     * @var	array
-     */
-    private $actions = array();
-
     /**
      * The dashboard sequence
      *
      * @var	array
      */
     private $dashboardSequence;
-
-    /**
-     * The id of the new group
-     *
-     * @var	int
-     */
-    private $id;
-
-    /**
-     * The modules
-     *
-     * @var	array
-     */
-    private $modules;
-
-    /**
-     * The widgets
-     *
-     * @var	array
-     */
-    private $widgets;
-
-    /**
-     * The widget instances
-     *
-     * @var	array
-     */
-    private $widgetInstances;
-
-    /**
-     * Bundle all actions that need to be bundled
-     */
-    private function bundleActions()
-    {
-        foreach ($this->modules as $module) {
-            // loop through actions and add all classnames
-            foreach ($this->actions[$module['value']] as $key => $action) {
-                // ajax action?
-                if (class_exists('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value'])) {
-                    // create reflection class
-                    $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Ajax\\' . $action['value']);
-                }
-
-                // no ajax action? create reflection class
-                else $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
-
-                // get the tag offset
-                $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
-
-                // no tag present? move on!
-                if (!($offset - strlen(ACTION_GROUP_TAG))) continue;
-
-                // get the group info
-                $groupInfo = trim(substr($reflection->getDocComment(), $offset, (strpos($reflection->getDocComment(), '*', $offset) - $offset)));
-
-                // get name and description
-                $bits = explode("\t", $groupInfo);
-
-                // delete empty values
-                foreach ($bits as $i => $bit) if (empty($bit)) unset($bits[$i]);
-
-                // add group to actions
-                $this->actions[$module['value']][$key]['group'] = $bits[0];
-
-                // add group to array
-                $this->actionGroups[$bits[0]] = end($bits);
-            }
-        }
-    }
 
     /**
      * Execute the action
@@ -130,60 +45,6 @@ class Add extends BackendBaseActionAdd
     }
 
     /**
-     * Get the actions
-     */
-    private function getActions()
-    {
-        $filter = array('Authentication', 'Error', 'Core');
-        $modules = array();
-
-        $finder = new Finder();
-        $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/Actions')
-            ->in(BACKEND_MODULES_PATH . '/*/Ajax');
-        foreach ($finder->files() as $file) {
-            /** @var $file \SplFileInfo */
-            $module = $file->getPathInfo()->getPathInfo()->getBasename();
-
-            // skip some modules
-            if (in_array($module, $filter)) continue;
-
-            if (BackendAuthentication::isAllowedModule($module)) {
-                $actionName = $file->getBasename('.php');
-                $isAjax = $file->getPathInfo()->getBasename() == 'Ajax';
-                $modules[] = $module;
-
-                // ajax-files should be required
-                if ($isAjax) $class = 'Backend\\Modules\\' . $module . '\\Ajax\\' . $actionName;
-                else $class = 'Backend\\Modules\\' . $module . '\\Actions\\' . $actionName;
-
-                $reflection = new \ReflectionClass($class);
-                $phpDoc = trim($reflection->getDocComment());
-                if ($phpDoc != '') {
-                    $offset = strpos($reflection->getDocComment(), '*', 7);
-                    $description = substr($reflection->getDocComment(), 0, $offset);
-                    $description = str_replace('*', '', $description);
-                    $description = trim(str_replace('/', '', $description));
-                } else $description = '';
-
-                $this->actions[$module][] = array(
-                    'label' => \SpoonFilter::toCamelCase($actionName),
-                    'value' => $actionName,
-                    'description' => $description
-                );
-            }
-        }
-
-        $modules = array_unique($modules);
-        foreach ($modules as $module) {
-            $this->modules[] = array(
-                'label' => \SpoonFilter::toCamelCase($module),
-                'value' => $module
-            );
-        }
-    }
-
-    /**
      * Get the data
      */
     private function getData()
@@ -191,58 +52,6 @@ class Add extends BackendBaseActionAdd
         $this->getWidgets();
         $this->getActions();
         $this->bundleActions();
-    }
-
-    /**
-     * Get the widgets
-     */
-    private function getWidgets()
-    {
-        $finder = new Finder();
-        $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
-        foreach ($finder->files() as $file) {
-            /** @var $file \SplFileInfo */
-            $module = $file->getPathInfo()->getPathInfo()->getBasename();
-            if (BackendAuthentication::isAllowedModule($module)) {
-                $widgetName = $file->getBasename('.php');
-                $class = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
-
-                if (class_exists($class)) {
-                    // add to array
-                    $this->widgetInstances[] = array(
-                        'module' => $module,
-                        'widget' => $widgetName,
-                        'className' => $class
-                    );
-
-                    // create reflection class
-                    $reflection = new \ReflectionClass($class);
-                    $phpDoc = trim($reflection->getDocComment());
-                    if ($phpDoc != '') {
-                        $offset = strpos($reflection->getDocComment(), '*', 7);
-                        $description = substr($reflection->getDocComment(), 0, $offset);
-                        $description = str_replace('*', '', $description);
-                        $description = trim(str_replace('/', '', $description));
-                    } else $description = '';
-
-                    // check if model file exists
-                    $pathName = $file->getPathInfo()->getPathInfo()->getRealPath();
-                    if (is_file($pathName . '/engine/model.php')) {
-                        // require model
-                        require_once $pathName . '/engine/model.php';
-                    }
-
-                    // add to array
-                    $this->widgets[] = array(
-                        'label' => \SpoonFilter::toCamelCase($widgetName),
-                        'value' => $widgetName,
-                        'description' => $description
-                    );
-
-
-                }
-            }
-        }
     }
 
     /**
