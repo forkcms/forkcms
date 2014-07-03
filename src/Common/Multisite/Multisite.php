@@ -170,6 +170,18 @@ class Multisite
     }
 
     /**
+     * @return array list of domains that have languages
+     */
+    public function getSites()
+    {
+        return (array) $this->db->getPairs(
+            'SELECT s.id, s.domain
+             FROM sites s
+             INNER JOIN sites_languages l ON l.site_id = s.id'
+        );
+    }
+
+    /**
      * @return array
      */
     public function getAllSites()

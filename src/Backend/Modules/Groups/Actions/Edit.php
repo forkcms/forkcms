@@ -196,8 +196,9 @@ class Edit extends GroupsPermissions
             $permissionBoxes[$key]['actions']['dataGrid'] = $actionGrid->getContent();
             $permissionBoxes[$key]['chk'] = $this->frm->addCheckbox($module['label'], null, 'inputCheckbox checkBeforeUnload selectAll')->parse();
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
-
         }
+
+        $this->addLanguageFields($this->id);
 
         // create elements
         $this->frm->addText('name', $this->record['name']);
@@ -220,6 +221,7 @@ class Edit extends GroupsPermissions
 
         // only allow deletion of empty groups
         $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('Delete'));
+        $this->tpl->assign('sites', $this->sites);
     }
 
     /**
@@ -415,6 +417,7 @@ class Edit extends GroupsPermissions
 
                 // update permissions
                 $this->updatePermissions($actionPermissions, $bundledActionPermissions);
+                $this->updateLanguagePermissions();
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));

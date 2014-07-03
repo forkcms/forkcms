@@ -180,6 +180,8 @@ class Add extends GroupsPermissions
             $permissionBoxes[$key]['id'] = \SpoonFilter::toCamelCase($module['label']);
         }
 
+        $this->addLanguageFields();
+
         // create elements
         $this->frm->addText('name');
         $this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
@@ -189,13 +191,12 @@ class Add extends GroupsPermissions
     }
 
     /**
-     * Parse the form
-     *
-     * @todo method is not necessary see the content...
+     * Parse all needed data into the template
      */
     protected function parse()
     {
         parent::parse();
+        $this->tpl->assign('sites', $this->sites);
     }
 
     /**
@@ -251,6 +252,7 @@ class Add extends GroupsPermissions
 
                 // insert permissions
                 $this->updatePermissions($actionPermissions, $bundledActionPermissions);
+                $this->updateLanguagePermissions();
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
