@@ -135,6 +135,16 @@ class Language
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
+    protected static function addErrors($errors)
+    {
+        foreach ($errors as $module => $translations) {
+            if (!isset(self::$err[$module])) {
+                self::$err[$module] = array();
+            }
+            self::$err[$module] = array_merge(self::$err[$module], $translations);
+        }
+    }
+
     /**
      * Get all the errors from the language-file
      *
@@ -214,6 +224,16 @@ class Language
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
     }
 
+    protected static function addLabels($labels)
+    {
+        foreach ($labels as $module => $translations) {
+            if (!isset(self::$lbl[$module])) {
+                self::$lbl[$module] = array();
+            }
+            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
+        }
+    }
+
     /**
      * Get all the labels from the language-file
      *
@@ -258,6 +278,16 @@ class Language
 
         // otherwise return the key in label-format
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
+    }
+
+    protected static function addMessages($messages)
+    {
+        foreach ($messages as $module => $translations) {
+            if (!isset(self::$msg[$module])) {
+                self::$msg[$module] = array();
+            }
+            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
+        }
     }
 
     /**
@@ -313,13 +343,8 @@ class Language
         $language = (string) $language;
         $siteId = (int) $siteId;
 
-        // validate file, generate it if needed
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
-            BackendLocaleModel::buildCache('en', $siteId, APPLICATION);
-        }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
-            BackendLocaleModel::buildCache($language, $siteId, APPLICATION);
-        }
+        // rebuild cache files if needed
+        self::checkLocaleCache($language, $siteId);
 
         // store
         self::$currentInterfaceLanguage = $language;
@@ -331,37 +356,63 @@ class Language
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
-        // init vars
+        self::readLocaleCache($language, $siteId);
+    }
+
+    /**
+     * Checks if the cache is build for the wanted locale and fallbacks
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function checkLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
+
+        // validate files, generate it if needed
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php')) {
+            BackendLocaleModel::buildCache('en', $mainSiteId, APPLICATION);
+        }
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
+            BackendLocaleModel::buildCache('en', $siteId, APPLICATION);
+        }
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
+            BackendLocaleModel::buildCache($language, $siteId, APPLICATION);
+        }
+    }
+
+
+    /**
+     * Reads the locale from the cache and stores it in memory
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function readLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
+
         $err = array();
         $lbl = array();
         $msg = array();
 
-        // set English translations, they'll be the fallback
+        // set English translations for main site, they'll be the fallback
+        require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php';
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
+
+        // set English translations for this site, they'll be the fallback
         require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php';
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
 
         // overwrite with the requested language's translations
         require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php';
-        foreach ($err as $module => $translations) {
-            if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
-            }
-            self::$err[$module] = array_merge(self::$err[$module], $translations);
-        }
-        foreach ($lbl as $module => $translations) {
-            if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
-            }
-            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
-        }
-        foreach ($msg as $module => $translations) {
-            if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
-            }
-            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
-        }
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
     }
 
     /**
