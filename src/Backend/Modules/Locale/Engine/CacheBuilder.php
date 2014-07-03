@@ -175,6 +175,18 @@ class CacheBuilder
             }
         }
 
+        $this->addSpoonLocale($json, $language);
+        return $json;
+    }
+
+    /**
+     * Adds months and days from spoonLocale to the json
+     *
+     * @param array $json
+     * @param string $language
+     */
+    protected function addSpoonLocale(&$json, $language)
+    {
         // get months
         $monthsLong = \SpoonLocale::getMonths($language, false);
         $monthsShort = \SpoonLocale::getMonths($language, true);
@@ -196,10 +208,7 @@ class CacheBuilder
         foreach ($daysShort as $key => $value) {
             $json['loc']['DayShort' . \SpoonFilter::ucfirst($key)] = $value;
         }
-
-        return $json;
     }
-
 
     /**
      * dumps the locale in cache as a json object
