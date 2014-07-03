@@ -392,17 +392,13 @@ class Language
     {
         $mainSiteId = Model::get('multisite')->getMainSiteId();
 
-        $err = array();
-        $lbl = array();
-        $msg = array();
-
         // set English translations for main site, they'll be the fallback
         require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php';
         self::addErrors($err);
         self::addLabels($lbl);
         self::addMessages($msg);
 
-        // set English translations for this site, they'll be the fallback
+        // get the wanted language for the main site, they'll be the fallback
         require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php';
         self::addErrors($err);
         self::addLabels($lbl);
