@@ -7,11 +7,14 @@ Improvements:
 
 Bugfixes:
 
-* Locale: problem when saving Frontend locale fixed #744. 
+* Locale: problem when saving Frontend locale fixed #744.
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
 * Core: Loading editor templates fixed, see #747
 * Analytics: Fixes action names to get data from Google Analytics, see #755
+* Extensions: you can now install custom themes again.
+* Pages: widget previous-next fixed.
+* Extensions: using 'Core' instead of 'core'.
 
 
 3.7.0 (2014-04-24)
