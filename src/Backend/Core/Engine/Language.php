@@ -379,7 +379,6 @@ class Language
         }
     }
 
-
     /**
      * Reads the locale from the cache and stores it in memory
      *

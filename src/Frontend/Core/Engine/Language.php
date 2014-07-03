@@ -85,6 +85,11 @@ class Language
         return '{$act' . $key . '}';
     }
 
+    protected static function addActions($actions)
+    {
+        self::$act = array_merge(self::$act, $actions);
+    }
+
     /**
      * Get all the actions
      *
@@ -196,6 +201,11 @@ class Language
         return '{$err' . $key . '}';
     }
 
+    protected static function addErrors($errors)
+    {
+        self::$err = array_merge(self::$err, $errors);
+    }
+
     /**
      * Get all the errors
      *
@@ -232,6 +242,11 @@ class Language
         return '{$lbl' . $key . '}';
     }
 
+    protected static function addLabels($labels)
+    {
+        self::$lbl = array_merge(self::$lbl, $labels);
+    }
+
     /**
      * Get all the labels
      *
@@ -266,6 +281,11 @@ class Language
 
         // otherwise return the key in label-format
         return '{$msg' . $key . '}';
+    }
+
+    protected static function addMessages($messages)
+    {
+        self::$msg = array_merge(self::$msg, $messages);
     }
 
     /**
@@ -315,33 +335,62 @@ class Language
             throw new Exception('Invalid language (' . $language . ').');
         }
 
-        // validate file, generate it if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
-            self::buildCache('en', $siteId, 'Frontend');
+        self::checkLocaleCache($language, $siteId);
+        self::readLocaleCache($language, $siteId);
+    }
+
+    /**
+     * Checks if the cache is build for the wanted locale and fallbacks
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function checkLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
+
+        // validate files, generate it if needed
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php')) {
+            self::buildCache('en', $mainSiteId, APPLICATION);
+        }
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php')) {
+            self::buildCache($language, $mainSiteId, APPLICATION);
         }
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
-            self::buildCache($language, $siteId, 'Frontend');
+            self::buildCache($language, $siteId, APPLICATION);
         }
+    }
 
-        // init vars
-        $act = array();
-        $err = array();
-        $lbl = array();
-        $msg = array();
+    /**
+     * Reads the locale from the cache and stores it in memory
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function readLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
 
-        // set English translations, they'll be the fallback
-        require FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php';
+        // set English translations for the main site, they'll be the fallback
+        require FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php';
         self::$fallbackAct = (array) $act;
         self::$fallbackErr = (array) $err;
         self::$fallbackLbl = (array) $lbl;
         self::$fallbackMsg = (array) $msg;
 
-        // We will overwrite with the requested language's translations upon request
+        // get the wanted language for the main site, they'll be the fallback
+        require FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php';
+        self::addActions($act);
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
+
+        // overwrite with the requested language's translations
         require FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php';
-        self::$act = (array) $act;
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+        self::addActions($act);
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
     }
 
     /**
