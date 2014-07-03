@@ -72,6 +72,7 @@ class CacheBuilder
     /**
      * Builds the php string that will be put in cache
      *
+     * @todo A lot of this could be replace by a var_export from the json cache
      * @param string $language
      * @param string $application
      * @return string
