@@ -248,12 +248,26 @@ class Url extends Base\Object
                         307
                     );
                 } else {
-                    // set the working language, this is not the interface language
-                    Language::setWorkingLanguage($language);
+                    if ($module !== 'Error'
+                        && !Authentication::isAllowedLanguage(
+                            Model::get('current_site')->getId(),
+                            $language
+                        )
+                    ) {
+                        // the user hasn't access, redirect to error page
+                        \SpoonHTTP::redirect(
+                            '/' . NAMED_APPLICATION . '/' . $language .
+                            '/error?type=language-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                            307
+                        );
+                    } else {
+                        // set the working language, this is not the interface language
+                        Language::setWorkingLanguage($language);
 
-                    $this->setLocale();
-                    $this->setModule($module);
-                    $this->setAction($action);
+                        $this->setLocale();
+                        $this->setModule($module);
+                        $this->setAction($action);
+                    }
                 }
             }
         }

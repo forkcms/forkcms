@@ -11303,6 +11303,11 @@
         <translation language="el"><![CDATA[Μόνον εικόνες τύπου jpg, gif και png.]]></translation>
         <translation language="tr"><![CDATA[Sadece JPG, GIF, PNG]]></translation>
       </item>
+      <item type="error" name="LanguageNotAllowed">
+        <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze taal.]]></translation>
+        <translation language="en"><![CDATA[You have insufficient rights for this language.]]></translation>
+        <translation language="fr"><![CDATA[Vous ne disposez pas des droits suffisants pour effectuer cette langue.]]></translation>
+      </item>
       <item type="error" name="ModuleNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze module.]]></translation>
         <translation language="en"><![CDATA[You have insufficient rights for this module.]]></translation>
