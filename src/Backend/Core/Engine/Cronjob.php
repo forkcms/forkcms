@@ -237,7 +237,10 @@ class Cronjob extends Object implements \ApplicationInterface
         $this->language = $value;
 
         // set the locale (we need this for the labels)
-        Language::setLocale($this->language);
+        Language::setLocale(
+            $this->language,
+            Model::get('current_site')->getId()
+        );
 
         // set working language
         Language::setWorkingLanguage($this->language);

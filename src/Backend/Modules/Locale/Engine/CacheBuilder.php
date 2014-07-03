@@ -39,33 +39,35 @@ class CacheBuilder
 
     /**
      * @param string $language
+     * @param int $siteId
      * @param string $application Backend or Frontend
      */
-    public function buildCache($language, $application)
+    public function buildCache($language, $siteId, $application)
     {
         // get types
         $this->types = $this->database->getEnumValues('locale', 'type');
-        $this->locale = $this->getLocale($language, $application);
+        $this->locale = $this->getLocale($language, $siteId, $application);
 
-        $this->dumpPhpCache($language, $application);
-        $this->dumpJavascriptCache($language, $application);
+        $this->dumpPhpCache($language, $siteId, $application);
+        $this->dumpJavascriptCache($language, $siteId, $application);
     }
 
     /**
      * Fetches locale for a certain language application combo
      *
      * @param string $language
+     * @param int $siteId
      * @param string $application
      * @return array
      */
-    protected function getLocale($language, $application)
+    protected function getLocale($language, $siteId, $application)
     {
         return (array) $this->database->getRecords(
             'SELECT type, module, name, value
              FROM locale
-             WHERE language = ? AND application = ?
+             WHERE language = ? AND site_id = ? AND application = ?
              ORDER BY type ASC, name ASC, module ASC',
-            array($language, $application)
+            array($language, $siteId, $application)
         );
     }
 
@@ -141,11 +143,11 @@ class CacheBuilder
      * @param string $language
      * @param string $application
      */
-    protected function dumpPhpCache($language, $application)
+    protected function dumpPhpCache($language, $siteId, $application)
     {
         $fs = new Filesystem();
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.php',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $siteId . '_' . $language . '.php',
             $this->buildPhpCache($language, $application)
         );
     }
@@ -217,11 +219,11 @@ class CacheBuilder
      * @param string $language
      * @param string $application
      */
-    protected function dumpJavascriptCache($language, $application)
+    protected function dumpJavascriptCache($language, $siteId, $application)
     {
         $fs = new Filesystem();
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.json',
+            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $siteId . '_' . $language . '.json',
             json_encode($this->buildJavascriptCache($language, $application))
         );
     }

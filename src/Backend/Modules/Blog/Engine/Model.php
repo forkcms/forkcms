@@ -694,7 +694,7 @@ class Model
         );
 
         // overwrite url
-        $baseUrl = BackendModel::getURLForBlock('Blog', 'detail');
+        $baseUrl = BackendModel::getURLForBlock('Blog', 'Detail');
 
         foreach ($comments as &$row) {
             $row['full_url'] = $baseUrl . '/' . $row['url'];

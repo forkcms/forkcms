@@ -674,6 +674,8 @@ class Header extends FrontendBaseObject
 
         // store language
         $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->jsData['site_id'] = Model::get('current_site')->getId();
+        $this->jsData['main_site_id'] = Model::get('multisite')->getMainSiteId();
 
         // encode and add
         $jsData = json_encode($this->jsData);

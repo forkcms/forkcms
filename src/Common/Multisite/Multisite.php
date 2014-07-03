@@ -91,9 +91,9 @@ class Multisite
      *
      * @return int
      */
-    protected function getMainSiteId()
+    public function getMainSiteId()
     {
-        return $this->db->getVar(
+        return (int) $this->db->getVar(
             'SELECT id FROM sites WHERE is_main_site = ?',
             array('Y')
         );

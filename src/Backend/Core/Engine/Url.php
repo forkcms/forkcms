@@ -306,7 +306,10 @@ class Url extends Base\Object
             $locale = $default;
         }
 
-        Language::setLocale($locale);
+        Language::setLocale(
+            $locale,
+            Model::get('current_site')->getId()
+        );
     }
 
     /**

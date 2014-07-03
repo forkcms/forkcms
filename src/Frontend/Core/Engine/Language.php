@@ -56,7 +56,7 @@ class Language
     public static function buildCache($language, $application)
     {
         $cacheBuilder = new CacheBuilder(Model::get('database'));
-        $cacheBuilder->buildCache($language, $application);
+        $cacheBuilder->buildCache($language, Model::get('current_site')->getId(), $application);
     }
 
     /**
@@ -308,6 +308,7 @@ class Language
     {
         // redefine
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $siteId = Model::get('current_site')->getId();
 
         // validate language
         if (!$force && !in_array($language, self::getActiveLanguages())) {
@@ -315,11 +316,11 @@ class Language
         }
 
         // validate file, generate it if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/en.php')) {
-            self::buildCache('en', 'Frontend');
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php')) {
+            self::buildCache('en', $siteId, 'Frontend');
         }
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
-            self::buildCache($language, 'Frontend');
+        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
+            self::buildCache($language, $siteId, 'Frontend');
         }
 
         // init vars
@@ -329,14 +330,14 @@ class Language
         $msg = array();
 
         // set English translations, they'll be the fallback
-        require FRONTEND_CACHE_PATH . '/Locale/en.php';
+        require FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_en.php';
         self::$fallbackAct = (array) $act;
         self::$fallbackErr = (array) $err;
         self::$fallbackLbl = (array) $lbl;
         self::$fallbackMsg = (array) $msg;
 
         // We will overwrite with the requested language's translations upon request
-        require FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php';
+        require FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php';
         self::$act = (array) $act;
         self::$err = (array) $err;
         self::$lbl = (array) $lbl;

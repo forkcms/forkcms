@@ -367,6 +367,8 @@ class Header extends Base\Object
         $this->jsData['site']['domain'] = SITE_DOMAIN;
         $this->jsData['editor']['language'] = $interfaceLanguage;
         $this->jsData['interface_language'] = $interfaceLanguage;
+        $this->jsData['site_id'] = BackendModel::get('current_site')->getId();
+        $this->jsData['main_site_id'] = BackendModel::get('multisite')->getMainSiteId();
 
         // is the user object filled?
         if (Authentication::getUser()->isAuthenticated()) {
