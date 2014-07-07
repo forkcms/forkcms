@@ -4,6 +4,9 @@ Improvements:
 * Profiles: LoginLink widget added.
 * Profiles: Added password verification field, see #695.
 
+Bugfixes:
+* Faq: deleting a faq question now also deletes the meta record.
+
 
 3.7.1 (2014-07-10)
 --
@@ -23,10 +26,6 @@ Bugfixes:
 * Extensions: you can now install custom themes again.
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
-* Api client: some small fixes.
-* ContentBlocks: template gave error on capital letter in default.tpl.
-* Content blocks: fixes empty positions for content blocks
-
 
 3.7.0 (2014-04-24)
 --
