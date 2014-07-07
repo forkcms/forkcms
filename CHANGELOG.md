@@ -4,6 +4,7 @@ Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
 * ContentBlocks: template gave error on capital letter in default.tpl.
+* Core: Reimplemented the behaviour of CSS/JS timestamps. No more page refreshing needed for visitors in production environment.
 
 Bugfixes:
 
