@@ -1,4 +1,4 @@
-{include:core/Layout/Templates/Head.tpl}
+{include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 	{include:Core/Layout/Templates/Cookies.tpl}
@@ -50,7 +50,7 @@
 		</section>
 
 		<footer>
-			{include:core/Layout/Templates/Footer.tpl}
+			{include:Core/Layout/Templates/Footer.tpl}
 		</footer>
 	</div>
 
