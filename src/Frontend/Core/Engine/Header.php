@@ -120,6 +120,9 @@ class Header extends FrontendBaseObject
     {
         $file = (string) $file;
         $minify = (bool) $minify;
+        if (!SPOON_DEBUG && $addTimestamp == null) {
+            $addTimestamp = true;
+        }
         $addTimestamp = (bool) $addTimestamp;
         $file = Theme::getPath($file);
 
@@ -158,6 +161,9 @@ class Header extends FrontendBaseObject
     {
         $file = (string) $file;
         $minify = (bool) $minify;
+        if (!SPOON_DEBUG && $addTimestamp == null) {
+            $addTimestamp = true;
+        }
         $addTimestamp = (bool) $addTimestamp;
 
         // get file path
