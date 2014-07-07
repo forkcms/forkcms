@@ -15,7 +15,7 @@ Bugfixes:
 * Extensions: you can now install custom themes again.
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
-
+* Api client: some small fixes.
 
 3.7.0 (2014-04-24)
 --
