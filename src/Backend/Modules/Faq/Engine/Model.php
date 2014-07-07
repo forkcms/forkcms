@@ -46,7 +46,13 @@ class Model
      */
     public static function delete($id)
     {
-        BackendModel::getContainer()->get('database')->delete('faq_questions', 'id = ?', array((int) $id));
+        $question = self::get($id);
+
+        /** @var $database SpoonDatabase */
+        $database = BackendModel::getContainer()->get('database');
+        $database->delete('faq_questions', 'id = ?', array((int) $id));
+        $database->delete('meta', 'id = ?', array((int)$question['meta_id']));
+
         BackendTagsModel::saveTags($id, '', 'Faq');
     }
 
