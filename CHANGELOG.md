@@ -15,7 +15,7 @@ Bugfixes:
 * Extensions: you can now install custom themes again.
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
-
+* Faq: deleting a faq question now also deletes the meta record.
 
 3.7.0 (2014-04-24)
 --
