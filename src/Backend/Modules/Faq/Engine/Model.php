@@ -48,7 +48,7 @@ class Model
     {
         $question = self::get($id);
 
-        /** @var $db SpoonDatabase */
+        /** @var $db \SpoonDatabase */
         $db = BackendModel::getContainer()->get('database');
         $db->delete('faq_questions', 'id = ?', array((int) $id));
         $db->delete('meta', 'id = ?', array((int) $question['meta_id']));
