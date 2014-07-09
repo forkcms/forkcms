@@ -58,7 +58,7 @@ class Config extends BackendBaseConfig
 
         // missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
         if ($error && $action != 'Settings' && $action != 'Index') {
-            \SpoonHTTP::redirect(BackendModel::createURLForAction('Index'));
+            throw new \Exception('The settings for Analytics must be filled in to use this cronjob.');
         }
     }
 }
