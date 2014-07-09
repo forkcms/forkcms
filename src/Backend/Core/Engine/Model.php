@@ -137,13 +137,26 @@ class Model extends \BaseModel
         array $parameters = null,
         $urlencode = true
     ) {
-        // grab the URL from the reference
-        $URL = self::getContainer()->get('url');
-
-        $action = ($action !== null) ? (string) $action : $URL->getAction();
-        $module = ($module !== null) ? (string) $module : $URL->getModule();
+        // redefine variables
+        $action = ($action !== null) ? (string) $action : null;
+        $module = ($module !== null) ? (string) $module : null;
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
         $queryString = '';
+
+        // we have an url, we don't have an url in a cronjob
+        if (self::getContainer()->has('url')) {
+            // grab the URL from the reference
+            $URL = self::getContainer()->get('url');
+
+            // redefine
+            if ($action === null) $action = $URL->getAction();
+            if ($module === null) $module = $URL->getModule();
+        }
+
+        // error checking
+        if ($action === null || $module === null) {
+            throw new \Exception('Action and Module must not be empty when creating an URL.');
+        }
 
         // lets create underscore cased module and action names
         $module = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
