@@ -143,7 +143,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
         $queryString = '';
 
-        // we have an url, we don't have an url in a cronjob
+        // checking if we have an url, because in a cronjob we don't have one
         if (self::getContainer()->has('url')) {
             // grab the URL from the reference
             $URL = self::getContainer()->get('url');
