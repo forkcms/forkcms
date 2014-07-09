@@ -16,6 +16,7 @@ Bugfixes:
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
 * Api client: some small fixes.
+* Analytics: Cronjob now throws exception instead of trying to redirect.
 
 3.7.0 (2014-04-24)
 --
