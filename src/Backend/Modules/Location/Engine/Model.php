@@ -103,7 +103,7 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
-     * @return array  The latitude/longitude coordinates
+     * @return array  Contains 'latitude' and 'longitude' as variables
      * @param  string $street[optional]
      * @param  string $streetNumber[optional]
      * @param  string $city[optional]
