@@ -16,6 +16,7 @@ Bugfixes:
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
 * Api client: some small fixes.
+* BackendModel: createURLForAction now works in a Cronjob, fixed #513.
 
 3.7.0 (2014-04-24)
 --
