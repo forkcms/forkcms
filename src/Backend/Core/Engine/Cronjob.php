@@ -176,6 +176,8 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+
+        // is the Core module
         if ($this->getModule() == 'Core') {
             $configClass = 'Backend\\Core\\Config';
         }
