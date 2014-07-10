@@ -47,8 +47,14 @@ class AddGroup extends BackendBaseActionAdd
         $chkDefaultForLanguageValues[] = array('label' => BL::msg('NoDefault'), 'value' => '0');
 
         // set default for language radiobutton values
-        foreach (BL::getWorkingLanguages() as $key => $value) {
-            $chkDefaultForLanguageValues[] = array('label' => $value, 'value' => $key);
+        $multisite = BackendModel::get('multisite');
+        foreach ($multisite->getSites() as $siteId => $domain) {
+            foreach ($multisite->getLanguageList($siteId, true) as $language) {
+                $chkDefaultForLanguageValues[] = array(
+                    'label' => $domain . ': ' . BL::lbl(strtoupper($language)),
+                    'value' => $siteId . '-' . $language
+                );
+            }
         }
 
         // create elements
@@ -85,8 +91,12 @@ class AddGroup extends BackendBaseActionAdd
                 // build item
                 $item['name'] = $txtName->getValue();
                 $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-                $item['language'] = $rbtDefaultForLanguage->getValue() === '0' ? null : $rbtDefaultForLanguage->getValue();
                 $item['is_default'] = $rbtDefaultForLanguage->getChecked() ? 'Y' : 'N';
+
+                if ($rbtDefaultForLanguage->getChecked()) {
+                    // language and site_id are stored in the value seperated by a dash
+                    list($item['site_id'], $item['language']) = explode('-', $rbtDefaultForLanguage->getValue());
+                }
 
                 // insert the item
                 $item['id'] = BackendMailmotorCMHelper::insertGroup($item);

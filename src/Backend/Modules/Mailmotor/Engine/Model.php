@@ -901,7 +901,7 @@ class Model
     public static function getDefaultGroups()
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT mg.id, mg.language, mg.name, mg.created_on
+            'SELECT mg.id, mg.language, mg.site_id, mg.name, mg.created_on
              FROM mailmotor_groups AS mg
              WHERE mg.is_default = ?',
             array('Y'),
@@ -1579,19 +1579,21 @@ class Model
     {
         // get DB
         $db = BackendModel::getContainer()->get('database');
+        $currentSiteId = BackendModel::get('current_site')->getId();
 
         // check if there is a default group set for this language
         // @todo refactor, this looks like shit
         if (!(bool) $db->getVar(
             'SELECT 1
              FROM mailmotor_groups AS mg
-             WHERE mg.is_default = ? AND mg.language = ?
+             WHERE mg.is_default = ? AND mg.language = ? AND mg.site_id = ?
              LIMIT 1',
-            array('Y', BL::getWorkingLanguage())
+            array('Y', BL::getWorkingLanguage(), $currentSiteId)
         )
         ) {
             // this list will be a default list
             $item['language'] = BL::getWorkingLanguage();
+            $item['site_id'] = $currentSiteId;
             $item['is_default'] = 'Y';
         }
 

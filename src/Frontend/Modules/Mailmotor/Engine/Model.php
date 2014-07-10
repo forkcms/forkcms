@@ -129,9 +129,13 @@ class Model
         return (int) FrontendModel::getContainer()->get('database')->getVar(
             'SELECT mg.id
              FROM mailmotor_groups AS mg
-             WHERE mg.is_default = ? AND mg.language = ?
+             WHERE mg.is_default = ? AND mg.language = ? AND mg.site_id = ?
              LIMIT 1',
-            array('Y', FRONTEND_LANGUAGE)
+            array(
+                'Y',
+                FRONTEND_LANGUAGE,
+                FrontendModel::get('current_site')->getId()
+            )
         );
     }
 

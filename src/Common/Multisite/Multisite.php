@@ -165,7 +165,7 @@ class Multisite
         return (array) $this->db->getColumn(
             'SELECT language FROM sites_languages
              WHERE site_id = ? AND is_active LIKE ?',
-            array((int)$siteId, $active)
+            array((int) $siteId, $active)
         );
     }
 
