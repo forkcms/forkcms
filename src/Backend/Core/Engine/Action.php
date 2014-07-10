@@ -13,6 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Multisite\Engine\Model as BackendMultisiteModel;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
@@ -79,20 +80,18 @@ class Action extends Base\Object
         }
 
         // get working languages
-        $languages = Language::getWorkingLanguages();
-        $workingLanguages = array();
+        $workingLanguages = BackendMultisiteModel::getWorkingLanguagesForDropdown();
 
         // loop languages and build an array that we can assign
-        foreach ($languages as $abbreviation => $label) {
-            $workingLanguages[] = array(
-                'abbr' => $abbreviation,
-                'label' => $label,
-                'selected' => ($abbreviation == Language::getWorkingLanguage())
-            );
+        foreach ($workingLanguages as &$language) {
+            $language['selected'] = ($language['value'] === Language::getWorkingLanguage());
         }
 
         // assign the languages
-        $this->tpl->assign('workingLanguages', $workingLanguages);
+        $this->tpl->assign(
+            'workingLanguages',
+            $workingLanguages
+        );
 
         // create action-object
         /** @var $object BackendBaseAction */
