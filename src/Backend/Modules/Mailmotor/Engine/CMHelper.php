@@ -677,16 +677,7 @@ class CMHelper
 
         // a list was created
         if ($cmId) {
-            // check if we have a default group set
-            if ($item['is_default'] === 'Y' && $item['language'] != '0') {
-                // set all defaults to N.
-                BackendModel::getContainer()->get('database')->update(
-                    'mailmotor_groups',
-                    array('is_default' => 'N', 'language' => null),
-                    'language = ?',
-                    $item['language']
-                );
-            }
+            self::overwriteDefaultGroup($item);
 
             $id = BackendMailmotorModel::insertGroup($item);
             self::insertCampaignMonitorID('list', $cmId, $id);
@@ -974,18 +965,29 @@ class CMHelper
         );
 
         // check if we have a default group set
-        if ($item['is_default'] === 'Y' && $item['language'] != '0') {
-            // set all defaults to N
-            BackendModel::getContainer()->get('database')->update(
-                'mailmotor_groups',
-                array('is_default' => 'N', 'language' => null),
-                'language = ?',
-                array($item['language'])
-            );
-        }
+        self::overwriteDefaultGroup($item);
 
         // update the group in our database
         return (int) BackendMailmotorModel::updateGroup($item);
+    }
+
+    /**
+     * Removes other default groups for the given group
+     *
+     * @param array $group
+     */
+    protected static function overwriteDefaultGroup($group)
+    {
+        // check if we have a default group set
+        if ($group['is_default'] === 'Y' && !empty($group['language'])) {
+            // set all defaults to N.
+            BackendModel::get('database')->update(
+                'mailmotor_groups',
+                array('is_default' => 'N', 'language' => null, 'site_id' => null),
+                'language = ? AND site_id = ?',
+                array($group['language'], $group['site_id'])
+            );
+        }
     }
 
     /**
