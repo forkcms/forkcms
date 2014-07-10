@@ -1253,10 +1253,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // reset type of drop for special pages
-        if ($droppedOn == 1) {
-            $typeOfDrop = 'inside';
-        }
-        if ($droppedOn == 0) {
+        if ($droppedOn == 0 || $droppedOn == 1) {
             $typeOfDrop = 'inside';
         }
 
