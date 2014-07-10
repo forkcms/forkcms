@@ -130,6 +130,24 @@ class Model
     }
 
     /**
+     * Fetches the working languages for the current site dropdown ready
+     *
+     * @return array
+     */
+    public static function getWorkingLanguagesForDropdown()
+    {
+        $languages = BackendModel::get('current_site')->getWorkingLanguages();
+        foreach ($languages as &$language) {
+            $language = array(
+                'value' => $language,
+                'label' => \SpoonFilter::ucfirst(Language::lbl(strtoupper($language)))
+            );
+        }
+
+        return $languages;
+    }
+
+    /**
      * @param array $languages List of languages for a site.
      * @param int $siteId ID of the site in the db where we are saving languages
      *        for.
