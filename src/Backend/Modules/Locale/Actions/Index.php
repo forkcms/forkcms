@@ -215,11 +215,27 @@ class Index extends BackendBaseActionIndex
      */
     private function loadForm()
     {
+        if ($this->get('current_site')->isMainSite()) {
+            $languages = BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod);
+        } else {
+            $languages = $this->get('current_site')->getWorkingLanguages();
+            foreach ($languages as &$language) {
+                $language = array(
+                    'value' => $language,
+                    'label' => \SpoonFilter::ucfirst(BL::lbl(strtoupper($language)))
+                );
+            }
+        }
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
         $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
         $this->frm->addText('name', $this->filter['name']);
         $this->frm->addText('value', $this->filter['value']);
-        $this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
+        $this->frm->addMultiCheckbox(
+            'language',
+            $languages,
+            $this->filter['language'],
+            'noFocus'
+        );
         $this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
         $this->frm->getField('module')->setDefaultElement(\SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
