@@ -78,8 +78,8 @@ class Model
     public static function buildCache($language = null, $siteId = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         $cacheBuilder = new CacheBuilder();
         $cacheBuilder->buildCache($language, $siteId);
@@ -342,7 +342,7 @@ class Model
         // redefine
         $id = (int) $id;
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -399,15 +399,18 @@ class Model
     /**
      * Check if a page exists
      *
-     * @param int $id The id to check for existence.
+     * @param int    $id The id to check for existence.
+     * @param string $language   The language wherein the page will be deleted,
+     *                           if not provided we will use the working language.
+     * @param int    $siteId     The language to use.
      * @return bool
      */
-    public static function exists($id)
+    public static function exists($id, $language = null, $siteId = null)
     {
         // redefine
         $id = (int) $id;
-        $language = BL::getWorkingLanguage();
-        $siteId = BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // exists?
         return (bool) BackendModel::getContainer()->get('database')->getVar(
@@ -439,7 +442,7 @@ class Model
         $id = (int) $id;
         $revisionId = (int) $revisionId;
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get page (active version)
         $return = (array) BackendModel::getContainer()->get('database')->getRecord(
@@ -510,7 +513,7 @@ class Model
         $id = (int) $id;
         $revisionId = (int) $revisionId;
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get page (active version)
         return (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -659,7 +662,7 @@ class Model
         // redefine
         $id = (int) $id;
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT revision_id
@@ -692,8 +695,8 @@ class Model
     public static function getMaximumPageId($language = null, $siteId = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get the maximum id
         $maximumMenuId = (int) BackendModel::getContainer()->get('database')->getVar(
@@ -724,8 +727,8 @@ class Model
     public static function getMaximumSequence($parentId, $language = null, $siteId = null)
     {
         $parentId = (int) $parentId;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get the maximum sequence inside a certain leaf
         return (int) BackendModel::getContainer()->get('database')->getVar(
@@ -746,8 +749,8 @@ class Model
     public static function getPagesForDropdown($language = null, $siteId = null)
     {
         // redefine
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get tree
         $levels = self::getTree(array(0), null, 1, $language, $siteId);
@@ -876,8 +879,8 @@ class Model
     {
         // redefine
         $level = (int) $level;
-        $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get data
         $data[$level] = (array) BackendModel::getContainer()->get('database')->getRecords(
@@ -1244,7 +1247,7 @@ class Model
         $typeOfDrop = \SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
         $tree = \SpoonFilter::getValue($tree, array('main', 'meta', 'footer', 'root'), 'inside');
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
-        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
+        $siteId = ($siteId === null) ? BackendModel::get('current_site')->getid() : (int) $siteId;
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -1304,11 +1307,11 @@ class Model
         if ($typeOfDrop == 'inside') {
             // get highest sequence + 1
             $newSequence = (int) $db->getVar(
-                    'SELECT MAX(i.sequence)
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?',
-                    array($newParent, $language, $siteId, 'active')
-                ) + 1;
+                'SELECT MAX(i.sequence)
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?',
+                array($newParent, $language, $siteId, 'active')
+            ) + 1;
 
             // update
             $db->update(
@@ -1321,12 +1324,12 @@ class Model
             // calculate new sequence for items that should be moved before
             // get new sequence
             $newSequence = (int) $db->getVar(
-                    'SELECT i.sequence
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?
-                     LIMIT 1',
-                    array($droppedOnPage['id'], $language, $siteId, 'active')
-                ) - 1;
+                'SELECT i.sequence
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?
+                 LIMIT 1',
+                array($droppedOnPage['id'], $language, $siteId, 'active')
+            ) - 1;
 
             // increment all pages with a sequence that is higher or equal to the current sequence;
             $db->execute(
@@ -1347,12 +1350,12 @@ class Model
             // calculate new sequence for items that should be moved after
             // get new sequence
             $newSequence = (int) $db->getVar(
-                    'SELECT i.sequence
-                    FROM pages AS i
-                    WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?
-                    LIMIT 1',
-                    array($droppedOnPage['id'], $language, $siteId, 'active')
-                ) + 1;
+                'SELECT i.sequence
+                FROM pages AS i
+                WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?
+                LIMIT 1',
+                array($droppedOnPage['id'], $language, $siteId, 'active')
+            ) + 1;
 
             // increment all pages with a sequence that is higher then the current sequence;
             $db->execute(
