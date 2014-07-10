@@ -18,6 +18,7 @@ Bugfixes:
 * Extensions: using 'Core' instead of 'core'.
 * Api client: some small fixes.
 * ContentBlocks: template gave error on capital letter in default.tpl.
+* Content blocks: fixes empty positions for content blocks
 
 3.7.0 (2014-04-24)
 --
