@@ -290,7 +290,7 @@ class ModuleInstaller
      * @param string $application
      * @return mixed
      */
-    protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
+    public function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
     {
         $translation = (string) $this->getDB()->getVar(
             'SELECT value
@@ -644,7 +644,7 @@ class ModuleInstaller
      * @param array $block    The blocks.
      * @return int
      */
-    protected function insertPage(array $revision, array $meta = null, array $block = null)
+    public function insertPage(array $revision, array $meta = null, array $block = null)
     {
         $revision = (array) $revision;
         $meta = (array) $meta;
