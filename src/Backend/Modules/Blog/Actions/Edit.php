@@ -427,14 +427,14 @@ class Edit extends BackendBaseActionEdit
                         }
 
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
                     } elseif ($item['image'] != null) {
                         // rename the old image
                         $image = new File($imagePath . '/source/' . $item['image']);
-                        $newName = $this->meta->getURL() . '.' . $image->getExtension();
+                        $newName = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $image->getExtension();
 
                         // only change the name if there is a difference
                         if ($newName != $item['image']) {

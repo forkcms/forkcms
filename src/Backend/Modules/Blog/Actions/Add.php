@@ -187,7 +187,7 @@ class Add extends BackendBaseActionAdd
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
