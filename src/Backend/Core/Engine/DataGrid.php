@@ -280,6 +280,17 @@ class DataGrid extends \SpoonDataGrid
     }
 
     /**
+     * Checks if a datagrid contains a certain column
+     *
+     * @param string $columnName
+     * @return boolean
+     */
+    public function hasColumn($columnName)
+    {
+        return array_key_exists($columnName, $this->columns);
+    }
+
+    /**
      * Sets the active tab for this datagrid
      *
      * @param string $tab The name of the tab to show.
