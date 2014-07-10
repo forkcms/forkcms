@@ -148,6 +148,58 @@ class Model
     }
 
     /**
+     * @return array List of the available sites, ready for use in a drop down
+     *         site selector.
+     * @param string $module The current module we are in
+     */
+    public static function getWorkingSites($module)
+    {
+        $items = (array) BackendModel::get('database')->getRecords(
+            'SELECT * FROM sites WHERE is_active = ?',
+            array('Y')
+        );
+        $currentLang = Language::getWorkingLanguage();
+        $currentSite = BackendModel::get('current_site');
+        foreach ($items as &$item) {
+            $availableLanguages = BackendModel::get('multisite')
+                ->getLanguageList($item['id'])
+            ;
+
+            // if we are not using the real domains (ex: during dev or staging)
+            // we need to use our prefixing system.
+            if (!$currentSite->isDomainSite()) {
+                $prefix = isset($item['prefix']) ? $item['prefix'] . '.' : '';
+                $domainInUrl = $prefix . $currentSite->getUnprefixedDomain();
+            } else {
+                $domainInUrl = $item['domain'];
+            }
+
+            // make sure our module is underscored (and not camelCased)
+            $module = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $module));
+
+            // Per
+            // Note that we do not append the action:
+            // We need to take care of too many things that seem unnecessary for
+            // what we are trying to achieve: things like id's (in an edit action),
+            // reports, vars, etc... all of which might not be available on another
+            // site.  Therefor, we redirect to the same module which seems to be
+            // a nice compromise between usability and complexity of code.
+            $item['full_url'] = SITE_PROTOCOL . '://'
+                . rtrim($domainInUrl, '/')
+                . '/private/'
+                . (
+                in_array($currentLang, $availableLanguages)
+                    ? $currentLang : $availableLanguages[0]
+                )
+                . '/' . $module;
+
+            $item['selected'] = ($item['id'] == $currentSite->getId());
+        }
+
+        return $items;
+    }
+
+    /**
      * @param array $languages List of languages for a site.
      * @param int $siteId ID of the site in the db where we are saving languages
      *        for.

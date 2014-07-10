@@ -542,6 +542,7 @@ jsBackend.controls =
 		jsBackend.controls.bindPasswordGenerator();
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
+		jsBackend.controls.bindWorkingSiteSelection();
 		jsBackend.controls.bindTableCheckbox();
 		jsBackend.controls.bindTargetBlank();
 		jsBackend.controls.bindToggleDiv();
@@ -1201,6 +1202,15 @@ jsBackend.controls =
 
 			// rebuild the url and redirect
 			document.location.href = url;
+		});
+	},
+
+	bindWorkingSiteSelection: function()
+	{
+		$('#jsWorkingSite').on('change', function(e)
+		{
+			e.preventDefault();
+			document.location.href = $(this).val();
 		});
 	}
 }

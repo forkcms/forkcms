@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Multisite\Engine\Model as BackendMultisiteModel;
+use Backend\Modules\Multisite\Engine\Model as MultisiteModel;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...
@@ -80,7 +80,7 @@ class Action extends Base\Object
         }
 
         // get working languages
-        $workingLanguages = BackendMultisiteModel::getWorkingLanguagesForDropdown();
+        $workingLanguages = MultisiteModel::getWorkingLanguagesForDropdown();
 
         // loop languages and build an array that we can assign
         foreach ($workingLanguages as &$language) {
@@ -88,9 +88,10 @@ class Action extends Base\Object
         }
 
         // assign the languages
+        $this->tpl->assign('workingLanguages', $workingLanguages);
         $this->tpl->assign(
-            'workingLanguages',
-            $workingLanguages
+            'workingSites',
+            MultisiteModel::getWorkingSites($this->getModule())
         );
 
         // create action-object
