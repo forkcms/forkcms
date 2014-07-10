@@ -351,13 +351,13 @@ class Language
 
         // validate files, generate it if needed
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php')) {
-            self::buildCache('en', $mainSiteId, APPLICATION);
+            self::buildCache('en', $mainSiteId, 'Frontend');
         }
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php')) {
-            self::buildCache($language, $mainSiteId, APPLICATION);
+            self::buildCache($language, $mainSiteId, 'Frontend');
         }
         if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
-            self::buildCache($language, $siteId, APPLICATION);
+            self::buildCache($language, $siteId, 'Frontend');
         }
     }
 
