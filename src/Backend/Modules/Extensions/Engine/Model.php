@@ -338,14 +338,9 @@ class Model
         return is_dir(FRONTEND_PATH . '/Themes/' . (string) $theme) || (string) $theme == 'Core';
     }
 
-    /**
-     * Get extras
-     *
-     * @return array
-     */
-    public static function getExtras()
+    protected static function getAllExtras()
     {
-        $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
+        return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
              FROM modules_extras AS i
              INNER JOIN modules AS m ON i.module = m.name
@@ -354,6 +349,16 @@ class Model
             array('N'),
             'id'
         );
+    }
+
+    /**
+     * Get extras
+     *
+     * @return array
+     */
+    public static function getExtras()
+    {
+        $extras = self::getAllExtras();
         $itemsToRemove = array();
 
         foreach ($extras as $id => &$row) {
@@ -405,14 +410,7 @@ class Model
      */
     public static function getExtrasData()
     {
-        $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
-             INNER JOIN modules AS m ON i.module = m.name
-             WHERE i.hidden = ?
-             ORDER BY i.module, i.sequence',
-            array('N')
-        );
+        $extras = self::getAllExtras();
         $values = array();
 
         foreach ($extras as $row) {
