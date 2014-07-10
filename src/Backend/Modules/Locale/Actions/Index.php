@@ -98,6 +98,39 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
+            // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
+            if ($dataGrid->hasColumn('translation_id')) {
+                $dataGrid->setColumnHidden('translation_id');
+            }
+
+            // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
+            if ($dataGrid->hasColumn('en')) {
+                $dataGrid->setHeaderLabels(array(
+                    'en' => \SpoonFilter::ucfirst(BL::lbl(strtoupper('en')))
+                ));
+            }
+
+            // only 1 language selected?
+            if (count($this->filter['language']) == 1) {
+                // check if this action is allowed
+                if (BackendAuthentication::isAllowedAction('Edit')) {
+                    // add edit button
+                    $dataGrid->addColumn(
+                        'edit', null, BL::lbl('Edit'),
+                        BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
+                    );
+                }
+
+                // check if this action is allowed
+                if (BackendAuthentication::isAllowedAction('Add')) {
+                    // add copy button
+                    $dataGrid->addColumnAction(
+                        'copy', null, BL::lbl('Copy'),
+                        BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
+                    );
+                }
+            }
+
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
@@ -116,39 +149,15 @@ class Index extends BackendBaseActionIndex
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
-                if ($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                if ($type == 'act') {
+                    $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                }
 
                 // set header labels
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
                 // set column attributes
                 $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
-
-                // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-                if ($dataGrid->hasColumn('translation_id')) {
-                    $dataGrid->setColumnHidden('translation_id');
-                }
-
-                // only 1 language selected?
-                if (count($this->filter['language']) == 1) {
-                    // check if this action is allowed
-                    if (BackendAuthentication::isAllowedAction('Edit')) {
-                        // add edit button
-                        $dataGrid->addColumn(
-                            'edit', null, BL::lbl('Edit'),
-                            BackendModel::createURLForAction('Edit') . '&amp;id=[translation_id]' . $this->filterQuery
-                        );
-                    }
-
-                    // check if this action is allowed
-                    if (BackendAuthentication::isAllowedAction('Add')) {
-                        // add copy button
-                        $dataGrid->addColumnAction(
-                            'copy', null, BL::lbl('Copy'),
-                            BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
-                        );
-                    }
-                }
             }
         }
     }
