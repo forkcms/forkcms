@@ -16,6 +16,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Multisite\Engine\Model as BackendMultisiteModel;
 
 /**
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
@@ -218,13 +219,7 @@ class Index extends BackendBaseActionIndex
         if ($this->get('current_site')->isMainSite()) {
             $languages = BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod);
         } else {
-            $languages = $this->get('current_site')->getWorkingLanguages();
-            foreach ($languages as &$language) {
-                $language = array(
-                    'value' => $language,
-                    'label' => \SpoonFilter::ucfirst(BL::lbl(strtoupper($language)))
-                );
-            }
+            $languages = BackendMultisiteModel::getWorkingLanguagesForDropdown();
         }
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
         $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
