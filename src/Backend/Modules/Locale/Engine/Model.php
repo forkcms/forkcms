@@ -990,20 +990,26 @@ class Model
      * @param string $module      The module.
      * @param array  $types       The types of the translations to get.
      * @param array  $languages   The languages of the translations to get.
+     * @param array  $siteIds     The siteIds of the translations to get.
      * @param string $name        The name.
      * @param string $value       The value.
      * @return array
      */
-    public static function getTranslations($application, $module, $types, $languages, $name, $value)
+    public static function getTranslations($application, $module, $types, $languages, $siteIds, $name, $value)
     {
         $languages = (array) $languages;
+        $siteIds = (array) $siteIds;
 
         // create an array for the languages, surrounded by quotes (example: 'en')
         $aLanguages = array();
-        foreach ($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+        foreach ($languages as $key => $val) {
+            $aLanguages[$key] = '\'' . $val . '\'';
+        }
 
         // surround the types with quotes
-        foreach ($types as $key => $val) $types[$key] = '\'' . $val . '\'';
+        foreach ($types as $key => $val) {
+            $types[$key] = '\'' . $val . '\'';
+        }
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -1014,6 +1020,7 @@ class Model
              FROM locale AS l
              WHERE
                  l.language IN (' . implode(',', $aLanguages) . ') AND
+                 l.site_id IN (' . implode(',', $siteIds) . ') AND
                  l.application = ? AND
                  l.name LIKE ? AND
                  l.value LIKE ? AND
@@ -1062,7 +1069,9 @@ class Model
 
                     // is there a translation? else empty string
                     foreach ($languages as $lang) {
-                        if (count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        if (count($languages) == 1) {
+                            $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        }
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
                     }
 
