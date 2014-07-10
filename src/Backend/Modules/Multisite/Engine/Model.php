@@ -5,7 +5,7 @@ namespace Backend\Modules\Multisite\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language;
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Core\Modules\Pages\Model as PagesModel;
+use Backend\Modules\Pages\Engine\Model as PagesModel;
 
 /**
  * In this file we store all generic functions that we will be using
@@ -43,8 +43,7 @@ class Model
      */
     public static function createHomepages($languages, $siteId)
     {
-        // @todo: uncomment this when the pages module has been made multisite aware
-        /*foreach ($languages as $language) {
+        foreach ($languages as $language) {
             // check if a homepages exists for this site/language combination
             if (!PagesModel::exists(1, $language['language'], $siteId)) {
                 // create a moduleInstaller instance.
@@ -60,10 +59,11 @@ class Model
                     array(
                         'id' => 1,
                         'parent_id' => 0,
-                        'template_id' => $installer->getTemplateId('home'),
                         'title' => \SpoonFilter::ucfirst(
                             $installer->getLocale(
-                                'Home', 'Core', $language['language'], 'lbl', 'Backend'
+                                'Home',
+                                'Core',
+                                $language['language']
                             )
                         ),
                         'language' => $language['language'],
@@ -73,7 +73,7 @@ class Model
                     )
                 );
             }
-        }*/
+        }
     }
 
     /**
