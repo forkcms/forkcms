@@ -184,6 +184,16 @@ class Index extends BackendBaseActionIndex
 
         // parse the add URL
         $this->tpl->assign('addURL', BackendModel::createURLForAction('Add', null, null, null) . $this->filterQuery);
+
+        $this->tpl->assign(
+            'hasMultipleSites',
+            count($this->get('multisite')->getSites()) > 1
+        );
+
+        $this->tpl->assign(
+            'isMainSite',
+            $this->get('current_site')->isMainSite()
+        );
     }
 
     /**
