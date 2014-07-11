@@ -1383,7 +1383,7 @@ class Model
         $record = array();
         $record['name'] = $name;
         $record['language'] = $language;
-        $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase($record, array('-', '_')));
+        $record['label'] = BL::lbl('Template' . \SpoonFilter::toCamelCase(\SpoonFilter::toCamelCase($name), '-'));
         $record['path_content'] = $path . '/' . $name . '/template.tpl';
         $record['path_css'] = $path . '/' . $name . '/Css/screen.css';
         $record['url_css'] = SITE_URL . '/src/Backend/Modules/Mailmotor/Templates/' . $language .
@@ -1417,7 +1417,10 @@ class Model
             $item['language'] = $language;
             $item['value'] = $directory->getBaseName();
             $item['label'] = BL::lbl(
-                'Template' . \SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_'))
+                'Template' . \SpoonFilter::toCamelCase(
+                    \SpoonFilter::toCamelCase($directory->getBaseName(), '-'),
+                    '_'
+                )
             );
 
             $records[$item['value']] = $item;

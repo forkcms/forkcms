@@ -53,7 +53,7 @@ class Loading extends BackendAnalyticsBase
      */
     private function getData()
     {
-        $this->redirectAction = \SpoonFilter::getGetValue('redirect_action', null, 'index');
+        $this->redirectAction = \SpoonFilter::getGetValue('redirect_action', null, 'Index');
         $this->identifier = time() . rand(0, 999);
         $this->pageId = \SpoonFilter::getGetValue('page_id', null, '');
         $this->pagePath = \SpoonFilter::getGetValue('page_path', null, '');

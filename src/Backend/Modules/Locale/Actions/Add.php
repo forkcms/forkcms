@@ -79,7 +79,7 @@ class Add extends BackendBaseActionAdd
 
         // create and add elements
         $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
+        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $isCopy ? $translation['module'] : $this->filter['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
         $this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
         $this->frm->addTextarea('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, true);
