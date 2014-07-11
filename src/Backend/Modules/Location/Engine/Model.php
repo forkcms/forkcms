@@ -103,12 +103,12 @@ class Model
     /**
      * Get coordinates latitude/longitude
      *
+     * @param  string $street
+     * @param  string $streetNumber
+     * @param  string $city
+     * @param  string $zip
+     * @param  string $country
      * @return array  Contains 'latitude' and 'longitude' as variables
-     * @param  string $street[optional]
-     * @param  string $streetNumber[optional]
-     * @param  string $city[optional]
-     * @param  string $zip[optional]
-     * @param  string $country[optional]
      */
     public static function getCoordinates(
         $street = null,
