@@ -52,31 +52,24 @@ class Model
             // today
             if ($hours >= 1) {
                 return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
-            } // more than one minute
-            elseif ($minutes > 1) {
+            } elseif ($minutes > 1) {
+                // more than one minute
                 return sprintf(BL::getLabel('MinutesAgo'), $minutes);
-            } // one minute
-            elseif ($minutes == 1) {
+            } elseif ($minutes == 1) {
+                // one minute
                 return BL::getLabel('OneMinuteAgo');
-            } // more than one second
-            elseif ($seconds > 1) {
+            } elseif ($seconds > 1) {
+                // more than one second
                 return sprintf(BL::getLabel('SecondsAgo'), $seconds);
-            } // one second
-            elseif ($seconds <= 1) {
+            } elseif ($seconds <= 1) {
+                // one second
                 return BL::getLabel('OneSecondAgo');
             }
-        } // yesterday
-        elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
-            return BL::getLabel(
-                       'Yesterday'
-                   ) . ' ' . date(
-                       'H:i',
-                       $timestamp
-                   );
-        }
-
-        // older
-        else {
+        } elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
+            // yesterday
+            return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
+        } else {
+            // older
             return date('d/m/Y H:i', $timestamp);
         }
     }
@@ -141,7 +134,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('form_builder', 'widget', array('id' => $id));
+        BackendModel::deleteExtra('FormBuilder', 'widget', array('id' => $id));
 
         // delete form
         $db->delete('forms', 'id = ?', $id);
@@ -368,8 +361,8 @@ class Model
             $type = (string) $type;
 
             return $errors[$type];
-        } // all errors
-        else {
+        } else {
+            // all errors
             $return = array();
 
             // loop errors
@@ -560,7 +553,7 @@ class Model
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',
-            array('form_builder', 'widget', '400' . $id)
+            array('FormBuilder', 'widget', '400' . $id)
         );
 
         return $id;

@@ -135,7 +135,7 @@ class Action extends Base\Object
             $configClass
         )
         ) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
         }
 
         // create config-object, the constructor will do some magic

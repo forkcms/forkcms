@@ -31,7 +31,7 @@ class Base extends BackendBaseActionIndex
      * @var	int
      */
     protected $startTimestamp;
-    private $endTimestamp;
+    protected $endTimestamp;
 
     /**
      * Execute the action

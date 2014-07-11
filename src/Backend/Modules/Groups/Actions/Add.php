@@ -199,7 +199,7 @@ class Add extends BackendBaseActionAdd
     private function getWidgets()
     {
         $finder = new Finder();
-        $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/widgets');
+        $finder->name('*.php')->in(BACKEND_MODULES_PATH . '/*/Widgets');
         foreach ($finder->files() as $file) {
             /** @var $file \SplFileInfo */
             $module = $file->getPathInfo()->getPathInfo()->getBasename();

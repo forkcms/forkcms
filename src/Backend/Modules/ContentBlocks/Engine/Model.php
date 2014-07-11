@@ -131,7 +131,7 @@ class Model
             'id' => $item['extra_id'],
             'module' => 'ContentBlocks',
             'type' => 'widget',
-            'action' => 'detail'
+            'action' => 'Detail'
         );
 
         // delete extra
@@ -309,7 +309,7 @@ class Model
             'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
-            'action' => 'detail',
+            'action' => 'Detail',
             'data' => serialize(
                 array(
                     'id' => $item['id'],

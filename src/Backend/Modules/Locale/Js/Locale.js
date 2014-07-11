@@ -52,7 +52,7 @@ jsBackend.translations.controls =
 			$('select#module option').prop('disabled', true);
 
 			// enable core
-			$('select#module option[value=core]').prop('disabled', false).prop('selected', true);
+			$('select#module option[value=Core]').prop('disabled', false).prop('selected', true);
 		}
 
 		// remove the disabled stuff
