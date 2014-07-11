@@ -1,10 +1,18 @@
-3.7.1 (xxxx-xx-xx)
+3.7.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Location: BackendLocationModel::getCoordinates() added.
+
+
+3.7.1 (2014-07-10)
 --
 Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
 * ContentBlocks: template gave error on capital letter in default.tpl.
-* Location: BackendLocationModel::getCoordinates() added.
+* Blog: show image on preview
+* Core: add .editorconfig file
 
 Bugfixes:
 
@@ -17,6 +25,9 @@ Bugfixes:
 * Pages: widget previous-next fixed.
 * Extensions: using 'Core' instead of 'core'.
 * Api client: some small fixes.
+* ContentBlocks: template gave error on capital letter in default.tpl.
+* Content blocks: fixes empty positions for content blocks
+
 
 3.7.0 (2014-04-24)
 --
