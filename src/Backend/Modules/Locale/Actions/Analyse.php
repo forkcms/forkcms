@@ -54,13 +54,13 @@ class Analyse extends BackendBaseActionIndex
         $files = (array) unserialize((string) $files);
 
         // no files
-        if(empty($files)) return '';
+        if (empty($files)) return '';
 
         // start
         $return = '<ul>' . "\n";
 
         // loop files
-        foreach($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">' . wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) . '</code></li>' . "\n";
+        foreach ($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">' . wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) . '</code></li>' . "\n";
 
         // end
         $return .= '</ul>';
@@ -86,7 +86,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgFrontend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Add')) {
+        if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
             $this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
@@ -95,7 +95,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('SaveTranslation')) {
+        if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
             $this->dgFrontend->addColumn('translation', null, null, null, BL::lbl('Add'));
 
@@ -122,7 +122,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('Add')) {
+        if (BackendAuthentication::isAllowedAction('Add')) {
             // set column URLs
             $this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('Add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
         }
@@ -131,7 +131,7 @@ class Analyse extends BackendBaseActionIndex
         $this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('SaveTranslation')) {
+        if (BackendAuthentication::isAllowedAction('SaveTranslation')) {
             // add columns
             $this->dgBackend->addColumn('translation', null, null, null, BL::lbl('Add'));
 

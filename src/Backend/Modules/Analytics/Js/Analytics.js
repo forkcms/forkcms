@@ -29,7 +29,7 @@ jsBackend.analytics.charts =
 {
 	init: function()
 	{
-		if($chartPieChart.length > 0 || $chartDoubleMetricPerDay.length > 0 || $chartSingleMetricPerDay.length > 0 || $chartWidget.length > 0)
+		if ($chartPieChart.length > 0 || $chartDoubleMetricPerDay.length > 0 || $chartSingleMetricPerDay.length > 0 || $chartWidget.length > 0)
 		{
 			Highcharts.setOptions(
 			{
@@ -57,7 +57,7 @@ jsBackend.analytics.chartPieChart =
 
 	init: function()
 	{
-		if($chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
+		if ($chartPieChart.length > 0) { jsBackend.analytics.chartPieChart.create(); }
 	},
 
 	// add new chart
@@ -126,7 +126,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
 	init: function()
 	{
-		if($chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
+		if ($chartDoubleMetricPerDay.length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
 	},
 
 	// add new chart
@@ -142,7 +142,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 		{
 			xAxisValues.push($(this).children('span.fulldate').html());
 			var text = $(this).children('span.date').html();
-			if(xAxisItems.length > 10 && counter%interval > 0) text = ' ';
+			if (xAxisItems.length > 10 && counter%interval > 0) text = ' ';
 			xAxisCategories.push(text);
 			counter++;
 		});
@@ -193,7 +193,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 	init: function()
 	{
-		if($chartSingleMetricPerDay.length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
+		if ($chartSingleMetricPerDay.length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
 	},
 
 	// add new chart
@@ -209,7 +209,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 		{
 			xAxisValues.push($(this).children('span.fulldate').html());
 			var text = $(this).children('span.date').html();
-			if(xAxisItems.length > 10 && counter%interval > 0) text = ' ';
+			if (xAxisItems.length > 10 && counter%interval > 0) text = ' ';
 			xAxisCategories.push(text);
 			counter++;
 		});
@@ -253,7 +253,7 @@ jsBackend.analytics.chartWidget =
 
 	init: function()
 	{
-		if($chartWidget.length > 0) { jsBackend.analytics.chartWidget.create(); }
+		if ($chartWidget.length > 0) { jsBackend.analytics.chartWidget.create(); }
 	},
 
 	// add new chart
@@ -269,7 +269,7 @@ jsBackend.analytics.chartWidget =
 		{
 			xAxisValues.push($(this).children('span.fulldate').html());
 			var text = $(this).children('span.date').html();
-			if(xAxisItems.length > 10 && counter%interval > 0) text = ' ';
+			if (xAxisItems.length > 10 && counter%interval > 0) text = ' ';
 			xAxisCategories.push(text);
 			counter++;
 		});
@@ -324,7 +324,7 @@ jsBackend.analytics.loading =
 		// variables
 		$longLoader = $('#longLoader');
 
-		if($longLoader.length > 0)
+		if ($longLoader.length > 0)
 		{
 			// loading bar stuff
 			$longLoader.show();
@@ -364,17 +364,17 @@ jsBackend.analytics.loading =
 			success: function(data, textStatus)
 			{
 				// redirect
-				if(data.data.status == 'unauthorized') { window.location = jsBackend.data.get('analytics.data.settingsUrl'); }
+				if (data.data.status == 'unauthorized') { window.location = jsBackend.data.get('analytics.data.settingsUrl'); }
 
-				if(data.code == 200)
+				if (data.code == 200)
 				{
 					// get redirect url
 					var url = document.location.protocol +'//'+ document.location.host;
-					if(jsBackend.data.exists('analytics.data.redirect')) url += jsBackend.data.get('analytics.data.redirect');
-					if(jsBackend.data.exists('analytics.data.redirectGet')) url += '&' + jsBackend.data.get('analytics.data.redirectGet');
+					if (jsBackend.data.exists('analytics.data.redirect')) url += jsBackend.data.get('analytics.data.redirect');
+					if (jsBackend.data.exists('analytics.data.redirectGet')) url += '&' + jsBackend.data.get('analytics.data.redirectGet');
 
 					// redirect
-					if(data.data.status == 'done') window.location = url;
+					if (data.data.status == 'done') window.location = url;
 				}
 				else
 				{
@@ -392,11 +392,11 @@ jsBackend.analytics.loading =
 					jsBackend.messages.add('error', textStatus);
 
 					// alert the user
-					if(jsBackend.debug) alert(textStatus);
+					if (jsBackend.debug) alert(textStatus);
 				}
 
 				// alert the user
-				if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+				if (data.code != 200 && jsBackend.debug) { alert(data.message); }
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
@@ -412,7 +412,7 @@ jsBackend.analytics.loading =
 				jsBackend.messages.add('error', textStatus);
 
 				// alert the user
-				if(jsBackend.debug) alert(textStatus);
+				if (jsBackend.debug) alert(textStatus);
 			}
 		});
 	}
@@ -428,7 +428,7 @@ jsBackend.analytics.resize =
 		$(window).on('resize', function()
 		{
 			resizeTime = new Date();
-			if(jsBackend.analytics.resize.timeout === false)
+			if (jsBackend.analytics.resize.timeout === false)
 			{
 				timeout = true;
 				setTimeout(jsBackend.analytics.resize.resizeEnd, jsBackend.analytics.resize.interval);
@@ -438,29 +438,29 @@ jsBackend.analytics.resize =
 
 	resizeEnd: function()
 	{
-		if(new Date() - resizeTime < jsBackend.analytics.resize.interval)
+		if (new Date() - resizeTime < jsBackend.analytics.resize.interval)
 		{
 			setTimeout(jsBackend.analytics.resize.resizeEnd, jsBackend.analytics.resize.interval);
 		}
 		else
 		{
 			timeout = false;
-			if($chartPieChart.length > 0)
+			if ($chartPieChart.length > 0)
 			{
 				$chartPieChart.html('&nbsp;');
 				jsBackend.analytics.chartPieChart.create();
 			}
-			if($chartDoubleMetricPerDay.length > 0)
+			if ($chartDoubleMetricPerDay.length > 0)
 			{
 				$chartDoubleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartDoubleMetricPerDay.create();
 			}
-			if($chartSingleMetricPerDay.length > 0)
+			if ($chartSingleMetricPerDay.length > 0)
 			{
 				$chartSingleMetricPerDay.html('&nbsp;');
 				jsBackend.analytics.chartSingleMetricPerDay.create();
 			}
-			if($chartWidget.length > 0)
+			if ($chartWidget.length > 0)
 			{
 				$chartWidget.html('&nbsp;');
 				jsBackend.analytics.chartWidget.create();

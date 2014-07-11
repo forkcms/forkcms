@@ -42,7 +42,7 @@ class Index extends BackendAnalyticsBase
         $warnings = BackendAnalyticsModel::checkSettings();
         $this->tpl->assign('warnings', $warnings);
 
-        if(empty($warnings)) {
+        if (empty($warnings)) {
             $this->parseOverviewData();
             $this->parseLineChartData();
             $this->parsePieChartData();
@@ -72,7 +72,7 @@ class Index extends BackendAnalyticsBase
     private function parseImportantKeywords()
     {
         $results = BackendAnalyticsModel::getTopKeywords($this->startTimestamp, $this->endTimestamp, 25);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
 
             // set headers
@@ -94,7 +94,7 @@ class Index extends BackendAnalyticsBase
     private function parseImportantReferrals()
     {
         $results = BackendAnalyticsModel::getTopReferrals($this->startTimestamp, $this->endTimestamp, 25);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnsHidden(array('referral_long'));
             $dataGrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
@@ -123,7 +123,7 @@ class Index extends BackendAnalyticsBase
 
         $metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-        foreach($metrics as $i => $metric) {
+        foreach ($metrics as $i => $metric) {
             // build graph data array
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
@@ -131,7 +131,7 @@ class Index extends BackendAnalyticsBase
             $graphData[$i]['i'] = $i + 1;
             $graphData[$i]['data'] = array();
 
-            foreach($metricsPerDay as $j => $data) {
+            foreach ($metricsPerDay as $j => $data) {
                 // cast SimpleXMLElement to array
                 $data = (array) $data;
 
@@ -141,11 +141,13 @@ class Index extends BackendAnalyticsBase
             }
         }
 
-        foreach($graphData as $metric) {
+        foreach ($graphData as $metric) {
             // loop the data
-            foreach($metric['data'] as $data) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 
@@ -165,35 +167,47 @@ class Index extends BackendAnalyticsBase
 
         // are there some values?
         $dataAvailable = false;
-        foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+        foreach ($resultsTotal as $data) {
+            if ($data != 0) {
+                $dataAvailable = true;
+            }
+        }
 
         // show message if there is no data
         $this->tpl->assign('dataAvailable', $dataAvailable);
 
-        if(!empty($results)) {
+        if (!empty($results)) {
             // time on site values
             $timeOnSite = ($results['entrances'] == 0) ? 0 : ($results['timeOnSite'] / $results['entrances']);
             $timeOnSiteTotal = ($resultsTotal['entrances'] == 0) ? 0 : ($resultsTotal['timeOnSite'] / $resultsTotal['entrances']);
             $timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 0);
-            if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+' . $timeOnSiteDifference;
+            if ($timeOnSiteDifference > 0) {
+                $timeOnSiteDifference = '+' . $timeOnSiteDifference;
+            }
 
             // pages / visit
             $pagesPerVisit = ($results['visits'] == 0) ? 0 : number_format(($results['pageviews'] / $results['visits']), 2);
             $pagesPerVisitTotal = ($resultsTotal['visits'] == 0) ? 0 : number_format(($resultsTotal['pageviews'] / $resultsTotal['visits']), 2);
             $pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 0);
-            if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
+            if ($pagesPerVisitDifference > 0) {
+                $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
+            }
 
             // new visits
             $newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
             $newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
             $newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-            if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
+            if ($newVisitsDifference > 0) {
+                $newVisitsDifference = '+' . $newVisitsDifference;
+            }
 
             // bounces
             $bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
             $bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
             $bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-            if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
+            if ($bouncesDifference > 0) {
+                $bouncesDifference = '+' . $bouncesDifference;
+            }
 
             $this->tpl->assign('pageviews', $results['pageviews']);
             $this->tpl->assign('visitors', $results['visitors']);
@@ -222,10 +236,12 @@ class Index extends BackendAnalyticsBase
         $graphData = array();
         $sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
 
-        foreach($sources as $i => $source) {
+        foreach ($sources as $i => $source) {
             // get label
             $label = BL::lbl(\SpoonFilter::toCamelCase($source['label']), 'analytics');
-            if($label == '{$lblAnalytics' . \SpoonFilter::toCamelCase($source['label']) . '}') $label = $source['label'];
+            if ($label == '{$lblAnalytics' . \SpoonFilter::toCamelCase($source['label']) . '}') {
+                $label = $source['label'];
+            }
 
             // build array
             $graphData[$i]['label'] = \SpoonFilter::ucfirst($label);

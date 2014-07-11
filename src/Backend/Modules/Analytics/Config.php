@@ -49,13 +49,15 @@ class Config extends BackendBaseConfig
         $action = $this->getContainer()->has('url') ? $this->getContainer()->get('url')->getAction() : null;
 
         // analytics session token
-        if(BackendModel::getModuleSetting('Analytics', 'session_token') === null) $error = true;
-
-        // analytics table id
-        if(BackendModel::getModuleSetting('Analytics', 'table_id') === null) $error = true;
+        if (
+            BackendModel::getModuleSetting('Analytics', 'session_token') === null ||
+            BackendModel::getModuleSetting('Analytics', 'table_id') === null
+        ) {
+            $error = true;
+        }
 
         // missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
-        if($error && $action != 'Settings' && $action != 'Index') {
+        if ($error && $action != 'Settings' && $action != 'Index') {
             \SpoonHTTP::redirect(BackendModel::createURLForAction('Index'));
         }
     }

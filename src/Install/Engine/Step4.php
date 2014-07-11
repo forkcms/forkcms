@@ -58,7 +58,7 @@ class Step4 extends Step
         foreach ($this->modules['required'] as $module) {
             // add to the list
             $modules[] = array(
-                'label' => \SpoonFilter::toCamelCase($module),
+                'label' => $module,
                 'value' => $module,
                 'attributes' => array('disabled' => 'disabled')
             );
@@ -146,25 +146,31 @@ class Step4 extends Step
 
                 // add blog if example data was checked
                 if ($this->frm->getField('example_data')->getChecked() &&
-                    !in_array('blog', $modules)
+                    !in_array('Blog', $modules)
                 ) {
-                    $modules[] = 'blog';
+                    $modules[] = 'Blog';
                 }
 
-                // set modules
+                // set modules and default data
                 \SpoonSession::set('modules', $modules);
+                \SpoonSession::set(
+                    'example_data',
+                    $this->frm->getField('example_data')->getChecked()
+                );
 
-                // example data
-                \SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
-
-                // debug mode
-                \SpoonSession::set('debug_mode', $this->frm->getField('debug_mode')->getChecked());
-
-                // specific debug email address
-                \SpoonSession::set('different_debug_email', $this->frm->getField('different_debug_email')->getChecked());
-
-                // specific debug email address text
-                \SpoonSession::set('debug_email', $this->frm->getField('debug_email')->getValue());
+                // debug data
+                \SpoonSession::set(
+                    'debug_mode',
+                    $this->frm->getField('debug_mode')->getChecked()
+                );
+                \SpoonSession::set(
+                    'different_debug_email',
+                    $this->frm->getField('different_debug_email')->getChecked()
+                );
+                \SpoonSession::set(
+                    'debug_email',
+                    $this->frm->getField('debug_email')->getValue()
+                );
 
                 // redirect
                 \SpoonHTTP::redirect('/install?step=5');

@@ -64,14 +64,14 @@ class ExitPages extends BackendAnalyticsBase
         // get metrics per day
         $metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
 
-        foreach($metrics as $i => $metric) {
+        foreach ($metrics as $i => $metric) {
             // build graph data array
             $graphData[$i] = array();
             $graphData[$i]['title'] = $metric;
             $graphData[$i]['label'] = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($metric)));
             $graphData[$i]['data'] = array();
 
-            foreach($metricsPerDay as $j => $data) {
+            foreach ($metricsPerDay as $j => $data) {
                 // cast SimpleXMLElement to array
                 $data = (array) $data;
 
@@ -82,10 +82,12 @@ class ExitPages extends BackendAnalyticsBase
         }
 
         // loop the metrics
-        foreach($graphData as $metric) {
-            foreach($metric['data'] as $data) {
+        foreach ($graphData as $metric) {
+            foreach ($metric['data'] as $data) {
                 // get the maximum value
-                if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+                if ((int) $data['value'] > $maxYAxis) {
+                    $maxYAxis = (int) $data['value'];
+                }
             }
         }
 
@@ -101,13 +103,13 @@ class ExitPages extends BackendAnalyticsBase
     private function parseExitPages()
     {
         $results = BackendAnalyticsModel::getExitPages($this->startTimestamp, $this->endTimestamp);
-        if(!empty($results)) {
+        if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setPaging();
             $dataGrid->setColumnHidden('page_encoded');
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
+            if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
                 $dataGrid->setColumnURL('page', BackendModel::createURLForAction('DetailPage') . '&amp;page=[page_encoded]');
             }
 
@@ -127,12 +129,16 @@ class ExitPages extends BackendAnalyticsBase
 
         // are there some values?
         $dataAvailable = false;
-        foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+        foreach ($resultsTotal as $data) {
+            if ($data != 0) {
+                $dataAvailable = true;
+            }
+        }
 
         // show message if there is no data
         $this->tpl->assign('dataAvailable', $dataAvailable);
 
-        if(!empty($results)) {
+        if (!empty($results)) {
             // exits percentage of total
             $exitsPercentageOfTotal = ($results['exits'] == 0) ? 0 : number_format(($results['exitPagesExits'] / $results['exits']) * 100, 0);
 
@@ -143,7 +149,9 @@ class ExitPages extends BackendAnalyticsBase
             $exitsPercentage = ($results['exitPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['exitPagesPageviews']) * 100, 0);
             $exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
             $exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
-            if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
+            if ($exitsPercentageDifference > 0) {
+                $exitsPercentageDifference = '+' . $exitsPercentageDifference;
+            }
 
             $this->tpl->assign('exits', $results['exits']);
             $this->tpl->assign('exitsPercentageOfTotal', $exitsPercentageOfTotal);

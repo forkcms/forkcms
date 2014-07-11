@@ -23,7 +23,6 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
-
 /**
  * This is the add-action, it will display a form to create a new item
  *
@@ -78,12 +77,16 @@ class Add extends BackendBaseActionAdd
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
         $this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting($this->getModule(), 'allow_comments', false));
         $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
-        if(count($categories) != 2) $this->frm->getField('category_id')->setDefaultElement('');
+        if (count($categories) != 2) {
+            $this->frm->getField('category_id')->setDefaultElement('');
+        }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
         $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
         $this->frm->addDate('publish_on_date');
         $this->frm->addTime('publish_on_time');
-        if($this->imageIsAllowed) $this->frm->addImage('image');
+        if ($this->imageIsAllowed) {
+            $this->frm->addImage('image');
+        }
 
         // meta
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
@@ -102,7 +105,9 @@ class Add extends BackendBaseActionAdd
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) {
+            $this->tpl->assign('detailURL', SITE_URL . $url);
+        }
     }
 
     /**
@@ -111,7 +116,7 @@ class Add extends BackendBaseActionAdd
     private function validateForm()
     {
         // is the form submitted?
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // get the status
             $status = \SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
@@ -124,11 +129,13 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
             $this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
             $this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
-            if($this->frm->getField('category_id')->getValue() == 'new_category') $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
+            if ($this->frm->getField('category_id')->getValue() == 'new_category') {
+                $this->frm->getField('category_id')->addError(BL::err('FieldIsRequired'));
+            }
 
-            if($this->imageIsAllowed) {
+            if ($this->imageIsAllowed) {
                 // validate the image
-                if($this->frm->getField('image')->isFilled()) {
+                if ($this->frm->getField('image')->isFilled()) {
                     // image extension and mime type
                     $this->frm->getField('image')->isAllowedExtension(array('jpg', 'png', 'gif', 'jpeg'), BL::err('JPGGIFAndPNGOnly'));
                     $this->frm->getField('image')->isAllowedMimeType(array('image/jpg', 'image/png', 'image/gif', 'image/jpeg'), BL::err('JPGGIFAndPNGOnly'));
@@ -138,7 +145,7 @@ class Add extends BackendBaseActionAdd
             // validate meta
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
                 $item['meta_id'] = $this->meta->save();
@@ -156,19 +163,23 @@ class Add extends BackendBaseActionAdd
                 $item['num_comments'] = 0;
                 $item['status'] = $status;
 
-                if($this->imageIsAllowed) {
+                if ($this->imageIsAllowed) {
                     // the image path
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
                     $fs = new Filesystem();
-                    if(!$fs->exists($imagePath . '/source')) $fs->mkdir($imagePath . '/source');
-                    if(!$fs->exists($imagePath . '/128x128')) $fs->mkdir($imagePath . '/128x128');
+                    if (!$fs->exists($imagePath . '/source')) {
+                        $fs->mkdir($imagePath . '/source');
+                    }
+                    if (!$fs->exists($imagePath . '/128x128')) {
+                        $fs->mkdir($imagePath . '/128x128');
+                    }
 
                     // image provided?
-                    if($this->frm->getField('image')->isFilled()) {
+                    if ($this->frm->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '.' . $this->frm->getField('image')->getExtension();
+                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
@@ -185,20 +196,19 @@ class Add extends BackendBaseActionAdd
                 BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
                 // active
-                if($item['status'] == 'active') {
+                if ($item['status'] == 'active') {
                     // add search index
                     BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
                     // ping
-                    if(BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());
+                    if (BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) {
+                        BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());
+                    }
 
                     // everything is saved, so redirect to the overview
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
-                }
-
-                // draft
-                elseif($item['status'] == 'draft') {
-                    // everything is saved, so redirect to the edit action
+                } elseif ($item['status'] == 'draft') {
+                    // draft: everything is saved, so redirect to the edit action
                     $this->redirect(BackendModel::createURLForAction('Edit') . '&report=saved-as-draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
                 }
             }

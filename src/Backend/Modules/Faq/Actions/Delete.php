@@ -28,7 +28,7 @@ class Delete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
 
-        if($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
             parent::execute();
             $this->record = BackendFaqModel::get($this->id);
 
@@ -44,8 +44,10 @@ class Delete extends BackendBaseActionDelete
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
                 urlencode($this->record['question'])
             );
-        } else $this->redirect(
-            BackendModel::createURLForAction('Index') . '&error=non-existing'
-        );
+        } else {
+            $this->redirect(
+                BackendModel::createURLForAction('Index') . '&error=non-existing'
+            );
+        }
     }
 }

@@ -52,24 +52,30 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('name', 'email', 'method', 'sent_forms'), 'name');
         $this->dataGrid->setColumnFunction(
             array(new BackendFormBuilderModel(), 'formatRecipients'),
-            array('[email]'), 'email'
+            array('[email]'),
+            'email'
         );
         $this->dataGrid->setColumnFunction(
             array(new BackendFormBuilderModel(), 'getLocale'),
-            array('Method_[method]'), 'method'
+            array('Method_[method]'),
+            'method'
         );
         $this->dataGrid->setColumnFunction(
-            array(__CLASS__, 'parseNumForms'), array('[id]', '[sent_forms]'),
+            array(__CLASS__, 'parseNumForms'),
+            array('[id]', '[sent_forms]'),
             'sent_forms'
         );
 
         // check if edit action is allowed
-        if(BackendAuthentication::isAllowedAction('Edit')) {
+        if (BackendAuthentication::isAllowedAction('Edit')) {
             $this->dataGrid->setColumnURL(
-                'name', BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
+                'name',
+                BackendModel::createURLForAction('Edit') . '&amp;id=[id]'
             );
             $this->dataGrid->addColumn(
-                'edit', null, BL::getLabel('Edit'),
+                'edit',
+                null,
+                BL::getLabel('Edit'),
                 BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                 BL::getLabel('Edit')
             );
@@ -101,16 +107,18 @@ class Index extends BackendBaseActionIndex
         $sentForms = (int) $sentForms;
 
         // one form sent
-        if($sentForms == 1) $output = BL::getMessage('OneSentForm');
-
-        // multiple forms sent
-        elseif($sentForms > 1) $output = sprintf(BL::getMessage('SentForms'), $sentForms);
-
-        // no forms sent
-        else $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+        if ($sentForms == 1) {
+            $output = BL::getMessage('OneSentForm');
+        } elseif ($sentForms > 1) {
+            // multiple forms sent
+            $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+        } else {
+            // no forms sent
+            $output = sprintf(BL::getMessage('SentForms'), $sentForms);
+        }
 
         // check if data action is allowed
-        if(BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
+        if (BackendAuthentication::isAllowedAction('Data', 'FormBuilder')) {
             // output
             $output = '<a href="' . BackendModel::createURLForAction('Data') .
                       '&amp;id=' . $formId . '" title="' . $output . '">' . $output . '</a>';

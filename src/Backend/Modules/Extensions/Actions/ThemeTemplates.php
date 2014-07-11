@@ -67,7 +67,9 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->selectedTheme = $this->getParameter('theme', 'string');
 
         // build available themes
-        foreach(BackendExtensionsModel::getThemes() as $theme) $this->availableThemes[$theme['value']] = $theme['label'];
+        foreach (BackendExtensionsModel::getThemes() as $theme) {
+            $this->availableThemes[$theme['value']] = $theme['label'];
+        }
 
         // determine selected theme, based upon submitted form or default theme
         $this->selectedTheme = \SpoonFilter::getValue($this->selectedTheme, array_keys($this->availableThemes), BackendModel::getModuleSetting('Core', 'theme', 'core'));
@@ -82,7 +84,7 @@ class ThemeTemplates extends BackendBaseActionEdit
         $this->dataGrid = new BackendDataGridDB(BackendExtensionsModel::QRY_BROWSE_TEMPLATES, array($this->selectedTheme));
 
         // check if this action is allowed
-        if(BackendAuthentication::isAllowedAction('EditThemeTemplate')) {
+        if (BackendAuthentication::isAllowedAction('EditThemeTemplate')) {
             // set colum URLs
             $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditThemeTemplate') . '&amp;id=[id]');
 

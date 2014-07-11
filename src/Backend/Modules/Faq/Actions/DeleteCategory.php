@@ -30,10 +30,10 @@ class DeleteCategory extends BackendBaseActionDelete
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
+        if ($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
             $this->record = (array) BackendFaqModel::getCategory($this->id);
 
-            if(BackendFaqModel::deleteCategoryAllowed($this->id)) {
+            if (BackendFaqModel::deleteCategoryAllowed($this->id)) {
                 parent::execute();
 
                 // delete item
@@ -49,12 +49,16 @@ class DeleteCategory extends BackendBaseActionDelete
                     BackendModel::createURLForAction('Categories') . '&report=deleted-category&var=' .
                     urlencode($this->record['title'])
                 );
-            } else $this->redirect(
-                BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
-                urlencode($this->record['title'])
+            } else {
+                $this->redirect(
+                    BackendModel::createURLForAction('Categories') . '&error=delete-category-not-allowed&var=' .
+                    urlencode($this->record['title'])
+                );
+            }
+        } else {
+            $this->redirect(
+                BackendModel::createURLForAction('Categories') . '&error=non-existing'
             );
-        } else $this->redirect(
-            BackendModel::createURLForAction('Categories') . '&error=non-existing'
-        );
+        }
     }
 }

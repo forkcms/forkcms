@@ -13,7 +13,6 @@ use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 
-
 /**
  * This action is used to perform mass actions on landing pages (delete, ...)
  *
@@ -30,14 +29,10 @@ class MassLandingPageAction extends BackendBaseAction
         $action = \SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
         // no id's provided
-        if(!isset($_GET['id'])) {
+        if (!isset($_GET['id'])) {
             $this->redirect(BackendModel::createURLForAction('LandingPages') . '&error=no-items-selected');
-        }
-
-        // at least one id
-        else {
-            // delete items
-            if($action == 'delete') BackendAnalyticsModel::deleteLandingPage((array) $_GET['id']);
+        } elseif ($action == 'delete') {
+            BackendAnalyticsModel::deleteLandingPage((array) $_GET['id']);
         }
 
         // redirect

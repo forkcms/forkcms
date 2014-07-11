@@ -47,8 +47,12 @@ class Helper
         $contentResults = self::getGoogleAnalyticsInstance()->getAnalyticsResults($contentMetrics, $startTimestamp, $endTimestamp);
 
         // make sure results contain an aggregates array
-        if(!isset($visitorResults['aggregates']) || !is_array($visitorResults['aggregates'])) $visitorResults['aggregates'] = array();
-        if(!isset($contentResults['aggregates']) || !is_array($contentResults['aggregates'])) $contentResults['aggregates'] = array();
+        if (!isset($visitorResults['aggregates']) || !is_array($visitorResults['aggregates'])) {
+            $visitorResults['aggregates'] = array();
+        }
+        if (!isset($contentResults['aggregates']) || !is_array($contentResults['aggregates'])) {
+            $contentResults['aggregates'] = array();
+        }
 
         // merge results
         $results = array_merge($visitorResults['aggregates'], $contentResults['aggregates']);
@@ -105,10 +109,13 @@ class Helper
         /*
          * PUT THEM ALL TOGETHER
          */
-        foreach($results as $key => $value) {
+        foreach ($results as $key => $value) {
             // format value
-            if($key == 'timeOnPage' || $key == 'timeOnSite') $value = (int) ceil($value);
-            else $value = (int) $value;
+            if ($key == 'timeOnPage' || $key == 'timeOnSite') {
+                $value = (int) ceil($value);
+            } else {
+                $value = (int) $value;
+            }
 
             // save
             $aggregates[$key] = $value;
@@ -129,21 +136,23 @@ class Helper
         // get metrics
         $metrics = array('pageviews', 'visitors');
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         $dimensions = 'ga:date';
         $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, $dimensions);
         $entries = array();
 
         // loop visitor results
-        foreach($results['entries'] as $result) {
+        foreach ($results['entries'] as $result) {
             $timestamp = gmmktime(12, 0, 0, substr($result['date'], 4, 2), substr($result['date'], 6, 2), substr($result['date'], 0, 4));
 
             // store metrics in correct format
             $entry = array();
             $entry['timestamp'] = $timestamp;
 
-            foreach($metrics as $metric) {
+            foreach ($metrics as $metric) {
                 $entry[$metric] = (int) $result[$metric];
             }
 
@@ -191,12 +200,16 @@ class Helper
         $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($metrics, mktime(0, 0, 0, 1, 1, 2005), $endTimestamp, $dimensions, $parameters);
 
         // loop page results and add hostname to data array
-        foreach($results['entries'] as $result) $data['hostname'] = $result['hostname'];
+        foreach ($results['entries'] as $result) {
+            $data['hostname'] = $result['hostname'];
+        }
 
         // get metrics
         $metrics = array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnPage', 'timeOnSite', 'visits');
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // get dimensions
         $dimensions = 'ga:date';
@@ -212,7 +225,7 @@ class Helper
         $data['aggregates'] = $results['aggregates'];
 
         // loop page results
-        foreach($results['entries'] as $result) {
+        foreach ($results['entries'] as $result) {
             // get timestamp
             $timestamp = gmmktime(12, 0, 0, substr($result['date'], 4, 2), substr($result['date'], 6, 2), substr($result['date'], 0, 4));
 
@@ -221,7 +234,9 @@ class Helper
             $entry['timestamp'] = $timestamp;
 
             // loop metrics
-            foreach($metrics as $metric) $entry[$metric] = (int) $result[$metric];
+            foreach ($metrics as $metric) {
+                $entry[$metric] = (int) $result[$metric];
+            }
 
             // add to entries array
             $data['metrics_per_day'][] = $entry;
@@ -230,7 +245,9 @@ class Helper
         // get metrics
         $metrics = array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnPage', 'timeOnSite', 'visits');
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // get dimensions
         $dimensions = array('ga:source', 'ga:referralPath', 'ga:keyword');
@@ -245,13 +262,18 @@ class Helper
         $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, $dimensions, $parameters);
 
         // loop page results
-        foreach($results['entries'] as $result) {
+        foreach ($results['entries'] as $result) {
             // store dimension in correct format
             $entry = array();
-            if($result['keyword'] != '(not set)') $entry['source'] = $result['keyword'];
-            elseif($result['source'] == '(direct)') $entry['source'] = BL::lbl('DirectTraffic');
-            elseif($result['referralPath'] != '(not set)') $entry['source'] = $result['source'] . $result['referralPath'];
-            else $entry['source'] = $result['source'];
+            if ($result['keyword'] != '(not set)') {
+                $entry['source'] = $result['keyword'];
+            } elseif ($result['source'] == '(direct)') {
+                $entry['source'] = BL::lbl('DirectTraffic');
+            } elseif ($result['referralPath'] != '(not set)') {
+                $entry['source'] = $result['source'] . $result['referralPath'];
+            } else {
+                $entry['source'] = $result['source'];
+            }
 
             // get metrics
             $entry['pageviews'] = (int) $result['pageviews'];
@@ -276,7 +298,7 @@ class Helper
         $totalPageviews = (isset($results['aggregates']['pageviews']) ? (int) $results['aggregates']['pageviews'] : 0);
 
         // loop entries
-        foreach($results['entries'] as $i => $result) {
+        foreach ($results['entries'] as $i => $result) {
             // add to sources array
             $data['sources_grouped'][$i]['label'] = $result['medium'];
             $data['sources_grouped'][$i]['value'] = $result['pageviews'];
@@ -303,16 +325,22 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
         $parameters['filters'] = 'ga:exits>0';
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         // return results
         return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:pagePath', $parameters);
@@ -357,16 +385,22 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
         $parameters['filters'] = 'ga:keyword!=(not set)';
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         // fetch and return
         return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:keyword', $parameters);
@@ -385,7 +419,9 @@ class Helper
         // get metrics
         $metrics = array('bounces', 'entrances');
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // get parameters
         $parameters = array();
@@ -411,7 +447,9 @@ class Helper
         // get metrics
         $metrics = array('bounces', 'entrances', 'exits', 'pageviews', 'visits', 'visitors');
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // get dimensions
         $dimensions = 'ga:date';
@@ -423,7 +461,7 @@ class Helper
         $entries = array();
 
         // loop visitor results
-        foreach($results['entries'] as $result) {
+        foreach ($results['entries'] as $result) {
             // get timestamp
             $timestamp = gmmktime(12, 0, 0, substr($result['date'], 4, 2), substr($result['date'], 6, 2), substr($result['date'], 0, 4));
 
@@ -432,7 +470,9 @@ class Helper
             $entry['timestamp'] = $timestamp;
 
             // loop metrics
-            foreach($metrics as $metric) $entry[$metric] = (int) $result[$metric];
+            foreach ($metrics as $metric) {
+                $entry[$metric] = (int) $result[$metric];
+            }
 
             // add to entries array
             $entries[] = $entry;
@@ -458,15 +498,21 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:pagePath', $parameters);
     }
@@ -492,13 +538,15 @@ class Helper
         $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, mktime(0, 0, 0), mktime(23, 59, 59), $gaDimensions, $parameters);
 
         // no results - try the same query but for yesterday
-        if(empty($results)) $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, strtotime('-1day', mktime(0, 0, 0)), strtotime('-1day', mktime(23, 59, 59)), $gaDimensions, $parameters);
+        if (empty($results)) {
+            $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, strtotime('-1day', mktime(0, 0, 0)), strtotime('-1day', mktime(23, 59, 59)), $gaDimensions, $parameters);
+        }
 
         // init vars
         $insertArray = array();
 
         // loop keywords
-        foreach($results['entries'] as $entry) {
+        foreach ($results['entries'] as $entry) {
             // build insert record
             $insertRecord = array();
             $insertRecord['keyword'] = $entry['keyword'];
@@ -510,7 +558,7 @@ class Helper
         }
 
         // there are some records to be inserted
-        if(!empty($insertArray)) {
+        if (!empty($insertArray)) {
             $db = BackendModel::getContainer()->get('database');
 
             // remove old data and insert array into database
@@ -540,13 +588,15 @@ class Helper
         $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, mktime(0, 0, 0), mktime(23, 59, 59), $gaDimensions, $parameters);
 
         // no results - try the same query but for yesterday
-        if(empty($results)) $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, strtotime('-1day', mktime(0, 0, 0)), strtotime('-1day', mktime(23, 59, 59)), $gaDimensions, $parameters);
+        if (empty($results)) {
+            $results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, strtotime('-1day', mktime(0, 0, 0)), strtotime('-1day', mktime(23, 59, 59)), $gaDimensions, $parameters);
+        }
 
         // init vars
         $insertArray = array();
 
         // loop referrers
-        foreach($results['entries'] as $entry) {
+        foreach ($results['entries'] as $entry) {
             // build insert record
             $insertRecord = array();
             $insertRecord['referrer'] = $entry['source'] . $entry['referralPath'];
@@ -558,7 +608,7 @@ class Helper
         }
 
         // there are some records to be inserted
-        if(!empty($insertArray)) {
+        if (!empty($insertArray)) {
             $db = BackendModel::getContainer()->get('database');
 
             // remove old data and insert array into database
@@ -584,16 +634,22 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
         $parameters['filters'] = 'ga:medium==referral';
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, array('ga:source', 'ga:referralPath'), $parameters);
     }
@@ -632,15 +688,21 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, array('ga:source', 'ga:medium', 'ga:keyword'), $parameters);
     }
@@ -663,15 +725,21 @@ class Helper
 
         // set metrics
         $gaMetrics = array();
-        foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
+        foreach ($metrics as $metric) {
+            $gaMetrics[] = 'ga:' . $metric;
+        }
 
         // set parameters
         $parameters = array();
-        if(isset($limit)) $parameters['max-results'] = (int) $limit;
+        if (isset($limit)) {
+            $parameters['max-results'] = (int) $limit;
+        }
         $parameters['start-index'] = (int) $index;
 
         // sort if needed
-        if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
+        if ($sort !== null) {
+            $parameters['sort'] = '-ga:' . $sort;
+        }
 
         // fetch
         $gaResults = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:medium', $parameters);
@@ -680,12 +748,18 @@ class Helper
         $totalPageviews = (isset($gaResults['aggregates']['pageviews']) ? (int) $gaResults['aggregates']['pageviews'] : 0);
 
         // add entries to items
-        foreach($gaResults['entries'] as $entry) {
+        foreach ($gaResults['entries'] as $entry) {
             // get traffic source type
             $trafficSource = $entry['medium'];
-            if($trafficSource == '(none)') $trafficSource = 'direct_traffic';
-            if($trafficSource == 'organic') $trafficSource = 'search_engines';
-            if($trafficSource == 'referral') $trafficSource = 'referring_sites';
+            if ($trafficSource == '(none)') {
+                $trafficSource = 'direct_traffic';
+            }
+            if ($trafficSource == 'organic') {
+                $trafficSource = 'search_engines';
+            }
+            if ($trafficSource == 'referral') {
+                $trafficSource = 'referring_sites';
+            }
 
             $items[] = array(
                 'label' => $trafficSource,
@@ -722,7 +796,7 @@ class Helper
         $frm->addDate('end_date', $endTimestamp, 'range', mktime(0, 0, 0, 1, 1, 2005), time(), 'noFocus');
 
         // submitted
-        if($frm->isSubmitted()) {
+        if ($frm->isSubmitted()) {
             // show the form
             $tpl->assign('showForm', true);
 
@@ -738,9 +812,9 @@ class Helper
             $txtEndDate->isFilled(BL::err('EndDateIsInvalid'));
 
             // dates within valid range
-            if($txtStartDate->isFilled() && $txtEndDate->isFilled()) {
+            if ($txtStartDate->isFilled() && $txtEndDate->isFilled()) {
                 // valid dates
-                if($txtStartDate->isValid(BL::err('StartDateIsInvalid')) && $txtEndDate->isValid(BL::err('EndDateIsInvalid'))) {
+                if ($txtStartDate->isValid(BL::err('StartDateIsInvalid')) && $txtEndDate->isValid(BL::err('EndDateIsInvalid'))) {
                     // get timestamps
                     $newStartDate = BackendModel::getUTCTimestamp($txtStartDate);
                     $newEndDate = BackendModel::getUTCTimestamp($txtEndDate);
@@ -749,20 +823,24 @@ class Helper
                     $valid = true;
 
                     // startdate cannot be before 2005 (earliest valid google startdate)
-                    if($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) $valid = false;
-
-                    // enddate cannot be in the future
-                    elseif($newEndDate > time()) $valid = false;
-
-                    // enddate cannot be before the startdate
-                    elseif($newStartDate > $newEndDate) $valid = false;
+                    if ($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) {
+                        $valid = false;
+                    } elseif ($newEndDate > time()) {
+                        // enddate cannot be in the future
+                        $valid = false;
+                    } elseif ($newStartDate > $newEndDate) {
+                        // enddate cannot be before the startdate
+                        $valid = false;
+                    }
 
                     // invalid range
-                    if(!$valid) $txtStartDate->setError(BL::err('DateRangeIsInvalid'));
+                    if (!$valid) {
+                        $txtStartDate->setError(BL::err('DateRangeIsInvalid'));
+                    }
                 }
             }
 
-            if($frm->isCorrect()) {
+            if ($frm->isCorrect()) {
                 // parameters
                 $parameters['start_timestamp'] = $newStartDate;
                 $parameters['end_timestamp'] = $newEndDate;
@@ -779,17 +857,21 @@ class Helper
         $frm->parse($tpl);
 
         // we only allow live data fetching when the end date is today, no point in fetching and older range because it will never change
-        if($endTimestamp == mktime(0, 0, 0, date('n'), date('j'), date('Y'))) {
+        if ($endTimestamp == mktime(0, 0, 0, date('n'), date('j'), date('Y'))) {
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
+            if (BackendAuthentication::isAllowedAction('Loading', 'Analytics')) {
                 // url of current action
                 $liveDataUrl = BackendModel::createURLForAction('Loading') . '&amp;redirect_action=' . BackendModel::getContainer()->get('url')->getAction();
 
                 // page id set
-                if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id=' . (int) $_GET['page_id'];
+                if (isset($_GET['page_id']) && $_GET['page_id'] != '') {
+                    $liveDataUrl .= '&amp;page_id=' . (int) $_GET['page_id'];
+                }
 
                 // page path set
-                if(isset($_GET['page_path']) && $_GET['page_path'] != '') $liveDataUrl .= '&amp;page_path=' . (string) $_GET['page_path'];
+                if (isset($_GET['page_path']) && $_GET['page_path'] != '') {
+                    $liveDataUrl .= '&amp;page_path=' . (string) $_GET['page_path'];
+                }
 
                 // assign
                 $tpl->assign('liveDataURL', $liveDataUrl);
@@ -808,48 +890,47 @@ class Helper
         $endTimestamp = (\SpoonSession::exists('analytics_end_timestamp') ? \SpoonSession::get('analytics_end_timestamp') : null);
 
         // overwrite with get data if needed
-        if(isset($_GET['start_timestamp']) && $_GET['start_timestamp'] != '' && isset($_GET['end_timestamp']) && $_GET['end_timestamp'] != '') {
+        if (isset($_GET['start_timestamp']) && $_GET['start_timestamp'] != '' && isset($_GET['end_timestamp']) && $_GET['end_timestamp'] != '') {
             // get dates
             $startTimestamp = (int) $_GET['start_timestamp'];
             $endTimestamp = (int) $_GET['end_timestamp'];
         }
 
         // dates are set
-        if($startTimestamp > 0 && $endTimestamp > 0) {
+        if ($startTimestamp > 0 && $endTimestamp > 0) {
             // init valid
             $valid = true;
 
             // check startTimestamp (valid year/month/day)
-            if(!checkdate((int) date('n', $startTimestamp), (int) date('j', $startTimestamp), (int) date('Y', $startTimestamp))) $valid = false;
-
-            // check endTimestamp (valid year/month/day)
-            elseif(!checkdate((int) date('n', $endTimestamp), (int) date('j', $endTimestamp), (int) date('Y', $endTimestamp))) $valid = false;
-
-            // we have valid formats but we like to dig deeper
-            else {
+            if (!checkdate((int) date('n', $startTimestamp), (int) date('j', $startTimestamp), (int) date('Y', $startTimestamp))) {
+                $valid = false;
+            } elseif (!checkdate((int) date('n', $endTimestamp), (int) date('j', $endTimestamp), (int) date('Y', $endTimestamp))) {
+                // check endTimestamp (valid year/month/day)
+                $valid = false;
+                // we have valid formats but we like to dig deeper
+            } elseif ($startTimestamp > $endTimestamp) {
                 // start needs to be before end
-                if($startTimestamp > $endTimestamp) $valid = false;
-
+                $valid = false;
+            } elseif ($startTimestamp < mktime(0, 0, 0, 1, 1, 2005)) {
                 // startTimestamp cannot be before 2005 (earliest valid google startdate)
-                elseif($startTimestamp < mktime(0, 0, 0, 1, 1, 2005)) $valid = false;
-
+                $valid = false;
+            } elseif ($endTimestamp > time()) {
                 // end can not be in the future
-                elseif($endTimestamp > time()) $valid = false;
+                $valid = false;
             }
 
             // valid dates
-            if($valid) {
+            if ($valid) {
                 // set sessions
                 \SpoonSession::set('analytics_start_timestamp', $startTimestamp);
                 \SpoonSession::set('analytics_end_timestamp', $endTimestamp);
             }
-        }
-
-        // dates are not set
-        else {
-            // get interval
+        } else {
+            // dates are not set: get interval
             $interval = BackendModel::getModuleSetting('Analytics', 'interval', 'week');
-            if($interval == 'week') $interval .= ' -1 days';
+            if ($interval == 'week') {
+                $interval .= ' -1 days';
+            }
 
             // set sessions
             \SpoonSession::set('analytics_start_timestamp', strtotime('-1' . $interval, mktime(0, 0, 0)));

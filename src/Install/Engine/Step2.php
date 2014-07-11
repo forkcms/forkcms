@@ -114,9 +114,9 @@ class Step2 extends Step
         self::checkRequirement(
             'settingsDateTimezone',
             (ini_get('date.timezone') == '' || (in_array(
-                    date_default_timezone_get(),
-                    \DateTimeZone::listIdentifiers()
-                ))),
+                date_default_timezone_get(),
+                \DateTimeZone::listIdentifiers()
+            ))),
             self::STATUS_WARNING
         );
 

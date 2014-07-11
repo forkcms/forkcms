@@ -649,9 +649,8 @@ class Model
 
                 return self::getURL($URL);
             }
-        } // current category should be excluded
-        else {
-            // already exists
+        } else {
+            // current category should be excluded
             if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_posts AS i
@@ -702,9 +701,8 @@ class Model
 
                 return self::getURLForCategory($URL);
             }
-        } // current category should be excluded
-        else {
-            // already exists
+        } else {
+            // current category should be excluded
             if ((bool) $db->getVar(
                 'SELECT 1
                  FROM blog_categories AS i

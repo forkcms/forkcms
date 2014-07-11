@@ -288,7 +288,8 @@ class Meta
         // is the form submitted?
         if ($this->frm->isSubmitted()) {
             /**
-             * If the fields are disabled we don't have any values in the post. When an error occurs in the other fields of the form the meta-fields would be cleared
+             * If the fields are disabled we don't have any values in the post.
+             * When an error occurs in the other fields of the form the meta-fields would be cleared
              * therefore we alter the POST so it contains the initial values.
              */
             if (!isset($_POST['page_title'])) {
@@ -307,10 +308,16 @@ class Meta
                 $_POST['meta_custom'] = (isset($this->data['custom'])) ? $this->data['custom'] : null;
             }
             if (!isset($_POST['seo_index'])) {
-                $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ? $this->data['data']['seo_index'] : 'none';
+                $_POST['seo_index'] = (isset($this->data['data']['seo_index'])) ?
+                    $this->data['data']['seo_index'] :
+                    'none'
+                ;
             }
             if (!isset($_POST['seo_follow'])) {
-                $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ? $this->data['data']['seo_follow'] : 'none';
+                $_POST['seo_follow'] = (isset($this->data['data']['seo_follow'])) ?
+                    $this->data['data']['seo_follow'] :
+                    'none'
+                ;
             }
         }
 

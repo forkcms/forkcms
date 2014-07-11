@@ -103,8 +103,12 @@ class TemplateModifiers
         // get separators
         $separators = explode('_', $format);
         $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
-        $thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+        $decimalSeparator = (
+            isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null
+        );
+        $thousandsSeparator = (
+            isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null
+        );
 
         // format the number
         return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
@@ -130,8 +134,12 @@ class TemplateModifiers
         // get separators
         $separators = explode('_', $format);
         $separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
-        $decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
-        $thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+        $decimalSeparator = (
+            isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null
+        );
+        $thousandsSeparator = (
+            isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null
+        );
 
         // format the number
         return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
@@ -248,7 +256,7 @@ class TemplateModifiers
      * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true)
+    public static function truncate($var, $length, $useHellip = true)
     {
         // remove special chars
         $var = htmlspecialchars_decode($var, ENT_QUOTES);

@@ -9,10 +9,10 @@ namespace Frontend\Modules\Blog\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Language AS FL;
+use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
-use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
@@ -65,7 +65,7 @@ class Model implements FrontendTagsInterface
             $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
             foreach ($folders as $folder) {
-                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $return['image'];
+                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
             }
         }
 
@@ -140,7 +140,7 @@ class Model implements FrontendTagsInterface
             // image?
             if (isset($row['image'])) {
                 foreach ($folders as $folder) {
-                    $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $row['image'];
+                    $items[$key]['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $row['image'];
                 }
             }
         }
@@ -789,7 +789,7 @@ class Model implements FrontendTagsInterface
     public static function getRevision($URL, $revision)
     {
         $return = (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.image,
              c.title AS category_title, m2.url AS category_url,
              UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
              i.allow_comments,
@@ -810,6 +810,15 @@ class Model implements FrontendTagsInterface
         // unserialize
         if (isset($return['meta_data'])) {
             $return['meta_data'] = @unserialize($return['meta_data']);
+        }
+
+        // image?
+        if (isset($return['image'])) {
+            $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
+
+            foreach ($folders as $folder) {
+                $return['image_' . $folder['dirname']] = $folder['url'] . '/' . $folder['dirname'] . '/' . $return['image'];
+            }
         }
 
         // return
@@ -949,7 +958,18 @@ class Model implements FrontendTagsInterface
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
-                null, null, null, null, null, null, null, null, null, null, null, true
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true
             );
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
@@ -964,7 +984,18 @@ class Model implements FrontendTagsInterface
                 FL::msg('NotificationSubject'),
                 FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
                 $variables,
-                null, null, null, null, null, null, null, null, null, null, null, true
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                true
             );
         }
     }

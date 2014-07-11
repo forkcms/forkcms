@@ -56,7 +56,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addCheckbox('hidden', true);
 
         // if we have multiple templates, add a dropdown to select them
-        if(count($this->templates) > 1) {
+        if (count($this->templates) > 1) {
             $this->frm->addDropdown('template', array_combine($this->templates, $this->templates));
         }
     }
@@ -66,14 +66,14 @@ class Add extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
             $fields = $this->frm->getFields();
 
             // validate fields
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();

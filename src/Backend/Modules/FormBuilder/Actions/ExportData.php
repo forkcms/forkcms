@@ -65,7 +65,7 @@ class ExportData extends BackendBaseAction
              WHERE i.form_id = ?';
 
         // add start date
-        if($this->filter['start_date'] !== '') {
+        if ($this->filter['start_date'] !== '') {
             // explode date parts
             $chunks = explode('/', $this->filter['start_date']);
 
@@ -75,7 +75,7 @@ class ExportData extends BackendBaseAction
         }
 
         // add end date
-        if($this->filter['end_date'] !== '') {
+        if ($this->filter['end_date'] !== '') {
             // explode date parts
             $chunks = explode('/', $this->filter['end_date']);
 
@@ -95,15 +95,15 @@ class ExportData extends BackendBaseAction
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exist
-        if($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
+        if ($this->id !== null && BackendFormBuilderModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->setItems();
             BackendCSV::outputCSV(date('Ymd_His') . '.csv', $this->rows, $this->columnHeaders);
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, redirect to index, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -112,7 +112,7 @@ class ExportData extends BackendBaseAction
     private function setFilter()
     {
         // start date is set
-        if(isset($_GET['start_date']) && $_GET['start_date'] != '') {
+        if (isset($_GET['start_date']) && $_GET['start_date'] != '') {
             // redefine
             $startDate = (string) $_GET['start_date'];
 
@@ -120,17 +120,19 @@ class ExportData extends BackendBaseAction
             $chunks = explode('/', $startDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['start_date'] = $startDate;
-
-            // invalid date
-            else $this->filter['start_date'] = '';
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
+                $this->filter['start_date'] = $startDate;
+            } else {
+                // invalid date
+                $this->filter['start_date'] = '';
+            }
+        } else {
+            // not set
+            $this->filter['start_date'] = '';
         }
 
-        // not set
-        else $this->filter['start_date'] = '';
-
         // end date is set
-        if(isset($_GET['end_date']) && $_GET['end_date'] != '') {
+        if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
             // redefine
             $endDate = (string) $_GET['end_date'];
 
@@ -138,14 +140,16 @@ class ExportData extends BackendBaseAction
             $chunks = explode('/', $endDate);
 
             // valid date
-            if(count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) $this->filter['end_date'] = $endDate;
-
-            // invalid date
-            else $this->filter['end_date'] = '';
+            if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
+                $this->filter['end_date'] = $endDate;
+            } else {
+                // invalid date
+                $this->filter['end_date'] = '';
+            }
+        } else {
+            // not set
+            $this->filter['end_date'] = '';
         }
-
-        // not set
-        else $this->filter['end_date'] = '';
     }
 
     /**
@@ -166,34 +170,44 @@ class ExportData extends BackendBaseAction
         $data = array();
 
         // reformat data
-        foreach($records as $row) {
+        foreach ($records as $row) {
             // first row of a submission
-            if(!isset($data[$row['data_id']])) {
+            if (!isset($data[$row['data_id']])) {
                 $data[$row['data_id']][$lblSessionId] = $row['session_id'];
-                $data[$row['data_id']][$lblSentOn] = \SpoonDate::getDate('Y-m-d H:i:s', $row['sent_on'], BL::getWorkingLanguage());
+                $data[$row['data_id']][$lblSentOn] = \SpoonDate::getDate(
+                    'Y-m-d H:i:s',
+                    $row['sent_on'],
+                    BL::getWorkingLanguage()
+                );
             }
 
             // value is serialized
             $value = unserialize($row['value']);
 
             // flatten arrays
-            if(is_array($value)) $value = implode(', ', $value);
+            if (is_array($value)) {
+                $value = implode(', ', $value);
+            }
 
             // group submissions
             $data[$row['data_id']][$row['label']] = \SpoonFilter::htmlentitiesDecode($value, null, ENT_QUOTES);
 
             // add into headers if not yet added
-            if(!in_array($row['label'], $this->columnHeaders)) $this->columnHeaders[] = $row['label'];
+            if (!in_array($row['label'], $this->columnHeaders)) {
+                $this->columnHeaders[] = $row['label'];
+            }
         }
 
         // reorder data so they are in the correct column
-        foreach($data as $id => $row) {
-            foreach($this->columnHeaders as $header) {
+        foreach ($data as $id => $row) {
+            foreach ($this->columnHeaders as $header) {
                 // submission has this field so add it
-                if(isset($row[$header])) $this->rows[$id][] = $row[$header];
-
-                // submission does not have this field so add a placeholder
-                else $this->rows[$id][] = '';
+                if (isset($row[$header])) {
+                    $this->rows[$id][] = $row[$header];
+                } else {
+                    // submission does not have this field so add a placeholder
+                    $this->rows[$id][] = '';
+                }
             }
         }
 

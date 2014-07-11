@@ -139,13 +139,22 @@ class Step6 extends Step
     {
         return array(
             '<debug-mode>' => \SpoonSession::get('debug_mode') ? 'true' : 'false',
-            '<debug-email>' => \SpoonSession::get('different_debug_email') ? \SpoonSession::get('debug_email') : \SpoonSession::get('email'),
+            '<debug-email>' => \SpoonSession::get('different_debug_email') ?
+                \SpoonSession::get('debug_email') :
+                \SpoonSession::get('email')
+            ,
             '<database-name>' => \SpoonSession::get('db_database'),
             '<database-host>' => addslashes(\SpoonSession::get('db_hostname')),
             '<database-user>' => addslashes(\SpoonSession::get('db_username')),
             '<database-password>' => addslashes(\SpoonSession::get('db_password')),
-            '<database-port>' => (\SpoonSession::exists('db_port') && \SpoonSession::get('db_port') != '') ? addslashes(\SpoonSession::get('db_port')) : 3306,
-            '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ? (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') : 'http',
+            '<database-port>' => (\SpoonSession::exists('db_port') && \SpoonSession::get('db_port') != '') ?
+                addslashes(\SpoonSession::get('db_port')) :
+                3306
+            ,
+            '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
+                (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
+                'http'
+            ,
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => \SpoonSession::get('multiple_languages') ? 'true' : 'false',
@@ -153,7 +162,7 @@ class Step6 extends Step
             '<path-www>' => PATH_WWW,
             '<path-library>' => PATH_LIBRARY,
             '<action-group-tag>' => '\@actiongroup',
-            '<action-rights-level>' => 7
+            '<action-rights-level>' => 7,
         );
     }
 }

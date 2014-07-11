@@ -34,38 +34,40 @@ class CheckStatus extends BackendBaseAJAXAction
         $fs = new Filesystem();
 
         // validate
-        if($page == '' || $identifier == '') $this->output(self::BAD_REQUEST, null, 'No page provided.');
-
-        // validated
-        else {
-            // init vars
+        if ($page == '' || $identifier == '') {
+            $this->output(self::BAD_REQUEST, null, 'No page provided.');
+        } else {
+            // validated
             $filename = BACKEND_CACHE_PATH . '/Analytics/' . $page . '_' . $identifier . '.txt';
 
-            if($fs->exists($filename)) {
+            if ($fs->exists($filename)) {
                 $status = file_get_contents($filename);
-            } else $status = false;
+            } else {
+                $status = false;
+            }
 
             // no file - create one
-            if($status === false) {
+            if ($status === false) {
                 // create file with initial counter
                 $fs->dumpFile($filename, 'missing1');
 
                 // return status
                 $this->output(self::OK, array('status' => false), 'Temporary file was missing. We created one.');
-            }
-
-            // busy status
-            elseif(strpos($status, 'busy') !== false) {
-                // get counter
+            } elseif (strpos($status, 'busy') !== false) {
+                // busy status: get counter
                 $counter = (int) substr($status, 4) + 1;
 
                 // file's been busy for more than hundred cycles - just stop here
-                if($counter > 100) {
+                if ($counter > 100) {
                     // remove file
                     \SpoonFile::delete($filename);
 
                     // return status
-                    $this->output(self::ERROR, array('status' => 'timeout'), 'Error while retrieving data - the script took too long to retrieve data.');
+                    $this->output(
+                        self::ERROR,
+                        array('status' => 'timeout'),
+                        'Error while retrieving data - the script took too long to retrieve data.'
+                    );
                     return;
                 }
 
@@ -73,14 +75,15 @@ class CheckStatus extends BackendBaseAJAXAction
                 $fs->dumpFile($filename, 'busy' . $counter);
 
                 // return status
-                $this->output(self::OK, array('status' => 'busy', 'temp' => $status), 'Data is being retrieved. (' . $counter . ')');
-            }
+                $this->output(
+                    self::OK,
+                    array('status' => 'busy', 'temp' => $status),
+                    'Data is being retrieved. (' . $counter . ')'
+                );
+            } elseif ($status == 'unauthorized') {
+                // unauthorized status: remove file
 
-            // unauthorized status
-            elseif($status == 'unauthorized') {
-                // remove file
-
-                if(is_file($filename)) {
+                if (is_file($filename)) {
                     $fs->remove($filename);
                 }
 
@@ -94,45 +97,49 @@ class CheckStatus extends BackendBaseAJAXAction
                 BackendAnalyticsModel::clearTables();
 
                 $this->output(self::OK, array('status' => 'unauthorized'), 'No longer authorized.');
-            }
-
-            // done status
-            elseif($status == 'done') {
-                // remove file
-                if(is_file($filename)) {
+            } elseif ($status == 'done') {
+                // done status: remove file
+                if (is_file($filename)) {
                     $fs->remove($filename);
                 }
 
                 // return status
                 $this->output(self::OK, array('status' => 'done'), 'Data retrieved.');
-            }
-
-            // missing status
-            elseif(strpos($status, 'missing') !== false) {
-                // get counter
+            } elseif (strpos($status, 'missing') !== false) {
+                // missing status: get counter
                 $counter = (int) substr($status, 7) + 1;
 
                 // file's been missing for more than ten cycles - just stop here
-                if($counter > 10) {
-                    if(is_file($filename)) {
+                if ($counter > 10) {
+                    if (is_file($filename)) {
                         $fs->remove($filename);
                     }
-                    $this->output(self::ERROR, array('status' => 'missing'), 'Error while retrieving data - file was never created.');
+                    $this->output(
+                        self::ERROR,
+                        array('status' => 'missing'),
+                        'Error while retrieving data - file was never created.'
+                    );
                 }
 
                 // change file content to increase counter
                 $fs->dumpFile($filename, 'missing' . $counter);
 
                 // return status
-                $this->output(self::OK, array('status' => 'busy'), 'Temporary file was still in status missing. (' . $counter . ')');
-            }
-
-            /* FALLBACK - SOMETHING WENT WRONG */
-            else {
-                if(is_file($filename)) {
+                $this->output(
+                    self::OK,
+                    array('status' => 'busy'),
+                    'Temporary file was still in status missing. (' . $counter . ')'
+                );
+            } else {
+                /* FALLBACK - SOMETHING WENT WRONG */
+                if (is_file($filename)) {
                     $fs->remove($filename);
                 }
-                $this->output(self::ERROR, array('status' => 'error', 'a' => ($status == 'done')), 'Error while retrieving data.');
+                $this->output(
+                    self::ERROR,
+                    array('status' => 'error', 'a' => ($status == 'done')),
+                    'Error while retrieving data.'
+                );
             }
         }
     }

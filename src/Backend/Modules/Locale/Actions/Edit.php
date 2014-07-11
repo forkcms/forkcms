@@ -47,7 +47,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendLocaleModel::exists($this->id)) {
+        if ($this->id !== null && BackendLocaleModel::exists($this->id)) {
             parent::execute();
             $this->setFilter();
             $this->getData();
@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
         $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
+        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
         $this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
@@ -123,7 +123,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->frm->cleanupFields();
 
             // redefine fields
@@ -131,16 +131,16 @@ class Edit extends BackendBaseActionEdit
             $txtValue = $this->frm->getField('value');
 
             // name checks
-            if($txtName->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtName->isFilled(BL::err('FieldIsRequired'))) {
                 // allowed regex (a-z and 0-9)
-                if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
+                if ($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName'))) {
                     // first letter does not seem to be a capital one
-                    if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
+                    if (!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
 
                     // syntax is completely fine
                     else {
                         // check if exists
-                        if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
+                        if (BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id)) {
                             $txtName->setError(BL::err('AlreadyExists'));
                         }
                     }
@@ -148,19 +148,19 @@ class Edit extends BackendBaseActionEdit
             }
 
             // value checks
-            if($txtValue->isFilled(BL::err('FieldIsRequired'))) {
+            if ($txtValue->isFilled(BL::err('FieldIsRequired'))) {
                 // in case this is a 'act' type, there are special rules concerning possible values
-                if($this->frm->getField('type')->getValue() == 'act') {
-                    if(urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
+                if ($this->frm->getField('type')->getValue() == 'act') {
+                    if (urlencode($txtValue->getValue()) != CommonUri::getUrl($txtValue->getValue())) $txtValue->addError(BL::err('InvalidValue'));
                 }
             }
 
-            // module should be 'core' for any other application than backend
-            if($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
+            // module should be 'Core' for any other application than backend
+            if ($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
                 $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
             }
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();

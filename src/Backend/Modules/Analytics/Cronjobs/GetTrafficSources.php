@@ -29,7 +29,7 @@ class GetTrafficSources extends BackendBaseCronjob
         parent::execute();
 
         // fork is no longer authorized to collect analytics data
-        if(BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
+        if (BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
             // remove all parameters from the module settings
             BackendModel::setModuleSetting('Analytics', 'session_token', null);
             BackendModel::setModuleSetting('Analytics', 'account_name', null);
@@ -52,7 +52,7 @@ class GetTrafficSources extends BackendBaseCronjob
         try {
             BackendAnalyticsHelper::getRecentReferrers();
             BackendAnalyticsHelper::getRecentKeywords();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             throw new \SpoonException('Something went wrong while getting dashboard data.');
         }
     }

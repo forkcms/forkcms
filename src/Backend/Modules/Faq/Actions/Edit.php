@@ -42,7 +42,7 @@ class Edit extends BackendBaseActionEdit
         $this->id = $this->getParameter('id', 'int');
 
         // does the item exists
-        if($this->id !== null && BackendFaqModel::exists($this->id)) {
+        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
             parent::execute();
 
             $this->getData();
@@ -51,7 +51,9 @@ class Edit extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        } else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 
     /**
@@ -79,7 +81,13 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addEditor('answer', $this->record['answer']);
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        $this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']), null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText(
+            'tags',
+            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            null,
+            'inputText tagBox',
+            'inputTextError tagBox'
+        );
 
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
     }
@@ -94,7 +102,9 @@ class Edit extends BackendBaseActionEdit
         // get url
         $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
         $url404 = BackendModel::getURL(404);
-        if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
+        if ($url404 != $url) {
+            $this->tpl->assign('detailURL', SITE_URL . $url);
+        }
 
         // assign the active record and additional variables
         $this->tpl->assign('item', $this->record);
@@ -106,7 +116,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
 
             $this->frm->cleanupFields();
@@ -117,7 +127,7 @@ class Edit extends BackendBaseActionEdit
             $this->frm->getField('category_id')->isFilled(BL::err('CategoryIsRequired'));
             $this->meta->validate();
 
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // build item
                 $item['id'] = $this->id;
                 $item['meta_id'] = $this->meta->save(true);
@@ -129,14 +139,28 @@ class Edit extends BackendBaseActionEdit
 
                 // update the item
                 BackendFaqModel::update($item);
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags(
+                    $item['id'],
+                    $this->frm->getField('tags')->getValue(),
+                    $this->URL->getModule()
+                );
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
 
                 // edit search index
-                BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['question'], 'text' => $item['answer']));
+                BackendSearchModel::saveIndex(
+                    $this->getModule(),
+                    $item['id'],
+                    array(
+                        'title' => $item['question'],
+                        'text' => $item['answer'],
+                    )
+                );
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('Index') . '&report=saved&var=' .
+                    urlencode($item['question']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }

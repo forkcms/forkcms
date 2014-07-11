@@ -59,8 +59,8 @@ class DetailTheme extends BackendBaseActionIndex
             $this->loadDataGridTemplates();
             $this->parse();
             $this->display();
-        } // no item found, redirect to index, because somebody is fucking with our url
-        else {
+        } else {
+            // no item found, redirect to index, because somebody is fucking with our url
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=non-existing');
         }
     }
@@ -91,17 +91,15 @@ class DetailTheme extends BackendBaseActionIndex
                 // empty data (nothing useful)
                 if (empty($this->information)) {
                     $this->warnings[] = array(
-                        'message' => BL::getMessage(
-                                'InformationFileIsEmpty'
-                            )
+                        'message' => BL::getMessage('InformationFileIsEmpty')
                     );
                 }
-            } // warning that the information file is corrupt
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
+                // warning that the information file is corrupt
                 $this->warnings[] = array('message' => BL::getMessage('InformationFileCouldNotBeLoaded'));
             }
-        } // warning that the information file is missing
-        else {
+        } else {
+            // warning that the information file is missing
             $this->warnings[] = array('message' => BL::getMessage('InformationFileIsMissing'));
         }
     }
@@ -165,8 +163,10 @@ class DetailTheme extends BackendBaseActionIndex
         // data grids
         $this->tpl->assign(
             'dataGridTemplates',
-            (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults(
-                                                ) > 0) ? $this->dataGridTemplates->getContent() : false
-        );
+            (isset($this->dataGridTemplates) && $this->dataGridTemplates->getNumResults() > 0) ?
+                $this->dataGridTemplates->getContent() :
+                false
+            )
+        ;
     }
 }

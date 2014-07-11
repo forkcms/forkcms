@@ -85,7 +85,7 @@ class ExportAnalyse extends BackendBaseActionIndex
         $frontend = BackendLocaleModel::getNonExistingFrontendLocale($this->filter['language']);
 
         // group by application, module, type and name
-        foreach($frontend as $item) {
+        foreach ($frontend as $item) {
             $item['value'] = null;
 
             $this->locale[$item['application']][$item['module']][$item['type']][$item['name']][] = $item;
@@ -98,7 +98,7 @@ class ExportAnalyse extends BackendBaseActionIndex
         $backend = BackendLocaleModel::getNonExistingBackendLocale($this->filter['language']);
 
         // group by application, module, type and name
-        foreach($backend as $item) {
+        foreach ($backend as $item) {
             $item['value'] = null;
 
             $this->locale[$item['application']][$item['module']][$item['type']][$item['name']][] = $item;

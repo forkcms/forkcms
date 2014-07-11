@@ -33,7 +33,8 @@ class Index extends BackendBaseActionIndex
      *
      * @var	array
      */
-    private $dataGrids, $emptyDatagrid;
+    private $dataGrids;
+    private $emptyDatagrid;
 
     /**
      * Execute the action
@@ -56,7 +57,7 @@ class Index extends BackendBaseActionIndex
         $categories = BackendFaqModel::getCategories(true);
 
         // loop categories and create a dataGrid for each one
-        foreach($categories as $categoryId => $categoryTitle) {
+        foreach ($categories as $categoryId => $categoryTitle) {
             $dataGrid = new BackendDataGridDB(
                 BackendFaqModel::QRY_DATAGRID_BROWSE,
                 array(BL::getWorkingLanguage(), $categoryId)
@@ -70,10 +71,12 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setRowAttributes(array('id' => '[id]'));
 
             // check if this action is allowed
-            if(BackendAuthentication::isAllowedAction('Edit')) {
+            if (BackendAuthentication::isAllowedAction('Edit')) {
                 $dataGrid->setColumnURL('question', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
                 $dataGrid->addColumn(
-                    'edit', null, BL::lbl('Edit'),
+                    'edit',
+                    null,
+                    BL::lbl('Edit'),
                     BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                     BL::lbl('Edit')
                 );
@@ -107,7 +110,9 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse dataGrids
-        if(!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
+        if (!empty($this->dataGrids)) {
+            $this->tpl->assign('dataGrids', $this->dataGrids);
+        }
         $this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
     }
 }

@@ -131,7 +131,7 @@ class Model
             'id' => $item['extra_id'],
             'module' => 'ContentBlocks',
             'type' => 'widget',
-            'action' => 'detail'
+            'action' => 'Detail'
         );
 
         // delete extra
@@ -160,13 +160,15 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // if the item should also be active, there should be at least one row to return true
-        if ((bool) $activeOnly) return (bool) $db->getVar(
-            'SELECT 1
-             FROM content_blocks AS i
-             WHERE i.id = ? AND i.status = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, 'active', BL::getWorkingLanguage())
-        );
+        if ((bool) $activeOnly) {
+            return (bool) $db->getVar(
+                'SELECT 1
+                 FROM content_blocks AS i
+                 WHERE i.id = ? AND i.status = ? AND i.language = ?
+                 LIMIT 1',
+                array((int) $id, 'active', BL::getWorkingLanguage())
+            );
+        }
 
         // fallback, this doesn't take the active status in account
         return (bool) $db->getVar(
@@ -269,21 +271,23 @@ class Model
             'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
-            'action' => 'detail',
+            'action' => 'Detail',
             'data' => null,
             'hidden' => 'N',
             'sequence' => $db->getVar(
-                    'SELECT MAX(i.sequence) + 1
-                     FROM modules_extras AS i
-                     WHERE i.module = ?',
-                    array('ContentBlocks')
-                )
+                'SELECT MAX(i.sequence) + 1
+                 FROM modules_extras AS i
+                 WHERE i.module = ?',
+                array('ContentBlocks')
+            )
         );
 
-        if (is_null($extra['sequence'])) $extra['sequence'] = $db->getVar(
-            'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-             FROM modules_extras AS i'
-        );
+        if (is_null($extra['sequence'])) {
+            $extra['sequence'] = $db->getVar(
+                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
+                 FROM modules_extras AS i'
+            );
+        }
 
         // insert extra
         $item['extra_id'] = $db->insert('modules_extras', $extra);
@@ -299,10 +303,10 @@ class Model
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
-                                  'Edit',
-                                  'ContentBlocks',
-                                  $item['language']
-                              ) . '&id=' . $item['id']
+                    'Edit',
+                    'ContentBlocks',
+                    $item['language']
+                ) . '&id=' . $item['id']
             )
         );
         $db->update(
@@ -331,7 +335,7 @@ class Model
             'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
-            'action' => 'detail',
+            'action' => 'Detail',
             'data' => serialize(
                 array(
                     'id' => $item['id'],
@@ -376,11 +380,13 @@ class Model
         );
 
         // delete other revisions
-        if (!empty($revisionIdsToKeep)) $db->delete(
-            'content_blocks',
-            'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-            array($item['id'], BL::getWorkingLanguage(), 'archived')
-        );
+        if (!empty($revisionIdsToKeep)) {
+            $db->delete(
+                'content_blocks',
+                'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'], BL::getWorkingLanguage(), 'archived')
+            );
+        }
 
         // return the new revision_id
         return $item['revision_id'];

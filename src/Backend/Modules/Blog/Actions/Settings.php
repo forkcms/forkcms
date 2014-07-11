@@ -73,7 +73,7 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 
         // no Akismet-key, so we can't enable spam-filter
-        if(BackendModel::getModuleSetting('Core', 'akismet_key') == '') {
+        if (BackendModel::getModuleSetting('Core', 'akismet_key') == '') {
             $this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
             $this->tpl->assign('noAkismetKey', true);
         }
@@ -102,7 +102,9 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 
         // god user?
-        if($this->isGod) $this->frm->addCheckbox('show_image_form', BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true));
+        if ($this->isGod) {
+            $this->frm->addCheckbox('show_image_form', BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true));
+        }
     }
 
     /**
@@ -122,7 +124,7 @@ class Settings extends BackendBaseActionEdit
      */
     private function validateForm()
     {
-        if($this->frm->isSubmitted()) {
+        if ($this->frm->isSubmitted()) {
             // shorten fields
             $feedburnerURL = $this->frm->getField('feedburner_url');
 
@@ -130,18 +132,20 @@ class Settings extends BackendBaseActionEdit
             $this->frm->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
 
             // feedburner URL is set
-            if($feedburnerURL->isFilled()) {
+            if ($feedburnerURL->isFilled()) {
                 // check if http:// is set and add if necessary
                 $feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://' . $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
                 // check if feedburner URL is valid
-                if(!\SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
+                if (!\SpoonFilter::isURL($feedburner)) {
+                    $feedburnerURL->addError(BL::err('InvalidURL'));
+                }
+            } else {
+                // init variable
+                $feedburner = null;
             }
 
-            // init variable
-            else $feedburner = null;
-
-            if($this->frm->isCorrect()) {
+            if ($this->frm->isCorrect()) {
                 // set our settings
                 BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'recent_articles_full_num_items', (int) $this->frm->getField('recent_articles_full_number_of_items')->getValue());
@@ -156,8 +160,12 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
-                if($this->isGod) BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
-                if(BackendModel::getModuleSetting('Core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                if ($this->isGod) {
+                    BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
+                }
+                if (BackendModel::getModuleSetting('Core', 'akismet_key') === null) {
+                    BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
+                }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_settings');

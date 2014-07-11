@@ -161,7 +161,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Mailmotor', 'SendMailing');
         $this->setActionRights(1, 'Mailmotor', 'Settings');
         $this->setActionRights(1, 'Mailmotor', 'Statistics');
-        $this->setActionRights(1, 'Mailmotor', 'StatisticsMounces');
+        $this->setActionRights(1, 'Mailmotor', 'StatisticsBounces');
         $this->setActionRights(1, 'Mailmotor', 'StatisticsCampaign');
         $this->setActionRights(1, 'Mailmotor', 'StatisticsLink');
     }

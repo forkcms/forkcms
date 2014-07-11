@@ -34,27 +34,30 @@ class MassDataAction extends BackendBaseAction
         $formId = \SpoonFilter::getGetValue('form_id', null, '', 'int');
 
         // no id's provided
-        if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-items-selected');
-
-        // no action provided
-        elseif($action == '') $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
-
-        // valid form id
-        elseif(!BackendFormBuilderModel::exists($formId)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
-
-        // at least one id
-        else {
+        if (!isset($_GET['id'])) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-items-selected');
+        } elseif ($action == '') {
+            // no action provided
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=no-action-selected');
+        } elseif (!BackendFormBuilderModel::exists($formId)) {
+            // valid form id
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        } else {
             // redefine id's
             $ids = (array) $_GET['id'];
 
             // delete comment(s)
-            if($action == 'delete') BackendFormBuilderModel::deleteData($ids);
+            if ($action == 'delete') {
+                BackendFormBuilderModel::deleteData($ids);
+            }
 
             // define report
             $report = (count($ids) > 1) ? 'items-' : 'item-';
 
             // init var
-            if($action == 'delete') $report .= 'deleted';
+            if ($action == 'delete') {
+                $report .= 'deleted';
+            }
 
             // redirect
             $this->redirect(BackendModel::createURLForAction('Data') . '&id=' . $formId . '&report=' . $report);
