@@ -41,7 +41,7 @@ class ModuleInstaller
      *
      * @var string
      */
-    private $name;
+    private $module;
 
     /**
      * The default extras that have to be added to every page.
@@ -119,19 +119,19 @@ class ModuleInstaller
 
     /**
      * Inserts a new module.
-     * The getModule method becomes available after using addModule and returns $name parameter.
+     * The getModule method becomes available after using addModule and returns $module parameter.
      *
-     * @param string $name The name of the module.
+     * @param string $module The name of the module.
      */
-    protected function addModule($name)
+    protected function addModule($module)
     {
-        $this->name = (string) $name;
+        $this->module = (string) $module;
 
         // module does not yet exists
-        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->name)) {
+        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->module)) {
             // build item
             $item = array(
-                'name' => $this->name,
+                'name' => $this->module,
                 'installed_on' => gmdate('Y-m-d H:i:s')
             );
 
@@ -139,7 +139,7 @@ class ModuleInstaller
             $this->getDB()->insert('modules', $item);
         } else {
             // activate and update description
-            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $this->name);
+            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $this->module);
         }
     }
 
@@ -230,7 +230,7 @@ class ModuleInstaller
      */
     protected function getModule()
     {
-        return $this->name;
+        return $this->module;
     }
 
     /**
