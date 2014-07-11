@@ -260,7 +260,7 @@ class Model
             'module' => 'ContentBlocks',
             'type' => 'widget',
             'label' => 'ContentBlocks',
-            'action' => 'detail',
+            'action' => 'Detail',
             'data' => null,
             'hidden' => 'N',
             'sequence' => $db->getVar(

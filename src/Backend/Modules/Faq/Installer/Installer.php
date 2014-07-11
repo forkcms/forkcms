@@ -43,7 +43,8 @@ class Installer extends ModuleInstaller
             'SELECT MAX(i.sequence) + 1
              FROM modules_extras AS i
              WHERE i.module = ?',
-            array('faq'));
+            array('faq')
+        );
 
         // build array
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
@@ -56,11 +57,13 @@ class Installer extends ModuleInstaller
         $item['id'] = (int) $db->insert('faq_categories', $item);
 
         // build data for widget
-        $extra['data'] = serialize(array(
-            'id' => $item['id'],
-            'extra_label' => 'Category: ' . $item['title'],
-            'language' => $item['language'],
-            'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id'])
+        $extra['data'] = serialize(
+            array(
+                'id' => $item['id'],
+                'extra_label' => 'Category: ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id']
+            )
         );
 
         // update widget
@@ -86,7 +89,8 @@ class Installer extends ModuleInstaller
             'SELECT id
              FROM faq_categories
              WHERE language = ?',
-            array((string) $language));
+            array((string) $language)
+        );
     }
 
     /**
@@ -156,14 +160,16 @@ class Installer extends ModuleInstaller
             }
 
             // check if a page for the faq already exists in this language
-            if (!(bool) $this->getDB()->getVar(
+            $faqPageExists = (bool) $this->getDB()->getVar(
                 'SELECT 1
                  FROM pages AS p
                  INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
                  WHERE b.extra_id = ? AND p.language = ?
                  LIMIT 1',
-                 array($faqId, $language)))
-            {
+                array($faqId, $language)
+            );
+
+            if (!$faqPageExists) {
                 // insert page
                 $this->insertPage(
                     array(
@@ -182,8 +188,18 @@ class Installer extends ModuleInstaller
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
-        $this->setNavigation($navigationFaqId, 'Questions', 'faq/index', array('faq/add', 'faq/edit'));
-        $this->setNavigation($navigationFaqId, 'Categories', 'faq/categories', array('faq/add_category', 'faq/edit_category'));
+        $this->setNavigation(
+            $navigationFaqId,
+            'Questions',
+            'faq/index',
+            array('faq/add', 'faq/edit')
+        );
+        $this->setNavigation(
+            $navigationFaqId,
+            'Categories',
+            'faq/categories',
+            array('faq/add_category', 'faq/edit_category')
+        );
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');

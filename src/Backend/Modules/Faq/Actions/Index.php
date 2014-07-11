@@ -33,7 +33,8 @@ class Index extends BackendBaseActionIndex
      *
      * @var	array
      */
-    private $dataGrids, $emptyDatagrid;
+    private $dataGrids;
+    private $emptyDatagrid;
 
     /**
      * Execute the action
@@ -73,7 +74,9 @@ class Index extends BackendBaseActionIndex
             if (BackendAuthentication::isAllowedAction('Edit')) {
                 $dataGrid->setColumnURL('question', BackendModel::createURLForAction('Edit') . '&amp;id=[id]');
                 $dataGrid->addColumn(
-                    'edit', null, BL::lbl('Edit'),
+                    'edit',
+                    null,
+                    BL::lbl('Edit'),
                     BackendModel::createURLForAction('Edit') . '&amp;id=[id]',
                     BL::lbl('Edit')
                 );
@@ -107,7 +110,9 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse dataGrids
-        if (!empty($this->dataGrids)) $this->tpl->assign('dataGrids', $this->dataGrids);
+        if (!empty($this->dataGrids)) {
+            $this->tpl->assign('dataGrids', $this->dataGrids);
+        }
         $this->tpl->assign('emptyDatagrid', $this->emptyDatagrid->getContent());
     }
 }

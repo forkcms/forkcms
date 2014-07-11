@@ -45,7 +45,9 @@ class EditCategory extends BackendBaseActionEdit
 
             $this->parse();
             $this->display();
-        } else $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+        } else {
+            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+        }
     }
 
     /**
@@ -77,7 +79,13 @@ class EditCategory extends BackendBaseActionEdit
 
         // assign the data
         $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('showFaqDeleteCategory', BackendFaqModel::deleteCategoryAllowed($this->id) && BackendAuthentication::isAllowedAction('DeleteCategory'));
+        $this->tpl->assign(
+            'showFaqDeleteCategory',
+            (
+                BackendFaqModel::deleteCategoryAllowed($this->id) &&
+                BackendAuthentication::isAllowedAction('DeleteCategory')
+            )
+        );
     }
 
     /**
@@ -86,7 +94,11 @@ class EditCategory extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURLForCategory', array($this->record['id']));
+            $this->meta->setUrlCallback(
+                'Backend\Modules\Faq\Engine\Model',
+                'getURLForCategory',
+                array($this->record['id'])
+            );
 
             $this->frm->cleanupFields();
 
@@ -107,7 +119,10 @@ class EditCategory extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                $this->redirect(
+                    BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
+                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                );
             }
         }
     }
