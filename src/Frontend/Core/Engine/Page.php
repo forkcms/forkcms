@@ -372,6 +372,10 @@ class Page extends FrontendBaseObject
                             'blockIsHTML' => false,
                             'blockContent' => $block['extra']->getContent()
                         );
+
+                        if (empty($positions[$position][$i]['blockContent'])) {
+                            unset($positions[$position][$i]);
+                        }
                     } else {
                         $positions[$position][$i] = $block;
                     }
