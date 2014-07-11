@@ -153,7 +153,10 @@ class Form extends FrontendBaseWidget
 
                 // form values
                 $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-                $defaultValues = (isset($field['settings']['default_values']) ? $field['settings']['default_values'] : null);
+                $defaultValues = (isset($field['settings']['default_values']) ?
+                    $field['settings']['default_values'] :
+                    null
+                );
 
                 if ($field['type'] == 'dropdown') {
                     // values and labels are the same
@@ -281,9 +284,10 @@ class Form extends FrontendBaseWidget
                     $field['plaintext'] = true;
                 } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                     // name (prefixed by type)
-                    $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::toCamelCase(
-                            $field['name']
-                        ) : 'rbt' . \SpoonFilter::toCamelCase($field['name']);
+                    $name = ($field['type'] == 'checkbox') ?
+                        'chk' . \SpoonFilter::toCamelCase($field['name']) :
+                        'rbt' . \SpoonFilter::toCamelCase($field['name'])
+                    ;
 
                     // rebuild so the html is stored in a general name (and not rbtName)
                     foreach ($field['html'] as &$item) {
@@ -414,9 +418,10 @@ class Form extends FrontendBaseWidget
                         // add field for email
                         $emailFields[] = array(
                             'label' => $field['settings']['label'],
-                            'value' => (is_array($fieldData['value']) ? implode(',', $fieldData['value']) : nl2br(
-                                    $fieldData['value']
-                                ))
+                            'value' => (is_array($fieldData['value']) ?
+                                implode(',', $fieldData['value']) :
+                                nl2br($fieldData['value'])
+                            )
                         );
                     }
 

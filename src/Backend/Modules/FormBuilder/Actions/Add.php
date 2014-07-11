@@ -44,7 +44,14 @@ class Add extends BackendBaseActionAdd
     {
         $this->frm = new BackendForm('add');
         $this->frm->addText('name');
-        $this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), 'database_email');
+        $this->frm->addDropdown(
+            'method',
+            array(
+                'database' => BL::getLabel('MethodDatabase'),
+                'database_email' => BL::getLabel('MethodDatabaseEmail'),
+            ),
+            'database_email'
+        );
         $this->frm->addText('email');
         $this->frm->addText('identifier', BackendFormBuilderModel::createIdentifier());
         $this->frm->addEditor('success_message');
@@ -84,16 +91,20 @@ class Add extends BackendBaseActionAdd
                 }
 
                 // add error
-                if ($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                if ($error) {
+                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                }
             }
 
             // identifier
             if ($txtIdentifier->isFilled()) {
                 // invalid characters
-                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
-
-                // unique identifier
-                elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) {
+                    $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                } elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue())) {
+                    // unique identifier
+                    $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                }
             }
 
             if ($this->frm->isCorrect()) {
@@ -104,7 +115,10 @@ class Add extends BackendBaseActionAdd
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ? $txtIdentifier->getValue() : BackendFormBuilderModel::createIdentifier());
+                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                    $txtIdentifier->getValue() :
+                    BackendFormBuilderModel::createIdentifier()
+                );
                 $values['created_on'] = BackendModel::getUTCDate();
                 $values['edited_on'] = BackendModel::getUTCDate();
 
@@ -124,7 +138,10 @@ class Add extends BackendBaseActionAdd
                 BackendFormBuilderModel::insertField($field);
 
                 // everything is saved, so redirect to the editform
-                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $id . '&report=added&var=' . urlencode($values['name']) . '#tabFields');
+                $this->redirect(
+                    BackendModel::createURLForAction('Edit') . '&id=' . $id .
+                    '&report=added&var=' . urlencode($values['name']) . '#tabFields'
+                );
             }
         }
     }

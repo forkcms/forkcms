@@ -19,7 +19,7 @@
 
 				<small>
 					<a id="testEmailConnection" href="#">{$msgSendTestMail}</a>
-					<span id="testEmailConnectionSpinner" style="display: none;"><img style="margin-top: 3px;" src="/backend/core/layout/images/spinner.gif" width="12px" height="12px" alt="loading" /></span>
+					<span id="testEmailConnectionSpinner" style="display: none;"><img style="margin-top: 3px;" src="/src/Backend/Core/Layout/images/spinner.gif" width="12px" height="12px" alt="loading" /></span>
 					<span id="testEmailConnectionError" style="display: none;" class="formError">{$errErrorWhileSendingEmail}</span>
 					<span id="testEmailConnectionSuccess" style="display: none;" class="formSuccess">{$msgTestWasSent}</span>
 				</small>

@@ -40,10 +40,10 @@ class Edit extends BackendBaseActionEdit
             $this->validateForm();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exceptions, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -61,7 +61,14 @@ class Edit extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('edit');
         $this->frm->addText('name', $this->record['name']);
-        $this->frm->addDropdown('method', array('database' => BL::getLabel('MethodDatabase'), 'database_email' => BL::getLabel('MethodDatabaseEmail')), $this->record['method']);
+        $this->frm->addDropdown(
+            'method',
+            array(
+                'database' => BL::getLabel('MethodDatabase'),
+                'database_email' => BL::getLabel('MethodDatabaseEmail'),
+            ),
+            $this->record['method']
+        );
         $this->frm->addText('email', implode(',', (array) $this->record['email']));
         $this->frm->addText('identifier', $this->record['identifier']);
         $this->frm->addEditor('success_message', $this->record['success_message']);
@@ -72,7 +79,14 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
         $this->frm->addText('textbox_required_error_message');
-        $this->frm->addDropdown('textbox_validation', array('' => '', 'email' => BL::getLabel('Email'), 'numeric' => BL::getLabel('Numeric')));
+        $this->frm->addDropdown(
+            'textbox_validation',
+            array(
+                '' => '',
+                'email' => BL::getLabel('Email'),
+                'numeric' => BL::getLabel('Numeric'),
+            )
+        );
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
 
@@ -164,7 +178,11 @@ class Edit extends BackendBaseActionEdit
                 $this->tpl->assign('submitId', $field['id']);
 
                 // add field
-                $btn = $this->frm->addButton('submit_field', \SpoonFilter::htmlspecialcharsDecode($field['settings']['values']), 'button');
+                $btn = $this->frm->addButton(
+                    'submit_field',
+                    \SpoonFilter::htmlspecialcharsDecode($field['settings']['values']),
+                    'button'
+                );
                 $btn->setAttribute('disabled', 'disabled');
 
                 // skip
@@ -213,16 +231,19 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // add error
-                if ($error) $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                if ($error) {
+                    $txtEmail->addError(BL::getError('EmailIsInvalid'));
+                }
             }
 
             // identifier
             if ($txtIdentifier->isFilled()) {
                 // invalid characters
-                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
-
-                // unique identifier
-                elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                if (!\SpoonFilter::isValidAgainstRegexp('/^[a-zA-Z0-9\.\_\-]+$/', $txtIdentifier->getValue())) {
+                    $txtIdentifier->setError(BL::getError('InvalidIdentifier'));
+                } elseif (BackendFormBuilderModel::existsIdentifier($txtIdentifier->getValue(), $this->id)) {
+                    $txtIdentifier->setError(BL::getError('UniqueIdentifier'));
+                }
             }
 
             if ($this->frm->isCorrect()) {
@@ -231,7 +252,10 @@ class Edit extends BackendBaseActionEdit
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['identifier'] = ($txtIdentifier->isFilled() ? $txtIdentifier->getValue() : BackendFormBuilderModel::createIdentifier());
+                $values['identifier'] = ($txtIdentifier->isFilled() ?
+                    $txtIdentifier->getValue() :
+                    BackendFormBuilderModel::createIdentifier()
+                );
                 $values['edited_on'] = BackendModel::getUTCDate();
 
                 // insert the item
@@ -241,7 +265,10 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
+                $this->redirect(
+                    BackendModel::createURLForAction('Index') . '&report=edited&var=' .
+                    urlencode($values['name']) . '&highlight=row-' . $id
+                );
             }
         }
     }

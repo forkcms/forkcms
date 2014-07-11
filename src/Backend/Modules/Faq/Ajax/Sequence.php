@@ -41,7 +41,9 @@ class Sequence extends BackendBaseAJAXAction
             $item['sequence'] = $i + 1;
 
             // update sequence
-            if (BackendFaqModel::existsCategory($item['id'])) BackendFaqModel::updateCategory($item);
+            if (BackendFaqModel::existsCategory($item['id'])) {
+                BackendFaqModel::updateCategory($item);
+            }
         }
 
         // success output

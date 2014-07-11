@@ -52,7 +52,8 @@ class Data extends BackendBaseActionIndex
     {
         $parameters = array($this->id);
 
-        // start query, as you can see this query is build in the wrong place, because of the filter it is a special case
+        // start query, as you can see this query is build in the wrong place,
+        // because of the filter it is a special case
         // wherein we allow the query to be in the actionfile itself
         $query =
             'SELECT i.id, UNIX_TIMESTAMP(i.sent_on) AS sent_on
@@ -100,10 +101,10 @@ class Data extends BackendBaseActionIndex
             $this->loadDataGrid();
             $this->parse();
             $this->display();
+        } else {
+            // no item found, throw an exceptions, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
-
-        // no item found, throw an exceptions, because somebody is fucking with our url
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 
     /**
@@ -127,13 +128,18 @@ class Data extends BackendBaseActionIndex
         // overrule default URL
         $this->dataGrid->setURL(
             BackendModel::createURLForAction(
-                null, null, null, array(
+                null,
+                null,
+                null,
+                array(
                     'offset' => '[offset]',
                     'order' => '[order]',
                     'sort' => '[sort]',
                     'start_date' => $this->filter['start_date'],
-                    'end_date' => $this->filter['end_date']
-                ), false) . '&amp;id=' . $this->id
+                    'end_date' => $this->filter['end_date'],
+                ),
+                false
+            ) . '&amp;id=' . $this->id
         );
 
         // sorting columns
@@ -146,28 +152,41 @@ class Data extends BackendBaseActionIndex
             $this->dataGrid->setColumnURL(
                 'sent_on',
                 BackendModel::createURLForAction(
-                    'DataDetails', null, null, array(
+                    'DataDetails',
+                    null,
+                    null,
+                    array(
                         'start_date' => $this->filter['start_date'],
-                        'end_date' => $this->filter['end_date']
-                    ), false) . '&amp;id=[id]'
+                        'end_date' => $this->filter['end_date'],
+                    ),
+                    false
+                ) . '&amp;id=[id]'
             );
 
             // add edit column
             $this->dataGrid->addColumn(
-                'details', null, BL::getLabel('Details'),
+                'details',
+                null,
+                BL::getLabel('Details'),
                 BackendModel::createURLForAction(
-                    'DataDetails', null, null, array(
+                    'DataDetails',
+                    null,
+                    null,
+                    array(
                         'start_date' => $this->filter['start_date'],
-                        'end_date' => $this->filter['end_date']
+                        'end_date' => $this->filter['end_date'],
                     )
-                ) . '&amp;id=[id]', BL::getLabel('Details')
+                ) . '&amp;id=[id]',
+                BL::getLabel('Details')
             );
         }
 
         // date
         $this->dataGrid->setColumnFunction(
             array(new BackendFormBuilderModel(), 'calculateTimeAgo'),
-            '[sent_on]', 'sent_on', false
+            '[sent_on]',
+            'sent_on',
+            false
         );
         $this->dataGrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);
 
@@ -191,13 +210,17 @@ class Data extends BackendBaseActionIndex
         if (isset($this->filter['start_date']) && $this->filter['start_date'] != '') {
             $chunks = explode('/', $this->filter['start_date']);
             $startDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
-            if ($startDate == 0) $startDate = '';
+            if ($startDate == 0) {
+                $startDate = '';
+            }
         }
 
         if (isset($this->filter['end_date']) && $this->filter['end_date'] != '') {
             $chunks = explode('/', $this->filter['end_date']);
             $endDate = (int) mktime(0, 0, 0, (int) $chunks[1], (int) $chunks[0], (int) $chunks[2]);
-            if ($endDate == 0) $endDate = '';
+            if ($endDate == 0) {
+                $endDate = '';
+            }
         }
 
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
@@ -240,14 +263,14 @@ class Data extends BackendBaseActionIndex
             // valid date
             if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
                 $this->filter['start_date'] = $startDate;
+            } else {
+                // invalid date
+                $this->filter['start_date'] = '';
             }
-
-            // invalid date
-            else $this->filter['start_date'] = '';
+        } else {
+            // not set
+            $this->filter['start_date'] = '';
         }
-
-        // not set
-        else $this->filter['start_date'] = '';
 
         // end date is set
         if (isset($_GET['end_date']) && $_GET['end_date'] != '') {
@@ -260,13 +283,13 @@ class Data extends BackendBaseActionIndex
             // valid date
             if (count($chunks) == 3 && checkdate((int) $chunks[1], (int) $chunks[0], (int) $chunks[2])) {
                 $this->filter['end_date'] = $endDate;
+            } else {
+                // invalid date
+                $this->filter['end_date'] = '';
             }
-
-            // invalid date
-            else $this->filter['end_date'] = '';
+        } else {
+            // not set
+            $this->filter['end_date'] = '';
         }
-
-        // not set
-        else $this->filter['end_date'] = '';
     }
 }
