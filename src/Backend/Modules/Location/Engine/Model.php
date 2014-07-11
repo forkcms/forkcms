@@ -120,20 +120,26 @@ class Model
         // init item
         $item = array();
 
-        // add street
-        if (!empty($street)) $item[] = $street;
+        // building item
+        if (!empty($street)) {
+            $item[] = $street;
+        }
 
-        // add street number
-        if (!empty($streetNumber)) $item[] = $streetNumber;
+        if (!empty($streetNumber)) {
+            $item[] = $streetNumber;
+        }
 
-        // add city
-        if (!empty($city)) $item[] = $city;
+        if (!empty($city)) {
+            $item[] = $city;
+        }
 
-        // add zip
-        if (!empty($zip)) $item[] = $zip;
+        if (!empty($zip)) {
+            $item[] = $zip;
+        }
 
-        // add country
-        if (!empty($country)) $item[] = \SpoonLocale::getCountry($country, BL::getWorkingLanguage());
+        if (!empty($country)) {
+            $item[] = \SpoonLocale::getCountry($country, BL::getWorkingLanguage());
+        }
 
         // define address
         $address = implode(' ', $item);
