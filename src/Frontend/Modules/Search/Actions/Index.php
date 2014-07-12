@@ -56,20 +56,6 @@ class Index extends FrontendBaseBlock
     private $offset;
 
     /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization.
-     *
-     * @var    array
-     */
-    protected $pagination = array(
-        'limit' => 20,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null
-    );
-
-    /**
      * The requested page
      *
      * @var    int
@@ -97,11 +83,10 @@ class Index extends FrontendBaseBlock
     {
         // set variables
         $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+        $this->url = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
         $this->limit = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
-        $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
-                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
-                           $this->offset . '_' . $this->limit . '.php';
+                           FRONTEND_LANGUAGE . '_' . md5($this->term) . '.php';
 
         // load the cached data
         if (!$this->getCachedData()) {
@@ -159,9 +144,17 @@ class Index extends FrontendBaseBlock
         // include cache file
         require_once $this->cacheFile;
 
+        $url = $this->url;
+
         // set info (received from cache)
-        $this->pagination = $pagination;
-        $this->items = $items;
+        $this->items = $this->parsePagination(
+            $items,
+            function($page) use ($url) {
+                return $url . '&page=' . $page;
+            },
+            $this->requestedPage,
+            $this->limit
+        );
 
         return true;
     }
@@ -176,38 +169,22 @@ class Index extends FrontendBaseBlock
             return;
         }
 
-        // set url
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
-
-        // populate calculated fields in pagination
-        $this->pagination['limit'] = $this->limit;
-        $this->pagination['offset'] = $this->offset;
-        $this->pagination['requested_page'] = $this->requestedPage;
-
         // get items
-        $this->items = FrontendSearchModel::search(
+        $allItems = FrontendSearchModel::search(
             $this->term,
-            $this->pagination['limit'],
-            $this->pagination['offset']
+            0
         );
 
-        // populate count fields in pagination
-        // this is done after actual search because some items might be
-        // activated/deactivated (getTotal only does rough checking)
-        $this->pagination['num_items'] = FrontendSearchModel::getTotal($this->term);
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
+        $url = $this->url;
 
-        // num pages is always equal to at least 1
-        if ($this->pagination['num_pages'] == 0) {
-            $this->pagination['num_pages'] = 1;
-        }
-
-        // redirect if the request page doesn't exist
-        if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
-        }
+        $this->items = $this->parsePagination(
+            $allItems,
+            function($page) use ($url) {
+                return $url . '&page=' . $page;
+            },
+            $this->requestedPage,
+            $this->limit
+        );
 
         // debug mode = no cache
         if (!SPOON_DEBUG) {
@@ -216,7 +193,7 @@ class Index extends FrontendBaseBlock
             $fs->dumpFile(
                 $this->cacheFile,
                 "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
-                    $this->items,
+                    $allItems,
                     true
                 ) . ";\n?>"
             );
@@ -269,9 +246,6 @@ class Index extends FrontendBaseBlock
         // assign articles
         $this->tpl->assign('searchResults', $this->items);
         $this->tpl->assign('searchTerm', $this->term);
-
-        // parse the pagination
-        $this->parsePagination();
     }
 
     /**
