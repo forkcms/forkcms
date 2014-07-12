@@ -82,26 +82,33 @@ class Model implements FrontendTagsInterface
      */
     public static function getAll($limit = 10, $offset = 0)
     {
+        $query = 'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+                  i.num_comments AS comments_count, c.title AS category_title, m2.url AS category_url, i.image,
+                  UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments, m.url
+                  FROM blog_posts AS i
+                  INNER JOIN blog_categories AS c ON i.category_id = c.id
+                  INNER JOIN meta AS m ON i.meta_id = m.id
+                  INNER JOIN meta AS m2 ON c.meta_id = m2.id
+                  WHERE i.status = :status AND i.language = :lang AND i.hidden = :hidden AND i.publish_on <= :publish
+                  ORDER BY i.publish_on DESC, i.id DESC';
+
+        $params = array(
+            'status' => 'active',
+            'lang' => FRONTEND_LANGUAGE,
+            'hidden' => 'N',
+            'publish' => FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+        );
+
+        if ($limit > 0) {
+            $query .= ' LIMIT :offset, :limit';
+
+            $params['offset'] = (int) $offset;
+            $params['limit'] = (int) $limit;
+        }
+
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-             c.title AS category_title, m2.url AS category_url, i.image,
-             UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
-             m.url
-             FROM blog_posts AS i
-             INNER JOIN blog_categories AS c ON i.category_id = c.id
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
-             ORDER BY i.publish_on DESC, i.id DESC
-             LIMIT ?, ?',
-            array(
-                'active',
-                FRONTEND_LANGUAGE,
-                'N',
-                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
-                (int) $offset,
-                (int) $limit
-            ),
+            $query,
+            $params,
             'id'
         );
 
@@ -211,21 +218,6 @@ class Model implements FrontendTagsInterface
     }
 
     /**
-     * Get the number of items
-     *
-     * @return int
-     */
-    public static function getAllCount()
-    {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT COUNT(i.id) AS count
-             FROM blog_posts AS i
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00')
-        );
-    }
-
-    /**
      * Get all items in a category (at least a chunk)
      *
      * @param string $categoryURL The URL of the category to retrieve the posts for.
@@ -235,27 +227,35 @@ class Model implements FrontendTagsInterface
      */
     public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
     {
+        $query = 'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+                  i.num_comments AS comments_count, c.title AS category_title, m2.url AS category_url, i.image,
+                  UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments, m.url
+                  FROM blog_posts AS i
+                  INNER JOIN blog_categories AS c ON i.category_id = c.id
+                  INNER JOIN meta AS m ON i.meta_id = m.id
+                  INNER JOIN meta AS m2 ON c.meta_id = m2.id
+                  WHERE i.status = :status AND i.language = :lang AND i.hidden = :hidden AND i.publish_on <= :publishOn
+                  AND m2.url = :url
+                  ORDER BY i.publish_on DESC';
+
+        $params = array(
+            'status' => 'active',
+            'lang' => FRONTEND_LANGUAGE,
+            'hidden' => 'N',
+            'publishOn' => FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
+            'url' => (string) $categoryURL,
+        );
+
+        if ($limit > 0) {
+            $query .= ' LIMIT :offset, :limit';
+
+            $params['offset'] = (int) $offset;
+            $params['limit'] = (int) $limit;
+        }
+
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-             c.title AS category_title, m2.url AS category_url, i.image,
-             UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
-             m.url
-             FROM blog_posts AS i
-             INNER JOIN blog_categories AS c ON i.category_id = c.id
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
-             ORDER BY i.publish_on DESC
-             LIMIT ?, ?',
-            array(
-                'active',
-                FRONTEND_LANGUAGE,
-                'N',
-                FrontendModel::getUTCDate('Y-m-d H:i') . ':00',
-                (string) $categoryURL,
-                (int) $offset,
-                (int) $limit
-            ),
+            $query,
+            $params,
             'id'
         );
 
@@ -313,24 +313,6 @@ class Model implements FrontendTagsInterface
     }
 
     /**
-     * Get the number of items in a given category
-     *
-     * @param string $URL The URL for the category.
-     * @return int
-     */
-    public static function getAllForCategoryCount($URL)
-    {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT COUNT(i.id) AS count
-             FROM blog_posts AS i
-             INNER JOIN blog_categories AS c ON i.category_id = c.id
-             INNER JOIN meta AS m ON c.meta_id = m.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
-            array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL)
-        );
-    }
-
-    /**
      * Get all items between a start and end-date
      *
      * @param int $start  The start date as a UNIX-timestamp.
@@ -346,28 +328,36 @@ class Model implements FrontendTagsInterface
         $limit = (int) $limit;
         $offset = (int) $offset;
 
+        $query = 'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
+                  i.num_comments AS comments_count, c.title AS category_title, m2.url AS category_url, i.image,
+                  UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments, m.url
+                  FROM blog_posts AS i
+                  INNER JOIN blog_categories AS c ON i.category_id = c.id
+                  INNER JOIN meta AS m ON i.meta_id = m.id
+                  INNER JOIN meta AS m2 ON c.meta_id = m2.id
+                  WHERE i.status = :status AND i.language = :lang AND i.hidden = :hidden
+                  AND i.publish_on BETWEEN :start AND :end
+                  ORDER BY i.publish_on DESC';
+
+        $params = array(
+            'status' => 'active',
+            'lang' => FRONTEND_LANGUAGE,
+            'hidden' => 'N',
+            'start' => FrontendModel::getUTCDate('Y-m-d H:i', $start),
+            'end' => FrontendModel::getUTCDate('Y-m-d H:i', $end),
+        );
+
+        if ($limit > 0) {
+            $query .= ' LIMIT :offset, :limit';
+
+            $params['offset'] = (int) $offset;
+            $params['limit'] = (int) $limit;
+        }
+
         // get the items
         $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
-             c.title AS category_title, m2.url AS category_url, i.image,
-             UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
-             m.url
-             FROM blog_posts AS i
-             INNER JOIN blog_categories AS c ON i.category_id = c.id
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             INNER JOIN meta AS m2 ON c.meta_id = m2.id
-             WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
-             ORDER BY i.publish_on DESC
-             LIMIT ?, ?',
-            array(
-                'active',
-                FRONTEND_LANGUAGE,
-                'N',
-                FrontendModel::getUTCDate('Y-m-d H:i', $start),
-                FrontendModel::getUTCDate('Y-m-d H:i', $end),
-                $offset,
-                $limit
-            ),
+            $query,
+            $params,
             'id'
         );
 

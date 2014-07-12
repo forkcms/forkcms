@@ -38,20 +38,6 @@ class Category extends FrontendBaseBlock
     private $category;
 
     /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization
-     *
-     * @var    array
-     */
-    protected $pagination = array(
-        'limit' => 10,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null
-    );
-
-    /**
      * Execute the extra
      */
     public function execute()
@@ -81,9 +67,6 @@ class Category extends FrontendBaseBlock
             'false'
         );
 
-        // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
-
         // validate category
         if ($requestedCategory == 'false') {
             $this->redirect(FrontendNavigation::getURL(404));
@@ -92,30 +75,22 @@ class Category extends FrontendBaseBlock
         // set category
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
-        // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
+        $allItems = FrontendBlogModel::getAllForCategory($requestedCategory, 0);
 
-        // populate count fields in pagination
-        $this->pagination['num_items'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
-
-        // redirect if the request page doesn't exists
-        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
-        }
-
-        // populate calculated fields in pagination
-        $this->pagination['requested_page'] = $requestedPage;
-        $this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
+        // requested page
+        $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
         // get articles
-        $this->items = FrontendBlogModel::getAllForCategory(
-            $requestedCategory,
-            $this->pagination['limit'],
-            $this->pagination['offset']
+        $this->items = $this->parsePagination(
+            $allItems,
+            function($page) use ($requestedCategory) {
+                $url = FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $requestedCategory;
+                $url .= '?page=' . $page;
+
+                return $url;
+            },
+            $requestedPage,
+            FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10)
         );
     }
 
@@ -166,8 +141,5 @@ class Category extends FrontendBaseBlock
 
         // assign articles
         $this->tpl->assign('items', $this->items);
-
-        // parse the pagination
-        $this->parsePagination();
     }
 }
