@@ -192,10 +192,7 @@ class Index extends FrontendBaseBlock
             $fs = new Filesystem();
             $fs->dumpFile(
                 $this->cacheFile,
-                "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export(
-                    $allItems,
-                    true
-                ) . ";\n?>"
+                "<?php\n" . '$items = ' . var_export($allItems, true) . ";\n?>"
             );
         }
     }
