@@ -291,7 +291,7 @@ class Block extends Object
      * Parse pagination
      *
      * @param array    $items        The list of items we want to paginate
-     * @param callable $currentPage  The current page number
+     * @param callable $getUrl       The current page number
      * @param int      $currentPage  The current page number
      * @param int      $itemsPerPage The number of items we want per page
      *
