@@ -84,7 +84,7 @@ class Category extends FrontendBaseBlock
         $this->items = $this->parsePagination(
             $allItems,
             function($page) use ($requestedCategory) {
-                $url = FrontendNavigation::getURLForBlock('Blog', 'category') . '/' . $requestedCategory;
+                $url = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
                 $url .= '?page=' . $page;
 
                 return $url;
