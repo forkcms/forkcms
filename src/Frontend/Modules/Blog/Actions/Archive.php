@@ -129,11 +129,13 @@ class Archive extends FrontendBaseBlock
         // requested page
         $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
+        $currentArchiveUrl = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
+
         // get articles
         $this->items = $this->parsePagination(
             $allItems,
-            function($page) use ($url) {
-                return FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url . '?page=' . $page;
+            function($page) use ($currentArchiveUrl) {
+                return $currentArchiveUrl . '?page=' . $page;
             },
             $requestedPage,
             FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10)

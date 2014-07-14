@@ -80,14 +80,13 @@ class Category extends FrontendBaseBlock
         // requested page
         $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
+        $currentCategoryUrl = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
+
         // get articles
         $this->items = $this->parsePagination(
             $allItems,
-            function($page) use ($requestedCategory) {
-                $url = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
-                $url .= '?page=' . $page;
-
-                return $url;
+            function($page) use ($currentCategoryUrl) {
+                return $currentCategoryUrl . '?page=' . $page;
             },
             $requestedPage,
             FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10)

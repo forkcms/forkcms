@@ -50,10 +50,12 @@ class Index extends FrontendBaseBlock
 
         $allItems = FrontendBlogModel::getAll(0);
 
+        $blogUrl = FrontendNavigation::getURLForBlock('Blog');
+
         $this->items = $this->parsePagination(
             $allItems,
-            function($page) {
-                return FrontendNavigation::getURLForBlock('Blog') . '?page=' . $page;
+            function($page) use ($blogUrl) {
+                return $blogUrl . '?page=' . $page;
             },
             $requestedPage,
             FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10)
