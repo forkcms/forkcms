@@ -297,7 +297,7 @@ class Block extends Object
      *
      * @return array The items for the current page
      */
-    public function parsePagination(array $items, $getUrl, $currentPage = 1, $itemsPerPage = 10)
+    protected function parsePagination(array $items, $getUrl, $currentPage = 1, $itemsPerPage = 10)
     {
         if (!is_callable($getUrl)) {
             throw new InvalidArgumentException('The getUrl parameter should be a callable function.');
