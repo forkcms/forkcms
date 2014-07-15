@@ -172,7 +172,7 @@ class Model
                 array(FRONTEND_LANGUAGE, FrontendModel::get('current_site')->getId(), 'Y', 'Y', $offset, $limit)
             );
         }
-
+var_dump($query, $params);exit;
         return (array) FrontendModel::getContainer()->get(
             'database'
         )->getRecords($query, $params);
