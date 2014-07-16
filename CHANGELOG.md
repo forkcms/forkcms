@@ -1,3 +1,12 @@
+3.7.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Extensions: you can upload a module from a zip with an extra directory
+
+Bugfixes:
+
+
 3.7.1 (2014-07-10)
 --
 Improvements:
