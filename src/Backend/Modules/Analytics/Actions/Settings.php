@@ -322,7 +322,7 @@ class Settings extends BackendBaseActionEdit
         BackendModel::setModuleSetting($this->getModule(), 'account_names', array());
         BackendModel::setModuleSetting($this->getModule(), 'table_ids', array());
         BackendModel::setModuleSetting($this->getModule(), 'profile_titles', array());
-        BackendModel::setModuleSetting($this->getModule(), 'web_property_id', null);
+        BackendModel::setModuleSetting($this->getModule(), 'web_property_ids', null);
 
         BackendAnalyticsModel::removeCacheFiles();
         BackendAnalyticsModel::clearTables();
@@ -408,7 +408,7 @@ class Settings extends BackendBaseActionEdit
             BackendModel::setModuleSetting($this->getModule(), 'account_names', $this->accountNames);
             BackendModel::setModuleSetting($this->getModule(), 'table_ids', $this->tableIds);
             BackendModel::setModuleSetting($this->getModule(), 'profile_titles', $this->profileTitles);
-            BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyIds);
+            BackendModel::setModuleSetting($this->getModule(), 'web_property_ids', $webPropertyIds);
         }
     }
 }
