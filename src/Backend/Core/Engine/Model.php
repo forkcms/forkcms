@@ -1260,8 +1260,8 @@ class Model extends \BaseModel
         // store
         self::getContainer()->get('database')->execute(
             'INSERT INTO modules_settings(module, name, value)
-            VALUES(?, ?, ?)
-            ON DUPLICATE KEY UPDATE value = ?',
+             VALUES(?, ?, ?)
+             ON DUPLICATE KEY UPDATE value = ?',
             array($module, $name, $valueToStore, $valueToStore)
         );
 
