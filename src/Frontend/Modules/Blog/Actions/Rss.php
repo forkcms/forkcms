@@ -34,13 +34,6 @@ class Rss extends FrontendBaseBlock
     private $items;
 
     /**
-     * The settings
-     *
-     * @var    array
-     */
-    private $settings;
-
-    /**
      * Execute the extra
      */
     public function execute()
@@ -56,7 +49,6 @@ class Rss extends FrontendBaseBlock
     private function getData()
     {
         $this->items = FrontendBlogModel::getAll(30);
-        $this->settings = FrontendModel::getModuleSettings('Blog');
     }
 
     /**
@@ -65,9 +57,9 @@ class Rss extends FrontendBaseBlock
     private function parse()
     {
         // get vars
-        $title = (isset($this->settings['rss_title_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_title_' . FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+        $title = FrontendModel::getModuleSetting('Blog', 'rss_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE);
         $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
-        $description = (isset($this->settings['rss_description_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_description_' . FRONTEND_LANGUAGE] : null;
+        $description = FrontendModel::getModuleSetting('Blog', 'rss_description', null, FRONTEND_LANGUAGE);
 
         // create new rss instance
         $rss = new FrontendRSS($title, $link, $description);
@@ -80,7 +72,7 @@ class Rss extends FrontendBaseBlock
             $description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
             // meta is wanted
-            if (FrontendModel::getModuleSetting('Blog', 'rss_meta_' . FRONTEND_LANGUAGE, true)) {
+            if (FrontendModel::getModuleSetting('Blog', 'rss_meta', true, FRONTEND_LANGUAGE)) {
                 // append meta
                 $description .= '<div class="meta">' . "\n";
                 $description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' .

@@ -123,7 +123,7 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if (BackendModel::getModuleSetting('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+            if (BackendModel::getModuleSetting('Blog', 'rss_title', null, BL::getWorkingLanguage()) == '') {
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
@@ -133,7 +133,7 @@ class Model
             }
 
             // rss description
-            if (BackendModel::getModuleSetting('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+            if (BackendModel::getModuleSetting('Blog', 'rss_description', null, BL::getWorkingLanguage()) == '') {
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
