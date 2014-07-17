@@ -190,7 +190,7 @@ After
     use Backend\Core\Engine\DataGridFunctions;
 
     ...
-    $dg->setColumnFunction(new DataGridFunctions(), 'getTimeAgo', '[time]', 'time');
+    $dg->setColumnFunction(array(new DataGridFunctions(), 'getTimeAgo'), '[time]', 'time');
 
 or
 
