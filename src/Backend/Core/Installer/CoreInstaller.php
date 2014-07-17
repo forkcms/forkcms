@@ -83,12 +83,12 @@ class CoreInstaller extends ModuleInstaller
     private function setSettings()
     {
         // languages settings
-        $this->setSetting('Core', 'languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'active_languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'redirect_languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'default_language', $this->getVariable('default_language'), true);
-        $this->setSetting('Core', 'interface_languages', $this->getInterfaceLanguages(), true);
-        $this->setSetting('Core', 'default_interface_language', $this->getVariable('default_interface_language'), true);
+        $this->setSetting('Core', 'languages', $this->getLanguages(), null, true);
+        $this->setSetting('Core', 'active_languages', $this->getLanguages(), null, true);
+        $this->setSetting('Core', 'redirect_languages', $this->getLanguages(), null, true);
+        $this->setSetting('Core', 'default_language', $this->getVariable('default_language'), null, true);
+        $this->setSetting('Core', 'interface_languages', $this->getInterfaceLanguages(), null, true);
+        $this->setSetting('Core', 'default_interface_language', $this->getVariable('default_interface_language'), null, true);
 
         // other settings
         $this->setSetting('Core', 'theme');
@@ -221,8 +221,9 @@ class CoreInstaller extends ModuleInstaller
             // set title
             $this->setSetting(
                 'Core',
-                'site_title_' . $language,
-                (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title')
+                'site_title',
+                (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'),
+                $language
             );
         }
 

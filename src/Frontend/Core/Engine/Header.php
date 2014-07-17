@@ -561,7 +561,7 @@ class Header extends FrontendBaseObject
         $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
         $this->tpl->assign(
             'siteTitle',
-            (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) Model::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE)
         );
     }
 
@@ -944,8 +944,9 @@ class Header extends FrontendBaseObject
             if (empty($value)) {
                 $this->pageTitle = Model::getModuleSetting(
                     'Core',
-                    'site_title_' . FRONTEND_LANGUAGE,
-                    SITE_DEFAULT_TITLE
+                    'site_title',
+                    SITE_DEFAULT_TITLE,
+                    FRONTEND_LANGUAGE
                 );
             } else {
                 // if the current page title is empty we should add the site title
@@ -953,8 +954,9 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' -  ' .
                                        Model::getModuleSetting(
                                            'Core',
-                                           'site_title_' . FRONTEND_LANGUAGE,
-                                           SITE_DEFAULT_TITLE
+                                           'site_title',
+                                           SITE_DEFAULT_TITLE,
+                                           FRONTEND_LANGUAGE
                                        );
                 } else {
                     // prepend the value to the current page title
