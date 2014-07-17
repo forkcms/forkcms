@@ -44,8 +44,6 @@ class Settings extends BackendBaseActionEdit
      *
      * @var BackendForm
      */
-    private $frmApiKey;
-    private $frmLinkProfile;
     private $frmTrackingType;
 
     /**
@@ -226,37 +224,38 @@ class Settings extends BackendBaseActionEdit
             urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE)
         );
 
-        $this->frmApiKey = new BackendForm('apiKey');
-        $this->frmApiKey->addText('key', $this->apiKey);
+        $frmApiKey = new BackendForm('apiKey');
+        $frmApiKey->addText('key', $this->apiKey);
 
-        if ($this->frmApiKey->isSubmitted()) {
-            $this->frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
+        if ($frmApiKey->isSubmitted()) {
+            $frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
 
-            if ($this->frmApiKey->isCorrect()) {
+            if ($frmApiKey->isCorrect()) {
                 BackendModel::setModuleSetting(
                     $this->getModule(),
                     'api_key',
-                    $this->frmApiKey->getField('key')->getValue()
+                    $frmApiKey->getField('key')->getValue()
                 );
                 $this->redirect($googleAccountAuthenticationForm);
             }
         }
 
-        $this->frmApiKey->parse($this->tpl);
+        $frmApiKey->parse($this->tpl);
     }
 
     protected function handleProfileLinkForm($accounts)
     {
-        $this->frmLinkProfile = new BackendForm(
+        $frmLinkProfile = new BackendForm(
             'linkProfile',
             BackendModel::createURLForAction(),
             'get'
         );
-        $this->frmLinkProfile->addDropdown('table_id', $accounts);
-        $this->frmLinkProfile->parse($this->tpl);
 
-        if ($this->frmLinkProfile->isSubmitted()) {
-            if ($this->frmLinkProfile->getField('table_id')->getValue() == '0') {
+        $frmLinkProfile->addDropdown('table_id', $accounts);
+        $frmLinkProfile->parse($this->tpl);
+
+        if ($frmLinkProfile->isSubmitted()) {
+            if ($frmLinkProfile->getField('table_id')->getValue() == '0') {
                 $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
             }
         }
