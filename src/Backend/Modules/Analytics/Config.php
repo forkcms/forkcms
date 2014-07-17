@@ -51,7 +51,7 @@ class Config extends BackendBaseConfig
         // analytics session token
         if (
             BackendModel::getModuleSetting('Analytics', 'session_token') === null ||
-            BackendModel::getModuleSetting('Analytics', 'table_id') === null
+            BackendModel::getModuleSetting('Analytics', 'table_ids') == false
         ) {
             $error = true;
         }

@@ -29,7 +29,7 @@ class Visitors extends BackendBaseWidget
         // analytics session token and analytics table id
         if (
             BackendModel::getModuleSetting('Analytics', 'session_token', null) == '' ||
-            BackendModel::getModuleSetting('Analytics', 'table_id', null) == ''
+            BackendModel::getModuleSetting('Analytics', 'table_ids', array()) == false
         ) {
             return;
         }

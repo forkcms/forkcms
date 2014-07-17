@@ -24,6 +24,8 @@ use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
  */
 class Helper
 {
+    protected static $siteId;
+
     /**
      * Get aggregates
      *
@@ -355,8 +357,12 @@ class Helper
     {
         // get session token and table id
         $sessionToken = BackendModel::getModuleSetting('Analytics', 'session_token', null);
-        $tableId = BackendModel::getModuleSetting('Analytics', 'table_id', null);
+        $tableIds = BackendModel::getModuleSetting('Analytics', 'table_ids', null);
         $apiKey = BackendModel::getModuleSetting('Analytics', 'api_key', null);
+
+        self::$siteId = BackendModel::get('current_site')->getId();
+
+        $tableId = $tableIds[self::$siteId];
 
         // require the GoogleAnalytics class
         require_once PATH_LIBRARY . '/external/google_analytics.php';
@@ -549,6 +555,7 @@ class Helper
         foreach ($results['entries'] as $entry) {
             // build insert record
             $insertRecord = array();
+            $insertRecord['site_id'] = self::$siteId;
             $insertRecord['keyword'] = $entry['keyword'];
             $insertRecord['entrances'] = $entry['entrances'];
             $insertRecord['date'] = $results['startDate'] . ' 00:00:00';
@@ -599,6 +606,7 @@ class Helper
         foreach ($results['entries'] as $entry) {
             // build insert record
             $insertRecord = array();
+            $insertRecord['site_id'] = self::$siteId;
             $insertRecord['referrer'] = $entry['source'] . $entry['referralPath'];
             $insertRecord['entrances'] = $entry['entrances'];
             $insertRecord['date'] = $results['startDate'] . ' 00:00:00';

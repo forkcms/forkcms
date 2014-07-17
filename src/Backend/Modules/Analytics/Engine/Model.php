@@ -73,7 +73,7 @@ class Model
             }
 
             // analytics table id (only show this error if no other exist)
-            if (empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
+            if (empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_ids', array()) == false) {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
@@ -260,7 +260,8 @@ class Model
      */
     private static function getCacheFile($startTimestamp, $endTimestamp)
     {
-        $filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
+        $siteId = BackendModel::get('current_site')->getId();
+        $filename = $siteId . '_' . (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
         // file exists
         if (is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
@@ -332,7 +333,13 @@ class Model
 
         // no id? insert this page
         if ($id === 0) {
-            $id = $db->insert('analytics_pages', array('page' => (string) $page));
+            $id = $db->insert(
+                'analytics_pages',
+                array(
+                    'page'    => (string) $page,
+                    'site_id' => BackendModel::get('current_site')->getId(),
+                )
+            );
         }
 
         // get data from cache
@@ -461,21 +468,27 @@ class Model
     {
         $results = array();
         $db = BackendModel::getContainer()->get('database');
+        $siteId = BackendModel::get('current_site')->getId();
 
         // get data from database
         if ($limit === null) {
             $items = (array) $db->getRecords(
-                'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+                'SELECT id, page_path, entrances, bounces, bounce_rate, start_date, end_date,
+                 UNIX_TIMESTAMP(updated_on) AS updated_on
                  FROM analytics_landing_pages
-                 ORDER BY entrances DESC'
+                 WHERE site_id = ?
+                 ORDER BY entrances DESC',
+                array($siteId)
             );
         } else {
             $items = (array) $db->getRecords(
-                'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+                'SELECT id, page_path, entrances, bounces, bounce_rate, start_date, end_date,
+                 UNIX_TIMESTAMP(updated_on) AS updated_on
                  FROM analytics_landing_pages
+                 WHERE site_id = ?
                  ORDER BY entrances DESC
                  LIMIT ?',
-                array((int) $limit)
+                array($siteId, (int) $limit)
             );
         }
 
@@ -1337,9 +1350,10 @@ class Model
         }
 
         // store
+        $siteId = BackendModel::get('current_site')->getId();
         $fs = new Filesystem();
         $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/Analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
+            BACKEND_CACHE_PATH . '/Analytics/'. $siteId . '_' . $startTimestamp . '_' . $endTimestamp . '.xml',
             $xml
         );
     }
