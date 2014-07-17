@@ -171,35 +171,8 @@ class Settings extends BackendBaseActionEdit
             $this->tpl->assign('NoSessionToken', true);
             $this->tpl->assign('Wizard', true);
 
-            // build the link to the google account authentication form
-            $redirectUrl = SITE_URL . '/' . (strpos($this->URL->getQueryString(), '?') === false ?
-                $this->URL->getQueryString() :
-                substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')))
-            ;
-            $googleAccountAuthenticationForm = sprintf(
-                BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL,
-                urlencode($redirectUrl),
-                urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE)
-            );
-
             // create form
-            $this->frmApiKey = new BackendForm('apiKey');
-            $this->frmApiKey->addText('key', $this->apiKey);
-
-            if ($this->frmApiKey->isSubmitted()) {
-                $this->frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
-
-                if ($this->frmApiKey->isCorrect()) {
-                    BackendModel::setModuleSetting(
-                        $this->getModule(),
-                        'api_key',
-                        $this->frmApiKey->getField('key')->getValue()
-                    );
-                    $this->redirect($googleAccountAuthenticationForm);
-                }
-            }
-
-            $this->frmApiKey->parse($this->tpl);
+            $this->handleApiKeyForm($googleAccountAuthenticationForm);
         } elseif (isset($this->sessionToken) && isset($this->profiles) && !isset($this->tableId)) {
             // session token is present but no table id
             $this->tpl->assign('NoTableId', true);
@@ -221,19 +194,7 @@ class Settings extends BackendBaseActionEdit
                     uksort($accounts, array(__CLASS__, 'sortAccounts'));
 
                     // create form
-                    $this->frmLinkProfile = new BackendForm(
-                        'linkProfile',
-                        BackendModel::createURLForAction(),
-                        'get'
-                    );
-                    $this->frmLinkProfile->addDropdown('table_id', $accounts);
-                    $this->frmLinkProfile->parse($this->tpl);
-
-                    if ($this->frmLinkProfile->isSubmitted()) {
-                        if ($this->frmLinkProfile->getField('table_id')->getValue() == '0') {
-                            $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
-                        }
-                    }
+                    $this->handleProfileLinkForm($accounts);
 
                     // parse accounts
                     $this->tpl->assign('accounts', true);
@@ -250,6 +211,55 @@ class Settings extends BackendBaseActionEdit
 
         // Parse tracking url form
         $this->frmTrackingType->parse($this->tpl);
+    }
+
+    protected function handleApiKeyForm()
+    {
+        // build the link to the google account authentication form
+        $redirectUrl = SITE_URL . '/' . (strpos($this->URL->getQueryString(), '?') === false ?
+            $this->URL->getQueryString() :
+            substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')))
+        ;
+        $googleAccountAuthenticationForm = sprintf(
+            BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL,
+            urlencode($redirectUrl),
+            urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE)
+        );
+
+        $this->frmApiKey = new BackendForm('apiKey');
+        $this->frmApiKey->addText('key', $this->apiKey);
+
+        if ($this->frmApiKey->isSubmitted()) {
+            $this->frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
+
+            if ($this->frmApiKey->isCorrect()) {
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'api_key',
+                    $this->frmApiKey->getField('key')->getValue()
+                );
+                $this->redirect($googleAccountAuthenticationForm);
+            }
+        }
+
+        $this->frmApiKey->parse($this->tpl);
+    }
+
+    protected function handleProfileLinkForm($accounts)
+    {
+        $this->frmLinkProfile = new BackendForm(
+            'linkProfile',
+            BackendModel::createURLForAction(),
+            'get'
+        );
+        $this->frmLinkProfile->addDropdown('table_id', $accounts);
+        $this->frmLinkProfile->parse($this->tpl);
+
+        if ($this->frmLinkProfile->isSubmitted()) {
+            if ($this->frmLinkProfile->getField('table_id')->getValue() == '0') {
+                $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
+            }
+        }
     }
 
     /**
