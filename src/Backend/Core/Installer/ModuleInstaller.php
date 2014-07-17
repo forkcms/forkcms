@@ -1044,9 +1044,10 @@ class ModuleInstaller
      * @param string $name      The name of the setting.
      * @param mixed  $value     The optional value.
      * @param string $language  The language to store the setting for
+     * @param int    $siteId    The id of the site to store a setting for
      * @param bool   $overwrite Overwrite no matter what.
      */
-    protected function setSetting($module, $name, $value = null, $language = null, $overwrite = false)
+    protected function setSetting($module, $name, $value = null, $language = null, $siteId = null, $overwrite = false)
     {
         $module = (string) $module;
         $name = (string) $name;
@@ -1055,6 +1056,10 @@ class ModuleInstaller
 
         if (!empty($language)) {
             $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
         }
 
         if ($overwrite) {
