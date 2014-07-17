@@ -10,9 +10,6 @@ namespace Backend\Modules\Analytics\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-
-use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -56,8 +53,8 @@ class CacheBuilder
     /**
      * Fetches the full path for the cache file
      *
-     * @param int   $startTimestamp The start timestamp for the cache file.
-     * @param int   $endTimestamp   The end timestamp for the cache file.
+     * @param int $startTimestamp The start timestamp for the cache file.
+     * @param int $endTimestamp   The end timestamp for the cache file.
      */
     protected function getCacheFilePath($startTimestamp, $endTimestamp)
     {
@@ -71,7 +68,7 @@ class CacheBuilder
     /**
      * Converts the data array to an xml file
      *
-     * @param array $data
+     * @param  array  $data
      * @return string
      */
     protected function getXmlForData(array $data)
@@ -107,7 +104,7 @@ class CacheBuilder
     /**
      * Converts the records array from the index page to an xml file
      *
-     * @param array $records
+     * @param  array  $records
      * @return string
      */
     protected function getXmlForIndexPage($records)
@@ -125,11 +122,10 @@ class CacheBuilder
         return $xml;
     }
 
-
     /**
      * Converts the records array from the detail page to an xml file
      *
-     * @param array $records
+     * @param  array  $records
      * @return string
      */
     protected function getXmlForDetailPage($records)
@@ -156,6 +152,13 @@ class CacheBuilder
         return $xml;
     }
 
+    /**
+     * Creates the parts of the xml specific for entries in the analytics data
+     *
+     * @param  string $key
+     * @param  mixed  $value
+     * @return string
+     */
     protected function getXmlForEntries($key, $value)
     {
         $xml = '';
