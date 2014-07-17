@@ -319,13 +319,18 @@ class Model extends \BaseModel
      * @param string $module       The module wherefore a setting has to be retrieved.
      * @param string $name         The name of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
+     * @param string $language     The language to fetch the setting for
      * @return mixed
      */
-    public static function getModuleSetting($module, $name, $defaultValue = null)
+    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null)
     {
         // redefine
         $module = (string) $module;
         $name = (string) $name;
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
 
         // get them all
         if (empty(self::$moduleSettings)) {
@@ -835,15 +840,20 @@ class Model extends \BaseModel
     /**
      * Store a module setting
      *
-     * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name   The name of the setting.
-     * @param mixed  $value  The value (will be serialized so make sure the type is correct).
+     * @param string $module   The module wherefore a setting has to be stored.
+     * @param string $name     The name of the setting.
+     * @param mixed  $value    The value (will be serialized so make sure the type is correct).
+     * @param string $language The language to fetch the setting for.
      */
-    public static function setModuleSetting($module, $name, $value)
+    public static function setModuleSetting($module, $name, $value, $language = null)
     {
         $module = (string) $module;
         $name = (string) $name;
         $value = serialize($value);
+
+        if (!empty($language)) {
+            $key .= '_' . $language;
+        }
 
         // store
         self::getContainer()->get('database')->execute(
