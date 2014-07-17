@@ -119,26 +119,7 @@ class CacheBuilder
 
         // loop data
         foreach ($items as $key => $value) {
-            // skip empty items
-            if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) {
-                continue;
-            }
-
-            // value contains an array
-            if (is_array($value)) {
-                // there are values
-                if (!empty($value)) {
-                    // build xml for every item in the entry
-                    $xml .= "\t\t<entry>\n";
-                    foreach ($value as $entryKey => $entryValue) {
-                        $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
-                    }
-                    $xml .= "\t\t</entry>\n";
-                }
-            } else {
-                // build xml
-                $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
-            }
+            $xml .= $this->getXmlForEntries($key, $value);
         }
 
         return $xml;
@@ -162,26 +143,7 @@ class CacheBuilder
             // sub items is an array: loop all the subitems.
             if (is_array($subItems)) {
                 foreach ($subItems as $key => $value) {
-                    // skip empty items
-                    if ((is_array($value) && empty($value)) || trim((string) $value) === '') {
-                        continue;
-                    }
-
-                    // value contains an array
-                    if (is_array($value)) {
-                        // there are values
-                        if (!empty($value)) {
-                            // build xml for every item in the entry
-                            $xml .= "\t\t\t<entry>\n";
-                            foreach ($value as $entryKey => $entryValue) {
-                                $xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
-                            }
-                            $xml .= "\t\t\t</entry>\n";
-                        }
-                    } else {
-                        // build xml
-                        $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
-                    }
+                    $xml .= $this->getXmlForEntries($key, $value);
                 }
             } else {
                 // not an array
@@ -189,6 +151,34 @@ class CacheBuilder
             }
 
             $xml .= "\t\t</" . $subKey . ">\n";
+        }
+
+        return $xml;
+    }
+
+    protected function getXmlForEntries($key, $value)
+    {
+        $xml = '';
+
+        // skip empty items
+        if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) {
+            return $xml;
+        }
+
+        // value contains an array
+        if (is_array($value)) {
+            // there are values
+            if (!empty($value)) {
+                // build xml for every item in the entry
+                $xml .= "\t\t<entry>\n";
+                foreach ($value as $entryKey => $entryValue) {
+                    $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
+                }
+                $xml .= "\t\t</entry>\n";
+            }
+        } else {
+            // build xml
+            $xml .= "\t<" . $key . ">" . $value . "</" . $key . ">\n";
         }
 
         return $xml;
