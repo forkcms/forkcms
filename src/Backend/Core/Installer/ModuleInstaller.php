@@ -535,7 +535,7 @@ class ModuleInstaller
         $sequence = null
     ) {
         // no sequence set
-        if (is_null($sequence)) {
+        if ($sequence === null) {
             // set next sequence number for this module
             $sequence = $this->getDB()->getVar(
                 'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
@@ -543,30 +543,22 @@ class ModuleInstaller
             );
 
             // this is the first extra for this module: generate new 1000-series
-            if (is_null($sequence)) {
+            if ($sequence === null) {
                 $sequence = $sequence = $this->getDB()->getVar(
                     'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
                 );
             }
         }
 
-        $module = (string) $module;
-        $type = (string) $type;
-        $label = (string) $label;
-        $action = !is_null($action) ? (string) $action : null;
-        $data = !is_null($data) ? (string) $data : null;
-        $hidden = $hidden && $hidden !== 'N' ? 'Y' : 'N';
-        $sequence = (int) $sequence;
-
         // build item
         $item = array(
-            'module' => $module,
-            'type' => $type,
-            'label' => $label,
-            'action' => $action,
-            'data' => $data,
-            'hidden' => $hidden,
-            'sequence' => $sequence
+            'module'   => (string) $module,
+            'type'     => (string) $type,
+            'label'    => (string) $label,
+            'action'   => !is_null($action) ? (string) $action : null,
+            'data'     => !is_null($data) ? (string) $data : null,
+            'hidden'   => $hidden && $hidden !== 'N' ? 'Y' : 'N',
+            'sequence' => (int) $sequence,
         );
 
         // build query
