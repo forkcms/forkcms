@@ -34,7 +34,7 @@ class CacheBuilder
         $xml = "<?xml version='1.0' encoding='" . SPOON_CHARSET . "'?>\n";
         $xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
-        $xml .= $this->convertDataToXml($data);
+        $xml .= $this->getXmlForData($data);
 
         // end xml string
         $xml .= "</analytics>";
@@ -68,19 +68,22 @@ class CacheBuilder
         return $path . '/' . $fileName;
     }
 
-    protected function convertDataToXml(array $data)
+    /**
+     * Converts the data array to an xml file
+     *
+     * @param array $data
+     * @return string
+     */
+    protected function getXmlForData(array $data)
     {
         $xml = '';
 
-        // loop data
         foreach ($data as $type => $records) {
             $attributes = array();
 
-            // there are some attributes
+            // if there are some attributes, add them to the attributes string
             if (isset($records['attributes']) && !empty($records['attributes'])) {
-                // loop em
                 foreach ($records['attributes'] as $key => $value) {
-                    // add to the attributes string
                     $attributes[] = $key . '="' . $value . '"';
                 }
             }
@@ -89,13 +92,78 @@ class CacheBuilder
 
             // we're not dealing with a page detail
             if (strpos($type, 'page_') === false) {
-                // get items
-                $items = (isset($records['entries']) ? $records['entries'] : $records);
+                $xml .= $this->getXmlForIndexPage($records);
+            } else {
+                $xml .= $this->getXmlForDetailPage($records);
+            }
 
-                // loop data
-                foreach ($items as $key => $value) {
+            // end xml element
+            $xml .= "\t</" . $type . ">\n";
+        }
+
+        return $xml;
+    }
+
+    /**
+     * Converts the records array from the index page to an xml file
+     *
+     * @param array $records
+     * @return string
+     */
+    protected function getXmlForIndexPage($records)
+    {
+        $xml = '';
+
+        // get items
+        $items = (isset($records['entries']) ? $records['entries'] : $records);
+
+        // loop data
+        foreach ($items as $key => $value) {
+            // skip empty items
+            if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) {
+                continue;
+            }
+
+            // value contains an array
+            if (is_array($value)) {
+                // there are values
+                if (!empty($value)) {
+                    // build xml for every item in the entry
+                    $xml .= "\t\t<entry>\n";
+                    foreach ($value as $entryKey => $entryValue) {
+                        $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
+                    }
+                    $xml .= "\t\t</entry>\n";
+                }
+            } else {
+                // build xml
+                $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
+            }
+        }
+
+        return $xml;
+    }
+
+
+    /**
+     * Converts the records array from the detail page to an xml file
+     *
+     * @param array $records
+     * @return string
+     */
+    protected function getXmlForDetailPage($records)
+    {
+        $xml = '';
+
+        // we're dealing with a page detail: loop data
+        foreach ($records as $subKey => $subItems) {
+            $xml .= "\t\t<" . $subKey . ">\n";
+
+            // sub items is an array: loop all the subitems.
+            if (is_array($subItems)) {
+                foreach ($subItems as $key => $value) {
                     // skip empty items
-                    if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) {
+                    if ((is_array($value) && empty($value)) || trim((string) $value) === '') {
                         continue;
                     }
 
@@ -103,17 +171,12 @@ class CacheBuilder
                     if (is_array($value)) {
                         // there are values
                         if (!empty($value)) {
-                            // build xml
-                            $xml .= "\t\t<entry>\n";
-
-                            // loop data
+                            // build xml for every item in the entry
+                            $xml .= "\t\t\t<entry>\n";
                             foreach ($value as $entryKey => $entryValue) {
-                                // build xml
-                                $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
+                                $xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
                             }
-
-                            // end xml element
-                            $xml .= "\t\t</entry>\n";
+                            $xml .= "\t\t\t</entry>\n";
                         }
                     } else {
                         // build xml
@@ -121,53 +184,11 @@ class CacheBuilder
                     }
                 }
             } else {
-                // we're dealing with a page detail: loop data
-                foreach ($records as $subKey => $subItems) {
-                    // build xml
-                    $xml .= "\t\t<" . $subKey . ">\n";
-
-                    // sub items is an array
-                    if (is_array($subItems)) {
-                        // loop data
-                        foreach ($subItems as $key => $value) {
-                            // skip empty items
-                            if ((is_array($value) && empty($value)) || trim((string) $value) === '') {
-                                continue;
-                            }
-
-                            // value contains an array
-                            if (is_array($value)) {
-                                // there are values
-                                if (!empty($value)) {
-                                    // build xml
-                                    $xml .= "\t\t\t<entry>\n";
-
-                                    // loop data
-                                    foreach ($value as $entryKey => $entryValue) {
-                                        // build xml
-                                        $xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
-                                    }
-
-                                    // end xml element
-                                    $xml .= "\t\t\t</entry>\n";
-                                }
-                            } else {
-                                // build xml
-                                $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
-                            }
-                        }
-                    } else {
-                        // not an array
-                        $xml .= "<![CDATA[" . (string) $subItems . "]]>";
-                    }
-
-                    // end xml element
-                    $xml .= "\t\t</" . $subKey . ">\n";
-                }
+                // not an array
+                $xml .= "<![CDATA[" . (string) $subItems . "]]>";
             }
 
-            // end xml element
-            $xml .= "\t</" . $type . ">\n";
+            $xml .= "\t\t</" . $subKey . ">\n";
         }
 
         return $xml;
