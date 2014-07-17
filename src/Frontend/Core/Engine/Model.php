@@ -319,10 +319,11 @@ class Model extends \BaseModel
      * @param string $module       The module wherefore a setting has to be retrieved.
      * @param string $name         The name of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
-     * @param string $language     The language to fetch the setting for
+     * @param string $language     The language to fetch the setting for.
+     * @param int    $siteId       The id of the site to fetch a setting for.
      * @return mixed
      */
-    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null)
+    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null, $siteId = null)
     {
         // redefine
         $module = (string) $module;
@@ -330,6 +331,10 @@ class Model extends \BaseModel
 
         if (!empty($language)) {
             $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
         }
 
         // get them all
@@ -844,15 +849,20 @@ class Model extends \BaseModel
      * @param string $name     The name of the setting.
      * @param mixed  $value    The value (will be serialized so make sure the type is correct).
      * @param string $language The language to fetch the setting for.
+     * @param int    $siteId   The id of the site to fetch a setting for.
      */
-    public static function setModuleSetting($module, $name, $value, $language = null)
+    public static function setModuleSetting($module, $name, $value, $language = null, $siteId = null)
     {
         $module = (string) $module;
         $name = (string) $name;
         $value = serialize($value);
 
         if (!empty($language)) {
-            $key .= '_' . $language;
+            $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
         }
 
         // store
