@@ -50,6 +50,48 @@ class Installer extends ModuleInstaller
 
         // we do this last, because we need the sites first
         $this->setRights();
+
+        $this->setSiteTitles();
+    }
+
+    protected function setSiteTitles()
+    {
+        // default titles
+        $siteTitles = array(
+            'en' => 'My website',
+            'bg' => 'уебсайта си',
+            'zh' => '我的网站',
+            'cs' => 'můj web',
+            'nl' => 'Mijn website',
+            'fr' => 'Mon site web',
+            'de' => 'Meine Webseite',
+            'el' => 'ιστοσελίδα μου',
+            'hu' => 'Hhonlapom',
+            'it' => 'Il mio sito web',
+            'ja' => '私のウェブサイト',
+            'lt' => 'mano svetainė',
+            'pl' => 'moja strona',
+            'ro' => 'site-ul meu',
+            'ru' => 'мой сайт',
+            'es' => 'Mi sitio web',
+            'sv' => 'min hemsida',
+            'tr' => 'web siteme',
+            'uk' => 'мій сайт'
+        );
+
+        // language specific
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages() as $language) {
+                // set title
+                $this->setSetting(
+                    'Core',
+                    'site_title',
+                    (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'),
+                    $language,
+                    $site['id']
+                );
+            }
+        }
     }
 
     protected function setRights()
