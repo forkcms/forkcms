@@ -293,7 +293,7 @@ class Template extends \SpoonTemplate
         // settings
         $this->assign(
             'SITE_TITLE',
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            Model::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
 
         // facebook stuff

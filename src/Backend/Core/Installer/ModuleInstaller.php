@@ -1043,14 +1043,19 @@ class ModuleInstaller
      * @param string $module    The module wherefore the setting will be set.
      * @param string $name      The name of the setting.
      * @param mixed  $value     The optional value.
+     * @param string $language  The language to store the setting for
      * @param bool   $overwrite Overwrite no matter what.
      */
-    protected function setSetting($module, $name, $value = null, $overwrite = false)
+    protected function setSetting($module, $name, $value = null, $language = null, $overwrite = false)
     {
         $module = (string) $module;
         $name = (string) $name;
         $value = serialize($value);
         $overwrite = (bool) $overwrite;
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
 
         if ($overwrite) {
             $this->getDB()->execute(

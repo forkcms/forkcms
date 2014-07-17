@@ -76,7 +76,7 @@ class Index extends BackendBaseActionIndex
         // general settings
         $this->frm->addText(
             'site_title',
-            BackendModel::getModuleSetting('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            BackendModel::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, BL::getWorkingLanguage())
         );
         $this->frm->addTextarea(
             'site_html_header',
@@ -345,8 +345,9 @@ class Index extends BackendBaseActionIndex
                 // general settings
                 BackendModel::setModuleSetting(
                     'Core',
-                    'site_title_' . BL::getWorkingLanguage(),
-                    $this->frm->getField('site_title')->getValue()
+                    'site_title',
+                    $this->frm->getField('site_title')->getValue(),
+                    BL::getWorkingLanguage()
                 );
                 BackendModel::setModuleSetting(
                     'Core',
