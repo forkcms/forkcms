@@ -337,22 +337,7 @@ class Model extends \BaseModel
             $name .= '_' . $siteId;
         }
 
-        // get them all
-        if (empty(self::$moduleSettings)) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms
-                 INNER JOIN modules AS m ON ms.module = m.name'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
-        }
+        self::loadModuleSettings();
 
         // if the setting doesn't exists, store it (it will be available from te cache)
         if (!array_key_exists($module, self::$moduleSettings) ||
@@ -375,8 +360,25 @@ class Model extends \BaseModel
     {
         $module = (string) $module;
 
+        self::loadModuleSettings();
+
+        // validate again
+        if (!isset(self::$moduleSettings[$module])) {
+            return array();
+        }
+
+        // return
+        return self::$moduleSettings[$module];
+    }
+
+    /**
+     * Fetches all module settings from the database and caches them in the
+     * $modules variable
+     */
+    public static function loadModuleSettings()
+    {
         // get them all
-        if (empty(self::$moduleSettings[$module])) {
+        if (empty(self::$moduleSettings)) {
             // fetch settings
             $settings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
@@ -390,14 +392,6 @@ class Model extends \BaseModel
                 );
             }
         }
-
-        // validate again
-        if (!isset(self::$moduleSettings[$module])) {
-            return array();
-        }
-
-        // return
-        return self::$moduleSettings[$module];
     }
 
     /**
