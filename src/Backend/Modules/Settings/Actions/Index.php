@@ -72,6 +72,7 @@ class Index extends BackendBaseActionIndex
 
         // create form
         $this->frm = new BackendForm('settingsIndex');
+        $siteId = $this->get('current_site')->getId();
 
         // general settings
         $this->frm->addText(
@@ -80,14 +81,14 @@ class Index extends BackendBaseActionIndex
         );
         $this->frm->addTextarea(
             'site_html_header',
-            BackendModel::getModuleSetting('Core', 'site_html_header', null),
+            BackendModel::getModuleSetting('Core', 'site_html_header', null, null, $siteId),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
-            BackendModel::getModuleSetting('Core', 'site_html_footer', null),
+            BackendModel::getModuleSetting('Core', 'site_html_footer', null, null, $siteId),
             'textarea code',
             'textareaError code',
             true
@@ -342,6 +343,7 @@ class Index extends BackendBaseActionIndex
 
             // no errors ?
             if ($this->frm->isCorrect()) {
+                $siteId = $this->get('current_site')->getId();
                 // general settings
                 BackendModel::setModuleSetting(
                     'Core',
@@ -352,12 +354,16 @@ class Index extends BackendBaseActionIndex
                 BackendModel::setModuleSetting(
                     'Core',
                     'site_html_header',
-                    $this->frm->getField('site_html_header')->getValue()
+                    $this->frm->getField('site_html_header')->getValue(),
+                    null,
+                    $siteId
                 );
                 BackendModel::setModuleSetting(
                     'Core',
                     'site_html_footer',
-                    $this->frm->getField('site_html_footer')->getValue()
+                    $this->frm->getField('site_html_footer')->getValue(),
+                    null,
+                    $siteId
                 );
 
                 // facebook settings
