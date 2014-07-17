@@ -126,7 +126,7 @@ class Category extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url', null, FRONTEND_LANGUAGE);
         if ($rssLink == '') {
             $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
@@ -136,7 +136,7 @@ class Category extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title', null, FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
