@@ -97,7 +97,7 @@ class Installer extends ModuleInstaller
          */
 
         // set default theme
-        $this->setSetting('Core', 'theme', 'triton', null, true);
+        $this->setSetting('Core', 'theme', 'triton', null, null, true);
 
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));

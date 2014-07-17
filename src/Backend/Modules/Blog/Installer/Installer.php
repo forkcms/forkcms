@@ -182,10 +182,10 @@ class Installer extends ModuleInstaller
                 }
 
                 // feedburner URL
-                $this->setSetting('Blog', 'feedburner_url_' . $language, '');
-                $this->setSetting('Blog', 'rss_meta_' . $language, true);
-                $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
-                $this->setSetting('Blog', 'rss_description_' . $language, '');
+                $this->setSetting('Blog', 'feedburner_url', '', $language, $site['id']);
+                $this->setSetting('Blog', 'rss_meta', true, $language, $site['id']);
+                $this->setSetting('Blog', 'rss_title', 'RSS', $language, $site['id']);
+                $this->setSetting('Blog', 'rss_description', '', $language, $site['id']);
 
                 // check if a page for blog already exists in this language
                 if (!(bool) $this->getDB()->getVar(
