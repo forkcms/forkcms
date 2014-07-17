@@ -663,21 +663,26 @@ class Model extends \BaseModel
      * Get a certain module-setting
      *
      * @param string $module       The module in which the setting is stored.
-     * @param string $key          The name of the setting.
+     * @param string $name         The name of the setting.
      * @param mixed  $defaultValue The value to return if the setting isn't present.
+     * @param string $language     The language to fetch the setting for
      * @return mixed
      */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
+    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null)
     {
         // redefine
         $module = (string) $module;
-        $key = (string) $key;
+        $name = (string) $name;
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
 
         // define settings
         $settings = self::getModuleSettings($module);
 
         // return if exists, otherwise return default value
-        return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
+        return (isset($settings[$name])) ? $settings[$name] : $defaultValue;
     }
 
     /**
@@ -1126,7 +1131,7 @@ class Model extends \BaseModel
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = self::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, Language::getWorkingLanguage());
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;
@@ -1227,26 +1232,31 @@ class Model extends \BaseModel
     /**
      * Saves a module-setting into the DB and the cached array
      *
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     * @param string $value  The value to store.
+     * @param string $module   The module to set the setting for.
+     * @param string $name      The name of the setting.
+     * @param string $value    The value to store.
+     * @param string $language The language to store the setting for.
      */
-    public static function setModuleSetting($module, $key, $value)
+    public static function setModuleSetting($module, $name, $value, $language = null)
     {
         $module = (string) $module;
-        $key = (string) $key;
+        $name = (string) $name;
         $valueToStore = serialize($value);
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
 
         // store
         self::getContainer()->get('database')->execute(
             'INSERT INTO modules_settings(module, name, value)
             VALUES(?, ?, ?)
             ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
+            array($module, $name, $valueToStore, $valueToStore)
         );
 
         // cache it
-        self::$moduleSettings[$module][$key] = $value;
+        self::$moduleSettings[$module][$name] = $value;
     }
 
     /**
