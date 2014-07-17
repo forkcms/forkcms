@@ -26,11 +26,13 @@ use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
 class Settings extends BackendBaseActionEdit
 {
     /**
-     * The account name
+     * The information for the coupled web profiles
      *
-     * @var    string
+     * @var    array
      */
-    private $accountName;
+    private $accountNames = array();
+    private $profileTitles = array();
+    private $tableIds = array();
 
     /**
      * API key needed by the API.
@@ -53,12 +55,6 @@ class Settings extends BackendBaseActionEdit
      */
     private $profiles = array();
 
-    /**
-     * The title of the selected profile
-     *
-     * @var    string
-     */
-    private $profileTitle;
 
     /**
      * The session token
@@ -68,11 +64,11 @@ class Settings extends BackendBaseActionEdit
     private $sessionToken;
 
     /**
-     * The table id
+     * The dropdowns containing the possible table ids
      *
-     * @var    int
+     * @var array
      */
-    private $tableId;
+    private $dropdowns;
 
     /**
      * Execute the action
@@ -101,9 +97,9 @@ class Settings extends BackendBaseActionEdit
 
         // get session token, account name, the profile's table id, the profile's title
         $this->sessionToken = BackendModel::getModuleSetting($this->getModule(), 'session_token', null);
-        $this->accountName = BackendModel::getModuleSetting($this->getModule(), 'account_name', null);
-        $this->tableId = BackendModel::getModuleSetting($this->getModule(), 'table_id', null);
-        $this->profileTitle = BackendModel::getModuleSetting($this->getModule(), 'profile_title', null);
+        $this->accountNames = BackendModel::getModuleSetting($this->getModule(), 'account_names', array());
+        $this->tableIds = BackendModel::getModuleSetting($this->getModule(), 'table_ids', array());
+        $this->profileTitles = BackendModel::getModuleSetting($this->getModule(), 'profile_titles', array());
         $this->apiKey = BackendModel::getModuleSetting($this->getModule(), 'api_key', null);
 
         // no session token
@@ -112,7 +108,7 @@ class Settings extends BackendBaseActionEdit
         }
 
         // session id is present but there is no table_id
-        if (isset($this->sessionToken) && !isset($this->tableId)) {
+        if (isset($this->sessionToken) && empty($this->tableIds)) {
             $this->getAnalyticsProfiles();
         }
     }
@@ -170,8 +166,8 @@ class Settings extends BackendBaseActionEdit
             $this->tpl->assign('Wizard', true);
 
             // create form
-            $this->handleApiKeyForm($googleAccountAuthenticationForm);
-        } elseif (isset($this->sessionToken) && isset($this->profiles) && !isset($this->tableId)) {
+            $this->handleApiKeyForm();
+        } elseif (isset($this->sessionToken) && isset($this->profiles) && empty($this->tableIds)) {
             // session token is present but no table id
             $this->tpl->assign('NoTableId', true);
             $this->tpl->assign('Wizard', true);
@@ -198,13 +194,20 @@ class Settings extends BackendBaseActionEdit
                     $this->tpl->assign('accounts', true);
                 }
             }
-        } elseif (isset($this->sessionToken) && isset($this->tableId) && isset($this->accountName)) {
+        } elseif (isset($this->sessionToken) && !empty($this->tableIds) && isset($this->accountNames)) {
             // show the linked account
             $this->tpl->assign('EverythingIsPresent', true);
 
             // show the title of the linked account and profile
-            $this->tpl->assign('accountName', $this->accountName);
-            $this->tpl->assign('profileTitle', $this->profileTitle);
+            $sites = $this->get('multisite')->getSites();
+            foreach ($sites as $siteId => &$properties) {
+                $properties = array(
+                    'domain'       => $properties,
+                    'accountName'  => $this->accountNames[$siteId],
+                    'profileTitle' => $this->profileTitles[$siteId],
+                );
+            }
+            $this->tpl->assign('properties', $sites);
         }
 
         // Parse tracking url form
@@ -251,11 +254,34 @@ class Settings extends BackendBaseActionEdit
             'get'
         );
 
-        $frmLinkProfile->addDropdown('table_id', $accounts);
+        $sites = $this->get('multisite')->getSites();
+
+        // add a table_id dropdown for every site
+        $this->dropdowns = array();
+        foreach ($sites as $siteId => $domain) {
+            $fieldName = 'table_id_' . $siteId;
+            $frmLinkProfile->addDropdown($fieldName, $accounts);
+            $this->dropdowns[] = array(
+                'name'    => $fieldName,
+                'site_id' => $siteId,
+                'label'   => $domain,
+                'field'   => $frmLinkProfile->getField($fieldName)->parse(),
+            );
+        }
+
+        $this->tpl->assign('dropdowns', $this->dropdowns);
         $frmLinkProfile->parse($this->tpl);
 
         if ($frmLinkProfile->isSubmitted()) {
-            if ($frmLinkProfile->getField('table_id')->getValue() == '0') {
+            $hasValue = false;
+            foreach ($this->dropdowns as $dropdown) {
+                if ($frmLinkProfile->getField($dropdown['name'])->getValue() != '0') {
+                    $hasValue = true;
+                    break;
+                }
+            }
+
+            if (!$hasValue) {
                 $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
             }
         }
@@ -293,9 +319,9 @@ class Settings extends BackendBaseActionEdit
         }
 
         // remove all profile parameters from the module settings
-        BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
-        BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
-        BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
+        BackendModel::setModuleSetting($this->getModule(), 'account_names', array());
+        BackendModel::setModuleSetting($this->getModule(), 'table_ids', array());
+        BackendModel::setModuleSetting($this->getModule(), 'profile_titles', array());
         BackendModel::setModuleSetting($this->getModule(), 'web_property_id', null);
 
         BackendAnalyticsModel::removeCacheFiles();
@@ -352,32 +378,37 @@ class Settings extends BackendBaseActionEdit
             // redirect to the settings page without parameters
             $this->redirect(BackendModel::createURLForAction('Settings'));
         } elseif (is_array($this->profiles)) {
-            $tableId = \SpoonFilter::getGetValue('table_id', null, null);
+            $sites = $this->get('multisite')->getSites();
+            $webPropertyIds = array();
+            foreach ($sites as $siteId => $domain) {
+                $fieldName = 'table_id_' . $siteId;
+                $tableId = \SpoonFilter::getGetValue($fieldName, null, null);
 
-            // a table id is given in the get parameters
-            if (!empty($tableId)) {
-                $profiles = array();
+                // a table id is given in the get parameters
+                if (!empty($tableId)) {
+                    $profiles = array();
 
-                // set the table ids as keys
-                foreach ($this->profiles as $profile) {
-                    $profiles[$profile['tableId']] = $profile;
-                }
+                    // set the table ids as keys
+                    foreach ($this->profiles as $profile) {
+                        $profiles[$profile['tableId']] = $profile;
+                    }
 
-                // correct table id
-                if (isset($profiles[$tableId])) {
-                    // save table id and account title
-                    $this->tableId = $tableId;
-                    $this->accountName = $profiles[$this->tableId]['profileName'];
-                    $this->profileTitle = $profiles[$this->tableId]['title'];
-                    $webPropertyId = $profiles[$this->tableId]['webPropertyId'];
-
-                    // store the table id and account title in the settings
-                    BackendModel::setModuleSetting($this->getModule(), 'account_name', $this->accountName);
-                    BackendModel::setModuleSetting($this->getModule(), 'table_id', $this->tableId);
-                    BackendModel::setModuleSetting($this->getModule(), 'profile_title', $this->profileTitle);
-                    BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyId);
+                    // correct table id
+                    if (isset($profiles[$tableId])) {
+                        // save table id and account title
+                        $this->tableIds[$siteId] = $tableId;
+                        $this->accountNames[$siteId] = $profiles[$tableId]['profileName'];
+                        $this->profileTitles[$siteId] = $profiles[$tableId]['title'];
+                        $webPropertyIds[$siteId] = $profiles[$tableId]['webPropertyId'];
+                    }
                 }
             }
+
+            // store the table id and account title in the settings
+            BackendModel::setModuleSetting($this->getModule(), 'account_names', $this->accountNames);
+            BackendModel::setModuleSetting($this->getModule(), 'table_ids', $this->tableIds);
+            BackendModel::setModuleSetting($this->getModule(), 'profile_titles', $this->profileTitles);
+            BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyIds);
         }
     }
 }

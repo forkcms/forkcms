@@ -238,6 +238,11 @@
         <translation language="sv"><![CDATA[länkat konto]]></translation>
         <translation language="el"><![CDATA[Συνδεδεμένος λογαριασμός]]></translation>
       </item>
+      <item type="label" name="LinkTheseProfiles">
+        <translation language="nl"><![CDATA[koppel deze profielen]]></translation>
+        <translation language="en"><![CDATA[link these profiles]]></translation>
+        <translation language="fr"><![CDATA[lier ces profiles]]></translation>
+      </item>
       <item type="label" name="LinkedProfile">
         <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
         <translation language="en"><![CDATA[linked profile]]></translation>

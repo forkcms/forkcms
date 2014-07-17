@@ -43,14 +43,26 @@
 				{option:accounts}
 					<p>{$msgLinkWebsiteProfile}</p>
 					{form:linkProfile}
-					<div class="oneLiner fakeP">
+						{iteration:dropdowns}
+							<div>
+								<p>
+									{option:hasMultipleSites}
+										<label>{$dropdowns.label}</label>
+									{/option:hasMultipleSites}
+									{$dropdowns.field}{option:tableIdError}<br /><span class="formerror">{$tableIdError}</span>{/option:tableIdError}
+								</p>
+							</div>
+						{/iteration:dropdowns}
 						<p>
-							{$ddmTableId} {option:tableIdError}<br /><span class="formerror">{$tableIdError}</span>{/option:tableIdError}
+							<div class="buttonHolder">
+								{option:hasMultipleSites}
+									<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkTheseProfiles|ucfirst}" />
+								{/option:hasMultipleSites}
+								{option:!hasMultipleSites}
+									<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />
+								{/option:!hasMultipleSites}
+							</div>
 						</p>
-						<div class="buttonHolder">
-							<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />
-						</div>
-					</div>
 					{/form:linkProfile}
 				{/option:accounts}
 
@@ -65,10 +77,15 @@
 		{/option:Wizard}
 
 		{option:EverythingIsPresent}
-			<p>
-				{$lblLinkedAccount|ucfirst}: <strong>{$accountName}</strong><br />
-				{$lblLinkedProfile|ucfirst}: <strong>{$profileTitle}</strong>
-			</p>
+			{iteration:properties}
+				<p><strong>{$properties.domain}</strong></p>
+				<p>
+					{$lblLinkedAccount|ucfirst}: <strong>{$properties.accountName}</strong><br />
+					{$lblLinkedProfile|ucfirst}: <strong>{$properties.profileTitle}</strong>
+				</p>
+				</div>
+				<div class="options">
+			{/iteration:properties}
 			<div class="buttonHolder">
 				<a href="{$var|geturl:'settings'}&amp;remove=table_id" data-message-id="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
 				{option:showAnalyticsIndex}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>{/option:showAnalyticsIndex}
