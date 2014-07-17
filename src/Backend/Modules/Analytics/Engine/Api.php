@@ -34,7 +34,7 @@ class Api
         }
 
         // analytics table id (only show this error if no other exist)
-        if (BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
+        if (BackendModel::getModuleSetting('Analytics', 'table_ids', array()) == false) {
             BaseAPI::output(BaseAPI::ERROR, array('message' => 'Analytics-module not configured correctly.'));
         }
 

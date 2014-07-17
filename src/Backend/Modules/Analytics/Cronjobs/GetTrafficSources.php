@@ -32,9 +32,9 @@ class GetTrafficSources extends BackendBaseCronjob
         if (BackendAnalyticsHelper::getStatus() == 'UNAUTHORIZED') {
             // remove all parameters from the module settings
             BackendModel::setModuleSetting('Analytics', 'session_token', null);
-            BackendModel::setModuleSetting('Analytics', 'account_name', null);
-            BackendModel::setModuleSetting('Analytics', 'table_id', null);
-            BackendModel::setModuleSetting('Analytics', 'profile_title', null);
+            BackendModel::setModuleSetting('Analytics', 'account_names', array());
+            BackendModel::setModuleSetting('Analytics', 'table_ids', array());
+            BackendModel::setModuleSetting('Analytics', 'profile_titles', array());
 
             BackendAnalyticsModel::removeCacheFiles();
             BackendAnalyticsModel::clearTables();

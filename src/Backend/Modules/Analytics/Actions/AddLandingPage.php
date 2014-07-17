@@ -121,6 +121,7 @@ class AddLandingPage extends BackendBaseActionAdd
 
                 // build item
                 $item['page_path'] = $page;
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['entrances'] = (isset($metrics['entrances']) ? $metrics['entrances'] : 0);
                 $item['bounces'] = (isset($metrics['bounces']) ? $metrics['bounces'] : 0);
                 $item['bounce_rate'] = ($metrics['entrances'] == 0 ?
