@@ -13,7 +13,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 
-use \MatthiasMullie\Minify;
+use MatthiasMullie\Minify;
 
 use Common\Cookie as CommonCookie;
 
