@@ -1,3 +1,13 @@
+3.7.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Ajax: endpoint has been changed to not contain an extension. /src/Backend/Ajax.php is now /backend/ajax and /src/Frontend/Ajax.php is now /frontend/ajax
+* Cronjob: endpoint has been changed to not contain an extension. /src/Backend/Cronjob.php is now /backend/cronjob.
+
+Bugfixes:
+
+
 3.7.1 (2014-07-10)
 --
 Improvements:
