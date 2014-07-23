@@ -8,6 +8,11 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 use Backend\Init as BackendInit;
 
@@ -63,8 +68,16 @@ class ApplicationRouting
 
         $this->request = $request;
         $this->kernel = $kernel;
+    }
 
-        $this->processQueryString();
+    public function backendController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Backend');
+        }
+        if (!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', 'private');
+        }
     }
 
     /**
@@ -83,6 +96,39 @@ class ApplicationRouting
      * @return Symfony\Component\HttpFoundation\Response
      */
     public function handleRequest()
+    {
+        $routes = new RouteCollection();
+        $routes->add('backend', new Route(
+            '/private/{_locale}/{module}/{action}',
+            array(
+                '_controller' => 'ApplicationRouting::backendController',
+                '_locale'     => null,
+                'module'      => null,
+                'action'      => null,
+            )
+        ));
+
+        $context = new RequestContext();
+        $context->fromRequest($this->request);
+        $matcher = new UrlMatcher($routes, $context);
+
+        try {
+            // call the given controller when it matches
+            $attributes = $matcher->match($this->request->getPathInfo());
+            call_user_func($attributes['_controller'], $attributes);
+        } catch (ResourceNotFoundException $e) {
+            // Let Fork process the query string as fallback.
+            $this->processQueryString();
+        }
+
+        $application = $this->getApplication();
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
+    }
+
+    protected function getApplication()
     {
         $applicationName = APPLICATION;
 
@@ -131,11 +177,7 @@ class ApplicationRouting
          * The kernel object itself will then be stored as a singleton in said container, same
          * as in Symfony.
          */
-        $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return new $applicationClass($this->kernel);
     }
 
     /**
@@ -243,8 +285,7 @@ class ApplicationRouting
         $chunks = explode('/', $queryString);
 
         // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if(isset($chunks[0]) && $chunks[0] == 'src')
-        {
+        if (isset($chunks[0]) && $chunks[0] == 'src') {
             unset($chunks[0]);
             $chunks = array_values($chunks);
         }
