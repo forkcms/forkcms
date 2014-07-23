@@ -155,12 +155,8 @@ class ApplicationRouting
      */
     public function backendController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-        if (!defined('NAMED_APPLICATION')) {
-            define('NAMED_APPLICATION', 'private');
-        }
+        define('APPLICATION', 'Backend');
+        define('NAMED_APPLICATION', 'private');
 
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->kernel);
@@ -178,9 +174,7 @@ class ApplicationRouting
      */
     public function backendAjaxController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
+        define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->kernel);
@@ -198,9 +192,7 @@ class ApplicationRouting
      */
     public function backendCronjobController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
+        define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->kernel);
@@ -218,9 +210,7 @@ class ApplicationRouting
      */
     public function frontendController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
+        define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->kernel);
@@ -238,9 +228,7 @@ class ApplicationRouting
      */
     public function frontendAjaxController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Frontend');
-        }
+        define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->kernel);
@@ -260,9 +248,7 @@ class ApplicationRouting
     {
         // if we're able to run the installer, install it
         if (file_exists(__DIR__ . '/../src/Install')) {
-            if (!defined('APPLICATION')) {
-                define('APPLICATION', 'Install');
-            }
+            define('APPLICATION', 'Install');
 
             $applicationClass = $this->initializeInstaller('Install');
             $application = new $applicationClass($this->kernel);
@@ -284,9 +270,7 @@ class ApplicationRouting
      */
     public function apiController($attributes)
     {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Api');
-        }
+        define('APPLICATION', 'Api');
 
         $applicationClass = $this->initializeAPI('Api');
         $application = new $applicationClass($this->kernel);
