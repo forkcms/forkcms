@@ -160,10 +160,16 @@ class Model
         );
         $currentLang = Language::getWorkingLanguage();
         $currentSite = BackendModel::get('current_site');
-        foreach ($items as &$item) {
+        foreach ($items as $key => &$item) {
             $availableLanguages = BackendModel::get('multisite')
                 ->getLanguageList($item['id'])
             ;
+
+            // if this site does not have active languages, remove it.
+            if (empty($availableLanguages)) {
+                unset($item, $items[$key]);
+                break;
+            }
 
             // if we are not using the real domains (ex: during dev or staging)
             // we need to use our prefixing system.
