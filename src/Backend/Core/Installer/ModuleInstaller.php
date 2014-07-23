@@ -642,12 +642,12 @@ class ModuleInstaller
         $meta = (array) $meta;
 
         // deactived previous revisions
-        if (isset($revision['id']) && isset($revision['language'])) {
+        if (isset($revision['id']) && isset($revision['language']) && isset($revision['site_id'])) {
             $this->getDB()->update(
                 'pages',
                 array('status' => 'archive'),
-                'id = ? AND language = ?',
-                array($revision['id'], $revision['language'])
+                'id = ? AND language = ? AND site_id = ?',
+                array($revision['id'], $revision['language'], $revision['site_id'])
             );
         }
 
@@ -655,13 +655,18 @@ class ModuleInstaller
         if (!isset($revision['language'])) {
             throw new \SpoonException('language is required for installing pages');
         }
+        if (!isset($revision['site_id'])) {
+            throw new \SpoonException('site_id is required for installing pages');
+        }
         if (!isset($revision['title'])) {
             throw new \SpoonException('title is required for installing pages');
         }
         if (!isset($revision['id'])) {
             $revision['id'] = (int) $this->getDB()->getVar(
-                'SELECT MAX(id) + 1 FROM pages WHERE language = ?',
-                array($revision['language'])
+                'SELECT MAX(id) + 1
+                 FROM pages
+                 WHERE language = ? AND site_id = ?',
+                array($revision['language'], $revision['site_id'])
             );
         }
         if (!$revision['id']) {
@@ -717,8 +722,10 @@ class ModuleInstaller
         }
         if (!isset($revision['sequence'])) {
             $revision['sequence'] = (int) $this->getDB()->getVar(
-                'SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?',
-                array($revision['language'], $revision['parent_id'], $revision['type'])
+                'SELECT MAX(sequence) + 1
+                 FROM pages
+                 WHERE language = ? AND site_id = ? AND parent_id = ? AND type = ?',
+                array($revision['language'], $revision['site_id'], $revision['parent_id'], $revision['type'])
             );
         }
 
