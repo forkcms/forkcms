@@ -1,0 +1,34 @@
+backend:
+    path: /private/{_locale}/{module}/{action}
+    defaults:
+        _controller: ApplicationRouting::backendController
+        _locale:     ~
+        module:      ~
+        action:      ~
+backend_ajax:
+    path: /src/Backend/Ajax.php
+    defaults:
+        _controller: ApplicationRouting::backendAjaxController
+backend_cronjob:
+    path: /src/Backend/Cronjob.php
+    defaults:
+        _controller: ApplicationRouting::backendCronjobController
+frontend_ajax:
+    path: /src/Frontend/Ajax.php
+    defaults:
+        _controller: ApplicationRouting::frontendAjaxController
+install:
+    path: /install
+    defaults:
+        _controller: ApplicationRouting::installController
+api:
+    path: /api
+    defaults:
+        _controller: ApplicationRouting::apiController
+frontend:
+    path: /{route}
+    defaults:
+        _controller: ApplicationRouting::frontendController
+        route:       ~
+    requirements:
+        route: (.*)

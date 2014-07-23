@@ -11,7 +11,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Routing\Router;
 use Symfony\Component\Routing\Route;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
 
 use Backend\Init as BackendInit;
 
@@ -87,63 +90,19 @@ class ApplicationRouting
      */
     public function handleRequest()
     {
-        $routes = new RouteCollection();
-        $routes->add('backend', new Route(
-            '/private/{_locale}/{module}/{action}',
-            array(
-                '_controller' => 'ApplicationRouting::backendController',
-                '_locale'     => null,
-                'module'      => null,
-                'action'      => null,
-            )
-        ));
-        $routes->add('backend_ajax', new Route(
-            '/src/Backend/Ajax.php',
-            array(
-                '_controller' => 'ApplicationRouting::backendAjaxController',
-            )
-        ));
-        $routes->add('backend_cronjob', new Route(
-            '/src/Backend/Cronjob.php',
-            array(
-                '_controller' => 'ApplicationRouting::backendCronjobController',
-            )
-        ));
-        $routes->add('frontend_ajax', new Route(
-            '/src/Frontend/Ajax.php',
-            array(
-                '_controller' => 'ApplicationRouting::frontendAjaxController',
-            )
-        ));
-        $routes->add('install', new Route(
-            '/install',
-            array(
-                '_controller' => 'ApplicationRouting::installController',
-            )
-        ));
-        $routes->add('api', new Route(
-            '/api',
-            array(
-                '_controller' => 'ApplicationRouting::apiController',
-            )
-        ));
-        $routes->add('frontend', new Route(
-            '/{route}',
-            array(
-                '_controller' => 'ApplicationRouting::frontendController',
-                'route'       => null,
-            ),
-            array(
-                'route' => '(.*)'
-            )
-        ));
-
+        $locator = new FileLocator(array(__DIR__));
         $context = new RequestContext();
         $context->fromRequest($this->request);
-        $matcher = new UrlMatcher($routes, $context);
+
+        $router = new Router(
+            new YamlFileLoader($locator),
+            'config/routing.yml',
+            array('cache_dir' => __DIR__ . '/cache'),
+            $context
+        );
 
         // call the given controller when it matches
-        $attributes = $matcher->match($this->request->getPathInfo());
+        $attributes = $router->match($this->request->getPathInfo());
         return call_user_func($attributes['_controller'], $attributes);
     }
 
