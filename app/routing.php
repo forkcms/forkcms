@@ -160,10 +160,7 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return $this->handleApplication($application);
     }
 
     /**
@@ -178,10 +175,7 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return $this->handleApplication($application);
     }
 
     /**
@@ -196,10 +190,7 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return $this->handleApplication($application);
     }
 
     /**
@@ -214,10 +205,7 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return $this->handleApplication($application);
     }
 
     /**
@@ -232,10 +220,7 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->kernel);
-        $application->passContainerToModels();
-        $application->initialize();
-
-        return $application->display();
+        return $this->handleApplication($application);
     }
 
     /**
@@ -252,14 +237,11 @@ class ApplicationRouting
 
             $applicationClass = $this->initializeInstaller('Install');
             $application = new $applicationClass($this->kernel);
-            $application->passContainerToModels();
-            $application->initialize();
-
-            return $application->display();
+            return $this->handleApplication($application);
         }
 
         // fallback to default frontend request
-        $this->frontendController($attributes);
+        return $this->frontendController($attributes);
     }
 
     /**
@@ -274,6 +256,17 @@ class ApplicationRouting
 
         $applicationClass = $this->initializeAPI('Api');
         $application = new $applicationClass($this->kernel);
+        return $this->handleApplication($application);
+    }
+
+    /**
+     * Runs an application and returns the Response
+     *
+     * @param \ApplicationInterface $application
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    protected function handleApplication(\ApplicationInterface $application)
+    {
         $application->passContainerToModels();
         $application->initialize();
 
