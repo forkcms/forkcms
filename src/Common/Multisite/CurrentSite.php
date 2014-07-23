@@ -53,7 +53,7 @@ class CurrentSite
         $currentSiteArray = $multisite->loadCurrentSite();
 
         // Put the fetched data in the properties
-        $this->id = $currentSiteArray['id'];
+        $this->id = (int) $currentSiteArray['id'];
         $this->activeLanguages = $currentSiteArray['active_languages'];
         $this->workingLanguages = $currentSiteArray['working_languages'];
         $this->domain = $currentSiteArray['domain'];
