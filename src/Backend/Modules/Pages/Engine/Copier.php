@@ -178,8 +178,8 @@ class Copier
         $ids = $this->database->getColumn(
             'SELECT id
              FROM pages AS i
-             WHERE i.language = ? AND i.status = ?',
-            array($this->from, 'active')
+             WHERE i.language = ? AND i.site_id = ? AND i.status = ?',
+            array($this->from, $this->fromSite, 'active')
         );
 
         foreach ($ids as $id) {
