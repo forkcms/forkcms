@@ -130,7 +130,7 @@ class Url extends Base\Object
 
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters
+                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
             );
         }
 

@@ -70,16 +70,6 @@ class ApplicationRouting
         $this->kernel = $kernel;
     }
 
-    public function backendController($attributes)
-    {
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', 'Backend');
-        }
-        if (!defined('NAMED_APPLICATION')) {
-            define('NAMED_APPLICATION', 'private');
-        }
-    }
-
     /**
      * Get the possible routes
      *
@@ -107,6 +97,24 @@ class ApplicationRouting
                 'action'      => null,
             )
         ));
+        $routes->add('backend_ajax', new Route(
+            '/src/Backend/Ajax.php',
+            array(
+                '_controller' => 'ApplicationRouting::backendAjaxController',
+            )
+        ));
+        $routes->add('backend_cronjob', new Route(
+            '/src/Backend/Cronjob.php',
+            array(
+                '_controller' => 'ApplicationRouting::backendCronjobController',
+            )
+        ));
+        $routes->add('frontend_ajax', new Route(
+            '/src/Frontend/Ajax.php',
+            array(
+                '_controller' => 'ApplicationRouting::frontendAjaxController',
+            )
+        ));
 
         $context = new RequestContext();
         $context->fromRequest($this->request);
@@ -115,13 +123,72 @@ class ApplicationRouting
         try {
             // call the given controller when it matches
             $attributes = $matcher->match($this->request->getPathInfo());
-            call_user_func($attributes['_controller'], $attributes);
+            return call_user_func($attributes['_controller'], $attributes);
         } catch (ResourceNotFoundException $e) {
             // Let Fork process the query string as fallback.
             $this->processQueryString();
+
+            $application = $this->getApplication();
+            $application->passContainerToModels();
+            $application->initialize();
+
+            return $application->display();
+        }
+    }
+
+    public function backendController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Backend');
+        }
+        if (!defined('NAMED_APPLICATION')) {
+            define('NAMED_APPLICATION', 'private');
         }
 
-        $application = $this->getApplication();
+        $applicationClass = $this->initializeBackend('Backend');
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
+    }
+
+    public function backendAjaxController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Backend');
+        }
+
+        $applicationClass = $this->initializeBackend('BackendAjax');
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
+    }
+
+    public function backendCronjobController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Backend');
+        }
+
+        $applicationClass = $this->initializeBackend('BackendCronjob');
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
+    }
+
+    public function frontendAjaxController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Frontend');
+        }
+
+        $applicationClass = $this->initializeFrontend('FrontendAjax');
+        $application = new $applicationClass($this->kernel);
         $application->passContainerToModels();
         $application->initialize();
 
@@ -132,27 +199,11 @@ class ApplicationRouting
     {
         $applicationName = APPLICATION;
 
-        /**
-         * Our ajax and cronjobs don't go trough the index.php file at the
-         * moment. Because of this we need to add some extra validation.
-         */
-        if (strpos($this->request->getRequestUri(), 'Ajax.php') !== false) {
-            $applicationName .= 'Ajax';
-        } elseif (strpos($this->request->getRequestUri(), 'Cronjob.php') !== false) {
-            $applicationName .= 'Cronjob';
-        }
-
         // Pave the way for the application we'll need to load.
         // This initializes basic functionality and retrieves the correct class to instantiate.
         switch ($applicationName) {
             case 'Frontend':
-            case 'FrontendAjax':
                 $applicationClass = $this->initializeFrontend($applicationName);
-                break;
-            case 'Backend':
-            case 'BackendAjax':
-            case 'BackendCronjob':
-                $applicationClass = $this->initializeBackend($applicationName);
                 break;
             case 'Api':
                 $applicationClass = $this->initializeAPI($applicationName);
@@ -311,9 +362,6 @@ class ApplicationRouting
         // define APP
         if (!defined('APPLICATION')) {
             define('APPLICATION', $application);
-        }
-        if (!defined('NAMED_APPLICATION')) {
-            define('NAMED_APPLICATION', $proposedApplication);
         }
     }
 }
