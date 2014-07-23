@@ -105,50 +105,50 @@ class Copier
             array($this->to, $this->toSite, 'active')
         );
 
+        if (empty($ids)) {
+            return;
+        }
+
         // delete them
-        if (!empty($ids)) {
-            foreach ($ids as $id) {
-                $id = (int) $id;
+        foreach ($ids as $id) {
+            $id = (int) $id;
 
-                // get revision ids
-                $revisionIDs = (array) $this->database->getColumn(
-                    'SELECT i.revision_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
-                    array($id, $this->to, $this->toSite)
+            // delete meta records
+            $metaIDs = (array) $this->database->getColumn(
+                'SELECT i.meta_id
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
+                array($id, $this->to, $this->toSite)
+            );
+            if (!empty($metaIDs)) {
+                $this->database->delete(
+                    'meta',
+                    'id IN (' . implode(',', $metaIDs) . ')'
                 );
+            }
 
-                // get meta ids
-                $metaIDs = (array) $this->database->getColumn(
-                    'SELECT i.meta_id
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
-                    array($id, $this->to, $this->toSite)
+            // get revision ids
+            $revisionIDs = (array) $this->database->getColumn(
+                'SELECT i.revision_id
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
+                array($id, $this->to, $this->toSite)
+            );
+
+            // delete blocks and their revisions
+            if (!empty($revisionIDs)) {
+                $this->database->delete(
+                    'pages_blocks',
+                    'revision_id IN (' . implode(',', $revisionIDs) . ')'
                 );
+            }
 
-                // delete meta records
-                if (!empty($metaIDs)) {
-                    $this->database->delete(
-                        'meta',
-                        'id IN (' . implode(',', $metaIDs) . ')'
-                    );
-                }
-
-                // delete blocks and their revisions
-                if (!empty($revisionIDs)) {
-                    $this->database->delete(
-                        'pages_blocks',
-                        'revision_id IN (' . implode(',', $revisionIDs) . ')'
-                    );
-                }
-
-                // delete page and the revisions
-                if (!empty($revisionIDs)) {
-                    $this->database->delete(
-                        'pages',
-                        'revision_id IN (' . implode(',', $revisionIDs) . ')'
-                    );
-                }
+            // delete page and the revisions
+            if (!empty($revisionIDs)) {
+                $this->database->delete(
+                    'pages',
+                    'revision_id IN (' . implode(',', $revisionIDs) . ')'
+                );
             }
         }
     }
