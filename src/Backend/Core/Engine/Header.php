@@ -2,18 +2,18 @@
 
 namespace Backend\Core\Engine;
 
-use \Symfony\Component\HttpKernel\KernelInterface;
-
-use \MatthiasMullie\Minify;
-
-use Backend\Core\Engine\Model as BackendModel;
-
 /*
  * This file is part of Fork CMS.
  *
  * For the full copyright and license information, please view the license
  * file that was distributed with this source code.
  */
+
+use Symfony\Component\HttpKernel\KernelInterface;
+
+use MatthiasMullie\Minify;
+
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
