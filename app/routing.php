@@ -115,25 +115,36 @@ class ApplicationRouting
                 '_controller' => 'ApplicationRouting::frontendAjaxController',
             )
         ));
+        $routes->add('install', new Route(
+            '/install',
+            array(
+                '_controller' => 'ApplicationRouting::installController',
+            )
+        ));
+        $routes->add('api', new Route(
+            '/api',
+            array(
+                '_controller' => 'ApplicationRouting::apiController',
+            )
+        ));
+        $routes->add('frontend', new Route(
+            '/{route}',
+            array(
+                '_controller' => 'ApplicationRouting::frontendController',
+                'route'       => null,
+            ),
+            array(
+                'route' => '(.*)'
+            )
+        ));
 
         $context = new RequestContext();
         $context->fromRequest($this->request);
         $matcher = new UrlMatcher($routes, $context);
 
-        try {
-            // call the given controller when it matches
-            $attributes = $matcher->match($this->request->getPathInfo());
-            return call_user_func($attributes['_controller'], $attributes);
-        } catch (ResourceNotFoundException $e) {
-            // Let Fork process the query string as fallback.
-            $this->processQueryString();
-
-            $application = $this->getApplication();
-            $application->passContainerToModels();
-            $application->initialize();
-
-            return $application->display();
-        }
+        // call the given controller when it matches
+        $attributes = $matcher->match($this->request->getPathInfo());
+        return call_user_func($attributes['_controller'], $attributes);
     }
 
     public function backendController($attributes)
@@ -181,6 +192,20 @@ class ApplicationRouting
         return $application->display();
     }
 
+    public function frontendController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Frontend');
+        }
+
+        $applicationClass = $this->initializeFrontend('Frontend');
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
+    }
+
     public function frontendAjaxController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -195,40 +220,38 @@ class ApplicationRouting
         return $application->display();
     }
 
-    protected function getApplication()
+    public function installController($attributes)
     {
-        $applicationName = APPLICATION;
+        // if we're able to run the installer, install it
+        if (file_exists(__DIR__ . '/../src/Install')) {
+            if (!defined('APPLICATION')) {
+                define('APPLICATION', 'Install');
+            }
 
-        // Pave the way for the application we'll need to load.
-        // This initializes basic functionality and retrieves the correct class to instantiate.
-        switch ($applicationName) {
-            case 'Frontend':
-                $applicationClass = $this->initializeFrontend($applicationName);
-                break;
-            case 'Api':
-                $applicationClass = $this->initializeAPI($applicationName);
-                break;
-            case 'Install':
-                // install directory might be deleted after install, handle it as a normal frontend request
-                if (file_exists(__DIR__ . '/../src/Install')) {
-                    $applicationClass = $this->initializeInstaller();
-                } else {
-                    $applicationClass = 'Frontend';
-                }
-                break;
-            default:
-                throw new Exception('Unknown application. (' . $applicationName . ')');
+            $applicationClass = $this->initializeInstaller('Install');
+            $application = new $applicationClass($this->kernel);
+            $application->passContainerToModels();
+            $application->initialize();
+
+            return $application->display();
         }
 
-        /**
-         * Load the page and pass along the application kernel
-         * This step is needed to bubble our container all the way to the action.
-         *
-         * Once we switch to bundles, the kernel will boot those bundles and pass the container.
-         * The kernel object itself will then be stored as a singleton in said container, same
-         * as in Symfony.
-         */
-        return new $applicationClass($this->kernel);
+        // fallback to default frontend request
+        $this->frontendController($attributes);
+    }
+
+    public function apiController($attributes)
+    {
+        if (!defined('APPLICATION')) {
+            define('APPLICATION', 'Api');
+        }
+
+        $applicationClass = $this->initializeAPI('Api');
+        $application = new $applicationClass($this->kernel);
+        $application->passContainerToModels();
+        $application->initialize();
+
+        return $application->display();
     }
 
     /**
@@ -323,45 +346,5 @@ class ApplicationRouting
     private function getQueryString()
     {
         return trim($this->request->getRequestUri(), '/');
-    }
-
-    /**
-     * Process the query string to define the application
-     */
-    private function processQueryString()
-    {
-        $queryString = $this->getQueryString();
-
-        // split into chunks
-        $chunks = explode('/', $queryString);
-
-        // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if (isset($chunks[0]) && $chunks[0] == 'src') {
-            unset($chunks[0]);
-            $chunks = array_values($chunks);
-        }
-
-        // is there a application specified
-        if (isset($chunks[0])) {
-            // cleanup
-            $proposedApplication = (string) $chunks[0];
-            $proposedApplication = strtok($proposedApplication, '?');
-
-            // set real application
-            if (isset(self::$routes[$proposedApplication])) {
-                $application = self::$routes[$proposedApplication];
-            } else {
-                $application = self::DEFAULT_APPLICATION;
-            }
-        } else {
-            // no application
-            $application = self::DEFAULT_APPLICATION;
-            $proposedApplication = $application;
-        }
-
-        // define APP
-        if (!defined('APPLICATION')) {
-            define('APPLICATION', $application);
-        }
     }
 }
