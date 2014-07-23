@@ -108,14 +108,8 @@ class Url extends Base\Object
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
         $chunks = (array) explode('/', trim($processedQueryString, '/'));
 
-        // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if (isset($chunks[0]) && $chunks[0] == 'src') {
-            unset($chunks[0]);
-            $chunks = array_values($chunks);
-        }
-
         // check if this is a request for a AJAX-file
-        $isAJAX = (isset($chunks[1]) && $chunks[1] == 'Ajax.php');
+        $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');
 
         // get the language, this will always be in front
         $language = '';
