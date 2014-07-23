@@ -147,6 +147,12 @@ class ApplicationRouting
         return call_user_func($attributes['_controller'], $attributes);
     }
 
+    /**
+     * Runs the backend
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function backendController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -164,6 +170,12 @@ class ApplicationRouting
         return $application->display();
     }
 
+    /**
+     * Runs the backend ajax requests
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function backendAjaxController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -178,6 +190,12 @@ class ApplicationRouting
         return $application->display();
     }
 
+    /**
+     * Runs the cronjobs
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function backendCronjobController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -192,6 +210,12 @@ class ApplicationRouting
         return $application->display();
     }
 
+    /**
+     * Runs the frontend requests
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function frontendController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -206,6 +230,12 @@ class ApplicationRouting
         return $application->display();
     }
 
+    /**
+     * Runs the frontend ajax requests
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function frontendAjaxController($attributes)
     {
         if (!defined('APPLICATION')) {
@@ -220,6 +250,12 @@ class ApplicationRouting
         return $application->display();
     }
 
+    /**
+     * Runs the install requests
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function installController($attributes)
     {
         // if we're able to run the installer, install it
@@ -240,6 +276,12 @@ class ApplicationRouting
         $this->frontendController($attributes);
     }
 
+    /**
+     * Runs the api requests
+     *
+     * @param array $attributes
+     * @return Symfony\Component\HttpFoundation\Response
+     */
     public function apiController($attributes)
     {
         if (!defined('APPLICATION')) {
