@@ -10,7 +10,6 @@ Improvements:
 Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
-* ContentBlocks: template gave error on capital letter in default.tpl.
 * Blog: show image on preview
 * Core: add .editorconfig file
 
