@@ -214,7 +214,7 @@ class Url extends Base\Object
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
                     '/' . $this->getQueryString()
                 )
             );
