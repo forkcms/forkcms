@@ -59,7 +59,7 @@ abstract class Kernel implements KernelInterface
      *
      * @api
      */
-    public function __construct($environment, $debug)
+    public function __construct($environment = null, $debug = false)
     {
         $this->environment = $environment;
         $this->debug = (bool) $debug;
@@ -636,7 +636,7 @@ abstract class Kernel implements KernelInterface
             $container->merge($cont);
         }
 
-        $container->addCompilerPass(new AddClassesToCachePass($this));
+        // $container->addCompilerPass(new AddClassesToCachePass($this));
 
         return $container;
     }
