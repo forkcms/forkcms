@@ -183,20 +183,44 @@ abstract class Kernel implements KernelInterface
      */
     protected function getKernelParameters()
     {
-        // This is also where symfony loads and stores the names of the active bundles
+        $bundles = array();
+        foreach ($this->bundles as $name => $bundle) {
+            $bundles[$name] = get_class($bundle);
+        }
 
-        /*
-         * Debug status and environment are params of the Kernel constructor, and
-         * are set via a separate front controller.
-         *
-         * Fork sets them directly in /app/config/parameters.yml through the installer.
-         * We can add additional non-installer related configuration options here.
-         */
-        return array(
-            //'kernel.debug' => $this->debug,
-            //'kernel.environment' => $this->environment,
-            'kernel.root_dir' => $this->getRootDir(),
+        return array_merge(
+            array(
+                'kernel.root_dir'        => $this->rootDir,
+                'kernel.environment'     => $this->environment,
+                'kernel.debug'           => $this->debug,
+                'kernel.name'            => $this->name,
+                'kernel.cache_dir'       => $this->getCacheDir(),
+                'kernel.logs_dir'        => $this->getLogDir(),
+                'kernel.bundles'         => $bundles,
+                'kernel.charset'         => $this->getCharset(),
+                'kernel.container_class' => $this->getContainerClass(),
+            ),
+            $this->getEnvParameters()
         );
+    }
+
+    /**
+     * Gets the environment parameters.
+     *
+     * Only the parameters starting with "SYMFONY__" are considered.
+     *
+     * @return array An array of parameters
+     */
+    protected function getEnvParameters()
+    {
+        $parameters = array();
+        foreach ($_SERVER as $key => $value) {
+            if (0 === strpos($key, 'SYMFONY__')) {
+                $parameters[strtolower(str_replace('__', '.', substr($key, 9)))] = $value;
+            }
+        }
+
+        return $parameters;
     }
 
     /**
@@ -552,18 +576,38 @@ abstract class Kernel implements KernelInterface
     }
 
     /**
+     * Gets the charset of the application.
+     *
+     * @return string The charset
+     *
+     * @api
+     */
+    public function getCharset()
+    {
+        return 'UTF-8';
+    }
+
+    /**
+     * Gets the name of the kernel
+     *
+     * @return string The kernel name
+     *
+     * @api
+     */
+    public function getName()
+    {
+        if (null === $this->name) {
+            $this->name = preg_replace('/[^a-zA-Z0-9_]+/', '', basename($this->rootDir));
+        }
+
+        return $this->name;
+    }
+
+    /**
      * @todo
      * These methods need to be present in order to answer to interface requirements.
      * Most are only relevant when bundles are present, so we can't use them yet.
      */
-    public function getCharset()
-    {
-    }
-
-    public function getName()
-    {
-    }
-
     public function getStartTime()
     {
     }
