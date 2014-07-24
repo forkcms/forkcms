@@ -12,6 +12,7 @@ use Symfony\Component\Routing\RequestContext;
 use Symfony\Component\Routing\Router;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Backend\Init as BackendInit;
 
@@ -27,7 +28,7 @@ use Frontend\Init as FrontendInit;
  * @author Dave Lens <dave.lens@wijs.be>
  * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
-class ApplicationRouting
+class ApplicationRouting extends Controller
 {
     const DEFAULT_APPLICATION = 'Frontend';
 
@@ -44,30 +45,11 @@ class ApplicationRouting
         'install' => 'Install'
     );
 
-    /**
-     * @var Kernel
-     */
-    private $kernel;
-
-    /**
-     * The actual request, formatted as a Symfony object.
-     *
-     * @var Request
-     */
-    private $request;
-
-    /**
-     * @param Request $request
-     * @param Kernel  $kernel
-     */
-    public function __construct(Request $request, Kernel $kernel)
+    public function __construct()
     {
         // this class is used in most Fork applications to bubble down the Kernel object
         require_once __DIR__ . '/ApplicationInterface.php';
         require_once __DIR__ . '/KernelLoader.php';
-
-        $this->request = $request;
-        $this->kernel = $kernel;
     }
 
     /**
@@ -81,137 +63,117 @@ class ApplicationRouting
     }
 
     /**
-     * Handle the actual request and delegate it to other parts of Fork.
-     *
-     * @return Symfony\Component\HttpFoundation\Response
-     */
-    public function handleRequest()
-    {
-        $locator = new FileLocator(array(__DIR__));
-        $context = new RequestContext();
-        $context->fromRequest($this->request);
-
-        $router = new Router(
-            new YamlFileLoader($locator),
-            'config/routing.yml',
-            array('cache_dir' => __DIR__ . '/cache'),
-            $context
-        );
-
-        // call the given controller when it matches
-        $attributes = $router->match($this->request->getPathInfo());
-        return call_user_func($attributes['_controller'], $attributes);
-    }
-
-    /**
      * Runs the backend
      *
-     * @param array $attributes
+     * @param Request $request
+     * @param string  $module
+     * @param string  $action
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendController($attributes)
+    public function backendController(Request $request, $module, $action)
     {
         define('APPLICATION', 'Backend');
         define('NAMED_APPLICATION', 'private');
 
         $applicationClass = $this->initializeBackend('Backend');
-        $application = new $applicationClass($this->kernel);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
     /**
      * Runs the backend ajax requests
      *
-     * @param array $attributes
+     * @param Request $request
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendAjaxController($attributes)
+    public function backendAjaxController(Request $request)
     {
         define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendAjax');
-        $application = new $applicationClass($this->kernel);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
     /**
      * Runs the cronjobs
      *
-     * @param array $attributes
+     * @param Request $request
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function backendCronjobController($attributes)
+    public function backendCronjobController(Request $request)
     {
         define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
-        $application = new $applicationClass($this->kernel);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
     /**
      * Runs the frontend requests
      *
-     * @param array $attributes
+     * @param Request $request
+     * @param string  $route
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function frontendController($attributes)
+    public function frontendController(Request $request, $route)
     {
         define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('Frontend');
-        $application = new $applicationClass($this->kernel);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
     /**
      * Runs the frontend ajax requests
      *
-     * @param array $attributes
+     * @param Request $request
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function frontendAjaxController($attributes)
+    public function frontendAjaxController(Request $request)
     {
         define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
-        $application = new $applicationClass($this->kernel);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
     /**
      * Runs the install requests
      *
-     * @param array $attributes
+     * @param Request $request
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function installController($attributes)
+    public function installController(Request $request)
     {
         // if we're able to run the installer, install it
         if (file_exists(__DIR__ . '/../src/Install')) {
             define('APPLICATION', 'Install');
 
             $applicationClass = $this->initializeInstaller('Install');
-            $application = new $applicationClass($this->kernel);
+            $application = new $applicationClass($this->container->get('kernel'));
             return $this->handleApplication($application);
         }
 
         // fallback to default frontend request
-        return $this->frontendController($attributes);
+        return $this->frontendController($request);
     }
 
     /**
      * Runs the api requests
      *
-     * @param array $attributes
+     * @param Request $request
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function apiController($attributes)
+    public function apiController(Request $request)
     {
         define('APPLICATION', 'Api');
 
-        $applicationClass = $this->initializeAPI('Api');
-        $application = new $applicationClass($this->kernel);
+        $applicationClass = $this->initializeAPI('Api', $request);
+        $application = new $applicationClass($this->container->get('kernel'));
         return $this->handleApplication($application);
     }
 
@@ -233,9 +195,9 @@ class ApplicationRouting
      * @param string $app The name of the application to load (ex. BackendAjax)
      * @return string The name of the application class we need to instantiate.
      */
-    protected function initializeAPI($app)
+    protected function initializeAPI($app, $request)
     {
-        $queryString = $this->getQueryString();
+        $queryString = trim($request->getRequestUri(), '/');
         $chunks = explode('/', $queryString);
         $apiVersion = (array_key_exists(1, $chunks)) ? $chunks[1] : 'v1';
         $apiVersion = strtok($apiVersion, '?');
@@ -246,7 +208,7 @@ class ApplicationRouting
             throw new Exception('This version of the API does not exists.');
         }
 
-        $init = new $apiClass($this->kernel);
+        $init = new $apiClass($this->container->get('kernel'));
         $init->initialize($app);
 
         // The client was requested
@@ -284,7 +246,7 @@ class ApplicationRouting
      */
     protected function initializeBackend($app)
     {
-        $init = new BackendInit($this->kernel);
+        $init = new BackendInit($this->container->get('kernel'));
         $init->initialize($app);
 
         switch ($app) {
@@ -307,19 +269,9 @@ class ApplicationRouting
      */
     protected function initializeFrontend($app)
     {
-        $init = new FrontendInit($this->kernel);
+        $init = new FrontendInit($this->container->get('kernel'));
         $init->initialize($app);
 
         return ($app === 'FrontendAjax') ? 'Frontend\Core\Engine\Ajax' : 'Frontend\Core\Engine\Frontend';
-    }
-
-    /**
-     * Retrieves the request URI from the request object
-     *
-     * @return string
-     */
-    private function getQueryString()
-    {
-        return trim($this->request->getRequestUri(), '/');
     }
 }

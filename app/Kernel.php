@@ -172,8 +172,8 @@ abstract class Kernel implements KernelInterface
 
         $router = new ApplicationRouting($request, $this);
 
-        return $router->handleRequest();
-        //return $this->getHttpKernel()->handle($request, $type, $catch);
+        //return $router->handleRequest();
+        return $this->getHttpKernel()->handle($request, $type, $catch);
     }
 
     /**
