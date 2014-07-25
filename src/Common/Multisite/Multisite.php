@@ -121,14 +121,14 @@ class Multisite
     {
         $record = $this->db->getRecord(
             'SELECT * FROM sites WHERE id = ?',
-            array((int)$id)
+            array((int) $id)
         );
-        $record['is_domain_site'] = (bool)$isDomainSite;
-        $record['is_main_site'] = (bool)$isMainSite;
-        $record['active_languages'] = (array)$this->db->getColumn(
+        $record['is_domain_site'] = (bool) $isDomainSite;
+        $record['is_main_site'] = (bool) $isMainSite;
+        $record['active_languages'] = (array) $this->db->getColumn(
             'SELECT language FROM sites_languages
              WHERE site_id = ? AND is_active = ? AND is_viewable = ?',
-            array((int)$id, 'Y', 'Y')
+            array((int) $id, 'Y', 'Y')
         );
         $record['working_languages'] = $this->getWorkingLanguages($id);
 
