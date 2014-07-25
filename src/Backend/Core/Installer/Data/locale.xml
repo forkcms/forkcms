@@ -3143,12 +3143,6 @@
         <translation language="el"><![CDATA[Λίγο πιό αργά...]]></translation>
         <translation language="pl"><![CDATA[zwolnij kowboju]]></translation>
       </item>
-      <item type="error" name="InvalidNumber">
-        <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
-        <translation language="de"><![CDATA[Bitte trag eine gültige Nummer ein.]]></translation>
-        <translation language="ru"><![CDATA[Пожалуйста, укажите число.]]></translation>
-        <translation language="lt"><![CDATA[Neteisingas numeris.]]></translation>
-      </item>
       <item type="error" name="InvalidPassword">
         <translation language="nl"><![CDATA[Ongeldig wachtwoord.]]></translation>
         <translation language="en"><![CDATA[Invalid password.]]></translation>
