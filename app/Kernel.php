@@ -170,8 +170,6 @@ abstract class Kernel implements KernelInterface
             $this->defineForkConstants();
         }
 
-        $router = new ApplicationRouting($request, $this);
-
         return $this->getHttpKernel()->handle($request, $type, $catch);
     }
 
