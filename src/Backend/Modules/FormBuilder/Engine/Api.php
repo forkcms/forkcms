@@ -232,7 +232,9 @@ class Api
             }
 
             $forms = (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, i.language, i.name, i.method, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+                'SELECT i.id, i.language, i.name, i.method,
+                 UNIX_TIMESTAMP(i.created_on) AS created_on,
+                 UNIX_TIMESTAMP(i.edited_on) AS edited_on
                  FROM forms AS i
                  ORDER BY i.created_on DESC
                  LIMIT ?, ?',

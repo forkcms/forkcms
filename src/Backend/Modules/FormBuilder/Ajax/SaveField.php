@@ -31,7 +31,12 @@ class SaveField extends BackendBaseAJAXAction
         // get parameters
         $formId = \SpoonFilter::getPostValue('form_id', null, '', 'int');
         $fieldId = \SpoonFilter::getPostValue('field_id', null, '', 'int');
-        $type = \SpoonFilter::getPostValue('type', array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'), '', 'string');
+        $type = \SpoonFilter::getPostValue(
+            'type',
+            array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'),
+            '',
+            'string'
+        );
         $label = trim(\SpoonFilter::getPostValue('label', null, '', 'string'));
         $values = trim(\SpoonFilter::getPostValue('values', null, '', 'string'));
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
@@ -45,20 +50,17 @@ class SaveField extends BackendBaseAJAXAction
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
 
         // invalid form id
-        if (!BackendFormBuilderModel::exists($formId)) $this->output(self::BAD_REQUEST, null, 'form does not exist');
-
-        // validated form
-        else {
+        if (!BackendFormBuilderModel::exists($formId)) {
+            $this->output(self::BAD_REQUEST, null, 'form does not exist');
+        } else {
             // invalid fieldId
-            if ($fieldId !== 0 && !BackendFormBuilderModel::existsField($fieldId, $formId)) $this->output(self::BAD_REQUEST, null, 'field does not exist');
-
-            // validated field
-            else {
+            if ($fieldId !== 0 && !BackendFormBuilderModel::existsField($fieldId, $formId)) {
+                $this->output(self::BAD_REQUEST, null, 'field does not exist');
+            } else {
                 // invalid type
-                if ($type == '') $this->output(self::BAD_REQUEST, null, 'invalid type provided');
-
-                // validated type
-                else {
+                if ($type == '') {
+                    $this->output(self::BAD_REQUEST, null, 'invalid type provided');
+                } else {
                     // extra validation is only possible for textfields
                     if ($type != 'textbox') {
                         $validation = '';
@@ -71,73 +73,103 @@ class SaveField extends BackendBaseAJAXAction
 
                     // validate textbox
                     if ($type == 'textbox') {
-                        if ($label == '') $errors['label'] = BL::getError('LabelIsRequired');
-                        if ($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
-                        if ($validation != '' && $errorMessage == '') $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
-                    }
-
-                    // validate textarea
-                    elseif ($type == 'textarea') {
-                        if ($label == '') $errors['label'] = BL::getError('LabelIsRequired');
-                        if ($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
-                        if ($validation != '' && $errorMessage == '') $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
-                    }
-
-                    // validate heading
-                    elseif ($type == 'heading' && $values == '') $errors['values'] = BL::getError('ValueIsRequired');
-
-                    // validate paragraph
-                    elseif ($type == 'paragraph' && $values == '') $errors['values'] = BL::getError('ValueIsRequired');
-
-                    // validate submit button
-                    elseif ($type == 'submit' && $values == '') $errors['values'] = BL::getError('ValueIsRequired');
-
-                    // validate dropdown
-                    elseif ($type == 'dropdown') {
-                        // values trim
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($validation != '' && $errorMessage == '') {
+                            $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                    } elseif ($type == 'textarea') {
+                        // validate textarea
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($validation != '' && $errorMessage == '') {
+                            $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                    } elseif ($type == 'heading' && $values == '') {
+                        // validate heading
+                        $errors['values'] = BL::getError('ValueIsRequired');
+                    } elseif ($type == 'paragraph' && $values == '') {
+                        // validate paragraphs
+                        $errors['values'] = BL::getError('ValueIsRequired');
+                    } elseif ($type == 'submit' && $values == '') {
+                        // validate submitbuttons
+                        $errors['values'] = BL::getError('ValueIsRequired');
+                    } elseif ($type == 'dropdown') {
+                        // validate dropdown
                         $values = trim($values, ',');
 
                         // validate
-                        if ($label == '') $errors['label'] = BL::getError('LabelIsRequired');
-                        if ($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
-                        if ($values == '') $errors['values'] = BL::getError('ValueIsRequired');
-                    }
-
-                    // validate radiobutton
-                    elseif ($type == 'radiobutton') {
-                        if ($label == '') $errors['label'] = BL::getError('LabelIsRequired');
-                        if ($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
-                        if ($values == '') $errors['values'] = BL::getError('ValueIsRequired');
-                    }
-
-                    // validate checkbox
-                    elseif ($type == 'checkbox') {
-                        if ($label == '') $errors['label'] = BL::getError('LabelIsRequired');
-                        if ($required == 'Y' && $requiredErrorMessage == '') $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($values == '') {
+                            $errors['values'] = BL::getError('ValueIsRequired');
+                        }
+                    } elseif ($type == 'radiobutton') {
+                        // validate radiobutton
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($values == '') {
+                            $errors['values'] = BL::getError('ValueIsRequired');
+                        }
+                    } elseif ($type == 'checkbox') {
+                        // validate checkbox
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
                     }
 
                     // got errors
-                    if (!empty($errors)) $this->output(self::OK, array('errors' => $errors), 'form contains errors');
-
-                    // no errors
-                    else {
+                    if (!empty($errors)) {
+                        $this->output(self::OK, array('errors' => $errors), 'form contains errors');
+                    } else {
                         // htmlspecialchars except for paragraphs
                         if ($type != 'paragraph') {
-                            if ($values != '') $values = \SpoonFilter::htmlspecialchars($values);
-                            if ($defaultValues != '') $defaultValues = \SpoonFilter::htmlspecialchars($defaultValues);
+                            if ($values != '') {
+                                $values = \SpoonFilter::htmlspecialchars($values);
+                            }
+                            if ($defaultValues != '') {
+                                $defaultValues = \SpoonFilter::htmlspecialchars($defaultValues);
+                            }
                         }
 
                         // split
-                        if ($type == 'dropdown' || $type == 'radiobutton' || $type == 'checkbox') $values = (array) explode('|', $values);
+                        if ($type == 'dropdown' || $type == 'radiobutton' || $type == 'checkbox') {
+                            $values = (array) explode('|', $values);
+                        }
 
                         /**
                          * Save!
                          */
                         // settings
                         $settings = array();
-                        if ($label != '') $settings['label'] = \SpoonFilter::htmlspecialchars($label);
-                        if ($values != '') $settings['values'] = $values;
-                        if ($defaultValues != '') $settings['default_values'] = $defaultValues;
+                        if ($label != '') {
+                            $settings['label'] = \SpoonFilter::htmlspecialchars($label);
+                        }
+                        if ($values != '') {
+                            $settings['values'] = $values;
+                        }
+                        if ($defaultValues != '') {
+                            $settings['default_values'] = $defaultValues;
+                        }
 
                         // reply-to, only for textboxes
                         if ($type == 'textbox') {
@@ -157,10 +189,7 @@ class SaveField extends BackendBaseAJAXAction
 
                             // delete all validation (added again later)
                             BackendFormBuilderModel::deleteFieldValidation($fieldId);
-                        }
-
-                        // create one
-                        else {
+                        } else {
                             // sequence
                             $field['sequence'] = BackendFormBuilderModel::getMaximumSequence($formId) + 1;
 
@@ -188,7 +217,10 @@ class SaveField extends BackendBaseAJAXAction
                             $validate['field_id'] = $fieldId;
                             $validate['type'] = $validation;
                             $validate['error_message'] = \SpoonFilter::htmlspecialchars($errorMessage);
-                            $validate['parameter'] = ($validationParameter != '') ? \SpoonFilter::htmlspecialchars($validationParameter) : null;
+                            $validate['parameter'] = ($validationParameter != '') ?
+                                \SpoonFilter::htmlspecialchars($validationParameter) :
+                                null
+                            ;
 
                             // add validation
                             BackendFormBuilderModel::insertFieldValidation($validate);
@@ -197,17 +229,26 @@ class SaveField extends BackendBaseAJAXAction
                             $field['validations'][$type] = $validate;
                         }
 
-                        // get item from database (i do this call again to keep the points of failure as low as possible)
+                        // get item from database (i do this call again to keep the pof as low as possible)
                         $field = BackendFormBuilderModel::getField($fieldId);
 
                         // submit button isnt parsed but handled directly via javascript
-                        if ($type == 'submit') $fieldHTML = '';
-
-                        // parse field to html
-                        else $fieldHTML = FormBuilderHelper::parseField($field);
+                        if ($type == 'submit') {
+                            $fieldHTML = '';
+                        } else {
+                            // parse field to html
+                            $fieldHTML = FormBuilderHelper::parseField($field);
+                        }
 
                         // success output
-                        $this->output(self::OK, array('field_id' => $fieldId, 'field_html' => $fieldHTML), 'field saved');
+                        $this->output(
+                            self::OK,
+                            array(
+                                'field_id' => $fieldId,
+                                'field_html' => $fieldHTML,
+                            ),
+                            'field saved'
+                        );
                     }
                 }
             }

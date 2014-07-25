@@ -43,7 +43,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
             $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
         } catch (FrontendException $e) {
             // template does not exist; assume subpages_default.tpl
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/previous_next_navigation.tpl');
+            $template = FrontendTheme::getPath($widgetTemplatesPath . '/PreviousNextNavigation.tpl');
         }
 
         $this->loadTemplate($template);

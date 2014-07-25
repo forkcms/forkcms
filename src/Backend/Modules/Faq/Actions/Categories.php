@@ -61,8 +61,11 @@ class Categories extends BackendBaseActionIndex
             BL::getWorkingLanguage()
         );
         $this->dataGrid->setHeaderLabels(array('num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))));
-        if ($this->multipleCategoriesAllowed) $this->dataGrid->enableSequenceByDragAndDrop();
-        else $this->dataGrid->setColumnsHidden(array('sequence'));
+        if ($this->multipleCategoriesAllowed) {
+            $this->dataGrid->enableSequenceByDragAndDrop();
+        } else {
+            $this->dataGrid->setColumnsHidden(array('sequence'));
+        }
         $this->dataGrid->setRowAttributes(array('id' => '[id]'));
         $this->dataGrid->setPaging(false);
 
@@ -71,7 +74,8 @@ class Categories extends BackendBaseActionIndex
             $this->dataGrid->setColumnFunction(
                 array(__CLASS__, 'setClickableCount'),
                 array('[num_items]', BackendModel::createURLForAction('Index') . '&amp;category=[id]'),
-                'num_items', true
+                'num_items',
+                true
             );
         }
 
@@ -79,7 +83,9 @@ class Categories extends BackendBaseActionIndex
         if (BackendAuthentication::isAllowedAction('EditCategory')) {
             $this->dataGrid->setColumnURL('title', BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]');
             $this->dataGrid->addColumn(
-                'edit', null, BL::lbl('Edit'),
+                'edit',
+                null,
+                BL::lbl('Edit'),
                 BackendModel::createURLForAction('EditCategory') . '&amp;id=[id]',
                 BL::lbl('Edit')
             );
@@ -98,7 +104,9 @@ class Categories extends BackendBaseActionIndex
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('AddCategory') && $this->multipleCategoriesAllowed) {
             $this->tpl->assign('showFaqAddCategory', true);
-        } else $this->tpl->assign('showFaqAddCategory', false);
+        } else {
+            $this->tpl->assign('showFaqAddCategory', false);
+        }
     }
 
     /**
@@ -115,8 +123,12 @@ class Categories extends BackendBaseActionIndex
         $link = (string) $link;
 
         // return link in case of more than one item, one item, other
-        if ($count > 1) return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Questions') . '</a>';
-        if ($count == 1) return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Question') . '</a>';
+        if ($count > 1) {
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Questions') . '</a>';
+        } elseif ($count == 1) {
+            return '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Question') . '</a>';
+        }
+
         return '';
     }
 }

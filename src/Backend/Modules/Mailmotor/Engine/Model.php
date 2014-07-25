@@ -1417,7 +1417,10 @@ class Model
             $item['language'] = $language;
             $item['value'] = $directory->getBaseName();
             $item['label'] = BL::lbl(
-                'Template' . \SpoonFilter::toCamelCase($directory->getBaseName(), array('-', '_'))
+                'Template' . \SpoonFilter::toCamelCase(
+                    \SpoonFilter::toCamelCase($directory->getBaseName(), '-'),
+                    '_'
+                )
             );
 
             $records[$item['value']] = $item;

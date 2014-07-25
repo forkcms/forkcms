@@ -29,11 +29,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Backend": "src/",
-            "Frontend": "src/",
-            "Install": "src/",
-            "Api": "src/",
-            "Common": "src/"
+            "": "src/"
         }
     }
 }
