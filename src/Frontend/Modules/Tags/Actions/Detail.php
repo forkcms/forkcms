@@ -82,7 +82,7 @@ class Detail extends FrontendBaseBlock
             );
 
             // set module class
-            $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
+            $class = 'Frontend\\Modules\\' . ucfirst($module) . '\\Engine\\Model';
 
             // get the items that are linked to the tags
             $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
