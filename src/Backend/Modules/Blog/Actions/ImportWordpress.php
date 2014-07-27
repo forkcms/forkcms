@@ -125,7 +125,7 @@ class ImportWordpress extends BackendBaseActionEdit
 
             // Read the XML as an SimpleXML-object
             /* @var \SimpleXMLElement $xml */
-            $xml = @simplexml_load_string($reader->readOuterXml());
+            $xml = @simplexml_load_string($xmlString);
 
             // Skip element if it isn't a valid SimpleXML-object
             if ($xml === false) {
