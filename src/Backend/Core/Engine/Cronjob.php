@@ -185,7 +185,7 @@ class Cronjob extends Object implements \ApplicationInterface
             $configClass
         )
         ) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
         }
 
         // create config-object, the constructor will do some magic
