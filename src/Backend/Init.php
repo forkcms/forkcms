@@ -221,9 +221,22 @@ class Init extends \KernelLoader
             // show errors on the screen
             ini_set('display_errors', 'On');
 
-            // in debug mode notices are triggered when using non existing
-            // locale, so we use a custom errorhandler to cleanup the message
-            set_error_handler(array(__CLASS__, 'errorHandler'));
+            if (DEBUG_WHOOPS) {
+                $whoops = new \Whoops\Run;
+                $prettyHandler = new \Whoops\Handler\PrettyPageHandler;
+                $jsonHandler = new \Whoops\Handler\JsonResponseHandler;
+                $jsonHandler->onlyForAjaxRequests(true);
+                $jsonHandler->addTraceToOutput(true);
+                $whoops->pushHandler($prettyHandler);
+                $whoops->pushHandler($jsonHandler);
+                return $whoops->register();
+            }
+            else {
+                // in debug mode notices are triggered when using non existing
+                // locale, so we use a custom errorhandler to cleanup the message
+                set_error_handler(array(__CLASS__, 'errorHandler'));
+            }
+
         } else {
             // set error reporting as low as possible
             error_reporting(0);
