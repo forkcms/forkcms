@@ -17,6 +17,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
@@ -96,6 +97,63 @@ class Model
              FROM location AS i
              WHERE i.language = ? AND i.show_overview = ?',
             array(BL::getWorkingLanguage(), 'Y')
+        );
+    }
+
+    /**
+     * Get coordinates latitude/longitude
+     *
+     * @param  string $street
+     * @param  string $streetNumber
+     * @param  string $city
+     * @param  string $zip
+     * @param  string $country
+     * @return array  Contains 'latitude' and 'longitude' as variables
+     */
+    public static function getCoordinates(
+        $street = null,
+        $streetNumber = null,
+        $city = null,
+        $zip = null,
+        $country = null
+    ) {
+        // init item
+        $item = array();
+
+        // building item
+        if (!empty($street)) {
+            $item[] = $street;
+        }
+
+        if (!empty($streetNumber)) {
+            $item[] = $streetNumber;
+        }
+
+        if (!empty($city)) {
+            $item[] = $city;
+        }
+
+        if (!empty($zip)) {
+            $item[] = $zip;
+        }
+
+        if (!empty($country)) {
+            $item[] = \SpoonLocale::getCountry($country, BL::getWorkingLanguage());
+        }
+
+        // define address
+        $address = implode(' ', $item);
+
+        // define url
+        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
+
+        // define result
+        $geocodes = json_decode(\SpoonHTTP::getContent($url), true);
+
+        // return coordinates latitude/longitude
+        return array(
+            'latitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
+            'longitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lng'] : null
         );
     }
 

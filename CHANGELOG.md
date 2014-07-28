@@ -3,6 +3,7 @@
 Improvements:
 * Profiles: LoginLink widget added.
 * Profiles: Added password verification field, see #695.
+* Location: BackendLocationModel::getCoordinates() added.
 
 Bugfixes:
 * Faq: deleting a faq question now also deletes the meta record.
