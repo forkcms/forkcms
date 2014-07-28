@@ -2,6 +2,7 @@
 --
 Improvements:
 * Profiles: LoginLink widget added.
+* Profiles: Added password verification field, see #695.
 
 
 3.7.1 (2014-07-10)
