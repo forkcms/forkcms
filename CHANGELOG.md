@@ -1,3 +1,9 @@
+3.7.2 (xxxx-xx-xx)
+--
+Improvements:
+* Profiles: LoginLink widget added.
+
+
 3.7.1 (2014-07-10)
 --
 Improvements:

@@ -81,8 +81,8 @@ class Authentication
     /**
      * Get the login/profile status for the given e-mail and password.
      *
-     * @param string $email    Profile email address.
-     * @param string $password Profile password.
+     * @param  string $email    Profile email address.
+     * @param  string $password Profile password.
      * @return string One of the FrontendProfilesAuthentication::LOGIN_* constants.
      */
     public static function getLoginStatus($email, $password)
@@ -227,8 +227,8 @@ class Authentication
     /**
      * Login a profile.
      *
-     * @param int      $profileId Login the profile with this id in.
-     * @param bool $remember  Should we set a cookie for later?
+     * @param  int  $profileId Login the profile with this id in.
+     * @param  bool $remember  Should we set a cookie for later?
      * @return bool
      */
     public static function login($profileId, $remember = false)
