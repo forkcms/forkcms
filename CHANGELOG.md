@@ -37,6 +37,7 @@ Improvements:
 * Core: CommonCookie and CommonUri are now in the src/Common folder
 * Core: unused function BackendModel::imageSave is removed in favor of generateThumbnails().
 * Core: removed duplicate mailer code and make the mailer a service
+* Core: Backend now has the formatcurrency template modifier. Fixes #611.
 
 Bugfixes:
 

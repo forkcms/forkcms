@@ -31,6 +31,28 @@ class TemplateModifiers
     }
 
     /**
+     * Format a number as currency
+     *    syntax: {$var|formatcurrency[:currency[:decimals]]}
+     *
+     * @param string $var      The string to form.
+     * @param string $currency The currency to will be used to format the number.
+     * @param int    $decimals The number of decimals to show.
+     * @return string
+     */
+    public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
+    {
+        // @later get settings from backend
+        switch ($currency) {
+            case 'EUR':
+                $decimals = ($decimals === null) ? 2 : (int) $decimals;
+
+                // format as Euro
+                return '€ ' . number_format((float) $var, $decimals, ',', ' ');
+                break;
+        }
+    }
+
+    /**
      * Format a UNIX-timestamp as a date
      * syntax: {$var|formatdate}
      *
