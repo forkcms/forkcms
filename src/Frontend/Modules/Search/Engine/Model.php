@@ -128,10 +128,14 @@ class Model
                 'SELECT i0.module, i0.other_id, ' . implode(' + ', $order) . ' AS score
                  FROM ' . implode(' INNER JOIN ', $join) . '
                  WHERE ' . implode(' AND ', $where) . '
-                 ORDER BY score DESC
-                 LIMIT ?, ?';
+                 ORDER BY score DESC';
 
-            $params = array_merge($params1, $params2, array($offset, $limit));
+            $params = array_merge($params1, $params2);
+
+            if ($limit > 0) {
+                $query .= ' LIMIT ?, ?';
+                $params = array_merge($params, array($offset, $limit));
+            }
         } else {
             // simple search
             // get all terms to search for (including synonyms)
@@ -163,14 +167,18 @@ class Model
                     -4
                 ) . ') AND i.language = ? AND i.active = ? AND m.searchable = ?
                  GROUP BY module, other_id
-                 ORDER BY score DESC
-                 LIMIT ?, ?';
+                 ORDER BY score DESC';
 
             $params = array_merge(
                 $terms,
                 $terms,
-                array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit)
+                array(FRONTEND_LANGUAGE, 'Y', 'Y')
             );
+
+            if ($limit > 0) {
+                $query .= ' LIMIT ?, ?';
+                $params = array_merge($params, array($offset, $limit));
+            }
         }
 
         return (array) FrontendModel::getContainer()->get(
