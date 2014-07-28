@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is the module upload-action.
@@ -95,18 +96,31 @@ class UploadModule extends BackendBaseActionAdd
         // there are some complications
         $warnings = array();
 
+        // has the module zip one level of folders too much?
+        $prefix = '';
+
         // check every file in the zip
         for ($i = 0; $i < $zip->numFiles; $i++) {
             // get the file name
             $file = $zip->statIndex($i);
             $fileName = $file['name'];
 
+            if ($i === 0 && $fileName !== 'src/' && $fileName !== 'library/') {
+                $prefix = $fileName;
+            }
+
             // check if the file is in one of the valid directories
             foreach ($allowedDirectories as $directory) {
                 // yay, in a valid directory
-                if (stripos($fileName, $directory) === 0) {
+                if (stripos($fileName, $prefix . $directory) === 0) {
                     // we have a library file
-                    if ($directory == 'library/external/') {
+                    if ($directory == $prefix . 'library/external/') {
+                        // strip the prefix from the filename if necessary
+                        $notPrefixedFileName = $fileName;
+                        if (!empty($prefix)) {
+                            $notPrefixedFileName = substr($fileName, strlen($prefix));
+                        }
+
                         if (!is_file(PATH_WWW . '/' . $fileName)) {
                             $files[] = $fileName;
                         } else {
@@ -116,7 +130,7 @@ class UploadModule extends BackendBaseActionAdd
                     }
 
                     // extract the module name from the url
-                    $tmpName = trim(str_ireplace($directory, '', $fileName), '/');
+                    $tmpName = trim(str_ireplace($prefix . $directory, '', $fileName), '/');
                     if ($tmpName == '') {
                         break;
                     }
@@ -156,13 +170,37 @@ class UploadModule extends BackendBaseActionAdd
         }
 
         // installer in array?
-        if (!in_array('src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
+        if (!in_array($prefix . 'src/Backend/Modules/' . $moduleName . '/Installer/Installer.php', $files)) {
             $fileFile->addError(sprintf(BL::getError('NoInstallerFile'), $moduleName));
             return;
         }
 
         // unpack module files
         $zip->extractTo(PATH_WWW, $files);
+
+        // place all the items in the prefixed folders in the right folders
+        if (!empty($prefix)) {
+            $fs = new Filesystem();
+            foreach ($files as &$file) {
+                $fullPath = PATH_WWW . '/' . $file;
+                $newPath = str_replace(
+                    PATH_WWW . '/' . $prefix,
+                    PATH_WWW . '/',
+                    $fullPath
+                );
+
+                if ($fs->exists($fullPath) && is_dir($fullPath)) {
+                    $fs->mkdir($newPath);
+                } elseif ($fs->exists($fullPath) && is_file($fullPath)) {
+                    $fs->copy(
+                        $fullPath,
+                        $newPath
+                    );
+                }
+            }
+
+            $fs->remove(PATH_WWW . '/' . $prefix);
+        }
 
         // run installer
         BackendExtensionsModel::installModule($moduleName, $warnings);

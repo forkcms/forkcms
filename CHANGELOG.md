@@ -1,9 +1,11 @@
 3.7.2 (xxxx-xx-xx)
 --
 Improvements:
+
 * Profiles: LoginLink widget added.
 * Profiles: Added password verification field, see #695.
 * Location: BackendLocationModel::getCoordinates() added.
+* Extensions: you can upload a module from a zip with an extra directory
 
 Bugfixes:
 * Faq: deleting a faq question now also deletes the meta record.
