@@ -74,15 +74,18 @@ class Add extends BackendBaseActionAdd
                 $item['city'] = $this->frm->getField('city')->getValue();
                 $item['country'] = $this->frm->getField('country')->getValue();
 
-                // geocode address
-                $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' .
-                       urlencode($item['street'] . ' ' . $item['number'] . ', ' .
-                       $item['zip'] . ' ' . $item['city'] . ', ' .
-                       \SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) .
-                       '&sensor=false';
-                $geocode = json_decode(\SpoonHTTP::getContent($url));
-                $item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
-                $item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
+                // define coordinates
+                $coordinates = BackendLocationModel::getCoordinates(
+                    $item['street'],
+                    $item['number'],
+                    $item['city'],
+                    $item['zip'],
+                    $item['country']
+                );
+
+                // define latitude and longitude
+                $item['lat'] = $coordinates['latitude'];
+                $item['lng'] = $coordinates['longitude'];
 
                 // insert the item
                 $item['id'] = BackendLocationModel::insert($item);
