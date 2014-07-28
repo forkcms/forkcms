@@ -66,7 +66,7 @@ var jsBackend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
-			url: '/src/Backend/Ajax.php',
+			url: '/backend/ajax',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',

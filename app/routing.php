@@ -35,6 +35,7 @@ class ApplicationRouting
         '' => self::DEFAULT_APPLICATION,
         'private' => 'Backend',
         'Backend' => 'Backend',
+        'backend' => 'Backend',
         'api' => 'Api',
         'install' => 'Install'
     );
@@ -90,9 +91,9 @@ class ApplicationRouting
          * Our ajax and cronjobs don't go trough the index.php file at the
          * moment. Because of this we need to add some extra validation.
          */
-        if (strpos($this->request->getRequestUri(), 'Ajax.php') !== false) {
+        if (strpos($this->request->getRequestUri(), 'ajax') !== false) {
             $applicationName .= 'Ajax';
-        } elseif (strpos($this->request->getRequestUri(), 'Cronjob.php') !== false) {
+        } elseif (strpos($this->request->getRequestUri(), 'cronjob') !== false) {
             $applicationName .= 'Cronjob';
         }
 
@@ -241,13 +242,6 @@ class ApplicationRouting
 
         // split into chunks
         $chunks = explode('/', $queryString);
-
-        // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if(isset($chunks[0]) && $chunks[0] == 'src')
-        {
-            unset($chunks[0]);
-            $chunks = array_values($chunks);
-        }
 
         // is there a application specified
         if (isset($chunks[0])) {

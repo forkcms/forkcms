@@ -44,7 +44,7 @@ var jsFrontend =
 		// set defaults for AJAX
 		$.ajaxSetup(
 		{
-			url: '/src/Frontend/Ajax.php',
+			url: '/frontend/ajax',
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
