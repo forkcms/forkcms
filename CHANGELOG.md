@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 * Faq: deleting a faq question now also deletes the meta record.
+* Analytics: Cronjob now throws exception instead of trying to redirect.
 
 
 3.7.1 (2014-07-10)
