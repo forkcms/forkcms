@@ -6,8 +6,11 @@ Improvements:
 * Profiles: Added password verification field, see #695.
 * Location: BackendLocationModel::getCoordinates() added.
 * Extensions: you can upload a module from a zip with an extra directory
+* Ajax: endpoint has been changed to not contain an extension. /src/Backend/Ajax.php is now /backend/ajax and /src/Frontend/Ajax.php is now /frontend/ajax
+* Cronjob: endpoint has been changed to not contain an extension. /src/Backend/Cronjob.php is now /backend/cronjob.
 
 Bugfixes:
+
 * Faq: deleting a faq question now also deletes the meta record.
 * Analytics: Cronjob now throws exception instead of trying to redirect.
 * BackendModel: createURLForAction now works in a Cronjob, fixed #513.

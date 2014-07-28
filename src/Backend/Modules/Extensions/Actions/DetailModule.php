@@ -114,7 +114,7 @@ class DetailModule extends BackendBaseActionIndex
         $this->dataGridCronjobs->addColumn(
             'cronjob',
             BL::getLabel('Cronjob'),
-            '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/src/Backend/Cronjob.php module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>',
+            '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/backend/cronjob module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>',
             null,
             null,
             null,

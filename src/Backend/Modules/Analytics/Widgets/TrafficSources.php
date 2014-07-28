@@ -52,7 +52,7 @@ class TrafficSources extends BackendBaseWidget
      */
     private function getData()
     {
-        $URL = SITE_URL . '/src/Backend/Cronjob.php?module=Analytics&action=GetTrafficSources&id=2';
+        $URL = SITE_URL . '/backend/cronjob?module=Analytics&action=GetTrafficSources&id=2';
 
         // set options
         $options = array();

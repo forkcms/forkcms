@@ -2,6 +2,7 @@
 # note: your hosting company might not allow these directives to be set. In that case,
 # you should either find another hosting company (advised) or remove the line below.
 Options +FollowSymlinks -Indexes
+DirectorySlash Off
 
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
@@ -35,8 +36,8 @@ FileETag MTime Size
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
 	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
 
-	# backend/install/api are existing dirs, but should all pass via the front controller
-	RewriteCond %{REQUEST_URI} ^/(backend|install|api(\/\d.\d)?(\/client)?)/$
+	# src dir should pass via the front controller
+	RewriteCond %{REQUEST_URI} ^/(src|src\/)$
 	RewriteRule . /index.php [NC,L]
 
 	# handle urls
