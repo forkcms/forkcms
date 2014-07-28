@@ -14,6 +14,7 @@ Bugfixes:
 * Faq: deleting a faq question now also deletes the meta record.
 * Analytics: Cronjob now throws exception instead of trying to redirect.
 * BackendModel: createURLForAction now works in a Cronjob, fixed #513.
+* Core: Fix generation of url's containing non-ascii characters
 
 
 3.7.1 (2014-07-10)
