@@ -1,3 +1,12 @@
+3.7.2 (xxxx-xx-xx)
+--
+Improvements:
+
+* Routing: use the Symfony routing component to replace routing.yml
+* Core: implement the SymfonyFrameworkBundle to handle routing.
+* Core: make the AppKernel more similar to Symfony's kernel.
+* Core: add the Symfony console component.
+
 3.7.1 (2014-07-10)
 --
 Improvements:
