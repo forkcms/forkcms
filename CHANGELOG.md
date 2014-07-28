@@ -1,3 +1,10 @@
+3.7.2 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Settings: Fixes #718, API Url for fork cms.
+
+
 3.7.1 (2014-07-10)
 --
 Improvements:

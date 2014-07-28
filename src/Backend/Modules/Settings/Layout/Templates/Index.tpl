@@ -125,7 +125,7 @@
 						<tr>
 							<td class="title"><label for="forkApiPublicKey">Fork public key</label></td>
 							<td>{$txtForkApiPublicKey} {$txtForkApiPublicKeyError}</td>
-							<td><a href="http://www.fork-cms.be/info/api">http://www.fork-cms.be/info/api</a></td>
+							<td><a href="http://api.fork-cms.be">http://api.fork-cms.be</a></td>
 						</tr>
 						<tr>
 							<td class="title"><label for="forkApiPrivateKey">Fork private key</label></td>
