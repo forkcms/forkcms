@@ -15,7 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 /**
  * This is the add-action, it will display a form to add a new profile.
  *
- * @author Jeroen Desloovere <jeroen@siesqo.be
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class ExportTemplate extends BackendBaseActionAdd
 {
