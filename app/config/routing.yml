@@ -6,15 +6,15 @@ backend:
         module:      ~
         action:      ~
 backend_ajax:
-    path: /src/Backend/Ajax.php
+    path: /backend/ajax
     defaults:
         _controller: ApplicationRouting::backendAjaxController
 backend_cronjob:
-    path: /src/Backend/Cronjob.php
+    path: /backend/cronjob
     defaults:
         _controller: ApplicationRouting::backendCronjobController
 frontend_ajax:
-    path: /src/Frontend/Ajax.php
+    path: /frontend/ajax
     defaults:
         _controller: ApplicationRouting::frontendAjaxController
 install:
