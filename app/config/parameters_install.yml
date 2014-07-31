@@ -12,7 +12,7 @@ parameters:
 
     fork.debug_email:       ~
     fork.debug_message:     'Internal error.'
-    fork.version:           '3.7.1'
+    fork.version:           '3.7.2'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>
