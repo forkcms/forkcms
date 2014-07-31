@@ -176,10 +176,8 @@ class Model extends \BaseModel
         // add at least one parameter
         $parameters['token'] = self::getToken();
 
-        // init counter
-        $i = 1;
-
         // add parameters
+        $i = 1;
         foreach ($parameters as $key => $value) {
             // first element
             if ($i == 1) {
@@ -188,21 +186,18 @@ class Model extends \BaseModel
                 $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
             }
 
-            // update counter
             $i++;
         }
 
-        // some applications aren't real separate applications, they are virtual applications inside the backend.
-        $namedApplication = NAMED_APPLICATION;
-        if (in_array(
-            $namedApplication,
-            array('BackendDirect', 'BackendAjax', 'BackendCronjob')
-        )) {
-            $namedApplication = 'Backend';
-        }
-
         // build the URL and return it
-        return '/' . $namedApplication . '/' . $language . '/' . $module . '/' . $action . $queryString;
+        return self::get('router')->generate(
+            'backend',
+            array(
+                '_locale' => $language,
+                'module'  => $module,
+                'action'  => $action
+            )
+        ) . $queryString;
     }
 
     /**

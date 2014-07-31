@@ -124,7 +124,7 @@ class Url extends Base\Object
 
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters
+                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
             );
         }
 
@@ -208,7 +208,7 @@ class Url extends Base\Object
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
                     '/' . $this->getQueryString()
                 )
             );

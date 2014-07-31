@@ -30,7 +30,7 @@ class Init extends \KernelLoader
      */
     public function initialize($type)
     {
-        $allowedTypes = array('Backend', 'BackendDirect', 'BackendAjax', 'BackendCronjob');
+        $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob');
         $type = (string) $type;
 
         // check if this is a valid type

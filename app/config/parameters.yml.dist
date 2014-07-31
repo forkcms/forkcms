@@ -8,6 +8,7 @@ parameters:
 
     kernel.debug:           <debug-mode>
     kernel.charset:         'utf-8'
+    kernel.secret:          <secret>
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
