@@ -51,6 +51,7 @@ if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
 }
 
+// get environment and debug mode from environment variables
 $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 

@@ -1,3 +1,12 @@
+3.8.0 (xxxx-xx-xx)
+--
+
+Improvements:
+
+* Debug mode and environment are set earlier in the response.
+  You can set debug mode with SetEnv FORK_DEBUG 1
+  You can set dev environment with SetEnv FORK_ENV dev
+
 3.7.2 (2014-07-31)
 --
 Improvements:
