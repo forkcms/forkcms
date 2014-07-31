@@ -22,6 +22,7 @@ if (!is_dir(__DIR__ . '/vendor')) {
 require_once __DIR__ . '/autoload.php';
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Debug\Debug;
 
 // Fork has not yet been installed
 $installer = dirname(__FILE__) . '/src/Install/Cache';
@@ -54,6 +55,10 @@ if (extension_loaded('newrelic')) {
 // get environment and debug mode from environment variables
 $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
+
+if ($debug) {
+    Debug::enable();
+}
 
 $kernel = new AppKernel($env, $debug);
 $response = $kernel->handle($request);

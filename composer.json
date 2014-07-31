@@ -20,7 +20,8 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "post-update-cmd": "cd tools && ./remove_cache"
+        "post-install-cmd": "app/console assets:install . && cd tools && ./remove_cache",
+        "post-update-cmd": "app/console assets:install . && cd tools && ./remove_cache"
     },
     "autoload": {
         "psr-0": {
