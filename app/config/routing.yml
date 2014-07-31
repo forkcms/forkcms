@@ -22,10 +22,13 @@ install:
     defaults:
         _controller: ApplicationRouting::installController
 api:
-    path: /api/{version}
+    path: /api/{version}/{client}
     defaults:
         _controller: ApplicationRouting::apiController
         version:     ~
+        client:      ~
+    requirements:
+        client: (|client)
 frontend:
     path: /{route}
     defaults:

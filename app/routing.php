@@ -162,9 +162,11 @@ class ApplicationRouting extends Controller
      * Runs the api requests
      *
      * @param Request $request
+     * @param string  $version
+     * @param string  $client
      * @return Symfony\Component\HttpFoundation\Response
      */
-    public function apiController(Request $request)
+    public function apiController(Request $request, $version, $client)
     {
         define('APPLICATION', 'Api');
 

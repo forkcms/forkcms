@@ -46,8 +46,8 @@ class Url extends Base\Object
         // add to registry
         $this->getContainer()->set('url', $this);
 
-        $this->setQueryString($_SERVER['REQUEST_URI']);
-        $this->setHost($_SERVER['HTTP_HOST']);
+        $this->setQueryString($this->get('request')->getRequestUri());
+        $this->setHost($this->get('request')->getHttpHost());
         $this->processQueryString();
     }
 
