@@ -51,7 +51,10 @@ if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
 }
 
-$kernel = new AppKernel();
+$env = getenv('FORK_ENV') ? : 'prod';
+$debug = getenv('FORK_DEBUG') === '1';
+
+$kernel = new AppKernel($env, $debug);
 $response = $kernel->handle($request);
 if ($response->getCharset() === null && $kernel->getContainer() != null) {
     $response->setCharset(

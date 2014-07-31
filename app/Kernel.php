@@ -23,19 +23,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 abstract class Kernel extends BaseKernel implements KernelInterface
 {
     /**
-     * Constructor.
-     *
-     * @param string  $environment The environment
-     * @param bool    $debug       Whether to enable debugging or not
-     *
-     * @api
-     */
-    public function __construct($environment = null, $debug = false)
-    {
-        parent::__construct($environment, $debug);
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @api

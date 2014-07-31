@@ -139,7 +139,6 @@ class Step6 extends Step
     protected function getConfigurationVariables()
     {
         return array(
-            '<debug-mode>' => \SpoonSession::get('debug_mode') ? 'true' : 'false',
             '<debug-email>' => \SpoonSession::get('different_debug_email') ?
                 \SpoonSession::get('debug_email') :
                 \SpoonSession::get('email')

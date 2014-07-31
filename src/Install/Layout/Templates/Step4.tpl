@@ -23,11 +23,8 @@
 
 			<h3>Debug mode</h3>
 			<p>Warning: debug mode is only useful when developing on Fork CMS.</p>
+			<p>You can enable debug mode by adding "SetEnv FORK_DEBUG 1" in your virtualhosts file.</p>
 			<ul class="inputList noPadding">
-				<li>
-					{$chkDebugMode} <label for="debugMode">Enable debug mode </label>
-					<span class="helpTxt">(Leave this checkbox unchecked for better security and performance)</span>
-				</li>
 				<li>
 					{$chkDifferentDebugEmail} <label for="differentDebugEmail">Use a specific debug email address </label>
 					<span class="helpTxt">(Exception emails will be sent to this email address)</span>
