@@ -28,14 +28,14 @@ class Model
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM faq_questions AS i
-         WHERE i.language = ? AND i.category_id = ?
+         WHERE i.language = ? AND i.site_id = ? AND i.category_id = ?
          ORDER BY i.sequence ASC';
 
     const QRY_DATAGRID_BROWSE_CATEGORIES =
         'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
          FROM faq_categories AS i
          LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
-         WHERE i.language = ?
+         WHERE i.language = ? AND i.site_id = ?
          GROUP BY i.id
          ORDER BY i.sequence ASC';
 
@@ -48,12 +48,9 @@ class Model
     {
         $question = self::get($id);
 
-        /** @var $db \SpoonDatabase */
-        $db = BackendModel::getContainer()->get('database');
+        $db = BackendModel::get('database');
         $db->delete('faq_questions', 'id = ?', array((int) $id));
         $db->delete('meta', 'id = ?', array((int) $question['meta_id']));
-
-        BackendTagsModel::saveTags($id, '', 'Faq');
     }
 
     /**
@@ -69,7 +66,12 @@ class Model
         if (!empty($item)) {
             $db->delete('meta', 'id = ?', array($item['meta_id']));
             $db->delete('faq_categories', 'id = ?', array((int) $id));
-            $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
+            $db->update(
+                'faq_questions',
+                array('category_id' => null),
+                'category_id = ?',
+                array((int) $id)
+            );
 
             // build extra
             $extra = array(
@@ -109,9 +111,13 @@ class Model
             return (bool) BackendModel::get('database')->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
-                 WHERE i.category_id = ? AND i.language = ?
+                 WHERE i.category_id = ? AND i.language = ? AND i.site_id = ?
                  LIMIT 1',
-                array((int) $id, BL::getWorkingLanguage())
+                array(
+                    (int) $id,
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                )
             );
         }
     }
@@ -142,9 +148,13 @@ class Model
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM faq_questions AS i
-             WHERE i.id = ? AND i.language = ?
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -159,9 +169,13 @@ class Model
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM faq_categories AS i
-             WHERE i.id = ? AND i.language = ?
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -177,8 +191,12 @@ class Model
             'SELECT i.*, m.url
              FROM faq_questions AS i
              INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -228,12 +246,22 @@ class Model
              FROM modules_tags AS mt
              INNER JOIN tags AS t ON mt.tag_id = t.id
              INNER JOIN faq_questions AS i ON mt.other_id = i.id
-             WHERE mt.module = ? AND mt.tag_id = ? AND i.language = ?',
-            array('Faq', (int) $tagId, BL::getWorkingLanguage())
+             WHERE mt.module = ? AND mt.tag_id = ? AND i.language = ? AND i.site_id = ?',
+            array(
+                'Faq',
+                (int) $tagId,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
 
         foreach ($items as &$row) {
-            $row['url'] = BackendModel::createURLForAction('Edit', 'Faq', null, array('id' => $row['url']));
+            $row['url'] = BackendModel::createURLForAction(
+                'Edit',
+                'Faq',
+                null,
+                array('id' => $row['url'])
+            );
         }
 
         return $items;
@@ -254,17 +282,23 @@ class Model
                 'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
                  FROM faq_categories AS i
                  LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
-                 WHERE i.language = ?
+                 WHERE i.language = ? AND i.site_id = ?
                  GROUP BY i.id',
-                array(BL::getWorkingLanguage())
+                array(
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                )
             );
         }
 
         return (array) $db->getPairs(
             'SELECT i.id, i.title
              FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
+             WHERE i.language = ? AND i.site_id = ?',
+            array(
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -279,8 +313,12 @@ class Model
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
              FROM faq_categories AS i
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -294,8 +332,11 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT COUNT(i.id)
              FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
+             WHERE i.language = ? AND i.site_id = ?',
+            array(
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -325,8 +366,11 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->getVar(
             'SELECT MAX(i.sequence)
              FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
+             WHERE i.language = ? AND i.site_id = ?',
+            array(
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -364,9 +408,13 @@ class Model
                 'SELECT 1
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ?
+                 WHERE i.language = ? AND i.site_id = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
+                array(
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                    $url,
+                )
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -379,9 +427,14 @@ class Model
                 'SELECT 1
                  FROM faq_questions AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
+                 WHERE i.language = ? AND i.site_id = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
+                array(
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                    $url,
+                    $id,
+                )
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -411,9 +464,13 @@ class Model
                 'SELECT 1
                  FROM faq_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ?
+                 WHERE i.language = ? AND i.site_id = ? AND m.url = ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
+                array(
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                    $url,
+                )
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -426,9 +483,14 @@ class Model
                 'SELECT 1
                  FROM faq_categories AS i
                  INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
+                 WHERE i.language = ? AND i.site_id = ? AND m.url = ? AND i.id != ?
                  LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
+                array(
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                    $url,
+                    $id,
+                )
             )
             ) {
                 $url = BackendModel::addNumber($url);
@@ -507,6 +569,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => 'Category: ' . $item['title'],
                 'language' => $item['language'],
+                'site_id' => $item['site_id'],
                 'edit_url' => BackendModel::createURLForAction(
                     'EditCategory',
                     'Faq',
@@ -550,7 +613,12 @@ class Model
     {
         $db = BackendModel::getContainer()->get('database');
 
-        BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
+        BackendModel::get('database')->update(
+            'faq_categories',
+            $item,
+            'id = ?',
+            array($item['id'])
+        );
         BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         // build extra
@@ -565,6 +633,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => 'Category: ' . $item['title'],
                     'language' => $item['language'],
+                    'site_id' => $item['site_id'],
                     'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
                 )
             ),

@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS `faq_categories` (
  `meta_id` int(11) NOT NULL,
  `extra_id` int(11) NOT NULL,
  `language` varchar(5) NOT NULL,
+ `site_id` int(11) NOT NULL,
  `title` varchar(255) NOT NULL,
  `sequence` int(11) NOT NULL,
  PRIMARY KEY (`id`)
@@ -15,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `faq_questions` (
   `user_id` int(11) NOT NULL,
   `meta_id` int(11) NOT NULL,
   `language` varchar(5) collate utf8_unicode_ci NOT NULL,
+  `site_id` int(11) NOT NULL,
   `question` varchar(255) collate utf8_unicode_ci NOT NULL,
   `answer` text collate utf8_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
