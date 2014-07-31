@@ -20,6 +20,7 @@ require_once __DIR__ . '/routing.php';
  *
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Dave Lens <dave.lens@wijs.be>
+ * @author Wouter Sioen <wouter.sioen@wijs.be>
  */
 class AppKernel extends Kernel
 {
@@ -32,8 +33,13 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Symfony\Bundle\MonologBundle\MonologBundle(),
         );
+
+        if (in_array($this->getEnvironment(), array('dev', 'test'))) {
+            $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
+        }
 
         return $bundles;
     }
@@ -48,6 +54,10 @@ class AppKernel extends Kernel
             $loader->load(__DIR__ . '/config/config.yml');
         } else {
             $loader->load(__DIR__ . '/config/config_install.yml');
+        }
+
+        if ($fs->exists(__DIR__.'/config/config_'.$this->getEnvironment().'.yml')) {
+            $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
         }
     }
 }
