@@ -167,20 +167,7 @@ class Init extends \KernelLoader
      */
     private function setDebugging()
     {
-        // debugging enabled
-        if (SPOON_DEBUG) {
-            // set error reporting as high as possible
-            error_reporting(E_ALL | E_STRICT);
-
-            // show errors on the screen
-            ini_set('display_errors', 'On');
-
-            /*
-             * in debug mode notices are triggered when using non existing locale, so we use a custom
-             * error handler to cleanup the message
-             */
-            set_error_handler(array(__CLASS__, 'errorHandler'));
-        } else {
+        if (!SPOON_DEBUG) {
             // set error reporting as low as possible
             error_reporting(0);
 
