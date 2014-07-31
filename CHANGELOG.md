@@ -6,6 +6,7 @@ Improvements:
 * Debug mode and environment are set earlier in the response.
   You can set debug mode with SetEnv FORK_DEBUG 1
   You can set dev environment with SetEnv FORK_ENV dev
+* Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
 
 3.7.2 (2014-07-31)
 --
