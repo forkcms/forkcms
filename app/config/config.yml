@@ -1,6 +1,3 @@
-imports:
-    - { resource: parameters.yml }
-
 framework:
     router:
         resource: "%kernel.root_dir%/config/routing.yml"

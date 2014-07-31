@@ -9,6 +9,7 @@
 
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
 
 // hardcoded this for now, this should be autoloaded
 require_once __DIR__ . '/Kernel.php';
@@ -42,6 +43,13 @@ class AppKernel extends Kernel
      */
     public function registerContainerConfiguration(LoaderInterface $loader)
     {
+        $fs = new Filesystem();
+        if ($fs->exists(__DIR__ . '/config/parameters.yml')) {
+            $loader->load(__DIR__ . '/config/parameters.yml');
+        } else {
+            $loader->load(__DIR__ . '/config/parameters_install.yml');
+        }
+
         // load the general config.yml
         $loader->load(__DIR__ . '/config/config.yml');
     }
