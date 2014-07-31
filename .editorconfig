@@ -4,7 +4,7 @@
 
 root = true
 
-[{*.php,*.js}]
+[*.php]
 charset = utf-8
 end_of_line = lf
 indent_size = 4
@@ -12,7 +12,31 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[{*.xml,*.html,*.tpl}]
+[*.js]
+charset = utf-8
+end_of_line = lf
+indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.xml]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.html]
+charset = utf-8
+end_of_line = lf
+indent_size = 2
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.tpl]
 charset = utf-8
 end_of_line = lf
 indent_size = 2
