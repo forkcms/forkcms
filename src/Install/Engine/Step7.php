@@ -147,7 +147,10 @@ class Step7 extends Step
             \SpoonSession::get('db_database'),
             \SpoonSession::get('db_port')
         );
-        $database->execute('SET CHARACTER SET utf8; NAMES utf8, time_zone = "+0:00"');
+        $database->execute(
+            'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
+            array('charset' => 'utf8')
+        );
         $this->getContainer()->set('database', $database);
 
         // create the core installer
