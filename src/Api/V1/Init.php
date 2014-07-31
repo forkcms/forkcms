@@ -44,14 +44,6 @@ class Init extends \KernelLoader
             date_default_timezone_set('Europe/Brussels');
         }
 
-        /**
-         * At first we enable the error reporting. Later on it will be disabled based on the
-         * value of SPOON_DEBUG, but for now it's required to see possible errors while trying
-         * to include the globals file(s).
-         */
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
-
         $this->definePaths();
         $this->setDebugging();
 
