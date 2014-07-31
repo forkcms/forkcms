@@ -159,7 +159,7 @@ class Init extends \KernelLoader
      */
     private function setDebugging()
     {
-        if (!SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug') === false) {
             // set error reporting as low as possible
             error_reporting(0);
 
