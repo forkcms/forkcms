@@ -283,7 +283,7 @@ class Model
             // loop tags
             foreach ($tags as $key => $tag) {
                 // cleanup
-                $tag = trim($tag);
+                $tag = strtolower(trim($tag));
 
                 // unset if the tag is empty
                 if ($tag == '') {
