@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
-	<backend>
-        <core>
+	<Backend>
+        <Core>
             <item type="label" name="TwitterSiteName">
                 <translation language="en"><![CDATA[Twitter site name]]></translation>
                 <translation language="nl"><![CDATA[Twitter site naam]]></translation>
                 <translation language="fr"><![CDATA[Twitter nom du site]]></translation>
             </item>
-        </core>
-	</backend>
-	<frontend>
-		<core>
+        </Core>
+	</Backend>
+	<Frontend>
+		<Core>
 			<item type="label" name="For">
 				<translation language="en"><![CDATA[for]]></translation>
 				<translation language="nl"><![CDATA[voor]]></translation>
@@ -55,6 +55,6 @@
 				<translation language="en"><![CDATA[To enhance the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
 				<translation language="nl"><![CDATA[Om de gebruikerservaring op deze site te verbeteren gebruiken we <a href="/disclaimer">cookies</a>.]]></translation>
 			</item>
-		</core>
-	</frontend>
+		</Core>
+	</Frontend>
 </locale>
