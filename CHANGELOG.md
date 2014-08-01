@@ -1,15 +1,83 @@
-3.6.7 (xxxx-xx-xx)
+3.7.3 (xxxx-xx-xx)
 --
+Bugfixes:
+
+* Installer: make sure our database is initalized as utf8
+* Installer: remove the cached container after installation
+
+
+3.7.2 (2014-07-31)
+--
+Improvements:
+
+* Profiles: LoginLink widget added.
+* Profiles: Added password verification field, see #695.
+* Location: BackendLocationModel::getCoordinates() added.
+* Extensions: you can upload a module from a zip with an extra directory
+* Ajax: endpoint has been changed to not contain an extension. /src/Backend/Ajax.php is now /backend/ajax and /src/Frontend/Ajax.php is now /frontend/ajax
+* Cronjob: endpoint has been changed to not contain an extension. /src/Backend/Cronjob.php is now /backend/cronjob.
+* Routing: use the Symfony routing component to replace routing.yml
+* Core: implement the SymfonyFrameworkBundle to handle routing.
+* Core: make the AppKernel more similar to Symfony's kernel.
+* Core: add the Symfony console component.
+
+Bugfixes:
+
+* Faq: deleting a faq question now also deletes the meta record.
+* Analytics: Cronjob now throws exception instead of trying to redirect.
+* BackendModel: createURLForAction now works in a Cronjob, fixed #513.
+* Core: Fix generation of url's containing non-ascii characters
+
+
+3.7.1 (2014-07-10)
+--
+Improvements:
+
+* Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+* Blog: show image on preview
+* Core: add .editorconfig file
+
+Bugfixes:
+
+* Locale: problem when saving Frontend locale fixed #744.
+* Core: Mailer uses \Exception.
+* Core: Frontend.js ajax url fixed
+* Core: Loading editor templates fixed, see #747
+* Analytics: Fixes action names to get data from Google Analytics, see #755
+* Extensions: you can now install custom themes again.
+* Pages: widget previous-next fixed.
+* Extensions: using 'Core' instead of 'core'.
+
+3.7.0 (2014-04-24)
+--
+Improvements:
+
+* Core: Spoon registry has been refactored out in favor of the Symfony DI container. See UPGRADE_3.7.md for more info.
+* Core: Don't throw exceptions in production mode on non-existing files.
+* Core: Implemented a cookie-bar, see http://www.fork-cms.com/blog/detail/the-cookie-bar for more information.
+* Core: use correct/new Facebook-js-snippet.
+* Users: more logical way of handling user-permissions, see #684.
+* Content blocks: only grab needed fields, see #669.
+* Core: better description for CKFinder maximum image size settings.
+* Core: used namespaces, see UPGRADE_3.7.md for more info
+* API: use isAuthorized() instead of authorize(), see UPGRADE_3.7.md for more info.
+* Core: CommonCookie and CommonUri are now in the src/Common folder
+* Core: unused function BackendModel::imageSave is removed in favor of generateThumbnails().
+* Core: removed duplicate mailer code and make the mailer a service
 
 Bugfixes:
 
 * Correct amount of sample comments in blog
 * msgSequenceSaved was missing from core installer.
+* Core: Modified misleading text about CKFinder maximum image size setting.
+* Share with linkedin, fixed double url encoding.
+* Faq: getByTags did not work in backend.
+* Blog: fixes an issue where an incorrect revision could be used instead of the most recent one, see #680.
+* API: use DIRECTORY_SEPARATOR instead of hardcoded /, fixes #682.
 
 
 3.6.6 (2014-01-15)
 --
-
 Improvements:
 
 * Blog: Import wordpress action added.
@@ -22,8 +90,6 @@ Improvements:
 
 Bugfixes:
 
-* Share with linkedin, fixed double url encoding.
-* Faq: getByTags did not work in backend.
 * BackendModel: getURLForBlock can now return the url when locale is not yet activated.
 * Urls containing md threw a 403 forbidden error.
 * Syntax error in FrontendBlockWidget fixed.
@@ -95,6 +161,7 @@ Bugfixes:
 * Analytics: Tracking code wasn't set.
 * Users: do not wrap delimiters in an array.
 * Duplicated header 'content-type' fixed
+
 
 
 3.6.0 (2013-06-18)
@@ -526,7 +593,7 @@ Bugfixes:
 Bugfixes:
 
 * Core: fixed LFI vulnerability.
-* Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/core/layout/templates/subnavigation.tpl'}
+* Core: you can now override the template for sub navigation and the navigation: {$var|getnavigation:'page':{$page.id}:2:null:null:'/Core/Layout/Templates/subnavigation.tpl'}
 * Extensions: installing a pre-uploaded theme from the themes overview now installs the selected theme instead of the last theme.
 * Mailmotor: fix CSV address imports.
 * Pages: include footer/meta subpages in the linkedlist.

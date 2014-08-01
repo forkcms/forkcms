@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+	<name>Location</name>
+	<version>2.0.0</version>
+	<requirements>
+		<minimum_version>3.2.2</minimum_version>
+	</requirements>
+	<description>
+		<![CDATA[
+			We've developed the Location-module to simply show your location on a Google Map on your website by just entering your address. Simple as that!
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name><![CDATA[Matthias Mullie]]></name>
+			<url><![CDATA[http://www.mullie.eu]]></url>
+		</author>
+		<author>
+			<name><![CDATA[Jelmer Snoeck]]></name>
+			<url><![CDATA[http://www.jelmersnoeck.com]]></url>
+		</author>
+	</authors>
+	<events>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a location is added.]]></event>
+		<event application="backend" name="after_delete"><![CDATA[Triggered when a location is deleted.]]></event>
+		<event application="backend" name="after_edit"><![CDATA[Triggered when a location is edited.]]></event>
+		<event application="backend" name="after_saved_settings"><![CDATA[Triggered when settings are saved.]]></event>
+	</events>
+</module>

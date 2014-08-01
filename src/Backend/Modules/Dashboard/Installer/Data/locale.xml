@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Dashboard>
+      <item type="label" name="AllStatistics">
+        <translation language="nl"><![CDATA[alle statistieken]]></translation>
+        <translation language="en"><![CDATA[all statistics]]></translation>
+        <translation language="hu"><![CDATA[minden statisztika]]></translation>
+        <translation language="it"><![CDATA[tutte le statistiche]]></translation>
+        <translation language="ru"><![CDATA[Вся статистика]]></translation>
+        <translation language="zh"><![CDATA[所有统计]]></translation>
+        <translation language="de"><![CDATA[alle Statistiken]]></translation>
+        <translation language="fr"><![CDATA[toutes les statistiques]]></translation>
+        <translation language="es"><![CDATA[todas las estadísticas]]></translation>
+        <translation language="uk"><![CDATA[Вся статистика]]></translation>
+        <translation language="lt"><![CDATA[visos statistikos]]></translation>
+        <translation language="sv"><![CDATA[all statistik]]></translation>
+        <translation language="el"><![CDATA[Όλα τα στατιστικά]]></translation>
+      </item>
+      <item type="label" name="TopKeywords">
+        <translation language="nl"><![CDATA[top zoekwoorden]]></translation>
+        <translation language="en"><![CDATA[top keywords]]></translation>
+        <translation language="hu"><![CDATA[top keresőszavak]]></translation>
+        <translation language="it"><![CDATA[migliori keyword]]></translation>
+        <translation language="ru"><![CDATA[Топ ключевых слов]]></translation>
+        <translation language="zh"><![CDATA[热门关键词]]></translation>
+        <translation language="fr"><![CDATA[meilleurs mots-clefs]]></translation>
+        <translation language="de"><![CDATA[Top Keywords]]></translation>
+        <translation language="es"><![CDATA[palabras clave destacadas]]></translation>
+        <translation language="uk"><![CDATA[Топ ключових слів]]></translation>
+        <translation language="sv"><![CDATA[topp nyckelord]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίες λέξεις-κλειδιά]]></translation>
+      </item>
+      <item type="label" name="TopReferrers">
+        <translation language="nl"><![CDATA[top verwijzende sites]]></translation>
+        <translation language="en"><![CDATA[top referrers]]></translation>
+        <translation language="hu"><![CDATA[top referrerek]]></translation>
+        <translation language="it"><![CDATA[migliori referenti]]></translation>
+        <translation language="ru"><![CDATA[Топ реферов]]></translation>
+        <translation language="zh"><![CDATA[最多引用]]></translation>
+        <translation language="fr"><![CDATA[meilleurs référents]]></translation>
+        <translation language="de"><![CDATA[Top Verweisende-Seiten]]></translation>
+        <translation language="es"><![CDATA[referentes destacados]]></translation>
+        <translation language="uk"><![CDATA[Топ реферерів]]></translation>
+        <translation language="sv"><![CDATA[topp referrers]]></translation>
+        <translation language="el"><![CDATA[Κορυφαίοι αναφορείς]]></translation>
+      </item>
+      <item type="message" name="EditYourDashboard">
+        <translation language="nl"><![CDATA[Personaliseer je dashboard]]></translation>
+        <translation language="en"><![CDATA[Personalize your dashboard]]></translation>
+        <translation language="hu"><![CDATA[Vezérlőpult személyreszabása]]></translation>
+        <translation language="it"><![CDATA[Personalizza la tua dashboard]]></translation>
+        <translation language="ru"><![CDATA[Персонализация ПУ]]></translation>
+        <translation language="zh"><![CDATA[自定义控制面板]]></translation>
+        <translation language="de"><![CDATA[Individualisiere dein Dashboard]]></translation>
+        <translation language="fr"><![CDATA[Personnaliser votre tableau de bord.]]></translation>
+        <translation language="es"><![CDATA[Personaliza tu dashboard]]></translation>
+        <translation language="lt"><![CDATA[Nusistatykite savo aplinką]]></translation>
+        <translation language="sv"><![CDATA[Ändra din dashboard]]></translation>
+        <translation language="el"><![CDATA[Προσωποποίηση του Περιβάλλοντος Εργασίας σας]]></translation>
+      </item>
+      <item type="message" name="HelpEditDashboard">
+        <translation language="nl"><![CDATA[Personaliseer je dashboard door de verschillende items te verslepen. Sluit de items om ze te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[Personalize your dashboard by dragging the boxes in the way you want. Close the boxes to remove them.]]></translation>
+        <translation language="hu"><![CDATA[Fogd meg a boxot és tedd oda ahova akarod, hogy személyre szabd a vezérlőpultodat. Zárd be a boxot, ha el akarod tüntetni.]]></translation>
+        <translation language="it"><![CDATA[Personalizza la tua dashboard trascinando i box dove preferisci. Chiudi i box per rimuoverli.]]></translation>
+        <translation language="ru"><![CDATA[Настройка происходит путем передвигания окон. Закройте окошко для удаления.]]></translation>
+        <translation language="zh"><![CDATA[拖拽模块可将其放置在你想要的位置。点击右上角“关闭”按钮可移除相应模块。]]></translation>
+        <translation language="de"><![CDATA[Individualisiere das Dashboard, indem du die Boxen an die gewünschte Stelle ziehst. Schließe Boxen um sie vom Dashboard zu entfernen.]]></translation>
+        <translation language="fr"><![CDATA[Personnalisez votre tableau de bord en déplaçant les boîtes de la façon que vous voulez. Fermez les boîtes pour les retirer.]]></translation>
+        <translation language="es"><![CDATA[Personaliza tu dashboard arrastrando las cajas donde quieres ponerlas. Cierra las cajas para eliminarlas.]]></translation>
+        <translation language="lt"><![CDATA[Suasmeninkite savo įrankių juostą vilkdami langelius kur norite patalpinti. Norėdami uždaryti langelius, spauskite UŽDARYTI (X)]]></translation>
+        <translation language="sv"><![CDATA[Ändra din dashboard genom flytta boxarna som du vill. Stäng boxarna för ta bort dem.]]></translation>
+        <translation language="el"><![CDATA[Προσωποποιήστε το Περιβάλλον Εργασίας σας σύροντας τα κουτιά όπου επιθυμείτε. Κλείστε τα κουτιά γιά να τα αφαιρέσετε.]]></translation>
+      </item>
+      <item type="message" name="WillBeEnabledOnSave">
+        <translation language="nl"><![CDATA[Deze widget zal geactiveerd worden bij het opslaan.]]></translation>
+        <translation language="en"><![CDATA[This widget wil be reenabled on save.]]></translation>
+        <translation language="hu"><![CDATA[Ez a widget engedélyezve lesz a mentéskor.]]></translation>
+        <translation language="it"><![CDATA[Questo widget verrà riabilitato salvando.]]></translation>
+        <translation language="ru"><![CDATA[Виджет заработает после сохранения.]]></translation>
+        <translation language="zh"><![CDATA[这个小工具将在保存后启用]]></translation>
+        <translation language="de"><![CDATA[Dieses Widget wird beim speichern reaktiviert.]]></translation>
+        <translation language="fr"><![CDATA[Le widget sera ré-activé à la sauvegarde.]]></translation>
+        <translation language="es"><![CDATA[Este widget será reactivado al guardar.]]></translation>
+        <translation language="sv"><![CDATA[Denna widget kommer att återaktiveras vid sparande.]]></translation>
+        <translation language="el"><![CDATA[Η μικροεφαρμογή θα ενεργοποιηθεί πάλι κατά την αποθήκευση.]]></translation>
+      </item>
+    </Dashboard>
+  </Backend>
+</locale>

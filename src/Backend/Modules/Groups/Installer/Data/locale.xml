@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Groups>
+      <item type="label" name="Action">
+        <translation language="nl"><![CDATA[actie]]></translation>
+        <translation language="en"><![CDATA[action]]></translation>
+        <translation language="it"><![CDATA[azione]]></translation>
+        <translation language="ru"><![CDATA[Действия]]></translation>
+        <translation language="zh"><![CDATA[行为]]></translation>
+        <translation language="fr"><![CDATA[action]]></translation>
+        <translation language="hu"><![CDATA[használ]]></translation>
+        <translation language="de"><![CDATA[Aktion]]></translation>
+        <translation language="es"><![CDATA[acción]]></translation>
+        <translation language="uk"><![CDATA[Дії]]></translation>
+        <translation language="lt"><![CDATA[veiksmas]]></translation>
+        <translation language="el"><![CDATA[Ενέργεια]]></translation>
+      </item>
+      <item type="label" name="AddGroup">
+        <translation language="nl"><![CDATA[groep toevoegen]]></translation>
+        <translation language="en"><![CDATA[add group]]></translation>
+        <translation language="it"><![CDATA[aggiungi gruppo]]></translation>
+        <translation language="ru"><![CDATA[Добавить группу]]></translation>
+        <translation language="zh"><![CDATA[添加用户组]]></translation>
+        <translation language="de"><![CDATA[Gruppe hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un groupe]]></translation>
+        <translation language="hu"><![CDATA[csoport hozzáadása]]></translation>
+        <translation language="uk"><![CDATA[Додати групу]]></translation>
+        <translation language="es"><![CDATA[agregar grupo]]></translation>
+        <translation language="lt"><![CDATA[nauja grupė]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη ομάδας]]></translation>
+      </item>
+      <item type="label" name="Checkbox">
+        <translation language="nl"><![CDATA[&nbsp;]]></translation>
+        <translation language="en"><![CDATA[ ]]></translation>
+        <translation language="it"><![CDATA[Checkbox]]></translation>
+        <translation language="ru"><![CDATA[ ]]></translation>
+        <translation language="zh"><![CDATA[&nbsp;]]></translation>
+        <translation language="fr"><![CDATA[Case à cocher]]></translation>
+        <translation language="hu"><![CDATA[Checkbox]]></translation>
+        <translation language="de"><![CDATA[Checkbox]]></translation>
+        <translation language="es"><![CDATA[&nbsp;]]></translation>
+        <translation language="uk"><![CDATA[Чекбокс]]></translation>
+        <translation language="lt"><![CDATA[&nbsp;]]></translation>
+        <translation language="el"><![CDATA[Πλήκτρο επιλογής]]></translation>
+      </item>
+      <item type="label" name="DisplayWidgets">
+        <translation language="nl"><![CDATA[te tonen widgets]]></translation>
+        <translation language="en"><![CDATA[widgets to display]]></translation>
+        <translation language="it"><![CDATA[widget da mostrare]]></translation>
+        <translation language="ru"><![CDATA[Отображаемые виджеты]]></translation>
+        <translation language="zh"><![CDATA[显示的小工具]]></translation>
+        <translation language="fr"><![CDATA[widgets à afficher]]></translation>
+        <translation language="hu"><![CDATA[widget megjelenítése]]></translation>
+        <translation language="de"><![CDATA[anzeigbare Widgets]]></translation>
+        <translation language="es"><![CDATA[widgets a mostrar]]></translation>
+        <translation language="uk"><![CDATA[Відображувані віджети]]></translation>
+        <translation language="lt"><![CDATA[programėlės rodymui]]></translation>
+        <translation language="el"><![CDATA[Μικροεφαρμογές προς εμφάνιση]]></translation>
+      </item>
+      <item type="label" name="NumUsers">
+        <translation language="nl"><![CDATA[aantal gebruikers]]></translation>
+        <translation language="en"><![CDATA[number of users]]></translation>
+        <translation language="it"><![CDATA[numero di utenti]]></translation>
+        <translation language="ru"><![CDATA[Кол-во пользователей]]></translation>
+        <translation language="zh"><![CDATA[用户数量]]></translation>
+        <translation language="fr"><![CDATA[nombre d'utilisateurs]]></translation>
+        <translation language="hu"><![CDATA[felhasználók száma]]></translation>
+        <translation language="de"><![CDATA[Benutzeranzahl]]></translation>
+        <translation language="es"><![CDATA[número de usuarios]]></translation>
+        <translation language="uk"><![CDATA[К-ть користувачів]]></translation>
+        <translation language="el"><![CDATA[Πλήθος χρηστών]]></translation>
+      </item>
+      <item type="label" name="Presets">
+        <translation language="it"><![CDATA[prestabiliti]]></translation>
+        <translation language="ru"><![CDATA[Установки]]></translation>
+        <translation language="zh"><![CDATA[预设]]></translation>
+        <translation language="fr"><![CDATA[pré-réglages]]></translation>
+        <translation language="hu"><![CDATA[presets]]></translation>
+        <translation language="de"><![CDATA[Vorgaben]]></translation>
+        <translation language="nl"><![CDATA[presets]]></translation>
+        <translation language="en"><![CDATA[presets]]></translation>
+        <translation language="es"><![CDATA[requisitos]]></translation>
+        <translation language="uk"><![CDATA[Установки]]></translation>
+        <translation language="el"><![CDATA[Αρχικές ρυθμίσεις]]></translation>
+      </item>
+      <item type="label" name="SetPermissions">
+        <translation language="nl"><![CDATA[stel rechten in]]></translation>
+        <translation language="en"><![CDATA[set permissions]]></translation>
+        <translation language="it"><![CDATA[imposta permessi]]></translation>
+        <translation language="ru"><![CDATA[Настроить права]]></translation>
+        <translation language="zh"><![CDATA[设置权限]]></translation>
+        <translation language="fr"><![CDATA[régler les permissions]]></translation>
+        <translation language="hu"><![CDATA[engedélyek megadása]]></translation>
+        <translation language="de"><![CDATA[Rechte einstellen]]></translation>
+        <translation language="es"><![CDATA[configurar permisos]]></translation>
+        <translation language="uk"><![CDATA[Налаштувати права]]></translation>
+        <translation language="el"><![CDATA[Ορισμός δικαιωμάτων]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA["%1$s" is toegevoegd.]]></translation>
+        <translation language="en"><![CDATA["%1$s" has been added.]]></translation>
+        <translation language="it"><![CDATA["%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - добавлено.]]></translation>
+        <translation language="zh"><![CDATA[“%1$s”已添加．]]></translation>
+        <translation language="de"><![CDATA["%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA["%1$s" a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA["%1$s" hozzáadva.]]></translation>
+        <translation language="es"><![CDATA["%1$s" ha sido agregado.]]></translation>
+        <translation language="uk"><![CDATA["%1$s" - додано.]]></translation>
+        <translation language="el"><![CDATA[Το "%1$s" προστέθηκε.]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA["%1$s" is verwijderd.]]></translation>
+        <translation language="en"><![CDATA["%1$s" has been deleted.]]></translation>
+        <translation language="it"><![CDATA["%1$s" è stato eliminato.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - удалено.]]></translation>
+        <translation language="zh"><![CDATA[“%1$s”已添加。]]></translation>
+        <translation language="de"><![CDATA["%1$s" wurde gelöscht.]]></translation>
+        <translation language="hu"><![CDATA["%1$s" törölve.]]></translation>
+        <translation language="fr"><![CDATA["%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA["%1$s" ha sido eliminado.]]></translation>
+        <translation language="el"><![CDATA[Το "%1$s" διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[wijzigingen aan "%1$s" werden opgeslaan.]]></translation>
+        <translation language="en"><![CDATA[changes for "%1$s" has been saved.]]></translation>
+        <translation language="it"><![CDATA[le modifiche per "%1$s" sono state salvate.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" - изменено.]]></translation>
+        <translation language="zh"><![CDATA[“%1$s”的变更已保存。]]></translation>
+        <translation language="de"><![CDATA[Änderungen an "%1$s" wurden gespeichert.]]></translation>
+        <translation language="hu"><![CDATA["%1$s" változásai elmentve.]]></translation>
+        <translation language="fr"><![CDATA[Les changements pour "%1$s" ont été enregistrés.]]></translation>
+        <translation language="es"><![CDATA[los cambios para "%1$s" han sido guardados.]]></translation>
+        <translation language="el"><![CDATA[Οι αλλαγές στο "%1$s" έχουν αποθηκευτεί.]]></translation>
+      </item>
+      <item type="message" name="NoUsers">
+        <translation language="nl"><![CDATA[Deze groep bevat geen gebruikers.]]></translation>
+        <translation language="en"><![CDATA[This group does not contain any users.]]></translation>
+        <translation language="it"><![CDATA[Questo gruppo non contiene nessun utente.]]></translation>
+        <translation language="ru"><![CDATA[В этой группе нет пользователей.]]></translation>
+        <translation language="zh"><![CDATA[这个组还没有用户。]]></translation>
+        <translation language="de"><![CDATA[Diese Gruppe enthält keine Benutzer.]]></translation>
+        <translation language="hu"><![CDATA[Ez a csoport nem tartalmaz felhasználókat.]]></translation>
+        <translation language="fr"><![CDATA[Ce groupe ne contient pas de nouveaux utilisateurs.]]></translation>
+        <translation language="es"><![CDATA[Este grupo no contiene ningún usuario.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ομάδα δεν έχει καθόλου χρήστες.]]></translation>
+      </item>
+      <item type="message" name="NoWidgets">
+        <translation language="nl"><![CDATA[Er zijn geen widgets beschikbaar.]]></translation>
+        <translation language="en"><![CDATA[There are no widgets available.]]></translation>
+        <translation language="it"><![CDATA[Questo widget non è disponibile.]]></translation>
+        <translation language="ru"><![CDATA[Нет доступных виджетов.]]></translation>
+        <translation language="zh"><![CDATA[还没有可用的小工具。]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Widgets verfügbar.]]></translation>
+        <translation language="hu"><![CDATA[Nem áll widget redelkezésre.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas de widget disponible.]]></translation>
+        <translation language="es"><![CDATA[No hay widgets disponibles.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν διαθέσιμες μικροεφαρμογές.]]></translation>
+      </item>
+      <item type="error" name="GroupAlreadyExists">
+        <translation language="nl"><![CDATA[Deze groep bestaat reeds.]]></translation>
+        <translation language="en"><![CDATA[This group already exists.]]></translation>
+        <translation language="it"><![CDATA[Questo gruppo è già esistente.]]></translation>
+        <translation language="ru"><![CDATA[Эта группа уже существует.]]></translation>
+        <translation language="zh"><![CDATA[这个组已经存在。]]></translation>
+        <translation language="de"><![CDATA[Diese Gruppe gibt es bereits.]]></translation>
+        <translation language="hu"><![CDATA[Ez a csoport már létezik.]]></translation>
+        <translation language="fr"><![CDATA[Ce groupe existe déjà.]]></translation>
+        <translation language="es"><![CDATA[Este grupo ya existe.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ομάδα υπάρχει ήδη.]]></translation>
+      </item>
+    </Groups>
+  </Backend>
+</locale>

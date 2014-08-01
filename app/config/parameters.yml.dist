@@ -8,10 +8,11 @@ parameters:
 
     kernel.debug:           <debug-mode>
     kernel.charset:         'utf-8'
+    kernel.secret:          <secret>
 
     fork.debug_email:       <debug-email>
     fork.debug_message:     'Internal error.'
-    fork.version:           '3.6.6'
+    fork.version:           '3.7.2'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>

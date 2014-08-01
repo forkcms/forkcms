@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Faq>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
+        <translation language="en"><![CDATA[add question]]></translation>
+        <translation language="es"><![CDATA[agregar pregunta]]></translation>
+        <translation language="de"><![CDATA[Frage hinzufügen]]></translation>
+        <translation language="uk"><![CDATA[Додати запитання]]></translation>
+        <translation language="lt"><![CDATA[naujas klausimas]]></translation>
+        <translation language="hu"><![CDATA[új kérdés]]></translation>
+        <translation language="sv"><![CDATA[lägg till fråga]]></translation>
+        <translation language="el"><![CDATA[Νέα ερώτηση]]></translation>
+        <translation language="zh"><![CDATA[添加问题]]></translation>
+      </item>
+      <item type="label" name="AddQuestion">
+        <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
+        <translation language="en"><![CDATA[add question]]></translation>
+        <translation language="hu"><![CDATA[új kérdés]]></translation>
+        <translation language="it"><![CDATA[aggiungi domanda]]></translation>
+        <translation language="ru"><![CDATA[Добавить вопрос]]></translation>
+        <translation language="zh"><![CDATA[添加问题]]></translation>
+        <translation language="de"><![CDATA[Frage hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une question]]></translation>
+        <translation language="es"><![CDATA[agregar pregunta]]></translation>
+        <translation language="uk"><![CDATA[Додати запитання]]></translation>
+        <translation language="lt"><![CDATA[naujas klausimas]]></translation>
+        <translation language="sv"><![CDATA[lägg till fråga]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη Ερώτησης]]></translation>
+      </item>
+      <item type="label" name="AllowFeedback">
+        <translation language="nl"><![CDATA[feedback toelaten]]></translation>
+        <translation language="en"><![CDATA[allow feedback]]></translation>
+        <translation language="es"><![CDATA[permitir retroalimentación]]></translation>
+        <translation language="de"><![CDATA[Feedback erlauben]]></translation>
+        <translation language="uk"><![CDATA[Дозволити відгуки]]></translation>
+        <translation language="hu"><![CDATA[visszajelzés elfogadása]]></translation>
+        <translation language="lt"><![CDATA[leisti atsiliepimus]]></translation>
+        <translation language="sv"><![CDATA[tillåt återkoppling]]></translation>
+        <translation language="el"><![CDATA[Να επιτρέπονται οι γνώμες]]></translation>
+        <translation language="zh"><![CDATA[允许回复]]></translation>
+      </item>
+      <item type="label" name="AllowMultipleCategories">
+        <translation language="nl"><![CDATA[meerdere categorieën toestaan]]></translation>
+        <translation language="en"><![CDATA[multiple categories allowed]]></translation>
+        <translation language="el"><![CDATA[Να επιτρέπονται πολλαπλές κατηγορίες]]></translation>
+        <translation language="zh"><![CDATA[允许添加到多个分类]]></translation>
+        <translation language="de"><![CDATA[mehrere Kategorien erlaubt]]></translation>
+      </item>
+      <item type="label" name="AllowOwnQuestion">
+        <translation language="nl"><![CDATA[gebruikersvragen toelaten]]></translation>
+        <translation language="en"><![CDATA[allow user questions]]></translation>
+        <translation language="es"><![CDATA[permitir preguntas de usuarios]]></translation>
+        <translation language="de"><![CDATA[Benutzerfragen erlauben]]></translation>
+        <translation language="uk"><![CDATA[Дозволити користувацькі запитання]]></translation>
+        <translation language="hu"><![CDATA[felhasználói kérdések elfogadása]]></translation>
+        <translation language="lt"><![CDATA[leisti klausti]]></translation>
+        <translation language="sv"><![CDATA[tillåt användarfrågor]]></translation>
+        <translation language="el"><![CDATA[Να επιτρέπονται οι ερωτήσεις από τους χρήστες]]></translation>
+        <translation language="zh"><![CDATA[允许用户提问]]></translation>
+      </item>
+      <item type="label" name="Answer">
+        <translation language="nl"><![CDATA[antwoord]]></translation>
+        <translation language="en"><![CDATA[answer]]></translation>
+        <translation language="hu"><![CDATA[válasz]]></translation>
+        <translation language="it"><![CDATA[risposta]]></translation>
+        <translation language="ru"><![CDATA[Ответ]]></translation>
+        <translation language="zh"><![CDATA[回答]]></translation>
+        <translation language="de"><![CDATA[Antwort]]></translation>
+        <translation language="fr"><![CDATA[réponse]]></translation>
+        <translation language="es"><![CDATA[respuesta]]></translation>
+        <translation language="uk"><![CDATA[Відповідь]]></translation>
+        <translation language="lt"><![CDATA[atsakymas]]></translation>
+        <translation language="sv"><![CDATA[svar]]></translation>
+        <translation language="el"><![CDATA[Απάντηση]]></translation>
+      </item>
+      <item type="label" name="Feedback">
+        <translation language="nl"><![CDATA[feedback]]></translation>
+        <translation language="en"><![CDATA[feedback]]></translation>
+        <translation language="es"><![CDATA[retroalimentación]]></translation>
+        <translation language="de"><![CDATA[Feedback]]></translation>
+        <translation language="uk"><![CDATA[Відгук]]></translation>
+        <translation language="hu"><![CDATA[visszajelzés]]></translation>
+        <translation language="sv"><![CDATA[återkoppla]]></translation>
+        <translation language="lt"><![CDATA[grįžtamasis ryšys]]></translation>
+        <translation language="el"><![CDATA[Η Γνώμη σας]]></translation>
+        <translation language="zh"><![CDATA[回复]]></translation>
+      </item>
+      <item type="label" name="Fråga">
+        <translation language="sv"><![CDATA[fråga]]></translation>
+      </item>
+      <item type="label" name="Frågor">
+        <translation language="sv"><![CDATA[frågor]]></translation>
+      </item>
+      <item type="label" name="ItemsPerCategory">
+        <translation language="nl"><![CDATA[items per categorie]]></translation>
+        <translation language="en"><![CDATA[items per category]]></translation>
+        <translation language="es"><![CDATA[objetos por categoría]]></translation>
+        <translation language="de"><![CDATA[Einträge pro Kategorie]]></translation>
+        <translation language="uk"><![CDATA[Кількість для категорії]]></translation>
+        <translation language="hu"><![CDATA[elem per kategória]]></translation>
+        <translation language="sv"><![CDATA[objekt per kategori]]></translation>
+        <translation language="el"><![CDATA[Θέματα ανά κατηγορία]]></translation>
+        <translation language="zh"><![CDATA[分类项目数]]></translation>
+      </item>
+      <item type="label" name="Process">
+        <translation language="nl"><![CDATA[verwerken]]></translation>
+        <translation language="en"><![CDATA[process]]></translation>
+        <translation language="es"><![CDATA[proceso]]></translation>
+        <translation language="de"><![CDATA[verarbeiten]]></translation>
+        <translation language="uk"><![CDATA[Процес]]></translation>
+        <translation language="hu"><![CDATA[feldolgozás]]></translation>
+        <translation language="sv"><![CDATA[process]]></translation>
+        <translation language="el"><![CDATA[Επεξεργασία]]></translation>
+        <translation language="zh"><![CDATA[进度]]></translation>
+      </item>
+      <item type="label" name="Question">
+        <translation language="nl"><![CDATA[vraag]]></translation>
+        <translation language="en"><![CDATA[question]]></translation>
+        <translation language="hu"><![CDATA[kérdés]]></translation>
+        <translation language="it"><![CDATA[domanda]]></translation>
+        <translation language="ru"><![CDATA[Вопрос]]></translation>
+        <translation language="zh"><![CDATA[问题]]></translation>
+        <translation language="de"><![CDATA[Frage]]></translation>
+        <translation language="fr"><![CDATA[question]]></translation>
+        <translation language="es"><![CDATA[pregunta]]></translation>
+        <translation language="uk"><![CDATA[Запитання]]></translation>
+        <translation language="el"><![CDATA[Ερώτηση]]></translation>
+      </item>
+      <item type="label" name="Questions">
+        <translation language="nl"><![CDATA[vragen]]></translation>
+        <translation language="en"><![CDATA[questions]]></translation>
+        <translation language="es"><![CDATA[preguntas]]></translation>
+        <translation language="de"><![CDATA[Fragen]]></translation>
+        <translation language="uk"><![CDATA[Запитання]]></translation>
+        <translation language="hu"><![CDATA[kérdések]]></translation>
+        <translation language="el"><![CDATA[Ερωτήσεις]]></translation>
+        <translation language="zh"><![CDATA[问题]]></translation>
+      </item>
+      <item type="label" name="SendEmailOnNewFeedback">
+        <translation language="nl"><![CDATA[stuur een email als er nieuwe feedback is]]></translation>
+        <translation language="en"><![CDATA[send an email if there is new feedback]]></translation>
+        <translation language="es"><![CDATA[enviar un email si hay retroalimentación nueva.]]></translation>
+        <translation language="de"><![CDATA[E-Mail senden falls neues Feedback vorhanden]]></translation>
+        <translation language="uk"><![CDATA[Надіслати e-mail якщо буде відгук]]></translation>
+        <translation language="hu"><![CDATA[küldj egy emailt, ha van új visszajelzés]]></translation>
+        <translation language="sv"><![CDATA[skicka ett e-postmeddelande om det inkommer nya återkopplingar]]></translation>
+        <translation language="el"><![CDATA[Στείλε ένα email αν υπάρχει μία νέα γνώμη]]></translation>
+        <translation language="zh"><![CDATA[当有新回复时发送邮件提醒]]></translation>
+      </item>
+      <item type="error" name="AnswerIsRequired">
+        <translation language="nl"><![CDATA[Het antwoord is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The answer is required.]]></translation>
+        <translation language="hu"><![CDATA[A válasz kötelező.]]></translation>
+        <translation language="it"><![CDATA[La risposta è obbligatoria.]]></translation>
+        <translation language="ru"><![CDATA[Поле Ответ обязательно к заполнению.]]></translation>
+        <translation language="zh"><![CDATA[答案是必填项。]]></translation>
+        <translation language="de"><![CDATA[Die Antwort wird benötigt.]]></translation>
+        <translation language="fr"><![CDATA[La réponse est requise.]]></translation>
+        <translation language="es"><![CDATA[La respuesta es requerida.]]></translation>
+        <translation language="sv"><![CDATA[svar är obligatoriskt.]]></translation>
+        <translation language="el"><![CDATA[Η απάντηση είναι υποχρεωτική.]]></translation>
+      </item>
+      <item type="error" name="CategoryIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een categorie te selecteren.]]></translation>
+        <translation language="en"><![CDATA[Please select a category.]]></translation>
+        <translation language="hu"><![CDATA[Kérlek válassz kategóriát.]]></translation>
+        <translation language="it"><![CDATA[Seleziona una categoria.]]></translation>
+        <translation language="ru"><![CDATA[Выберите категорию.]]></translation>
+        <translation language="zh"><![CDATA[请选择一个分类。]]></translation>
+        <translation language="de"><![CDATA[Such dir bitte eine Kategorie aus.]]></translation>
+        <translation language="fr"><![CDATA[Veuillez choisir une catégorie.]]></translation>
+        <translation language="es"><![CDATA[Por favor selecciona una categoría.]]></translation>
+        <translation language="sv"><![CDATA[Vänligen välj en kategori.]]></translation>
+        <translation language="el"><![CDATA[Παρακαλώ επιλέξτε μία κατηγορία.]]></translation>
+      </item>
+      <item type="error" name="DeleteCategoryNotAllowed">
+        <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
+        <translation language="es"><![CDATA[No esta permitido eliminar la categoría "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Es ist nicht erlaubt die Kategorie "%1$s" zu löschen.]]></translation>
+        <translation language="hu"><![CDATA[Nem megendegett, hogy töröld a(z) "%1$s" kategóriát.]]></translation>
+        <translation language="sv"><![CDATA[Det inte tillåtet till ta bort kategorin "%1$s".]]></translation>
+        <translation language="el"><![CDATA[Δεν επιτρέπεται η διαγραφή της κατηγορίας "%1$s".]]></translation>
+        <translation language="zh"><![CDATA[分类“%1$s”不允许被删除。]]></translation>
+      </item>
+      <item type="error" name="OnlyOneCategoryAllowed">
+        <translation language="nl"><![CDATA[Het gebruik van meerdere categorieën is niet toegelaten.]]></translation>
+        <translation language="en"><![CDATA[The use of multiple categories is not allowed.]]></translation>
+        <translation language="el"><![CDATA[Δεν επιτρέπεται η χρήση πολλαπλών κατηγοριών.]]></translation>
+        <translation language="zh"><![CDATA[不允许使用多目录。]]></translation>
+        <translation language="de"><![CDATA[Das Benutzen mehrere Kategorien ist nicht erlaubt.]]></translation>
+      </item>
+      <item type="error" name="QuestionIsRequired">
+        <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The question is required.]]></translation>
+        <translation language="hu"><![CDATA[A kérdés kötelező.]]></translation>
+        <translation language="it"><![CDATA[La domanda è obbligatoria.]]></translation>
+        <translation language="ru"><![CDATA[Поле Вопрос обязательно к заполнению.]]></translation>
+        <translation language="zh"><![CDATA[问题是必填项。]]></translation>
+        <translation language="de"><![CDATA[Die Frage wird benötigt.]]></translation>
+        <translation language="fr"><![CDATA[La question est requise.]]></translation>
+        <translation language="es"><![CDATA[La pregunta es requerida.]]></translation>
+        <translation language="sv"><![CDATA[fråga är obligatoriskt.]]></translation>
+        <translation language="el"><![CDATA[Η ερώτηση είναι υποχρεωτική.]]></translation>
+      </item>
+      <item type="message" name="EditCategory">
+        <translation language="nl"><![CDATA[Bewerk categorie "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Edit category "%1$s"]]></translation>
+        <translation language="es"><![CDATA[Editar categoría "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Bearbeite Kategorie "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" kategória szerkesztése]]></translation>
+        <translation language="sv"><![CDATA[Ändra kategori "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή της κατηγορίας "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑分类“%1$s”]]></translation>
+      </item>
+      <item type="message" name="EditQuestion">
+        <translation language="nl"><![CDATA[Bewerk vraag "%1$s]]></translation>
+        <translation language="en"><![CDATA[Edit question "%1$s]]></translation>
+        <translation language="hu"><![CDATA["%1$s" kérdés szerkesztése]]></translation>
+        <translation language="it"><![CDATA[Modifica domanda "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать вопрос "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑问题“%1$s”]]></translation>
+        <translation language="de"><![CDATA[bearbeite Frage "%1$s"]]></translation>
+        <translation language="fr"><![CDATA[éditer la question "%1$s"]]></translation>
+        <translation language="es"><![CDATA[Editar pregunta "%1$s]]></translation>
+        <translation language="sv"><![CDATA[Ändra fråga "%1$s]]></translation>
+        <translation language="el"><![CDATA[Μεταβολή της ερώτησης "%1$s"]]></translation>
+      </item>
+      <item type="message" name="FeedbackInfo">
+        <translation language="nl"><![CDATA[Dit zijn alle berichten achtergelaten door bezoekers die dit antwoord niet nuttig vonden.]]></translation>
+        <translation language="en"><![CDATA[These are all the messages from visitors who did't find this answer useful.]]></translation>
+        <translation language="de"><![CDATA[Das sind alle Mitteilungen von Besuchern, die diese Antwort nicht hilfreich fanden.]]></translation>
+        <translation language="es"><![CDATA[Estos son los mensajes de todos los visitantes que no encontraro útil esta respuesta.]]></translation>
+        <translation language="hu"><![CDATA[Ez az összes üzenet a látogatóktól, akik nem találták hasznosnak a választ.]]></translation>
+        <translation language="sv"><![CDATA[Dessa är alla meddelanden från besökare som inte ansåg detta svar användbart.]]></translation>
+        <translation language="el"><![CDATA[Αυτά είναι τα μηνύματα από επισκέπτες που δεν βρήκαν χρήσιμη αυτή την απάντηση.]]></translation>
+        <translation language="zh"><![CDATA[全部未被访客视为有用的消息。]]></translation>
+      </item>
+      <item type="message" name="HelpSpamFilter">
+        <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in feedback en gebruikersvragen te vermijden.]]></translation>
+        <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam in feedback and user questions.]]></translation>
+        <translation language="es"><![CDATA[Activar el filtro anti-spam incorporado (Akismet) para ayudar a evitar el spam en feedback y preguntas de usuarios.]]></translation>
+        <translation language="de"><![CDATA[Aktiviere den eingebauten Spamfilter (Akismet) um Spam in den Benutzerfragen und im Feedback zu vermeiden.]]></translation>
+        <translation language="hu"><![CDATA[A beépített spamszűrő (Akismet) engedélyezése, hogy segítse elkerülni a spam visszajelzést és felhasználói kérdést.]]></translation>
+        <translation language="sv"><![CDATA[Aktivera inbyggda spamfiltret (Akismet) för att undvika skräp i återkopplingar och användarfrågor.]]></translation>
+        <translation language="el"><![CDATA[Ενεργοποίησε το ενσωματωμένο φίλτρο ανεπιθύμητης αλληλογραφίας (spam) (Akismet) γιά να μην έχετε ανεπιθύμητα μηνύματα στις ερωτήσεις και τις γνώμες των χρηστών.]]></translation>
+        <translation language="zh"><![CDATA[允许内置垃圾过滤器（Akismet）来帮助避免在回复和用户提问中的垃圾信息。]]></translation>
+      </item>
+      <item type="message" name="NoCategories">
+        <translation language="nl"><![CDATA[Er zijn nog geen categorieën]]></translation>
+        <translation language="en"><![CDATA[There are no categories yet]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még kategóriák.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora categorie.]]></translation>
+        <translation language="ru"><![CDATA[Нет категорий.]]></translation>
+        <translation language="zh"><![CDATA[尚无分类。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Kategorien.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de catégories.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay categorías]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga kategorier än]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχει ακόμη καμμία κατηγορία.]]></translation>
+      </item>
+      <item type="message" name="NoFeedbackItems">
+        <translation language="nl"><![CDATA[Er zijn momenteel geen feedback berichten.]]></translation>
+        <translation language="en"><![CDATA[There are no feedback comments at the moment.]]></translation>
+        <translation language="de"><![CDATA[Es gibt im Moment noch keine Feedback-Kommentare.]]></translation>
+        <translation language="es"><![CDATA[No hay comentarios de retroalimentación por el momento.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még visszajelzés hozzászólások jelen pillanatban.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga återkoppla kommentarer just nu.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν σχόλια με γνώμες γιά την ώρα.]]></translation>
+        <translation language="zh"><![CDATA[当下还没有回复评论。]]></translation>
+      </item>
+      <item type="message" name="NoQuestionInCategory">
+        <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
+        <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+        <translation language="hu"><![CDATA[Nincs kérdés ebben a kategóriában.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono domande in questa categoria.]]></translation>
+        <translation language="ru"><![CDATA[Нет вопросов в этой категории.]]></translation>
+        <translation language="zh"><![CDATA[此分类中没有问题。]]></translation>
+        <translation language="de"><![CDATA[Es gibt keine Fragen in dieser Kategorie.]]></translation>
+        <translation language="fr"><![CDATA[Il n'y a pas encore de questions dans cette catégorie.]]></translation>
+        <translation language="es"><![CDATA[No hay preguntas en esta categoría.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga frågor i detta kategori.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ερωτήσεις σ' αυτή την κατηγορία.]]></translation>
+      </item>
+      <item type="message" name="NumMostReadItems">
+        <translation language="nl"><![CDATA[Aantal meest gelezen items]]></translation>
+        <translation language="en"><![CDATA[Number of most read items]]></translation>
+        <translation language="es"><![CDATA[Número de objetos más leídos]]></translation>
+        <translation language="de"><![CDATA[Anzahl der meistgelesenen Fragen]]></translation>
+        <translation language="hu"><![CDATA[Legolvasottabb elemek száma]]></translation>
+        <translation language="sv"><![CDATA[Antal mest lästa objekt]]></translation>
+        <translation language="el"><![CDATA[Πλήθος των πλέον αναγνωσμένων θεμάτων.]]></translation>
+        <translation language="zh"><![CDATA[最多人阅读的条目数量]]></translation>
+      </item>
+      <item type="message" name="NumRelatedItems">
+        <translation language="nl"><![CDATA[Aantal gerelateerde items]]></translation>
+        <translation language="en"><![CDATA[Number of related items]]></translation>
+        <translation language="es"><![CDATA[Número de objetos relacionados]]></translation>
+        <translation language="de"><![CDATA[Anzahl an verwandten Fragen]]></translation>
+        <translation language="hu"><![CDATA[Kapcsolódó elemek száma]]></translation>
+        <translation language="sv"><![CDATA[Antal relaterade objekt]]></translation>
+        <translation language="el"><![CDATA[Πλήθος σχετικών θεμάτων.]]></translation>
+        <translation language="zh"><![CDATA[相关条目数量]]></translation>
+      </item>
+      <item type="message" name="Processed">
+        <translation language="nl"><![CDATA[De feedback is verwerkt.]]></translation>
+        <translation language="en"><![CDATA[The feedback is processed.]]></translation>
+        <translation language="es"><![CDATA[La retroalimentación es procesada.]]></translation>
+        <translation language="de"><![CDATA[Das Feedback wird verarbeitet.]]></translation>
+        <translation language="hu"><![CDATA[A visszajelzés feldolgozva.]]></translation>
+        <translation language="sv"><![CDATA[återkopplingen är processad.]]></translation>
+        <translation language="el"><![CDATA[Επεξεργασία της γνώμης σας.]]></translation>
+        <translation language="zh"><![CDATA[回复正在被处理。]]></translation>
+      </item>
+    </Faq>
+  </Backend>
+  <Frontend>
+    <Core>
+      <item type="message" name="OtherQuestions">
+        <translation language="nl"><![CDATA[Andere vragen]]></translation>
+        <translation language="en"><![CDATA[Other questions]]></translation>
+      </item>
+    </Core>
+  </Frontend>
+</locale>

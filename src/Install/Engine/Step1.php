@@ -1,0 +1,77 @@
+<?php
+
+namespace Install\Engine;
+
+/*
+ * This file is part of Fork CMS.
+ *
+ * For the full copyright and license information, please view the license
+ * file that was distributed with this source code.
+ */
+
+/**
+ * Step 1 of the Fork installer
+ *
+ * @author Davy Hellemans <davy@netlash.com>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Matthias Mullie <forkcms@mullie.eu>
+ */
+class Step1 extends Step
+{
+    /**
+     * Execute this step
+     */
+    public function execute()
+    {
+        // init vars
+        $variables = array();
+
+        // head
+        $variables['head'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Head.tpl');
+        $variables['foot'] = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Foot.tpl');
+
+        // this should be the path
+        $path = realpath(dirname(__FILE__) . '/../../../library');
+        $spoonFolder = realpath($path . '/../vendor/spoon/library');
+
+        // just one found? add it into the session
+        if (file_exists($spoonFolder . '/spoon/spoon.php')) {
+            $_SESSION['path_library'] = $path;
+
+            // redirect to step 2
+            header('Location: install?step=2');
+            exit;
+        }
+
+        // template contents
+        $tpl = file_get_contents(dirname(__FILE__) . '/../Layout/Templates/Step1.tpl');
+
+        // build the search & replace array
+        $search = array_keys($variables);
+        $replace = array_values($variables);
+
+        // loop search values
+        foreach ($search as $key => $value) {
+            $search[$key] = '{$' . $value . '}';
+        }
+
+        // build output
+        $output = str_replace($search, $replace, $tpl);
+
+        // show output
+        echo $output;
+
+        // stop the script
+        exit;
+    }
+
+    /**
+     * This step is always allowed.
+     *
+     * @return bool
+     */
+    public static function isAllowed()
+    {
+        return true;
+    }
+}
