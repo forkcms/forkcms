@@ -51,7 +51,7 @@ if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
 }
 
-$kernel = new AppKernel();
+$kernel = new AppKernel('prod');
 $response = $kernel->handle($request);
 if ($response->getCharset() === null && $kernel->getContainer() != null) {
     $response->setCharset(
