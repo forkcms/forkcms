@@ -13,7 +13,9 @@
         "symfony/symfony": "2.3.*",
         "spoon/library": "1.3.*",
         "symfony/monolog-bundle": "2.3.*",
-        "behat/transliterator": "~1.0"
+        "behat/transliterator": "~1.0",
+        "sumocoders/sumo-fork-class": "dev-master",
+        "flippa-official/errbit-php": "@dev"
     },
     "support": {
         "irc": "irc://irc.freenode.org/forkcms",

@@ -1,0 +1,60 @@
+/* Headings */
+
+h1,h2,h3,h4,h5,h6 {
+  @if ($boldFontFamily) {
+    font-weight: 100;
+    font-family: $boldFontFamily;
+  }
+  @else {
+    font-weight: 500;
+  }
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h5 {
+
+}
+
+h6 {
+
+}
+
+
+/* Links */
+
+a {
+  color: $linkColor;
+  border-bottom: 1px solid $linkColor;
+  @include transition(all 150ms);
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $linkColorHover;
+    border-bottom-color: $linkColorHover;
+    text-decoration: none;
+  }
+
+  &:focus {
+
+  }
+
+  &:active {
+    text-decoration: none;
+  }
+}

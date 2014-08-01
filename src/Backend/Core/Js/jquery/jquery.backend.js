@@ -709,6 +709,7 @@
 				// get chunks
 				var chunks = $('#' + id).val().split(options.splitChar);
 				var elements = [];
+        var value;
 
 				// loop elements and trim them from spaces
 				for(var i in chunks)
@@ -1008,6 +1009,7 @@
 				// get chunks
 				var chunks = $('#' + id).val().split(options.splitChar);
 				var elements = [];
+        var value;
 
 				// loop elements and trim them from spaces
 				for(var i in chunks)
@@ -1244,6 +1246,7 @@
 				// get chunks
 				var chunks = $('#' + id).val();
 				var elements = [];
+        var value;
 
 				// loop elements and trim them from spaces
 				for(var i in chunks)
@@ -1549,6 +1552,7 @@
 				// get chunks
 				var chunks = $('#' + id).val().split(options.splitChar);
 				var elements = [];
+        var value;
 
 				// loop elements and trim them from spaces
 				for(var i in chunks)

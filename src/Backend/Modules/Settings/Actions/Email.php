@@ -60,13 +60,13 @@ class Email extends BackendBaseActionIndex
         // email settings
         $mailerFrom = BackendModel::getModuleSetting('Core', 'mailer_from');
         $this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
-        $this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
+        $this->frm->addTrimmedText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
         $mailerTo = BackendModel::getModuleSetting('Core', 'mailer_to');
         $this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
-        $this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
+        $this->frm->addTrimmedText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
         $mailerReplyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
         $this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
-        $this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
+        $this->frm->addTrimmedText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
 
 
         if ($this->isGod) {

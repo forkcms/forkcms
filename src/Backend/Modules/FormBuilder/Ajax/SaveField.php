@@ -49,6 +49,12 @@ class SaveField extends BackendBaseAJAXAction
         // special field for textbox: reply to
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
 
+        # Special field for textbox. Using filter_input instead of SpoonFilter, so we can see if this var is not posted
+        $mailCopyTo = filter_input(INPUT_POST, 'mail_copy_to', FILTER_SANITIZE_STRING);
+        if ($mailCopyTo !== null) {
+            $mailCopyTo = ($mailCopyTo === 'Y' ? 'Y' : 'N');
+        }
+
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
             $this->output(self::BAD_REQUEST, null, 'form does not exist');
@@ -81,6 +87,9 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($validation != '' && $errorMessage == '') {
                             $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($mailCopyTo === 'Y' && $validation !== 'email') {
+                            $errors['mail_copy_to'] = BL::getError('ValidationMustBeEmail');
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea
@@ -169,6 +178,9 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($defaultValues != '') {
                             $settings['default_values'] = $defaultValues;
+                        }
+                        if ($mailCopyTo !== null) {
+                            $settings['mailCopyTo'] = $mailCopyTo;
                         }
 
                         // reply-to, only for textboxes
