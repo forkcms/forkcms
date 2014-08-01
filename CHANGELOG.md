@@ -1,5 +1,9 @@
 3.7.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Analytics: implement event tracking for universal analytics
+
 Bugfixes:
 
 * Installer: make sure our database is initalized as utf8
