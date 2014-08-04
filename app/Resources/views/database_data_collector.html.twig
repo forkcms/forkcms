@@ -32,27 +32,34 @@
             <em>No queries.</em>
         </p>
     {% else %}
-        <table class="inline">
-            <thead>
-                <tr>
-                    <th scope="col">Queries</th>
-                </tr>
-            </thead>
+        <table class="alt">
             <tbody>
                 {% for i, query in collector.queries %}
-                    <tr>
-                        <td>
-                            <p>
-                                <pre>{{ query.query }}</pre>
-                            </p>
-                            <p>
-                                Parameters:<br/>
-                                <pre>{{ dump(query.parameters) }}</pre>
-                            </p>
-                        </td>
+                    <tr class="">
+                        <{{ cycle(['th', 'td'], i) }}>
+                            {{ query.query_formatted | raw }}<br/>
+                            <small>
+                                <strong>Parameters:</strong>
+                                [
+                                    {% for parameter in query.parameters %}
+                                        {{ parameter }}{% if not loop.last %},{% endif %}
+                                    {% endfor %}
+                                ]
+                            </small>
+                        </{{ cycle(['th', 'td'], i) }}>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% endif %}
+
+    <style>
+        th small {
+            font-weight: normal;
+        }
+        th pre {
+            background: none !important;
+            font-weight: normal;
+        }
+    </style>
 {% endblock %}

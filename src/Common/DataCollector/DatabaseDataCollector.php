@@ -21,6 +21,10 @@ class DatabaseDataCollector extends DataCollector
             'queries'    => $this->database->getQueries(),
             'queryCount' => count($this->database->getQueries()),
         );
+
+        foreach ($this->data['queries'] as &$query) {
+            $query['query_formatted'] = \SqlFormatter::format($query['query']);
+        }
     }
 
     public function getQueryCount()
