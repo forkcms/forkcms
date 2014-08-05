@@ -1,3 +1,10 @@
+3.7.4 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Authentication: avoid unnecessary dabase calls for unauthenticated users.
+
+
 3.7.3 (2014-08-08)
 --
 Bugfixes:
