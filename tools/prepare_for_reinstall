@@ -88,6 +88,10 @@ main() {
     clear_file_caches
     remove_generated_configurations
     clear_database $db_host $db_port $db_name $db_user $db_pass
+
+    ${SCRIPT_PATH}/../app/console cache:clear
+    ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+
     echo 'All done! Ready for reinstall.'
     return 1;
 }
