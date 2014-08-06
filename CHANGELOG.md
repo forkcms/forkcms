@@ -1,3 +1,10 @@
+3.7.4 (2014-xx-xx)
+--
+Bugfixes:
+
+* Core: event subscriptions did not get fired in the frontend.
+
+
 3.7.3 (2014-08-08)
 --
 Bugfixes:

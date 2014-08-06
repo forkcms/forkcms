@@ -204,7 +204,7 @@ Before
 
 After
 
-    fork.dev/src/Backend/Cronjob.php?module=Core&action=SendQueuedEmails
+    fork.dev/backend/cronjob?module=Core&action=SendQueuedEmails
 
 ## API isAuthorized() instead of authorize()
 
