@@ -10339,7 +10339,7 @@
         <translation language="tr"><![CDATA[etiket]]></translation>
       </item>
       <item type="message" name="LoginFormForgotPasswordSuccess">
-        <translation language="nl"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
+        <translation language="nl"><![CDATA[<strong>Mail verzonden.</strong> Bekijk je postvak in!]]></translation>
         <translation language="en"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
         <translation language="hu"><![CDATA[<strong>Üzenet elküldve.</strong> Kérlek ellenőrizd a postaládádat.]]></translation>
         <translation language="it"><![CDATA[<strong>Email inviata.</strong> Per favore controlla la tua casella di posta!]]></translation>
