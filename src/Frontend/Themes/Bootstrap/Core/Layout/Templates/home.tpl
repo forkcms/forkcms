@@ -1,9 +1,9 @@
 {* Write your section-titles likes this when you are making a one-pager: <h2><a name="usefulName" href="#" class="nonVisibleAnchor"></a></h2> *}
 
-{include:core/layout/templates/head.tpl}
+{include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	{include:core/layout/templates/notifications.tpl}
+	{include:Core/Layout/Templates/Notifications.tpl}
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="navbar-header">
@@ -22,7 +22,7 @@
             {iteration:positionTop}
                 {$positionTop.blockContent}
             {/iteration:positionTop}
-            {include:core/layout/templates/languages.tpl}
+            {include:Core/Layout/Templates/Languages.tpl}
         </div>
     </nav>
 
@@ -70,6 +70,6 @@
             {/iteration:positionMain}
         </div>
 	</section>
-    {include:core/layout/templates/footer.tpl}
+    {include:Core/Layout/Templates/Footer.tpl}
 </body>
 </html>

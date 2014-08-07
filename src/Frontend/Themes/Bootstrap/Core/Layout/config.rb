@@ -6,7 +6,7 @@
 require 'compass_sumo'
 
 # Set this to the root of your project when deployed:
-http_path = "/src/Frontend/Themes/bootstrap/Core/Layout"
+http_path = "/src/Frontend/Themes/Bootstrap/Core/Layout"
 css_dir = "Css"
 sass_dir = "Sass"
 images_dir = "Images"
