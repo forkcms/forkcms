@@ -1,5 +1,9 @@
 3.7.4 (2014-xx-xx)
 --
+Improvements:
+
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
+
 Bugfixes:
 
 * Core: event subscriptions did not get fired in the frontend.
