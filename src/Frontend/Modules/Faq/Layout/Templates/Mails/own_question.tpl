@@ -1,4 +1,4 @@
-{include:/Core/Layout/Templates/Mails/HeadPart.tpl}
+{include:/Core/Layout/Templates/Mails/Header.tpl}
 
 <h2>Fork CMS: {$msgFaqOwnQuestionSubject|sprintf:'{$name}'}</h2>
 <h3>{$lblSenderInformation|ucfirst}</h3>

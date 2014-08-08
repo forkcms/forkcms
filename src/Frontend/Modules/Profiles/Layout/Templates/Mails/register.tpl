@@ -1,4 +1,4 @@
-{include:/Core/Layout/Templates/Mails/HeadPart.tpl}
+{include:/Core/Layout/Templates/Mails/Header.tpl}
 
 <h2>{$msgRegisterSubject}</h2>
 <hr/><br/>

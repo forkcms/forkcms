@@ -1,4 +1,4 @@
-{include:/Core/Layout/Templates/Mails/HeadPart.tpl}
+{include:/Core/Layout/Templates/Mails/Header.tpl}
 
 <h2>{$SITE_TITLE}: {$msgFormBuilderSubject|sprintf:{$name}}</h2>
 <hr/>
