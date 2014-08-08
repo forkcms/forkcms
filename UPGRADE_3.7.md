@@ -205,6 +205,16 @@ Before
 After
 
     fork.dev/backend/cronjob?module=Core&action=SendQueuedEmails
+    
+* Setting a url callback now use namespaces
+
+Before
+
+    $this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+
+After
+
+    $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
 
 ## API isAuthorized() instead of authorize()
 
