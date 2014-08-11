@@ -73,7 +73,8 @@ class Installer extends ModuleInstaller
                  'profiles/add',
                  'profiles/edit',
                  'profiles/add_profile_group',
-                 'profiles/edit_profile_group'
+                 'profiles/edit_profile_group',
+                 'profiles/import'
             )
         );
         $this->setNavigation(
