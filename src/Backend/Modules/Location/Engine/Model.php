@@ -151,7 +151,6 @@ class Model
         // define database
         $db = BackendModel::getContainer()->get('database');
 
-        // define dates
         $item['created_on'] = BackendModel::getUTCDate();
         $item['edited_on'] = BackendModel::getUTCDate();
 
