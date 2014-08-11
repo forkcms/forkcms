@@ -39,7 +39,6 @@ class Model
         // get item
         $item = self::get($id);
 
-        // delete extra by id
         BackendModel::deleteExtraById($item['extra_id']);
 
         // delete location and its settings
