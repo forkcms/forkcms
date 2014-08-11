@@ -484,8 +484,8 @@ class Model
      */
     public static function insert(array $values)
     {
-        // define new id
-        $newId = BackendModel::getContainer()->get('database')->insert('forms', $values);
+        // define form id
+        $formId = BackendModel::getContainer()->get('database')->insert('forms', $values);
 
         // insert extra
         BackendModel::insertExtra(
@@ -494,16 +494,16 @@ class Model
             'Form',
             'FormBuilder',
             array(
-                'id' => $newId,
+                'id' => $formId,
                 'extra_label' => $values['name'],
                 'language' => $values['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $newId
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId
             ),
             false,
-            '400' . $newId
+            '400' . $formId
         );
 
-        return $newId;
+        return $formId;
     }
 
     /**
