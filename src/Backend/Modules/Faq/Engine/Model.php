@@ -66,10 +66,7 @@ class Model
             $db->delete('faq_categories', 'id = ?', array((int) $id));
             $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-            // delete extra and pages_blocks
             BackendModel::deleteExtraById($item['extra_id']);
-
-            // invalidate the cache for the faq
             BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
