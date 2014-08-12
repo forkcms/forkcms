@@ -10,6 +10,19 @@
 		</div>
 </div>
 
+{option:hasMultipleSites}
+	{option:isMainSite}
+		<div class="generalMessage infoMessage content">
+			{$msgEditingMainSiteLocale}
+		</div>
+	{/option:isMainSite}
+	{option:!isMainSite}
+		<div class="generalMessage infoMessage content">
+			{$msgEditingSpecificLocale}
+		</div>
+	{/option:!isMainSite}
+{/option:hasMultipleSites}
+
 <div class="dataGridHolder">
 	{form:filter}
 		<div class="dataFilter">

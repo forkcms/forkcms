@@ -4,6 +4,7 @@
  * @author	Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  * @author	Thomas Deceuninck <thomas@fronto.be>
+ * @author	Wouter Sioen <wouter@wijs.be>
  */
 jsBackend.groups =
 {
@@ -14,9 +15,9 @@ jsBackend.groups =
 		$hide = $('.hide');
 		$container = $('.container');
 		$containerLabel = $('.container span label');
-		$moduleDataGridBody = $('.module .datagridHolder .dataGrid tbody');
+		$moduleDataGridBody = $('.module .datagridHolder');
 		$groupHolderDataGridBody = $('.groupHolder .dataGrid tbody');
-		$dataGridTd = $('.dataGrid tbody tr td');
+		$subItemCheckbox = $('.datagridHolder input');
 		$selectAll = $('.selectAll');
 
 		$hide.each(jsBackend.groups.hide);
@@ -24,7 +25,7 @@ jsBackend.groups =
 		$containerLabel.each(jsBackend.groups.mouseHandler);
 		$moduleDataGridBody.each(jsBackend.groups.selectionPermissions);
 		$groupHolderDataGridBody.each(jsBackend.groups.selectionWidgets)
-		$dataGridTd.click(jsBackend.groups.selectHandler);
+		$subItemCheckbox.on('change', jsBackend.groups.selectHandler);
 		$selectAll.click(jsBackend.groups.selectAll);
 	},
 
@@ -83,7 +84,9 @@ jsBackend.groups =
 		$this = $(this);
 
 		// editing permissions? check permissions
-		if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
+		if($this.closest('.module').html() !== null){
+			$this.closest('.datagridHolder').each(jsBackend.groups.selectionPermissions);
+		}
 
 		// editing widgets? check widgets
 		else $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionWidgets);
@@ -98,7 +101,7 @@ jsBackend.groups =
 		$this = $(this);
 
 		// loop all actions and check if they're checked
-		$this.find('tr td input').each(function()
+		$this.find('input').each(function()
 		{
 			// if not checked set false
 			if(!$(this).prop('checked')) allChecked = false;
@@ -111,24 +114,24 @@ jsBackend.groups =
 		if(!allChecked && !noneChecked)
 		{
 			// unset checked and set indeterminate
-			$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
-			$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = true;
+			$this.closest('.module').find('input').get(0).checked = false;
+			$this.closest('.module').find('input').get(0).indeterminate = true;
 		}
 
 		// if all actions are checked, check massaction checkbox
 		if(allChecked)
 		{
 			// unset indeterminate and set checked
-			$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
-			$this.parent('table').parent('div').parent('li').find('input').get(0).checked = true;
+			$this.closest('.module').find('input').get(0).indeterminate = false;
+			$this.closest('.module').find('input').get(0).checked = true;
 		}
 
 		// nothing is checked?
 		if(noneChecked)
 		{
 			// unset indeterminate and checked
-			$this.parent('table').parent('div').parent('li').find('input').get(0).indeterminate = false;
-			$this.parent('table').parent('div').parent('li').find('input').get(0).checked = false;
+			$this.closest('.module').find('input').get(0).indeterminate = false;
+			$this.closest('.module').find('input').get(0).checked = false;
 		}
 	},
 
@@ -178,7 +181,7 @@ jsBackend.groups =
 		if($this.prop('checked'))
 		{
 			// loop through rows
-			$this.next('a').next('div').find('table tbody tr td input').each(function()
+			$this.next('a').next('div').find('input').each(function()
 			{
 				// check boxes
 				$(this).attr('checked', 'checked').parents('tr').addClass('selected');
@@ -189,7 +192,7 @@ jsBackend.groups =
 		else
 		{
 			// loop through rows
-			$this.next('a').next('div').find('table tbody tr td input').each(function()
+			$this.next('a').next('div').find('input').each(function()
 			{
 				// uncheck boxes
 				$(this).removeAttr('checked').parents('tr').removeClass('selected');

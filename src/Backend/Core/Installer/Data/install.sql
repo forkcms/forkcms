@@ -543,6 +543,16 @@ CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
+CREATE TABLE IF NOT EXISTS `groups_rights_languages` (
+  `id` int(11) NOT NULL auto_increment,
+  `group_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
+  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
  `id` int(11) NOT NULL auto_increment,
  `group_id` int(11) NOT NULL,

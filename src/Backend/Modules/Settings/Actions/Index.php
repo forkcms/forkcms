@@ -72,22 +72,23 @@ class Index extends BackendBaseActionIndex
 
         // create form
         $this->frm = new BackendForm('settingsIndex');
+        $siteId = $this->get('current_site')->getId();
 
         // general settings
         $this->frm->addText(
             'site_title',
-            BackendModel::getModuleSetting('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            BackendModel::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, BL::getWorkingLanguage())
         );
         $this->frm->addTextarea(
             'site_html_header',
-            BackendModel::getModuleSetting('Core', 'site_html_header', null),
+            BackendModel::getModuleSetting('Core', 'site_html_header', null, null, $siteId),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
-            BackendModel::getModuleSetting('Core', 'site_html_footer', null),
+            BackendModel::getModuleSetting('Core', 'site_html_footer', null, null, $siteId),
             'textarea code',
             'textareaError code',
             true
@@ -342,21 +343,27 @@ class Index extends BackendBaseActionIndex
 
             // no errors ?
             if ($this->frm->isCorrect()) {
+                $siteId = $this->get('current_site')->getId();
                 // general settings
                 BackendModel::setModuleSetting(
                     'Core',
-                    'site_title_' . BL::getWorkingLanguage(),
-                    $this->frm->getField('site_title')->getValue()
+                    'site_title',
+                    $this->frm->getField('site_title')->getValue(),
+                    BL::getWorkingLanguage()
                 );
                 BackendModel::setModuleSetting(
                     'Core',
                     'site_html_header',
-                    $this->frm->getField('site_html_header')->getValue()
+                    $this->frm->getField('site_html_header')->getValue(),
+                    null,
+                    $siteId
                 );
                 BackendModel::setModuleSetting(
                     'Core',
                     'site_html_footer',
-                    $this->frm->getField('site_html_footer')->getValue()
+                    $this->frm->getField('site_html_footer')->getValue(),
+                    null,
+                    $siteId
                 );
 
                 // facebook settings

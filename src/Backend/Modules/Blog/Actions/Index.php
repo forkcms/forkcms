@@ -91,7 +91,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY,
-                array($this->categoryId, 'active', BL::getWorkingLanguage())
+                array(
+                    $this->categoryId,
+                    'active',
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                )
             );
 
             // set the URL
@@ -100,7 +105,11 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgPosts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE,
-                array('active', BL::getWorkingLanguage())
+                array(
+                    'active',
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                )
             );
         }
 
@@ -171,7 +180,8 @@ class Index extends BackendBaseActionIndex
                     $this->categoryId,
                     'draft',
                     BackendAuthentication::getUser()->getUserId(),
-                    BL::getWorkingLanguage()
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
                 )
             );
 
@@ -181,7 +191,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgDrafts = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS,
-                array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+                array(
+                    'draft',
+                    BackendAuthentication::getUser()->getUserId(),
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                )
             );
         }
 
@@ -245,7 +260,13 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY,
-                array($this->categoryId, 'active', BL::getWorkingLanguage(), 4)
+                array(
+                    $this->categoryId,
+                    'active',
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                    4,
+                )
             );
 
             // set the URL
@@ -254,7 +275,12 @@ class Index extends BackendBaseActionIndex
             // create datagrid
             $this->dgRecent = new BackendDataGridDB(
                 BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT,
-                array('active', BL::getWorkingLanguage(), 4)
+                array(
+                    'active',
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId(),
+                    4,
+                )
             );
         }
 

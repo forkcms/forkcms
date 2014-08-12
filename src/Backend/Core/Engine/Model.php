@@ -536,6 +536,12 @@ class Model extends \BaseModel
 
         // create an array with an equal amount of questionmarks as ids provided
         $extraIdPlaceHolders = array_fill(0, count($ids), '?');
+        return (array) $db->getRecords(
+            'SELECT i.*
+             FROM modules_extras AS i
+             WHERE i.id IN (' . implode(', ', $extraIdPlaceHolders) . ')',
+            $ids
+        );
 
         // get extras
         return (array) $db->getRecords(
@@ -565,8 +571,8 @@ class Model extends \BaseModel
 
         // init query
         $query = 'SELECT i.id, i.data
-                 FROM modules_extras AS i
-                 WHERE i.module = ? AND i.data != ?';
+            FROM modules_extras AS i
+            WHERE i.module = ? AND i.data != ?';
 
         // init parameters
         $parameters = array($module, 'NULL');
@@ -600,24 +606,27 @@ class Model extends \BaseModel
      * Get the page-keys
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int $siteId The siteId to use, if not provided we will use the working site id.
      * @return array
      */
-    public static function getKeys($language = null)
+    public static function getKeys($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getid();
 
         // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
+        if (!isset(self::$keys[$siteId][$language]) || empty(self::$keys[$siteId][$language])) {
+            $file = FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '_' . $siteId . '.php';
+            if (!is_file($file)) {
+                BackendPagesModel::buildCache($language, $siteId);
             }
 
             $keys = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
+            require $file;
+            self::$keys[$siteId][$language] = $keys;
         }
 
-        return self::$keys[$language];
+        return self::$keys[$siteId][$language];
     }
 
     /**
@@ -662,21 +671,31 @@ class Model extends \BaseModel
      * Get a certain module-setting
      *
      * @param string $module       The module in which the setting is stored.
-     * @param string $key          The name of the setting.
+     * @param string $name         The name of the setting.
      * @param mixed  $defaultValue The value to return if the setting isn't present.
+     * @param string $language     The language to fetch the setting for
+     * @param int    $siteId       The id of the site to fetch a setting for
      * @return mixed
      */
-    public static function getModuleSetting($module, $key, $defaultValue = null)
+    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null, $siteId = null)
     {
         // redefine
         $module = (string) $module;
-        $key = (string) $key;
+        $name = (string) $name;
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
+        }
 
         // define settings
         $settings = self::getModuleSettings($module);
 
         // return if exists, otherwise return default value
-        return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
+        return (isset($settings[$name])) ? $settings[$name] : $defaultValue;
     }
 
     /**
@@ -695,7 +714,7 @@ class Model extends \BaseModel
             // get all settings
             $moduleSettings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
+                FROM modules_settings AS ms'
             );
 
             // loop and store settings in the cache
@@ -749,25 +768,28 @@ class Model extends \BaseModel
      * Get the navigation-items
      *
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int $siteId The site id to fetch navigation for
      * @return array
      */
-    public static function getNavigation($language = null)
+    public static function getNavigation($language = null, $siteId = null)
     {
+        // @note: this looks like a possible bug. FRONTEND_NAVIGATION is not defined in the backend
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
+        if (!isset(self::$navigation[$siteId][$language]) || empty(self::$navigation[$siteId][$language])) {
+            $file = FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '_' . $siteId . '.php';
+            if (!is_file($file)) {
                 BackendPagesModel::buildCache($language);
             }
 
             $navigation = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            self::$navigation[$language] = $navigation;
+            require $file;
+            self::$navigation[$siteId][$language] = $navigation;
         }
 
-        return self::$navigation[$language];
+        return self::$navigation[$siteId][$language];
     }
 
     /**
@@ -871,18 +893,20 @@ class Model extends \BaseModel
      *
      * @param int    $pageId   The id of the page to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int    $siteId The siteId to use
      * @return string
      */
-    public static function getURL($pageId, $language = null)
+    public static function getURL($pageId, $language = null, $siteId = null)
     {
         $pageId = (int) $pageId;
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         // init URL
         $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
         // get the menuItems
-        $keys = self::getKeys($language);
+        $keys = self::getKeys($language, $siteId);
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
@@ -901,16 +925,18 @@ class Model extends \BaseModel
      * @param string $module   The module to get the URL for.
      * @param string $action   The action to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param int    $siteId The siteId to use
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, $siteId = null)
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : self::get('current_site')->getId();
 
         $pageIdForURL = null;
-        $navigation = self::getNavigation($language);
+        $navigation = self::getNavigation($language, $siteId);
 
         // loop types
         foreach ($navigation as $level) {
@@ -1019,13 +1045,13 @@ class Model extends \BaseModel
         $fs = new Filesystem();
         foreach (array_keys($fileSizes) as $sizeDir) {
             $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                        (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
+                (empty($subDirectory) ? '/' : $subDirectory . '/') . $sizeDir . '/' . $filename;
             if (is_file($fullPath)) {
                 $fs->remove($fullPath);
             }
         }
         $fullPath = FRONTEND_FILES_PATH . '/' . $module .
-                    (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
+            (empty($subDirectory) ? '/' : $subDirectory . '/') . 'source/' . $filename;
         if (is_file($fullPath)) {
             $fs->remove($fullPath);
         }
@@ -1036,30 +1062,23 @@ class Model extends \BaseModel
      *
      * @param string $module   A specific module to clear the cache for.
      * @param string $language The language to use.
+     * @param int $siteId The ID of the site to clear the cache for.
      */
-    public static function invalidateFrontendCache($module = null, $language = null)
+    public static function invalidateFrontendCache($module = null, $language = null, $siteId = null)
     {
         $module = ($module !== null) ? (string) $module : null;
         $language = ($language !== null) ? (string) $language : null;
+        $siteId = ($siteId !== null) ? (int) $siteId : null;
 
         // get cache path
         $path = FRONTEND_CACHE_PATH . '/CachedTemplates';
 
         if (is_dir($path)) {
-            // build regular expression
-            if ($module !== null) {
-                if ($language === null) {
-                    $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
-                }
-            } else {
-                if ($language === null) {
-                    $regexp = '/(.*)_cache\.tpl/i';
-                } else {
-                    $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
-                }
-            }
+            $regexp = self::buildInvalidateCacheRegex(
+                $module,
+                $language,
+                $siteId
+            );
 
             $finder = new Finder();
             $fs = new Filesystem();
@@ -1067,6 +1086,40 @@ class Model extends \BaseModel
                 $fs->remove($file->getRealPath());
             }
         }
+    }
+
+    /**
+     * @param string $module A specific module to clear the cache for.
+     * @param string $language The language to use.
+     * @param int $siteId The ID of the site to clear the cache for.
+     * @return string The regular expression to match cache files.
+     * @internal There is a test for this:
+     *           tests/InvalidateCacheRegexTest.php
+     */
+    public static function buildInvalidateCacheRegex($module, $language, $siteId)
+    {
+        $params = array($siteId, $language, $module);
+        $regex = '/';
+        for ($i = 0; $i < count($params); $i++) {
+            $param = $params[$i];
+            $isFirst = ($i == 0);
+            $previousIsNotNull = ($i != 0 && $params[$i - 1] !== null);
+            if ($param === null) {
+                if (($previousIsNotNull) || $isFirst) {
+                    $regex .= '(.*)';
+                }
+            } else {
+                if ($previousIsNotNull) {
+                    $regex .= '_' . $param;
+                } else {
+                    $regex .= $param;
+                }
+            }
+        }
+        $regexEnd = '(.*)_cache\.tpl/i';
+
+        // Remove too much wildcards, not needed.
+        return rtrim($regex, '(.*)') . $regexEnd;
     }
 
     /**
@@ -1091,7 +1144,7 @@ class Model extends \BaseModel
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = self::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, Language::getWorkingLanguage());
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;
@@ -1192,26 +1245,36 @@ class Model extends \BaseModel
     /**
      * Saves a module-setting into the DB and the cached array
      *
-     * @param string $module The module to set the setting for.
-     * @param string $key    The name of the setting.
-     * @param string $value  The value to store.
+     * @param string $module   The module to set the setting for.
+     * @param string $name     The name of the setting.
+     * @param string $value    The value to store.
+     * @param string $language The language to store the setting for.
+     * @param int    $siteId   The siteId to store the setting for
      */
-    public static function setModuleSetting($module, $key, $value)
+    public static function setModuleSetting($module, $name, $value, $language = null, $siteId = null)
     {
         $module = (string) $module;
-        $key = (string) $key;
+        $name = (string) $name;
         $valueToStore = serialize($value);
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
+        }
 
         // store
         self::getContainer()->get('database')->execute(
             'INSERT INTO modules_settings(module, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
+            array($module, $name, $valueToStore, $valueToStore)
         );
 
         // cache it
-        self::$moduleSettings[$module][$key] = $value;
+        self::$moduleSettings[$module][$name] = $value;
     }
 
     /**
@@ -1429,9 +1492,9 @@ class Model extends \BaseModel
         // check if the subscription already exists
         $exists = (bool) $db->getVar(
             'SELECT 1
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
-             LIMIT 1',
+            FROM hooks_subscriptions AS i
+            WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
+            LIMIT 1',
             array($eventModule, $eventName, $module)
         );
 
@@ -1466,8 +1529,8 @@ class Model extends \BaseModel
         // get all items that subscribe to this event
         $subscriptions = (array) self::getContainer()->get('database')->getRecords(
             'SELECT i.module, i.callback
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ?',
+            FROM hooks_subscriptions AS i
+            WHERE i.event_module = ? AND i.event_name = ?',
             array($module, $eventName)
         );
 
@@ -1558,8 +1621,8 @@ class Model extends \BaseModel
 
         $data = (string) $db->getVar(
             'SELECT i.data
-             FROM modules_extras AS i
-             WHERE i.id = ?',
+            FROM modules_extras AS i
+            WHERE i.id = ?',
             array((int) $id)
         );
 

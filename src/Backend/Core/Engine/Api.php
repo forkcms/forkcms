@@ -208,7 +208,7 @@ class Api
                 }
 
                 // set attributes
-                $var['language']['title'] = BackendModel::getModuleSetting('Core', 'site_title_' . $language);
+                $var['language']['title'] = BackendModel::getModuleSetting('Core', 'site_title', null, $language);
                 $var['language']['url'] = SITE_URL . '/' . $language;
 
                 // add

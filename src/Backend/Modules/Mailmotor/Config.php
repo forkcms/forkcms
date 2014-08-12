@@ -163,20 +163,24 @@ class Config extends BackendBaseConfig
         $groups = BackendMailmotorModel::getDefaultGroups();
 
         // loop languages
-        foreach (BL::getActiveLanguages() as $language) {
-            // this language does not have a default group set
-            if (!isset($groups[$language])) {
-                // set group record
-                $group['name'] = 'Website (' . strtoupper($language) . ')';
-                $group['language'] = $language;
-                $group['is_default'] = 'Y';
-                $group['created_on'] = date('Y-m-d H:i:s');
+        $multisite = BackendModel::get('multisite');
+        foreach ($multisite->getSites() as $siteId => $domain) {
+            foreach ($multisite->getLanguageList($siteId, true) as $language) {
+                // this language does not have a default group set
+                if (!$this->hasDefaultGroup($groups, $language, $siteId)) {
+                    // set group record
+                    $group['name'] = $domain . ' (' . strtoupper($language) . ')';
+                    $group['language'] = $language;
+                    $group['site_id'] = $siteId;
+                    $group['is_default'] = 'Y';
+                    $group['created_on'] = date('Y-m-d H:i:s');
 
-                try {
-                    // insert the group in CampaignMonitor
-                    BackendMailmotorCMHelper::insertGroup($group);
-                } catch (\CampaignMonitorException $e) {
-                    // ignore
+                    try {
+                        // insert the group in CampaignMonitor
+                        BackendMailmotorCMHelper::insertGroup($group);
+                    } catch (\CampaignMonitorException $e) {
+                        // ignore
+                    }
                 }
             }
         }
@@ -184,6 +188,25 @@ class Config extends BackendBaseConfig
         // we have groups set, and default groups chosen
         BackendModel::setModuleSetting('Mailmotor', 'cm_groups_set', true);
         BackendModel::setModuleSetting('Mailmotor', 'cm_groups_defaults_set', true);
+    }
+
+    /**
+     * Checks if a group is available with the given language and siteId
+     *
+     * @param array  $groups The array to search in
+     * @param string $language
+     * @param int    $siteId
+     * @return bool
+     */
+    protected function hasDefaultGroup(array $groups, $language, $siteId)
+    {
+        foreach ($groups as $group) {
+            if ($group['language'] == $language && $group['site_id'] == $siteId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

@@ -319,30 +319,25 @@ class Model extends \BaseModel
      * @param string $module       The module wherefore a setting has to be retrieved.
      * @param string $name         The name of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
+     * @param string $language     The language to fetch the setting for.
+     * @param int    $siteId       The id of the site to fetch a setting for.
      * @return mixed
      */
-    public static function getModuleSetting($module, $name, $defaultValue = null)
+    public static function getModuleSetting($module, $name, $defaultValue = null, $language = null, $siteId = null)
     {
         // redefine
         $module = (string) $module;
         $name = (string) $name;
 
-        // get them all
-        if (empty(self::$moduleSettings)) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms
-                 INNER JOIN modules AS m ON ms.module = m.name'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
+        if (!empty($language)) {
+            $name .= '_' . $language;
         }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
+        }
+
+        self::loadModuleSettings();
 
         // if the setting doesn't exists, store it (it will be available from te cache)
         if (!array_key_exists($module, self::$moduleSettings) ||
@@ -365,8 +360,25 @@ class Model extends \BaseModel
     {
         $module = (string) $module;
 
+        self::loadModuleSettings();
+
+        // validate again
+        if (!isset(self::$moduleSettings[$module])) {
+            return array();
+        }
+
+        // return
+        return self::$moduleSettings[$module];
+    }
+
+    /**
+     * Fetches all module settings from the database and caches them in the
+     * $modules variable
+     */
+    public static function loadModuleSettings()
+    {
         // get them all
-        if (empty(self::$moduleSettings[$module])) {
+        if (empty(self::$moduleSettings)) {
             // fetch settings
             $settings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
@@ -380,14 +392,6 @@ class Model extends \BaseModel
                 );
             }
         }
-
-        // validate again
-        if (!isset(self::$moduleSettings[$module])) {
-            return array();
-        }
-
-        // return
-        return self::$moduleSettings[$module];
     }
 
     /**
@@ -835,15 +839,25 @@ class Model extends \BaseModel
     /**
      * Store a module setting
      *
-     * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name   The name of the setting.
-     * @param mixed  $value  The value (will be serialized so make sure the type is correct).
+     * @param string $module   The module wherefore a setting has to be stored.
+     * @param string $name     The name of the setting.
+     * @param mixed  $value    The value (will be serialized so make sure the type is correct).
+     * @param string $language The language to fetch the setting for.
+     * @param int    $siteId   The id of the site to fetch a setting for.
      */
-    public static function setModuleSetting($module, $name, $value)
+    public static function setModuleSetting($module, $name, $value, $language = null, $siteId = null)
     {
         $module = (string) $module;
         $name = (string) $name;
         $value = serialize($value);
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
+        }
 
         // store
         self::getContainer()->get('database')->execute(

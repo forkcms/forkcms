@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Common\Cookie as CommonCookie;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Multisite\Engine\Model as MultisiteModel;
 
 /**
  * This class will handle the incoming URL.
@@ -112,19 +113,32 @@ class Url extends Base\Object
         $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');
 
         // get the language, this will always be in front
+        $possibleLanguages = MultisiteModel::getWorkingLanguagesForDropdown();
         $language = '';
         if (isset($chunks[1]) && $chunks[1] != '') {
-            $language = \SpoonFilter::getValue($chunks[1], array_keys(Language::getWorkingLanguages()), '');
+            $language = \SpoonFilter::getValue(
+                $chunks[1],
+                array_keys($possibleLanguages),
+                ''
+            );
         }
 
         // no language provided?
         if ($language == '' && !$isAJAX) {
-            // remove first element
+            // remove 'private' and language from url
             array_shift($chunks);
+            array_shift($chunks);
+
+            $redirectLanguage = SITE_DEFAULT_LANGUAGE;
+            if (!array_key_exists(SITE_DEFAULT_LANGUAGE, $possibleLanguages)) {
+                reset($possibleLanguages);
+                $redirectLanguage = key($possibleLanguages);
+            }
 
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
+                '/' . NAMED_APPLICATION . '/' . $redirectLanguage . (empty($chunks) ? '' : '/') .
+                implode('/', $chunks) . $getParameters
             );
         }
 
@@ -248,12 +262,27 @@ class Url extends Base\Object
                         307
                     );
                 } else {
-                    // set the working language, this is not the interface language
-                    Language::setWorkingLanguage($language);
+                    if ($module !== 'Error'
+                        && $module !== 'Authentication'
+                        && !Authentication::isAllowedLanguage(
+                            Model::get('current_site')->getId(),
+                            $language
+                        )
+                    ) {
+                        // the user hasn't access, redirect to error page
+                        \SpoonHTTP::redirect(
+                            '/' . NAMED_APPLICATION . '/' . $language .
+                            '/error?type=language-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                            307
+                        );
+                    } else {
+                        // set the working language, this is not the interface language
+                        Language::setWorkingLanguage($language);
 
-                    $this->setLocale();
-                    $this->setModule($module);
-                    $this->setAction($action);
+                        $this->setLocale();
+                        $this->setModule($module);
+                        $this->setAction($action);
+                    }
                 }
             }
         }
@@ -291,7 +320,10 @@ class Url extends Base\Object
             $locale = $default;
         }
 
-        Language::setLocale($locale);
+        Language::setLocale(
+            $locale,
+            Model::get('current_site')->getId()
+        );
     }
 
     /**

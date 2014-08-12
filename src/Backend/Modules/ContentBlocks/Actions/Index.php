@@ -43,7 +43,11 @@ class Index extends BackendBaseActionIndex
     {
         $this->dataGrid = new BackendDataGridDB(
             BackendContentBlocksModel::QRY_BROWSE,
-            array('active', BL::getWorkingLanguage())
+            array(
+                'active',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
         $this->dataGrid->setSortingColumns(array('title'));
 

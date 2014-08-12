@@ -11,7 +11,6 @@ namespace Backend\Modules\ContentBlocks\Engine;
 
 use Symfony\Component\Finder\Finder;
 
-use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -29,89 +28,13 @@ class Model
     const QRY_BROWSE =
         'SELECT i.id, i.title, i.hidden
          FROM content_blocks AS i
-         WHERE i.status = ? AND i.language = ?';
+         WHERE i.status = ? AND i.language = ? AND i.site_id = ?';
 
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM content_blocks AS i
-         WHERE i.status = ? AND i.id = ? AND i.language = ?
+         WHERE i.status = ? AND i.id = ? AND i.language = ? AND i.site_id = ?
          ORDER BY i.edited_on DESC';
-
-    /**
-     * Copy content blocks
-     *
-     * @param string $from The language code to copy the content blocks from.
-     * @param string $to   The language code we want to copy the content blocks to.
-     * @return array
-     */
-    public static function copy($from, $to)
-    {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
-
-        // init variables
-        $contentBlockIds = $oldIds = $newIds = array();
-
-        // copy the contentblocks
-        $contentBlocks = (array) $db->getRecords(
-            'SELECT * FROM content_blocks WHERE language = ? AND status = "active"',
-            array($from)
-        );
-
-        // define counter
-        $i = 1;
-
-        // loop existing content blocks
-        foreach ($contentBlocks as $contentBlock) {
-            // define old id
-            $oldId = $contentBlock['extra_id'];
-
-            // init new block
-            $newBlock = array();
-
-            // build new block
-            $newBlock['id'] = self::getMaximumId() + $i;
-            $newBlock['language'] = $to;
-            $newBlock['created_on'] = BackendModel::getUTCDate();
-            $newBlock['edited_on'] = BackendModel::getUTCDate();
-            $newBlock['status'] = $contentBlock['status'];
-            $newBlock['user_id'] = BackendAuthentication::getUser()->getUserId();
-            $newBlock['template'] = $contentBlock['template'];
-            $newBlock['title'] = $contentBlock['title'];
-            $newBlock['text'] = $contentBlock['text'];
-            $newBlock['hidden'] = $contentBlock['hidden'];
-
-            // inset content block
-            $newId = self::insert($newBlock);
-
-            // save ids for later
-            $oldIds[] = $oldId;
-            $newIds[$oldId] = $newId;
-
-            // redefine counter
-            $i++;
-        }
-
-        // get the extra Ids for the content blocks
-        if (!empty($newIds)) {
-            // get content block extra ids
-            $contentBlockExtraIds = (array) $db->getRecords(
-                'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
-            );
-
-            // loop new ids
-            foreach ($newIds as $oldId => $newId) {
-                foreach ($contentBlockExtraIds as $extraId) {
-                    if ($extraId['revision_id'] == $newId) {
-                        $contentBlockIds[$oldId] = $extraId['extra_id'];
-                    }
-                }
-            }
-        }
-
-        // return contentBlockIds
-        return $contentBlockIds;
-    }
 
     /**
      * Delete an item.
@@ -142,10 +65,23 @@ class Model
         );
 
         // update blocks with this item linked
-        $db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
+        $db->update(
+            'pages_blocks',
+            array('extra_id' => null, 'html' => ''),
+            'extra_id = ?',
+            array($item['extra_id'])
+        );
 
         // delete all records
-        $db->delete('content_blocks', 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
+        $db->delete(
+            'content_blocks',
+            'id = ? AND language = ? AND site_id = ?',
+            array(
+                $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
+        );
     }
 
     /**
@@ -164,9 +100,14 @@ class Model
             return (bool) $db->getVar(
                 'SELECT 1
                  FROM content_blocks AS i
-                 WHERE i.id = ? AND i.status = ? AND i.language = ?
+                 WHERE i.id = ? AND i.status = ? AND i.language = ? AND i.site_id = ?
                  LIMIT 1',
-                array((int) $id, 'active', BL::getWorkingLanguage())
+                array(
+                    (int) $id,
+                    'active',
+                    BL::getWorkingLanguage(),
+                    BackendModel::get('current_site')->getId(),
+                )
             );
         }
 
@@ -174,9 +115,13 @@ class Model
         return (bool) $db->getVar(
             'SELECT 1
              FROM content_blocks AS i
-             WHERE i.revision_id = ? AND i.language = ?
+             WHERE i.revision_id = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -189,11 +134,17 @@ class Model
     public static function get($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
+             UNIX_TIMESTAMP(i.edited_on) AS edited_on
              FROM content_blocks AS i
-             WHERE i.id = ? AND i.status = ? AND i.language = ?
+             WHERE i.id = ? AND i.status = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, 'active', BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                'active',
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -205,8 +156,14 @@ class Model
     public static function getMaximumId()
     {
         return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1',
-            array(BL::getWorkingLanguage())
+            'SELECT MAX(i.id)
+             FROM content_blocks AS i
+             WHERE i.language = ? AND i.site_id = ?
+             LIMIT 1',
+            array(
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -220,11 +177,17 @@ class Model
     public static function getRevision($id, $revisionId)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
+             UNIX_TIMESTAMP(i.edited_on) AS edited_on
              FROM content_blocks AS i
-             WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
+             WHERE i.id = ? AND i.revision_id = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, (int) $revisionId, BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                (int) $revisionId,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -302,6 +265,7 @@ class Model
                 'id' => $item['id'],
                 'extra_label' => $item['title'],
                 'language' => $item['language'],
+                'site_id' => $item['site_id'],
                 'edit_url' => BackendModel::createURLForAction(
                     'Edit',
                     'ContentBlocks',
@@ -341,6 +305,7 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => $item['title'],
                     'language' => $item['language'],
+                    'site_id' => $item['site_id'],
                     'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
                 )
             ),
@@ -359,8 +324,8 @@ class Model
         $db->update(
             'content_blocks',
             array('status' => 'archived'),
-            'id = ? AND language = ?',
-            array($item['id'], BL::getWorkingLanguage())
+            'id = ? AND language = ? AND site_id = ?',
+            array($item['id'], $item['language'], $item['site_id'])
         );
 
         // insert new version
@@ -373,18 +338,19 @@ class Model
         $revisionIdsToKeep = (array) $db->getColumn(
             'SELECT i.revision_id
              FROM content_blocks AS i
-             WHERE i.id = ? AND i.language = ? AND i.status = ?
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ? AND i.status = ?
              ORDER BY i.edited_on DESC
              LIMIT ?',
-            array($item['id'], BL::getWorkingLanguage(), 'archived', $rowsToKeep)
+            array($item['id'], $item['language'], $item['site_id'], 'archived', $rowsToKeep)
         );
 
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
             $db->delete(
                 'content_blocks',
-                'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'], BL::getWorkingLanguage(), 'archived')
+                'id = ? AND language = ? AND site_id = ? AND status = ?
+                 AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'], $item['language'], $item['site_id'], 'archived')
             );
         }
 

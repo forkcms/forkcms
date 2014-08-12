@@ -76,6 +76,7 @@ class GetData extends BackendBaseCronjob
         $endTimestamp = (int) trim(\SpoonFilter::getGetValue('end_date', null, ''));
         $force = trim(\SpoonFilter::getGetValue('force', array('Y', 'N'), 'N')) == 'Y';
         $filename = null;
+        $siteId = $this->get('current_site')->getId();
 
         // no parameters given? cronjob called
         if ($page == '' && $identifier == '' && $startTimestamp === 0 && $endTimestamp === 0) {
@@ -92,7 +93,7 @@ class GetData extends BackendBaseCronjob
             }
         } elseif ($page != '' && $identifier != '' && $startTimestamp !== 0 && $endTimestamp !== 0) {
             // all parameters given? curl called
-            $filename = $this->cachePath . '/' . $page . ($pageId != '' ? '_' . $pageId : '')
+            $filename = $this->cachePath . '/' . $siteId . '_' . $page . ($pageId != '' ? '_' . $pageId : '')
                 . '_' . $identifier . '.txt';
             $fs = new Filesystem();
 

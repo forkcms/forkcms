@@ -18,6 +18,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Common\Path;
 
 /**
  * This is the detail-action
@@ -149,7 +150,7 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url', null, FRONTEND_LANGUAGE);
         if ($rssLink == '') {
             $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
@@ -159,7 +160,7 @@ class Detail extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title', null, FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
@@ -182,9 +183,11 @@ class Detail extends FrontendBaseBlock
 
         // add specified image
         if (isset($this->record['image']) && $this->record['image'] != '') {
+            $imageUrl = Path::buildImageUrl($this->getModule(), FRONTEND_LANGUAGE);
             $this->header->addOpenGraphImage(
-                FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image']
+                $imageUrl . '/' . $this->record['image']
             );
+            $this->tpl->assign('imageUrl', $imageUrl);
         }
 
         // Open Graph-data: add images from content
@@ -196,7 +199,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
         $this->header->addOpenGraphData(
             'site_name',
-            FrontendModel::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            FrontendModel::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE),
             true
         );
         $this->header->addOpenGraphData(
@@ -359,6 +362,7 @@ class Detail extends FrontendBaseBlock
                 // build array
                 $comment['post_id'] = $this->record['id'];
                 $comment['language'] = FRONTEND_LANGUAGE;
+                $comment['site_id'] = $this->get('current_site')->getId();
                 $comment['created_on'] = FrontendModel::getUTCDate();
                 $comment['author'] = $author;
                 $comment['email'] = $email;

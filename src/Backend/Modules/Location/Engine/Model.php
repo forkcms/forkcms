@@ -24,7 +24,7 @@ class Model
     const QRY_DATAGRID_BROWSE =
         'SELECT id, title, CONCAT(street, " ", number, ", ", zip, " ", city, ", ", country) AS address
          FROM location
-         WHERE language = ?';
+         WHERE language = ? AND site_id = ?';
 
     /**
      * Delete an item
@@ -48,7 +48,15 @@ class Model
         );
 
         $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
-        $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
+        $db->delete(
+            'location',
+            'id = ? AND language = ? AND site_id = ?',
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
+        );
         $db->delete('location_settings', 'map_id = ?', array((int) $id));
     }
 
@@ -63,9 +71,13 @@ class Model
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
              FROM location AS i
-             WHERE i.id = ? AND i.language = ?
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?
              LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -80,8 +92,12 @@ class Model
         return (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
              FROM location AS i
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+             WHERE i.id = ? AND i.language = ? AND i.site_id = ?',
+            array(
+                (int) $id,
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+            )
         );
     }
 
@@ -95,8 +111,12 @@ class Model
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM location AS i
-             WHERE i.language = ? AND i.show_overview = ?',
-            array(BL::getWorkingLanguage(), 'Y')
+             WHERE i.language = ? AND i.site_id = ? AND i.show_overview = ?',
+            array(
+                BL::getWorkingLanguage(),
+                BackendModel::get('current_site')->getId(),
+                'Y',
+            )
         );
     }
 
@@ -241,9 +261,20 @@ class Model
             'id' => $item['id'],
             'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
             'language' => $item['language'],
+            'site_id' => $item['site_id'],
             'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
         );
-        $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        $db->update(
+            'modules_extras',
+            $extra,
+            'id = ? AND module = ? AND type = ? AND action = ?',
+            array(
+                $extra['id'],
+                $extra['module'],
+                $extra['type'],
+                $extra['action'],
+            )
+        );
 
         // return the new id
         return $item['id'];
@@ -291,16 +322,36 @@ class Model
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
+                    'site_id' => $item['site_id'],
                     'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
                 ),
                 'hidden' => 'N'
             );
 
             // update extra
-            $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+            $db->update(
+                'modules_extras',
+                $extra,
+                'id = ? AND module = ? AND type = ? AND action = ?',
+                array(
+                    $extra['id'],
+                    $extra['module'],
+                    $extra['type'],
+                    $extra['action'],
+                )
+            );
         }
 
         // update item
-        return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
+        return $db->update(
+            'location',
+            $item,
+            'id = ? AND language = ? AND site_id = ?',
+            array(
+                $item['id'],
+                $item['language'],
+                $item['site_id'],
+            )
+        );
     }
 }

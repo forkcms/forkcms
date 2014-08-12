@@ -190,6 +190,32 @@
         <translation language="uk"><![CDATA["%1$s" - змінено]]></translation>
         <translation language="el"><![CDATA[Η μετάφραση  "%1$s" αποθηκεύτηκε.]]></translation>
       </item>
+      <item type="message" name="EditingMainSiteLocale">
+        <translation language="en"><![CDATA[
+          <p>You're editing locale used for multiple domains.</p>
+          <ul class="pb0">
+            <li>For the main site, it will be used as default translations.</li>
+            <li>For the other sites, it will be used as a fallback when this specific translation doesn't exist.</li>
+          </ul>]]>
+        </translation>
+        <translation language="nl"><![CDATA[
+          <p>Je bent vertalingen aan het aanpassen die gebruikt worden voor meerdere domeinen.</p>
+          <ul class="pb0">
+            <li>Voor de hoofdsite worden ze gebruikt als standaard vertalingen.</li>
+            <li>Op de andere sites wordt er op teruggevallen als de specifieke vertaling niet gevonden wordt.</li>
+          </ul>]]>
+        </translation>
+      </item>
+      <item type="message" name="EditingSpecificLocale">
+        <translation language="en"><![CDATA[
+          You're editing locales for your domain only.<br/>
+          Other domains with the same language won't be affected.
+        ]]></translation>
+        <translation language="nl"><![CDATA[
+          Je bent vertalingen aan het aanpassen die enkel van toepassing zijn voor dit domein.<br/>
+          Andere domeinen met dezelfde taal zullen hierdoor niet beïnvloed worden.
+        ]]></translation>
+      </item>
       <item type="message" name="EditTranslation">
         <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
         <translation language="en"><![CDATA[edit translation "%1$s"]]></translation>

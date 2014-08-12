@@ -13,6 +13,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\Blog\Engine\Model as FrontendBlogModel;
+use Common\Path;
 
 /**
  * This is the overview-action
@@ -96,7 +97,7 @@ class Index extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
+        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url', null, FRONTEND_LANGUAGE);
         if ($rssLink == '') {
             $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
         }
@@ -106,10 +107,15 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title', null, FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true
+        );
+
+        $this->tpl->assign(
+            'imageUrl',
+            Path::buildImageUrl($this->getModule(), FRONTEND_LANGUAGE)
         );
 
         // assign articles

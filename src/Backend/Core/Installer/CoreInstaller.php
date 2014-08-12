@@ -83,12 +83,12 @@ class CoreInstaller extends ModuleInstaller
     private function setSettings()
     {
         // languages settings
-        $this->setSetting('Core', 'languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'active_languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'redirect_languages', $this->getLanguages(), true);
-        $this->setSetting('Core', 'default_language', $this->getVariable('default_language'), true);
-        $this->setSetting('Core', 'interface_languages', $this->getInterfaceLanguages(), true);
-        $this->setSetting('Core', 'default_interface_language', $this->getVariable('default_interface_language'), true);
+        $this->setSetting('Core', 'languages', $this->getLanguages(), null, null, true);
+        $this->setSetting('Core', 'active_languages', $this->getLanguages(), null, null, true);
+        $this->setSetting('Core', 'redirect_languages', $this->getLanguages(), null, null, true);
+        $this->setSetting('Core', 'default_language', $this->getVariable('default_language'), null, null, true);
+        $this->setSetting('Core', 'interface_languages', $this->getInterfaceLanguages(), null, null, true);
+        $this->setSetting('Core', 'default_interface_language', $this->getVariable('default_interface_language'), null, null, true);
 
         // other settings
         $this->setSetting('Core', 'theme');
@@ -192,39 +192,6 @@ class CoreInstaller extends ModuleInstaller
         $this->setSetting('Core', 'smtp_port', $this->getVariable('smtp_port'));
         $this->setSetting('Core', 'smtp_username', $this->getVariable('smtp_username'));
         $this->setSetting('Core', 'smtp_password', $this->getVariable('smtp_password'));
-
-        // default titles
-        $siteTitles = array(
-            'en' => 'My website',
-            'bg' => 'уебсайта си',
-            'zh' => '我的网站',
-            'cs' => 'můj web',
-            'nl' => 'Mijn website',
-            'fr' => 'Mon site web',
-            'de' => 'Meine Webseite',
-            'el' => 'ιστοσελίδα μου',
-            'hu' => 'Hhonlapom',
-            'it' => 'Il mio sito web',
-            'ja' => '私のウェブサイト',
-            'lt' => 'mano svetainė',
-            'pl' => 'moja strona',
-            'ro' => 'site-ul meu',
-            'ru' => 'мой сайт',
-            'es' => 'Mi sitio web',
-            'sv' => 'min hemsida',
-            'tr' => 'web siteme',
-            'uk' => 'мій сайт'
-        );
-
-        // language specific
-        foreach ($this->getLanguages() as $language) {
-            // set title
-            $this->setSetting(
-                'Core',
-                'site_title_' . $language,
-                (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title')
-            );
-        }
 
         // create new instance
         require_once PATH_LIBRARY . '/external/fork_api.php';

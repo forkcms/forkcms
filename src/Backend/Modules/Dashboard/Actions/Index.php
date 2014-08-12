@@ -20,6 +20,7 @@ use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Common\Classes;
 
 /**
  * This is the index-action (default), it will display the login screen
@@ -81,13 +82,10 @@ class Index extends BackendBaseActionIndex
                 foreach ($finder->files()->in($pathName . '/Widgets') as $file) {
                     /** @ver $file \SplFileInfo */
                     $widgetName = $file->getBaseName('.php');
-                    $className = 'Backend\\Modules\\' . $module . '\\Widgets\\' . $widgetName;
-                    if ($module == 'Core') {
-                        $className = 'Backend\\Core\\Widgets\\' . $widgetName;
-                    }
+                    $className = Classes::buildForWidget('Backend', $module, $widgetName);
 
                     if (!class_exists($className)) {
-                        throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
+                        throw new BackendException('The class "' . $className . '" could not be found.');
                     }
 
                     // present?

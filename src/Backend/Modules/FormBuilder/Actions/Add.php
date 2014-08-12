@@ -109,7 +109,9 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build array
+                $values = array();
                 $values['language'] = BL::getWorkingLanguage();
+                $values['site_id'] = $this->get('current_site')->getId();
                 $values['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $values['name'] = $txtName->getValue();
                 $values['method'] = $ddmMethod->getValue();

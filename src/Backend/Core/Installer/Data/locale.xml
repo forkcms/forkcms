@@ -11303,6 +11303,11 @@
         <translation language="el"><![CDATA[Μόνον εικόνες τύπου jpg, gif και png.]]></translation>
         <translation language="tr"><![CDATA[Sadece JPG, GIF, PNG]]></translation>
       </item>
+      <item type="error" name="LanguageNotAllowed">
+        <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze taal.]]></translation>
+        <translation language="en"><![CDATA[You have insufficient rights for this language.]]></translation>
+        <translation language="fr"><![CDATA[Vous ne disposez pas des droits suffisants pour effectuer cette langue.]]></translation>
+      </item>
       <item type="error" name="ModuleNotAllowed">
         <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze module.]]></translation>
         <translation language="en"><![CDATA[You have insufficient rights for this module.]]></translation>
@@ -11651,6 +11656,52 @@
         <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία τύπου XML.]]></translation>
         <translation language="tr"><![CDATA[Sadece XML dosyalarına izin verilir.]]></translation>
       </item>
+      <item type="label" name="Multisite">
+        <translation language="en"><![CDATA[multisite]]></translation>
+        <translation language="nl"><![CDATA[multisite]]></translation>
+      </item>
+      <item type="label" name="Site">
+        <translation language="en"><![CDATA[site]]></translation>
+        <translation language="nl"><![CDATA[site]]></translation>
+      </item>
+      <item type="label" name="Sites">
+        <translation language="en"><![CDATA[sites]]></translation>
+        <translation language="nl"><![CDATA[sites]]></translation>
+      </item>
     </Core>
+    <Multisite>
+      <item type="label" name="Site">
+        <translation language="en"><![CDATA[site]]></translation>
+        <translation language="nl"><![CDATA[site]]></translation>
+      </item>
+      <item type="label" name="Sites">
+        <translation language="en"><![CDATA[sites]]></translation>
+        <translation language="nl"><![CDATA[sites]]></translation>
+      </item>
+      <item type="label" name="Domain">
+        <translation language="en"><![CDATA[domain]]></translation>
+        <translation language="nl"><![CDATA[domein]]></translation>
+      </item>
+      <item type="label" name="IsActive">
+        <translation language="en"><![CDATA[active]]></translation>
+        <translation language="nl"><![CDATA[actief]]></translation>
+      </item>
+      <item type="label" name="IsViewable">
+        <translation language="en"><![CDATA[viewable]]></translation>
+        <translation language="nl"><![CDATA[bekijkbaar]</translation>
+      </item>
+      <item type="label" name="Active">
+        <translation language="en"><![CDATA[active]]></translation>
+        <translation language="nl"><![CDATA[actief]]></translation>
+      </item>
+      <item type="label" name="Viewable">
+        <translation language="en"><![CDATA[viewable]]></translation>
+        <translation language="nl"><![CDATA[bekijkbaar]]></translation>
+      </item>
+      <item type="label" name="IsMainSite">
+        <translation language="en"><![CDATA[main site]]></translation>
+        <translation language="nl"><![CDATA[hoofdsite]]></translation>
+      </item>
+      </Multisite>
   </Backend>
 </locale>

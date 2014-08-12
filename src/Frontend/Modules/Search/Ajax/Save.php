@@ -21,11 +21,6 @@ use Frontend\Modules\Search\Engine\Model as FrontendSearchModel;
 class Save extends FrontendBaseAJAXAction
 {
     /**
-     * @var array
-     */
-    private $statistics;
-
-    /**
      * Execute the action
      */
     public function execute()
@@ -49,15 +44,17 @@ class Save extends FrontendBaseAJAXAction
             // save this term?
             if ($previousTerm != $term) {
                 // format data
-                $this->statistics = array();
-                $this->statistics['term'] = $term;
-                $this->statistics['language'] = FRONTEND_LANGUAGE;
-                $this->statistics['time'] = FrontendModel::getUTCDate();
-                $this->statistics['data'] = serialize(array('server' => $_SERVER));
-                $this->statistics['num_results'] = FrontendSearchModel::getTotal($term);
+                $statistics = array(
+                    'term' => $term,
+                    'language' => FRONTEND_LANGUAGE,
+                    'site_id' => $this->get('current_site')->getId(),
+                    'time' => FrontendModel::getUTCDate(),
+                    'data' => serialize(array('server' => $_SERVER)),
+                    'num_results' => FrontendSearchModel::getTotal($term),
+                );
 
                 // save data
-                FrontendSearchModel::save($this->statistics);
+                FrontendSearchModel::save($statistics);
             }
 
             // save current search term in cookie

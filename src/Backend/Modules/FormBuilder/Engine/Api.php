@@ -232,7 +232,7 @@ class Api
             }
 
             $forms = (array) BackendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.id, i.language, i.name, i.method,
+                'SELECT i.id, i.language, i.site_id, i.name, i.method,
                  UNIX_TIMESTAMP(i.created_on) AS created_on,
                  UNIX_TIMESTAMP(i.edited_on) AS edited_on
                  FROM forms AS i
@@ -250,6 +250,7 @@ class Api
                 $item['form']['@attributes']['id'] = $row['id'];
                 $item['form']['@attributes']['created_on'] = date('c', $row['created_on']);
                 $item['form']['@attributes']['language'] = $row['language'];
+                $item['form']['@attributes']['site_id'] = $row['site_id'];
 
                 // set content
                 $item['form']['name'] = $row['name'];

@@ -14,6 +14,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Blog\Engine\Model as BackendBlogModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Common\Path;
 
 /**
  * This action will delete a blogpost
@@ -57,7 +58,8 @@ class Delete extends BackendBaseActionDelete
             BackendBlogModel::delete($this->id);
 
             // delete the image
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $this->record['image']);
+            $imagePath = Path::buildImagePath($this->getModule());
+            BackendModel::deleteThumbnails($imagePath, $this->record['image']);
 
             // trigger event
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));

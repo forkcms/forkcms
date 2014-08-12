@@ -70,6 +70,37 @@
 					</ul>
 				</div>
 			</div>
+			<div class="subtleBox">
+				<div class="heading">
+					<h3>{$lblLanguages|ucfirst}</h3>
+				</div>
+				<div class="options labelWidthLong horizontal">
+					<label>{$lblSetPermissions|ucfirst}</label>
+					<ul id="moduleList" class="inputList">
+						{iteration:sites}
+							<li class="module">
+								{$sites.checkbox}
+								<a href="#" class="icon iconCollapsed container" title="open">
+									<span>
+										<label for="site-{$sites.siteId}">{$sites.domain}</label>
+									</span>
+								</a>
+								<div class="datagridHolder hide clearfix">
+									<ul>
+										{iteration:sites.languages}
+											<li>
+												<label for="{$sites.siteId}-{$sites.languages.language}">
+													{$sites.languages.checkbox} {$sites.languages.language}
+												</label>
+											</li>
+										{/iteration:sites.languages}
+									</ul>
+								</div>
+							</li>
+						{/iteration:sites}
+					</ul>
+				</div>
+			</div>
 		</div>
 
 	<div class="fullwidthOptions">

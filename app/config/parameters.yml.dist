@@ -15,7 +15,6 @@ parameters:
     fork.version:           '3.7.3'
 
     site.protocol:          <site-protocol>
-    site.domain:            <site-domain>
     site.default_title:     <site-default-title>
     site.multilanguage:     <site-multilanguage>
     site.default_language:  <site-default-language>

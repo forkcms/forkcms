@@ -182,7 +182,12 @@ class Edit extends BackendBaseActionEdit
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS,
-            array($this->record['id'], 'draft', BL::getWorkingLanguage())
+            array(
+                $this->record['id'],
+                'draft',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -449,10 +454,10 @@ class Edit extends BackendBaseActionEdit
         $this->dgRevisions = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_REVISIONS,
             array(
-                 $this->id,
-                 'archive',
-                 BL::getWorkingLanguage(
-                 )
+                $this->id,
+                'archive',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
             )
         );
 
@@ -623,6 +628,7 @@ class Edit extends BackendBaseActionEdit
                 $page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
                 $page['meta_id'] = (int) $this->meta->save();
                 $page['language'] = BL::getWorkingLanguage();
+                $page['site_id'] = $this->get('current_site')->getId();
                 $page['type'] = $this->record['type'];
                 $page['title'] = $this->frm->getField('title')->getValue();
                 $page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
@@ -695,7 +701,10 @@ class Edit extends BackendBaseActionEdit
                 );
 
                 // build cache
-                BackendPagesModel::buildCache(BL::getWorkingLanguage());
+                BackendPagesModel::buildCache(
+                    BL::getWorkingLanguage(),
+                    $this->get('current_site')->getId()
+                );
 
                 // active
                 if ($page['status'] == 'active') {

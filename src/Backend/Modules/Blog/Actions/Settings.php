@@ -96,10 +96,22 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox('ping_services', BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false));
 
         // add fields for RSS
-        $this->frm->addCheckbox('rss_meta', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
-        $this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
-        $this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
-        $this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
+        $this->frm->addCheckbox(
+            'rss_meta',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta', true, BL::getWorkingLanguage())
+        );
+        $this->frm->addText(
+            'rss_title',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title', null, BL::getWorkingLanguage())
+        );
+        $this->frm->addTextarea(
+            'rss_description',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description', null, BL::getWorkingLanguage())
+        );
+        $this->frm->addText(
+            'feedburner_url',
+            BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url', null, BL::getWorkingLanguage())
+        );
 
         // god user?
         if ($this->isGod) {
@@ -156,10 +168,10 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->frm->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment', (bool) $this->frm->getField('notify_by_email_on_new_comment')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
+                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title', $this->frm->getField('rss_title')->getValue(), BL::getWorkingLanguage());
+                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description', $this->frm->getField('rss_description')->getValue(), BL::getWorkingLanguage());
+                BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta', $this->frm->getField('rss_meta')->getValue(), BL::getWorkingLanguage());
+                BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url', $feedburner, BL::getWorkingLanguage());
                 if ($this->isGod) {
                     BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
                 }

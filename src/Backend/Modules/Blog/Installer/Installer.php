@@ -21,25 +21,20 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /**
-     * Default category id
-     *
-     * @var    int
-     */
-    private $defaultCategoryId;
-
-    /**
      * Add a category for a language
      *
      * @param string $language The language to use.
+     * @param string $siteId   The siteId to use.
      * @param string $title    The title of the category.
      * @param string $url      The URL for the category.
      * @return int
      */
-    private function addCategory($language, $title, $url)
+    private function addCategory($language, $siteId, $title, $url)
     {
         $item = array();
         $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
         $item['language'] = (string) $language;
+        $item['site_id'] = (int) $siteId;
         $item['title'] = (string) $title;
 
         return (int) $this->getDB()->insert('blog_categories', $item);
@@ -51,11 +46,13 @@ class Installer extends ModuleInstaller
      * @param string $language The language to use.
      * @return int
      */
-    private function getCategory($language)
+    private function getCategory($language, $siteId)
     {
         return (int) $this->getDB()->getVar(
-            'SELECT id FROM blog_categories WHERE language = ?',
-            array((string) $language)
+            'SELECT id
+             FROM blog_categories
+             WHERE language = ? AND site_id = ?',
+            array((string) $language, (int) $siteId)
         );
     }
 
@@ -79,13 +76,11 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'blog' as a module
         $this->addModule('Blog');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
@@ -101,10 +96,8 @@ class Installer extends ModuleInstaller
 
         $this->makeSearchable('Blog');
 
-        // module rights
+        // rights
         $this->setModuleRights(1, 'Blog');
-
-        // action rights
         $this->setActionRights(1, 'Blog', 'AddCategory');
         $this->setActionRights(1, 'Blog', 'Add');
         $this->setActionRights(1, 'Blog', 'Categories');
@@ -123,6 +116,13 @@ class Installer extends ModuleInstaller
         // insert dashboard widget
         $this->insertWidget();
 
+        $this->insertBackendNavigation();
+        $extras = $this->insertExtras();
+        $this->insertPages($extras);
+    }
+
+    protected function insertBackendNavigation()
+    {
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationBlogId = $this->setNavigation($navigationModulesId, 'Blog');
@@ -144,9 +144,14 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, 'Blog', 'blog/settings');
+    }
+
+    protected function insertExtras()
+    {
+        $extras = array();
 
         // add extra's
-        $blogId = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
+        $extras['blog'] = $this->insertExtra('Blog', 'block', 'Blog', null, null, 'N', 1000);
         $this->insertExtra('Blog', 'widget', 'RecentComments', 'RecentComments', null, 'N', 1001);
         $this->insertExtra('Blog', 'widget', 'Categories', 'Categories', null, 'N', 1002);
         $this->insertExtra('Blog', 'widget', 'Archive', 'Archive', null, 'N', 1003);
@@ -154,51 +159,59 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Blog', 'widget', 'RecentArticlesList', 'RecentArticlesList', null, 'N', 1005);
 
         // get search extra id
-        $searchId = (int) $this->getDB()->getVar(
+        $extras['search'] = (int) $this->getDB()->getVar(
             'SELECT id FROM modules_extras
              WHERE module = ? AND type = ? AND action = ?',
             array('Search', 'widget', 'Form')
         );
 
+        return $extras;
+    }
+
+    protected function insertPages($extras)
+    {
         // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // fetch current categoryId
-            $this->defaultCategoryId = $this->getCategory($language);
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                // fetch current categoryId
+                $categoryId = $this->getCategory($language, $site['id']);
 
-            // no category exists
-            if ($this->defaultCategoryId == 0) {
-                // add category
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-            }
+                // add a new category if there is none yet exists
+                if ($categoryId == 0) {
+                    $categoryId = $this->addCategory($language, $site['id'], 'Default', 'default');
+                }
 
-            // feedburner URL
-            $this->setSetting('Blog', 'feedburner_url_' . $language, '');
+                // feedburner URL
+                $this->setSetting('Blog', 'feedburner_url', '', $language, $site['id']);
+                $this->setSetting('Blog', 'rss_meta', true, $language, $site['id']);
+                $this->setSetting('Blog', 'rss_title', 'RSS', $language, $site['id']);
+                $this->setSetting('Blog', 'rss_description', '', $language, $site['id']);
 
-            // RSS settings
-            $this->setSetting('Blog', 'rss_meta_' . $language, true);
-            $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
-            $this->setSetting('Blog', 'rss_description_' . $language, '');
+                // check if a page for blog already exists in this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array($extras['blog'], $language, $site['id'])
+                )
+                ) {
+                    $this->insertPage(
+                        array(
+                            'title' => 'Blog',
+                            'language' => $language,
+                            'site_id' => $site['id'],
+                        ),
+                        null,
+                        array('extra_id' => $extras['blog'], 'position' => 'main'),
+                        array('extra_id' => $extras['search'], 'position' => 'top')
+                    );
+                }
 
-            // check if a page for blog already exists in this language
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($blogId, $language)
-            )
-            ) {
-                $this->insertPage(
-                    array('title' => 'Blog', 'language' => $language),
-                    null,
-                    array('extra_id' => $blogId, 'position' => 'main'),
-                    array('extra_id' => $searchId, 'position' => 'top')
-                );
-            }
-
-            if ($this->installExample()) {
-                $this->installExampleData($language);
+                if ($this->installExample()) {
+                    $this->installExampleData($language, $site['id'], $categoryId);
+                }
             }
         }
     }
@@ -206,9 +219,11 @@ class Installer extends ModuleInstaller
     /**
      * Install example data
      *
-     * @param string $language The language to use.
+     * @param string $language   The language to use.
+     * @param int    $siteId     The siteid to insert items for.
+     * @param int    $categoryId The categoryId to insert blogposts in
      */
-    private function installExampleData($language)
+    private function installExampleData($language, $siteId, $categoryId)
     {
         // get db instance
         $db = $this->getDB();
@@ -217,9 +232,9 @@ class Installer extends ModuleInstaller
         if (!(bool) $db->getVar(
             'SELECT 1
              FROM blog_posts
-             WHERE language = ?
+             WHERE language = ? AND site_id = ?
              LIMIT 1',
-            array($language)
+            array($language, $siteId)
         )
         ) {
             // insert sample blogpost 1
@@ -227,7 +242,7 @@ class Installer extends ModuleInstaller
                 'blog_posts',
                 array(
                     'id' => 1,
-                    'category_id' => $this->defaultCategoryId,
+                    'category_id' => $categoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta(
                         'Nunc sediam est',
@@ -236,6 +251,7 @@ class Installer extends ModuleInstaller
                         'nunc-sediam-est'
                     ),
                     'language' => $language,
+                    'site_id' => $siteId,
                     'title' => 'Nunc sediam est',
                     'introduction' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
@@ -258,10 +274,11 @@ class Installer extends ModuleInstaller
                 'blog_posts',
                 array(
                     'id' => 2,
-                    'category_id' => $this->defaultCategoryId,
+                    'category_id' => $categoryId,
                     'user_id' => $this->getDefaultUserID(),
                     'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
                     'language' => $language,
+                    'site_id' => $siteId,
                     'title' => 'Lorem ipsum',
                     'introduction' => file_get_contents(
                         PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
@@ -285,6 +302,7 @@ class Installer extends ModuleInstaller
                 array(
                     'post_id' => 1,
                     'language' => $language,
+                    'site_id' => $siteId,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Davy Hellemans',
                     'email' => 'forkcms-sample@spoon-library.com',
@@ -302,6 +320,7 @@ class Installer extends ModuleInstaller
                 array(
                     'post_id' => 1,
                     'language' => $language,
+                    'site_id' => $siteId,
                     'created_on' => gmdate('Y-m-d H:i:00'),
                     'author' => 'Tijs Verkoyen',
                     'email' => 'forkcms-sample@sumocoders.be',

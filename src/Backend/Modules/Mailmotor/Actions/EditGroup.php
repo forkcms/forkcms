@@ -70,13 +70,23 @@ class EditGroup extends BackendBaseActionEdit
         $chkDefaultForLanguageValues[] = array('label' => BL::msg('NoDefault'), 'value' => '0');
 
         // set default for language radiobutton values
-        foreach (BL::getWorkingLanguages() as $key => $value) {
-            $chkDefaultForLanguageValues[] = array('label' => $value, 'value' => $key);
+        $multisite = BackendModel::get('multisite');
+        foreach ($multisite->getSites() as $siteId => $domain) {
+            foreach ($multisite->getLanguageList($siteId, true) as $language) {
+                $chkDefaultForLanguageValues[] = array(
+                    'label' => $domain . ': ' . BL::lbl(strtoupper($language)),
+                    'value' => $siteId . '-' . $language
+                );
+            }
         }
 
         // create elements
+        $default = ($this->record['is_default'] === 'Y') ?
+            $this->record['site_id'] . '-' . $this->record['language'] :
+            '0'
+        ;
         $this->frm->addText('name', $this->record['name']);
-        $this->frm->addRadiobutton('default', $chkDefaultForLanguageValues, $this->record['language']);
+        $this->frm->addRadiobutton('default', $chkDefaultForLanguageValues, $default);
     }
 
     /**
@@ -118,8 +128,12 @@ class EditGroup extends BackendBaseActionEdit
                 // build item
                 $item['id'] = $this->id;
                 $item['name'] = $txtName->getValue();
-                $item['language'] = $rbtDefaultForLanguage->getValue() === '0' ? null : $rbtDefaultForLanguage->getValue();
                 $item['is_default'] = $rbtDefaultForLanguage->getChecked() ? 'Y' : 'N';
+
+                if ($rbtDefaultForLanguage->getChecked()) {
+                    // language and site_id are stored in the value seperated by a dash
+                    list($item['site_id'], $item['language']) = explode('-', $rbtDefaultForLanguage->getValue());
+                }
 
                 // update the item
                 BackendMailmotorCMHelper::updateGroup($item);

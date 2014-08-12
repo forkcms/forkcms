@@ -27,28 +27,27 @@ class UpdateMarker extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        // get parameters
+        // get and validate the id
         $itemId = trim(\SpoonFilter::getPostValue('id', null, '', 'int'));
+        if ($itemId == 0) {
+            return $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        }
+
         $lat = \SpoonFilter::getPostValue('lat', null, null, 'float');
         $lng = \SpoonFilter::getPostValue('lng', null, null, 'float');
 
-        // validate id
-        if ($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        //update
+        $updateData = array(
+            'id'       => $itemId,
+            'lat'      => $lat,
+            'lng'      => $lng,
+            'language' => BL::getWorkingLanguage(),
+            'site_id'  => $this->get('current_site')->getId(),
+        );
 
-        // validated
-        else {
-            //update
-            $updateData = array(
-                'id' => $itemId,
-                'lat' => $lat,
-                'lng' => $lng,
-                'language' => BL::getWorkingLanguage()
-            );
+        BackendLocationModel::update($updateData);
 
-            BackendLocationModel::update($updateData);
-
-            // output
-            $this->output(self::OK);
-        }
+        // output
+        $this->output(self::OK);
     }
 }

@@ -46,6 +46,21 @@ class Model
     }
 
     /**
+     * Adds language permissions
+     *
+     * @param array $languagePermissions
+     */
+    public static function addLanguagePermissions($languagePermissions)
+    {
+        if (!empty($languagePermissions)) {
+            BackendModel::get('database')->insert(
+                'groups_rights_languages',
+                $languagePermissions
+            );
+        }
+    }
+
+    /**
      * Add module permissions
      *
      * @param array $modulePermissions
@@ -101,6 +116,20 @@ class Model
                 );
             }
         }
+    }
+
+    /**
+     * Deletes all language permissions for a group
+     *
+     * @param int $groupId
+     */
+    public static function deleteLanguagePermissions($groupId)
+    {
+        BackendModel::get('database')->delete(
+            'groups_rights_languages',
+            'group_id = ?',
+            array((int) $groupId)
+        );
     }
 
     /**
@@ -220,6 +249,20 @@ class Model
     {
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id AS value, i.name AS label FROM groups AS i'
+        );
+    }
+
+    /**
+     * @param int $groupId
+     * @return array
+     */
+    public static function getAllowedLanguages($groupId)
+    {
+        return (array) BackendModel::get('database')->getColumn(
+            'SELECT DISTINCT CONCAT(site_id, "-", language)
+             FROM groups_rights_languages
+             WHERE group_id = ?',
+            array((int) $groupId)
         );
     }
 

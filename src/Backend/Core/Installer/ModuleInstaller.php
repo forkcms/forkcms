@@ -14,6 +14,8 @@ use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
+use Common\Multisite\Multisite;
+use Common\Multisite\CurrentSite;
 
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
@@ -42,6 +44,13 @@ class ModuleInstaller
      * @var string
      */
     private $module;
+
+    /**
+     * Multisite service
+     *
+     * @var Multisite
+     */
+    private $multisite;
 
     /**
      * The default extras that have to be added to every page.
@@ -150,39 +159,41 @@ class ModuleInstaller
      * @param int    $otherId  The id of the record.
      * @param array  $fields   A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
+     * @param int    $siteId   The site id for this entry.
      */
-    protected function addSearchIndex($module, $otherId, array $fields, $language)
+    protected function addSearchIndex($module, $otherId, array $fields, $language, $siteId)
     {
         // get db
         $db = $this->getDB();
 
-        // validate cache
+        // get modules from cache if possible
         if (empty(self::$modules)) {
-            // get all modules
             self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
         }
 
-        // module exists?
-        if (!in_array('search', self::$modules)) {
-            return;
-        }
-
-        // no fields?
-        if (empty($fields)) {
+        // module exists or no fields?
+        if (!in_array('search', self::$modules) || empty($fields)) {
             return;
         }
 
         // insert search index
         foreach ($fields as $field => $value) {
-            // reformat value
             $value = strip_tags((string) $value);
-
-            // insert in db
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y')
+                array(
+                    (string) $module,
+                    (int) $otherId,
+                    (string) $language,
+                    (int) $siteId,
+                    (string) $field,
+                    $value,
+                    'Y',
+                    $value,
+                    'Y'
+                )
             );
         }
 
@@ -190,7 +201,6 @@ class ModuleInstaller
         $finder = new Finder();
         $fs = new Filesystem();
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
-            /** @var $file \SplFileInfo */
             $fs->remove($file->getRealPath());
         }
     }
@@ -274,10 +284,18 @@ class ModuleInstaller
 
     /**
      * Get the selected languages
+     *
+     * @param int $siteId If the site id is given, fetch languages for one site
      */
-    protected function getLanguages()
+    protected function getLanguages($siteId = null)
     {
-        return $this->languages;
+        if (empty($siteId)) {
+            return $this->languages;
+        } else {
+            return $this->getMultisite()
+                ->getLanguageList($siteId, true)
+            ;
+        }
     }
 
     /**
@@ -290,7 +308,7 @@ class ModuleInstaller
      * @param string $application
      * @return mixed
      */
-    protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
+    public function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
     {
         $translation = (string) $this->getDB()->getVar(
             'SELECT value
@@ -300,6 +318,20 @@ class ModuleInstaller
         );
 
         return ($translation != '') ? $translation : $name;
+    }
+
+    /**
+     * Get the multisite service
+     *
+     * @return Multisite
+     */
+    protected function getMultisite()
+    {
+        if (empty($this->multisite)) {
+            $this->multisite = new Multisite($this->getDB());
+        }
+
+        return $this->multisite;
     }
 
     /**
@@ -319,6 +351,17 @@ class ModuleInstaller
                 array((string) $module, (string) $name)
             )
         );
+    }
+
+    /**
+     * Fetches all possible sites
+     * @note: inactive sites will also be fetched.
+     *
+     * @return array
+     */
+    protected function getSites()
+    {
+        return $this->getMultisite()->getAllSites();
     }
 
     /**
@@ -510,7 +553,7 @@ class ModuleInstaller
         $sequence = null
     ) {
         // no sequence set
-        if (is_null($sequence)) {
+        if ($sequence === null) {
             // set next sequence number for this module
             $sequence = $this->getDB()->getVar(
                 'SELECT MAX(sequence) + 1 FROM modules_extras WHERE module = ?',
@@ -518,30 +561,22 @@ class ModuleInstaller
             );
 
             // this is the first extra for this module: generate new 1000-series
-            if (is_null($sequence)) {
+            if ($sequence === null) {
                 $sequence = $sequence = $this->getDB()->getVar(
                     'SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM modules_extras'
                 );
             }
         }
 
-        $module = (string) $module;
-        $type = (string) $type;
-        $label = (string) $label;
-        $action = !is_null($action) ? (string) $action : null;
-        $data = !is_null($data) ? (string) $data : null;
-        $hidden = $hidden && $hidden !== 'N' ? 'Y' : 'N';
-        $sequence = (int) $sequence;
-
         // build item
         $item = array(
-            'module' => $module,
-            'type' => $type,
-            'label' => $label,
-            'action' => $action,
-            'data' => $data,
-            'hidden' => $hidden,
-            'sequence' => $sequence
+            'module'   => (string) $module,
+            'type'     => (string) $type,
+            'label'    => (string) $label,
+            'action'   => !is_null($action) ? (string) $action : null,
+            'data'     => !is_null($data) ? (string) $data : null,
+            'hidden'   => $hidden && $hidden !== 'N' ? 'Y' : 'N',
+            'sequence' => (int) $sequence,
         );
 
         // build query
@@ -619,18 +654,18 @@ class ModuleInstaller
      * @param array $block    The blocks.
      * @return int
      */
-    protected function insertPage(array $revision, array $meta = null, array $block = null)
+    public function insertPage(array $revision, array $meta = null, array $block = null)
     {
         $revision = (array) $revision;
         $meta = (array) $meta;
 
         // deactived previous revisions
-        if (isset($revision['id']) && isset($revision['language'])) {
+        if (isset($revision['id']) && isset($revision['language']) && isset($revision['site_id'])) {
             $this->getDB()->update(
                 'pages',
                 array('status' => 'archive'),
-                'id = ? AND language = ?',
-                array($revision['id'], $revision['language'])
+                'id = ? AND language = ? AND site_id = ?',
+                array($revision['id'], $revision['language'], $revision['site_id'])
             );
         }
 
@@ -638,13 +673,18 @@ class ModuleInstaller
         if (!isset($revision['language'])) {
             throw new \SpoonException('language is required for installing pages');
         }
+        if (!isset($revision['site_id'])) {
+            throw new \SpoonException('site_id is required for installing pages');
+        }
         if (!isset($revision['title'])) {
             throw new \SpoonException('title is required for installing pages');
         }
         if (!isset($revision['id'])) {
             $revision['id'] = (int) $this->getDB()->getVar(
-                'SELECT MAX(id) + 1 FROM pages WHERE language = ?',
-                array($revision['language'])
+                'SELECT MAX(id) + 1
+                 FROM pages
+                 WHERE language = ? AND site_id = ?',
+                array($revision['language'], $revision['site_id'])
             );
         }
         if (!$revision['id']) {
@@ -700,8 +740,10 @@ class ModuleInstaller
         }
         if (!isset($revision['sequence'])) {
             $revision['sequence'] = (int) $this->getDB()->getVar(
-                'SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?',
-                array($revision['language'], $revision['parent_id'], $revision['type'])
+                'SELECT MAX(sequence) + 1
+                 FROM pages
+                 WHERE language = ? AND site_id = ? AND parent_id = ? AND type = ?',
+                array($revision['language'], $revision['site_id'], $revision['parent_id'], $revision['type'])
             );
         }
 
@@ -884,6 +926,34 @@ class ModuleInstaller
      * @param int    $groupId The group wherefor the rights will be set.
      * @param string $module  The module too set the rights for.
      */
+    protected function setLanguageRights($groupId, $language, $siteId)
+    {
+        $languageRightExists = (bool) $this->getDB()->getVar(
+            'SELECT 1
+             FROM groups_rights_languages
+             WHERE group_id = ? AND language = ? AND site_id = ?
+             LIMIT 1',
+            array((int) $groupId, (string) $language, (int) $siteId)
+        );
+
+        if (!$languageRightExists) {
+            $this->getDB()->insert(
+                'groups_rights_languages',
+                array(
+                    'group_id' => (int) $groupId,
+                    'language' => (string) $language,
+                    'site_id'  => (int) $siteId,
+                )
+            );
+        }
+    }
+
+    /**
+     * Sets the rights for a module
+     *
+     * @param int    $groupId The group wherefor the rights will be set.
+     * @param string $module  The module too set the rights for.
+     */
     protected function setModuleRights($groupId, $module)
     {
         $groupId = (int) $groupId;
@@ -972,14 +1042,24 @@ class ModuleInstaller
      * @param string $module    The module wherefore the setting will be set.
      * @param string $name      The name of the setting.
      * @param mixed  $value     The optional value.
+     * @param string $language  The language to store the setting for
+     * @param int    $siteId    The id of the site to store a setting for
      * @param bool   $overwrite Overwrite no matter what.
      */
-    protected function setSetting($module, $name, $value = null, $overwrite = false)
+    protected function setSetting($module, $name, $value = null, $language = null, $siteId = null, $overwrite = false)
     {
         $module = (string) $module;
         $name = (string) $name;
         $value = serialize($value);
         $overwrite = (bool) $overwrite;
+
+        if (!empty($language)) {
+            $name .= '_' . $language;
+        }
+
+        if (!empty($siteId)) {
+            $name .= '_' . $siteId;
+        }
 
         if ($overwrite) {
             $this->getDB()->execute(

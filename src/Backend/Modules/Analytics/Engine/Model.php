@@ -73,7 +73,7 @@ class Model
             }
 
             // analytics table id (only show this error if no other exist)
-            if (empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_id', null) == '') {
+            if (empty($warnings) && BackendModel::getModuleSetting('Analytics', 'table_ids', array()) == false) {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
@@ -260,7 +260,8 @@ class Model
      */
     private static function getCacheFile($startTimestamp, $endTimestamp)
     {
-        $filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
+        $siteId = BackendModel::get('current_site')->getId();
+        $filename = $siteId . '_' . (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
         // file exists
         if (is_file(BACKEND_CACHE_PATH . '/Analytics/' . $filename)) {
@@ -332,7 +333,13 @@ class Model
 
         // no id? insert this page
         if ($id === 0) {
-            $id = $db->insert('analytics_pages', array('page' => (string) $page));
+            $id = $db->insert(
+                'analytics_pages',
+                array(
+                    'page'    => (string) $page,
+                    'site_id' => BackendModel::get('current_site')->getId(),
+                )
+            );
         }
 
         // get data from cache
@@ -461,21 +468,27 @@ class Model
     {
         $results = array();
         $db = BackendModel::getContainer()->get('database');
+        $siteId = BackendModel::get('current_site')->getId();
 
         // get data from database
         if ($limit === null) {
             $items = (array) $db->getRecords(
-                'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+                'SELECT id, page_path, entrances, bounces, bounce_rate, start_date, end_date,
+                 UNIX_TIMESTAMP(updated_on) AS updated_on
                  FROM analytics_landing_pages
-                 ORDER BY entrances DESC'
+                 WHERE site_id = ?
+                 ORDER BY entrances DESC',
+                array($siteId)
             );
         } else {
             $items = (array) $db->getRecords(
-                'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+                'SELECT id, page_path, entrances, bounces, bounce_rate, start_date, end_date,
+                 UNIX_TIMESTAMP(updated_on) AS updated_on
                  FROM analytics_landing_pages
+                 WHERE site_id = ?
                  ORDER BY entrances DESC
                  LIMIT ?',
-                array((int) $limit)
+                array($siteId, (int) $limit)
             );
         }
 
@@ -535,22 +548,25 @@ class Model
      * Get all data for a given revision.
      *
      * @param string $language The language to use.
+     * @param int    $siteId The language to use.
      * @return array
      */
-    public static function getLinkList($language = null)
+    public static function getLinkList($language = null, $siteId = null)
     {
         $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
+        $siteId = ($siteId !== null) ? (int) $siteId : BackendModel::get('current_site')->getid();
 
         // there is no cache file
-        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js')) {
+        $file = FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '_' . $siteId . '.js';
+        if (!is_file($file)) {
             return array();
         }
 
         // read the cache file
-        $cacheFile = file_get_contents(FRONTEND_CACHE_PATH . '/Navigation/tinymce_link_list_' . $language . '.js');
+        $cacheContent = file_get_contents($file);
 
         // get the array
-        preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
+        preg_match('/new Array\((.*)\);$/s', $cacheContent, $matches);
 
         // no matched
         if (empty($matches)) {
@@ -1223,121 +1239,7 @@ class Model
      */
     public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
     {
-        $xml = "<?xml version='1.0' encoding='" . SPOON_CHARSET . "'?>\n";
-        $xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
-
-        // loop data
-        foreach ($data as $type => $records) {
-            $attributes = array();
-
-            // there are some attributes
-            if (isset($records['attributes']) && !empty($records['attributes'])) {
-                // loop em
-                foreach ($records['attributes'] as $key => $value) {
-                    // add to the attributes string
-                    $attributes[] = $key . '="' . $value . '"';
-                }
-            }
-
-            $xml .= "\t<" . $type . (!empty($attributes) ? ' ' . implode(' ', $attributes) : '') . ">\n";
-
-            // we're not dealing with a page detail
-            if (strpos($type, 'page_') === false) {
-                // get items
-                $items = (isset($records['entries']) ? $records['entries'] : $records);
-
-                // loop data
-                foreach ($items as $key => $value) {
-                    // skip empty items
-                    if ((is_array($value) && empty($value)) || (is_string($value) && trim($value) === '')) {
-                        continue;
-                    }
-
-                    // value contains an array
-                    if (is_array($value)) {
-                        // there are values
-                        if (!empty($value)) {
-                            // build xml
-                            $xml .= "\t\t<entry>\n";
-
-                            // loop data
-                            foreach ($value as $entryKey => $entryValue) {
-                                // build xml
-                                $xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
-                            }
-
-                            // end xml element
-                            $xml .= "\t\t</entry>\n";
-                        }
-                    } else {
-                        // build xml
-                        $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
-                    }
-                }
-            } else {
-                // we're dealing with a page detail: loop data
-                foreach ($records as $subKey => $subItems) {
-                    // build xml
-                    $xml .= "\t\t<" . $subKey . ">\n";
-
-                    // sub items is an array
-                    if (is_array($subItems)) {
-                        // loop data
-                        foreach ($subItems as $key => $value) {
-                            // skip empty items
-                            if ((is_array($value) && empty($value)) || trim((string) $value) === '') {
-                                continue;
-                            }
-
-                            // value contains an array
-                            if (is_array($value)) {
-                                // there are values
-                                if (!empty($value)) {
-                                    // build xml
-                                    $xml .= "\t\t\t<entry>\n";
-
-                                    // loop data
-                                    foreach ($value as $entryKey => $entryValue) {
-                                        // build xml
-                                        $xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
-                                    }
-
-                                    // end xml element
-                                    $xml .= "\t\t\t</entry>\n";
-                                }
-                            } else {
-                                // build xml
-                                $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
-                            }
-                        }
-                    } else {
-                        // not an array
-                        $xml .= "<![CDATA[" . (string) $subItems . "]]>";
-                    }
-
-                    // end xml element
-                    $xml .= "\t\t</" . $subKey . ">\n";
-                }
-            }
-
-            // end xml element
-            $xml .= "\t</" . $type . ">\n";
-        }
-
-        // end xml string
-        $xml .= "</analytics>";
-
-        // perform checks for valid xml and throw exception if needed
-        $simpleXml = @simplexml_load_string($xml);
-        if ($simpleXml === false) {
-            throw new BackendException('The xml of the cache file is invalid.');
-        }
-
-        // store
-        $fs = new Filesystem();
-        $fs->dumpFile(
-            BACKEND_CACHE_PATH . '/Analytics/' . $startTimestamp . '_' . $endTimestamp . '.xml',
-            $xml
-        );
+        $cacheBuilder = new CacheBuilder();
+        $cacheBuilder->buildCache($data, $startTimestamp, $endTimestamp);
     }
 }

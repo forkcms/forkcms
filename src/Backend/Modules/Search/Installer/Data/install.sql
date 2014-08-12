@@ -4,8 +4,9 @@ CREATE TABLE IF NOT EXISTS `search_index` (
  `field` varchar(64) NOT NULL,
  `value` text NOT NULL,
  `language` varchar(5) NOT NULL,
+ `site_id` int(11) NOT NULL,
  `active` enum('N','Y') NOT NULL default 'N',
- PRIMARY KEY (`module`,`other_id`,`field`,`language`),
+ PRIMARY KEY (`module`,`other_id`,`field`,`language`, `site_id`),
  FULLTEXT KEY `value` (`value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
 
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `search_statistics` (
  `id` int(11) NOT NULL auto_increment,
  `term` varchar(255) NOT NULL,
  `language` varchar(5) NOT NULL,
+ `site_id` int(11) NOT NULL,
  `time` datetime NOT NULL,
  `data` text,
  `num_results` int(11) default NULL,

@@ -561,7 +561,7 @@ class Header extends FrontendBaseObject
         $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
         $this->tpl->assign(
             'siteTitle',
-            (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) Model::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE)
         );
     }
 
@@ -597,14 +597,17 @@ class Header extends FrontendBaseObject
         // get the data
         $siteHTMLHeader = (string) Model::getModuleSetting('Core', 'site_html_header', null);
         $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
-        $webPropertyId = Model::getModuleSetting('Analytics', 'web_property_id', null);
+        $webPropertyIds = Model::getModuleSetting('Analytics', 'web_property_ids', array());
         $type = Model::getModuleSetting('Analytics', 'tracking_type', 'universal_analytics');
+        $siteId = Model::get('current_site')->getId();
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if (
-            $webPropertyId != '' &&
-            strpos($siteHTMLHeader, $webPropertyId) === false &&
-            strpos($siteHTMLFooter, $webPropertyId) === false
+            !empty($webPropertyIds)
+            && isset($webPropertyIds[$siteId])
+            && $webPropertyIds[$siteId] != ''
+            &&strpos($siteHTMLHeader, $webPropertyIds[$siteId]) === false
+            && strpos($siteHTMLFooter, $webPropertyIds[$siteId]) === false
         ) {
             $anonymize = (
                 Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
@@ -615,7 +618,7 @@ class Header extends FrontendBaseObject
                 case 'classic_analytics':
                     $trackingCode = '<script>
                                         var _gaq = _gaq || [];
-                                        _gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+                                        _gaq.push([\'_setAccount\', \'' . $webPropertyIds[$siteId] . '\']);
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
@@ -633,7 +636,7 @@ class Header extends FrontendBaseObject
                 case 'display_advertising':
                     $trackingCode = '<script>
                                         var _gaq = _gaq || [];
-                                        _gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
+                                        _gaq.push([\'_setAccount\', \'' . $webPropertyIds[$siteId] . '\']);
                                         _gaq.push([\'_setDomainName\', \'none\']);
                                         _gaq.push([\'_trackPageview\']);
                                     ';
@@ -655,7 +658,7 @@ class Header extends FrontendBaseObject
                                       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                                       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
                                       })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
-                                      ga(\'create\', \'' . $webPropertyId . '\', \'' . $url->getHost() . '\');
+                                      ga(\'create\', \'' . $webPropertyIds[$siteId] . '\', \'' . $url->getHost() . '\');
                                     ';
 
                     if ($anonymize) {
@@ -674,6 +677,8 @@ class Header extends FrontendBaseObject
 
         // store language
         $this->jsData['FRONTEND_LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->jsData['site_id'] = Model::get('current_site')->getId();
+        $this->jsData['main_site_id'] = Model::get('multisite')->getMainSiteId();
 
         // encode and add
         $jsData = json_encode($this->jsData);
@@ -939,8 +944,9 @@ class Header extends FrontendBaseObject
             if (empty($value)) {
                 $this->pageTitle = Model::getModuleSetting(
                     'Core',
-                    'site_title_' . FRONTEND_LANGUAGE,
-                    SITE_DEFAULT_TITLE
+                    'site_title',
+                    SITE_DEFAULT_TITLE,
+                    FRONTEND_LANGUAGE
                 );
             } else {
                 // if the current page title is empty we should add the site title
@@ -948,8 +954,9 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' -  ' .
                                        Model::getModuleSetting(
                                            'Core',
-                                           'site_title_' . FRONTEND_LANGUAGE,
-                                           SITE_DEFAULT_TITLE
+                                           'site_title',
+                                           SITE_DEFAULT_TITLE,
+                                           FRONTEND_LANGUAGE
                                        );
                 } else {
                     // prepend the value to the current page title

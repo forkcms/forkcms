@@ -109,13 +109,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -133,6 +127,16 @@ class Language
 
         // otherwise return the key in label-format
         return '{$err' . \SpoonFilter::toCamelCase($module) . $key . '}';
+    }
+
+    protected static function addErrors($errors)
+    {
+        foreach ($errors as $module => $translations) {
+            if (!isset(self::$err[$module])) {
+                self::$err[$module] = array();
+            }
+            self::$err[$module] = array_merge(self::$err[$module], $translations);
+        }
     }
 
     /**
@@ -188,13 +192,7 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -212,6 +210,32 @@ class Language
 
         // otherwise return the key in label-format
         return '{$lbl' . \SpoonFilter::toCamelCase($module) . $key . '}';
+    }
+
+    /**
+     * Fetches the module from the url or falls back to core
+     *
+     * @return string
+     */
+    public static function getModule()
+    {
+        if (BackendModel::getContainer()->has('url')) {
+            return BackendModel::getContainer()->get('url')->getModule();
+        } elseif (isset($_GET['module']) && $_GET['module'] != '') {
+            return (string) $_GET['module'];
+        } else {
+            return 'Core';
+        }
+    }
+
+    protected static function addLabels($labels)
+    {
+        foreach ($labels as $module => $translations) {
+            if (!isset(self::$lbl[$module])) {
+                self::$lbl[$module] = array();
+            }
+            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
+        }
     }
 
     /**
@@ -234,13 +258,7 @@ class Language
     public static function getMessage($key, $module = null)
     {
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
-            } elseif (isset($_GET['module']) && $_GET['module'] != '') {
-                $module = (string) $_GET['module'];
-            } else {
-                $module = 'Core';
-            }
+            $module = self::getModule();
         }
 
         $key = \SpoonFilter::toCamelCase((string) $key);
@@ -258,6 +276,16 @@ class Language
 
         // otherwise return the key in label-format
         return '{$msg' . \SpoonFilter::toCamelCase($module) . $key . '}';
+    }
+
+    protected static function addMessages($messages)
+    {
+        foreach ($messages as $module => $translations) {
+            if (!isset(self::$msg[$module])) {
+                self::$msg[$module] = array();
+            }
+            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
+        }
     }
 
     /**
@@ -306,18 +334,15 @@ class Language
      * It will require the correct file and init the needed vars
      *
      * @param string $language The language to load.
+     * @param int $siteId The id of the site to load
      */
-    public static function setLocale($language)
+    public static function setLocale($language, $siteId)
     {
         $language = (string) $language;
+        $siteId = (int) $siteId;
 
-        // validate file, generate it if needed
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.php')) {
-            BackendLocaleModel::buildCache('en', APPLICATION);
-        }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
-            BackendLocaleModel::buildCache($language, APPLICATION);
-        }
+        // rebuild cache files if needed
+        self::checkLocaleCache($language, $siteId);
 
         // store
         self::$currentInterfaceLanguage = $language;
@@ -329,37 +354,58 @@ class Language
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
-        // init vars
-        $err = array();
-        $lbl = array();
-        $msg = array();
+        self::readLocaleCache($language, $siteId);
+    }
 
-        // set English translations, they'll be the fallback
-        require BACKEND_CACHE_PATH . '/Locale/en.php';
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+    /**
+     * Checks if the cache is build for the wanted locale and fallbacks
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function checkLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
+
+        // validate files, generate it if needed
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php')) {
+            BackendLocaleModel::buildCache('en', $mainSiteId, APPLICATION);
+        }
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php')) {
+            BackendLocaleModel::buildCache($language, $mainSiteId, APPLICATION);
+        }
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php')) {
+            BackendLocaleModel::buildCache($language, $siteId, APPLICATION);
+        }
+    }
+
+    /**
+     * Reads the locale from the cache and stores it in memory
+     *
+     * @param string $language
+     * @param int $siteId
+     */
+    protected static function readLocaleCache($language, $siteId)
+    {
+        $mainSiteId = Model::get('multisite')->getMainSiteId();
+
+        // set English translations for main site, they'll be the fallback
+        require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_en.php';
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
+
+        // get the wanted language for the main site, they'll be the fallback
+        require BACKEND_CACHE_PATH . '/Locale/' . $mainSiteId . '_' . $language . '.php';
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
 
         // overwrite with the requested language's translations
-        require BACKEND_CACHE_PATH . '/Locale/' . $language . '.php';
-        foreach ($err as $module => $translations) {
-            if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
-            }
-            self::$err[$module] = array_merge(self::$err[$module], $translations);
-        }
-        foreach ($lbl as $module => $translations) {
-            if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
-            }
-            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
-        }
-        foreach ($msg as $module => $translations) {
-            if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
-            }
-            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
-        }
+        require BACKEND_CACHE_PATH . '/Locale/' . $siteId . '_' . $language . '.php';
+        self::addErrors($err);
+        self::addLabels($lbl);
+        self::addMessages($msg);
     }
 
     /**

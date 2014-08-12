@@ -48,14 +48,17 @@ class Index extends BackendBaseActionIndex
         $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // check if the cached files exists
-        if (!is_file(PATH_WWW . '/src/Frontend/Cache/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
-        }
-        if (!is_file(
-            PATH_WWW . '/src/Frontend/Cache/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
-        )
+        $language = BL::getWorkingLanguage();
+        $siteId = BackendModel::get('current_site')->getid();
+        if (
+            !is_file(
+                FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '_' . $siteId . '.js'
+            ) ||
+            !is_file(
+                FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '_' . $siteId . '.js'
+            )
         ) {
-            BackendPagesModel::buildCache(BL::getWorkingLanguage());
+            BackendPagesModel::buildCache($language, $siteId);
         }
 
         // load the dgRecentlyEdited
@@ -76,7 +79,12 @@ class Index extends BackendBaseActionIndex
         // create datagrid
         $this->dgDrafts = new BackendDataGridDB(
             BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS,
-            array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage())
+            array(
+                'draft',
+                BackendAuthentication::getUser()->getUserId(),
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+            )
         );
 
         // hide columns
@@ -133,7 +141,12 @@ class Index extends BackendBaseActionIndex
         // create dgRecentlyEdited
         $this->dgRecentlyEdited = new BackendDataGridDB(
             BackendPagesModel::QRY_BROWSE_RECENT,
-            array('active', BL::getWorkingLanguage(), 7)
+            array(
+                'active',
+                BL::getWorkingLanguage(),
+                $this->get('current_site')->getId(),
+                7
+            )
         );
 
         // disable paging

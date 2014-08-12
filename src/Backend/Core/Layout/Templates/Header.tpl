@@ -13,6 +13,15 @@
 						</li>
 					{/option:debug}
 
+					{option:hasMultipleSites}
+						<li>
+							<select id="jsWorkingSite">
+								{iteration:workingSites}
+									<option{option:workingSites.selected} selected="selected"{/option:workingSites.selected} value="{$workingSites.full_url}">{$workingSites.domain}</option>
+								{/iteration:workingSites}
+							</select>
+						</li>
+					{/option:hasMultipleSites}
 					{option:SITE_MULTILANGUAGE}
 					{option:workingLanguages}
 						<li>

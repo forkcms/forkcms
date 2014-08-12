@@ -79,6 +79,7 @@ class Add extends BackendBaseActionAdd
                 $item['user_id'] = BackendAuthentication::getUser()->getUserId();
                 $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
                 $item['language'] = BL::getWorkingLanguage();
+                $item['site_id'] = $this->get('current_site')->getId();
                 $item['title'] = $fields['title']->getValue();
                 $item['text'] = $fields['text']->getValue();
                 $item['hidden'] = $fields['hidden']->getValue() ? 'N' : 'Y';

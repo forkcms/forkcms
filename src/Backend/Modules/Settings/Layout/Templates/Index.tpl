@@ -30,7 +30,15 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblScripts|ucfirst}</h3>
+			<div class="oneLiner">
+				<h3>{$lblScripts|ucfirst}</h3>
+				{option:hasMultipleSites}
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpMultisiteSettings}</p>
+					</div>
+				{/option:hasMultipleSites}
+			</div>
 		</div>
 		<div class="options">
 			<div class="textareaHolder">

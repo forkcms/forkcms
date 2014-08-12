@@ -46,7 +46,7 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE)
+            Model::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE)
         );
 
         // set feed properties

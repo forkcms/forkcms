@@ -339,13 +339,13 @@ class Model
     }
 
     /**
-     * Get extras
+     * Fetches all extras from the database
      *
      * @return array
      */
-    public static function getExtras()
+    protected static function getAllExtras()
     {
-        $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
+        return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.module, i.type, i.label, i.data
              FROM modules_extras AS i
              INNER JOIN modules AS m ON i.module = m.name
@@ -354,26 +354,67 @@ class Model
             array('N'),
             'id'
         );
-        $itemsToRemove = array();
+    }
+
+    /**
+     * Filters away extras for other languages or sites
+     *
+     * @param array $extras
+     * @return array
+     */
+    protected static function filterExtras($extras)
+    {
+        foreach ($extras as $key => $extra) {
+            $extra['data'] = @unserialize($extra['data']);
+            if (isset($extra['data']['language']) && $extra['data']['language'] != BL::getWorkingLanguage()) {
+                unset($extras[$key]);
+            }
+            if (isset($extra['data']['site_id']) && $extra['data']['site_id'] != BackendModel::get('current_site')->getId()) {
+                unset($extras[$key]);
+            }
+        }
+
+        return $extras;
+    }
+
+    /**
+     * Fetches the name for an extra
+     *
+     * @param array $extra
+     * @return string
+     */
+    public static function getExtraName($extra)
+    {
+        $name = \SpoonFilter::ucfirst(BL::lbl($extra['label']));
+        if (isset($extra['data']['extra_label'])) {
+            $name = $extra['data']['extra_label'];
+        }
+        if (isset($extra['data']['label_variables'])) {
+            $name = vsprintf($name, $extra['data']['label_variables']);
+        }
+
+        return $name;
+    }
+
+    /**
+     * Get extras
+     *
+     * @return array
+     */
+    public static function getExtras()
+    {
+        $extras = self::getAllExtras();
+        $extras = self::filterExtras($extras);
 
         foreach ($extras as $id => &$row) {
             $row['data'] = @unserialize($row['data']);
-            if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
-                $itemsToRemove[] = $id;
-            }
 
             // set URL if needed, we use '' instead of null, because otherwise the module of the current action (modules) is used.
             if (!isset($row['data']['url'])) {
                 $row['data']['url'] = BackendModel::createURLForAction('', $row['module']);
             }
 
-            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
-            if (isset($row['data']['extra_label'])) {
-                $name = $row['data']['extra_label'];
-            }
-            if (isset($row['data']['label_variables'])) {
-                $name = vsprintf($name, $row['data']['label_variables']);
-            }
+            $name = self::getExtraName($row);
 
             // add human readable name
             $module = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
@@ -383,13 +424,6 @@ class Model
             $row['path'] = \SpoonFilter::ucfirst(
                 BL::lbl(\SpoonFilter::toCamelCase('ExtraType_' . $row['type']))
             ) . ' › ' . $module . ($module != $name ? ' › ' . $name : '');
-        }
-
-        // any items to remove?
-        if (!empty($itemsToRemove)) {
-            foreach ($itemsToRemove as $id) {
-                unset($extras[$id]);
-            }
         }
 
         return $extras;
@@ -402,23 +436,12 @@ class Model
      */
     public static function getExtrasData()
     {
-        $extras = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id, i.module, i.type, i.label, i.data
-             FROM modules_extras AS i
-             INNER JOIN modules AS m ON i.module = m.name
-             WHERE i.hidden = ?
-             ORDER BY i.module, i.sequence',
-            array('N')
-        );
+        $extras = self::getAllExtras();
+        $extras = self::filterExtras($extras);
         $values = array();
 
         foreach ($extras as $row) {
             $row['data'] = @unserialize($row['data']);
-
-            // remove items that are not for the current language
-            if (isset($row['data']['language']) && $row['data']['language'] != BL::getWorkingLanguage()) {
-                continue;
-            }
 
             // set URL if needed
             if (!isset($row['data']['url'])) {
@@ -428,13 +451,7 @@ class Model
                 );
             }
 
-            $name = \SpoonFilter::ucfirst(BL::lbl($row['label']));
-            if (isset($row['data']['extra_label'])) {
-                $name = $row['data']['extra_label'];
-            }
-            if (isset($row['data']['label_variables'])) {
-                $name = vsprintf($name, $row['data']['label_variables']);
-            }
+            $name = self::getExtraName($row);
             $moduleName = \SpoonFilter::ucfirst(BL::lbl(\SpoonFilter::toCamelCase($row['module'])));
 
             if (!isset($values[$row['module']])) {

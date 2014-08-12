@@ -65,6 +65,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         $item = array(
             'id' => $itemId,
             'language' => BL::getWorkingLanguage(),
+            'site_id' => $this->get('current_site')->getId(),
             'show_overview' => ($showOverview) ? 'Y' : 'N'
         );
         BackendLocationModel::update($item);

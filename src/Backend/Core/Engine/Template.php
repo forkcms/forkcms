@@ -211,10 +211,8 @@ class Template extends \SpoonTemplate
         // get all defined constants
         $constants = get_defined_constants(true);
 
-        // init var
-        $realConstants = array();
-
         // remove protected constants aka constants that should not be used in the template
+        $realConstants = array();
         foreach ($constants['user'] as $key => $value) {
             if (!in_array($key, $notPublicConstants)) {
                 $realConstants[$key] = $value;
@@ -228,6 +226,16 @@ class Template extends \SpoonTemplate
 
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
+        $this->assign('SITE_ID', BackendModel::get('current_site')->getId());
+        $this->assign('MAIN_SITE_ID', BackendModel::get('multisite')->getMainSiteId());
+        $this->assign(
+            'hasMultipleSites',
+            (count(BackendModel::get('multisite')->getSites()) > 1)
+        );
+        $this->assign(
+            'isMainSite',
+            BackendModel::get('current_site')->isMainSite()
+        );
 
         if ($this->URL instanceof Url) {
             // assign the current module
@@ -251,7 +259,7 @@ class Template extends \SpoonTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            BackendModel::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, Language::getWorkingLanguage())
         );
     }
 

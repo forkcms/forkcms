@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS `analytics_keywords` (
  `id` int(11) NOT NULL auto_increment,
+ `site_id` int(11) NOT NULL,
  `keyword` varchar(255) NOT NULL,
  `entrances` int(11) NOT NULL,
  `date` datetime NOT NULL,
@@ -9,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `analytics_keywords` (
 
 CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
  `id` int(11) NOT NULL auto_increment,
+ `site_id` int(11) NOT NULL,
  `page_path` varchar(255) NOT NULL,
  `entrances` int(11) NOT NULL,
  `bounces` int(11) NOT NULL,
@@ -22,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `analytics_landing_pages` (
 
 CREATE TABLE IF NOT EXISTS `analytics_pages` (
  `id` int(11) NOT NULL auto_increment,
+ `site_id` int(11) NOT NULL,
  `page` varchar(255) NOT NULL,
  `date_viewed` datetime NOT NULL,
  PRIMARY KEY (`id`)
@@ -30,6 +33,7 @@ CREATE TABLE IF NOT EXISTS `analytics_pages` (
 
 CREATE TABLE IF NOT EXISTS `analytics_referrers` (
  `id` int(11) NOT NULL auto_increment,
+ `site_id` int(11) NOT NULL,
  `referrer` varchar(255) NOT NULL,
  `entrances` int(11) NOT NULL,
  `date` datetime NOT NULL,

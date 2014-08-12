@@ -250,7 +250,7 @@
         <translation language="es"><![CDATA[La id de tu aplicación Facebook]]></translation>
         <translation language="el"><![CDATA[Το id της εφαρμογής σας στο Facebook.]]></translation>
       </item>
-      <item type="message" name="HelpFacebookApplicationSecret">
+      <item type="messag e" name="HelpFacebookApplicationSecret">
         <translation language="nl"><![CDATA[De App Secret van je Facebook-toepassing.]]></translation>
         <translation language="en"><![CDATA[The secret of your Facebook application.]]></translation>
         <translation language="it"><![CDATA[La chiave segreta della tua applicazione Facebook]]></translation>
@@ -486,6 +486,13 @@
         <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
       </item>
     </Settings>
+    <Core>
+      <item type="message" name="HelpMultisiteSettings">
+        <translation language="nl"><![CDATA[Deze instellingen kunnen verschillen per domein. Vergeet ze bij de andere domeinen niet in te stellen.]]></translation>
+        <translation language="en"><![CDATA[These settings can differ per domain. Don't forget to configure them for the other domains.]]></translation>
+        <translation language="fr"><![CDATA[Ces paramètres peuvent différer par domaine. N'oublie pas de les configurer pour les autres domaines.]]></translation>
+      </item>
+    </Core>
   </Backend>
 </locale>
 

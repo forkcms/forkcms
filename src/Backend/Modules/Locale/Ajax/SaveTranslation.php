@@ -44,6 +44,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         $type = \SpoonFilter::getPostValue('type', BackendModel::getContainer()->get('database')->getEnumValues('locale', 'type'), null, 'string');
         $application = \SpoonFilter::getPostValue('application', array('Backend', 'Frontend'), null, 'string');
         $value = \SpoonFilter::getPostValue('value', null, null, 'string');
+        $siteId = BackendModel::get('current_site')->getId();
 
         // validate values
         if (trim($value) == '' || $language == '' || $module == '' || $type == '' || $application == '' || ($application == 'Frontend' && $module != 'Core')) $error = BL::err('InvalidValue');
@@ -55,6 +56,7 @@ class SaveTranslation extends BackendBaseAJAXAction
         if (!isset($error)) {
             // build item
             $item['language'] = $language;
+            $item['site_id'] = $siteId;
             $item['module'] = $module;
             $item['name'] = $name;
             $item['type'] = $type;

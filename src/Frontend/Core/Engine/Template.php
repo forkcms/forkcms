@@ -287,11 +287,13 @@ class Template extends \SpoonTemplate
         // aliases
         $this->assign('LANGUAGE', FRONTEND_LANGUAGE);
         $this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
+        $this->assign('SITE_ID', Model::get('current_site')->getId());
+        $this->assign('MAIN_SITE_ID', Model::get('multisite')->getMainSiteId());
 
         // settings
         $this->assign(
             'SITE_TITLE',
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            Model::getModuleSetting('Core', 'site_title', SITE_DEFAULT_TITLE, FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
 
         // facebook stuff

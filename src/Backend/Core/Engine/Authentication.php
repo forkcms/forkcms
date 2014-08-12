@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
 use Backend\Modules\Users\Engine\Model as BackendUsersModel;
 
 /**
@@ -35,6 +36,13 @@ class Authentication
      * @var    array
      */
     private static $allowedModules = array();
+
+    /**
+     * Allowed site language combinations
+     *
+     * @var array
+     */
+    private static $allowedSiteLanguages = array();
 
     /**
      * A userobject for the current authenticated user
@@ -262,6 +270,34 @@ class Authentication
 
         // fallback
         return false;
+    }
+
+    /**
+     * Is the given site language combinations allowed for the current user
+     *
+     * @param int $siteId The site to check for.
+     * @param string $language The language to check for
+     * @return bool
+     */
+    public static function isAllowedLanguage($siteId, $language)
+    {
+        // god user can touch every language
+        if (self::getUser()->isGod()) {
+            return true;
+        }
+
+        // do we already know something?
+        if (empty(self::$allowedSiteLanguages)) {
+            // we fetch the concat siteId-language combos for the correct group
+            foreach (self::getUser()->getGroups() as $groupId) {
+                self::$allowedSiteLanguages = array_merge(
+                    self::$allowedSiteLanguages,
+                    BackendGroupsModel::getAllowedLanguages($groupId)
+                );
+            }
+        }
+
+        return in_array($siteId . '-' . $language, self::$allowedSiteLanguages);
     }
 
     /**

@@ -156,7 +156,6 @@ class Step6 extends Step
                 (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http'
             ,
-            '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => \SpoonSession::get('multiple_languages') ? 'true' : 'false',
             '<site-default-language>' => \SpoonSession::get('default_language'),

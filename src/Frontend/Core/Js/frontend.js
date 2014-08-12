@@ -395,15 +395,32 @@ jsFrontend.locale =
 	// init, something like a constructor
 	init: function()
 	{
+		// fallback to headquarter language
 		$.ajax({
-			url: '/src/Frontend/Cache/Locale/' + jsFrontend.current.language + '.json',
+			url: '/src/Frontend/Cache/Locale/' + jsFrontend.data.get('main_site_id') + '_' + jsFrontend.current.language + '.json',
 			type: 'GET',
 			dataType: 'json',
 			async: false,
 			success: function(data)
 			{
 				jsFrontend.locale.data = data;
-				jsFrontend.locale.initialized = true;
+
+				// overwrite with our current site and language
+				$.ajax({
+					url: '/src/Frontend/Cache/Locale/' + jsFrontend.data.get('site_id') + '_' + jsFrontend.current.language + '.json',
+					type: 'GET',
+					dataType: 'json',
+					async: false,
+					success: function(data)
+					{
+						jsFrontend.locale.data = $.extend(true, jsFrontend.locale.data, data);
+						jsFrontend.locale.initialized = true;
+					},
+					error: function(jqXHR, textStatus, errorThrown)
+					{
+						throw 'Regenerate your locale-files.';
+					}
+				});
 			},
 			error: function(jqXHR, textStatus, errorThrown)
 			{

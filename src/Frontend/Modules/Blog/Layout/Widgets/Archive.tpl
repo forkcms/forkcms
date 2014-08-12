@@ -3,7 +3,7 @@
 	- {$widgetBlogArchive}:
 *}
 
-{cache:{$LANGUAGE}_blogWidgetArchiveCache}
+{cache:{$cacheName}}
 	{option:widgetBlogArchive}
 		<section id="blogArchiveWidget" class="mod">
 			<div class="inner">
@@ -38,4 +38,4 @@
 			</div>
 		</section>
 	{/option:widgetBlogArchive}
-{/cache:{$LANGUAGE}_blogWidgetArchiveCache}
+{/cache:{$cacheName}}

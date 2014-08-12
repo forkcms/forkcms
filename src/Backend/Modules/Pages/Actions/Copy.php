@@ -12,7 +12,7 @@ namespace Backend\Modules\Pages\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Exception as BackendException;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Modules\Pages\Engine\Copier as PagesCopier;
 
 /**
  * BackendPagesCopy
@@ -34,6 +34,14 @@ class Copy extends BackendBaseActionIndex
     private $to;
 
     /**
+     * The sites
+     *
+     * @var int
+     */
+    private $fromSite;
+    private $toSite;
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -41,11 +49,23 @@ class Copy extends BackendBaseActionIndex
         // call parent, this will probably add some general CSS/JS or other required files
         parent::execute();
 
-        // get parameters
+        $this->getParameters();
+
+        $copier = new PagesCopier(BackendModel::get('database'));
+        $copier->copy($this->from, $this->to, $this->fromSite, $this->toSite);
+
+        // redirect
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . urlencode($this->to));
+    }
+
+    protected function getParameters()
+    {
         $this->from = $this->getParameter('from');
         $this->to = $this->getParameter('to');
+        $this->fromSite = $this->getParameter('from_site');
+        $this->toSite = $this->getParameter('to_site');
 
-        // validate
+        // validate required parameters
         if ($this->from == '') {
             throw new BackendException('Specify a from-parameter.');
         }
@@ -53,10 +73,12 @@ class Copy extends BackendBaseActionIndex
             throw new BackendException('Specify a to-parameter.');
         }
 
-        // copy pages
-        BackendPagesModel::copy($this->from, $this->to);
-
-        // redirect
-        $this->redirect(BackendModel::createURLForAction('Index') . '&report=copy-added&var=' . urlencode($this->to));
+        // if no site_id's are specified, let's copy in the current site.
+        if (empty($this->fromSite)) {
+            $this->fromSite = $this->get('current_site')->getId();
+        }
+        if (empty($this->toSite)) {
+            $this->toSite = $this->get('current_site')->getId();
+        }
     }
 }

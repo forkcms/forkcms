@@ -27,23 +27,19 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'search' as a module
         $this->addModule('Search');
 
-        // import locale
+        // load database scheme and locale
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
         // general settings
         $this->setSetting('Search', 'overview_num_items', 10);
         $this->setSetting('Search', 'validate_search', true);
 
-        // module rights
+        // rights
         $this->setModuleRights(1, 'Search');
-
-        // action rights
         $this->setActionRights(1, 'Search', 'AddSynonym');
         $this->setActionRights(1, 'Search', 'EditSynonym');
         $this->setActionRights(1, 'Search', 'DeleteSynonym');
@@ -51,7 +47,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Search', 'Statistics');
         $this->setActionRights(1, 'Search', 'Synonyms');
 
-        // set navigation
+        // backend navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigationSearchId = $this->setNavigation($navigationModulesId, 'Search');
         $this->setNavigation($navigationSearchId, 'Statistics', 'search/statistics');
@@ -72,33 +68,25 @@ class Installer extends ModuleInstaller
         $this->insertExtra('Search', 'widget', 'SearchForm', 'Form', null, 'N', 2001);
 
         // loop languages
-        foreach ($this->getLanguages() as $language) {
-            // check if a page for search already exists in this language
-            // @todo refactor this nasty if statement...
-            if (!(bool) $this->getDB()->getVar(
-                'SELECT 1
-                 FROM pages AS p
-                 INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-                 WHERE b.extra_id = ? AND p.language = ?
-                 LIMIT 1',
-                array($searchId, $language)
-            )
-            ) {
-                // insert search
-                $this->insertPage(
-                    array(
-                         'title' => \SpoonFilter::ucfirst($this->getLocale('Search', 'Core', $language, 'lbl', 'Frontend')),
-                         'type' => 'root',
-                         'language' => $language
-                    ),
-                    null,
-                    array('extra_id' => $searchId, 'position' => 'main')
-                );
+        foreach ($this->getSites() as $site) {
+            foreach ($this->getLanguages($site['id']) as $language) {
+                // check if a page for search already exists in this language
+                if (!(bool) $this->getDB()->getVar(
+                    'SELECT 1
+                     FROM pages AS p
+                     INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+                     WHERE b.extra_id = ? AND p.language = ? AND p.site_id = ?
+                     LIMIT 1',
+                    array($searchId, $language, $site['id'])
+                )
+                ) {
+                    $this->insertSearchPage($language, $site['id'], $searchId);
+                }
             }
         }
 
         // activate search on 'pages'
-        $this->searchPages();
+        $this->makePagesSearchable();
 
         // create module cache path
         $fs = new Filesystem();
@@ -108,19 +96,49 @@ class Installer extends ModuleInstaller
     }
 
     /**
+     * Inserts page for the search module
+     *
+     * @param string $language
+     * @param int $siteId
+     * @param ing $searchId
+     */
+    protected function insertSearchPage($language, $siteId, $searchId)
+    {
+        $this->insertPage(
+            array(
+                'title'    => \SpoonFilter::ucfirst(
+                    $this->getLocale(
+                        'Search',
+                        'Core',
+                        $language,
+                        'lbl',
+                        'Frontend'
+                    )
+                ),
+                'type'     => 'root',
+                'language' => $language,
+                'site_id'  => $siteId,
+            ),
+            null,
+            array(
+                'extra_id' => $searchId,
+                'position' => 'main',
+            )
+        );
+    }
+
+    /**
      * Activate search on pages
      */
-    private function searchPages()
+    private function makePagesSearchable()
     {
         // make 'pages' searchable
         $this->makeSearchable('Pages');
 
-        // get db instance
-        $db = $this->getDB();
-
         // get existing menu items
+        $db = $this->getDB();
         $menu = $db->getRecords(
-            'SELECT id, revision_id, language, title
+            'SELECT id, revision_id, language, site_id, title
              FROM pages
              WHERE status = ?',
             array('active')
@@ -130,7 +148,9 @@ class Installer extends ModuleInstaller
         foreach ($menu as $page) {
             // get blocks
             $blocks = $db->getColumn(
-                'SELECT html FROM pages_blocks WHERE revision_id = ?',
+                'SELECT html
+                 FROM pages_blocks
+                 WHERE revision_id = ?',
                 array($page['revision_id'])
             );
 
@@ -139,25 +159,36 @@ class Installer extends ModuleInstaller
 
             // add page to search index
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
                 array(
                      'Pages',
                      (int) $page['id'],
                      (string) $page['language'],
+                     (int) $page['site_id'],
                      'title',
                      $page['title'],
                      'Y',
                      $page['title'],
-                     'Y'
+                     'Y',
                 )
             );
             $db->execute(
-                'INSERT INTO search_index (module, other_id, language, field, value, active)
-                 VALUES (?, ?, ?, ?, ?, ?)
+                'INSERT INTO search_index (module, other_id, language, site_id, field, value, active)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)
                  ON DUPLICATE KEY UPDATE value = ?, active = ?',
-                array('Pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y')
+                array(
+                    'Pages',
+                    (int) $page['id'],
+                    (string) $page['language'],
+                    (int) $page['site_id'],
+                    'text',
+                    $text,
+                    'Y',
+                    $text,
+                    'Y',
+                )
             );
         }
     }
