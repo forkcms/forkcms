@@ -12,6 +12,9 @@ Improvements:
 * Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
 * Core: handle errors in debug mode by the symfony error handler.
 * Analytics: implement event tracking for universal analytics
+* Faq: BackendFaqModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* ContentBlocks: BackendContentBlocksModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* Location: BackendLocationModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
 
 Bugfixes:
 
