@@ -35,6 +35,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
      * @var string
      */
     protected static $content;
+    protected static $version;
 
     /**
      * Initializes the entire API; extract class+method from the request, call, and output.
@@ -46,6 +47,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
     {
         // simulate $_REQUEST
         $parameters = array_merge($_GET, $_POST);
+        self::$version = $this->getContainer()->getParameter('fork.version');
 
         // validate parameters
         if (!isset($parameters['method'])) {
@@ -452,7 +454,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $JSON = array();
         $JSON['meta']['status_code'] = $statusCode;
         $JSON['meta']['status'] = ($statusCode === 200) ? 'ok' : 'error';
-        $JSON['meta']['version'] = FORK_VERSION;
+        $JSON['meta']['version'] = self::$version;
         $JSON['meta']['endpoint'] = SITE_URL . '/api/' . $version;
 
         // add data
@@ -498,7 +500,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         // add attributes
         $root->setAttribute('status_code', $statusCode);
         $root->setAttribute('status', ($statusCode == 200) ? 'ok' : 'error');
-        $root->setAttribute('version', FORK_VERSION);
+        $root->setAttribute('version', self::$version);
         $root->setAttribute('endpoint', SITE_URL . '/api/' . $version);
 
         // append

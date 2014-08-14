@@ -40,7 +40,9 @@ class FrontendIcal extends \SpoonICal
         $properties['X-WR-CALDESC'] = $description;
         $properties['X-WR-TIMEZONE'] = date_default_timezone_get();
 
-        $this->setProductIdentifier('Fork v' . FORK_VERSION);
+        $this->setProductIdentifier(
+            'Fork v' . FrontendModel::getContainer()->getParameter('fork.version')
+        );
         $this->setXProperties($properties);
         $this->setTitle($title);
         $this->setFilename(str_replace('-', '_', CommonUri::getUrl($title)) . '.ics');
