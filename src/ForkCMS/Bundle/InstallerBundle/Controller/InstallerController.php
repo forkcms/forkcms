@@ -15,24 +15,25 @@ class InstallerController extends Controller
         $requirementsChecker = $this->get('forkcms.requirements.checker');
         if ($requirementsChecker->passes()) {
             return $this->redirect($this->generateUrl('install_step2'));
-        } else {
-            $errors = $requirementsChecker->getErrors();
-            return $this->render(
-                'ForkCMSInstallerBundle:Installer:step1.html.twig',
-                array(
-                    'errors' => $errors,
-                    'hasErrors' => in_array(
-                        $requirementsChecker::STATUS_ERROR,
-                        $errors
-                    ),
-                    'hasWarnings' => in_array(
-                        $requirementsChecker::STATUS_WARNING,
-                        $errors
-                    ),
-                    'rootDir' => $this->container->getParameter('kernel.root_dir'),
-                )
-            );
         }
+
+        // not all requirements are met, render the errors in the template
+        $errors = $requirementsChecker->getErrors();
+        return $this->render(
+            'ForkCMSInstallerBundle:Installer:step1.html.twig',
+            array(
+                'errors' => $errors,
+                'hasErrors' => in_array(
+                    $requirementsChecker::STATUS_ERROR,
+                    $errors
+                ),
+                'hasWarnings' => in_array(
+                    $requirementsChecker::STATUS_WARNING,
+                    $errors
+                ),
+                'rootDir' => $this->container->getParameter('kernel.root_dir'),
+            )
+        );
     }
 
     public function step2Action()
