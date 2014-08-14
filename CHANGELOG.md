@@ -5,6 +5,7 @@ Improvements:
 * Profiles: mass import for profiles using a .csv added.
 * Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
 * Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
 
 Bugfixes:
 
