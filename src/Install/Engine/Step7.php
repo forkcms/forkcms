@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 use Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand;
+use Symfony\Bundle\FrameworkBundle\Command\AssetsInstallCommand;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 
@@ -129,6 +130,13 @@ class Step7 extends Step
         $command = new CacheClearCommand();
         $command->setContainer($this->getContainer());
         $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+
+        // install assets
+        $command = new AssetsInstallCommand();
+        $command->setContainer($this->getContainer());
+        $input = new ArrayInput(array('target' => PATH_WWW));
         $output = new NullOutput();
         $resultCode = $command->run($input, $output);
 
