@@ -11,6 +11,7 @@ Improvements:
   You can set dev environment with ````SetEnv FORK_ENV dev````
 * Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
 * Core: handle errors in debug mode by the symfony error handler.
+* Analytics: implement event tracking for universal analytics
 
 Bugfixes:
 
@@ -21,10 +22,6 @@ Bugfixes:
 
 3.7.3 (2014-08-08)
 --
-Improvements:
-
-* Analytics: implement event tracking for universal analytics
-
 Bugfixes:
 
 * Installer: make sure our database is initalized as utf8
