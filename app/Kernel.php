@@ -74,8 +74,5 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         define('SITE_DOMAIN', $container->getParameter('site.domain'));
         define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
         define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
-
-        define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
-        define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
     }
 }
