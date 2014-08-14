@@ -364,7 +364,7 @@ class Header extends Base\Object
 
         // some default stuff
         $this->jsData['debug'] = SPOON_DEBUG;
-        $this->jsData['site']['domain'] = SITE_DOMAIN;
+        $this->jsData['site']['domain'] = BackendModel::get('request')->getHost();
         $this->jsData['editor']['language'] = $interfaceLanguage;
         $this->jsData['interface_language'] = $interfaceLanguage;
 

@@ -151,7 +151,6 @@ class Step6 extends Step
                 addslashes(\SpoonSession::get('db_port')) :
                 3306
             ,
-            '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
             '<site-default-title>' => 'Fork CMS',
             '<site-multilanguage>' => \SpoonSession::get('multiple_languages') ? 'true' : 'false',
             '<site-default-language>' => \SpoonSession::get('default_language'),

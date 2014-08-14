@@ -71,7 +71,10 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
         define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
-        define('SITE_DOMAIN', $container->getParameter('site.domain'));
-        define('SITE_URL', $request->getScheme() . '://' . SITE_DOMAIN);
+        $siteUrl = $request->getScheme() . '://' . $request->getHost();
+        if ($request->getPort() !== 80) {
+            $siteUrl .= ':' . $request->getPort();
+        }
+        define('SITE_URL', $siteUrl);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Backend;
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -152,7 +154,12 @@ class Init extends \KernelLoader
             $headers .= "X-Mailer: SpoonLibrary Webmail\n";
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail(
+                SPOON_DEBUG_EMAIL,
+                'Exception Occurred (' . BackendModel::get('request')->getHost() . ')',
+                $output,
+                $headers
+            );
         }
 
         // build HTML for nice error
