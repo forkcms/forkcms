@@ -52,7 +52,8 @@ class InstallerController extends Controller
     public function noStepAction()
     {
         $this->checkInstall();
-        var_dump('no step');exit;
+
+        return $this->redirect($this->generateUrl('install_step1'));
     }
 
     protected function checkInstall()
