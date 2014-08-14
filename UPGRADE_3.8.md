@@ -1,4 +1,4 @@
-UPGRADE FROM 3.6 to 3.7
+UPGRADE FROM 3.7 to 3.8
 =======================
 
 ## FrameworkBundle
