@@ -1032,6 +1032,72 @@ class Model extends \BaseModel
     }
 
     /**
+     * Insert extra
+     *
+     * @param  string    $type           What type do you want to insert, 'homepage', 'block' or 'widget'.
+     * @param  string    $module         The module you are inserting this extra for.
+     * @param  string    $action         The action this extra will use.
+     * @param  string    $label          Label which will be used when you want to connect this block.
+     * @param  array     $data           Containing extra variables.
+     * @param  bool      $hidden         Should this extra be visible in frontend or not?
+     * @param  int       $sequence
+     * @return int       The new extra id
+     */
+    public static function insertExtra($type, $module, $action = null, $label = null, $data = null, $hidden = false, $sequence = null)
+    {
+        $type = (string) $type;
+        $module = (string) $module;
+
+        // if action and label are empty, fallback to module
+        $action = ($action == null) ? $module : (string) $action;
+        $label = ($label == null) ? $module : (string) $label;
+
+        // check if type is allowed
+        if (!in_array($type, array('homepage', 'block', 'widget'))) {
+            throw new BackendException(
+                'Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".'
+            );
+        }
+
+        // get database
+        $db = self::get('database');
+
+        // sequence not given
+        if ($sequence == null) {
+            // redefine sequence: get maximum sequence for module
+            $sequence = $db->getVar(
+                'SELECT MAX(i.sequence) + 1
+                 FROM modules_extras AS i
+                 WHERE i.module = ?',
+                array($module)
+            );
+
+            // sequence could not be found for module
+            if (is_null($sequence)) {
+                // redefine sequence: maximum sequence overall
+                $sequence = $db->getVar(
+                    'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
+                     FROM modules_extras AS i'
+                );
+            }
+        }
+
+        // build extra
+        $extra = array(
+            'module' => $module,
+            'type' => $type,
+            'label' => $label,
+            'action' => $action,
+            'data' => serialize((array) $data),
+            'hidden' => ($hidden) ? 'Y' : 'N',
+            'sequence' => $sequence
+        );
+
+        // return id for inserted extra
+        return $db->insert('modules_extras', $extra);
+    }
+
+    /**
      * Invalidate cache
      *
      * @param string $module   A specific module to clear the cache for.

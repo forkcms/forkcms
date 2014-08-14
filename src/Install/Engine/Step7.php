@@ -12,6 +12,9 @@ namespace Install\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
+use Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
@@ -121,6 +124,13 @@ class Step7 extends Step
 
         // show success message
         $this->showSuccess();
+
+        // clear cache, this will remove the cached container
+        $command = new CacheClearCommand();
+        $command->setContainer($this->getContainer());
+        $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
 
         // clear session
         \SpoonSession::destroy();

@@ -50,6 +50,9 @@ class Helper
              */
             // dropdown
             if ($field['type'] == 'dropdown') {
+                // values and labels are the same
+                $values = array_combine($values, $values);
+
                 // get index of selected item
                 $defaultIndex = array_search($defaultValues, $values, true);
                 if ($defaultIndex === false) {

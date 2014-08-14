@@ -1,13 +1,32 @@
 3.8.0 (xxxx-xx-xx)
 --
-
 Improvements:
 
+* Profiles: mass import for profiles using a .csv added.
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
+* Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
 * Debug mode and environment are set earlier in the response.
-  You can set debug mode with SetEnv FORK_DEBUG 1
-  You can set dev environment with SetEnv FORK_ENV dev
+  You can set debug mode with ````SetEnv FORK_DEBUG 1````
+  You can set dev environment with ````SetEnv FORK_ENV dev````
 * Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
 * Core: handle errors in debug mode by the symfony error handler.
+
+Bugfixes:
+
+* Core: event subscriptions did not get fired in the frontend.
+* Authentication: avoid unnecessary dabase calls for unauthenticated users.
+* Tags: make sure the same tag can't exist with and without a capital letter.
+
+
+3.7.3 (2014-08-08)
+--
+Bugfixes:
+
+* Installer: make sure our database is initalized as utf8
+* Installer: remove the cached container after installation
+
+>>>>>>> master
 
 3.7.2 (2014-07-31)
 --

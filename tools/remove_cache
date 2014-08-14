@@ -26,4 +26,7 @@ rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Logs/ ! -name ".gitignore" -type
 
 rm -f `find ${SCRIPT_PATH}/../app/cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
+${SCRIPT_PATH}/../app/console cache:clear
+${SCRIPT_PATH}/../app/console cache:clear --env=prod
+
 echo 'All done! Cache files removed.'
