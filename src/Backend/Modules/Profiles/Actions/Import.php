@@ -14,6 +14,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Backend\Core\Engine\Csv;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
@@ -47,10 +48,8 @@ class Import extends BackendBaseActionAdd
         // get group values for dropdown
         $ddmValues = BackendProfilesModel::getGroupsForDropDown($this->id);
 
-        // create form
+        // create form and elements
         $this->frm = new BackendForm('import');
-
-        // create elements
         $this->frm->addDropdown('group', $ddmValues);
         $this->frm->addFile('file');
         $this->frm->addCheckbox('overwrite_existing');
@@ -61,38 +60,31 @@ class Import extends BackendBaseActionAdd
      */
     private function validateForm()
     {
-        // is the form submitted?
         if ($this->frm->isSubmitted()) {
-            // cleanup the submitted fields, ignore fields that were added by hackers
             $this->frm->cleanupFields();
 
             // get fields
             $ddmGroup = $this->frm->getField('group');
             $fileFile = $this->frm->getField('file');
+            $csv = array();
 
-            // fields filled?
+            // validate input
             $ddmGroup->isFilled(BL::getError('FieldIsRequired'));
-
-            // name checks
             if ($fileFile->isFilled(BL::err('FieldIsRequired'))) {
-                // only xml files allowed
-                if ($fileFile->isAllowedExtension(array('csv'), sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))) {
-                    // load xml
-                    $csv = \SpoonFileCSV::fileToArray($fileFile->getTempFileName());
-
-                    // invalid csv
+                if ($fileFile->isAllowedExtension(
+                    array('csv'),
+                    sprintf(BL::getError('ExtensionNotAllowed'), 'csv'))
+                ) {
                     if ($csv === false) {
+                        $csv = Csv::fileToArray($fileFile->getTempFileName());
                         $fileFile->addError(BL::getError('InvalidCSV'));
                     }
                 }
             }
 
-            // no errors?
             if ($this->frm->isCorrect()) {
-                // should we overwrite existing?
-                $overwrite = ($this->frm->getField('overwrite_existing')->isChecked());
-
-                // import csv
+                // import the profiles
+                $overwrite = $this->frm->getField('overwrite_existing')->isChecked();
                 $statistics = BackendProfilesModel::importCsv(
                     $csv,
                     $ddmGroup->getValue(),
@@ -106,11 +98,12 @@ class Import extends BackendBaseActionAdd
                     array('statistics' => $statistics)
                 );
 
-                // init redirect url
-                $redirectUrl = BackendModel::createURLForAction('index');
-
-                // add message to redirect url
-                $redirectUrl .= '&report=' . (($overwrite) ? 'profiles-imported-and-updated' : 'profiles-imported');
+                // build redirect url with the right message
+                $redirectUrl = BackendModel::createURLForAction('index') . '&report=';
+                $redirectUrl .= ($overwrite) ?
+                    'profiles-imported-and-updated' :
+                    'profiles-imported'
+                ;
                 $redirectUrl .= '&var[]=' . $statistics['count']['inserted'];
                 $redirectUrl .= '&var[]=' . $statistics['count']['exists'];
 
