@@ -52,8 +52,6 @@ class AppKernel extends Kernel
         $fs = new Filesystem();
         if ($fs->exists(__DIR__ . '/config/parameters.yml')) {
             $loader->load(__DIR__ . '/config/config.yml');
-        } else {
-            $loader->load(__DIR__ . '/config/config_install.yml');
         }
 
         if ($fs->exists(__DIR__.'/config/config_'.$this->getEnvironment().'.yml')) {
