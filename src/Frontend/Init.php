@@ -18,6 +18,7 @@ namespace Frontend;
  */
 class Init extends \KernelLoader
 {
+
     /**
      * Current type
      *
