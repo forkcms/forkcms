@@ -1,3 +1,10 @@
+3.8.1 (2014-xx-xx)
+--
+Improvements:
+
+* Authentication: make the isLoggedIn function more efficient.
+
+
 3.8.0 (2014-08-14)
 --
 Improvements:
