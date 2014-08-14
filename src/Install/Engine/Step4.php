@@ -90,12 +90,6 @@ class Step4 extends Step
             (\SpoonSession::exists('example_data') ? \SpoonSession::get('example_data') : true)
         );
 
-        // debug mode
-        $this->frm->addCheckbox(
-            'debug_mode',
-            (\SpoonSession::exists('debug_mode') ? \SpoonSession::get('debug_mode') : false)
-        );
-
         // specific debug email address
         $this->frm->addCheckbox(
             'different_debug_email',
@@ -158,11 +152,6 @@ class Step4 extends Step
                     $this->frm->getField('example_data')->getChecked()
                 );
 
-                // debug data
-                \SpoonSession::set(
-                    'debug_mode',
-                    $this->frm->getField('debug_mode')->getChecked()
-                );
                 \SpoonSession::set(
                     'different_debug_email',
                     $this->frm->getField('different_debug_email')->getChecked()

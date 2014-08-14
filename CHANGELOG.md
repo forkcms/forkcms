@@ -1,4 +1,4 @@
-3.7.4 (2014-xx-xx)
+3.8.0 (xxxx-xx-xx)
 --
 Improvements:
 
@@ -6,6 +6,11 @@ Improvements:
 * Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
 * Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
 * Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
+* Debug mode and environment are set earlier in the response.
+  You can set debug mode with ````SetEnv FORK_DEBUG 1````
+  You can set dev environment with ````SetEnv FORK_ENV dev````
+* Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
+* Core: handle errors in debug mode by the symfony error handler.
 
 Bugfixes:
 

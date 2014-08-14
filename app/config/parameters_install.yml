@@ -6,7 +6,6 @@ parameters:
     database.user:          ~
     database.password:      ~
 
-    kernel.debug:           true
     kernel.charset:         'utf-8'
     kernel.secret:          installation
 

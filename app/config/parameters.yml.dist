@@ -6,7 +6,6 @@ parameters:
     database.user:          <database-user>
     database.password:      <database-password>
 
-    kernel.debug:           <debug-mode>
     kernel.charset:         'utf-8'
     kernel.secret:          <secret>
 
