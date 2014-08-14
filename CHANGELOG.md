@@ -10,6 +10,7 @@ Improvements:
 Bugfixes:
 
 * Core: event subscriptions did not get fired in the frontend.
+* Authentication: avoid unnecessary dabase calls for unauthenticated users.
 
 
 3.7.3 (2014-08-08)

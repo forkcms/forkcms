@@ -209,6 +209,11 @@ class Authentication
             return true;
         }
 
+        // users that aren't logged in can only access always allowed items
+        if (!self::isLoggedIn()) {
+            return false;
+        }
+
         // get modules
         $modules = BackendModel::getModules();
 
@@ -279,6 +284,11 @@ class Authentication
         // is this module a module that doesn't require user level authentication?
         if (in_array($module, $alwaysAllowed)) {
             return true;
+        }
+
+        // users that aren't logged in can only access always allowed items
+        if (!self::isLoggedIn()) {
+            return false;
         }
 
         // module is active and God user, good enough
