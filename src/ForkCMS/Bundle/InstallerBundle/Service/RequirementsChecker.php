@@ -82,31 +82,26 @@ class RequirementsChecker
      */
     protected function checkPhpExtensions()
     {
-        $this->checkRequirement('extensionCURL', extension_loaded('curl'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionLibXML', extension_loaded('libxml'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionDOM', extension_loaded('dom'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionSPL', extension_loaded('SPL'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionPDO', extension_loaded('PDO'), self::STATUS_ERROR);
-        $this->checkRequirement(
-            'extensionPDOMySQL',
-            extension_loaded('PDO') && in_array('mysql', \PDO::getAvailableDrivers()),
-            self::STATUS_ERROR
-        );
-        $this->checkRequirement('extensionMBString', extension_loaded('mbstring'), self::STATUS_ERROR);
-        $this->checkRequirement('extensionIconv', extension_loaded('iconv'), self::STATUS_ERROR);
-        $this->checkRequirement(
-            'extensionGD2',
-            extension_loaded('gd') && function_exists('gd_info'),
-            self::STATUS_ERROR
-        );
-        $this->checkRequirement('extensionJSON', extension_loaded('json'), self::STATUS_ERROR);
         $pcreVersion = defined('PCRE_VERSION') ? (float) PCRE_VERSION : null;
-        $this->checkRequirement(
-            'extensionPCRE',
-            (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
-            self::STATUS_ERROR
+        $extensionsArray = array(
+            'extensionCURL'      => extension_loaded('curl'),
+            'extensionLibXML'    => extension_loaded('libxml'),
+            'extensionDOM'       => extension_loaded('dom'),
+            'extensionSimpleXML' => extension_loaded('SimpleXML'),
+            'extensionSPL'       => extension_loaded('SPL'),
+            'extensionPDO'       => extension_loaded('PDO'),
+            'extensionPDOMySQL'  => extension_loaded('PDO') && in_array('mysql', \PDO::getAvailableDrivers()),
+            'extensionMBString'  => extension_loaded('mbstring'),
+            'extensionIconv'     => extension_loaded('iconv'),
+            'extensionGD2'       => extension_loaded('gd') && function_exists('gd_info'),
+            'extensionJSON'      => extension_loaded('json'),
+            'extensionPCRE'      => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
         );
+
+        // not installed extensions give an error
+        foreach ($extensionsArray as $errorName => $requirement) {
+            $this->checkRequirement($errorName, $requirement, self::STATUS_ERROR);
+        }
     }
 
     /**
