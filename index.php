@@ -24,26 +24,32 @@ require_once __DIR__ . '/autoload.php';
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
+// get environment and debug mode from environment variables
+$env = getenv('FORK_ENV') ? : 'prod';
+$debug = getenv('FORK_DEBUG') === '1';
+
 // Fork has not yet been installed
 $installer = dirname(__FILE__) . '/src/Install/Cache';
 $request = Request::createFromGlobals();
 if (file_exists($installer) &&
     is_dir($installer) &&
-    !file_exists($installer . '/Installed.txt') &&
-    substr($request->getRequestURI(), 0, 8) != '/install'
+    !file_exists($installer . '/Installed.txt')
 ) {
-    // check .htaccess
-    if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
-        echo 'Your install is missing the .htaccess file. Make sure you show
-             hidden files while uploading Fork CMS. Read the article about
-             <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
-             for further information. <a href="?skiphtaccess">Skip .htaccess
-             check</a>';
+    $env = 'install';
+    if (substr($request->getRequestURI(), 0, 8) != '/install') {
+        // check .htaccess
+        if (!file_exists('.htaccess') && !isset($_GET['skiphtaccess'])) {
+            echo 'Your install is missing the .htaccess file. Make sure you show
+                 hidden files while uploading Fork CMS. Read the article about
+                 <a href="http://www.fork-cms.com/community/documentation/detail/installation/webservers">webservers</a>
+                 for further information. <a href="?skiphtaccess">Skip .htaccess
+                 check</a>';
+            exit;
+        }
+
+        header('Location: /install');
         exit;
     }
-
-    header('Location: /install');
-    exit;
 }
 
 require_once __DIR__ . '/app/AppKernel.php';
@@ -51,10 +57,6 @@ require_once __DIR__ . '/app/AppKernel.php';
 if (extension_loaded('newrelic')) {
     newrelic_name_transaction(strtok($request->getRequestUri(), '?'));
 }
-
-// get environment and debug mode from environment variables
-$env = getenv('FORK_ENV') ? : 'prod';
-$debug = getenv('FORK_DEBUG') === '1';
 
 if ($debug) {
     Debug::enable();
