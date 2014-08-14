@@ -22,15 +22,7 @@ class InstallerController extends Controller
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
             array(
-                'errors' => $errors,
-                'hasErrors' => in_array(
-                    $requirementsChecker::STATUS_ERROR,
-                    $errors
-                ),
-                'hasWarnings' => in_array(
-                    $requirementsChecker::STATUS_WARNING,
-                    $errors
-                ),
+                'checker' => $requirementsChecker,
                 'rootDir' => $this->container->getParameter('kernel.root_dir'),
             )
         );

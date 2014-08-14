@@ -36,16 +36,49 @@ class RequirementsChecker
         $this->libraryDir = $rootDir . 'library/';
     }
 
+    /**
+     * Are all requirements met?
+     *
+     * @return bool
+     */
     public function passes()
     {
         return $this->checkRequirements();
     }
 
+    /**
+     * Get all errors created by the requirements test
+     *
+     * @return array
+     */
     public function getErrors()
     {
         return $this->errors;
     }
 
+    /**
+     * Are there any issues with status error?
+     *
+     * @return bool
+     */
+    public function hasErrors()
+    {
+        return in_array(self::STATUS_ERROR, $this->errors);
+    }
+
+    /**
+     * Are there any issues with status warning?
+     */
+    public function hasWarnings()
+    {
+        return in_array(self::STATUS_WARNING, $this->errors);
+    }
+
+    /**
+     * Check all requirements and returns if everything has passed.
+     *
+     * @return bool
+     */
     protected function checkRequirements()
     {
         $this->checkPhpVersion();
@@ -61,9 +94,7 @@ class RequirementsChecker
         $this->checkApacheRewrites();
 
         // error status
-        return !in_array(self::STATUS_ERROR, $this->errors)
-            && !in_array(self::STATUS_WARNING, $this->errors)
-        ;
+        return !$this->hasErrors() && !$this->hasWarnings();
     }
 
     /*
