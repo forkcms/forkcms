@@ -19,6 +19,7 @@ use Frontend\Core\Engine\Language as FL;
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -51,31 +52,24 @@ class Model
             // today
             if ($hours >= 1) {
                 return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
-            } // more than one minute
-            elseif ($minutes > 1) {
+            } elseif ($minutes > 1) {
+                // more than one minute
                 return sprintf(BL::getLabel('MinutesAgo'), $minutes);
-            } // one minute
-            elseif ($minutes == 1) {
+            } elseif ($minutes == 1) {
+                // one minute
                 return BL::getLabel('OneMinuteAgo');
-            } // more than one second
-            elseif ($seconds > 1) {
+            } elseif ($seconds > 1) {
+                // more than one second
                 return sprintf(BL::getLabel('SecondsAgo'), $seconds);
-            } // one second
-            elseif ($seconds <= 1) {
+            } elseif ($seconds <= 1) {
+                // one second
                 return BL::getLabel('OneSecondAgo');
             }
-        } // yesterday
-        elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
-            return BL::getLabel(
-                       'Yesterday'
-                   ) . ' ' . date(
-                       'H:i',
-                       $timestamp
-                   );
-        }
-
-        // older
-        else {
+        } elseif ($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) {
+            // yesterday
+            return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
+        } else {
+            // older
             return date('d/m/Y H:i', $timestamp);
         }
     }
@@ -140,7 +134,7 @@ class Model
         }
 
         // delete extra
-        BackendModel::deleteExtra('form_builder', 'widget', array('id' => $id));
+        BackendModel::deleteExtra('FormBuilder', 'widget', array('id' => $id));
 
         // delete form
         $db->delete('forms', 'id = ?', $id);
@@ -367,8 +361,8 @@ class Model
             $type = (string) $type;
 
             return $errors[$type];
-        } // all errors
-        else {
+        } else {
+            // all errors
             $return = array();
 
             // loop errors
@@ -490,28 +484,26 @@ class Model
      */
     public static function insert(array $values)
     {
-        $insertId = BackendModel::getContainer()->get('database')->insert('forms', $values);
-
-        // build array
-        $extra['module'] = 'form_builder';
-        $extra['type'] = 'widget';
-        $extra['label'] = 'FormBuilder';
-        $extra['action'] = 'form';
-        $extra['data'] = serialize(
-            array(
-                'language' => $values['language'],
-                'extra_label' => $values['name'],
-                'id' => $insertId,
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $insertId
-            )
-        );
-        $extra['hidden'] = 'N';
-        $extra['sequence'] = '400' . $insertId;
+        // define form id
+        $formId = BackendModel::getContainer()->get('database')->insert('forms', $values);
 
         // insert extra
-        BackendModel::getContainer()->get('database')->insert('modules_extras', $extra);
+        BackendModel::insertExtra(
+            'widget',
+            'FormBuilder',
+            'Form',
+            'FormBuilder',
+            array(
+                'id' => $formId,
+                'extra_label' => $values['name'],
+                'language' => $values['language'],
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $formId
+            ),
+            false,
+            '400' . $formId
+        );
 
-        return $insertId;
+        return $formId;
     }
 
     /**
@@ -561,7 +553,7 @@ class Model
             'modules_extras',
             $extra,
             'module = ? AND type = ? AND sequence = ?',
-            array('form_builder', 'widget', '400' . $id)
+            array('FormBuilder', 'widget', '400' . $id)
         );
 
         return $id;

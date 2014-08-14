@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
         $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->record['application']);
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
+        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(), $this->record['module']);
         $this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
         $this->frm->addText('name', $this->record['name']);
         $this->frm->addTextarea('value', $this->record['value'], null, 'inputText', 'inputTextError', true);
@@ -155,7 +155,7 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            // module should be 'core' for any other application than backend
+            // module should be 'Core' for any other application than backend
             if ($this->frm->getField('application')->getValue() != 'Backend' && $this->frm->getField('module')->getValue() != 'Core') {
                 $this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', $this->getModule()));
             }

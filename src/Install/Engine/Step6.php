@@ -11,6 +11,7 @@ namespace Install\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Step 6 of the Fork installer
@@ -138,7 +139,6 @@ class Step6 extends Step
     protected function getConfigurationVariables()
     {
         return array(
-            '<debug-mode>' => \SpoonSession::get('debug_mode') ? 'true' : 'false',
             '<debug-email>' => \SpoonSession::get('different_debug_email') ?
                 \SpoonSession::get('debug_email') :
                 \SpoonSession::get('email')
@@ -163,6 +163,7 @@ class Step6 extends Step
             '<path-library>' => PATH_LIBRARY,
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
+            '<secret>' => BackendModel::generateRandomString(32, true, true, true, false),
         );
     }
 }

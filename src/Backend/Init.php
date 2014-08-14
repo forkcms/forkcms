@@ -30,7 +30,7 @@ class Init extends \KernelLoader
      */
     public function initialize($type)
     {
-        $allowedTypes = array('Backend', 'BackendDirect', 'BackendAjax', 'BackendCronjob');
+        $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob');
         $type = (string) $type;
 
         // check if this is a valid type
@@ -43,14 +43,6 @@ class Init extends \KernelLoader
         if (ini_get('date.timezone') == '') {
             date_default_timezone_set('Europe/Brussels');
         }
-
-        /**
-         * At first we enable the error reporting. Later on it will be disabled based on the
-         * value of SPOON_DEBUG, but for now it's required to see possible errors while trying
-         * to include the globals file(s).
-         */
-        error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 'On');
 
         // get last modified time for globals
         $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
@@ -213,18 +205,7 @@ class Init extends \KernelLoader
      */
     private function setDebugging()
     {
-        // debugging enabled
-        if (SPOON_DEBUG) {
-            // set error reporting as high as possible
-            error_reporting(E_ALL | E_STRICT);
-
-            // show errors on the screen
-            ini_set('display_errors', 'On');
-
-            // in debug mode notices are triggered when using non existing
-            // locale, so we use a custom errorhandler to cleanup the message
-            set_error_handler(array(__CLASS__, 'errorHandler'));
-        } else {
+        if ($this->getContainer()->getParameter('kernel.debug') === false) {
             // set error reporting as low as possible
             error_reporting(0);
 

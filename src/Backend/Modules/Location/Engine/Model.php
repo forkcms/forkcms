@@ -17,6 +17,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -38,15 +39,9 @@ class Model
         // get item
         $item = self::get($id);
 
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'Location',
-            'type' => 'widget',
-            'action' => 'Location'
-        );
+        BackendModel::deleteExtraById($item['extra_id']);
 
-        $db->delete('modules_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+        // delete location and its settings
         $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
         $db->delete('location_settings', 'map_id = ?', array((int) $id));
     }
@@ -100,6 +95,63 @@ class Model
     }
 
     /**
+     * Get coordinates latitude/longitude
+     *
+     * @param  string $street
+     * @param  string $streetNumber
+     * @param  string $city
+     * @param  string $zip
+     * @param  string $country
+     * @return array  Contains 'latitude' and 'longitude' as variables
+     */
+    public static function getCoordinates(
+        $street = null,
+        $streetNumber = null,
+        $city = null,
+        $zip = null,
+        $country = null
+    ) {
+        // init item
+        $item = array();
+
+        // building item
+        if (!empty($street)) {
+            $item[] = $street;
+        }
+
+        if (!empty($streetNumber)) {
+            $item[] = $streetNumber;
+        }
+
+        if (!empty($city)) {
+            $item[] = $city;
+        }
+
+        if (!empty($zip)) {
+            $item[] = $zip;
+        }
+
+        if (!empty($country)) {
+            $item[] = \SpoonLocale::getCountry($country, BL::getWorkingLanguage());
+        }
+
+        // define address
+        $address = implode(' ', $item);
+
+        // define url
+        $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($address) . '&sensor=false';
+
+        // define result
+        $geocodes = json_decode(\SpoonHTTP::getContent($url), true);
+
+        // return coordinates latitude/longitude
+        return array(
+            'latitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lat'] : null,
+            'longitude' => array_key_exists(0, $geocodes['results']) ? $geocodes['results'][0]['geometry']['location']['lng'] : null
+        );
+    }
+
+    /**
      * Retrieve a map setting
      *
      * @param int $mapId
@@ -148,46 +200,29 @@ class Model
     public static function insert($item)
     {
         $db = BackendModel::getContainer()->get('database');
-        $item['created_on'] = BackendModel::getUTCDate();
-        $item['edited_on'] = BackendModel::getUTCDate();
-
-        // build extra
-        $extra = array(
-            'module' => 'Location',
-            'type' => 'widget',
-            'label' => 'Location',
-            'action' => 'Location',
-            'data' => null,
-            'hidden' => 'N',
-            'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?', array('Location')
-                )
-            );
-        if (is_null($extra['sequence'])) {
-            $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000 FROM modules_extras AS i'
-            );
-        }
 
         // insert extra
-        $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'Location'
+        );
 
-        // insert and return the new id
+        // insert new location
+        $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
         $item['id'] = $db->insert('location', $item);
 
         // update extra (item id is now known)
-        $extra['data'] = serialize(array(
-            'id' => $item['id'],
-            'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-            'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+            )
         );
-        $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
-        // return the new id
         return $item['id'];
     }
 
@@ -218,31 +253,30 @@ class Model
      */
     public static function update($item)
     {
-        $db = BackendModel::getContainer()->get('database');
+        // redefine edited on date
         $item['edited_on'] = BackendModel::getUTCDate();
 
+        // we have an extra_id
         if (isset($item['extra_id'])) {
-            // build extra
-            $extra = array(
-                'id' => $item['extra_id'],
-                'module' => 'Location',
-                'type' => 'widget',
-                'label' => 'Location',
-                'action' => 'Location',
-                'data' => serialize(array(
+            // update extra
+            BackendModel::updateExtra(
+                $item['extra_id'],
+                'data',
+                array(
                     'id' => $item['id'],
                     'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
                     'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
-                ),
-                'hidden' => 'N'
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                )
             );
-
-            // update extra
-            $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
         }
 
         // update item
-        return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
+        return BackendModel::get('database')->update(
+            'location',
+            $item,
+            'id = ? AND language = ?',
+            array($item['id'], $item['language'])
+        );
     }
 }

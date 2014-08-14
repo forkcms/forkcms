@@ -133,8 +133,8 @@ class Profile
     /**
      * Get a profile setting by name.
      *
-     * @param string        $name         Setting name.
-     * @param string $defaultValue Default value is used when the setting does not exist.
+     * @param  string $name         Setting name.
+     * @param  string $defaultValue Default value is used when the setting does not exist.
      * @return mixed
      */
     public function getSetting($name, $defaultValue = null)
@@ -192,7 +192,7 @@ class Profile
     /**
      * Does this user belong to the group with the given ID?
      *
-     * @param int $groupId Group id.
+     * @param  int $groupId Group id.
      * @return int
      */
     public function isInGroup($groupId)

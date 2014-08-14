@@ -36,7 +36,7 @@ class Step5 extends Step
     public static function isAllowed()
     {
         return Step4::isAllowed() && isset($_SESSION['modules']) &&
-               isset($_SESSION['example_data']) && isset($_SESSION['debug_mode']);
+               isset($_SESSION['example_data']);
     }
 
     /**

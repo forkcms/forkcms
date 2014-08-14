@@ -33,20 +33,31 @@ class Helper
         if (!empty($field)) {
             // init
             $frm = new BackendForm('tmp', '');
-            $tpl = (BackendModel::getContainer()->has('template') ? BackendModel::getContainer()->get('template') : new BackendTemplate());
+            $tpl = (BackendModel::getContainer()->has('template') ?
+                BackendModel::getContainer()->get('template') :
+                new BackendTemplate()
+            );
             $fieldHTML = '';
             $fieldName = 'field' . $field['id'];
             $values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
-            $defaultValues = (isset($field['settings']['default_values']) ? $field['settings']['default_values'] : null);
+            $defaultValues = (isset($field['settings']['default_values']) ?
+                $field['settings']['default_values'] :
+                null
+            );
 
             /**
              * Create form and parse to HTML
              */
             // dropdown
             if ($field['type'] == 'dropdown') {
+                // values and labels are the same
+                $values = array_combine($values, $values);
+
                 // get index of selected item
                 $defaultIndex = array_search($defaultValues, $values, true);
-                if ($defaultIndex === false) $defaultIndex = null;
+                if ($defaultIndex === false) {
+                    $defaultIndex = null;
+                }
 
                 // create element
                 $ddm = $frm->addDropdown($fieldName, $values, $defaultIndex);
@@ -56,44 +67,36 @@ class Helper
 
                 // get content
                 $fieldHTML = $ddm->parse();
-            }
-
-            // radiobutton
-            elseif ($field['type'] == 'radiobutton') {
+            } elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
-                foreach ($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
+                foreach ($values as $value) {
+                    $newValues[] = array('label' => $value, 'value' => $value);
+                }
 
                 // create element
                 $rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
-            }
-
-            // checkbox
-            elseif ($field['type'] == 'checkbox') {
+            } elseif ($field['type'] == 'checkbox') {
                 // rebuild values
-                foreach ($values as $value) $newValues[] = array('label' => $value, 'value' => $value);
+                foreach ($values as $value) {
+                    $newValues[] = array('label' => $value, 'value' => $value);
+                }
 
                 // create element
                 $chk = $frm->addMultiCheckbox($fieldName, $newValues, $defaultValues);
 
                 // get content
                 $fieldHTML = $chk->parse();
-            }
-
-            // textbox
-            elseif ($field['type'] == 'textbox') {
+            } elseif ($field['type'] == 'textbox') {
                 // create element
                 $txt = $frm->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
 
                 // get content
                 $fieldHTML = $txt->parse();
-            }
-
-            // textarea
-            elseif ($field['type'] == 'textarea') {
+            } elseif ($field['type'] == 'textarea') {
                 // create element
                 $txt = $frm->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
@@ -101,13 +104,11 @@ class Helper
 
                 // get content
                 $fieldHTML = $txt->parse();
+            } elseif ($field['type'] == 'heading') {
+                $fieldHTML = '<h3>' . $values . '</h3>';
+            } elseif ($field['type'] == 'paragraph') {
+                $fieldHTML = $values;
             }
-
-            // heading
-            elseif ($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';
-
-            // paragraph
-            elseif ($field['type'] == 'paragraph') $fieldHTML = $values;
 
             /**
              * Parse the field into the template
@@ -124,24 +125,23 @@ class Helper
                 // assign
                 $tpl->assign('content', $fieldHTML);
                 $tpl->assign('plaintext', true);
-            }
-
-            // multiple items
-            elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
+            } elseif ($field['type'] == 'checkbox' || $field['type'] == 'radiobutton') {
                 // name (prefixed by type)
-                $name = ($field['type'] == 'checkbox') ? 'chk' . \SpoonFilter::ucfirst($fieldName) : 'rbt' . \SpoonFilter::ucfirst($fieldName);
+                $name = ($field['type'] == 'checkbox') ?
+                    'chk' . \SpoonFilter::ucfirst($fieldName) :
+                    'rbt' . \SpoonFilter::ucfirst($fieldName)
+                ;
 
                 // rebuild so the html is stored in a general name (and not rbtName)
-                foreach ($fieldHTML as &$item) $item['field'] = $item[$name];
+                foreach ($fieldHTML as &$item) {
+                    $item['field'] = $item[$name];
+                }
 
                 // show multiple
                 $tpl->assign('label', $field['settings']['label']);
                 $tpl->assign('items', $fieldHTML);
                 $tpl->assign('multiple', true);
-            }
-
-            // simple items
-            else {
+            } else {
                 // assign
                 $tpl->assign('label', $field['settings']['label']);
                 $tpl->assign('field', $fieldHTML);
@@ -149,9 +149,9 @@ class Helper
             }
 
             return $tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Field.tpl');
+        } else {
+            // empty field so return empty string
+            return '';
         }
-
-        // empty field so return empty string
-        else return '';
     }
 }

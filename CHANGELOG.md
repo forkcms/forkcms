@@ -1,14 +1,77 @@
-3.7.1 (xxxx-xx-xx)
+3.8.0 (2014-08-14)
+--
+Improvements:
+
+* Profiles: mass import for profiles using a .csv added.
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
+* Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
+* Debug mode and environment are set earlier in the response.
+  You can set debug mode with ````SetEnv FORK_DEBUG 1````
+  You can set dev environment with ````SetEnv FORK_ENV dev````
+* Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
+* Core: handle errors in debug mode by the symfony error handler.
+* Analytics: implement event tracking for universal analytics
+* Faq: BackendFaqModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* ContentBlocks: BackendContentBlocksModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* Location: BackendLocationModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+
+Bugfixes:
+
+* Core: event subscriptions did not get fired in the frontend.
+* Authentication: avoid unnecessary dabase calls for unauthenticated users.
+* Tags: make sure the same tag can't exist with and without a capital letter.
+
+
+3.7.3 (2014-08-08)
+--
+Bugfixes:
+
+* Installer: make sure our database is initalized as utf8
+* Installer: remove the cached container after installation
+
+
+3.7.2 (2014-07-31)
+--
+Improvements:
+
+* Profiles: LoginLink widget added.
+* Profiles: Added password verification field, see #695.
+* Location: BackendLocationModel::getCoordinates() added.
+* Extensions: you can upload a module from a zip with an extra directory
+* Ajax: endpoint has been changed to not contain an extension. /src/Backend/Ajax.php is now /backend/ajax and /src/Frontend/Ajax.php is now /frontend/ajax
+* Cronjob: endpoint has been changed to not contain an extension. /src/Backend/Cronjob.php is now /backend/cronjob.
+* Routing: use the Symfony routing component to replace routing.yml
+* Core: implement the SymfonyFrameworkBundle to handle routing.
+* Core: make the AppKernel more similar to Symfony's kernel.
+* Core: add the Symfony console component.
+
+Bugfixes:
+
+* Faq: deleting a faq question now also deletes the meta record.
+* Analytics: Cronjob now throws exception instead of trying to redirect.
+* BackendModel: createURLForAction now works in a Cronjob, fixed #513.
+* Core: Fix generation of url's containing non-ascii characters
+
+
+3.7.1 (2014-07-10)
 --
 Improvements:
 
 * Core: BackendModel::updateExtra() now has a serialization check when key === 'data'.
+* Blog: show image on preview
+* Core: add .editorconfig file
 
 Bugfixes:
 
+* Locale: problem when saving Frontend locale fixed #744.
 * Core: Mailer uses \Exception.
 * Core: Frontend.js ajax url fixed
-
+* Core: Loading editor templates fixed, see #747
+* Analytics: Fixes action names to get data from Google Analytics, see #755
+* Extensions: you can now install custom themes again.
+* Pages: widget previous-next fixed.
+* Extensions: using 'Core' instead of 'core'.
 
 3.7.0 (2014-04-24)
 --

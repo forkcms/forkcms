@@ -56,7 +56,9 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Profiles', 'EditGroup');
         $this->setActionRights(1, 'Profiles', 'EditProfileGroup');
         $this->setActionRights(1, 'Profiles', 'Edit');
+        $this->setActionRights(1, 'Profiles', 'ExportTemplate');
         $this->setActionRights(1, 'Profiles', 'Groups');
+        $this->setActionRights(1, 'Profiles', 'Import');
         $this->setActionRights(1, 'Profiles', 'Index');
         $this->setActionRights(1, 'Profiles', 'MassAction');
 
@@ -71,7 +73,8 @@ class Installer extends ModuleInstaller
                  'profiles/add',
                  'profiles/edit',
                  'profiles/add_profile_group',
-                 'profiles/edit_profile_group'
+                 'profiles/edit_profile_group',
+                 'profiles/import'
             )
         );
         $this->setNavigation(
@@ -122,6 +125,7 @@ class Installer extends ModuleInstaller
         );
 
         $this->insertExtra('Profiles', 'widget', 'LoginBox', 'LoginBox', null, 'N', 5010);
+        $this->insertExtra('Profiles', 'widget', 'LoginLink', 'LoginLink', null, 'N', 5011);
 
         // get search widget id
         $searchId = (int) $this->getDB()->getVar(

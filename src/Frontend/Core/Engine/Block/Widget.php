@@ -148,11 +148,11 @@ class Widget extends FrontendBaseObject
     {
         // set path to template if the widget didn't return any data
         if ($this->output === null) {
-            return $this->object->getContent();
+            return trim($this->object->getContent());
         }
 
         // return possible output
-        return $this->output;
+        return trim($this->output);
     }
 
     /**

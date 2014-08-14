@@ -926,7 +926,7 @@ class Model extends \BaseModel
         );
 
         // build the request
-        $request = 'GET /backend/cronjob.php?module=core&action=process_queued_hooks HTTP/1.1' . "\r\n";
+        $request = 'GET /backend/cronjob?module=Core&action=ProcessQueuedHooks HTTP/1.1' . "\r\n";
         $request .= 'Host: ' . $parts['host'] . "\r\n";
         $request .= 'Content-Length: 0' . "\r\n\r\n";
         $request .= 'Connection: Close' . "\r\n\r\n";

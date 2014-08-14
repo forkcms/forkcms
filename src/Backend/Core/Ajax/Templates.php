@@ -20,7 +20,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.eu>
  */
-class BackendCoreAjaxTemplates extends AjaxAction
+class Templates extends AjaxAction
 {
     /**
      * Execute the action

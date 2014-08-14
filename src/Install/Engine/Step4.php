@@ -58,7 +58,7 @@ class Step4 extends Step
         foreach ($this->modules['required'] as $module) {
             // add to the list
             $modules[] = array(
-                'label' => \SpoonFilter::toCamelCase($module),
+                'label' => $module,
                 'value' => $module,
                 'attributes' => array('disabled' => 'disabled')
             );
@@ -88,12 +88,6 @@ class Step4 extends Step
         $this->frm->addCheckbox(
             'example_data',
             (\SpoonSession::exists('example_data') ? \SpoonSession::get('example_data') : true)
-        );
-
-        // debug mode
-        $this->frm->addCheckbox(
-            'debug_mode',
-            (\SpoonSession::exists('debug_mode') ? \SpoonSession::get('debug_mode') : false)
         );
 
         // specific debug email address
@@ -146,9 +140,9 @@ class Step4 extends Step
 
                 // add blog if example data was checked
                 if ($this->frm->getField('example_data')->getChecked() &&
-                    !in_array('blog', $modules)
+                    !in_array('Blog', $modules)
                 ) {
-                    $modules[] = 'blog';
+                    $modules[] = 'Blog';
                 }
 
                 // set modules and default data
@@ -158,11 +152,6 @@ class Step4 extends Step
                     $this->frm->getField('example_data')->getChecked()
                 );
 
-                // debug data
-                \SpoonSession::set(
-                    'debug_mode',
-                    $this->frm->getField('debug_mode')->getChecked()
-                );
                 \SpoonSession::set(
                     'different_debug_email',
                     $this->frm->getField('different_debug_email')->getChecked()

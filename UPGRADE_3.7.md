@@ -190,7 +190,7 @@ After
     use Backend\Core\Engine\DataGridFunctions;
 
     ...
-    $dg->setColumnFunction(new DataGridFunctions(), 'getTimeAgo', '[time]', 'time');
+    $dg->setColumnFunction(array(new DataGridFunctions(), 'getTimeAgo'), '[time]', 'time');
 
 or
 
@@ -204,7 +204,17 @@ Before
 
 After
 
-    fork.dev/src/Backend/Cronjob.php?module=Core&action=SendQueuedEmails
+    fork.dev/backend/cronjob?module=Core&action=SendQueuedEmails
+    
+* Setting a url callback now use namespaces
+
+Before
+
+    $this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+
+After
+
+    $this->meta->setUrlCallback('Backend\Modules\Blog\Engine\Model', 'getURL', array($this->record['id']));
 
 ## API isAuthorized() instead of authorize()
 

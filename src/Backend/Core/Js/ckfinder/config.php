@@ -19,8 +19,9 @@
 require '../../../../../../../../autoload.php';
 require '../../../../../../../../app/AppKernel.php';
 require '../../../../../../../../app/KernelLoader.php';
-$kernel = new AppKernel();
+$kernel = new AppKernel('prod', false);
 $loader = new KernelLoader($kernel);
+$kernel->boot();
 $loader->passContainerToModels();
 
 // after registring autoloaders, let's add use statements for our needed classes

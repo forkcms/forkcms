@@ -1,32 +1,103 @@
 #! /bin/bash
 #
-# This script will remove all cache-files.
+# This script will remove all cache-files and drop your database.
 #
-# @version	1.0.1
 # @author	Yohann Bianchi <nstCactus@gmail.com>
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
+# @author <per@wijs.be>
+#
+# @internal This script will spit out warnings for using mysql on the command
+#           line with a password.
+#           If a app/config/parameters.yml is not present, it'll spit out errors
+#           that it cannot find the file, but previous behaviour (ie. without
+#           cleaning out the database) will be preserved.
+
 
 SCRIPT_PATH="`dirname \"$0\"`"
+. "${SCRIPT_PATH}/functions/extract_from_yml.sh"
 
-rm -f `find ${SCRIPT_PATH}/../src/Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+clear_file_caches() {
+    rm -f `find ${SCRIPT_PATH}/../src/Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedCss/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/MinifiedJs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Mailmotor/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Logs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
+    return 1;
+}
 
-rm -f ${SCRIPT_PATH}/../app/config/parameters.yml
 
-echo 'All done! Ready for reinstall.'
+remove_generated_configurations() {
+    rm -f ${SCRIPT_PATH}/../app/config/parameters.yml
+    return 1;
+}
+
+
+clear_database() {
+    local db_host="$1";
+    local db_port="$2";
+    local db_name="$3";
+    local db_user="$4";
+    local db_pass="$5";
+    local mysql_command="mysql \
+        --default-character-set=utf8 \
+        --host=$db_host \
+        --port=$db_port \
+        --user=$db_user \
+        --password=$db_pass \
+        --database=$db_name \
+    "
+    local tables=$($mysql_command -e 'show tables' | awk '{ print $1}' | grep -v '^Tables' )
+
+    for t in $tables
+    do
+        $mysql_command -e "drop table $t"
+    done
+
+    return 1;
+}
+
+
+main() {
+    local parameters_yml_path="${SCRIPT_PATH}/../app/config/parameters.yml"
+
+    # extract configs before doing anything, because generated config files will
+    # be deleted.
+    local db_host="$(extract_from_yml $parameters_yml_path database.host || echo 127.0.0.1)";
+    local db_port="$(extract_from_yml $parameters_yml_path database.port || echo 3306)";
+    [ "$db_port" = '~' ] && db_port=3306;
+    local db_name="$(extract_from_yml $parameters_yml_path database.name)";
+    local db_user="$(extract_from_yml $parameters_yml_path database.user)";
+    local db_pass="$(extract_from_yml $parameters_yml_path database.password)";
+    if [[ "$db_pass" == "null" ]]; then
+        db_pass="";
+    fi;
+
+    clear_file_caches
+    remove_generated_configurations
+    clear_database $db_host $db_port $db_name $db_user $db_pass
+
+    ${SCRIPT_PATH}/../app/console cache:clear
+    ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+
+    echo 'All done! Ready for reinstall.'
+    return 1;
+}
+
+read -p "This will erase the current database, are you sure? (y/n) "
+[[ $REPLY == [yY] ]] && main
+echo
+exit 1;
+

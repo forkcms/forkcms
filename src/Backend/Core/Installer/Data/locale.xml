@@ -631,10 +631,16 @@
       <item type="label" name="IAgree">
         <translation language="nl"><![CDATA[ik ga akkoord]]></translation>
       	<translation language="en"><![CDATA[I agree]]></translation>
+      	<translation language="fr"><![CDATA[je suis d'accord]]></translation>
+      	<translation language="de"><![CDATA[ich bin einverstanden]]></translation>
+      	<translation language="es"><![CDATA[estoy de acuerdo]]></translation>
       </item>
       <item type="label" name="IDisagree">
         <translation language="nl"><![CDATA[ik ga niet akkoord]]></translation>
       	<translation language="en"><![CDATA[I disagree]]></translation>
+      	<translation language="fr"><![CDATA[je ne suis pas d'accord]]></translation>
+      	<translation language="de"><![CDATA[ich bin nicht einverstanden]]></translation>
+      	<translation language="es"><![CDATA[no estoy de acuerdo]]></translation>
       </item>
       <item type="label" name="In">
         <translation language="nl"><![CDATA[in]]></translation>
@@ -889,6 +895,25 @@
         <translation language="el"><![CDATA[νέος κωδικός]]></translation>
         <translation language="pl"><![CDATA[nowe hasło]]></translation>
         <translation language="tr"><![CDATA[yeni şifre]]></translation>
+      </item>
+      <item type="label" name="VerifyNewPassword">
+        <translation language="nl"><![CDATA[verifiëer nieuw wachtwoord]]></translation>
+        <translation language="en"><![CDATA[verify new password]]></translation>
+        <translation language="fr"><![CDATA[vérifier nouveau mot de passe]]></translation>
+      </item>
+      <item type="error" name="PasswordsDontMatch">
+        <translation language="nl"><![CDATA[De wachtwoorden zijn verschillend]]></translation>
+        <translation language="en"><![CDATA[The passwords differ]]></translation>
+        <translation language="hu"><![CDATA[A jelszavak különböznek]]></translation>
+        <translation language="it"><![CDATA[Le password sono diverse.]]></translation>
+        <translation language="ru"><![CDATA[Введенные пароли различаются.]]></translation>
+        <translation language="zh"><![CDATA[密码不匹配。]]></translation>
+        <translation language="fr"><![CDATA[Le mot de passe ne correspond pas.]]></translation>
+        <translation language="de"><![CDATA[Die Passwörter stimmen nicht überein]]></translation>
+        <translation language="es"><![CDATA[Las contraseñas no coinciden]]></translation>
+        <translation language="lt"><![CDATA[Slaptažodžiai nesutampa.]]></translation>
+        <translation language="sv"><![CDATA[Lösenorden matchar inte]]></translation>
+        <translation language="el"><![CDATA[Οι κωδικοί διαφέρουν.]]></translation>
       </item>
       <item type="label" name="Next">
         <translation language="nl"><![CDATA[volgende]]></translation>
@@ -2138,7 +2163,10 @@
       </item>
       <item type="message" name="CookiesWarning">
         <translation language="nl"><![CDATA[Om de gebruikerservaring van deze site te verbeteren gebruikt deze website <a href="/disclaimer">cookies</a>.]]></translation>
-        <translation language="en"><![CDATA[To improve the userexpierence on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="en"><![CDATA[To improve the user experience on this site we use <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="fr"><![CDATA[Pour améliorer l'expérience utilisateur sur ce site, nous utilisons des <a href="/disclaimer">cookies</a>.]]></translation>
+        <translation language="de"><![CDATA[Wir verwenden <a href="/disclaimer">Cookies</a> um Ihr Benutzer-Erlebnis zu verbessern.]]></translation>
+        <translation language="es"><![CDATA[Para mejorar la experiencia del usuario en este sitio utilizamos <a href="/disclaimer">cookies</a>.]]></translation>
       </item>
       <item type="message" name="EN">
         <translation language="nl"><![CDATA[Engels]]></translation>
@@ -3142,12 +3170,6 @@
         <translation language="sv"><![CDATA[Sakta ner cowboy]]></translation>
         <translation language="el"><![CDATA[Λίγο πιό αργά...]]></translation>
         <translation language="pl"><![CDATA[zwolnij kowboju]]></translation>
-      </item>
-      <item type="error" name="InvalidNumber">
-        <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
-        <translation language="de"><![CDATA[Bitte trag eine gültige Nummer ein.]]></translation>
-        <translation language="ru"><![CDATA[Пожалуйста, укажите число.]]></translation>
-        <translation language="lt"><![CDATA[Neteisingas numeris.]]></translation>
       </item>
       <item type="error" name="InvalidPassword">
         <translation language="nl"><![CDATA[Ongeldig wachtwoord.]]></translation>
@@ -10317,7 +10339,7 @@
         <translation language="tr"><![CDATA[etiket]]></translation>
       </item>
       <item type="message" name="LoginFormForgotPasswordSuccess">
-        <translation language="nl"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
+        <translation language="nl"><![CDATA[<strong>Mail verzonden.</strong> Bekijk je postvak in!]]></translation>
         <translation language="en"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
         <translation language="hu"><![CDATA[<strong>Üzenet elküldve.</strong> Kérlek ellenőrizd a postaládádat.]]></translation>
         <translation language="it"><![CDATA[<strong>Email inviata.</strong> Per favore controlla la tua casella di posta!]]></translation>

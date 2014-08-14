@@ -82,6 +82,9 @@ class ChangePassword extends FrontendBaseBlock
         $this->frm->addPassword('new_password', null, null, 'inputText showPasswordInput')->setAttributes(
             array('required' => null)
         );
+        $this->frm->addPassword('verify_new_password', null, null, 'inputText showVerifyPasswordInput')->setAttributes(
+            array('required' => null)
+        );
         $this->frm->addCheckbox('show_password');
     }
 
@@ -110,6 +113,7 @@ class ChangePassword extends FrontendBaseBlock
             // get fields
             $txtOldPassword = $this->frm->getField('old_password');
             $txtNewPassword = $this->frm->getField('new_password');
+            $txtVerifyNewPassword = $this->frm->getField('verify_new_password');
 
             // old password filled in?
             if ($txtOldPassword->isFilled(FL::getError('PasswordIsRequired'))) {
@@ -121,6 +125,11 @@ class ChangePassword extends FrontendBaseBlock
 
                 // new password filled in?
                 $txtNewPassword->isFilled(FL::getError('PasswordIsRequired'));
+
+                // passwords match?
+                if ($this->frm->getField('new_password')->getValue() !== $this->frm->getField('verify_new_password')->getValue()) {
+                    $this->frm->getField('verify_new_password')->addError(FL::err('PasswordsDontMatch'));
+                }
             }
 
             // no errors

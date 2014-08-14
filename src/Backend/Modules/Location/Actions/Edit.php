@@ -191,11 +191,18 @@ class Edit extends BackendBaseActionEdit
 
                 // check if it's necessary to geocode again
                 if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
-                    // geocode address
-                    $url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . \SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
-                    $geocode = json_decode(\SpoonHTTP::getContent($url));
-                    $item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
-                    $item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
+                    // define coordinates
+                    $coordinates = BackendLocationModel::getCoordinates(
+                        $item['street'],
+                        $item['number'],
+                        $item['city'],
+                        $item['zip'],
+                        $item['country']
+                    );
+
+                    // define latitude and longitude
+                    $item['lat'] = $coordinates['latitude'];
+                    $item['lng'] = $coordinates['longitude'];
                 }
 
                 // old values are still good

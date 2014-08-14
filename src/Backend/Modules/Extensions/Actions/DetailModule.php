@@ -111,7 +111,15 @@ class DetailModule extends BackendBaseActionIndex
         $this->dataGridCronjobs->setColumnsHidden(array('minute', 'hour', 'day-of-month', 'month', 'day-of-week', 'action', 'description', 'active'));
 
         // add cronjob data column
-        $this->dataGridCronjobs->addColumn('cronjob', BL::getLabel('Cronjob'), '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/backend/cronjob.php module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>', null, null, null, 0);
+        $this->dataGridCronjobs->addColumn(
+            'cronjob',
+            BL::getLabel('Cronjob'),
+            '[description]<br /><strong>[minute] [hour] [day-of-month] [month] [day-of-week]</strong> php ' . PATH_WWW . '/backend/cronjob module=<strong>' . $this->currentModule . '</strong> action=<strong>[action]</strong>',
+            null,
+            null,
+            null,
+            0
+        );
 
         // no paging
         $this->dataGridCronjobs->setPaging(false);

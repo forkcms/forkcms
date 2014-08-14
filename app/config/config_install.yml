@@ -1,0 +1,33 @@
+imports:
+    - { resource: parameters_install.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    templating:
+        engines: ['twig']
+
+monolog:
+    handlers:
+        main:
+            type:  stream
+            path:  %site.path_www%/app/logs/logs.log
+            level: debug
+
+services:
+    database:
+        class: SpoonDatabase
+        arguments:
+            - %database.driver%
+            - %database.host%
+            - %database.user%
+            - %database.password%
+            - %database.name%
+            - %database.port%
+        calls:
+            - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+    mailer:
+        class: Common\Mailer
+        arguments:
+            - @database

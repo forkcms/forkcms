@@ -12,6 +12,10 @@ namespace Install\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
+use Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand;
+use Symfony\Bundle\FrameworkBundle\Command\AssetsInstallCommand;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Output\NullOutput;
 
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
@@ -122,6 +126,20 @@ class Step7 extends Step
         // show success message
         $this->showSuccess();
 
+        // clear cache, this will remove the cached container
+        $command = new CacheClearCommand();
+        $command->setContainer($this->getContainer());
+        $input = new ArrayInput(array());
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+
+        // install assets
+        $command = new AssetsInstallCommand();
+        $command->setContainer($this->getContainer());
+        $input = new ArrayInput(array('target' => PATH_WWW));
+        $output = new NullOutput();
+        $resultCode = $command->run($input, $output);
+
         // clear session
         \SpoonSession::destroy();
     }
@@ -137,6 +155,21 @@ class Step7 extends Step
 
         // init var
         $warnings = array();
+
+        // put a new instance of the database in the container
+        $database = new \SpoonDatabase(
+            'mysql',
+            \SpoonSession::get('db_hostname'),
+            \SpoonSession::get('db_username'),
+            \SpoonSession::get('db_password'),
+            \SpoonSession::get('db_database'),
+            \SpoonSession::get('db_port')
+        );
+        $database->execute(
+            'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
+            array('charset' => 'utf8')
+        );
+        $this->getContainer()->set('database', $database);
 
         // create the core installer
         $installer = new CoreInstaller(

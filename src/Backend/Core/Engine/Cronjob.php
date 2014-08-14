@@ -176,16 +176,15 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
+
+        // is the Core module
         if ($this->getModule() == 'Core') {
             $configClass = 'Backend\\Core\\Config';
         }
 
         // validate if class exists (aka has correct name)
-        if (!class_exists(
-            $configClass
-        )
-        ) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
         }
 
         // create config-object, the constructor will do some magic

@@ -61,17 +61,17 @@ class Url extends \KernelLoader
         $this->getContainer()->set('url', $this);
 
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen($_SERVER['REQUEST_URI']) != 1 &&
-            mb_substr($_SERVER['REQUEST_URI'], -1) == '/'
+        if (mb_strlen($this->get('request')->getRequestUri()) != 1 &&
+            mb_substr($this->get('request')->getRequestUri(), -1) == '/'
         ) {
-            \SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);
+            \SpoonHTTP::redirect(mb_substr($this->get('request')->getRequestUri(), 0, -1), 301);
         }
 
         // set query-string for later use
-        $this->setQueryString($_SERVER['REQUEST_URI']);
+        $this->setQueryString($this->get('request')->getRequestUri());
 
         // set host for later use
-        $this->setHost($_SERVER['HTTP_HOST']);
+        $this->setHost($this->get('request')->getHttpHost());
 
         // process URL
         $this->processQueryString();

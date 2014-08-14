@@ -1,6 +1,18 @@
 imports:
     - { resource: parameters.yml }
 
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    templating:
+        engines: ['twig']
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
+
+
 monolog:
     handlers:
         main:
@@ -20,6 +32,7 @@ services:
             - %database.port%
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
+            - [ setDebug, [ %kernel.debug% ]]
     mailer:
         class: Common\Mailer
         arguments:

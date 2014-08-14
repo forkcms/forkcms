@@ -46,8 +46,8 @@ class Url extends Base\Object
         // add to registry
         $this->getContainer()->set('url', $this);
 
-        $this->setQueryString($_SERVER['REQUEST_URI']);
-        $this->setHost($_SERVER['HTTP_HOST']);
+        $this->setQueryString($this->get('request')->getRequestUri());
+        $this->setHost($this->get('request')->getHttpHost());
         $this->processQueryString();
     }
 
@@ -108,14 +108,8 @@ class Url extends Base\Object
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
         $chunks = (array) explode('/', trim($processedQueryString, '/'));
 
-        // remove the src part if necessary. This is needed for backend ajax/cronjobs
-        if (isset($chunks[0]) && $chunks[0] == 'src') {
-            unset($chunks[0]);
-            $chunks = array_values($chunks);
-        }
-
         // check if this is a request for a AJAX-file
-        $isAJAX = (isset($chunks[1]) && $chunks[1] == 'Ajax.php');
+        $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');
 
         // get the language, this will always be in front
         $language = '';
@@ -130,7 +124,7 @@ class Url extends Base\Object
 
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks) . $getParameters
+                '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
             );
         }
 
@@ -214,7 +208,7 @@ class Url extends Base\Object
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
             \SpoonHTTP::redirect(
-                '/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode(
+                '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
                     '/' . $this->getQueryString()
                 )
             );
