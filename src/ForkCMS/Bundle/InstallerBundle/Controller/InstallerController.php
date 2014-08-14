@@ -11,17 +11,26 @@ class InstallerController extends Controller
     {
         $this->checkInstall();
 
-        $libraryFolder = $this->container->getParameter('kernel.root_dir')
-            . '/../library';
-
-        $fs = new Filesystem();
-        if ($fs->exists($libraryFolder)) {
-            $this->get('session')->set('path_library', $libraryFolder);
-
+        // if all our requirements are met, go to the next step
+        $requirementsChecker = $this->get('forkcms.requirements.checker');
+        if ($requirementsChecker->passes()) {
             return $this->redirect($this->generateUrl('install_step2'));
         } else {
+            $errors = $requirementsChecker->getErrors();
             return $this->render(
-                'ForkCMSInstallerBundle:Installer:step1.html.twig'
+                'ForkCMSInstallerBundle:Installer:step1.html.twig',
+                array(
+                    'errors' => $errors,
+                    'hasErrors' => in_array(
+                        $requirementsChecker::STATUS_ERROR,
+                        $errors
+                    ),
+                    'hasWarnings' => in_array(
+                        $requirementsChecker::STATUS_WARNING,
+                        $errors
+                    ),
+                    'rootDir' => $this->container->getParameter('kernel.root_dir'),
+                )
             );
         }
     }
@@ -53,13 +62,12 @@ class InstallerController extends Controller
     public function step6Action()
     {
         $this->checkInstall();
-        var_dump('6');exit;
-    }
 
-    public function step7Action()
-    {
-        $this->checkInstall();
-        var_dump('7');exit;
+        $libraryFolder = $this->container->getParameter('kernel.root_dir')
+            . '/../library'
+        ;
+
+        var_dump('6');exit;
     }
 
     public function noStepAction()
