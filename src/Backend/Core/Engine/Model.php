@@ -1040,12 +1040,11 @@ class Model extends \BaseModel
      * @param  string    $label          Label which will be used when you want to connect this block.
      * @param  array     $data           Containing extra variables.
      * @param  bool      $hidden         Should this extra be visible in frontend or not?
-     * @param  int       $sequence       
+     * @param  int       $sequence
      * @return int       The new extra id
      */
     public static function insertExtra($type, $module, $action = null, $label = null, $data = null, $hidden = false, $sequence = null)
     {
-        // recast variables
         $type = (string) $type;
         $module = (string) $module;
 
@@ -1053,22 +1052,15 @@ class Model extends \BaseModel
         $action = ($action == null) ? $module : (string) $action;
         $label = ($label == null) ? $module : (string) $label;
 
-        // recast data to array
-        $data = (array) $data;
-
-        // redefine hidden
-        $hidden = ($hidden) ? 'Y' : 'N';
-
-        // define allowed extras
-        $allowedExtras = array('homepage', 'block', 'widget');
-
         // check if type is allowed
-        if (!in_array($type, $allowedExtras)) {
-            throw new BackendException('Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".');
+        if (!in_array($type, array('homepage', 'block', 'widget'))) {
+            throw new BackendException(
+                'Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".'
+            );
         }
 
         // get database
-        $db = self::getContainer()->get('database');
+        $db = self::get('database');
 
         // sequence not given
         if ($sequence == null) {
@@ -1096,8 +1088,8 @@ class Model extends \BaseModel
             'type' => $type,
             'label' => $label,
             'action' => $action,
-            'data' => serialize($data),
-            'hidden' => $hidden,
+            'data' => serialize((array) $data),
+            'hidden' => ($hidden) ? 'Y' : 'N',
             'sequence' => $sequence
         );
 

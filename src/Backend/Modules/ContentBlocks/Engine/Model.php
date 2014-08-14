@@ -271,8 +271,9 @@ class Model
             'Detail'
         );
 
-        // insert and return the new revision id
-        $item['revision_id'] = BackendModel::getContainer()->get('database')->insert('content_blocks', $item);
+        $item['revision_id'] = BackendModel::get('database')
+            ->insert('content_blocks', $item)
+        ;
 
         // update data for the extra
         BackendModel::updateExtra(

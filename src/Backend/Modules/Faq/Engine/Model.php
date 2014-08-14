@@ -465,12 +465,10 @@ class Model
      */
     public static function insertCategory(array $item, $meta = null)
     {
-        // define database
-        $db = BackendModel::getContainer()->get('database');
+        $db = BackendModel::get('database');
 
-        // we have meta given
+        // insert the meta if possible
         if ($meta !== null) {
-            // insert meta
             $item['meta_id'] = $db->insert('meta', $meta);
         }
 
@@ -481,7 +479,6 @@ class Model
             'CategoryList'
         );
 
-        // insert item
         $item['id'] = $db->insert('faq_categories', $item);
 
         // update extra (item id is now known)
@@ -500,10 +497,8 @@ class Model
             )
         );
 
-        // invalidate frontend cache
         BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
-        // return the new item id
         return $item['id'];
     }
 

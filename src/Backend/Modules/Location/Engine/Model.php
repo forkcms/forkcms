@@ -205,11 +205,7 @@ class Model
      */
     public static function insert($item)
     {
-        // define database
         $db = BackendModel::getContainer()->get('database');
-
-        $item['created_on'] = BackendModel::getUTCDate();
-        $item['edited_on'] = BackendModel::getUTCDate();
 
         // insert extra
         $item['extra_id'] = BackendModel::insertExtra(
@@ -218,6 +214,7 @@ class Model
         );
 
         // insert new location
+        $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
         $item['id'] = $db->insert('location', $item);
 
         // update extra (item id is now known)
@@ -232,7 +229,6 @@ class Model
             )
         );
 
-        // return the new id
         return $item['id'];
     }
 
@@ -287,7 +283,6 @@ class Model
             $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
         }
 
-        // update item
         return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
     }
 }
