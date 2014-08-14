@@ -10,7 +10,20 @@ class InstallerController extends Controller
     public function step1Action()
     {
         $this->checkInstall();
-        var_dump('1');exit;
+
+        $libraryFolder = $this->container->getParameter('kernel.root_dir')
+            . '/../library';
+
+        $fs = new Filesystem();
+        if ($fs->exists($libraryFolder)) {
+            $this->get('session')->set('path_library', $libraryFolder);
+
+            return $this->redirect($this->generateUrl('install_step2'));
+        } else {
+            return $this->render(
+                'ForkCMSInstallerBundle:Installer:step1.html.twig'
+            );
+        }
     }
 
     public function step2Action()

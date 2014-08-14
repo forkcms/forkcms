@@ -7,6 +7,7 @@ framework:
         strict_requirements: ~
     templating:
         engines: ['twig']
+    session:         ~
 
 twig:
     debug:            "%kernel.debug%"
