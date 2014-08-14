@@ -11,6 +11,7 @@ Bugfixes:
 
 * Core: event subscriptions did not get fired in the frontend.
 * Authentication: avoid unnecessary dabase calls for unauthenticated users.
+* Tags: make sure the same tag can't exist with and without a capital letter.
 
 
 3.7.3 (2014-08-08)
