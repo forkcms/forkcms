@@ -72,22 +72,7 @@ class Model
             $db->delete('faq_categories', 'id = ?', array((int) $id));
             $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-            // build extra
-            $extra = array(
-                'id' => $item['extra_id'],
-                'module' => 'Faq',
-                'type' => 'widget',
-                'action' => 'category_list'
-            );
-
-            // delete extra
-            $db->delete(
-                'modules_extras',
-                'id = ? AND module = ? AND type = ? AND action = ?',
-                array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
-            );
-
-            // invalidate the cache for the faq
+            BackendModel::deleteExtraById($item['extra_id']);
             BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
@@ -525,35 +510,22 @@ class Model
      */
     public static function updateCategory(array $item)
     {
-        $db = BackendModel::getContainer()->get('database');
-
+        // update faq category
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'Faq',
-            'type' => 'widget',
-            'label' => 'Faq',
-            'action' => 'category_list',
-            'data' => serialize(
-                array(
-                    'id' => $item['id'],
-                    'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
-                )
-            ),
-            'hidden' => 'N'
-        );
 
         // update extra
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => 'Category: ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+            )
         );
+
+        // invalidate faq
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 }
