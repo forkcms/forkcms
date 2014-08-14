@@ -1,7 +1,15 @@
-3.7.4 (xxxx-xx-xx)
+3.7.4 (2014-xx-xx)
 --
+Improvements:
+
+* Profiles: mass import for profiles using a .csv added.
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
+* Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
+
 Bugfixes:
 
+* Core: event subscriptions did not get fired in the frontend.
 * Authentication: avoid unnecessary dabase calls for unauthenticated users.
 
 

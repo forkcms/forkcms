@@ -6,6 +6,9 @@
 
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}"><span>{$lblAdd|ucfirst}</span></a>
+		{option:showProfilesImport}
+		<a href="{$var|geturl:'import'}" class="button icon iconImport" title="{$lblImport|ucfirst}"><span>{$lblImport|ucfirst}</span></a>
+		{/option:showProfilesImport}
 	</div>
 </div>
 

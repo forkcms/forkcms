@@ -17,7 +17,7 @@ use Backend\Core\Engine\Model as BackendModel;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
- * @author Jeroen Desloovere <info@jeroendesloovere.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -206,46 +206,29 @@ class Model
     public static function insert($item)
     {
         $db = BackendModel::getContainer()->get('database');
-        $item['created_on'] = BackendModel::getUTCDate();
-        $item['edited_on'] = BackendModel::getUTCDate();
-
-        // build extra
-        $extra = array(
-            'module' => 'Location',
-            'type' => 'widget',
-            'label' => 'Location',
-            'action' => 'Location',
-            'data' => null,
-            'hidden' => 'N',
-            'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?', array('Location')
-                )
-            );
-        if (is_null($extra['sequence'])) {
-            $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000 FROM modules_extras AS i'
-            );
-        }
 
         // insert extra
-        $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'Location'
+        );
 
-        // insert and return the new id
+        // insert new location
+        $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
         $item['id'] = $db->insert('location', $item);
 
         // update extra (item id is now known)
-        $extra['data'] = serialize(array(
-            'id' => $item['id'],
-            'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-            'language' => $item['language'],
-            'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id'])
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+            )
         );
-        $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
-        // return the new id
         return $item['id'];
     }
 
@@ -300,7 +283,6 @@ class Model
             $db->update('modules_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
         }
 
-        // update item
         return $db->update('location', $item, 'id = ? AND language = ?', array($item['id'], $item['language']));
     }
 }
