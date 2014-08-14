@@ -26,7 +26,6 @@ Bugfixes:
 * Installer: make sure our database is initalized as utf8
 * Installer: remove the cached container after installation
 
->>>>>>> master
 
 3.7.2 (2014-07-31)
 --
