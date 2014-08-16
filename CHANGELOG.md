@@ -1,3 +1,10 @@
+3.8.1 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Location: correct item is highlighted after updating the map, fixes #798.
+
+
 3.8.0 (2014-08-14)
 --
 Improvements:
