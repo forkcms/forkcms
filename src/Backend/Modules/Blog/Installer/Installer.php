@@ -171,9 +171,6 @@ class Installer extends ModuleInstaller
                 $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
             }
 
-            // feedburner URL
-            $this->setSetting('Blog', 'feedburner_url_' . $language, '');
-
             // RSS settings
             $this->setSetting('Blog', 'rss_meta_' . $language, true);
             $this->setSetting('Blog', 'rss_title_' . $language, 'RSS');
