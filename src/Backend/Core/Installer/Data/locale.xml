@@ -10030,20 +10030,6 @@
         <translation language="sv"><![CDATA[Meddelande från detta CMS skickas här.]]></translation>
         <translation language="el"><![CDATA[Οι ειδοποιήσεις από το CMS αποστέλλονται εδώ.]]></translation>
       </item>
-      <item type="message" name="HelpFeedburnerURL">
-        <translation language="nl"><![CDATA[bijv. http://feeds.feedburner.com/jouw-website]]></translation>
-        <translation language="en"><![CDATA[eg. http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="hu"><![CDATA[pl. http://feeds.feedburner.com/te-oldalad]]></translation>
-        <translation language="it"><![CDATA[es. http://feeds.feedburner.com/il-tuo-sito]]></translation>
-        <translation language="ru"><![CDATA[прим. http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="zh"><![CDATA[例如：eg. http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="de"><![CDATA[z.B.  http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="fr"><![CDATA[ex http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="es"><![CDATA[ej. http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="lt"><![CDATA[pvz. http://feeds.feedburner.com/jūsų-tinklapis]]></translation>
-        <translation language="sv"><![CDATA[t. ex. http://feeds.feedburner.com/your-website]]></translation>
-        <translation language="el"><![CDATA[πχ. http://feeds.feedburner.com/η ιστοσελίδα σας εδώ]]></translation>
-      </item>
       <item type="message" name="HelpFileFieldWithMaxFileSize">
         <translation language="nl"><![CDATA[Enkel bestanden met de extensie %1$s zijn toegelaten, maximum toegelaten bestandsgrootte: %2$s.]]></translation>
         <translation language="en"><![CDATA[Only files with the extension %1$s are allowed, maximum file size: %2$s.]]></translation>
