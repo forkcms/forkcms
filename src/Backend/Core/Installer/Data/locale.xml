@@ -5541,21 +5541,6 @@
         <translation language="el"><![CDATA[γνώμες]]></translation>
         <translation language="zh"><![CDATA[回复]]></translation>
       </item>
-      <item type="label" name="FeedburnerURL">
-        <translation language="nl"><![CDATA[feedburner URL]]></translation>
-        <translation language="en"><![CDATA[feedburner URL]]></translation>
-        <translation language="hu"><![CDATA[feedburner URL]]></translation>
-        <translation language="it"><![CDATA[URL feedburner]]></translation>
-        <translation language="ru"><![CDATA[FeedBurner URL]]></translation>
-        <translation language="zh"><![CDATA[FeedburnerURL]]></translation>
-        <translation language="de"><![CDATA[Feedburner-Url]]></translation>
-        <translation language="fr"><![CDATA[URL feedburner]]></translation>
-        <translation language="es"><![CDATA[feedburner URL]]></translation>
-        <translation language="lt"><![CDATA[teikinio generavimo URL]]></translation>
-        <translation language="uk"><![CDATA[FeedBurner URL]]></translation>
-        <translation language="sv"><![CDATA[feedburner webbadress]]></translation>
-        <translation language="el"><![CDATA[διεύθυνση URL στο feedburner]]></translation>
-      </item>
       <item type="label" name="File">
         <translation language="nl"><![CDATA[bestand]]></translation>
         <translation language="en"><![CDATA[file]]></translation>
