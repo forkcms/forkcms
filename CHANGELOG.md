@@ -1,3 +1,10 @@
+3.8.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
+
+
 3.8.0 (2014-08-14)
 --
 Improvements:
