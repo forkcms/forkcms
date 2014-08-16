@@ -1,3 +1,10 @@
+3.8.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Blog: remove the FeedBurner integration as FeedBurner is no longer active, fixes #693.
+
+
 3.8.0 (2014-08-14)
 --
 Improvements:
