@@ -212,7 +212,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // insert the item
-                $id = BackendLocationModel::update($item);
+                BackendLocationModel::update($item);
 
                 // everything is saved, so redirect to the overview
                 if ($item['lat'] && $item['lng']) {
