@@ -1,3 +1,17 @@
+3.8.1 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
+* The sequence field for the extra's is now respected, see #828.
+* Blog: remove the FeedBurner integration as FeedBurner is no longer active, fixes #693.
+
+Bugfixes:
+
+* Location: correct item is highlighted after updating the map, fixes #798.
+* Installer: avoid duplicate headers in the installer
+
+
 3.8.0 (2014-08-14)
 --
 Improvements:

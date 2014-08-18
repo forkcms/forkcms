@@ -96,10 +96,7 @@ class Index extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssLink = FrontendModel::getModuleSetting('Blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
-        if ($rssLink == '') {
-            $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
-        }
+        $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
         $this->header->addLink(

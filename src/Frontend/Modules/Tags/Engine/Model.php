@@ -37,19 +37,12 @@ class Model
             // return result
             return call_user_func(array($class, $method), $parameter);
         } else {
-            // interface is not implemented
-            // when debug is on throw an exception
-            if (SPOON_DEBUG) {
-                throw new FrontendException(
-                    'To use the tags module you need
-                    to implement the FrontendTagsInterface
-                    in the model of your module
-                    (' . $module . ').'
-                );
-            } else {
-                // when debug is off show a descent message
-                exit(SPOON_DEBUG_MESSAGE);
-            }
+            throw new FrontendException(
+                'To use the tags module you need
+                to implement the FrontendTagsInterface
+                in the model of your module
+                (' . $module . ').'
+            );
         }
     }
 

@@ -95,11 +95,6 @@
 				<span class="helpTxt">{$msgHelpRSSDescription}</span>
 			</div>
 			<div class="options">
-				<label for="feedburnerUrl">{$lblFeedburnerURL|ucfirst}</label>
-				{$txtFeedburnerUrl} {$txtFeedburnerUrlError}
-				<span class="helpTxt">{$msgHelpFeedburnerURL}</span>
-			</div>
-			<div class="options">
 				<p>{$msgHelpMeta}:</p>
 				<ul class="inputList p0">
 					<li><label for="rssMeta">{$chkRssMeta} {$lblMetaInformation|ucfirst}</label></li>
