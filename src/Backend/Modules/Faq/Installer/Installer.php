@@ -141,6 +141,7 @@ class Installer extends ModuleInstaller
         // Category faq widgets will be added on the fly
         $this->insertExtra('Faq', 'widget', 'MostReadQuestions', 'MostReadQuestions');
         $this->insertExtra('Faq', 'widget', 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra('Faq', 'widget', 'Categories', 'Categories');
 
         $this->setSetting('Faq', 'overview_num_items_per_category', 0);
         $this->setSetting('Faq', 'most_read_num_items', 0);
