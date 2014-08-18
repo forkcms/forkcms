@@ -107,6 +107,12 @@ class Index extends BackendBaseActionIndex
             BackendModel::getModuleSetting('Core', 'facebook_app_secret', null)
         );
 
+        // twitter settings
+        $this->frm->addText(
+            'twitter_site_name',
+            ltrim(BackendModel::getModuleSetting('Core', 'twitter_site_name', null), '@')
+        );
+
         // ckfinder
         $this->frm->addText(
             'ckfinder_license_name',
@@ -381,6 +387,17 @@ class Index extends BackendBaseActionIndex
                         'facebook_application_secret'
                     )->getValue() : null
                 );
+
+                // twitter settings
+                /** @var \SpoonFormText $txtTwitterSiteName */
+                $txtTwitterSiteName = $this->frm->getField('twitter_site_name');
+                if ($txtTwitterSiteName->isFilled()) {
+                    BackendModel::setModuleSetting(
+                        'Core',
+                        'twitter_site_name',
+                        '@' . ltrim($txtTwitterSiteName->getValue(), '@')
+                    );
+                }
 
                 // ckfinder settings
                 BackendModel::setModuleSetting(

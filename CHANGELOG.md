@@ -2,6 +2,7 @@
 --
 Improvements:
 
+* Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
 * The sequence field for the extra's is now respected, see #828.
 
 
