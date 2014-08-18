@@ -99,7 +99,6 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addCheckbox('rss_meta', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
         $this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
         $this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
-        $this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 
         // god user?
         if ($this->isGod) {
@@ -125,25 +124,8 @@ class Settings extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            // shorten fields
-            $feedburnerURL = $this->frm->getField('feedburner_url');
-
             // validation
             $this->frm->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
-
-            // feedburner URL is set
-            if ($feedburnerURL->isFilled()) {
-                // check if http:// is set and add if necessary
-                $feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://' . $feedburnerURL->getValue() : $feedburnerURL->getValue();
-
-                // check if feedburner URL is valid
-                if (!\SpoonFilter::isURL($feedburner)) {
-                    $feedburnerURL->addError(BL::err('InvalidURL'));
-                }
-            } else {
-                // init variable
-                $feedburner = null;
-            }
 
             if ($this->frm->isCorrect()) {
                 // set our settings
@@ -159,7 +141,6 @@ class Settings extends BackendBaseActionEdit
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
                 BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
-                BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
                 if ($this->isGod) {
                     BackendModel::setModuleSetting($this->URL->getModule(), 'show_image_form', (bool) $this->frm->getField('show_image_form')->getChecked());
                 }
