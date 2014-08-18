@@ -5,6 +5,10 @@ Improvements:
 * Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
 * The sequence field for the extra's is now respected, see #828.
 
+Bugfixes:
+
+* Location: correct item is highlighted after updating the map, fixes #798.
+
 
 3.8.0 (2014-08-14)
 --
