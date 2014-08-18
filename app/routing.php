@@ -232,9 +232,6 @@ class ApplicationRouting extends Controller
             date_default_timezone_set('Europe/Brussels');
         }
 
-        // we'll be using utf-8
-        header('Content-type: text/html;charset=utf8');
-
         return 'Install\Engine\Installer';
     }
 
