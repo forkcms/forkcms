@@ -53,6 +53,10 @@ class RequirementsChecker
      */
     public function getErrors()
     {
+        if (empty($this->errors)) {
+            $this->checkRequirements();
+        }
+
         return $this->errors;
     }
 
@@ -63,6 +67,10 @@ class RequirementsChecker
      */
     public function hasErrors()
     {
+        if (empty($this->errors)) {
+            $this->checkRequirements();
+        }
+
         return in_array(self::STATUS_ERROR, $this->errors);
     }
 
@@ -71,6 +79,10 @@ class RequirementsChecker
      */
     public function hasWarnings()
     {
+        if (empty($this->errors)) {
+            $this->checkRequirements();
+        }
+
         return in_array(self::STATUS_WARNING, $this->errors);
     }
 
