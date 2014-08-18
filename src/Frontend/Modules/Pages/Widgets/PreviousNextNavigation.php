@@ -18,6 +18,7 @@ use Frontend\Core\Engine\Navigation AS FrontendNavigation;
  * This is a widget which creates a previous/next navigation for pages on the same level.
  *
  * @author Frederik Heyninck <frederik@figure8.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class PreviousNextNavigation extends FrontendBaseWidget
 {
@@ -35,18 +36,7 @@ class PreviousNextNavigation extends FrontendBaseWidget
     {
         parent::execute();
         $this->loadData();
-
-        $widgetTemplatesPath = FRONTEND_MODULES_PATH . '/Pages/Layout/Widgets';
-
-        // check if the given template exists
-        try {
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/' . $this->data['template']);
-        } catch (FrontendException $e) {
-            // template does not exist; assume subpages_default.tpl
-            $template = FrontendTheme::getPath($widgetTemplatesPath . '/PreviousNextNavigation.tpl');
-        }
-
-        $this->loadTemplate($template);
+        $this->loadTemplate();
         $this->parse();
     }
 

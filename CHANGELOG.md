@@ -5,6 +5,7 @@ Improvements:
 * Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
 * The sequence field for the extra's is now respected, see #828.
 * Blog: remove the FeedBurner integration as FeedBurner is no longer active, fixes #693.
+* Pages: remove redundant template code in the PreviousNextNavigation and Subpages widget.
 
 Bugfixes:
 
