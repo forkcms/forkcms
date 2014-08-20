@@ -91,7 +91,7 @@ class Model
         ) {
             return false;
         } else {
-            // check if the category contains questions
+            // check if the category does not contain questions
             return !(bool) BackendModel::get('database')->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
