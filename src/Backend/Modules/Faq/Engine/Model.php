@@ -92,7 +92,7 @@ class Model
             return false;
         } else {
             // check if the category contains questions
-            return (bool) BackendModel::get('database')->getVar(
+            return !(bool) BackendModel::get('database')->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
                  WHERE i.category_id = ? AND i.language = ?
