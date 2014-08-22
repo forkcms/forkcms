@@ -1,4 +1,4 @@
-3.8.1 (xxxx-xx-xx)
+3.8.1 (2014-08-22)
 --
 Improvements:
 
