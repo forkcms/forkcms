@@ -1,3 +1,10 @@
+3.8.2 (2014-xx-xx)
+--
+Improvements:
+
+* Core: small fix for mail template style on very small screens.
+
+
 3.8.1 (2014-08-22)
 --
 Improvements:
