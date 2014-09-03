@@ -422,9 +422,9 @@ class Model extends \BaseModel
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
+             WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ? AND p.site_id = ?
              LIMIT 1',
-            array($pageId, 'active', 'N', FRONTEND_LANGUAGE)
+            array($pageId, 'active', 'N', FRONTEND_LANGUAGE, self::get('current_site')->getId())
         );
 
         // validate
@@ -502,9 +502,9 @@ class Model extends \BaseModel
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.revision_id = ? AND p.language = ?
+             WHERE p.revision_id = ? AND p.language = ? AND p.site_id = ?
              LIMIT 1',
-            array($revisionId, FRONTEND_LANGUAGE)
+            array($revisionId, FRONTEND_LANGUAGE, self::get('current_site')->getId())
         );
 
         // validate
