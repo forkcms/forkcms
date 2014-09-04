@@ -13,9 +13,6 @@
       <p>Which modules would you like to install?</p>
       <ul id="moduleList" class="inputList noPadding">
         {{ form_widget(form.modules) }}
-        {#{iteration:modules}
-          <li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
-        {/iteration:modules}#}
       </ul>
 
       <h3>Example data</h3>
