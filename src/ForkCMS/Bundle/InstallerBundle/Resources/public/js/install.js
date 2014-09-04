@@ -10,6 +10,7 @@ var jsInstall =
 	init: function()
 	{
 		jsInstall.step2.init();
+		jsInstall.step3.init();
 	}
 }
 
@@ -126,6 +127,31 @@ jsInstall.step2 =
 
 		$('#interfaceLanguages input:checkbox').on('change', function() {
 			jsInstall.step2.setInterfaceDefaultLanguage();
+		});
+	}
+}
+
+jsInstall.step3 =
+{
+	init: function()
+	{
+		jsInstall.step3.toggleDebugEmail();
+	},
+
+	toggleDebugEmail: function()
+	{
+		if ($('#install_modules_different_debug_email').is(':checked')) {
+			$('#debugEmailHolder').show();
+		}
+
+		// multiple languages
+		$('#install_modules_different_debug_email').on('change', function() {
+			if ($('#install_modules_different_debug_email').is(':checked')) {
+				$('#debugEmailHolder').show();
+				$('#install_modules_debug_email').focus();
+			} else {
+				$('#debugEmailHolder').hide();
+			}
 		});
 	}
 }

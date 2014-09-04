@@ -5,46 +5,47 @@
 {% block content %}
   <h2>Settings</h2>
   {{ form_start(form) }}
-      <h3>Languages</h3>
-
-      <p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
-      {{ form_widget(form.language_type) }}
-      <ul id="languages" class="hidden inputList noPadding">
-        {{ form_widget(form.languages) }}
+  {#{% if formError is not empty%}
+    <div class="formMessage errorMessage"><p>{$formError}</p></div>
+  {% endif %}#}
+    <div>
+      <h3 class="noPadding">Modules</h3>
+      <p>Which modules would you like to install?</p>
+      <ul id="moduleList" class="inputList noPadding">
+        {{ form_widget(form.modules) }}
+        {#{iteration:modules}
+          <li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
+        {/iteration:modules}#}
       </ul>
 
-      <div>
-        <p>What is the default language we should use for the website?</p>
-        <p>
-          {{ form_widget(form.default_language) }}
-        </p>
-      </div>
-
-      <h3>CMS interface languages</h3>
-      <p>What languages do you plan to use in the CMS interface?</p>
-      <ul class="inputList">
+      <h3>Example data</h3>
+      <p>If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</p>
+      <ul class="inputList noPadding">
         <li>
-          {{ form_widget(form.same_interface_language) }}
-          {{ form_label(form.same_interface_language) }}
-          <p id="interfaceLanguagesExplanation" class="hidden noPadding">Select the language(s) you would like to use use in the CMS interface.</p>
-          <ul id="interfaceLanguages" class="hidden inputList noPadding">
-            {{ form_widget(form.interface_languages) }}
-          </ul>
+          {{ form_row(form.example_data)}}
+          <span class="helpTxt">(The blog-module is required and will be installed)</span>
         </li>
       </ul>
 
-      <div id="defaultInterfaceLanguageContainer">
-        <p>What is the default language we should use for the CMS interface?</p>
-        <p>
-          {{ form_widget(form.interface_language) }}
-        </p>
+      <h3>Debug mode</h3>
+      <p>Warning: debug mode is only useful when developing on Fork CMS.</p>
+      <p>You can enable debug mode by adding "<code>SetEnv FORK_DEBUG 1</code>" in your virtualhosts file.</p>
+      <ul class="inputList noPadding">
+        <li>
+          {{ form_row(form.different_debug_email)}}
+          <span class="helpTxt">(Exception emails will be sent to this email address)</span>
+        </li>
+        <li id="debugEmailHolder">
+          {{ form_widget(form.debug_email)}}
+        </li>
+      </ul>
+    </div>
+    <div class="fullwidthOptions">
+      <div class="buttonHolder">
+        <a href="install/2" class="button">Previous</a>
+        <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
       </div>
-      <div class="fullwidthOptions">
-        <div class="buttonHolder">
-          <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
-        </div>
-      </div>
-
+    </div>
   {{ form_end(form) }}
 {% endblock %}
 

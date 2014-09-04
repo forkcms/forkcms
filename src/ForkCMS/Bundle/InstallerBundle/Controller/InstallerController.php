@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 
 class InstallerController extends Controller
@@ -58,9 +59,20 @@ class InstallerController extends Controller
 
     public function step3Action(Request $request)
     {
-        var_dump($request->getSession()->all());exit;
         $this->checkInstall();
-        var_dump('3');exit;
+
+        //var_dump($request->getSession()->all());exit;
+        // @todo: check if all data from step 2 is available
+
+        // show modules form
+        $form = $this->createForm(new ModulesType());
+
+        return $this->render(
+            'ForkCMSInstallerBundle:Installer:step3.html.twig',
+            array(
+                'form' => $form->createView(),
+            )
+        );
     }
 
     public function step4Action()
