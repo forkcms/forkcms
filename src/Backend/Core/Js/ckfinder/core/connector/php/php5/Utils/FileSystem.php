@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -25,6 +25,14 @@ if (!defined('IN_CKFINDER')) exit;
  */
 class CKFinder_Connector_Utils_FileSystem
 {
+    /**
+     * @param string $path
+     * @return string
+     */
+    private function trimPathTrailingSlashes($path)
+    {
+        return rtrim($path, DIRECTORY_SEPARATOR . '/\\');
+    }
 
     /**
      * This function behaves similar to System.IO.Path.Combine in C#, the only diffrenece is that it also accepts null values and treat them as empty string
@@ -438,8 +446,10 @@ class CKFinder_Connector_Utils_FileSystem
             /**
              * realpath — Returns canonicalized absolute pathname
              */
-            $sRealPath = realpath( './' ) ;
+            $sRealPath = realpath('.') ;
         }
+
+        $sRealPath = $this->trimPathTrailingSlashes($sRealPath);
 
         /**
          * The filename of the currently executing script, relative to the document root.
@@ -447,8 +457,9 @@ class CKFinder_Connector_Utils_FileSystem
          * would be /test.php/foo.bar.
          */
         $sSelfPath = dirname($_SERVER['PHP_SELF']);
+        $sSelfPath = $this->trimPathTrailingSlashes($sSelfPath);
 
-        return substr($sRealPath, 0, strlen($sRealPath) - strlen($sSelfPath));
+        return $this->trimPathTrailingSlashes(substr($sRealPath, 0, strlen($sRealPath) - strlen($sSelfPath)));
     }
 
     /**
@@ -550,6 +561,7 @@ class CKFinder_Connector_Utils_FileSystem
      * @access public
      * @param string $filePath absolute path to file
      * @param string $extension file extension
+     * @param integer $detectionLevel 0 = none, 1 = use getimagesize for images, 2 = use DetectHtml for images
      * @return boolean
     */
     public static function isImageValid($filePath, $extension)
@@ -694,17 +706,18 @@ class CKFinder_Connector_Utils_FileSystem
      *
      * @param string $filePath
      * @param string $fileName
+     * @param string $sFileNameOrginal
      */
     public static function autoRename( $filePath, $fileName )
     {
-      $sFileNameOriginal = $fileName;
+      $sFileNameOrginal = $fileName;
       $iCounter = 0;
       while (true)
       {
         $sFilePath = CKFinder_Connector_Utils_FileSystem::combinePaths($filePath, $fileName);
         if ( file_exists($sFilePath) ){
           $iCounter++;
-          $fileName = CKFinder_Connector_Utils_FileSystem::getFileNameWithoutExtension($sFileNameOriginal, false) . "(" . $iCounter . ")" . "." .CKFinder_Connector_Utils_FileSystem::getExtension($sFileNameOriginal, false);
+          $fileName = CKFinder_Connector_Utils_FileSystem::getFileNameWithoutExtension($sFileNameOrginal, false) . "(" . $iCounter . ")" . "." .CKFinder_Connector_Utils_FileSystem::getExtension($sFileNameOrginal, false);
         }
         else
         {

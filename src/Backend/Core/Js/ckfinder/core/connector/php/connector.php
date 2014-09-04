@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -33,7 +33,7 @@ ob_start();
 /**
  * define required constants
  */
-require_once "./constants.php";
+require_once dirname(__FILE__) . '/constants.php';
 
 // @ob_end_clean();
 // header("Content-Encoding: none");
@@ -41,19 +41,20 @@ require_once "./constants.php";
 /**
  * we need this class in each call
  */
-require_once CKFINDER_CONNECTOR_LIB_DIR . "/CommandHandler/CommandHandlerBase.php";
+require_once CKFINDER_CONNECTOR_LIB_DIR . '/CommandHandler/CommandHandlerBase.php';
 /**
  * singleton factory
  */
-require_once CKFINDER_CONNECTOR_LIB_DIR . "/Core/Factory.php";
+require_once CKFINDER_CONNECTOR_LIB_DIR . '/Core/Factory.php';
 /**
  * utils class
  */
-require_once CKFINDER_CONNECTOR_LIB_DIR . "/Utils/Misc.php";
+require_once CKFINDER_CONNECTOR_LIB_DIR . '/Utils/Misc.php';
 /**
  * hooks class
  */
-require_once CKFINDER_CONNECTOR_LIB_DIR . "/Core/Hooks.php";
+require_once CKFINDER_CONNECTOR_LIB_DIR . '/Core/Hooks.php';
+
 /**
  * Simple function required by config.php - discover the server side path
  * to the directory relative to the "$baseUrl" attribute
