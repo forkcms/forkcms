@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 
 class InstallerController extends Controller
 {
@@ -61,11 +62,14 @@ class InstallerController extends Controller
     {
         $this->checkInstall();
 
-        //var_dump($request->getSession()->all());exit;
         // @todo: check if all data from step 2 is available
 
         // show modules form
         $form = $this->createForm(new ModulesType());
+        $handler = new ModulesHandler();
+        if ($handler->process($form, $request)) {
+            return $this->redirect($this->generateUrl('install_step4'));
+        }
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step3.html.twig',

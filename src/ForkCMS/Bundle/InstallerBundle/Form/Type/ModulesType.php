@@ -6,6 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -48,6 +50,26 @@ class ModulesType extends AbstractType
                 'email'
             )
         ;
+
+        // make sure the required modules are selected when submitting
+        $builder->addEventListener(
+            FormEvents::PRE_SUBMIT,
+            function (FormEvent $event) {
+                $data = $event->getData();
+
+                // add the modules array if it doesn't exit
+                if (!isset($data['modules'])) {
+                    $data['modules'] = $this->getRequiredModules();
+                } else {
+                    $data['modules'] = array_merge(
+                        $data['modules'],
+                        $this->getRequiredModules()
+                    );
+                }
+
+                $event->setData($data);
+            }
+        );
     }
 
     public function getName()
