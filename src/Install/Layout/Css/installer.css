@@ -100,8 +100,8 @@ h3 {
 	Step 5: DB
 */
 
-#installer input#hostname { width: 140px; }
-#installer input#port { width: 40px; }
+#installer input#install_database_hostname { width: 140px; }
+#installer input#install_database_port { width: 40px; }
 
 /*
 	Step 7
@@ -121,12 +121,12 @@ h3 {
 		padding-left: 12px;
 		border-bottom: 1px solid #CCC;
 	}
-	
+
 	.infoGrid th {
 		width: 100px;
 		border: none;
 	}
-	
+
 #debugEmailHolder
 {
 	display: none;

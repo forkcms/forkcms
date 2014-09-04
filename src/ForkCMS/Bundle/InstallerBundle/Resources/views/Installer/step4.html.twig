@@ -1,0 +1,71 @@
+{% extends 'ForkCMSInstallerBundle:Installer:base.html.twig' %}
+
+{% form_theme form _self %}
+
+{% block content %}
+  <h2>Settings</h2>
+  {{ form_start(form) }}
+  {#{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}#}
+    <div id="javascriptDisabled" class="formMessage errorMessage"><p>Javascript should be enabled.</p></div>
+    <div class="horizontal">
+      <p>Enter your database details. Make sure this database already exists.</p>
+      <p>
+        <label for="hostname">Hostname<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.hostname) }} : {{ form_widget(form.port) }}
+        <span class="helpTxt">If you are working locally, your hostname is probably <strong>localhost</strong>.</span>
+      </p>
+      <p>
+        <label for="database">Database<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.database) }}
+        <span class="helpTxt">Make sure this database is empty!</span>
+      </p>
+      <p>
+        <label for="username">Username<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.username) }}
+      </p>
+      <p>
+        <label for="password">Password<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.password) }}
+      </p>
+    </div>
+    <p class="buttonHolder spacing">
+      <a href="index.php?step=4" class="button">Previous</a>
+      <input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" disabled="disabled" />
+    </p>
+  {{ form_end(form) }}
+{% endblock %}
+
+{# Form theme. Note: this should be global #}
+
+{% block choice_widget_expanded -%}
+    <ul class="inputList" {{ block('widget_container_attributes') }}>
+    {%- for child in form %}
+        <li>
+          {{- form_widget(child, { 'attr' : { 'class' : 'inputRadio' } }) -}}
+          {{- form_label(child) -}}
+        </li>
+    {% endfor -%}
+    </ul>
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget -%}
+    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="inputCheckbox" />
+{%- endblock checkbox_widget %}
+
+{% block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    <input type="{{ type }}" class="inputText" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple %}
+
+{% block form_start -%}
+    {% set method = method|upper %}
+    {%- if method in ["GET", "POST"] -%}
+        {% set form_method = method %}
+    {%- else -%}
+        {% set form_method = "POST" %}
+    {%- endif -%}
+    <form id="{{ form.vars.name }}" name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms submitWithLink">
+    {%- if form_method != method -%}
+        <input type="hidden" name="_method" value="{{ method }}" />
+    {%- endif -%}
+{%- endblock form_start %}

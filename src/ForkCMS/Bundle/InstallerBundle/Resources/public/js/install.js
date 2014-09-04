@@ -11,6 +11,7 @@ var jsInstall =
 	{
 		jsInstall.step2.init();
 		jsInstall.step3.init();
+		jsInstall.step4.init();
 	}
 }
 
@@ -153,6 +154,15 @@ jsInstall.step3 =
 				$('#debugEmailHolder').hide();
 			}
 		});
+	}
+}
+
+jsInstall.step4 =
+{
+	init: function()
+	{
+		$('#javascriptDisabled').remove();
+		$('#installerButton').removeAttr('disabled');
 	}
 }
 
