@@ -4,7 +4,9 @@ namespace ForkCMS\Bundle\InstallerBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 
 class InstallerController extends Controller
 {
@@ -29,7 +31,7 @@ class InstallerController extends Controller
         );
     }
 
-    public function step2Action()
+    public function step2Action(Request $request)
     {
         $this->checkInstall();
 
@@ -41,6 +43,10 @@ class InstallerController extends Controller
 
         // show language information form.
         $form = $this->createForm(new LanguagesType());
+        $handler = new LanguagesHandler();
+        if ($handler->process($form, $request)) {
+            return $this->redirect($this->generateUrl('install_step3'));
+        }
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step2.html.twig',
@@ -50,8 +56,9 @@ class InstallerController extends Controller
         );
     }
 
-    public function step3Action()
+    public function step3Action(Request $request)
     {
+        var_dump($request->getSession()->all());exit;
         $this->checkInstall();
         var_dump('3');exit;
     }
