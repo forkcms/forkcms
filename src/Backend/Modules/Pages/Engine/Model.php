@@ -19,7 +19,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 use Frontend\Core\Engine\Language as FrontendLanguage;
-
+j
 /**
  * In this file we store all generic functions that we will be using in the PagesModule
  *
@@ -1167,7 +1167,7 @@ class Model
             $db->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND i.site_id = ? AND sequence > ?',
+                 WHERE parent_id = ? AND language = ? AND site_id = ? AND sequence > ?',
                 array($newParent, $language, $siteId, $newSequence)
             );
 
