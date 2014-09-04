@@ -1167,7 +1167,7 @@ class Model
             $db->execute(
                 'UPDATE pages
                  SET sequence = sequence + 1
-                 WHERE parent_id = ? AND language = ? AND i.site_id = ? AND sequence > ?',
+                 WHERE parent_id = ? AND language = ? AND site_id = ? AND sequence > ?',
                 array($newParent, $language, $siteId, $newSequence)
             );
 
