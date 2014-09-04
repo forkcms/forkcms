@@ -59,13 +59,13 @@ class ModulesType extends AbstractType
 
                 // add the modules array if it doesn't exit
                 if (!isset($data['modules'])) {
-                    $data['modules'] = $this->getRequiredModules();
-                } else {
-                    $data['modules'] = array_merge(
-                        $data['modules'],
-                        $this->getRequiredModules()
-                    );
+                    $data['modules'] = array();
                 }
+
+                $data['modules'] = array_merge(
+                    $data['modules'],
+                    $this->getRequiredModules()
+                );
 
                 $event->setData($data);
             }
