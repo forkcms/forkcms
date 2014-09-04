@@ -21,7 +21,12 @@ class DatabaseType extends AbstractType
             )
             ->add(
                 'port',
-                'text'
+                'text',
+                array(
+                    'attr' => array(
+                        'value' => 3306,
+                    ),
+                )
             )
             ->add(
                 'database',
