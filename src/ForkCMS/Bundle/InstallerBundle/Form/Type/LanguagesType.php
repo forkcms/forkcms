@@ -47,6 +47,7 @@ class LanguagesType extends AbstractType
                 'same_interface_language',
                 'checkbox',
                 array(
+                    'attr' => array('checked' => 'checked'),
                     'label' => 'Use the same language(s) for the CMS interface.',
                 )
             )
