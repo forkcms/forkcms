@@ -39,6 +39,11 @@
           {{ form_widget(form.interface_language) }}
         </p>
       </div>
+      <div class="fullwidthOptions">
+        <div class="buttonHolder">
+          <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+        </div>
+      </div>
 
   {{ form_end(form) }}
 {% endblock %}
@@ -67,7 +72,7 @@
     {%- else -%}
         {% set form_method = "POST" %}
     {%- endif -%}
-    <form name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms">
+    <form id="{{ form.vars.name }}" name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms submitWithLink">
     {%- if form_method != method -%}
         <input type="hidden" name="_method" value="{{ method }}" />
     {%- endif -%}
