@@ -79,10 +79,10 @@ class InstallerController extends Controller
         );
     }
 
-    public function step4Action()
+    public function step4Action(Request $request)
     {
         $this->checkInstall();
-        var_dump('4');exit;
+        var_dump($request->getSession()->all());exit;
     }
 
     public function step5Action()

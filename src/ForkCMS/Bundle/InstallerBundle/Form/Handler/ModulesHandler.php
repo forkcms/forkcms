@@ -31,12 +31,11 @@ class ModulesHandler
     {
         $session = $request->getSession();
         $data = $form->getData();
-var_dump($session->all(), $data);exit;
-        $session->set('default_language', $data['default_language']);
-        $session->set('default_interface_language', $data['interface_language']);
-        $session->set('multiple_languages', $data['language_type'] === 'multiple');
-        $session->set('languages', $data['languages']);
-        $session->set('interface_languages', $data['interface_languages']);
+
+        $session->set('modules', $data['modules']);
+        $session->set('example_data', $data['example_data']);
+        $session->set('example_data', $data['different_debug_email']);
+        $session->set('debug_email', $data['debug_email']);
 
         return true;
     }
