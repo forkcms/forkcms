@@ -240,11 +240,6 @@ class RequirementsChecker
             self::STATUS_WARNING
         );
         $this->checkRequirement(
-            'fileSystemInstaller',
-            $this->isWritable($this->rootDir . 'src/Install/Cache'),
-            self::STATUS_ERROR
-        );
-        $this->checkRequirement(
             'fileSystemAppCache',
             $this->isRecursivelyWritable($this->rootDir . 'app/cache/'),
             self::STATUS_ERROR
