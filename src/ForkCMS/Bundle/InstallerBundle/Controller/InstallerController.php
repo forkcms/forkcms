@@ -10,6 +10,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 
 class InstallerController extends Controller
 {
@@ -86,11 +87,10 @@ class InstallerController extends Controller
 
         // show database form
         $form = $this->createForm(new DatabaseType());
-        /*$handler = new DatabaseHandler();
+        $handler = new DatabaseHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step5'));
         }
-        var_dump($request->getSession()->all());exit;*/
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step4.html.twig',
@@ -100,10 +100,10 @@ class InstallerController extends Controller
         );
     }
 
-    public function step5Action()
+    public function step5Action(Request $request)
     {
         $this->checkInstall();
-        var_dump('5');exit;
+        var_dump($request->getSession()->all());exit;
     }
 
     public function step6Action()

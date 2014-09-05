@@ -6,6 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Symfony\Component\Validator\ExecutionContextInterface;
+use Symfony\Component\Validator\Constraints\Callback;
 
 /**
  * Builds the form to set up database information
@@ -35,7 +38,7 @@ class DatabaseType extends AbstractType
             )
             ->add(
                 'password',
-                'text'
+                'password'
             )
         ;
 
@@ -71,5 +74,55 @@ class DatabaseType extends AbstractType
     public function getName()
     {
         return 'install_database';
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'constraints' => array(
+                new Callback(
+                    array(
+                        'methods' => array(
+                            array($this, 'checkDatabaseConnection')
+                        ),
+                    )
+                )
+            ),
+        ));
+    }
+
+    /**
+     * Validate if a database connection can be made
+     *
+     * @param  array                     $data    The form data
+     * @param  ExecutionContextInterface $context The forms validation context
+     *
+     * @todo   Replace SpoonDatabase
+     */
+    public function checkDatabaseConnection($data, ExecutionContextInterface $context)
+    {
+        try {
+            // create instance
+            $db = new \SpoonDatabase(
+                'mysql',
+                $data['hostname'],
+                $data['username'],
+                $data['password'],
+                $data['database'],
+                $data['port']
+            );
+
+            // test table
+            $table = 'test' . time();
+
+            // attempt to create table
+            $db->execute('DROP TABLE IF EXISTS ' . $table);
+            $db->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
+
+            // drop table
+            $db->drop($table);
+        } catch (\Exception $e) {
+            $context->addViolation('Problem with database credentials');
+        }
     }
 }
