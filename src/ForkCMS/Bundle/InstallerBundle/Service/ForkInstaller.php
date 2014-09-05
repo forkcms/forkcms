@@ -40,7 +40,6 @@ class ForkInstaller
     /**
      * @var array
      */
-    private $warnings = array();
     private $defaultExtras = array();
 
     /**
@@ -85,11 +84,6 @@ class ForkInstaller
         $this->createLocaleFiles($data);
 
         return true;
-    }
-
-    public function getWarnings()
-    {
-        return $this->warnings;
     }
 
     /**
@@ -198,12 +192,6 @@ class ForkInstaller
         $installer = $this->getCoreInstaller($data);
         $installer->install();
 
-        // add the warnings
-        $moduleWarnings = $installer->getWarnings();
-        if (!empty($moduleWarnings)) {
-            $this->warnings[] = array('module' => 'Core', 'warnings' => $moduleWarnings);
-        }
-
         // add the default extras
         $moduleDefaultExtras = $installer->getDefaultExtras();
         if (!empty($moduleDefaultExtras)) {
@@ -280,12 +268,6 @@ class ForkInstaller
 
                 // install the module
                 $installer->install();
-
-                // add the warnings
-                $moduleWarnings = $installer->getWarnings();
-                if (!empty($moduleWarnings)) {
-                    $this->warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
-                }
 
                 // add the default extras
                 $moduleDefaultExtras = $installer->getDefaultExtras();

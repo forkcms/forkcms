@@ -22,19 +22,31 @@ class DatabaseType extends AbstractType
         $builder
             ->add(
                 'hostname',
-                'text'
+                'text',
+                array(
+                    'required' => true,
+                )
             )
             ->add(
                 'port',
-                'text'
+                'text',
+                array(
+                    'required' => true,
+                )
             )
             ->add(
                 'database',
-                'text'
+                'text',
+                array(
+                    'required' => true,
+                )
             )
             ->add(
                 'username',
-                'text'
+                'text',
+                array(
+                    'required' => true,
+                )
             )
             ->add(
                 'password',

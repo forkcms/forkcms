@@ -23,22 +23,4 @@
     <a class="button" href="../">View your new website</a>
     <a class="button" href="../private">Log in to Fork CMS</a>
   </div>
-
-  {% if installer.warnings is not empty %}
-    <div class="generalMessage infoMessage">
-      <p><strong>There are some warnings for following module(s):</strong></p>
-      {% for warning in warnings %}
-        <ul>
-          <li>
-            <strong>{{ warning.module }}</strong>
-            <ul>
-              {% for moduleWarning in warning %}
-                <li>- {{ moduleWarning.message }}</li>
-              {% endfor %}
-            </ul>
-          </li>
-        </ul>
-      {% endfor %}
-    </div>
-  {% endif %}
 {% endblock %}
