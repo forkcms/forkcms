@@ -43,12 +43,15 @@ class ForkInstaller
     private $defaultExtras = array();
 
     /**
-     * @todo: make sure the Container doesn't have to be injected
+     * @todo: - make sure the Container doesn't have to be injected
+     *        - make sure the Model::setContainer isn't needed anymore
      */
     public function __construct(Container $container, $rootDir)
     {
         $this->container = $container;
         $this->rootDir = $rootDir;
+
+        Model::setContainer($container);
     }
 
     /**
@@ -72,6 +75,8 @@ class ForkInstaller
 
         $this->buildDatabase($data);
         $this->installCore($data);
+
+        $this->installModules($data);
         var_dump($this);exit;
     }
 
@@ -198,6 +203,82 @@ class ForkInstaller
                 'smtp_username'              => '',
                 'smtp_password'              => '',
             )
+        );
+    }
+
+    protected function installModules($data)
+    {
+        $data['modules'] = array_merge(
+            $data['modules'],
+            self::getHiddenModules()
+        );
+
+        // loop modules
+        foreach ($data['modules'] as $module) {
+            $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
+
+            // install exists
+            if (class_exists($class)) {
+
+                // create installer
+                /** @var $install ModuleInstaller */
+                $installer = new $class(
+                    $this->container->get('database'),
+                    $data['languages'],
+                    $data['interface_languages'],
+                    $data['example_data'],
+                    $data
+                );
+
+                // install the module
+                $installer->install();
+
+                // add the warnings
+                $moduleWarnings = $installer->getWarnings();
+                if (!empty($moduleWarnings)) {
+                    $this->warnings[] = array('module' => $module, 'warnings' => $moduleWarnings);
+                }
+
+                // add the default extras
+                $moduleDefaultExtras = $installer->getDefaultExtras();
+                if (!empty($moduleDefaultExtras)) {
+                    $this->defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+                }
+            }
+        }
+    }
+
+    /**
+     * Fetches the required modules
+     *
+     * @return array
+     */
+    public static function getRequiredModules()
+    {
+        return array(
+            'Locale',
+            'Settings',
+            'Users',
+            'Groups',
+            'Extensions',
+            'Pages',
+            'Search',
+            'ContentBlocks',
+            'Tags',
+        );
+    }
+
+    /**
+     * Fetches the hidden modules
+     *
+     * @return array
+     */
+    public static function getHiddenModules()
+    {
+        return array(
+            'Authentication',
+            'Dashboard',
+            'Error',
         );
     }
 }

@@ -8,6 +8,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use ForkCMS\Bundle\InstallerBundle\Service\ForkInstaller;
 
 use Backend\Core\Engine\Model as BackendModel;
 
@@ -64,7 +65,7 @@ class ModulesType extends AbstractType
 
                 $data['modules'] = array_merge(
                     $data['modules'],
-                    $this->getRequiredModules()
+                    ForkInstaller::getRequiredModules()
                 );
 
                 $event->setData($data);
@@ -85,7 +86,7 @@ class ModulesType extends AbstractType
     protected function getInstallableModules()
     {
         $modules = array_unique(array_merge(
-            $this->getRequiredModules(),
+            ForkInstaller::getRequiredModules(),
             BackendModel::getModulesOnFilesystem(false)
         ));
         $this->removeHiddenModules($modules);
@@ -103,7 +104,7 @@ class ModulesType extends AbstractType
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
         foreach ($view->children['modules']->children as $module) {
-            if (in_array($module->vars['value'], $this->getRequiredModules())) {
+            if (in_array($module->vars['value'], ForkInstaller::getRequiredModules())) {
                 $module->vars['attr']['disabled'] = 'disabled';
                 $module->vars['checked'] = true;
             }
@@ -118,43 +119,9 @@ class ModulesType extends AbstractType
     protected function removeHiddenModules(&$modules)
     {
         foreach ($modules as $key => $module) {
-            if (in_array($module, $this->getHiddenModules())) {
+            if (in_array($module, ForkInstaller::getHiddenModules())) {
                 unset($modules[$key]);
             }
         }
-    }
-
-    /**
-     * Fetches the required modules
-     *
-     * @return array
-     */
-    protected function getRequiredModules()
-    {
-        return array(
-            'Locale',
-            'Settings',
-            'Users',
-            'Groups',
-            'Extensions',
-            'Pages',
-            'Search',
-            'ContentBlocks',
-            'Tags',
-        );
-    }
-
-    /**
-     * Fetches the hidden modules
-     *
-     * @return array
-     */
-    protected function getHiddenModules()
-    {
-        return array(
-            'Authentication',
-            'Dashboard',
-            'Error',
-        );
     }
 }
