@@ -45,7 +45,6 @@ class Backend extends \KernelLoader implements \ApplicationInterface
         new Template();
         new Navigation($this->getKernel());
         new Header($this->getKernel());
-
         $this->action = new Action($this->getKernel());
         $this->action->setModule($URL->getModule());
         $this->action->setAction($URL->getAction());
