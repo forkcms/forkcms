@@ -29,14 +29,14 @@ class DatabaseHandler
 
     public function processValidForm(Form $form, $request)
     {
-        var_dump('ok', $form->getData());exit;
-        /*$session = $request->getSession();
+        $session = $request->getSession();
         $data = $form->getData();
 
-        $session->set('modules', $data['modules']);
-        $session->set('example_data', $data['example_data']);
-        $session->set('example_data', $data['different_debug_email']);
-        $session->set('debug_email', $data['debug_email']);*/
+        $session->set('db_hostname', $data['hostname']);
+        $session->set('db_username', $data['username']);
+        $session->set('db_database', $data['database']);
+        $session->set('db_port', $data['port']);
+        $session->set('db_password', $data['password']);
 
         return true;
     }
