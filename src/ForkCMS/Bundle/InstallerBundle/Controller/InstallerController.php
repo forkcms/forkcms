@@ -26,9 +26,6 @@ class InstallerController extends Controller
             return $this->redirect($this->generateUrl('install_step2'));
         }
 
-        // not all requirements are met, render the errors in the template
-        $errors = $requirementsChecker->getErrors();
-
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
             array(
