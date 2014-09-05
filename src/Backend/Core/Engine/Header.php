@@ -73,7 +73,7 @@ class Header extends Base\Object
         $this->URL = $this->getContainer()->get('url');
         $this->tpl = $this->getContainer()->get('template');
 
-		$this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
+        $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
 
     }
 
