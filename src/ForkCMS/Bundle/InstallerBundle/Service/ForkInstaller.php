@@ -128,8 +128,7 @@ class ForkInstaller
      */
     protected function isValidData(array $data)
     {
-        if (
-            !in_array('db_hostname', $data)
+        if (!in_array('db_hostname', $data)
             || !in_array('db_username', $data)
             || !in_array('db_password', $data)
             || !in_array('db_database', $data)

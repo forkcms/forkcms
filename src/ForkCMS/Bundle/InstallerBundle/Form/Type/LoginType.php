@@ -21,7 +21,10 @@ class LoginType extends AbstractType
                 'email',
                 'email'
             )
-            ->add('password', 'repeated', array(
+            ->add(
+                'password',
+                'repeated',
+                array(
                     'type'            => 'password',
                     'invalid_message' => 'The passwords do not match.',
                     'required'        => true,
