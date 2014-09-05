@@ -93,6 +93,17 @@ class Export extends BackendBaseActionIndex
             $parameters[] = '%' . $this->filter['value'] . '%';
         }
 
+		// filter checkboxes
+		if ($this->filter['ids']) {
+
+			// make really sure we are working with integers
+			foreach($this->filter['ids'] as &$id) {
+				$id = (int) $id;
+			}
+
+			$query .= ' AND l.id IN (' . implode(',', $this->filter['ids']) . ') ';
+		}
+
         // end of query
         $query .= ' ORDER BY l.application, l.module, l.name ASC';
 
@@ -143,6 +154,17 @@ class Export extends BackendBaseActionIndex
         $this->filter['language'] = $this->getParameter('language', 'array');
         $this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
         $this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
+
+		$this->filter['ids'] = in_array($this->getParameter('ids'), array(null, '', false, array())) ? array() : explode('|', $this->getParameter('ids'));
+
+		foreach($this->filter['ids'] as $id) {
+
+			//someone is messing with the url, clear ids
+			if(!is_numeric($id)) {
+				$this->filter['ids'] = array();
+				break;
+			}
+		}
     }
 
     /**

@@ -1110,7 +1110,7 @@ class Model
 
         // build the query
         $query =
-            'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+            'SELECT l.id, l.module, l.type, l.name, l.value, l.language, UNIX_TIMESTAMP(l.edited_on) as edited_on
              FROM locale AS l
              WHERE
                  l.language IN (' . implode(',', $aLanguages) . ') AND
@@ -1139,9 +1139,12 @@ class Model
             // add to the sorted array
             $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array(
                 'id' => $translation['id'],
-                'value' => $translation['value']
+                'value' => $translation['value'],
+				'edited_on' => $translation['edited_on'],
             );
         }
+
+
 
         // create an array to use in the datagrid
         $dataGridTranslations = array();
@@ -1158,12 +1161,19 @@ class Model
                 // loop modules
                 foreach ($translation as $module => $t) {
                     // create translation (and increase id)
-                    $trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
+                    $trans = array('module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
 
                     // is there a translation? else empty string
                     foreach ($languages as $lang) {
-                        if (count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
+						if (count($languages) == 1) {
+							$trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+							$trans['edited_on'] = isset($t[$lang]) ? $t[$lang]['edited_on'] : '';
+						} else {
+							$trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+						}
+
                     }
 
                     // add the translation to the array
@@ -1171,6 +1181,8 @@ class Model
                 }
             }
         }
+
+		//echo '<pre>' . print_r($dataGridTranslations['msg'], true) . '</pre>';
 
         return $dataGridTranslations;
     }

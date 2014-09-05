@@ -44,6 +44,10 @@
         <translation language="lt"><![CDATA[kopijuoti]]></translation>
         <translation language="el"><![CDATA[Αντιγραφή]]></translation>
       </item>
+      <item type="label" name="Edited">
+        <translation language="nl"><![CDATA[bewerkt]]></translation>
+        <translation language="en"><![CDATA[edited]]></translation>
+      </item>
       <item type="label" name="EN">
         <translation language="nl"><![CDATA[engels]]></translation>
         <translation language="en"><![CDATA[english]]></translation>

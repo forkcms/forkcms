@@ -12,6 +12,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -82,19 +83,41 @@ class Index extends BackendBaseActionIndex
         // put the datagrids (references) in an array so we can loop them
         $dataGrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
 
+		$sortingColums = array('module', 'name');
+
+		if (count($this->filter['language']) == 1) {
+			$sortingColums[] = 'edited_on';
+		}
+
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             // set sorting
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name'), 'name');
 
-            // disable paging
-            $dataGrid->setPaging(false);
+            $dataGrid->setSortingColumns($sortingColums, 'name');
 
-            // set header label for reference code
-            $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-            // set column attributes for each language
+			if (count($this->filter['language']) == 1) {
+				$dataGrid->setColumnFunction(
+					array(new BackendDataGridFunctions(), 'getTimeAgo'),
+					array('[edited_on]'),
+					'edited_on',
+					true
+				);
+
+				$dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
+			}
+
+			// disable paging
+			$dataGrid->setPaging(false);
+
+			// set header label for reference code
+			$dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
+
+			// add the multicheckbox column
+			$dataGrid->setMassActionCheckboxes('checkbox', '[name]');
+
+			// set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
                 $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
@@ -112,11 +135,16 @@ class Index extends BackendBaseActionIndex
                 // set column attributes
                 $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
-                // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-                if (count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
+
+					// add id of translation for the export
+					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
+
+					// hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
+					$dataGrid->setColumnHidden('translation_id');
+
                     // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
@@ -134,7 +162,11 @@ class Index extends BackendBaseActionIndex
                             BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
-                }
+                } else {
+					// add id of translation for the export
+					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
+					$dataGrid->setColumnHidden('translation_id_' . $lang);
+				}
             }
         }
     }

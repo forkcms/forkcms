@@ -41,6 +41,21 @@ jsBackend.translations.controls =
 			// highlight all empty items
 			$('.dataGrid td.translationValue span:empty').parents('td.translationValue').addClass('highlighted');
 		}
+
+        // when clicking on the check which checkboxes are checked, and add the id's of the translations to the querystring
+        $('.iconExport').click(function(e){
+
+            e.preventDefault();
+
+            var labels = new Array();
+
+            $('.dataGridHolder .dataGridHolder input[type="checkbox"]:checked').closest('tr').find('.translationValue').each(function(e){
+                labels.push($(this).attr('data-numeric-id'));
+            });
+            var url = $(this).attr('href') + '&ids=' + labels.join('|');
+
+            window.location.href = url;
+        });
 	},
 
 	enableDisableModules: function()
