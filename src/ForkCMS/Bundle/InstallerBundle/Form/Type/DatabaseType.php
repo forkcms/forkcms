@@ -94,8 +94,8 @@ class DatabaseType extends AbstractType
     /**
      * Validate if a database connection can be made
      *
-     * @param  array                     $data    The form data
-     * @param  ExecutionContextInterface $context The forms validation context
+     * @param array                     $data    The form data
+     * @param ExecutionContextInterface $context The forms validation context
      *
      * @todo   Replace SpoonDatabase
      */

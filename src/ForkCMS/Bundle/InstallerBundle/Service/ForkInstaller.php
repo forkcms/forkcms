@@ -58,8 +58,8 @@ class ForkInstaller
     /**
      * Installs Fork
      *
-     * @param  array  $data The collected data required for Fork
-     * @return bool         Is Fork successfully installed?
+     * @param  array $data The collected data required for Fork
+     * @return bool  Is Fork successfully installed?
      */
     public function install(array $data)
     {
@@ -130,7 +130,7 @@ class ForkInstaller
      * Checks if our given data is complete and valid
      *
      * @param  array $data The collected data required to install Fork
-     * @return bool        Do we have all the needed data
+     * @return bool  Do we have all the needed data
      */
     protected function isValidData(array $data)
     {

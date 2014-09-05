@@ -286,9 +286,9 @@ class RequirementsChecker
     /**
      * Check if a specific requirement is satisfied
      *
-     * @param string $name        The "name" of the check.
-     * @param bool   $requirement The result of the check.
-     * @param string $severity    The severity of the requirement.
+     * @param  string $name        The "name" of the check.
+     * @param  bool   $requirement The result of the check.
+     * @param  string $severity    The severity of the requirement.
      * @return bool
      */
     protected function checkRequirement($name, $requirement, $severity = self::STATUS_ERROR)
@@ -302,7 +302,7 @@ class RequirementsChecker
     /**
      * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
      *
-     * @param string $path The path to check.
+     * @param  string $path The path to check.
      * @return bool
      */
     private function isRecursivelyWritable($path)
@@ -336,7 +336,7 @@ class RequirementsChecker
      * Check if a directory is writable.
      * The default is_writable function has problems due to Windows ACLs "bug"
      *
-     * @param string $path The path to check.
+     * @param  string $path The path to check.
      * @return bool
      */
     private function isWritable($path)
