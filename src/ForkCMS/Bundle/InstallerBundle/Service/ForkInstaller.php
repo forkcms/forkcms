@@ -69,7 +69,7 @@ class ForkInstaller
 
         // extend execution limit
         set_time_limit(0);
-        ini_set('memory_limit', '16M');
+        ini_set('memory_limit', '24M');
 
         $this->createYAMLConfig($data);
 
@@ -83,7 +83,8 @@ class ForkInstaller
         $this->installExtras();
 
         $this->createLocaleFiles($data);
-        var_dump($this);exit;
+
+        return true;
     }
 
     public function getWarnings()

@@ -126,17 +126,16 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         $forkInstaller = $this->get('forkcms.installer');
-        if ($forkInstaller->install($request->getSession()->all())) {
-            exit('yay');
-        } else {
-            exit('nah :(');
-        }
+        $status = $forkInstaller->install($request->getSession()->all());
 
-        $libraryFolder = $this->container->getParameter('kernel.root_dir')
-            . '/../library'
-        ;
-
-        var_dump('6');exit;
+        return $this->render(
+            'ForkCMSInstallerBundle:Installer:step6.html.twig',
+            array(
+                'installStatus' => $status,
+                'installer'     => $forkInstaller,
+                'data'          => $request->getSession()->all(),
+            )
+        );
     }
 
     public function noStepAction()
