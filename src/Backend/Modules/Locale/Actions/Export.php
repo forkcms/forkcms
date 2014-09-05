@@ -148,7 +148,7 @@ class Export extends BackendBaseActionIndex
      */
     private function setFilter()
     {
-        $this->filter['application'] = $this->getParameter('application') == null ? 'Backend' : $this->getParameter('application');
+        $this->filter['application'] = $this->getParameter('application', 'string', null);
         $this->filter['module'] = $this->getParameter('module');
         $this->filter['type'] = $this->getParameter('type', 'array');
         $this->filter['language'] = $this->getParameter('language', 'array');
@@ -163,6 +163,7 @@ class Export extends BackendBaseActionIndex
 			if(!is_numeric($id)) {
 				$this->filter['ids'] = array();
 				break;
+
 			}
 		}
     }

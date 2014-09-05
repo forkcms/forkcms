@@ -1110,23 +1110,28 @@ class Model
 
         // build the query
         $query =
-            'SELECT l.id, l.module, l.type, l.name, l.value, l.language, UNIX_TIMESTAMP(l.edited_on) as edited_on
+            'SELECT l.id, l.application, l.module, l.type, l.name, l.value, l.language, UNIX_TIMESTAMP(l.edited_on) as edited_on
              FROM locale AS l
              WHERE
                  l.language IN (' . implode(',', $aLanguages) . ') AND
-                 l.application = ? AND
                  l.name LIKE ? AND
                  l.value LIKE ? AND
                  l.type IN (' . implode(',', $types) . ')';
 
         // add the parameters
-        $parameters = array($application, '%' . $name . '%', '%' . $value . '%');
+        $parameters = array('%' . $name . '%', '%' . $value . '%');
 
         // add module to the query if needed
         if ($module) {
             $query .= ' AND l.module = ?';
             $parameters[] = $module;
         }
+
+		// add module to the query if needed
+		if ($application) {
+			$query .= ' AND l.application = ?';
+			$parameters[] = $application;
+		}
 
         // get the translations
         $translations = (array) $db->getRecords($query, $parameters);
@@ -1141,6 +1146,7 @@ class Model
                 'id' => $translation['id'],
                 'value' => $translation['value'],
 				'edited_on' => $translation['edited_on'],
+				'application' => $translation['application'],
             );
         }
 
@@ -1175,6 +1181,7 @@ class Model
 						}
 
                     }
+					$trans['application'] = $t[$lang]['application'];
 
                     // add the translation to the array
                     $dataGridTranslations[$type][] = $trans;

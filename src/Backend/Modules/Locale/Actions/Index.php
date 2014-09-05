@@ -69,7 +69,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // init vars
-        $langWidth = (80 / count($this->filter['language']));
+        $langWidth = (60 / count($this->filter['language']));
 
         // get all the translations for the selected languages
         $translations = BackendLocaleModel::getTranslations($this->filter['application'], $this->filter['module'], $this->filter['type'], $this->filter['language'], $this->filter['name'], $this->filter['value']);
@@ -117,13 +117,18 @@ class Index extends BackendBaseActionIndex
 			// add the multicheckbox column
 			$dataGrid->setMassActionCheckboxes('checkbox', '[name]');
 
+			// hide the application when only one application is shown
+			if ($this->filter['application'] != '') {
+				$dataGrid->setColumnHidden('application');
+			}
+
 			// set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
                 $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
 
                 // add attributes, so the inline editing has all the needed data
-                $dataGrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'' . $type . '\'}'));
+                $dataGrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'[application]\', module: \'[module]\', name: \'[name]\', type: \'' . $type . '\'}'));
 
                 // escape the double quotes
                 $dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
@@ -177,13 +182,13 @@ class Index extends BackendBaseActionIndex
     private function loadForm()
     {
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
+        $this->frm->addDropdown('application', array('' => '-','Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
         $this->frm->addText('name', $this->filter['name']);
         $this->frm->addText('value', $this->filter['value']);
         $this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
         $this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
         $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-        $this->frm->getField('module')->setDefaultElement(\SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
+        $this->frm->getField('module')->setDefaultElement('-');
 
         // manually parse fields
         $this->frm->parse($this->tpl);
@@ -236,7 +241,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // set filter
-        $this->filter['application'] = $this->getParameter('application') == null ? 'Frontend' : $this->getParameter('application');
+        $this->filter['application'] = $this->getParameter('application', 'string', null);
         $this->filter['module'] = $this->getParameter('module', 'string', null);
         $this->filter['type'] = $this->getParameter('type', 'array');
         $this->filter['language'] = $this->getParameter('language', 'array');
