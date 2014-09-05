@@ -5,80 +5,92 @@
 {% block content %}
   <h2>Settings</h2>
   {{ form_start(form) }}
-      <h3>Languages</h3>
+    {{ form_errors(form) }}
+    <h3>Languages</h3>
 
-      <p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
-      {{ form_widget(form.language_type) }}
-      <ul id="languages" class="hidden inputList noPadding">
-        {{ form_widget(form.languages) }}
-      </ul>
+    <p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
+    {{ form_widget(form.language_type) }}
+    <ul id="languages" class="hidden inputList noPadding">
+      {{ form_widget(form.languages) }}
+    </ul>
 
-      <div>
-        <p>What is the default language we should use for the website?</p>
-        <p>
-          {{ form_widget(form.default_language) }}
-        </p>
+    <div>
+      <p>What is the default language we should use for the website?</p>
+      <p>
+        {{ form_widget(form.default_language) }}
+      </p>
+    </div>
+
+    <h3>CMS interface languages</h3>
+    <p>What languages do you plan to use in the CMS interface?</p>
+    <ul class="inputList">
+      <li>
+        {{ form_widget(form.same_interface_language) }}
+        {{ form_label(form.same_interface_language) }}
+        <p id="interfaceLanguagesExplanation" class="hidden noPadding">Select the language(s) you would like to use use in the CMS interface.</p>
+        <ul id="interfaceLanguages" class="hidden inputList noPadding">
+          {{ form_widget(form.interface_languages) }}
+        </ul>
+      </li>
+    </ul>
+
+    <div id="defaultInterfaceLanguageContainer">
+      <p>What is the default language we should use for the CMS interface?</p>
+      <p>
+        {{ form_widget(form.interface_language) }}
+      </p>
+    </div>
+    <div class="fullwidthOptions">
+      <div class="buttonHolder">
+        <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
       </div>
-
-      <h3>CMS interface languages</h3>
-      <p>What languages do you plan to use in the CMS interface?</p>
-      <ul class="inputList">
-        <li>
-          {{ form_widget(form.same_interface_language) }}
-          {{ form_label(form.same_interface_language) }}
-          <p id="interfaceLanguagesExplanation" class="hidden noPadding">Select the language(s) you would like to use use in the CMS interface.</p>
-          <ul id="interfaceLanguages" class="hidden inputList noPadding">
-            {{ form_widget(form.interface_languages) }}
-          </ul>
-        </li>
-      </ul>
-
-      <div id="defaultInterfaceLanguageContainer">
-        <p>What is the default language we should use for the CMS interface?</p>
-        <p>
-          {{ form_widget(form.interface_language) }}
-        </p>
-      </div>
-      <div class="fullwidthOptions">
-        <div class="buttonHolder">
-          <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
-        </div>
-      </div>
+    </div>
 
   {{ form_end(form) }}
 {% endblock %}
 
 {# Form theme. Note: this should be global #}
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+  <div class="formMessage errorMessage">
+    <p>
+      {%- for error in errors -%}
+        {{ error.message }}<br/>
+      {%- endfor -%}
+    </p>
+  </div>
+  {%- endif %}
+{%- endblock form_errors %}
 
 {% block choice_widget_expanded -%}
-    <ul class="inputList" {{ block('widget_container_attributes') }}>
-    {%- for child in form %}
-        <li>
-          {{- form_widget(child, { 'attr' : { 'class' : 'inputRadio' } }) -}}
-          {{- form_label(child) -}}
-        </li>
-    {% endfor -%}
-    </ul>
+  <ul class="inputList" {{ block('widget_container_attributes') }}>
+  {%- for child in form %}
+      <li>
+        {{- form_widget(child, { 'attr' : { 'class' : 'inputRadio' } }) -}}
+        {{- form_label(child) -}}
+      </li>
+  {% endfor -%}
+  </ul>
 {% endblock choice_widget_expanded %}
 
 {% block checkbox_widget -%}
-    <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="inputCheckbox" />
+  <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="inputCheckbox" />
 {%- endblock checkbox_widget %}
 
 {% block form_widget_simple -%}
-    {%- set type = type|default('text') -%}
-    <input type="{{ type }}" class="inputText" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+  {%- set type = type|default('text') -%}
+  <input type="{{ type }}" class="inputText" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
 {%- endblock form_widget_simple %}
 
 {% block form_start -%}
-    {% set method = method|upper %}
-    {%- if method in ["GET", "POST"] -%}
-        {% set form_method = method %}
-    {%- else -%}
-        {% set form_method = "POST" %}
-    {%- endif -%}
-    <form id="{{ form.vars.name }}" name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms submitWithLink">
-    {%- if form_method != method -%}
-        <input type="hidden" name="_method" value="{{ method }}" />
-    {%- endif -%}
+  {% set method = method|upper %}
+  {%- if method in ["GET", "POST"] -%}
+      {% set form_method = method %}
+  {%- else -%}
+      {% set form_method = "POST" %}
+  {%- endif -%}
+  <form id="{{ form.vars.name }}" name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms submitWithLink">
+  {%- if form_method != method -%}
+      <input type="hidden" name="_method" value="{{ method }}" />
+  {%- endif -%}
 {%- endblock form_start %}
