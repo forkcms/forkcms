@@ -1169,19 +1169,33 @@ class Model
                     // create translation (and increase id)
                     $trans = array('module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
 
+					if(isset($edited_on)) unset($edited_on);
+
                     // is there a translation? else empty string
                     foreach ($languages as $lang) {
 
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
+
 						if (count($languages) == 1) {
 							$trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-							$trans['edited_on'] = isset($t[$lang]) ? $t[$lang]['edited_on'] : '';
 						} else {
 							$trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
 						}
 
+						if (isset($t[$lang])) {
+							$application = $t[$lang]['application'];
+							if (!isset($edited_on) || $edited_on < $t[$lang]['edited_on']) {
+								$edited_on = $t[$lang]['edited_on'];
+							}
+						} else {
+							$edited_on = '';
+						}
+
                     }
-					$trans['application'] = $t[$lang]['application'];
+					// we add them here to keep the language next to eachother
+					$trans['edited_on'] = $edited_on;
+					$trans['application'] = $application;
+
 
                     // add the translation to the array
                     $dataGridTranslations[$type][] = $trans;

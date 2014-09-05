@@ -56,6 +56,50 @@ jsBackend.translations.controls =
 
             window.location.href = url;
         });
+
+        // let's do something ugly.
+        // the standard sorting behaviour ignores the values of the filter.
+        // So before we go to to the sorted page, we add the filter manually
+        $('.dataGrid th a').click(function(e){
+
+            e.preventDefault();
+            var url = $(this).attr('href');
+
+
+            var application = $('select#application').val();
+            if (application != '') {
+                url += '&application=' + escape(application);
+            }
+
+            var module = $('select#module').val();
+            if (module != '') {
+                url += '&module=' + escape(module);
+            }
+
+            var name = $('input#name').val();
+            if (name != '') {
+                url += '&name=' + escape(name);
+            }
+
+            var value = $('input#value').val()
+            if (value != '') {
+                url += '&value=' + escape(value);
+            }
+
+            $('input[name="language[]"]:checked').each(function(){
+                url += '&language[]=' + escape($(this).val());
+            });
+
+
+            $('input[name="type[]"]:checked').each(function(){
+                url += '&type[]=' + escape($(this).val());
+            });
+
+            //console.log(url);
+
+            window.location.href = url;
+
+        });
 	},
 
 	enableDisableModules: function()

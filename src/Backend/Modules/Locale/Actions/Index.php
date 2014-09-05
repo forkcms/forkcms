@@ -83,30 +83,23 @@ class Index extends BackendBaseActionIndex
         // put the datagrids (references) in an array so we can loop them
         $dataGrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
 
-		$sortingColums = array('module', 'name');
-
-		if (count($this->filter['language']) == 1) {
-			$sortingColums[] = 'edited_on';
-		}
 
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             // set sorting
             /** @var $dataGrid BackendDataGridArray */
 
-            $dataGrid->setSortingColumns($sortingColums, 'name');
+            $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
 
 
-			if (count($this->filter['language']) == 1) {
-				$dataGrid->setColumnFunction(
-					array(new BackendDataGridFunctions(), 'getTimeAgo'),
-					array('[edited_on]'),
-					'edited_on',
-					true
-				);
+			$dataGrid->setColumnFunction(
+				array(new BackendDataGridFunctions(), 'getTimeAgo'),
+				array('[edited_on]'),
+				'edited_on',
+				true
+			);
 
-				$dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
-			}
+			$dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
 
 			// disable paging
 			$dataGrid->setPaging(false);
@@ -138,11 +131,13 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
                 // set column attributes
-                $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+
 
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
+
+					$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
 					// add id of translation for the export
 					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
@@ -171,6 +166,9 @@ class Index extends BackendBaseActionIndex
 					// add id of translation for the export
 					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
 					$dataGrid->setColumnHidden('translation_id_' . $lang);
+
+					//ugly fix but the browser does funny things with the percentage when show a lots of languages
+					$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%; max-width: '. (600/count($this->filter['language'])) .'px;'));
 				}
             }
         }
