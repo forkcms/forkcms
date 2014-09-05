@@ -34,7 +34,7 @@ class ModulesHandler
 
         $session->set('modules', $data['modules']);
         $session->set('example_data', $data['example_data']);
-        $session->set('example_data', $data['different_debug_email']);
+        $session->set('different_debug_email', $data['different_debug_email']);
         $session->set('debug_email', $data['debug_email']);
 
         return true;

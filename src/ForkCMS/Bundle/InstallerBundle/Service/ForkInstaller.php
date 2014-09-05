@@ -4,11 +4,12 @@ namespace ForkCMS\Bundle\InstallerBundle\Service;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\DependencyInjection\Container;
 
 use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
-use Symfony\Component\DependencyInjection\Container;
+use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * This service installs fork
@@ -70,6 +71,8 @@ class ForkInstaller
         set_time_limit(0);
         ini_set('memory_limit', '16M');
 
+        $this->createYAMLConfig($data);
+
         $this->definePaths();
         $this->deleteCachedData();
 
@@ -78,7 +81,48 @@ class ForkInstaller
 
         $this->installModules($data);
         $this->installExtras();
+
+        $this->createLocaleFiles($data);
         var_dump($this);exit;
+    }
+
+    public function getWarnings()
+    {
+        return $this->warnings;
+    }
+
+    /**
+     * Fetches the required modules
+     *
+     * @return array
+     */
+    public static function getRequiredModules()
+    {
+        return array(
+            'Locale',
+            'Settings',
+            'Users',
+            'Groups',
+            'Extensions',
+            'Pages',
+            'Search',
+            'ContentBlocks',
+            'Tags',
+        );
+    }
+
+    /**
+     * Fetches the hidden modules
+     *
+     * @return array
+     */
+    public static function getHiddenModules()
+    {
+        return array(
+            'Authentication',
+            'Dashboard',
+            'Error',
+        );
     }
 
     /**
@@ -103,6 +147,8 @@ class ForkInstaller
 
             || !in_array('modules', $data)
             || !in_array('example_data', $data)
+            || !in_array('different_debug_email', $data)
+            || !in_array('debug_email', $data)
 
             || !in_array('email', $data)
             || !in_array('password', $data)
@@ -284,42 +330,89 @@ class ForkInstaller
         }
     }
 
-    public function getWarnings()
-    {
-        return $this->warnings;
-    }
-
     /**
-     * Fetches the required modules
-     *
-     * @return array
+     * Create locale cache files
      */
-    public static function getRequiredModules()
+    protected function createLocaleFiles($data)
     {
-        return array(
-            'Locale',
-            'Settings',
-            'Users',
-            'Groups',
-            'Extensions',
-            'Pages',
-            'Search',
-            'ContentBlocks',
-            'Tags',
+        // all available languages
+        $languages = array_unique(
+            array_merge($data['languages'], $data['interface_languages'])
         );
+
+        // loop all the languages
+        foreach ($languages as $language) {
+            // get applications
+            $applications = $this->container->get('database')->getColumn(
+                'SELECT DISTINCT application
+                 FROM locale
+                 WHERE language = ?',
+                array((string) $language)
+            );
+
+            // loop applications
+            foreach ((array) $applications as $application) {
+                // build application locale cache
+                BackendLocaleModel::buildCache($language, $application);
+            }
+        }
     }
 
     /**
-     * Fetches the hidden modules
-     *
-     * @return array
+     * Writes a config file to app/config/parameters.yml.
      */
-    public static function getHiddenModules()
+    protected function createYAMLConfig($data)
+    {
+        // these variables should be parsed inside the config file(s).
+        $variables = $this->getConfigurationVariables($data);
+
+        // map the config templates to their destination filename
+        $yamlFiles = array(
+            PATH_WWW . '/app/config/parameters.yml.dist' => PATH_WWW . '/app/config/parameters.yml',
+        );
+
+        foreach ($yamlFiles as $sourceFilename => $destinationFilename) {
+            $yamlContent = file_get_contents($sourceFilename);
+            $yamlContent = str_replace(
+                array_keys($variables),
+                array_values($variables),
+                $yamlContent
+            );
+
+            // write app/config/parameters.yml
+            $fs = new Filesystem();
+            $fs->dumpFile($destinationFilename, $yamlContent);
+        }
+    }
+
+    /**
+     * @return array A list of variables that should be parsed into the configuration file(s).
+     */
+    protected function getConfigurationVariables($data)
     {
         return array(
-            'Authentication',
-            'Dashboard',
-            'Error',
+            '<debug-email>' => $data['different_debug_email'] ?
+                $data['debug_email'] :
+                $data['email']
+            ,
+            '<database-name>' => $data['db_database'],
+            '<database-host>' => addslashes($data['db_hostname']),
+            '<database-user>' => addslashes($data['db_username']),
+            '<database-password>' => addslashes($data['db_password']),
+            '<database-port>' => $data['db_port'] != '',
+            '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
+                (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
+                'http'
+            ,
+            '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
+            '<site-default-title>' => 'Fork CMS',
+            '<site-multilanguage>' => $data['multiple_languages'] ? 'true' : 'false',
+            '<site-default-language>' => $data['default_language'],
+            '<path-www>' => PATH_WWW,
+            '<path-library>' => PATH_LIBRARY,
+            '<action-group-tag>' => '\@actiongroup',
+            '<action-rights-level>' => 7,
+            '<secret>' => Model::generateRandomString(32, true, true, true, false),
         );
     }
 }
