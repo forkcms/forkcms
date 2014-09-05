@@ -77,6 +77,7 @@ class ForkInstaller
         $this->installCore($data);
 
         $this->installModules($data);
+        $this->installExtras();
         var_dump($this);exit;
     }
 
@@ -246,6 +247,46 @@ class ForkInstaller
                 }
             }
         }
+    }
+
+    protected function installExtras()
+    {
+        // loop default extras
+        foreach ($this->defaultExtras as $extra) {
+            // get pages without this extra
+            $revisionIds = $this->container->get('database')->getColumn(
+                'SELECT i.revision_id
+                 FROM pages AS i
+                 WHERE i.revision_id NOT IN (
+                     SELECT DISTINCT b.revision_id
+                     FROM pages_blocks AS b
+                     WHERE b.extra_id = ?
+                    GROUP BY b.revision_id
+                 )',
+                array($extra['id'])
+            );
+
+            // build insert array for this extra
+            $insertExtras = array();
+            foreach ($revisionIds as $revisionId) {
+                $insertExtras[] = array(
+                    'revision_id' => $revisionId,
+                    'position' => $extra['position'],
+                    'extra_id' => $extra['id'],
+                    'created_on' => gmdate('Y-m-d H:i:s'),
+                    'edited_on' => gmdate('Y-m-d H:i:s'),
+                    'visible' => 'Y'
+                );
+            }
+
+            // insert block
+            $this->container->get('database')->insert('pages_blocks', $insertExtras);
+        }
+    }
+
+    public function getWarnings()
+    {
+        return $this->warnings;
     }
 
     /**
