@@ -42,3 +42,11 @@
       <input type="hidden" name="_method" value="{{ method }}" />
   {%- endif -%}
 {%- endblock form_start %}
+
+{% block form_row -%}
+    <p>
+        {{- form_label(form) -}}
+        {{- form_errors(form) -}}
+        {{- form_widget(form) -}}
+    </p>
+{%- endblock form_row %}

@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\LanguagesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\ModulesType;
 use ForkCMS\Bundle\InstallerBundle\Form\Type\DatabaseType;
+use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
@@ -103,7 +104,20 @@ class InstallerController extends Controller
     public function step5Action(Request $request)
     {
         $this->checkInstall();
-        var_dump($request->getSession()->all());exit;
+
+        // show database form
+        $form = $this->createForm(new LoginType());
+        /*$handler = new DatabaseHandler();
+        if ($handler->process($form, $request)) {
+            return $this->redirect($this->generateUrl('install_step5'));
+        }*/
+
+        return $this->render(
+            'ForkCMSInstallerBundle:Installer:step5.html.twig',
+            array(
+                'form' => $form->createView(),
+            )
+        );
     }
 
     public function step6Action()
