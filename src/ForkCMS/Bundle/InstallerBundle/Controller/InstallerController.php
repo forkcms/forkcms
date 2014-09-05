@@ -12,6 +12,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Type\LoginType;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
+use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
 
 class InstallerController extends Controller
 {
@@ -107,10 +108,10 @@ class InstallerController extends Controller
 
         // show database form
         $form = $this->createForm(new LoginType());
-        /*$handler = new DatabaseHandler();
+        $handler = new LoginHandler();
         if ($handler->process($form, $request)) {
-            return $this->redirect($this->generateUrl('install_step5'));
-        }*/
+            return $this->redirect($this->generateUrl('install_step6'));
+        }
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step5.html.twig',
@@ -120,9 +121,16 @@ class InstallerController extends Controller
         );
     }
 
-    public function step6Action()
+    public function step6Action(Request $request)
     {
         $this->checkInstall();
+
+        $forkInstaller = $this->get('forkcms.installer');
+        if ($forkInstaller->install($request->getSession()->all())) {
+            exit('yay');
+        } else {
+            exit('nah :(');
+        }
 
         $libraryFolder = $this->container->getParameter('kernel.root_dir')
             . '/../library'
