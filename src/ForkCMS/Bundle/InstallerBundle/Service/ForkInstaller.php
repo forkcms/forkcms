@@ -37,6 +37,12 @@ class ForkInstaller
     private $container;
 
     /**
+     * @var array
+     */
+    private $warnings = array();
+    private $defaultExtras = array();
+
+    /**
      * @todo: make sure the Container doesn't have to be injected
      */
     public function __construct(Container $container, $rootDir)
@@ -66,7 +72,7 @@ class ForkInstaller
 
         $this->buildDatabase($data);
         $this->installCore($data);
-        var_dump('ok');exit;
+        var_dump($this);exit;
     }
 
     /**
@@ -138,6 +144,18 @@ class ForkInstaller
         // install the core
         $installer = $this->getCoreInstaller($data);
         $installer->install();
+
+        // add the warnings
+        $moduleWarnings = $installer->getWarnings();
+        if (!empty($moduleWarnings)) {
+            $this->warnings[] = array('module' => 'Core', 'warnings' => $moduleWarnings);
+        }
+
+        // add the default extras
+        $moduleDefaultExtras = $installer->getDefaultExtras();
+        if (!empty($moduleDefaultExtras)) {
+            $this->defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+        }
     }
 
     protected function buildDatabase($data)
