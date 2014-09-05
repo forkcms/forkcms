@@ -149,10 +149,11 @@ class InstallerController extends Controller
     protected function checkInstall()
     {
         $fs = new FileSystem();
-        $installCacheDir = $this->container->getParameter('kernel.cache_dir');
-        if ($fs->exists($installCacheDir . 'installed.txt')) {
+        $kernelDir = $this->container->getParameter('kernel.root_dir');
+        $parameterFile = $kernelDir . 'config/parameters.yml';
+        if ($fs->exists($parameterFile)) {
             exit('This Fork has already been installed. To reinstall, delete
-                 installed.txt from the ' . $installCacheDir . ' directory. To log in,
+                 parameters.yml from the ' . $kernelDir . 'config/ directory. To log in,
                  <a href="/private">click here</a>.');
         }
     }
