@@ -22,8 +22,8 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "post-install-cmd": "cd tools && ./remove_cache",
-        "post-update-cmd": "cd tools && ./remove_cache"
+        "post-install-cmd": "cd tools && ./remove_cache && app/console assetic:dump . --env=install",
+        "post-update-cmd": "cd tools && ./remove_cache && app/console assetic:dump . --env=install"
     },
     "autoload": {
         "psr-0": {
