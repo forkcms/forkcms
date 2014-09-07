@@ -28,7 +28,7 @@ jsBackend.mailmotor =
 			});
 		}
 	}
-}
+};
 
 jsBackend.mailmotor.charts =
 {
@@ -54,7 +54,7 @@ jsBackend.mailmotor.charts =
 			});
 		}
 	}
-}
+};
 
 jsBackend.mailmotor.chartPieChart =
 {
@@ -109,7 +109,7 @@ jsBackend.mailmotor.chartPieChart =
 			series: [ { type: 'pie', data: pieChartData } ]
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.changeGroup =
 {
@@ -125,7 +125,7 @@ jsBackend.mailmotor.changeGroup =
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.linkAccount =
 {
@@ -146,7 +146,7 @@ jsBackend.mailmotor.linkAccount =
 				e.preventDefault();
 
 				// if all fields are set
-				if($url.val() != '' && $username.val() != '' && $password.val() != '')
+				if($url.val() !== '' && $username.val() !== '' && $password.val() !== '')
 				{
 					// do the call to link the account
 					jsBackend.mailmotor.linkAccount.doCall();
@@ -256,7 +256,7 @@ jsBackend.mailmotor.linkAccount =
 			}
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.resizing =
 {
@@ -306,7 +306,7 @@ jsBackend.mailmotor.resizing =
 			}
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.step3 =
 {
@@ -360,7 +360,7 @@ jsBackend.mailmotor.step3 =
 			});
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.step4 =
 {
@@ -410,8 +410,8 @@ jsBackend.mailmotor.step4 =
 		$(oSendDate.selector +', '+ oSendTime.selector).on('change', function(e)
 		{
 			// check if the send date/time is empty. if they are, reset the dates to the old values
-			if(oSendDate.val() == '') oSendDate.val(sendDate);
-			if(oSendTime.val() == '') oSendTime.val(sendTime);
+			if(oSendDate.val() === '') oSendDate.val(sendDate);
+			if(oSendTime.val() === '') oSendTime.val(sendTime);
 
 			// save the send date
 			jsBackend.mailmotor.step4.saveSendDate();
@@ -423,8 +423,8 @@ jsBackend.mailmotor.step4 =
 			if(e.keyCode == 13)
 			{
 				// check if the send time is empty. if they are, reset the time to the old value
-				if(oSendDate.val() == '') oSendDate.val(sendDate);
-				if(oSendTime.val() == '') oSendTime.val(sendTime);
+				if(oSendDate.val() === '') oSendDate.val(sendDate);
+				if(oSendTime.val() === '') oSendTime.val(sendTime);
 
 				// save the send date
 				jsBackend.mailmotor.step4.saveSendDate();
@@ -532,7 +532,7 @@ jsBackend.mailmotor.step4 =
 			}
 		});
 	}
-}
+};
 
 jsBackend.mailmotor.templateSelection =
 {
@@ -564,6 +564,6 @@ jsBackend.mailmotor.templateSelection =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.mailmotor.init);

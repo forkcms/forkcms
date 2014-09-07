@@ -56,7 +56,7 @@ jsBackend.formBuilder =
 		// hide email field
 		else $emailWrapper.slideUp();
 	}
-}
+};
 
 jsBackend.formBuilder.fields =
 {
@@ -110,7 +110,7 @@ jsBackend.formBuilder.fields =
 			var id = $(this).attr('rel');
 
 			// only when set
-			if(id != '')
+			if(id !== '')
 			{
 				// make the call
 				$.ajax(
@@ -159,7 +159,7 @@ jsBackend.formBuilder.fields =
 			var id = $(this).attr('id');
 
 			// only when set
-			if(id != '')
+			if(id !== '')
 			{
 				// initialize
 				$('#'+ id).dialog(
@@ -287,7 +287,7 @@ jsBackend.formBuilder.fields =
 			var id = $(this).attr('rel');
 
 			// bind
-			if(id != '') $('#'+ id).dialog('open');
+			if(id !== '') $('#'+ id).dialog('open');
 		});
 	},
 
@@ -365,7 +365,7 @@ jsBackend.formBuilder.fields =
 			var id = $(this).attr('rel');
 
 			// only when set
-			if(id != '')
+			if(id !== '')
 			{
 				// make the call
 				$.ajax(
@@ -639,7 +639,7 @@ jsBackend.formBuilder.fields =
 			$(wrapper).find('.validationRequiredErrorMessage').slideDown();
 
 			// error message empty so add default
-			if($(wrapper).find('.validationRequiredErrorMessage input:visible:first').val() == '')
+			if($(wrapper).find('.validationRequiredErrorMessage input:visible:first').val() === '')
 			{
 				$(wrapper).find('.validationRequiredErrorMessage input:visible:first').val(jsBackend.formBuilder.fields.defaultErrorMessages.required);
 			}
@@ -647,7 +647,7 @@ jsBackend.formBuilder.fields =
 		else $(wrapper).find('.validationRequiredErrorMessage').slideUp();
 
 		// toggle validation error message
-		if($(validation).val() != '')
+		if($(validation).val() !== '')
 		{
 			// show error message
 			$(wrapper).find('.validationErrorMessage').slideDown();
@@ -675,7 +675,7 @@ jsBackend.formBuilder.fields =
 		$(items).each(function(k, v)
 		{
 			// values is not empty
-			if(v != '')
+			if(v !== '')
 			{
 				// build html
 				var html = '<option value="'+ v +'"';
@@ -1297,7 +1297,7 @@ jsBackend.formBuilder.fields =
 			$(this).find('.formError').each(function()
 			{
 				// has a message so highlight tab
-				if($(this).html() != '') $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error');
+				if($(this).html() !== '') $('#'+ id +' .ui-tabs-nav a[href="#'+ tabId +'"]').parent().addClass('ui-state-error');
 			});
 		});
 
@@ -1305,12 +1305,12 @@ jsBackend.formBuilder.fields =
 		$("#"+ id).find('.formError').each(function()
 		{
 			// has a message
-			if($(this).html() != '') $(this).show();
+			if($(this).html() !== '') $(this).show();
 
 			// no message
 			else $(this).hide();
 		});
 	}
-}
+};
 
 $(jsBackend.formBuilder.init);

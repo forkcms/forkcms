@@ -79,6 +79,6 @@ jsBackend.settings =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.settings.init);

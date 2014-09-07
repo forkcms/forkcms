@@ -63,8 +63,8 @@ jsBackend.dashboard =
 		$('.sortableWidget.isRemoved').show();
 
 		$sortableWidget.each(function() {
-			if($(this).find('.box').length == 0) $(this).remove();
-		})
+			if($(this).find('.box').length === 0) $(this).remove();
+		});
 
 		// make them sortable
 		$column.sortable(
@@ -194,6 +194,6 @@ jsBackend.dashboard =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.dashboard.init);
