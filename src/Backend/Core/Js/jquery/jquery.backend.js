@@ -16,7 +16,7 @@
 		var defaults = {};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// loop all elements
 		return this.each(function()
@@ -152,7 +152,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		return this.each(function()
 		{
@@ -171,10 +171,11 @@
 				var currentElement = $('#' + $(this).data('id'));
 
 				// check if it isn't a text-element
+				var newElement;
 				if(currentElement.attr('type') != 'text')
 				{
 					// clone the current element
-					var newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
+					newElement = $('<input value="" id="'+ currentElement.attr('id') +'" name="'+ currentElement.attr('name') +'" maxlength="'+ currentElement.attr('maxlength') +'" class="'+ currentElement.attr('class') +'" type="text">');
 
 					// insert the new element
 					newElement.insertBefore(currentElement);
@@ -284,7 +285,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// init var
 		var editing = false;
@@ -337,7 +338,7 @@
 				var $this = $(this);
 
 				// grab extra params
-				if($this.parent().data('id') != '')
+				if($this.parent().data('id') !== '')
 				{
 					options.current.extraParams = eval('(' + $this.parent().data('id') + ')');
 				}
@@ -405,7 +406,7 @@
 			function saveElement()
 			{
 				// if the new value is empty and that isn't allowed, we restore the original value
-				if(!options.allowEmpty && options.current.element.val() == '')
+				if(!options.allowEmpty && options.current.element.val() === '')
 				{
 					options.current.element.val(options.current.value);
 				}
@@ -473,7 +474,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// loop all elements
 		return this.each(function()
@@ -493,7 +494,7 @@
 				// hide before..
 				$('#errorMessage-'+ id).remove();
 
-				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
+				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
@@ -593,7 +594,7 @@
 				}
 
 				// disable or enable button
-				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				if($(this).val().replace(/^\s+|\s+$/g, '') === '')
 				{
 					blockSubmit = false;
 					$('#addButton-' + id).addClass('disabledButton');
@@ -649,7 +650,7 @@
 				$('#errorMessage-'+ id).remove();
 
 				// only add new element if it isn't empty
-				if(value != '')
+				if(value !== '')
 				{
 					// already in elements?
 					for(var i in elements)
@@ -679,7 +680,7 @@
 				var html = '';
 
 				// no items and message given?
-				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+				if(elements.length === 0 && options.emptyMessage !== '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
 
 				// items available
 				else
@@ -714,7 +715,7 @@
 				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
-					if(value != '') elements.push(value);
+					if(value !== '') elements.push(value);
 				}
 
 				return elements;
@@ -764,7 +765,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// loop all elements
 		return this.each(function()
@@ -784,7 +785,7 @@
 				// hide before..
 				$('#errorMessage-'+ id).remove();
 
-				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
+				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') !== '')
 				{
 					// show warning
 					$('#addValue-'+ id).parents('.oneLiner').append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
@@ -895,7 +896,7 @@
 				}
 
 				// disable or enable button
-				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				if($(this).val().replace(/^\s+|\s+$/g, '') === '')
 				{
 					blockSubmit = false;
 					$('#addButton-' + id).addClass('disabledButton');
@@ -948,7 +949,7 @@
 				$('#errorMessage-'+ id).remove();
 
 				// only add new element if it isn't empty
-				if(value != '')
+				if(value !== '')
 				{
 					// already in elements?
 					for(var i in elements)
@@ -978,7 +979,7 @@
 				var html = '';
 
 				// no items and message given?
-				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+				if(elements.length === 0 && options.emptyMessage !== '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
 
 				// items available
 				else
@@ -1013,7 +1014,7 @@
 				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
-					if(value != '') elements.push(value);
+					if(value !== '') elements.push(value);
 				}
 
 				return elements;
@@ -1062,7 +1063,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// loop all elements
 		return this.each(function()
@@ -1160,7 +1161,7 @@
 				$('#addValue-' + id).focus();
 
 				// only add new element if it isn't empty
-				if(value != null && value != '')
+				if(value !== null && value !== '')
 				{
 					// already in elements?
 					for(var i in elements)
@@ -1178,7 +1179,7 @@
 						$('#' + id).val(elements);
 
 						// call callback if specified
-						if(options.afterAdd != null) { options.afterAdd(value); }
+						if(options.afterAdd !== null) { options.afterAdd(value); }
 
 						// rebuild element list
 						build();
@@ -1193,7 +1194,7 @@
 				var html = '';
 
 				// no items and message given?
-				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+				if(elements.length === 0 && options.emptyMessage !== '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
 
 				// items available
 				else
@@ -1227,7 +1228,7 @@
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
 				$('#addValue-' + id).removeClass('disabled').prop('disabled', false);
-				if($('#addValue-' + id + ' option:enabled').length == 0 || (options.maxItems !== null && elements.length >= options.maxItems))
+				if($('#addValue-' + id + ' option:enabled').length === 0 || (options.maxItems !== null && elements.length >= options.maxItems))
 				{
 					$('#addButton-' + id).addClass('disabledButton');
 					$('#addValue-' + id).addClass('disabled').prop('disabled', true);
@@ -1235,7 +1236,7 @@
 				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
 
 				// call callback if specified
-				if(options.afterBuild != null) { options.afterBuild(id); }
+				if(options.afterBuild !== null) { options.afterBuild(id); }
 			}
 
 			// get all items
@@ -1249,7 +1250,7 @@
 				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
-					if(value != '') elements.push(value);
+					if(value !== '') elements.push(value);
 				}
 
 				return elements;
@@ -1299,7 +1300,7 @@
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 
 		// loop all elements
 		return this.each(function()
@@ -1401,7 +1402,7 @@
 				}
 
 				// disable or enable button
-				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				if($(this).val().replace(/^\s+|\s+$/g, '') === '')
 				{
 					blockSubmit = false;
 					$('#addButton-' + id).addClass('disabledButton');
@@ -1448,7 +1449,7 @@
 					var value = $(this).val().replace(/^\s+|\s+$/g, '');
 
 					// empty elements shouldn't be added
-					if(value == '')
+					if(value === '')
 					{
 						$(this).parent().parent().remove();
 					}
@@ -1482,7 +1483,7 @@
 				for (var e in values) {
 					value = values[e];
 					// only add new element if it isn't empty
-					if(value != '')
+					if(value !== '')
 					{
 						// already in elements?
 						for(var i in elements)
@@ -1513,7 +1514,7 @@
 				var html = '';
 
 				// no items and message given?
-				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+				if(elements.length === 0 && options.emptyMessage !== '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
 
 				// items available
 				else
@@ -1540,7 +1541,7 @@
 				$('#elementList-' + id).html(html);
 
 				// call callback if specified
-				if(options.afterBuild != null) { options.afterBuild(id); }
+				if(options.afterBuild !== null) { options.afterBuild(id); }
 			}
 
 			// get all items
@@ -1554,7 +1555,7 @@
 				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
-					if(value != '') elements.push(value);
+					if(value !== '') elements.push(value);
 				}
 
 				return elements;
