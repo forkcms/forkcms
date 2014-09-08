@@ -73,8 +73,6 @@ class Header extends Base\Object
         $this->URL = $this->getContainer()->get('url');
         $this->tpl = $this->getContainer()->get('template');
 
-        $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
-
     }
 
     /**
@@ -275,7 +273,10 @@ class Header extends Base\Object
      */
     public function parse()
     {
-        // parse CSS
+		// put the page title in the <title>
+		$this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
+
+		// parse CSS
         $this->parseCSS();
 
         // parse JS
