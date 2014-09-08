@@ -276,7 +276,7 @@ class Header extends Base\Object
         // put the page title in the <title>
         $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
 
-		// parse CSS
+        // parse CSS
         $this->parseCSS();
 
         // parse JS
