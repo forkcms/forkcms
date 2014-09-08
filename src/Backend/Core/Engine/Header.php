@@ -273,8 +273,8 @@ class Header extends Base\Object
      */
     public function parse()
     {
-		// put the page title in the <title>
-		$this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
+        // put the page title in the <title>
+        $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
 
 		// parse CSS
         $this->parseCSS();
