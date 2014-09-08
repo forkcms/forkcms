@@ -42,64 +42,63 @@ jsBackend.translations.controls =
 			$('.dataGrid td.translationValue span:empty').parents('td.translationValue').addClass('highlighted');
 		}
 
-        // when clicking on the check which checkboxes are checked, and add the id's of the translations to the querystring
-        $('.iconExport').click(function(e){
+		// when clicking on the export-button which checkboxes are checked, add the id's of the translations to the querystring
+		$('.iconExport').click(function(e){
 
-            e.preventDefault();
+			e.preventDefault();
 
-            var labels = new Array();
+			var labels = new Array();
 
-            $('.dataGridHolder .dataGridHolder input[type="checkbox"]:checked').closest('tr').find('.translationValue').each(function(e){
-                labels.push($(this).attr('data-numeric-id'));
-            });
-            var url = $(this).attr('href') + '&ids=' + labels.join('|');
+			$('.dataGridHolder .dataGridHolder input[type="checkbox"]:checked').closest('tr').find('.translationValue').each(function(e){
+				labels.push($(this).attr('data-numeric-id'));
+			});
 
-            window.location.href = url;
-        });
+			var url = $(this).attr('href') + '&ids=' + labels.join('|');
 
-        // let's do something ugly.
-        // the standard sorting behaviour ignores the values of the filter.
-        // So before we go to to the sorted page, we add the filter manually
-        $('.dataGrid th a').click(function(e){
+			window.location.href = url;
+		});
 
-            e.preventDefault();
-            var url = $(this).attr('href');
+		// When clicking on a sort-button (in the header of the table)
+		// add the current filter to the url so we don't have to re-search everything,
+		// and in the process loose the sorting.
+		$('.dataGrid th a').click(function(e){
+
+			e.preventDefault();
+
+			var url = $(this).attr('href');
+
+			var application = $('select#application').val();
+			if (application != '') {
+				url += '&application=' + escape(application);
+			}
+
+			var module = $('select#module').val();
+			if (module != '') {
+				url += '&module=' + escape(module);
+			}
+
+			var name = $('input#name').val();
+			if (name != '') {
+				url += '&name=' + escape(name);
+			}
+
+			var value = $('input#value').val()
+			if (value != '') {
+				url += '&value=' + escape(value);
+			}
+
+			$('input[name="language[]"]:checked').each(function(){
+				url += '&language[]=' + escape($(this).val());
+			});
 
 
-            var application = $('select#application').val();
-            if (application != '') {
-                url += '&application=' + escape(application);
-            }
+			$('input[name="type[]"]:checked').each(function(){
+				url += '&type[]=' + escape($(this).val());
+			});
 
-            var module = $('select#module').val();
-            if (module != '') {
-                url += '&module=' + escape(module);
-            }
+			window.location.href = url;
 
-            var name = $('input#name').val();
-            if (name != '') {
-                url += '&name=' + escape(name);
-            }
-
-            var value = $('input#value').val()
-            if (value != '') {
-                url += '&value=' + escape(value);
-            }
-
-            $('input[name="language[]"]:checked').each(function(){
-                url += '&language[]=' + escape($(this).val());
-            });
-
-
-            $('input[name="type[]"]:checked').each(function(){
-                url += '&type[]=' + escape($(this).val());
-            });
-
-            //console.log(url);
-
-            window.location.href = url;
-
-        });
+		});
 	},
 
 	enableDisableModules: function()

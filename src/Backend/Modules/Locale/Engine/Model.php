@@ -1127,11 +1127,11 @@ class Model
             $parameters[] = $module;
         }
 
-		// add module to the query if needed
-		if ($application) {
-			$query .= ' AND l.application = ?';
-			$parameters[] = $application;
-		}
+        // add module to the query if needed
+        if ($application) {
+            $query .= ' AND l.application = ?';
+            $parameters[] = $application;
+        }
 
         // get the translations
         $translations = (array) $db->getRecords($query, $parameters);
@@ -1145,8 +1145,8 @@ class Model
             $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array(
                 'id' => $translation['id'],
                 'value' => $translation['value'],
-				'edited_on' => $translation['edited_on'],
-				'application' => $translation['application'],
+                'edited_on' => $translation['edited_on'],
+                'application' => $translation['application'],
             );
         }
 
@@ -1169,32 +1169,32 @@ class Model
                     // create translation (and increase id)
                     $trans = array('module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
 
-					if(isset($edited_on)) unset($edited_on);
+                    if(isset($edited_on)) unset($edited_on);
 
                     // is there a translation? else empty string
                     foreach ($languages as $lang) {
 
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
 
-						if (count($languages) == 1) {
-							$trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-						} else {
-							$trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-						}
+                        if (count($languages) == 1) {
+                            $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        } else {
+                            $trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        }
 
-						if (isset($t[$lang])) {
-							$application = $t[$lang]['application'];
-							if (!isset($edited_on) || $edited_on < $t[$lang]['edited_on']) {
-								$edited_on = $t[$lang]['edited_on'];
-							}
-						} else {
-							$edited_on = '';
-						}
+                        if (isset($t[$lang])) {
+                            $application = $t[$lang]['application'];
+                            if (!isset($edited_on) || $edited_on < $t[$lang]['edited_on']) {
+                                $edited_on = $t[$lang]['edited_on'];
+                            }
+                        } else {
+                            $edited_on = '';
+                        }
 
                     }
-					// we add them here to keep the language next to eachother
-					$trans['edited_on'] = $edited_on;
-					$trans['application'] = $application;
+                    // we add them here to keep the language next to eachother
+                    $trans['edited_on'] = $edited_on;
+                    $trans['application'] = $application;
 
 
                     // add the translation to the array
@@ -1203,7 +1203,7 @@ class Model
             }
         }
 
-		//echo '<pre>' . print_r($dataGridTranslations['msg'], true) . '</pre>';
+        //echo '<pre>' . print_r($dataGridTranslations['msg'], true) . '</pre>';
 
         return $dataGridTranslations;
     }

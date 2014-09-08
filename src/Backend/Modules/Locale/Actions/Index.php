@@ -92,30 +92,30 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
 
 
-			$dataGrid->setColumnFunction(
-				array(new BackendDataGridFunctions(), 'getTimeAgo'),
-				array('[edited_on]'),
-				'edited_on',
-				true
-			);
+            $dataGrid->setColumnFunction(
+                array(new BackendDataGridFunctions(), 'getTimeAgo'),
+                array('[edited_on]'),
+                'edited_on',
+                true
+            );
 
-			$dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
+            $dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
 
-			// disable paging
-			$dataGrid->setPaging(false);
+            // disable paging
+            $dataGrid->setPaging(false);
 
-			// set header label for reference code
-			$dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
+            // set header label for reference code
+            $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-			// add the multicheckbox column
-			$dataGrid->setMassActionCheckboxes('checkbox', '[name]');
+            // add the multicheckbox column
+            $dataGrid->setMassActionCheckboxes('checkbox', '[name]');
 
-			// hide the application when only one application is shown
-			if ($this->filter['application'] != '') {
-				$dataGrid->setColumnHidden('application');
-			}
+            // hide the application when only one application is shown
+            if ($this->filter['application'] != '') {
+                $dataGrid->setColumnHidden('application');
+            }
 
-			// set column attributes for each language
+            // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
                 $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
@@ -137,13 +137,13 @@ class Index extends BackendBaseActionIndex
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
 
-					$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+                    $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
-					// add id of translation for the export
-					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
+                    // add id of translation for the export
+                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
 
-					// hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-					$dataGrid->setColumnHidden('translation_id');
+                    // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
+                    $dataGrid->setColumnHidden('translation_id');
 
                     // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Edit')) {
@@ -163,13 +163,13 @@ class Index extends BackendBaseActionIndex
                         );
                     }
                 } else {
-					// add id of translation for the export
-					$dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
-					$dataGrid->setColumnHidden('translation_id_' . $lang);
+                    // add id of translation for the export
+                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
+                    $dataGrid->setColumnHidden('translation_id_' . $lang);
 
-					//ugly fix but the browser does funny things with the percentage when show a lots of languages
-					$dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%; max-width: '. (600/count($this->filter['language'])) .'px;'));
-				}
+                    //ugly fix but the browser does funny things with the percentage when show a lots of languages
+                    $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%; max-width: '. (600/count($this->filter['language'])) .'px;'));
+                }
             }
         }
     }
