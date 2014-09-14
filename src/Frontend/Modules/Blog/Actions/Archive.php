@@ -44,20 +44,6 @@ class Archive extends FrontendBaseBlock
     private $endDate;
 
     /**
-     * The pagination array
-     * It will hold all needed parameters, some of them need initialization
-     *
-     * @var    array
-     */
-    protected $pagination = array(
-        'limit' => 10,
-        'offset' => 0,
-        'requested_page' => 1,
-        'num_items' => null,
-        'num_pages' => null
-    );
-
-    /**
      * The requested year
      *
      * @var    int
@@ -119,9 +105,6 @@ class Archive extends FrontendBaseBlock
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
-        // requested page
-        $requestedPage = $this->URL->getParameter('page', 'int', 1);
-
         // rebuild url
         $url = $this->year;
 
@@ -136,31 +119,26 @@ class Archive extends FrontendBaseBlock
             $this->endDate = gmmktime(23, 59, 59, 12, 31, $this->year);
         }
 
-        // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
+        // requested page
+        $requestedPage = $this->URL->getParameter('page', 'int', 1);
 
-        // populate count fields in pagination
-        $this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);
-        $this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
-
-        // redirect if the request page doesn't exists
-        if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
-        }
-
-        // populate calculated fields in pagination
-        $this->pagination['requested_page'] = $requestedPage;
-        $this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
+        $currentArchiveUrl = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
+        $startDate = $this->startDate;
+        $endDate = $this->endDate;
 
         // get articles
-        $this->items = FrontendBlogModel::getAllForDateRange(
-            $this->startDate,
-            $this->endDate,
-            $this->pagination['limit'],
-            $this->pagination['offset']
+        $this->items = $this->parsePagination(
+            function() use ($startDate, $endDate) {
+                return FrontendBlogModel::getAllForDateRangeCount($startDate, $endDate);
+            },
+            function($offset, $length) use ($startDate, $endDate) {
+                return FrontendBlogModel::getAllForDateRange($startDate, $endDate, $length, $offset);
+            },
+            function($page) use ($currentArchiveUrl) {
+                return $currentArchiveUrl . '?page=' . $page;
+            },
+            $requestedPage,
+            FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10)
         );
     }
 
@@ -217,8 +195,5 @@ class Archive extends FrontendBaseBlock
 
         // assign allowComments
         $this->tpl->assign('allowComments', FrontendModel::getModuleSetting('Blog', 'allow_comments'));
-
-        // parse the pagination
-        $this->parsePagination();
     }
 }
