@@ -47,7 +47,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->meta = new BackendMeta($this->frm, null, 'title', true);
 
         // set callback for generating an unique URL
-        $this->meta->setURLCallback('Backend\Modules\Blog\engine\Model', 'getURLForCategory');
+        $this->meta->setURLCallback('Backend\Modules\Blog\Engine\Model', 'getURLForCategory');
     }
 
     /**
