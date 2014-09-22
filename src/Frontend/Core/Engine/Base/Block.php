@@ -304,10 +304,14 @@ class Block extends Object
             throw new InvalidArgumentException('The getUrl parameter should be a callable function.');
         }
 
+        // Create a new pagerfanta object using the given callbacks and pagerfanta's callback adapter.
         $adapter = new \Pagerfanta\Adapter\CallbackAdapter($getNbResults, $getSlice);
         $pagerFanta = new \Pagerfanta\Pagerfanta($adapter);
         $pagerFanta->setMaxPerPage($itemsPerPage);
 
+        // Set the current page to the given value.
+        // If it's less than one, set the current page to the first page.
+        // If it's more than the number of pages we have in total, set it to the last page.
         try {
             $pagerFanta->setCurrentPage($currentPage);
         } catch (\Pagerfanta\Exception\LessThan1CurrentPageException $e) {
@@ -318,6 +322,7 @@ class Block extends Object
             $pagerFanta->setCurrentPage($currentPage);
         }
 
+        // Create a list of all page numbers, with a label, an url and a boolean flag when they're the current page.
         $pages = range(1, $pagerFanta->getNbPages());
         $pages = array_map(
             function($pageNumber) use ($getUrl, $currentPage) {
@@ -330,11 +335,13 @@ class Block extends Object
             $pages
         );
 
+        // Should we show navigation buttons for the previous and next pages?
         $showNext = $pagerFanta->hasNextPage();
         $nextUrl = ($showNext) ? $pages[$currentPage]['url'] : null;
         $showPrevious = $pagerFanta->hasPreviousPage();
         $previousUrl = ($showPrevious) ? $pages[$currentPage - 2]['url'] : null;
 
+        // Calculate for which page numbers we should show navigation buttons
         $first = null;
         $last = null;
         if ($pagerFanta->getNbPages() > 7) {
@@ -351,6 +358,7 @@ class Block extends Object
             }
         }
 
+        // Create pagination data object for the template, and assign it
         $pagination = array(
             'multiple_pages' => $pagerFanta->haveToPaginate(),
             'first' => $first,
