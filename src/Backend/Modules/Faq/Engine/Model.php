@@ -78,7 +78,7 @@ class Model
                 'id' => $item['extra_id'],
                 'module' => 'Faq',
                 'type' => 'widget',
-                'action' => 'category_list'
+                'action' => 'CategoryList'
             );
 
             // delete extra
@@ -646,7 +646,7 @@ class Model
             'module' => 'Faq',
             'type' => 'widget',
             'label' => 'Faq',
-            'action' => 'category_list',
+            'action' => 'CategoryList',
             'data' => serialize(
                 array(
                     'id' => $item['id'],
