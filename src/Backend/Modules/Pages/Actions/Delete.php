@@ -56,7 +56,7 @@ class Delete extends BackendBaseActionDelete
             // valid page?
             if (!empty($page)) {
                 // delete the page
-                $success = BackendPagesModel::delete($this->id, null, $revisionId);
+                $success = BackendPagesModel::delete($this->id, null, null, $revisionId);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
