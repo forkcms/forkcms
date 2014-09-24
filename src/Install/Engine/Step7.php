@@ -98,6 +98,9 @@ class Step7 extends Step
     {
         // extend execution limit
         set_time_limit(0);
+        
+        // extend memory limit
+        ini_set('memory_limit','256M');
 
         // validate all previous steps
         if (!$this->validateForm()) {
