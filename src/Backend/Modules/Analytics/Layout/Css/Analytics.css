@@ -1,0 +1,144 @@
+/*
+
+    Analytics
+
+    @package      backend
+    @subpackage   analytics
+
+    @author       Yoni De Beule <yoni@netlash.com>
+
+*/
+
+
+/* Hide header links */
+
+.box .box h3 a, .box .box h4 a, .dataGridHolder .tableHeading h3 a {
+	color: #000 !important;
+	border: 0; 
+}
+
+/* Analytics top data */
+
+.analyticsColWrapper { padding: 4px 10px; }
+.analyticsColWrapper:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+	.analyticsCol {
+		float: left;
+		max-width: 324px;
+		width: 33.3%;
+	}
+	
+		.analyticsCol strong {
+			font-size: 16px;
+			font-weight: 700;
+		}
+		
+		.analyticsCol a {
+			font-size: 11px;
+			font-weight: 700;
+			border: 0;
+			color: #0077cc; /* I'm changing the link color to match the Google Analytics layout */
+			border: none;
+		}
+
+		.analyticsCol a:link,
+		.analyticsCol a:visited {
+			color: #0077cc;
+		}
+
+		.analyticsCol a:hover,
+		.analyticsCol a:active {
+			color: #001a77;
+		}
+
+		.analyticsCol small {
+			color: #999;
+			font-size: 11px;
+		}
+
+/* Analytics icon buttons */
+
+	.boxLevel2 .heading a.linkButton {
+		height: 18px;
+		line-height: 18px;
+		margin-right: 1px;
+	}
+
+		.boxLevel2 .heading a.linkButton span {
+			margin-top: -2px;
+			padding-top: 2px !important;
+		}
+
+/* Analytics containers */
+
+.analyticsGraphWrapper { width: 100%; }
+.analyticsGraphWrapper:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+	.analyticsLeftCol {
+		float: left;
+		max-width: 491px;
+		width: 49.3%;
+	}
+
+	.analyticsRightCol {
+		float: right;
+		max-width: 491px;
+		width: 49.3%;
+	}
+
+		a.analyticsBacklink {
+			float: left;
+			border: 0;
+			color: #999;
+			padding-top: 8px;
+			line-height: 16px;
+			font-size: 11px;
+		}
+
+/* DataGrid holders */
+
+#analyticsDataGridLeftCol {
+	max-width: 504px;
+	width: 49.3%;
+	float: left;
+}
+
+#analyticsDataGridLeftCol .dataGrid th a, #analyticsDataGridLeftCol .dataGrid th span {
+	white-space: nowrap;
+}
+
+#analyticsDataGridRightCol {
+	max-width: 504px;
+	width: 49.3%;
+	float: right;
+}
+
+#analyticsDataGridRightCol .dataGrid th a, #analyticsDataGridRightCol .dataGrid th span {
+	white-space: nowrap;
+}
+
+.box .options .dataGridHolder:last-child, .box .content .dataGridHolder:last-child {
+	margin: 0;
+}
+
+/* Datefields */
+
+#periodPickerForm input.inputText {
+	width: 140px;
+}
+
+/* Settings page */
+
+.box .box .dataGrid {
+	border-top: 0;
+}
+
+#settings label {
+	display: inline;
+}
+
+/* URL Input */
+
+.bigInput input {
+	width: 320px;
+}
