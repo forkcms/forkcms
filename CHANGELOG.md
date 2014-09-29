@@ -4,6 +4,10 @@ Improvements:
 
 * Core: small fix for mail template style on very small screens.
 
+Bugfixes:
+
+* Analytics: fixed the Loading action which prevented from getting Analytics for the first time.
+
 
 3.8.1 (2014-08-22)
 --
