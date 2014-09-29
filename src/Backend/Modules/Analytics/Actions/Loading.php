@@ -69,7 +69,7 @@ class Loading extends BackendAnalyticsBase
         }
 
         // build url
-        $URL = SITE_URL . '/backend/cronjob?module=Analytics&action=GetData&id=1';
+        $URL = SITE_URL . '/src/Backend/Cronjob.php?module=Analytics&action=GetData&id=1';
         $URL .= '&page=' . $this->redirectAction;
         if ($this->pageId != '') {
             $URL .= '&page_id=' . $this->pageId;
