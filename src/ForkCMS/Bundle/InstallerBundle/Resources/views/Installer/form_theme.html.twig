@@ -1,12 +1,22 @@
 {% block form_errors -%}
   {% if errors|length > 0 -%}
-  <div class="formMessage errorMessage">
-    <p>
-      {%- for error in errors -%}
-        {{ error.message }}<br/>
-      {%- endfor -%}
-    </p>
-  </div>
+    {% if form.parent is empty %}
+      {# Overal form errors #}
+      <div class="formMessage errorMessage">
+        <p>
+          {%- for error in errors -%}
+            {{ error.message }}{% if not loop.last %}<br/>{% endif %}
+          {%- endfor -%}
+        </p>
+      </div>
+    {% else %}
+      {# form errors for one field #}
+      <span class="formError">
+          {%- for error in errors -%}
+            {{ error.message }}{% if not loop.last %}<br/>{% endif %}
+          {%- endfor -%}
+      </span>
+    {% endif %}
   {%- endif %}
 {%- endblock form_errors %}
 
@@ -46,7 +56,7 @@
 {% block form_row -%}
     <p>
         {{- form_label(form) -}}
-        {{- form_errors(form) -}}
         {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
     </p>
 {%- endblock form_row %}
