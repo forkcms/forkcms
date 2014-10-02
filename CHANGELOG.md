@@ -7,6 +7,7 @@ Improvements:
 Bugfixes:
 
 * Analytics: fixed CSS on servers which listens to Capital A in Analytics.css
+* Core: make setting cookies work on a domain with a custom port (not port 80)
 
 
 3.8.1 (2014-08-22)

@@ -56,7 +56,7 @@ class Cookie extends \SpoonCookie
 
         // when the domain isn't passed and the url-object is available we can set the cookies for all subdomains
         if ($domain === null && FrontendModel::getContainer()->has('url')) {
-            $domain = '.' . FrontendModel::getContainer()->get('url')->getDomain();
+            $domain = '.' . strtok(FrontendModel::getContainer()->get('url')->getDomain(), ':');
         }
 
         // when the secure-parameter isn't set
