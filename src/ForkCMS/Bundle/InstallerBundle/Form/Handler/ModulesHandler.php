@@ -32,6 +32,10 @@ class ModulesHandler
         $session = $request->getSession();
         $data = $form->getData();
 
+        if ($data['example_data'] === true && !in_array('Blog', $data['modules'])) {
+            $data['modules'][] = 'Blog';
+        }
+
         $session->set('modules', $data['modules']);
         $session->set('example_data', $data['example_data']);
         $session->set('different_debug_email', $data['different_debug_email']);
