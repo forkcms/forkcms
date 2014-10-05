@@ -78,7 +78,7 @@ class Helper
 
                 // get content
                 $fieldHTML = $datetime->parse();
-            }elseif ($field['type'] == 'radiobutton') {
+            } elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
                 foreach ($values as $value) {
                     $newValues[] = array('label' => $value, 'value' => $value);
