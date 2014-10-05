@@ -225,6 +225,21 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
+                } elseif ($field['type'] == 'datetime') {
+                    // create element
+                    if($field['settings']['input_type'] == 'date') {
+                        $datetime = $this->frm->addDate($item['name'], $defaultValues);
+                    } else {
+                        $datetime = $this->frm->addTime($item['name'], $defaultValues);
+                    }
+
+                    // add required attribute
+                    if ($item['required']) {
+                        $datetime->setAttribute('required', null);
+                    }
+
+                    // get content
+                    $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);

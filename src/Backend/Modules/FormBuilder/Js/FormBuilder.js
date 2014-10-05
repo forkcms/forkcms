@@ -184,6 +184,9 @@ jsBackend.formBuilder.fields =
 									case 'textareaDialog':
 										jsBackend.formBuilder.fields.saveTextarea();
 										break;
+									case 'datetimeDialog':
+										jsBackend.formBuilder.fields.saveDatetime();
+										break;
 									case 'headingDialog':
 										jsBackend.formBuilder.fields.saveHeading();
 										break;
@@ -439,6 +442,35 @@ jsBackend.formBuilder.fields =
 
 								// show dialog
 								$('#textareaDialog').dialog('open');
+							}
+
+							// datetime edit
+							else if(data.data.field.type == 'datetime')
+							{
+								// fill in form
+								$('#datetimeId').val(data.data.field.id);
+								$('#datetimeLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
+								$('#datetimeValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								$('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type));
+								$.each(data.data.field.validations, function(k, v)
+								{
+									// required checkbox
+									if(k == 'required')
+									{
+										$('#datetimeRequired').prop('checked', true);
+										$('#datetimeRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
+									}
+
+									// dropdown
+									else
+									{
+										$('#datetimeValidation').val(v.type);
+										$('#datetimeErrorMessage').val(utils.string.htmlDecode(v.error_message));
+									}
+								});
+
+								// show dialog
+								$('#datetimeDialog').dialog('open');
 							}
 
 							// dropdown edit
@@ -773,6 +805,82 @@ jsBackend.formBuilder.fields =
 				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
+	},
+
+	/**
+	 * Handle text box save
+	 */
+	saveDatetime: function()
+	{
+		// init vars
+		var fieldId = $('#datetimeId').val();
+		var type = 'datetime';
+		var label = $('#datetimeLabel').val();
+		var value = $('#datetimeValue').val();
+		//var replyTo = ($('#datetimeReplyTo').is(':checked') ? 'Y' : 'N');
+		var input_type = $('#datetimeType').val();
+		var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
+		var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
+		var validation = $('#datetimeValidation').val();
+		var validationParameter = $('#datetimeValidationParameter').val();
+		var errorMessage = $('#datetimeErrorMessage').val();
+
+		// make the call
+		$.ajax(
+			{
+				data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: fieldId,
+						type: type,
+						label: label,
+						default_values: value,
+						required: required,
+						required_error_message: requiredErrorMessage,
+						input_type: input_type,
+						validation: validation,
+						validation_parameter: validationParameter,
+						error_message: errorMessage
+					}),
+				success: function(data, textStatus)
+				{
+					// success
+					if(data.code == 200)
+					{
+						// clear errors
+						$('.formError').html('');
+
+						// form contains errors
+						if(typeof data.data.errors != 'undefined')
+						{
+							// assign errors
+							if(typeof data.data.errors.label != 'undefined') $('#datetimeLabelError').html(data.data.errors.label);
+							if(typeof data.data.errors.required_error_message != 'undefined') $('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
+							if(typeof data.data.errors.error_message != 'undefined') $('#datetimeErrorMessageError').html(data.data.errors.error_message);
+							if(typeof data.data.errors.validation_parameter != 'undefined') $('#datetimeValidationParameterError').html(data.data.errors.validation_parameter);
+
+							// toggle error messages
+							jsBackend.formBuilder.fields.toggleValidationErrors('datetimeDialog');
+						}
+
+						// saved!
+						else
+						{
+							// append field html
+							jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
+
+							// close console box
+							$('#datetimeDialog').dialog('close');
+						}
+					}
+
+					// show error message
+					else jsBackend.messages.add('error', textStatus);
+
+					// alert the user
+					if(data.code != 200 && jsBackend.debug) alert(data.message);
+				}
+			});
 	},
 
 	/**

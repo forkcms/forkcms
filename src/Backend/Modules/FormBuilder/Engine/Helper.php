@@ -67,7 +67,18 @@ class Helper
 
                 // get content
                 $fieldHTML = $ddm->parse();
-            } elseif ($field['type'] == 'radiobutton') {
+            } elseif ($field['type'] == 'datetime') {
+                // create element
+                if($field['settings']['input_type'] == 'date') {
+                    $datetime = $frm->addDate($fieldName, $defaultValues);
+                } else {
+                    $datetime = $frm->addTime($fieldName, $defaultValues);
+                }
+                $datetime->setAttribute('disabled', 'disabled');
+
+                // get content
+                $fieldHTML = $datetime->parse();
+            }elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
                 foreach ($values as $value) {
                     $newValues[] = array('label' => $value, 'value' => $value);

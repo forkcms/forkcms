@@ -568,6 +568,34 @@
         <translation language="sv"><![CDATA[textbox]]></translation>
         <translation language="el"><![CDATA[Κουτί κειμένου]]></translation>
       </item>
+      <item type="label" name="Datetime">
+        <translation language="nl"><![CDATA[datum & tijd]]></translation>
+        <translation language="en"><![CDATA[date & time]]></translation>
+        <translation language="it"><![CDATA[data e oro]]></translation>
+        <translation language="ru"><![CDATA[Дата и время]]></translation>
+        <translation language="zh"><![CDATA[日期和時間]]></translation>
+        <translation language="fr"><![CDATA[date et l'heure]]></translation>
+        <translation language="hu"><![CDATA[dátum és idő]]></translation>
+        <translation language="de"><![CDATA[Datum und Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[fecha y hora]]></translation>
+        <translation language="uk"><![CDATA[Дата і час]]></translation>
+        <translation language="sv"><![CDATA[datum och tid]]></translation>
+        <translation language="el"><![CDATA[Ημερομηνία και ώρα]]></translation>
+      </item>
+      <item type="label" name="Time">
+        <translation language="nl"><![CDATA[tijd]]></translation>
+        <translation language="en"><![CDATA[time]]></translation>
+        <translation language="it"><![CDATA[oro]]></translation>
+        <translation language="ru"><![CDATA[время]]></translation>
+        <translation language="zh"><![CDATA[时间]]></translation>
+        <translation language="fr"><![CDATA[l'heure]]></translation>
+        <translation language="hu"><![CDATA[idő]]></translation>
+        <translation language="de"><![CDATA[Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[hora]]></translation>
+        <translation language="uk"><![CDATA[час]]></translation>
+        <translation language="sv"><![CDATA[tid]]></translation>
+        <translation language="el"><![CDATA[ώρα]]></translation>
+      </item>
       <item type="label" name="TextElements">
         <translation language="nl"><![CDATA[tekst elementen]]></translation>
         <translation language="en"><![CDATA[text elements]]></translation>

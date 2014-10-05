@@ -102,6 +102,7 @@
 							<ul>
 								<li id="textboxSelector"><a href="#textbox" rel="textboxDialog" class="openFieldDialog">{$lblTextbox|ucfirst}</a></li>
 								<li id="textareaSelector"><a href="#textarea" rel="textareaDialog" class="openFieldDialog">{$lblTextarea|ucfirst}</a></li>
+								<li id="datetimeSelector"><a href="#datetime" rel="datetimeDialog" class="openFieldDialog">{$lblDatetime|ucfirst}</a></li>
 								<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
 								<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="openFieldDialog">{$lblCheckbox|ucfirst}</a></li>
 								<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="openFieldDialog">{$lblRadiobutton|ucfirst}</a></li>
@@ -279,6 +280,82 @@
 			</div>
 		</div>
 	</div>
+
+    {* Dialog for a datetime *}
+    <div id="datetimeDialog" title="{$lblDatetime|ucfirst}" class="dialog" style="display: none;">
+        <input type="hidden" name="datetime_id" id="datetimeId" value="" />
+
+        <div class="tabs forkForms">
+            <ul>
+                <li><a href="#tabDatetimeBasic">{$lblBasic|ucfirst}</a></li>
+                <li><a href="#tabDatetimeProperties">{$lblProperties|ucfirst}</a></li>
+            </ul>
+
+            <div id="tabDatetimeBasic" class="box">
+                <div class="horizontal">
+                    <div class="options">
+                        <p>
+                            <label for="datetimeLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeLabel}
+                            <span id="datetimeLabelError" class="formError" style="display: none;"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div id="tabDatetimeProperties" class="box">
+                <div class="horizontal">
+                    <div class="options">
+                        <p>
+                            <label for="datetimeValue">{$lblDefaultValue|ucfirst}</label>
+                            {$txtDatetimeValue}
+                        </p>
+                    </div>
+                    <div class="validation options">
+                        <p class="p0">
+                            <label for="datetimeRequired">{$lblRequiredField|ucfirst}</label>
+                            {$chkDatetimeRequired}
+                        </p>
+                        <p class="validationRequiredErrorMessage hidden">
+                            <label for="datetimeRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeRequiredErrorMessage}
+                            <span id="datetimeRequiredErrorMessageError" class="formError" style="display: none;"></span>
+                        </p>
+                    </div>
+                    <div class="type options">
+                        <p class="p0">
+                            <label for="datetimeType">{$lblType|ucfirst}</label>
+                            {$ddmDatetimeType}
+                        </p>
+                        <p class="typeParameter" style="display: none;">
+                            <label for="datetimeTypeParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeTypeParameter}
+                        </p>
+                        <p class="typeErrorMessage" style="display: none;">
+                            <label for="datetimeErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeErrorMessage}
+                            <span id="datetimeErrorMessageError" class="formError" style="display: none;"></span>
+                        </p>
+                    </div>
+                    <div class="validation options">
+                        <p class="p0">
+                            <label for="datetimeValidation">{$lblValidation|ucfirst}</label>
+                            {$ddmDatetimeValidation}
+                        </p>
+                        <p class="validationParameter" style="display: none;">
+                            <label for="datetimeValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeValidationParameter}
+                        </p>
+                        <p class="validationErrorMessage" style="display: none;">
+                            <label for="datetimeErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+                            {$txtDatetimeErrorMessage}
+                            <span id="datetimeErrorMessageError" class="formError" style="display: none;"></span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 	{* Dialog for a dropdown *}
 	<div id="dropdownDialog" title="{$lblDropdown|ucfirst}" class="dialog" style="display: none;">

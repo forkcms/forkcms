@@ -100,6 +100,29 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textarea_validation_parameter');
         $this->frm->addText('textarea_error_message');
 
+        // datetime dialog
+        $this->frm->addText('datetime_label');
+        $this->frm->addText('datetime_value');
+        $this->frm->addCheckbox('datetime_required');
+        $this->frm->addText('datetime_required_error_message');
+        $this->frm->addDropdown(
+            'datetime_type',
+            array(
+                'date' => BL::getLabel('Date'),
+                'time' => BL::getLabel('Time'),
+            )
+        );
+        $this->frm->addDropdown(
+            'datetime_validation',
+            array(
+                '' => '',
+                'email' => BL::getLabel('Email'),
+                'numeric' => BL::getLabel('Numeric'),
+            )
+        );
+        $this->frm->addText('textbox_validation_parameter');
+        $this->frm->addText('textbox_error_message');
+
         // dropdown dialog
         $this->frm->addText('dropdown_label');
         $this->frm->addText('dropdown_values');

@@ -33,7 +33,7 @@ class SaveField extends BackendBaseAJAXAction
         $fieldId = \SpoonFilter::getPostValue('field_id', null, '', 'int');
         $type = \SpoonFilter::getPostValue(
             'type',
-            array('checkbox', 'dropdown', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'),
+            array('checkbox', 'dropdown', 'datetime', 'heading', 'paragraph', 'radiobutton', 'submit', 'textarea', 'textbox'),
             '',
             'string'
         );
@@ -48,6 +48,9 @@ class SaveField extends BackendBaseAJAXAction
 
         // special field for textbox: reply to
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
+
+        // special field for datetime: input type
+        $inputType = \SpoonFilter::getPostValue('input_type', array('date','time'), 'date', 'string');
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
@@ -84,6 +87,17 @@ class SaveField extends BackendBaseAJAXAction
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea
+                        if ($label == '') {
+                            $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if ($required == 'Y' && $requiredErrorMessage == '') {
+                            $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                        if ($validation != '' && $errorMessage == '') {
+                            $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
+                        }
+                    } elseif ($type == 'datetime') {
+                        // validate datetime
                         if ($label == '') {
                             $errors['label'] = BL::getError('LabelIsRequired');
                         }
@@ -174,6 +188,11 @@ class SaveField extends BackendBaseAJAXAction
                         // reply-to, only for textboxes
                         if ($type == 'textbox') {
                             $settings['reply_to'] = ($replyTo == 'Y');
+                        }
+
+                        // input_type, only for datetime input
+                        if ($type == 'datetime') {
+                            $settings['input_type'] = $inputType;
                         }
 
                         // build array
