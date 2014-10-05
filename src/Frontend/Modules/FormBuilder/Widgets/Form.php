@@ -228,9 +228,15 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'datetime') {
                     // create element
                     if($field['settings']['input_type'] == 'date') {
-                        $datetime = $this->frm->addDate($item['name'], $defaultValues);
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                            array(
+                                'data-mask' => 'dd/mm/yy',
+                                'data-firstday' => '1',
+                                'type' => 'date'
+                            )
+                        );
                     } else {
-                        $datetime = $this->frm->addTime($item['name'], $defaultValues);
+                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
                     }
 
                     // add required attribute

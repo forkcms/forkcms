@@ -204,6 +204,16 @@ jsFrontend.forms =
 	// initialize the date fields
 	datefields: function()
 	{
+		// jQuery datapicker fallback for browsers that don't support the HTML5 date type
+		var $inputDateType = $('input.inputDatefield');
+		if ($inputDateType.length)
+		{
+			// the browser does not support the HTML5 data type
+			if ('date' !== $inputDateType.get(0).type) {
+				$inputDateType.addClass('inputDatefieldNormal');
+			}
+		}
+
 		var $inputDatefields = $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange');
 		var $inputDatefieldNormal = $('.inputDatefieldNormal');
 		var $inputDatefieldFrom = $('.inputDatefieldFrom');
