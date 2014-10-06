@@ -822,7 +822,7 @@ jsBackend.formBuilder.fields =
 		var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
 		var validation = $('#datetimeValidation').val();
-		var validationParameter = $('#datetimeValidationParameter').val();
+		//var validationParameter = $('#datetimeValidationParameter').val();
 		var errorMessage = $('#datetimeErrorMessage').val();
 
 		// make the call
@@ -839,7 +839,7 @@ jsBackend.formBuilder.fields =
 						required_error_message: requiredErrorMessage,
 						input_type: input_type,
 						validation: validation,
-						validation_parameter: validationParameter,
+						//validation_parameter: validationParameter,
 						error_message: errorMessage
 					}),
 				success: function(data, textStatus)
@@ -857,7 +857,7 @@ jsBackend.formBuilder.fields =
 							if(typeof data.data.errors.label != 'undefined') $('#datetimeLabelError').html(data.data.errors.label);
 							if(typeof data.data.errors.required_error_message != 'undefined') $('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
 							if(typeof data.data.errors.error_message != 'undefined') $('#datetimeErrorMessageError').html(data.data.errors.error_message);
-							if(typeof data.data.errors.validation_parameter != 'undefined') $('#datetimeValidationParameterError').html(data.data.errors.validation_parameter);
+							//if(typeof data.data.errors.validation_parameter != 'undefined') $('#datetimeValidationParameterError').html(data.data.errors.validation_parameter);
 
 							// toggle error messages
 							jsBackend.formBuilder.fields.toggleValidationErrors('datetimeDialog');

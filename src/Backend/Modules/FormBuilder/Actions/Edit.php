@@ -116,12 +116,11 @@ class Edit extends BackendBaseActionEdit
             'datetime_validation',
             array(
                 '' => '',
-                'email' => BL::getLabel('Email'),
-                'numeric' => BL::getLabel('Numeric'),
+                'time' => BL::getLabel('Time')
             )
         );
-        $this->frm->addText('textbox_validation_parameter');
-        $this->frm->addText('textbox_error_message');
+        //$this->frm->addText('datetime_validation_parameter');
+        $this->frm->addText('datetime_error_message');
 
         // dropdown dialog
         $this->frm->addText('dropdown_label');

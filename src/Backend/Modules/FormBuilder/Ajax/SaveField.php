@@ -42,7 +42,7 @@ class SaveField extends BackendBaseAJAXAction
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
         $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
-        $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric'), '', 'string');
+        $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric', 'time'), '', 'string');
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
@@ -64,8 +64,8 @@ class SaveField extends BackendBaseAJAXAction
                 if ($type == '') {
                     $this->output(self::BAD_REQUEST, null, 'invalid type provided');
                 } else {
-                    // extra validation is only possible for textfields
-                    if ($type != 'textbox') {
+                    // extra validation is only possible for textfields & datetime fields
+                    if ($type != 'textbox' && $type != 'datetime') {
                         $validation = '';
                         $validationParameter = '';
                         $errorMessage = '';

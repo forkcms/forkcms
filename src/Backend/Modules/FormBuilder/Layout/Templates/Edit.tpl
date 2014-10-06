@@ -330,20 +330,11 @@
                             <label for="datetimeTypeParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
                             {$txtDatetimeTypeParameter}
                         </p>
-                        <p class="typeErrorMessage" style="display: none;">
-                            <label for="datetimeErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-                            {$txtDatetimeErrorMessage}
-                            <span id="datetimeErrorMessageError" class="formError" style="display: none;"></span>
-                        </p>
                     </div>
                     <div class="validation options">
                         <p class="p0">
                             <label for="datetimeValidation">{$lblValidation|ucfirst}</label>
                             {$ddmDatetimeValidation}
-                        </p>
-                        <p class="validationParameter" style="display: none;">
-                            <label for="datetimeValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-                            {$txtDatetimeValidationParameter}
                         </p>
                         <p class="validationErrorMessage" style="display: none;">
                             <label for="datetimeErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>

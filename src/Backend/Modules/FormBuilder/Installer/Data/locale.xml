@@ -959,11 +959,29 @@
         <translation language="fr"><![CDATA[Veuillez fournir une valeur.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg az értéket.]]></translation>
         <translation language="de"><![CDATA[Bitte gib einen Wert an.]]></translation>
-        <translation language="es"><![CDATA[Ppor favor introduce un valor.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un valor.]]></translation>
         <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
         <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
       </item>
     </FormBuilder>
   </Backend>
+  <Frontend>
+    <Core>
+      <item type="error" name="TimeIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige tijd]]></translation>
+        <translation language="en"><![CDATA[Invalid time]]></translation>
+        <translation language="it"><![CDATA[Tempo non valido]]></translation>
+        <translation language="ru"><![CDATA[Неверное время]]></translation>
+        <translation language="zh"><![CDATA[无效的时间]]></translation>
+        <translation language="fr"><![CDATA[Heure invalide]]></translation>
+        <translation language="hu"><![CDATA[Érvénytelen idő]]></translation>
+        <translation language="de"><![CDATA[Ungültige Zeit]]></translation>
+        <translation language="es"><![CDATA[Tiempo no válido]]></translation>
+        <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
+        <translation language="sv"><![CDATA[невірний час]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρη ώρα]]></translation>
+      </item>
+    </Core>
+  </Frontend>
 </locale>
