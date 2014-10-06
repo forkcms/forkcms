@@ -666,6 +666,62 @@
         <translation language="sv"><![CDATA[igår]]></translation>
         <translation language="el"><![CDATA[Χθές]]></translation>
       </item>
+      <item type="label" name="Day">
+        <translation language="nl"><![CDATA[dag]]></translation>
+        <translation language="en"><![CDATA[day]]></translation>
+        <translation language="it"><![CDATA[giorno]]></translation>
+        <translation language="ru"><![CDATA[день]]></translation>
+        <translation language="zh"><![CDATA[一天]]></translation>
+        <translation language="fr"><![CDATA[journée]]></translation>
+        <translation language="hu"><![CDATA[nap]]></translation>
+        <translation language="de"><![CDATA[Tag]]></translation>
+        <translation language="es"><![CDATA[día]]></translation>
+        <translation language="uk"><![CDATA[день]]></translation>
+        <translation language="sv"><![CDATA[dag]]></translation>
+        <translation language="el"><![CDATA[ημέρα]]></translation>
+      </item>
+      <item type="label" name="Week">
+        <translation language="nl"><![CDATA[week]]></translation>
+        <translation language="en"><![CDATA[week]]></translation>
+        <translation language="it"><![CDATA[settimana]]></translation>
+        <translation language="ru"><![CDATA[Неделя]]></translation>
+        <translation language="zh"><![CDATA[周]]></translation>
+        <translation language="fr"><![CDATA[semaine]]></translation>
+        <translation language="hu"><![CDATA[a héten]]></translation>
+        <translation language="de"><![CDATA[Woche]]></translation>
+        <translation language="es"><![CDATA[semana]]></translation>
+        <translation language="uk"><![CDATA[тиждень]]></translation>
+        <translation language="sv"><![CDATA[vecka]]></translation>
+        <translation language="el"><![CDATA[εβδομάδα]]></translation>
+      </item>
+      <item type="label" name="Month">
+        <translation language="nl"><![CDATA[maand]]></translation>
+        <translation language="en"><![CDATA[month]]></translation>
+        <translation language="it"><![CDATA[mese]]></translation>
+        <translation language="ru"><![CDATA[месяц]]></translation>
+        <translation language="zh"><![CDATA[个月]]></translation>
+        <translation language="fr"><![CDATA[mois]]></translation>
+        <translation language="hu"><![CDATA[hónap]]></translation>
+        <translation language="de"><![CDATA[Monat]]></translation>
+        <translation language="es"><![CDATA[mes]]></translation>
+        <translation language="uk"><![CDATA[місяць]]></translation>
+        <translation language="sv"><![CDATA[månad]]></translation>
+        <translation language="el"><![CDATA[μήνα]]></translation>
+      </item>
+      <item type="label" name="Year">
+        <translation language="nl"><![CDATA[jaar]]></translation>
+        <translation language="en"><![CDATA[year]]></translation>
+        <translation language="it"><![CDATA[anno]]></translation>
+        <translation language="ru"><![CDATA[год]]></translation>
+        <translation language="zh"><![CDATA[一年]]></translation>
+        <translation language="fr"><![CDATA[année]]></translation>
+        <translation language="hu"><![CDATA[év]]></translation>
+        <translation language="de"><![CDATA[Jahr]]></translation>
+        <translation language="es"><![CDATA[año]]></translation>
+        <translation language="uk"><![CDATA[рік]]></translation>
+        <translation language="sv"><![CDATA[år]]></translation>
+        <translation language="el"><![CDATA[έτος]]></translation>
+      </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The form "%1$s" was added.]]></translation>

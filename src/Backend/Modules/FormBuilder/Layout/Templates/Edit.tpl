@@ -304,10 +304,11 @@
             </div>
             <div id="tabDatetimeProperties" class="box">
                 <div class="horizontal">
-                    <div class="options">
+                    <div class="defaultValue options">
                         <p>
                             <label for="datetimeValue">{$lblDefaultValue|ucfirst}</label>
-                            {$txtDatetimeValue}
+                            {$ddmDatetimeValueAmount} {$ddmDatetimeValueType}
+                            <span id="datetimeDefaultValueErrorMessageError" class="formError" style="display: none;"></span>
                         </p>
                     </div>
                     <div class="validation options">

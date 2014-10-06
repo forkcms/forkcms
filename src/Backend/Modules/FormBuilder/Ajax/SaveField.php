@@ -49,8 +49,10 @@ class SaveField extends BackendBaseAJAXAction
         // special field for textbox: reply to
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
 
-        // special field for datetime: input type
+        // special fields for datetime
         $inputType = \SpoonFilter::getPostValue('input_type', array('date','time'), 'date', 'string');
+        $valueAmount = trim(\SpoonFilter::getPostValue('value_amount', null, '', 'string'));
+        $valueType = trim(\SpoonFilter::getPostValue('value_type', null, '', 'string'));
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
@@ -100,6 +102,9 @@ class SaveField extends BackendBaseAJAXAction
                         // validate datetime
                         if ($label == '') {
                             $errors['label'] = BL::getError('LabelIsRequired');
+                        }
+                        if (in_array($valueType, array('day','week','month','year')) && $valueAmount == '') {
+                            $errors['default_value_error_message'] = BL::getError('ValueIsRequired');
                         }
                         if ($required == 'Y' && $requiredErrorMessage == '') {
                             $errors['required_error_message'] = BL::getError('ErrorMessageIsRequired');
@@ -190,9 +195,14 @@ class SaveField extends BackendBaseAJAXAction
                             $settings['reply_to'] = ($replyTo == 'Y');
                         }
 
-                        // input_type, only for datetime input
+                        // only for datetime input
                         if ($type == 'datetime') {
                             $settings['input_type'] = $inputType;
+
+                            if($inputType == 'date') {
+                                $settings['value_amount'] = $valueAmount;
+                                $settings['value_type'] = $valueType;
+                            }
                         }
 
                         // build array

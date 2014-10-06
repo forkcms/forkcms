@@ -70,7 +70,25 @@ class Helper
             } elseif ($field['type'] == 'datetime') {
                 // create element
                 if($field['settings']['input_type'] == 'date') {
-                    $datetime = $frm->addDate($fieldName, $defaultValues);
+                    // calculate default value
+                    $amount = $field['settings']['value_amount'];
+                    $type = $field['settings']['value_type'];
+
+                    if($type != '') {
+                        switch($type) {
+                            case 'today':
+                                $defaultValues = date('d/m/Y');
+                                break;
+                            case 'day':
+                            case 'week':
+                            case 'month':
+                            case 'year':
+                                if($amount != '') $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                break;
+                        }
+                    }
+
+                    $datetime = $frm->addText($fieldName, $defaultValues);
                 } else {
                     $datetime = $frm->addTime($fieldName, $defaultValues);
                 }

@@ -228,11 +228,30 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'datetime') {
                     // create element
                     if($field['settings']['input_type'] == 'date') {
+                        // calculate default value
+                        $amount = $field['settings']['value_amount'];
+                        $type = $field['settings']['value_type'];
+
+                        if($type != '') {
+                            switch($type) {
+                                case 'today':
+                                    $defaultValues = date('Y-m-d');
+                                    break;
+                                case 'day':
+                                case 'week':
+                                case 'month':
+                                case 'year':
+                                    if($amount != '') $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    break;
+                            }
+                        }
+
                         $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
                             array(
                                 'data-mask' => 'dd/mm/yy',
                                 'data-firstday' => '1',
-                                'type' => 'date'
+                                'type' => 'date',
+                                'default-date' => (!empty($defaultValues) ? date("d/m/Y", strtotime($defaultValues)) : '')
                             )
                         );
                     } else {

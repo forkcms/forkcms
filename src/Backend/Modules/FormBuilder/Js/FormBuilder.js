@@ -256,6 +256,16 @@ jsBackend.formBuilder.fields =
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
 							});
 						}
+						else if(id == 'datetimeDialog')
+						{
+							$('#datetimeType').change(function() {
+								if($(this).val() === 'time') {
+									$('#datetimeDialog').find('.defaultValue').hide();
+								} else {
+									$('#datetimeDialog').find('.defaultValue').show();
+								}
+							});
+						}
 
 						// focus on first input element
 						if($(this).find(':input:visible').length > 0) $(this).find(':input:visible')[0].focus();
@@ -450,7 +460,8 @@ jsBackend.formBuilder.fields =
 								// fill in form
 								$('#datetimeId').val(data.data.field.id);
 								$('#datetimeLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
-								$('#datetimeValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								$('#datetimeValueAmount').val(utils.string.htmlDecode(data.data.field.settings.value_amount));
+								$('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type));
 								$('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type));
 								$.each(data.data.field.validations, function(k, v)
 								{
@@ -736,6 +747,9 @@ jsBackend.formBuilder.fields =
 
 		// select first tab
 		$('#'+ id +' .tabs').tabs('select', 0);
+
+		// reset hidden fields
+		$('#datetimeDialog').find('.defaultValue').show();
 	},
 
 	/**
@@ -816,8 +830,8 @@ jsBackend.formBuilder.fields =
 		var fieldId = $('#datetimeId').val();
 		var type = 'datetime';
 		var label = $('#datetimeLabel').val();
-		var value = $('#datetimeValue').val();
-		//var replyTo = ($('#datetimeReplyTo').is(':checked') ? 'Y' : 'N');
+		var value_amount = $('#datetimeValueAmount').val();
+		var value_type = $('#datetimeValueType').val();
 		var input_type = $('#datetimeType').val();
 		var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
@@ -834,7 +848,8 @@ jsBackend.formBuilder.fields =
 						field_id: fieldId,
 						type: type,
 						label: label,
-						default_values: value,
+						value_amount: value_amount,
+						value_type: value_type,
 						required: required,
 						required_error_message: requiredErrorMessage,
 						input_type: input_type,
@@ -855,6 +870,7 @@ jsBackend.formBuilder.fields =
 						{
 							// assign errors
 							if(typeof data.data.errors.label != 'undefined') $('#datetimeLabelError').html(data.data.errors.label);
+							if(typeof data.data.errors.default_value_error_message != 'undefined') $('#datetimeDefaultValueErrorMessageError').html(data.data.errors.default_value_error_message);
 							if(typeof data.data.errors.required_error_message != 'undefined') $('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
 							if(typeof data.data.errors.error_message != 'undefined') $('#datetimeErrorMessageError').html(data.data.errors.error_message);
 							//if(typeof data.data.errors.validation_parameter != 'undefined') $('#datetimeValidationParameterError').html(data.data.errors.validation_parameter);
