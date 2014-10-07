@@ -429,7 +429,8 @@ class Form extends FrontendBaseWidget
                             );
                         }
                     } elseif ($rule == 'time') {
-                        if (!\SpoonFilter::isValidAgainstRegexp('/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/', $this->frm->getField($fieldName)->getValue())) {
+                        $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
+                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
                             $this->frm->getField($fieldName)->setError($settings['error_message']);
                         }
                     }

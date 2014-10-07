@@ -792,10 +792,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined'){ $('#checkboxLabelError').html(data.data.errors.label); }
-						if(typeof data.data.errors.values != 'undefined') $('#checkboxValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#checkboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#checkboxErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#checkboxLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#checkboxValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#checkboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#checkboxErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('checkboxDialog');
@@ -869,11 +877,18 @@ jsBackend.formBuilder.fields =
 						if(typeof data.data.errors != 'undefined')
 						{
 							// assign errors
-							if(typeof data.data.errors.label != 'undefined') $('#datetimeLabelError').html(data.data.errors.label);
-							if(typeof data.data.errors.default_value_error_message != 'undefined') $('#datetimeDefaultValueErrorMessageError').html(data.data.errors.default_value_error_message);
-							if(typeof data.data.errors.required_error_message != 'undefined') $('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
-							if(typeof data.data.errors.error_message != 'undefined') $('#datetimeErrorMessageError').html(data.data.errors.error_message);
-							//if(typeof data.data.errors.validation_parameter != 'undefined') $('#datetimeValidationParameterError').html(data.data.errors.validation_parameter);
+							if(typeof data.data.errors.label != 'undefined') {
+								$('#datetimeLabelError').html(data.data.errors.label);
+							}
+							if(typeof data.data.errors.default_value_error_message != 'undefined') {
+								$('#datetimeDefaultValueErrorMessageError').html(data.data.errors.default_value_error_message);
+							}
+							if(typeof data.data.errors.required_error_message != 'undefined') {
+								$('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
+							}
+							if(typeof data.data.errors.error_message != 'undefined') {
+								$('#datetimeErrorMessageError').html(data.data.errors.error_message);
+							}
 
 							// toggle error messages
 							jsBackend.formBuilder.fields.toggleValidationErrors('datetimeDialog');
@@ -939,10 +954,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#dropdownLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.values != 'undefined') $('#dropdownValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#dropdownRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#dropdownErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#dropdownLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#dropdownValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#dropdownRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#dropdownErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('dropdownDialog');
@@ -1124,10 +1147,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#radiobuttonLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.values != 'undefined') $('#radiobuttonValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#radiobuttonLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#radiobuttonValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('radiobuttonDialog');
@@ -1255,10 +1286,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#textareaLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#textareaErrorMessageError').html(data.data.errors.error_message);
-						if(typeof data.data.errors.validation_parameter != 'undefined') $('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#textareaLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#textareaErrorMessageError').html(data.data.errors.error_message);
+						}
+						if(typeof data.data.errors.validation_parameter != 'undefined') {
+							$('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textareaDialog');
@@ -1330,10 +1369,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#textboxLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#textboxErrorMessageError').html(data.data.errors.error_message);
-						if(typeof data.data.errors.validation_parameter != 'undefined') $('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#textboxLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#textboxErrorMessageError').html(data.data.errors.error_message);
+						}
+						if(typeof data.data.errors.validation_parameter != 'undefined') {
+							$('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textboxDialog');

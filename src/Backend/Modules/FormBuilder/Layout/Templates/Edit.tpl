@@ -86,7 +86,9 @@
 									{$btnSubmitField}
 								</p>
 								<p class="floatRight buttonHolderRight p0">
-									<a href="#edit-{$submitId}" class="button iconOnly icon iconEdit editField floatRight" rel="{$submitId}"><span>{$lblEdit}</span></a>
+									<a href="#edit-{$submitId}" class="button iconOnly icon iconEdit editField floatRight" rel="{$submitId}">
+                                        <span>{$lblEdit}</span>
+                                    </a>
 								</p>
 							</div>
 						</div>
