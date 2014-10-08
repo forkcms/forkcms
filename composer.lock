@@ -556,16 +556,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.2.0",
+            "version": "1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "7f17bcfc223f554cf30a464b6abea69a9a947061"
+                "reference": "36b9b3b543b8607049027d7fccbabdaa722f64f1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/7f17bcfc223f554cf30a464b6abea69a9a947061",
-                "reference": "7f17bcfc223f554cf30a464b6abea69a9a947061",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/36b9b3b543b8607049027d7fccbabdaa722f64f1",
+                "reference": "36b9b3b543b8607049027d7fccbabdaa722f64f1",
                 "shasum": ""
             },
             "require": {
@@ -586,12 +586,13 @@
                 {
                     "name": "Matthias Mullie",
                     "email": "minify@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
                     "role": "Developer"
                 }
             ],
             "description": "CSS & JS minifier",
             "homepage": "https://github.com/matthiasmullie/minify",
-            "time": "2013-12-01 22:51:43"
+            "time": "2014-10-08 08:54:11"
         },
         {
             "name": "monolog/monolog",
