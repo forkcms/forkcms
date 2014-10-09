@@ -56,7 +56,23 @@ class Model
              FROM forms_fields AS i
              WHERE i.form_id = ?
              ORDER BY i.sequence ASC',
-            (int) $id
+            (int) $id,
+            'id'
+        );
+
+        if (empty($fields)) {
+            return false;
+        }
+
+        // create an array with an equal amount of questionmarks as ids provided
+        $idPlaceHolders = array_fill(0, count($fields), '?');
+
+        // get field validations, each field can have multiple 'type' validations
+        $fieldValidations = (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.field_id, i.type, i.parameter, i.error_message
+             FROM forms_fields_validation AS i
+             WHERE i.field_id IN (' . implode(', ', $idPlaceHolders) . ')',
+             array_keys($fields)
         );
 
         // fields
@@ -66,14 +82,20 @@ class Model
                 $field['settings'] = unserialize($field['settings']);
             }
 
-            // get validation
-            $field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.type, i.parameter, i.error_message
-                 FROM forms_fields_validation AS i
-                 WHERE i.field_id = ?',
-                $field['id'],
-                'type'
-            );
+            // init validations
+            $field['validations'] = array();
+
+            // we need to loop because one field can have multiple 'type' validations
+            foreach ($fieldValidations as $key => $fieldValidation) {
+                // define if validation is set for this field
+                if ($fieldValidation['field_id'] == $field['id']) {
+                    // add validation type to our field
+                    $field['validations'][$fieldValidation['type']] = $fieldValidation;
+
+                    // unset this field for faster looping
+                    unset($fieldValidation[$key]);
+                }
+            }
         }
 
         return $fields;
