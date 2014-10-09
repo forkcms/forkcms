@@ -75,7 +75,7 @@ class Model
              array_keys($fields)
         );
 
-        // fields
+        // loop fields to add extra parameters
         foreach ($fields as &$field) {
             // unserialize
             if ($field['settings'] !== null) {
