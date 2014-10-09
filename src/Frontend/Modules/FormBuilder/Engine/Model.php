@@ -84,18 +84,12 @@ class Model
 
             // init validations
             $field['validations'] = array();
+        }
 
-            // we need to loop because one field can have multiple 'type' validations
-            foreach ($fieldValidations as $key => $fieldValidation) {
-                // define if validation is set for this field
-                if ($fieldValidation['field_id'] == $field['id']) {
-                    // add validation type to our field
-                    $field['validations'][$fieldValidation['type']] = $fieldValidation;
-
-                    // unset this field for faster looping
-                    unset($fieldValidation[$key]);
-                }
-            }
+        // we need to loop because one field can have multiple 'type' validations
+        foreach ($fieldValidations as $fieldValidation) {
+            // add validation type to our field
+            $fields[$fieldValidation['field_id']]['validations'][$fieldValidation['type']] = $fieldValidation;
         }
 
         return $fields;
