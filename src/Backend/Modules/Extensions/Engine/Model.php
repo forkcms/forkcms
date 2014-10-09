@@ -800,9 +800,8 @@ class Model
      * Install a module.
      *
      * @param string $module   The name of the module to be installed.
-     * @param array  $warnings Warnings from the upload of the module.
      */
-    public static function installModule($module, array $warnings = array())
+    public static function installModule($module)
     {
         $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
         $variables = array();
@@ -817,18 +816,6 @@ class Model
         );
 
         $installer->install();
-        foreach ($warnings as $warning) {
-            $installer->addWarning($warning);
-        }
-
-        // save the warnings in session for later use
-        if ($installer->getWarnings()) {
-            $warnings = \SpoonSession::exists('installer_warnings') ? \SpoonSession::get(
-                'installer_warnings'
-            ) : array();
-            $warnings = array_merge($warnings, array('module' => $module, 'warnings' => $installer->getWarnings()));
-            \SpoonSession::set('installer_warnings', $warnings);
-        }
 
         // clear the cache so locale (and so much more) gets rebuilt
         self::clearCache();
