@@ -289,199 +289,90 @@ class Block extends Object
 
     /**
      * Parse pagination
+     *
+     * @param callable $getNbResults A function that returns the total number of results
+     * @param callable $getSlice     A function that returns a slice of the collection
+     * @param callable $getUrl       A function to get the correct url for this item
+     * @param int      $currentPage  The current page number
+     * @param int      $itemsPerPage The number of items we want per page
+     *
+     * @return array The items for the current page
      */
-    protected function parsePagination()
+    protected function parsePagination($getNbResults, $getSlice, $getUrl, $currentPage = 1, $itemsPerPage = 10)
     {
-        $pagination = null;
-        $showFirstPages = false;
-        $showLastPages = false;
-        $useQuestionMark = true;
-
-        // validate pagination array
-        if (!isset($this->pagination['limit'])) {
-            throw new Exception('no limit in the pagination-property.');
-        }
-        if (!isset($this->pagination['offset'])) {
-            throw new Exception('no offset in the pagination-property.');
-        }
-        if (!isset($this->pagination['requested_page'])) {
-            throw new Exception('no requested_page available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_items'])) {
-            throw new Exception('no num_items available in the pagination-property.');
-        }
-        if (!isset($this->pagination['num_pages'])) {
-            throw new Exception('no num_pages available in the pagination-property.');
-        }
-        if (!isset($this->pagination['url'])) {
-            throw new Exception('no URL available in the pagination-property.');
+        if (!is_callable($getUrl)) {
+            throw new InvalidArgumentException('The getUrl parameter should be a callable function.');
         }
 
-        // should we use a questionmark or an ampersand
-        if (mb_strpos($this->pagination['url'], '?') > 0) {
-            $useQuestionMark = false;
+        // Create a new pagerfanta object using the given callbacks and pagerfanta's callback adapter.
+        $adapter = new \Pagerfanta\Adapter\CallbackAdapter($getNbResults, $getSlice);
+        $pagerFanta = new \Pagerfanta\Pagerfanta($adapter);
+        $pagerFanta->setMaxPerPage($itemsPerPage);
+
+        // Set the current page to the given value.
+        // If it's less than one, set the current page to the first page.
+        // If it's more than the number of pages we have in total, set it to the last page.
+        try {
+            $pagerFanta->setCurrentPage($currentPage);
+        } catch (\Pagerfanta\Exception\LessThan1CurrentPageException $e) {
+            $currentPage = 1;
+            $pagerFanta->setCurrentPage($currentPage);
+        } catch (\Pagerfanta\Exception\OutOfRangeCurrentPageException $e) {
+            $currentPage = $pagerFanta->getNbPages();
+            $pagerFanta->setCurrentPage($currentPage);
         }
 
-        // no pagination needed
-        if ($this->pagination['num_pages'] < 1) {
-            return;
-        }
+        // Create a list of all page numbers, with a label, an url and a boolean flag when they're the current page.
+        $pages = range(1, $pagerFanta->getNbPages());
+        $pages = array_map(
+            function($pageNumber) use ($getUrl, $currentPage) {
+                return array(
+                    'url' => $getUrl($pageNumber),
+                    'label' => $pageNumber,
+                    'current' => ((int) $pageNumber === (int) $currentPage),
+                );
+            },
+            $pages
+        );
 
-        // populate count fields
-        $pagination['num_pages'] = $this->pagination['num_pages'];
-        $pagination['current_page'] = $this->pagination['requested_page'];
+        // Should we show navigation buttons for the previous and next pages?
+        $showNext = $pagerFanta->hasNextPage();
+        $nextUrl = ($showNext) ? $pages[$currentPage]['url'] : null;
+        $showPrevious = $pagerFanta->hasPreviousPage();
+        $previousUrl = ($showPrevious) ? $pages[$currentPage - 2]['url'] : null;
 
-        // define anchor
-        $anchor = (isset($this->pagination['anchor'])) ? '#' . $this->pagination['anchor'] : '';
-
-        // as long as we have more then 5 pages and are 5 pages from the end we should show all pages till the end
-        if ($this->pagination['requested_page'] > 5 && $this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 4)) {
-            // init vars
-            $pagesStart = ($this->pagination['num_pages'] > 7) ? $this->pagination['num_pages'] - 5 : $this->pagination['num_pages'] - 6;
-            $pagesEnd = $this->pagination['num_pages'];
-
-            // fix for page 6
-            if ($this->pagination['num_pages'] == 6) {
-                $pagesStart = 1;
-            }
-
-            // show first pages
-            if ($this->pagination['num_pages'] > 7) {
-                $showFirstPages = true;
-            }
-        } elseif ($this->pagination['requested_page'] <= 5) {
-            // as long as we are below page 5 and below 5 from the end we should show all pages starting from 1
-            // init vars
-            $pagesStart = 1;
-            $pagesEnd = 6;
-
-            // when we have 7 pages, show 7 as end
-            if ($this->pagination['num_pages'] == 7) {
-                $pagesEnd = 7;
-            } elseif ($this->pagination['num_pages'] <= 6) {
-
-                // when we have less then 6 pages, show the maximum page
-                $pagesEnd = $this->pagination['num_pages'];
-            }
-
-            // show last pages
-            if ($this->pagination['num_pages'] > 7) {
-                $showLastPages = true;
-            }
-        } else {
-            // page 6
-            // init vars
-            $pagesStart = $this->pagination['requested_page'] - 2;
-            $pagesEnd = $this->pagination['requested_page'] + 2;
-            $showFirstPages = true;
-            $showLastPages = true;
-        }
-
-        // show previous
-        if ($this->pagination['requested_page'] > 1) {
-            // build URL
-            if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+        // Calculate for which page numbers we should show navigation buttons
+        $first = null;
+        $last = null;
+        if ($pagerFanta->getNbPages() > 7) {
+            if ($currentPage < 6) {
+                $last = array_slice($pages, -1);
+                $pages = array_slice($pages, 0, 6);
+            } elseif ($currentPage > $pagerFanta->getNbPages() - 5) {
+                $first = array_slice($pages, 0, 1);
+                $pages = array_slice($pages, -6);
             } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
-            }
-
-            // set
-            $pagination['show_previous'] = true;
-            $pagination['previous_url'] = $URL . $anchor;
-
-            // flip ahead
-            $this->header->addLink(
-                array(
-                    'rel' => 'prev',
-                    'href' => SITE_URL . $URL . $anchor,
-                )
-            );
-        }
-
-        // show first pages?
-        if ($showFirstPages) {
-            // init var
-            $pagesFirstStart = 1;
-            $pagesFirstEnd = 1;
-
-            // loop pages
-            for ($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++) {
-                // build URL
-                if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
-                } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
-                }
-
-                // add
-                $pagination['first'][] = array('url' => $URL . $anchor, 'label' => $i);
+                $first = array_slice($pages, 0, 1);
+                $last = array_slice($pages, -1);
+                $pages = array_slice($pages, $currentPage - 3, 5);
             }
         }
 
-        // build array
-        for ($i = $pagesStart; $i <= $pagesEnd; $i++) {
-            // init var
-            $current = ($i == $this->pagination['requested_page']);
+        // Create pagination data object for the template, and assign it
+        $pagination = array(
+            'multiple_pages' => $pagerFanta->haveToPaginate(),
+            'first' => $first,
+            'last' => $last,
+            'pages' => $pages,
+            'show_next' => $showNext,
+            'next_url' => $nextUrl,
+            'show_previous' => $showPrevious,
+            'previous_url' => $previousUrl,
+        );
 
-            // build URL
-            if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . $i;
-            } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . $i;
-            }
-
-            // add
-            $pagination['pages'][] = array('url' => $URL . $anchor, 'label' => $i, 'current' => $current);
-        }
-
-        // show last pages?
-        if ($showLastPages) {
-            // init var
-            $pagesLastStart = $this->pagination['num_pages'];
-            $pagesLastEnd = $this->pagination['num_pages'];
-
-            // loop pages
-            for ($i = $pagesLastStart; $i <= $pagesLastEnd; $i++) {
-                // build URL
-                if ($useQuestionMark) {
-                    $URL = $this->pagination['url'] . '?page=' . $i;
-                } else {
-                    $URL = $this->pagination['url'] . '&amp;page=' . $i;
-                }
-
-                // add
-                $pagination['last'][] = array('url' => $URL . $anchor, 'label' => $i);
-            }
-        }
-
-        // show next
-        if ($this->pagination['requested_page'] < $this->pagination['num_pages']) {
-            // build URL
-            if ($useQuestionMark) {
-                $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
-            } else {
-                $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
-            }
-
-            // set
-            $pagination['show_next'] = true;
-            $pagination['next_url'] = $URL . $anchor;
-
-            // flip ahead
-            $this->header->addLink(
-                array(
-                    'rel' => 'next',
-                    'href' => SITE_URL . $URL . $anchor,
-                )
-            );
-        }
-
-        // multiple pages
-        $pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
-
-        // assign pagination
         $this->tpl->assign('pagination', $pagination);
+
+        return $pagerFanta->getCurrentPageResults();
     }
 
     /**
