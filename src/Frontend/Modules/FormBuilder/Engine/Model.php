@@ -9,6 +9,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
