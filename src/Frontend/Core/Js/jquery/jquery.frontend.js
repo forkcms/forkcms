@@ -13,11 +13,11 @@
  * 		2. if the title-attribute is used this value will be used in favor of the OpenGraph-title-tag.
  * 		3. if the data-title-attribute is set this value will be used, OpenGraph and title-attribute will be ignored.
  * 		4. as a fallback the value of the title-tag is used.
- * - The description (used by: Delicious, LinkedIn, Netlog, Twitter)
+ * - The description (used by: Delicious, LinkedIn, Twitter)
  * 		1. if the OpenGraph-description-tag is provided, that value will be used.
  * 		2. if the data-description-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. no description will be used.
- * - The image (used by: Netlog)
+ * - The image
  * 		1. if the OpenGraph-image tag is available the value of this tag will be used.
  * 		2. if the data-image-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. the default image if there is one provided.
@@ -45,7 +45,7 @@
 		{
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
-			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
+			sequence: ['facebook', 'twitter', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
 			isDropdown: true
 		};
 		var settings =
@@ -54,7 +54,6 @@
 			digg: { name: 'digg', show: true, label: 'Digg' },
 			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
 			linkedin: { name: 'linkedin', show: true, label: 'LinkedIn' },
-			netlog: { name: 'netlog', show: true, label: 'Netlog' },
 			twitter: { name: 'twitter', show: true, label: 'tweet' },
 			googleplus: { name: 'googleplus', show: true, label: 'Google +1' },
 			pinterest: { name: 'pinterest', show: true, label: 'Pin it', countLayout: 'horizontal' } // possible values for countLayout: horizontal/vertical/none
@@ -188,24 +187,6 @@
 							// add html
 							html += '<li class="shareMenuLinkedin">' +
 									'	<script type="IN/Share" data-url="' + link + '" data-counter="right"></script>' +
-									'</li>' + "\n";
-						break;
-
-						// Netlog?
-						case 'netlog':
-							// build url
-							var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + encodeURIComponent(link);
-							if(title != '') url += '&title=' + title;
-							if(description != '') url += '&description=' + description;
-							if(image != '') url += '&thumb=' + encodeURIComponent(image);
-							url += '&referer=' + encodeURIComponent(document.location);
-
-							// add html
-							html += '<li class="shareMenuNetlog">' +
-									'	<a href="' + url + '" target="_blank">' +
-									'		<span class="icon"></span>' +
-									'		<span class="textWrapper">' + options.netlog.label + '</span>' +
-									'	</a>' +
 									'</li>' + "\n";
 						break;
 
