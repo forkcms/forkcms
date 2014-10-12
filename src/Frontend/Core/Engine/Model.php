@@ -701,7 +701,9 @@ class Model extends \BaseModel
 
         // set properties
         $akismet->setTimeOut(10);
-        $akismet->setUserAgent('Fork CMS/' . FORK_VERSION);
+        $akismet->setUserAgent(
+            'Fork CMS/' . self::getContainer()->getParameter('fork.version')
+        );
 
         // try it, to decide if the item is spam
         try {

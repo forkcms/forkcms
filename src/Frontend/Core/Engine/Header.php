@@ -329,7 +329,8 @@ class Header extends FrontendBaseObject
         $image = str_replace(SITE_URL, '', $image);
 
         // check if it no longer points to an absolute uri
-        if (substr($image, 0, 7) != SITE_PROTOCOL . '://') {
+        $protocol = Model::getContainer()->get('request')->getScheme();
+        if (substr($image, 0, 7) != $protocol . '://') {
             if (!is_file(PATH_WWW . $image)) {
                 return;
             }
@@ -342,7 +343,7 @@ class Header extends FrontendBaseObject
             $overwrite,
             array('property', 'content')
         );
-        if (SITE_PROTOCOL == 'https') {
+        if ($protocol == 'https') {
             $this->addMetaData(
                 array('property' => 'og:image:secure_url', 'content' => $image),
                 $overwrite,

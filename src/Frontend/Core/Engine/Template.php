@@ -335,6 +335,8 @@ class Template extends \SpoonTemplate
                 '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
             );
         }
+
+        $this->assign('SITE_DOMAIN', Model::get('request')->getHost());
     }
 
     /**

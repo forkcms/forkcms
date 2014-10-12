@@ -13,8 +13,6 @@ parameters:
     fork.debug_message:     'Internal error.'
     fork.version:           '3.8.1'
 
-    site.protocol:          <site-protocol>
-    site.domain:            <site-domain>
     site.default_title:     <site-default-title>
     site.multilanguage:     <site-multilanguage>
     site.default_language:  <site-default-language>

@@ -33,7 +33,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
             $this->boot();
 
             // define Fork constants
-            $this->defineForkConstants();
+            $this->defineForkConstants($request);
         }
 
         return $this->getHttpKernel()->handle($request, $type, $catch);
@@ -43,7 +43,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      * This will disappear in time in favour of container-driven parameters.
      * @deprecated
      */
-    protected function defineForkConstants()
+    protected function defineForkConstants($request)
     {
         $container = $this->getContainer();
 
@@ -71,13 +71,10 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
         define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
         define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
-        define('SITE_DOMAIN', $container->getParameter('site.domain'));
-        define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
-        define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
-
-        define('FORK_VERSION', $container->getParameter('fork.version'));
-
-        define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
-        define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+        $siteUrl = $request->getScheme() . '://' . $request->getHost();
+        if ($request->getPort() !== 80) {
+            $siteUrl .= ':' . $request->getPort();
+        }
+        define('SITE_URL', $siteUrl);
     }
 }

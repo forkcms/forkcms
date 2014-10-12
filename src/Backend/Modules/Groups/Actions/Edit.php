@@ -97,10 +97,11 @@ class Edit extends BackendBaseActionEdit
                 else $reflection = new \ReflectionClass('Backend\\Modules\\' . $module['value'] . '\\Actions\\' . $action['value']);
 
                 // get the tag offset
-                $offset = strpos($reflection->getDocComment(), ACTION_GROUP_TAG) + strlen(ACTION_GROUP_TAG);
+                $actionGroupTag = BackendModel::getContainer()->getParameter('action.group_tag');
+                $offset = strpos($reflection->getDocComment(), $actionGroupTag) + strlen($actionGroupTag);
 
                 // no tag present? move on!
-                if (!($offset - strlen(ACTION_GROUP_TAG))) continue;
+                if (!($offset - strlen($actionGroupTag))) continue;
 
                 // get the group info
                 $groupInfo = trim(substr($reflection->getDocComment(), $offset, (strpos($reflection->getDocComment(), '*', $offset) - $offset)));
@@ -420,6 +421,7 @@ class Edit extends BackendBaseActionEdit
         $actionsGranted = array();
         $checkedModules = array();
         $uncheckedModules = array();
+        $actionRightsLevel = BackendModel::getContainer()->getParameter('action.rights_level');
 
         // loop through action permissions
         foreach ($actionPermissions as $permission) {
@@ -433,7 +435,7 @@ class Edit extends BackendBaseActionEdit
             // permission checked?
             if ($permission->getChecked()) {
                 // add to granted
-                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => $actionRightsLevel);
 
                 // if not yet present, add to checked modules
                 if (!in_array($module, $checkedModules)) $checkedModules[] = $module;
@@ -442,7 +444,7 @@ class Edit extends BackendBaseActionEdit
             // permission not checked?
             else {
                 // add to denied
-                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => ACTION_RIGHTS_LEVEL);
+                $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $action, 'level' => $actionRightsLevel);
 
                 // if not yet present add to unchecked modules
                 if (!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
@@ -466,7 +468,7 @@ class Edit extends BackendBaseActionEdit
                 // permission checked?
                 if ($permission->getChecked()) {
                     // add to granted if in the right group
-                    if (in_array($group, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($group, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => $actionRightsLevel);
 
                     // if not yet present, add to checked modules
                     if (!in_array($module, $checkedModules)) $checkedModules[] = $module;
@@ -475,7 +477,7 @@ class Edit extends BackendBaseActionEdit
                 // permission not checked?
                 else {
                     // add to denied
-                    if (in_array($group, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($group, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => $actionRightsLevel);
 
                     // if not yet present add to unchecked modules
                     if (!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;

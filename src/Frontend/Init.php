@@ -2,6 +2,8 @@
 
 namespace Frontend;
 
+use Frontend\Core\Engine\Model as FrontendModel;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -153,8 +155,12 @@ class Init extends \KernelLoader
             $headers .= "X-Mailer: SpoonLibrary Webmail\n";
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
-            // send email
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail(
+                SPOON_DEBUG_EMAIL,
+                'Exception Occurred (' . FrontendModel::get('request')->getHost() . ')',
+                $output,
+                $headers
+            );
         }
 
         // build HTML for nice error
