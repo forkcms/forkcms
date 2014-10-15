@@ -448,19 +448,6 @@ class Model
             $values[$row['module']]['items'][$row['type']][$name] = array('id' => $row['id'], 'label' => $name);
         }
 
-        foreach ($values as &$row) {
-            if (!empty($row['items']['widget'])) {
-                $row['items']['widget'] = \SpoonFilter::arraySortKeys(
-                    $row['items']['widget']
-                );
-            }
-            if (!empty($row['items']['block'])) {
-                $row['items']['block'] = \SpoonFilter::arraySortKeys(
-                    $row['items']['block']
-                );
-            }
-        }
-
         return $values;
     }
 

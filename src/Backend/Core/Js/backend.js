@@ -260,7 +260,7 @@ jsBackend.ckeditor =
 	init: function()
 	{
 		// the language isn't know before this init-method is called, so we set the url for the template-files just now
-		jsBackend.ckeditor.defaultConfig.templates_files = ['/src/Backend/Ajax.php?fork[module]=Core&fork[action]=Templates&fork[language]=' + jsBackend.current.language];
+		jsBackend.ckeditor.defaultConfig.templates_files = ['/backend/ajax?fork[module]=Core&fork[action]=Templates&fork[language]=' + jsBackend.current.language];
 
 		// load the editor
 		if($('textarea.inputEditor, textarea.inputEditorError, textarea.inputEditorNewsletter, textarea.inputEditorNewsletterError').length > 0)

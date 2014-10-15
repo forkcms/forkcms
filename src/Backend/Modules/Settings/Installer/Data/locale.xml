@@ -262,6 +262,11 @@
         <translation language="es"><![CDATA[La App secret de tu aplicación Facebook.]]></translation>
         <translation language="el"><![CDATA[Το μυστικό κωδικού της εφαρμογής σας στο Facebook.]]></translation>
       </item>
+      <item type="label" name="TwitterSiteName">
+          <translation language="nl"><![CDATA[twitter gebruikersnaam]]></translation>
+          <translation language="en"><![CDATA[twitter username]]></translation>
+          <translation language="fr"><![CDATA[twitter nom d'utilisateur]]></translation>
+      </item>
       <item type="message" name="HelpLanguages">
         <translation language="nl"><![CDATA[Duid aan welke talen toegankelijk zijn voor bezoekers]]></translation>
         <translation language="en"><![CDATA[Select the languages that are accessible for visitors.]]></translation>

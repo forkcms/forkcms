@@ -20,7 +20,7 @@
     #inner .wider td, #inner .wider th { margin: 0; padding: 1px 0; }
     #outer, #inner, .wider { width: 100%; }
     #footer { color: #a9a9a9; }
-    .wider { padding: 24px; }
+    .wider { padding: 2%; }
   </style>
 </head>
 <body>
