@@ -22,6 +22,7 @@ Bugfixes:
 
 * Location: correct item is highlighted after updating the map, fixes #798.
 * Installer: avoid duplicate headers in the installer
+* Faq: fixed deleteCategoryAllowed
 
 
 3.8.0 (2014-08-14)
