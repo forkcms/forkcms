@@ -1,3 +1,6 @@
+installer:
+    resource: "@ForkCMSInstallerBundle/Resources/config/routing.yml"
+
 backend:
     path: /private/{_locale}/{module}/{action}
     defaults:
@@ -17,10 +20,6 @@ frontend_ajax:
     path: /frontend/ajax
     defaults:
         _controller: ApplicationRouting::frontendAjaxController
-install:
-    path: /install
-    defaults:
-        _controller: ApplicationRouting::installController
 api:
     path: /api/{version}/{client}
     defaults:

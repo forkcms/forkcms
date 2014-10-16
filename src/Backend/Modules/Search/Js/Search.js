@@ -30,6 +30,6 @@ jsBackend.search =
 			else { $('#' + $this.attr('id') + 'Weight').prop('disabled', true).addClass('disabled'); }
 		});
 	}
-}
+};
 
 $(jsBackend.search.init);

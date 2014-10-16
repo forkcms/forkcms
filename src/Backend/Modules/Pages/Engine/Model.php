@@ -1284,14 +1284,15 @@ class Model
         $html .= '	<ul>' . "\n";
         $html .= '		<li id="page-1" rel="home">';
 
-        // homepage should
+        // create homepage anchor from title
+        $homePage = self::get(1);
         $html .= '			<a href="' .
                  BackendModel::createURLForAction(
                      'Edit',
                      null,
                      null,
                      array('id' => 1)
-                 ) . '"><ins>&#160;</ins>' . \SpoonFilter::ucfirst(BL::lbl('Home')) . '</a>' . "\n";
+                 ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
         $html .= self::getSubTree($navigation, 1);

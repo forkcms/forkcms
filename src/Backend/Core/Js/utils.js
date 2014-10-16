@@ -7,7 +7,7 @@
 var utils =
 {
 	debug: false
-}
+};
 
 /**
  * Functions related to arrays
@@ -32,7 +32,7 @@ utils.array =
 		// fallback
 		return false;
 	}
-}
+};
 
 /**
  * Function related to cookies
@@ -78,7 +78,7 @@ utils.cookies =
 		{
 			var cookie = cookies[i];
 			while(cookie.charAt(0) == ' ') cookie = cookie.substring(1, cookie.length);
-			if(cookie.indexOf(name) == 0) return cookie.substring(name.length, cookie.length);
+			if(cookie.indexOf(name) === 0) return cookie.substring(name.length, cookie.length);
 		}
 
 		// fallback
@@ -93,7 +93,7 @@ utils.cookies =
 		expireDate.setDate(expireDate.getDate() + days);
 		document.cookie = name + '=' + escape(value) + ';expires=' + expireDate.toUTCString() + ';path=/';
 	}
-}
+};
 
 /**
  * Functions related to forms
@@ -133,7 +133,7 @@ utils.form =
 	 */
 	isFilled: function(element)
 	{
-		return (utils.string.trim(element.val()) != '');
+		return (utils.string.trim(element.val()) !== '');
 	},
 
 	/**
@@ -144,7 +144,7 @@ utils.form =
 	 */
 	isNumber: function(element)
 	{
-		return (!isNaN(element.val()) && element.val() != '');
+		return (!isNaN(element.val()) && element.val() !== '');
 	},
 
 	/**
@@ -158,7 +158,7 @@ utils.form =
 		var regexp = /^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z\#%@\.\/_-]+)?(\?[0-9a-zA-Z%@\/&=_-]+)?)?)$/i;
 		return regexp.test(element.val());
 	}
-}
+};
 
 /**
  * Functions related to strings
@@ -267,7 +267,7 @@ utils.string =
 	 */
 	replaceAll: function(value, needle, replacement)
 	{
-		if(value == undefined) return '';
+		if(typeof value === 'undefined') return '';
 		return value.replace(new RegExp(needle, 'g'), replacement);
 	},
 
@@ -315,8 +315,8 @@ utils.string =
 	 */
 	trim: function(value, charlist)
 	{
-		if(value == undefined) return '';
-		if(charlist == undefined) charlist = ' ';
+		if(typeof value === 'undefined') return '';
+		if(typeof charlist === 'undefined') charlist = ' ';
 
 		var pattern = new RegExp('^[' + charlist + ']*|[' + charlist + ']*$', 'g');
 		return value.replace(pattern, '');
@@ -373,7 +373,7 @@ utils.string =
 		);
 
 		// remove reserved characters
-		for(i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ');
+		for(var i in reservedCharacters) value = value.replace(reservedCharacters[i], ' ');
 
 		// replace double quote, since this one might cause problems in html (e.g. <a href="double"quote">)
 		value = utils.string.replaceAll(value, '"', ' ');
@@ -425,7 +425,7 @@ utils.string =
 		// XHTML
 		return value;
 	}
-}
+};
 
 /**
  * Functions related to the current url
@@ -438,7 +438,7 @@ utils.url =
 	extractParamFromUri: function (uri, paramName)
 	{
 		if(!uri) return;
-		var uri = uri.split('#')[0];
+		uri = uri.split('#')[0];
 		var parts = uri.split('?');
 		if (parts.length == 1) return;
 
@@ -486,4 +486,4 @@ utils.url =
 		// cough up value
 		return getValue;
 	}
-}
+};

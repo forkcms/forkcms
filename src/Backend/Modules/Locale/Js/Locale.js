@@ -9,7 +9,7 @@ jsBackend.translations =
 	{
 		jsBackend.translations.controls.init();
 	}
-}
+};
 
 jsBackend.translations.controls =
 {
@@ -61,6 +61,6 @@ jsBackend.translations.controls =
 			$('select#module option').prop('disabled', false);
 		}
 	}
-}
+};
 
 $(jsBackend.translations.init);

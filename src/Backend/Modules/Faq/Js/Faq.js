@@ -150,6 +150,6 @@ jsBackend.faq =
 			});
 		});
 	}
-}
+};
 
 $(jsBackend.faq.init);

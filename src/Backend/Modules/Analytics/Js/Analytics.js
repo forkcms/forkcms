@@ -23,7 +23,7 @@ jsBackend.analytics =
 		jsBackend.analytics.loading.init();
 		jsBackend.analytics.resize.init();
 	}
-}
+};
 
 jsBackend.analytics.charts =
 {
@@ -49,7 +49,7 @@ jsBackend.analytics.charts =
 			});
 		}
 	}
-}
+};
 
 jsBackend.analytics.chartPieChart =
 {
@@ -118,7 +118,7 @@ jsBackend.analytics.chartPieChart =
 	{
 		jsBackend.analytics.chartPieChart.chart.destroy();
 	}
-}
+};
 
 jsBackend.analytics.chartDoubleMetricPerDay =
 {
@@ -165,7 +165,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 		{
 			chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
-			yAxis: { min: 0, max: $('#dataChartDoubleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartDoubleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartDoubleMetricPerDay #tickInterval').html()), title: { text: '' } },
+			yAxis: { min: 0, max: $('#dataChartDoubleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartDoubleMetricPerDay #tickInterval').html() === '' ? null : $('#dataChartDoubleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
@@ -185,7 +185,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	{
 		jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
 	}
-}
+};
 
 jsBackend.analytics.chartSingleMetricPerDay =
 {
@@ -226,7 +226,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 		{
 			chart: { renderTo: 'chartSingleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'area' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
-			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
+			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() === '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
@@ -245,7 +245,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	{
 		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
 	}
-}
+};
 
 jsBackend.analytics.chartWidget =
 {
@@ -288,11 +288,11 @@ jsBackend.analytics.chartWidget =
 
 		jsBackend.analytics.chartWidget.chart = new Highcharts.Chart(
 		{
-			chart: { renderTo: 'chartWidget', defaultSeriesType: 'line', margin: [30, 0, 30, 0], height: 200, width: 270, defaultSeriesType: 'line' },
+			chart: { renderTo: 'chartWidget', defaultSeriesType: 'line', margin: [30, 0, 30, 0], height: 200, width: 270 },
 			xAxis: { categories: xAxisCategories },
-			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() == '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
+			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() === '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
 			credits: { enabled: false },
-			legend: { layout: 'horizontal', backgroundColor: 'transparent' },
+			legend: { layout: 'horizontal', backgroundColor: 'transparent', enabled: false },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
 			plotOptions:
 			{
@@ -301,8 +301,7 @@ jsBackend.analytics.chartWidget =
 				column: { pointPadding: 0.2, borderWidth: 0 },
 				series: { fillOpacity: 0.3 }
 			},
-			series: [ { name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data } ],
-			legend: { enabled: false }
+			series: [ { name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data } ]
 		});
 	},
 
@@ -311,7 +310,7 @@ jsBackend.analytics.chartWidget =
 	{
 		jsBackend.analytics.chartWidget.chart.destroy();
 	}
-}
+};
 
 jsBackend.analytics.loading =
 {
@@ -416,7 +415,7 @@ jsBackend.analytics.loading =
 			}
 		});
 	}
-}
+};
 
 jsBackend.analytics.resize =
 {
@@ -467,6 +466,6 @@ jsBackend.analytics.resize =
 			}
 		}
 	}
-}
+};
 
 $(jsBackend.analytics.init);

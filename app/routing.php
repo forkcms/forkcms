@@ -38,14 +38,12 @@ class ApplicationRouting extends Controller
         'Backend' => 'Backend',
         'backend' => 'Backend',
         'api' => 'Api',
-        'install' => 'Install'
     );
 
     public function __construct()
     {
         // this class is used in most Fork applications to bubble down the Kernel object
         require_once __DIR__ . '/ApplicationInterface.php';
-        require_once __DIR__ . '/KernelLoader.php';
     }
 
     /**
@@ -138,27 +136,6 @@ class ApplicationRouting extends Controller
     }
 
     /**
-     * Runs the install requests
-     *
-     * @param Request $request
-     * @return Symfony\Component\HttpFoundation\Response
-     */
-    public function installController(Request $request)
-    {
-        // if we're able to run the installer, install it
-        if (file_exists(__DIR__ . '/../src/Install')) {
-            define('APPLICATION', 'Install');
-
-            $applicationClass = $this->initializeInstaller('Install');
-            $application = new $applicationClass($this->container->get('kernel'));
-            return $this->handleApplication($application);
-        }
-
-        // fallback to default frontend request
-        return $this->frontendController($request);
-    }
-
-    /**
      * Runs the api requests
      *
      * @param Request $request
@@ -218,21 +195,6 @@ class ApplicationRouting extends Controller
         }
 
         return $applicationClass;
-    }
-
-    /**
-     * @return string The name of the application class we need to instantiate.
-     */
-    protected function initializeInstaller()
-    {
-        session_start();
-
-        // set a default timezone if no one was set by PHP.ini
-        if (ini_get('date.timezone') == '') {
-            date_default_timezone_set('Europe/Brussels');
-        }
-
-        return 'Install\Engine\Installer';
     }
 
     /**
