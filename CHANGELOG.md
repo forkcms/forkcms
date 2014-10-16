@@ -10,6 +10,7 @@ Bugfixes:
 
 * Analytics: fixed CSS on servers which listens to Capital A in Analytics.css
 * Core: moved KernelLoader.php to autoload.php because doctrine from CLI had problems.
+* Faq: fixed deleteCategoryAllowed
 
 
 3.8.1 (2014-08-22)
@@ -25,7 +26,6 @@ Bugfixes:
 
 * Location: correct item is highlighted after updating the map, fixes #798.
 * Installer: avoid duplicate headers in the installer
-* Faq: fixed deleteCategoryAllowed
 
 
 3.8.0 (2014-08-14)
