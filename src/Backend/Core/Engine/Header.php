@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use MatthiasMullie\Minify;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
 
 /**
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
@@ -71,6 +72,7 @@ class Header extends Base\Object
         // grab from the reference
         $this->URL = $this->getContainer()->get('url');
         $this->tpl = $this->getContainer()->get('template');
+
     }
 
     /**
@@ -271,6 +273,9 @@ class Header extends Base\Object
      */
     public function parse()
     {
+        // put the page title in the <title>
+        $this->tpl->assign('page_title', BL::getLabel($this->URL->getModule()));
+
         // parse CSS
         $this->parseCSS();
 

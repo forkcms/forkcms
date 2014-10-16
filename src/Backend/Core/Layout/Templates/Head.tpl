@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 	<meta name="robots" content="noindex, nofollow" />
 
-	<title>{$SITE_TITLE} - Fork CMS</title>
+	<title>{option:page_title}{$page_title|ucfirst} - {/option:page_title}{$SITE_TITLE} - Fork CMS</title>
 	<link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 
 	{iteration:cssFiles}<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}{/iteration:cssFiles}
