@@ -364,8 +364,8 @@ class Navigation extends FrontendBaseObject
                     $navigation[$type][$parentId][$id]['nofollow'] = false;
                 }
 
-                // meta subpages have the "page" type
-                if ($type == 'meta') {
+                // meta and footer subpages have the "page" type
+                if ($type == 'meta' || $type == "footer") {
                     $subType = 'page';
                 } else {
                     $subType = $type;
