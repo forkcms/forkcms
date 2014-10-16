@@ -204,7 +204,7 @@ class Detail extends FrontendBaseBlock
 
         // Twitter Card
         $imgURL = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
-        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'],$imgURL);
+        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgURL);
 
         // when there are 2 or more categories with at least one item in it,
         // the category will be added in the breadcrumb
