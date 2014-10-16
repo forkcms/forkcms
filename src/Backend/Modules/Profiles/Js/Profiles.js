@@ -36,6 +36,6 @@ jsBackend.profiles =
 			);
 		}
 	}
-}
+};
 
 $(jsBackend.profiles.init);

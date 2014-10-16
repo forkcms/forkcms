@@ -45,6 +45,6 @@ jsBackend.faq.edit =
 			$(this).next('.longFeedback').hide();
 		}
 	}
-}
+};
 
 $(jsBackend.faq.edit.init);

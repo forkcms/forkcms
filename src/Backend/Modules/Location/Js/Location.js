@@ -7,14 +7,14 @@
 jsBackend.location =
 {
 	// base values
-	bounds: null, center: null, centerLat: null, centerLng: null, height: null,  
+	bounds: null, center: null, centerLat: null, centerLng: null, height: null,
 	map: null, mapId: null, showDirections: false, showLink: false, showOverview: true,
 	type: null, width: null, zoomLevel: null,
 
 	init: function()
 	{
 		// only show a map when there are options and markers given
-		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined') 
+		if(typeof markers != 'undefined' && typeof mapOptions != 'undefined')
 		{
 			jsBackend.location.showMap();
 
@@ -50,25 +50,25 @@ jsBackend.location =
 			map: map,
 			title: object.title
 		});
-		
+
 		if(typeof object.dragable != 'undefined' && object.dragable)
 		{
 			marker.setDraggable(true);
-			
+
 			// add event listener
 			google.maps.event.addListener(marker, 'dragend', function()
 			{
 				jsBackend.location.updateMarker(marker);
 			});
 		}
-		
+
 		// add click event on marker
 		google.maps.event.addListener(marker, 'click', function()
 		{
 			// create infowindow
 			new google.maps.InfoWindow(
-			{ 
-				content: '<h1>'+ object.title +'</h1>' + object.text 
+			{
+				content: '<h1>'+ object.title +'</h1>' + object.text
 			}).open(map, marker);
 		});
 	},
@@ -91,7 +91,7 @@ jsBackend.location =
 		jsBackend.location.showLink = ($('#fullUrl').attr('checked') == 'checked');
 		jsBackend.location.showOverview = ($('#markerOverview').attr('checked') == 'checked');
 	},
-	
+
 	// this will refresh the page and display a certain message
 	refreshPage: function(message)
 	{
@@ -102,7 +102,7 @@ jsBackend.location =
 		// cleanly redirect so we can display a message
 		window.location = reloadLocation;
 	},
-	
+
 	saveLiveData: function()
 	{
 		$.ajax(
@@ -131,14 +131,14 @@ jsBackend.location =
 					{
 						jsBackend.location.refreshPage('map-saved');
 					}
-					
+
 					$('input#redirect').val('edit');
 					$('form#edit').submit();
 				}
 			}
 		});
 	},
-	
+
 	// this will set the terrain type of the map to the dropdown
 	setDropdownTerrain: function()
 	{
@@ -195,15 +195,15 @@ jsBackend.location =
 
 		jsBackend.location.setMapZoom(mapOptions.zoom);
 	},
-	
+
 	// this will re-set the position of a marker
 	updateMarker: function(marker)
 	{
 		jsBackend.location.getMapData();
-		
+
 		var lat = marker.getPosition().lat();
 		var lng = marker.getPosition().lng();
-		
+
 		$.ajax(
 		{
 			data:
@@ -220,6 +220,6 @@ jsBackend.location =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.location.init);
