@@ -958,4 +958,36 @@ class Header extends FrontendBaseObject
             }
         }
     }
+
+    /**
+     * Set Twitter Card
+     *
+     * @param string $title The title (maximum 70 characters)
+     * @param string $description A brief description of the card (maximum 200 characters)
+     * @param string $imageURL The URL of the image (minimum 280x150 and <1MB)
+     * @param string $cardType  The cardtype, possible types: https://dev.twitter.com/cards/types
+     * @param string $siteHandle (optional)  Twitter handle of the site
+     * @param string $creatorHandle (optional) Twitter handle of the author
+     */
+    public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null){
+        $data = array(
+            'twitter:card' => $cardType,
+            'twitter:title' => $title,
+            'twitter:description' => $description,
+            'twitter:image' => $imageURL
+        );
+
+        // add site handle if provided
+        if($siteHandle != null){
+            $data[] = array('twitter:site' => $siteHandle);
+        }
+
+        // add creator handle if provided
+        if($creatorHandle != null){
+            $data[] = array('twitter:creator' => $creatorHandle);
+        }
+
+        // add Twitter Card to the header
+        static::addMetaData($data);
+    }
 }
