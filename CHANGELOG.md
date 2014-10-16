@@ -8,6 +8,7 @@ Improvements:
 Bugfixes:
 
 * Analytics: fixed CSS on servers which listens to Capital A in Analytics.css
+* Core: moved KernelLoader.php to autoload.php because doctrine from CLI had problems.
 
 
 3.8.1 (2014-08-22)
