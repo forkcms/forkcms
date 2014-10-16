@@ -974,7 +974,7 @@ class Header extends FrontendBaseObject
             'twitter:card' => $cardType,
             'twitter:title' => $title,
             'twitter:description' => $description,
-            'twitter:image' => $imageURL
+            'twitter:image' => $imageURL,
         );
 
         // add site handle if provided
