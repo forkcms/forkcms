@@ -978,12 +978,12 @@ class Header extends FrontendBaseObject
         );
 
         // add site handle if provided
-        if($siteHandle != null){
+        if ($siteHandle != null) {
             $data[] = array('twitter:site' => $siteHandle);
         }
 
         // add creator handle if provided
-        if($creatorHandle != null){
+        if ($creatorHandle != null) {
             $data[] = array('twitter:creator' => $creatorHandle);
         }
 
