@@ -4,6 +4,7 @@ Improvements:
 
 * Core: small fix for mail template style on very small screens.
 * FormBuilder: reduced database querying while getting form fields in Form widget.
+* Faq: Categories widget added.
 
 Bugfixes:
 
