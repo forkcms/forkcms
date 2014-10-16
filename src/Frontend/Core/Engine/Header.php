@@ -962,11 +962,11 @@ class Header extends FrontendBaseObject
     /**
      * Set Twitter Card
      *
-     * @param string $title The title (maximum 70 characters)
-     * @param string $description A brief description of the card (maximum 200 characters)
-     * @param string $imageURL The URL of the image (minimum 280x150 and <1MB)
-     * @param string $cardType  The cardtype, possible types: https://dev.twitter.com/cards/types
-     * @param string $siteHandle (optional)  Twitter handle of the site
+     * @param string $title         The title (maximum 70 characters)
+     * @param string $description   A brief description of the card (maximum 200 characters)
+     * @param string $imageURL      The URL of the image (minimum 280x150 and <1MB)
+     * @param string $cardType      The cardtype, possible types: https://dev.twitter.com/cards/types
+     * @param string $siteHandle    (optional)  Twitter handle of the site
      * @param string $creatorHandle (optional) Twitter handle of the author
      */
     public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null){
