@@ -191,7 +191,7 @@ class ForkInstaller
             $this->container->get('database'),
             $data->getLanguages(),
             $data->getInterfaceLanguages(),
-            $data->getExampleData(),
+            $data->hasExampleData(),
             $this->getInstallerData($data)
         );
     }
@@ -215,7 +215,7 @@ class ForkInstaller
                     $this->container->get('database'),
                     $data->getLanguages(),
                     $data->getInterfaceLanguages(),
-                    $data->getExampleData(),
+                    $data->hasExampleData(),
                     $this->getInstallerData($data)
                 );
 
@@ -327,7 +327,7 @@ class ForkInstaller
     protected function getConfigurationVariables($data)
     {
         return array(
-            '<debug-email>' => $data->getDifferentDebugEmail() ?
+            '<debug-email>' => $data->hasDifferentDebugEmail() ?
                 $data->getDebugEmail() :
                 $data->getEmail()
             ,

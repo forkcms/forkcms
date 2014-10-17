@@ -31,7 +31,7 @@ class ModulesHandler
     {
         $data = $form->getData();
 
-        if ($data->getExampleData() === true) {
+        if ($data->hasExampleData() === true) {
             $data->addModule('Blog');
         }
 

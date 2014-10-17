@@ -445,7 +445,7 @@ class InstallationData
      *
      * @return bool
      */
-    public function getExampleData()
+    public function hasExampleData()
     {
         return $this->exampleData;
     }
@@ -468,7 +468,7 @@ class InstallationData
      *
      * @return bool
      */
-    public function getDifferentDebugEmail()
+    public function hasDifferentDebugEmail()
     {
         return $this->differentDebugEmail;
     }
