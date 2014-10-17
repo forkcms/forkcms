@@ -222,6 +222,9 @@ class Template extends \SpoonTemplate
         $this->mapModifier('getnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getNavigation'));
         $this->mapModifier('getsubnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getSubNavigation'));
 
+        // get module setting
+        $this->mapModifier('getmodulesetting', array('Frontend\Core\Engine\TemplateModifiers', 'getModuleSetting'));
+
         // parse a widget
         $this->mapModifier('parsewidget', array('Frontend\Core\Engine\TemplateModifiers', 'parseWidget'));
 
