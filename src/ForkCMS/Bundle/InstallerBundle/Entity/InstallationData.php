@@ -9,110 +9,110 @@ namespace ForkCMS\Bundle\InstallerBundle\Entity;
  */
 class InstallationData
 {
-	/**
-	 * The host of the database
-	 *
-	 * @var string
-	 */
-	protected $dbHostname;
+    /**
+     * The host of the database
+     *
+     * @var string
+     */
+    protected $dbHostname;
 
-	/**
-	 * The username for the database
-	 *
-	 * @var string
-	 */
-	protected $dbUsername;
+    /**
+     * The username for the database
+     *
+     * @var string
+     */
+    protected $dbUsername;
 
-	/**
-	 * The password for the database
-	 *
-	 * @var string
-	 */
-	protected $dbPassword;
+    /**
+     * The password for the database
+     *
+     * @var string
+     */
+    protected $dbPassword;
 
-	/**
-	 * The database name
-	 *
-	 * @var string
-	 */
-	protected $dbDatabase;
+    /**
+     * The database name
+     *
+     * @var string
+     */
+    protected $dbDatabase;
 
-	/**
-	 * The port for the database
-	 *
-	 * @var int
-	 */
-	protected $dbPort = 3306;
+    /**
+     * The port for the database
+     *
+     * @var int
+     */
+    protected $dbPort = 3306;
 
-	/**
-	 * The languages to install Fork in
-	 *
-	 * @var array
-	 */
-	protected $languages;
+    /**
+     * The languages to install Fork in
+     *
+     * @var array
+     */
+    protected $languages;
 
-	/**
-	 * The backend interface languages to install for Fork
-	 *
-	 * @var array
-	 */
-	protected $interfaceLanguages;
+    /**
+     * The backend interface languages to install for Fork
+     *
+     * @var array
+     */
+    protected $interfaceLanguages;
 
-	/**
-	 * The default language for this Fork installation
-	 *
-	 * @var string
-	 */
-	protected $defaultLanguage;
+    /**
+     * The default language for this Fork installation
+     *
+     * @var string
+     */
+    protected $defaultLanguage;
 
-	/**
-	 * The default language for the Fork backend
-	 *
-	 * @var string
-	 */
-	protected $defaultInterfaceLanguage;
+    /**
+     * The default language for the Fork backend
+     *
+     * @var string
+     */
+    protected $defaultInterfaceLanguage;
 
-	/**
-	 * The modules to install Fork in
-	 *
-	 * @var array
-	 */
-	protected $modules;
+    /**
+     * The modules to install Fork in
+     *
+     * @var array
+     */
+    protected $modules;
 
-	/**
-	 * do we install exampleData?
-	 *
-	 * @var bool
-	 */
-	protected $exampleData;
+    /**
+     * do we install exampleData?
+     *
+     * @var bool
+     */
+    protected $exampleData;
 
-	/**
-	 * Do we use a different debug emailaddress
-	 *
-	 * @var bool
-	 */
-	protected $differentDebugEmail;
+    /**
+     * Do we use a different debug emailaddress
+     *
+     * @var bool
+     */
+    protected $differentDebugEmail;
 
-	/**
-	 * The custom debug emailaddress, if applicable
-	 *
-	 * @var string
-	 */
-	protected $debugEmail;
+    /**
+     * The custom debug emailaddress, if applicable
+     *
+     * @var string
+     */
+    protected $debugEmail;
 
-	/**
-	 * The backend login email for the GOD user
-	 *
-	 * @var string
-	 */
-	protected $email;
+    /**
+     * The backend login email for the GOD user
+     *
+     * @var string
+     */
+    protected $email;
 
-	/**
-	 * The backend password for the GOD user
-	 *
-	 * @var string
-	 */
-	protected $password;
+    /**
+     * The backend password for the GOD user
+     *
+     * @var string
+     */
+    protected $password;
 
     /**
      * Gets the The host of the database.
