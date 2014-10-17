@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
@@ -285,6 +286,21 @@ class TemplateModifiers
 
         // fallback
         return $var;
+    }
+
+    /**
+     * Gets module setting
+     *    syntax: {$var|getmodulesetting:module:name[:defaultvalue]]}
+     *
+     * @param string $var The variable.
+     * @param $module Module name to get settings from.
+     * @param $name Setting name.
+     * @param null $defaultValue Default value to return if setting does not exist.
+     * @return string
+     */
+    public static function getModuleSetting($var, $module, $name, $defaultValue = null)
+    {
+        return FrontendModel::getModuleSetting($module, $name, $defaultValue);
     }
 
     /**
