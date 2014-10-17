@@ -108,7 +108,10 @@ class Index extends BackendBaseActionIndex
         );
 
         // twitter settings
-        $this->frm->addText('twitter_site_name', ltrim(BackendModel::getModuleSetting('core', 'twitter_site_name', null), '@'));
+        $this->frm->addText(
+            'twitter_site_name',
+            ltrim(BackendModel::getModuleSetting('Core', 'twitter_site_name', null), '@')
+        );
 
         // ckfinder
         $this->frm->addText(
@@ -386,10 +389,14 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // twitter settings
-                /** @var SpoonFormText $txt */
-                $txt = $this->frm->getField('twitter_site_name');
-                if($txt->isFilled()) {
-                    BackendModel::setModuleSetting('core', 'twitter_site_name', '@' . ltrim($txt->getValue(), '@'));
+                /** @var \SpoonFormText $txtTwitterSiteName */
+                $txtTwitterSiteName = $this->frm->getField('twitter_site_name');
+                if ($txtTwitterSiteName->isFilled()) {
+                    BackendModel::setModuleSetting(
+                        'Core',
+                        'twitter_site_name',
+                        '@' . ltrim($txtTwitterSiteName->getValue(), '@')
+                    );
                 }
 
                 // ckfinder settings

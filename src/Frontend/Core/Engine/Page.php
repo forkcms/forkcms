@@ -395,7 +395,8 @@ class Page extends FrontendBaseObject
         // loop all extras
         foreach ($this->extras as $extra) {
             $this->getContainer()->get('logger')->info(
-                "Executing frontend action '{$extra->getAction()}' for module '{$extra->getModule()}'."
+                "Executing " . get_class($extra)
+                . " '{$extra->getAction()}' for module '{$extra->getModule()}'."
             );
 
             // all extras extend FrontendBaseObject, which extends KernelLoader

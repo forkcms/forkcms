@@ -17,8 +17,6 @@ SCRIPT_PATH="`dirname \"$0\"`"
 . "${SCRIPT_PATH}/functions/extract_from_yml.sh"
 
 clear_file_caches() {
-    rm -f `find ${SCRIPT_PATH}/../src/Install/Cache/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
-
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CachedTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
@@ -88,6 +86,10 @@ main() {
     clear_file_caches
     remove_generated_configurations
     clear_database $db_host $db_port $db_name $db_user $db_pass
+
+    ${SCRIPT_PATH}/../app/console cache:clear
+    ${SCRIPT_PATH}/../app/console cache:clear --env=prod
+
     echo 'All done! Ready for reinstall.'
     return 1;
 }

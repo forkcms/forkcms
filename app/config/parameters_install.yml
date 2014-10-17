@@ -6,13 +6,12 @@ parameters:
     database.user:          ~
     database.password:      ~
 
-    kernel.debug:           true
     kernel.charset:         'utf-8'
     kernel.secret:          installation
 
     fork.debug_email:       ~
     fork.debug_message:     'Internal error.'
-    fork.version:           '3.7.2'
+    fork.version:           '3.8.1'
 
     site.protocol:          <site-protocol>
     site.domain:            <site-domain>

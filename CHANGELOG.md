@@ -1,4 +1,59 @@
-3.7.3 (xxxx-xx-xx)
+3.8.2 (2014-xx-xx)
+--
+Improvements:
+
+* Core: small fix for mail template style on very small screens.
+* FormBuilder: reduced database querying while getting form fields in Form widget.
+* Faq: Categories widget added.
+
+Bugfixes:
+
+* Analytics: fixed CSS on servers which listens to Capital A in Analytics.css
+* Core: moved KernelLoader.php to autoload.php because doctrine from CLI had problems.
+* Faq: fixed deleteCategoryAllowed
+
+
+3.8.1 (2014-08-22)
+--
+Improvements:
+
+* Core: Twitter username from settings gets parsed to template as TWITTER_SITE_NAME
+* The sequence field for the extra's is now respected, see #828.
+* Blog: remove the FeedBurner integration as FeedBurner is no longer active, fixes #693.
+* Authentication: make the isLoggedIn function more efficient.
+
+Bugfixes:
+
+* Location: correct item is highlighted after updating the map, fixes #798.
+* Installer: avoid duplicate headers in the installer
+
+
+3.8.0 (2014-08-14)
+--
+Improvements:
+
+* Profiles: mass import for profiles using a .csv added.
+* Core: BackendModel::insertExtra() added to allow inserting homepage/widgets/blocks.
+* Core: insertExtra Integrated in the modules: "ContentBlocks, Faq, FormBuilder and Location"
+* Core: Restyled mail templates, simple fluid design (looks good on small and wide screens).
+* Debug mode and environment are set earlier in the response.
+  You can set debug mode with ````SetEnv FORK_DEBUG 1````
+  You can set dev environment with ````SetEnv FORK_ENV dev````
+* Core: when in debug mode and in dev environment, the SymfonyWebProfiler is shown in the bottom of the page.
+* Core: handle errors in debug mode by the symfony error handler.
+* Analytics: implement event tracking for universal analytics
+* Faq: BackendFaqModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* ContentBlocks: BackendContentBlocksModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+* Location: BackendLocationModel now uses BackendModel::deleteExtraById() and BackendModel::updateExtra().
+
+Bugfixes:
+
+* Core: event subscriptions did not get fired in the frontend.
+* Authentication: avoid unnecessary dabase calls for unauthenticated users.
+* Tags: make sure the same tag can't exist with and without a capital letter.
+
+
+3.7.3 (2014-08-08)
 --
 Bugfixes:
 

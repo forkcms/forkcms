@@ -1,0 +1,28 @@
+install_step1:
+    path: /install/1
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step1Action
+install_step2:
+    path: /install/2
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step2Action
+install_step3:
+    path: /install/3
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step3Action
+install_step4:
+    path: /install/4
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step4Action
+install_step5:
+    path: /install/5
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step5Action
+install_step6:
+    path: /install/6
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step6Action
+install:
+    path: /install
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::noStepAction

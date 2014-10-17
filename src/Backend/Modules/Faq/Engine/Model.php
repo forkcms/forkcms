@@ -22,6 +22,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Model
 {
@@ -71,22 +72,7 @@ class Model
             $db->delete('faq_categories', 'id = ?', array((int) $id));
             $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
 
-            // build extra
-            $extra = array(
-                'id' => $item['extra_id'],
-                'module' => 'Faq',
-                'type' => 'widget',
-                'action' => 'category_list'
-            );
-
-            // delete extra
-            $db->delete(
-                'modules_extras',
-                'id = ? AND module = ? AND type = ? AND action = ?',
-                array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
-            );
-
-            // invalidate the cache for the faq
+            BackendModel::deleteExtraById($item['extra_id']);
             BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
         }
     }
@@ -105,8 +91,8 @@ class Model
         ) {
             return false;
         } else {
-            // check if the category contains questions
-            return (bool) BackendModel::get('database')->getVar(
+            // check if the category does not contain questions
+            return !(bool) BackendModel::get('database')->getVar(
                 'SELECT 1
                  FROM faq_questions AS i
                  WHERE i.category_id = ? AND i.language = ?
@@ -464,48 +450,29 @@ class Model
      */
     public static function insertCategory(array $item, $meta = null)
     {
-        $db = BackendModel::getContainer()->get('database');
+        $db = BackendModel::get('database');
 
-        // build extra
-        $extra = array(
-            'module' => 'Faq',
-            'type' => 'widget',
-            'label' => 'Faq',
-            'action' => 'category_list',
-            'data' => null,
-            'hidden' => 'N',
-            'sequence' => $db->getVar(
-                'SELECT MAX(i.sequence) + 1
-                 FROM modules_extras AS i
-                 WHERE i.module = ?',
-                array('Faq')
-            )
-        );
-
-        if (is_null($extra['sequence'])) {
-            $extra['sequence'] = $db->getVar(
-                'SELECT CEILING(MAX(i.sequence) / 1000) * 1000
-             FROM modules_extras AS i'
-            );
-        }
-
-        // insert extra
-        $item['extra_id'] = $db->insert('modules_extras', $extra);
-        $extra['id'] = $item['extra_id'];
-
-        // Store category
+        // insert the meta if possible
         if ($meta !== null) {
             $item['meta_id'] = $db->insert('meta', $meta);
         }
+
+        // insert extra
+        $item['extra_id'] = BackendModel::insertExtra(
+            'widget',
+            'Faq',
+            'CategoryList'
+        );
+
         $item['id'] = $db->insert('faq_categories', $item);
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
         // update extra (item id is now known)
-        $extra['data'] = serialize(
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
             array(
                 'id' => $item['id'],
-                'extra_label' => 'Category: ' . $item['title'],
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $item['title'],
                 'language' => $item['language'],
                 'edit_url' => BackendModel::createURLForAction(
                     'EditCategory',
@@ -515,12 +482,7 @@ class Model
             )
         );
 
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
-        );
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
 
         return $item['id'];
     }
@@ -548,35 +510,22 @@ class Model
      */
     public static function updateCategory(array $item)
     {
-        $db = BackendModel::getContainer()->get('database');
-
+        // update faq category
         BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
-
-        // build extra
-        $extra = array(
-            'id' => $item['extra_id'],
-            'module' => 'Faq',
-            'type' => 'widget',
-            'label' => 'Faq',
-            'action' => 'category_list',
-            'data' => serialize(
-                array(
-                    'id' => $item['id'],
-                    'extra_label' => 'Category: ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
-                )
-            ),
-            'hidden' => 'N'
-        );
 
         // update extra
-        $db->update(
-            'modules_extras',
-            $extra,
-            'id = ? AND module = ? AND type = ? AND action = ?',
-            array($extra['id'], $extra['module'], $extra['type'], $extra['action'])
+        BackendModel::updateExtra(
+            $item['extra_id'],
+            'data',
+            array(
+                'id' => $item['id'],
+                'extra_label' => 'Category: ' . $item['title'],
+                'language' => $item['language'],
+                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+            )
         );
+
+        // invalidate faq
+        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 }

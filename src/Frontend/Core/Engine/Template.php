@@ -315,9 +315,12 @@ class Template extends \SpoonTemplate
         }
 
         // twitter stuff
-        if (Model::getModuleSetting('core', 'twitter_site_name', null) !== null) {
+        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
             // strip @ from twitter username
-            $this->assign('TWITTER_SITE_NAME', ltrim(FrontendModel::getModuleSetting('core', 'twitter_site_name', null), '@'));
+            $this->assign(
+                'TWITTER_SITE_NAME',
+                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
+            );
         }
 
         // theme

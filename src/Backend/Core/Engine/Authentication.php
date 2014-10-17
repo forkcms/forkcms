@@ -209,6 +209,11 @@ class Authentication
             return true;
         }
 
+        // users that aren't logged in can only access always allowed items
+        if (!self::isLoggedIn()) {
+            return false;
+        }
+
         // get modules
         $modules = BackendModel::getModules();
 
@@ -281,6 +286,11 @@ class Authentication
             return true;
         }
 
+        // users that aren't logged in can only access always allowed items
+        if (!self::isLoggedIn()) {
+            return false;
+        }
+
         // module is active and God user, good enough
         if (in_array($module, $modules) && self::getUser()->isGod()) {
             return true;
@@ -324,6 +334,10 @@ class Authentication
      */
     public static function isLoggedIn()
     {
+        if (BackendModel::getContainer()->has('logged_in')) {
+            return BackendModel::getContainer()->get('logged_in');
+        }
+
         // check if all needed values are set in the session
         // @todo could be written by SpoonSession::get (since that no longer throws exceptions)
         if (\SpoonSession::exists('backend_logged_in', 'backend_secret_key') &&
@@ -356,25 +370,17 @@ class Authentication
                 self::$user = new User($sessionData['user_id']);
 
                 // the user is logged on
+                BackendModel::getContainer()->set('logged_in', true);
                 return true;
-            } else {
-                // no data found, so fuck up the session, will be handled later on in the code
-                \SpoonSession::set('backend_logged_in', false);
             }
-        } else {
-            // no data found, so fuck up the session, will be handled later on in the code
-            \SpoonSession::set('backend_logged_in', false);
         }
 
-        // reset values for invalid users. We can't destroy the session because session-data can be used on the site.
-        if ((bool) \SpoonSession::get('backend_logged_in') === false) {
-            // reset some values
-            \SpoonSession::set('backend_logged_in', false);
-            \SpoonSession::set('backend_secret_key', '');
+        // no data found, so fuck up the session, will be handled later on in the code
+        \SpoonSession::set('backend_logged_in', false);
+        BackendModel::getContainer()->set('logged_in', false);
+        \SpoonSession::set('backend_secret_key', '');
 
-            // return result
-            return false;
-        }
+        return false;
     }
 
     /**
