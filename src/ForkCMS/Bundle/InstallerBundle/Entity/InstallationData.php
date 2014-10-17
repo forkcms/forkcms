@@ -555,6 +555,11 @@ class InstallationData
         return $this;
     }
 
+    /**
+     * Checks if all data needed for installation is available here
+     *
+     * @return boolean
+     */
     public function isValid()
     {
         if (
