@@ -10,6 +10,7 @@ use Backend\Core\Engine\Model;
 use Backend\Core\Installer\CoreInstaller;
 use Backend\Core\Installer\ModuleInstaller;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * This service installs fork
@@ -60,9 +61,9 @@ class ForkInstaller
      * @param  array $data The collected data required for Fork
      * @return bool  Is Fork successfully installed?
      */
-    public function install(array $data)
+    public function install(InstallationData $data)
     {
-        if (!$this->isValidData($data)) {
+        if (!$data->isValid()) {
             return false;
         }
 
@@ -121,39 +122,6 @@ class ForkInstaller
     }
 
     /**
-     * Checks if our given data is complete and valid
-     *
-     * @param  array $data The collected data required to install Fork
-     * @return bool  Do we have all the needed data
-     */
-    protected function isValidData(array $data)
-    {
-        if (!in_array('db_hostname', $data)
-            || !in_array('db_username', $data)
-            || !in_array('db_password', $data)
-            || !in_array('db_database', $data)
-            || !in_array('db_port', $data)
-
-            || !in_array('languages', $data)
-            || !in_array('interface_languages', $data)
-            || !in_array('default_language', $data)
-            || !in_array('default_interface_language', $data)
-
-            || !in_array('modules', $data)
-            || !in_array('example_data', $data)
-            || !in_array('different_debug_email', $data)
-            || !in_array('debug_email', $data)
-
-            || !in_array('email', $data)
-            || !in_array('password', $data)
-        ) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
      * Define paths also used in frontend/backend, to be used in installer.
      * @deprecated This is done in different places in Fork. This should be centralized
      */
@@ -203,11 +171,11 @@ class ForkInstaller
         // put a new instance of the database in the container
         $database = new \SpoonDatabase(
             'mysql',
-            $data['db_hostname'],
-            $data['db_username'],
-            $data['db_password'],
-            $data['db_database'],
-            $data['db_port']
+            $data->getDbHostname(),
+            $data->getDbUsername(),
+            $data->getDbPassword(),
+            $data->getDbDatabase(),
+            $data->getDbPort()
         );
         $database->execute(
             'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
@@ -221,35 +189,21 @@ class ForkInstaller
         // create the core installer
         return new CoreInstaller(
             $this->container->get('database'),
-            $data['languages'],
-            $data['interface_languages'],
-            $data['example_data'],
-            array(
-                'default_language'           => $data['default_language'],
-                'default_interface_language' => $data['default_interface_language'],
-                'spoon_debug_email'          => $data['email'],
-                'api_email'                  => $data['email'],
-                'site_domain'                => (isset($_SERVER['HTTP_HOST'])) ?
-                    $_SERVER['HTTP_HOST'] :
-                    'fork.local',
-                'site_title'                 => 'Fork CMS',
-                'smtp_server'                => '',
-                'smtp_port'                  => '',
-                'smtp_username'              => '',
-                'smtp_password'              => '',
-            )
+            $data->getLanguages(),
+            $data->getInterfaceLanguages(),
+            $data->hasExampleData(),
+            $this->getInstallerData($data)
         );
     }
 
     protected function installModules($data)
     {
-        $data['modules'] = array_merge(
-            $data['modules'],
-            self::getHiddenModules()
-        );
+        foreach (self::getHiddenModules() as $hiddenModule) {
+            $data->addModule($hiddenModule);
+        }
 
         // loop modules
-        foreach ($data['modules'] as $module) {
+        foreach ($data->getModules() as $module) {
             $class = 'Backend\\Modules\\' . $module . '\\Installer\\Installer';
 
             // install exists
@@ -259,10 +213,10 @@ class ForkInstaller
                 /** @var $install ModuleInstaller */
                 $installer = new $class(
                     $this->container->get('database'),
-                    $data['languages'],
-                    $data['interface_languages'],
-                    $data['example_data'],
-                    $data
+                    $data->getLanguages(),
+                    $data->getInterfaceLanguages(),
+                    $data->hasExampleData(),
+                    $this->getInstallerData($data)
                 );
 
                 // install the module
@@ -319,7 +273,7 @@ class ForkInstaller
     {
         // all available languages
         $languages = array_unique(
-            array_merge($data['languages'], $data['interface_languages'])
+            array_merge($data->getLanguages(), $data->getInterfaceLanguages())
         );
 
         // loop all the languages
@@ -373,28 +327,48 @@ class ForkInstaller
     protected function getConfigurationVariables($data)
     {
         return array(
-            '<debug-email>' => $data['different_debug_email'] ?
-                $data['debug_email'] :
-                $data['email']
+            '<debug-email>' => $data->hasDifferentDebugEmail() ?
+                $data->getDebugEmail() :
+                $data->getEmail()
             ,
-            '<database-name>' => $data['db_database'],
-            '<database-host>' => addslashes($data['db_hostname']),
-            '<database-user>' => addslashes($data['db_username']),
-            '<database-password>' => addslashes($data['db_password']),
-            '<database-port>' => $data['db_port'] != '',
+            '<database-name>' => $data->getDbDatabase(),
+            '<database-host>' => addslashes($data->getDbHostname()),
+            '<database-user>' => addslashes($data->getDbUsername()),
+            '<database-password>' => addslashes($data->getDbPassword()),
+            '<database-port>' => $data->getDbPort(),
             '<site-protocol>' => isset($_SERVER['SERVER_PROTOCOL']) ?
                 (strpos(strtolower($_SERVER['SERVER_PROTOCOL']), 'https') === false ? 'http' : 'https') :
                 'http'
             ,
             '<site-domain>' => (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local',
             '<site-default-title>' => 'Fork CMS',
-            '<site-multilanguage>' => $data['multiple_languages'] ? 'true' : 'false',
-            '<site-default-language>' => $data['default_language'],
+            '<site-multilanguage>' => $data->getLanguageType() === 'multiple' ? 'true' : 'false',
+            '<site-default-language>' => $data->getDefaultLanguage(),
             '<path-www>' => PATH_WWW,
             '<path-library>' => PATH_LIBRARY,
             '<action-group-tag>' => '\@actiongroup',
             '<action-rights-level>' => 7,
             '<secret>' => Model::generateRandomString(32, true, true, true, false),
+        );
+    }
+
+    protected function getInstallerData($data)
+    {
+        return array(
+            'default_language'           => $data->getDefaultLanguage(),
+            'default_interface_language' => $data->getDefaultInterfaceLanguage(),
+            'spoon_debug_email'          => $data->getEmail(),
+            'api_email'                  => $data->getEmail(),
+            'site_domain'                => (isset($_SERVER['HTTP_HOST'])) ?
+                $_SERVER['HTTP_HOST'] :
+                'fork.local',
+            'site_title'                 => 'Fork CMS',
+            'smtp_server'                => '',
+            'smtp_port'                  => '',
+            'smtp_username'              => '',
+            'smtp_password'              => '',
+            'email'                      => $data->getEmail(),
+            'password'                   => $data->getPassword(),
         );
     }
 }

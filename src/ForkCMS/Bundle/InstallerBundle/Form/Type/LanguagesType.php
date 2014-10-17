@@ -4,6 +4,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Builds the form to select languages to install
@@ -25,7 +26,6 @@ class LanguagesType extends AbstractType
                         'single'   => 'Just one language',
                         'multiple' => 'Multiple languages',
                     ),
-                    'data' => 'single',
                 )
             )
             ->add(
@@ -48,7 +48,6 @@ class LanguagesType extends AbstractType
                 'same_interface_language',
                 'checkbox',
                 array(
-                    'attr' => array('checked' => 'checked'),
                     'label' => 'Use the same language(s) for the CMS interface.',
                 )
             )
@@ -69,6 +68,13 @@ class LanguagesType extends AbstractType
                 )
             )
         ;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+        ));
     }
 
     public function getName()

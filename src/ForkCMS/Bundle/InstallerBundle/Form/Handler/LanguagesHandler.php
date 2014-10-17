@@ -4,6 +4,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * Validates and saves the data from the languages form
@@ -29,28 +30,27 @@ class LanguagesHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
         $data = $form->getData();
 
-        $session->set('default_language', $data['default_language']);
-        $session->set('default_interface_language', $data['interface_language']);
-        $session->set('multiple_languages', $data['language_type'] === 'multiple');
-
         // different fields for single and multiple language
-        $session->set(
-            'languages',
-            ($data['language_type'] === 'multiple')
-                ? $data['languages']
-                : array($data['default_language'])
+        $data->setLanguages(
+            ($data->getLanguageType() === 'multiple')
+                ? $data->getLanguages()
+                : array($data->getDefaultLanguage())
         );
 
         // take same_interface_language field into account
-        $session->set(
-            'interface_languages',
-            ($data['same_interface_language'] === true)
-                ? $session->get('languages')
-                : $data['interface_languages']
+        $data->setInterfaceLanguages(
+            ($data->getSameInterfaceLanguage() === true)
+                ? $data->getLanguages()
+                : $data->getInterfaceLanguages()
         );
+
+        if ($data->getSameInterfaceLanguage() === true) {
+            $data->setDefaultInterfaceLanguage($data->getDefaultLanguage());
+        }
+
+        $request->getSession()->set('installation_data', $data);
 
         return true;
     }
