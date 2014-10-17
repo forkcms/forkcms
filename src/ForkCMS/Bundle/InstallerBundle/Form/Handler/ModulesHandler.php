@@ -29,14 +29,13 @@ class ModulesHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
         $data = $form->getData();
 
         if ($data->getExampleData() === true) {
             $data->addModule('Blog');
         }
 
-        $session->set('installation_data', $data);
+        $request->getSession()->set('installation_data', $data);
 
         return true;
     }

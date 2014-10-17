@@ -21,35 +21,35 @@ class DatabaseType extends AbstractType
     {
         $builder
             ->add(
-                'hostname',
+                'dbHostname',
                 'text',
                 array(
                     'required' => true,
                 )
             )
             ->add(
-                'port',
+                'dbPort',
                 'text',
                 array(
                     'required' => true,
                 )
             )
             ->add(
-                'database',
+                'dbDatabase',
                 'text',
                 array(
                     'required' => true,
                 )
             )
             ->add(
-                'username',
+                'dbUsername',
                 'text',
                 array(
                     'required' => true,
                 )
             )
             ->add(
-                'password',
+                'dbPassword',
                 'password'
             )
         ;
@@ -60,22 +60,20 @@ class DatabaseType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                if (empty($data)) {
-                    $data = array();
-
+                if (empty($data->getDbHostname())) {
                     // guess db & username
                     $host = $_SERVER['HTTP_HOST'];
                     $chunks = explode('.', $host);
 
                     // seems like windows can't handle localhost...
-                    $data['hostname'] = (substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost';
+                    $data->setDbHostname((substr(PHP_OS, 0, 3) == 'WIN') ? '127.0.0.1' : 'localhost');
 
                     // remove tld
                     array_pop($chunks);
 
                     // create base
-                    $data['database'] = $data['username'] = implode('_', $chunks);
-                    $data['port'] = 3306;
+                    $data->setDbDatabase(implode('_', $chunks));
+                    $data->setDbUsername(implode('_', $chunks));
 
                     $event->setData($data);
                 }
@@ -100,6 +98,7 @@ class DatabaseType extends AbstractType
                     )
                 )
             ),
+            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
         ));
     }
 
@@ -117,11 +116,11 @@ class DatabaseType extends AbstractType
             // create instance
             $db = new \SpoonDatabase(
                 'mysql',
-                $data['hostname'],
-                $data['username'],
-                $data['password'],
-                $data['database'],
-                $data['port']
+                $data->getDbHostname(),
+                $data->getDbUsername(),
+                $data->getDbPassword(),
+                $data->getDbDatabase(),
+                $data->getDbPort()
             );
 
             // test table

@@ -30,7 +30,6 @@ class LanguagesHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
         $data = $form->getData();
 
         // different fields for single and multiple language
@@ -47,7 +46,7 @@ class LanguagesHandler
                 : $data->getInterfaceLanguages()
         );
 
-        $session->set('installation_data', $data);
+        $request->getSession()->set('installation_data', $data);
 
         return true;
     }
