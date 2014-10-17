@@ -47,10 +47,7 @@ class InstallerController extends Controller
         }
 
         // show language information form.
-        if (!$request->getSession()->has('installation_data')) {
-            $request->getSession()->set('installation_data', new InstallationData());
-        }
-        $form = $this->createForm(new LanguagesType(), $request->getSession()->get('installation_data'));
+        $form = $this->createForm(new LanguagesType(), $this->getInstallationData($request));
         $handler = new LanguagesHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step3'));
@@ -71,7 +68,7 @@ class InstallerController extends Controller
         // @todo: check if all data from step 2 is available
 
         // show modules form
-        $form = $this->createForm(new ModulesType());
+        $form = $this->createForm(new ModulesType(), $this->getInstallationData($request));
         $handler = new ModulesHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step4'));
@@ -90,7 +87,7 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         // show database form
-        $form = $this->createForm(new DatabaseType());
+        $form = $this->createForm(new DatabaseType(), $this->getInstallationData($request));
         $handler = new DatabaseHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step5'));
@@ -138,6 +135,15 @@ class InstallerController extends Controller
                 'data'          => $request->getSession()->all(),
             )
         );
+    }
+
+    protected function getInstallationData(Request $request)
+    {
+        if (!$request->getSession()->has('installation_data')) {
+            $request->getSession()->set('installation_data', new InstallationData());
+        }
+
+        return $request->getSession()->get('installation_data');
     }
 
     public function noStepAction()

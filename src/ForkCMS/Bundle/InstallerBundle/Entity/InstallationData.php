@@ -91,7 +91,7 @@ class InstallationData
      *
      * @var array
      */
-    protected $modules;
+    protected $modules = array();
 
     /**
      * do we install exampleData?
@@ -399,6 +399,32 @@ class InstallationData
     public function getModules()
     {
         return $this->modules;
+    }
+
+    /**
+     * Adds a module to the modules array
+     *
+     * @param string $module
+     * @return $this
+     */
+    public function addModule($module)
+    {
+        if (!in_array($module, $this->modules)) {
+            $this->modules[] = $module;
+        }
+    }
+
+    /**
+     * Removes an item from the modules array
+     *
+     * @param string $module
+     * @return $this
+     */
+    public function removeModule($module)
+    {
+        if (!in_array($module, $this->modules)) {
+            unset($this->modules[$module]);
+        }
     }
 
     /**
