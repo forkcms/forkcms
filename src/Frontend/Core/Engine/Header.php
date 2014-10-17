@@ -29,6 +29,31 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 class Header extends FrontendBaseObject
 {
     /**
+     *
+     */
+    const FILE_PRIORITY_GROUP_GLOBAL = 0;
+
+    /**
+     *
+     */
+    const FILE_PRIORITY_GROUP_DEFAULT = 1;
+
+    /**
+     *
+     */
+    const FILE_PRIORITY_GROUP_THEME = 2;
+
+    /**
+     *
+     */
+    const FILE_PRIORITY_GROUP_MODULE = 3;
+
+    /**
+     *
+     */
+    const FILE_PRIORITY_GROUP_WIDGET = 4;
+
+    /**
      * The canonical URL
      *
      * @var string
@@ -102,11 +127,11 @@ class Header extends FrontendBaseObject
         }
 
         // add default javascript-files
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true);
-        $this->addJS('/src/Frontend/Core/Js/utils.js', true);
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', false);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::FILE_PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::FILE_PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
     }
 
     /**
@@ -154,7 +179,7 @@ class Header extends FrontendBaseObject
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS($file, $minify = true, $addTimestamp = null)
+    public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::FILE_PRIORITY_GROUP_DEFAULT)
     {
         $file = (string) $file;
         $minify = (bool) $minify;
@@ -174,9 +199,11 @@ class Header extends FrontendBaseObject
             $file = $this->minifyJS($file);
         }
 
+        $jsFile = array('file' => $file, 'add_timestamp' => $addTimestamp, 'priority_group' => $priorityGroup);
+
         // already in array?
-        if (!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
-            $this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+        if (!in_array($jsFile, $this->jsFiles)) {
+            $this->jsFiles[] = $jsFile;
         }
     }
 
@@ -768,6 +795,7 @@ class Header extends FrontendBaseObject
     private function parseJS()
     {
         $jsFiles = array();
+        $jsFilesGrouped = array();
         $existingJSFiles = $this->getJSFiles();
 
         // if there aren't any JS-files added we don't need to do something
@@ -779,6 +807,8 @@ class Header extends FrontendBaseObject
             );
 
             foreach ($existingJSFiles as $file) {
+                $priorityGroup = $file['priority_group'];
+
                 // some files shouldn't be uncacheable
                 if (in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) {
                     $file = array('file' => $file['file']);
@@ -791,7 +821,13 @@ class Header extends FrontendBaseObject
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 
-                $jsFiles[] = $file;
+                $jsFilesGrouped[$priorityGroup][] = $file;
+            }
+
+            ksort($jsFilesGrouped);
+
+            foreach ($jsFilesGrouped as $jsFile) {
+                $jsFiles = array_merge($jsFiles, $jsFile);
             }
         }
 
