@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Frontend\Core\Engine\Breadcrumb;
 use Frontend\Core\Engine\Exception;
-use Frontend\Core\Engine\Header as FrontendHeader;
+use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Engine\Template as FrontendTemplate;
 
@@ -191,12 +191,12 @@ class Block extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, FrontendHeader::FILE_PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::FILE_PRIORITY_GROUP_MODULE);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, FrontendHeader::FILE_PRIORITY_GROUP_MODULE);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::FILE_PRIORITY_GROUP_MODULE);
         }
     }
 

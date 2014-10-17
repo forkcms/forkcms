@@ -11,7 +11,7 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
-use Frontend\Core\Engine\Header as FrontendHeader;
+use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Core\Engine\Url;
 
@@ -164,12 +164,12 @@ class Widget extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, FrontendHeader::FILE_PRIORITY_GROUP_WIDGET);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::FILE_PRIORITY_GROUP_WIDGET);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, FrontendHeader::FILE_PRIORITY_GROUP_WIDGET);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::FILE_PRIORITY_GROUP_WIDGET);
         }
     }
 
