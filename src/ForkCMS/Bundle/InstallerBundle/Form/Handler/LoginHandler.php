@@ -29,11 +29,7 @@ class LoginHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
-        $data = $form->getData();
-
-        $session->set('email', $data['email']);
-        $session->set('password', $data['password']);
+        $request->getSession()->set('installation_data', $form->getData());
 
         return true;
     }

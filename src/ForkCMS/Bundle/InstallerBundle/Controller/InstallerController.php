@@ -106,7 +106,7 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         // show database form
-        $form = $this->createForm(new LoginType());
+        $form = $this->createForm(new LoginType(), $this->getInstallationData($request));
         $handler = new LoginHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step6'));
