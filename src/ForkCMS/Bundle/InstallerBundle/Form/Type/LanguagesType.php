@@ -25,6 +25,7 @@ class LanguagesType extends AbstractType
                         'single'   => 'Just one language',
                         'multiple' => 'Multiple languages',
                     ),
+                    'data' => 'single',
                 )
             )
             ->add(
