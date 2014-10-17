@@ -29,29 +29,24 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 class Header extends FrontendBaseObject
 {
     /**
-     *
+     * Index of priority group for global files
      */
     const FILE_PRIORITY_GROUP_GLOBAL = 0;
 
     /**
-     *
+     * Index of priority group for default files
      */
     const FILE_PRIORITY_GROUP_DEFAULT = 1;
 
     /**
-     *
+     * Index of priority group for module files
      */
-    const FILE_PRIORITY_GROUP_THEME = 2;
+    const FILE_PRIORITY_GROUP_MODULE = 2;
 
     /**
-     *
+     * Index of priority group for widget files
      */
-    const FILE_PRIORITY_GROUP_MODULE = 3;
-
-    /**
-     *
-     */
-    const FILE_PRIORITY_GROUP_WIDGET = 4;
+    const FILE_PRIORITY_GROUP_WIDGET = 3;
 
     /**
      * The canonical URL
