@@ -554,4 +554,28 @@ class InstallationData
 
         return $this;
     }
+
+    public function isValid()
+    {
+        if (
+            empty($this->dbHostname)
+            || empty($this->dbUsername)
+            || empty($this->dbDatabase)
+            || empty($this->dbPort)
+
+            || empty($this->languages)
+            || empty($this->interfaceLanguages)
+            || empty($this->defaultLanguage)
+            || empty($this->defaultInterfaceLanguage)
+
+            || empty($this->modules)
+
+            || empty($this->email)
+            || empty($this->password)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
 }

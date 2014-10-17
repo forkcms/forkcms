@@ -46,6 +46,10 @@ class LanguagesHandler
                 : $data->getInterfaceLanguages()
         );
 
+        if ($data->getSameInterfaceLanguage() === true) {
+            $data->setDefaultInterfaceLanguage($data->getDefaultLanguage());
+        }
+
         $request->getSession()->set('installation_data', $data);
 
         return true;

@@ -125,14 +125,14 @@ class InstallerController extends Controller
         $this->checkInstall();
 
         $forkInstaller = $this->get('forkcms.installer');
-        $status = $forkInstaller->install($request->getSession()->all());
+        $status = $forkInstaller->install($this->getInstallationData($request));
 
         return $this->render(
             'ForkCMSInstallerBundle:Installer:step6.html.twig',
             array(
                 'installStatus' => $status,
                 'installer'     => $forkInstaller,
-                'data'          => $request->getSession()->all(),
+                'data'          => $this->getInstallationData($request),
             )
         );
     }
