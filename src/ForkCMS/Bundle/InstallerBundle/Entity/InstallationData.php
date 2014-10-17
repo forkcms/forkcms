@@ -45,6 +45,20 @@ class InstallationData
     protected $dbPort = 3306;
 
     /**
+     * The type of language setup: single or multiple
+     *
+     * @var string
+     */
+    protected $languageType = 'single';
+
+    /**
+     * Do we use the same languages for the backend or not?
+     *
+     * @var bool
+     */
+    protected $sameInterfaceLanguage = true;
+
+    /**
      * The languages to install Fork in
      *
      * @var array
@@ -130,7 +144,7 @@ class InstallationData
      * @param string $dbHostname the db hostname
      * @return self
      */
-    protected function setDbHostname($dbHostname)
+    public function setDbHostname($dbHostname)
     {
         $this->dbHostname = $dbHostname;
 
@@ -153,7 +167,7 @@ class InstallationData
      * @param string $dbUsername the db username
      * @return self
      */
-    protected function setDbUsername($dbUsername)
+    public function setDbUsername($dbUsername)
     {
         $this->dbUsername = $dbUsername;
 
@@ -176,7 +190,7 @@ class InstallationData
      * @param string $dbPassword the db password
      * @return self
      */
-    protected function setDbPassword($dbPassword)
+    public function setDbPassword($dbPassword)
     {
         $this->dbPassword = $dbPassword;
 
@@ -199,7 +213,7 @@ class InstallationData
      * @param string $dbDatabase the db database
      * @return self
      */
-    protected function setDbDatabase($dbDatabase)
+    public function setDbDatabase($dbDatabase)
     {
         $this->dbDatabase = $dbDatabase;
 
@@ -222,11 +236,67 @@ class InstallationData
      * @param int $dbPort the db port
      * @return self
      */
-    protected function setDbPort($dbPort)
+    public function setDbPort($dbPort)
     {
         $this->dbPort = $dbPort;
 
         return $this;
+    }
+
+    /**
+     * Gets the The type of language setup: single or multiple.
+     *
+     * @return string
+     */
+    public function getLanguageType()
+    {
+        return $this->languageType;
+    }
+
+    /**
+     * Sets the The type of language setup: single or multiple.
+     *
+     * @param string $languageType the language type
+     * @return self
+     */
+    public function setLanguageType($languageType)
+    {
+        $this->languageType = $languageType;
+
+        return $this;
+    }
+
+    /**
+     * Gets the Do we use the same languages for the backend or not?.
+     *
+     * @return bool
+     */
+    public function getSameInterfaceLanguage()
+    {
+        return $this->sameInterfaceLanguage;
+    }
+
+    /**
+     * Sets the Do we use the same languages for the backend or not?.
+     *
+     * @param bool $sameInterfaceLanguage the same interface language
+     * @return self
+     */
+    public function setSameInterfaceLanguage($sameInterfaceLanguage)
+    {
+        $this->sameInterfaceLanguage = $sameInterfaceLanguage;
+
+        return $this;
+    }
+
+    /**
+     * Helper method, only needed for the languages form
+     *
+     * @return string
+     */
+    public function getInterfaceLanguage()
+    {
+        return $this->getDefaultLanguage();
     }
 
     /**
@@ -245,7 +315,7 @@ class InstallationData
      * @param array $languages the languages
      * @return self
      */
-    protected function setLanguages(array $languages)
+    public function setLanguages(array $languages)
     {
         $this->languages = $languages;
 
@@ -268,7 +338,7 @@ class InstallationData
      * @param array $interfaceLanguages the interface languages
      * @return self
      */
-    protected function setInterfaceLanguages(array $interfaceLanguages)
+    public function setInterfaceLanguages(array $interfaceLanguages)
     {
         $this->interfaceLanguages = $interfaceLanguages;
 
@@ -291,7 +361,7 @@ class InstallationData
      * @param string $defaultLanguage the default language
      * @return self
      */
-    protected function setDefaultLanguage($defaultLanguage)
+    public function setDefaultLanguage($defaultLanguage)
     {
         $this->defaultLanguage = $defaultLanguage;
 
@@ -314,7 +384,7 @@ class InstallationData
      * @param string $defaultInterfaceLanguage the default interface language
      * @return self
      */
-    protected function setDefaultInterfaceLanguage($defaultInterfaceLanguage)
+    public function setDefaultInterfaceLanguage($defaultInterfaceLanguage)
     {
         $this->defaultInterfaceLanguage = $defaultInterfaceLanguage;
 
@@ -337,7 +407,7 @@ class InstallationData
      * @param array $modules the modules
      * @return self
      */
-    protected function setModules(array $modules)
+    public function setModules(array $modules)
     {
         $this->modules = $modules;
 
@@ -360,7 +430,7 @@ class InstallationData
      * @param bool $exampleData the example data
      * @return self
      */
-    protected function setExampleData($exampleData)
+    public function setExampleData($exampleData)
     {
         $this->exampleData = $exampleData;
 
@@ -383,7 +453,7 @@ class InstallationData
      * @param bool $differentDebugEmail the different debug email
      * @return self
      */
-    protected function setDifferentDebugEmail($differentDebugEmail)
+    public function setDifferentDebugEmail($differentDebugEmail)
     {
         $this->differentDebugEmail = $differentDebugEmail;
 
@@ -406,7 +476,7 @@ class InstallationData
      * @param string $debugEmail the debug email
      * @return self
      */
-    protected function setDebugEmail($debugEmail)
+    public function setDebugEmail($debugEmail)
     {
         $this->debugEmail = $debugEmail;
 
@@ -429,7 +499,7 @@ class InstallationData
      * @param string $email the email
      * @return self
      */
-    protected function setEmail($email)
+    public function setEmail($email)
     {
         $this->email = $email;
 
@@ -452,7 +522,7 @@ class InstallationData
      * @param string $password the password
      * @return self
      */
-    protected function setPassword($password)
+    public function setPassword($password)
     {
         $this->password = $password;
 

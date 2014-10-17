@@ -13,6 +13,7 @@ use ForkCMS\Bundle\InstallerBundle\Form\Handler\LanguagesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\ModulesHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\DatabaseHandler;
 use ForkCMS\Bundle\InstallerBundle\Form\Handler\LoginHandler;
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 class InstallerController extends Controller
 {
@@ -46,7 +47,10 @@ class InstallerController extends Controller
         }
 
         // show language information form.
-        $form = $this->createForm(new LanguagesType());
+        if (!$request->getSession()->has('installation_data')) {
+            $request->getSession()->set('installation_data', new InstallationData());
+        }
+        $form = $this->createForm(new LanguagesType(), $request->getSession()->get('installation_data'));
         $handler = new LanguagesHandler();
         if ($handler->process($form, $request)) {
             return $this->redirect($this->generateUrl('install_step3'));
