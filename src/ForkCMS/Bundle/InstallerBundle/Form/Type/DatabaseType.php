@@ -60,7 +60,8 @@ class DatabaseType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                if (empty($data->getDbHostname())) {
+                $dbHostname = $data->getDbHostname();
+                if (empty($dbHostname)) {
                     // guess db & username
                     $host = $_SERVER['HTTP_HOST'];
                     $chunks = explode('.', $host);
