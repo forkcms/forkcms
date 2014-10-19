@@ -58,8 +58,8 @@ class ForkInstaller
     /**
      * Installs Fork
      *
-     * @param  array $data The collected data required for Fork
-     * @return bool  Is Fork successfully installed?
+     * @param  InstallationData $data The collected data required for Fork
+     * @return bool                   Is Fork successfully installed?
      */
     public function install(InstallationData $data)
     {
@@ -153,7 +153,10 @@ class ForkInstaller
         }
     }
 
-    protected function installCore($data)
+    /**
+     * @param InstallationData $data
+     */
+    protected function installCore(InstallationData $data)
     {
         // install the core
         $installer = $this->getCoreInstaller($data);
@@ -166,7 +169,10 @@ class ForkInstaller
         }
     }
 
-    protected function buildDatabase($data)
+    /**
+     * @param InstallationData $data
+     */
+    protected function buildDatabase(InstallationData $data)
     {
         // put a new instance of the database in the container
         $database = new \SpoonDatabase(
@@ -184,7 +190,11 @@ class ForkInstaller
         $this->container->set('database', $database);
     }
 
-    protected function getCoreInstaller($data)
+    /**
+     * @param  InstallationData $data
+     * @return CoreInstaller
+     */
+    protected function getCoreInstaller(InstallationData $data)
     {
         // create the core installer
         return new CoreInstaller(
@@ -196,7 +206,10 @@ class ForkInstaller
         );
     }
 
-    protected function installModules($data)
+    /**
+     * @param InstallationData $data
+     */
+    protected function installModules(InstallationData $data)
     {
         foreach (self::getHiddenModules() as $hiddenModule) {
             $data->addModule($hiddenModule);
@@ -266,10 +279,13 @@ class ForkInstaller
         }
     }
 
+
     /**
      * Create locale cache files
+     *
+     * @param InstallationData $data
      */
-    protected function createLocaleFiles($data)
+    protected function createLocaleFiles(InstallationData $data)
     {
         // all available languages
         $languages = array_unique(
@@ -296,8 +312,10 @@ class ForkInstaller
 
     /**
      * Writes a config file to app/config/parameters.yml.
+     *
+     * @param InstallationData $data
      */
-    protected function createYAMLConfig($data)
+    protected function createYAMLConfig(InstallationData $data)
     {
         // these variables should be parsed inside the config file(s).
         $variables = $this->getConfigurationVariables($data);
@@ -322,9 +340,10 @@ class ForkInstaller
     }
 
     /**
+     * @param  InstallationData $data
      * @return array A list of variables that should be parsed into the configuration file(s).
      */
-    protected function getConfigurationVariables($data)
+    protected function getConfigurationVariables(InstallationData $data)
     {
         return array(
             '<debug-email>' => $data->hasDifferentDebugEmail() ?
@@ -352,7 +371,11 @@ class ForkInstaller
         );
     }
 
-    protected function getInstallerData($data)
+    /**
+     * @param  InstallationData $data
+     * @return array A list of variables that will be used in installers.
+     */
+    protected function getInstallerData(InstallationData $data)
     {
         return array(
             'default_language'           => $data->getDefaultLanguage(),
