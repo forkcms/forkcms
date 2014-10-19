@@ -1054,7 +1054,7 @@ class Model extends \BaseModel
 
         // check if type is allowed
         if (!in_array($type, array('homepage', 'block', 'widget'))) {
-            throw new BackendException(
+            throw new Exception(
                 'Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".'
             );
         }
