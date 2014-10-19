@@ -12,7 +12,6 @@ namespace Backend\Core\Engine;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This class is the real code, it creates an action, loads the config file, ...

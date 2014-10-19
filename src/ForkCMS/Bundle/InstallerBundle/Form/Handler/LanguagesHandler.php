@@ -4,7 +4,6 @@ namespace ForkCMS\Bundle\InstallerBundle\Form\Handler;
 
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
-use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 
 /**
  * Validates and saves the data from the languages form

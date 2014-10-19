@@ -10,7 +10,6 @@ namespace Backend\Modules\Search\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Language as BL;

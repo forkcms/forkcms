@@ -11,7 +11,6 @@ namespace Frontend\Modules\Location\Actions;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
 
 /**

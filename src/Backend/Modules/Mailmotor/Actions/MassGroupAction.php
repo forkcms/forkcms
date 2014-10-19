@@ -11,7 +11,6 @@ namespace Backend\Modules\Mailmotor\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
 /**
