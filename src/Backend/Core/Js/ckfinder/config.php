@@ -19,9 +19,14 @@
 require_once '../../../../../../../../autoload.php';
 require_once '../../../../../../../../app/AppKernel.php';
 require_once '../../../../../../../../app/KernelLoader.php';
-$kernel = new AppKernel('prod', false);
+
+$env = getenv('FORK_ENV') ? : 'prod';
+$debug = getenv('FORK_DEBUG') === '1';
+
+$kernel = new AppKernel($env, $debug);
 $loader = new KernelLoader($kernel);
 $kernel->boot();
+$kernel->getContainer()->get('session.handler');
 $loader->passContainerToModels();
 
 // after registring autoloaders, let's add use statements for our needed classes
