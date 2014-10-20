@@ -12,17 +12,24 @@
  * advanced features of CKFinder.
  */
 
+/**
+ * Detect environment, because sessions must match.
+ */
+$env = getenv('FORK_ENV') ? : 'prod';
+
 /*
  * Create a Kernel and load the DI container to be able to access the Backend Model methods and
  * the configuration. This should be refactored in time.
  */
 require '../../../../../../../../autoload.php';
 require '../../../../../../../../app/AppKernel.php';
-require '../../../../../../../../app/KernelLoader.php';
-$kernel = new AppKernel('prod', false);
+$kernel = new AppKernel($env, false);
 $loader = new KernelLoader($kernel);
 $kernel->boot();
 $loader->passContainerToModels();
+
+// Load necessary services
+$kernel->getContainer()->get('session.handler');
 
 // after registring autoloaders, let's add use statements for our needed classes
 use Backend\Core\Engine\Authentication as BackendAuthentication;
