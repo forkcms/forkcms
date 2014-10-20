@@ -205,7 +205,7 @@
 
     <div class="box horizontal">
         <div class="heading">
-            <h3>Twitter</h3>
+            <h3>{$lblTwitter|ucfirst}</h3>
         </div>
         <div class="options labelWidthLong">
             <p>
