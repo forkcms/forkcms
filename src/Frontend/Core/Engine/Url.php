@@ -191,40 +191,16 @@ class Url extends \KernelLoader
      */
     private function processQueryString()
     {
-        // store the query string local, so we don't alter it.
-        $queryString = $this->getQueryString();
+        $request = $this->get('request');
 
-        // fix GET-parameters
-        $getChunks = explode('?', $queryString);
+        // define all GET parameters
+        $this->parameters = $request->query->all();
 
-        // are there GET-parameters
-        if (isset($getChunks[1])) {
-            // get key-value pairs
-            $get = explode('&', $getChunks[1]);
-
-            // remove from query string
-            $queryString = str_replace('?' . $getChunks[1], '', $this->getQueryString());
-
-            // loop pairs
-            foreach ($get as $getItem) {
-                // get key and value
-                $getChunks = explode('=', $getItem, 2);
-
-                // key available?
-                if (isset($getChunks[0])) {
-                    // reset in $_GET
-                    $_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
-
-                    // add into parameters
-                    if (isset($getChunks[1])) {
-                        $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];
-                    }
-                }
-            }
-        }
+        // define url being requested
+        $url = trim($request->getPathInfo(), '/');
 
         // split into chunks
-        $chunks = (array) explode('/', $queryString);
+        $chunks = (array) explode('/', $url);
 
         // single language
         if (!SITE_MULTILANGUAGE) {
@@ -285,7 +261,7 @@ class Url extends \KernelLoader
             // redirect is required
             if ($mustRedirect) {
                 // build URL
-                $URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
+                $URL = rtrim('/' . $language . '/' . $url, '/');
 
                 // when we are just adding the language to the domain, it's a temporary redirect because
                 // Safari keeps the 301 in cache, so the cookie to switch language doesn't work any more
@@ -320,11 +296,11 @@ class Url extends \KernelLoader
 
         // remove language from query string
         if (SITE_MULTILANGUAGE) {
-            $queryString = trim(substr($queryString, strlen($language)), '/');
+            $url = trim(substr($url, strlen($language)), '/');
         }
 
         // if it's the homepage AND parameters were given (not allowed!)
-        if ($URL == '' && $queryString != '') {
+        if ($URL == '' && $url != '') {
             // get 404 URL
             $URL = Navigation::getURL(404);
 
