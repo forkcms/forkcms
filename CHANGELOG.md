@@ -1,3 +1,10 @@
+3.8.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Profiles: profiles.js not exists, so don't load it in.
+
+
 3.8.2 (2014-10-20)
 --
 Improvements:
