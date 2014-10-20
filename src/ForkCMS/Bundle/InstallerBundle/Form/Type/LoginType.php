@@ -41,7 +41,8 @@ class LoginType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                if (empty($data->getEmail())) {
+                $email = $data->getEmail();
+                if (empty($email)) {
                     $data->setEmail('info@' . $_SERVER['HTTP_HOST']);
                     $event->setData($data);
                 }
