@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Profiles: profiles.js not exists, so don't load it in.
+* Core: Fixes #849, frontend queryString parameters now work.
 
 
 3.8.2 (2014-10-20)
