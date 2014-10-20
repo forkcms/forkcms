@@ -1,8 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
     "hash": "9b72953bca97cd986d834f39751ffe86",
     "packages": [
@@ -620,16 +619,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.5",
+            "version": "1.3.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "7b5abfe1819a80af8e9ec932eadefc148ede6927"
+                "reference": "8378037ee4b91a34da9fb9afdf01e972b51bf75a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/7b5abfe1819a80af8e9ec932eadefc148ede6927",
-                "reference": "7b5abfe1819a80af8e9ec932eadefc148ede6927",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/8378037ee4b91a34da9fb9afdf01e972b51bf75a",
+                "reference": "8378037ee4b91a34da9fb9afdf01e972b51bf75a",
                 "shasum": ""
             },
             "require": {
@@ -660,7 +659,7 @@
             ],
             "description": "CSS & JS minifier",
             "homepage": "https://github.com/matthiasmullie/minify",
-            "time": "2014-10-14 09:30:23"
+            "time": "2014-10-20 09:08:51"
         },
         {
             "name": "monolog/monolog",
@@ -1219,21 +1218,14 @@
             "time": "2014-10-10 14:09:53"
         }
     ],
-    "packages-dev": [
-
-    ],
-    "aliases": [
-
-    ],
+    "packages-dev": [],
+    "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
         "jdorn/sql-formatter": 20
     },
-    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.2"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
