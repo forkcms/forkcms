@@ -969,7 +969,8 @@ class Header extends FrontendBaseObject
      * @param string $siteHandle    (optional)  Twitter handle of the site
      * @param string $creatorHandle (optional) Twitter handle of the author
      */
-    public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null){
+    public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null)
+    {
         $data = array(
             'twitter:card' => $cardType,
             'twitter:title' => $title,
