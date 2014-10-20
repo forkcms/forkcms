@@ -286,7 +286,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $templateFile = PATH_WWW.'/src/Frontend/Themes/' . $this->frm->getField('theme')->getValue() . '/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             }
             if (!is_file($templateFile)) {
-                $this->frm->getField('file')->addError(BL::err('FileNotFound'));
+                $this->frm->getField('file')->addError(BL::err('TemplateFileNotFound'));
             }
 
             // validate syntax
