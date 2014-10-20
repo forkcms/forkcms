@@ -1,5 +1,9 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: BackendModel::deleteModuleSetting() added.
+
 Bugfixes:
 
 * Profiles: profiles.js not exists, so don't load it in.
