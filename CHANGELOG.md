@@ -1,10 +1,3 @@
-3.8.3 (xxxx-xx-xx)
---
-Bugfixes:
-
-* Profiles: profiles.js not exists, so don't load it in.
-
-
 3.8.2 (2014-10-20)
 --
 Improvements:
@@ -12,12 +5,18 @@ Improvements:
 * Core: small fix for mail template style on very small screens.
 * FormBuilder: reduced database querying while getting form fields in Form widget.
 * Faq: Categories widget added.
+* Core: update minify library.
+* Core: update CKFinder.
+* Install: refactor installer to a Symfony Bundle.
+* Core: add assetic to Fork
+* Core: add Twig to Fork
 
 Bugfixes:
 
 * Analytics: fixed CSS on servers which listens to Capital A in Analytics.css
 * Core: moved KernelLoader.php to autoload.php because doctrine from CLI had problems.
 * Faq: fixed deleteCategoryAllowed
+* Profiles: profiles.js not exists, so don't load it in.
 
 
 3.8.1 (2014-08-22)
