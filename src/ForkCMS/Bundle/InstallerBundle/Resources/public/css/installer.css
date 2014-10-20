@@ -100,8 +100,8 @@ h3 {
 	Step 5: DB
 */
 
-#installer input#install_database_hostname { width: 140px; }
-#installer input#install_database_port { width: 40px; }
+#installer input#install_database_dbHostname { width: 140px; }
+#installer input#install_database_dbPort { width: 40px; }
 
 /*
 	Step 7

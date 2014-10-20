@@ -6,6 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 /**
  * Builds the form to set up login information
@@ -40,13 +41,20 @@ class LoginType extends AbstractType
             function (FormEvent $event) {
                 $data = $event->getData();
 
-                if (empty($data)) {
-                    $data = array();
-                    $data['email'] = 'info@' . $_SERVER['HTTP_HOST'];
+                $email = $data->getEmail();
+                if (empty($email)) {
+                    $data->setEmail('info@' . $_SERVER['HTTP_HOST']);
                     $event->setData($data);
                 }
             }
         );
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'ForkCMS\Bundle\InstallerBundle\Entity\InstallationData',
+        ));
     }
 
     public function getName()

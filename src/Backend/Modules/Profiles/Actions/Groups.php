@@ -15,7 +15,6 @@ use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
 
 /**
  * This is the groups-action, it will display the overview of profile groups.

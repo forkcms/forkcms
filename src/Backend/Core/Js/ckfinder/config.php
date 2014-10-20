@@ -16,9 +16,9 @@
  * Create a Kernel and load the DI container to be able to access the Backend Model methods and
  * the configuration. This should be refactored in time.
  */
-require '../../../../../../../../autoload.php';
-require '../../../../../../../../app/AppKernel.php';
-require '../../../../../../../../app/KernelLoader.php';
+require_once '../../../../../../../../autoload.php';
+require_once '../../../../../../../../app/AppKernel.php';
+require_once '../../../../../../../../app/KernelLoader.php';
 $kernel = new AppKernel('prod', false);
 $loader = new KernelLoader($kernel);
 $kernel->boot();
@@ -97,14 +97,14 @@ $config['Thumbnails'] = array(
     'maxWidth' => 96,
     'maxHeight' => 96,
     'bmpSupported' => false,
-    'quality' => 100
+    'quality' => 100,
 );
 
 // set the maximum size of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = array(
     'maxWidth' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width'),
     'maxHeight' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height'),
-    'quality' => 100
+    'quality' => 100,
 );
 
 /*
@@ -141,7 +141,7 @@ $config['AccessControl'][] = array(
     'fileView' => true,
     'fileUpload' => true,
     'fileRename' => true,
-    'fileDelete' => true
+    'fileDelete' => true,
 );
 
 /*
@@ -160,7 +160,7 @@ $config['ResourceType'][] = array(
     'directory' => $baseDir . 'files',
     'maxSize' => 0,
     'allowedExtensions' => '7z,aiff,asf,avi,bmp,csv,doc,docx,fla,flv,gif,gz,gzip,jpeg,jpg,mid,mov,mp3,mp4,mpc,mpeg,mpg,ods,odt,pdf,png,ppt,pptx,pxd,qt,ram,rar,rm,rmi,rmvb,rtf,sdc,sitd,swf,sxc,sxw,tar,tgz,tif,tiff,txt,vsd,wav,wma,wmv,xls,xlsx,xml,zip',
-    'deniedExtensions' => ''
+    'deniedExtensions' => '',
 );
 
 $config['ResourceType'][] = array(
@@ -169,7 +169,7 @@ $config['ResourceType'][] = array(
     'directory' => $baseDir . 'images',
     'maxSize' => 0,
     'allowedExtensions' => 'gif,jpeg,jpg,png',
-    'deniedExtensions' => ''
+    'deniedExtensions' => '',
 );
 
 /*

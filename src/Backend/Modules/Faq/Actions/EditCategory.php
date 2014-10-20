@@ -16,8 +16,6 @@ use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This is the edit category action, it will display a form to edit an existing category.
