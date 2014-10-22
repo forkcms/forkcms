@@ -10,7 +10,6 @@ namespace Backend\Modules\Profiles\Actions;
  */
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
-use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * This is the add-action, it will display a form to add a new profile.

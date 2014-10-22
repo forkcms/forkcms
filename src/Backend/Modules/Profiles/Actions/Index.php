@@ -98,7 +98,6 @@ class Index extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-        $this->header->addJS('profiles.js');
         $this->setFilter();
         $this->loadForm();
         $this->loadDataGrid();

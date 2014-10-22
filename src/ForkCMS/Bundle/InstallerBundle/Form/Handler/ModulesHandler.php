@@ -29,17 +29,13 @@ class ModulesHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
         $data = $form->getData();
 
-        if ($data['example_data'] === true && !in_array('Blog', $data['modules'])) {
-            $data['modules'][] = 'Blog';
+        if ($data->hasExampleData() === true) {
+            $data->addModule('Blog');
         }
 
-        $session->set('modules', $data['modules']);
-        $session->set('example_data', $data['example_data']);
-        $session->set('different_debug_email', $data['different_debug_email']);
-        $session->set('debug_email', $data['debug_email']);
+        $request->getSession()->set('installation_data', $data);
 
         return true;
     }

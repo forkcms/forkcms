@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use TijsVerkoyen\Akismet\Akismet;
@@ -1054,7 +1053,7 @@ class Model extends \BaseModel
 
         // check if type is allowed
         if (!in_array($type, array('homepage', 'block', 'widget'))) {
-            throw new BackendException(
+            throw new Exception(
                 'Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".'
             );
         }

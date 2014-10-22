@@ -11,25 +11,25 @@
       <p>Enter your database details. Make sure this database already exists.</p>
       <p>
         <label for="hostname">Hostname<abbr title="Required field">*</abbr></label>
-        {{ form_widget(form.hostname) }} : {{ form_widget(form.port) }}
+        {{ form_widget(form.dbHostname) }} : {{ form_widget(form.dbPort) }}
         <span class="helpTxt">If you are working locally, your hostname is probably <strong>localhost</strong>.</span>
       </p>
       <p>
         <label for="database">Database<abbr title="Required field">*</abbr></label>
-        {{ form_widget(form.database) }}
+        {{ form_widget(form.dbDatabase) }}
         <span class="helpTxt">Make sure this database is empty!</span>
       </p>
       <p>
         <label for="username">Username<abbr title="Required field">*</abbr></label>
-        {{ form_widget(form.username) }}
+        {{ form_widget(form.dbUsername) }}
       </p>
       <p>
         <label for="password">Password<abbr title="Required field">*</abbr></label>
-        {{ form_widget(form.password) }}
+        {{ form_widget(form.dbPassword) }}
       </p>
     </div>
     <p class="buttonHolder spacing">
-      <a href="index.php?step=4" class="button">Previous</a>
+      <a href="{{ path('install_step3') }}" class="button">Previous</a>
       <input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" disabled="disabled" />
     </p>
   {{ form_end(form) }}

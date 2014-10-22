@@ -14,6 +14,7 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Exception as BackendException;
 
 /**
  * In this file we store all generic functions that we will be using in the profiles module.
@@ -283,21 +284,21 @@ class Model
         return $avatar;
     }
 
-	/**
-	 * Get information about a profile, by email
-	 *
-	 * @param  string $email The profile email to get the information for.
-	 * @return array
-	 */
-	public static function getByEmail($email)
-	{
-		return (array) BackendModel::getContainer()->get('database')->getRecord(
-			'SELECT p.id, p.email, p.status, p.display_name, p.url
-			 FROM profiles AS p
-			 WHERE p.email = ?',
-			(string) $email
-		);
-	}
+    /**
+     * Get information about a profile, by email
+     *
+     * @param  string $email The profile email to get the information for.
+     * @return array
+     */
+    public static function getByEmail($email)
+    {
+        return (array) BackendModel::getContainer()->get('database')->getRecord(
+            'SELECT p.id, p.email, p.status, p.display_name, p.url
+             FROM profiles AS p
+             WHERE p.email = ?',
+            (string) $email
+        );
+    }
 
     /**
      * Encrypt a string with a salt.
@@ -587,20 +588,20 @@ class Model
 
         // build html
         $html = '<div class="dataGridAvatar">' . "\n";
-        $html .= '	<div class="avatar av24">' . "\n";
+        $html .= '  <div class="avatar av24">' . "\n";
         if ($allowed) {
-            $html .= '		<a href="' .
+            $html .= '      <a href="' .
                      BackendModel::createURLForAction(
                          'Edit',
                          'Profiles'
                      ) . '&amp;id=' . $id . '">' . "\n";
         }
-        $html .= '			<img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+        $html .= '          <img src="' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
         if ($allowed) {
-            $html .= '		</a>' . "\n";
+            $html .= '      </a>' . "\n";
         }
-        $html .= '	</div>';
-        $html .= '	<p><a href="' .
+        $html .= '  </div>';
+        $html .= '  <p><a href="' .
                  BackendModel::createURLForAction(
                      'Edit',
                      'Profiles'
@@ -610,98 +611,98 @@ class Model
         return $html;
     }
 
-	/**
-	 * Import CSV data
-	 *
-	 * @param array $data The array from the .csv file
-	 * @param int[optional] $groupId Adding these profiles to a group
-	 * @param bool[optional] $overwriteExisting If set to true, this will overwrite existing profiles
-	 * @param return array('count' => array('exists' => 0, 'inserted' => 0));
-	 */
-	public static function importCsv($data, $groupId = null, $overwriteExisting = false)
-	{
-		// init statistics
-		$statistics = array('count' => array('exists' => 0, 'inserted' => 0));
+    /**
+     * Import CSV data
+     *
+     * @param array $data The array from the .csv file
+     * @param int[optional] $groupId Adding these profiles to a group
+     * @param bool[optional] $overwriteExisting If set to true, this will overwrite existing profiles
+     * @param return array('count' => array('exists' => 0, 'inserted' => 0));
+     */
+    public static function importCsv($data, $groupId = null, $overwriteExisting = false)
+    {
+        // init statistics
+        $statistics = array('count' => array('exists' => 0, 'inserted' => 0));
 
-		// loop data
-		foreach ($data as $item) {
-			// field checking
-			if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
-				throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
-			}
+        // loop data
+        foreach ($data as $item) {
+            // field checking
+            if (!isset($item['email']) || !isset($item['display_name']) || !isset($item['password'])) {
+                throw new BackendException('The .csv file should have the following columns; "email", "password" and "display_name".');
+            }
 
-			// init $insert
-			$values = array();
+            // init $insert
+            $values = array();
 
-			// define exists
-			$exists = self::existsByEmail($item['email']);
+            // define exists
+            $exists = self::existsByEmail($item['email']);
 
-			// do not overwrite existing profiles
-			if ($exists && !$overwriteExisting) {
-				// adding to exists
-				$statistics['count']['exists'] += 1;
+            // do not overwrite existing profiles
+            if ($exists && !$overwriteExisting) {
+                // adding to exists
+                $statistics['count']['exists'] += 1;
 
-				// skip this item
-				continue;
-			}
+                // skip this item
+                continue;
+            }
 
-			// build item
-			$values = array(
-				'email' => $item['email'],
-				'registered_on' => BackendModel::getUTCDate(),
-				'display_name' => $item['display_name'],
-				'url' => self::getUrl($item['display_name'])
-			);
+            // build item
+            $values = array(
+                'email' => $item['email'],
+                'registered_on' => BackendModel::getUTCDate(),
+                'display_name' => $item['display_name'],
+                'url' => self::getUrl($item['display_name'])
+            );
 
-			// does not exists
-			if (!$exists) {
-				// import
-				$id = self::insert($values);
+            // does not exists
+            if (!$exists) {
+                // import
+                $id = self::insert($values);
 
-				// update counter
-				$statistics['count']['inserted'] += 1;
-			// already exists
-			} else {
-				// get profile
-				$profile = self::getByEmail($item['email']);
-				$id = $profile['id'];
+                // update counter
+                $statistics['count']['inserted'] += 1;
+            // already exists
+            } else {
+                // get profile
+                $profile = self::getByEmail($item['email']);
+                $id = $profile['id'];
 
-				// exists
-				$statistics['count']['exists'] += 1;
-			}
+                // exists
+                $statistics['count']['exists'] += 1;
+            }
 
-			// new password filled in?
-			if ($item['password']) {
-				// get new salt
-				$salt = self::getRandomString();
+            // new password filled in?
+            if ($item['password']) {
+                // get new salt
+                $salt = self::getRandomString();
 
-				// update salt
-				self::setSetting($id, 'salt', $salt);
+                // update salt
+                self::setSetting($id, 'salt', $salt);
 
-				// build password
-				$values['password'] = self::getEncryptedString($item['password'], $salt);
-			}
+                // build password
+                $values['password'] = self::getEncryptedString($item['password'], $salt);
+            }
 
-			// update values
-			self::update($id, $values);
+            // update values
+            self::update($id, $values);
 
-			// we have a group id
-			if ($groupId) {
-				// init values
-				$values = array();
-			
-				// build item
-				$values['profile_id'] = $id;
-				$values['group_id'] = $groupId;
-				$values['starts_on'] = BackendModel::getUTCDate();
+            // we have a group id
+            if ($groupId) {
+                // init values
+                $values = array();
 
-				// insert values
-				$id = self::insertProfileGroup($values);
-			}
-		}
+                // build item
+                $values['profile_id'] = $id;
+                $values['group_id'] = $groupId;
+                $values['starts_on'] = BackendModel::getUTCDate();
 
-		return $statistics;
-	}
+                // insert values
+                $id = self::insertProfileGroup($values);
+            }
+        }
+
+        return $statistics;
+    }
 
     /**
      * Insert a new profile.

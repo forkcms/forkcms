@@ -10,10 +10,7 @@ namespace Backend\Core\Installer;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
-use Symfony\Component\Finder\Finder;
 
-use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
  * Installer for the core

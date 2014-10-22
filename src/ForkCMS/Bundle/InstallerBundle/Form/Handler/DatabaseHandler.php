@@ -29,14 +29,7 @@ class DatabaseHandler
 
     public function processValidForm(Form $form, $request)
     {
-        $session = $request->getSession();
-        $data = $form->getData();
-
-        $session->set('db_hostname', $data['hostname']);
-        $session->set('db_username', $data['username']);
-        $session->set('db_database', $data['database']);
-        $session->set('db_port', $data['port']);
-        $session->set('db_password', $data['password']);
+        $request->getSession()->set('installation_data', $form->getData());
 
         return true;
     }
