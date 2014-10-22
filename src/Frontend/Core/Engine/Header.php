@@ -972,23 +972,25 @@ class Header extends FrontendBaseObject
     public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null)
     {
         $data = array(
-            'twitter:card' => $cardType,
-            'twitter:title' => $title,
-            'twitter:description' => $description,
-            'twitter:image' => $imageURL,
+            array('name' => 'twitter:card', 'content' => $cardType),
+            array('name' => 'twitter:title', 'content' => $title),
+            array('name' => 'twitter:description', 'content' => $description),
+            array('name' => 'twitter:image', 'content' => $imageURL),
         );
 
         // add site handle if provided
         if ($siteHandle != null) {
-            $data[] = array('twitter:site' => $siteHandle);
+            $data[] = array(array('name' => 'twitter:site', 'content' => $siteHandle));
         }
 
         // add creator handle if provided
         if ($creatorHandle != null) {
-            $data[] = array('twitter:creator' => $creatorHandle);
+            $data[] = array(array('name' => 'twitter:creator', 'content' => $creatorHandle));
         }
 
         // add Twitter Card to the header
-        static::addMetaData($data);
+        foreach ($data as $d) {
+            static::addMetaData($d);
+        }
     }
 }
