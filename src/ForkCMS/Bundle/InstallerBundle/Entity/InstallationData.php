@@ -98,7 +98,7 @@ class InstallationData
      *
      * @var bool
      */
-    protected $exampleData;
+    protected $exampleData = true;
 
     /**
      * Do we use a different debug emailaddress
