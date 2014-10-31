@@ -450,7 +450,7 @@ class Page extends FrontendBaseObject
         new Navigation($this->getKernel());
 
         // assign content
-        $this->record['has_children'] = (count(PagesModel::getSubPages($this->record['id'])) > 0);
+        $this->record['has_children'] = (count(PagesModel::getSubpages($this->record['id'])) > 0);
         $this->tpl->assign('page', $this->record);
 
         // set template path
