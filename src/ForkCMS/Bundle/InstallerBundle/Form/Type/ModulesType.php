@@ -36,7 +36,6 @@ class ModulesType extends AbstractType
                 'example_data',
                 'checkbox',
                 array(
-                    'attr' => array('checked' => 'checked'),
                     'label' => 'Install example data',
                 )
             )
