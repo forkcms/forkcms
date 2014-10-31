@@ -1,3 +1,10 @@
+3.8.3 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Tags: fix wrong variable name.
+
+
 3.8.2 (2014-10-21)
 --
 Improvements:
