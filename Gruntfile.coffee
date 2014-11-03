@@ -41,11 +41,18 @@ module.exports = (grunt) ->
           dest: '<%= theme_build %>/layout/templates/'
         ]
       images:
-        files: [
-          cwd: '<%= theme_src %>/layout/images/'
-          src: '**'
-          dest: '<%= theme_build %>/layout/images/'
-        ]
+        all:
+          files: [
+            cwd: '<%= theme_src %>/layout/images/'
+            src: '**'
+            dest: '<%= theme_build %>/layout/images/'
+          ]
+        svg:
+          files: [
+            cwd: '<%= theme_src %>/layout/images/'
+            src: '*.svg'
+            dest: '<%= theme_build %>/layout/images/'
+          ]
       fonts:
         files: [
           cwd: '<%= theme_src %>/layout/fonts/'
@@ -73,7 +80,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: '<%= theme_src %>/layout/images/'
-          src: ['**/*.{png,jpg,gif}']
+          src: ['**/*.{png,jpg,gif,jpeg}']
           dest: '<%= theme_build %>/layout/images/'
         ]
     fontgen:
@@ -128,7 +135,7 @@ module.exports = (grunt) ->
       images:
         files: ['<%= theme_src %>/layout/images/**']
         tasks: [
-          'sync:images'
+          'sync:images:all'
         ]
       fonts:
         files: ['<%= theme_src %>/layout/fonts/**']
@@ -158,9 +165,11 @@ module.exports = (grunt) ->
   grunt.registerTask 'production', [
     'coffee'
     'concat'
-    'compass'
     'uglify'
+    'compass'
     'sync:templates'
-    'sync:fonts'
+    'sync:images:svg'
     'imagemin'
+    'fontgen'
+    'clean:fontsCss'
   ]
