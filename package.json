@@ -15,6 +15,7 @@
     "grunt-contrib-imagemin": "^0.9.1",
     "grunt-contrib-clean": "^0.6.0",
     "grunt-sync": "^0.2.0",
-    "grunt-fontgen": "^0.2.2"
+    "grunt-fontgen": "^0.2.2",
+    "grunt-concurrent": "^1.0.0"
   }
 }

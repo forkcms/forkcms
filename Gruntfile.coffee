@@ -5,6 +5,14 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON 'package.json'
     theme_src: 'frontend/themes/<%= pkg.theme %>/src'
     theme_build: 'frontend/themes/<%= pkg.theme %>/core'
+    concurrent:
+      watch:
+        tasks: [
+          'watch'
+          'compass:watch'
+        ]
+        options:
+          logConcurrentOutput: true
     uglify:
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -33,6 +41,16 @@ module.exports = (grunt) ->
           config: '<%= theme_src %>/layout/config.rb'
           sassDir: '<%= theme_src %>/layout/sass'
           cssDir: '<%= theme_build %>/layout/css'
+          imageDir: '<%= theme_build %>/layout/images'
+          fontsDir: '<%= theme_build %>/layout/fonts'
+      watch:
+        options:
+          config: '<%= theme_src %>/layout/config.rb'
+          sassDir: '<%= theme_src %>/layout/sass'
+          cssDir: '<%= theme_build %>/layout/css'
+          imageDir: '<%= theme_build %>/layout/images'
+          fontsDir: '<%= theme_build %>/layout/fonts'
+          watch: true
     sync:
       templates:
         files: [
@@ -41,18 +59,19 @@ module.exports = (grunt) ->
           dest: '<%= theme_build %>/layout/templates/'
         ]
       images:
-        all:
-          files: [
-            cwd: '<%= theme_src %>/layout/images/'
-            src: '**'
-            dest: '<%= theme_build %>/layout/images/'
-          ]
-        svg:
-          files: [
-            cwd: '<%= theme_src %>/layout/images/'
-            src: '*.svg'
-            dest: '<%= theme_build %>/layout/images/'
-          ]
+        files: [
+          cwd: '<%= theme_src %>/layout/images/'
+          src: '**'
+          dest: '<%= theme_build %>/layout/images/'
+        ]
+        updateAndDelete: true
+      svg:
+        files: [
+          cwd: '<%= theme_src %>/layout/images/'
+          src: '*.svg'
+          dest: '<%= theme_build %>/layout/images/'
+        ]
+        updateAndDelete: true
       fonts:
         files: [
           cwd: '<%= theme_src %>/layout/fonts/'
@@ -107,11 +126,12 @@ module.exports = (grunt) ->
       fontsCss: [
         '<%= theme_build %>/layout/fonts/*.css'
       ]
+      core: [
+        '<%= theme_build %>'
+      ]
     watch:
       #options:
       #  livereload: 80
-      options:
-        atBegin: true
       coffee:
         files: ['<%= theme_src %>/coffee/*']
         tasks: ['coffee']
@@ -121,12 +141,6 @@ module.exports = (grunt) ->
           'concat'
           'uglify'
         ]
-      compass:
-        files: [
-          '<%= theme_src %>/layout/sass/*'
-          '<%= theme_src %>/layout/images/*'
-        ]
-        tasks: ['compass']
       templates:
         files: ['<%= theme_src %>/layout/templates/**']
         tasks: [
@@ -135,7 +149,7 @@ module.exports = (grunt) ->
       images:
         files: ['<%= theme_src %>/layout/images/**']
         tasks: [
-          'sync:images:all'
+          'sync:images'
         ]
       fonts:
         files: ['<%= theme_src %>/layout/fonts/**']
@@ -155,10 +169,24 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-sync'
   grunt.loadNpmTasks 'grunt-fontgen'
+  grunt.loadNpmTasks 'grunt-concurrent'
 
   # Default task(s)
   grunt.registerTask 'default', [
-    'watch'
+    'concurrent:watch'
+  ]
+
+  # Development tasks
+  grunt.registerTask 'dev', [
+    'coffee'
+    'concat'
+    'uglify'
+    'sync:templates'
+    'sync:images'
+    'sync:fonts'
+    'fontgen'
+    'clean:fontsCss'
+    'compass:dist'
   ]
 
   # Production task
@@ -166,10 +194,11 @@ module.exports = (grunt) ->
     'coffee'
     'concat'
     'uglify'
-    'compass'
     'sync:templates'
-    'sync:images:svg'
+    'sync:svg'
     'imagemin'
+    'sync:fonts'
     'fontgen'
     'clean:fontsCss'
+    'compass:dist'
   ]
