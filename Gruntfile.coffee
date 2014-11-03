@@ -76,6 +76,17 @@ module.exports = (grunt) ->
           src: ['**/*.{png,jpg,gif}']
           dest: '<%= theme_build %>/layout/images/'
         ]
+    fontgen:
+      all:
+        options:
+          stylesheet: false
+        files: [
+          src: [
+            '<%= theme_src %>/layout/fonts/*.ttf'
+            '<%= theme_src %>/layout/fonts/*.otf'
+          ]
+          dest: '<%= theme_build %>/layout/fonts/'
+        ]
     clean:
       templates: [
         '<%= theme_build %>/layout/templates/'
@@ -85,6 +96,9 @@ module.exports = (grunt) ->
       ]
       fonts: [
         '<%= theme_build %>/layout/fonts/'
+      ]
+      fontsCss: [
+        '<%= theme_build %>/layout/fonts/*.css'
       ]
     watch:
       #options:
@@ -119,7 +133,8 @@ module.exports = (grunt) ->
       fonts:
         files: ['<%= theme_src %>/layout/fonts/**']
         tasks: [
-          'sync:images'
+          'fontgen'
+          'clean:fontsCss'
         ]
 
   # Load the plugin that provides the necessary task
@@ -132,6 +147,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-imagemin'
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-sync'
+  grunt.loadNpmTasks 'grunt-fontgen'
 
   # Default task(s)
   grunt.registerTask 'default', [
