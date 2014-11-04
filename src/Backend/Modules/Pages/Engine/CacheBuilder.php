@@ -470,6 +470,12 @@ class CacheBuilder
         $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
     }
 
+    /**
+     * Gets the header for cache files
+     *
+     * @param  string $itContainsMessage A message about the content of the file
+     * @return string A comment to be used in the cache file
+     */
     protected function getCacheHeader($itContainsMessage)
     {
         $cacheHeader = '/**' . "\n";
