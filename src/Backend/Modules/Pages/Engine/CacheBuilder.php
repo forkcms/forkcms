@@ -10,9 +10,7 @@ namespace Backend\Modules\Pages\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
-use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 /**
@@ -61,10 +59,10 @@ class CacheBuilder
      * Fetches the pagedata for a certain page array
      * It also adds the page data to the keys array
      *
-     * @param array  &$keys
-     * @param array  $page
-     * @param string $language
-     * @return array An array containing more data for the page
+     * @param  array  &$keys
+     * @param  array  $page
+     * @param  string $language
+     * @return array  An array containing more data for the page
      */
     protected function getPageData(&$keys, $page, $language)
     {
@@ -239,10 +237,10 @@ class CacheBuilder
     /**
      * Get the order
      *
-     * @param array  $navigation The navigation array.
-     * @param string $type       The type of navigation.
-     * @param int    $parentId   The Id to start from.
-     * @param array  $order      The array to hold the order.
+     * @param  array  $navigation The navigation array.
+     * @param  string $type       The type of navigation.
+     * @param  int    $parentId   The Id to start from.
+     * @param  array  $order      The array to hold the order.
      * @return array
      */
     protected function getOrder($navigation, $type = 'page', $parentId = 0, $order = array())
@@ -465,7 +463,7 @@ class CacheBuilder
         }
 
         // add JSON-string
-        $editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
+        $editorinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
         // write the file
         $fs = new Filesystem();
