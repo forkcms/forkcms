@@ -1,0 +1,377 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Blog>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[artikel toevoegen]]></translation>
+        <translation language="en"><![CDATA[add article]]></translation>
+        <translation language="hu"><![CDATA[új cikk]]></translation>
+        <translation language="it"><![CDATA[aggiungi articolo]]></translation>
+        <translation language="ru"><![CDATA[Добавить статью]]></translation>
+        <translation language="zh"><![CDATA[添加文章]]></translation>
+        <translation language="de"><![CDATA[Artikel hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un article]]></translation>
+        <translation language="es"><![CDATA[agregar artículo]]></translation>
+        <translation language="uk"><![CDATA[Додати статтю]]></translation>
+        <translation language="lt"><![CDATA[naujas įrašas]]></translation>
+        <translation language="sv"><![CDATA[lägg till artikel]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη άρθρου]]></translation>
+      </item>
+      <item type="label" name="WordpressFilter">
+        <translation language="nl"><![CDATA[filter]]></translation>
+        <translation language="en"><![CDATA[filter]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" cikk hozzáadva.]]></translation>
+        <translation language="it"><![CDATA[L'articolo "%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Статья "%1$s" была добавлена]]></translation>
+        <translation language="zh"><![CDATA[文章“%1$s”已添加。]]></translation>
+        <translation language="de"><![CDATA[Der Artikel "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[L'article "%1$s" a été ajouté.]]></translation>
+        <translation language="es"><![CDATA[El artículo "%1$s" ha sido agregado.]]></translation>
+        <translation language="uk"><![CDATA[Статтю "%1$s" додано.]]></translation>
+        <translation language="sv"><![CDATA[Artikeln "%1$s" har lagts till.]]></translation>
+        <translation language="el"><![CDATA[Το άρθρο "%1$s" έχει προστεθεί.]]></translation>
+      </item>
+      <item type="message" name="ArticlesFor">
+        <translation language="nl"><![CDATA[Artikels in "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Articles for "%1$s"]]></translation>
+        <translation language="it"><![CDATA[Articoli per "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Статья в "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[文章“%1$s”。]]></translation>
+        <translation language="hu"><![CDATA[Cikkek "%1$s"-tól/től]]></translation>
+        <translation language="de"><![CDATA[Artikel in "%1$s"]]></translation>
+        <translation language="fr"><![CDATA[Articles pour "%1$s" ]]></translation>
+        <translation language="es"><![CDATA[Artículos para "%1$s"]]></translation>
+        <translation language="uk"><![CDATA[Статтю "%1$s" додано.]]></translation>
+        <translation language="sv"><![CDATA[Artiklar för "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Άρθρα γιά "%1$s"]]></translation>
+      </item>
+      <item type="message" name="CommentOnWithURL">
+        <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[Comment on: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="it"><![CDATA[Commento su: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="ru"><![CDATA[Комментарии для записи <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="zh"><![CDATA[评论于 <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="hu"><![CDATA[Hozzászólás: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="fr"><![CDATA[Commentaire sur <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="de"><![CDATA[Kommentare zu: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="es"><![CDATA[Comentario en: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="sv"><![CDATA[Kommentar på: <en href="%1$s">%2$s</en>]]></translation>
+        <translation language="el"><![CDATA[Σχολιασμός του: <a href="%1$s">%2$s</a>]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je het artikel "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the article "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare l'articolo "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Действительно удалить "%1$s"?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除这篇文章“%1$s”？]]></translation>
+        <translation language="de"><![CDATA[Willst du den Artikel "%1$s" wirklich löschen?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" cikket?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer l'article "%1$s"?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el artículo "%1$s"?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill till ta bort artikeln "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε αυτό το άρθρο "%1$s";]]></translation>
+      </item>
+      <item type="message" name="DeleteAllSpam">
+        <translation language="nl"><![CDATA[Alle spam verwijderen:]]></translation>
+        <translation language="en"><![CDATA[Delete all spam:]]></translation>
+        <translation language="it"><![CDATA[Cancella tutto lo spam:]]></translation>
+        <translation language="ru"><![CDATA[Удалить спам:]]></translation>
+        <translation language="zh"><![CDATA[清空垃圾箱：]]></translation>
+        <translation language="hu"><![CDATA[Összes spam törlése:]]></translation>
+        <translation language="fr"><![CDATA[Effacer tous les spams:]]></translation>
+        <translation language="de"><![CDATA[Lösche allen Spam:]]></translation>
+        <translation language="es"><![CDATA[Eliminar todo el Spam:]]></translation>
+        <translation language="sv"><![CDATA[Ta bort allt skräp:]]></translation>
+        <translation language="el"><![CDATA[Διαγραφή όλης της ανεπιθύμητης αλληλογραφίας:]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De geselecteerde artikels werden verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The selected articles were deleted.]]></translation>
+        <translation language="it"><![CDATA[Gli articolo selezionati sono stati eliminati.]]></translation>
+        <translation language="ru"><![CDATA[Записи были удалены.]]></translation>
+        <translation language="zh"><![CDATA[所选文章已删除。]]></translation>
+        <translation language="hu"><![CDATA[A kiválasztott cikkek törlésre kerültek.]]></translation>
+        <translation language="de"><![CDATA[Die ausgewählten Artikel wurden gelöscht.]]></translation>
+        <translation language="fr"><![CDATA[Les articles sélectionnées ont été effacés.]]></translation>
+        <translation language="es"><![CDATA[Los artículos seleccionados fueron eliminados.]]></translation>
+        <translation language="sv"><![CDATA[Valda artiklar borttagna.]]></translation>
+        <translation language="el"><![CDATA[Τα επιλεγμένα άρθρα διεγράφησαν.]]></translation>
+      </item>
+      <item type="message" name="DeletedSpam">
+        <translation language="nl"><![CDATA[Alle spamberichten werden verwijderd.]]></translation>
+        <translation language="en"><![CDATA[All spam-comments were deleted.]]></translation>
+        <translation language="it"><![CDATA[Tutti i commenti ritenuti spam sono stati eliminati.]]></translation>
+        <translation language="ru"><![CDATA[Все спам-комментарии были удалены.]]></translation>
+        <translation language="zh"><![CDATA[所有垃圾评论已删除。]]></translation>
+        <translation language="de"><![CDATA[Alle als Spam markierten Kommentare wurden gelöscht.]]></translation>
+        <translation language="hu"><![CDATA[Összes spam-hozzászólás törölve.]]></translation>
+        <translation language="fr"><![CDATA[Tous les commentaires spams ont été effacés.]]></translation>
+        <translation language="es"><![CDATA[Todos los comentarios spam fueron eliminados.]]></translation>
+        <translation language="sv"><![CDATA[Alla skräpkommentarer borttagna.]]></translation>
+        <translation language="el"><![CDATA[Όλα τα ανεπιθύμητα σχόλια διεγράφησαν.]]></translation>
+      </item>
+      <item type="message" name="EditArticle">
+        <translation language="nl"><![CDATA[bewerk artikel "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit article "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" cikk szerkesztése]]></translation>
+        <translation language="it"><![CDATA[modifica articolo "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать запись "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑文章“%1$s”]]></translation>
+        <translation language="de"><![CDATA[bearbeite Artikel "%1$s"]]></translation>
+        <translation language="fr"><![CDATA[éditer l'article "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar artículo "%1$s"]]></translation>
+        <translation language="sv"><![CDATA[ändra artikel "%1$s"]]></translation>
+        <translation language="el"><![CDATA[μεταβολή άρθρου "%1$s"]]></translation>
+      </item>
+      <item type="message" name="EditCommentOn">
+        <translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit comment on "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" hozzászólás szerkesztése]]></translation>
+        <translation language="it"><![CDATA[modifica commento su "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать комментарии записи "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑“%1$s”上的评论]]></translation>
+        <translation language="fr"><![CDATA[éditer le commentaire sur "%1$s"]]></translation>
+        <translation language="de"><![CDATA[bearbeite die Kommentare zu "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar comentario en "%1$s"]]></translation>
+        <translation language="sv"><![CDATA[ändra kommentar på "%1$s"]]></translation>
+        <translation language="el"><![CDATA[μεταβολή του σχολίου στο "%1$s"]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[Het artikel "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The article "%1$s" was saved.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" cikk elmentve.]]></translation>
+        <translation language="it"><![CDATA[L'articolo "%1$s" è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Запись "%1$s" сохранена.]]></translation>
+        <translation language="zh"><![CDATA[文章“%1$s”已保存。]]></translation>
+        <translation language="de"><![CDATA[Der Artikel "%1$s" wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[L'article "%1$s" a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[El atículo "%1$s" fue guardado.]]></translation>
+        <translation language="sv"><![CDATA[Artikeln "%1$s" sparades.]]></translation>
+        <translation language="el"><![CDATA[Το άρθρο "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="EditedComment">
+        <translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The comment was saved.]]></translation>
+        <translation language="hu"><![CDATA[A hozzászólás elmentve.]]></translation>
+        <translation language="it"><![CDATA[Il commento è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Комментарий изменен.]]></translation>
+        <translation language="zh"><![CDATA[评论已保存。]]></translation>
+        <translation language="de"><![CDATA[Der Kommentar wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Le commentaire a été enregistré.]]></translation>
+        <translation language="es"><![CDATA[El comentario fue guardado.]]></translation>
+        <translation language="sv"><![CDATA[Kommentar sparades.]]></translation>
+        <translation language="el"><![CDATA[Το σχόλιο αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="FollowAllCommentsInRSS">
+        <translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="en"><![CDATA[Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="it"><![CDATA[Segui tutti i commenti tramite feed RSS: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="ru"><![CDATA[Следить за комментариями по RSS: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="zh"><![CDATA[通过RSS源订阅所有评论： <a href="%1$s">%1$s</a>。]]></translation>
+        <translation language="hu"><![CDATA[Az összes hozzászólás RSS feed-je: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="de"><![CDATA[Verfolge alle Kommentare in einem RSS-Feed: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="fr"><![CDATA[Faire suivre les commentaires dans un flux RSS <a href="%1$s">%1$s</a>]]></translation>
+        <translation language="es"><![CDATA[Sigue todos los comentarios en el RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="sv"><![CDATA[Följ alla kommentarer i ett RSS-flöde: <en href="%1$s">%1$s</en>.]]></translation>
+        <translation language="el"><![CDATA[Ακολούθησε όλα τα σχόλια σε μιά ροή RSS: <a href="%1$s">%1$s</a>.]]></translation>
+      </item>
+      <item type="message" name="HelpMeta">
+        <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie)]]></translation>
+        <translation language="en"><![CDATA[Show the meta information for this blogpost in the RSS feed (category)]]></translation>
+        <translation language="it"><![CDATA[Mostra le meta informazioni di questo articolo nel feed RSS (categoria)]]></translation>
+        <translation language="ru"><![CDATA[Показать Мета данные для записей в RSS.]]></translation>
+        <translation language="zh"><![CDATA[在RSS源（分类）中显示博客文章的所有信息]]></translation>
+        <translation language="hu"><![CDATA[Mutasd ennek a blogposztnak a meta információit RSS feed-ben (katagória)]]></translation>
+        <translation language="de"><![CDATA[Zeige die Meta-Informationen für diesen Blogpost im RSS Feed (Kategorie)]]></translation>
+        <translation language="fr"><![CDATA[Afficher les informations meta pour ce post dans le flux RSS (catégorie)]]></translation>
+        <translation language="es"><![CDATA[muestra la información meta de este post en el RSS feed (category)]]></translation>
+        <translation language="sv"><![CDATA[Visa meta information för denna bloggpost i RSS-flöde (kategori)]]></translation>
+        <translation language="el"><![CDATA[Εμφάνισε τις μετα-πληροφορίες γιά αυτή την ανάρτηση στη ροή RSS (κατηγορία)]]></translation>
+      </item>
+      <item type="message" name="HelpPingServices">
+        <translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.]]></translation>
+        <translation language="en"><![CDATA[Let various blogservices know when you've posted a new article.]]></translation>
+        <translation language="it"><![CDATA[Informa diversi blogservices quando pubblichi un nuovo articolo.]]></translation>
+        <translation language="ru"><![CDATA[Разрешить другим блого-сервисам знать о дате новых записей.]]></translation>
+        <translation language="zh"><![CDATA[让多个不同的博客服务提供商知道你发布了一篇新文章。]]></translation>
+        <translation language="de"><![CDATA[Informiere verschiedene Blogging-Dienste sobald du einen neuen Artikel veröffentlicht hast.]]></translation>
+        <translation language="hu"><![CDATA[Tudj meg több más blogszolgáltatást, mikor új cikket teszel közzé.]]></translation>
+        <translation language="fr"><![CDATA[Informez plusieurs services de blog que vous avez posté un nouvel article.]]></translation>
+        <translation language="es"><![CDATA[avisa a varios servicios de blog cuando publicas un nuevo artículo.]]></translation>
+        <translation language="sv"><![CDATA[Låt olika bloggtjänster veta när du har postat en ny artikel.]]></translation>
+        <translation language="el"><![CDATA[Ενημέρωσε τις διάφορες υπηρεσίες ιστολογίων όταν έχετε αναρτήσει ένα νέο άρθρο.]]></translation>
+      </item>
+      <item type="message" name="HelpSpamFilter">
+        <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
+        <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
+        <translation language="it"><![CDATA[Abilita il filtro antispam (Askimet) per evitare spam nei commenti. ]]></translation>
+        <translation language="ru"><![CDATA[Включить спам-фильтр Akismet.]]></translation>
+        <translation language="zh"><![CDATA[开启内置的垃圾评论滤镜（Akismet)过滤垃圾评论。]]></translation>
+        <translation language="de"><![CDATA[Aktiviere den eingebauten Spamfilter (Akismet) um Spam in den Kommentaren zu vermeiden.]]></translation>
+        <translation language="hu"><![CDATA[Engedélyezd a beépített spamszűrőt (Akismet) a spam hozzászólások kivédéséhez.]]></translation>
+        <translation language="fr"><![CDATA[Activez le filtre de spam (Akismet) pour éviter les spams dans les commentaires.]]></translation>
+        <translation language="es"><![CDATA[Activar el filtro spam incorporado (Akismet) para ayudar a evitar los comentarios spam.]]></translation>
+        <translation language="sv"><![CDATA[Aktivera det inbyggda skräpfiltret (Akismet) för att undvika skräpkommentarer.]]></translation>
+        <translation language="el"><![CDATA[Ενεργοποίηση του ενσωματωμένου φίλτρου (Akismet) γιά την παρεμπόδιση ανεπιθύμητων σχολίων.]]></translation>
+      </item>
+      <item type="message" name="HelpSummary">
+        <translation language="nl"><![CDATA[Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.]]></translation>
+        <translation language="en"><![CDATA[Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.]]></translation>
+        <translation language="it"><![CDATA[Scrivi un'introduzione o un sommario per gli articoli lunghi che verrà mostrato nell'homepage o nella panoramica dell'articolo.]]></translation>
+        <translation language="ru"><![CDATA[Напишите краткое описание для длинных статей. Это будет показано на главной странице или в обзоре статей.]]></translation>
+        <translation language="zh"><![CDATA[为长篇文章撰写介绍或概括文字。它将显示在首页和文章概览页。]]></translation>
+        <translation language="hu"><![CDATA[Írj bevezetőt vagy összegzést a hosszú bejegyzésekhez. Ez megjelenik a kezdőoldalon vagy a cikk áttekintésénél.]]></translation>
+        <translation language="de"><![CDATA[Schreibe eine kurze Einleitung oder Zusammenfassung für längere Artikel. Sie wird auf der Startseite oder der Artikel-Übersicht angezeigt werden.]]></translation>
+        <translation language="fr"><![CDATA[Rédigez une introduction pour les articles longs. Elle sera affichée sur la homepage ou sur la vue d'ensemble de l'article.]]></translation>
+        <translation language="es"><![CDATA[Escribe una introducción o resumen para artículos largos. Esto se mostrará en la página principal o en el resumen del artículo.]]></translation>
+        <translation language="sv"><![CDATA[Skriv en introduktion eller summering för långa artiklar. Det kommer visas på hemsidan eller artikelöversikten.]]></translation>
+        <translation language="el"><![CDATA[Γράψτε μιά εισαγωγή ή περίληψη γιά μακροσκελή άρθρα. Θα εμφανίζεται στην αρχική σελίδα ή την προεπισκόπηση του άρθρου.]]></translation>
+      </item>
+      <item type="message" name="HelpWordpress">
+        <translation language="nl"><![CDATA[You can upload an export file from a wordpress site here.]]></translation>
+        <translation language="en"><![CDATA[Hier kan je een export bestand vanuit een wordpress site uploaden.]]></translation>
+      </item>
+      <item type="message" name="HelpWordpressFilter">
+        <translation language="nl"><![CDATA[The searchterm that identifies links in an existing blogpost so that we can transfer them to active links on the fork blog module.]]></translation>
+        <translation language="en"><![CDATA[De zoekterm die in bestaande blogposts in een link voor moet komen, alvorens wij de link kunnen omzetten naar een actieve link op de fork blog module.]]></translation>
+      </item>
+      <item type="message" name="NoCategoryItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen categorieën. <a href="%1$s">Maak een eerste categorie</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no categories yet. <a href="%1$s">Create the first category</a>.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora categorie. <a href="%1$s">Crea la prima categoria</a>.]]></translation>
+        <translation language="ru"><![CDATA[Нет категорий.<a href="%1$s">Создайте первую</a>.]]></translation>
+        <translation language="zh"><![CDATA[尚无分类。There are no articles yet. <a href="%1$s">创建一个分类</a>.]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Kategorien. <a href="%1$s">Erstelle die erste Kategorie</a>.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még kategóriák. <a href="%1$s">Hozd létre az elsőt</a>.]]></translation>
+        <translation language="fr"><![CDATA[il n'y a pas encore de catégorie. <a href="%1$s">Créez la première</a>]]></translation>
+        <translation language="es"><![CDATA[Aún no hay categorias. <a href="%1$s">Crea la primera categoría</a>.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga kategorier än. <en href="%1$s">Skapa en första kategori</en>.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη κατηγορίες. <a href="%1$s">Δημιουργήστε την πρώτη κατηγορία</a>.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora articoli. <a href="%1$s">Scrivi il primo articolo</a>.]]></translation>
+        <translation language="ru"><![CDATA[Нет записей. <a href="%1$s">Напишите первый пост</a>.]]></translation>
+        <translation language="zh"><![CDATA[尚无文章。<a href="%1$s">撰写一篇文章</a>。]]></translation>
+        <translation language="de"><![CDATA[Es gibt noch keine Artikel. <a href="%1$s">Schreibe den ersten Artikel</a>.]]></translation>
+        <translation language="hu"><![CDATA[Nincsenek még cikkek. <a href="%1$s">Írd meg az elsőt</a>.]]></translation>
+        <translation language="fr"><![CDATA[il n'y a pas encore d'article. <a href="%1$s">Ajouter le premier article</a>.]]></translation>
+        <translation language="es"><![CDATA[Aún no hay artículos. <a href="%1$s">Escribe el primer artículo</a>.]]></translation>
+        <translation language="sv"><![CDATA[Det finns inga artiklar än. <en href="%1$s">Skriv den första artikeln</en>.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη άρθρα. <a href="%1$s">Γράψε το πρώτο άρθρο</a>.]]></translation>
+      </item>
+      <item type="message" name="NotifyByEmailOnNewComment">
+        <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
+        <translation language="en"><![CDATA[Notify by email when there is a new comment.]]></translation>
+        <translation language="it"><![CDATA[Invia una mail quando viene aggiunto un commento.]]></translation>
+        <translation language="ru"><![CDATA[Оповещать по E-Mail о новых комментариях.]]></translation>
+        <translation language="zh"><![CDATA[有新评论时发邮件提醒我。]]></translation>
+        <translation language="de"><![CDATA[Benachrichtigung per E-Mail bei neuen Kommentare.]]></translation>
+        <translation language="hu"><![CDATA[Értesítés e-mailben, ha új hozzászólás érkezik.]]></translation>
+        <translation language="fr"><![CDATA[Notifier par e-mail quand il y a un nouveau commentaire.]]></translation>
+        <translation language="es"><![CDATA[Notificar por email cuando haya un nuevo comentario.]]></translation>
+        <translation language="sv"><![CDATA[Notifiera via e-post när det finns en ny kommentar.]]></translation>
+        <translation language="el"><![CDATA[Ειδοποίηση με email όταν υπάρχει νέο σχόλιο.]]></translation>
+      </item>
+      <item type="message" name="NotifyByEmailOnNewCommentToModerate">
+        <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie te modereren is.]]></translation>
+        <translation language="en"><![CDATA[Notify by email when there is a new comment to moderate.]]></translation>
+        <translation language="it"><![CDATA[Invia una mail quando ci sono nuovi commenti da moderare.]]></translation>
+        <translation language="ru"><![CDATA[Оповещать по E-Mail о новых комментариях со статусом для модерации.]]></translation>
+        <translation language="zh"><![CDATA[有新评论待审核时发邮件提醒我。]]></translation>
+        <translation language="de"><![CDATA[Benachrichtigung per E-Mail bei neuen, freizuschaltenden Kommentaren.]]></translation>
+        <translation language="hu"><![CDATA[Értesítés e-mailben, ha új hozzászólást moderációra vár.]]></translation>
+        <translation language="fr"><![CDATA[Notifier par e-mail quand il y a un nouveau commentaire à modérer.]]></translation>
+        <translation language="es"><![CDATA[Notificar por email cuando haya un nuevo comentario que moderar.]]></translation>
+        <translation language="sv"><![CDATA[Notifiera via e-post när det finns en ny kommentar till moderera.]]></translation>
+        <translation language="el"><![CDATA[Ειδοποίηση με email όταν υπάρχει ένα νέο σχόλιο προς έγκριση.]]></translation>
+      </item>
+      <item type="message" name="NumItemsInRecentArticlesFull">
+        <translation language="nl"><![CDATA[Aantal items in recente artikels (volledig) widget]]></translation>
+        <translation language="en"><![CDATA[Number of articles in the recent articles (full) widget]]></translation>
+        <translation language="it"><![CDATA[Numero di articoli nel widget (completo) degli articoli recenti]]></translation>
+        <translation language="ru"><![CDATA[Количество последних записей (все)]]></translation>
+        <translation language="zh"><![CDATA[最新文章（全文）小工具中的文章数量]]></translation>
+        <translation language="hu"><![CDATA[A legutóbbi cikkek száma (teljes) widget]]></translation>
+        <translation language="fr"><![CDATA[Nombre d'articles dans le widget articles récents (complet)]]></translation>
+        <translation language="de"><![CDATA[Anzahl an Artikeln im neueste Artikel (vollständig) Widget.]]></translation>
+        <translation language="es"><![CDATA[Número de artículos en los artículos recientes (completo) widget]]></translation>
+        <translation language="sv"><![CDATA[Antal artiklar bland de senaste artiklarna (fullständig) widget]]></translation>
+        <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (πλήρης)]]></translation>
+      </item>
+      <item type="message" name="NumItemsInRecentArticlesList">
+        <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
+        <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
+        <translation language="it"><![CDATA[Numero di articoli nel widget (lista) degli articoli recenti]]></translation>
+        <translation language="ru"><![CDATA[Количество последних записей (лист)]]></translation>
+        <translation language="zh"><![CDATA[最新文章（列表）小工具中的文章数量]]></translation>
+        <translation language="hu"><![CDATA[A legutóbbi cikkek száma (lista) widget]]></translation>
+        <translation language="fr"><![CDATA[Nombre d'articles dans le widget articles récents (liste)]]></translation>
+        <translation language="de"><![CDATA[Anzahl an Artikeln im neueste Artikel (Liste) Widget.]]></translation>
+        <translation language="es"><![CDATA[Número de artículos en los artículos recientes (lista) widget]]></translation>
+        <translation language="sv"><![CDATA[Antal artiklar bland de senaste artiklarna (lista) widget]]></translation>
+        <translation language="el"><![CDATA[Πλήθος άρθρων στη μικροεφαρμογή Πρόσφατων Άρθρων (λίστα).]]></translation>
+      </item>
+      <item type="message" name="ShowImageForm">
+        <translation language="nl"><![CDATA[De gebruiker mag een afbeelding toevoegen.]]></translation>
+        <translation language="en"><![CDATA[The user can upload a file.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь может загрузить файл.]]></translation>
+        <translation language="de"><![CDATA[Der Benutzer kann eine Datei hochladen.]]></translation>
+        <translation language="es"><![CDATA[El usuario puede subir un archivo.]]></translation>
+        <translation language="hu"><![CDATA[A felhasználó tölthet fel fájlt.]]></translation>
+        <translation language="sv"><![CDATA[Användaren kan ladda upp en fil.]]></translation>
+        <translation language="el"><![CDATA[Ο χρήστης μπορεί να ανεβάσει ένα αρχείο.]]></translation>
+        <translation language="zh"><![CDATA[用户可以上传一个文件。]]></translation>
+      </item>
+      <item type="message" name="ShowOnlyItemsInCategory">
+        <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
+        <translation language="en"><![CDATA[Show only articles for:]]></translation>
+        <translation language="it"><![CDATA[Mostra solo gli articoli per:]]></translation>
+        <translation language="ru"><![CDATA[Показаны записи:]]></translation>
+        <translation language="zh"><![CDATA[只显示分类下的文章：]]></translation>
+        <translation language="de"><![CDATA[Zeige nur Artikel der Kategorie:]]></translation>
+        <translation language="hu"><![CDATA[Csak cikkek mutatása:]]></translation>
+        <translation language="fr"><![CDATA[Montrer seulement les articles pour:]]></translation>
+        <translation language="es"><![CDATA[Mostrar solamente artículos para:]]></translation>
+        <translation language="sv"><![CDATA[Visa endast artiklar för:]]></translation>
+        <translation language="el"><![CDATA[Εμφάνισε άρθρα μόνον γιά:]]></translation>
+      </item>
+      <item type="error" name="DeleteCategoryNotAllowed">
+        <translation language="nl"><![CDATA[Het is niet toegestaan om de categorie "%1$s" te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[It is not allowed to delete the category "%1$s".]]></translation>
+        <translation language="it"><![CDATA[Non è consentito eliminare la categoria "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Запрещено удаление категории "%1$s".]]></translation>
+        <translation language="zh"><![CDATA[分类“%1$s”不允许删除。]]></translation>
+        <translation language="de"><![CDATA[Es ist nicht erlaubt die Kategorie "%1$s" zu löschen.]]></translation>
+        <translation language="hu"><![CDATA[Nem törölhető a(z) "%1$s" kategória.]]></translation>
+        <translation language="fr"><![CDATA[Vous ne pouvez pas effacer la catégorie "%1$s".]]></translation>
+        <translation language="es"><![CDATA[No está permitido eliminar la categoría "%1$s".]]></translation>
+        <translation language="sv"><![CDATA[Det inte tillåtet att ta bort kategorin "%1$s".]]></translation>
+        <translation language="el"><![CDATA[Δεν επιτρέπεται να διαγράψετε την κατηγορία "%1$s".]]></translation>
+      </item>
+      <item type="error" name="RSSDescription">
+        <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Blog RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>
+        <translation language="it"><![CDATA[Non è stata ancora fornita una descrizione per il feed RSS del Blog. <a href="%1$s">Aggiungila</a>]]></translation>
+        <translation language="ru"><![CDATA[Не установлен заголовок RSS. <a href="%1$s">Настроить</a>]]></translation>
+        <translation language="zh"><![CDATA[博客RSS描述尚未提供。<a href="%1$s">设置</a>]]></translation>
+        <translation language="fr"><![CDATA[La description du blog RSS n'est pas encore founie. <a href="%1$s">Configurer</a>]]></translation>
+        <translation language="hu"><![CDATA[Blog RSS leírás még nincs megadva. <a href="%1$s">Beállítás</a>]]></translation>
+        <translation language="de"><![CDATA[Die Blog RSS Beschreibung wurde noch nicht angegeben. <a href="%1$s">Konfigurieren</a>]]></translation>
+        <translation language="es"><![CDATA[Aún no se ha proporcionado una descripción para la alimentación del blog RSS. <a href="%1$s">Configurar</a>]]></translation>
+        <translation language="lt"><![CDATA[Tinklaraščio RSS nenustatytas, <a href="%1$s">nustatyti</a>]]></translation>
+        <translation language="sv"><![CDATA[Blogg RSS beskrivning är ännu inte tillagd. <en href="%1$s">Konfigurera</en>]]></translation>
+        <translation language="el"><![CDATA[Δεν έχει δοθεί ακόμη η περιγραφή γιά τη ροή RSS του ιστολογίου. <a href="%1$s">Ρυθμίστε την</a>]]></translation>
+      </item>
+      <item type="error" name="XMLFilesOnly">
+        <translation language="nl"><![CDATA[Enkel XML bestanden kunnen worden geupload.]]></translation>
+        <translation language="en"><![CDATA[Only XML files can be uploaded.]]></translation>
+      </item>
+    </Blog>
+  </Backend>
+</locale>

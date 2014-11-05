@@ -16,13 +16,13 @@ mkdir -p ${SCRIPT_PATH}/reports
 echo "* Running PHP Mess Detection (will take a while)"
 
 # run PHP Mess Detection
-phpmd ${SCRIPT_PATH}/../ xml codesize,unusedcode,naming --exclude ${SCRIPT_PATH}/../backend/core/js/ckeditor,${SCRIPT_PATH}/../backend/core/js/ckfinder,${SCRIPT_PATH}/../frontend/cache,${SCRIPT_PATH}/../backend/cache,${SCRIPT_PATH}/../install/cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external --reportfile ${SCRIPT_PATH}/reports/phpmd.xml
+phpmd ${SCRIPT_PATH}/../ xml codesize,unusedcode,naming --exclude ${SCRIPT_PATH}/../src/Backend/Core/jJs/ckeditor,${SCRIPT_PATH}/../src/Backend/Core/Js/ckfinder,${SCRIPT_PATH}/../src/Frontend/Cache,${SCRIPT_PATH}/../src/Backend/Cache,${SCRIPT_PATH}/../src/Install/Cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external --reportfile ${SCRIPT_PATH}/reports/phpmd.xml
 
 # tell user
 echo "* Running PHP Depend (will take a while)"
 
 # run PHP Depend
-pdepend --jdepend-chart=${SCRIPT_PATH}/reports/pdepend_chart.svg --overview-pyramid=${SCRIPT_PATH}/reports/pdepend_pyramid.svg --summary-xml=${SCRIPT_PATH}/reports/pdepend.xml --suffix=php --ignore=${SCRIPT_PATH}/../backend/core/js/ckeditor,${SCRIPT_PATH}/../backend/core/js/ckfinder,${SCRIPT_PATH}/../frontend/cache,${SCRIPT_PATH}/../backend/cache,${SCRIPT_PATH}/../install/cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external ${SCRIPT_PATH}/../ > /dev/null
+pdepend --jdepend-chart=${SCRIPT_PATH}/reports/pdepend_chart.svg --overview-pyramid=${SCRIPT_PATH}/reports/pdepend_pyramid.svg --summary-xml=${SCRIPT_PATH}/reports/pdepend.xml --suffix=php --ignore=${SCRIPT_PATH}/../src/Backend/Core/Js/ckeditor,${SCRIPT_PATH}/../src/Backend/Core/Js/ckfinder,${SCRIPT_PATH}/../src/Frontend/Cache,${SCRIPT_PATH}/../src/Backend/Cache,${SCRIPT_PATH}/../src/Install/Cache,${SCRIPT_PATH}/../tools,${SCRIPT_PATH}/../library/external ${SCRIPT_PATH}/../ > /dev/null
 
 # tell user
 echo "* Running PHP Loc"

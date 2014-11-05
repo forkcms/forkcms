@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Users>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[gebruiker toevoegen]]></translation>
+        <translation language="en"><![CDATA[add user]]></translation>
+        <translation language="it"><![CDATA[aggiungi utente]]></translation>
+        <translation language="ru"><![CDATA[Добавить пользователя]]></translation>
+        <translation language="zh"><![CDATA[添加用户]]></translation>
+        <translation language="de"><![CDATA[Benutzer hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter un utilisateur]]></translation>
+        <translation language="hu"><![CDATA[felhasználó hozzáadása]]></translation>
+        <translation language="es"><![CDATA[añadir usuario]]></translation>
+        <translation language="uk"><![CDATA[Додати кокистувача]]></translation>
+        <translation language="lt"><![CDATA[naujas narys]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη χρήστη]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[L'utente "%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь "%1$s" добавлен.]]></translation>
+        <translation language="zh"><![CDATA[用户“%1$s”已添加。]]></translation>
+        <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó hozzáadva.]]></translation>
+        <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" ha sido agregado.]]></translation>
+        <translation language="uk"><![CDATA[Користувача "%1$s" додано.]]></translation>
+        <translation language="el"><![CDATA[Προστέθηκε ο χρήστης "%1$s".]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the user "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare l'utente "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Действительно удалить пользователя "%1$s"?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除用户“%1$s”吗？]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer l'utilisateur "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törölni akarod a(z) "%1$s" felhasználót?]]></translation>
+        <translation language="de"><![CDATA[Bist du dir sicher, dass du den Benutzer "%1$s" löschen möchtest?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de que quieres eliminar el usuario "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το χρήστη "%1$s";]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" was deleted.]]></translation>
+        <translation language="it"><![CDATA[L'utente "%1$s" è stato eliminato.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь "%1$s" удален.]]></translation>
+        <translation language="zh"><![CDATA[用户“%1$s”已删除。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó törölve.]]></translation>
+        <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde gelöscht.]]></translation>
+        <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été effacé.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" fue eliminado.]]></translation>
+        <translation language="el"><![CDATA[Ο χρήστης "%1$s" διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De instellingen voor "%1$s" werden opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The settings for "%1$s" were saved.]]></translation>
+        <translation language="it"><![CDATA[Le impostazioni di "%1$s" sono state salvate.]]></translation>
+        <translation language="ru"><![CDATA[Настройки для пользователя "%1$s" сохранены.]]></translation>
+        <translation language="zh"><![CDATA[“%1$s”的设置已保存。]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" beállításai elmentve.]]></translation>
+        <translation language="de"><![CDATA[Die Einstellungen für "%1$s" wurden gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Les réglages pour "%1$s" ont été enregistrés.]]></translation>
+        <translation language="es"><![CDATA[Las configuraciones para "%1$s" han sido guardadas.]]></translation>
+        <translation language="el"><![CDATA[Οι ρυθμίσεις γιά "%1$s" αποθηκεύτηκαν.]]></translation>
+      </item>
+      <item type="message" name="EditUser">
+        <translation language="nl"><![CDATA[bewerk gebruiker "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit user "%1$s"]]></translation>
+        <translation language="it"><![CDATA[modifica utente "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[Редактировать пользователя "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[编辑用户“%1$s”。‘]]></translation>
+        <translation language="hu"><![CDATA["%1$s" felhasználó szerkesztése]]></translation>
+        <translation language="de"><![CDATA[bearbeite Benutzer "%1$s"]]></translation>
+        <translation language="fr"><![CDATA[éditer l'utilisateur "%1$s"]]></translation>
+        <translation language="es"><![CDATA[editar usuario "%1$s"]]></translation>
+        <translation language="el"><![CDATA[μεταβολή στοιχείων του χρήστη "%1$s"]]></translation>
+      </item>
+      <item type="message" name="HelpActive">
+        <translation language="nl"><![CDATA[Geef deze account toegang tot het CMS.]]></translation>
+        <translation language="en"><![CDATA[Enable CMS access for this account.]]></translation>
+        <translation language="it"><![CDATA[Abilita l'accesso tramite CMS per questo account.]]></translation>
+        <translation language="ru"><![CDATA[Разрешить доступ к CMS этому аккунту.]]></translation>
+        <translation language="zh"><![CDATA[允许CMS到达这个帐户。]]></translation>
+        <translation language="de"><![CDATA[Aktiviere CMS-Zugang für dieses Konto.]]></translation>
+        <translation language="hu"><![CDATA[CMS hozzáférés engedélyezése a fiókhoz.]]></translation>
+        <translation language="fr"><![CDATA[Activer l'accès CMS pour ce compte.]]></translation>
+        <translation language="es"><![CDATA[Activa el acceso CMS para esta cuenta.]]></translation>
+        <translation language="el"><![CDATA[Δώσε άδεια πρόσβασης στο CMS γιά αυτόν το λογαριασμό.]]></translation>
+      </item>
+      <item type="message" name="HelpAPIAccess">
+        <translation language="nl"><![CDATA[Geef deze account toegang tot de API.]]></translation>
+        <translation language="en"><![CDATA[Enable API access for this account.]]></translation>
+        <translation language="it"><![CDATA[Abilita l'accesso tramite API per questo account.]]></translation>
+        <translation language="ru"><![CDATA[Разрешить доступ к API этому аккаунту.]]></translation>
+        <translation language="zh"><![CDATA[允许API到达这个帐户。]]></translation>
+        <translation language="de"><![CDATA[API-Zugang für dieses Benutzerkonto aktivieren.]]></translation>
+        <translation language="hu"><![CDATA[API hozzáférés engedélyezése a fiókhoz.]]></translation>
+        <translation language="fr"><![CDATA[Activer l'accès API pour ce compte.]]></translation>
+        <translation language="es"><![CDATA[activa el acceso API para esta cuenta.]]></translation>
+        <translation language="el"><![CDATA[Δώσε άδεια πρόσβασης στο API γιά αυτόν το λογαριασμό.]]></translation>
+      </item>
+      <item type="message" name="HelpStrongPassword">
+        <translation language="nl"><![CDATA[Sterke wachtwoorden bestaan uit een combinatie van hoofdletters]]></translation>
+        <translation language="en"><![CDATA[Strong passwords consist of a combination of capitals]]></translation>
+        <translation language="it"><![CDATA[Una password forte è formata da una combinazione di maiuscole.]]></translation>
+        <translation language="ru"><![CDATA[Сильный пароль - комбинация чисел и букв.]]></translation>
+        <translation language="zh"><![CDATA[建议使用大小写字母组合增强密码安全度。]]></translation>
+        <translation language="de"><![CDATA[Starke Passwörter bestehen aus einer Kombination von großen und kleinen Buchstaben, sowie Ziffern und Sonderzeichen.]]></translation>
+        <translation language="hu"><![CDATA[Erős jelszóhoz kombináld a kis- és nagybetűket.]]></translation>
+        <translation language="fr"><![CDATA[Les mots de passe évolués sont constitués d'une combinaison de majuscules.]]></translation>
+        <translation language="es"><![CDATA[Las contraseñas seguras consisten en una combinación de letras mayúsculas]]></translation>
+        <translation language="el"><![CDATA[Οι ισχυροί κωδικοί αποτελούνται από συνδυασμό κεφαλαίων]]></translation>
+      </item>
+      <item type="message" name="Restored">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd terug geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" is restored.]]></translation>
+        <translation language="it"><![CDATA[L'utente "%1$s" è stato ripristinato.]]></translation>
+        <translation language="ru"><![CDATA[Пользователь "%1$s" восстановлен.]]></translation>
+        <translation language="zh"><![CDATA[用户“%1$s”已恢复。]]></translation>
+        <translation language="de"><![CDATA[Der Benutzer "%1$s" wurde wiederhergestellt.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" felhasználó helyreállítva.]]></translation>
+        <translation language="fr"><![CDATA[L'utilisateur "%1$s" a été restauré.]]></translation>
+        <translation language="es"><![CDATA[El usuario "%1$s" ha sido restaurado.]]></translation>
+        <translation language="el"><![CDATA[Έγινε επαναφορά του χρήστη "%1$s".]]></translation>
+      </item>
+      <item type="error" name="CantChangeGodsEmail">
+        <translation language="nl"><![CDATA[Je kan het emailadres van deze gebruiker niet aanpassen.]]></translation>
+        <translation language="en"><![CDATA[You can't change the emailaddres of the GOD-user.]]></translation>
+        <translation language="it"><![CDATA[Non puoi cambiare l'indirizzo email dell'utente Dio.]]></translation>
+        <translation language="ru"><![CDATA[Вы не можете изменить E-Mail пользователя-Бога.]]></translation>
+        <translation language="zh"><![CDATA[你不能更改终极用户的邮箱地址。]]></translation>
+        <translation language="fr"><![CDATA[Vous ne pouvez pas changer l'adresse e-mail du GOD-user.]]></translation>
+        <translation language="de"><![CDATA[De E-Mail-Adresse des Hauptbenutzers kann nicht gelöscht werden.]]></translation>
+        <translation language="hu"><![CDATA[Nem tudod megváltoztatni a GOD-felhasználó e-mail címét.]]></translation>
+        <translation language="es"><![CDATA[No puedes cambiar la dirección email del usuario-DIOS..]]></translation>
+        <translation language="el"><![CDATA[Δεν μπορείτε να αλλάξετε το email του χρήστη GOD.]]></translation>
+      </item>
+      <item type="error" name="CantDeleteGod">
+        <translation language="nl"><![CDATA[Je kan deze gebruiker niet verwijderen.]]></translation>
+        <translation language="en"><![CDATA[You can't delete the GOD-user.]]></translation>
+        <translation language="it"><![CDATA[Non puoi eliminare l'utente Dio.]]></translation>
+        <translation language="ru"><![CDATA[Вы не можете удалить пользователя-Бога.]]></translation>
+        <translation language="zh"><![CDATA[你不能删除终极用户。]]></translation>
+        <translation language="fr"><![CDATA[Vous ne pouvez pas effacer le GOD-user.]]></translation>
+        <translation language="de"><![CDATA[Der Haupt-Benutzer kann nicht gelöscht werden.]]></translation>
+        <translation language="hu"><![CDATA[Nem törölheted a GOD-felhasználót.]]></translation>
+        <translation language="es"><![CDATA[No puedes eliminar el usuario-DIOS.]]></translation>
+        <translation language="el"><![CDATA[Δεν επιπτρέπεται να διαγράψετε το χρήστη GOD.]]></translation>
+      </item>
+      <item type="error" name="EmailWasDeletedBefore">
+        <translation language="nl"><![CDATA[Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.]]></translation>
+        <translation language="en"><![CDATA[A user with this emailaddress was deleted. <a href="%1$s">Restore this user</a>.]]></translation>
+        <translation language="it"><![CDATA[Un utente con questo indirizzo email è stato eliminato. <a href="%1$s">Ripristina questo utente</a>]]></translation>
+        <translation language="ru"><![CDATA[Пользователь с этим E-Mail удален. <a href="%1$s">Восстановить</a>.]]></translation>
+        <translation language="zh"><![CDATA[拥有这个邮箱地址的用户已删除。<a href="%1$s">恢复这个用户</a>。]]></translation>
+        <translation language="fr"><![CDATA[Un utilisateur avec cette adresse e-mail a été effacé. <a href="%1$s">Restaurer cet utilisateur</a>.]]></translation>
+        <translation language="de"><![CDATA[Ein Benutzer mit dieser E-Mail-Adresse wurde früher gelöscht. <a href="%1$s"> Stelle diesen Benutzet wieder her</a>]]></translation>
+        <translation language="hu"><![CDATA[A felhasználó ezzel az e-mail címmel törölve lett. <a href="%1$s">Felhasználó visszaállítása</a>.]]></translation>
+        <translation language="es"><![CDATA[Un usuario con esta dirección de email ha sido eliminado. <a href="%1$s">Restaurar este usuario</a>.]]></translation>
+        <translation language="el"><![CDATA[Ο χρήστης με αυτό το email διεγράφη. <a href="%1$s">Επαναφορά του χρήστη</a>.]]></translation>
+      </item>
+      <item type="error" name="NonExisting">
+        <translation language="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
+        <translation language="en"><![CDATA[This user doesn't exist.]]></translation>
+        <translation language="it"><![CDATA[Questo utente non esiste.]]></translation>
+        <translation language="ru"><![CDATA[Такой пользователь не существует.]]></translation>
+        <translation language="zh"><![CDATA[这个用户不存在。]]></translation>
+        <translation language="fr"><![CDATA[Cet utilisateur n'existe pas.]]></translation>
+        <translation language="de"><![CDATA[Dieser Benutzer existiert nicht.]]></translation>
+        <translation language="hu"><![CDATA[Ez a felhasználó nem létezik.]]></translation>
+        <translation language="es"><![CDATA[Este usuario no existe.]]></translation>
+        <translation language="el"><![CDATA[Ο χρήστης δεν υπάρχει.]]></translation>
+      </item>
+    </Users>
+  </Backend>
+</locale>

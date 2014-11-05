@@ -16,17 +16,17 @@
  */
 interface ApplicationInterface
 {
-	/**
-	 * This method exists because the kernel/service container needs to be set before
-	 * the page's functionality gets loaded. Any functionality of the app should be
-	 * initialized afterwards.
-	 */
-	public function initialize();
+    /**
+     * This method exists because the kernel/service container needs to be set before
+     * the page's functionality gets loaded. Any functionality of the app should be
+     * initialized afterwards.
+     */
+    public function initialize();
 
-	/**
-	 * Sends the output of the app to our browser, in the form of a Response object.
-	 *
-	 * @return Symfony\Component\HttpFoundation\Response
-	 */
-	public function display();
+    /**
+     * Sends the output of the app to our browser, in the form of a Response object.
+     *
+     * @return Symfony\Component\HttpFoundation\Response
+     */
+    public function display();
 }
