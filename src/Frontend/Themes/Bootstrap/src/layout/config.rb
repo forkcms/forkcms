@@ -1,17 +1,15 @@
-#$LOAD_PATH << "/Users/mathias/Sites/dev/compass-twitter-bootstrap/lib"
-
 # Require any additional compass plugins here.
 require 'bootstrap-sass'
 require 'font-awesome-sass'
 require 'compass_sumo'
 
 # Set this to the root of your project when deployed:
-http_path = "frontend/themes/bootstrap/core/layout"
-cache_path = "frontend/themes/bootstrap/src/layout/.sass-cache"
+http_path = "src/Frontend/Themes/Bootstrap/Core/Layout"
+cache_path = "src/Frontend/Themes/Bootstrap/Src/Layout/.sass-cache"
 sass_dir = "sass"
-css_dir = "css"
+css_dir = "Css"
 images_dir = "images"
-javascripts_dir = "js"
+javascripts_dir = "Js"
 fonts_dir = "fonts"
 
 # You can select your preferred output style here (can be overridden via the command line):
