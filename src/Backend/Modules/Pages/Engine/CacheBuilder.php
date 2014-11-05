@@ -474,7 +474,7 @@ class CacheBuilder
         }
 
         // add JSON-string
-        $editorinkListString .= 'var linkList = ' . json_encode($links) . ';';
+        $editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
         // write the file
         $fs = new Filesystem();
