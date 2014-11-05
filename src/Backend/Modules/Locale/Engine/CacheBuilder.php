@@ -151,6 +151,7 @@ class CacheBuilder
             $this->buildPhpCache($language, $application)
         );
     }
+
     /**
      * Builds the array that will be put in cache
      *
@@ -181,6 +182,7 @@ class CacheBuilder
 
         return $json;
     }
+
     /**
      * Adds months and days from spoonLocale to the json
      *
