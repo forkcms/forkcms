@@ -3,6 +3,7 @@
 Bugfixes:
 
 * Tags: fix wrong variable name.
+* Core: fix installation with different interface langauge(s)
 
 
 3.8.2 (2014-10-21)
