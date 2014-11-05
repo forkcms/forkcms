@@ -11,8 +11,6 @@ namespace Backend\Modules\Pages\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-use Backend\Core\Engine\Model as BackendModel;
-
 /**
  * In this file, the pages cache is build
  *
