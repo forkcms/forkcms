@@ -1,0 +1,798 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Extensions>
+      <item type="message" name="AddedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was added.]]></translation>
+        <translation language="it"><![CDATA[Il template "%1$s" è stato aggiunto.]]></translation>
+        <translation language="ru"><![CDATA[Шаблон "%1$s" добавлен.]]></translation>
+        <translation language="zh"><![CDATA[模板 “%1$s” 已添加。]]></translation>
+        <translation language="de"><![CDATA[Das Template "%1$s" wurde hinzugefügt.]]></translation>
+        <translation language="fr"><![CDATA[Le template "%1$s" a été ajouté.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" sablon hozzáadva.]]></translation>
+        <translation language="es"><![CDATA[La plantilla "%1$s" fue agregado.]]></translation>
+        <translation language="uk"><![CDATA[Шаблон для "%1$s" додано.]]></translation>
+        <translation language="sv"><![CDATA[mall "%1$s" har lagts till.]]></translation>
+        <translation language="el"><![CDATA[Το πρότυπο "%1$s" προστέθηκε.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteTemplate">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the template "%1$s"?]]></translation>
+        <translation language="it"><![CDATA[Sei sicuro di voler eliminare il template "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Удалить шаблон "%1$s"?]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除模板“%1$s”吗？]]></translation>
+        <translation language="de"><![CDATA[Soll das Template "%1$s" wirklich gelöscht werden?]]></translation>
+        <translation language="fr"><![CDATA[Etes-vous sûr de vouloir effacer le template "%1$s"?]]></translation>
+        <translation language="hu"><![CDATA[Biztos törlöd a(z) "%1$s" sablont?]]></translation>
+        <translation language="es"><![CDATA[¿Está seguro de eliminar la plantilla "%1$s"?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker att du vill ta bort mallen "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να διαγράψετε το πρότυπο "%1$s";]]></translation>
+      </item>
+      <item type="message" name="ConfirmModuleInstall">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de module "%1$s" wil installeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to install the module "%1$s"?]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите установить модуль "%1$s"?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de instalar el módulo "%1$s"?]]></translation>
+        <translation language="de"><![CDATA[Möchtest du das Modul "%1$s" wirklich installieren?]]></translation>
+        <translation language="hu"><![CDATA[Biztos telepíted a(z) "%1$s" modult?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill installera modulen "%1$s"?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε την ενότητα "%1$s";]]></translation>
+        <translation language="zh"><![CDATA[你确定要删除模块“%1$s”吗？]]></translation>
+      </item>
+      <item type="message" name="ConfirmThemeInstall">
+        <translation language="nl"><![CDATA[Ben je zeker dat je dit thema wil installeren?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to install this theme?]]></translation>
+        <translation language="ru"><![CDATA[Вы действительно хотите установить эту тему?]]></translation>
+        <translation language="es"><![CDATA[¿Estás seguro de instalar el tema "%1$s"?]]></translation>
+        <translation language="de"><![CDATA[Möchtest du dieses Theme wirklich installieren?]]></translation>
+        <translation language="hu"><![CDATA[Biztos telepíted a(z) "%1$s" sablont?]]></translation>
+        <translation language="sv"><![CDATA[Är du säker du vill installera detta tema?]]></translation>
+        <translation language="el"><![CDATA[Σίγουρα θέλετε να εγκαταστήσετε αυτό το θέμα;]]></translation>
+        <translation language="zh"><![CDATA[你确定要安装这个主题？]]></translation>
+      </item>
+      <item type="message" name="CronjobsInfo">
+        <translation language="nl"><![CDATA[
+
+            <p>
+              Cronjobs roepen perdiodiek, op bepaalde tijdstippen, een script aan.<br />
+              Cronjobs kunnen ofwel commandline aangeroepen worden, alsook via je webserver.<br />
+              Probeer bij het instellen van cronjobs op servers met meerdere Fork CMS installaties de uitvoering van cronjobs te spreiden door de minuten parameter aan te passen.
+            </p>
+            <p>
+              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />
+              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>
+            </p>
+
+     	]]></translation>
+        <translation language="en"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
+        <translation language="ru"><![CDATA[                      <p>              Планировщик задач периодически в заданное время будет выполнять специальные скрипты.<br />              Планировщик задач может быть запущен в командной строке на вашем сервере.<br />              Если на сервере несколько Fork CMS, советуем для каждой установить иное время.            </p>            <p>              Командная строка: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Веб-сервер: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
+        <translation language="de"><![CDATA[                      <p>              Cronjobs senden periodisch, nach einem gesetzten Zeitintervall, einen Aufruf an einen Skript.<br />              Cronjobs können über die Commandline und über den Webserver direkt ausgeführt werden.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
+        <translation language="es"><![CDATA[<p>Los Cronjobs realizan periódicamente, en un tiempo determinado, una llamada para un script.<br />Los Cronjobs puede ser ejecutados a través de la línea de comando o a través de tu servidor web.<br />Cuando configures cronjobs en servidores con varias instalaciones de Fork CMS intenta distanciar la ejecución cambiando el parametro de minutos.</p><p>Línea de comando: <small>php %1$s/backend/cronjob module=<i>module</i>action=<i>action</i></small><br />Servidor Web: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small></p>      	       	]]></translation>
+        <translation language="lt"><![CDATA[Kronoinformacija]]></translation>
+        <translation language="hu"><![CDATA[                      <p>              Cronjobs periodically, on a set timeframe, perform a call to script.<br />              Cronjobs can be executed either through commandline as well as over your webserver.<br />              When setting cronjobs on servers with several Fork CMS installations try to spread the execution by changing the minutes parameter.            </p>            <p>              Commandline: <small>php %1$s/backend/cronjob module=<i>module</i> action=<i>action</i></small><br />              Webserver: <small>/usr/bin/wget -O - --quiet --timeout=1440 "%2$s/backend/cronjob?module=<i>module</i>&action=<i>action</i>"</small>            </p>      	       	]]></translation>
+      </item>
+      <item type="message" name="DeletedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
+        <translation language="it"><![CDATA[Il template "%1$s" è stato eliminato.]]></translation>
+        <translation language="ru"><![CDATA[Шаблон "%1$s" удален.]]></translation>
+        <translation language="zh"><![CDATA[模板“%1$s”已删除。]]></translation>
+        <translation language="de"><![CDATA[Das Template "%1$s" wurde gelöscht.]]></translation>
+        <translation language="fr"><![CDATA[Le template "%1$s" a été effacé.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" sablon törölve.]]></translation>
+        <translation language="es"><![CDATA[La plantilla "%1$s" fue eliminada.]]></translation>
+        <translation language="sv"><![CDATA[mall "%1$s" är borttaget.]]></translation>
+        <translation language="el"><![CDATA[Το πρότυπο "%1$s" διεγράφη.]]></translation>
+      </item>
+      <item type="message" name="EditedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
+        <translation language="it"><![CDATA[Il template "%1$s" è stato salvato.]]></translation>
+        <translation language="ru"><![CDATA[Шаблон "%1$s" изменен.]]></translation>
+        <translation language="zh"><![CDATA[模板“%1$s”已保存。]]></translation>
+        <translation language="de"><![CDATA[Das Template "%1$s" wurde gespeichert.]]></translation>
+        <translation language="fr"><![CDATA[Le template "%1$s" a été enregistré.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" sablon elmentve.]]></translation>
+        <translation language="es"><![CDATA[La plantilla "%1$s" fue guardada.]]></translation>
+        <translation language="sv"><![CDATA[mall "%1$s" sparades.]]></translation>
+        <translation language="el"><![CDATA[Το πρότυπο "%1$s" αποθηκεύτηκε.]]></translation>
+      </item>
+      <item type="message" name="HelpInstallableThemes">
+        <translation language="nl"><![CDATA[Klik op een thema om het te installeren.]]></translation>
+        <translation language="en"><![CDATA[Click a theme to install it.]]></translation>
+        <translation language="ru"><![CDATA[Кликните по теме оформления, для её установки]]></translation>
+        <translation language="es"><![CDATA[Da click sobre un tema para instalarlo.]]></translation>
+        <translation language="de"><![CDATA[Klick ein Theme an, um es zu installieren.]]></translation>
+        <translation language="hu"><![CDATA[Klikk a sablon telepítéséhez.]]></translation>
+        <translation language="sv"><![CDATA[Click en tema till installera det.]]></translation>
+        <translation language="el"><![CDATA[Κάντε κλικ σε ένα θέμα γιά να το εγκαταστήσετε.]]></translation>
+        <translation language="zh"><![CDATA[点击主题进行安装。]]></translation>
+      </item>
+      <item type="message" name="HelpOverwrite">
+        <translation language="nl"><![CDATA[<strong>Opgelet!</strong>Het aanvinken van deze checkbox zal tot gevolg hebben dat de inhoud van elke pagina wordt gereset naar de hierboven gekozen standaardwaarden!]]></translation>
+        <translation language="en"><![CDATA[<strong>Attention!</strong> Checking this checkbox will cause the content of every page to be reset to the defaults chosen here-above.]]></translation>
+        <translation language="it"><![CDATA[<strong>Attenzione!</strong> Selezionando questa checkbox il contenuto di ogni pagina verrà resettato ai valori di default scelti qui.]]></translation>
+        <translation language="ru"><![CDATA[<strong>Осторожно!</strong> Все содержание может быть сброшено по-умолчанию.]]></translation>
+        <translation language="zh"><![CDATA[<strong>注意！</strong> 选中这个复选框项目将会使每个页面重置回默认的勾选状态。]]></translation>
+        <translation language="de"><![CDATA[<strong>Aufpassen!</strong> Das aktivieren dieser Checkbox führt dazu, dass die Inhalte aller Seiten auf die oberhalb gewählten Standardwerte zurückgesetzt werden.]]></translation>
+        <translation language="fr"><![CDATA[<strong>Attention!</strong> Cocher cette case entrainera une réinitialisation du contenu de chaque page aux valeurs par défaut.]]></translation>
+        <translation language="hu"><![CDATA[<strong>Figyelem!</strong> Ha bejelölöd ezt az opciót, akkor minden oldal tartalma visszaáll a fenti alapértelmezettre.]]></translation>
+        <translation language="es"><![CDATA[<strong>¡Atención!</strong> Seleccionado esta casilla el contenido de la página sera reseteado al valor por defecto elegido aquí arriba.]]></translation>
+        <translation language="sv"><![CDATA[<strong>Attention!</strong> Checking detta checkbox kommer att cause innehållet av every sida till be återställ till defaults chosen här-above.]]></translation>
+      </item>
+      <item type="message" name="HelpPositionsLayout">
+        <translation language="nl"><![CDATA[<strong>Aan visuele representatie voor de pagina's-module.</strong><ul><li>Rij toevoegen: gebruik <strong>[]</strong></li><li>Positie weergeven: gebruik <strong>positienaam</strong></li><li>Niet-aanpasbaar gebied: gebruik <strong>/</strong></li></ul><p>Als je een positie breder of hoger wenst weer te geven in de grafische voorstelling, herhaal de positie meermaals (zowel horizontaal als vertikaal, maar de vorm moet rechthoekig blijven)</p><strong>Een template kan er als volgt uitzien:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="en"><![CDATA[<strong>A visual representation to be used in the pages-module.</strong><ul><li>Add a row: use <strong>[]</strong></li><li>Reflect a position: use <strong>position name</strong></li><li>Reflect a non-editable area: use <strong>/</strong></li></ul><p>If you want a position to display wider or higher in it's graphical representation, repeat the position multiple times (both horizontal and vertical, but the shape should form a rectangle)</p><strong>A template could look like the chart below:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="it"><![CDATA[<strong>Una rappresentazione visuale da usare nel modulo della pagina.</strong><ul><li>Aggiungi una riga: usa <strong>[]</strong></li><li>Rifletti una posizione: usa <strong>nome della posizione</strong></li><li>Rifletti un'area non modificabile: usa <strong>/</strong></li></ul><p>Se vuoi che una posizione sia visualizzata più larga o alta nella sua rappresentazione grafica, ripeti la posizione diverse volte (sia orizzontalmente, sia verticalemente, in modo da formare un rettangolo)</p><strong>Un template potrebbe assomigliare a questo:</strong><pre>[ / , / , / , / , top ],<br />[ / , / , / , / , / ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="ru"><![CDATA[<strong>Визуальное представление для страниц модуля.</strong><ul><li>Добавление строки: используйте <strong>[]</strong></li><li>Позиционирование: <strong>имя позиции</strong></li><li>Нередактируемая сецкия: <strong>/</strong></li></ul><p>Если вы хотите изменить графическое представление,</p><strong>шаблон должен выглядеть примерно так:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="zh"><![CDATA[<strong>视觉元素可以不在页面模块中使用</strong><ul><li>添加一行，使用 <strong>[]</strong></li><li>显示一个位置： <strong>位置名称</strong></li><li>显示一个不可编辑区域：使用<strong>/</strong></li></ul><p>如果你想一个位置能显示它所使用的图形元素的宽度或高度，重复它的位置几次（包括水平方向和垂直方向，但这个形状必须是一个矩形)</p><strong>一个模板可以看起来像下方的这个图表：</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="fr"><![CDATA[<strong>Une représentation visuelle utilisée sur la page de modules</strong><ul><li>Ajouter un rang: utiliser <strong>[]</strong></li><li>Spécifier une position: utiliser <strong>nom de la position</strong></li><li>Spécifier une zone non-éditable: utiliser <strong>/</strong></li></ul><p>Si vous voulez qu'une position s'affiche de façon plus large ou plus grande dans sa représentation graphique, répétez la position plusieurs fois (à la fois horizontale et verticale, mais la forme doit former un rectangle)</p><strong>Un template peut s'afficher comme la charte ci-dessous:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="de"><![CDATA[<strong>Visuelle Repräsentation zur Verwendung im Seitenmodul.</strong><ul><li>Füge eine Reihe hinzu: benutze <strong>[]</strong></li><li>Stelle eine Position dar: benutze <strong>Positionsname</strong></li><li>Stelle einen nicht-editierbaren Bereich dar: benutze <strong>/</strong></li></ul><p>Wenn du eine Position in der grafischen Repräsentation breiter oder höher dargestellt haben möchtest, kannst du die Position mehrfach wiederholen (sowohl horizontal als auch vertikal, die Form sollte aber ein Rechteck bilden)</p><strong>Ein Template könnte zum Beispiel so aussehen:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="hu"><![CDATA[<strong>Vizuálisan kell használni az oldal-modult.</strong><ul><li>Sor hozzáadása: <strong>[]</strong> használata</li><li>Pozíció jelzése: <strong>pozíció neve</strong> használata</li><li>Nem szerkeszthető-terület jelzése: <strong>/</strong> használata</li></ul><p>Ha magasabb vagy szélesebb terület kell, akkor használd több alkalommal a helyet. (mind vízszintesen és függőlegesen, csak téglalap legyen)</p><strong>A sablon így néz ki:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+        <translation language="es"><![CDATA[<strong>Una representación visual para ser utilizada en el módulo páginas.</strong><ul><li>Agregar una fila: usa <strong>[]</strong></li><li>Reflejar una posición: usa <strong>nombre de la posición</strong></li><li>Reflejar un área no editable: usa <strong>/</strong></li></ul><p>Si deseas que una posición se muestre más ancha o más alta en su representación gráfica, repite varias veces la posición (horizontal y verticalmente, pero el conjunto debe formar un rectángulo)</p><strong>Una plantilla podría verse como la tabla siguiente:</strong><pre>[  /   ,  /   ,  /   ,  /   ,  top ],<br />[  /   ,  /   ,  /   ,  /   ,  /   ],<br />[ left , main , main , main , right],<br />[bottom,bottom,bottom,bottom,bottom]</pre>]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateFormat">
+        <translation language="nl"><![CDATA[vb. [left,main,right],[/,main,/]]]></translation>
+        <translation language="en"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
+        <translation language="it"><![CDATA[es.[left,main,right],[/,main,/]]]></translation>
+        <translation language="ru"><![CDATA[прим. [left,main,right],[/,main,/]]]></translation>
+        <translation language="zh"><![CDATA[例如：[left,main,right],[/,main,/]]]></translation>
+        <translation language="de"><![CDATA[z.B. [left,main,right],[/,main,/]]]></translation>
+        <translation language="fr"><![CDATA[ex [left,main,right],[/,main,/]]]></translation>
+        <translation language="hu"><![CDATA[pl. [left,main,right],[/,main,/]]]></translation>
+        <translation language="es"><![CDATA[e.j. [left,main,right],[/,main,/]]]></translation>
+        <translation language="sv"><![CDATA[e.g. [left,main,right],[/,main,/]]]></translation>
+        <translation language="el"><![CDATA[πχ. [left,main,right],[/,main,/]]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateLocation">
+        <translation language="nl"><![CDATA[Plaats de templates in de map <code>Core/Layout/Templates</code> van je thema.]]></translation>
+        <translation language="en"><![CDATA[Put your templates in the <code>Core/Layout/Templates</code> folder of your theme.]]></translation>
+        <translation language="it"><![CDATA[Metti i tuoi template nella cartella <code>Core/Layout/Templates</code> del tuo tema.]]></translation>
+        <translation language="ru"><![CDATA[Путь для шаблонов <code>Core/Layout/Templates</code>.]]></translation>
+        <translation language="zh"><![CDATA[将你的模板放置在你的主题文件夹<code>Core/Layout/Templates</code> 中。]]></translation>
+        <translation language="de"><![CDATA[Leg deine Templates im Ordner <code>Core/Layout/Templates</code> deines Themes ab.]]></translation>
+        <translation language="fr"><![CDATA[Placez les templates dans le répertoire <code>Core/Layout/Templates</code> de votre thème.]]></translation>
+        <translation language="hu"><![CDATA[Tedd a sablonodad a témád <code>Core/Layout/Templates</code> mappájába.]]></translation>
+        <translation language="es"><![CDATA[Pon tus plantillas en la carpeta <code>Core/Layout/Templates</code> de tu tema.]]></translation>
+        <translation language="sv"><![CDATA[Lägg dina mallar i <code>core/layout/mallar</code> mapp av ditt tema.]]></translation>
+        <translation language="el"><![CDATA[Τοποθετήσατε τα πρότυπά σας στο φάκελο <code>Core/Layout/Templates</code> του θέματός σας.]]></translation>
+      </item>
+      <item type="message" name="HelpThemes">
+        <translation language="nl"><![CDATA[Duid aan welk thema je wil gebruiken.]]></translation>
+        <translation language="en"><![CDATA[Select the theme you wish to use.]]></translation>
+        <translation language="it"><![CDATA[Scegli il tema che vuoi usare.]]></translation>
+        <translation language="ru"><![CDATA[Выберите тему.]]></translation>
+        <translation language="zh"><![CDATA[选择你想使用的主题。]]></translation>
+        <translation language="de"><![CDATA[Wähle das Theme, dass du verwenden möchtest.]]></translation>
+        <translation language="hu"><![CDATA[A használni kívánt sablon kiválasztása.]]></translation>
+        <translation language="fr"><![CDATA[Choisissez le thème que vous souhaitez utiliser.]]></translation>
+        <translation language="es"><![CDATA[Selecciona el tema que deseas usar.]]></translation>
+        <translation language="sv"><![CDATA[Välj temat du önskar att använda.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε το θέμα που θέλετε να χρησιμοποιήσετε.]]></translation>
+      </item>
+      <item type="message" name="InformationFileCouldNotBeLoaded">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+        <translation language="ru"><![CDATA[Файл info.xml присутствует, но не может быть загружен. Проверьте содержимое файла XML.]]></translation>
+        <translation language="es"><![CDATA[Un archivo info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
+        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
+        <translation language="hu"><![CDATA[Az info.xml fájl létezik, de nem töltődött be. Ellenőrizd, hogy valid XML e a tartalom.]]></translation>
+        <translation language="sv"><![CDATA[info.xml fil är finns men den kan inte laddas. Verifiera om innehållet är giltig XML.]]></translation>
+        <translation language="zh"><![CDATA[info.xml文件已递交但它无法被加载。请确认它的内容是否是有效的XML。]]></translation>
+        <translation language="el"><![CDATA[Βρέθηκε ένα αρχείο info.xml, αλλά δεν έγινε δυνατό να φορτωθεί. Επιβεβαιώστε οτι το περιεχόμενο είναι έγκυρο τύπου XML.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsEmpty">
+        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
+        <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+        <translation language="ru"><![CDATA[Файл info.xml присутствует, но либо пустой, либо содержит неправильную информацию.]]></translation>
+        <translation language="es"><![CDATA[Un archivo info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
+        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
+        <translation language="hu"><![CDATA[Az info.xml létezik, de nem üres vagy nem tartalmaz értékes információt.]]></translation>
+        <translation language="sv"><![CDATA[info.xml fil är men är antingen tom eller innehåller den inte värdefull information.]]></translation>
+        <translation language="zh"><![CDATA[info.xml文件已递交但它有可能是空的或它不包含有价值的信息。]]></translation>
+        <translation language="el"><![CDATA[Το αρχείο info.xmp υπάρχει, αλλά είτε είναι άδειο είτε δεν περιέχει χρήσιμες πληροφορίες.]]></translation>
+      </item>
+      <item type="message" name="InformationFileIsMissing">
+        <translation language="nl"><![CDATA[Er is geen informatie beschikbaar.]]></translation>
+        <translation language="en"><![CDATA[There is no information available.]]></translation>
+        <translation language="ru"><![CDATA[Необходимая информация отсутствует.]]></translation>
+        <translation language="es"><![CDATA[No hay información disponible.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Informationen verfügbar.]]></translation>
+        <translation language="hu"><![CDATA[Nincs elérhető információ.]]></translation>
+        <translation language="sv"><![CDATA[Det finns ingen information tillgänglig.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν διαθέσιμες πληροφορίες.]]></translation>
+        <translation language="zh"><![CDATA[没有可用信息。]]></translation>
+      </item>
+      <item type="message" name="InformationModuleIsNotInstalled">
+        <translation language="nl"><![CDATA[Deze module is nog niet geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[This module is not yet installed.]]></translation>
+        <translation language="ru"><![CDATA[Данный модуль еще не установлен.]]></translation>
+        <translation language="es"><![CDATA[Este módulo no está instalado aun.]]></translation>
+        <translation language="de"><![CDATA[Dieses Modul ist noch nicht installiert.]]></translation>
+        <translation language="hu"><![CDATA[Ez a modul nem lett telepítve.]]></translation>
+        <translation language="sv"><![CDATA[Denna modul är ännu inte installerad.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η ενότητα δεν έχει ακόμη εγκατασταθεί.]]></translation>
+        <translation language="zh"><![CDATA[这个模块还没被安装。]]></translation>
+      </item>
+      <item type="message" name="InformationThemeIsNotInstalled">
+        <translation language="nl"><![CDATA[Dit thema is nog niet geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[This theme is not yet installed.]]></translation>
+        <translation language="ru"><![CDATA[Данная тема оформления еще не установлена​​.]]></translation>
+        <translation language="es"><![CDATA[Este tema no está instalado aun.]]></translation>
+        <translation language="de"><![CDATA[Dieses Theme ist noch nicht installiert.]]></translation>
+        <translation language="hu"><![CDATA[Ez a sablon nem lett telepítve.]]></translation>
+        <translation language="sv"><![CDATA[Detta tema är ännu inte installerad.]]></translation>
+        <translation language="el"><![CDATA[Αυτό το θέμα δεν έχει ακόμη εγκατασταθεί.]]></translation>
+        <translation language="zh"><![CDATA[这个主题还未被安装]]></translation>
+      </item>
+      <item type="message" name="Module">
+        <translation language="nl"><![CDATA[module "%1$s"]]></translation>
+        <translation language="en"><![CDATA[module "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[модуль "%1$s"]]></translation>
+        <translation language="es"><![CDATA[módulo "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Modul "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" modul]]></translation>
+        <translation language="sv"><![CDATA[modul "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Ενότητα "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[模块“%1$s”]]></translation>
+      </item>
+      <item type="message" name="ModuleInstalled">
+        <translation language="nl"><![CDATA[De module "%1$s" werd geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" was installed.]]></translation>
+        <translation language="ru"><![CDATA[Модуль "%1$s" успешно установлен.]]></translation>
+        <translation language="es"><![CDATA[El módulo "%1$s" fue instalado.]]></translation>
+        <translation language="de"><![CDATA[Das Modul "%1$s" wurde installiert.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" modul telepítve.]]></translation>
+        <translation language="sv"><![CDATA[modul "%1$s" installerades.]]></translation>
+        <translation language="el"><![CDATA[Η ενότητα "%1$s" εγκαταστάθηκε.]]></translation>
+        <translation language="zh"><![CDATA[模块“%1$s”已安装。]]></translation>
+      </item>
+      <item type="message" name="ModulesNotWritable">
+        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de modules mappen. Controleer of je schrijfrechten hebt op de modules map in alle applicaties.]]></translation>
+        <translation language="en"><![CDATA[We do not have write rights to the modules folders. Check if you have write rights on the modules folders in all applications.]]></translation>
+        <translation language="ru"><![CDATA[Каталог модулей не имеет прав на запись. Проверьте, правильно ли выставлены права на каталог модулей во всех приложениях.]]></translation>
+        <translation language="es"><![CDATA[No tenemos permiso de escritura para la carpeta de módulos. Comprueba si tienes permisos de escritura en la carpeta de módulos (modules) en todas las aplicaciones.]]></translation>
+        <translation language="de"><![CDATA[Es fehlen Schreibrechte für die Modul-Ordner. Bitte überprüfe die Schreibrechte der Ordner "modules" in den Ordnern "frontend" und "backend".]]></translation>
+        <translation language="hu"><![CDATA[Jelenleg nincs írási joga a moduls mappának. Ellenőrizd, hogy rendelkezik e írási jogosultsággal a moduls mappa minden alkalmazáshoz.]]></translation>
+        <translation language="sv"><![CDATA[Vi har inte skrivrättigheter till modulmappar. Kontrollera om du har skrivrättigheter på modulmappar i alla applikationer.]]></translation>
+        <translation language="zh"><![CDATA[我们没有模块文件夹的写入权限。请检查你是否对所有应用的模块文件夹拥有写入权限。]]></translation>
+        <translation language="el"><![CDATA[Ο φάκελος ενοτήτων δεν έχει απαγορευτικά δικαιώματα. Ελέγξατε αν έχετε δικαιώματα εγγραφής στους φακέλους ενοτήτων όλων των εφαρμογών.]]></translation>
+      </item>
+      <item type="message" name="ModulesWarnings">
+        <translation language="nl"><![CDATA[Er zijn waarschuwingen voor volgende module(s)]]></translation>
+        <translation language="en"><![CDATA[There are some warnings for following module(s)]]></translation>
+        <translation language="ru"><![CDATA[Есть некоторые предупреждения для следующих модулей]]></translation>
+        <translation language="de"><![CDATA[Es gibt einige Warnhinweise für folgende(s) Modul(e)]]></translation>
+        <translation language="es"><![CDATA[Hay algunas advertencias para el(los) siguiente(s) módulo(s)]]></translation>
+        <translation language="hu"><![CDATA[Van néhány hiba a következő modul(ok)ban]]></translation>
+        <translation language="sv"><![CDATA[Det är några varningar för följande modul(er)]]></translation>
+        <translation language="el"><![CDATA[Υπάρχουν προειδοποιήσεις γιά τις παρακάτω ενότητες.]]></translation>
+        <translation language="zh"><![CDATA[以下模块有警告信息]]></translation>
+      </item>
+      <item type="message" name="NoModulesInstalled">
+        <translation language="nl"><![CDATA[Er zijn nog geen modules geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[No modules installed.]]></translation>
+        <translation language="ru"><![CDATA[Нет установленных модулей.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Module installiert.]]></translation>
+        <translation language="es"><![CDATA[Ningún módulo está instalado.]]></translation>
+        <translation language="hu"><![CDATA[Nincs modul telepítve.]]></translation>
+        <translation language="sv"><![CDATA[Inga moduler installerad.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν εγκατεστημένες ενότητες.]]></translation>
+        <translation language="zh"><![CDATA[没有模块被安装。]]></translation>
+      </item>
+      <item type="message" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="ru"><![CDATA[Нет доступных тем формления.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
+        <translation language="es"><![CDATA[Ningún tema está disponible.]]></translation>
+        <translation language="hu"><![CDATA[A sablon nem elérhető.]]></translation>
+        <translation language="sv"><![CDATA[Inga teman tillgängliga.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν διαθέσιμα θέματα.]]></translation>
+        <translation language="zh"><![CDATA[没有可用主题。]]></translation>
+      </item>
+      <item type="message" name="PathToTemplate">
+        <translation language="nl"><![CDATA[Pad naar de template]]></translation>
+        <translation language="en"><![CDATA[Path to template]]></translation>
+        <translation language="it"><![CDATA[Path del template]]></translation>
+        <translation language="ru"><![CDATA[Путь к шаблону]]></translation>
+        <translation language="zh"><![CDATA[模板路径]]></translation>
+        <translation language="de"><![CDATA[Pfad zum Template]]></translation>
+        <translation language="fr"><![CDATA[Chemin vers le template]]></translation>
+        <translation language="hu"><![CDATA[A sablon útvonala]]></translation>
+        <translation language="es"><![CDATA[Ruta de la plantilla]]></translation>
+        <translation language="sv"><![CDATA[Sökväg till mall]]></translation>
+        <translation language="el"><![CDATA[Διαδρομή προς το πρότυπο.]]></translation>
+      </item>
+      <item type="message" name="TemplateInUse">
+        <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
+        <translation language="en"><![CDATA[This template is in use.]]></translation>
+        <translation language="it"><![CDATA[Questo template è in uso.]]></translation>
+        <translation language="ru"><![CDATA[Шаблон уже используется.]]></translation>
+        <translation language="zh"><![CDATA[这个模板正在使用中。]]></translation>
+        <translation language="de"><![CDATA[Dieses Template wird verwendet.]]></translation>
+        <translation language="fr"><![CDATA[Ce template est utilisé.]]></translation>
+        <translation language="hu"><![CDATA[Ez a sablon már használatban van.]]></translation>
+        <translation language="es"><![CDATA[Esta plantilla está en uso.]]></translation>
+        <translation language="sv"><![CDATA[Denna mall används redan.]]></translation>
+        <translation language="el"><![CDATA[Αυτό το πρότυπο είναι εν χρήσει.]]></translation>
+      </item>
+      <item type="message" name="Theme">
+        <translation language="nl"><![CDATA[thema "%1$s"]]></translation>
+        <translation language="en"><![CDATA[theme "%1$s"]]></translation>
+        <translation language="ru"><![CDATA[тема "%1$s"]]></translation>
+        <translation language="es"><![CDATA[tema "%1$s"]]></translation>
+        <translation language="de"><![CDATA[Theme "%1$s"]]></translation>
+        <translation language="hu"><![CDATA["%1$s" sablon]]></translation>
+        <translation language="sv"><![CDATA[tema "%1$s"]]></translation>
+        <translation language="el"><![CDATA[Θέμα "%1$s"]]></translation>
+        <translation language="zh"><![CDATA[主题“%1$s”]]></translation>
+      </item>
+      <item type="message" name="ThemeInstalled">
+        <translation language="nl"><![CDATA[Het thema "%1$s" werd geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA[The theme "%1$s" was installed.]]></translation>
+        <translation language="ru"><![CDATA[Тема "%1$s" успешно установлена.]]></translation>
+        <translation language="es"><![CDATA[El tema "%1$s" fue instalado.]]></translation>
+        <translation language="de"><![CDATA[Das Theme "%1$s" wurde installiert.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" sablon telepítve.]]></translation>
+        <translation language="sv"><![CDATA[tema "%1$s" installerades.]]></translation>
+        <translation language="el"><![CDATA[Το θέμα "%1$s" εγκαταστάθηκε.]]></translation>
+        <translation language="zh"><![CDATA[主题“%1$s”已经被安装。]]></translation>
+      </item>
+      <item type="message" name="ThemesNotWritable">
+        <translation language="nl"><![CDATA[We hebben geen schrijfrechten in de themes map. Controleer of je schrijfrechten hebt op de themes map in de frontend-applicatie.]]></translation>
+        <translation language="en"><![CDATA[We do not have write rights to the themes folder. Check if you have write rights on the themes folders in the frontend-application.]]></translation>
+        <translation language="ru"><![CDATA[Каталог тем оформления не имеет прав на запись. Проверьте, правильно ли выставлены права на каталог во всех приложениях.]]></translation>
+        <translation language="es"><![CDATA[No tenemos permiso de escritura en la carpeta de temas. Comprueba si tienes permiso de escritura en la carpeta de temas en la frontend-application.]]></translation>
+        <translation language="de"><![CDATA[Wir haben keine Schreibrechte im Themes-Ordner. Überprüfe die Schreibrechte des Ordners "Themes", der sich im Ordner "Frontend" befindet.]]></translation>
+        <translation language="hu"><![CDATA[Jelenleg nincs írási joga a themes mappának. Ellenőrizd, hogy rendelkezik e írási jogosultsággal a themes mappa a frontend-alkalmazáshoz.]]></translation>
+        <translation language="sv"><![CDATA[Vi har inte skrivrättigheter till temamappen. Kontrollera om du har skrivrättigheter på temamappar i frontend-applikation.]]></translation>
+        <translation language="zh"><![CDATA[我们没有主题文件夹的写入权限。请检查你是否对所有应用的主题文件夹拥有写入权限。]]></translation>
+      </item>
+      <item type="message" name="ZipArchiveIsMissing">
+        <translation language="nl"><![CDATA[
+        	Uw server ontbreekt de benodigde PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS heeft deze class nodig om je geüploade module uit te pakken.<br /><br />
+			<ul>
+				<li>Contacteer je server administrator met bovenstaande melding.</li>
+				<li>Of pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
+			</ul>
+		]]></translation>
+        <translation language="en"><![CDATA[        	Your server is missing the required PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS needs this class to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="ru"><![CDATA[        	На вашем сервере не установлен необходимый PHP класс "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS нуждается в этом классе, чтобы была возможность распаковки загруженного модуля.<br /><br />			<ul>				<li>Обратитесь к администратору сервера с этим сообщением.</li>				<li>Или распакуйте ZIP на ваш компьютер и загрузите каталоги вручную (Скорее всего через FTP).</li>			</ul>		]]></translation>
+        <translation language="de"><![CDATA[Dem Server fehlt die benötigte PHP Klasse "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS benötigt diese Klasse, um das von dir hochgeladene Modul zu entpacken.<br /><br />			<ul>				<li>Kontaktiere deinen Server-Administrator mit dieser Nachricht.</li>				<li>Oder entpacke das ZIP-Archiv auf deinem Computer und lade die Ordner manuell (per FTP) in das Root-Verzeichnis deiner Website.</li>			</ul>		]]></translation>
+        <translation language="es"><![CDATA[A tu servidor le falta la clase PHP <a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>". Fork CMS necesita esta clase para poder desempaquetar el módulo subido.<br /><br /><ul><li>Contacta a tu administrador de servidor con el mensaje anterior.</li><li>O desempaqueta el archivo ZIP en tu computadora y sube los archivos manualmente (preferentemente vía FTP) a la raíz de tu sitio web.</li></ul>]]></translation>
+        <translation language="hu"><![CDATA[        	Your server is missing the required PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS needs this class to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="zh"><![CDATA[你的服务器缺少必要的PHP "<a href="http://be2.php.net/manual/en/class.ziparchive.php">ZipArchive</a>" class. Fork CMS需要这个class来解压你上传的模块<br /><br />	 <ul>	 <li>请联系系统管理员解决上述问题。</li>	 <li>或在你的电脑上解压这个ZIP压缩包，然后通过FTP等工具手动上传到你的网站的根目录。</li>	 </ul>]]></translation>
+      </item>
+      <item type="message" name="ZlibIsMissing">
+        <translation language="nl"><![CDATA[
+        	Uw server ontbreekt de benodigde PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extensie. Fork CMS heeft deze extensie nodig om je geüploade module uit te pakken.<br /><br />
+			<ul>
+				<li>Contacteer je server administrator met bovenstaande melding.</li>
+				<li>Of pak manueel de bestanden uit het ZIP archief uit op je computer en upload deze (waarschijnlijk via FTP) naar je website root.</li>
+			</ul>
+		]]></translation>
+        <translation language="en"><![CDATA[        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="ru"><![CDATA[        	На вашем сервере не установлено необходимое PHP расширение "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>". Fork CMS нуждается в этом расширении, чтобы балы возможность распаковки загруженного модуля.<br /><br />			<ul>				<li>Обратитесь к администратору сервера с этим сообщением.</li>				<li>Или распакуйте ZIP на ваш компьютер и загрузите каталоги вручную (Скорее всего через FTP).</li>			</ul>		]]></translation>
+        <translation language="es"><![CDATA[        	        	Tu servidor no encuentra la extensión PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" requerida. Fork CMS necesita esta extensión para descomprimir los modulos subidos.<br /><br />			<ul>				<li>Contacta tu administrador de servidor con el mensaje de arriba.</li>				<li>O descomprime el archivo ZIP en tu PC y sube las carpetas manualmente (via FTP) a la raiz de tu sitio web.</li>			</ul>					]]></translation>
+        <translation language="de"><![CDATA[Deinem Server felt die benötigte PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" Erweiterung. Fork CMS benötigt diese Erweiterung um hochgeladene Module zu entpacken.<br /><br />			<ul>				<li>Kontaktiere deinen Server-Administrator mit der obigen Nachricht.</li>				<li>Oder entpacke das ZIP Archiv auf deinem Computer und lade es manuell (per FTP-Programm) hoch.</li></ul>]]></translation>
+        <translation language="hu"><![CDATA[        	Your server is missing the required PHP "<a href="http://www.php.net/manual/en/book.zlib.php">Zlib</a>" extension. Fork CMS needs this extension to be able to unpack your uploaded module.<br /><br />			<ul>				<li>Contact your server administrator with the above message.</li>				<li>Or unpack the ZIP archive on your computer and upload the folders manually (most likely via FTP) to your website root.</li>			</ul>		]]></translation>
+        <translation language="zh"><![CDATA[你的服务器缺少必要的PHP "<a href="http://be2.php.net/manual/en/book.zlib..php">Zlib</a>" class. Fork CMS需要这个class来解压你上传的模块<br /><br />	 <ul>	 <li>请联系系统管理员解决上述问题。</li>	 <li>或在你的电脑上解压这个ZIP压缩包，然后通过FTP等工具手动上传到你的网站的根目录。</li>	 </ul>]]></translation>
+      </item>
+      <item type="label" name="AddPosition">
+        <translation language="nl"><![CDATA[positie toevoegen]]></translation>
+        <translation language="en"><![CDATA[add position]]></translation>
+        <translation language="it"><![CDATA[aggiungi posizione]]></translation>
+        <translation language="ru"><![CDATA[Добавить расположение]]></translation>
+        <translation language="zh"><![CDATA[添加位置]]></translation>
+        <translation language="de"><![CDATA[Position hinzufügen]]></translation>
+        <translation language="fr"><![CDATA[ajouter une position]]></translation>
+        <translation language="hu"><![CDATA[pozíció hozzáadása]]></translation>
+        <translation language="es"><![CDATA[agregar posición]]></translation>
+        <translation language="uk"><![CDATA[Додати розташування]]></translation>
+        <translation language="lt"><![CDATA[nauja pozicija]]></translation>
+        <translation language="sv"><![CDATA[lägg till position]]></translation>
+        <translation language="el"><![CDATA[Προσθήκη θέσης]]></translation>
+      </item>
+      <item type="label" name="Authors">
+        <translation language="nl"><![CDATA[auteurs]]></translation>
+        <translation language="en"><![CDATA[authors]]></translation>
+        <translation language="ru"><![CDATA[авторы]]></translation>
+        <translation language="es"><![CDATA[autores]]></translation>
+        <translation language="de"><![CDATA[Autoren]]></translation>
+        <translation language="uk"><![CDATA[Автори]]></translation>
+        <translation language="hu"><![CDATA[szerzők]]></translation>
+        <translation language="lt"><![CDATA[autoriai]]></translation>
+        <translation language="sv"><![CDATA[författare]]></translation>
+        <translation language="el"><![CDATA[Συγγραφείς]]></translation>
+        <translation language="zh"><![CDATA[作者]]></translation>
+      </item>
+      <item type="label" name="DeletePosition">
+        <translation language="nl"><![CDATA[positie verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete position]]></translation>
+        <translation language="it"><![CDATA[elimina posizione]]></translation>
+        <translation language="ru"><![CDATA[Удалить расположение]]></translation>
+        <translation language="zh"><![CDATA[删除位置]]></translation>
+        <translation language="de"><![CDATA[Position löschen]]></translation>
+        <translation language="fr"><![CDATA[effacer la position]]></translation>
+        <translation language="hu"><![CDATA[pozíció törlése]]></translation>
+        <translation language="es"><![CDATA[eliminar posición]]></translation>
+        <translation language="uk"><![CDATA[Видалити розташування]]></translation>
+        <translation language="sv"><![CDATA[ta bort position]]></translation>
+        <translation language="lt"><![CDATA[trinti poziciją]]></translation>
+        <translation language="el"><![CDATA[Διαγραφή θέσης]]></translation>
+      </item>
+      <item type="label" name="Events">
+        <translation language="nl"><![CDATA[evenementen (hooks)]]></translation>
+        <translation language="en"><![CDATA[events (hooks)]]></translation>
+        <translation language="ru"><![CDATA[события (hooks)]]></translation>
+        <translation language="es"><![CDATA[eventos (hooks)]]></translation>
+        <translation language="de"><![CDATA[Events (hooks)]]></translation>
+        <translation language="hu"><![CDATA[események (horog)]]></translation>
+        <translation language="sv"><![CDATA[händelse (hookar)]]></translation>
+        <translation language="el"><![CDATA[Συμβάντα (hooks)]]></translation>
+        <translation language="zh"><![CDATA[事件（hooks）]]></translation>
+      </item>
+      <item type="label" name="FindModules">
+        <translation language="nl"><![CDATA[vind modules]]></translation>
+        <translation language="en"><![CDATA[find modules]]></translation>
+        <translation language="ru"><![CDATA[поиск модулей]]></translation>
+        <translation language="es"><![CDATA[encontrar módulos]]></translation>
+        <translation language="de"><![CDATA[Module finden]]></translation>
+        <translation language="uk"><![CDATA[Знайти модулі]]></translation>
+        <translation language="hu"><![CDATA[modulok keresése]]></translation>
+        <translation language="sv"><![CDATA[hitta moduler]]></translation>
+        <translation language="lt"><![CDATA[ieškoti modulio]]></translation>
+        <translation language="el"><![CDATA[Αναζήτηση ενοτήτων]]></translation>
+        <translation language="zh"><![CDATA[搜寻模块]]></translation>
+      </item>
+      <item type="label" name="FindThemes">
+        <translation language="nl"><![CDATA[vind thema's]]></translation>
+        <translation language="en"><![CDATA[find themes]]></translation>
+        <translation language="ru"><![CDATA[поиск тем оформления]]></translation>
+        <translation language="es"><![CDATA[encontrar temas]]></translation>
+        <translation language="de"><![CDATA[Themes finden]]></translation>
+        <translation language="uk"><![CDATA[Знайти теми]]></translation>
+        <translation language="hu"><![CDATA[sablonok keresése]]></translation>
+        <translation language="sv"><![CDATA[hitta teman]]></translation>
+        <translation language="lt"><![CDATA[ieškoti šablono]]></translation>
+        <translation language="el"><![CDATA[Αναζήτηση θεμάτων]]></translation>
+        <translation language="zh"><![CDATA[搜寻主题]]></translation>
+      </item>
+      <item type="label" name="Install">
+        <translation language="nl"><![CDATA[installeer]]></translation>
+        <translation language="en"><![CDATA[install]]></translation>
+        <translation language="ru"><![CDATA[установить]]></translation>
+        <translation language="es"><![CDATA[instalar]]></translation>
+        <translation language="de"><![CDATA[installieren]]></translation>
+        <translation language="uk"><![CDATA[Встановити]]></translation>
+        <translation language="hu"><![CDATA[telepítés]]></translation>
+        <translation language="sv"><![CDATA[installera]]></translation>
+        <translation language="lt"><![CDATA[instaliuoti]]></translation>
+        <translation language="el"><![CDATA[Εγκατάσταση]]></translation>
+        <translation language="zh"><![CDATA[安装]]></translation>
+      </item>
+      <item type="label" name="InstallableModules">
+        <translation language="nl"><![CDATA[niet geïnstalleerde modules]]></translation>
+        <translation language="en"><![CDATA[not installed modules]]></translation>
+        <translation language="ru"><![CDATA[Неустановленные модули]]></translation>
+        <translation language="es"><![CDATA[módulos no instalados]]></translation>
+        <translation language="de"><![CDATA[nicht installierte Module]]></translation>
+        <translation language="uk"><![CDATA[Немає встановлених модулів]]></translation>
+        <translation language="hu"><![CDATA[nincsen telepített modulok]]></translation>
+        <translation language="sv"><![CDATA[ej installerade moduler]]></translation>
+        <translation language="el"><![CDATA[Μη εγκατεστημένες ενότητες]]></translation>
+        <translation language="zh"><![CDATA[未安装模块]]></translation>
+      </item>
+      <item type="label" name="InstallableThemes">
+        <translation language="nl"><![CDATA[niet geïnstalleerde thema's']]></translation>
+        <translation language="en"><![CDATA[not installed themes]]></translation>
+        <translation language="ru"><![CDATA[Неустановленные темы оформления]]></translation>
+        <translation language="es"><![CDATA[temas no instalados]]></translation>
+        <translation language="de"><![CDATA[nicht installierte Themes]]></translation>
+        <translation language="uk"><![CDATA[Немає встановлених тем]]></translation>
+        <translation language="hu"><![CDATA[nincsen telepített sablonok]]></translation>
+        <translation language="sv"><![CDATA[ej installerade teman]]></translation>
+        <translation language="el"><![CDATA[Μη εγκατεστημένα θέματα]]></translation>
+        <translation language="zh"><![CDATA[未安装主题]]></translation>
+      </item>
+      <item type="label" name="InstalledModules">
+        <translation language="nl"><![CDATA[geïnstalleerde modules]]></translation>
+        <translation language="en"><![CDATA[installed modules]]></translation>
+        <translation language="ru"><![CDATA[установленные модули]]></translation>
+        <translation language="es"><![CDATA[módulos instalados]]></translation>
+        <translation language="de"><![CDATA[installierte Module]]></translation>
+        <translation language="uk"><![CDATA[Встановлені модулі]]></translation>
+        <translation language="hu"><![CDATA[telepített modulok]]></translation>
+        <translation language="sv"><![CDATA[installerade moduler]]></translation>
+        <translation language="el"><![CDATA[Εγκατεστημένες ενότητες]]></translation>
+        <translation language="zh"><![CDATA[已安装模块]]></translation>
+      </item>
+      <item type="label" name="InstalledThemes">
+        <translation language="nl"><![CDATA[geïnstalleerde thema's']]></translation>
+        <translation language="en"><![CDATA[installed themes]]></translation>
+        <translation language="ru"><![CDATA[установленные темы оформления]]></translation>
+        <translation language="es"><![CDATA[temas instalados]]></translation>
+        <translation language="de"><![CDATA[installierte Themes]]></translation>
+        <translation language="uk"><![CDATA[Встановлені теми]]></translation>
+        <translation language="hu"><![CDATA[telepített sablonok]]></translation>
+        <translation language="sv"><![CDATA[installerade teman]]></translation>
+        <translation language="el"><![CDATA[Εγκατεστημένα θέματα]]></translation>
+        <translation language="zh"><![CDATA[已安装主题]]></translation>
+      </item>
+      <item type="label" name="Overwrite">
+        <translation language="nl"><![CDATA[overschrijf]]></translation>
+        <translation language="en"><![CDATA[overwrite]]></translation>
+        <translation language="it"><![CDATA[sovrascrivi]]></translation>
+        <translation language="ru"><![CDATA[Перезаписать]]></translation>
+        <translation language="zh"><![CDATA[重写]]></translation>
+        <translation language="de"><![CDATA[überschreiben]]></translation>
+        <translation language="fr"><![CDATA[écraser]]></translation>
+        <translation language="hu"><![CDATA[felülír]]></translation>
+        <translation language="es"><![CDATA[sobreescribir]]></translation>
+        <translation language="uk"><![CDATA[Перезаписати]]></translation>
+        <translation language="sv"><![CDATA[skriva över]]></translation>
+        <translation language="el"><![CDATA[Επικάλυψη]]></translation>
+      </item>
+      <item type="label" name="Theme">
+        <translation language="nl"><![CDATA[thema]]></translation>
+        <translation language="en"><![CDATA[theme]]></translation>
+        <translation language="ru"><![CDATA[тема]]></translation>
+        <translation language="de"><![CDATA[Theme]]></translation>
+        <translation language="es"><![CDATA[tema]]></translation>
+        <translation language="uk"><![CDATA[Тема]]></translation>
+        <translation language="hu"><![CDATA[sablon]]></translation>
+        <translation language="sv"><![CDATA[teman]]></translation>
+        <translation language="el"><![CDATA[Θέμα]]></translation>
+        <translation language="zh"><![CDATA[主题]]></translation>
+      </item>
+      <item type="label" name="UploadModule">
+        <translation language="nl"><![CDATA[module opladen]]></translation>
+        <translation language="en"><![CDATA[upload module]]></translation>
+        <translation language="ru"><![CDATA[загрузить модуль]]></translation>
+        <translation language="es"><![CDATA[subir módulo]]></translation>
+        <translation language="de"><![CDATA[Modul hochladen]]></translation>
+        <translation language="uk"><![CDATA[Завантажити модуль]]></translation>
+        <translation language="hu"><![CDATA[modul feltöltés]]></translation>
+        <translation language="sv"><![CDATA[ladda upp modul]]></translation>
+        <translation language="el"><![CDATA[Μεταφόρτωση ενότητας]]></translation>
+        <translation language="zh"><![CDATA[上传模块]]></translation>
+      </item>
+      <item type="label" name="UploadTheme">
+        <translation language="nl"><![CDATA[thema opladen]]></translation>
+        <translation language="en"><![CDATA[upload theme]]></translation>
+        <translation language="ru"><![CDATA[загрузить тему]]></translation>
+        <translation language="es"><![CDATA[subir tema]]></translation>
+        <translation language="de"><![CDATA[Theme hochladen]]></translation>
+        <translation language="uk"><![CDATA[Завантажити тему]]></translation>
+        <translation language="hu"><![CDATA[sablon feltöltés]]></translation>
+        <translation language="sv"><![CDATA[ladda upp teman]]></translation>
+        <translation language="el"><![CDATA[Μεταφόρτωση θέματος]]></translation>
+        <translation language="zh"><![CDATA[上传主题]]></translation>
+      </item>
+      <item type="label" name="Version">
+        <translation language="nl"><![CDATA[versie]]></translation>
+        <translation language="en"><![CDATA[version]]></translation>
+        <translation language="ru"><![CDATA[версия]]></translation>
+        <translation language="es"><![CDATA[versión]]></translation>
+        <translation language="de"><![CDATA[Version]]></translation>
+        <translation language="uk"><![CDATA[Версія]]></translation>
+        <translation language="hu"><![CDATA[verzió]]></translation>
+        <translation language="sv"><![CDATA[version]]></translation>
+        <translation language="el"><![CDATA[Έκδοση]]></translation>
+        <translation language="zh"><![CDATA[版本]]></translation>
+      </item>
+      <item type="error" name="AlreadyInstalled">
+        <translation language="nl"><![CDATA["%1$s" is reeds geïnstalleerd.]]></translation>
+        <translation language="en"><![CDATA["%1$s" is already installed.]]></translation>
+        <translation language="ru"><![CDATA["%1$s" уже установлен.]]></translation>
+        <translation language="es"><![CDATA["%1$s" ya está instalada.]]></translation>
+        <translation language="de"><![CDATA["%1$s" ist bereits installiert.]]></translation>
+        <translation language="hu"><![CDATA["%1$s" feltelepítve.]]></translation>
+        <translation language="sv"><![CDATA["%1$s" är redan installerad.]]></translation>
+        <translation language="el"><![CDATA[Το "%1$s" έχει ήδη εγκατασταθεί.]]></translation>
+        <translation language="zh"><![CDATA["%1$s"已安装。]]></translation>
+      </item>
+      <item type="error" name="CorruptedFile">
+        <translation language="nl"><![CDATA[Het geüploade bestand is geen geldig ZIP bestand en kon niet worden uitgepakt.]]></translation>
+        <translation language="en"><![CDATA[The uploaded file is not a valid ZIP file and could not be extracted.]]></translation>
+        <translation language="ru"><![CDATA[Загруженный файл не является допустимым ZIP файлом и не может быть извлечен.]]></translation>
+        <translation language="es"><![CDATA[El arhivo ZIP subido no es válido y no puede ser extraído.]]></translation>
+        <translation language="de"><![CDATA[Die hochgeladene Datei konnte nicht entpackt werden, es scheint sich nicht um eine gültige ZIP-Datei zu handeln.]]></translation>
+        <translation language="hu"><![CDATA[A feltöltött fájl nem érvényes ZIP fájl és nem kell kicsomagolni.]]></translation>
+        <translation language="sv"><![CDATA[uppladdad fil är inte en giltig ZIP fil och kan inte extraherad.]]></translation>
+        <translation language="el"><![CDATA[Το αρχείο που ανεβάσατε δεν είναι έγκυρο αρχείο ZIP και δεν έγινε δυνατό να αποσυμπιεστεί.]]></translation>
+        <translation language="zh"><![CDATA[上传的文件不是一个有效的ZIP文件，无法被解压。]]></translation>
+      </item>
+      <item type="error" name="CronjobsNotSet">
+        <translation language="nl"><![CDATA[Niet alle cronjobs zijn ingesteld.]]></translation>
+        <translation language="en"><![CDATA[Not all cronjobs are set.]]></translation>
+        <translation language="ru"><![CDATA[Планировщик задач не установлен.]]></translation>
+        <translation language="de"><![CDATA[Es wurden noch nicht alle Cronjobs eingestellt.]]></translation>
+        <translation language="es"><![CDATA[No todos los cronjobs están configurados.]]></translation>
+        <translation language="lt"><![CDATA[Ne visi cron darbai yra.]]></translation>
+        <translation language="hu"><![CDATA[Nincs minden cronjobs beállítva.]]></translation>
+        <translation language="sv"><![CDATA[Inte alla cronjobs är satta.]]></translation>
+        <translation language="zh"><![CDATA[cronjobs未被全部设置]]></translation>
+        <translation language="el"><![CDATA[Δεν έχουν ορισθεί όλοι οι χρονοπρογραμματισμοί.]]></translation>
+      </item>
+      <item type="error" name="DeleteTemplate">
+        <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
+        <translation language="en"><![CDATA[You can't delete this template.]]></translation>
+        <translation language="it"><![CDATA[Non puoi eliminare questo template.]]></translation>
+        <translation language="ru"><![CDATA[Вы не можете удалить этот шаблон.]]></translation>
+        <translation language="zh"><![CDATA[你不能删除这个模板。]]></translation>
+        <translation language="de"><![CDATA[Du kannst dieses Template nicht löschen.]]></translation>
+        <translation language="fr"><![CDATA[Vous ne pouvez pas effacer ce template.]]></translation>
+        <translation language="hu"><![CDATA[Nem törölheted ezt a sablont.]]></translation>
+        <translation language="es"><![CDATA[No puedes eliminar esta plantilla.]]></translation>
+        <translation language="sv"><![CDATA[Du kan inte ta bort denna mall.]]></translation>
+        <translation language="el"><![CDATA[Δεν μπορείτε να διαγράψετε αυτό το πρότυπο.]]></translation>
+      </item>
+      <item type="error" name="DuplicatePositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is gedupliceerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is duplicated.]]></translation>
+        <translation language="it"><![CDATA[La posizione %s è duplicata.]]></translation>
+        <translation language="ru"><![CDATA[%s - дублировано.]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 重复了。]]></translation>
+        <translation language="fr"><![CDATA[La position %s est en double.]]></translation>
+        <translation language="de"><![CDATA[Der Positionsname %s existiert bereits.]]></translation>
+        <translation language="hu"><![CDATA[A %s pozíció duplikált.]]></translation>
+        <translation language="es"><![CDATA[La posición %s está duplicada.]]></translation>
+        <translation language="sv"><![CDATA[Position %s är dublett.]]></translation>
+        <translation language="el"><![CDATA[Η θέση %s είναι ήδη κατειλημμένη.]]></translation>
+      </item>
+      <item type="error" name="FileContentsIsUseless">
+        <translation language="nl"><![CDATA[We vonden geen module in het geüploade bestand. Controleer de inhoud.]]></translation>
+        <translation language="en"><![CDATA[We could not find a module in the uploaded file. Verify the contents.]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти модуль в загруженном файле. Проверьте содержимое.]]></translation>
+        <translation language="es"><![CDATA[No pudimos encontrar un módulo en el archivo subido. Verifica el contenido.]]></translation>
+        <translation language="de"><![CDATA[Wir konnten kein Modul in der hochgeladenen Datei finden. Bitte überprüfe den Inhalt.]]></translation>
+        <translation language="hu"><![CDATA[Nem találtunk modult a feltöltött fájlban. Ellenőrizd a tartalmat.]]></translation>
+        <translation language="sv"><![CDATA[Vi kan inte hitta en modul i uppladdad fil. Verifiera innehåll.]]></translation>
+        <translation language="zh"><![CDATA[我们无法在上传的文件中找到模块。请检查内容。]]></translation>
+        <translation language="el"><![CDATA[Δεν βρέθηκε καμμία λειτουργική μονάδα στο αρχείο που ανέβηκε. Επαληθεύσατε τα περιεχόμενά του.]]></translation>
+      </item>
+      <item type="error" name="FileIsEmpty">
+        <translation language="nl"><![CDATA[Het bestand is leeg. Controleer de inhoud.]]></translation>
+        <translation language="en"><![CDATA[The file is empty. Verify the contents.]]></translation>
+        <translation language="ru"><![CDATA[Файл пустой. Проверьте содержимое.]]></translation>
+        <translation language="es"><![CDATA[El archivo está vacio. Verifica el contenido.]]></translation>
+        <translation language="de"><![CDATA[Diese Datei ist leer. Bitte überprüfe den Inhalt.]]></translation>
+        <translation language="hu"><![CDATA[A fájl üres. Ellenőrizd a tartalmat.]]></translation>
+        <translation language="sv"><![CDATA[fil är tom. Verifiera innehåll.]]></translation>
+        <translation language="el"><![CDATA[Το αρχείο είναι κενό. Επαληθεύστε τα περιεχόμενά του.]]></translation>
+        <translation language="zh"><![CDATA[这个文件是空的。请检查内容。]]></translation>
+      </item>
+      <item type="error" name="InvalidTemplateSyntax">
+        <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
+        <translation language="en"><![CDATA[Invalid syntax.]]></translation>
+        <translation language="it"><![CDATA[Sintassi non valida.]]></translation>
+        <translation language="ru"><![CDATA[Неправильный синтакс.]]></translation>
+        <translation language="zh"><![CDATA[无效的语法。]]></translation>
+        <translation language="de"><![CDATA[Ungültige Syntax.]]></translation>
+        <translation language="fr"><![CDATA[Syntaxe non-valide]]></translation>
+        <translation language="hu"><![CDATA[Érvénytelen szintaxis.]]></translation>
+        <translation language="es"><![CDATA[Sintaxis inválida.]]></translation>
+        <translation language="sv"><![CDATA[Ogiltigt syntax.]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρη σύνταξη εντολής.]]></translation>
+      </item>
+      <item type="error" name="LibraryFileAlreadyExists">
+        <translation language="nl"><![CDATA[Het library-bestand "%1$s" bestond al van een andere module. Deze module werkt mogelijk niet optimaal.]]></translation>
+        <translation language="en"><![CDATA[The library-file "%1$s" already existed by another module. This module may not function properly.]]></translation>
+        <translation language="ru"><![CDATA[Библиотека-файл "%1$s" уже существует в другом модуле. Этот модуль не может функционировать должным образом.]]></translation>
+        <translation language="de"><![CDATA[Die Library-Datei "%1$s" existiert bereits von einem anderen Modul. Dieses Modul funktioniert eventuell nicht korrekt.]]></translation>
+        <translation language="es"><![CDATA[El archivo de biblioteca "%1$s" ya existe para otro módulo. Este módulo puede no funcionar correctamente.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" könyvár-fájl már létezik egy modulban. Ez a modul nem működik rendesen.]]></translation>
+        <translation language="zh"><![CDATA[库文件“%1$s”已经在其他的模块中存在。这个模块的功能可能无法正常运作。]]></translation>
+        <translation language="el"><![CDATA[Το αρχείο βιβλιοθήκης "%1$s" υπάρχει ήδη από μιά άλλη λειτουργική μονάδα. Αυτή η λειτουργική μονάδα μπορεί να μη λειτουργήσει σωστά.]]></translation>
+      </item>
+      <item type="error" name="ModuleAlreadyExists">
+        <translation language="nl"><![CDATA[De module "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
+        <translation language="en"><![CDATA[The module "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="ru"><![CDATA[Модуль "%1$s" уже существует, вы не можете загрузить его снова.]]></translation>
+        <translation language="es"><![CDATA[El módulo "%1$s" ya existe, no puedes subirlo otra vez.]]></translation>
+        <translation language="de"><![CDATA[Das Modul "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" modul már létezik, nem töltheted fel újból.]]></translation>
+        <translation language="sv"><![CDATA[modul "%1$s" finns redan, du kan inte ladda upp det igen.]]></translation>
+        <translation language="zh"><![CDATA[模块“%1$s”已经存在，不需要重新上传。]]></translation>
+        <translation language="el"><![CDATA[Η λειτουργική μονάδα "%1$s" υπάρχει ήδη, δεν μπορείτε να τη μεταφορτώσετε πάλι.]]></translation>
+      </item>
+      <item type="error" name="NoAlphaNumPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is niet alfanumeriek.]]></translation>
+        <translation language="en"><![CDATA[Position %s is not alphanumerical.]]></translation>
+        <translation language="it"><![CDATA[La posizione %s non è alfanumerica.]]></translation>
+        <translation language="ru"><![CDATA[%s - неправильное название.]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 非字母或数字。]]></translation>
+        <translation language="de"><![CDATA[Position %s ist nicht alphanumerisch.]]></translation>
+        <translation language="fr"><![CDATA[La position %s n'est pas alphanumérique.]]></translation>
+        <translation language="hu"><![CDATA[A %s pozíció nem alfanumerikus.]]></translation>
+        <translation language="es"><![CDATA[La posición %s no es alfanumérica.]]></translation>
+        <translation language="sv"><![CDATA[Position %s är inte alfanummeriskt.]]></translation>
+        <translation language="el"><![CDATA[Το όνομα της θέσης %s δεν είναι αλφαριθμητικό.]]></translation>
+      </item>
+      <item type="error" name="NoInformationFile">
+        <translation language="nl"><![CDATA[We konden geen info.xml bestanden vinden voor "%1$s".]]></translation>
+        <translation language="en"><![CDATA[We could not find an info.xml file for "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти info.xml в "%1$s".]]></translation>
+        <translation language="es"><![CDATA[No hemos podido encontrar un archivo info.xml para "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Für "%1$s" konnte keine info.xml gefunden werden.]]></translation>
+        <translation language="hu"><![CDATA[Nem találtunk info.xml fájlt a(z) "%1$s"-nál/nél.]]></translation>
+        <translation language="sv"><![CDATA[Vi kan inte hitta en info.xml fil för "%1$s".]]></translation>
+        <translation language="zh"><![CDATA[我们无法为“%1$s”里找到info.xml]]></translation>
+        <translation language="el"><![CDATA[Δεν βρέθηκε το αρχείο info.xml γιά το "%1$s".]]></translation>
+      </item>
+      <item type="error" name="NoInstallerFile">
+        <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
+        <translation language="en"><![CDATA[We could not find an installer for the module "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти файл установки в модуле "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Für das Modul "%1$s" konnte kein Installer gefunden werden.]]></translation>
+        <translation language="es"><![CDATA[No pudimos encontrar un instalador para el módulo "%1$s".]]></translation>
+        <translation language="hu"><![CDATA[Nem találtunk telepítőt a(z) "%1$s" modulnál.]]></translation>
+        <translation language="sv"><![CDATA[Vi kan inte hitta en installer för modul "%1$s".]]></translation>
+        <translation language="zh"><![CDATA[我们无法找到模块“%1$s”的安装器。]]></translation>
+        <translation language="el"><![CDATA[Δεν βρέθηκε πρόγραμμα εγκατάστασης γιά την ενότητα "%1$s".]]></translation>
+      </item>
+      <item type="error" name="NonExistingPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is niet gedefiniëerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is not defined.]]></translation>
+        <translation language="it"><![CDATA[La posizione %s non è definita.]]></translation>
+        <translation language="ru"><![CDATA[%s - нет названия.]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 未定义。]]></translation>
+        <translation language="de"><![CDATA[Position %s ist nicht definiert.]]></translation>
+        <translation language="fr"><![CDATA[La position %s n'est pas définie.]]></translation>
+        <translation language="hu"><![CDATA[A %s pozíció nem definiált.]]></translation>
+        <translation language="es"><![CDATA[La posción %s no está definida.]]></translation>
+        <translation language="sv"><![CDATA[Position %s är inte defined.]]></translation>
+        <translation language="el"><![CDATA[Η θέση %s δεν έχει καθοριστεί.]]></translation>
+      </item>
+      <item type="error" name="NoThemes">
+        <translation language="nl"><![CDATA[Er zijn nog geen thema's aanwezig.]]></translation>
+        <translation language="en"><![CDATA[No themes available.]]></translation>
+        <translation language="ru"><![CDATA[нет доступных тем оформления.]]></translation>
+        <translation language="de"><![CDATA[Es sind keine Themes vorhanden.]]></translation>
+        <translation language="es"><![CDATA[No hay temas disponibles.]]></translation>
+        <translation language="hu"><![CDATA[Nincs elérhető sablon.]]></translation>
+        <translation language="sv"><![CDATA[Inga teman tillgängliga.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν διαθέσιμα θέματα.]]></translation>
+        <translation language="zh"><![CDATA[没有可用主题。]]></translation>
+      </item>
+      <item type="error" name="ReservedPositionName">
+        <translation language="nl"><![CDATA[De positienaam %s is gereserveerd.]]></translation>
+        <translation language="en"><![CDATA[Position %s is reserved.]]></translation>
+        <translation language="it"><![CDATA[La posizione %s è riservata.]]></translation>
+        <translation language="ru"><![CDATA[%s - сохранено.]]></translation>
+        <translation language="zh"><![CDATA[位置 %s 已保留。]]></translation>
+        <translation language="de"><![CDATA[Position %s ist reserviert.]]></translation>
+        <translation language="fr"><![CDATA[La position %s est réservée.]]></translation>
+        <translation language="hu"><![CDATA[A %s pozíció lefoglalva.]]></translation>
+        <translation language="es"><![CDATA[La posciión %s está reservada.]]></translation>
+        <translation language="sv"><![CDATA[Position %s är reserved.]]></translation>
+        <translation language="el"><![CDATA[Η θέση %s είναι κατειλημμένη.]]></translation>
+      </item>
+      <item type="error" name="ThemeAlreadyExists">
+        <translation language="nl"><![CDATA[Het thema "%1$s" bestaat al, je kan deze niet opnieuw uploaden.]]></translation>
+        <translation language="en"><![CDATA[The theme "%1$s" already exists, you can not upload it again.]]></translation>
+        <translation language="ru"><![CDATA[Тема "%1$s" уже существует, вы не можете загрузить её снова.]]></translation>
+        <translation language="es"><![CDATA[El tema "%1$s" existe actualmente, No puedes subirlo de nuevo.]]></translation>
+        <translation language="de"><![CDATA[Das Theme "%1$s" existiert bereits, du kannst es nicht erneut hochladen.]]></translation>
+        <translation language="hu"><![CDATA[A(z) "%1$s" sablon már létezik, nem töltheted fel újból.]]></translation>
+        <translation language="sv"><![CDATA[tema "%1$s" finns redan, du kan inte ladda upp det igen.]]></translation>
+        <translation language="zh"><![CDATA[主题“%1$s”已经存在，不需要重新上传。]]></translation>
+        <translation language="el"><![CDATA[Το θέμα "%1$s" υπάρχει ήδη, δεν μπορείτε να το ανεβάσετε πάλι.]]></translation>
+      </item>
+      <item type="error" name="ThemeNameDoesntMatch">
+        <translation language="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in info.xml.]]></translation>
+        <translation language="en"><![CDATA[The theme's folder name doesn't match the theme name in info.xml.]]></translation>
+        <translation language="ru"><![CDATA[Название каталога темы не совпадает с названием, определенным в файле info.xml.]]></translation>
+        <translation language="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en info.xml.]]></translation>
+        <translation language="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der info.xml stimmen nicht überein.]]></translation>
+        <translation language="hu"><![CDATA[A sablon neve nem egyezik az info.xml sablon névvel.]]></translation>
+        <translation language="sv"><![CDATA[temats mappnamn matchar inte temanamn i info.xml.]]></translation>
+        <translation language="zh"><![CDATA[主题文件名和info.xml里的主题名称不匹配。]]></translation>
+        <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
+      </item>
+    </Extensions>
+  </Backend>
+</locale>

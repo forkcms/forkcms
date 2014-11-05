@@ -1,2 +1,2 @@
-compass: sh -c 'cd frontend/themes/bootstrap/core/layout && compass watch'
-coffee: sh -c 'cd frontend/themes/bootstrap/core && coffee -w -c -o js coffee'
+compass: sh -c 'cd src/Frontend/Themes/bootstrap/Core/Layout && compass watch'
+coffee: sh -c 'cd src/Frontend/Themes/bootstrap/Core && coffee -w -c -o js coffee'

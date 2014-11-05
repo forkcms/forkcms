@@ -2,6 +2,7 @@
 # note: your hosting company might not allow these directives to be set. In that case,
 # you should either find another hosting company (advised) or remove the line below.
 Options +FollowSymlinks -Indexes
+DirectorySlash Off
 
 # file etags (used when comparing local cached file to server file)
 FileETag MTime Size
@@ -16,19 +17,19 @@ FileETag MTime Size
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
 	RewriteRule .*\.md - [F]
-	RewriteRule frontend/cache/cached_templates - [F]
-	RewriteRule frontend/cache/compiled_templates - [F]
-	RewriteRule frontend/cache/config - [F]
-	RewriteRule frontend/cache/locale/.*\.php - [F]
-	RewriteRule frontend/cache/logs - [F]
-	RewriteRule frontend/cache/navigation/.*\.php - [F]
-	RewriteRule frontend/cache/search - [F]
-	RewriteRule backend/cache/compiled_templates - [F]
-	RewriteRule backend/cache/config - [F]
-	RewriteRule backend/cache/cronjobs - [F]
-	RewriteRule backend/cache/locale/.*\.php - [F]
-	RewriteRule backend/cache/logs - [F]
-	RewriteRule backend/cache/navigation - [F]
+	RewriteRule src/Frontend/Cache/CachedTemplates - [F]
+	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
+	RewriteRule src/Frontend/Cache/Config - [F]
+	RewriteRule src/Frontend/Cache/Locale/.*\.php - [F]
+	RewriteRule src/Frontend/Cache/Logs - [F]
+	RewriteRule src/Frontend/Cache/Navigation/.*\.php - [F]
+	RewriteRule src/Frontend/Cache/Search - [F]
+	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
+	RewriteRule src/Backend/Cache/Config - [F]
+	RewriteRule src/Backend/Cache/Cronjobs - [F]
+	RewriteRule src/Backend/Cache/Locale/.*\.php - [F]
+	RewriteRule src/Backend/Cache/Logs - [F]
+	RewriteRule src/Backend/Cache/Navigation - [F]
 
 	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
@@ -36,8 +37,8 @@ FileETag MTime Size
 	# RewriteCond %{HTTP_HOST} !.*\.xip.io [NC]
 	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
 
-	# backend/install/api are existing dirs, but should all pass via the front controller
-	RewriteCond %{REQUEST_URI} ^/(backend|install|api(\/\d.\d)?(\/client)?)/$
+	# src dir should pass via the front controller
+	RewriteCond %{REQUEST_URI} ^/(src|src\/)$
 	RewriteRule . /index.php [NC,L]
 
 	# handle urls

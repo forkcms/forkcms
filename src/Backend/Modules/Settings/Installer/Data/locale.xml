@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Settings>
+      <item type="label" name="AdminIds">
+        <translation language="nl"><![CDATA[admin-ids]]></translation>
+        <translation language="en"><![CDATA[admin ids]]></translation>
+        <translation language="it"><![CDATA[id amministratori]]></translation>
+        <translation language="ru"><![CDATA[ID Администратора]]></translation>
+        <translation language="zh"><![CDATA[管理员id]]></translation>
+        <translation language="fr"><![CDATA[identifiants admin]]></translation>
+        <translation language="de"><![CDATA[Admin-IDs]]></translation>
+        <translation language="hu"><![CDATA[admin ids]]></translation>
+        <translation language="es"><![CDATA[admin ids]]></translation>
+        <translation language="uk"><![CDATA[ID Адміністратора]]></translation>
+        <translation language="lt"><![CDATA[admino id]]></translation>
+        <translation language="el"><![CDATA[ID του Διαχειριστή]]></translation>
+      </item>
+      <item type="label" name="ApplicationId">
+        <translation language="nl"><![CDATA[toepassings-id]]></translation>
+        <translation language="en"><![CDATA[application id]]></translation>
+        <translation language="it"><![CDATA[id applicazione]]></translation>
+        <translation language="ru"><![CDATA[ID Приложения]]></translation>
+        <translation language="zh"><![CDATA[应用程序id]]></translation>
+        <translation language="fr"><![CDATA[identifiant de l'application]]></translation>
+        <translation language="de"><![CDATA[Application-ID]]></translation>
+        <translation language="hu"><![CDATA[application id]]></translation>
+        <translation language="es"><![CDATA[id de aplicación]]></translation>
+        <translation language="uk"><![CDATA[ID Додатка]]></translation>
+        <translation language="lt"><![CDATA[aplikacijos id]]></translation>
+        <translation language="el"><![CDATA[ID της εφαρμογής]]></translation>
+      </item>
+      <item type="label" name="ApplicationSecret">
+        <translation language="nl"><![CDATA[app secret]]></translation>
+        <translation language="en"><![CDATA[app secret]]></translation>
+        <translation language="it"><![CDATA[chiave segreta dell'applicazione]]></translation>
+        <translation language="ru"><![CDATA[Секретный код приложения]]></translation>
+        <translation language="zh"><![CDATA[应用密码]]></translation>
+        <translation language="fr"><![CDATA[app secret]]></translation>
+        <translation language="de"><![CDATA[app secret]]></translation>
+        <translation language="hu"><![CDATA[app secret]]></translation>
+        <translation language="es"><![CDATA[app secret]]></translation>
+        <translation language="uk"><![CDATA[Таємний код додатка]]></translation>
+        <translation language="lt"><![CDATA[app slaptas žodis]]></translation>
+        <translation language="el"><![CDATA[Το μυστικό της εφαρμογής]]></translation>
+      </item>
+      <item type="label" name="Cookies">
+        <translation language="nl"><![CDATA[cookies]]></translation>
+        <translation language="en"><![CDATA[cookies]]></translation>
+        <translation language="fr"><![CDATA[cookies]]></translation>
+        <translation language="de"><![CDATA[Cookies]]></translation>
+        <translation language="es"><![CDATA[cookies]]></translation>
+      </item>
+      <item type="label" name="LicenseKey">
+        <translation language="nl"><![CDATA[Licentie key]]></translation>
+        <translation language="en"><![CDATA[License key]]></translation>
+        <translation language="ru"><![CDATA[Лицензионный ключ]]></translation>
+        <translation language="de"><![CDATA[Lizenz-Schlüssel]]></translation>
+        <translation language="es"><![CDATA[llave de licencia]]></translation>
+        <translation language="uk"><![CDATA[Ліцензійний ключ]]></translation>
+        <translation language="hu"><![CDATA[Licenc kulcs]]></translation>
+        <translation language="el"><![CDATA[Κλειδί Άδειας Χρήσης]]></translation>
+        <translation language="zh"><![CDATA[许可密钥]]></translation>
+      </item>
+      <item type="label" name="LicenseName">
+        <translation language="nl"><![CDATA[Licentie naam]]></translation>
+        <translation language="en"><![CDATA[License name]]></translation>
+        <translation language="ru"><![CDATA[Название лицензии]]></translation>
+        <translation language="de"><![CDATA[Lizenz-Name]]></translation>
+        <translation language="es"><![CDATA[nombre de licencia]]></translation>
+        <translation language="uk"><![CDATA[Назва ліцензії]]></translation>
+        <translation language="hu"><![CDATA[Licenc név]]></translation>
+        <translation language="el"><![CDATA[Όνομα στην Άδεια Χρήσης]]></translation>
+        <translation language="zh"><![CDATA[许可证名]]></translation>
+      </item>
+      <item type="label" name="MaximumHeight">
+        <translation language="nl"><![CDATA[maximale hoogte]]></translation>
+        <translation language="en"><![CDATA[maximum height]]></translation>
+        <translation language="ru"><![CDATA[максимальная высота]]></translation>
+        <translation language="de"><![CDATA[maximale Höhe]]></translation>
+        <translation language="es"><![CDATA[altura máxima]]></translation>
+        <translation language="uk"><![CDATA[Максимальна висота]]></translation>
+        <translation language="hu"><![CDATA[maximum magasság]]></translation>
+        <translation language="el"><![CDATA[μέγιστο ύψος]]></translation>
+        <translation language="zh"><![CDATA[最大高度]]></translation>
+      </item>
+      <item type="label" name="MaximumWidth">
+        <translation language="nl"><![CDATA[maximale breedte]]></translation>
+        <translation language="en"><![CDATA[maximum width]]></translation>
+        <translation language="ru"><![CDATA[максимальная ширина]]></translation>
+        <translation language="de"><![CDATA[maximale Breite]]></translation>
+        <translation language="es"><![CDATA[ancho máximo]]></translation>
+        <translation language="uk"><![CDATA[Максимальна ширина]]></translation>
+        <translation language="hu"><![CDATA[maximum szélesség]]></translation>
+        <translation language="el"><![CDATA[μέγιστο πλάτος]]></translation>
+        <translation language="zh"><![CDATA[最大宽度]]></translation>
+      </item>
+      <item type="label" name="SEOSettings">
+        <translation language="nl"><![CDATA[SEO instellingen]]></translation>
+        <translation language="en"><![CDATA[SEO settings]]></translation>
+        <translation language="it"><![CDATA[Impostazioni SEO]]></translation>
+        <translation language="ru"><![CDATA[Настройки SEO]]></translation>
+        <translation language="zh"><![CDATA[搜索引擎优化设置]]></translation>
+        <translation language="fr"><![CDATA[réglages SEO]]></translation>
+        <translation language="de"><![CDATA[SEO-Einstellungen]]></translation>
+        <translation language="hu"><![CDATA[SEO beállítások]]></translation>
+        <translation language="es"><![CDATA[configuracion SEO]]></translation>
+        <translation language="uk"><![CDATA[Налаштування SEO]]></translation>
+        <translation language="el"><![CDATA[Ρυθμίσεις SEO]]></translation>
+      </item>
+      <item type="label" name="SmtpSecureLayer">
+        <translation language="nl"><![CDATA[beveiliging]]></translation>
+        <translation language="en"><![CDATA[security]]></translation>
+        <translation language="el"><![CDATA[ασφάλεια]]></translation>
+        <translation language="zh"><![CDATA[安全]]></translation>
+        <translation language="de"><![CDATA[Sicherheit]]></translation>
+      </item>
+      <item type="message" name="ConfigurationError">
+        <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
+        <translation language="en"><![CDATA[Some settings are not yet configured.]]></translation>
+        <translation language="it"><![CDATA[Alcune impostazioni non sono state ancora configurate.]]></translation>
+        <translation language="ru"><![CDATA[Некоторые настройки не сохранены.]]></translation>
+        <translation language="zh"><![CDATA[存在未设置项。]]></translation>
+        <translation language="fr"><![CDATA[Certains réglages ne sont pas configurés.]]></translation>
+        <translation language="hu"><![CDATA[Néhény beállítás még nincs konfigurálva.]]></translation>
+        <translation language="de"><![CDATA[Einige Einstellungen sind noch nicht konfiguriert.]]></translation>
+        <translation language="es"><![CDATA[Algunas configuraciones aún no estan configuradas.]]></translation>
+        <translation language="el"><![CDATA[Μερικές ρυθμίσεις δεν έχουν διαμορφωθεί ακόμη.]]></translation>
+      </item>
+      <item type="message" name="HelpAPIKeys">
+        <translation language="nl"><![CDATA[Toegangscodes voor gebruikte webservices:]]></translation>
+        <translation language="en"><![CDATA[Access codes for webservices.]]></translation>
+        <translation language="it"><![CDATA[Codici di accesso per servizi web.]]></translation>
+        <translation language="ru"><![CDATA[Код доступа к сервисам.]]></translation>
+        <translation language="zh"><![CDATA[网站服务器的接入码（API Key）。]]></translation>
+        <translation language="hu"><![CDATA[Webszolgáltatások hozzáférési kódja.]]></translation>Show
+        <translation language="fr"><![CDATA[Codes d'accès pour webservices.]]></translation>
+        <translation language="de"><![CDATA[Zugangscode für Webdienste.]]></translation>
+        <translation language="es"><![CDATA[Código de acceso para webservices.]]></translation>
+        <translation language="el"><![CDATA[Κωδικοί πρόσβασης γιά υπηρεσίες web.]]></translation>
+      </item>
+      <item type="message" name="HelpCkfinderMaximumHeight">
+        <translation language="nl"><![CDATA[Instellen van de maximale hoogte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum height (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
+        <translation language="ru"><![CDATA[Наладзьце максімальную вышыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Höhe (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
+        <translation language="es"><![CDATA[Configure la altura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
+        <translation language="hu"><![CDATA[Adja meg a maximális magasság (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
+        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο ύψος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
+        <translation language="zh"><![CDATA[配置上载的图像的最大高度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
+      </item>
+      <item type="message" name="HelpCkfinderMaximumWidth">
+        <translation language="nl"><![CDATA[Instellen van de maximale breedte (in pixels) van geüploade afbeeldingen. Als een geüploade afbeelding groter is, dan wordt het proportioneel verkleind. Voer 0 in om deze functie uit te schakelen.]]></translation>
+        <translation language="en"><![CDATA[Configure the maximum width (in pixels) of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.]]></translation>
+        <translation language="ru"><![CDATA[Наладзьце максімальную шырыню (у пікселях) загружаных малюнкаў. Калі загружаны малюнак больш, ён атрымлівае зменшана прапарцыйна. Усталюйце 0, каб адключыць гэтую функцыю.]]></translation>
+        <translation language="de"><![CDATA[Konfigurieren Sie die maximale Breite (in Pixel) der hochgeladenen Bilder. Wenn ein hochgeladenes Bild größer ist, wird es nach unten proportional skaliert. Auf 0 setzen, um diese Funktion zu deaktivieren.]]></translation>
+        <translation language="es"><![CDATA[Configure la anchura máxima (en píxeles) de las imágenes cargadas. Si una imagen cargada es más grande, se redujo de forma proporcional. Se establece en 0 para desactivar esta función.]]></translation>
+        <translation language="hu"><![CDATA[Adja meg a maximális szélesség (pixel) a feltöltött képek. Ha a feltöltött kép nagyobb, ez lesz kicsinyítve arányosan. A 0 letiltja ezt a funkciót.]]></translation>
+        <translation language="el"><![CDATA[Διαμορφώστε το μέγιστο πλάτος (σε pixel) της φωτογραφίες. Αν μια εικόνα που αποστέλετε είναι μεγαλύτερο, παίρνει μειωθούν αναλογικά. Οριστεί σε 0 για να απενεργοποιήσετε αυτή τη λειτουργία.]]></translation>
+        <translation language="zh"><![CDATA[配置上载的图像的最大宽度（以像素为单位）。如果上传的图片比较大，它就会被缩小比例。设置为0以禁用此功能。]]></translation>
+      </item>
+      <item type="message" name="HelpCookies">
+        <translation language="nl"><![CDATA[In Europa is een wetgeving rond cookies van kracht. Met deze cookie balk voldoet u aan de meest strenge wetgeving.]]></translation>
+        <translation language="en"><![CDATA[There are several laws in Europe about the use of cookies. With this Cookie-bar you fulfill the most strict law.]]></translation>
+        <translation language="fr"><![CDATA[En Europe, il existe plusieurs lois pour l'utilisation des cookies. Avec ce barre de cookie vous accomplissez la loi la plus stricte.]]></translation>
+        <translation language="de"><![CDATA[In Europa gibt es mehrere Gesetze für die Verwendung von Cookies. Mit diesem Cookie-Bar erfüllen Sie das strengsten Recht.]]></translation>
+        <translation language="es"><![CDATA[En Europa hay varias leyes para el uso de cookies. Con este barra de cookie cumple con la legislación más estricta.]]></translation>
+      </item>
+      <item type="message" name="HelpDateFormatLong">
+        <translation language="nl"><![CDATA[Formaat dat bij de overzichtspagina's en detailweergaves wordt gebruikt.]]></translation>
+        <translation language="en"><![CDATA[Format that's used on overview and detail pages.]]></translation>
+        <translation language="it"><![CDATA[Formato usato sulla panoramica e sui dettagli delle pagine.]]></translation>
+        <translation language="ru"><![CDATA[Формат для страниц с полной статьей.]]></translation>
+        <translation language="zh"><![CDATA[用于概览和详细页面的格式。]]></translation>
+        <translation language="hu"><![CDATA[Használt formátumok áttekintése és részletes oldala.]]></translation>
+        <translation language="fr"><![CDATA[Format utilisé pour les vues d'ensemble et les pages de détail.]]></translation>
+        <translation language="de"><![CDATA[Format welches für Übersichts- und Detail-Seiten verwendet wird.]]></translation>
+        <translation language="es"><![CDATA[Formato que se utiliza en las páginas de resumen y detalle.]]></translation>
+        <translation language="el"><![CDATA[Η μορφή που χρησιμοποιείται στις συνοπτικές και αναλυτικές σελίδες.]]></translation>
+      </item>
+      <item type="message" name="HelpDateFormatShort">
+        <translation language="nl"><![CDATA[Dit formaat wordt voornamelijk gebruikt bij tabelweergaves.]]></translation>
+        <translation language="en"><![CDATA[This format is mostly used in table overviews.]]></translation>
+        <translation language="it"><![CDATA[Questo formato è principalmente usato nelle panoramiche tabulari.]]></translation>
+        <translation language="ru"><![CDATA[Формат, который используется для кратких и подробных страниц.]]></translation>
+        <translation language="zh"><![CDATA[这种格式通常用于表格概览。]]></translation>
+        <translation language="hu"><![CDATA[Ez a formátum többnyire táblázat áttekintésére.]]></translation>
+        <translation language="fr"><![CDATA[Format utilisé dans les tables de vue d'ensemble.]]></translation>
+        <translation language="de"><![CDATA[Dieses Format wird meist in tabellarischen Übersichten verwendet.]]></translation>
+        <translation language="es"><![CDATA[Este formato se utiliza principalmente en resúmenes.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποιείται κυρίως στην επισκόπηση πινάκων.]]></translation>
+      </item>
+      <item type="message" name="HelpDomains">
+        <translation language="nl"><![CDATA[Vul de domeinen in waarop de website te bereiken is (1 domein per regel)]]></translation>
+        <translation language="en"><![CDATA[Enter the domains on which this website can be reached. (Split domains with linebreaks.)]]></translation>
+        <translation language="it"><![CDATA[Inserisci i domini sui quali questo sito sarà raggiungibile (Un dominio per ogni riga).]]></translation>
+        <translation language="ru"><![CDATA[Домены, для которых доступна вся информация.]]></translation>
+        <translation language="zh"><![CDATA[输入这个网站可以到达的域名（使用回车换行分隔域多个域名）。]]></translation>
+        <translation language="hu"><![CDATA[Domainek, amikkel elérhető az oldal. (Split domainek soronként.)]]></translation>
+        <translation language="fr"><![CDATA[Entrez les domaines sur lesquels ce site peut être accessible. (Séparez les domaines par des sauts de ligne.)]]></translation>
+        <translation language="de"><![CDATA[Gib die Domains an, unter denen diese Website erreicht werden kann.(Trenne Domains mit Zeilenumbrüchen.)]]></translation>
+        <translation language="es"><![CDATA[Insertar los dominios donde este sitio web puede ser accesible. (Separar dominios con saltos de linea.)]]></translation>
+        <translation language="el"><![CDATA[Γράψτε τους τομείς (domains) στους οποίους είναι προσβάσιμος ο ιστοχώρος. (Γράψτε κάθε τομέα σε νέα γραμμή).]]></translation>
+      </item>
+      <item type="message" name="HelpEmailWebmaster">
+        <translation language="nl"><![CDATA[Stuur notificaties van het CMS naar dit e-mailadres.]]></translation>
+        <translation language="en"><![CDATA[Send CMS notifications to this e-mailaddress.]]></translation>
+        <translation language="it"><![CDATA[Invia le notifiche dal CMS a questo indirizzo email.]]></translation>
+        <translation language="ru"><![CDATA[E-mail веб-мастера, для получения оповещений.]]></translation>
+        <translation language="zh"><![CDATA[将CMS消息提醒发送到这个电子邮件地址。]]></translation>
+        <translation language="hu"><![CDATA[CMS értesítő küldése erre az e-mail címre.]]></translation>
+        <translation language="fr"><![CDATA[Envoyer les notifications du CMS à ces adresses e-mail.]]></translation>
+        <translation language="de"><![CDATA[Sende CMS-Benachrichtigungen an diese E-Mail-Adresse.]]></translation>
+        <translation language="es"><![CDATA[Enviar las notificaciones del CMS a esta dirección e-mail.]]></translation>
+        <translation language="el"><![CDATA[Στείλε ειδοποιήσεις CMS σε αυτή τη διεύθυνση email.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookAdminIds">
+        <translation language="nl"><![CDATA[Een lijst met de Facebook-gebruikers hun ID en/of het id van de Facebook-applicatie die de paginas mogen beheren.]]></translation>
+        <translation language="en"><![CDATA[Either Facebook user IDs or a Facebook Platform application ID that administers this website.]]></translation>
+        <translation language="it"><![CDATA[O lo user ID Facebook o un ID dell'applicazione Facebook Platform di chi amministra questo sito. ]]></translation>
+        <translation language="ru"><![CDATA[ID пользователя Facebook, который будет администрировать сайт.]]></translation>
+        <translation language="zh"><![CDATA[Facebook用户ID或Facebook平台应用ID管理这个网站。]]></translation>
+        <translation language="hu"><![CDATA[Vagy Facebook felhasználó ID-t vagy Facebook Platform alkalmazás ID-t alkalmaz az oldal.]]></translation>
+        <translation language="fr"><![CDATA[Une ID d'utilisateur Facebook our une ID d'application Facebook en lien avec ce site.]]></translation>
+        <translation language="de"><![CDATA[Entweder die Facebookbenutzer-IDs oder die Facebook Plattformanwendungs-ID die diese Website administriert.]]></translation>
+        <translation language="es"><![CDATA[Ya sea IDs de usuario Facebook o ID de una aplicación Facebook Platform la que administra este sitio web.]]></translation>
+        <translation language="el"><![CDATA[Είτε το ID χρήστη στο Facebook είτε ένα ID εφαρμογής Facebook Platform γιά τη διαχείριση αυτού του ιστοχώρου.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApiKey">
+        <translation language="nl"><![CDATA[De API-sleutel van je Facebook-toepassing]]></translation>
+        <translation language="en"><![CDATA[The API key of your Facebook application.]]></translation>
+        <translation language="it"><![CDATA[La chiave API della tua applicazione Facebook.]]></translation>
+        <translation language="ru"><![CDATA[API-ключ к приложению Facebook.]]></translation>
+        <translation language="zh"><![CDATA[你的Facebook应用API key]]></translation>
+        <translation language="hu"><![CDATA[A Facebook alkalmazás API kulcsa.]]></translation>
+        <translation language="fr"><![CDATA[La clef API de votre application Facebook.]]></translation>
+        <translation language="de"><![CDATA[Der API-Key deiner Facebookanwendung.]]></translation>
+        <translation language="es"><![CDATA[La API key de tu aplicación Facebook.]]></translation>
+        <translation language="el"><![CDATA[Το κλειδί API της εφαρμογής σας στο Facebook.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApplicationId">
+        <translation language="nl"><![CDATA[Het toepassings-id van je Facebook-toepassing.]]></translation>
+        <translation language="en"><![CDATA[The id of your Facebook application]]></translation>
+        <translation language="it"><![CDATA[L'ID della tua applicazione Facebook.]]></translation>
+        <translation language="ru"><![CDATA[ID приложения Facebook.]]></translation>
+        <translation language="zh"><![CDATA[你的Facebook应用ID]]></translation>
+        <translation language="hu"><![CDATA[A Facebook alkalmazás id-je.]]></translation>
+        <translation language="fr"><![CDATA[L'ID de votre application Facebook]]></translation>
+        <translation language="de"><![CDATA[Die ID deiner Facebookanwendung.]]></translation>
+        <translation language="es"><![CDATA[La id de tu aplicación Facebook]]></translation>
+        <translation language="el"><![CDATA[Το id της εφαρμογής σας στο Facebook.]]></translation>
+      </item>
+      <item type="message" name="HelpFacebookApplicationSecret">
+        <translation language="nl"><![CDATA[De App Secret van je Facebook-toepassing.]]></translation>
+        <translation language="en"><![CDATA[The secret of your Facebook application.]]></translation>
+        <translation language="it"><![CDATA[La chiave segreta della tua applicazione Facebook]]></translation>
+        <translation language="ru"><![CDATA[Секретный код приложения Facebook.]]></translation>
+        <translation language="zh"><![CDATA[你的Facebook应用密码。]]></translation>
+        <translation language="hu"><![CDATA[The secret of your Facebook application.]]></translation>
+        <translation language="fr"><![CDATA[La clef secrète de votre application Facebook]]></translation>
+        <translation language="de"><![CDATA[Secret-Key deiner Facebook-Anwendung.]]></translation>
+        <translation language="es"><![CDATA[La App secret de tu aplicación Facebook.]]></translation>
+        <translation language="el"><![CDATA[Το μυστικό κωδικού της εφαρμογής σας στο Facebook.]]></translation>
+      </item>
+      <item type="label" name="TwitterSiteName">
+          <translation language="nl"><![CDATA[twitter gebruikersnaam]]></translation>
+          <translation language="en"><![CDATA[twitter username]]></translation>
+          <translation language="fr"><![CDATA[twitter nom d'utilisateur]]></translation>
+      </item>
+      <item type="message" name="HelpLanguages">
+        <translation language="nl"><![CDATA[Duid aan welke talen toegankelijk zijn voor bezoekers]]></translation>
+        <translation language="en"><![CDATA[Select the languages that are accessible for visitors.]]></translation>
+        <translation language="it"><![CDATA[Seleziona le lingue accessibili dai visitatori.]]></translation>
+        <translation language="ru"><![CDATA[Языки, доступные посетителям.]]></translation>
+        <translation language="zh"><![CDATA[选择访客可以选用的语言。]]></translation>
+        <translation language="hu"><![CDATA[Az elérhető nyelvek kiválasztása a látogatók számára.]]></translation>
+        <translation language="de"><![CDATA[Wähle die Sprachen die für den Besucher zugänglich sind.]]></translation>
+        <translation language="fr"><![CDATA[Choisissez les languages accessibles à vos visiteurs.]]></translation>
+        <translation language="es"><![CDATA[Selecciona las lenguas accesibles para tus visitantes.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες έχει πρόσβαση ο επισκέπτης.]]></translation>
+      </item>
+      <item type="message" name="HelpNumberFormat">
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van getallen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display numbers on the website.]]></translation>
+        <translation language="it"><![CDATA[Questo formato è usato per mostrare i numeri su questo sito.]]></translation>
+        <translation language="ru"><![CDATA[Числовой формат для показа на сайте.]]></translation>
+        <translation language="zh"><![CDATA[这一个是用于显示网站上的数字。]]></translation>
+        <translation language="hu"><![CDATA[A szám formátuma a honlapon.]]></translation>
+        <translation language="fr"><![CDATA[Le format utilisé pour afficher des nombres sur le site.]]></translation>
+        <translation language="de"><![CDATA[Dieses Format wird verwendet um Zahlen auf der Website darzustellen.]]></translation>
+        <translation language="es"><![CDATA[Este formato es usado para mostrar numeros en el sitio web.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποείται γιά την εμφάνιση των αριθμών στον ιστοχώρο.]]></translation>
+      </item>
+      <item type="message" name="HelpRedirectLanguages">
+        <translation language="nl"><![CDATA[Duid aan op welke talen mensen op basis van hun browsertaal automatisch mogen terechtkomen.]]></translation>
+        <translation language="en"><![CDATA[Select the languages that people may automatically be redirected to based upon their browser language.]]></translation>
+        <translation language="it"><![CDATA[Seleziona le lingue alle quali i visitatori possono accedere automaticamente tramite il loro browser.]]></translation>
+        <translation language="ru"><![CDATA[Выберите языки, чтобы пользователи могли сразу быть переадресованы.]]></translation>
+        <translation language="zh"><![CDATA[请选择用户通过浏览器自动被重新定向的语言。]]></translation>
+        <translation language="hu"><![CDATA[A nyelv kiválasztása, ahova a látogatót autómatikusan átirányítja a böngésző.]]></translation>
+        <translation language="fr"><![CDATA[Choisissez les languages vers lesquels les gens seront automatiquement redirigés par leurs navigateurs.]]></translation>
+        <translation language="de"><![CDATA[Wähle die Sprachen, zu denen Besucher automatisch durch deren Browser weitergeleitet werden dürfen.]]></translation>
+        <translation language="es"><![CDATA[Selecciona el idioma al que la gente será redireccionada automáticamente basado en el idioma de su navegador.]]></translation>
+        <translation language="el"><![CDATA[Επιλέξτε τις γλώσσες στις οποίες οι χρήστες θα κατευθύνονται αυτόματα ανάλογα με τη γλώσσα του φυλλομετρητή τους.]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsFoot">
+        <translation language="nl"><![CDATA[Plaats hier code die onderaan elke pagina geladen moet worden.]]></translation>
+        <translation language="en"><![CDATA[Paste code that needs to be loaded at the end of the <code><body></code> tag here.]]></translation>
+        <translation language="it"><![CDATA[Incolla qui il codice che vuoi caricare al termine del tag<code>&lt;body&gt;</code>.]]></translation>
+        <translation language="ru"><![CDATA[ Введите код, который должен быть загружен в конце <code>&lt;body&gt;</code>.]]></translation>
+        <translation language="zh"><![CDATA[请将需要在<code>&lt;body&gt;</code> 标签前加载的代码粘贴在这里。]]></translation>
+        <translation language="hu"><![CDATA[Illeszd ide a <code>&lt;body&gt;</code> végére szánt kódot.]]></translation>
+        <translation language="fr"><![CDATA[Collez ici le code qui doit être placé à la fin de la balise <code>&lt;body&gt;</code>]]></translation>
+        <translation language="de"><![CDATA[Füge den Code der am Ende des <code>&lt;body&gt;</code> Tag geladen werden soll hier ein.]]></translation>
+        <translation language="es"><![CDATA[Pega el código que necesites para ser cargado al final de la etiqueta <code>&lt;body&gt;</code> aquí.]]></translation>
+        <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τέλος της ετικέτας <code><body></code>.]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsFootLabel">
+        <translation language="nl"><![CDATA[Einde van <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[End of <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="it"><![CDATA[Termine degli script(s) <code>&lt;body&gt;</code>]]></translation>
+        <translation language="ru"><![CDATA[Скрипты в конце <code>&lt;body&gt;</code>.]]></translation>
+        <translation language="zh"><![CDATA[<code>&lt;body&gt;</code> 结束标签。]]></translation>
+        <translation language="hu"><![CDATA[A <code>&lt;body&gt;</code> script(ek) vége]]></translation>
+        <translation language="fr"><![CDATA[Fin de <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="de"><![CDATA[<code>&lt;body&gt;</code> - Ende Script(s)]]></translation>
+        <translation language="es"><![CDATA[fin de <code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="el"><![CDATA[Τέλος των <code>&lt;body&gt;</code> σκριπτ.]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsHead">
+        <translation language="nl"><![CDATA[Plaats hier code die op elke pagina geladen moet worden in de <code>&lt;head&gt;</code>-tag.]]></translation>
+        <translation language="en"><![CDATA[Paste code that needs to be loaded in the <code>&lt;head&gt;</code> section here.]]></translation>
+        <translation language="it"><![CDATA[Incolla qui il codice che vuoi caricare nel tag <code>&lt;head&gt;</code>.]]></translation>
+        <translation language="ru"><![CDATA[ Введите код, который должен быть загружен в <code>&lt;head&gt;</code>.]]></translation>
+        <translation language="zh"><![CDATA[请将需要在<code>&lt;head&gt;</code> 标签前加载的代码粘贴在这里。]]></translation>
+        <translation language="hu"><![CDATA[Illeszd ide a <code>&lt;head&gt;</code> szekcióba szánt kódot.]]></translation>
+        <translation language="fr"><![CDATA[Copiez le code qui doit être chargé dans la section <code>&lt;head&gt;</code>.]]></translation>
+        <translation language="de"><![CDATA[Füge den Code der im <code>&lt;head&gt;</code> Tag geladen werden soll hier ein.]]></translation>
+        <translation language="es"><![CDATA[Pega el código que necesita ser cargado en la sección <code>&lt;head&gt;</code> aquí.]]></translation>
+        <translation language="el"><![CDATA[Επικολλήστε εδώ τον κώδικα που πρέπει να φορτώνεται στο τμήμα <code><head></code>.]]></translation>
+      </item>
+      <item type="message" name="HelpScriptsHeadLabel">
+        <translation language="nl"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+        <translation language="en"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+        <translation language="it"><![CDATA[script(s) <code>&lt;head&gt;</code>]]></translation>
+        <translation language="ru"><![CDATA[Скрипты в <code>&lt;head&gt;</code>.]]></translation>
+        <translation language="zh"><![CDATA[<code>&lt;head&gt;</code>标签]]></translation>
+        <translation language="hu"><![CDATA[<code>&lt;head&gt;</code> script(ek)]]></translation>
+        <translation language="de"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+        <translation language="fr"><![CDATA[<code>&lt;body&gt;</code> script(s)]]></translation>
+        <translation language="es"><![CDATA[<code>&lt;head&gt;</code> script(s)]]></translation>
+        <translation language="el"><![CDATA[<code>&lt;head&gt;</code> σκριπτ.]]></translation>
+      </item>
+      <item type="message" name="HelpSendingEmails">
+        <translation language="nl"><![CDATA[Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken]]></translation>
+        <translation language="en"><![CDATA[You can send emails in 2 ways. By using PHP's built-in mail method or via SMTP. We advise you to use SMTP]]></translation>
+        <translation language="it"><![CDATA[Puoi inviare email in 2 modi. Usando il metodo mail built-in di PHP o attraverso un server SMTP. Noi consigliamo di usare SMTP.]]></translation>
+        <translation language="ru"><![CDATA[Вы можете отправлять сообщения 2 способами. Встроенным PHP Mail, или через внешний SMTP. Мы советуем использовать SMTP.]]></translation>
+        <translation language="zh"><![CDATA[你可以用两种方法发送电子邮件，一是使用基于PHP的内置邮件方法，二是通过SMTP。我们建议你使用SMTP]]></translation>
+        <translation language="hu"><![CDATA[Kétféleképpen küldhetsz e-mailt. Használhatod a beépített PHP mail küldőt vagy SMTP-t. Mi az SMTP-t tanácsoljuk.]]></translation>
+        <translation language="de"><![CDATA[E-Mails können auf 2 Wege versendet werden. Mit SMTP oder mit der in PHP eingebauten Funktionalität. Wir empfehlen SMTP zu nutzen.]]></translation>
+        <translation language="fr"><![CDATA[Vous pouvez envoer des e-mails de deux façons. En utilisant PHP ou via SMTP. Nous vous recommandons d'utiliser le SMTP]]></translation>
+        <translation language="es"><![CDATA[Tienes dos 2 opciones para enviar e-mails. Usando el método incorporado mail de PHP o via SMTP. Te aconsejamos utilizar SMTP]]></translation>
+        <translation language="el"><![CDATA[Μπορείτε να στείλετε email με 2 τρόπους. Με χρήση της ενσωματωμένης μεθόδου email της PHP ή μέσω SMTP. Σας συνιστούμε να χρησιμοποιήσετε το SMTP.]]></translation>
+      </item>
+      <item type="message" name="HelpSEONoodp">
+        <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van het <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
+        <translation language="en"><![CDATA[Opt out of the <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a> override.]]></translation>
+        <translation language="it"><![CDATA[Scegli di ignorare il servizio <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>]]></translation>
+        <translation language="ru"><![CDATA[Запретить <a href="http://www.dmoz.org/" class="targetBlank">DMOZ</a> каталог.]]></translation>
+        <translation language="zh"><![CDATA[选择不被<a href="http://www.dmoz.org/" class="targetBlank">开放目录（open directory project）</a> 覆写。]]></translation>
+        <translation language="hu"><![CDATA[Opt out of the <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a> override.]]></translation>
+        <translation language="fr"><![CDATA[Opt out du  <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>]]></translation>
+        <translation language="de"><![CDATA[Verhindere, dass deine Seite zum <a href="http://www.dmoz.org/" class="targetBlank"> Open-Directory-Project</a> hinzugefügt wird.]]></translation>
+        <translation language="es"><![CDATA[Optar por ignorar el servicio <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
+        <translation language="el"><![CDATA[Μηνύματα εξόδου από το <a href="http://www.dmoz.org/" class="targetBlank">open directory project</a>.]]></translation>
+      </item>
+      <item type="message" name="HelpSEONoydir">
+        <translation language="nl"><![CDATA[Gebruik geen titel en omschrijving van de Yahoo! Directory.]]></translation>
+        <translation language="en"><![CDATA[Opt out of the Yahoo! Directory override.]]></translation>
+        <translation language="it"><![CDATA[Scegli di ignorare il servizio Yahoo! Directory.]]></translation>
+        <translation language="ru"><![CDATA[Запретить Yahoo! каталог.]]></translation>
+        <translation language="zh"><![CDATA[选择不被雅虎网站目录覆写。]]></translation>
+        <translation language="hu"><![CDATA[Opt out of the Yahoo! Directory override.]]></translation>
+        <translation language="fr"><![CDATA[Opt Out du répertoire Yahoo!]]></translation>
+        <translation language="de"><![CDATA[Verhindere, dass deine Seite zu Yahoo!-Directory hinzugefügt wird.]]></translation>
+        <translation language="es"><![CDATA[Optar por ignorar el servicio Yahoo! Directory.]]></translation>
+        <translation language="el"><![CDATA[Μηνύματα εξόδου από το Yahoo! Directory.]]></translation>
+      </item>
+      <item type="message" name="HelpTimeFormat">
+        <translation language="nl"><![CDATA[Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.]]></translation>
+        <translation language="en"><![CDATA[This format is used to display dates on the website.]]></translation>
+        <translation language="it"><![CDATA[Questo formato è usato per visualizzare le date nel sito.]]></translation>
+        <translation language="ru"><![CDATA[Формат даты, используемый на сайте.]]></translation>
+        <translation language="zh"><![CDATA[这个格式用于显示网站上的日期。]]></translation>
+        <translation language="hu"><![CDATA[A dátum formátuma a honlapon.]]></translation>
+        <translation language="de"><![CDATA[Dieses Format wird verwendet um Daten auf der Website anzugeben.]]></translation>
+        <translation language="fr"><![CDATA[Le format est utilisé pour afficher des dates sur le site.]]></translation>
+        <translation language="es"><![CDATA[Este formato es usado para mostrar fechas en el sitio web.]]></translation>
+        <translation language="el"><![CDATA[Αυτή η μορφή χρησιμοποείται γιά την εμφάνιση των ημερομηνιών στον ιστοχώρο.]]></translation>
+      </item>
+      <item type="message" name="NoAdminIds">
+        <translation language="nl"><![CDATA[Nog geen admin-ids]]></translation>
+        <translation language="en"><![CDATA[No admin ids yet.]]></translation>
+        <translation language="it"><![CDATA[Non ci sono ancora ID amministratori.]]></translation>
+        <translation language="ru"><![CDATA[Нет ИД администратора.]]></translation>
+        <translation language="zh"><![CDATA[尚无管理员id]]></translation>
+        <translation language="de"><![CDATA[Noch keine Admin-IDs.]]></translation>
+        <translation language="hu"><![CDATA[Nincs még admin id.]]></translation>
+        <translation language="fr"><![CDATA[Pas encore d'identifiants admin]]></translation>
+        <translation language="es"><![CDATA[Aún no hay ids de admin.]]></translation>
+        <translation language="el"><![CDATA[Δεν υπάρχουν ακόμη id γιά το διαχειριστή.]]></translation>
+      </item>
+      <item type="message" name="SendTestMail">
+        <translation language="nl"><![CDATA[verstuur testmail]]></translation>
+        <translation language="en"><![CDATA[send test email]]></translation>
+        <translation language="it"><![CDATA[invia email di prova]]></translation>
+        <translation language="ru"><![CDATA[Отправить тестовое сообщение.]]></translation>
+        <translation language="zh"><![CDATA[发送测试邮件]]></translation>
+        <translation language="de"><![CDATA[sende Testmail]]></translation>
+        <translation language="hu"><![CDATA[teszt e-mail küldése]]></translation>
+        <translation language="fr"><![CDATA[envoyer un mail test]]></translation>
+        <translation language="es"><![CDATA[enviar email de prueba]]></translation>
+        <translation language="el"><![CDATA[Αποστολή δοκιμαστικού email.]]></translation>
+      </item>
+      <item type="message" name="SEONoFollowInComments">
+        <translation language="nl"><![CDATA[<code>rel="nofollow"</code> voor links in reacties]]></translation>
+        <translation language="en"><![CDATA[add <code>rel="nofollow"</code> on links inside a comment]]></translation>
+        <translation language="it"><![CDATA[aggiungi <code>rel="nofollow"</code> sui link all'interno dei commenti]]></translation>
+        <translation language="ru"><![CDATA[Добавляет <code>rel="nofollow"</code> на ссылки в комментариях.]]></translation>
+        <translation language="zh"><![CDATA[在评论中的链接添加<code>rel="nofollow"</code>]]></translation>
+        <translation language="hu"><![CDATA[a hosszászólás linkjéhez <code>rel="nofollow"</code> hozzáadás]]></translation>
+        <translation language="fr"><![CDATA[ajouter le code <code>rel="nofollow"</code> sur les liens à l'intérieur des commentaires]]></translation>
+        <translation language="de"><![CDATA[füge <code>rel="nofollow"</code> bei Links in Kommentaren ein]]></translation>
+        <translation language="es"><![CDATA[agregar <code>rel="nofollow"</code> en los enlaces dentro de un comentario]]></translation>
+        <translation language="el"><![CDATA[Προσθέσατε <code>rel="nofollow"</code> σε συνδέσμους που βρίσκονται μέσα σε σχόλιο.]]></translation>
+      </item>
+      <item type="message" name="ShowCookieBar">
+        <translation language="nl"><![CDATA[toon de cookie balk]]></translation>
+        <translation language="en"><![CDATA[show the cookie bar]]></translation>
+        <translation language="fr"><![CDATA[montrer la barre de cookie]]></translation>
+        <translation language="de"><![CDATA[zeigen Sie die Cookie-Bar]]></translation>
+        <translation language="es"><![CDATA[monstrar la barra de cookie]]></translation>
+      </item>
+      <item type="message" name="TestMessage">
+        <translation language="nl"><![CDATA[dit is een test]]></translation>
+        <translation language="en"><![CDATA[this is just a test]]></translation>
+        <translation language="it"><![CDATA[questo è solo una prova]]></translation>
+        <translation language="ru"><![CDATA[Это просто тест.]]></translation>
+        <translation language="zh"><![CDATA[这是一条测试消息]]></translation>
+        <translation language="de"><![CDATA[dies ist nur ein Test]]></translation>
+        <translation language="hu"><![CDATA[ez csak egy teszt]]></translation>
+        <translation language="fr"><![CDATA[il s'eagit juste d'un test]]></translation>
+        <translation language="es"><![CDATA[esto sólo es una prueba]]></translation>
+        <translation language="el"><![CDATA[Αυτό είναι απλώς μία δοκιμή.]]></translation>
+      </item>
+      <item type="message" name="TestWasSent">
+        <translation language="nl"><![CDATA[De testmail is verzonden.]]></translation>
+        <translation language="en"><![CDATA[The test email was sent.]]></translation>
+        <translation language="it"><![CDATA[L'email di prova è stata inviata.]]></translation>
+        <translation language="ru"><![CDATA[Сообщение отправлено.]]></translation>
+        <translation language="zh"><![CDATA[测试邮件已发送。]]></translation>
+        <translation language="de"><![CDATA[Die Testmail wurde versandt.]]></translation>
+        <translation language="hu"><![CDATA[A teszt e-mail elküldve.]]></translation>
+        <translation language="fr"><![CDATA[L'e-mail tests a été envoyé.]]></translation>
+        <translation language="es"><![CDATA[El email de prueba ha sido enviado.]]></translation>
+        <translation language="el"><![CDATA[Το δοκιμαστικό email απεστάλη.]]></translation>
+      </item>
+      <item type="error" name="PortIsRequired">
+        <translation language="nl"><![CDATA[Poort is verplicht.]]></translation>
+        <translation language="en"><![CDATA[Port is required.]]></translation>
+        <translation language="it"><![CDATA[La porta è obbligatoria.]]></translation>
+        <translation language="ru"><![CDATA[Порт - обязательное поле.]]></translation>
+        <translation language="zh"><![CDATA[端口是必填项。]]></translation>
+        <translation language="fr"><![CDATA[Le port est requis.]]></translation>
+        <translation language="hu"><![CDATA[A port kötelező.]]></translation>
+        <translation language="de"><![CDATA[Port ist eine Pflichtangabe.]]></translation>
+        <translation language="es"><![CDATA[El Puerto es requerido.]]></translation>
+        <translation language="el"><![CDATA[Ο αριθμός της θύρας (port) είναι υποχρεωτικός.]]></translation>
+      </item>
+      <item type="error" name="ServerIsRequired">
+        <translation language="nl"><![CDATA[Server is verplicht.]]></translation>
+        <translation language="en"><![CDATA[Server is required.]]></translation>
+        <translation language="it"><![CDATA[Il server è obbligatorio.]]></translation>
+        <translation language="ru"><![CDATA[Сервер - обязательное поле.]]></translation>
+        <translation language="zh"><![CDATA[服务器 ]]></translation>
+        <translation language="fr"><![CDATA[Serveur est requis]]></translation>
+        <translation language="hu"><![CDATA[A szerver kötelező.]]></translation>
+        <translation language="de"><![CDATA[Der Server muss angegeben werden.]]></translation>
+        <translation language="es"><![CDATA[El servidor es requerido.]]></translation>
+        <translation language="el"><![CDATA[Το όνομα ή IP του διακομιστή (server) είναι υποχρεωτικό.]]></translation>
+      </item>
+    </Settings>
+  </Backend>
+</locale>
+
