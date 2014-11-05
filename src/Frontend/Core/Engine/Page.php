@@ -17,7 +17,6 @@ use Common\Cookie as CommonCookie;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
-use Frontend\Modules\Pages\Engine\Model as PagesModel;
 
 /**
  * Frontend page class, this class will handle everything on a page
@@ -450,7 +449,6 @@ class Page extends FrontendBaseObject
         new Navigation($this->getKernel());
 
         // assign content
-        $this->record['has_children'] = (count(PagesModel::getSubpages($this->record['id'])) > 0);
         $this->tpl->assign('page', $this->record);
 
         // set template path
