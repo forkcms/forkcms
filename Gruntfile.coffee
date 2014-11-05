@@ -3,8 +3,8 @@ module.exports = (grunt) ->
   # Project configuration
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
-    theme_src: 'frontend/themes/<%= pkg.theme %>/src'
-    theme_build: 'frontend/themes/<%= pkg.theme %>/core'
+    theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/Src'
+    theme_build: 'src/Frontend/Themes/<%= pkg.theme %>/Core'
     concurrent:
       watch:
         tasks: [
@@ -17,59 +17,59 @@ module.exports = (grunt) ->
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       build:
-        src: '<%= theme_src %>/js/lib.js'
-        dest: '<%= theme_build %>/js/lib.min.js'
+        src: '<%= theme_src %>/Js/lib.js'
+        dest: '<%= theme_build %>/Js/lib.min.js'
     coffee:
       compileJoined:
         options:
           bare: true
         files:
-          '<%= theme_build %>/js/theme.js': [
-            '<%= theme_src %>/coffee/theme.coffee'
+          '<%= theme_build %>/Js/theme.js': [
+            '<%= theme_src %>/Coffee/theme.coffee'
           ]
     concat:
       options:
         seperator: ';'
       dist:
         src: [
-          '<%= theme_src %>/js/lib/*.js'
+          '<%= theme_src %>/Js/lib/*.js'
         ]
-        dest: '<%= theme_src %>/js/lib.js'
+        dest: '<%= theme_src %>/Js/lib.js'
     compass:
       dist:
         options:
-          config: '<%= theme_src %>/layout/config.rb'
-          sassDir: '<%= theme_src %>/layout/sass'
-          cssDir: '<%= theme_build %>/layout/css'
-          imageDir: '<%= theme_build %>/layout/images'
-          fontsDir: '<%= theme_build %>/layout/fonts'
+          config: '<%= theme_src %>/Layout/config.rb'
+          sassDir: '<%= theme_src %>/Layout/sass'
+          cssDir: '<%= theme_build %>/Layout/Css'
+          imageDir: '<%= theme_build %>/Layout/images'
+          fontsDir: '<%= theme_build %>/Layout/fonts'
       watch:
         options:
-          config: '<%= theme_src %>/layout/config.rb'
-          sassDir: '<%= theme_src %>/layout/sass'
-          cssDir: '<%= theme_build %>/layout/css'
-          imageDir: '<%= theme_build %>/layout/images'
-          fontsDir: '<%= theme_build %>/layout/fonts'
+          config: '<%= theme_src %>/Layout/config.rb'
+          sassDir: '<%= theme_src %>/Layout/sass'
+          cssDir: '<%= theme_build %>/Layout/Css'
+          imageDir: '<%= theme_build %>/Layout/images'
+          fontsDir: '<%= theme_build %>/Layout/fonts'
           watch: true
     sync:
       templates:
         files: [
-          cwd: '<%= theme_src %>/layout/templates/'
+          cwd: '<%= theme_src %>/Layout/Templates/'
           src: '**'
-          dest: '<%= theme_build %>/layout/templates/'
+          dest: '<%= theme_build %>/Layout/Templates/'
         ]
       images:
         files: [
-          cwd: '<%= theme_src %>/layout/images/'
+          cwd: '<%= theme_src %>/Layout/images/'
           src: '**'
-          dest: '<%= theme_build %>/layout/images/'
+          dest: '<%= theme_build %>/Layout/images/'
         ]
         updateAndDelete: true
       svg:
         files: [
-          cwd: '<%= theme_src %>/layout/images/'
+          cwd: '<%= theme_src %>/Layout/images/'
           src: '*.svg'
-          dest: '<%= theme_build %>/layout/images/'
+          dest: '<%= theme_build %>/Layout/images/'
         ]
         updateAndDelete: true
       fonts:
@@ -88,19 +88,19 @@ module.exports = (grunt) ->
         expand: true
         cwd: '<%= theme_src %>/layout/images/'
         src: '**'
-        dest: '<%= theme_build %>/layout/images/'
+        dest: '<%= theme_build %>/Layout/images/'
       fonts:
         expand: true
-        cwd: '<%= theme_src %>/layout/fonts/'
+        cwd: '<%= theme_src %>/Layout/fonts/'
         src: '**'
-        dest: '<%= theme_build %>/layout/fonts/'
+        dest: '<%= theme_build %>/Layout/fonts/'
     imagemin:
       dynamic:
         files: [
           expand: true
-          cwd: '<%= theme_src %>/layout/images/'
+          cwd: '<%= theme_src %>/Layout/images/'
           src: ['**/*.{png,jpg,gif,jpeg}']
-          dest: '<%= theme_build %>/layout/images/'
+          dest: '<%= theme_build %>/Layout/images/'
         ]
     fontgen:
       all:
@@ -108,23 +108,23 @@ module.exports = (grunt) ->
           stylesheet: false
         files: [
           src: [
-            '<%= theme_src %>/layout/fonts/*.ttf'
-            '<%= theme_src %>/layout/fonts/*.otf'
+            '<%= theme_src %>/Layout/fonts/*.ttf'
+            '<%= theme_src %>/Layout/fonts/*.otf'
           ]
-          dest: '<%= theme_build %>/layout/fonts/'
+          dest: '<%= theme_build %>/Layout/fonts/'
         ]
     clean:
       templates: [
-        '<%= theme_build %>/layout/templates/'
+        '<%= theme_build %>/Layout/Templates/'
       ]
       images: [
-        '<%= theme_build %>/layout/images/'
+        '<%= theme_build %>/Layout/images/'
       ]
       fonts: [
-        '<%= theme_build %>/layout/fonts/'
+        '<%= theme_build %>/Layout/fonts/'
       ]
       fontsCss: [
-        '<%= theme_build %>/layout/fonts/*.css'
+        '<%= theme_build %>/Layout/fonts/*.css'
       ]
       core: [
         '<%= theme_build %>'
@@ -136,23 +136,23 @@ module.exports = (grunt) ->
         files: ['<%= theme_src %>/coffee/*']
         tasks: ['coffee']
       lib:
-        files: ['<%= theme_src %>/js/lib/*.js']
+        files: ['<%= theme_src %>/Js/lib/*.js']
         tasks: [
           'concat'
           'uglify'
         ]
       templates:
-        files: ['<%= theme_src %>/layout/templates/**']
+        files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
           'sync:templates'
         ]
       images:
-        files: ['<%= theme_src %>/layout/images/**']
+        files: ['<%= theme_src %>/Layout/images/**']
         tasks: [
           'sync:images'
         ]
       fonts:
-        files: ['<%= theme_src %>/layout/fonts/**']
+        files: ['<%= theme_src %>/Layout/fonts/**']
         tasks: [
           'fontgen'
           'clean:fontsCss'
