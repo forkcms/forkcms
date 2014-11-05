@@ -41,10 +41,34 @@ class CacheBuilder
      */
     public function buildCache($language)
     {
+        list($keys, $navigation) = $this->getData($language);
+
+        $fs = new Filesystem();
+        $fs->dumpFile(
+            FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php',
+           $this->dumpKeys($keys, $language)
+        );
+        $fs->dumpFile(
+            FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php',
+            $this->dumpNavigation($navigation, $language)
+        );
+        $fs->dumpFile(
+            FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '.js',
+            $this->dumpEditorLinkList($navigation, $keys, $language)
+        );
+    }
+
+    /**
+     * Fetches all data from the database
+     *
+     * @param $language
+     * @return array tupple containing keys and navigation
+     */
+    protected function getData($language)
+    {
         // get tree
         $levels = Model::getTree(array(0), null, 1, $language);
 
-        // init vars
         $keys = array();
         $navigation = array();
 
@@ -61,9 +85,8 @@ class CacheBuilder
 
         // order by URL
         asort($keys);
-        $this->dumpKeys($keys, $language);
-        $this->dumpNavigation($navigation, $language);
-        $this->dumpEditorLinkList($navigation, $keys, $language);
+
+        return array($keys, $navigation);
     }
 
     /**
@@ -278,8 +301,9 @@ class CacheBuilder
     /**
      * Saves the keys file
      *
-     * @param array  $keys     The page keys
-     * @param string $language The language to save the file for
+     * @param  array  $keys     The page keys
+     * @param  string $language The language to save the file for
+     * @return string           The full content for the cache file
      */
     protected function dumpKeys($keys, $language)
     {
@@ -298,16 +322,15 @@ class CacheBuilder
         // end file
         $keysString .= "\n" . '?>';
 
-        // write the file
-        $fs = new Filesystem();
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php', $keysString);
+        return $keysString;
     }
 
     /**
      * Saves the keys file
      *
-     * @param array  $navigation The full navigation array
-     * @param string $language   The language to save the file for
+     * @param  array  $navigation The full navigation array
+     * @param  string $language   The language to save the file for
+     * @return string           The full content for the cache file
      */
     protected function dumpNavigation($navigation, $language)
     {
@@ -389,17 +412,16 @@ class CacheBuilder
         // end file
         $navigationString .= '?>';
 
-        // write the file
-        $fs = new Filesystem();
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php', $navigationString);
+        return $navigationString;
     }
 
     /**
      * Save the link list
      *
-     * @param array  $navigation The full navigation array
-     * @param array  $keys       The page keys
-     * @param string $language   The language to save the file for
+     * @param  array  $navigation The full navigation array
+     * @param  array  $keys       The page keys
+     * @param  string $language   The language to save the file for
+     * @return string             The full content for the cache file
      */
     protected function dumpEditorLinkList($navigation, $keys, $language)
     {
@@ -476,9 +498,7 @@ class CacheBuilder
         // add JSON-string
         $editorLinkListString .= 'var linkList = ' . json_encode($links) . ';';
 
-        // write the file
-        $fs = new Filesystem();
-        $fs->dumpFile(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '.js', $editorLinkListString);
+        return $editorLinkListString;
     }
 
     /**
