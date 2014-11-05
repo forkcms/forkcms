@@ -78,7 +78,7 @@ class Model
         // redefine
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
-        $cacheBuilder = new CacheBuilder();
+        $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
         $cacheBuilder->buildCache($language);
 
         // trigger an event

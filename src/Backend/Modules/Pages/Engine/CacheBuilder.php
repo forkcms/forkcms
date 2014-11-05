@@ -20,8 +20,21 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class CacheBuilder
 {
+    /**
+     * @var \SpoonDatabase
+     */
+    protected $database;
+
     protected $blocks;
     protected $siteMapId;
+
+    /**
+     * @param \SpoonDatabase $database
+     */
+    public function __construct(\SpoonDatabase $database)
+    {
+        $this->database = $database;
+    }
 
     /**
      * Builds the pages cache
@@ -194,7 +207,7 @@ class CacheBuilder
     protected function getBlocks()
     {
         if (empty($this->blocks)) {
-            $this->blocks = (array) BackendModel::get('database')->getRecords(
+            $this->blocks = (array) $this->database->getRecords(
                 'SELECT i.id, i.module, i.action
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
@@ -214,7 +227,7 @@ class CacheBuilder
     protected function getSitemapId()
     {
         if (empty($this->sitemapId)) {
-            $widgets = (array) BackendModel::get('database')->getRecords(
+            $widgets = (array) $this->database->getRecords(
                 'SELECT i.id, i.module, i.action
                  FROM modules_extras AS i
                  WHERE i.type = ? AND i.hidden = ?',
@@ -406,7 +419,7 @@ class CacheBuilder
         $links = array();
 
         // init var
-        $cachedTitles = (array) BackendModel::get('database')->getPairs(
+        $cachedTitles = (array) $this->database->getPairs(
             'SELECT i.id, i.navigation_title
              FROM pages AS i
              WHERE i.id IN(' . implode(',', array_keys($keys)) . ')
