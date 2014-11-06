@@ -1,5 +1,9 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Pages: add has_children variable to page array
+
 Bugfixes:
 
 * Tags: fix wrong variable name.
