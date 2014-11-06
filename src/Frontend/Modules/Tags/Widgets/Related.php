@@ -143,7 +143,7 @@ class Related extends FrontendBaseWidget
         // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
-            $class = 'Frontend\\Modules\\' . $record['module'] . '\\Engine\\Model';
+            $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
             if (is_callable(array($class, 'getIdForTags'))) {
                 // get record for module
