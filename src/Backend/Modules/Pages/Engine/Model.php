@@ -1236,12 +1236,12 @@ class Model
              LEFT OUTER JOIN pages_blocks AS b ON b.revision_id = i.revision_id AND b.extra_id IS NOT NULL
              LEFT OUTER JOIN modules_extras AS e ON e.id = b.extra_id AND e.type = ?
              LEFT OUTER JOIN pages AS p ON p.parent_id = i.id AND p.status = "active" AND p.hidden = "N"
-             AND p.language = ?
+             AND p.language = i.language
              WHERE i.parent_id IN (' . implode(', ', $ids) . ')
                  AND i.status = ? AND i.language = ?
              GROUP BY i.revision_id
              ORDER BY i.sequence ASC',
-            array('block', $language, 'active', $language),
+            array('block', 'active', $language),
             'id'
         );
 
