@@ -10,7 +10,6 @@ namespace Backend\Modules\Mailmotor\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;

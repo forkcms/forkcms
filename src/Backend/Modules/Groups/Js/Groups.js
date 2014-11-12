@@ -23,7 +23,7 @@ jsBackend.groups =
 		$container.click(jsBackend.groups.clickHandler);
 		$containerLabel.each(jsBackend.groups.mouseHandler);
 		$moduleDataGridBody.each(jsBackend.groups.selectionPermissions);
-		$groupHolderDataGridBody.each(jsBackend.groups.selectionWidgets)
+		$groupHolderDataGridBody.each(jsBackend.groups.selectionWidgets);
 		$dataGridTd.click(jsBackend.groups.selectHandler);
 		$selectAll.click(jsBackend.groups.selectAll);
 	},
@@ -196,6 +196,6 @@ jsBackend.groups =
 			});
 		}
 	}
-}
+};
 
 $(jsBackend.groups.init);

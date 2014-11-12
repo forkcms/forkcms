@@ -17,7 +17,7 @@ jsBackend.blog =
 		// do meta
 		if($title.length > 0) $title.doMeta();
 	}
-}
+};
 
 jsBackend.blog.controls =
 {
@@ -130,6 +130,6 @@ jsBackend.blog.controls =
 
 		jsBackend.blog.controls.currentCategory = $categoryId.val();
 	}
-}
+};
 
 $(jsBackend.blog.init);

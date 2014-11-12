@@ -31,7 +31,7 @@ jsBackend.pages =
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
 	}
-}
+};
 
 /**
  * All methods related to the controls (buttons, ...)
@@ -114,25 +114,26 @@ jsBackend.pages.extras =
 		if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
 
 		// block
+		var editLink, title, description;
 		if(extraId != 0)
 		{
 			// link to edit this block/widget
-			var editLink = '';
+			editLink = '';
 			if(extrasById[extraId].type == 'block' && extrasById[extraId].data.url) editLink = extrasById[extraId].data.url;
 			if(typeof extrasById[extraId].data.edit_url != 'undefined' && extrasById[extraId].data.edit_url) editLink = extrasById[extraId].data.edit_url;
 
 			// title, description & visibility
-			var title = extrasById[extraId].human_name;
-			var description = extrasById[extraId].path;
+			title = extrasById[extraId].human_name;
+			description = extrasById[extraId].path;
 		}
 
 		// editor
 		else
 		{
 			// link to edit this content, title, description & visibility
-			var editLink = '';
-			var title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
-			var description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
+			editLink = '';
+			title = utils.string.ucfirst(jsBackend.locale.lbl('Editor'));
+			description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
 		// create html to be appended in template-view
@@ -255,7 +256,7 @@ jsBackend.pages.extras =
 	hideFallback: function()
 	{
 		// after removing all from fallback; hide fallback
-		if($('#templateVisualFallback .templatePositionCurrentType').length == 0) $('#templateVisualFallback').hide();
+		if($('#templateVisualFallback .templatePositionCurrentType').length === 0) $('#templateVisualFallback').hide();
 	},
 
 	// populate the dropdown with the modules
@@ -392,7 +393,7 @@ jsBackend.pages.extras =
 			var id = $(this).val();
 
 			// check if a block is already linked
-			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
+			if(id !== '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
 
 		// hide warnings
@@ -614,7 +615,7 @@ jsBackend.pages.extras =
 	{
 		element.effect('highlight');
 	}
-}
+};
 
 /**
  * All methods related to the templates
@@ -686,7 +687,7 @@ jsBackend.pages.template =
 			jsBackend.pages.template.original = false;
 
 			// check if this block is a default of the old template, in which case it'll go to the fallback position
-			if(current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html == '') $('input[id=blockPosition' + index + ']', this).val('fallback');
+			if(current != old && $.inArray(extraId, old.data.default_extras[position]) >= 0 && html === '') $('input[id=blockPosition' + index + ']', this).val('fallback');
 		});
 
 		// init var
@@ -707,14 +708,11 @@ jsBackend.pages.template =
 					// grab extraId
 					extraId = current.data.default_extras[position][block];
 
-					// init var
-					var existingBlock = null;
-
 					// find existing block sent to default
 					var existingBlock = $('input[id^=blockPosition][value=fallback]:not(#blockPosition0)').parent().find('input[id^=blockExtraId][value=' + extraId + ']').parent();
 
 					// if this block did net yet exist, add it
-					if(existingBlock.length == 0) newDefaults.push(new Array(extraId, position));
+					if(existingBlock.length === 0) newDefaults.push(new Array(extraId, position));
 
 					// if this block already existed, reset it to correct (new) position
 					else $('input[id^=blockPosition]', existingBlock).val(position);
@@ -800,7 +798,7 @@ jsBackend.pages.template =
 			]
 		});
 	}
-}
+};
 
 /**
  * All methods related to the tree
@@ -812,7 +810,7 @@ jsBackend.pages.tree =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('#tree div').length == 0) return false;
+		if($('#tree div').length === 0) return false;
 
 		// add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
 		if(!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
@@ -824,7 +822,7 @@ jsBackend.pages.tree =
 			var parents = $('#page-'+ pageID).parents('li');
 
 			// init var
-			var openedIds = ['page-'+ pageID];
+			openedIds = ['page-'+ pageID];
 
 			// add parents
 			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).prop('id'));
@@ -876,7 +874,7 @@ jsBackend.pages.tree =
 		$('.tree li.open').each(function()
 		{
 			// if the so-called open-element doesn't have any childs we should replace the open-class.
-			if($(this).find('ul').length == 0) $(this).removeClass('open').addClass('leaf');
+			if($(this).find('ul').length === 0) $(this).removeClass('open').addClass('leaf');
 		});
 
 		// set the item selected
@@ -887,9 +885,10 @@ jsBackend.pages.tree =
 	beforeMove: function(node, refNode, type, tree)
 	{
 		// get pageID that has to be moved
+		var parentPageID;
 		var currentPageID = $(node).prop('id').replace('page-', '');
 		if(typeof refNode == 'undefined') parentPageID = 0;
-		else var parentPageID = $(refNode).prop('id').replace('page-', '')
+		else parentPageID = $(refNode).prop('id').replace('page-', '');
 
 		// home is a special item
 		if(parentPageID == '1')
@@ -948,14 +947,15 @@ jsBackend.pages.tree =
 	onMove: function(node, refNode, type, tree, rollback)
 	{
 		// get the tree
-		var tree = tree.container.data('tree');
+		tree = tree.container.data('tree');
 
 		// get pageID that has to be moved
 		var currentPageID = $(node).prop('id').replace('page-', '');
 
 		// get pageID wheron the page has been dropped
+		var droppedOnPageID;
 		if(typeof refNode == 'undefined') droppedOnPageID = 0;
-		else var droppedOnPageID = $(refNode).prop('id').replace('page-', '')
+		else droppedOnPageID = $(refNode).prop('id').replace('page-', '');
 
 		// make the call
 		$.ajax(
@@ -988,6 +988,6 @@ jsBackend.pages.tree =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.pages.init);

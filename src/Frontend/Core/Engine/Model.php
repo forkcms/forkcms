@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use TijsVerkoyen\Akismet\Akismet;

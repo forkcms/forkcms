@@ -9,7 +9,6 @@ namespace Backend\Modules\Extensions\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;

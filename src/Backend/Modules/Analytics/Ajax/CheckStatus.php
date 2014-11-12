@@ -10,7 +10,6 @@ namespace Backend\Modules\Analytics\Ajax;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Model as BackendModel;

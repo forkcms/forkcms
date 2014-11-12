@@ -1,0 +1,50 @@
+{% extends 'ForkCMSInstallerBundle:Installer:base.html.twig' %}
+
+{% form_theme form 'ForkCMSInstallerBundle:Installer:form_theme.html.twig' %}
+
+{% block content %}
+  <h2>Settings</h2>
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <h3>Languages</h3>
+
+    <p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
+    {{ form_widget(form.language_type) }}
+    <ul id="languages" class="hidden inputList noPadding">
+      {{ form_widget(form.languages) }}
+    </ul>
+
+    <div>
+      <p>What is the default language we should use for the website?</p>
+      <p>
+        {{ form_widget(form.default_language) }}
+      </p>
+    </div>
+
+    <h3>CMS interface languages</h3>
+    <p>What languages do you plan to use in the CMS interface?</p>
+    <ul class="inputList">
+      <li>
+        {{ form_widget(form.same_interface_language) }}
+        {{ form_label(form.same_interface_language) }}
+        <p id="interfaceLanguagesExplanation" class="hidden noPadding">Select the language(s) you would like to use use in the CMS interface.</p>
+        <ul id="interfaceLanguages" class="hidden inputList noPadding">
+          {{ form_widget(form.interface_languages) }}
+        </ul>
+      </li>
+    </ul>
+
+    <div id="defaultInterfaceLanguageContainer">
+      <p>What is the default language we should use for the CMS interface?</p>
+      <p>
+        {{ form_widget(form.default_interface_language) }}
+      </p>
+    </div>
+    <div class="fullwidthOptions">
+      <div class="buttonHolder">
+        <input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+      </div>
+    </div>
+
+  {{ form_end(form) }}
+{% endblock %}

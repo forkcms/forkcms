@@ -1,5 +1,5 @@
 /**
- * Interaction for the mailmotor
+ * Interaction for the profiles module
  *
  * @author	Thomas Deceuninck <thomas@fronto.be>
  */
@@ -36,6 +36,6 @@ jsBackend.profiles =
 			);
 		}
 	}
-}
+};
 
 $(jsBackend.profiles.init);

@@ -10,7 +10,6 @@ namespace Backend\Core\Installer;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
@@ -77,13 +76,6 @@ class ModuleInstaller
      * @var array
      */
     private $variables = array();
-
-    /**
-     * The warnings thrown during the install
-     *
-     * @var array
-     */
-    private $warnings = array();
 
     /**
      * @param \SpoonDatabase $db                 The database-connection.
@@ -193,16 +185,6 @@ class ModuleInstaller
             /** @var $file \SplFileInfo */
             $fs->remove($file->getRealPath());
         }
-    }
-
-    /**
-     * Adds a warning to the stack of warnings
-     *
-     * @param string $message The message that needs to be displayed.
-     */
-    public function addWarning($message)
-    {
-        $this->warnings[] = array('message' => $message);
     }
 
     /**
@@ -354,16 +336,6 @@ class ModuleInstaller
     protected function getVariable($name)
     {
         return (!isset($this->variables[$name])) ? null : $this->variables[$name];
-    }
-
-    /**
-     * Get all warnings
-     *
-     * @return array
-     */
-    public function getWarnings()
-    {
-        return $this->warnings;
     }
 
     /**

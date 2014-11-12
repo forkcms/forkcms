@@ -457,10 +457,18 @@
 
 		/* Less important tabs go on the right side */
 
-		#pages.pagesAddEdit .ui-tabs-nav li { float: right; }
-		#pages.pagesAddEdit .ui-tabs-nav li:first-child { float: left; }
+		#pages.pagesAdd .ui-tabs-nav li,
+		#pages.pagesEdit .ui-tabs-nav li { 
+			float: right; 
+		}
 
-		#pages.pagesAddEdit .ui-tabs-nav li:nth-child(2) {
+		#pages.pagesAdd .ui-tabs-nav li:first-child,
+		#pages.pagesEdit .ui-tabs-nav li:first-child { 
+			float: left; 
+		}
+
+		#pages.pagesAdd .ui-tabs-nav li:nth-child(2),
+		#pages.pagesEdit .ui-tabs-nav li:nth-child(2) {
 			margin-right: 0;
 		}
 

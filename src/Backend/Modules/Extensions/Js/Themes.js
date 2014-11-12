@@ -9,7 +9,7 @@ jsBackend.extensions =
 	{
 		jsBackend.extensions.themeSelection.init();
 	}
-}
+};
 
 jsBackend.extensions.themeSelection =
 {
@@ -38,6 +38,6 @@ jsBackend.extensions.themeSelection =
 			}
 		});
 	}
-}
+};
 
 $(jsBackend.extensions.init);

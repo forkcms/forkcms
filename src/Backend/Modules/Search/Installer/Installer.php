@@ -10,7 +10,6 @@ namespace Backend\Modules\Search\Installer;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Installer\ModuleInstaller;
 

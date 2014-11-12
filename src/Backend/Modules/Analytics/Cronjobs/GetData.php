@@ -11,7 +11,6 @@ namespace Backend\Modules\Analytics\Cronjobs;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Engine\Base\Cronjob as BackendBaseCronjob;
 use Backend\Core\Engine\Model as BackendModel;

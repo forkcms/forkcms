@@ -1,0 +1,36 @@
+{% extends 'ForkCMSInstallerBundle:Installer:base.html.twig' %}
+
+{% form_theme form 'ForkCMSInstallerBundle:Installer:form_theme.html.twig' %}
+
+{% block content %}
+  <h2>Settings</h2>
+  {{ form_start(form) }}
+    {{ form_errors(form) }}
+    <div id="javascriptDisabled" class="formMessage errorMessage"><p>Javascript should be enabled.</p></div>
+    <div class="horizontal">
+      <p>Enter your database details. Make sure this database already exists.</p>
+      <p>
+        <label for="hostname">Hostname<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.dbHostname) }} : {{ form_widget(form.dbPort) }}
+        <span class="helpTxt">If you are working locally, your hostname is probably <strong>localhost</strong>.</span>
+      </p>
+      <p>
+        <label for="database">Database<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.dbDatabase) }}
+        <span class="helpTxt">Make sure this database is empty!</span>
+      </p>
+      <p>
+        <label for="username">Username<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.dbUsername) }}
+      </p>
+      <p>
+        <label for="password">Password<abbr title="Required field">*</abbr></label>
+        {{ form_widget(form.dbPassword) }}
+      </p>
+    </div>
+    <p class="buttonHolder spacing">
+      <a href="{{ path('install_step3') }}" class="button">Previous</a>
+      <input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" disabled="disabled" />
+    </p>
+  {{ form_end(form) }}
+{% endblock %}

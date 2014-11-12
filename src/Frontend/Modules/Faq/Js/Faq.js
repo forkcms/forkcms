@@ -12,7 +12,7 @@ jsFrontend.faq =
 	{
 		if($('#faqFeedbackForm').length > 0) jsFrontend.faq.feedback.init();
 	}
-}
+};
 
 // feedback form
 jsFrontend.faq.feedback =
@@ -38,6 +38,6 @@ jsFrontend.faq.feedback =
 			}
 		});
 	}
-}
+};
 
 $(jsFrontend.faq.init);

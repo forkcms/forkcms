@@ -9,6 +9,7 @@ use Frontend\Core\Engine\Model as FrontendModel;
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
@@ -55,24 +56,40 @@ class Model
              FROM forms_fields AS i
              WHERE i.form_id = ?
              ORDER BY i.sequence ASC',
-            (int) $id
+            (int) $id,
+            'id'
         );
 
-        // fields
+        if (empty($fields)) {
+            return false;
+        }
+
+        // create an array with an equal amount of questionmarks as ids provided
+        $idPlaceHolders = array_fill(0, count($fields), '?');
+
+        // get field validations, each field can have multiple 'type' validations
+        $fieldValidations = (array) FrontendModel::getContainer()->get('database')->getRecords(
+            'SELECT i.field_id, i.type, i.parameter, i.error_message
+             FROM forms_fields_validation AS i
+             WHERE i.field_id IN (' . implode(', ', $idPlaceHolders) . ')',
+             array_keys($fields)
+        );
+
+        // loop fields to add extra parameters
         foreach ($fields as &$field) {
             // unserialize
             if ($field['settings'] !== null) {
                 $field['settings'] = unserialize($field['settings']);
             }
 
-            // get validation
-            $field['validations'] = (array) FrontendModel::getContainer()->get('database')->getRecords(
-                'SELECT i.type, i.parameter, i.error_message
-                 FROM forms_fields_validation AS i
-                 WHERE i.field_id = ?',
-                $field['id'],
-                'type'
-            );
+            // init validations
+            $field['validations'] = array();
+        }
+
+        // we need to loop because one field can have multiple 'type' validations
+        foreach ($fieldValidations as $fieldValidation) {
+            // add validation type to our field
+            $fields[$fieldValidation['field_id']]['validations'][$fieldValidation['type']] = $fieldValidation;
         }
 
         return $fields;
