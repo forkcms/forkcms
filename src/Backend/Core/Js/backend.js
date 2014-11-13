@@ -33,7 +33,7 @@ var jsBackend =
 		else jsBackend.current.action = utils.string.ucfirst(utils.string.camelCase(chunks[4]));
 
 		// set defaults
-		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
+		if(!jsBackend.current.module) jsBackend.current.module = 'Dashboard';
 		if(!jsBackend.current.action) jsBackend.current.action = 'index';
 
 		// init stuff
