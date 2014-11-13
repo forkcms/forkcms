@@ -17,8 +17,8 @@ module.exports = (grunt) ->
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
       build:
-        src: '<%= theme_src %>/Js/lib.js'
-        dest: '<%= theme_build %>/Js/lib.min.js'
+        src: '<%= theme_build %>/Js/lib.js'
+        dest: '<%= theme_build %>/Js/lib.js'
     coffee:
       compileJoined:
         options:
@@ -139,7 +139,6 @@ module.exports = (grunt) ->
         files: ['<%= theme_src %>/Js/lib/*.js']
         tasks: [
           'concat'
-          'uglify'
         ]
       templates:
         files: ['<%= theme_src %>/Layout/Templates/**']
@@ -180,7 +179,6 @@ module.exports = (grunt) ->
   grunt.registerTask 'dev', [
     'coffee'
     'concat'
-    'uglify'
     'sync:templates'
     'sync:images'
     'sync:fonts'
