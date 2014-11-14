@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# PHP_CORRECT_VERSION , we need to check php version using PHP_VERSION_ID before starting tests
+CODECEPT=./vendor/codeception/codeception/codecept
+
+tools/remove_cache
+php -S localhost:8123 -t . ./index.php &
+SERVER_PID=$!
+./$CODECEPT build
+./$CODECEPT run --coverage --report
+kill "$SERVER_PID"
