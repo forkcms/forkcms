@@ -5,14 +5,6 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON 'package.json'
     theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/Src'
     theme_build: 'src/Frontend/Themes/<%= pkg.theme %>/Core'
-    concurrent:
-      watch:
-        tasks: [
-          'watch'
-          'compass:watch'
-        ]
-        options:
-          logConcurrentOutput: true
     uglify:
       options:
         banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -43,14 +35,6 @@ module.exports = (grunt) ->
           cssDir: '<%= theme_build %>/Layout/Css'
           imageDir: '<%= theme_build %>/Layout/images'
           fontsDir: '<%= theme_build %>/Layout/fonts'
-      watch:
-        options:
-          config: '<%= theme_src %>/Layout/config.rb'
-          sassDir: '<%= theme_src %>/Layout/sass'
-          cssDir: '<%= theme_build %>/Layout/Css'
-          imageDir: '<%= theme_build %>/Layout/images'
-          fontsDir: '<%= theme_build %>/Layout/fonts'
-          watch: true
     sync:
       templates:
         files: [
@@ -130,8 +114,6 @@ module.exports = (grunt) ->
         '<%= theme_build %>'
       ]
     watch:
-      #options:
-      #  livereload: 80
       coffee:
         files: ['<%= theme_src %>/coffee/*']
         tasks: ['coffee']
@@ -140,6 +122,9 @@ module.exports = (grunt) ->
         tasks: [
           'concat'
         ]
+      sass:
+        files: ['<%= theme_src %>/Layout/**/*.scss']
+        tasks: ['compass:dist']
       templates:
         files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
@@ -156,6 +141,12 @@ module.exports = (grunt) ->
           'fontgen'
           'clean:fontsCss'
         ]
+      livereload:
+        options:
+          livereload: 35729
+        files: [
+          '<%= theme_build %>/**/*'
+        ]
 
   # Load the plugin that provides the necessary task
   grunt.loadNpmTasks 'grunt-contrib-uglify'
@@ -168,11 +159,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-sync'
   grunt.loadNpmTasks 'grunt-fontgen'
-  grunt.loadNpmTasks 'grunt-concurrent'
 
   # Default task(s)
   grunt.registerTask 'default', [
-    'concurrent:watch'
+    'watch'
   ]
 
   # Development tasks

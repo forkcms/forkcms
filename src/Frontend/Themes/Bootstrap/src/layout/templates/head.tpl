@@ -49,6 +49,10 @@
 	<script src="{$THEME_URL}/core/js/lib.js?m={$LAST_MODIFIED_TIME}"></script>
 	<script src="{$THEME_URL}/core/js/theme.js?m={$LAST_MODIFIED_TIME}"></script>
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
+	
+	{option:SPOON_DEBUG}
+		<script src="http://localhost:35729/livereload.js?snipver=1"></script>
+	{/option:SPOON_DEBUG}
 
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
