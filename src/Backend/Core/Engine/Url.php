@@ -23,18 +23,11 @@ use Backend\Core\Engine\Model as BackendModel;
 class Url extends Base\Object
 {
     /**
-     * The host, will be used for cookies
+     * The Symfony request object
      *
-     * @var    string
+     * @var Request
      */
-    private $host;
-
-    /**
-     * The querystring
-     *
-     * @var    string
-     */
-    private $queryString;
+    private $request;
 
     /**
      * @param KernelInterface $kernel
@@ -46,8 +39,9 @@ class Url extends Base\Object
         // add to registry
         $this->getContainer()->set('url', $this);
 
-        $this->setQueryString($this->get('request')->getRequestUri());
-        $this->setHost($this->get('request')->getHttpHost());
+        // fetch the request object from the container
+        $this->request = $this->get('request');
+
         $this->processQueryString();
     }
 
@@ -58,11 +52,8 @@ class Url extends Base\Object
      */
     public function getDomain()
     {
-        // get host
-        $host = $this->getHost();
-
         // replace
-        return str_replace('www.', '', $host);
+        return str_replace('www.', '', $this->getHost());
     }
 
     /**
@@ -72,7 +63,7 @@ class Url extends Base\Object
      */
     public function getHost()
     {
-        return $this->host;
+        return $this->request->getHttpHost();
     }
 
     /**
@@ -82,7 +73,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return $this->queryString;
+        return trim((string) $this->request->getRequestUri(), '/');
     }
 
     /**
@@ -292,26 +283,5 @@ class Url extends Base\Object
         }
 
         Language::setLocale($locale);
-    }
-
-    /**
-     * Set the querystring
-     *
-     * @param string $queryString The full query-string.
-     */
-    private function setQueryString($queryString)
-    {
-        $queryString = trim((string) $queryString, '/');
-
-        // replace GET with encoded GET in the queryString to prevent XSS
-        if (isset($_GET) && !empty($_GET)) {
-            // strip GET from the queryString
-            list($queryString) = explode('?', $queryString, 2);
-
-            // readd
-            $queryString = $queryString . '?' . http_build_query($_GET);
-        }
-
-        $this->queryString = $queryString;
     }
 }
