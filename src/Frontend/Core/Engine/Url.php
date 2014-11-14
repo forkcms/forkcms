@@ -140,15 +140,12 @@ class Url extends \KernelLoader
     {
         // does the index exists and isn't this parameter empty
         if (isset($this->parameters[$index]) && $this->parameters[$index] != '') {
-            // parameter exists
-            if (isset($this->parameters[$index])) {
-                return \SpoonFilter::getValue(
-                    $this->parameters[$index],
-                    null,
-                    null,
-                    $type
-                );
-            }
+            return \SpoonFilter::getValue(
+                $this->parameters[$index],
+                null,
+                null,
+                $type
+            );
         }
 
         // fallback
