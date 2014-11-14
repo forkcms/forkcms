@@ -251,16 +251,6 @@ class Url extends Base\Object
     }
 
     /**
-     * Set the host
-     *
-     * @param string $host The host.
-     */
-    private function setHost($host)
-    {
-        $this->host = (string) $host;
-    }
-
-    /**
      * Set the locale
      */
     private function setLocale()
