@@ -30,25 +30,18 @@ class Url extends \KernelLoader
     private $pages = array();
 
     /**
+     * The Symfony request object
+     *
+     * @var Request
+     */
+    private $request;
+
+    /**
      * The parameters
      *
      * @var    array
      */
     private $parameters = array();
-
-    /**
-     * The host, will be used for cookies
-     *
-     * @var    string
-     */
-    private $host;
-
-    /**
-     * The query string
-     *
-     * @var    string
-     */
-    private $queryString;
 
     /**
      * @param KernelInterface $kernel
@@ -60,24 +53,24 @@ class Url extends \KernelLoader
         // add ourself to the reference so other classes can retrieve us
         $this->getContainer()->set('url', $this);
 
+        // fetch the request object from the container
+        $this->request = $this->get('request');
+
         // if there is a trailing slash we permanent redirect to the page without slash
-        if (mb_strlen($this->get('request')->getRequestUri()) != 1 &&
-            mb_substr($this->get('request')->getRequestUri(), -1) == '/'
+        if (mb_strlen($this->request->getRequestUri()) != 1 &&
+            mb_substr($this->request->getRequestUri(), -1) == '/'
         ) {
-            \SpoonHTTP::redirect(mb_substr($this->get('request')->getRequestUri(), 0, -1), 301);
+            \SpoonHTTP::redirect(mb_substr($this->request->getRequestUri(), 0, -1), 301);
         }
 
-        // set query-string for later use
-        $this->setQueryString($this->get('request')->getRequestUri());
-
-        // set host for later use
-        $this->setHost($this->get('request')->getHttpHost());
+        // set query-string and parameters for later use
+        $this->parameters = $this->request->query->all();
 
         // process URL
         $this->processQueryString();
 
         // set constant
-        define('SELF', SITE_URL . '/' . $this->queryString);
+        define('SELF', SITE_URL . '/' . $this->getQueryString());
     }
 
     /**
@@ -87,11 +80,8 @@ class Url extends \KernelLoader
      */
     public function getDomain()
     {
-        // get host
-        $host = $this->getHost();
-
         // replace
-        return str_replace('www.', '', $host);
+        return str_replace('www.', '', $this->getHost());
     }
 
     /**
@@ -101,7 +91,7 @@ class Url extends \KernelLoader
      */
     public function getHost()
     {
-        return $this->host;
+        return $this->request->getHttpHost();
     }
 
     /**
@@ -173,7 +163,10 @@ class Url extends \KernelLoader
      */
     public function getParameters($includeGET = true)
     {
-        return ($includeGET) ? $this->parameters : array_diff_assoc($this->parameters, $_GET);
+        return ($includeGET) ?
+            $this->parameters :
+            array_diff_assoc($this->parameters, $this->request->query->all())
+        ;
     }
 
     /**
@@ -183,7 +176,7 @@ class Url extends \KernelLoader
      */
     public function getQueryString()
     {
-        return $this->queryString;
+        return trim((string) $this->request->getRequestUri(), '/');
     }
 
     /**
@@ -192,36 +185,7 @@ class Url extends \KernelLoader
     private function processQueryString()
     {
         // store the query string local, so we don't alter it.
-        $queryString = $this->getQueryString();
-
-        // fix GET-parameters
-        $getChunks = explode('?', $queryString);
-
-        // are there GET-parameters
-        if (isset($getChunks[1])) {
-            // get key-value pairs
-            $get = explode('&', $getChunks[1]);
-
-            // remove from query string
-            $queryString = str_replace('?' . $getChunks[1], '', $this->getQueryString());
-
-            // loop pairs
-            foreach ($get as $getItem) {
-                // get key and value
-                $getChunks = explode('=', $getItem, 2);
-
-                // key available?
-                if (isset($getChunks[0])) {
-                    // reset in $_GET
-                    $_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
-
-                    // add into parameters
-                    if (isset($getChunks[1])) {
-                        $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];
-                    }
-                }
-            }
-        }
+        $queryString = trim($this->request->getPathInfo(), '/');
 
         // split into chunks
         $chunks = (array) explode('/', $queryString);
@@ -305,7 +269,7 @@ class Url extends \KernelLoader
         // list of pageIds & their full URL
         $keys = Navigation::getKeys();
 
-        // full URL
+        // rebuild our URL, but without the language parameter. (it's tripped earlier)
         $URL = implode('/', $chunks);
         $startURL = $URL;
 
@@ -409,16 +373,6 @@ class Url extends \KernelLoader
     }
 
     /**
-     * Set the host
-     *
-     * @param string $host The value of the host.
-     */
-    private function setHost($host)
-    {
-        $this->host = (string) $host;
-    }
-
-    /**
      * Set the pages
      *
      * @param array $pages An array of all the pages to set.
@@ -438,26 +392,5 @@ class Url extends \KernelLoader
         foreach ($parameters as $key => $value) {
             $this->parameters[$key] = $value;
         }
-    }
-
-    /**
-     * Set the query string
-     *
-     * @param string $queryString The full query string.
-     */
-    private function setQueryString($queryString)
-    {
-        $queryString = trim((string) $queryString, '/');
-
-        // replace GET with encoded GET in the queryString to prevent XSS
-        if (isset($_GET) && !empty($_GET)) {
-            // strip GET from the queryString
-            list($queryString) = explode('?', $queryString, 2);
-
-            // re-add
-            $queryString = $queryString . '?' . http_build_query($_GET);
-        }
-
-        $this->queryString = $queryString;
     }
 }
