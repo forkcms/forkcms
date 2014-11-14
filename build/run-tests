@@ -12,8 +12,8 @@ php -S localhost:8123 -t . ./index.php &
 SERVER_PID=$!
 
 # Run PHP Code Sniffer tests
-./$PHPCS ./src --standard=PSR1 --encoding=utf-8 --extensions=php --report=summary -p
-./$PHPCS ./src --standard=PSR2 --encoding=utf-8 --extensions=php --report=summary -p
+./$PHPCS ./src --standard=PSR1 --encoding=utf-8 --extensions=php -p
+./$PHPCS ./src --standard=PSR2 --encoding=utf-8 --extensions=php -p
 # @todo code sniff test classes
 
 ./$CODECEPT build
