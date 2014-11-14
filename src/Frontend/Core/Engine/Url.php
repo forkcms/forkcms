@@ -139,7 +139,7 @@ class Url extends \KernelLoader
     public function getParameter($index, $type = 'string', $defaultValue = null)
     {
         // does the index exists and isn't this parameter empty
-        if (isset($this->parameters[$index]) && $this->parameters[$index] != '') {
+        if ($this->hasParameter($index)) {
             return \SpoonFilter::getValue(
                 $this->parameters[$index],
                 null,
@@ -174,6 +174,20 @@ class Url extends \KernelLoader
     public function getQueryString()
     {
         return trim((string) $this->request->getRequestUri(), '/');
+    }
+
+    /**
+     * Check if a certain ($_GET) parameter exists
+     *
+     * @param  mixed   $index The index of the parameter.
+     * @return boolean
+     */
+    public function hasParameter($index)
+    {
+        return (
+            isset($this->parameters[$index])
+            && $this->parameters[$index] != ''
+        );
     }
 
     /**
