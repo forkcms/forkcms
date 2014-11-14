@@ -12,7 +12,7 @@ settings:
 coverage:
     enabled: true
     include:
-        - src/*
+        - src/*.php
 modules:
     config:
         PhpBrowser:
