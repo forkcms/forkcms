@@ -17,3 +17,4 @@ script:
 before_script:
   - composer self-update || true
   - composer update -o --prefer-source
+  - chmod ugo+x ./build/run-tests
