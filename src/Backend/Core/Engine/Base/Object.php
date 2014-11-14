@@ -70,6 +70,7 @@ class Object extends \KernelLoader
      *
      * @param string $action The action to load.
      * @param string $module The module to load.
+     * @throws Exception If module is not set or action is not allowed
      */
     public function setAction($action, $module = null)
     {
@@ -100,6 +101,7 @@ class Object extends \KernelLoader
      * Set the module
      *
      * @param string $module The module to load.
+     * @throws Exception If module is not allowed
      */
     public function setModule($module)
     {

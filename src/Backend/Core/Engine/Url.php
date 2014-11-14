@@ -9,11 +9,12 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use Backend\Core\Engine\Model as BackendModel;
 
 use Common\Cookie as CommonCookie;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will handle the incoming URL.
@@ -156,13 +157,14 @@ class Url extends Base\Object
             }
 
             try {
+                /** @var BackendBaseConfig $config */
                 $config = new $configClass($this->getKernel(), $module);
 
                 // set action
                 $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
             } catch (Exception $ex) {
                 if (SPOON_DEBUG) {
-                    throw new Exception('The configfile for the module (' . $module . ') can\'t be found.');
+                    throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
                 } else {
                     // @todo    don't use redirects for error, we should have something like an invoke method.
 
@@ -308,7 +310,7 @@ class Url extends Base\Object
             // strip GET from the queryString
             list($queryString) = explode('?', $queryString, 2);
 
-            // readd
+            // read
             $queryString = $queryString . '?' . http_build_query($_GET);
         }
 
