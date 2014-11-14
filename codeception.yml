@@ -14,9 +14,9 @@ coverage:
     include:
         - src/*
 modules:
-    PhpBrowser:
-        url: 'http://localhost:8123/'
     config:
+        PhpBrowser:
+            url: 'http://localhost:8123/'
         Db:
             dsn: ''
             user: ''
