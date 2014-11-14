@@ -3,9 +3,18 @@
 # PHP_CORRECT_VERSION , we need to check php version using PHP_VERSION_ID before starting tests
 CODECEPT=./vendor/codeception/codeception/codecept
 
+# Remove cache
 tools/remove_cache
+
+# Start PHP server
 php -S localhost:8123 -t . ./index.php &
+
+# Run PHP Code Sniffer tests
+vendor/bin/phpcs ./src --standard=PSR1 --encoding=utf-8 --extensions=php --report=summary -p
+vendor/bin/phpcs ./src --standard=PSR2 --encoding=utf-8 --extensions=php --report=summary -p
+# @todo code sniff test classes
+
 SERVER_PID=$!
 ./$CODECEPT build
-./$CODECEPT run --coverage --report
+./$CODECEPT run --coverage --report --xml --html
 kill "$SERVER_PID"

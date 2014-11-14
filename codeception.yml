@@ -9,7 +9,13 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
+coverage:
+    enabled: true
+    include:
+        - src/*
 modules:
+    PhpBrowser:
+        url: 'http://localhost:8123/'
     config:
         Db:
             dsn: ''

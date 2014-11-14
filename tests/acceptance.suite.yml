@@ -13,6 +13,3 @@ modules:
     enabled:
         - PhpBrowser
         - WebHelper
-    config:
-        PhpBrowser:
-            url: 'http://localhost/myapp/'

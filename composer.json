@@ -18,7 +18,8 @@
         "jdorn/sql-formatter": "1.2.17"
     },
 	"require-dev": {
-		"codeception/codeception": "1.8.*"
+		"codeception/codeception": "1.8.*",
+		"squizlabs/php_codesniffer": "1.*"
 	},
     "support": {
         "irc": "irc://irc.freenode.org/forkcms",
