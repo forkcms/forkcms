@@ -1,23 +1,31 @@
 #!/bin/sh
 
+PHP_GREATER_THAN_53=$(php -r 'echo ((PHP_VERSION_ID < 50400) ? "" : "1\n");')
+
 # PHP_CORRECT_VERSION , we need to check php version using PHP_VERSION_ID before starting tests
 CODECEPT=./vendor/bin/codecept
 PHPCS=./vendor/bin/phpcs
 
-# Remove cache
-tools/remove_cache
+if [ "$PHP_GREATER_THAN_53" ]
+    then
+        # Remove cache
+        tools/remove_cache
 
-# Start PHP server and store its pid
-php -S localhost:8123 -t . ./index.php &
-SERVER_PID=$!
+        # Start PHP server and store its pid
+        php -S localhost:8123 -t . ./index.php &
+        SERVER_PID=$!
 
-# Run PHP Code Sniffer tests
-./$PHPCS ./src --standard=PSR1 --encoding=utf-8 --extensions=php --report=summary -p
-./$PHPCS ./src --standard=PSR2 --encoding=utf-8 --extensions=php --report=summary -p
-# @todo code sniff test classes
+        # Run PHP Code Sniffer tests
+        ./$PHPCS ./src --standard=PSR1 --encoding=utf-8 --extensions=php --report=summary -p
+        ./$PHPCS ./src --standard=PSR2 --encoding=utf-8 --extensions=php --report=summary -p
+        # @todo code sniff test classes
 
-./$CODECEPT build
-./$CODECEPT run --coverage --report --xml
+        ./$CODECEPT build
+        ./$CODECEPT run --coverage --report --xml
 
-# Kill php server using its previously stored pid
-kill "$SERVER_PID"
+        # Kill php server using its previously stored pid
+        kill "$SERVER_PID"
+    else
+        PHP_VERSION=$(php -r 'echo PHP_VERSION;')
+        echo "Cannot run codeception integration tests, because the installed PHP version ($PHP_VERSION) does not support the built-in web server."
+fi
