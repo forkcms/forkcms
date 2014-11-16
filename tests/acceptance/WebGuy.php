@@ -7,6 +7,7 @@
 use \Codeception\Maybe;
 use Codeception\Module\PhpBrowser;
 use Codeception\Module\WebHelper;
+use Codeception\Module\WebDebug;
 
 /**
  * Inherited methods
@@ -2051,6 +2052,53 @@ class WebGuy extends \Codeception\AbstractGuy
      */
     public function getName() {
         $this->scenario->addStep(new \Codeception\Step\Action('getName', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     * Saves screenshot of browser window and saves to `_logs/debug/`
+     *
+     * Optionally you can provide a screenshot name.
+     *
+     * @param $name
+     * @see Codeception\Module\WebDebug::makeAScreenshot()
+     * @return \Codeception\Maybe
+     */
+    public function makeAScreenshot($name = null) {
+        $this->scenario->addStep(new \Codeception\Step\Action('makeAScreenshot', func_get_args()));
+        if ($this->scenario->running()) {
+            $result = $this->scenario->runStep();
+            return new Maybe($result);
+        }
+        return new Maybe();
+    }
+
+ 
+    /**
+     * This method is generated.
+     * Documentation taken from corresponding module.
+     * ----------------------------------------------
+     *
+     * Saves current response content to `_logs/debug/`
+     * By default a response is treated as HTML, so all stored files will have html extension
+     *
+     * Optionally you can provide a dump name.
+     *
+     * @param $name
+     * @see Codeception\Module\WebDebug::makeAResponseDump()
+     * @return \Codeception\Maybe
+     */
+    public function makeAResponseDump($name) {
+        $this->scenario->addStep(new \Codeception\Step\Action('makeAResponseDump', func_get_args()));
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
             return new Maybe($result);

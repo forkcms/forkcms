@@ -1,4 +1,10 @@
 <?php
+
+use Codeception\Scenario as Scenario;
+
+/** $scenario \Codeception\Scenario  */
+$scenario->group('install');
+
 $I = new WebGuy($scenario);
 $I->wantTo('Install Fork CMS');
 

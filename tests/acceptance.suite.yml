@@ -13,3 +13,4 @@ modules:
     enabled:
         - PhpBrowser
         - WebHelper
+        - WebDebug

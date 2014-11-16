@@ -16,7 +16,7 @@ coverage:
 modules:
     config:
         PhpBrowser:
-            url: 'http://localhost:8123/'
+            url: 'http://localhost/'
         Db:
             dsn: ''
             user: ''

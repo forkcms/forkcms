@@ -20,20 +20,13 @@ if [ "$PHP_GREATER_THAN_53" ]
         cp index.php orignal_index.php
         sudo sed -i "2i\include_once 'c3.php';" index.php
 
-        # Start PHP server and store its pid
-        php -S localhost:8123 -t . ./index.php &
-        SERVER_PID=$!
-
         # Run PHP Code Sniffer tests
         ./$PHPCS ./src --standard=PSR1 --encoding=utf-8 --extensions=php --report=summary -p
         ./$PHPCS ./src --standard=PSR2 --encoding=utf-8 --extensions=php --report=summary -p
         # @todo code sniff test classes
 
         ./$CODECEPT build
-        ./$CODECEPT run --coverage --report --xml
-
-        # Kill php server using its previously stored pid
-        kill "$SERVER_PID"
+        ./$CODECEPT run --steps --coverage --xml
 
         # Reset the old index file
         rm index.php
