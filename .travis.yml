@@ -19,8 +19,8 @@ before_script:
   - sudo a2enmod rewrite deflate
   - sudo sed -i "9i\SetEnv FORK_ENV test" .htaccess
   - sudo sed -i "9i\SetEnv FORK_DEBUG 1" .htaccess
-  - sudo cp -f build/travis-ci-apache.conf /etc/apache2/sites-available/000-default.conf
-  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/000-default.conf
+  - sudo cp -f build/travis-ci-apache.conf /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
   - composer self-update || true
   - composer update -o --prefer-source
