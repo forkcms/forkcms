@@ -1789,14 +1789,14 @@ jsBackend.locale =
 	// get an error
 	err: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('err', key, module);
 	},
 
 	// get a label
 	lbl: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('lbl', key, module);
 	},
 
@@ -1809,7 +1809,7 @@ jsBackend.locale =
 	// get a message
 	msg: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('msg', key, module);
 	}
 };
