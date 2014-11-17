@@ -34,7 +34,7 @@ class Archive extends FrontendBaseWidget
      */
     private function parse()
     {
-        // we will cache this widget for 15minutes
+        // we will cache this widget for 24 hours
         $this->tpl->cache(FRONTEND_LANGUAGE . '_blogWidgetArchiveCache', (24 * 60 * 60));
 
         // if the widget isn't cached, assign the variables
