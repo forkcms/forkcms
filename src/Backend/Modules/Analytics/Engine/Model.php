@@ -531,6 +531,23 @@ class Model
     }
 
     /**
+     * Fetches a landing page from the database
+     *
+     * @param  int   $id The id of the landing page to fetch
+     * @return array
+     */
+    public static function getLandingPage($id)
+    {
+        return (array) BackendModel::get('database')->getRecord(
+            'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+             FROM analytics_landing_pages
+             WHERE id = ?
+             LIMIT 1',
+            array((int) $id)
+        );
+    }
+
+    /**
      * Get all data for a given revision.
      *
      * @param string $language The language to use.
