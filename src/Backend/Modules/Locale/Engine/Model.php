@@ -29,6 +29,7 @@ use Frontend\Core\Engine\Language as FL;
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Model
 {
@@ -1167,7 +1168,8 @@ class Model
                 // loop modules
                 foreach ($translation as $module => $t) {
                     // create translation (and increase id)
-                    $trans = array('module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
+                    
+                    $trans = array('application' => $application, 'module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
 
                     if(isset($edited_on)) unset($edited_on);
 
@@ -1192,9 +1194,9 @@ class Model
                         }
 
                     }
-                    // we add them here to keep the language next to eachother
+                    // we add them here to keep the languages next to each other
                     $trans['edited_on'] = $edited_on;
-                    $trans['application'] = $application;
+
 
 
                     // add the translation to the array

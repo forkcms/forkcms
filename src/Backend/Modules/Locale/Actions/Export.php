@@ -19,6 +19,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  *
  * @author Dieter Vanden Eynde <dieter@dieterve.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Export extends BackendBaseActionIndex
 {
@@ -158,12 +159,10 @@ class Export extends BackendBaseActionIndex
         $this->filter['ids'] = in_array($this->getParameter('ids'), array(null, '', false, array())) ? array() : explode('|', $this->getParameter('ids'));
 
         foreach($this->filter['ids'] as $id) {
-
-            //someone is messing with the url, clear ids
+            // someone is messing with the url, clear ids
             if(!is_numeric($id)) {
                 $this->filter['ids'] = array();
                 break;
-
             }
         }
     }
