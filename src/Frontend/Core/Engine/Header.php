@@ -980,12 +980,12 @@ class Header extends FrontendBaseObject
 
         // add site handle if provided
         if ($siteHandle != null) {
-            $data[] = array(array('name' => 'twitter:site', 'content' => $siteHandle));
+            $data[] = array('name' => 'twitter:site', 'content' => $siteHandle);
         }
 
         // add creator handle if provided
         if ($creatorHandle != null) {
-            $data[] = array(array('name' => 'twitter:creator', 'content' => $creatorHandle));
+            $data[] = array('name' => 'twitter:creator', 'content' => $creatorHandle);
         }
 
         // add Twitter Card to the header
