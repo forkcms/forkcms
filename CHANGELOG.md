@@ -1,5 +1,9 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Meta Entity added.
+
 Bugfixes:
 
 * Tags: fix wrong variable name.
