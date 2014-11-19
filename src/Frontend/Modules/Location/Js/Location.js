@@ -6,6 +6,7 @@
 jsFrontend.location =
 {
 	map: {},
+	mapFullUrl: null,
 	directionService: null,
 	directionsDisplay: null,
 
@@ -70,6 +71,10 @@ jsFrontend.location =
 				// calculate & display the route
 				jsFrontend.location.setRoute(id, mapId, items[0]);
 			});
+		}
+
+		if($('#map-full-url-' + id).length > 0) {
+			jsFrontend.location.mapFullUrl = $('#map-full-url-' + id).attr('href');
 		}
 	},
 
