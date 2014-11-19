@@ -1,7 +1,8 @@
 /**
  * Interaction for the profiles module
  *
- * @author	Thomas Deceuninck <thomas@fronto.be>
+ * @author Thomas Deceuninck <thomas@fronto.be>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 jsBackend.profiles =
 {
@@ -9,6 +10,7 @@ jsBackend.profiles =
 	{
 		jsBackend.profiles.addToGroup.init();
 		jsBackend.profiles.settings.init();
+		jsBackend.profiles.edit.init();
 	},
 
 	addToGroup:
@@ -36,6 +38,30 @@ jsBackend.profiles =
 					.val(window.name)
 			);
 		}
+	},
+	
+	edit:
+	{
+	    init: function()
+	    {
+	        if ($('#newPasswordBox').length == 0) return false;
+
+            $('#newPassword').on('change', function() {
+                jsBackend.profiles.edit.toggleNewPasswordBox();
+            });
+
+            jsBackend.profiles.edit.toggleNewPasswordBox();
+	    },
+
+	    toggleNewPasswordBox: function()
+	    {
+    	    var $item = $('#newPassword');
+            var checked = ($item.attr('checked') == 'checked');
+
+            $('#newPasswordBox').toggle(checked);
+        }
+	},
+
 	settings:
 	{
 	    init: function()
