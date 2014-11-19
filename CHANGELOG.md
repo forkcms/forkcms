@@ -1,5 +1,9 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Location: when routing from A to B, <a href="URL"> has to change also, fixes #741.
+
 Bugfixes:
 
 * Tags: fix wrong variable name.

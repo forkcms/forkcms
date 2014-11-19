@@ -6,6 +6,7 @@
 jsFrontend.location =
 {
 	map: {},
+	mapFullUrl: null,
 	directionService: null,
 	directionsDisplay: null,
 
@@ -71,6 +72,10 @@ jsFrontend.location =
 				jsFrontend.location.setRoute(id, mapId, items[0]);
 			});
 		}
+
+		if($('#map-full-url-' + id).length > 0) {
+		    jsFrontend.location.mapFullUrl = $('#map-full-url-' + id).attr('href');
+		}
 	},
 
 	// add a marker
@@ -126,7 +131,7 @@ jsFrontend.location =
 			travelMode: google.maps.DirectionsTravelMode.DRIVING
 		};
 
-		// request the rout
+		// request the route
 		jsFrontend.location.directionsService.route(request, function(response, status)
 		{
 			// did we find a route
@@ -137,6 +142,18 @@ jsFrontend.location =
 
 				// render the route
 				jsFrontend.location.directionsDisplay.setDirections(response);
+
+				// change the link
+				if (jsFrontend.location.mapFullUrl != null) {
+				    // get "a"-link element
+				    var $item = $('#map-full-url-' + id);
+
+                    // d = directions
+                    var href = jsFrontend.location.mapFullUrl + '&f=d&saddr=' + $search.val() + '&daddr=' + position;
+
+                    // update href
+				    $item.attr('href', href);
+				}
 			}
 
 			// show error
