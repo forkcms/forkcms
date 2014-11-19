@@ -1,5 +1,10 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: Integrated addRssLink() function, fixes #841.
+* Blog: making use of the new $this->header->addRssLink() function, fixes #841.
+
 Bugfixes:
 
 * Tags: fix wrong variable name.
