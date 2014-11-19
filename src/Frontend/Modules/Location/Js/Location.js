@@ -142,6 +142,18 @@ jsFrontend.location =
 
 				// render the route
 				jsFrontend.location.directionsDisplay.setDirections(response);
+
+				// change the link
+				if (jsFrontend.location.mapFullUrl != null) {
+					// get "a"-link element
+					var $item = $('#map-full-url-' + id);
+
+					// d = directions
+					var href = jsFrontend.location.mapFullUrl + '&f=d&saddr=' + $search.val() + '&daddr=' + position;
+
+					// update href
+					$item.attr('href', href);
+				}
 			}
 
 			// show error
