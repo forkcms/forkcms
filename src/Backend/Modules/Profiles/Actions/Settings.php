@@ -91,7 +91,7 @@ class Settings extends BackendBaseActionEdit
             if ($this->frm->getField('send_new_profile_admin_mail')->isChecked()) {
                 if ($this->frm->getField('overwrite_profile_notification_email')->isChecked()) {
                     $this->frm->getField('profile_notification_email')->isEmail(BL::msg('EmailIsRequired'));
-                }                
+                }
             }
 
             if ($this->frm->isCorrect()) {
@@ -101,7 +101,7 @@ class Settings extends BackendBaseActionEdit
                     'send_new_profile_admin_mail',
                     (bool) $this->frm->getField('send_new_profile_admin_mail')->getValue()
                 );
-                
+
                 $profileNotificationEmail = null;
 
                 if ($this->frm->getField('overwrite_profile_notification_email')->isChecked()) {
