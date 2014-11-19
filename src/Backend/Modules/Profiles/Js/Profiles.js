@@ -8,6 +8,7 @@ jsBackend.profiles =
 	init: function()
 	{
 		jsBackend.profiles.addToGroup.init();
+		jsBackend.profiles.settings.init();
 	},
 
 	addToGroup:
@@ -35,6 +36,39 @@ jsBackend.profiles =
 					.val(window.name)
 			);
 		}
+	settings:
+	{
+	    init: function()
+	    {
+	        if ($('#sendNewProfileAdminMail').length == 0) return false;
+
+            $('#sendNewProfileAdminMail').on('change', function() {
+                jsBackend.profiles.settings.toggleAdminMail();
+            });
+
+            $('#overwriteProfileNotificationEmail').on('change', function() {
+                jsBackend.profiles.settings.toggleProfileNotificationEmail();
+            });
+
+            jsBackend.profiles.settings.toggleAdminMail();
+            jsBackend.profiles.settings.toggleProfileNotificationEmail();
+	    },
+
+	    toggleAdminMail: function()
+	    {
+    	    var $item = $('#sendNewProfileAdminMail');
+            var checked = ($item.attr('checked') == 'checked');
+
+            $('#overwriteProfileNotificationEmailBox').toggle(checked);
+        },
+
+	    toggleProfileNotificationEmail: function()
+	    {
+    	    var $item = $('#overwriteProfileNotificationEmail');
+            var checked = ($item.attr('checked') == 'checked');
+
+            $('#profileNotificationEmailBox').toggle(checked);
+        }
 	}
 };
 
