@@ -737,6 +737,115 @@ class Model
         return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $values);
     }
 
+	/**
+	 * Notify profile - after adding profile to profiles module
+	 *
+	 * @param array $values
+	 */
+	public static function notifyNewProfile($values)
+	{
+		// set variables
+		$variables['message'] = vsprintf(
+		    BL::msg('NotificationNewProfileToProfile', 'Profiles'),
+		    array(
+		        $values['email'],
+		        $values['unencrypted_password'],
+		        SITE_URL
+		    )
+		);
+		
+		// define subject
+		$subject = BL::lbl('NotificationNewProfileToProfile', 'Profiles');
+
+		// define template path
+		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+
+		// send the mail
+		BackendModel::get('mailer')->addEmail(
+		    $subject,
+		    $templatePath,
+		    $variables,
+		    $values['email'],
+		    $values['display_name']
+		);
+	}
+
+	/**
+	 * Notify admin - after adding profile to profiles module
+	 *
+	 * @param array $values
+	 */
+	public static function notifyNewProfileToAdmin($values)
+	{
+	    // to email
+	    $toEmail = BackendModel::getModuleSetting('profiles', 'profile_notification_email', null);
+
+		// define backend url
+		$backendURL = BackendModel::createURLForAction('edit', 'Profiles') . '&id=' . $values['id'];
+
+		// set variables
+		$variables['message'] = vsprintf(
+		    BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+		    array(
+		        $values['display_name'],
+		        $values['email'],
+		        $backendURL
+		    )
+		);
+
+		// define subject
+		$subject = vsprintf(
+		    BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
+		    array(
+		        $values['email']
+		    )
+		);
+
+		// define template path
+		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+
+		// send the mail
+		BackendModel::get('mailer')->addEmail(
+		    $subject,
+		    $templatePath,
+		    $variables,
+		    $toEmail
+		);
+	}
+
+	/**
+	 * Notify profile - after adding profile to profiles module
+	 *
+	 * @param string $change This can be "new_password" (todo: "new_email", ...)
+	 * @param array $values
+	 */
+	public static function notifyUpdatedProfile($values)
+	{
+		// set variables
+		$variables['message'] = vsprintf(
+		    BL::msg('NotificationUpdatedProfileToProfile', 'Profiles'),
+		    array(
+		        $values['email'],
+		        $values['unencrypted_password'],
+		        SITE_URL
+		    )
+		);
+
+		// define subject
+		$subject = BL::lbl('NotificationNewProfileToProfile', 'Profiles');
+
+		// define template path
+		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+
+		// send the mail
+		BackendModel::get('mailer')->addEmail(
+		    $subject,
+		    $templatePath,
+		    $variables,
+		    $values['email'],
+		    $values['display_name']
+		);
+	}
     /**
      * Insert or update a single profile setting.
      *
