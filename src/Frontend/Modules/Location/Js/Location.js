@@ -131,7 +131,7 @@ jsFrontend.location =
 			travelMode: google.maps.DirectionsTravelMode.DRIVING
 		};
 
-		// request the rout
+		// request the route
 		jsFrontend.location.directionsService.route(request, function(response, status)
 		{
 			// did we find a route
