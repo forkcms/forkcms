@@ -1,5 +1,10 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Profiles: notify profile and/or admin when profile is added.
+* Profiles: notify profile when profile is edited.
+
 Bugfixes:
 
 * Tags: fix wrong variable name.
