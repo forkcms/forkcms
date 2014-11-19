@@ -145,14 +145,14 @@ jsFrontend.location =
 
 				// change the link
 				if (jsFrontend.location.mapFullUrl != null) {
-				    // get "a"-link element
-				    var $item = $('#map-full-url-' + id);
-
+                    // get "a"-link element
+                    var $item = $('#map-full-url-' + id);
+                    
                     // d = directions
                     var href = jsFrontend.location.mapFullUrl + '&f=d&saddr=' + $search.val() + '&daddr=' + position;
-
+                    
                     // update href
-				    $item.attr('href', href);
+                    $item.attr('href', href);
 				}
 			}
 
