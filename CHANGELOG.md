@@ -5,6 +5,7 @@ Bugfixes:
 * Tags: fix wrong variable name.
 * Core: fix installation with different interface langauge(s)
 * Core: fix for dashboard ajax functions.
+* Users: when a user becomes "non-active" remove his sessions so he gets logged out.
 
 
 3.8.2 (2014-10-21)
