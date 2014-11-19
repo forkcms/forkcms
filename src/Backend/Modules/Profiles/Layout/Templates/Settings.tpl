@@ -16,7 +16,7 @@
 				<li><label for="sendNewProfileAdminMail">{$chkSendNewProfileAdminMail} {$lblSendNewProfileAdminMail|ucfirst}</label></li>
 				<li id="overwriteProfileNotificationEmailBox"><label for="overwriteProfileNotificationEmail">{$chkOverwriteProfileNotificationEmail} {$lblOverwriteProfileNotificationEmail|ucfirst}</label><br/>
 				    <span id="profileNotificationEmailBox">
-				        {$txtProfileNotificationEmail} {$txtProfileNotificationEmailError}
+				        {$txtProfileNotificationEmail}<abbr title="{$lblRequiredField|ucfirst}">*</abbr> {$txtProfileNotificationEmailError}
 				    </span>
 				</li>
 		    </ul>
