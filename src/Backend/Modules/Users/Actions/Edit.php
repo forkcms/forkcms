@@ -306,6 +306,18 @@ class Edit extends BackendBaseActionEdit
                     $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
                 }
 
+                // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
+                if ($user['active'] === 'N' && $this->record['active'] !== $user['active']) {
+                    // delete all sessions for user
+                    BackendModel::get('database')->delete(
+                        'users_sessions',
+                        'user_id = ?',
+                        array(
+                            $this->user->getUserId()
+                        )
+                    );
+                }
+
                 // build settings-array
                 $settings['nickname'] = $fields['nickname']->getValue();
                 $settings['name'] = $fields['name']->getValue();
