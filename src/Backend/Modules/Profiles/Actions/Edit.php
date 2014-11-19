@@ -24,22 +24,28 @@ use Symfony\Component\Intl\Intl as Intl;
  *
  * @author Lester Lievens <lester@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Edit extends BackendBaseActionEdit
 {
-    /**
-     * Info about the current profile.
-     *
-     * @var array
-     */
-    private $profile;
-
     /**
      * Groups data grid.
      *
      * @var    BackendDataGridDB
      */
     private $dgGroups;
+
+    /**
+     * @var bool
+     */
+    private $notifyProfile;
+
+    /**
+     * Info about the current profile.
+     *
+     * @var array
+     */
+    private $profile;
 
     /**
      * Execute the action.
@@ -69,6 +75,12 @@ class Edit extends BackendBaseActionEdit
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
+
+		$this->notifyProfile = BackendModel::getModuleSetting(
+            $this->URL->getModule(),
+            'send_new_profile_mail',
+            false
+        );
     }
 
     /**
@@ -105,6 +117,7 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         $this->frm->addText('email', $this->profile['email']);
+        $this->frm->addCheckbox('new_password');
         $this->frm->addPassword('password');
         $this->frm->addText('display_name', $this->profile['display_name']);
         $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));
@@ -179,6 +192,8 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
+        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+
         // assign the active record and additional variables
         $this->tpl->assign('profile', $this->profile);
 
@@ -240,6 +255,13 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
+            // new_password is checked, so verify new password (only if profile should not be notified)
+            // because then if the password field is empty, it will generate a new password
+            if ($this->frm->getField('new_password')->isChecked() && !$this->notifyProfile) {
+                // password filled in?
+                $txtPassword->isFilled(BL::err('FieldIsRequired'));
+            }
+
             // one of the bday fields are filled in
             if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
                 // valid date?
@@ -261,15 +283,19 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // new password filled in?
-                if ($txtPassword->isFilled()) {
+                if ($this->frm->getField('new_password')->isChecked()) {
                     // get new salt
                     $salt = BackendProfilesModel::getRandomString();
 
                     // update salt
                     BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
+    				// new password filled in? otherwise generate a password
+    				$password = ($txtPassword->isFilled()) ?
+				        $txtPassword->getValue() : BackendModel::generatePassword(8);
+
                     // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString($txtPassword->getValue(), $salt);
+                    $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
                 }
 
                 // update values
@@ -292,6 +318,28 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'birth_date', $birthDate);
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
+
+                if ($this->notifyProfile) {
+                    // new password
+                    if ($this->frm->getField('new_password')->isChecked()) {
+                        // notify values
+        				$notifyValues = array_merge(
+        				    $values,
+        					array(
+        						'id' => $this->id,
+        						'first_name' => $txtFirstName->getValue(),
+        						'last_name' => $txtLastName->getValue(),
+        						'unencrypted_password' => $password
+        					)					
+        				);
+
+        				if (!isset($notifyValues['display_name'])) {
+        				    $notifyValues['display_name'] = $this->profile['display_name'];
+        				}
+
+				        BackendProfilesModel::notifyUpdatedProfile($notifyValues);
+                    }
+                }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
