@@ -56,13 +56,13 @@ class Add extends BackendBaseActionAdd
      */
     public function getData()
     {
-		$this->notifyAdmin = BackendModel::getModuleSetting(
+        $this->notifyAdmin = BackendModel::getModuleSetting(
             $this->URL->getModule(),
             'send_new_profile_admin_mail',
             false
         );
 
-		$this->notifyProfile = BackendModel::getModuleSetting(
+        $this->notifyProfile = BackendModel::getModuleSetting(
             $this->URL->getModule(),
             'send_new_profile_mail',
             false

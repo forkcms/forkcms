@@ -75,7 +75,7 @@ class Edit extends BackendBaseActionEdit
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
 
-		$this->notifyProfile = BackendModel::getModuleSetting(
+        $this->notifyProfile = BackendModel::getModuleSetting(
             $this->URL->getModule(),
             'send_new_profile_mail',
             false
