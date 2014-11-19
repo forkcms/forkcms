@@ -131,20 +131,20 @@ jsFrontend.location =
 			travelMode: google.maps.DirectionsTravelMode.DRIVING
 		};
 
-		// request the route
-		jsFrontend.location.directionsService.route(request, function(response, status)
-		{
-			// did we find a route
-			if(status == google.maps.DirectionsStatus.OK)
-			{
-				// change the map
-				jsFrontend.location.directionsDisplay.setMap(jsFrontend.location.map[mapId]);
-
-				// render the route
-				jsFrontend.location.directionsDisplay.setDirections(response);
-
-				// change the link
-				if (jsFrontend.location.mapFullUrl != null) {
+        // request the route
+        jsFrontend.location.directionsService.route(request, function(response, status)
+        {
+            // did we find a route
+            if(status == google.maps.DirectionsStatus.OK)
+            {
+                // change the map
+                jsFrontend.location.directionsDisplay.setMap(jsFrontend.location.map[mapId]);
+                
+                // render the route
+                jsFrontend.location.directionsDisplay.setDirections(response);
+                
+                // change the link
+                if (jsFrontend.location.mapFullUrl != null) {
                     // get "a"-link element
                     var $item = $('#map-full-url-' + id);
                     
@@ -153,12 +153,12 @@ jsFrontend.location =
                     
                     // update href
                     $item.attr('href', href);
-				}
-			}
-
-			// show error
-			else $error.show();
-		});
+                }
+            }
+            
+            // show error
+            else $error.show();
+        });
 	}
 };
 
