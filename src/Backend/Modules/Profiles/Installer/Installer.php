@@ -16,6 +16,7 @@ use Backend\Core\Installer\ModuleInstaller;
  *
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Davy Van Vooren <davy.vanvooren@netlash.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Installer extends ModuleInstaller
 {
@@ -35,6 +36,10 @@ class Installer extends ModuleInstaller
 
         // general settings
         $this->setSetting('Profiles', 'allow_gravatar', true);
+        $this->setSetting('Profiles', 'overwrite_profile_notification_email', false);
+        $this->setSetting('Profiles', 'profile_notification_email', null);
+        $this->setSetting('Profiles', 'send_mail_for_new_profile_to_admin', false);
+        $this->setSetting('Profiles', 'send_mail_for_new_profile_to_profile', false);
 
         // add folders
         \SpoonDirectory::create(PATH_WWW . '/src/Frontend/Files/Profiles/avatars/source/');
@@ -86,6 +91,11 @@ class Installer extends ModuleInstaller
                  'profiles/edit_group'
             )
         );
+
+        // settings navigation
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation($navigationModulesId, 'Profiles', 'profiles/settings');
 
         // add extra
         $activateId = $this->insertExtra('Profiles', 'block', 'Activate', 'Activate', null, 'N', 5000);
