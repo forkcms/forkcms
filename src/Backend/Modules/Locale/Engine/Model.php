@@ -1205,8 +1205,6 @@ class Model
             }
         }
 
-        //echo '<pre>' . print_r($dataGridTranslations['msg'], true) . '</pre>';
-
         return $dataGridTranslations;
     }
 
@@ -1316,7 +1314,8 @@ class Model
         );
 
         // set defaults if necessary
-        // we can't simply use these right away, because this function is also calls by the installer, which does not have Backend-functions
+        // we can't simply use these right away, because this function is also calls by the installer,
+        // which does not have Backend-functions
         if ($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
         if ($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
         if ($userId === null) $userId = BackendAuthentication::getUser()->getUserId();

@@ -22,6 +22,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -149,10 +150,6 @@ class Index extends BackendBaseActionIndex
                 // set header labels
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
-                // set column attributes
-
-
-
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
 
@@ -161,7 +158,7 @@ class Index extends BackendBaseActionIndex
                     // add id of translation for the export
                     $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
 
-                    // hide translation_id column (only if only one language is selected
+                    // Hide translation_id column (only if only one language is selected
                     // because the key doesn't exist if more than 1 language is selected)
                     $dataGrid->setColumnHidden('translation_id');
 
@@ -187,7 +184,7 @@ class Index extends BackendBaseActionIndex
                     $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
                     $dataGrid->setColumnHidden('translation_id_' . $lang);
 
-                    //ugly fix but the browser does funny things with the percentage when show a lots of languages
+                    //ugly fix but the browser does funny things with the percentage when showing lots of languages
                     $dataGrid->setColumnAttributes(
                         $lang,
                         array(
@@ -209,19 +206,32 @@ class Index extends BackendBaseActionIndex
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
         $this->frm->addDropdown(
             'application',
-            array('' => '-','Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']
+            array(
+                '' => '-',
+                'Backend' => 'Backend',
+                'Frontend' => 'Frontend'
+            ),
+            $this->filter['application']
         );
         $this->frm->addText('name', $this->filter['name']);
         $this->frm->addText('value', $this->filter['value']);
         $this->frm->addMultiCheckbox(
             'language',
-            BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus'
+            BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod),
+            $this->filter['language'],
+            'noFocus'
         );
         $this->frm->addMultiCheckbox(
             'type',
-            BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus'
+            BackendLocaleModel::getTypesForMultiCheckbox(),
+            $this->filter['type'],
+            'noFocus'
         );
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+        $this->frm->addDropdown(
+            'module',
+            BackendModel::getModulesForDropDown(false),
+            $this->filter['module']
+        );
         $this->frm->getField('module')->setDefaultElement('-');
 
         // manually parse fields
