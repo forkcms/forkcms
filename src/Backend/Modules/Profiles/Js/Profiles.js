@@ -42,59 +42,59 @@ jsBackend.profiles =
 	
 	edit:
 	{
-	    init: function()
-	    {
-	        if ($('#newPasswordBox').length == 0) return false;
+		init: function()
+		{
+			if ($('#newPasswordBox').length == 0) return false;
 
-            $('#newPassword').on('change', function() {
-                jsBackend.profiles.edit.toggleNewPasswordBox();
-            });
+			$('#newPassword').on('change', function() {
+				jsBackend.profiles.edit.toggleNewPasswordBox();
+			});
 
-            jsBackend.profiles.edit.toggleNewPasswordBox();
-	    },
+			jsBackend.profiles.edit.toggleNewPasswordBox();
+		},
 
-	    toggleNewPasswordBox: function()
-	    {
-    	    var $item = $('#newPassword');
-            var checked = ($item.attr('checked') == 'checked');
+		toggleNewPasswordBox: function()
+		{
+			var $item = $('#newPassword');
+			var checked = ($item.attr('checked') == 'checked');
 
-            $('#newPasswordBox').toggle(checked);
-        }
+			$('#newPasswordBox').toggle(checked);
+		}
 	},
 
 	settings:
 	{
-	    init: function()
-	    {
-	        if ($('#sendNewProfileAdminMail').length == 0) return false;
+		init: function()
+		{
+			if ($('#sendNewProfileAdminMail').length == 0) return false;
 
-            $('#sendNewProfileAdminMail').on('change', function() {
-                jsBackend.profiles.settings.toggleAdminMail();
-            });
+			$('#sendNewProfileAdminMail').on('change', function() {
+				jsBackend.profiles.settings.toggleAdminMail();
+			});
 
-            $('#overwriteProfileNotificationEmail').on('change', function() {
-                jsBackend.profiles.settings.toggleProfileNotificationEmail();
-            });
+			$('#overwriteProfileNotificationEmail').on('change', function() {
+				jsBackend.profiles.settings.toggleProfileNotificationEmail();
+			});
 
-            jsBackend.profiles.settings.toggleAdminMail();
-            jsBackend.profiles.settings.toggleProfileNotificationEmail();
-	    },
+			jsBackend.profiles.settings.toggleAdminMail();
+			jsBackend.profiles.settings.toggleProfileNotificationEmail();
+		},
 
-	    toggleAdminMail: function()
-	    {
-    	    var $item = $('#sendNewProfileAdminMail');
-            var checked = ($item.attr('checked') == 'checked');
+		toggleAdminMail: function()
+		{
+			var $item = $('#sendNewProfileAdminMail');
+			var checked = ($item.attr('checked') == 'checked');
 
-            $('#overwriteProfileNotificationEmailBox').toggle(checked);
-        },
+			$('#overwriteProfileNotificationEmailBox').toggle(checked);
+		},
 
-	    toggleProfileNotificationEmail: function()
-	    {
-    	    var $item = $('#overwriteProfileNotificationEmail');
-            var checked = ($item.attr('checked') == 'checked');
+		toggleProfileNotificationEmail: function()
+		{
+			var $item = $('#overwriteProfileNotificationEmail');
+			var checked = ($item.attr('checked') == 'checked');
 
-            $('#profileNotificationEmailBox').toggle(checked);
-        }
+			$('#profileNotificationEmailBox').toggle(checked);
+		}
 	}
 };
 
