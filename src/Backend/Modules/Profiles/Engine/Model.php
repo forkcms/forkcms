@@ -781,7 +781,7 @@ class Model
 	    $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
 
 		// define backend url
-		$backendURL = BackendModel::createURLForAction('edit', 'Profiles') . '&id=' . $values['id'];
+		$backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
 		// set variables
 		$variables['message'] = vsprintf(
