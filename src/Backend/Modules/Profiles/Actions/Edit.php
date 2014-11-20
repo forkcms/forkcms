@@ -257,7 +257,6 @@ class Edit extends BackendBaseActionEdit
             // new_password is checked, so verify new password (only if profile should not be notified)
             // because then if the password field is empty, it will generate a new password
             if ($this->frm->getField('new_password')->isChecked() && !$this->notifyProfile) {
-                // password filled in?
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
             }
 

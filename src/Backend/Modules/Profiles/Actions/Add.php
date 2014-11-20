@@ -155,7 +155,6 @@ class Add extends BackendBaseActionAdd
 
             // profile must not be notified, password must not be empty
             if (!$this->notifyProfile) {
-                // password filled in?
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
             }
 
