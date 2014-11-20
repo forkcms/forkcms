@@ -778,7 +778,7 @@ class Model
 	public static function notifyNewProfileToAdmin($values)
 	{
 	    // to email
-	    $toEmail = BackendModel::getModuleSetting('profiles', 'profile_notification_email', null);
+	    $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
 
 		// define backend url
 		$backendURL = BackendModel::createURLForAction('edit', 'Profiles') . '&id=' . $values['id'];
