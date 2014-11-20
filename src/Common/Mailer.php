@@ -218,7 +218,12 @@ class Mailer
     private function getTemplateContent($template, $variables = null)
     {
         // new template instance
-        $tpl = new Template(false);
+        $tpl = null;
+        if (APPLICATION === 'Backend') {
+            $tpl = new Backend\Core\Engine\Template(false);
+        } else {
+            $tpl = new Template(false);
+        }
 
         // set some options
         $tpl->setForceCompile(true);
