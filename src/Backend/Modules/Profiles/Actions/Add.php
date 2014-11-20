@@ -170,9 +170,6 @@ class Add extends BackendBaseActionAdd
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                // get new salt
-                $salt = BackendProfilesModel::getRandomString();
-
                 // build item
                 $values = array(
                     'email' => $txtEmail->getValue(),
