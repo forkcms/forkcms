@@ -134,7 +134,7 @@ class Add extends BackendBaseActionAdd
                 );
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['question']) . '&highlight=row-' . $item['id']
+                    urlencode($item['question']) . '&highlight=' . $item['id']
                 );
             }
         }
