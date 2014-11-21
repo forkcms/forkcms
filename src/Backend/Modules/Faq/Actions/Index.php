@@ -67,7 +67,7 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setColumnsSequence('dragAndDropHandle');
             $dataGrid->setColumnAttributes('question', array('class' => 'title'));
             $dataGrid->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
-            $dataGrid->setRowAttributes(array('id' => '[id]'));
+            $dataGrid->setRowAttributes(array('id' => 'row-[id]'));
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('Edit')) {
