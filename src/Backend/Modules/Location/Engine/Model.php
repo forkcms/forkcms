@@ -11,6 +11,7 @@ namespace Backend\Modules\Location\Engine;
 
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Location\Entity\Location;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
@@ -29,21 +30,13 @@ class Model
     /**
      * Delete an item
      *
-     * @param int $id The id of the record to delete.
+     * @param Location $location
      */
-    public static function delete($id)
+    public static function delete(Location $location)
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
-
-        // get item
-        $item = self::get($id);
-
-        BackendModel::deleteExtraById($item['extra_id']);
-
-        // delete location and its settings
-        $db->delete('location', 'id = ? AND language = ?', array((int) $id, BL::getWorkingLanguage()));
-        $db->delete('location_settings', 'map_id = ?', array((int) $id));
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->remove($location);
+        $em->flush();
     }
 
     /**
@@ -67,15 +60,16 @@ class Model
      * Fetch a record from the database
      *
      * @param int $id The id of the record to fetch.
-     * @return array
+     * @return Location
      */
     public static function get($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em->getRepository('Backend\Modules\Location\Entity\Location')->findOneBy(
+            array(
+                'id' => $id,
+                'language' => BL::getWorkingLanguage()
+            )
         );
     }
 
@@ -86,11 +80,12 @@ class Model
      */
     public static function getAll()
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*
-             FROM location AS i
-             WHERE i.language = ? AND i.show_overview = ?',
-            array(BL::getWorkingLanguage(), 'Y')
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em->getRepository('Backend\Modules\Location\Entity\Location')->findBy(
+            array(
+                'language' => BL::getWorkingLanguage(),
+                'showOverview' => true
+            )
         );
     }
 
@@ -167,7 +162,9 @@ class Model
             array((int) $mapId, (string) $name)
         );
 
-        if ($serializedData != null) return unserialize($serializedData);
+        if ($serializedData != null) {
+            return unserialize($serializedData);
+        }
         return false;
     }
 
@@ -186,7 +183,9 @@ class Model
             array((int) $mapId)
         );
 
-        foreach ($mapSettings as $key => $value) $mapSettings[$key] = unserialize($value);
+        foreach ($mapSettings as $key => $value) {
+            $mapSettings[$key] = unserialize($value);
+        }
 
         return $mapSettings;
     }
@@ -194,36 +193,35 @@ class Model
     /**
      * Insert an item
      *
-     * @param array $item The data of the record to insert.
+     * @param Location $location
      * @return int
      */
-    public static function insert($item)
+    public static function insert(Location $location)
     {
-        $db = BackendModel::getContainer()->get('database');
-
         // insert extra
-        $item['extra_id'] = BackendModel::insertExtra(
+        $location->setExtraId(BackendModel::insertExtra(
             'widget',
             'Location'
-        );
+        ));
 
         // insert new location
-        $item['created_on'] = $item['edited_on'] = BackendModel::getUTCDate();
-        $item['id'] = $db->insert('location', $item);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($location);
+        $em->flush();
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $location->getExtraId(),
             'data',
             array(
-                'id' => $item['id'],
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $item['title'],
-                'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                'id' => $location->getId(),
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $location->getTitle(),
+                'language' => $location->getLanguage(),
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $location->getId()
             )
         );
 
-        return $item['id'];
+        return $location->getId();
     }
 
     /**
@@ -248,35 +246,35 @@ class Model
     /**
      * Update an item
      *
-     * @param array $item The data of the record to update.
+     * @param Location $location
      * @return int
      */
-    public static function update($item)
+    public static function update(Location $location)
     {
         // redefine edited on date
-        $item['edited_on'] = BackendModel::getUTCDate();
+        $location->setEditedOn(new \DateTime());
 
         // we have an extra_id
-        if (isset($item['extra_id'])) {
-            // update extra
+        $extraId = $location->getExtraId();
+        if (isset($extraId)) {
+            // update extra (item id is now known)
             BackendModel::updateExtra(
-                $item['extra_id'],
+                $location->getExtraId(),
                 'data',
                 array(
-                    'id' => $item['id'],
-                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
-                    'language' => $item['language'],
-                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                    'id' => $location->getId(),
+                    'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Location', 'Core')) . ': ' . $location->getTitle(),
+                    'language' => $location->getLanguage(),
+                    'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $location->getId()
                 )
             );
         }
 
-        // update item
-        return BackendModel::get('database')->update(
-            'location',
-            $item,
-            'id = ? AND language = ?',
-            array($item['id'], $item['language'])
-        );
+        // update location
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($location);
+        $em->flush();
+
+        return $location->getId();
     }
 }

@@ -21,6 +21,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Mathias Dewelde <mathias@studiorauw.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -41,28 +42,17 @@ class Edit extends BackendBaseActionEdit
      */
     public function execute()
     {
-        $this->id = $this->getParameter('id', 'int');
+        parent::execute();
 
-        // does the item exists
-        if ($this->id !== null && BackendLocationModel::exists($this->id)) {
-            parent::execute();
+        // add js
+        $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
-            // add js
-            $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
-
-            $this->loadData();
-
-            $this->loadForm();
-            $this->validateForm();
-
-            $this->loadSettingsForm();
-
-            $this->parse();
-            $this->display();
-        }
-
-        // no item found, throw an exception, because somebody is fucking with our URL
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        $this->loadData();
+        $this->loadForm();
+        $this->validateForm();
+        $this->loadSettingsForm();
+        $this->parse();
+        $this->display();
     }
 
     /**
@@ -70,10 +60,13 @@ class Edit extends BackendBaseActionEdit
      */
     private function loadData()
     {
-        $this->record = (array) BackendLocationModel::get($this->id);
+        $this->id = $this->getParameter('id', 'int');
+        $this->record = BackendLocationModel::get($this->id);
 
         // no item found, throw an exceptions, because somebody is fucking with our URL
-        if (empty($this->record)) $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        if ($this->id == null || empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
 
         $this->settings = BackendLocationModel::getMapSettings($this->id);
 
@@ -85,14 +78,14 @@ class Edit extends BackendBaseActionEdit
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
-            $this->settings['center']['lat'] = $this->record['lat'];
-            $this->settings['center']['lng'] = $this->record['lng'];
+            $this->settings['center']['lat'] = $this->record->getLat();
+            $this->settings['center']['lng'] = $this->record->getLng();
         }
 
         // no center point given yet, use the first occurrence
         if (!isset($this->settings['center'])) {
-            $this->settings['center']['lat'] = $this->record['lat'];
-            $this->settings['center']['lng'] = $this->record['lng'];
+            $this->settings['center']['lat'] = $this->record->getLat();
+            $this->settings['center']['lng'] = $this->record->getLng();
         }
 
         $this->settings['full_url'] = (isset($this->settings['full_url'])) ? ($this->settings['full_url']) : false;
@@ -105,12 +98,12 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-        $this->frm->addText('street', $this->record['street']);
-        $this->frm->addText('number', $this->record['number']);
-        $this->frm->addText('zip', $this->record['zip']);
-        $this->frm->addText('city', $this->record['city']);
-        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
+        $this->frm->addText('title', $this->record->getTitle(), null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('street', $this->record->getStreet());
+        $this->frm->addText('number', $this->record->getNumber());
+        $this->frm->addText('zip', $this->record->getZip());
+        $this->frm->addText('city', $this->record->getCity());
+        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record->getCountry());
         $this->frm->addHidden('redirect', 'overview');
     }
 
@@ -141,7 +134,7 @@ class Edit extends BackendBaseActionEdit
         $this->settingsForm->addDropdown('map_type', $mapTypes, $this->settings['map_type']);
         $this->settingsForm->addCheckbox('full_url', $this->settings['full_url']);
         $this->settingsForm->addCheckbox('directions', $this->settings['directions']);
-        $this->settingsForm->addCheckbox('marker_overview', ($this->record['show_overview'] == 'Y'));
+        $this->settingsForm->addCheckbox('marker_overview', $this->record->getShowOverview());
     }
 
     /**
@@ -152,14 +145,16 @@ class Edit extends BackendBaseActionEdit
         parent::parse();
 
         // assign to template
-        $this->tpl->assign('item', $this->record);
+        $this->tpl->assign('item', $this->record->toArray());
         $this->tpl->assign('settings', $this->settings);
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
 
         $this->settingsForm->parse($this->tpl);
 
         // assign message if address was not be geocoded
-        if ($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+        if ($this->record->getLat() == null || $this->record->getLng() == null) {
+            $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
+        }
     }
 
     /**
@@ -179,53 +174,59 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['language'] = BL::getWorkingLanguage();
-                $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
-                $item['country'] = $this->frm->getField('country')->getValue();
+                $item = $this->record;
+                $item->setLanguage(BL::getWorkingLanguage());
+                $item->setExtraId($this->record->getExtraId());
+                $item->setTitle($this->frm->getField('title')->getValue());
+                $item->setStreet($this->frm->getField('street')->getValue());
+                $item->setNumber($this->frm->getField('number')->getValue());
+                $item->setZip($this->frm->getField('zip')->getValue());
+                $item->setCity($this->frm->getField('city')->getValue());
+                $item->setCountry($this->frm->getField('country')->getValue());
 
                 // check if it's necessary to geocode again
-                if ($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country']) {
+                if ($this->record->getLat() === null
+                    || $this->record->getLng() === null
+                    || $item->getStreet() != $this->record->getStreet()
+                    || $item->getNumber() != $this->record->getNumber()
+                    || $item->getZip() != $this->record->getZip()
+                    || $item->getCity() != $this->record->getCity()
+                    || $item->getCountry() != $this->record->getCountry()
+                ) {
                     // define coordinates
+                    // @todo make use of the Location object
+                    // @todo replace geocoding to entity
                     $coordinates = BackendLocationModel::getCoordinates(
-                        $item['street'],
-                        $item['number'],
-                        $item['city'],
-                        $item['zip'],
-                        $item['country']
+                        $item->getStreet(),
+                        $item->getNumber(),
+                        $item->getCity(),
+                        $item->getZip(),
+                        $item->getCountry()
                     );
 
                     // define latitude and longitude
-                    $item['lat'] = $coordinates['latitude'];
-                    $item['lng'] = $coordinates['longitude'];
+                    $item->setLat($coordinates['latitude']);
+                    $item->setLng($coordinates['longitude']);
                 }
 
-                // old values are still good
-                else {
-                    $item['lat'] = $this->record['lat'];
-                    $item['lng'] = $this->record['lng'];
-                }
-
-                // insert the item
+                // update the item
+                // @todo create and update the same -> save()
                 BackendLocationModel::update($item);
 
                 // everything is saved, so redirect to the overview
-                if ($item['lat'] && $item['lng']) {
+                if ($item->getLat() && $item->getLng()) {
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
                 }
 
                 // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
-                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
+                    $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item->getTitle()) . '&highlight=row-' . $item->getId());
                 }
                 // redirect to the edit action
-                else $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] . '&report=edited');
+                else {
+                    $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item->getId() . '&report=edited');
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  * This action will delete an item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Mathias Dewelde <mathias@studiorauw.be>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -28,15 +29,15 @@ class Delete extends BackendBaseActionDelete
         // get parameters
         $this->id = $this->getParameter('id', 'int');
 
+        // get the location
+        $this->record = BackendLocationModel::get($this->id);
+
         // does the item exist
-        if ($this->id !== null && BackendLocationModel::exists($this->id)) {
+        if ($this->id !== null || !empty($this->record)) {
             parent::execute();
 
-            // get all data for the item we want to edit
-            $this->record = (array) BackendLocationModel::get($this->id);
-
             // delete item
-            BackendLocationModel::delete($this->id);
+            BackendLocationModel::delete($this->record);
 
             // trigger event
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
@@ -44,11 +45,13 @@ class Delete extends BackendBaseActionDelete
             // user was deleted, so redirect
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['title'])
+                urlencode($this->record->getTitle())
             );
         }
 
         // something went wrong
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        else {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
     }
 }

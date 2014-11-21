@@ -14,11 +14,13 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Entity\Location;
 
 /**
  * This is the add-action, it will display a form to create a new item
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Mathias Dewelde <mathias@studiorauw.eu>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -64,41 +66,43 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
-                // build item
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['street'] = $this->frm->getField('street')->getValue();
-                $item['number'] = $this->frm->getField('number')->getValue();
-                $item['zip'] = $this->frm->getField('zip')->getValue();
-                $item['city'] = $this->frm->getField('city')->getValue();
-                $item['country'] = $this->frm->getField('country')->getValue();
+                $location = new Location();
+                $location
+                    ->setLanguage(BL::getWorkingLanguage())
+                    ->setTitle($this->frm->getField('title')->getValue())
+                    ->setStreet($this->frm->getField('street')->getValue())
+                    ->setNumber($this->frm->getField('number')->getValue())
+                    ->setZip($this->frm->getField('zip')->getValue())
+                    ->setCity($this->frm->getField('city')->getValue())
+                    ->setCountry($this->frm->getField('country')->getValue())
+                ;
 
                 // define coordinates
                 $coordinates = BackendLocationModel::getCoordinates(
-                    $item['street'],
-                    $item['number'],
-                    $item['city'],
-                    $item['zip'],
-                    $item['country']
+                    $location->getStreet(),
+                    $location->getNumber(),
+                    $location->getCity(),
+                    $location->getZip(),
+                    $location->getCountry()
                 );
 
                 // define latitude and longitude
-                $item['lat'] = $coordinates['latitude'];
-                $item['lng'] = $coordinates['longitude'];
+                $location->setLat($coordinates['latitude']);
+                $location->setLng($coordinates['longitude']);
 
                 // insert the item
-                $item['id'] = BackendLocationModel::insert($item);
+                BackendLocationModel::insert($location);
 
                 // everything is saved, so redirect to the overview
-                if ($item['lat'] && $item['lng']) {
+                if ($location->getLat() && $location->getLng()) {
                     // trigger event
-                    BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
+                    BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $location));
                 }
 
                 // redirect
                 $this->redirect(
-                    BackendModel::createURLForAction('Edit') . '&id=' . $item['id'] .
-                    '&report=added&var=' . urlencode($item['title'])
+                    BackendModel::createURLForAction('Edit') . '&id=' . $location->getId() .
+                    '&report=added&var=' . urlencode($location->getTitle())
                 );
             }
         }

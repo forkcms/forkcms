@@ -16,12 +16,14 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Entity\Location;
 
 /**
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Mathias Dewelde <mathias@studiorauw.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -66,20 +68,24 @@ class Index extends BackendBaseActionIndex
         $firstMarker = current($this->items);
 
         // if there are no markers we reset it to the birthplace of Fork
-        if ($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
+        if ($firstMarker === false) {
+            $firstMarker = new Location();
+            $firstMarker->setLat('51.052146');
+            $firstMarker->setLng('3.720491');
+        }
 
         // load the settings from the general settings
         if (empty($this->settings)) {
             $this->settings = BackendModel::getModuleSettings('Location');
 
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
+            $this->settings['center']['lat'] = $firstMarker->getLat();
+            $this->settings['center']['lng'] = $firstMarker->getLng();
         }
 
         // no center point given yet, use the first occurrence
         if (!isset($this->settings['center'])) {
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
+            $this->settings['center']['lat'] = $firstMarker->getLat();
+            $this->settings['center']['lng'] = $firstMarker->getLng();
         }
     }
 
@@ -143,6 +149,11 @@ class Index extends BackendBaseActionIndex
 
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
+
+        // object to array (temporary till twig is supported)
+        foreach ($this->items as $key => $value) {
+            $this->items[$key] = $value->toArray();
+        }
 
         // assign to template
         $this->tpl->assign('items', $this->items);

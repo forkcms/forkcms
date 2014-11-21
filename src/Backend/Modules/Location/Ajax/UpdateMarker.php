@@ -17,6 +17,7 @@ use Backend\Modules\Location\Engine\Model as BackendLocationModel;
  * This is an ajax handler
  *
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Mathias Dewelde <mathias@studiorauw.be>
  */
 class UpdateMarker extends BackendBaseAJAXAction
 {
@@ -32,20 +33,16 @@ class UpdateMarker extends BackendBaseAJAXAction
         $lat = \SpoonFilter::getPostValue('lat', null, null, 'float');
         $lng = \SpoonFilter::getPostValue('lng', null, null, 'float');
 
-        // validate id
-        if ($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        $item = BackendLocationModel::get($itemId);
 
-        // validated
-        else {
+        // does the item exists
+        if ($itemId === null || empty($item)) {
+            $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        } else {
             //update
-            $updateData = array(
-                'id' => $itemId,
-                'lat' => $lat,
-                'lng' => $lng,
-                'language' => BL::getWorkingLanguage()
-            );
-
-            BackendLocationModel::update($updateData);
+            $item->setLat($lat);
+            $item->setLng($lng);
+            BackendLocationModel::update($item);
 
             // output
             $this->output(self::OK);
