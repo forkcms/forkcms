@@ -40,7 +40,7 @@ doctrine:
                 type: annotation
                 dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/Entity
                 prefix: Backend\Modules\ContentBlocks\Entity
-        Location:
+            Location:
                 type: annotation
                 dir: %kernel.root_dir%/../src/Backend/Modules/Location/Entity
                 prefix: Backend\Modules\Location\Entity
