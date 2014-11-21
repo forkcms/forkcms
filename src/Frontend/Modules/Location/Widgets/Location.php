@@ -19,13 +19,14 @@ use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Location extends FrontendBaseWidget
 {
     /**
-     * @var array
+     * @var Location
      */
-    protected $items = array();
+    protected $item = array();
 
     /**
      * @var array
@@ -37,8 +38,6 @@ class Location extends FrontendBaseWidget
      */
     public function execute()
     {
-        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
-
         parent::execute();
 
         $this->loadTemplate();
@@ -53,7 +52,8 @@ class Location extends FrontendBaseWidget
     protected function loadData()
     {
         $this->item = FrontendLocationModel::get($this->data['id']);
-        $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
+        $this->settings = $this->item->getSettings();
+
         if (empty($this->settings)) {
             $settings = FrontendModel::getModuleSettings('Location');
 
@@ -61,14 +61,14 @@ class Location extends FrontendBaseWidget
             $this->settings['height'] = $settings['height_widget'];
             $this->settings['map_type'] = $settings['map_type_widget'];
             $this->settings['zoom_level'] = $settings['zoom_level_widget'];
-            $this->settings['center']['lat'] = $this->item['lat'];
-            $this->settings['center']['lng'] = $this->item['lng'];
+            $this->settings['center']['lat'] = $this->item->getLat();
+            $this->settings['center']['lng'] = $this->item->getLng();
         }
 
         // no center point given yet, use the first occurrence
         if (!isset($this->settings['center'])) {
-            $this->settings['center']['lat'] = $this->item['lat'];
-            $this->settings['center']['lng'] = $this->item['lng'];
+            $this->settings['center']['lat'] = $this->item->getLat();
+            $this->settings['center']['lng'] = $this->item->getLng();
         }
 
         $this->settings['maps_url'] = FrontendLocationModel::buildUrl($this->settings, array($this->item));
@@ -79,9 +79,10 @@ class Location extends FrontendBaseWidget
      */
     private function parse()
     {
+        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
-        $this->addJSData('settings_' . $this->item['id'], $this->settings);
-        $this->addJSData('items_' . $this->item['id'], array($this->item));
+        $this->addJSData('settings_' . $this->item->getId(), $this->settings);
+        $this->addJSData('items_' . $this->item->getId(), array($this->item));
 
         $this->tpl->assign('widgetLocationItem', $this->item);
         $this->tpl->assign('widgetLocationSettings', $this->settings);
