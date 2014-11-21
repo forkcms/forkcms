@@ -20,6 +20,22 @@ assetic:
     filters:
         cssrewrite: ~
 
+# Doctrine Configuration
+doctrine:
+    dbal:
+        # this is a little bit nasty, but we need pdo_ for doctrine and spoonDatabase to work together
+        driver:   "pdo_%database.driver%"
+        host:     "%database.host%"
+        port:     "%database.port%"
+        dbname:   "%database.name%"
+        user:     "%database.user%"
+        password: "%database.password%"
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
