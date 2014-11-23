@@ -19,8 +19,7 @@
     },
 	"require-dev": {
 		"codeception/codeception": "1.8.*",
-		"satooshi/php-coveralls": "dev-master",
-		"squizlabs/php_codesniffer": "1.*"
+		"satooshi/php-coveralls": "dev-master"
 	},
     "support": {
         "irc": "irc://irc.freenode.org/forkcms",
