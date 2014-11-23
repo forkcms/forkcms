@@ -21,7 +21,7 @@ $I->click('Next');
 
 # Step 3
 $I->see('Enter your database details');
-$I->fillField('install_database_dbDatabase','fork_cms');
+$I->fillField('install_database_dbDatabase','fork_cms_test');
 $I->fillField('install_database_dbUsername','root');
 $I->fillField('install_database_dbPassword','pa$$word');
 $I->click('Next');

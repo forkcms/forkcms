@@ -27,10 +27,11 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $dbUsername = 'root';
         $debugEmail = 'developers@forkcms.org';
         $defaultInterfaceLanguage = 'en';
-        $interfaceLanguages = array('en','fr');
+        $interfaceLanguages = array('en', 'fr');
         $email = 'admin@forkcms.org';
+        $password = 'adminpwd';
         $languageType = 'multiple';
-        $modules = array('Tags','Modules','Profiles','Users');
+        $modules = array('Tags', 'Modules', 'Profiles', 'Users');
 
         $installationData = new InstallationData();
         $installationData->setDbDatabase($dbDatabase);
@@ -42,11 +43,11 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $installationData->setDefaultInterfaceLanguage($defaultInterfaceLanguage);
         $installationData->setDifferentDebugEmail(true);
         $installationData->setEmail($email);
+        $installationData->setPassword($password);
         $installationData->setDefaultLanguage($defaultInterfaceLanguage);
         $installationData->setExampleData(true);
         $installationData->setLanguageType($languageType);
         $installationData->setInterfaceLanguages($interfaceLanguages);
-        $installationData->setInterfaceLanguage($defaultInterfaceLanguage);
         $installationData->setLanguages($interfaceLanguages);
         $installationData->setModules($modules);
         $installationData->setSameInterfaceLanguage(true);
@@ -60,6 +61,7 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $this->assertEquals($defaultInterfaceLanguage, $installationData->getDefaultInterfaceLanguage());
         $this->assertEquals(true, $installationData->hasDifferentDebugEmail());
         $this->assertEquals($email, $installationData->getEmail());
+        $this->assertEquals($password, $installationData->getPassword());
         $this->assertEquals($defaultInterfaceLanguage, $installationData->getDefaultLanguage());
         $this->assertEquals(true, $installationData->hasExampleData());
         $this->assertEquals($languageType, $installationData->getLanguageType());
