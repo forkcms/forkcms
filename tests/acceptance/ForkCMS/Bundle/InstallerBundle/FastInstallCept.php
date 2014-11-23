@@ -21,8 +21,8 @@ $I->click('Next');
 
 # Step 3
 $I->see('Enter your database details');
-$I->fillField('install_database_dbDatabase','fork_cms_test');
-$I->fillField('install_database_dbUsername','root');
+$I->fillField('install_database_dbDatabase','test_fork_cms');
+$I->fillField('install_database_dbUsername','test_user');
 $I->fillField('install_database_dbPassword','pa$$word');
 $I->click('Next');
 
@@ -32,3 +32,7 @@ $I->fillField('install_login_email','tests@forkcms.org');
 $I->fillField('install_login_password_first','te$ts');
 $I->fillField('install_login_password_second','te$ts');
 $I->click('Finish installation');
+
+# Step 5
+$I->see('Installation complete');
+$I->see('tests@forkcms.org');

@@ -6,7 +6,9 @@ php:
   - 5.5
   - 5.6
   - hhvm
-  
+env:
+  - DB=mysql
+
 matrix:
   allow_failures:
     - php: hhvm
@@ -25,6 +27,12 @@ before_script:
   - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
   - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
   - sudo service apache2 restart
+  # configure MySQL database
+  - "mysql -uroot -e \"DELETE FROM mysql.db WHERE Db = 'test\\_%';\""
+  - "mysql -uroot -e \"DELETE FROM mysql.user WHERE Host = 'localhost' AND User = '';\""
+  - "mysql -uroot -e \"FLUSH PRIVILEGES;\""
+  - "mysql -uroot -e \"CREATE DATABASE IF NOT EXISTS test_fork_cms DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;\""
+  - "mysql -uroot -e \"GRANT ALL PRIVILEGES ON test_fork_cms.* TO 'test_user'@'localhost' IDENTIFIED BY 'pa$$word';\""
   # Custom Fork CMS configuration
   - sudo sed -i "9i\SetEnv FORK_ENV test" .htaccess
   - sudo sed -i "9i\SetEnv FORK_DEBUG 1" .htaccess
