@@ -27,7 +27,7 @@ $I->fillField('install_database_dbPassword','pa$$word');
 $I->click('Next');
 
 # Step 4
-$I->see('Enter the e-mail address ');
+$I->see('Email');
 $I->fillField('install_login_email','tests@forkcms.org');
 $I->fillField('install_login_password_first','te$ts');
 $I->fillField('install_login_password_second','te$ts');

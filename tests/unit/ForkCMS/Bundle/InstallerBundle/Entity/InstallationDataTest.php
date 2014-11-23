@@ -34,6 +34,10 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $modules = array('Tags', 'Modules', 'Profiles', 'Users');
 
         $installationData = new InstallationData();
+
+        // validate all entries
+        $this->assertEquals(false, $installationData->isValid());
+
         $installationData->setDbDatabase($dbDatabase);
         $installationData->setDbPort($dbPort);
         $installationData->setDbHostname($dbHostname);
@@ -70,5 +74,22 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $this->assertEquals($interfaceLanguages, $installationData->getLanguages());
         $this->assertEquals($modules, $installationData->getModules());
         $this->assertEquals(true, $installationData->getSameInterfaceLanguage());
+
+        // validate all entries
+        $this->assertEquals(true, $installationData->isValid());
+    }
+
+    public function testInstallationEditModules()
+    {
+        $fullModules = array('Blog', 'Modules', 'Users');
+        $newModules = array('Blog', 'Modules', 'Users');
+
+        $installationData = new InstallationData();
+        $installationData->addModule('Blog');
+        $installationData->addModule('Modules');
+        $installationData->addModule('Users');
+        $this->assertEquals($fullModules, $installationData->getModules());
+        $installationData->removeModule('Blog');
+        $this->assertEquals($newModules, $installationData->getModules());
     }
 }
