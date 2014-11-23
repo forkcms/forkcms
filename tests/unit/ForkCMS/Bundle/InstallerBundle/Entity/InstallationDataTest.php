@@ -27,7 +27,10 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $dbUsername = 'root';
         $debugEmail = 'developers@forkcms.org';
         $defaultInterfaceLanguage = 'en';
+        $interfaceLanguages = array('en','fr');
         $email = 'admin@forkcms.org';
+        $languageType = 'multiple';
+        $modules = array('Tags','Modules','Profiles','Users');
 
         $installationData = new InstallationData();
         $installationData->setDbDatabase($dbDatabase);
@@ -39,6 +42,14 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $installationData->setDefaultInterfaceLanguage($defaultInterfaceLanguage);
         $installationData->setDifferentDebugEmail(true);
         $installationData->setEmail($email);
+        $installationData->setDefaultLanguage($defaultInterfaceLanguage);
+        $installationData->setExampleData(true);
+        $installationData->setLanguageType($languageType);
+        $installationData->setInterfaceLanguages($interfaceLanguages);
+        $installationData->setInterfaceLanguage($defaultInterfaceLanguage);
+        $installationData->setLanguages($interfaceLanguages);
+        $installationData->setModules($modules);
+        $installationData->setSameInterfaceLanguage(true);
 
         $this->assertEquals($dbDatabase, $installationData->getDbDatabase());
         $this->assertEquals($dbPort, $installationData->getDbPort());
@@ -49,5 +60,13 @@ class InstallationDataTest extends \Codeception\TestCase\Test
         $this->assertEquals($defaultInterfaceLanguage, $installationData->getDefaultInterfaceLanguage());
         $this->assertEquals(true, $installationData->hasDifferentDebugEmail());
         $this->assertEquals($email, $installationData->getEmail());
+        $this->assertEquals($defaultInterfaceLanguage, $installationData->getDefaultLanguage());
+        $this->assertEquals(true, $installationData->hasExampleData());
+        $this->assertEquals($languageType, $installationData->getLanguageType());
+        $this->assertEquals($interfaceLanguages, $installationData->getInterfaceLanguages());
+        $this->assertEquals($defaultInterfaceLanguage, $installationData->getInterfaceLanguage());
+        $this->assertEquals($interfaceLanguages, $installationData->getLanguages());
+        $this->assertEquals($modules, $installationData->getModules());
+        $this->assertEquals(true, $installationData->getSameInterfaceLanguage());
     }
 }
