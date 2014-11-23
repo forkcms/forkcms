@@ -21,6 +21,8 @@ $I->click('Next');
 
 # Step 3
 $I->see('Enter your database details');
+$I->fillField('install_database_dbHostname','localhost');
+$I->fillField('install_database_dbPort','3306');
 $I->fillField('install_database_dbDatabase','test_fork_cms');
 $I->fillField('install_database_dbUsername','root');
 $I->fillField('install_database_dbPassword','$ecure');
