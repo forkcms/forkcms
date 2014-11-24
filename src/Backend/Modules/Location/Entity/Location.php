@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Mathias Dewelde <mathias@studiorauw.be>
  *
  * @ORM\Entity
+ * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="location")
  */
 class Location
@@ -121,11 +122,22 @@ class Location
      */
     private $editedOn;
 
-    public function __construct()
-    {
-        $this->createdOn = new \DateTime();
-        $this->editedOn = new \DateTime();
-    }
+
+	/**
+	 *  @ORM\PrePersist
+	 */
+	public function prePersist()
+	{
+		$this->createdOn = new \Datetime();
+	}
+
+	/**
+	 *  @ORM\PreUpdate
+	 */
+	public function preUpdate()
+	{
+		$this->editedOn = new \Datetime();
+	}
 
     /**
      * Set id

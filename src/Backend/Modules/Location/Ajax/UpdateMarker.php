@@ -42,7 +42,7 @@ class UpdateMarker extends BackendBaseAJAXAction
             //update
             $item->setLat($lat);
             $item->setLng($lng);
-            BackendLocationModel::update($item);
+            BackendLocationModel::persist($item);
 
             // output
             $this->output(self::OK);

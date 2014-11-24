@@ -91,7 +91,7 @@ class Add extends BackendBaseActionAdd
                 $location->setLng($coordinates['longitude']);
 
                 // insert the item
-                BackendLocationModel::insert($location);
+                BackendLocationModel::persist($location);
 
                 // everything is saved, so redirect to the overview
                 if ($location->getLat() && $location->getLng()) {

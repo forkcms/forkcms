@@ -194,8 +194,6 @@ class Edit extends BackendBaseActionEdit
                     || $item->getCountry() != $this->record->getCountry()
                 ) {
                     // define coordinates
-                    // @todo make use of the Location object
-                    // @todo replace geocoding to entity
                     $coordinates = BackendLocationModel::getCoordinates(
                         $item->getStreet(),
                         $item->getNumber(),
@@ -210,8 +208,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // update the item
-                // @todo create and update the same -> save()
-                BackendLocationModel::update($item);
+                BackendLocationModel::persist($item);
 
                 // everything is saved, so redirect to the overview
                 if ($item->getLat() && $item->getLng()) {
@@ -219,12 +216,9 @@ class Edit extends BackendBaseActionEdit
                     BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
                 }
 
-                // redirect to the overview
                 if ($this->frm->getField('redirect')->getValue() == 'overview') {
                     $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($item->getTitle()) . '&highlight=row-' . $item->getId());
-                }
-                // redirect to the edit action
-                else {
+                } else {
                     $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $item->getId() . '&report=edited');
                 }
             }

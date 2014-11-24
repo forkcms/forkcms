@@ -74,7 +74,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         // does the item exists
         if ($itemId !== null && !empty($item)) {
             $item->setShowOverview($showOverview);
-            BackendLocationModel::update($item);
+            BackendLocationModel::persist($item);
         }
 
         $this->output(self::OK, null, BL::msg('Success'));

@@ -19,6 +19,7 @@ use Backend\Modules\Location\Entity\Location;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * @author Mathias Dewelde <mathias@studiorauw.be>
  */
 class Model
 {
@@ -251,9 +252,6 @@ class Model
      */
     public static function update(Location $location)
     {
-        // redefine edited on date
-        $location->setEditedOn(new \DateTime());
-
         // we have an extra_id
         $extraId = $location->getExtraId();
         if (isset($extraId)) {
@@ -277,4 +275,19 @@ class Model
 
         return $location->getId();
     }
+
+	/**
+	 * Persist an item
+	 *
+	 * @param Location $location
+	 * @return int
+	 */
+	public static function persist(Location $location)
+	{
+		if ($location->getId() === null) {
+			self::insert($location);
+		} else {
+			self::update($location);
+		}
+	}
 }
