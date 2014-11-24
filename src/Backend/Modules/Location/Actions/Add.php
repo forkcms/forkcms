@@ -78,13 +78,8 @@ class Add extends BackendBaseActionAdd
                 ;
 
                 // define coordinates
-                $coordinates = BackendLocationModel::getCoordinates(
-                    $location->getStreet(),
-                    $location->getNumber(),
-                    $location->getCity(),
-                    $location->getZip(),
-                    $location->getCountry()
-                );
+                $geocoder = BackendModel::get('geocoder');
+                $coordinates = $geocoder->getCoordinates($location);
 
                 // define latitude and longitude
                 $location->setLat($coordinates['latitude']);

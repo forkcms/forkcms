@@ -123,21 +123,22 @@ class Location
     private $editedOn;
 
 
-	/**
-	 *  @ORM\PrePersist
-	 */
-	public function prePersist()
-	{
-		$this->createdOn = new \Datetime();
-	}
+    /**
+     *  @ORM\PrePersist
+     */
+    public function prePersist()
+    {
+        $this->createdOn = new \Datetime();
+        $this->editedOn = new \Datetime();
+    }
 
-	/**
-	 *  @ORM\PreUpdate
-	 */
-	public function preUpdate()
-	{
-		$this->editedOn = new \Datetime();
-	}
+    /**
+     *  @ORM\PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->editedOn = new \Datetime();
+    }
 
     /**
      * Set id

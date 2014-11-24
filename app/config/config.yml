@@ -74,3 +74,6 @@ services:
         class: Common\Mailer
         arguments:
             - @database
+
+    geocoder:
+        class: Backend\Modules\Location\Service\Geocoder

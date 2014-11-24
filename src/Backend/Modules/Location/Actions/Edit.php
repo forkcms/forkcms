@@ -173,6 +173,17 @@ class Edit extends BackendBaseActionEdit
             $this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
             if ($this->frm->isCorrect()) {
+
+                // check if it's necessary to geocode again
+                $reGeocode = ($this->record->getLat() === null
+                    || $this->record->getLng() === null
+                    || $this->frm->getField('street')->getValue() != $this->record->getStreet()
+                    || $this->frm->getField('number')->getValue() != $this->record->getNumber()
+                    || $this->frm->getField('zip')->getValue() != $this->record->getZip()
+                    || $this->frm->getField('city')->getValue() != $this->record->getCity()
+                    || $this->frm->getField('country')->getValue() != $this->record->getCountry()
+                ) ? true : false;
+
                 // build item
                 $item = $this->record;
                 $item->setLanguage(BL::getWorkingLanguage());
@@ -184,23 +195,11 @@ class Edit extends BackendBaseActionEdit
                 $item->setCity($this->frm->getField('city')->getValue());
                 $item->setCountry($this->frm->getField('country')->getValue());
 
-                // check if it's necessary to geocode again
-                if ($this->record->getLat() === null
-                    || $this->record->getLng() === null
-                    || $item->getStreet() != $this->record->getStreet()
-                    || $item->getNumber() != $this->record->getNumber()
-                    || $item->getZip() != $this->record->getZip()
-                    || $item->getCity() != $this->record->getCity()
-                    || $item->getCountry() != $this->record->getCountry()
-                ) {
+                // should we geocode again
+                if ($reGeocode) {
                     // define coordinates
-                    $coordinates = BackendLocationModel::getCoordinates(
-                        $item->getStreet(),
-                        $item->getNumber(),
-                        $item->getCity(),
-                        $item->getZip(),
-                        $item->getCountry()
-                    );
+                    $geocoder = BackendModel::get('geocoder');
+                    $coordinates = $geocoder->getCoordinates($item);
 
                     // define latitude and longitude
                     $item->setLat($coordinates['latitude']);
