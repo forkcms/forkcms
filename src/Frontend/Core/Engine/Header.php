@@ -194,7 +194,11 @@ class Header extends FrontendBaseObject
             $file = $this->minifyJS($file);
         }
 
-        $jsFile = array('file' => $file, 'add_timestamp' => $addTimestamp, 'priority_group' => $priorityGroup);
+        $jsFile = array(
+            'file' => $file,
+            'add_timestamp' => $addTimestamp,
+            'priority_group' => $priorityGroup
+        );
 
         // already in array?
         if (!in_array($jsFile, $this->jsFiles)) {
