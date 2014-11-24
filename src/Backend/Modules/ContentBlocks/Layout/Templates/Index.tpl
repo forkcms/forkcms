@@ -22,7 +22,7 @@
 				<td>
 					<div class="options">
 						<p>
-							<label for="email">{$lblTitle|ucfirst}</label>
+							<label for="title">{$lblTitle|ucfirst}</label>
 							{$txtTitle} {$txtTitleError}
 						</p>
 					</div>
