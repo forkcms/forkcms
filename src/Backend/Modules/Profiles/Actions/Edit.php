@@ -335,7 +335,6 @@ class Edit extends BackendBaseActionEdit
                             $notifyValues['display_name'] = $this->profile['display_name'];
                         }
 
-                        BackendProfilesModel::notifyUpdatedProfile($notifyValues);
                 $redirectUrl = BackendModel::createURLForAction('Index') .
                     '&var=' . urlencode($values['email']) .
                     '&highlight=row-' . $this->id .
@@ -344,6 +343,7 @@ class Edit extends BackendBaseActionEdit
 
                     }
 
+                    BackendProfilesModel::notifyProfile($notifyValues, true);
                     $redirectUrl .= 'saved-and-notified';
                 } else {
                     $redirectUrl .= 'saved';

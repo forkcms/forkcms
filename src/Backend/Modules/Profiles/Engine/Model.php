@@ -738,50 +738,18 @@ class Model
     }
 
 	/**
-	 * Notify profile - after adding profile to profiles module
-	 *
-	 * @param array $values
-	 */
-	public static function notifyNewProfile($values)
-	{
-		// set variables
-		$variables['message'] = vsprintf(
-		    BL::msg('NotificationNewProfileToProfile', 'Profiles'),
-		    array(
-		        $values['email'],
-		        $values['unencrypted_password'],
-		        SITE_URL
-		    )
-		);
-		
-		// define subject
-		$subject = BL::lbl('NotificationNewProfileToProfile', 'Profiles');
-
-		// define template path
-		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
-
-		// send the mail
-		BackendModel::get('mailer')->addEmail(
-		    $subject,
-		    $templatePath,
-		    $variables,
-		    $values['email'],
-		    $values['display_name']
-		);
-	}
-
-	/**
 	 * Notify admin - after adding profile to profiles module
 	 *
 	 * @param array $values
+	 * @param string $templatePath
 	 */
-	public static function notifyNewProfileToAdmin($values)
+	public static function notifyAdmin($values, $templatePath = null)
 	{
 	    // to email
-	    $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
+	    $toEmail = BackendModel::getModuleSetting('profiles', 'profile_notification_email', null);
 
 		// define backend url
-		$backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
+		$backendURL = BackendModel::createURLForAction('edit', 'Profiles') . '&id=' . $values['id'];
 
 		// set variables
 		$variables['message'] = vsprintf(
@@ -801,29 +769,29 @@ class Model
 		    )
 		);
 
-		// define template path
-		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
-
-		// send the mail
-		BackendModel::get('mailer')->addEmail(
+		self::sendMail(
 		    $subject,
 		    $templatePath,
 		    $variables,
-		    $toEmail
+		    $toEmail,
+		    null
 		);
 	}
 
 	/**
 	 * Notify profile - after adding profile to profiles module
 	 *
-	 * @param string $change This can be "new_password" (todo: "new_email", ...)
 	 * @param array $values
+	 * @param bool $forUpdate
+	 * @param string $templatePath
 	 */
-	public static function notifyUpdatedProfile($values)
+	public static function notifyProfile($values, $forUpdate = false, $templatePath = null)
 	{
+	    $notificationSubject = ($forUpdate) ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
+
 		// set variables
 		$variables['message'] = vsprintf(
-		    BL::msg('NotificationUpdatedProfileToProfile', 'Profiles'),
+		    BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
 		    array(
 		        $values['email'],
 		        $values['unencrypted_password'],
@@ -832,13 +800,9 @@ class Model
 		);
 
 		// define subject
-		$subject = BL::lbl('NotificationNewProfileToProfile', 'Profiles');
+		$subject = BL::lbl($notificationSubject, 'Profiles');
 
-		// define template path
-		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
-
-		// send the mail
-		BackendModel::get('mailer')->addEmail(
+		self::sendMail(
 		    $subject,
 		    $templatePath,
 		    $variables,
@@ -846,6 +810,32 @@ class Model
 		    $values['display_name']
 		);
 	}
+
+	/**
+	 * Send mail
+	 *
+	 * @param string $subject
+	 * @param string $templatePath
+	 * @param array $variables
+	 * @param string $toEmail
+	 * @param string $displayName
+	 */
+	protected static function sendMail($subject, $templatePath = null, $variables, $toEmail, $displayName = null)
+	{
+	    if (empty($templatePath)) {
+    		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+    	}
+
+		// send the mail
+		BackendModel::get('mailer')->addEmail(
+		    $subject,
+		    $templatePath,
+		    $variables,
+		    $toEmail,
+		    $displayName
+		);
+	}
+
     /**
      * Insert or update a single profile setting.
      *

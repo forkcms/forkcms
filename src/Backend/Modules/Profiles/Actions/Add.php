@@ -233,7 +233,7 @@ class Add extends BackendBaseActionAdd
 
                 // notify new profile user
                 if ($this->notifyProfile) {
-                    BackendProfilesModel::notifyNewProfile($notifyValues);
+                    BackendProfilesModel::notifyProfile($notifyValues);
 
                     $redirectUrl .= 'saved-and-notified';
                 } else {
@@ -242,7 +242,7 @@ class Add extends BackendBaseActionAdd
 
                 // notify admin
                 if ($this->notifyAdmin) {
-                    BackendProfilesModel::notifyNewProfileToAdmin($notifyValues);
+                    BackendProfilesModel::notifyAdmin($notifyValues);
                 }
 
                 // trigger event
