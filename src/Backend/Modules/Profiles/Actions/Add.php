@@ -226,9 +226,18 @@ class Add extends BackendBaseActionAdd
                     )
                 );
 
+                $redirectUrl = BackendModel::createURLForAction('Edit') .
+                    '&id=' . $this->id .
+                    '&report='
+                ;
+
                 // notify new profile user
                 if ($this->notifyProfile) {
                     BackendProfilesModel::notifyNewProfile($notifyValues);
+
+                    $redirectUrl .= 'saved-and-notified';
+                } else {
+                    $redirectUrl .= 'saved';
                 }
 
                 // notify admin
@@ -240,7 +249,7 @@ class Add extends BackendBaseActionAdd
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $this->id);
+                $this->redirect($redirectUrl);
             }
         }
     }

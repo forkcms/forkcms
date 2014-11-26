@@ -336,18 +336,24 @@ class Edit extends BackendBaseActionEdit
                         }
 
                         BackendProfilesModel::notifyUpdatedProfile($notifyValues);
+                $redirectUrl = BackendModel::createURLForAction('Index') .
+                    '&var=' . urlencode($values['email']) .
+                    '&highlight=row-' . $this->id .
+                    '&report='
+                ;
+
                     }
+
+                    $redirectUrl .= 'saved-and-notified';
+                } else {
+                    $redirectUrl .= 'saved';
                 }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(
-                    BackendModel::createURLForAction('Index') . '&report=saved&var=' . urlencode(
-                        $values['email']
-                    ) . '&highlight=row-' . $this->id
-                );
+                $this->redirect($redirectUrl);
             }
         }
     }
