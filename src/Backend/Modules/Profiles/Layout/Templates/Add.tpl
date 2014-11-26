@@ -8,10 +8,10 @@
 {form:add}
     {option:notifyProfile}
     <div class="generalMessage infoMessage content">
-		<p>{$lblNewProfileWillBeNotified|ucfirst}</p>
-	</div>
+        <p>{$lblNewProfileWillBeNotified|ucfirst}</p>
+    </div>
     {/option:notifyProfile}
-		
+
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblProfile|ucfirst}</h3>
