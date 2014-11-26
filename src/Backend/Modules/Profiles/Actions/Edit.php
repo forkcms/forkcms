@@ -317,33 +317,30 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
-                if ($this->notifyProfile) {
-                    // new password
-                    if ($this->frm->getField('new_password')->isChecked()) {
-                        // notify values
-                        $notifyValues = array_merge(
-                            $values,
-                            array(
-                                'id' => $this->id,
-                                'first_name' => $txtFirstName->getValue(),
-                                'last_name' => $txtLastName->getValue(),
-                                'unencrypted_password' => $password
-                            )
-                        );
-
-                        if (!isset($notifyValues['display_name'])) {
-                            $notifyValues['display_name'] = $this->profile['display_name'];
-                        }
-
                 $redirectUrl = BackendModel::createURLForAction('Index') .
                     '&var=' . urlencode($values['email']) .
                     '&highlight=row-' . $this->id .
                     '&report='
                 ;
 
+                if ($this->notifyProfile && $this->frm->getField('new_password')->isChecked()) {
+                    // notify values
+                    $notifyValues = array_merge(
+                        $values,
+                        array(
+                            'id' => $this->id,
+                            'first_name' => $txtFirstName->getValue(),
+                            'last_name' => $txtLastName->getValue(),
+                            'unencrypted_password' => $password
+                        )
+                    );
+
+                    if (!isset($notifyValues['display_name'])) {
+                        $notifyValues['display_name'] = $this->profile['display_name'];
                     }
 
                     BackendProfilesModel::notifyProfile($notifyValues, true);
+
                     $redirectUrl .= 'saved-and-notified';
                 } else {
                     $redirectUrl .= 'saved';
