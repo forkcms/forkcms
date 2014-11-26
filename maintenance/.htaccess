@@ -1,0 +1,10 @@
+# All url's will be see the maintenance page (index.php)
+# This way they are back to there original page after maintenance is finished.
+<IfModule mod_rewrite.c>
+	# nice urls
+	RewriteEngine On
+	RewriteBase /
+
+	# handle urls
+	RewriteRule . index.php [NC,L]
+</IfModule>
