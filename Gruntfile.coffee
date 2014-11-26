@@ -36,6 +36,9 @@ module.exports = (grunt) ->
           imageDir: '<%= theme_build %>/Layout/images'
           fontsDir: '<%= theme_build %>/Layout/fonts'
           relativeAssets: true
+    autoprefixer:
+      dist:
+        src: '<%= theme_build %>/Layout/Css/**.css'
     sync:
       templates:
         files: [
@@ -146,7 +149,7 @@ module.exports = (grunt) ->
         ]
       sass:
         files: ['<%= theme_src %>/Layout/**/*.scss']
-        tasks: ['compass:dist']
+        tasks: ['compass:dist', 'autoprefixer:dist']
       templates:
         files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
@@ -185,6 +188,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.loadNpmTasks 'grunt-contrib-concat'
   grunt.loadNpmTasks 'grunt-contrib-compass'
+  grunt.loadNpmTasks 'grunt-autoprefixer'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-contrib-copy'
   grunt.loadNpmTasks 'grunt-contrib-imagemin'
@@ -228,4 +232,5 @@ module.exports = (grunt) ->
     'fontgen'
     'clean:fontsCss'
     'compass:dist'
+    'autoprefixer:dist'
   ]
