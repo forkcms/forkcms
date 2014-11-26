@@ -13,11 +13,11 @@
 		</ul>
 
 		<div id="tabGeneral" class="subtleBox">
-            {option:notifyProfile}
-            <div class="generalMessage infoMessage content">
-                <p>{$lblUpdatedProfileWillBeNotified|ucfirst}</p>
-            </div>
-            {/option:notifyProfile}
+			{option:notifyProfile}
+			<div class="generalMessage infoMessage content">
+				<p>{$lblUpdatedProfileWillBeNotified|ucfirst}</p>
+			</div>
+			{/option:notifyProfile}
 
 			<div class="heading">
 				<h3>{$lblProfile|ucfirst}</h3>

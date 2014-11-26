@@ -6,11 +6,11 @@
 </div>
 
 {form:add}
-    {option:notifyProfile}
-    <div class="generalMessage infoMessage content">
-        <p>{$lblNewProfileWillBeNotified|ucfirst}</p>
-    </div>
-    {/option:notifyProfile}
+	{option:notifyProfile}
+	<div class="generalMessage infoMessage content">
+		<p>{$lblNewProfileWillBeNotified|ucfirst}</p>
+	</div>
+	{/option:notifyProfile}
 
 	<div class="box">
 		<div class="heading">
