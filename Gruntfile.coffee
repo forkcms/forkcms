@@ -35,6 +35,7 @@ module.exports = (grunt) ->
           cssDir: '<%= theme_build %>/Layout/Css'
           imageDir: '<%= theme_build %>/Layout/images'
           fontsDir: '<%= theme_build %>/Layout/fonts'
+          relativeAssets: true
     sync:
       templates:
         files: [
@@ -61,6 +62,12 @@ module.exports = (grunt) ->
           cwd: '<%= theme_src %>/layout/fonts/'
           src: '**'
           dest: '<%= theme_build %>/layout/fonts/'
+        ]
+      scripts:
+        files: [
+          cwd: '<%= theme_src %>/js/'
+          src: '**'
+          dest: '<%= theme_build %>/js/'
         ]
     copy:
       templates:
@@ -97,6 +104,18 @@ module.exports = (grunt) ->
           ]
           dest: '<%= theme_build %>/Layout/fonts/'
         ]
+    webfont:
+      icons:
+        src: '<%=theme_src %>/Layout/icon-sources/*.svg'
+        dest: '<%= theme_src %>/Layout/fonts/'
+        destCss: '<%= theme_src %>/Layout/sass/'
+        classPrefix: 'icon-'
+        options:
+          stylesheet: 'scss'
+          htmlDemo: false
+          template: '<%= theme_src %>/layout/sass/_icons-template.scss'
+          templateOptions:          
+            classPrefix: 'icon-'
     clean:
       templates: [
         '<%= theme_build %>/Layout/Templates/'
@@ -109,6 +128,9 @@ module.exports = (grunt) ->
       ]
       fontsCss: [
         '<%= theme_build %>/Layout/fonts/*.css'
+      ]
+      iconFonts: [
+        '<%= theme_build %>/Layout/fonts/icons-*.*'
       ]
       core: [
         '<%= theme_build %>'
@@ -135,11 +157,21 @@ module.exports = (grunt) ->
         tasks: [
           'sync:images'
         ]
+      scripts:
+        files: ['<%= theme_src %>/js/**']
+        tasks: [
+          'sync:scripts'
+        ]
       fonts:
         files: ['<%= theme_src %>/Layout/fonts/**']
         tasks: [
           'fontgen'
           'clean:fontsCss'
+        ]
+      icons:
+        files: ['<%= theme_src %>/Layout/icon-sources/**']
+        tasks: [
+          'iconfont'
         ]
       livereload:
         options:
@@ -159,10 +191,17 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-clean'
   grunt.loadNpmTasks 'grunt-sync'
   grunt.loadNpmTasks 'grunt-fontgen'
+  grunt.loadNpmTasks 'grunt-webfont'
 
   # Default task(s)
   grunt.registerTask 'default', [
     'watch'
+  ]
+
+  grunt.registerTask 'iconfont', [
+    'clean:iconFonts'
+    'webfont'
+    'sync:fonts'
   ]
 
   # Development tasks
