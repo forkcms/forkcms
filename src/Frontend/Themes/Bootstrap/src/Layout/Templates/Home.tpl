@@ -1,9 +1,9 @@
 {* Write your section-titles likes this when you are making a one-pager: <h2><a name="usefulName" href="#" class="nonVisibleAnchor"></a></h2> *}
 
-{include:Core/Layout/Templates/head.tpl}
+{include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	{include:Core/Layout/Templates/notifications.tpl}
+    {include:Core/Layout/Templates/Notifications.tpl}
 
     <nav class="navbar navbar-default navbar-static-top" role="navigation">
         <div class="navbar-header">
@@ -22,27 +22,27 @@
             {iteration:positionTop}
                 {$positionTop.blockContent}
             {/iteration:positionTop}
-            {include:Core/Layout/Templates/languages.tpl}
+            {include:Core/Layout/Templates/Languages.tpl}
         </div>
     </nav>
 
-	{option:positionSlideshow}
-		<div id="myCarousel" class="carousel slide">
-			<div class="carousel-inner">
-				{* Slideshow position *}
-				{iteration:positionSlideshow}
-				  <div class="item{option:positionSlideshow.first} active{/option:positionSlideshow.first}">
-  					{$positionSlideshow.blockContent}
-    			</div>
-				{/iteration:positionSlideshow}
-			</div>
+    {option:positionSlideshow}
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                {* Slideshow position *}
+                {iteration:positionSlideshow}
+                  <div class="item{option:positionSlideshow.first} active{/option:positionSlideshow.first}">
+                    {$positionSlideshow.blockContent}
+                </div>
+                {/iteration:positionSlideshow}
+            </div>
 
-			<a class="left carousel-control" data-no-scroll rel="previous" href="#myCarousel" data-slide="prev"><span class="icon-prev"></span><span class="sr-only"> {$lblPrevious}</span></a>
-			<a class="right carousel-control" data-no-scroll rel="next" href="#myCarousel" data-slide="next"><span class="sr-only">{$lblNext} </span><span class="icon-next"></span></a>
-		</div>
-	{/option:positionSlideshow}
+            <a class="left carousel-control" data-no-scroll rel="previous" href="#myCarousel" data-slide="prev"><span class="icon-prev"></span><span class="sr-only"> {$lblPrevious}</span></a>
+            <a class="right carousel-control" data-no-scroll rel="next" href="#myCarousel" data-slide="next"><span class="sr-only">{$lblNext} </span><span class="icon-next"></span></a>
+        </div>
+    {/option:positionSlideshow}
 
-	<section id="main">
+    <section id="main">
         <div class="container">
             {option:positionFeatures}
                 <div class="row marketing">
@@ -68,7 +68,7 @@
                 {/option:!positionMain.blockIsHTML}
             {/iteration:positionMain}
         </div>
-	</section>
-    {include:Core/Layout/Templates/footer.tpl}
+    </section>
+    {include:Core/Layout/Templates/Footer.tpl}
 </body>
 </html>
