@@ -172,8 +172,16 @@ module.exports = (grunt) ->
     'watch'
   ]
 
+  grunt.registerTask 'iconfont', [
+    'clean:iconfont'
+    'webfont'
+    'copy:fonts'
+    'clean:aftericonfont'
+  ]
+
   # Production task
   grunt.registerTask 'build', [
+    'clean:iconfont'
     'compass:dist'
     'autoprefixer'
     'coffee'
@@ -184,10 +192,8 @@ module.exports = (grunt) ->
     'usemin'
     'copy:svg'
     'imagemin'
+    'iconfont'
     'fontgen'
-    'clean:iconfont'
-    'webfont'
-    'clean:aftericonfont'
     'copy:fonts'
     'clean:fontsCss'
     'clean:dist'
