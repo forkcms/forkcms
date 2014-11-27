@@ -1,7 +1,7 @@
-{include:core/layout/templates/head.tpl}
+{include:Core/Layout/Templates/head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-	{include:core/layout/templates/notifications.tpl}
+	{include:Core/Layout/Templates/notifications.tpl}
 
 	<div class="navbar-wrapper">
 		<div class="navbar navbar-inverse">
@@ -19,7 +19,7 @@
 						{iteration:positionTop}
 							{$positionTop.blockContent}
 						{/iteration:positionTop}
-						{* @todo {include:core/layout/templates/languages.tpl} *}
+						{* @todo {include:Core/Layout/Templates/languages.tpl} *}
 					</div>
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 				{/iteration:positionMain}
 			</div>
 		</div>
-		{include:core/layout/templates/footer.tpl}
+		{include:Core/Layout/Templates/footer.tpl}
 	</div>
 </body>
 </html>
