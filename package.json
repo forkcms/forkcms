@@ -16,7 +16,10 @@
     "grunt-contrib-uglify": "^0.6.0",
     "grunt-contrib-watch": "^0.6.1",
     "grunt-fontgen": "^0.2.2",
+    "grunt-replace": "^0.8.0",
     "grunt-sync": "^0.2.0",
-    "grunt-webfont": "^0.4.8"
+    "grunt-usemin": "^2.6.2",
+    "grunt-webfont": "^0.4.8",
+    "load-grunt-tasks": "^1.0.0"
   }
 }
