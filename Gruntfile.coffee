@@ -30,6 +30,10 @@ module.exports = (grunt) ->
               match: /\<script\ src=\"\/src/g
               replacement: '<script src="{$THEME_URL}/src'
             }
+            {
+              match: /\<script\ src=\"\/Core\/Js/g
+              replacement: '<script src="{$THEME_URL}/Core/Js'
+            }
           ]
         files: [
           src: '<%= theme_src %>/layout/templates/head.tpl'
@@ -41,22 +45,22 @@ module.exports = (grunt) ->
       options:
         root: '<%= theme_src %>/../'
         dest: '<%= theme_src %>/../'
-      html: '<%= theme_src %>/layout/templates/head.tpl'
+      html: '<%= theme_src %>/Layout/Templates/Head.tpl'
     usemin:
-      html: '<%= theme_build %>/Layout/Templates/head.tpl'
+      html: '<%= theme_build %>/Layout/Templates/Head.tpl'
       options:
         blockReplacements:
           js: (block) ->
             '<script src="{$THEME_URL}' + block.dest + '"></script>'
     clean:
       fontsCss: [
-        '<%= theme_build %>/Layout/fonts/*.css'
+        '<%= theme_build %>/Layout/Fonts/*.css'
       ]
       iconfont: [
-        '<%= theme_build %>/Layout/fonts/icons-*.*'
+        '<%= theme_build %>/Layout/Fonts/icons-*.*'
       ]
       aftericonfont: [
-        '<%= theme_src %>/Layout/fonts/icons-*.*'
+        '<%= theme_src %>/Layout/Fonts/icons-*.*'
       ]
       dist: [
         '.tmp'
@@ -75,25 +79,25 @@ module.exports = (grunt) ->
       svg:
         files: [
           expand: true
-          cwd: '<%= theme_src %>/Layout/images/'
+          cwd: '<%= theme_src %>/Layout/Images/'
           src: '*.svg'
-          dest: '<%= theme_build %>/Layout/images/'
+          dest: '<%= theme_build %>/Layout/Images/'
         ]
         updateAndDelete: true
       fonts:
         files: [
           expand: true
-          cwd: '<%= theme_src %>/layout/fonts/'
+          cwd: '<%= theme_src %>/Layout/Fonts/'
           src: '**'
-          dest: '<%= theme_build %>/layout/fonts/'
+          dest: '<%= theme_build %>/Layout/Fonts/'
         ]
     imagemin:
       dynamic:
         files: [
           expand: true
-          cwd: '<%= theme_src %>/Layout/images/'
+          cwd: '<%= theme_src %>/Layout/Images/'
           src: ['**/*.{png,jpg,gif,jpeg}']
-          dest: '<%= theme_build %>/Layout/images/'
+          dest: '<%= theme_build %>/Layout/Images/'
         ]
     fontgen:
       all:
@@ -101,21 +105,21 @@ module.exports = (grunt) ->
           stylesheet: false
         files: [
           src: [
-            '<%= theme_src %>/Layout/fonts/*.ttf'
-            '<%= theme_src %>/Layout/fonts/*.otf'
+            '<%= theme_src %>/Layout/Fonts/*.ttf'
+            '<%= theme_src %>/Layout/Fonts/*.otf'
           ]
-          dest: '<%= theme_build %>/Layout/fonts/'
+          dest: '<%= theme_build %>/Layout/Fonts/'
         ]
     webfont:
       icons:
         src: '<%=theme_src %>/Layout/icon-sources/*.svg'
-        dest: '<%= theme_src %>/Layout/fonts/'
-        destCss: '<%= theme_src %>/Layout/sass/'
+        dest: '<%= theme_src %>/Layout/Fonts/'
+        destCss: '<%= theme_src %>/Layout/Sass/'
         classPrefix: 'icon-'
         options:
           stylesheet: 'scss'
           htmlDemo: false
-          template: '<%= theme_src %>/layout/sass/_icons-template.scss'
+          template: '<%= theme_src %>/Layout/Sass/_icons-template.scss'
           templateOptions:          
             classPrefix: 'icon-'
     watch:
@@ -132,16 +136,16 @@ module.exports = (grunt) ->
       templates:
         files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
-          'replace:head'
           'copy:templates'
+          'replace:head'
         ]
       images:
-        files: ['<%= theme_src %>/Layout/images/**']
+        files: ['<%= theme_src %>/Layout/Images/**']
         tasks: [
           'imagemin'
         ]
       fonts:
-        files: ['<%= theme_src %>/Layout/fonts/**']
+        files: ['<%= theme_src %>/Layout/Fonts/**']
         tasks: [
           'fontgen'
           'clean:fontsCss'
