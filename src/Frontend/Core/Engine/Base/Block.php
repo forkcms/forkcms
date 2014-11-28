@@ -187,16 +187,26 @@ class Block extends Object
         $frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
         // build URL to the module
-        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule() . '/Js';
+        $frontendModuleURL = '/src/Frontend/Modules/' . $this->getModule();
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+            $this->header->addJS($frontendModuleURL . '/Js/' . $this->getModule() . '.js', false);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+            $this->header->addJS($frontendModuleURL . '/Js/' . $this->getAction() . '.js', false);
+        }
+
+        // add css file with same name as module (if the file exists)
+        if (is_file($frontendModulePath . '/Layout/Css/' . $this->getModule() . '.css')) {
+            $this->header->addCSS($frontendModuleURL . '/Layout/Css/' . $this->getModule() . '.css', true);
+        }
+
+        // add css file with same name as the action (if the file exists)
+        if (is_file($frontendModulePath . '/Layout/Css/' . $this->getAction() . '.css')) {
+            $this->header->addCSS($frontendModuleURL . '/Layout/Css/' . $this->getAction() . '.css', true);
         }
     }
 
