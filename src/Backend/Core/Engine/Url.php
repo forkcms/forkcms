@@ -53,11 +53,13 @@ class Url extends Base\Object
     public function getDomain()
     {
         // replace
-        return str_replace('www.', '', $this->getHost());
+        return str_replace('www.', '', $this->request->getHttpHost());
     }
 
     /**
      * Get the host
+     *
+     * @deprecated use $request->getHttpHost() instead
      *
      * @return string
      */
