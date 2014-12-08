@@ -31,6 +31,10 @@ doctrine:
         user:     "%database.user%"
         password: "%database.password%"
         charset:  UTF8
+
+        # Remove when we don't have legacy tables anymore
+        mapping_types:
+            enum:       string
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
