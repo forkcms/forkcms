@@ -21,6 +21,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class ContentBlock
 {
+    const STATUS_ACTIVE = 'active';
+    const STATUS_ARCHIVED = 'archived';
+
     /**
      * @var int
      *
@@ -319,6 +322,10 @@ class ContentBlock
      */
     public function setStatus($status)
     {
+        if (!in_array($status, array(self::STATUS_ACTIVE, self::STATUS_ARCHIVED))) {
+            throw new \InvalidArgumentException('Invalid content block status');
+        }
+
         $this->status = $status;
 
         return $this;
