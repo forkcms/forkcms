@@ -38,6 +38,11 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        mappings:
+            ContentBlocks:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/Entity
+                prefix: Backend\Modules\ContentBlocks\Entity
 
 twig:
     debug:            "%kernel.debug%"
