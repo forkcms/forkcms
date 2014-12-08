@@ -20,6 +20,21 @@ assetic:
     filters:
         cssrewrite: ~
 
+# Doctrine Configuration
+doctrine:
+    dbal:
+        # This pdo_ prefix should be cleaned up in the future, when completely moved to doctrine
+        driver:   "pdo_%database.driver%"
+        host:     "%database.host%"
+        port:     "%database.port%"
+        dbname:   "%database.name%"
+        user:     "%database.user%"
+        password: "%database.password%"
+        charset:  UTF8
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
