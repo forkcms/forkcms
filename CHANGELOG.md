@@ -6,6 +6,7 @@ Bugfixes:
 * Core: fix installation with different interface langauge(s)
 * Core: fix for dashboard ajax functions.
 * Core: make sure emails can be send from the backend.
+* Core: make setting cookies work on a domain with a custom port (not port 80)
 
 
 3.8.2 (2014-10-21)
