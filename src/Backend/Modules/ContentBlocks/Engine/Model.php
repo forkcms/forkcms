@@ -28,15 +28,15 @@ use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 class Model
 {
     const QRY_BROWSE =
-        'SELECT i.id, i.title, i.hidden
-         FROM content_blocks AS i
+        'SELECT i.id, i.title, i.isHidden AS hidden
+         FROM ContentBlock AS i
          WHERE i.status = ? AND i.language = ?';
 
     const QRY_BROWSE_REVISIONS =
-        'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
-         FROM content_blocks AS i
+        'SELECT i.id, i.revisionId AS revision_id, i.title, UNIX_TIMESTAMP(i.editedOn) AS edited_on, i.userId AS user_id
+         FROM ContentBlock AS i
          WHERE i.status = ? AND i.id = ? AND i.language = ?
-         ORDER BY i.edited_on DESC';
+         ORDER BY i.editedOn DESC';
 
     /**
      * Copy content blocks
@@ -126,7 +126,18 @@ class Model
 
         // delete the content_block
         $em = BackendModel::get('doctrine.orm.entity_manager');
-        $em->remove($contentBlock);
+        $contentBlocksToDelete = $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findBy(
+                array(
+                    'id' => $contentBlock->getId(),
+                    'language' => $contentBlock->getLanguage(),
+                )
+            )
+        ;
+        foreach ($contentBlocksToDelete as $contentBlockToDelete) {
+            $em->remove($contentBlockToDelete);
+        }
         $em->flush();
     }
 
