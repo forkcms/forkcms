@@ -1,10 +1,9 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
-        "This file is @generated automatically"
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
     ],
-    "hash": "002dc8603b7ab95fa43d4def91005a65",
+    "hash": "faa86b274bbe0798631d141e265bd867",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -617,16 +616,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.6",
+            "version": "1.3.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "8378037ee4b91a34da9fb9afdf01e972b51bf75a"
+                "reference": "e13143b35c6fc54713e4fcc711b030ab7ec2d7e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/8378037ee4b91a34da9fb9afdf01e972b51bf75a",
-                "reference": "8378037ee4b91a34da9fb9afdf01e972b51bf75a",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/e13143b35c6fc54713e4fcc711b030ab7ec2d7e1",
+                "reference": "e13143b35c6fc54713e4fcc711b030ab7ec2d7e1",
                 "shasum": ""
             },
             "require": {
@@ -656,8 +655,8 @@
                 }
             ],
             "description": "CSS & JS minifier",
-            "homepage": "https://github.com/matthiasmullie/minify",
-            "time": "2014-10-20 09:08:51"
+            "homepage": "http://www.minifier.org",
+            "time": "2014-12-07 17:35:07"
         },
         {
             "name": "monolog/monolog",
@@ -1115,12 +1114,12 @@
             "version": "v1.16.2",
             "source": {
                 "type": "git",
-                "url": "https://github.com/fabpot/Twig.git",
+                "url": "https://github.com/twigphp/Twig.git",
                 "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fabpot/Twig/zipball/42f758d9fe2146d1f0470604fc05ee43580873fc",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/42f758d9fe2146d1f0470604fc05ee43580873fc",
                 "reference": "42f758d9fe2146d1f0470604fc05ee43580873fc",
                 "shasum": ""
             },
@@ -1172,7 +1171,6 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": [],
-    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.2"
     },
