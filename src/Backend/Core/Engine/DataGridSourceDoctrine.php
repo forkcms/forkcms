@@ -89,7 +89,7 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 		$qb->setFirstResult($offset);
 		$qb->setMaxResults($limit);
 
-		if ($orderBy !== null) {
+		if ($order !== null) {
 			$qb->orderBy('i.' . $order, $sort);
 		}
 
@@ -144,6 +144,10 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 			}
 
 			$result[$alias] = $fullObject[$name];
+
+			if ($result[$alias] instanceOf \DateTime) {
+				$result[$alias] = $result[$alias]->getTimeStamp();
+			}
 		}
 
 		return $result;

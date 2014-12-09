@@ -14,7 +14,7 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
@@ -108,13 +108,19 @@ class Edit extends BackendBaseActionEdit
      */
     private function loadRevisions()
     {
-        // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
+        $this->dgRevisions = new DataGridDoctrine(
+            'Backend\Modules\ContentBlocks\Entity\ContentBlock',
             array(
-                ContentBlock::STATUS_ARCHIVED,
-                $this->record->getId(),
-                BL::getWorkingLanguage(),
+                'status'   => ContentBlock::STATUS_ARCHIVED,
+                'id'       => $this->record->getId(),
+                'language' => BL::getWorkingLanguage(),
+            ),
+            array(
+                'id',
+                'revisionId' => 'revision_id',
+                'title',
+                'editedOn'   => 'edited_on',
+                'userId'     => 'user_id',
             )
         );
 
