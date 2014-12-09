@@ -127,7 +127,10 @@ class Model extends \BaseModel
      * @param string $language   The language to use, if not provided we will use the working language.
      * @param array  $parameters GET-parameters to use.
      * @param bool   $urlencode  Should the parameters be urlencoded?
+     *
      * @return string
+     *
+     * @throws \Exception If $action, $module or both are not set
      */
     public static function createURLForAction(
         $action = null,
@@ -353,7 +356,7 @@ class Model extends \BaseModel
      */
     public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
     {
-        // list of allowed vowels and vowelsounds
+        // list of allowed vowels and vowel sounds
         $vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
         // list of allowed consonants and consonant sounds
@@ -558,7 +561,7 @@ class Model extends \BaseModel
             $id = (int) $id;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
+        // create an array with an equal amount of question marks as ids provided
         $extraIdPlaceHolders = array_fill(0, count($ids), '?');
 
         // get extras
@@ -708,6 +711,7 @@ class Model extends \BaseModel
      *
      * @param string $module You can get all settings for a module.
      * @return array
+     * @throws Exception If the module settings were not saved in a correct format
      */
     public static function getModuleSettings($module = null)
     {
@@ -730,7 +734,7 @@ class Model extends \BaseModel
                     serialize(false) != $setting['value']
                 ) {
                     throw new Exception(
-                        'The modulesetting (' . $setting['module'] . ': ' .
+                        'The module setting (' . $setting['module'] . ': ' .
                         $setting['name'] . ') wasn\'t saved properly.'
                     );
                 }
@@ -998,6 +1002,7 @@ class Model extends \BaseModel
      * @param \SpoonFormDate $date An instance of \SpoonFormDate.
      * @param \SpoonFormTime $time An instance of \SpoonFormTime.
      * @return int
+     * @throws Exception If provided $date, $time or both are invalid
      */
     public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
     {
@@ -1066,6 +1071,7 @@ class Model extends \BaseModel
      * @param  bool      $hidden         Should this extra be visible in frontend or not?
      * @param  int       $sequence
      * @return int       The new extra id
+     * @throws Exception If extra type is not allowed
      */
     public static function insertExtra($type, $module, $action = null, $label = null, $data = null, $hidden = false, $sequence = null)
     {
@@ -1501,6 +1507,7 @@ class Model extends \BaseModel
      * @param string $eventName   The name of the event.
      * @param string $module      The module that subscribes to the event.
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
+     * @throws Exception          When the callback is invalid
      */
     public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
     {
@@ -1610,6 +1617,7 @@ class Model extends \BaseModel
      * @param int    $id    The id for the extra.
      * @param string $key   The key you want to update.
      * @param string $value The new value.
+     * @throws Exception If key parameter is not allowed
      */
     public static function updateExtra($id, $key, $value)
     {

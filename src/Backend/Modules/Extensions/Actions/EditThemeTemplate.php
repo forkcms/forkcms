@@ -320,7 +320,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                         break;
                     }
 
-                    // doublecheck position names
+                    // double check position names
                     foreach ($row as $cell) {
                         // ignore unavailable space
                         if ($cell != '/') {
