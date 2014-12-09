@@ -131,38 +131,6 @@ class Model
     }
 
     /**
-     * Does the item exist.
-     *
-     * @param int  $id         The id of the record to check for existence.
-     * @param bool $activeOnly Only check in active items?
-     * @return bool
-     */
-    public static function exists($id, $activeOnly = true)
-    {
-        $db = BackendModel::getContainer()->get('database');
-
-        // if the item should also be active, there should be at least one row to return true
-        if ((bool) $activeOnly) {
-            return (bool) $db->getVar(
-                'SELECT 1
-                 FROM content_blocks AS i
-                 WHERE i.id = ? AND i.status = ? AND i.language = ?
-                 LIMIT 1',
-                array((int) $id, 'active', BL::getWorkingLanguage())
-            );
-        }
-
-        // fallback, this doesn't take the active status in account
-        return (bool) $db->getVar(
-            'SELECT 1
-             FROM content_blocks AS i
-             WHERE i.revision_id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
-        );
-    }
-
-    /**
      * Get all data for a given id.
      *
      * @param int $id The id for the record to get.
