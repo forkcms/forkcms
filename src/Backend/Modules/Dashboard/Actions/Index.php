@@ -11,7 +11,6 @@ namespace Backend\Modules\Dashboard\Actions;
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Base\Widget as BackendBaseWidget;

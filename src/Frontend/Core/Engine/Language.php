@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This class will store the language-dependant content for the frontend.

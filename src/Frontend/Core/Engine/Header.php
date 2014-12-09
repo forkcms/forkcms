@@ -11,7 +11,6 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use MatthiasMullie\Minify;
 

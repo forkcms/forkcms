@@ -43,10 +43,10 @@ jsBackend.users =
 		$surname = $('#surname');
 
 		var maxLength = parseInt($nickname.attr('maxlength'));
-		if(maxLength == 0) maxLength = 255;
+		if(maxLength === 0) maxLength = 255;
 
 		return utils.string.trim(utils.string.trim($name.val()) +' '+ utils.string.trim($surname.val())).substring(0, maxLength);
 	}
-}
+};
 
 $(jsBackend.users.init);

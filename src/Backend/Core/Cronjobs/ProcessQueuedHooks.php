@@ -10,7 +10,6 @@ namespace Backend\Core\Cronjobs;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Engine\Base\Cronjob;
 use Backend\Core\Engine\Exception;

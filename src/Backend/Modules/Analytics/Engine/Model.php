@@ -10,7 +10,6 @@ namespace Backend\Modules\Analytics\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Finder\Finder;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
@@ -529,6 +528,23 @@ class Model
         }
 
         return $results;
+    }
+
+    /**
+     * Fetches a landing page from the database
+     *
+     * @param  int   $id The id of the landing page to fetch
+     * @return array
+     */
+    public static function getLandingPage($id)
+    {
+        return (array) BackendModel::get('database')->getRecord(
+            'SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+             FROM analytics_landing_pages
+             WHERE id = ?
+             LIMIT 1',
+            array((int) $id)
+        );
     }
 
     /**

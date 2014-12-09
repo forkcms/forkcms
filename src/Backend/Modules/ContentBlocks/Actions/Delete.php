@@ -11,7 +11,6 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionDelete as BackendBaseActionDelete;
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**

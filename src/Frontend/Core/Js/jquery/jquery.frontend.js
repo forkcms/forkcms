@@ -13,11 +13,11 @@
  * 		2. if the title-attribute is used this value will be used in favor of the OpenGraph-title-tag.
  * 		3. if the data-title-attribute is set this value will be used, OpenGraph and title-attribute will be ignored.
  * 		4. as a fallback the value of the title-tag is used.
- * - The description (used by: Delicious, LinkedIn, Netlog, Twitter)
+ * - The description (used by: Delicious, LinkedIn, Twitter)
  * 		1. if the OpenGraph-description-tag is provided, that value will be used.
  * 		2. if the data-description-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. no description will be used.
- * - The image (used by: Netlog)
+ * - The image
  * 		1. if the OpenGraph-image tag is available the value of this tag will be used.
  * 		2. if the data-image-attribute is set this value will be used, even if the OpenGraph-image-tag is provided.
  * 		3. the default image if there is one provided.
@@ -45,7 +45,7 @@
 		{
 			debug: false,
 			default_image: document.location.protocol + '//' + document.location.host + '/apple-touch-icon.png',
-			sequence: ['facebook', 'twitter', 'netlog', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
+			sequence: ['facebook', 'twitter', 'linkedin', 'digg', 'delicious', 'googleplus', 'pinterest'],
 			isDropdown: true
 		};
 		var settings =
@@ -54,14 +54,13 @@
 			digg: { name: 'digg', show: true, label: 'Digg' },
 			facebook: { name: 'facebook', show: true, width: 90, verb: 'like', colorScheme: 'light', font : 'arial' },
 			linkedin: { name: 'linkedin', show: true, label: 'LinkedIn' },
-			netlog: { name: 'netlog', show: true, label: 'Netlog' },
 			twitter: { name: 'twitter', show: true, label: 'tweet' },
 			googleplus: { name: 'googleplus', show: true, label: 'Google +1' },
 			pinterest: { name: 'pinterest', show: true, label: 'Pin it', countLayout: 'horizontal' } // possible values for countLayout: horizontal/vertical/none
 		};
 
 		// extend options
-		var options = $.extend(defaults, options);
+		options = $.extend(defaults, options);
 		options = $.extend(true, settings, options);
 
 		return this.each(function()
@@ -76,27 +75,28 @@
 			var image = '';
 
 			// get the link
-			if($this.attr('href') != undefined) link = $this.attr('href');
+			if($this.attr('href') !== undefined) link = $this.attr('href');
 			if(link.substr(0, 1) == '#') link = document.location.href;
 			if(link.substr(0, 4) != 'http') link = document.location.protocol + '//' + document.location.host + link;
 
 			// get the title
-			if($('meta[property="og:title"]').attr('content') != undefined) title = $('meta[property="og:title"]').attr('content');
-			if($this.attr('title') != undefined) title = $this.attr('title');
-			if($this.data('title') != undefined) title = $this.data('title');
+			if($('meta[property="og:title"]').attr('content') !== undefined) title = $('meta[property="og:title"]').attr('content');
+			if($this.attr('title') !== undefined) title = $this.attr('title');
+			if($this.data('title') !== undefined) title = $this.data('title');
 
 			// get the description
-			if($('meta[property="og:description"]').attr('content') != undefined) description = $('meta[property="og:description"]').attr('content');
-			if($this.data('description') != undefined) description = $this.data('description');
+			if($('meta[property="og:description"]').attr('content') !== undefined) description = $('meta[property="og:description"]').attr('content');
+			if($this.data('description') !== undefined) description = $this.data('description');
 
 			// get the image
-			if($('meta[property="og:image"]').attr('content') != undefined) image = $('meta[property="og:image"]').attr('content');
-			if($this.data('image') != undefined) image = $this.data('image');
-			if(image == '' && options.default_image != '') image = options.default_image;
+			if($('meta[property="og:image"]').attr('content') !== undefined) image = $('meta[property="og:image"]').attr('content');
+			if($this.data('image') !== undefined) image = $this.data('image');
+			if(image === '' && options.default_image !== '') image = options.default_image;
 
 			// start HTML
-			if(options.isDropdown) var html = '<ul style="display: none;" class="shareMenu">' + "\n";
-			else var html = '<ul class="shareMenu">' + "\n";
+			var html;
+			if(options.isDropdown) html = '<ul style="display: none;" class="shareMenu">' + "\n";
+			else html = '<ul class="shareMenu">' + "\n";
 
 			// loop items
 			for(var i in options.sequence)
@@ -111,8 +111,8 @@
 						case 'delicious':
 							// build url
 							var url = 'http://delicious.com/save?url=' + encodeURIComponent(link);
-							if(title != '') url += '&title=' + title;
-							if(description != '') url += '&notes=' + description;
+							if(title !== '') url += '&title=' + title;
+							if(description !== '') url += '&notes=' + description;
 
 							// add html
 							html += '<li class="shareMenuDelicious">' +
@@ -127,7 +127,7 @@
 						case 'digg':
 							// build url
 							var url = 'http://digg.com/submit?url=' + encodeURIComponent(link);
-							if(title != '') url += '&title=' + title;
+							if(title !== '') url += '&title=' + title;
 
 							// add html
 							html += '<li class="shareMenuDigg">' +
@@ -141,7 +141,7 @@
 						// Facebook?
 						case 'facebook':
 							// check for OG-data.
-							if(options.debug && $('meta[property^="og"]').length == 0) console.log('You should provide OpenGraph data.');
+							if(options.debug && $('meta[property^="og"]').length === 0) console.log('You should provide OpenGraph data.');
 
 							// add html
 							html += '<li class="shareMenuFacebook">';
@@ -174,7 +174,7 @@
 								if(!linkedInLoaded)
 								{
 									// create the script tag
-									var script = document.createElement('script')
+									var script = document.createElement('script');
 									script.src = 'http://platform.linkedin.com/in.js';
 
 									// add into head
@@ -188,24 +188,6 @@
 							// add html
 							html += '<li class="shareMenuLinkedin">' +
 									'	<script type="IN/Share" data-url="' + link + '" data-counter="right"></script>' +
-									'</li>' + "\n";
-						break;
-
-						// Netlog?
-						case 'netlog':
-							// build url
-							var url = 'http://www.netlog.com/go/manage/links/view=save&origin=external&url=' + encodeURIComponent(link);
-							if(title != '') url += '&title=' + title;
-							if(description != '') url += '&description=' + description;
-							if(image != '') url += '&thumb=' + encodeURIComponent(image);
-							url += '&referer=' + encodeURIComponent(document.location);
-
-							// add html
-							html += '<li class="shareMenuNetlog">' +
-									'	<a href="' + url + '" target="_blank">' +
-									'		<span class="icon"></span>' +
-									'		<span class="textWrapper">' + options.netlog.label + '</span>' +
-									'	</a>' +
 									'</li>' + "\n";
 						break;
 
@@ -223,7 +205,7 @@
 								if(!twitterLoaded)
 								{
 									// create the script tag
-									var script = document.createElement('script')
+									var script = document.createElement('script');
 									script.src = 'http://platform.twitter.com/widgets.js';
 
 									// add into head
@@ -237,7 +219,7 @@
 							// build & add html
 							html += '<li class="shareMenuTwitter">' +
 									'	<a href="http://twitter.com/share" class="twitter-share-button" data-url="' + link + '"';
-							if(title != '') html += ' data-text="' + title + '"';
+							if(title !== '') html += ' data-text="' + title + '"';
 							html += ' data-lang="' + jsFrontend.current.language + '">' + options.twitter.label  + '</a>' +
 									'</li>';
 						break;
@@ -256,7 +238,7 @@
 								if(!googlePlusLoaded)
 								{
 									// create the script tag
-									var script = document.createElement('script')
+									var script = document.createElement('script');
 									script.src = 'https://apis.google.com/js/plusone.js';
 
 									// add into head
@@ -275,7 +257,7 @@
 
 						// pinterest
 						case 'pinterest':
-							if(image != '')
+							if(image !== '')
 							{
 								if(!pinterestLoaded)
 								{
@@ -289,7 +271,7 @@
 									if(!pinterestLoaded)
 									{
 										// create the script tag
-										var script = document.createElement('script')
+										var script = document.createElement('script');
 										script.src = '//assets.pinterest.com/js/pinit.js';
 
 										// add into head

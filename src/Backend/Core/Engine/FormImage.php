@@ -10,7 +10,6 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 /**
  * This is our extended version of \SpoonFormFile

@@ -71,3 +71,44 @@ From your .htaccess file
         SetEnvIf Host (\.dev|\.xip\.io) FORK_DEBUG=1
         SetEnvIf Host (\.dev|\.xip\.io) FORK_ENV=dev
     </IfModule>
+
+
+For Nginx
+
+    server {
+            listen 80; ## listen for ipv4; this line is default and implied
+            server_name_in_redirect off;
+            server_name fork-cms.com;
+            root /var/www/fork;
+            index index.php;
+            error_log /var/www/fork/app/logs/error-nginx.log;
+            access_log /var/www/fork/app/logs/access-nginx.log;
+    
+        #site root is redirected to the app boot script
+        location = / {
+            try_files @site @site;
+        }
+    
+        #all other locations try other files first and go to our front controller if none of them exists
+        location / {
+            try_files $uri $uri/ @site;
+        }
+    
+        location ~ ^/(backend|install|api(\/\d.\d)?(\/client)?).*\.php$ {
+            # backend/install/api are existing dirs, but should all pass via the front
+            try_files $uri $uri/ @site;
+        }
+    
+        #return 404 for all php files as we do have a front controller
+        location ~ \.php$ {
+            return 404;
+        }
+    
+        location @site {
+            fastcgi_pass unix:/var/run/php5-fpm.sock;
+            include fastcgi_params;
+            fastcgi_param  FORK_DEBUG 1;
+            fastcgi_param  FORK_ENV dev;
+            fastcgi_param  SCRIPT_FILENAME $document_root/index.php;
+        }
+    }

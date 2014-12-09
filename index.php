@@ -29,12 +29,9 @@ $env = getenv('FORK_ENV') ? : 'prod';
 $debug = getenv('FORK_DEBUG') === '1';
 
 // Fork has not yet been installed
-$installer = dirname(__FILE__) . '/src/Install/Cache';
+$parametersFile = dirname(__FILE__) . '/app/config/parameters.yml';
 $request = Request::createFromGlobals();
-if (file_exists($installer) &&
-    is_dir($installer) &&
-    !file_exists($installer . '/Installed.txt')
-) {
+if (!file_exists($parametersFile)) {
     $env = 'install';
     if (substr($request->getRequestURI(), 0, 8) != '/install') {
         // check .htaccess

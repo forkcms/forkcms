@@ -10,7 +10,6 @@ namespace Backend\Modules\Users\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOException;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;

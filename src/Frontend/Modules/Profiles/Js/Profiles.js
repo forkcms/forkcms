@@ -45,6 +45,6 @@ jsFrontend.profiles = {
 			}
 		});
 	}
-}
+};
 
 $(jsFrontend.profiles.init);

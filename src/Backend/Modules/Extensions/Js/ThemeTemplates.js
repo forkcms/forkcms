@@ -26,6 +26,6 @@ jsBackend.templates =
 			window.location.search = '?theme=' + $(this).val();
 		});
 	}
-}
+};
 
 $(jsBackend.templates.init);

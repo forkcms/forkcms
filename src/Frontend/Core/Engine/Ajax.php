@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 use Frontend\Core\Engine\Base\AjaxAction as FrontendBaseAJAXAction;

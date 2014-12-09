@@ -33,7 +33,7 @@ var jsBackend =
 		else jsBackend.current.action = utils.string.ucfirst(utils.string.camelCase(chunks[4]));
 
 		// set defaults
-		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
+		if(!jsBackend.current.module) jsBackend.current.module = 'Dashboard';
 		if(!jsBackend.current.action) jsBackend.current.action = 'index';
 
 		// init stuff
@@ -98,7 +98,7 @@ var jsBackend =
 		$(document).ajaxStart(function() { $ajaxSpinner.show(); });
 		$(document).ajaxStop(function() { $ajaxSpinner.hide(); });
 	}
-}
+};
 
 /**
  * Handle form messages (action feedback: success, error, ...)
@@ -119,7 +119,7 @@ jsBackend.balloons =
 			var linkedElement = $('*[data-message-id='+ $(this).attr('id') +']');
 
 			// linked item found?
-			if(linkedElement != null)
+			if(linkedElement !== null)
 			{
 				// variables
 				var topValue = linkedElement.offset().top + linkedElement.height() + 10;
@@ -143,7 +143,7 @@ jsBackend.balloons =
 		var id = clickedElement.data('messageId');
 
 		// rel available?
-		if(id != '')
+		if(id !== '')
 		{
 			// hide if already visible
 			if($('#'+ id).is(':visible'))
@@ -183,7 +183,7 @@ jsBackend.balloons =
 		// position
 		element.css('position', 'absolute').css('top', topValue).css('left', leftValue);
 	}
-}
+};
 
 /**
  * CK Editor related objects
@@ -517,7 +517,7 @@ jsBackend.ckeditor =
 		// force the content check
 		jsBackend.ckeditor.checkContent({ editor: evt.editor, forced: true });
 	}
-}
+};
 
 
 /**
@@ -653,7 +653,7 @@ jsBackend.controls =
 					$this.parents('.radiobuttonFieldCombo:first').find('input:not([name='+ $radiobutton.attr('name') +']), select, textarea').addClass('disabled').prop('disabled', true);
 
 					// get fields that should be enabled
-					$fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea')
+					$fields = $('input[name=' + $radiobutton.attr('name') + ']:checked').parents('li').find('input:not([name=' + $radiobutton.attr('name') + ']), select, textarea');
 
 					// enable
 					$fields.removeClass('disabled').prop('disabled', false);
@@ -684,7 +684,7 @@ jsBackend.controls =
 			var url = $this.attr('href');
 			if(typeof url == 'undefined') url = $this.find('a').attr('href');
 
-			if(id != '' && url != '')
+			if(id !== '' && url !== '')
 			{
 				// initialize
 				$('#'+ id).dialog(
@@ -733,7 +733,7 @@ jsBackend.controls =
 			var id = $(this).data('messageId');
 
 			// bind
-			if(id != '')
+			if(id !== '')
 			{
 				// set target
 				$('#'+ id).data('messageId', $(this).attr('href'));
@@ -817,7 +817,7 @@ jsBackend.controls =
 				// show
 				$(id).show('blind', {}, 'fast');
 			}
-		})
+		});
 	},
 
 	// toggle between full width and sidebar-layout
@@ -1067,7 +1067,7 @@ jsBackend.controls =
 		var uniqueChars = [];
 
 		// no chars means no password
-		if(string.length == 0) return 'none';
+		if(string.length === 0) return 'none';
 
 		// less then 4 chars is just a weak password
 		if(string.length <= 4) return 'weak';
@@ -1203,7 +1203,7 @@ jsBackend.controls =
 			document.location.href = url;
 		});
 	}
-}
+};
 
 /**
  * Data related methods
@@ -1238,7 +1238,7 @@ jsBackend.data =
 		// return
 		return eval('jsBackend.data.data.' + key);
 	}
-}
+};
 
 /**
  * Backend effects
@@ -1262,7 +1262,7 @@ jsBackend.effects =
 		var highlightId = utils.url.getGetValue('highlight');
 
 		// id is set
-		if(highlightId != '')
+		if(highlightId !== '')
 		{
 			// init selector of the element we want to highlight
 			var selector = '#'+ highlightId;
@@ -1281,7 +1281,7 @@ jsBackend.effects =
 			}
 		}
 	}
-}
+};
 
 /**
  * Backend forms
@@ -1445,7 +1445,7 @@ jsBackend.forms =
 				$input = $(this);
 
 				// only do something when the input is empty or the value is the same as the placeholder
-				if($input.val() == '' || $input.val() == $input.attr('placeholder'))
+				if($input.val() === '' || $input.val() === $input.attr('placeholder'))
 				{
 					// set placeholder
 					$input.val(input.attr('placeholder'));
@@ -1490,7 +1490,7 @@ jsBackend.forms =
 				var dontSubmit = false;
 
 				// validate id
-				if(formId != '')
+				if(formId !== '')
 				{
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input[type=submit]').each(function()
@@ -1509,8 +1509,8 @@ jsBackend.forms =
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; })
+					$('form#'+ formId + ' .dontSubmit').on('focus', function() { dontSubmit = true; });
+					$('form#'+ formId + ' .dontSubmit').on('blur', function() { dontSubmit = false; });
 
 					// hijack the submit event
 					$('form#'+ formId).submit(function(e) { return !dontSubmit; });
@@ -1591,7 +1591,7 @@ jsBackend.forms =
 			// compare values
 			if($this.data('initial-value') != $this.val())
 			{
-				if(typeof $this.data('initial-value') == 'undefined' && $this.val() == '') {}
+				if(typeof $this.data('initial-value') === 'undefined' && $this.val() === '') {}
 				else
 				{
 					// reset var
@@ -1606,7 +1606,7 @@ jsBackend.forms =
 		// return if needed
 		if(changed) return jsBackend.locale.msg('ValuesAreChanged');
 	}
-}
+};
 
 /**
  * Do custom layout/interaction stuff
@@ -1715,7 +1715,7 @@ jsBackend.layout =
 		// show warning if needed
 		if(showWarning) $('#showBrowserWarning').show();
 	}
-}
+};
 
 /**
  * Locale
@@ -1761,7 +1761,7 @@ jsBackend.locale =
 		var missingTranslation = '{$' + type + key + '}';
 
 		// validate
-		if(data == null || !data.hasOwnProperty(type) || data[type] == null)
+		if(data === null || !data.hasOwnProperty(type) || data[type] === null)
 		{
 			return missingTranslation;
 		}
@@ -1773,9 +1773,9 @@ jsBackend.locale =
 		}
 
 		// if the translation does not exist for the given module, try to fall back to the core
-		if(!data[type].hasOwnProperty(module) || data[type][module] == null || !data[type][module].hasOwnProperty(key) || data[type][module][key] == null)
+		if(!data[type].hasOwnProperty(module) || data[type][module] === null || !data[type][module].hasOwnProperty(key) || data[type][module][key] === null)
 		{
-			if(!data[type].hasOwnProperty('Core') || data[type]['Core'] == null || !data[type]['Core'].hasOwnProperty(key) || data[type]['Core'][key] == null)
+			if(!data[type].hasOwnProperty('Core') || data[type]['Core'] === null || !data[type]['Core'].hasOwnProperty(key) || data[type]['Core'][key] === null)
 			{
 				return missingTranslation;
 			}
@@ -1789,14 +1789,14 @@ jsBackend.locale =
 	// get an error
 	err: function(key, module)
 	{
-		if(module == null) module = jsBackend.current.module
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('err', key, module);
 	},
 
 	// get a label
 	lbl: function(key, module)
 	{
-		if(module == null) module = jsBackend.current.module
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('lbl', key, module);
 	},
 
@@ -1809,10 +1809,10 @@ jsBackend.locale =
 	// get a message
 	msg: function(key, module)
 	{
-		if(module == null) module = jsBackend.current.module
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('msg', key, module);
 	}
-}
+};
 
 /**
  * Handle form messages (action feedback: success, error, ...)
@@ -1863,7 +1863,7 @@ jsBackend.messages =
 		if(type == 'notice') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 		if(type == 'success') setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000);
 	}
-}
+};
 
 /**
  * Apply tabs
@@ -1924,7 +1924,7 @@ jsBackend.tabs =
 			});
 		}
 	}
-}
+};
 
 /**
  * Apply tooltip
@@ -1945,7 +1945,7 @@ jsBackend.tooltip =
 			$help.tooltip({ effect: 'fade', relative: true }).dynamic();
 		}
 	}
-}
+};
 
 /**
  * Handle browsers with impaired CSS selector support
@@ -1964,7 +1964,7 @@ jsBackend.selectors =
 			// nothing yet
 		}
 	}
-}
+};
 
 /**
  * Fix focus/blur events on impaired browsers
@@ -1991,7 +1991,7 @@ jsBackend.focusfix =
 			focusFix('textarea', 'focus');
 		}
 	}
-}
+};
 
 /**
  * Enable setting of sequence by drag & drop
@@ -2085,6 +2085,6 @@ jsBackend.tableSequenceByDragAndDrop =
 			});
 		}
 	}
-}
+};
 
 $(jsBackend.init);

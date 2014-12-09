@@ -1,0 +1,62 @@
+{% block form_errors -%}
+  {% if errors|length > 0 -%}
+    {% if form.parent is empty %}
+      {# Overal form errors #}
+      <div class="formMessage errorMessage">
+        <p>
+          {%- for error in errors -%}
+            {{ error.message }}{% if not loop.last %}<br/>{% endif %}
+          {%- endfor -%}
+        </p>
+      </div>
+    {% else %}
+      {# form errors for one field #}
+      <span class="formError">
+          {%- for error in errors -%}
+            {{ error.message }}{% if not loop.last %}<br/>{% endif %}
+          {%- endfor -%}
+      </span>
+    {% endif %}
+  {%- endif %}
+{%- endblock form_errors %}
+
+{% block choice_widget_expanded -%}
+  <ul class="inputList" {{ block('widget_container_attributes') }}>
+  {%- for child in form %}
+      <li>
+        {{- form_widget(child, { 'attr' : { 'class' : 'inputRadio' } }) -}}
+        {{- form_label(child) -}}
+      </li>
+  {% endfor -%}
+  </ul>
+{% endblock choice_widget_expanded %}
+
+{% block checkbox_widget -%}
+  <input type="checkbox" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} class="inputCheckbox" />
+{%- endblock checkbox_widget %}
+
+{% block form_widget_simple -%}
+  {%- set type = type|default('text') -%}
+  <input type="{{ type }}" class="inputText" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+{%- endblock form_widget_simple %}
+
+{% block form_start -%}
+  {% set method = method|upper %}
+  {%- if method in ["GET", "POST"] -%}
+      {% set form_method = method %}
+  {%- else -%}
+      {% set form_method = "POST" %}
+  {%- endif -%}
+  <form id="{{ form.vars.name }}" name="{{ form.vars.name }}" method="{{ form_method|lower }}" action="{{ action }}"{% for attrname, attrvalue in attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}{% if multipart %} enctype="multipart/form-data"{% endif %} class="forkForms submitWithLink">
+  {%- if form_method != method -%}
+      <input type="hidden" name="_method" value="{{ method }}" />
+  {%- endif -%}
+{%- endblock form_start %}
+
+{% block form_row -%}
+    <p>
+        {{- form_label(form) -}}
+        {{- form_widget(form) -}}
+        {{- form_errors(form) -}}
+    </p>
+{%- endblock form_row %}

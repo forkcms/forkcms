@@ -143,6 +143,6 @@ jsFrontend.location =
 			else $error.show();
 		});
 	}
-}
+};
 
 $(jsFrontend.location.init);

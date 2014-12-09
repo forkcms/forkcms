@@ -17,7 +17,7 @@ use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 /**
  * BackendPagesCopy
  * This is the copy-action, it will copy pages from one language to another
- * @remark :    IMPORTANT existing data will be removed, this feature is also experimental!
+ * Remark :    IMPORTANT existing data will be removed, this feature is also experimental!
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Sam Tubbax <sam@sumocoders.be>

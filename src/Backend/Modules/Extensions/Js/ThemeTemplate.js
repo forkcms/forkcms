@@ -14,7 +14,7 @@ jsBackend.template =
 	init: function()
 	{
 		// add first default position
-		if($('#position1').length == 0) jsBackend.template.addPosition();
+		if($('#position1').length === 0) jsBackend.template.addPosition();
 
 		// first position can't be removed
 		$('#position1').parent().find('.deletePosition').remove();
@@ -140,6 +140,6 @@ jsBackend.template =
 			});
 		});
 	}
-}
+};
 
 $(jsBackend.template.init);
