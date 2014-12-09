@@ -27,7 +27,7 @@ class DatabaseHandler
         return false;
     }
 
-    public function processValidForm(Form $form, $request)
+    public function processValidForm(Form $form, Request $request)
     {
         $request->getSession()->set('installation_data', $form->getData());
 

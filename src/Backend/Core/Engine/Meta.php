@@ -114,6 +114,7 @@ class Meta
      *
      * @param string $URL The base-url to start from.
      * @return string
+     * @throws Exception When the function does not exist
      */
     public function generateURL($URL)
     {
@@ -392,6 +393,7 @@ class Meta
      * Load a specific meta-record
      *
      * @param int $id The id of the record to load.
+     * @throws Exception If no meta-record exists with the provided id
      */
     protected function loadMeta($id)
     {
@@ -420,6 +422,7 @@ class Meta
      * Saves the meta object
      *
      * @param bool $update Should we update the record or insert a new one.
+     * @throws Exception If no meta id was provided.
      * @return int
      */
     public function save($update = false)

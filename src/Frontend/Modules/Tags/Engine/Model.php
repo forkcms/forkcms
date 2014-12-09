@@ -29,6 +29,7 @@ class Model
      * @param string       $method    The method to call.
      * @param mixed $parameter The parameters to pass.
      * @return mixed
+     * @throws FrontendException When FrontendTagsInterface is not correctly implemented to the module model
      */
     public static function callFromInterface($module, $class, $method, $parameter = null)
     {
