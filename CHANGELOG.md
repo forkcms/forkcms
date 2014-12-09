@@ -12,6 +12,7 @@ Bugfixes:
 * Core: fix for dashboard ajax functions.
 * Core: make sure emails can be send from the backend.
 * Core: make setting cookies work on a domain with a custom port (not port 80)
+* Users: when a user becomes "non-active" remove his sessions so he gets logged out.
 
 
 3.8.2 (2014-10-21)
