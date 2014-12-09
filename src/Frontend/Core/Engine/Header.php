@@ -30,22 +30,22 @@ class Header extends FrontendBaseObject
     /**
      * Index of priority group for global files
      */
-    const FILE_PRIORITY_GROUP_GLOBAL = 0;
+    const PRIORITY_GROUP_GLOBAL = 0;
 
     /**
      * Index of priority group for default files
      */
-    const FILE_PRIORITY_GROUP_DEFAULT = 1;
+    const PRIORITY_GROUP_DEFAULT = 1;
 
     /**
      * Index of priority group for module files
      */
-    const FILE_PRIORITY_GROUP_MODULE = 2;
+    const PRIORITY_GROUP_MODULE = 2;
 
     /**
      * Index of priority group for widget files
      */
-    const FILE_PRIORITY_GROUP_WIDGET = 3;
+    const PRIORITY_GROUP_WIDGET = 3;
 
     /**
      * The canonical URL
@@ -121,11 +121,11 @@ class Header extends FrontendBaseObject
         }
 
         // add default javascript-files
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::FILE_PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::FILE_PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::FILE_PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
     }
 
     /**
@@ -173,7 +173,7 @@ class Header extends FrontendBaseObject
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::FILE_PRIORITY_GROUP_DEFAULT)
+    public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::PRIORITY_GROUP_DEFAULT)
     {
         $file = (string) $file;
         $minify = (bool) $minify;
