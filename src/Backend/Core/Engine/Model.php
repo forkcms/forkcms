@@ -53,6 +53,13 @@ class Model extends \BaseModel
     private static $moduleSettings;
 
     /**
+     * Allowed module extras types
+     *
+     * @var    array
+     */
+    private static $allowedExtras = array('homepage', 'block', 'widget');
+
+    /**
      * Add a number to the string
      *
      * @param string $string The string where the number will be appended to.
@@ -1083,9 +1090,9 @@ class Model extends \BaseModel
         $label = ($label == null) ? $module : (string) $label;
 
         // check if type is allowed
-        if (!in_array($type, array('homepage', 'block', 'widget'))) {
+        if (!in_array($type, self::$allowedExtras)) {
             throw new Exception(
-                'Type is not allowed, choose from "' . implode(', ', $allowedExtras) .'".'
+                'Type is not allowed, choose from "' . implode(', ', self::$allowedExtras) .'".'
             );
         }
 
