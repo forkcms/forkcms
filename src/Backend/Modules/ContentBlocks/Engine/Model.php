@@ -33,6 +33,8 @@ class Model
          WHERE i.status = ? AND i.id = ? AND i.language = ?
          ORDER BY i.editedOn DESC';
 
+    const ENTITY_CLASS = 'Backend\Modules\ContentBlocks\Entity\ContentBlock';
+
     /**
      * Copy content blocks
      *
@@ -122,7 +124,7 @@ class Model
         // delete the content_block
         $em = BackendModel::get('doctrine.orm.entity_manager');
         $contentBlocksToDelete = $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findBy(
                 array(
                     'id' => $contentBlock->getId(),
@@ -146,7 +148,7 @@ class Model
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
         return $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
                     'id'       => $id,
@@ -166,7 +168,7 @@ class Model
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
         $maxContentBlock = $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array('language' => BL::getWorkingLanguage()),
                 array('id' => 'DESC')
@@ -187,7 +189,7 @@ class Model
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
         return $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
                     'id'         => $id,
@@ -272,7 +274,6 @@ class Model
      */
     public static function update(ContentBlock $contentBlock)
     {
-        $db = BackendModel::getContainer()->get('database');
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
         // update extra
@@ -289,7 +290,7 @@ class Model
 
         // archive all older content_block versions
         $itemsToArchive = $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findBy(
                 array(
                     'id' => $contentBlock->getId(),
@@ -310,7 +311,7 @@ class Model
 
         // get revision-ids for items to keep
         $revisionsToRemove = $em
-            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->getRepository(self::ENTITY_CLASS)
             ->findBy(
                 array(
                     'id' => $contentBlock->getId(),

@@ -109,7 +109,7 @@ class Edit extends BackendBaseActionEdit
     private function loadRevisions()
     {
         $this->dgRevisions = new DataGridDoctrine(
-            'Backend\Modules\ContentBlocks\Entity\ContentBlock',
+            BackendContentBlocksModel::ENTITY_CLASS,
             array(
                 'status'   => ContentBlock::STATUS_ARCHIVED,
                 'id'       => $this->record->getId(),

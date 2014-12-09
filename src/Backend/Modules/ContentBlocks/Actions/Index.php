@@ -43,7 +43,7 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         $this->dataGrid = new DataGridDoctrine(
-            'Backend\Modules\ContentBlocks\Entity\ContentBlock',
+            BackendContentBlocksModel::ENTITY_CLASS,
             array(
                 'status' => ContentBlock::STATUS_ACTIVE,
                 'language' => BL::getWorkingLanguage(),
