@@ -109,54 +109,58 @@ class Edit extends BackendBaseActionEdit
     private function loadRevisions()
     {
         // create datagrid
-        //$this->dgRevisions = new BackendDataGridDB(
-        //    BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
-        //    array('archived', $this->record['id'], BL::getWorkingLanguage())
-        //);
-//
-        //// hide columns
-        //$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
-//
-        //// disable paging
-        //$this->dgRevisions->setPaging(false);
-//
-        //// set headers
-        //$this->dgRevisions->setHeaderLabels(array(
-        //    'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
-        //    'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
-        //));
-//
-        //// set column-functions
-        //$this->dgRevisions->setColumnFunction(
-        //    array(new BackendDataGridFunctions(), 'getUser'),
-        //    array('[user_id]'),
-        //    'user_id'
-        //);
-        //$this->dgRevisions->setColumnFunction(
-        //    array(new BackendDataGridFunctions(), 'getTimeAgo'),
-        //    array('[edited_on]'),
-        //    'edited_on'
-        //);
-//
-        //// check if this action is allowed
-        //if (BackendAuthentication::isAllowedAction('Edit')) {
-        //    // set column URLs
-        //    $this->dgRevisions->setColumnURL(
-        //        'title',
-        //        BackendModel::createURLForAction('Edit') .
-        //        '&amp;id=[id]&amp;revision=[revision_id]'
-        //    );
-//
-        //    // add use column
-        //    $this->dgRevisions->addColumn(
-        //        'use_revision',
-        //        null,
-        //        BL::lbl('UseThisVersion'),
-        //        BackendModel::createURLForAction('Edit') .
-        //        '&amp;id=[id]&amp;revision=[revision_id]',
-        //        BL::lbl('UseThisVersion')
-        //    );
-        //}
+        $this->dgRevisions = new BackendDataGridDB(
+            BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
+            array(
+                ContentBlock::STATUS_ARCHIVED,
+                $this->record->getId(),
+                BL::getWorkingLanguage(),
+            )
+        );
+
+        // hide columns
+        $this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+
+        // disable paging
+        $this->dgRevisions->setPaging(false);
+
+        // set headers
+        $this->dgRevisions->setHeaderLabels(array(
+            'user_id' => \SpoonFilter::ucfirst(BL::lbl('By')),
+            'edited_on' => \SpoonFilter::ucfirst(BL::lbl('LastEditedOn'))
+        ));
+
+        // set column-functions
+        $this->dgRevisions->setColumnFunction(
+            array(new BackendDataGridFunctions(), 'getUser'),
+            array('[user_id]'),
+            'user_id'
+        );
+        $this->dgRevisions->setColumnFunction(
+            array(new BackendDataGridFunctions(), 'getTimeAgo'),
+            array('[edited_on]'),
+            'edited_on'
+        );
+
+        // check if this action is allowed
+        if (BackendAuthentication::isAllowedAction('Edit')) {
+            // set column URLs
+            $this->dgRevisions->setColumnURL(
+                'title',
+                BackendModel::createURLForAction('Edit') .
+                '&amp;id=[id]&amp;revision=[revision_id]'
+            );
+
+            // add use column
+            $this->dgRevisions->addColumn(
+                'use_revision',
+                null,
+                BL::lbl('UseThisVersion'),
+                BackendModel::createURLForAction('Edit') .
+                '&amp;id=[id]&amp;revision=[revision_id]',
+                BL::lbl('UseThisVersion')
+            );
+        }
     }
 
     /**
@@ -169,7 +173,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('item', $this->record);
 
         // assign revisions-datagrid
-        //$this->tpl->assign('revisions', (string) $this->dgRevisions->getContent());
+        $this->tpl->assign('revisions', (string) $this->dgRevisions->getContent());
     }
 
     /**
