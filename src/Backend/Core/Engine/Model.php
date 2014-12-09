@@ -296,6 +296,31 @@ class Model extends \BaseModel
     }
 
     /**
+     * Deletes a module-setting from the DB and the cached array
+     *
+     * @param string $module The module to set the setting for.
+     * @param string $key    The name of the setting.
+     */
+    public static function deleteModuleSetting($module, $key)
+    {
+        $module = (string) $module;
+        $key = (string) $key;
+
+        // delete
+        self::getContainer()->get('database')->delete(
+            'modules_settings',
+            'module = ? and name = ?',
+            array(
+                $module,
+                $key
+            )
+        );
+
+        // unset from cache
+        unset(self::$moduleSettings[$module][$key]);
+    }
+
+    /**
      * Delete thumbnails based on the folders in the path
      *
      * @param string $path      The path wherein the thumbnail-folders exist.
