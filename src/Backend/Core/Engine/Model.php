@@ -921,7 +921,7 @@ class Model extends \BaseModel
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getURL(404);
+            return self::getURL(404, $language);
         } else {
             $URL .= $keys[$pageId];
         }
