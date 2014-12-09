@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: BackendModel::deleteModuleSetting() added.
+* Pages: add has_children variable to page array
 
 Bugfixes:
 
