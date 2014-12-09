@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity
  * @ORM\HasLifecycleCallbacks
- * @ORM\Table(name="location")
+ * @ORM\Table()
  */
 class Location
 {
@@ -41,7 +41,7 @@ class Location
     /**
      * @var int
      *
-     * @ORM\Column(type="integer", name="extra_id")
+     * @ORM\Column(type="integer")
      */
     private $extraId;
 
@@ -104,21 +104,21 @@ class Location
     /**
      * @var boolean
      *
-     * @ORM\Column(type="boolean", name="show_overview")
+     * @ORM\Column(type="boolean")
      */
     private $showOverview = true;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="created_on")
+     * @ORM\Column(type="datetime")
      */
     private $createdOn;
 
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="edited_on")
+     * @ORM\Column(type="datetime")
      */
     private $editedOn;
 

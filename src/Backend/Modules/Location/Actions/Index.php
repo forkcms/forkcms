@@ -94,6 +94,7 @@ class Index extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
+        // @todo should be replace by a Doctrine Adapter/Source
         $this->dataGrid = new BackendDataGridDB(
             BackendLocationModel::QRY_DATAGRID_BROWSE,
             array(BL::getWorkingLanguage())

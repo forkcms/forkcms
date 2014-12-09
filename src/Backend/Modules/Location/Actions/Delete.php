@@ -33,7 +33,7 @@ class Delete extends BackendBaseActionDelete
         $this->record = BackendLocationModel::get($this->id);
 
         // does the item exist
-        if ($this->id !== null || !empty($this->record)) {
+        if ($this->id !== null && !empty($this->record)) {
             parent::execute();
 
             // delete item
