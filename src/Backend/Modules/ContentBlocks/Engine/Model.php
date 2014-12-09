@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
@@ -248,39 +249,39 @@ class Model
     /**
      * Add a new item.
      *
-     * @param array $item The data to insert.
+     * @param  ContentBlock $item The data to insert.
      * @return int
      */
-    public static function insert(array $item)
+    public static function insert(ContentBlock $contentBlock)
     {
         // insert extra
-        $item['extra_id'] = BackendModel::insertExtra(
+        $contentBlock->setExtraId(BackendModel::insertExtra(
             'widget',
             'ContentBlocks',
             'Detail'
-        );
+        ));
 
-        $item['revision_id'] = BackendModel::get('database')
-            ->insert('content_blocks', $item)
-        ;
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($contentBlock);
+        $em->flush();
 
         // update data for the extra
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $contentBlock->getExtraId(),
             'data',
             array(
-                'id' => $item['id'],
-                'extra_label' => $item['title'],
-                'language' => $item['language'],
+                'id' => $contentBlock->getId(),
+                'extra_label' => $contentBlock->getTitle(),
+                'language' => $contentBlock->getLanguage(),
                 'edit_url' => BackendModel::createURLForAction(
                     'Edit',
                     'ContentBlocks',
-                    $item['language']
-                ) . '&id=' . $item['id']
+                    $contentBlock->getLanguage()
+                ) . '&id=' . $contentBlock->getId()
             )
         );
 
-        return $item['revision_id'];
+        return $contentBlock->getRevisionId();
     }
 
     /**
