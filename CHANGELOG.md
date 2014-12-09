@@ -5,6 +5,8 @@ Improvements:
 * Core: BackendModel::deleteModuleSetting() added.
 * Pages: add has_children variable to page array
 * Location: when routing from A to B, <a href="URL"> has to change also, fixes #741.
+* Core: Integrated addRssLink() function, fixes #841.
+* Blog: making use of the new $this->header->addRssLink() function, fixes #841.
 
 Bugfixes:
 

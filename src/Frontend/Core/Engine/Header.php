@@ -377,6 +377,25 @@ class Header extends FrontendBaseObject
     }
 
     /**
+     * Add Rss link
+     *
+     * @param string $title
+     * @param string $link
+     */
+    public function addRssLink($title, $link)
+    {
+        $this->addLink(
+            array(
+                 'rel' => 'alternate',
+                 'type' => 'application/rss+xml',
+                 'title' => $title,
+                 'href' => $link
+            ),
+            true
+        );
+    }
+
+    /**
      * Sort function for CSS-files
      *
      * @param array $cssFiles The css files to sort.
