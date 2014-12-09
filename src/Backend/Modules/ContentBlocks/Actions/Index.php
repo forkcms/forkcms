@@ -11,10 +11,11 @@ namespace Backend\Modules\ContentBlocks\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * This is the index-action (default), it will display the overview
@@ -41,9 +42,13 @@ class Index extends BackendBaseActionIndex
      */
     private function loadDataGrid()
     {
-        $this->dataGrid = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE,
-            array('active', BL::getWorkingLanguage())
+        $this->dataGrid = new DataGridDoctrine(
+            'Backend\Modules\ContentBlocks\Entity\ContentBlock',
+            array(
+                'status' => ContentBlock::STATUS_ACTIVE,
+                'language' => BL::getWorkingLanguage(),
+            ),
+            array('id', 'title', 'isHidden' => 'hidden')
         );
         $this->dataGrid->setSortingColumns(array('title'));
 
