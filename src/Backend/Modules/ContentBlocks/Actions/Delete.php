@@ -30,13 +30,14 @@ class Delete extends BackendBaseActionDelete
         // get parameters
         $this->id = $this->getParameter('id', 'int');
 
+        $this->record = BackendContentBlocksModel::get($this->id);
+
         // does the item exist
-        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
+        if ($this->id !== null && !empty($this->record)) {
             parent::execute();
-            $this->record = (array) BackendContentBlocksModel::get($this->id);
 
             // delete item
-            BackendContentBlocksModel::delete($this->id);
+            BackendContentBlocksModel::delete($this->record);
 
             // trigger event
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
@@ -44,7 +45,7 @@ class Delete extends BackendBaseActionDelete
             // item was deleted, so redirect
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['title'])
+                urlencode($this->record->getTitle())
             );
         } else {
             // no item found, redirect to the overview with an error

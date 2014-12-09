@@ -117,25 +117,17 @@ class Model
     /**
      * Delete an item.
      *
-     * @param int $id The id of the record to delete.
+     * @param ContentBlock $contentBlock The record to delete.
      */
-    public static function delete($id)
+    public static function delete(ContentBlock $contentBlock)
     {
-        // recast id
-        $id = (int) $id;
-
-        // get item
-        $item = self::get($id);
-
         // delete extra and pages_blocks
-        BackendModel::deleteExtraById($item['extra_id']);
+        BackendModel::deleteExtraById($contentBlock->getExtraId());
 
         // delete the content_block
-        BackendModel::getContainer()->get('database')->delete(
-            'content_blocks',
-            'id = ? AND language = ?',
-            array($id, BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->remove($contentBlock);
+        $em->flush();
     }
 
     /**
