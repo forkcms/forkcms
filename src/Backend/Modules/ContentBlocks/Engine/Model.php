@@ -169,10 +169,16 @@ class Model
      */
     public static function getMaximumId()
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.id) FROM content_blocks AS i WHERE i.language = ? LIMIT 1',
-            array(BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $maxContentBlock = $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findOneBy(
+                array('language' => BL::getWorkingLanguage()),
+                array('id' => 'DESC')
+            )
+        ;
+
+        return empty($maxContentBlock) ? 0 : $maxContentBlock->getId();
     }
 
     /**
