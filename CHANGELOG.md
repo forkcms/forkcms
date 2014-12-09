@@ -1,8 +1,17 @@
 3.8.3 (xxxx-xx-xx)
 --
+Improvements:
+
+* Core: BackendModel::deleteModuleSetting() added.
+* Pages: add has_children variable to page array
+
 Bugfixes:
 
 * Tags: fix wrong variable name.
+* Core: fix installation with different interface langauge(s)
+* Core: fix for dashboard ajax functions.
+* Core: make sure emails can be send from the backend.
+* Core: make setting cookies work on a domain with a custom port (not port 80)
 
 
 3.8.2 (2014-10-21)

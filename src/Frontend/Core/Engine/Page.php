@@ -449,6 +449,8 @@ class Page extends FrontendBaseObject
         new Navigation($this->getKernel());
 
         // assign content
+        $pageInfo = Navigation::getPageInfo($this->record['id']);
+        $this->record['has_children'] = $pageInfo['has_children'];
         $this->tpl->assign('page', $this->record);
 
         // set template path

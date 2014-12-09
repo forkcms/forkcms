@@ -29,6 +29,7 @@ use Frontend\Core\Engine\Language as FL;
  * @author Lowie Benoot <lowie.benoot@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Wouter Sioen <wouter.sioen@wijs.be>
+ * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Model
 {
@@ -1010,22 +1011,27 @@ class Model
 
         // build the query
         $query =
-            'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+            'SELECT l.id, l.application, l.module, l.type, l.name, l.value, l.language, UNIX_TIMESTAMP(l.edited_on) as edited_on
              FROM locale AS l
              WHERE
                  l.language IN (' . implode(',', $aLanguages) . ') AND
-                 l.application = ? AND
                  l.name LIKE ? AND
                  l.value LIKE ? AND
                  l.type IN (' . implode(',', $types) . ')';
 
         // add the parameters
-        $parameters = array($application, '%' . $name . '%', '%' . $value . '%');
+        $parameters = array('%' . $name . '%', '%' . $value . '%');
 
         // add module to the query if needed
         if ($module) {
             $query .= ' AND l.module = ?';
             $parameters[] = $module;
+        }
+
+        // add module to the query if needed
+        if ($application) {
+            $query .= ' AND l.application = ?';
+            $parameters[] = $application;
         }
 
         // get the translations
@@ -1039,9 +1045,13 @@ class Model
             // add to the sorted array
             $sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array(
                 'id' => $translation['id'],
-                'value' => $translation['value']
+                'value' => $translation['value'],
+                'edited_on' => $translation['edited_on'],
+                'application' => $translation['application'],
             );
         }
+
+
 
         // create an array to use in the datagrid
         $dataGridTranslations = array();
@@ -1058,13 +1068,36 @@ class Model
                 // loop modules
                 foreach ($translation as $module => $t) {
                     // create translation (and increase id)
-                    $trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
+
+                    $trans = array('application' => $application, 'module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
+
+                    if(isset($edited_on)) unset($edited_on);
 
                     // is there a translation? else empty string
                     foreach ($languages as $lang) {
-                        if (count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+
                         $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
+
+                        if (count($languages) == 1) {
+                            $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        } else {
+                            $trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                        }
+
+                        if (isset($t[$lang])) {
+                            $application = $t[$lang]['application'];
+                            if (!isset($edited_on) || $edited_on < $t[$lang]['edited_on']) {
+                                $edited_on = $t[$lang]['edited_on'];
+                            }
+                        } else {
+                            $edited_on = '';
+                        }
+
                     }
+                    // we add them here to keep the languages next to each other
+                    $trans['edited_on'] = $edited_on;
+
+
 
                     // add the translation to the array
                     $dataGridTranslations[$type][] = $trans;
@@ -1181,7 +1214,8 @@ class Model
         );
 
         // set defaults if necessary
-        // we can't simply use these right away, because this function is also calls by the installer, which does not have Backend-functions
+        // we can't simply use these right away, because this function is also calls by the installer,
+        // which does not have Backend-functions
         if ($frontendLanguages === null) $frontendLanguages = array_keys(BL::getWorkingLanguages());
         if ($backendLanguages === null) $backendLanguages = array_keys(BL::getInterfaceLanguages());
         if ($userId === null) $userId = BackendAuthentication::getUser()->getUserId();

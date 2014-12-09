@@ -122,6 +122,7 @@ class Register extends FrontendBaseBlock
 
                 // generate salt
                 $settings['salt'] = FrontendProfilesModel::getRandomString();
+                $settings['language'] = FRONTEND_LANGUAGE;
 
                 // values
                 $values['email'] = $txtEmail->getValue();

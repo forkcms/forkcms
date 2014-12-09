@@ -28,6 +28,26 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 class Header extends FrontendBaseObject
 {
     /**
+     * Index of priority group for global files
+     */
+    const PRIORITY_GROUP_GLOBAL = 0;
+
+    /**
+     * Index of priority group for default files
+     */
+    const PRIORITY_GROUP_DEFAULT = 1;
+
+    /**
+     * Index of priority group for module files
+     */
+    const PRIORITY_GROUP_MODULE = 2;
+
+    /**
+     * Index of priority group for widget files
+     */
+    const PRIORITY_GROUP_WIDGET = 3;
+
+    /**
      * The canonical URL
      *
      * @var string
@@ -101,11 +121,11 @@ class Header extends FrontendBaseObject
         }
 
         // add default javascript-files
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true);
-        $this->addJS('/src/Frontend/Core/Js/utils.js', true);
-        $this->addJS('/src/Frontend/Core/Js/frontend.js', false);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
     }
 
     /**
@@ -153,7 +173,7 @@ class Header extends FrontendBaseObject
      * @param bool   $minify       Should the file be minified?
      * @param bool   $addTimestamp May we add a timestamp for caching purposes?
      */
-    public function addJS($file, $minify = true, $addTimestamp = null)
+    public function addJS($file, $minify = true, $addTimestamp = null, $priorityGroup = self::PRIORITY_GROUP_DEFAULT)
     {
         $file = (string) $file;
         $minify = (bool) $minify;
@@ -173,9 +193,15 @@ class Header extends FrontendBaseObject
             $file = $this->minifyJS($file);
         }
 
+        $jsFile = array(
+            'file' => $file,
+            'add_timestamp' => $addTimestamp,
+            'priority_group' => $priorityGroup
+        );
+
         // already in array?
-        if (!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->jsFiles)) {
-            $this->jsFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
+        if (!in_array($jsFile, $this->jsFiles)) {
+            $this->jsFiles[] = $jsFile;
         }
     }
 
@@ -767,6 +793,7 @@ class Header extends FrontendBaseObject
     private function parseJS()
     {
         $jsFiles = array();
+        $jsFilesGrouped = array();
         $existingJSFiles = $this->getJSFiles();
 
         // if there aren't any JS-files added we don't need to do something
@@ -778,6 +805,8 @@ class Header extends FrontendBaseObject
             );
 
             foreach ($existingJSFiles as $file) {
+                $priorityGroup = $file['priority_group'];
+
                 // some files shouldn't be uncacheable
                 if (in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) {
                     $file = array('file' => $file['file']);
@@ -790,7 +819,13 @@ class Header extends FrontendBaseObject
                     $file = array('file' => $file['file'] . $modifiedTime);
                 }
 
-                $jsFiles[] = $file;
+                $jsFilesGrouped[$priorityGroup][] = $file;
+            }
+
+            ksort($jsFilesGrouped);
+
+            foreach ($jsFilesGrouped as $jsFile) {
+                $jsFiles = array_merge($jsFiles, $jsFile);
             }
         }
 
@@ -955,6 +990,41 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' - ' . $this->pageTitle;
                 }
             }
+        }
+    }
+
+    /**
+     * Set Twitter Card
+     *
+     * @param string $title         The title (maximum 70 characters)
+     * @param string $description   A brief description of the card (maximum 200 characters)
+     * @param string $imageURL      The URL of the image (minimum 280x150 and <1MB)
+     * @param string $cardType      The cardtype, possible types: https://dev.twitter.com/cards/types
+     * @param string $siteHandle    (optional)  Twitter handle of the site
+     * @param string $creatorHandle (optional) Twitter handle of the author
+     */
+    public function setTwitterCard($title, $description, $imageURL, $cardType = 'summary', $siteHandle = null, $creatorHandle = null)
+    {
+        $data = array(
+            array('name' => 'twitter:card', 'content' => $cardType),
+            array('name' => 'twitter:title', 'content' => $title),
+            array('name' => 'twitter:description', 'content' => $description),
+            array('name' => 'twitter:image', 'content' => $imageURL),
+        );
+
+        // add site handle if provided
+        if ($siteHandle != null) {
+            $data[] = array('name' => 'twitter:site', 'content' => $siteHandle);
+        }
+
+        // add creator handle if provided
+        if ($creatorHandle != null) {
+            $data[] = array('name' => 'twitter:creator', 'content' => $creatorHandle);
+        }
+
+        // add Twitter Card to the header
+        foreach ($data as $d) {
+            static::addMetaData($d);
         }
     }
 }

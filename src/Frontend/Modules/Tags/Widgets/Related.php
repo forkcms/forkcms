@@ -129,7 +129,7 @@ class Related extends FrontendBaseWidget
         $pageId = $this->getContainer()->get('page')->getId();
 
         // array of excluded records
-        $this->exclude[] = array('module' => 'pages', 'other_id' => $pageId);
+        $this->exclude[] = array('module' => 'Pages', 'other_id' => $pageId);
 
         // get tags for page
         $tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
