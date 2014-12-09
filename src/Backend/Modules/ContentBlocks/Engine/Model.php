@@ -178,13 +178,17 @@ class Model
      */
     public static function get($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-             FROM content_blocks AS i
-             WHERE i.id = ? AND i.status = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, 'active', BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findOneBy(
+                array(
+                    'id'       => $id,
+                    'status'   => ContentBlock::STATUS_ACTIVE,
+                    'language' => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -209,13 +213,17 @@ class Model
      */
     public static function getRevision($id, $revisionId)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-             FROM content_blocks AS i
-             WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, (int) $revisionId, BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findOneBy(
+                array(
+                    'id'         => $id,
+                    'revisionId' => $revisionId,
+                    'language'   => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -287,59 +295,73 @@ class Model
     /**
      * Update an existing item.
      *
-     * @param array $item The new data.
+     * @param  ContentBlock $item The new data.
      * @return int
      */
-    public static function update(array $item)
+    public static function update(ContentBlock $contentBlock)
     {
         $db = BackendModel::getContainer()->get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
         // update extra
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $contentBlock->getExtraId(),
             'data',
             array(
-                'id' => $item['id'],
-                'extra_label' => $item['title'],
-                'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $item['id']
+                'id' => $contentBlock->getId(),
+                'extra_label' => $contentBlock->getTitle(),
+                'language' => $contentBlock->getLanguage(),
+                'edit_url' => BackendModel::createURLForAction('Edit') . '&id=' . $contentBlock->getId()
             )
         );
 
         // archive all older content_block versions
-        $db->update(
-            'content_blocks',
-            array('status' => 'archived'),
-            'id = ? AND language = ?',
-            array($item['id'], BL::getWorkingLanguage())
-        );
+        $itemsToArchive = $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findBy(
+                array(
+                    'id' => $contentBlock->getId(),
+                    'language' => $contentBlock->getLanguage(),
+                )
+            )
+        ;
+        foreach ($itemsToArchive as $itemToArchive) {
+            $itemToArchive->setStatus(ContentBlock::STATUS_ARCHIVED);
+            $em->persist($itemToArchive);
+        }
 
         // insert new version
-        $item['revision_id'] = $db->insert('content_blocks', $item);
+        $em->persist($contentBlock);
 
         // how many revisions should we keep
         $rowsToKeep = (int) BackendModel::getModuleSetting('ContentBlocks', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) $db->getColumn(
-            'SELECT i.revision_id
-             FROM content_blocks AS i
-             WHERE i.id = ? AND i.language = ? AND i.status = ?
-             ORDER BY i.edited_on DESC
-             LIMIT ?',
-            array($item['id'], BL::getWorkingLanguage(), 'archived', $rowsToKeep)
-        );
+        $revisionsToRemove = $em
+            ->getRepository('Backend\Modules\ContentBlocks\Entity\ContentBlock')
+            ->findBy(
+                array(
+                    'id' => $contentBlock->getId(),
+                    'language' => $contentBlock->getLanguage(),
+                    'status' => ContentBlock::STATUS_ARCHIVED,
+                ),
+                array(
+                    'editedOn' => 'DESC',
+                ),
+                null,
+                $rowsToKeep - 1
+            )
+        ;
 
         // delete other revisions
-        if (!empty($revisionIdsToKeep)) {
-            $db->delete(
-                'content_blocks',
-                'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
-                array($item['id'], BL::getWorkingLanguage(), 'archived')
-            );
+        if (!empty($revisionsToRemove)) {
+            foreach ($revisionsToRemove as $revisionToRemove) {
+                $em->remove($revisionToRemove);
+            }
         }
+        $em->flush();
 
         // return the new revision_id
-        return $item['revision_id'];
+        return $contentBlock->getRevisionId();
     }
 }

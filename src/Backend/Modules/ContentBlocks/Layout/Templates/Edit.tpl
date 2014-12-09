@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblContentBlocks|ucfirst}: {$msgEditContentBlock|sprintf:{$title}}</h2>
+	<h2>{$lblContentBlocks|ucfirst}: {$msgEditContentBlock|sprintf:{$item.title}}</h2>
 </div>
 
 {form:edit}
@@ -59,7 +59,7 @@
 
 	<div class="fullwidthOptions">
 		{option:showContentBlocksDelete}
-		<a href="{$var|geturl:'delete'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		{/option:showContentBlocksDelete}
@@ -71,7 +71,7 @@
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
-			{$msgConfirmDelete|sprintf:{$title}}
+			{$msgConfirmDelete|sprintf:{$item.title}}
 		</p>
 	</div>
 {/form:edit}
