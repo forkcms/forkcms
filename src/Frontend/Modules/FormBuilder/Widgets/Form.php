@@ -108,7 +108,10 @@ class Form extends FrontendBaseWidget
         $this->loadData();
 
         // success message
-        if (isset($_GET['identifier']) && $_GET['identifier'] == $this->item['identifier']) {
+        if (
+            $this->URL->hasParameter('identifier')
+            && $this->URL->getParameter('identifier') == $this->item['identifier']
+        ) {
             $this->parseSuccessMessage();
         } else {
             // create/handle form

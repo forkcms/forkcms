@@ -58,7 +58,7 @@ class UploadTheme extends BackendBaseActionAdd
             return false;
         }
 
-        // everything is writeable
+        // everything is writable
         return true;
     }
 

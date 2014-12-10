@@ -170,18 +170,11 @@ class Archive extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
+        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
-        $this->header->addLink(
-            array(
-                 'rel' => 'alternate',
-                 'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
-                 'href' => $rssLink
-            ),
-            true
-        );
+        $this->header->addRssLink($rssTitle, $rssLink);
 
         // add into breadcrumb
         $this->breadcrumb->addElement(\SpoonFilter::ucfirst(FL::lbl('Archive')));

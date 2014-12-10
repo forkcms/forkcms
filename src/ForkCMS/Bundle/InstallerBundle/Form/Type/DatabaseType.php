@@ -2,13 +2,14 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Form\Type;
 
+use ForkCMS\Bundle\InstallerBundle\Entity\InstallationData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Validator\ExecutionContextInterface;
 use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\ExecutionContextInterface;
 
 /**
  * Builds the form to set up database information
@@ -106,12 +107,12 @@ class DatabaseType extends AbstractType
     /**
      * Validate if a database connection can be made
      *
-     * @param array                     $data    The form data
+     * @param InstallationData          $data    The form data
      * @param ExecutionContextInterface $context The forms validation context
      *
      * @todo   Replace SpoonDatabase
      */
-    public function checkDatabaseConnection($data, ExecutionContextInterface $context)
+    public function checkDatabaseConnection(InstallationData $data, ExecutionContextInterface $context)
     {
         try {
             // create instance

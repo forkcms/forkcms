@@ -3832,7 +3832,7 @@
         <translation language="tr"><![CDATA[adres]]></translation>
         <translation language="pl"><![CDATA[adres]]></translation>
       </item>
-      <item type="label" name="Addresses">
+      <item type="label" name="EmailAddresses">
         <translation language="en"><![CDATA[e-mail addresses]]></translation>
         <translation language="nl"><![CDATA[e-mailadressen]]></translation>
         <translation language="hu"><![CDATA[e-mail címek]]></translation>
@@ -3887,7 +3887,7 @@
         <translation language="sv"><![CDATA[aktivera]]></translation>
         <translation language="ru"><![CDATA[активировать]]></translation>
       </item>
-      <item type="label" name="AllAddresses">
+      <item type="label" name="AllEmailAddresses">
         <translation language="en"><![CDATA[all e-mail addresses]]></translation>
         <translation language="nl"><![CDATA[alle e-mailadressen,]]></translation>
         <translation language="hu"><![CDATA[összes e-mail cím]]></translation>

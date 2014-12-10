@@ -9,8 +9,6 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\Filesystem\Filesystem;
-
 /**
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
