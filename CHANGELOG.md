@@ -3,19 +3,30 @@
 Improvements:
 
 * Core: BackendModel::deleteModuleSetting() added.
-* Pages: add has_children variable to page array
+* Pages: add has_children variable to page array.
 * Location: when routing from A to B, <a href="URL"> has to change also, fixes #741.
 * Core: Integrated addRssLink() function, fixes #841.
 * Blog: making use of the new $this->header->addRssLink() function, fixes #841.
+* Core: minifier updated to a newer version.
+* Core: remove unneeded kernel.charset parameter from the parameters.yml file.
+* Core: refactor the URL classes to use the Symfony Request object.
+* Core: update the PHPDocs for some methods.
+* Pages: add a has_children variable to pages.
+* Core: add priority groups to add JavaScript in a certain order.
+* Blog: implement Twitter cards.
+* Extensions: check if a template file exists when adding/editing templates.
+* Locale: improve the filtering and export for translations.
 
 Bugfixes:
 
 * Tags: fix wrong variable name.
-* Core: fix installation with different interface langauge(s)
+* Core: fix installation with different interface langauge(s).
 * Core: fix for dashboard ajax functions.
 * Core: make sure emails can be send from the backend.
-* Core: make setting cookies work on a domain with a custom port (not port 80)
+* Core: make setting cookies work on a domain with a custom port (not port 80).
 * Users: when a user becomes "non-active" remove his sessions so he gets logged out.
+* Faq: fix the highlighted row after adding or updating a question.
+* Faq: update edited_on date after processing feedback.
 
 
 3.8.2 (2014-10-21)
