@@ -27,7 +27,7 @@ class LanguagesHandler
         return false;
     }
 
-    public function processValidForm(Form $form, $request)
+    public function processValidForm(Form $form, Request $request)
     {
         $data = $form->getData();
 

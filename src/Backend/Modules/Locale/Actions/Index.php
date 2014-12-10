@@ -12,6 +12,7 @@ namespace Backend\Modules\Locale\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
+use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
@@ -21,6 +22,7 @@ use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
  * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
  * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author Stef Bastiaansen <stef.bastiaansen@wijs.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -68,10 +70,17 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // init vars
-        $langWidth = (80 / count($this->filter['language']));
+        $langWidth = (60 / count($this->filter['language']));
 
         // get all the translations for the selected languages
-        $translations = BackendLocaleModel::getTranslations($this->filter['application'], $this->filter['module'], $this->filter['type'], $this->filter['language'], $this->filter['name'], $this->filter['value']);
+        $translations = BackendLocaleModel::getTranslations(
+            $this->filter['application'],
+            $this->filter['module'],
+            $this->filter['type'],
+            $this->filter['language'],
+            $this->filter['name'],
+            $this->filter['value']
+        );
 
         // create datagrids
         $this->dgLabels = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
@@ -80,13 +89,28 @@ class Index extends BackendBaseActionIndex
         $this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : array());
 
         // put the datagrids (references) in an array so we can loop them
-        $dataGrids = array('lbl' => &$this->dgLabels, 'msg' => &$this->dgMessages, 'err' => &$this->dgErrors, 'act' => &$this->dgActions);
+        $dataGrids = array(
+            'lbl' => &$this->dgLabels,
+            'msg' => &$this->dgMessages,
+            'err' => &$this->dgErrors,
+            'act' => &$this->dgActions
+        );
 
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
             // set sorting
             /** @var $dataGrid BackendDataGridArray */
-            $dataGrid->setSortingColumns(array('module', 'name'), 'name');
+
+            $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
+
+            $dataGrid->setColumnFunction(
+                array(new BackendDataGridFunctions(), 'getTimeAgo'),
+                array('[edited_on]'),
+                'edited_on',
+                true
+            );
+
+            $dataGrid->setHeaderLabels(array('edited_on' => \SpoonFilter::ucfirst(BL::lbl('Edited'))));
 
             // disable paging
             $dataGrid->setPaging(false);
@@ -94,29 +118,50 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
+            // add the multicheckbox column
+            $dataGrid->setMassActionCheckboxes('checkbox', '[name]');
+
+            // hide the application when only one application is shown
+            if ($this->filter['application'] != '') {
+                $dataGrid->setColumnHidden('application');
+            }
+
             // set column attributes for each language
             foreach ($this->filter['language'] as $lang) {
                 // add a class for the inline edit
                 $dataGrid->setColumnAttributes($lang, array('class' => 'translationValue'));
 
                 // add attributes, so the inline editing has all the needed data
-                $dataGrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'' . $type . '\'}'));
+                $dataGrid->setColumnAttributes(
+                    $lang,
+                    array(
+                        'data-id' => '{language: \'' .
+                            $lang . '\',application: \'[application]\',module: \'[module]\',name: \'[name]\',type: \'' .
+                            $type . '\'}'
+                    )
+                );
 
                 // escape the double quotes
-                $dataGrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
+                $dataGrid->setColumnFunction(
+                    array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true
+                );
                 if ($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
 
                 // set header labels
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
-                // set column attributes
-                $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
-
-                // hide translation_id column (only if only one language is selected because the key doesn't exist if more than 1 language is selected)
-                if (count($this->filter['language']) == 1) $dataGrid->setColumnHidden('translation_id');
-
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
+
+                    $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
+
+                    // add id of translation for the export
+                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id]'));
+
+                    // Hide translation_id column (only if only one language is selected
+                    // because the key doesn't exist if more than 1 language is selected)
+                    $dataGrid->setColumnHidden('translation_id');
+
                     // check if this action is allowed
                     if (BackendAuthentication::isAllowedAction('Edit')) {
                         // add edit button
@@ -134,6 +179,20 @@ class Index extends BackendBaseActionIndex
                             BackendModel::createURLForAction('Add') . '&amp;id=[translation_id]' . $this->filterQuery
                         );
                     }
+                } else {
+                    // add id of translation for the export
+                    $dataGrid->setColumnAttributes($lang, array('data-numeric-id' => '[translation_id_' . $lang .']'));
+                    $dataGrid->setColumnHidden('translation_id_' . $lang);
+
+                    //ugly fix but the browser does funny things with the percentage when showing lots of languages
+                    $dataGrid->setColumnAttributes(
+                        $lang,
+                        array(
+                            'style' => 'width: ' .
+                                $langWidth .
+                                '%; max-width: '. (600 / count($this->filter['language'])) .'px;'
+                        )
+                    );
                 }
             }
         }
@@ -145,13 +204,35 @@ class Index extends BackendBaseActionIndex
     private function loadForm()
     {
         $this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
-        $this->frm->addDropdown('application', array('Backend' => 'Backend', 'Frontend' => 'Frontend'), $this->filter['application']);
+        $this->frm->addDropdown(
+            'application',
+            array(
+                '' => '-',
+                'Backend' => 'Backend',
+                'Frontend' => 'Frontend'
+            ),
+            $this->filter['application']
+        );
         $this->frm->addText('name', $this->filter['name']);
         $this->frm->addText('value', $this->filter['value']);
-        $this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod), $this->filter['language'], 'noFocus');
-        $this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
-        $this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-        $this->frm->getField('module')->setDefaultElement(\SpoonFilter::ucfirst(BL::lbl('ChooseAModule')));
+        $this->frm->addMultiCheckbox(
+            'language',
+            BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod),
+            $this->filter['language'],
+            'noFocus'
+        );
+        $this->frm->addMultiCheckbox(
+            'type',
+            BackendLocaleModel::getTypesForMultiCheckbox(),
+            $this->filter['type'],
+            'noFocus'
+        );
+        $this->frm->addDropdown(
+            'module',
+            BackendModel::getModulesForDropDown(false),
+            $this->filter['module']
+        );
+        $this->frm->getField('module')->setDefaultElement('-');
 
         // manually parse fields
         $this->frm->parse($this->tpl);
@@ -165,10 +246,22 @@ class Index extends BackendBaseActionIndex
         parent::parse();
 
         // parse datagrids
-        $this->tpl->assign('dgLabels', ($this->dgLabels->getNumResults() != 0) ? $this->dgLabels->getContent() : false);
-        $this->tpl->assign('dgMessages', ($this->dgMessages->getNumResults() != 0) ? $this->dgMessages->getContent() : false);
-        $this->tpl->assign('dgErrors', ($this->dgErrors->getNumResults() != 0) ? $this->dgErrors->getContent() : false);
-        $this->tpl->assign('dgActions', ($this->dgActions->getNumResults() != 0) ? $this->dgActions->getContent() : false);
+        $this->tpl->assign(
+            'dgLabels',
+            ($this->dgLabels->getNumResults() != 0) ? $this->dgLabels->getContent() : false
+        );
+        $this->tpl->assign(
+            'dgMessages',
+            ($this->dgMessages->getNumResults() != 0) ? $this->dgMessages->getContent() : false
+        );
+        $this->tpl->assign(
+            'dgErrors',
+            ($this->dgErrors->getNumResults() != 0) ? $this->dgErrors->getContent() : false
+        );
+        $this->tpl->assign(
+            'dgActions',
+            ($this->dgActions->getNumResults() != 0) ? $this->dgActions->getContent() : false
+        );
 
         // is filtered?
         if ($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
@@ -180,7 +273,13 @@ class Index extends BackendBaseActionIndex
         $this->tpl->assign('isGod', $this->isGod);
 
         // parse noItems, if all the datagrids are empty
-        $this->tpl->assign('noItems', $this->dgLabels->getNumResults() == 0 && $this->dgMessages->getNumResults() == 0 && $this->dgErrors->getNumResults() == 0 && $this->dgActions->getNumResults() == 0);
+        $this->tpl->assign(
+            'noItems',
+            $this->dgLabels->getNumResults() == 0 &&
+            $this->dgMessages->getNumResults() == 0 &&
+            $this->dgErrors->getNumResults() == 0 &&
+            $this->dgActions->getNumResults() == 0
+        );
 
         // parse the add URL
         $this->tpl->assign('addURL', BackendModel::createURLForAction('Add', null, null, null) . $this->filterQuery);
@@ -204,7 +303,7 @@ class Index extends BackendBaseActionIndex
         }
 
         // set filter
-        $this->filter['application'] = $this->getParameter('application') == null ? 'Frontend' : $this->getParameter('application');
+        $this->filter['application'] = $this->getParameter('application', 'string', null);
         $this->filter['module'] = $this->getParameter('module', 'string', null);
         $this->filter['type'] = $this->getParameter('type', 'array');
         $this->filter['language'] = $this->getParameter('language', 'array');

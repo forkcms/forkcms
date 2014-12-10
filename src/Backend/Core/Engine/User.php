@@ -210,6 +210,7 @@ class User
      * Load a user
      *
      * @param int $userId The id of the user to load.
+     * @throws Exception If user cannot be loaded
      */
     public function loadUser($userId)
     {
@@ -265,6 +266,7 @@ class User
      * Load a user by his e-mail adress
      *
      * @param string $email The email of the user to load.
+     * @throws Exception If user cannot be loaded
      */
     public function loadUserByEmail($email)
     {

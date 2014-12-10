@@ -164,12 +164,12 @@ class Widget extends Object
 
         // add javascript file with same name as module (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getModule() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getModule() . '.js', false, null, Header::PRIORITY_GROUP_WIDGET);
         }
 
         // add javascript file with same name as the action (if the file exists)
         if (is_file($frontendModulePath . '/Js/' . $this->getAction() . '.js')) {
-            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false);
+            $this->header->addJS($frontendModuleURL . '/' . $this->getAction() . '.js', false, null, Header::PRIORITY_GROUP_WIDGET);
         }
     }
 

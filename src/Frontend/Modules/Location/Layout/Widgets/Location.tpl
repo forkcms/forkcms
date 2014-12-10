@@ -24,7 +24,7 @@
 	{/option:widgetLocationSettings.directions}
 
 	{option:widgetLocationSettings.full_url}
-		<p><a href="{$widgetLocationSettings.maps_url}" title="{$lblViewLargeMap}">{$lblViewLargeMap|ucfirst}</a></p>
+		<p><a id="map-full-url-{$widgetLocationItem.id}" href="{$widgetLocationSettings.maps_url}" title="{$lblViewLargeMap}">{$lblViewLargeMap|ucfirst}</a></p>
 	{/option:widgetLocationSettings.full_url}
 
 	<div id="markerText{$widgetLocationItem.id}" style="display: none;">
