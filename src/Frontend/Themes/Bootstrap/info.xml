@@ -30,7 +30,7 @@
 	</authors>
 	<metanavigation supported="false" />
 	<templates>
-		<template label="Default" path="core/layout/templates/default.tpl">
+		<template label="Default" path="Core/Layout/Templates/Default.tpl">
 			<positions>
 				<position name="main" />
 				<position name="top">
@@ -43,7 +43,7 @@
 				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Error" path="core/layout/templates/error.tpl">
+		<template label="Error" path="Core/Layout/Templates/Error.tpl">
 			<positions>
 				<position name="main" />
 				<position name="top">
@@ -56,7 +56,7 @@
 				[/,/,/,top,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Home" path="core/layout/templates/home.tpl">
+		<template label="Home" path="Core/Layout/Templates/Home.tpl">
 			<positions>
 				<position name="slideshow" />
 				<position name="features" />
@@ -71,7 +71,7 @@
 				[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]
 			</format>
 		</template>
-		<template label="Sidebar" path="core/layout/templates/sidebar.tpl">
+		<template label="Sidebar" path="Core/Layout/Templates/Sidebar.tpl">
 			<positions>
 				<position name="main" />
 				<position name="right" />
