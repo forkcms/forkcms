@@ -33,6 +33,12 @@ class Index extends BackendBaseActionIndex
      * @var	array
      */
     private $dataGrids;
+
+    /**
+     * Default dataGird
+     *
+     * @var BackendDataGridArray
+     */
     private $emptyDatagrid;
 
     /**

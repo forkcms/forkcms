@@ -109,6 +109,7 @@ class Config extends Object
      * called before any authentication is required.
      *
      * @param string $module The module to load.
+     * @throws BackendException If module is not allowed
      */
     public function setModule($module)
     {

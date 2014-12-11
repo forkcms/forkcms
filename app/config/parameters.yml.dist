@@ -6,7 +6,6 @@ parameters:
     database.user:          <database-user>
     database.password:      <database-password>
 
-    kernel.charset:         'utf-8'
     kernel.secret:          <secret>
 
     fork.debug_email:       <debug-email>

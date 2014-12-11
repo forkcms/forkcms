@@ -33,7 +33,7 @@ var jsBackend =
 		else jsBackend.current.action = utils.string.ucfirst(utils.string.camelCase(chunks[4]));
 
 		// set defaults
-		if(!jsBackend.current.module) jsBackend.current.module = 'dashboard';
+		if(!jsBackend.current.module) jsBackend.current.module = 'Dashboard';
 		if(!jsBackend.current.action) jsBackend.current.action = 'index';
 
 		// init stuff
@@ -1789,14 +1789,14 @@ jsBackend.locale =
 	// get an error
 	err: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('err', key, module);
 	},
 
 	// get a label
 	lbl: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('lbl', key, module);
 	},
 
@@ -1809,7 +1809,7 @@ jsBackend.locale =
 	// get a message
 	msg: function(key, module)
 	{
-		if(module === null) module = jsBackend.current.module;
+		if(typeof module === 'undefined') module = jsBackend.current.module;
 		return jsBackend.locale.get('msg', key, module);
 	}
 };

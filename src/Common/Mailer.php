@@ -12,6 +12,7 @@ namespace Common;
 use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Template;
+use Backend\Core\Engine\Template as BackendTemplate;
 
 /**
  * This class will send mails
@@ -218,7 +219,12 @@ class Mailer
     private function getTemplateContent($template, $variables = null)
     {
         // new template instance
-        $tpl = new Template(false);
+        $tpl = null;
+        if (APPLICATION === 'Backend') {
+            $tpl = new BackendTemplate(false);
+        } else {
+            $tpl = new Template(false);
+        }
 
         // set some options
         $tpl->setForceCompile(true);

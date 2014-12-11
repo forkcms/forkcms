@@ -186,7 +186,6 @@ class Email extends BackendBaseActionIndex
                 // assign report
                 $this->tpl->assign('report', true);
                 $this->tpl->assign('reportMessage', BL::msg('Saved'));
-                $this->tpl->assign('isGod', $this->isGod);
             }
         }
     }
