@@ -273,9 +273,7 @@ class Edit extends BackendBaseActionEdit
                     // update salt
                     BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
-                    // new password filled in? otherwise generate a password
-                    $password = ($txtPassword->isFilled()) ?
-                        $txtPassword->getValue() : BackendModel::generatePassword(8);
+                    $password = $txtPassword->getValue();
 
                     // build password
                     $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
