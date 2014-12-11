@@ -64,6 +64,26 @@ class Model
     }
 
     /**
+     * Check if an item with a certain title exists
+     *
+     * @param string $title The title of the record to look for.
+     * @return bool
+     */
+    public static function existsByTitle($title, $language = null)
+    {
+        // define language
+        $language = ($language == null) ? BL::getWorkingLanguage() : (string) $language;
+
+        return (bool) BackendModel::getContainer()->get('database')->getVar(
+            'SELECT 1
+             FROM location AS i
+             WHERE i.title = ? AND i.language = ?
+             LIMIT 1',
+            array((string) $title, $language)
+        );
+    }
+
+    /**
      * Fetch a record from the database
      *
      * @param int $id The id of the record to fetch.
