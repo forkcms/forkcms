@@ -17,6 +17,7 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Installer extends ModuleInstaller
 {
@@ -35,10 +36,8 @@ class Installer extends ModuleInstaller
         // general settings
         $this->setSetting($this->getModule(), 'max_num_revisions', 20);
 
-        // module rights
+        // module and action rights
         $this->setModuleRights(1, $this->getModule());
-
-        // action rights
         $this->setActionRights(1, $this->getModule(), 'Add');
         $this->setActionRights(1, $this->getModule(), 'Delete');
         $this->setActionRights(1, $this->getModule(), 'Edit');

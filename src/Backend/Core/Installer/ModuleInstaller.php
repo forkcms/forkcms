@@ -26,6 +26,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class ModuleInstaller
 {
