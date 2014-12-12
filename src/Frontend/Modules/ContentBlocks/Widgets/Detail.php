@@ -25,33 +25,6 @@ class Detail extends FrontendBaseWidget
     private $item;
 
     /**
-     * Assign the template path
-     *
-     * @return string
-     */
-    private function assignTemplate()
-    {
-        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/Default.tpl');
-
-        // is the content block visible?
-        if (!empty($this->item)) {
-            // check if the given template exists
-            try {
-                $template = FrontendTheme::getPath(
-                    FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/' . $this->item['template']
-                );
-            } catch (FrontendException $e) {
-                // do nothing
-            }
-        } else {
-            // set a default text so we don't see the template data
-            $this->item['text'] = '';
-        }
-
-        return $template;
-    }
-
-    /**
      * Execute the extra
      */
     public function execute()
@@ -69,6 +42,33 @@ class Detail extends FrontendBaseWidget
     private function loadData()
     {
         $this->item = FrontendContentBlocksModel::get((int) $this->data['id']);
+    }
+
+    /**
+     * Assign the template path
+     *
+     * @return string
+     */
+    private function assignTemplate()
+    {
+        $template = FrontendTheme::getPath(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/Default.tpl');
+
+        // is the content block visible?
+        if (!empty($this->item)) {
+            // check if the given template exists
+            try {
+                $template = FrontendTheme::getPath(
+                    FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets/' . $this->item->getTemplate()
+                );
+            } catch (FrontendException $e) {
+                // do nothing
+            }
+        } else {
+            // set a default text so we don't see the template data
+            $this->item->setText('');
+        }
+
+        return $template;
     }
 
     /**

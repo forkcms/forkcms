@@ -3,6 +3,7 @@
 namespace Frontend\Modules\ContentBlocks\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * In this file we store all generic functions that we will be using in the content_blocks module
@@ -13,6 +14,8 @@ use Frontend\Core\Engine\Model as FrontendModel;
  */
 class Model
 {
+    const ENTITY_CLASS = 'Backend\Modules\ContentBlocks\Entity\ContentBlock';
+
     /**
      * Get an item.
      *
@@ -21,11 +24,16 @@ class Model
      */
     public static function get($id)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.title, i.text, i.template
-             FROM content_blocks AS i
-             WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',
-            array((int) $id, 'active', 'N', FRONTEND_LANGUAGE)
-        );
+        $em = FrontendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => $id,
+                    'status'   => ContentBlock::STATUS_ACTIVE,
+                    'language' => FRONTEND_LANGUAGE,
+                )
+            )
+        ;
     }
 }
