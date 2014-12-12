@@ -10,8 +10,9 @@ namespace Backend\Modules\Faq\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
-use Backend\Modules\Faq\Entity\Category;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Faq\Entity\Category;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * Installer for the faq module
@@ -93,7 +94,7 @@ class Installer extends ModuleInstaller
     private function getCategory($language)
     {
         return BackendModel::get('doctrine.orm.entity_manager')
-            ->getRepository('Backend\Modules\Faq\Entity\Category')
+            ->getRepository(BackendFaqModel::CATEGORY_ENTITY_CLASS)
             ->findOneBy(
                 array(
                     'language' => $language,
@@ -123,9 +124,9 @@ class Installer extends ModuleInstaller
     public function install()
     {
         $this->addEntitiesInDatabase(array(
-            'Backend\Modules\Faq\Entity\Category',
-            'Backend\Modules\Faq\Entity\Question',
-            'Backend\Modules\Faq\Entity\Feedback',
+            BackendFaqModel::CATEGORY_ENTITY_CLASS,
+            BackendFaqModel::QUESTION_ENTITY_CLASS,
+            BackendFaqModel::FEEDBACK_ENTITY_CLASS,
         ));
 
         $this->addModule('Faq');

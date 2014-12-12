@@ -23,21 +23,18 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Model
 {
+    const CATEGORY_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Category';
+    const QUESTION_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Question';
+    const FEEDBACK_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Feedback';
+
     const QRY_DATAGRID_BROWSE =
         'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
          FROM faq_questions AS i
          WHERE i.language = ? AND i.category_id = ?
-         ORDER BY i.sequence ASC';
-
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
-        'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
-         FROM faq_categories AS i
-         LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
-         WHERE i.language = ?
-         GROUP BY i.id
          ORDER BY i.sequence ASC';
 
     /**

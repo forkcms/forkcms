@@ -11,7 +11,7 @@ namespace Backend\Modules\Faq\Actions;
 
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -23,6 +23,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author SIESQO <info@siesqo.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Categories extends BackendBaseActionIndex
 {
@@ -55,11 +56,12 @@ class Categories extends BackendBaseActionIndex
         $this->multipleCategoriesAllowed = BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true);
 
         // create dataGrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendFaqModel::QRY_DATAGRID_BROWSE_CATEGORIES,
-            BL::getWorkingLanguage()
+        $this->dataGrid = new DataGridDoctrine(
+            BackendFaqModel::CATEGORY_ENTITY_CLASS,
+            array('language' => BL::getWorkingLanguage()),
+            array('id', 'title', 'sequence')
         );
-        $this->dataGrid->setHeaderLabels(array('num_items' => \SpoonFilter::ucfirst(BL::lbl('Amount'))));
+
         if ($this->multipleCategoriesAllowed) {
             $this->dataGrid->enableSequenceByDragAndDrop();
         } else {
