@@ -10,6 +10,8 @@ namespace Backend\Modules\Faq\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Faq\Entity\Category;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * Installer for the faq module
@@ -21,9 +23,9 @@ use Backend\Core\Installer\ModuleInstaller;
 class Installer extends ModuleInstaller
 {
     /**
-     * @var	int
+     * @var	Category
      */
-    private $defaultCategoryId;
+    private $defaultCategory;
 
     /**
      * Add a category for a language
@@ -46,23 +48,28 @@ class Installer extends ModuleInstaller
             array('faq')
         );
 
-        // build array
-        $item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
-        $item['extra_id'] = $this->insertExtra('Faq', 'widget', 'Faq', 'CategoryList', null, 'N', $sequenceExtra);
-        $item['language'] = (string) $language;
-        $item['title'] = (string) $title;
-        $item['sequence'] = 1;
+        // build category
+        $category = new Category();
+        $category
+            ->setMetaId($this->insertMeta($title, $title, $title, $url))
+            ->setExtraId($this->insertExtra('Faq', 'widget', 'Faq', 'CategoryList', null, 'N', $sequenceExtra))
+            ->setLanguage((string) $language)
+            ->setTitle((string) $title)
+            ->setSequence(1)
+        ;
 
         // insert category
-        $item['id'] = (int) $db->insert('faq_categories', $item);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($category);
+        $em->flush();
 
         // build data for widget
         $extra['data'] = serialize(
             array(
-                'id' => $item['id'],
-                'extra_label' => 'Category: ' . $item['title'],
-                'language' => $item['language'],
-                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $item['id']
+                'id' => $category->getId(),
+                'extra_label' => 'Category: ' . $category->getTitle(),
+                'language' => $language,
+                'edit_url' => '/private/' . $language . '/faq/edit_category?id=' . $category->getId()
             )
         );
 
@@ -71,26 +78,28 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($item['extra_id'], 'faq', 'widget', 'category_list')
+            array($category->getExtraId(), 'faq', 'widget', 'category_list')
         );
 
-        return $item['id'];
+        return $category->getId();
     }
 
     /**
      * Fetch the id of the first category in this language we come across
      *
      * @param string $language
-     * @return int
+     * @return Category|null
      */
     private function getCategory($language)
     {
-        return (int) $this->getDB()->getVar(
-            'SELECT id
-             FROM faq_categories
-             WHERE language = ?',
-            array((string) $language)
-        );
+        return BackendModel::get('doctrine.orm.entity_manager')
+            ->getRepository('Backend\Modules\Faq\Entity\Category')
+            ->findOneBy(
+                array(
+                    'language' => $language,
+                )
+            )
+        ;
     }
 
     /**
@@ -113,51 +122,70 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->addEntitiesInDatabase(array(
+            'Backend\Modules\Faq\Entity\Category',
+            'Backend\Modules\Faq\Entity\Question',
+            'Backend\Modules\Faq\Entity\Feedback',
+        ));
 
         $this->addModule('Faq');
 
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
-        $this->makeSearchable('Faq');
-        $this->setModuleRights(1, 'Faq');
+        $this->makeSearchable($this->getModule());
+        $this->setRights();
 
-        $this->setActionRights(1, 'Faq', 'Index');
-        $this->setActionRights(1, 'Faq', 'Add');
-        $this->setActionRights(1, 'Faq', 'Edit');
-        $this->setActionRights(1, 'Faq', 'Delete');
-        $this->setActionRights(1, 'Faq', 'Sequence');
-        $this->setActionRights(1, 'Faq', 'Categories');
-        $this->setActionRights(1, 'Faq', 'AddCategory');
-        $this->setActionRights(1, 'Faq', 'EditCategory');
-        $this->setActionRights(1, 'Faq', 'DeleteCategory');
-        $this->setActionRights(1, 'Faq', 'SequenceQuestions');
-        $this->setActionRights(1, 'Faq', 'DeleteFeedback');
-        $this->setActionRights(1, 'Faq', 'Settings');
-
-        $faqId = $this->insertExtra('Faq', 'block', 'Faq');
+        $faqId = $this->insertExtra($this->getModule(), 'block', $this->getModule());
 
         // Register widgets
         // Category faq widgets will be added on the fly
-        $this->insertExtra('Faq', 'widget', 'MostReadQuestions', 'MostReadQuestions');
-        $this->insertExtra('Faq', 'widget', 'AskOwnQuestion', 'AskOwnQuestion');
-        $this->insertExtra('Faq', 'widget', 'Categories', 'Categories');
+        $this->insertExtra($this->getModule(), 'widget', 'MostReadQuestions', 'MostReadQuestions');
+        $this->insertExtra($this->getModule(), 'widget', 'AskOwnQuestion', 'AskOwnQuestion');
+        $this->insertExtra($this->getModule(), 'widget', 'Categories', 'Categories');
 
-        $this->setSetting('Faq', 'overview_num_items_per_category', 0);
-        $this->setSetting('Faq', 'most_read_num_items', 0);
-        $this->setSetting('Faq', 'related_num_items', 0);
-        $this->setSetting('Faq', 'spamfilter', false);
-        $this->setSetting('Faq', 'allow_feedback', false);
-        $this->setSetting('Faq', 'allow_own_question', false);
-        $this->setSetting('Faq', 'allow_multiple_categories', true);
-        $this->setSetting('Faq', 'send_email_on_new_feedback', false);
+        $this->setSetting($this->getModule(), 'overview_num_items_per_category', 0);
+        $this->setSetting($this->getModule(), 'most_read_num_items', 0);
+        $this->setSetting($this->getModule(), 'related_num_items', 0);
+        $this->setSetting($this->getModule(), 'spamfilter', false);
+        $this->setSetting($this->getModule(), 'allow_feedback', false);
+        $this->setSetting($this->getModule(), 'allow_own_question', false);
+        $this->setSetting($this->getModule(), 'allow_multiple_categories', true);
+        $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
 
+        $this->addDefaultCategories();
+
+        $this->insertWidget();
+
+        // set navigation
+        $this->setBackendNavigation();
+    }
+
+    private function setRights()
+    {
+        $this->setModuleRights(1, $this->getModule());
+
+        $this->setActionRights(1, $this->getModule(), 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Sequence');
+        $this->setActionRights(1, $this->getModule(), 'Categories');
+        $this->setActionRights(1, $this->getModule(), 'AddCategory');
+        $this->setActionRights(1, $this->getModule(), 'EditCategory');
+        $this->setActionRights(1, $this->getModule(), 'DeleteCategory');
+        $this->setActionRights(1, $this->getModule(), 'SequenceQuestions');
+        $this->setActionRights(1, $this->getModule(), 'DeleteFeedback');
+        $this->setActionRights(1, $this->getModule(), 'Settings');
+    }
+
+    private function addDefaultCategories()
+    {
         foreach ($this->getLanguages() as $language) {
-            $this->defaultCategoryId = $this->getCategory($language);
+            $this->defaultCategory = $this->getCategory($language);
 
             // no category exists
-            if ($this->defaultCategoryId == 0) {
-                $this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+            if (empty($this->defaultCategory)) {
+                $this->defaultCategory = $this->addCategory($language, 'Default', 'default');
             }
 
             // check if a page for the faq already exists in this language
@@ -183,12 +211,12 @@ class Installer extends ModuleInstaller
                 );
             }
         }
+    }
 
-        $this->insertWidget();
-
-        // set navigation
+    private function setBackendNavigation()
+    {
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigationFaqId = $this->setNavigation($navigationModulesId, 'Faq');
+        $navigationFaqId = $this->setNavigation($navigationModulesId, $this->getModule());
         $this->setNavigation(
             $navigationFaqId,
             'Questions',
@@ -203,6 +231,6 @@ class Installer extends ModuleInstaller
         );
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
-        $this->setNavigation($navigationModulesId, 'Faq', 'faq/settings');
+        $this->setNavigation($navigationModulesId, $this->getModule(), 'faq/settings');
     }
 }
