@@ -276,7 +276,6 @@ class Model
         ;
         foreach ($itemsToArchive as $itemToArchive) {
             $itemToArchive->setStatus(ContentBlock::STATUS_ARCHIVED);
-            $em->persist($itemToArchive);
         }
 
         // insert new version
