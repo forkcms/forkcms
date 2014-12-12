@@ -39,67 +39,48 @@ class Model
      */
     public static function copy($from, $to)
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // get entity manager
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
         // init variables
-        $contentBlockIds = $oldIds = $newIds = array();
+        $contentBlockIds = array();
 
         // copy the contentblocks
-        $contentBlocks = (array) $db->getRecords(
-            'SELECT * FROM content_blocks WHERE language = ? AND status = "active"',
-            array($from)
-        );
+        $contentBlocks = $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->findBy(
+                array(
+                    'status'   => ContentBlock::STATUS_ACTIVE,
+                    'language' => $from,
+                )
+            )
+        ;
 
         // define counter
         $i = 1;
 
         // loop existing content blocks
         foreach ($contentBlocks as $contentBlock) {
-            // define old id
-            $oldId = $contentBlock['extra_id'];
-
-            // init new block
-            $newBlock = array();
-
             // build new block
-            $newBlock['id'] = self::getMaximumId() + $i;
-            $newBlock['language'] = $to;
-            $newBlock['created_on'] = BackendModel::getUTCDate();
-            $newBlock['edited_on'] = BackendModel::getUTCDate();
-            $newBlock['status'] = $contentBlock['status'];
-            $newBlock['user_id'] = BackendAuthentication::getUser()->getUserId();
-            $newBlock['template'] = $contentBlock['template'];
-            $newBlock['title'] = $contentBlock['title'];
-            $newBlock['text'] = $contentBlock['text'];
-            $newBlock['hidden'] = $contentBlock['hidden'];
+            $newContentBlock = new ContentBlock();
+            $newContentBlock
+                ->setId(self::getMaximumId() + $i)
+                ->setLanguage($to)
+                ->setStatus($contentBlock->getStatus())
+                ->setUserId(BackendAuthentication::getUser()->getUserId())
+                ->setTemplate($contentBlock->getTemplate())
+                ->setTitle($contentBlock->getTitle())
+                ->setText($contentBlock->getText())
+                ->setIsHidden($contentBlock->getIsHidden())
+            ;
 
             // inset content block
-            $newId = self::insert($newBlock);
+            self::insert($newContentBlock);
 
-            // save ids for later
-            $oldIds[] = $oldId;
-            $newIds[$oldId] = $newId;
+            $contentBlockIds[$contentBlock->getExtraId()] = $newContentBlock->getExtraId();
 
             // redefine counter
             $i++;
-        }
-
-        // get the extra Ids for the content blocks
-        if (!empty($newIds)) {
-            // get content block extra ids
-            $contentBlockExtraIds = (array) $db->getRecords(
-                'SELECT revision_id, extra_id FROM content_blocks WHERE revision_id IN (' . implode(',', $newIds) . ')'
-            );
-
-            // loop new ids
-            foreach ($newIds as $oldId => $newId) {
-                foreach ($contentBlockExtraIds as $extraId) {
-                    if ($extraId['revision_id'] == $newId) {
-                        $contentBlockIds[$oldId] = $extraId['extra_id'];
-                    }
-                }
-            }
         }
 
         // return contentBlockIds
