@@ -43,6 +43,10 @@ doctrine:
                 type: annotation
                 dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/Entity
                 prefix: Backend\Modules\ContentBlocks\Entity
+            Faq:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Modules/Faq/Entity
+                prefix: Backend\Modules\Faq\Entity
 
 twig:
     debug:            "%kernel.debug%"
