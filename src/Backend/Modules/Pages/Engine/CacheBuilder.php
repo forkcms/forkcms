@@ -133,6 +133,7 @@ class CacheBuilder
             'no_follow' => (bool) (isset($page['meta_data']['seo_follow']) && $page['meta_data']['seo_follow'] == 'nofollow'),
             'hidden' => (bool) ($page['hidden'] == 'Y'),
             'extra_blocks' => null,
+            'has_children' => (bool) ($page['has_children'] == 'Y')
         );
 
         $pageData['extra_blocks'] = $this->getPageExtraBlocks($page, $pageData);
