@@ -10,6 +10,7 @@ namespace Backend\Modules\ContentBlocks\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 
 /**
  * Installer for the content blocks module
@@ -24,29 +25,27 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
-        // add 'content_blocks' as a module
+        // add 'ContentBlocks' as a module
         $this->addModule('ContentBlocks');
 
-        // import locale
+        // import locale and add DB column.
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->addEntityInDatabase(BackendContentBlocksModel::ENTITY_CLASS);
 
         // general settings
-        $this->setSetting('ContentBlocks', 'max_num_revisions', 20);
+        $this->setSetting($this->getModule(), 'max_num_revisions', 20);
 
         // module rights
-        $this->setModuleRights(1, 'ContentBlocks');
+        $this->setModuleRights(1, $this->getModule());
 
         // action rights
-        $this->setActionRights(1, 'ContentBlocks', 'Add');
-        $this->setActionRights(1, 'ContentBlocks', 'Delete');
-        $this->setActionRights(1, 'ContentBlocks', 'Edit');
-        $this->setActionRights(1, 'ContentBlocks', 'Index');
+        $this->setActionRights(1, $this->getModule(), 'Add');
+        $this->setActionRights(1, $this->getModule(), 'Delete');
+        $this->setActionRights(1, $this->getModule(), 'Edit');
+        $this->setActionRights(1, $this->getModule(), 'Index');
 
         // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $this->setNavigation($navigationModulesId, 'ContentBlocks', 'content_blocks/index', array('content_blocks/add', 'content_blocks/edit'));
+        $this->setNavigation($navigationModulesId, $this->getModule(), 'content_blocks/index', array('content_blocks/add', 'content_blocks/edit'));
     }
 }

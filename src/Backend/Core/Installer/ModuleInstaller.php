@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 use Common\Uri as CommonUri;
 
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Core\Engine\Model as BackendModel;
 
 /**
  * The base-class for the installer
@@ -395,6 +396,20 @@ class ModuleInstaller
                 $this->getDB()->execute($query);
             }
         }
+    }
+
+    /**
+     * Adds a new doctrine entity in the database
+     *
+     * @param string $entityClass The class where the entity is stored
+     */
+    protected function addEntityInDatabase($entityClass)
+    {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        // create the database table for the given class using the doctrine SchemaTool
+        $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($em);
+        $schemaTool->createSchema(array($em->getClassMetadata($entityClass)));
     }
 
     /**
