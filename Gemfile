@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'compass'
+gem 'compass', '~> 1.0.1'
 gem 'compass_twitter_bootstrap'
 gem 'compass_sumo'
 gem 'foreman'
