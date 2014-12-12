@@ -31,7 +31,9 @@ class Installer extends ModuleInstaller
 
         // import locale and add DB column.
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
-        $this->addEntityInDatabase(BackendContentBlocksModel::ENTITY_CLASS);
+        $this->addEntitiesInDatabase(array(
+            BackendContentBlocksModel::ENTITY_CLASS
+        ));
 
         // general settings
         $this->setSetting($this->getModule(), 'max_num_revisions', 20);

@@ -400,17 +400,20 @@ class ModuleInstaller
     }
 
     /**
-     * Adds a new doctrine entity in the database
+     * Adds new doctrine entities in the database
      *
-     * @param string $entityClass The class where the entity is stored
+     * @param array $entityClasses The Class names of the entities.
      */
-    protected function addEntityInDatabase($entityClass)
+    protected function addEntitiesInDatabase($entityClasses)
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
         // create the database table for the given class using the doctrine SchemaTool
         $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($em);
-        $schemaTool->createSchema(array($em->getClassMetadata($entityClass)));
+        foreach ($entityClasses as &$entityClass) {
+            $entityClass = $em->getClassMetadata($entityClass);
+        }
+        $schemaTool->createSchema($entityClasses);
     }
 
     /**
