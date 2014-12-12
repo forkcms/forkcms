@@ -54,7 +54,7 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
         $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
         $this->frm->addEditor('text');
-        $this->frm->addCheckbox('hidden', true);
+        $this->frm->addCheckbox('visible', true);
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {
@@ -84,7 +84,7 @@ class Add extends BackendBaseActionAdd
                     ->setLanguage(BL::getWorkingLanguage())
                     ->setTitle($fields['title']->getValue())
                     ->setText($fields['text']->getValue())
-                    ->setIsHidden($fields['hidden']->isChecked())
+                    ->setIsHidden(!$fields['visible']->isChecked())
                     ->setstatus(ContentBlock::STATUS_ACTIVE)
                 ;
 

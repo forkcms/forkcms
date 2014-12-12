@@ -30,7 +30,7 @@
 					</div>
 				</div>
 				{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
-				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
+				<p><label for="visible">{$chkVisible} {$chkVisibleError} {$lblVisibleOnSite|ucfirst}</label></p>
 			</fieldset>
 		</div>
 

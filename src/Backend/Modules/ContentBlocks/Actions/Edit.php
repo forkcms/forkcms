@@ -95,7 +95,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
         $this->frm->addText('title', $this->record->getTitle(), null, 'inputText title', 'inputTextError title');
         $this->frm->addEditor('text', $this->record->getText());
-        $this->frm->addCheckbox('hidden', ($this->record->getIsHidden()));
+        $this->frm->addCheckbox('visible', !$this->record->getIsHidden());
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {
@@ -204,7 +204,7 @@ class Edit extends BackendBaseActionEdit
                     ->setLanguage(BL::getWorkingLanguage())
                     ->setTitle($fields['title']->getValue())
                     ->setText($fields['text']->getValue())
-                    ->setIsHidden($fields['hidden']->isChecked())
+                    ->setIsHidden(!$fields['visible']->isChecked())
                     ->setstatus(ContentBlock::STATUS_ACTIVE)
                 ;
 
