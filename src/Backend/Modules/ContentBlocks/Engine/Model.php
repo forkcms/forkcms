@@ -24,15 +24,10 @@ use Backend\Modules\ContentBlocks\Entity\ContentBlock;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Model
 {
-    const QRY_BROWSE_REVISIONS =
-        'SELECT i.id, i.revisionId AS revision_id, i.title, UNIX_TIMESTAMP(i.editedOn) AS edited_on, i.userId AS user_id
-         FROM ContentBlock AS i
-         WHERE i.status = ? AND i.id = ? AND i.language = ?
-         ORDER BY i.editedOn DESC';
-
     const ENTITY_CLASS = 'Backend\Modules\ContentBlocks\Entity\ContentBlock';
 
     /**

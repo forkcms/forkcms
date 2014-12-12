@@ -11,6 +11,7 @@ use Backend\Modules\ContentBlocks\Entity\ContentBlock;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Tijs verkoyen <tijs@sumocoders.be>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Model
 {
