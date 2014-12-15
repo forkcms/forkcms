@@ -128,24 +128,6 @@ class Model
     }
 
     /**
-     * Does the category exist?
-     *
-     * @todo  remove this method
-     * @param int $id
-     * @return bool
-     */
-    public static function existsCategory($id)
-    {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM faq_categories AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
-        );
-    }
-
-    /**
      * Fetch a question
      *
      * @param int $id
@@ -228,24 +210,22 @@ class Model
     public static function getCategories($includeCount = false)
     {
         $db = BackendModel::getContainer()->get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $categories = $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findByLanguage(BL::getWorkingLanguage())
+        ;
 
-        if ($includeCount) {
-            return (array) $db->getPairs(
-                'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
-                 FROM faq_categories AS i
-                 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
-                 WHERE i.language = ?
-                 GROUP BY i.id',
-                array(BL::getWorkingLanguage())
-            );
+        $pairs = array();
+        foreach ($categories as $category) {
+            $pairs[$category->getId()] = $category->getTitle();
+
+            if ($includeCount) {
+                $pairs[$category->getId()] .= ' (' . count($category->getQuestions()) . ')';
+            }
         }
 
-        return (array) $db->getPairs(
-            'SELECT i.id, i.title
-             FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
-        );
+        return $pairs;
     }
 
     /**
