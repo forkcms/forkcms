@@ -59,7 +59,9 @@ class Categories extends BackendBaseActionIndex
         $this->dataGrid = new DataGridDoctrine(
             BackendFaqModel::CATEGORY_ENTITY_CLASS,
             array('language' => BL::getWorkingLanguage()),
-            array('id', 'title', 'sequence')
+            array('id', 'title', 'sequence'),
+            'sequence',
+            'asc'
         );
 
         if ($this->multipleCategoriesAllowed) {

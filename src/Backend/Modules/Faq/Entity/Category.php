@@ -56,7 +56,7 @@ class Category
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Question", mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="category", cascade={"persist", "remove"})
      */
     private $questions;
 

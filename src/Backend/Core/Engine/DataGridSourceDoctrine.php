@@ -41,19 +41,33 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 	private $columns = array();
 
 	/**
+	 * @var string
+	 */
+	private $order;
+
+	/**
+	 * @var string;
+	 */
+	private $sort;
+
+	/**
 	 * Class construtor.
 	 *
 	 * @param EntityManager $em         The entity manager.
 	 * @param string        $repository The entity repository
 	 * @param array         $parameters The parameters to fetch data with
 	 * @param array         $columns    The columns to fetch
+     * @param string        $order      The column to order on
+     * @param string        $sort       Order ascending (asc) or descending (desc)
 	 */
-	public function __construct(EntityManager $em, $repository, $parameters = array(), $columns = array())
+	public function __construct(EntityManager $em, $repository, $parameters = array(), $columns = array(), $order = null, $sort = null)
 	{
 		$this->em = $em;
 		$this->repository = $repository;
 		$this->parameters = $parameters;
 		$this->columns = $columns;
+		$this->order = $order;
+		$this->sort = $sort;
 
 		$this->setNumResults();
 	}
@@ -91,6 +105,8 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 
 		if ($order !== null) {
 			$qb->orderBy('i.' . $order, $sort);
+		} elseif($this->order !== null) {
+			$qb->orderBy('i.' . $this->order, $this->sort);
 		}
 
 		$rows = $qb->getQuery()->getArrayResult();

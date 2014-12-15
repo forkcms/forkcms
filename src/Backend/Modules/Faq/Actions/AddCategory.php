@@ -15,6 +15,7 @@ use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Faq\Entity\Category;
 
 /**
  * This is the add-action, it will display a form to create a new category
@@ -70,19 +71,22 @@ class AddCategory extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['meta_id'] = $this->meta->save();
-                $item['sequence'] = BackendFaqModel::getMaximumCategorySequence() + 1;
+                $category = new Category();
+                $category
+                    ->setTitle($this->frm->getField('title')->getValue())
+                    ->setLanguage(BL::getWorkingLanguage())
+                    ->setMetaId($this->meta->save())
+                    ->setSequence(BackendFaqModel::getMaximumCategorySequence() + 1)
+                ;
 
                 // save the data
-                $item['id'] = BackendFaqModel::insertCategory($item);
-                BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $item));
+                BackendFaqModel::insertCategory($category);
+                BackendModel::triggerEvent($this->getModule(), 'after_add_category', array('item' => $category));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=added-category&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    urlencode($category->getTitle()) . '&highlight=row-' . $category->getId()
                 );
             }
         }

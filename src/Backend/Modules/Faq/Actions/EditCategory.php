@@ -31,21 +31,15 @@ class EditCategory extends BackendBaseActionEdit
      */
     public function execute()
     {
-        $this->id = $this->getParameter('id', 'int');
-
         // does the item exist?
-        if ($this->id !== null && BackendFaqModel::existsCategory($this->id)) {
-            parent::execute();
+        parent::execute();
 
-            $this->getData();
-            $this->loadForm();
-            $this->validateForm();
+        $this->getData();
+        $this->loadForm();
+        $this->validateForm();
 
-            $this->parse();
-            $this->display();
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
-        }
+        $this->parse();
+        $this->display();
     }
 
     /**
@@ -53,7 +47,12 @@ class EditCategory extends BackendBaseActionEdit
      */
     private function getData()
     {
+        $this->id = $this->getParameter('id', 'int');
         $this->record = BackendFaqModel::getCategory($this->id);
+
+        if ($this->id == null || empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Categories') . '&error=non-existing');
+        }
     }
 
     /**
@@ -63,9 +62,9 @@ class EditCategory extends BackendBaseActionEdit
     {
         // create form
         $this->frm = new BackendForm('editCategory');
-        $this->frm->addText('title', $this->record['title']);
+        $this->frm->addText('title', $this->record->getTitle());
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->frm, $this->record->getMetaId(), 'title', true);
     }
 
     /**
@@ -80,7 +79,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->tpl->assign(
             'showFaqDeleteCategory',
             (
-                BackendFaqModel::deleteCategoryAllowed($this->id) &&
+                BackendFaqModel::deleteCategoryAllowed($this->record) &&
                 BackendAuthentication::isAllowedAction('DeleteCategory')
             )
         );
@@ -95,7 +94,7 @@ class EditCategory extends BackendBaseActionEdit
             $this->meta->setUrlCallback(
                 'Backend\Modules\Faq\Engine\Model',
                 'getURLForCategory',
-                array($this->record['id'])
+                array($this->id)
             );
 
             $this->frm->cleanupFields();
@@ -105,21 +104,19 @@ class EditCategory extends BackendBaseActionEdit
             $this->meta->validate();
 
             if ($this->frm->isCorrect()) {
-                // build item
-                $item['id'] = $this->id;
-                $item['language'] = $this->record['language'];
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['extra_id'] = $this->record['extra_id'];
-                $item['meta_id'] = $this->meta->save(true);
+                $this->record
+                    ->setTitle($this->frm->getField('title')->getValue())
+                    ->setMetaId($this->meta->save(true))
+                ;
 
                 // update the item
-                BackendFaqModel::updateCategory($item);
-                BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $item));
+                BackendFaqModel::updateCategory($this->record);
+                BackendModel::triggerEvent($this->getModule(), 'after_edit_category', array('item' => $this->record));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Categories') . '&report=edited-category&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    urlencode($this->record->getTitle()) . '&highlight=row-' . $this->record->getId()
                 );
             }
         }
