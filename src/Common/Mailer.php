@@ -13,6 +13,8 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Template;
 use Backend\Core\Engine\Template as BackendTemplate;
+use Frontend\Core\Engine\Language;
+use Backend\Core\Engine\Language as BackendLanguage;
 
 /**
  * This class will send mails
@@ -58,6 +60,7 @@ class Mailer
      * @param string $plainText    The plain text version.
      * @param array  $attachments  Paths to attachments to include.
      * @param bool   $addUTM       Add UTM tracking to the urls.
+     * @param string $language     Set the language for locale in the used template.
      * @return int
      */
     public function addEmail(
@@ -75,7 +78,8 @@ class Mailer
         $isRawHTML = false,
         $plainText = null,
         array $attachments = null,
-        $addUTM = false
+        $addUTM = false,
+        $language = null
     ) {
         $subject = (string) strip_tags($subject);
         $template = (string) $template;
@@ -104,6 +108,13 @@ class Mailer
             throw new \Exception('Invalid e-mail address for reply-to address.');
         }
 
+        // set a different language
+        if ($language !== null) {
+            if(!in_array($language, Language::getActiveLanguages())) {
+                throw new \Exception('Invalid or inactive language.');
+            }
+        }
+
         // build array
         $email['to_name'] = \SpoonFilter::htmlentitiesDecode($email['to_name']);
         $email['from_name'] = \SpoonFilter::htmlentitiesDecode($email['from_name']);
@@ -112,7 +123,7 @@ class Mailer
         if ($isRawHTML) {
             $email['html'] = $template;
         } else {
-            $email['html'] = $this->getTemplateContent($template, $variables);
+            $email['html'] = $this->getTemplateContent($template, $variables, $language);
         }
         if ($plainText !== null) {
             $email['plain_text'] = $plainText;
@@ -214,15 +225,18 @@ class Mailer
      *
      * @param string $template  The template to use.
      * @param array  $variables The variables to assign.
+     * @param string $language  The language to use.
      * @return string
      */
-    private function getTemplateContent($template, $variables = null)
+    private function getTemplateContent($template, $variables = null, $language = null)
     {
         // new template instance
         $tpl = null;
         if (APPLICATION === 'Backend') {
+            BackendLanguage::setLocale(($language !== null) ? $language : BackendLanguage::getWorkingLanguage());
             $tpl = new BackendTemplate(false);
         } else {
+            Language::setLocale(($language !== null) ? $language : FRONTEND_LANGUAGE);
             $tpl = new Template(false);
         }
 
