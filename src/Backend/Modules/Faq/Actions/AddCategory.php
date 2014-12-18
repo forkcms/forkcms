@@ -24,6 +24,7 @@ use Backend\Modules\Faq\Entity\Category;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author SIESQO <info@siesqo.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class AddCategory extends BackendBaseActionAdd
 {

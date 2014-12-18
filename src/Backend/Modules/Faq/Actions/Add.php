@@ -16,6 +16,7 @@ use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
+use Backend\Modules\Faq\Entity\Question;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
@@ -52,7 +53,7 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
 
         // set hidden values
-        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
+        $rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => true);
         $rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
         // get categories
@@ -102,39 +103,45 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['meta_id'] = $this->meta->save();
-                $item['category_id'] = $this->frm->getField('category_id')->getValue();
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['language'] = BL::getWorkingLanguage();
-                $item['question'] = $this->frm->getField('title')->getValue();
-                $item['answer'] = $this->frm->getField('answer')->getValue(true);
-                $item['created_on'] = BackendModel::getUTCDate();
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
-                $item['sequence'] = BackendFaqModel::getMaximumSequence(
-                    $this->frm->getField('category_id')->getValue()
-                ) + 1;
+                $question = new Question();
+                $question
+                    ->setMetaId($this->meta->save())
+                    ->setCategory(BackendFaqModel::getCategory(
+                        $this->frm->getField('category_id')->getValue()
+                    ))
+                    ->setUserId(BackendAuthentication::getUser()->getUserId())
+                    ->setLanguage(BL::getWorkingLanguage())
+                    ->setQuestion($this->frm->getField('title')->getValue())
+                    ->setAnswer($this->frm->getField('answer')->getValue(true))
+                    ->setIsHidden($this->frm->getField('hidden')->getValue() === 'Y')
+                    ->setSequence(
+                        BackendFaqModel::getMaximumSequence(
+                            $this->frm->getField('category_id')->getValue()
+                        ) + 1
+                    )
+                ;
 
                 // save the data
-                $item['id'] = BackendFaqModel::insert($item);
+                BackendFaqModel::insert($question);
                 BackendTagsModel::saveTags(
-                    $item['id'],
+                    $question->getId(),
                     $this->frm->getField('tags')->getValue(),
                     $this->URL->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
+                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $question));
 
                 // add search index
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
-                    $item['id'],
+                    $question->getId(),
                     array(
-                        'title' => $item['question'],
-                        'text' => $item['answer'],
+                        'title' => $question->getQuestion(),
+                        'text' => $question->getAnswer(),
                     )
                 );
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['question']) . '&highlight=' . $item['id']
+                    urlencode($question->getQuestion()) . '&highlight=' . $question->getId()
                 );
             }
         }

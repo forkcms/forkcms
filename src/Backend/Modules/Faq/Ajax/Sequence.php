@@ -16,6 +16,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  * Reorder categories
  *
  * @author Lester Lievens <lester.lievens@netlash.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Sequence extends BackendBaseAJAXAction
 {

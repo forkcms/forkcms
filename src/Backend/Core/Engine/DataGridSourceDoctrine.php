@@ -10,6 +10,7 @@ namespace Backend\Core\Engine;
  */
 
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Query;
 
 /**
  * This class is used for datagrids based on doctrine
@@ -109,7 +110,11 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 			$qb->orderBy('i.' . $this->order, $this->sort);
 		}
 
-		$rows = $qb->getQuery()->getArrayResult();
+		$query = $qb->getQuery();
+
+		// make sure columns that couple to other entities (f.e. categoryId) can get fetched
+		$query->setHint(Query::HINT_INCLUDE_META_COLUMNS, true);
+		$rows = $query->getArrayResult();
 
 		// extract the right columns from the array results
 		$results = array();
@@ -120,7 +125,6 @@ class DataGridSourceDoctrine extends \SpoonDatagridSource
 		// fetch data
 		return $results;
 	}
-
 
 	/**
 	 * Set the number of results.

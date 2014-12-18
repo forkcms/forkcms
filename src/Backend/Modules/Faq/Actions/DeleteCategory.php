@@ -19,6 +19,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class DeleteCategory extends BackendBaseActionDelete
 {

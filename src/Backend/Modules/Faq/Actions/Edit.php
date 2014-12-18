@@ -38,21 +38,15 @@ class Edit extends BackendBaseActionEdit
      */
     public function execute()
     {
-        $this->id = $this->getParameter('id', 'int');
-
         // does the item exists
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
-            parent::execute();
+        parent::execute();
 
-            $this->getData();
-            $this->loadForm();
-            $this->validateForm();
+        $this->getData();
+        $this->loadForm();
+        $this->validateForm();
 
-            $this->parse();
-            $this->display();
-        } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
-        }
+        $this->parse();
+        $this->display();
     }
 
     /**
@@ -60,8 +54,14 @@ class Edit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = (array) BackendFaqModel::get($this->id);
-        $this->feedback = BackendFaqModel::getAllFeedbackForQuestion($this->id);
+        $this->id = $this->getParameter('id', 'int');
+
+        $this->record = BackendFaqModel::get($this->id);
+        if ($this->id === null || empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
+
+        $this->feedback = array();//BackendFaqModel::getAllFeedbackForQuestion($this->id);
     }
 
     /**
@@ -76,19 +76,19 @@ class Edit extends BackendBaseActionEdit
 
         // create form
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['question'], null, 'inputText title', 'inputTextError title');
-        $this->frm->addEditor('answer', $this->record['answer']);
-        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
-        $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
+        $this->frm->addText('title', $this->record->getQuestion(), null, 'inputText title', 'inputTextError title');
+        $this->frm->addEditor('answer', $this->record->getAnswer());
+        $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record->getIsHidden() ? 'Y' : 'N');
+        $this->frm->addDropdown('category_id', $categories, $this->record->getCategory()->getId());
         $this->frm->addText(
             'tags',
-            BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
+            BackendTagsModel::getTags($this->URL->getModule(), $this->record->getId()),
             null,
             'inputText tagBox',
             'inputTextError tagBox'
         );
 
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $this->meta = new BackendMeta($this->frm, $this->record->getMetaId(), 'title', true);
     }
 
     /**
@@ -116,7 +116,7 @@ class Edit extends BackendBaseActionEdit
     private function validateForm()
     {
         if ($this->frm->isSubmitted()) {
-            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record['id']));
+            $this->meta->setUrlCallback('Backend\Modules\Faq\Engine\Model', 'getURL', array($this->record->getId()));
 
             $this->frm->cleanupFields();
 
@@ -128,37 +128,39 @@ class Edit extends BackendBaseActionEdit
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = $this->id;
-                $item['meta_id'] = $this->meta->save(true);
-                $item['category_id'] = $this->frm->getField('category_id')->getValue();
-                $item['language'] = $this->record['language'];
-                $item['question'] = $this->frm->getField('title')->getValue();
-                $item['answer'] = $this->frm->getField('answer')->getValue(true);
-                $item['hidden'] = $this->frm->getField('hidden')->getValue();
+                $this->record
+                    ->setMetaId($this->meta->save(true))
+                    ->setCategory(BackendFaqModel::getCategory(
+                        $this->frm->getField('category_id')->getValue()
+                    ))
+                    ->setQuestion($this->frm->getField('title')->getValue())
+                    ->setAnswer($this->frm->getField('answer')->getValue(true))
+                    ->setIsHidden($this->frm->getField('hidden')->getValue() === 'Y')
+                ;
 
                 // update the item
-                BackendFaqModel::update($item);
+                BackendFaqModel::update($this->record);
                 BackendTagsModel::saveTags(
-                    $item['id'],
+                    $this->record->getId(),
                     $this->frm->getField('tags')->getValue(),
                     $this->URL->getModule()
                 );
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $this->record));
 
                 // edit search index
                 BackendSearchModel::saveIndex(
                     $this->getModule(),
-                    $item['id'],
+                    $this->record->getId(),
                     array(
-                        'title' => $item['question'],
-                        'text' => $item['answer'],
+                        'title' => $this->record->getQuestion(),
+                        'text' => $this->record->getAnswer(),
                     )
                 );
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=saved&var=' .
-                    urlencode($item['question']) . '&highlight=' . $item['id']
+                    urlencode($this->record->getQuestion()) . '&highlight=' . $this->record->getId()
                 );
             }
         }
