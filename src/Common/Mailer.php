@@ -110,8 +110,16 @@ class Mailer
 
         // set a different language
         if ($language !== null) {
-            if(!in_array($language, Language::getActiveLanguages())) {
+            if (!in_array($language, Language::getActiveLanguages())) {
                 throw new \Exception('Invalid or inactive language.');
+            }
+
+            if (APPLICATION === 'Backend') {
+                $currentLanguage = BackendLanguage::getWorkingLanguage();
+                BackendLanguage::setLocale(($language !== null) ? $language : BackendLanguage::getWorkingLanguage());
+            } else {
+                $currentLanguage = FRONTEND_LANGUAGE;
+                Language::setLocale(($language !== null) ? $language : FRONTEND_LANGUAGE);
             }
         }
 
@@ -172,6 +180,15 @@ class Mailer
             $this->send($id);
         }
 
+        // reset the language back to the users language
+        if (isset($currentLanguage)) {
+            if (APPLICATION === 'Backend') {
+                BackendLanguage::setLocale($currentLanguage);
+            } else {
+                Language::setLocale($currentLanguage);
+            }
+        }
+
         // return
         return $id;
     }
@@ -225,18 +242,15 @@ class Mailer
      *
      * @param string $template  The template to use.
      * @param array  $variables The variables to assign.
-     * @param string $language  The language to use.
      * @return string
      */
-    private function getTemplateContent($template, $variables = null, $language = null)
+    private function getTemplateContent($template, $variables = null)
     {
         // new template instance
         $tpl = null;
         if (APPLICATION === 'Backend') {
-            BackendLanguage::setLocale(($language !== null) ? $language : BackendLanguage::getWorkingLanguage());
             $tpl = new BackendTemplate(false);
         } else {
-            Language::setLocale(($language !== null) ? $language : FRONTEND_LANGUAGE);
             $tpl = new Template(false);
         }
 
