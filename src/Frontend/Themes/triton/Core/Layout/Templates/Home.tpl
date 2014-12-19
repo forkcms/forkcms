@@ -148,20 +148,6 @@
 	{* Theme specific Javascript *}
 	<script src="{$THEME_URL}/Core/Js/triton.js"></script>
 
-	{* Used to create a search bar in google*}
-	<script type="application/ld+json">
-	{
-		"@context": "http://schema.org",
-		"@type": "WebSite",
-		"url": "{$SITE_URL}",
-		"potentialAction": {
-			"@type": "SearchAction",
-			"target": "{$SITE_URL}{$var|geturlforblock:'search'}?form=search&q={search_term_string}",
-			"query-input": "required name=search_term_string"
-		}
-	}
-	</script>
-
 	{* Site wide HTML *}
 	{$siteHTMLFooter}
 </body>

@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
@@ -45,69 +46,115 @@ class Footer extends FrontendBaseObject
 
         // facebook admins given?
         if ($facebookAdminIds !== null || $facebookAppId !== null) {
-            // build correct locale
-            switch (FRONTEND_LANGUAGE) {
-                case 'en':
-                    $locale = 'en_US';
-                    break;
-
-                case 'zh':
-                    $locale = 'zh_CN';
-                    break;
-
-                case 'cs':
-                    $locale = 'cs_CZ';
-                    break;
-
-                case 'el':
-                    $locale = 'el_GR';
-                    break;
-
-                case 'ja':
-                    $locale = 'ja_JP';
-                    break;
-
-                case 'sv':
-                    $locale = 'sv_SE';
-                    break;
-
-                case 'uk':
-                    $locale = 'uk_UA';
-                    break;
-
-                default:
-                    $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
-            }
-
             // add Facebook container
-            $siteHTMLFooter .= "\n" . '<div id="fb-root"></div>' . "\n";
+            $siteHTMLFooter .= $this->getFacebookHtml($facebookAppId);
+        }
 
-            // add facebook JS
-            $siteHTMLFooter .= '<script>' . "\n";
-            if ($facebookAppId !== null) {
-                $siteHTMLFooter .= '	window.fbAsyncInit = function() {' . "\n";
-                $siteHTMLFooter .= '		FB.init({' . "\n";
-                $siteHTMLFooter .= '			appId: "' . $facebookAppId . '",' . "\n";
-                $siteHTMLFooter .= '			status: true,' . "\n";
-                $siteHTMLFooter .= '			cookie: true,' . "\n";
-                $siteHTMLFooter .= '			xfbml: true,' . "\n";
-                $siteHTMLFooter .= '			oauth: true' . "\n";
-                $siteHTMLFooter .= '		});' . "\n";
-                $siteHTMLFooter .= '		jsFrontend.facebook.afterInit();' . "\n";
-                $siteHTMLFooter .= '	};' . "\n";
-            }
-
-            $siteHTMLFooter .= '	(function(d, s, id){' . "\n";
-            $siteHTMLFooter .= '		var js, fjs = d.getElementsByTagName(s)[0];' . "\n";
-            $siteHTMLFooter .= '		if (d.getElementById(id)) {return;}' . "\n";
-            $siteHTMLFooter .= '		js = d.createElement(s); js.id = id;' . "\n";
-            $siteHTMLFooter .= '		js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
-            $siteHTMLFooter .= '		fjs.parentNode.insertBefore(js, fjs);' . "\n";
-            $siteHTMLFooter .= '	}(document, \'script\', \'facebook-jssdk\'));' . "\n";
-            $siteHTMLFooter .= '</script>';
+        $searchUrl = FrontendNavigation::getURLForBlock('Search');
+        $url404 = FrontendNavigation::getURL(404);
+        if ($searchUrl !== $url404) {
+            $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
         }
 
         // assign site wide html
         $this->tpl->assign('siteHTMLFooter', $siteHTMLFooter);
+    }
+
+    /**
+     * Builds the HTML needed for Facebook to be initialized
+     *
+     * @param  string $facebookAppId The application id used to interact with FB
+     * @return string                HTML and JS needed to initialize FB JavaScript
+     */
+    protected function getFacebookHtml($facebookAppId)
+    {
+        // build correct locale
+        $locale = strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE);
+
+        // reform some locale
+        switch (FRONTEND_LANGUAGE) {
+            case 'en':
+                $locale = 'en_US';
+                break;
+
+            case 'zh':
+                $locale = 'zh_CN';
+                break;
+
+            case 'cs':
+                $locale = 'cs_CZ';
+                break;
+
+            case 'el':
+                $locale = 'el_GR';
+                break;
+
+            case 'ja':
+                $locale = 'ja_JP';
+                break;
+
+            case 'sv':
+                $locale = 'sv_SE';
+                break;
+
+            case 'uk':
+                $locale = 'uk_UA';
+                break;
+        }
+
+        // add the fb-root div
+        $facebookHtml = "\n" . '<div id="fb-root"></div>' . "\n";
+
+        // add facebook JavaScript
+        $facebookHtml .= '<script>' . "\n";
+        if ($facebookAppId !== null) {
+            $facebookHtml .= '    window.fbAsyncInit = function() {' . "\n";
+            $facebookHtml .= '        FB.init({' . "\n";
+            $facebookHtml .= '            appId: "' . $facebookAppId . '",' . "\n";
+            $facebookHtml .= '            status: true,' . "\n";
+            $facebookHtml .= '            cookie: true,' . "\n";
+            $facebookHtml .= '            xfbml: true,' . "\n";
+            $facebookHtml .= '            oauth: true' . "\n";
+            $facebookHtml .= '        });' . "\n";
+            $facebookHtml .= '        jsFrontend.facebook.afterInit();' . "\n";
+            $facebookHtml .= '    };' . "\n";
+        }
+
+        $facebookHtml .= '    (function(d, s, id){' . "\n";
+        $facebookHtml .= '        var js, fjs = d.getElementsByTagName(s)[0];' . "\n";
+        $facebookHtml .= '        if (d.getElementById(id)) {return;}' . "\n";
+        $facebookHtml .= '        js = d.createElement(s); js.id = id;' . "\n";
+        $facebookHtml .= '        js.src = "//connect.facebook.net/' . $locale . '/all.js";' . "\n";
+        $facebookHtml .= '        fjs.parentNode.insertBefore(js, fjs);' . "\n";
+        $facebookHtml .= '    }(document, \'script\', \'facebook-jssdk\'));' . "\n";
+        $facebookHtml .= '</script>';
+
+        return $facebookHtml;
+    }
+
+    /**
+     * Returns the code needed to get a site links search box in Google.
+     * More information can be found on the offical Google documentation:
+     * https://developers.google.com/webmasters/richsnippets/sitelinkssearch
+     *
+     * @param  string $searchUrl The url to the search page
+     * @return string            The script needed for google
+     */
+    protected function getSiteLinksCode($searchUrl)
+    {
+        $siteLinksCode = '<script type="application/ld+json">' . "\n";
+        $siteLinksCode .= '{' . "\n";
+        $siteLinksCode .= '    "@context": "http://schema.org",' . "\n";
+        $siteLinksCode .= '    "@type": "WebSite",' . "\n";
+        $siteLinksCode .= '    "url": "' . SITE_URL . '",' . "\n";
+        $siteLinksCode .= '    "potentialAction": {' . "\n";
+        $siteLinksCode .= '        "@type": "SearchAction",' . "\n";
+        $siteLinksCode .= '        "target": "' . SITE_URL . $searchUrl . '?form=search&q={search_term_string}",' . "\n";
+        $siteLinksCode .= '        "query-input": "required name=search_term_string"' . "\n";
+        $siteLinksCode .= '    }' . "\n";
+        $siteLinksCode .= '}' . "\n";
+        $siteLinksCode .= '</script>';
+
+        return $siteLinksCode;
     }
 }
