@@ -50,10 +50,13 @@ class Footer extends FrontendBaseObject
             $siteHTMLFooter .= $this->getFacebookHtml($facebookAppId);
         }
 
-        $searchUrl = FrontendNavigation::getURLForBlock('Search');
-        $url404 = FrontendNavigation::getURL(404);
-        if ($searchUrl !== $url404) {
-            $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
+        // add Google sitelinks search box code if wanted.
+        if (Model::getModuleSetting('Search', 'use_sitelinks_search_box', true)) {
+            $searchUrl = FrontendNavigation::getURLForBlock('Search');
+            $url404 = FrontendNavigation::getURL(404);
+            if ($searchUrl !== $url404) {
+                $siteHTMLFooter .= $this->getSiteLinksCode($searchUrl);
+            }
         }
 
         // assign site wide html
