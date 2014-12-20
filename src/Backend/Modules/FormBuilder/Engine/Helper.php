@@ -70,7 +70,7 @@ class Helper
             } elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
                 foreach ($values as $value) {
-                    $newValues[] = array('label' => $value, 'value' => $value);
+                    $newValues[] = array('label' => $value['label'], 'value' => $value['value']);
                 }
 
                 // create element
