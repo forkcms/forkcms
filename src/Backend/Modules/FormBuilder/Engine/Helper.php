@@ -68,13 +68,8 @@ class Helper
                 // get content
                 $fieldHTML = $ddm->parse();
             } elseif ($field['type'] == 'radiobutton') {
-                // rebuild values
-                foreach ($values as $value) {
-                    $newValues[] = array('label' => $value['label'], 'value' => $value['value']);
-                }
-
                 // create element
-                $rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
+                $rbt = $frm->addRadiobutton($fieldName, $values, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
