@@ -79,7 +79,7 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($category->getExtraId(), 'faq', 'widget', 'category_list')
+            array($category->getExtraId(), 'Faq', 'widget', 'CategoryList')
         );
 
         return $category->getId();
@@ -153,7 +153,7 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'allow_multiple_categories', true);
         $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
 
-        $this->addDefaultCategories();
+        $this->addDefaultCategories($faqId);
 
         $this->insertWidget();
 
@@ -179,7 +179,7 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, $this->getModule(), 'Settings');
     }
 
-    private function addDefaultCategories()
+    private function addDefaultCategories($faqId)
     {
         foreach ($this->getLanguages() as $language) {
             $this->defaultCategory = $this->getCategory($language);
