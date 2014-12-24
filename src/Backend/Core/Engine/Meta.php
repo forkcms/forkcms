@@ -20,6 +20,8 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Meta
 {
+    const ENTITY_CLASS = 'Backend\Core\Entity\Meta';
+
     /**
      * The name of the field we should use to generate default-values
      *

@@ -3,7 +3,7 @@
 namespace Frontend\Modules\ContentBlocks\Engine;
 
 use Frontend\Core\Engine\Model as FrontendModel;
-use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlockModel;
+use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
 use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
@@ -26,7 +26,7 @@ class Model
     {
         $em = FrontendModel::get('doctrine.orm.entity_manager');
         return $em
-            ->getRepository(BackendContentBlockModel::ENTITY_CLASS)
+            ->getRepository(BackendContentBlocksModel::ENTITY_CLASS)
             ->findOneBy(
                 array(
                     'id'       => $id,
