@@ -309,11 +309,11 @@ class Model
         $url = CommonUri::getUrl((string) $url);
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        $items = $em
+        $questionWithUrl = $em
             ->getRepository(self::QUESTION_ENTITY_CLASS)
             ->findByUrl($url, BL::getWorkingLanguage(), $id)
         ;
-        if (count($items) !== 0) {
+        if (!empty($questionWithUrl)) {
             $url = BackendModel::addNumber($url);
 
             return self::getURL($url);
@@ -335,11 +335,11 @@ class Model
         $url = CommonUri::getUrl((string) $url);
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        $items = $em
+        $categoryWithUrl = $em
             ->getRepository(self::CATEGORY_ENTITY_CLASS)
             ->findByUrl($url, BL::getWorkingLanguage(), $id)
         ;
-        if (count($items) !== 0) {
+        if (!empty($categoryWithUrl)) {
             $url = BackendModel::addNumber($url);
 
             return self::getURL($url);

@@ -18,7 +18,7 @@ class CategoryRepository extends EntityRepository
      * @param  string $language The current language
      * @param  id     $ignoreId The id of the category we don't want to fetch
      *
-     * @return Question|null    The category that matches these criteria
+     * @return Category|null    The category that matches these criteria
      */
     function findByUrl($url, $language, $ignoreId = null)
     {
@@ -42,7 +42,7 @@ class CategoryRepository extends EntityRepository
         }
 
         return $qb->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 }

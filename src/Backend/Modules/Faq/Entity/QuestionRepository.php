@@ -42,7 +42,7 @@ class QuestionRepository extends EntityRepository
         }
 
         return $qb->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
     }
 }
