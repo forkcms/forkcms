@@ -52,7 +52,7 @@ class Installer extends ModuleInstaller
         // build category
         $category = new Category();
         $category
-            ->setMetaId($this->insertMeta($title, $title, $title, $url))
+            ->setMeta($this->getMetaEntity($title, $title, $title, $url))
             ->setExtraId($this->insertExtra($this->getModule(), 'widget', $this->getModule(), 'CategoryList', null, 'N', $sequenceExtra))
             ->setLanguage((string) $language)
             ->setTitle((string) $title)

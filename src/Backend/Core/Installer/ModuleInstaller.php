@@ -16,6 +16,7 @@ use Common\Uri as CommonUri;
 
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Entity\Meta;
 
 /**
  * The base-class for the installer
@@ -557,6 +558,55 @@ class ModuleInstaller
 
         // exists so return id
         return $extraId;
+    }
+
+    /**
+     * Insert a meta item
+     *
+     * @param string $keywords             The keyword of the item.
+     * @param string $description          A description of the item.
+     * @param string $title                The page title for the item.
+     * @param string $url                  The unique URL.
+     * @param bool   $keywordsOverwrite    Should the keywords be overwritten?
+     * @param bool   $descriptionOverwrite Should the descriptions be overwritten?
+     * @param bool   $titleOverwrite       Should the pagetitle be overwritten?
+     * @param bool   $urlOverwrite         Should the URL be overwritten?
+     * @param string $custom               Any custom meta-data.
+     * @param array  $data                 Any custom meta-data.
+     * @return int
+     */
+    protected function getMetaEntity(
+        $keywords,
+        $description,
+        $title,
+        $url,
+        $keywordsOverwrite = false,
+        $descriptionOverwrite = false,
+        $titleOverwrite = false,
+        $urlOverwrite = false,
+        $custom = null,
+        $data = null
+    ) {
+        $meta = new Meta();
+        $meta
+            ->setKeywords((string) $keywords)
+            ->setOverwriteKeywords($keywordsOverwrite && $keywordsOverwrite !== 'N')
+            ->setDescription((string) $description)
+            ->setOverwriteDescription($descriptionOverwrite && $descriptionOverwrite !== 'N')
+            ->setTitle((string) $title)
+            ->setOverwriteTitle($titleOverwrite && $titleOverwrite !== 'N')
+            ->setUrl(CommonUri::getUrl((string) $url, SPOON_CHARSET))
+            ->setOverwriteUrl($urlOverwrite && $urlOverwrite !== 'N')
+        ;
+
+        if (!is_null($custom)) {
+            $meta->setCustom($custom);
+        }
+        if (!is_null($data)) {
+            $meta->setData($data);
+        }
+
+        return $meta;
     }
 
     /**

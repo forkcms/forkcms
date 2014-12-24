@@ -4,6 +4,7 @@ namespace Backend\Modules\Faq\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Backend\Core\Entity\Meta;
 
 /**
  * This is the Faq Category Entity
@@ -26,11 +27,10 @@ class Category
     private $id;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(type="integer")
-     */
-    private $metaId;
+     * @ORM\OneToOne(targetEntity="Backend\Core\Entity\Meta",cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
+     **/
+    private $meta;
 
     /**
      * @var int
@@ -100,26 +100,26 @@ class Category
     }
 
     /**
-     * Set metaId
+     * Set meta
      *
-     * @param integer $metaId
+     * @param Meta $meta
      * @return Category
      */
-    public function setMetaId($metaId)
+    public function setMeta(Meta $meta = null)
     {
-        $this->metaId = $metaId;
+        $this->meta = $meta;
 
         return $this;
     }
 
     /**
-     * Get metaId
+     * Get meta
      *
-     * @return integer
+     * @return Meta
      */
-    public function getMetaId()
+    public function getMeta()
     {
-        return $this->metaId;
+        return $this->meta;
     }
 
     /**
