@@ -24,15 +24,15 @@ $I->see('Enter your database details');
 $I->fillField('install_database_dbHostname','localhost');
 $I->fillField('install_database_dbPort','3306');
 $I->fillField('install_database_dbDatabase','test_fork_cms');
-$I->fillField('install_database_dbUsername','root');
-$I->fillField('install_database_dbPassword','$ecure');
+$I->fillField('install_database_dbUsername','forktest');
+$I->fillField('install_database_dbPassword','forktest');
 $I->click('Next');
 
 # Step 4
 $I->see('Email');
-$I->fillField('install_login_email','tests@forkcms.org');
-$I->fillField('install_login_password_first','te$ts');
-$I->fillField('install_login_password_second','te$ts');
+$I->fillField('install_login_email','forktest@forkcms.org');
+$I->fillField('install_login_password_first','forktest');
+$I->fillField('install_login_password_second','forktest');
 $I->click('Finish installation');
 
 # Step 5
