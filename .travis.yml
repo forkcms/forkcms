@@ -17,7 +17,7 @@ script:
   - ./build/run-tests
 
 before_script:
-  # From official travis ci PHP documentation to enable php-fpm
+  # Travis comes with php-fpm, we install libapache2-mod-fastcgi to use it : http://docs.travis-ci.com/user/languages/php/
   - sudo apt-get install apache2 libapache2-mod-fastcgi
   - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
   - sudo a2enmod rewrite actions fastcgi alias
@@ -35,7 +35,7 @@ before_script:
   - sudo sed -i "9i\SetEnv FORK_DEBUG 1" .htaccess
   - sudo service apache2 restart
   - composer self-update || true
-  - composer update -o --prefer-source
+  - composer install -o --prefer-source
   - chmod ugo+x ./build/run-tests
 
 after_script:
