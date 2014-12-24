@@ -1,0 +1,4 @@
+service_name: travis-ci
+src_dir: src
+coverage_clover: tests/_log/coverage.xml
+json_path: tests/_log/coveralls-upload.json

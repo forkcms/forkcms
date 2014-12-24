@@ -1,0 +1,44 @@
+language: php
+
+php:
+  - 5.3
+  - 5.4
+  - 5.5
+  - 5.6
+  - hhvm
+env:
+  - DB=mysql
+
+matrix:
+  allow_failures:
+    - php: hhvm
+
+script:
+  - ./build/run-tests
+
+before_script:
+  # From official travis ci PHP documentation to enable php-fpm
+  - sudo apt-get install apache2 libapache2-mod-fastcgi
+  - sudo cp ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf.default ~/.phpenv/versions/$(phpenv version-name)/etc/php-fpm.conf
+  - sudo a2enmod rewrite actions fastcgi alias
+  - echo "cgi.fix_pathinfo = 1" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
+  - ~/.phpenv/versions/$(phpenv version-name)/sbin/php-fpm
+  # configure apache virtual hosts
+  - sudo cp -f build/travis-ci-apache /etc/apache2/sites-available/default
+  - sudo sed -e "s?%TRAVIS_BUILD_DIR%?$(pwd)?g" --in-place /etc/apache2/sites-available/default
+  - sudo service apache2 restart
+  # configure MySQL database
+  - mysql -e "CREATE DATABASE IF NOT EXISTS test_fork_cms DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;"
+  - echo "USE mysql;\nUPDATE user SET password=PASSWORD('$ecure') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
+  # Custom Fork CMS configuration
+  - sudo sed -i "9i\SetEnv FORK_ENV test" .htaccess
+  - sudo sed -i "9i\SetEnv FORK_DEBUG 1" .htaccess
+  - sudo service apache2 restart
+  - composer self-update || true
+  - composer update -o --prefer-source
+  - chmod ugo+x ./build/run-tests
+
+after_script:
+  - vendor/bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover tests/_log/coverage.xml
