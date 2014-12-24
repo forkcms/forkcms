@@ -88,7 +88,7 @@ class Edit extends BackendBaseActionEdit
             'inputTextError tagBox'
         );
 
-        $this->meta = new BackendMeta($this->frm, $this->record->getMetaId(), 'title', true);
+        $this->meta = new BackendMeta($this->frm, $this->record->getMeta(), 'title', true);
     }
 
     /**
@@ -129,7 +129,7 @@ class Edit extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // build item
                 $this->record
-                    ->setMetaId($this->meta->save(true))
+                    ->setMeta($this->meta->save(true))
                     ->setCategory(BackendFaqModel::getCategory(
                         $this->frm->getField('category_id')->getValue()
                     ))

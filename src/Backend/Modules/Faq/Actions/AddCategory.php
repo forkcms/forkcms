@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\ActionAdd as BackendBaseActionAdd;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Entity\Meta;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Faq\Entity\Category;
@@ -53,7 +54,7 @@ class AddCategory extends BackendBaseActionAdd
         $this->frm = new BackendForm('addCategory');
         $this->frm->addText('title');
 
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->frm, new Meta(), 'title', true);
     }
 
     /**
@@ -76,7 +77,7 @@ class AddCategory extends BackendBaseActionAdd
                 $category
                     ->setTitle($this->frm->getField('title')->getValue())
                     ->setLanguage(BL::getWorkingLanguage())
-                    ->setMetaId($this->meta->save())
+                    ->setMeta($this->meta->save())
                     ->setSequence(BackendFaqModel::getMaximumCategorySequence() + 1)
                 ;
 

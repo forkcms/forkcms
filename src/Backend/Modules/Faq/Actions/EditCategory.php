@@ -65,7 +65,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->frm = new BackendForm('editCategory');
         $this->frm->addText('title', $this->record->getTitle());
 
-        $this->meta = new BackendMeta($this->frm, $this->record->getMetaId(), 'title', true);
+        $this->meta = new BackendMeta($this->frm, $this->record->getMeta(), 'title', true);
     }
 
     /**
@@ -107,7 +107,7 @@ class EditCategory extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 $this->record
                     ->setTitle($this->frm->getField('title')->getValue())
-                    ->setMetaId($this->meta->save(true))
+                    ->setMeta($this->meta->save(true))
                 ;
 
                 // update the item

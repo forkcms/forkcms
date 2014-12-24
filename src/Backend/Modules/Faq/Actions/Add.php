@@ -15,6 +15,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Entity\Meta;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 use Backend\Modules\Faq\Entity\Question;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -67,7 +68,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 
         // meta
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $this->meta = new BackendMeta($this->frm, new Meta(), 'title', true);
     }
 
     /**
@@ -105,7 +106,7 @@ class Add extends BackendBaseActionAdd
                 // build item
                 $question = new Question();
                 $question
-                    ->setMetaId($this->meta->save())
+                    ->setMeta($this->meta->save())
                     ->setCategory(BackendFaqModel::getCategory(
                         $this->frm->getField('category_id')->getValue()
                     ))

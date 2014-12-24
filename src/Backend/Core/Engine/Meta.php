@@ -12,11 +12,13 @@ namespace Backend\Core\Engine;
 use Common\Uri as CommonUri;
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Entity\Meta as MetaEntity;
 
 /**
  * This class represents a META-object
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Meta
 {
@@ -383,7 +385,7 @@ class Meta
             $this->frm->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
         }
 
-        $this->frm->addHidden('meta_id', $this->id);
+        $this->frm->addHidden('meta_id', $this->data['id']);
         $this->frm->addHidden('base_field_name', $this->baseFieldName);
         $this->frm->addHidden('custom', $this->custom);
         $this->frm->addHidden('class_name', $this->callback['class']);
@@ -399,25 +401,74 @@ class Meta
      */
     protected function loadMeta($id)
     {
-        $this->id = (int) $id;
+        if ($id instanceof MetaEntity) {
+            $this->id = $id;
 
-        // get item
-        $this->data = (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT *
-             FROM meta AS m
-             WHERE m.id = ?',
-            array($this->id)
-        );
+            $this->data = array(
+                'id'                    => $id->getId(),
+                'keywords'              => $id->getKeywords(),
+                'keywords_overwrite'    => $id->getOverwriteKeywords() ? 'Y' : 'N',
+                'description'           => $id->getDescription(),
+                'description_overwrite' => $id->getOverwriteDescription() ? 'Y' : 'N',
+                'title'                 => $id->getTitle(),
+                'title_overwrite'       => $id->getOverwriteTitle() ? 'Y' : 'N',
+                'url'                   => $id->getUrl(),
+                'url_overwrite'         => $id->getOverwriteUrl() ? 'Y' : 'N',
+                'custom'                => $id->getCustom(),
+                'data'                  => $id->getData(),
+            );
+        } else {
+            $this->id = (int) $id;
 
-        // validate meta-record
-        if (empty($this->data)) {
-            throw new Exception('Meta-record doesn\'t exist.');
+            // get item
+            $this->data = (array) BackendModel::getContainer()->get('database')->getRecord(
+                'SELECT *
+                 FROM meta AS m
+                 WHERE m.id = ?',
+                array($this->id)
+            );
+
+            // validate meta-record
+            if (empty($this->data)) {
+                throw new Exception('Meta-record doesn\'t exist.');
+            }
         }
 
         // unserialize data
         if (isset($this->data['data'])) {
             $this->data['data'] = @unserialize($this->data['data']);
         }
+    }
+
+    /**
+     * Fetches the updated meta entity
+     *
+     * @return MetaEntity The meta entity with updated data
+     */
+    public function getUpdated()
+    {
+        $data = $this->getUpdatedData();
+
+        $meta = $this->id;
+        $meta
+            ->setKeywords($data['keywords'])
+            ->setOverwriteKeywords($data['keywords_overwrite'] == 'Y')
+            ->setDescription($data['description'])
+            ->setOverwriteDescription($data['description_overwrite'] == 'Y')
+            ->setTitle($data['title'])
+            ->setOverwriteTitle($data['title_overwrite'] == 'Y')
+            ->setUrl(CommonUri::getUrl((string) $data['url'], SPOON_CHARSET))
+            ->setOverwriteUrl($data['url_overwrite'] == 'Y')
+        ;
+
+        $meta->setCustom($data['custom']);
+        if (isset($data['data'])) {
+            $meta->setData($data['data']);
+        } else {
+            $meta->setData(null);
+        }
+
+        return $meta;
     }
 
     /**
@@ -429,70 +480,15 @@ class Meta
      */
     public function save($update = false)
     {
-        $update = (bool) $update;
-
-        // get meta keywords
-        if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
-            $keywords = $this->frm->getField('meta_keywords')->getValue();
-        } else {
-            $keywords = $this->frm->getField($this->baseFieldName)->getValue();
+        if ($this->id instanceof MetaEntity) {
+            return $this->getUpdated();
         }
 
-        // get meta description
-        if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
-            $description = $this->frm->getField('meta_description')->getValue();
-        } else {
-            $description = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get page title
-        if ($this->frm->getField('page_title_overwrite')->isChecked()) {
-            $title = $this->frm->getField('page_title')->getValue();
-        } else {
-            $title = $this->frm->getField($this->baseFieldName)->getValue();
-        }
-
-        // get URL
-        if ($this->frm->getField('url_overwrite')->isChecked()) {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
-        } else {
-            $URL = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
-        }
-
-        // get the real URL
-        $URL = $this->generateURL($URL);
-
-        // get meta custom
-        if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
-            $custom = $this->frm->getField('meta_custom')->getValue(true);
-        } else {
-            $custom = null;
-        }
-
-        // build meta
-        $meta['keywords'] = $keywords;
-        $meta['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
-        $meta['description'] = $description;
-        $meta['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
-        $meta['title'] = $title;
-        $meta['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
-        $meta['url'] = $URL;
-        $meta['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
-        $meta['custom'] = $custom;
-        $meta['data'] = null;
-        if ($this->frm->getField('seo_index')->getValue() != 'none') {
-            $meta['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
-        }
-        if ($this->frm->getField('seo_follow')->getValue() != 'none') {
-            $meta['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
-        }
-        if (isset($meta['data'])) {
-            $meta['data'] = serialize($meta['data']);
-        }
+        $meta = $this->getUpdatedData();
 
         $db = BackendModel::getContainer()->get('database');
 
-        if ($update) {
+        if ((bool) $update) {
             if ($this->id === null) {
                 throw new Exception('No metaID specified.');
             }
@@ -504,6 +500,64 @@ class Meta
 
             return $id;
         }
+    }
+
+    protected function getUpdatedData()
+    {
+        // get meta keywords
+        if ($this->frm->getField('meta_keywords_overwrite')->isChecked()) {
+            $data['keywords'] = $this->frm->getField('meta_keywords')->getValue();
+        } else {
+            $data['keywords'] = $this->frm->getField($this->baseFieldName)->getValue();
+        }
+
+        // get meta description
+        if ($this->frm->getField('meta_description_overwrite')->isChecked()) {
+            $data['description'] = $this->frm->getField('meta_description')->getValue();
+        } else {
+            $data['description'] = $this->frm->getField($this->baseFieldName)->getValue();
+        }
+
+        // get page title
+        if ($this->frm->getField('page_title_overwrite')->isChecked()) {
+            $data['title'] = $this->frm->getField('page_title')->getValue();
+        } else {
+            $data['title'] = $this->frm->getField($this->baseFieldName)->getValue();
+        }
+
+        // get URL
+        if ($this->frm->getField('url_overwrite')->isChecked()) {
+            $data['url'] = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue());
+        } else {
+            $data['url'] = \SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue());
+        }
+
+        // get the real URL
+        $data['url'] = $this->generateURL($data['url']);
+
+        // get meta custom
+        if ($this->custom && $this->frm->getField('meta_custom')->isFilled()) {
+            $data['custom'] = $this->frm->getField('meta_custom')->getValue(true);
+        } else {
+            $data['custom'] = null;
+        }
+
+        $data['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
+        $data['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
+        $data['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
+        $data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
+
+        if ($this->frm->getField('seo_index')->getValue() != 'none') {
+            $data['data']['seo_index'] = $this->frm->getField('seo_index')->getValue();
+        }
+        if ($this->frm->getField('seo_follow')->getValue() != 'none') {
+            $data['data']['seo_follow'] = $this->frm->getField('seo_follow')->getValue();
+        }
+        if (isset($data['data'])) {
+            $data['data'] = serialize($data['data']);
+        }
+
+        return $data;
     }
 
     /**

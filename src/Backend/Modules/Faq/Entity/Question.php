@@ -55,8 +55,8 @@ class Question
     private $userId;
 
     /**
-     * @ORM\OneToOne(targetEntity="Backend\Core\Entity\Meta")
-     * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Backend\Core\Entity\Meta",cascade={"persist","remove"})
+     * @ORM\JoinColumn(name="metaId", referencedColumnName="id")
      **/
     private $meta;
 

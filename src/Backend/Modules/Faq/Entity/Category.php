@@ -28,7 +28,7 @@ class Category
 
     /**
      * @ORM\OneToOne(targetEntity="Backend\Core\Entity\Meta",cascade={"persist","remove"})
-     * @ORM\JoinColumn(name="meta_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="metaId", referencedColumnName="id")
      **/
     private $meta;
 
