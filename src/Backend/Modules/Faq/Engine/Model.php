@@ -44,10 +44,6 @@ class Model
         $em->remove($question);
         $em->flush();
 
-        /** @var $db \SpoonDatabase */
-        $db = BackendModel::getContainer()->get('database');
-        $db->delete('meta', 'id = ?', array((int) $question->getMetaId()));
-
         BackendTagsModel::saveTags($question->getId(), '', 'Faq');
     }
 
@@ -58,11 +54,9 @@ class Model
      */
     public static function deleteCategory(Category $category)
     {
-        $db = BackendModel::getContainer()->get('database');
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
         if (!empty($category)) {
-            $db->delete('meta', 'id = ?', array($category->getMetaId()));
             BackendModel::deleteExtraById($category->getExtraId());
 
             $em->remove($category);
@@ -313,38 +307,16 @@ class Model
     public static function getURL($url, $id = null)
     {
         $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // new item
-        if ($id === null) {
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM FaqQuestion AS i
-                 INNER JOIN meta AS m ON i.metaId = m.id
-                 WHERE i.language = ? AND m.url = ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
+        $items = $em
+            ->getRepository(self::QUESTION_ENTITY_CLASS)
+            ->findByUrl($url, BL::getWorkingLanguage(), $id)
+        ;
+        if (count($items) !== 0) {
+            $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM FaqQuestion AS i
-                 INNER JOIN meta AS m ON i.metaId = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getURL($url, $id);
-            }
+            return self::getURL($url);
         }
 
         return $url;
@@ -361,38 +333,16 @@ class Model
     public static function getURLForCategory($url, $id = null)
     {
         $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // new category
-        if ($id === null) {
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM FaqCategory AS i
-                 INNER JOIN meta AS m ON i.metaId = m.id
-                 WHERE i.language = ? AND m.url = ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
+        $items = $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findByUrl($url, BL::getWorkingLanguage(), $id)
+        ;
+        if (count($items) !== 0) {
+            $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM FaqCategory AS i
-                 INNER JOIN meta AS m ON i.metaId = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getURLForCategory($url, $id);
-            }
+            return self::getURL($url);
         }
 
         return $url;

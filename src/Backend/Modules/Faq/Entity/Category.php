@@ -11,7 +11,7 @@ use Backend\Core\Entity\Meta;
  *
  * @author Wouter Sioen <wouter.sioen@wijs.be>
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Faq\Entity\CategoryRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="FaqCategory")
  */
