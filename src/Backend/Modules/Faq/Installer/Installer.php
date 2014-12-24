@@ -46,14 +46,14 @@ class Installer extends ModuleInstaller
             'SELECT MAX(i.sequence) + 1
              FROM modules_extras AS i
              WHERE i.module = ?',
-            array('faq')
+            array($this->getModule())
         );
 
         // build category
         $category = new Category();
         $category
             ->setMetaId($this->insertMeta($title, $title, $title, $url))
-            ->setExtraId($this->insertExtra('Faq', 'widget', 'Faq', 'CategoryList', null, 'N', $sequenceExtra))
+            ->setExtraId($this->insertExtra($this->getModule(), 'widget', $this->getModule(), 'CategoryList', null, 'N', $sequenceExtra))
             ->setLanguage((string) $language)
             ->setTitle((string) $title)
             ->setSequence(1)
@@ -79,7 +79,7 @@ class Installer extends ModuleInstaller
             'modules_extras',
             $extra,
             'id = ? AND module = ? AND type = ? AND action = ?',
-            array($category->getExtraId(), 'Faq', 'widget', 'CategoryList')
+            array($category->getExtraId(), $this->getModule(), 'widget', 'CategoryList')
         );
 
         return $category->getId();
@@ -115,7 +115,7 @@ class Installer extends ModuleInstaller
             'present' => true
         );
 
-        $this->insertDashboardWidget('Faq', 'Feedback', $feedback);
+        $this->insertDashboardWidget($this->getModule(), 'Feedback', $feedback);
     }
 
     /**
@@ -123,13 +123,13 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
+        $this->addModule('Faq');
+
         $this->addEntitiesInDatabase(array(
             BackendFaqModel::CATEGORY_ENTITY_CLASS,
             BackendFaqModel::QUESTION_ENTITY_CLASS,
             BackendFaqModel::FEEDBACK_ENTITY_CLASS,
         ));
-
-        $this->addModule('Faq');
 
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
 
@@ -154,10 +154,8 @@ class Installer extends ModuleInstaller
         $this->setSetting($this->getModule(), 'send_email_on_new_feedback', false);
 
         $this->addDefaultCategories($faqId);
-
         $this->insertWidget();
 
-        // set navigation
         $this->setBackendNavigation();
     }
 
