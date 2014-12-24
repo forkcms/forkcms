@@ -25,6 +25,17 @@ should install our dependencies. The dependencies are handled by [composer](http
 To install the dependencies, you can run the command below in the document-root:
 
 	composer install -o
+	
+## Running the tests
+
+1. Make sure you have installed the dev requirements from composer (this is done by default)
+2. Make sure you have a clean local database with these settings:
+   * name: test_fork_cms
+   * user: forktest
+   * password: forktest
+3. If you don't use "localhost" as your local url, change your url in codeception.yml (under modules => config => PhpBrowser => url)
+4. Run the tests on the command line using `vendor/bin/codeception run`
+
 
 ## Bugs
 
