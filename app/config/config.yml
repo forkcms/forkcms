@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        save_path: %kernel.root_dir%/cache/sessions
 
 # Assetic Configuration
 assetic:
@@ -51,7 +52,6 @@ doctrine:
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
 
 monolog:
     handlers:
