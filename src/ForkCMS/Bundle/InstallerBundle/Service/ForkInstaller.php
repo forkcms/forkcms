@@ -56,6 +56,25 @@ class ForkInstaller
     }
 
     /**
+     * Makes all preparations for installing Fork
+     * This creates the parameters.yml file and cleares the needed cache
+     *
+     * @param  InstallationData $data The collected data required for Fork
+     * @return bool                   Is Fork successfully installed?
+     */
+    public function prepare(InstallationData $data)
+    {
+        if (!$data->isValid()) {
+            return false;
+        }
+
+        $this->createYAMLConfig($data);
+
+        $this->definePaths();
+        $this->deleteCachedData();
+    }
+
+    /**
      * Installs Fork
      *
      * @param  InstallationData $data The collected data required for Fork
@@ -71,12 +90,9 @@ class ForkInstaller
         set_time_limit(0);
         ini_set('memory_limit', '512M');
 
-        $this->createYAMLConfig($data);
-
         $this->definePaths();
         $this->deleteCachedData();
 
-        $this->buildDatabase($data);
         $this->installCore($data);
 
         $this->installModules($data);
@@ -167,27 +183,6 @@ class ForkInstaller
         if (!empty($moduleDefaultExtras)) {
             $this->defaultExtras = array_merge($this->defaultExtras, $moduleDefaultExtras);
         }
-    }
-
-    /**
-     * @param InstallationData $data
-     */
-    protected function buildDatabase(InstallationData $data)
-    {
-        // put a new instance of the database in the container
-        $database = new \SpoonDatabase(
-            'mysql',
-            $data->getDbHostname(),
-            $data->getDbUsername(),
-            $data->getDbPassword(),
-            $data->getDbDatabase(),
-            $data->getDbPort()
-        );
-        $database->execute(
-            'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"',
-            array('charset' => 'utf8')
-        );
-        $this->container->set('database', $database);
     }
 
     /**

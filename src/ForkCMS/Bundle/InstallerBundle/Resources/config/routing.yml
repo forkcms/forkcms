@@ -22,6 +22,10 @@ install_step6:
     path: /install/6
     defaults:
         _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step6Action
+install_step7:
+    path: /install/7
+    defaults:
+        _controller: ForkCMS\Bundle\InstallerBundle\Controller\InstallerController::step7Action
 install:
     path: /install
     defaults:
