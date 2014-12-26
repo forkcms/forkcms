@@ -1,3 +1,23 @@
+3.8.5 (xxxx-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+
+3.8.4 (2014-12-26)
+--
+Improvements:
+
+* Core: Make sure setDebugMessage is only called once.
+
+Bugfixes:
+
+* Pages: Fix missing variable.
+* Blog: Capitalize module and detail names to fix URLs.
+* Security: Avoid XSS by not directly injecting $_GET parameters in html.
+
+
 3.8.3 (2014-12-12)
 --
 Improvements:
