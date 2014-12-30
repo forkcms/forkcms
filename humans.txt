@@ -5,6 +5,10 @@
 	Github: https://github.com/mathiashelin
 	From: Belgium, Kortrijk
 
+	Frontender: Daan De Deckere
+	Contact: daan-is-a-human [at] sumocoders.be
+	From: Belgium
+
 	Designer: Niels De Paepe
 	Contact: niels-is-a-human [at] sumocoders.be
 	Twitter: @nielsdepaepe
@@ -17,6 +21,10 @@
 
 	Developer: Toon Daelman
 	Contact: toon-is-a-human [at] sumocoders.be
+	From: Belgium, Ghent
+
+	Developer: Jelmer Prins
+	Contact: jelmer-is-a-human [at] sumocoders.be
 	From: Belgium, Ghent
 
 	Developer: Tijs Verkoyen

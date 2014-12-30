@@ -129,7 +129,7 @@ class Related extends FrontendBaseWidget
         $pageId = $this->getContainer()->get('page')->getId();
 
         // array of excluded records
-        $this->exclude[] = array('module' => 'pages', 'other_id' => $pageId);
+        $this->exclude[] = array('module' => 'Pages', 'other_id' => $pageId);
 
         // get tags for page
         $tags = (array) FrontendTagsModel::getForItem('pages', $pageId);
@@ -143,7 +143,7 @@ class Related extends FrontendBaseWidget
         // loop blocks
         foreach ((array) $record['extra_blocks'] as $block) {
             // set module class
-            $class = 'Frontend\\Modules\\' . $record['module'] . '\\Engine\\Model';
+            $class = 'Frontend\\Modules\\' . $block['module'] . '\\Engine\\Model';
 
             if (is_callable(array($class, 'getIdForTags'))) {
                 // get record for module

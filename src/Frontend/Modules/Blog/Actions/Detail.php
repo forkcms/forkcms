@@ -149,33 +149,19 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
+        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
-        $this->header->addLink(
-            array(
-                 'rel' => 'alternate',
-                 'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
-                 'href' => $rssLink
-            ),
-            true
-        );
+        $this->header->addRssLink($rssTitle, $rssLink);
 
         // get RSS-link for the comments
+        $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
         $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
                            '/' . $this->record['url'];
 
         // add RSS-feed into the metaCustom
-        $this->header->addLink(
-            array(
-                 'rel' => 'alternate',
-                 'type' => 'application/rss+xml',
-                 'title' => vsprintf(FL::msg('CommentsOn'), array($this->record['title'])),
-                 'href' => $rssCommentsLink
-            ),
-            true
-        );
+        $this->header->addRssLink($rssCommentTitle, $rssCommentsLink);
 
         // add specified image
         if (isset($this->record['image']) && $this->record['image'] != '') {
@@ -201,6 +187,10 @@ class Detail extends FrontendBaseBlock
             ($this->record['meta_description_overwrite'] == 'Y') ? $this->record['meta_description'] : $this->record['title'],
             true
         );
+
+        // Twitter Card
+        $imgURL = FRONTEND_FILES_URL . '/blog/images/source/' . $this->record['image'];
+        $this->header->setTwitterCard($this->record['title'], $this->record['meta_description'], $imgURL);
 
         // when there are 2 or more categories with at least one item in it,
         // the category will be added in the breadcrumb

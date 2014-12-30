@@ -27,7 +27,7 @@ class LanguagesHandler
         return false;
     }
 
-    public function processValidForm(Form $form, $request)
+    public function processValidForm(Form $form, Request $request)
     {
         $data = $form->getData();
 
@@ -44,10 +44,6 @@ class LanguagesHandler
                 ? $data->getLanguages()
                 : $data->getInterfaceLanguages()
         );
-
-        if ($data->getSameInterfaceLanguage() === true) {
-            $data->setDefaultInterfaceLanguage($data->getDefaultLanguage());
-        }
 
         $request->getSession()->set('installation_data', $data);
 

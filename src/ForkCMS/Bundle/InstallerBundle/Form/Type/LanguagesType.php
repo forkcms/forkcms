@@ -52,7 +52,7 @@ class LanguagesType extends AbstractType
                 )
             )
             ->add(
-                'interface_language',
+                'default_interface_language',
                 'choice',
                 array(
                     'choices' => $this->getInstallableLanguages(),

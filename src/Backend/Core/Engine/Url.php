@@ -9,11 +9,12 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
+use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use Backend\Core\Engine\Model as BackendModel;
 
 use Common\Cookie as CommonCookie;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * This class will handle the incoming URL.
@@ -23,18 +24,11 @@ use Backend\Core\Engine\Model as BackendModel;
 class Url extends Base\Object
 {
     /**
-     * The host, will be used for cookies
+     * The Symfony request object
      *
-     * @var    string
+     * @var Request
      */
-    private $host;
-
-    /**
-     * The querystring
-     *
-     * @var    string
-     */
-    private $queryString;
+    private $request;
 
     /**
      * @param KernelInterface $kernel
@@ -46,8 +40,9 @@ class Url extends Base\Object
         // add to registry
         $this->getContainer()->set('url', $this);
 
-        $this->setQueryString($this->get('request')->getRequestUri());
-        $this->setHost($this->get('request')->getHttpHost());
+        // fetch the request object from the container
+        $this->request = $this->get('request');
+
         $this->processQueryString();
     }
 
@@ -58,21 +53,20 @@ class Url extends Base\Object
      */
     public function getDomain()
     {
-        // get host
-        $host = $this->getHost();
-
         // replace
-        return str_replace('www.', '', $host);
+        return str_replace('www.', '', $this->request->getHttpHost());
     }
 
     /**
      * Get the host
      *
+     * @deprecated use $request->getHttpHost() instead
+     *
      * @return string
      */
     public function getHost()
     {
-        return $this->host;
+        return $this->request->getHttpHost();
     }
 
     /**
@@ -82,7 +76,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return $this->queryString;
+        return trim((string) $this->request->getRequestUri(), '/');
     }
 
     /**
@@ -156,13 +150,14 @@ class Url extends Base\Object
             }
 
             try {
+                /** @var BackendBaseConfig $config */
                 $config = new $configClass($this->getKernel(), $module);
 
                 // set action
                 $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
             } catch (Exception $ex) {
                 if (SPOON_DEBUG) {
-                    throw new Exception('The configfile for the module (' . $module . ') can\'t be found.');
+                    throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
                 } else {
                     // @todo    don't use redirects for error, we should have something like an invoke method.
 
@@ -260,16 +255,6 @@ class Url extends Base\Object
     }
 
     /**
-     * Set the host
-     *
-     * @param string $host The host.
-     */
-    private function setHost($host)
-    {
-        $this->host = (string) $host;
-    }
-
-    /**
      * Set the locale
      */
     private function setLocale()
@@ -292,26 +277,5 @@ class Url extends Base\Object
         }
 
         Language::setLocale($locale);
-    }
-
-    /**
-     * Set the querystring
-     *
-     * @param string $queryString The full query-string.
-     */
-    private function setQueryString($queryString)
-    {
-        $queryString = trim((string) $queryString, '/');
-
-        // replace GET with encoded GET in the queryString to prevent XSS
-        if (isset($_GET) && !empty($_GET)) {
-            // strip GET from the queryString
-            list($queryString) = explode('?', $queryString, 2);
-
-            // readd
-            $queryString = $queryString . '?' . http_build_query($_GET);
-        }
-
-        $this->queryString = $queryString;
     }
 }
