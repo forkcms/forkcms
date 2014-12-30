@@ -201,7 +201,7 @@ class Add extends BackendBaseActionAdd
 
                     // ping
                     if (BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) {
-                        BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') . '/' . $this->meta->getURL());
+                        BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $this->meta->getURL());
                     }
 
                     // everything is saved, so redirect to the overview
