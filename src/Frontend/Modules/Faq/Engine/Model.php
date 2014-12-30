@@ -14,6 +14,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
+use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
@@ -99,24 +100,13 @@ class Model implements FrontendTagsInterface
      */
     public static function getCategories()
     {
-        $items = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.*, m.url
-             FROM faq_categories AS i
-             INNER JOIN meta AS m ON i.meta_id = m.id
-             WHERE i.language = ?
-             ORDER BY i.sequence',
-            array(FRONTEND_LANGUAGE)
-        );
-
-        // init var
-        $link = FrontendNavigation::getURLForBlock('Faq', 'Category');
-
-        // build the item url
-        foreach ($items as &$item) {
-            $item['full_url'] = $link . '/' . $item['url'];
-        }
-
-        return $items;
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendFaqModel::CATEGORY_ENTITY_CLASS)
+            ->findBy(
+                array('language' => FRONTEND_LANGUAGE),
+                array('sequence' => 'ASC')
+            )
+        ;
     }
 
     /**
