@@ -36,8 +36,8 @@ module.exports = (grunt) ->
             }
           ]
         files: [
-          src: '<%= theme_src %>/layout/templates/head.tpl'
-          dest: '<%= theme_build %>/layout/Templates/'
+          src: '<%= theme_src %>/Layout/Templates/Head.tpl'
+          dest: '<%= theme_build %>/Layout/Templates/'
           flatten: true
           expand: true
         ]
@@ -120,16 +120,16 @@ module.exports = (grunt) ->
           stylesheet: 'scss'
           htmlDemo: false
           template: '<%= theme_src %>/Layout/Sass/_icons-template.scss'
-          templateOptions:          
+          templateOptions:
             classPrefix: 'icon-'
     watch:
       coffee:
-        files: ['<%= theme_src %>/coffee/*']
+        files: ['<%= theme_src %>/Coffee/*']
         tasks: ['coffee']
       lib:
         files: ['<%= theme_src %>/Js/lib/*.js']
         options:
-          livereload: true 
+          livereload: true
       sass:
         files: ['<%= theme_src %>/Layout/**/*.scss']
         tasks: ['compass:dist', 'autoprefixer:dist']
