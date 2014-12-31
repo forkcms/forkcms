@@ -1,7 +1,7 @@
 {
   "name": "forkcms",
   "version": "3.6.6",
-  "theme": "bootstrap",
+  "theme": "Bootstrap",
   "devDependencies": {
     "grunt": "^0.4.5",
     "grunt-autoprefixer": "^2.0.0",
