@@ -3,6 +3,7 @@ load "deploy" if respond_to?(:namespace) # cap2 differentiator
 # development information
 set :client,  ""                                  # eg: "dev"
 set :project, ""                                  # eg: "site"
+set :theme, "Bootstrap"                               # eg: "Bootstrap"
 
 # production information, ignore these items during development
 set :production_url, ""                           # eg: "http://fork.sumocoders.be"
