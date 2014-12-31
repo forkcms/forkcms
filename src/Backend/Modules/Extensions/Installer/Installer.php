@@ -101,9 +101,9 @@ class Installer extends ModuleInstaller
 
         // build templates
         $templates['bootstrap']['default'] = array(
-            'theme' => 'bootstrap',
+            'theme' => 'Bootstrap',
             'label' => 'Default',
-            'path' => 'core/layout/templates/default.tpl',
+            'path' => 'Core/Layout/Templates/Default.tpl',
             'active' => 'Y',
             'data' => serialize(array(
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -113,9 +113,9 @@ class Installer extends ModuleInstaller
         );
 
         $templates['bootstrap']['error'] = array(
-            'theme' => 'bootstrap',
+            'theme' => 'Bootstrap',
             'label' => 'Error',
-            'path' => 'core/layout/templates/error.tpl',
+            'path' => 'Core/Layout/Templates/Error.tpl',
             'active' => 'Y',
             'data' => serialize(array(
                     'format' => '[/,/,/,top,/],[/,main,main,main,/]',
@@ -125,9 +125,9 @@ class Installer extends ModuleInstaller
         );
 
         $templates['bootstrap']['home'] = array(
-            'theme' => 'bootstrap',
+            'theme' => 'Bootstrap',
             'label' => 'Home',
-            'path' => 'core/layout/templates/home.tpl',
+            'path' => 'Core/Layout/Templates/Home.tpl',
             'active' => 'Y',
             'data' => serialize(array(
                     'format' => '[/,/,/,top,/],[slideshow,slideshow,slideshow,slideshow,slideshow],[/,features,features,features,/],[/,main,main,main,/]',
@@ -146,7 +146,7 @@ class Installer extends ModuleInstaller
          */
 
         // set default theme
-        $this->setSetting('Core', 'theme', 'bootstrap', true);
+        $this->setSetting('Core', 'theme', 'Bootstrap', true);
 
         // set default template
         $this->setSetting('Pages', 'default_template', $this->getTemplateId('default'));
