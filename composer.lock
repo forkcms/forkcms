@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b173a825d97c306ae1d6fdcca9039cad",
+    "hash": "4ee01767c6e4f4efa6d8a3d5304d7df9",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -453,12 +453,12 @@
             "version": "v3.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/facebookarchive/facebook-php-sdk.git",
+                "url": "https://github.com/facebook/facebook-php-sdk.git",
                 "reference": "6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facebookarchive/facebook-php-sdk/zipball/6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb",
+                "url": "https://api.github.com/repos/facebook/facebook-php-sdk/zipball/6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb",
                 "reference": "6714042fa2f5979d4c64c7d11fb4bcab16bdf6cb",
                 "shasum": ""
             },
@@ -492,8 +492,40 @@
                 "facebook",
                 "sdk"
             ],
-            "abandoned": "facebook/php-sdk-v4",
             "time": "2013-11-19 23:11:14"
+        },
+        {
+            "name": "flippa-official/errbit-php",
+            "version": "dev-master",
+            "target-dir": "Flippa/ErrbitPhp",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/flippa/errbit-php.git",
+                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/flippa/errbit-php/zipball/e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
+                "reference": "e15eb15ca37963ee7dcc5dae0a70d5420fca85a4",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "lib/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Errbit & Airbrake Client for PHP",
+            "homepage": "https://github.com/flippa/errbit-php",
+            "time": "2013-05-03 07:04:08"
         },
         {
             "name": "jdorn/sql-formatter",
@@ -665,16 +697,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.11.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa"
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
-                "reference": "ec3961874c43840e96da3a8a1ed20d8c73d7e5aa",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
+                "reference": "1fbe8c2641f2b163addf49cc5e18f144bec6b19f",
                 "shasum": ""
             },
             "require": {
@@ -688,7 +720,7 @@
                 "aws/aws-sdk-php": "~2.4, >2.4.8",
                 "doctrine/couchdb": "~1.0@dev",
                 "graylog2/gelf-php": "~1.0",
-                "phpunit/phpunit": "~3.7.0",
+                "phpunit/phpunit": "~4.0",
                 "raven/raven": "~0.5",
                 "ruflin/elastica": "0.90.*",
                 "videlalvaro/php-amqplib": "~2.4"
@@ -707,7 +739,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.11.x-dev"
+                    "dev-master": "1.12.x-dev"
                 }
             },
             "autoload": {
@@ -733,7 +765,7 @@
                 "logging",
                 "psr-3"
             ],
-            "time": "2014-09-30 13:30:58"
+            "time": "2014-12-29 21:29:35"
         },
         {
             "name": "psr/log",
@@ -807,6 +839,46 @@
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
             "time": "2014-12-15 09:46:38"
+        },
+        {
+            "name": "sumocoders/sumo-fork-class",
+            "version": "dev-master",
+            "target-dir": "SumoCoders/SumoForkClass",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sumocoders/Sumo-specific-Fork-stuff.git",
+                "reference": "bf8a1df7bbf5aaded5d90b85c5499e7dfd5e5e25"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sumocoders/Sumo-specific-Fork-stuff/zipball/bf8a1df7bbf5aaded5d90b85c5499e7dfd5e5e25",
+                "reference": "bf8a1df7bbf5aaded5d90b85c5499e7dfd5e5e25",
+                "shasum": ""
+            },
+            "require": {
+                "flippa-official/errbit-php": "dev-master",
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "SumoCoders\\SumoForkClass": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Tijs Verkoyen",
+                    "email": "tijs@sumocoders.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Fork is great, but we like to implemented our internal tools into the website we create for our clients",
+            "homepage": "https://github.com/sumocoders/Sumo-specific-Fork-stuff",
+            "time": "2014-03-15 13:26:12"
         },
         {
             "name": "symfony/assetic-bundle",
@@ -1178,9 +1250,11 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "sumocoders/sumo-fork-class": 20,
+        "flippa-official/errbit-php": 20
+    },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.2"
     },

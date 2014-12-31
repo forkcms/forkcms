@@ -392,6 +392,9 @@ jsBackend.formBuilder.fields =
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
 								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
+                if (data.data.field.settings.mailCopyTo && data.data.field.settings.mailCopyTo === 'Y') {
+                  $('#textboxMailCopyTo').prop('checked', true);
+                }
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -1171,6 +1174,7 @@ jsBackend.formBuilder.fields =
 		var label = $('#textboxLabel').val();
 		var value = $('#textboxValue').val();
 		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
+    var mailCopyTo = ($('#textboxMailCopyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
 		var validation = $('#textboxValidation').val();
@@ -1188,6 +1192,7 @@ jsBackend.formBuilder.fields =
 				label: label,
 				default_values: value,
 				reply_to: replyTo,
+        mail_copy_to: mailCopyTo,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,
@@ -1210,6 +1215,9 @@ jsBackend.formBuilder.fields =
 						if(typeof data.data.errors.required_error_message != 'undefined') $('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
 						if(typeof data.data.errors.error_message != 'undefined') $('#textboxErrorMessageError').html(data.data.errors.error_message);
 						if(typeof data.data.errors.validation_parameter != 'undefined') $('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
+            if (typeof data.data.errors.mail_copy_to !== 'undefined') {
+              $('#textboxMailCopyToError').html(data.data.errors.mail_copy_to);
+            }
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textboxDialog');

@@ -470,6 +470,12 @@ class Form extends FrontendBaseWidget
                                 $replyTo = $email;
                             }
                         }
+                        if (isset($field['settings']['mailCopyTo']) && $field['settings']['mailCopyTo'] == 'Y') {
+                            $email = $this->frm->getField('field' . $field['id'])->getValue();
+                            if (SpoonFilter::isEmail($email)) {
+                                $mailCopyTo = $email;
+                            }
+                        }
                     }
 
                     // loop recipients
@@ -485,6 +491,19 @@ class Form extends FrontendBaseWidget
                             null,
                             $replyTo,
                             null, null, null, null, null, null, true
+                        );
+                    }
+
+
+                    # Mail copy
+                    if ($mailCopyTo) {
+                        $variables = array_replace($variables, array('mailCopyTo' => true));
+                        FrontendMailer::addEmail(
+                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+                            FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+                            $variables,
+                            $mailCopyTo,
+                            $this->item['name']
                         );
                     }
                 }

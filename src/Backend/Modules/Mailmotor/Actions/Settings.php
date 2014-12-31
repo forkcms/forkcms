@@ -175,10 +175,10 @@ class Settings extends BackendBaseActionEdit
 
         // sender info
         $this->frmClient->addText('from_name', $this->settings['from_name']);
-        $this->frmClient->addText('from_email', $this->settings['from_email']);
+        $this->frmClient->addTrimmedText('from_email', $this->settings['from_email']);
 
         // reply to address
-        $this->frmClient->addText('reply_to_email', $this->settings['reply_to_email']);
+        $this->frmClient->addTrimmedText('reply_to_email', $this->settings['reply_to_email']);
 
         // add fields for comments
         $this->frmClient->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
@@ -194,10 +194,10 @@ class Settings extends BackendBaseActionEdit
 
         // sender info
         $this->frmGeneral->addText('from_name', $this->settings['from_name']);
-        $this->frmGeneral->addText('from_email', $this->settings['from_email']);
+        $this->frmGeneral->addTrimmedText('from_email', $this->settings['from_email']);
 
         // reply to address
-        $this->frmGeneral->addText('reply_to_email', $this->settings['reply_to_email']);
+        $this->frmGeneral->addTrimmedText('reply_to_email', $this->settings['reply_to_email']);
 
         // add fields for comments
         $this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);

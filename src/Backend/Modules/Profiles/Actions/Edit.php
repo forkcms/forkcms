@@ -103,7 +103,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // create elements
-        $this->frm->addText('email', $this->profile['email']);
+        $this->frm->addTrimmedText('email', $this->profile['email']);
         $this->frm->addPassword('password');
         $this->frm->addText('display_name', $this->profile['display_name']);
         $this->frm->addText('first_name', BackendProfilesModel::getSetting($this->id, 'first_name'));

@@ -13,7 +13,7 @@
 			<form method="get" action="#">
 				<p>
 					<label for="locationSearchAddress{$widgetLocationItem.id}">{$lblStart|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="inputText" />
+					<input type="text" id="locationSearchAddress{$widgetLocationItem.id}" name="locationSearchAddress" class="form-control" />
 					<span id="locationSearchError{$widgetLocationItem.id}" class="formError inlineError" style="display: none;">{$errFieldIsRequired|ucfirst}</span>
 				</p>
 				<p>

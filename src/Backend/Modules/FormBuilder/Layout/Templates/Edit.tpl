@@ -186,6 +186,11 @@
 							<abbr class="help">(?)</abbr>
 							<span class="tooltip" style="display: none;">{$msgHelpReplyTo}</span>
 						</p>
+                        <p class="p0">
+                            <label for="textboxMailCopyTo">{$lblMailCopyTo|ucfirst}</label>
+                            {$chkTextboxMailCopyTo}
+                            <span id="textboxMailCopyToError" class="formError" style="display: none;"></span>
+                        </p>
 					</div>
 					<div class="validation options">
 						<p class="p0">

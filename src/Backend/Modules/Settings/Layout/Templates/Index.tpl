@@ -229,6 +229,17 @@
 		</div>
 	</div>
 
+    <div class="box horizontal">
+        <div class="heading"><h3>Twitter</h3></div>
+        <div class="options labelWidthLong">
+            <p>
+                <label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
+				<span style="float: left;">
+					@ {$txtTwitterSiteName} {$txtTwitterSiteNameError}
+				</span>
+            </p>
+        </div>
+    </div>
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
