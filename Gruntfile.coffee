@@ -22,6 +22,7 @@ module.exports = (grunt) ->
           imageDir: '<%= theme_build %>/Layout/images'
           fontsDir: '<%= theme_build %>/Layout/fonts'
           relativeAssets: true
+          bundleExec: true
     replace:
       head:
         options:
