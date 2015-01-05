@@ -301,10 +301,13 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
+                $displayName = (isset($values['display_name'])) ? $values['display_name'] : $this->profile['display_name'];
+
                 $redirectUrl = BackendModel::createURLForAction('Index') .
                     '&var=' . urlencode($values['email']) .
                     '&highlight=row-' . $this->id .
-                    '&report='
+                    '&var=' . urlencode($displayName) .
+                    '&report=saved'
                 ;
 
                 // trigger event
