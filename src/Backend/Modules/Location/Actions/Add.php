@@ -14,6 +14,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -45,7 +46,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('number');
         $this->frm->addText('zip');
         $this->frm->addText('city');
-        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), 'BE');
+        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), 'BE');
     }
 
     /**
