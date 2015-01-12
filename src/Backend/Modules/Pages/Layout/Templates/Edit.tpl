@@ -331,7 +331,7 @@
 	</div>
 
 	{*
-		Dialog to select the content (editor, module or widget).
+		Dialog to select the content (editor, module, widget or template).
 		Do not change the ID!
 	 *}
 	<div id="addBlock" class="forkForms" title="{$lblChooseContent|ucfirst}" style="display: none;">
@@ -360,8 +360,19 @@
 					<option value="-1">-</option>
 				</select>
 			</p>
+      <p id="userTemplateHolder" style="display: none;">
+        <label for="userTemplate">{$lblWhichTemplate|ucfirst}</label>
+        <select id="userTemplate">
+          <option value="-1">-</option>
+        </select>
+      </p>
 		</div>
 	</div>
+
+  <div id="addUserTemplate" class="forkForms" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
+    <div id="userTemplateHiddenPlaceholder"></div>
+    <div id="userTemplatePlaceholder"></div>
+  </div>
 
 	{*
 		Dialog to select another template.

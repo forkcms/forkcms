@@ -1049,7 +1049,8 @@ class Model
         return array(
             'rich_text' => BL::lbl('Editor'),
             'block' => BL::lbl('Module'),
-            'widget' => BL::lbl('Widget')
+            'widget' => BL::lbl('Widget'),
+            'usertemplate' => BL::lbl('UserTemplate')
         );
     }
 
