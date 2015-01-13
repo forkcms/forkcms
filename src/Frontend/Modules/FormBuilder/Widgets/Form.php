@@ -273,7 +273,7 @@ class Form extends FrontendBaseWidget
         // form name
         $formName = 'form' . $this->item['id'];
         $this->tpl->assign('formName', $formName);
-        $this->tpl->assign('formAction', $this->createAction() . '#formbuilder' . $formName);
+        $this->tpl->assign('formAction', $this->createAction() . '#' . $formName);
 
         // got fields
         if (!empty($this->fieldsHTML)) {

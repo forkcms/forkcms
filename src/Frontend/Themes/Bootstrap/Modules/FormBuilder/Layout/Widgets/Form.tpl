@@ -1,8 +1,8 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
-<section class="row" id="formbuilder{$formName}">
+<section class="row" id="formbuilder{$formName|ucfirst}">
 	<div class="col-xs-12">
-		{option:successMessage}<div class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
+		{option:successMessage}<div id="{$formName}" class="alert alert-success" role="alert">{$successMessage}</div>{/option:successMessage}
 		{option:formBuilderError}<div class="alert alert-danger" role="alert">{$formBuilderError}</div>{/option:formBuilderError}
 
 		{option:fields}
