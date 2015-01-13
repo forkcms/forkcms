@@ -330,6 +330,9 @@ class Form extends FrontendBaseWidget
      */
     private function parseSuccessMessage()
     {
+        // form name
+        $formName = 'form' . $this->item['id'];
+        $this->tpl->assign('formName', $formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
