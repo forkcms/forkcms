@@ -2,8 +2,13 @@
 --
 Improvements:
 
+* Core: use Symfony Intl component instead of Spoon to fetch countries.
+* Core: implement Google's sitelinks searchbox
+
 Bugfixes:
 
+* Core: Make sure logs aren't publically accessible
+* Core: Make sure PHP 5.5+'s opcode cache is now cleared after updating code
 
 3.8.4 (2014-12-26)
 --
