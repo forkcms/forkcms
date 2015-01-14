@@ -147,7 +147,7 @@ class CacheBuilder
         return $pageData;
     }
 
-    protected function getPageTreeType($page, $pageData)
+    protected function getPageTreeType($page, &$pageData)
     {
         // calculate tree-type
         $treeType = 'page';
