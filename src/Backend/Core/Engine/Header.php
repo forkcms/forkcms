@@ -10,6 +10,9 @@ namespace Backend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
 
 use MatthiasMullie\Minify;
 
@@ -408,7 +411,8 @@ class Header extends Base\Object
         }
 
         // encode and add
-        $jsData = json_encode($this->jsData);
+        $serializer = new Serializer(array(new GetSetMethodNormalizer()), array('json' => new JsonEncoder()));
+        $jsData = $serializer->serialize($this->jsData, 'json');
         $this->tpl->assign('jsData', 'var jsData = ' . $jsData . ';' . "\n");
     }
 }
