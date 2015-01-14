@@ -29,6 +29,24 @@
 
 	<div class="box">
 		<div class="heading">
+			<h3>Sitelinks Search Box</h3>
+		</div>
+		<div class="options">
+			<div class="oneLiner">
+				<p>
+					<label for="useSitelinksSearchBox">{$chkUseSitelinksSearchBox|ucfirst} {$lblUseSitelinksSearchBox|ucfirst}</label>
+					{$chkUseSitelinksSearchBoxError}
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpSitelinksSearchBox}</p>
+					</div>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="box">
+		<div class="heading">
 			<h3>{$lblModuleWeight|ucfirst}</h3>
 		</div>
 
