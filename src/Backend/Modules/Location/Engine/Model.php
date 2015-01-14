@@ -11,6 +11,7 @@ namespace Backend\Modules\Location\Engine;
 
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * In this file we store all generic functions that we will be using in the location module
@@ -132,7 +133,7 @@ class Model
         }
 
         if (!empty($country)) {
-            $item[] = \SpoonLocale::getCountry($country, BL::getWorkingLanguage());
+            $item[] = Intl::getRegionBundle()->getCountryName($country, BL::getInterfaceLanguage());
         }
 
         // define address
