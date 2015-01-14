@@ -1170,6 +1170,11 @@ class Model extends \BaseModel
                 $fs->remove($file->getRealPath());
             }
         }
+
+        // clear the php5.5+ opcode cache
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
     }
 
     /**

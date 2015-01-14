@@ -145,11 +145,19 @@ class CacheBuilder
      */
     protected function dumpPhpCache($language, $application)
     {
+        $filePath = constant(mb_strtoupper($application) . '_CACHE_PATH')
+            . '/Locale/' . $language . '.php';
+
         $fs = new Filesystem();
         $fs->dumpFile(
-            constant(mb_strtoupper($application) . '_CACHE_PATH') . '/Locale/' . $language . '.php',
+            $filePath,
             $this->buildPhpCache($language, $application)
         );
+
+        // clear the php5.5+ opcode cache
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($filePath);
+        }
     }
 
     /**
