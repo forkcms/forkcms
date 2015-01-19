@@ -31,10 +31,10 @@ class TemplateModifiers
     }
 
     /**
-     * Format a UNIX-timestamp as a date
+     * Format a UNIX-timestamp or DateTime-object as a date
      * syntax: {$var|formatdate}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatDate($var)
@@ -42,21 +42,29 @@ class TemplateModifiers
         // get setting
         $format = Authentication::getUser()->getSetting('date_format');
 
+        if ($var instanceof \DateTime) {
+            $var = BackendModel::getUTCDate('U', $var->format('U'));
+        }
+
         // format the date
         return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
     }
 
     /**
-     * Format a UNIX-timestamp as a datetime
+     * Format a UNIX-timestamp or DateTime-object as a datetime
      * syntax: {$var|formatdatetime}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatDateTime($var)
     {
         // get setting
         $format = Authentication::getUser()->getSetting('datetime_format');
+
+        if ($var instanceof \DateTime) {
+            $var = BackendModel::getUTCDate('U', $var->format('U'));
+        }
 
         // format the date
         return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
@@ -124,16 +132,20 @@ class TemplateModifiers
     }
 
     /**
-     * Format a UNIX-timestamp as a date
+     * Format a UNIX-timestamp or DateTime-object as a time
      * syntax: {$var|formatdate}
      *
-     * @param int $var The UNIX-timestamp to format.
+     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatTime($var)
     {
         // get setting
         $format = Authentication::getUser()->getSetting('time_format');
+
+        if ($var instanceof \DateTime) {
+            $var = BackendModel::getUTCDate('U', $var->format('U'));
+        }
 
         // format the date
         return \SpoonDate::getDate($format, (int) $var, Language::getInterfaceLanguage());
