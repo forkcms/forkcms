@@ -484,14 +484,15 @@ class TemplateModifiers
 
     /**
      * Truncate a string
-     *    syntax: {$var|truncate:max-length[:append-hellip]}
+     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var       The string passed from the template.
-     * @param int    $length    The maximum length of the truncated string.
-     * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param string $var         The string passed from the template.
+     * @param int    $length      The maximum length of the truncated string.
+     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
+     * @param bool   $closestWord Truncate on exact length or on closest word?
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true)
+    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
         // remove special chars, all of them, also the ones that shouldn't be there.
         $var = \SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
@@ -509,8 +510,12 @@ class TemplateModifiers
                 $length = $length - 1;
             }
 
-            // get the amount of requested characters
-            $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+            // truncate
+            if ($closestWord) {
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length), ' '), SPOON_CHARSET);
+            } else {
+                $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+            }
 
             // add hellip
             if ($useHellip) {
