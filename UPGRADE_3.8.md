@@ -112,3 +112,8 @@ For Nginx
             fastcgi_param  SCRIPT_FILENAME $document_root/index.php;
         }
     }
+
+## Twitter cards
+* Visit the [Twitter cards validator](https://cards-dev.twitter.com/validator) to whitelist your site.
+* Paste your url with the cards meta-tags in the form.
+* Fill out the complete form to request a whitelisting approval for your domain.

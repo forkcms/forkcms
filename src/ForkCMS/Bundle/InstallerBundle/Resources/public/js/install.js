@@ -12,6 +12,7 @@ var jsInstall =
         jsInstall.step2.init();
         jsInstall.step3.init();
         jsInstall.step4.init();
+        jsInstall.step6.init();
     }
 }
 
@@ -164,6 +165,29 @@ jsInstall.step4 =
     {
         $('#javascriptDisabled').remove();
         $('#installerButton').removeAttr('disabled');
+    }
+}
+
+jsInstall.step6 =
+{
+    init: function()
+    {
+        $('#showPassword').on('change', function(e)
+        {
+            e.preventDefault();
+
+            // show password
+            if($(this).is(':checked'))
+            {
+                $('#plainPassword').show();
+                $('#fakePassword').hide();
+            }
+            else
+            {
+                $('#plainPassword').hide();
+                $('#fakePassword').show();
+            }
+        });
     }
 }
 

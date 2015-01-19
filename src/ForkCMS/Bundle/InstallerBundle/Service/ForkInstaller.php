@@ -165,7 +165,7 @@ class ForkInstaller
         // add the default extras
         $moduleDefaultExtras = $installer->getDefaultExtras();
         if (!empty($moduleDefaultExtras)) {
-            $this->defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+            $this->defaultExtras = array_merge($this->defaultExtras, $moduleDefaultExtras);
         }
     }
 
@@ -238,7 +238,7 @@ class ForkInstaller
                 // add the default extras
                 $moduleDefaultExtras = $installer->getDefaultExtras();
                 if (!empty($moduleDefaultExtras)) {
-                    $this->defaultExtras = array_merge($defaultExtras, $moduleDefaultExtras);
+                    $this->defaultExtras = array_merge($this->$defaultExtras, $moduleDefaultExtras);
                 }
             }
         }

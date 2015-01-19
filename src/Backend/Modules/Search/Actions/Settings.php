@@ -63,17 +63,23 @@ class Settings extends BackendBaseActionEdit
         $this->frm->addDropdown(
             'overview_num_items',
             array_combine(range(1, 30), range(1, 30)),
-            BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 20)
+            BackendModel::getModuleSetting($this->getModule(), 'overview_num_items', 20)
         );
         $this->frm->addDropdown(
             'autocomplete_num_items',
             array_combine(range(1, 30), range(1, 30)),
-            BackendModel::getModuleSetting($this->URL->getModule(), 'autocomplete_num_items', 20)
+            BackendModel::getModuleSetting($this->getModule(), 'autocomplete_num_items', 20)
         );
         $this->frm->addDropdown(
             'autosuggest_num_items',
             array_combine(range(1, 30), range(1, 30)),
-            BackendModel::getModuleSetting($this->URL->getModule(), 'autosuggest_num_items', 20)
+            BackendModel::getModuleSetting($this->getModule(), 'autosuggest_num_items', 20)
+        );
+
+        // add checkbox for the sitelinks search box in Google
+        $this->frm->addCheckbox(
+            'use_sitelinks_search_box',
+            BackendModel::getModuleSetting($this->getModule(), 'use_sitelinks_search_box', true)
         );
 
         // modules that, no matter what, can not be searched
@@ -155,19 +161,24 @@ class Settings extends BackendBaseActionEdit
             if ($this->frm->isCorrect()) {
                 // set our settings
                 BackendModel::setModuleSetting(
-                    $this->URL->getModule(),
+                    $this->getModule(),
                     'overview_num_items',
                     $this->frm->getField('overview_num_items')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    $this->URL->getModule(),
+                    $this->getModule(),
                     'autocomplete_num_items',
                     $this->frm->getField('autocomplete_num_items')->getValue()
                 );
                 BackendModel::setModuleSetting(
-                    $this->URL->getModule(),
+                    $this->getModule(),
                     'autosuggest_num_items',
                     $this->frm->getField('autosuggest_num_items')->getValue()
+                );
+                BackendModel::setModuleSetting(
+                    $this->getModule(),
+                    'use_sitelinks_search_box',
+                    $this->frm->getField('use_sitelinks_search_box')->isChecked()
                 );
 
                 // module search

@@ -17,6 +17,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to edit an existing profile.
@@ -115,7 +116,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addDropdown('year', array_combine($years, $years), (int) $birthYear);
         $this->frm->addDropdown(
             'country',
-            \SpoonLocale::getCountries(BL::getInterfaceLanguage()),
+            Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()),
             BackendProfilesModel::getSetting($this->id, 'country')
         );
 

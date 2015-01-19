@@ -111,7 +111,7 @@ class Model
     {
         BackendModel::getContainer()->get('database')->update(
             'faq_feedback',
-            array('processed' => 'Y'),
+            array('processed' => 'Y', 'edited_on' => \SpoonDate::getDate('Y-m-d H:i:s')),
             'id = ?',
             (int) $itemId
         );

@@ -9,12 +9,13 @@ namespace Backend\Modules\Location\Actions;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
+use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the edit-action, it will display a form to create a new item
@@ -110,7 +111,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
         $this->frm->addText('city', $this->record['city']);
-        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()), $this->record['country']);
+        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()), $this->record['country']);
         $this->frm->addHidden('redirect', 'overview');
     }
 
