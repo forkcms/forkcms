@@ -53,6 +53,21 @@ class TemplateModifiers
     }
 
     /**
+     * Format a UNIX-timestamp or DateTime-object as a date
+     * syntax: {$var|date[:format][:language][:GMT]}
+     *
+     * @param mixed   $var      The UNIX-timestamp or DateTime-object to format.
+     * @param string  $format   The date format, if not provided we will use the date_format_long.
+     * @param string  $language The language to use, if not provided we will use the loaded language.
+     * @param boolean $GMT      Should we consider this timestamp or DateTime-object to be GMT/UTC?
+     * @return string
+     */
+    public static function date($var, $format = null, $language = null, $GMT = false)
+    {
+        return self::formatDateTime($var, $format, $language, $GMT);
+    }
+
+    /**
      * Dumps the data
      *    syntax: {$var|dump}
      *
@@ -84,6 +99,29 @@ class TemplateModifiers
                 return '€ ' . number_format((float) $var, $decimals, ',', ' ');
                 break;
         }
+    }
+
+    /**
+     * Format a UNIX-timestamp or DateTime-object as a datetime
+     * syntax: {$var|formatdatetime[:format][:language][:GMT]}
+     *
+     * @param mixed   $var      The UNIX-timestamp or DateTime-object to format.
+     * @param string  $format   The date format, if not provided we will use the date_format_long.
+     * @param string  $language The language to use, if not provided we will use the loaded language.
+     * @param boolean $GMT      Should we consider this timestamp or DateTime-object to be GMT/UTC?
+     * @return string
+     */
+    public static function formatDateTime($var, $format = null, $language = null, $GMT = false)
+    {
+        if ($var instanceof \DateTime) $var = $var->format('U');
+        if ($format === null) $format = Model::getModuleSetting('Core', 'date_format_long');
+
+        $var = (int) $var;
+
+        // invalid timestamp
+        if ($var == 0) return '';
+
+        return \SpoonDate::getDate($format, $var, $language, $GMT);
     }
 
     /**
@@ -456,14 +494,15 @@ class TemplateModifiers
     }
 
     /**
-     * Formats a timestamp as a string that indicates the time ago
+     * Formats a timestamp or DateTime-object as a string that indicates the time ago
      *    syntax: {$var|timeago}
      *
-     * @param string $var A UNIX-timestamp that will be formatted as a time-ago-string.
+     * @param string|DateTime $var A UNIX-timestamp or DateTime-object that will be formatted as a time-ago-string.
      * @return string
      */
     public static function timeAgo($var = null)
     {
+        if ($var instanceof \DateTime) $var = $var->format('U');
         $var = (int) $var;
 
         // invalid timestamp
