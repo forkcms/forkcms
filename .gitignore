@@ -4,11 +4,7 @@
 .settings
 .*.swp
 .DS_Store
-"**/.*",
-/node_modules/
 /bower_components/
-/test/
-/tests/
 /app/cache/*
 /app/logs/*
 /components/
