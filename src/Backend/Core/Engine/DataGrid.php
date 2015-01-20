@@ -39,7 +39,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
+        $this->setAttributes(array('class' => 'table table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
         // id gets special treatment
         if (in_array('id', $this->getColumns())) {

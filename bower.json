@@ -11,17 +11,15 @@
   ],
   "license": "MIT",
   "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
+    "bower_components"
   ],
   "dependencies": {
-    "bootstrap": "3.3.*",
+    "bootstrap": "~3.0",
     "modernizr": "2.*",
     "jquery": "1.11.*",
     "jquery-migrate": "1.2.*",
-    "jquery-ui": "1.11.*"
+    "jquery-ui": "1.11.*",
+    "jstree": "~3.0.4",
+    "jstree-bootstrap-theme": "1.0.*"
   }
 }

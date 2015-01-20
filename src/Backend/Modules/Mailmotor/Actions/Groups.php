@@ -98,7 +98,7 @@ class Groups extends BackendBaseActionIndex
                 BL::lbl('CustomFields'),
                 BackendModel::createURLForAction('CustomFields') . '&amp;group_id=[id]',
                 BL::lbl('CustomFields'),
-                array('class' => 'button icon iconEdit linkButton')
+                array('class' => 'btn btn-primary')
             );
         }
 
