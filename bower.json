@@ -1,0 +1,27 @@
+{
+  "name": "forkcms/forkcms",
+  "version": "3.8.5",
+  "homepage": "http://www.fork-cms.com/",
+  "authors": [
+    "info@fork-cms.com"
+  ],
+  "description": "Fork is an open source CMS that will rock your world.",
+  "keywords": [
+    "cms"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "3.3.*",
+    "modernizr": "2.*",
+    "jquery": "1.11.*",
+    "jquery-migrate": "1.2.*",
+    "jquery-ui": "1.11.*"
+  }
+}
