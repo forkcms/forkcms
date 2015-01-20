@@ -137,7 +137,7 @@ class Action extends Object
         // add jquery, we will need this in every action, so add it globally
         $this->header->addJS('/bower_components/jquery/dist/jquery.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', 'Core', false, true);
-        $this->header->addJS('/bower_components/jquery-ui/jquery-ui.min.js', 'Core', false);
+        $this->header->addJS('/bower_components/jquery-ui/jquery-ui.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/bootstrap/dist/js/bootstrap.min.js', 'Core', false, true);
         $this->header->addJS('jquery/jquery.ui.dialog.patch.js', 'Core');
         $this->header->addJS('jquery/jquery.tools.js', 'Core', false);
