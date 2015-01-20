@@ -12,7 +12,10 @@
 	<!--[if IE 7]><link rel="stylesheet" href="/src/Backend/Core/Layout/Css/conditionals/ie7.css" /><![endif]-->
 	<!--[if IE 8]><link rel="stylesheet" href="/src/Backend/Core/Layout/Css/conditionals/ie8.css" /><![endif]-->
 
-	{iteration:jsFiles}<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}{/iteration:jsFiles}
+	{iteration:jsFiles}
+	<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}
+	{/iteration:jsFiles}
+
 	<script>
 		//<![CDATA[
 			{$jsData}

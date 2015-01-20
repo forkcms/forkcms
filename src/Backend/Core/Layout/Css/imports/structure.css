@@ -21,14 +21,6 @@ body {
 	width: 100%;
 }
 
-#encloser {
-	width: 100%;
-	height: 100%;
-	/* Fix jQuery UI modal scrollbars problem */
-	position: absolute;
-	top: 0; left: 0;
-}
-
 #container {
 	height: 100%;
 	width: 100%;
@@ -39,8 +31,6 @@ body {
 
 #main {
 	border-top: none;
-	min-width: 958px;
-	max-width: 1224px;
 	margin: 0 auto;
 	background: #FAFAFA;
 	border: 1px solid #BED7E9;

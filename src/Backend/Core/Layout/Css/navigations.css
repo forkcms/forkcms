@@ -1,0 +1,14 @@
+.fork-nav-sidebar {
+
+}
+
+.fork-nav-sidebar li > ul > li {
+    margin-top: 2px;
+    margin-left: 0px;
+}
+
+.fork-nav-sidebar li > ul {
+    border-bottom: 1px solid #DDDDDD;
+    padding-bottom: 2px;
+    padding-left: 15px;
+}

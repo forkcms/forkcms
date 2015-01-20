@@ -1,5 +1,3 @@
-				</div>
-			</div>
-		</td>
-	</tr>
-</table>
+</div>
+</div>
+</div>

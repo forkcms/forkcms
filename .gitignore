@@ -6,6 +6,7 @@
 .DS_Store
 /app/cache/*
 /app/logs/*
+/components/
 /backend/cache/navigation/
 /vendor/
 /app/config/parameters.yml

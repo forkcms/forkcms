@@ -146,7 +146,7 @@ class Navigation extends Base\Object
             if ($currentDepth >= $startDepth - 1) {
                 // start li
                 if ($selected) {
-                    $HTML .= '<li class="selected">' . "\n";
+                    $HTML .= '<li class="active">' . "\n";
                 } else {
                     $HTML .= '<li>' . "\n";
                 }
@@ -160,7 +160,7 @@ class Navigation extends Base\Object
                 if ($endDepth === null || $currentDepth < $endDepth) {
                     // start ul if needed
                     if ($currentDepth != 0) {
-                        $HTML .= '<ul>' . "\n";
+                        $HTML .= '<ul class="nav">' . "\n";
                     }
 
                     // loop children
@@ -467,15 +467,16 @@ class Navigation extends Base\Object
      *
      * @param int $startDepth The start-depth.
      * @param int $endDepth   The end-depth.
+     * @param string $class Class attribute of ul list
      * @return string
      */
-    public function getNavigation($startDepth = 0, $endDepth = null)
+    public function getNavigation($startDepth = 0, $endDepth = null, $class = null)
     {
         // get selected
         $selectedKeys = $this->getSelectedKeys();
 
         // init html
-        $HTML = '<ul>' . "\n";
+        $HTML = '<ul ' . ($class?'class="' . $class . '"':'') . '>' . "\n";
 
         // loop the navigation elements
         foreach ($this->navigation as $key => $value) {
