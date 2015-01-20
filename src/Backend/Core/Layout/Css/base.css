@@ -5,3 +5,7 @@
 textarea {
     resize: vertical;
 }
+
+.fork-tabs .nav-tabs {
+    margin-bottom: 15px;
+}

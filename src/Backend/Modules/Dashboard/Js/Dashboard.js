@@ -29,8 +29,8 @@ jsBackend.dashboard =
 		// get widget
 		$widget = $(this).parents('.sortableWidget').eq(0);
 
-		if($widget.hasClass('isRemoved')) $widget.find('.options, .footer, .dataGridHolder').show().removeClass('isRemoved');
-		else $widget.find('.options, .footer, .dataGridHolder').hide().addClass('isRemoved');
+		if($widget.hasClass('isRemoved')) $widget.find('.panel').show().removeClass('isRemoved');
+		else $widget.find('.panel').hide().addClass('isRemoved');
 	},
 
 	load: function(e)
@@ -63,7 +63,7 @@ jsBackend.dashboard =
 		$('.sortableWidget.isRemoved').show();
 
 		$sortableWidget.each(function() {
-			if($(this).find('.box').length === 0) $(this).remove();
+			if($(this).find('.panel').length === 0) $(this).remove();
 		});
 
 		// make them sortable
@@ -132,7 +132,7 @@ jsBackend.dashboard =
 
 		// unbind
 		$column.sortable('destroy');
-		$sortableWidget.draggable('destroy').off('mouseenter mouseleave');
+		$sortableWidget.draggable('disable');
 
 		// build new array
 		var newSequence = [];
@@ -147,6 +147,8 @@ jsBackend.dashboard =
 				// add item
 				items.push({ module: $(this).data('module'), widget: $(this).data('widget'), hidden: $(this).hasClass('isRemoved'), present: true });
 			});
+
+			console.log(items);
 
 			// add to all
 			newSequence.push(items);
