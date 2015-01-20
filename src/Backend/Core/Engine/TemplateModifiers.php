@@ -144,11 +144,12 @@ class TemplateModifiers
      *  syntax: {$var|getmainnavigation}
      *
      * @param string $var A placeholder var, will be replaced with the generated HTML.
+     * @param string $class Class attribute of ul list
      * @return string
      */
-    public static function getMainNavigation($var = null)
+    public static function getMainNavigation($var = null, $class = null)
     {
-        return BackendModel::getContainer()->get('navigation')->getNavigation(1, 1);
+        return BackendModel::getContainer()->get('navigation')->getNavigation(1, 1, $class);
     }
 
     /**
@@ -158,15 +159,16 @@ class TemplateModifiers
      * @param string $var        A placeholder var, will be replaced with the generated HTML.
      * @param int    $startDepth The start depth of the navigation to get.
      * @param int    $endDepth   The ending depth of the navigation to get.
+     * @param string $class Class attribute of ul list
      * @return string
      */
-    public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
+    public static function getNavigation($var = null, $startDepth = null, $endDepth = null, $class = null)
     {
         $startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
         $endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
         // return navigation
-        return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth);
+        return BackendModel::getContainer()->get('navigation')->getNavigation($startDepth, $endDepth, $class);
     }
 
     /**
@@ -177,14 +179,19 @@ class TemplateModifiers
      * @param string $action The action to build the URL for.
      * @param string $module The module to build the URL for.
      * @param string $suffix A string to append.
+     * @param string $language A language code
      * @return string
      */
-    public static function getURL($var = null, $action = null, $module = null, $suffix = null)
+    public static function getURL($var = null, $action = null, $module = null, $suffix = null, $language = null)
     {
+        if (!in_array($language, Language::getActiveLanguages())) {
+            $language = Language::getWorkingLanguage();
+        }
+
         $action = ($action !== null) ? (string) $action : null;
         $module = ($module !== null) ? (string) $module : null;
 
-        return BackendModel::createURLForAction($action, $module, Language::getWorkingLanguage()) . $suffix;
+        return BackendModel::createURLForAction($action, $module, $language) . $suffix;
     }
 
     /**

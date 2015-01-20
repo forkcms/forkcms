@@ -81,22 +81,22 @@ class Index extends BackendBaseActionIndex
         $this->frm->addTextarea(
             'site_html_header',
             BackendModel::getModuleSetting('Core', 'site_html_header', null),
-            'textarea code',
-            'textareaError code',
+            'form-control code',
+            'error code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
             BackendModel::getModuleSetting('Core', 'site_html_footer', null),
-            'textarea code',
-            'textareaError code',
+            'form-control code',
+            'error code',
             true
         );
         $this->frm->addTextarea(
             'site_domains',
             implode("\n", (array) BackendModel::getModuleSetting('Core', 'site_domains', $defaultDomains)),
-            'textarea code',
-            'textareaError code'
+            'form-control code',
+            'error code'
         );
 
         // facebook settings
