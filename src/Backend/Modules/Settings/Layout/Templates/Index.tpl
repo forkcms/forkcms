@@ -7,7 +7,7 @@
 	{option:warnings}
 	<div class="alert alert-warning" role="alert">
 		<p><strong>{$msgConfigurationError}</strong></p>
-		<ul class="pb0">
+		<ul>
 			{iteration:warnings}
 			<li>{$warnings.message}</li>
 			{/iteration:warnings}
@@ -18,9 +18,9 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">
+					<h2 class="panel-title">
 						{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>
-					</h3>
+					</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -34,7 +34,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblScripts|ucfirst}</h3>
+					<h2 class="panel-title">{$lblScripts|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -57,7 +57,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblLanguages|ucfirst}</h3>
+					<h2 class="panel-title">{$lblLanguages|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -94,7 +94,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblDateAndTime|ucfirst}</h3>
+					<h2 class="panel-title">{$lblDateAndTime|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -120,7 +120,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblNumbers|ucfirst}</h3>
+					<h2 class="panel-title">{$lblNumbers|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -136,7 +136,7 @@
 		<div class="col-md-12">
 			<div id="settingsApiKeys" class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblAPIKeys|ucfirst}</h3>
+					<h2 class="panel-title">{$lblAPIKeys|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<p>{$msgHelpAPIKeys}</p>
@@ -183,7 +183,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">CKFinder</h3>
+					<h2 class="panel-title">CKFinder</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -212,7 +212,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Facebook</h3>
+					<h2 class="panel-title">Facebook</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -238,7 +238,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">Twitter</h3>
+					<h2 class="panel-title">Twitter</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -255,7 +255,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">{$lblCookies|ucfirst}</h3>
+					<h2 class="panel-title">{$lblCookies|ucfirst}</h2>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">

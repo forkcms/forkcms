@@ -1,73 +1,73 @@
-<div class="box" id="widgetMailmotorClassic">
-	<div class="heading">
-		<h3>
-			<a href="{$var|geturl:'index':'mailmotor'}">
-				{$lblMailmotor|ucfirst}
-			</a>
-		</h3>
+<div id="widgetMailmotorClassic" class="panel panel-default">
+	<div class="panel-heading">
+		<h2 class="panel-title">
+			<a href="{$var|geturl:'index':'mailmotor'}">{$lblMailmotor|ucfirst}</a>
+		</h2>
 	</div>
-
-	<div class="options">
-		<div id="tabs" class="tabs">
-			<ul>
-				<li><a href="#tabMailmotorSubscriptions">{$lblSubscriptions|ucfirst}</a></li>
-				<li><a href="#tabMailmotorUnsubscriptions">{$lblUnsubscriptions|ucfirst}</a></li>
-				<li><a href="#tabMailmotorStatistics">{$lblStatistics|ucfirst}</a></li>
+	<div class="panel-body">
+		<div class="fork-tabs" role="tabpanel">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#tabMailmotorSubscriptions" aria-controls="home" role="tab" data-toggle="tab">{$lblSubscriptions|ucfirst}</a>
+				</li>
+				<li role="presentation">
+					<a href="#tabMailmotorUnsubscriptions" aria-controls="profile" role="tab" data-toggle="tab">{$lblUnsubscriptions|ucfirst}</a>
+				</li>
+				<li role="presentation">
+					<a href="#tabMailmotorStatistics" aria-controls="messages" role="tab" data-toggle="tab">{$lblStatistics|ucfirst}</a>
+				</li>
 			</ul>
-
-			<div id="tabMailmotorSubscriptions">
-				{* All the subscriptions *}
-				<div id="dataGridSubscriptions">
-					{option:dgMailmotorSubscriptions}
-					<div class="dataGridHolder">
-						{$dgMailmotorSubscriptions}
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="tabMailmotorSubscriptions">
+					<div id="dataGridSubscriptions">
+						{option:dgMailmotorSubscriptions}
+						<div class="table table-striped dataGridHolder">
+							{$dgMailmotorSubscriptions}
+						</div>
+						{/option:dgMailmotorSubscriptions}
+						{option:!dgMailmotorSubscriptions}
+						<p>
+							{$msgNoSubscriptions|ucfirst}
+						</p>
+						{/option:!dgMailmotorSubscriptions}
 					</div>
-					{/option:dgMailmotorSubscriptions}
-					{option:!dgMailmotorSubscriptions}
-					<p>
-						{$msgNoSubscriptions|ucfirst}
-					</p>
-					{/option:!dgMailmotorSubscriptions}
 				</div>
-			</div>
-
-			<div id="tabMailmotorUnsubscriptions">
-				{* All the unsubscriptions *}
-				<div id="dataGridUnsubscriptions">
-					{option:dgMailmotorUnsubscriptions}
-					<div class="dataGridHolder" >
-						{$dgMailmotorUnsubscriptions}
+				<div role="tabpanel" class="tab-pane" id="tabMailmotorUnsubscriptions">
+					<div id="dataGridUnsubscriptions">
+						{option:dgMailmotorUnsubscriptions}
+						<div class="table table-striped dataGridHolder" >
+							{$dgMailmotorUnsubscriptions}
+						</div>
+						{/option:dgMailmotorUnsubscriptions}
+						{option:!dgMailmotorUnsubscriptions}
+						<p>
+							{$msgNoUnsubscriptions|ucfirst}
+						</p>
+						{/option:!dgMailmotorUnsubscriptions}
 					</div>
-					{/option:dgMailmotorUnsubscriptions}
-					{option:!dgMailmotorUnsubscriptions}
-					<p>
-						{$msgNoUnsubscriptions|ucfirst}
-					</p>
-					{/option:!dgMailmotorUnsubscriptions}
 				</div>
-			</div>
-
-			<div id="tabMailmotorStatistics">
-				{* The stats *}
-				<div id="dataGridStatistics">
-					{option:dgMailmotorStatistics}
-					<div class="dataGridHolder">
-						{$dgMailmotorStatistics}
+				<div role="tabpanel" class="tab-pane" id="tabMailmotorStatistics">
+					<div id="dataGridStatistics">
+						{option:dgMailmotorStatistics}
+						<div class="table table-striped dataGridHolder">
+							{$dgMailmotorStatistics}
+						</div>
+						{/option:dgMailmotorStatistics}
+						{option:!dgMailmotorStatistics}
+						<p>
+							{$msgNoSentMailings|ucfirst}
+						</p>
+						{/option:!dgMailmotorStatistics}
 					</div>
-					{/option:dgMailmotorStatistics}
-
-					{option:!dgMailmotorStatistics}
-					<p>
-						{$msgNoSentMailings|ucfirst}
-					</p>
-					{/option:!dgMailmotorStatistics}
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="footer">
-		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'addresses':'mailmotor'}" class="button"><span>{$msgAllAddresses|ucfirst}</span></a>
+	<div class="panel-footer">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a href="{$var|geturl:'addresses':'mailmotor'}" class="btn"><span>{$msgAllAddresses|ucfirst}</span></a>
+			</div>
 		</div>
 	</div>
 </div>
