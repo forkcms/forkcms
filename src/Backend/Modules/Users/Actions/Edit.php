@@ -301,21 +301,21 @@ class Edit extends BackendBaseActionEdit
                 if (!$this->user->isGod()) {
                     $user['email'] = $fields['email']->getValue(true);
                 }
-                if ($this->authenticatedUser->getUserId() != $this->record['id']
-                ) {
-                    $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
-                }
 
-                // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
-                if ($user['active'] === 'N' && $this->record['active'] !== $user['active']) {
-                    // delete all sessions for user
-                    BackendModel::get('database')->delete(
-                        'users_sessions',
-                        'user_id = ?',
-                        array(
-                            $this->user->getUserId()
-                        )
-                    );
+                if ($this->authenticatedUser->getUserId() != $this->record['id']) {
+                    $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
+
+                    // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
+                    if ($user['active'] === 'N' && $this->record['active'] !== $user['active']) {
+                        // delete all sessions for user
+                        BackendModel::get('database')->delete(
+                            'users_sessions',
+                            'user_id = ?',
+                            array(
+                                $this->user->getUserId()
+                            )
+                        );
+                    }
                 }
 
                 // build settings-array
