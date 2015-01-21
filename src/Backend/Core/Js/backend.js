@@ -1846,11 +1846,11 @@ jsBackend.messages =
 	add: function(type, content)
 	{
 		var uniqueId = 'e'+ new Date().getTime().toString();
-		var html = '<div id="'+ uniqueId +'" class="formMessage '+ type +'Message" style="display: none;">'+
-					'	<p>'+ content +'</p>'+
-					'	<div class="buttonHolderRight">'+
-					'		<a class="button icon linkButton iconClose iconOnly" href="#"><span>X</span></a>'+
-					'	</div>'+
+		var html = '<div id="'+ uniqueId +'" class="alert alert-' + type + ' alert-dismissible formMessage '+ type +'Message" style="display: none;">'+
+					content +
+					'  <button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+					'    <span aria-hidden="true">&times;</span>' +
+					'  </button>'
 					'</div>';
 
 		// prepend

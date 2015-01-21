@@ -29,8 +29,8 @@ jsBackend.dashboard =
 		// get widget
 		$widget = $(this).parents('.sortableWidget').eq(0);
 
-		if($widget.hasClass('isRemoved')) $widget.find('.panel').show().removeClass('isRemoved');
-		else $widget.find('.panel').hide().addClass('isRemoved');
+		if($widget.hasClass('isRemoved')) $widget.has('.panel').show().removeClass('isRemoved');
+		else $widget.has('.panel').hide().addClass('isRemoved');
 	},
 
 	load: function(e)
@@ -45,8 +45,7 @@ jsBackend.dashboard =
 		$column = $('.column');
 
 		// bind before unload event
-		$(window).on('beforeunload', function()
-		{
+		$(window).on('beforeunload', function() {
 			return jsBackend.locale.msg('ValuesAreChanged');
 		});
 
@@ -76,7 +75,7 @@ jsBackend.dashboard =
 				stop: function(e, ui)
 				{
 					// remove the original item
-					jsBackend.dashboard.itemOnTheMove.hide();
+					//jsBackend.dashboard.itemOnTheMove.hide();
 				}
 			}
 		);
@@ -85,7 +84,6 @@ jsBackend.dashboard =
 			{
 				cursor: 'move',
 				connectToSortable: '.column',
-				helper: 'clone',
 				opacity: 0.50,
 				revert: 'invalid',
 				start: function(e, ui)
@@ -130,9 +128,11 @@ jsBackend.dashboard =
 		// hide close buttons
 		$editDashboardClose.hide();
 
+		console.log($sortableWidget);
+
 		// unbind
 		$column.sortable('destroy');
-		$sortableWidget.draggable('disable');
+		$sortableWidget.draggable('destroy');
 
 		// build new array
 		var newSequence = [];

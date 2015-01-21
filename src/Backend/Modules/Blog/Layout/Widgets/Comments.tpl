@@ -1,4 +1,4 @@
-<div id="widgetBlogComments" class="panel panel-default">
+<div id="widgetBlogComments" class="panel panel-primary">
 	<div class="panel-heading">
 		<h2 class="panel-title">
 			<a href="{$var|geturl:'comments':'blog'}">{$lblBlog|ucfirst}: {$lblLatestComments|ucfirst}</a>

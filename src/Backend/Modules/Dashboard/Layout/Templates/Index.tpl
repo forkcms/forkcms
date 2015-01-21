@@ -2,15 +2,20 @@
 {include:{$BACKEND_MODULES_PATH}/Dashboard/Layout/Templates/StructureStart.tpl}
 
 <div id="dashboardWidgets" class="row">
-	<div id="editDashboardMessage" class="generalMessage infoMessage" style="display:none; margin: 12px;">
-		{$msgHelpEditDashboard}
-		<a href="#" id="doneEditingDashboard">{$lblDone|ucfirst}</a>
+	<div class="col-md-12">
+		<div class="page-header">
+			<h1>{$lblDashboard|ucfirst}</h1>
+		</div>
+		<div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
+			{$msgHelpEditDashboard}
+			<a href="#" id="doneEditingDashboard">{$lblDone|ucfirst}</a>
+		</div>
 	</div>
 
-	<div class="col-md-4 column">
+	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:leftColumn}
-		<div class="sortableWidget{option:leftColumn.hidden} isRemoved{/option:leftColumn.hidden}" data-module="{$leftColumn.module}" data-widget="{$leftColumn.widget}" data-title="{$leftColumn.title}"{option:leftColumn.hidden} style="display: none;"{/option:leftColumn.hidden}>
-			<a href="#" class="editDashboardClose ui-dialog-titlebar-close ui-corner-all" style="display: none;"><span class="ui-icon ui-icon-closethick">close</span></a>
+		<div class="fork-widget sortableWidget{option:leftColumn.hidden} isRemoved{/option:leftColumn.hidden}" data-module="{$leftColumn.module}" data-widget="{$leftColumn.widget}" data-title="{$leftColumn.title}"{option:leftColumn.hidden} style="display: none;"{/option:leftColumn.hidden}>
+			<a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
 			{option:leftColumn.hidden}
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -29,10 +34,10 @@
 		&#160;
 	</div>
 
-	<div class="col-md-4 column">
+	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:middleColumn}
-		<div class="sortableWidget{option:middleColumn.hidden} isRemoved{/option:middleColumn.hidden}" data-module="{$middleColumn.module}" data-widget="{$middleColumn.widget}" data-title="{$middleColumn.title}"{option:middleColumn.hidden} style="display: none;"{/option:middleColumn.hidden}>
-			<a href="#" class="editDashboardClose ui-dialog-titlebar-close ui-corner-all" style="display: none;"><span class="ui-icon ui-icon-closethick">close</span></a>
+		<div class="fork-widget sortableWidget{option:middleColumn.hidden} isRemoved{/option:middleColumn.hidden}" data-module="{$middleColumn.module}" data-widget="{$middleColumn.widget}" data-title="{$middleColumn.title}"{option:middleColumn.hidden} style="display: none;"{/option:middleColumn.hidden}>
+			<a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
 			{option:middleColumn.hidden}
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -51,10 +56,10 @@
 		&#160;
 	</div>
 
-	<div class="col-md-4 column">
+	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:rightColumn}
-		<div class="sortableWidget{option:rightColumn.hidden} isRemoved{/option:rightColumn.hidden}" data-module="{$rightColumn.module}" data-widget="{$rightColumn.widget}" data-title="{$rightColumn.title}"{option:rightColumn.hidden} style="display: none;"{/option:rightColumn.hidden}>
-			<a href="#" class="editDashboardClose ui-dialog-titlebar-close ui-corner-all" style="display: none;"><span class="ui-icon ui-icon-closethick">close</span></a>
+		<div class="fork-widget sortableWidget{option:rightColumn.hidden} isRemoved{/option:rightColumn.hidden}" data-module="{$rightColumn.module}" data-widget="{$rightColumn.widget}" data-title="{$rightColumn.title}"{option:rightColumn.hidden} style="display: none;"{/option:rightColumn.hidden}>
+			<a href="#" class="editDashboardClose close ui-dialog-titlebar-close ui-corner-all" style="display: none;">&times;</a>
 			{option:rightColumn.hidden}
 			<div class="panel panel-default">
 				<div class="panel-heading">
