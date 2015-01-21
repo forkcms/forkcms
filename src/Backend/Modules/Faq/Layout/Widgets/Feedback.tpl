@@ -1,4 +1,4 @@
-<div id="widgetFaqFeedback" class="panel panel-default">
+<div id="widgetFaqFeedback" class="panel panel-primary">
 	<div class="panel-heading">
 		<h2 class="panel-title">
 			<a href="{$var|geturl:'index':'faq'}">{$lblFaq|ucfirst}: {$lblFeedback|ucfirst}</a>

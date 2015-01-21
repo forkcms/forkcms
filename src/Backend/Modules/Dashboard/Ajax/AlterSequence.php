@@ -75,7 +75,11 @@ class AlterSequence extends BackendBaseAjaxAction
                     // loop modules
                     foreach ($currentSetting as $module => $widgets) {
                         foreach ($widgets as $widget => $values) {
-                            if ($values['hidden'] && isset($userSequence[$module][$widget]['hidden']) && !$userSequence[$module][$widget]['hidden']) {
+                            if (
+                                isset($values['hidden']) && $values['hidden']
+                                && isset($userSequence[$module][$widget]['hidden'])
+                                && !$userSequence[$module][$widget]['hidden']
+                            ) {
                                 $data['reload'] = true;
                             }
                         }

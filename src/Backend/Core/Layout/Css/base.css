@@ -9,3 +9,19 @@ textarea {
 .fork-tabs .nav-tabs {
     margin-bottom: 15px;
 }
+
+.fork-dashboard-column {
+    min-height: 200px;
+    line-height: 0;
+}
+
+.fork-widget {
+    position: relative;
+    line-height: normal;
+}
+
+.fork-widget > .close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+}

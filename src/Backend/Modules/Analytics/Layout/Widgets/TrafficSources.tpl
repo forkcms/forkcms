@@ -1,62 +1,55 @@
 {option:analyticsValidSettings}
-<div class="box" id="widgetAnalyticsTrafficSources">
-	<div class="heading">
-		<h3>
+<div id="widgetAnalyticsTrafficSources" class="panel panel-primary">
+	<div class="panel-heading">
+		<h2 class="panel-title">
 			<a href="{$var|geturl:'index':'analytics'}">
 				{$lblTrafficSources|ucfirst}
 				{$lblFrom}
 				<span id="trafficSourcesDate">{$analyticsTrafficSourcesDate}</span>
 			</a>
-		</h3>
+		</h2>
 	</div>
-
-	<div class="options">
-		<div id="tabs" class="tabs">
-			<ul>
-				<li><a href="#tabAnalyticsReferrers">{$lblTopReferrers|ucfirst}</a></li>
-				<li><a href="#tabAnalyticsKeywords">{$lblTopKeywords|ucfirst}</a></li>
+	<div class="panel-body">
+		<div class="fork-tabs" role="tabpanel">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#tabAnalyticsReferrers">{$lblTopReferrers|ucfirst}</a>
+				</li>
+				<li role="presentation">
+					<a href="#tabAnalyticsKeywords">{$lblTopKeywords|ucfirst}</a>
+				</li>
 			</ul>
-
-			<div id="tabAnalyticsReferrers">
-				{* Top referrers *}
-				<div class="dataGridHolder" id="dataGridReferrers">
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="tabAnalyticsReferrers">
 					{option:dgAnalyticsReferrers}
-						{$dgAnalyticsReferrers}
+					{$dgAnalyticsReferrers}
 					{/option:dgAnalyticsReferrers}
-
 					{option:!dgAnalyticsReferrers}
-						<table class="dataGrid">
-							<tr>
-								<td>{$msgNoReferrers}</td>
-							</tr>
-						</table>
+					<p>{$msgNoReferrers}</p>
 					{/option:!dgAnalyticsReferrers}
 				</div>
 			</div>
-
-			<div id="tabAnalyticsKeywords">
-				{* Top keywords *}
-				<div class="dataGridHolder" id="dataGridKeywords">
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane" id="tabAnalyticsKeywords">
 					{option:dgAnalyticsKeywords}
-						{$dgAnalyticsKeywords}
+					{$dgAnalyticsKeywords}
 					{/option:dgAnalyticsKeywords}
-
 					{option:!dgAnalyticsKeywords}
-						<table class="dataGrid">
-							<tr>
-								<td>{$msgNoKeywords}</td>
-							</tr>
-						</table>
+					<p>{$msgNoKeywords}</p>
 					{/option:!dgAnalyticsKeywords}
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="footer">
-		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'index':'analytics'}" class="button"><span>{$lblAllStatistics|ucfirst}</span></a>
-			<a href="#refresh" id="refreshTrafficSources" class="submitButton button inputButton mainButton iconLink icon iconRefresh"><span></span></a>
-			{option:settingsUrl}<div id="settingsUrl" class="hidden">{$settingsUrl}</div>{/option:settingsUrl}
+	<div class="panel-footer">
+		<div class="btn-toolbar">
+			<div class="btn-group">
+				<a href="{$var|geturl:'index':'analytics'}" class="btn"><span>{$lblAllStatistics|ucfirst}</span></a>
+				<a href="#refresh" id="refreshTrafficSources" class="submitButton button inputButton mainButton iconLink icon iconRefresh"><span></span></a>
+				{option:settingsUrl}
+				<div id="settingsUrl" class="hidden">{$settingsUrl}</div>
+				{/option:settingsUrl}
+			</div>
 		</div>
 	</div>
 </div>

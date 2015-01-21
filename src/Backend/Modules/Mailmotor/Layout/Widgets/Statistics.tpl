@@ -1,4 +1,4 @@
-<div id="widgetMailmotorClassic" class="panel panel-default">
+<div id="widgetMailmotorClassic" class="panel panel-primary">
 	<div class="panel-heading">
 		<h2 class="panel-title">
 			<a href="{$var|geturl:'index':'mailmotor'}">{$lblMailmotor|ucfirst}</a>
