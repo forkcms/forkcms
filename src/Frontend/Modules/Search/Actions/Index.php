@@ -246,7 +246,7 @@ class Index extends FrontendBaseBlock
         // since we know the term just here we should set the canonical url here
         $canonicalUrl = SITE_URL . FrontendNavigation::getURLForBlock('Search');
         if (isset($_GET['q']) && $_GET['q'] != '') {
-            $canonicalUrl .= '?q=' . $_GET['q'];
+            $canonicalUrl .= '?q=' . \SpoonFilter::htmlspecialchars($_GET['q']);
         }
         $this->header->setCanonicalUrl($canonicalUrl);
     }

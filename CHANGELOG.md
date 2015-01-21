@@ -1,4 +1,29 @@
-3.8.3 (xxxx-xx-xx)
+3.8.5 (2015-01-14)
+--
+Improvements:
+
+* Core: use Symfony Intl component instead of Spoon to fetch countries.
+* Core: implement Google's sitelinks searchbox
+
+Bugfixes:
+
+* Core: Make sure logs aren't publically accessible
+* Core: Make sure PHP 5.5+'s opcode cache is now cleared after updating code
+
+3.8.4 (2014-12-26)
+--
+Improvements:
+
+* Core: Make sure setDebugMessage is only called once.
+
+Bugfixes:
+
+* Pages: Fix missing variable.
+* Blog: Capitalize module and detail names to fix URLs.
+* Security: Avoid XSS by not directly injecting $_GET parameters in html.
+
+
+3.8.3 (2014-12-12)
 --
 Improvements:
 

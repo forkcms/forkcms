@@ -48,7 +48,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
         $container = $this->getContainer();
 
         Spoon::setDebug($container->getParameter('kernel.debug'));
-        Spoon::setDebugMessage($container->getParameter('fork.debug_email'));
+        Spoon::setDebugEmail($container->getParameter('fork.debug_email'));
         Spoon::setDebugMessage($container->getParameter('fork.debug_message'));
         Spoon::setCharset($container->getParameter('kernel.charset'));
 
