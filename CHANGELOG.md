@@ -1,3 +1,9 @@
+3.8.6 (xxxx-xx-xx)
+--
+Bugfixes:
+
+* Profiles: bugfix for error when 'active' was not set.
+
 3.8.5 (2015-01-14)
 --
 Improvements:
