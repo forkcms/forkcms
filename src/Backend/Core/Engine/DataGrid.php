@@ -26,6 +26,26 @@ use Backend\Core\Engine\Model as BackendModel;
 class DataGrid extends \SpoonDataGrid
 {
     /**
+     * Map of glyph icons by given action name
+     * @todo this map is not full
+     *
+     * @var array
+     */
+    private $mapGlyphIcons = array(
+        'add' => 'glyphicon-plus',
+        'copy' => 'glyphicon-plus',
+        'edit' => 'glyphicon-pencil',
+        'delete' => 'glyphicon-trash',
+        'detail' => 'glyphicon-cog',
+        'details' => 'glyphicon-cog',
+        'approve' => 'glyphicon-ok',
+        'mark_as_spam' => 'glyphicon-ban-circle',
+        'install' => 'glyphicon-save',
+        'use_revision' => 'glyphicon-open',
+        'use_draft' => 'glyphicon-open'
+    );
+
+    /**
      * @param \SpoonDataGridSource $source
      */
     public function __construct(\SpoonDataGridSource $source)
@@ -91,6 +111,8 @@ class DataGrid extends \SpoonDataGrid
         $image = null,
         $sequence = null
     ) {
+        $icon = $this->decideGlyphIcon($name);
+
         // known actions that should have a button
         if (in_array(
             $name,
@@ -98,8 +120,11 @@ class DataGrid extends \SpoonDataGrid
         )
         ) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button icon icon' .
-                     \SpoonFilter::toCamelCase($name) . ' linkButton"><span>' . $value . '</span></a>';
+            $value =
+                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                $value .
+                '</a>';
 
             // reset URL
             $URL = null;
@@ -107,10 +132,11 @@ class DataGrid extends \SpoonDataGrid
 
         if (in_array($name, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' .
-                     \SpoonFilter::toCamelCase($name) . '">
-                        <span>' . $value . '</span>
-                    </a>';
+            $value =
+                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                $value .
+                '</a>';
 
             // reset URL
             $URL = null;
@@ -137,7 +163,7 @@ class DataGrid extends \SpoonDataGrid
         )
         ) {
             // add special attributes for actions we know
-            $this->setColumnAttributes($name, array('class' => 'action action' . \SpoonFilter::toCamelCase($name)));
+            $this->setColumnAttributes($name, array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name)));
         }
 
         // set header attributes
@@ -169,10 +195,11 @@ class DataGrid extends \SpoonDataGrid
         // reserve var for attributes
         $attributes = '';
 
+        $icon = $this->decideGlyphIcon($name);
+
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
-            $anchorAttributes['class'] = 'button icon icon' .
-                                         \SpoonFilter::toCamelCase($name) . ' linkButton';
+            $anchorAttributes['class'] = 'btn btn-default btn-xs';
         }
 
         // loop the attributes, build our attributes string
@@ -181,9 +208,11 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // rebuild value
-        $value = '<a href="' . $URL . '"' . $attributes . '>
-                        <span>' . $value . '</span>
-                    </a>';
+        $value =
+            '<a href="' . $URL . '"' . $attributes . '>' .
+            ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+            $value .
+            '</a>';
 
         // add the column to the datagrid
         parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
@@ -192,7 +221,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnAttributes(
             $name,
             array(
-                'class' => 'action action' . \SpoonFilter::toCamelCase($name),
+                'class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name),
                 'style' => 'width: 10%;'
             )
         );
@@ -560,5 +589,22 @@ class DataGrid extends \SpoonDataGrid
         } else {
             parent::setURL($URL);
         }
+    }
+
+    /**
+     * Decides what glyph icon to use by given name
+     *
+     * @param $name
+     * @return null|string
+     */
+    private function decideGlyphIcon($name)
+    {
+        $icon = null;
+
+        if (isset($this->mapGlyphIcons[$name])) {
+            $icon = $this->mapGlyphIcons[$name];
+        }
+
+        return $icon;
     }
 }

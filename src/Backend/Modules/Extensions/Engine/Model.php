@@ -147,12 +147,15 @@ class Model
                     // large visual?
                     if ($large) {
                         $html .= ' id="templatePosition-' . $value . '" data-position="' . $value . '" class="box">
-                                    <div class="heading linkedBlocksTitle"><h3>' . $title . '</h3></div>
+                                    <div class="heading linkedBlocksTitle"><h4>' . $title . '</h4></div>
                                     <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                                    <div class="buttonHolder buttonAddHolder">
-                                        <a href="#addBlock" class="button icon iconAdd addBlock">
-                                            <span>' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '</span>
-                                        </a>
+                                    <div class="btn-toolbar text-center" role="toolbar">
+                                        <div class="btn-group fork-inline-block" role="group">
+                                            <a href="#addBlock" class="btn btn-primary btn-xs">
+                                                <span class="glyphicon glyphicon-th-large"></span>
+                                                ' . \SpoonFilter::ucfirst(BL::lbl('AddBlock')) . '
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>' . "\n";
                     } else {

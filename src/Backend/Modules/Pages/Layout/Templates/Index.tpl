@@ -1,20 +1,22 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
-<div class="page-header">
-	{option:showPagesAdd}
-	<div class="btn-toolbar pull-right">
-		<div class="btn-group" role="group">
-			<a href="{$var|geturl:'add'}" class="btn btn-primary">
-				<span class="glyphicon glyphicon-plus-sign"></span>
-				{$lblAdd|ucfirst}
-			</a>
+<div class="row">
+	<div class="col-md-12">
+		<h2>
+			{option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
+			{option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
+		</h2>
+		{option:showPagesAdd}
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				<a href="{$var|geturl:'add'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
+					<span class="glyphicon glyphicon-plus-sign"></span>
+					{$lblAdd|ucfirst}
+				</a>
+			</div>
 		</div>
+		{/option:showPagesAdd}
 	</div>
-	{/option:showPagesAdd}
-	<h1>
-		{option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
-		{option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
-	</h1>
 </div>
 {option:dgDrafts}
 <div class="dataGridHolder {option:!dgDrafts}dataGridHolderNoDataGrid{/option:!dgDrafts}">

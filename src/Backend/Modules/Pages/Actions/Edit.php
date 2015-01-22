@@ -90,6 +90,7 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
         // add css
+        $this->header->addCSS('pages.css');
         $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // get the templates
