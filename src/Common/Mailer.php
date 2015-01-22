@@ -77,52 +77,41 @@ class Mailer
         array $attachments = null,
         $addUTM = false
     ) {
-        $subject = (string) strip_tags($subject);
-        $template = (string) $template;
-
-        // set defaults
+        // set recipient/sender headers
         $to = Model::getModuleSetting('Core', 'mailer_to');
         $from = Model::getModuleSetting('Core', 'mailer_from');
         $replyTo = Model::getModuleSetting('Core', 'mailer_reply_to');
+        $toEmail = ($toEmail === null) ? (string) $to['email'] : $toEmail;
+        $toName = ($toName === null) ? (string) $to['name'] : $toName;
+        $fromEmail = ($fromEmail === null) ? (string) $from['email'] : $fromEmail;
+        $fromName = ($fromName === null) ? (string) $from['name'] : $fromName;
+        $replyToEmail = ($replyToEmail === null) ? (string) $replyTo['email'] : $replyToEmail;
+        $replyToName = ($replyToName === null) ? (string) $replyTo['name'] : $replyToName;
 
-        // set recipient/sender headers
-        $email['to_email'] = ($toEmail === null) ? (string) $to['email'] : $toEmail;
-        $email['to_name'] = ($toName === null) ? (string) $to['name'] : $toName;
-        $email['from_email'] = ($fromEmail === null) ? (string) $from['email'] : $fromEmail;
-        $email['from_name'] = ($fromName === null) ? (string) $from['name'] : $fromName;
-        $email['reply_to_email'] = ($replyToEmail === null) ? (string) $replyTo['email'] : $replyToEmail;
-        $email['reply_to_name'] = ($replyToName === null) ? (string) $replyTo['name'] : $replyToName;
-
-        // validate
-        if (!\SpoonFilter::isEmail($email['to_email'])) {
-            throw new \Exception('Invalid e-mail address for recipient.');
-        }
-        if (!\SpoonFilter::isEmail($email['from_email'])) {
-            throw new \Exception('Invalid e-mail address for sender.');
-        }
-        if (!\SpoonFilter::isEmail($email['reply_to_email'])) {
-            throw new \Exception('Invalid e-mail address for reply-to address.');
-        }
-
-        // build array
-        $email['to_name'] = \SpoonFilter::htmlentitiesDecode($email['to_name']);
-        $email['from_name'] = \SpoonFilter::htmlentitiesDecode($email['from_name']);
-        $email['reply_to_name'] = \SpoonFilter::htmlentitiesDecode($email['reply_to_name']);
-        $email['subject'] = \SpoonFilter::htmlentitiesDecode($subject);
+        // build html
+        $html = '';
         if ($isRawHTML) {
-            $email['html'] = $template;
+            $html = $template;
         } else {
-            $email['html'] = $this->getTemplateContent($template, $variables);
+            $html = $this->getTemplateContent($template, $variables);
         }
-        if ($plainText !== null) {
-            $email['plain_text'] = $plainText;
-        }
-        $email['created_on'] = Model::getUTCDate();
-
-        // replace url's in the html content
-        $email['html'] = $this->relativeToAbsolute($email['html']);
+        $html = $this->relativeToAbsolute($html);
         if ($addUTM === true) {
-            $email['html'] = $this->addUTM($email['html'], $subject);
+            $html = $this->addUTM($html, $subject);
+        }
+
+        $transport = \Common\Mailer\Transport::newInstance();
+
+        $message = \Swift_message::newInstance()
+            ->setSubject($subject)
+            ->setFrom(array($fromEmail => $fromName))
+            ->setTo(array($toEmail => $toName))
+            ->setReplyTo(array($replyToEmail => $replyToName))
+            ->setBody($html, 'text/html')
+        ;
+
+        if ($plainText !== null) {
+            $message->addPart($plainText, 'text/plain');
         }
 
         // attachments added
@@ -131,38 +120,16 @@ class Mailer
             foreach ($attachments as $attachment) {
                 // only add existing files
                 if (is_file($attachment)) {
-                    $email['attachments'][] = $attachment;
+                    $message->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
-
-            // serialize :)
-            if (!empty($email['attachments'])) {
-                $email['attachments'] = serialize($email['attachments']);
-            }
         }
 
-        // set send date
-        if ($queue) {
-            if ($sendOn === null) {
-                $email['send_on'] = Model::getUTCDate('Y-m-d H') . ':00:00';
-            } else {
-                $email['send_on'] = Model::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
-            }
-        }
-
-        // insert the email into the database
-        $id = $this->database->insert('emails', $email);
+        $mailer = \Swift_Mailer::newInstance($transport);
+        $mailer->send($message);
 
         // trigger event
-        Model::triggerEvent('Core', 'after_email_queued', array('id' => $id));
-
-        // if queue was not enabled, send this mail right away
-        if (!$queue) {
-            $this->send($id);
-        }
-
-        // return
-        return $id;
+        Model::triggerEvent('Core', 'after_email_sent', array('message' => $message));
     }
 
     /**
@@ -192,21 +159,6 @@ class Mailer
         }
 
         return $html;
-    }
-
-    /**
-     * Get all queued mail ids
-     *
-     * @return array
-     */
-    public function getQueuedMailIds()
-    {
-        return (array) $this->database->getColumn(
-            'SELECT e.id
-             FROM emails AS e
-             WHERE e.send_on < ? OR e.send_on IS NULL',
-            array(Model::getUTCDate())
-        );
     }
 
     /**
@@ -279,85 +231,5 @@ class Mailer
         }
 
         return $html;
-    }
-
-    /**
-     * Send an email
-     *
-     * @param int $id The id of the mail to send.
-     */
-    public function send($id)
-    {
-        $id = (int) $id;
-
-        // get record
-        $emailRecord = (array) $this->database->getRecord(
-            'SELECT *
-             FROM emails AS e
-             WHERE e.id = ?',
-            array($id)
-        );
-
-        // mailer type
-        $mailerType = Model::getModuleSetting('Core', 'mailer_type', 'mail');
-
-        // create new \SpoonEmail-instance
-        $email = new \SpoonEmail();
-        $email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
-
-        // send via SMTP
-        if ($mailerType == 'smtp') {
-            // get settings
-            $SMTPServer = Model::getModuleSetting('Core', 'smtp_server');
-            $SMTPPort = Model::getModuleSetting('Core', 'smtp_port', 25);
-            $SMTPUsername = Model::getModuleSetting('Core', 'smtp_username');
-            $SMTPPassword = Model::getModuleSetting('Core', 'smtp_password');
-
-            // set security if needed
-            $secureLayer = Model::getModuleSetting('Core', 'smtp_secure_layer');
-            if (in_array($secureLayer, array('ssl', 'tls'))) {
-                $email->setSMTPSecurity($secureLayer);
-            }
-
-            // set server and connect with SMTP
-            $email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-
-            // set authentication if needed
-            if ($SMTPUsername !== null && $SMTPPassword !== null) {
-                $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-            }
-        }
-
-        // set some properties
-        $email->setFrom($emailRecord['from_email'], $emailRecord['from_name']);
-        $email->addRecipient($emailRecord['to_email'], $emailRecord['to_name']);
-        $email->setReplyTo($emailRecord['reply_to_email']);
-        $email->setSubject($emailRecord['subject']);
-        $email->setHTMLContent($emailRecord['html']);
-        $email->setCharset(SPOON_CHARSET);
-        $email->setContentTransferEncoding('base64');
-        if ($emailRecord['plain_text'] != '') {
-            $email->setPlainContent($emailRecord['plain_text']);
-        }
-
-        // attachments added
-        if (isset($emailRecord['attachments']) && $emailRecord['attachments'] !== null) {
-            // unserialize
-            $attachments = (array) unserialize($emailRecord['attachments']);
-
-            // add attachments to email
-            foreach ($attachments as $attachment) {
-                $email->addAttachment($attachment);
-            }
-        }
-
-        // send the email
-        if ($email->send()) {
-            // remove the email
-            $this->database->delete('emails', 'id = ?', array($id));
-
-            // trigger event
-            Model::triggerEvent('Core', 'after_email_sent', array('id' => $id));
-        }
     }
 }
