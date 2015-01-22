@@ -1,7 +1,9 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-<div class="page-header">
-	<h1>{$lblGeneralSettings|ucfirst}</h1>
+<div class="row">
+	<div class="col-md-12">
+		<h2>{$lblGeneralSettings|ucfirst}</h2>
+	</div>
 </div>
 {form:settingsIndex}
 	{option:warnings}

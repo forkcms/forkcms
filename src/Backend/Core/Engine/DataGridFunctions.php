@@ -169,8 +169,7 @@ class DataGridFunctions
         $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
         // build html
-        $html = '<div class="dataGridAvatar">' . "\n";
-        $html .= '  <div class="avatar av24">' . "\n";
+        $html = '<div class="fork-data-grid-avatar">' . "\n";
         if ($allowed) {
             $html .= '     <a href="' .
                      BackendModel::createURLForAction(
@@ -178,17 +177,13 @@ class DataGridFunctions
                          'Users'
                      ) . '&amp;id=' . $id . '">' . "\n";
         }
-        $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+        $html .= '          <img class="img-rounded" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
                  $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+
+        $html .= '<span>' . $nickname . '</span>';
         if ($allowed) {
-            $html .= '     </a>' . "\n";
+            $html .= '</a>' . "\n";
         }
-        $html .= '  </div>';
-        $html .= '  <p><a href="' .
-                 BackendModel::createURLForAction(
-                     'edit',
-                     'users'
-                 ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
         $html .= '</div>';
 
         return $html;
@@ -206,7 +201,7 @@ class DataGridFunctions
      */
     public static function greyOut($type, $value, array $attributes = array())
     {
-        $grayedOutClass = 'grayedOut';
+        $grayedOutClass = 'fork-data-grid-grayed-out grayedOut';
         $greyOut = false;
 
         switch ($type) {
@@ -250,7 +245,7 @@ class DataGridFunctions
         $image = (string) $image;
         $title = (string) $title;
 
-        return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
+        return '<img class="img-rounded" src="' . $path . '/' . $image . '" alt="' . $title . '" />';
     }
 
     /**
