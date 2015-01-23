@@ -36,6 +36,10 @@ textarea {
     right: 10px;
 }
 
+.fork-modal-ckeditor > .modal-dialog {
+    width: 95%;
+}
+
 h2, h3 {
     float: left;
 }
