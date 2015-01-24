@@ -77,7 +77,6 @@
                                                 <div id="fallbackInfo">
                                                     {$msgFallbackInfo}
                                                 </div>
-
                                                 <table cellspacing="2">
                                                     <tbody>
                                                     <tr>
@@ -93,7 +92,6 @@
                                                 </table>
                                             </div>
                                         </div>
-
                                         <div id="templateVisualLarge">
                                             &nbsp;
                                         </div>
@@ -103,187 +101,194 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabSettings">
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>Settings</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblSettings|ucfirst}</h3>
                             </div>
-                            <div class="options">
-                                <ul class="inputList">
-                                    {iteration:hidden}
-                                        <li>{$hidden.rbtHidden} <label
-                                                    for="{$hidden.id}">{$hidden.label|ucfirst}</label></li>
-                                    {/iteration:hidden}
-                                </ul>
-                                <p>
-                                    <label for="isAction">{$chkIsAction} {$msgIsAction}</label>
-                                </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <ul class="list-unstyled">
+                                        {iteration:hidden}
+                                        <li class="radio">
+                                            <label for="{$hidden.id}">{$hidden.rbtHidden} {$hidden.label|ucfirst}</label>
+                                        </li>
+                                        {/iteration:hidden}
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="list-unstyled">
+                                        <li class="checkbox">
+                                            <label for="isAction">{$chkIsAction} {$msgIsAction}</label>
+                                        </li>
+                                    </ul>
+                                </div>
                                 {option:isGod}
-                                    <ul class="inputList">
+                                <div class="form-group">
+                                    <ul class="list-unstyled">
                                         {iteration:allow}
-                                            <li>{$allow.chkAllow} <label for="{$allow.id}">{$allow.label}</label></li>
+                                        <li class="checkbox">
+                                            <label for="{$allow.id}">{$allow.chkAllow} {$allow.label}</label>
+                                        </li>
                                         {/iteration:allow}
                                     </ul>
+                                </div>
                                 {/option:isGod}
                             </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabRedirect">
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>Redirect</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblRedirect|ucfirst}</h3>
                             </div>
-                            <div class="options">
-                                {$rbtRedirectError}
-                                <ul class="inputList radiobuttonFieldCombo">
-                                    {iteration:redirect}
-                                        <li>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                {option:rbtRedirectError}
+                                <div class="alert alert-danger">{$rbtRedirectError}</div>
+                                {/option:rbtRedirectError}
+                                <div class="form-group">
+                                    <ul class="list-unstyled radiobuttonFieldCombo">
+                                        {iteration:redirect}
+                                        <li class="radio">
                                             <label for="{$redirect.id}">{$redirect.rbtRedirect} {$redirect.label}</label>
                                             {option:redirect.isInternal}
-                                                <label for="internalRedirect"
-                                                       class="visuallyHidden">{$redirect.label}</label>
+                                            <label for="internalRedirect" class="hidden">{$redirect.label}</label>
+                                            <p class="text-info">{$msgHelpInternalRedirect}</p>
                                             {$ddmInternalRedirect} {$ddmInternalRedirectError}
-                                                <span class="helpTxt">{$msgHelpInternalRedirect}</span>
                                             {/option:redirect.isInternal}
-
                                             {option:redirect.isExternal}
-                                                <label for="externalRedirect"
-                                                       class="visuallyHidden">{$redirect.label}</label>
+                                            <label for="externalRedirect" class="hidden">{$redirect.label}</label>
+                                            <p class="text-info">{$msgHelpExternalRedirect}</p>
                                             {$txtExternalRedirect} {$txtExternalRedirectError}
-                                                <span class="helpTxt">{$msgHelpExternalRedirect}</span>
                                             {/option:redirect.isExternal}
                                         </li>
-                                    {/iteration:redirect}
-                                </ul>
+                                        {/iteration:redirect}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabTags">
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>
-                                    <label for="addValue-tags">{$lblTags|ucfirst}</label>
-                                </h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblTags|ucfirst}</h3>
                             </div>
-                            <div class="options">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
                                 {$txtTags} {$txtTagsError}
                             </div>
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane" id="tabSEO">
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>{$lblTitles|ucfirst}</h3>
-                            </div>
-                            <div class="options">
-                                <p>
-                                    <label for="pageTitleOverwrite">{$lblPageTitle|ucfirst}</label>
-                                    <span class="helpTxt">{$msgHelpPageTitle}</span>
-                                </p>
-                                <ul class="inputList checkboxTextFieldCombo">
-                                    <li>
-                                        {$chkPageTitleOverwrite}
-                                        <label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
-                                        {$txtPageTitle} {$txtPageTitleError}
-                                    </li>
-                                </ul>
-                                <p>
-                                    <label for="navigationTitleOverwrite">{$lblNavigationTitle|ucfirst}</label>
-                                    <span class="helpTxt">{$msgHelpNavigationTitle}</span>
-                                </p>
-                                <ul class="inputList checkboxTextFieldCombo">
-                                    <li>
-                                        {$chkNavigationTitleOverwrite}
-                                        <label for="navigationTitle"
-                                               class="visuallyHidden">{$lblNavigationTitle|ucfirst}</label>
-                                        {$txtNavigationTitle} {$txtNavigationTitleError}
-                                    </li>
-                                </ul>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblSEO|ucfirst}</h3>
                             </div>
                         </div>
-
-                        <div id="seoMeta" class="subtleBox">
-                            <div class="heading">
-                                <h3>{$lblMetaInformation|ucfirst}</h3>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{$lblTitles|ucfirst}</h4>
+                                <div class="form-group">
+                                    <ul class="list-unstyled checkboxTextFieldCombo">
+                                        <li class="checkbox">
+                                            <label for="pageTitleOverwrite" class="visuallyHidden">{$chkPageTitleOverwrite} <b>{$lblPageTitle|ucfirst}</b></label>
+                                            <p class="text-info">{$msgHelpPageTitle}</p>
+                                            {$txtPageTitle} {$txtPageTitleError}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="list-unstyled checkboxTextFieldCombo">
+                                        <li class="checkbox">
+                                            <label for="navigationTitleOverwrite" class="visuallyHidden">{$chkNavigationTitleOverwrite} <b>{$lblNavigationTitle|ucfirst}</b></label>
+                                            <p class="text-info">{$msgHelpNavigationTitle}</p>
+                                            {$txtNavigationTitle} {$txtNavigationTitleError}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="options">
-                                <p>
-                                    <label for="metaDescriptionOverwrite">{$lblDescription|ucfirst}</label>
-                                    <span class="helpTxt">{$msgHelpMetaDescription}</span>
-                                </p>
-                                <ul class="inputList checkboxTextFieldCombo">
-                                    <li>
-                                        {$chkMetaDescriptionOverwrite}
-                                        <label for="metaDescription"
-                                               class="visuallyHidden">{$lblDescription|ucfirst}</label>
-                                        {$txtMetaDescription} {$txtMetaDescriptionError}
-                                    </li>
-                                </ul>
-                                <p>
-                                    <label for="metaKeywordsOverwrite">{$lblKeywords|ucfirst}</label>
-                                    <span class="helpTxt">{$msgHelpMetaKeywords}</span>
-                                </p>
-                                <ul class="inputList checkboxTextFieldCombo">
-                                    <li>
-                                        {$chkMetaKeywordsOverwrite}
-                                        <label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
-                                        {$txtMetaKeywords} {$txtMetaKeywordsError}
-                                    </li>
-                                </ul>
-                                <div class="textareaHolder">
-                                    <p>
-                                        <label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-                                        <span class="helpTxt">{$msgHelpMetaCustom}</span>
-                                    </p>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{$lblMetaInformation|ucfirst}</h4>
+                                <div class="form-group">
+                                    <ul class="list-unstyled checkboxTextFieldCombo">
+                                        <li class="checkbox">
+                                            <label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaDescriptionOverwrite} <b>{$lblDescription|ucfirst}</b></label>
+                                            <p class="text-info">{$msgHelpMetaDescription}</p>
+                                            {$txtMetaDescription} {$txtMetaDescriptionError}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <ul class="list-unstyled checkboxTextFieldCombo">
+                                        <li class="checkbox">
+                                            <label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaKeywordsOverwrite} <b>{$lblKeywords|ucfirst}</b></label>
+                                            <p class="text-info">{$msgHelpMetaKeywords}</p>
+                                            {$txtMetaKeywords} {$txtMetaKeywordsError}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="form-group">
+                                    <label for="metaDescriptionOverwrite" class="visuallyHidden">{$lblExtraMetaTags|ucfirst}</label>
+                                    <p class="text-info">{$msgHelpMetaCustom}</p>
                                     {$txtMetaCustom} {$txtMetaCustomError}
                                 </div>
                             </div>
                         </div>
-
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>{$lblURL}</h3>
-                            </div>
-                            <div class="options">
-                                <p>
-                                    <label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
-                                    <span class="helpTxt">{$msgHelpMetaURL}</span>
-                                </p>
-                                <ul class="inputList checkboxTextFieldCombo">
-                                    <li>
-                                        {$chkUrlOverwrite}
-                                        <label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
-                                        <span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
-                                    </li>
-                                </ul>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{$lblURL|ucfirst}</h4>
+                                <div class="form-group">
+                                    <ul class="list-unstyled checkboxTextFieldCombo">
+                                        <li class="checkbox">
+                                            <label for="urlOverwrite" class="visuallyHidden">{$chkUrlOverwrite} <b>{$lblCustomURL|ucfirst}</b></label>
+                                            <p class="text-info">{$msgHelpMetaURL}</p>
+                                            <span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-
-                        <div class="subtleBox">
-                            <div class="heading">
-                                <h3>{$lblSEO|uppercase}</h3>
-                            </div>
-                            <div class="options">
-                                <p class="label">{$lblIndex}</p>
-                                {$rbtSeoIndexError}
-                                <ul class="inputList inputListHorizontal">
-                                    {iteration:seo_index}
-                                        <li>
-                                            <label for="{$seo_index.id}">{$seo_index.rbtSeoIndex} {$seo_index.label}</label>
-                                        </li>
-                                    {/iteration:seo_index}
-                                </ul>
-                                <p class="label">{$lblFollow}</p>
-                                {$rbtSeoFollowError}
-                                <ul class="inputList inputListHorizontal">
-                                    {iteration:seo_follow}
-                                        <li>
-                                            <label for="{$seo_follow.id}">{$seo_follow.rbtSeoFollow} {$seo_follow.label}</label>
-                                        </li>
-                                    {/iteration:seo_follow}
-                                </ul>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>{$lblSEO|ucfirst}</h4>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <p><b>{$lblIndex}</b></p>
+                                        {option:rbtSeoIndexError}
+                                            <div class="alert alert-danger">{$rbtSeoIndexError}</div>
+                                        {/option:rbtSeoIndexError}
+                                        <ul class="list-unstyled inputListHorizontal">
+                                            {iteration:seo_index}
+                                            <li class="radio">
+                                                <label for="{$seo_index.id}">{$seo_index.rbtSeoIndex} {$seo_index.label}</label>
+                                            </li>
+                                            {/iteration:seo_index}
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <p><b>{$lblFollow}</b></p>
+                                        {option:rbtSeoFollowError}
+                                        <div class="alert alert-danger">{$rbtSeoFollowError}</div>
+                                        {/option:rbtSeoFollowError}
+                                        <ul class="list-unstyled inputListHorizontal">
+                                            {iteration:seo_follow}
+                                            <li class="radio">
+                                                <label for="{$seo_follow.id}">{$seo_follow.rbtSeoFollow} {$seo_follow.label}</label>
+                                            </li>
+                                            {/iteration:seo_follow}
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-
                         {* Hidden settings, used for the Ajax-call to verify the url *}
                         {$hidMetaId}
                         {$hidBaseFieldName}

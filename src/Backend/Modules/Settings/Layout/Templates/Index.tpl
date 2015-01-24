@@ -262,8 +262,10 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<p>{$msgHelpCookies}</p>
-						<ul>
-							<li class="checkbox"><label for="showCookieBar">{$chkShowCookieBar} {$msgShowCookieBar}</label></li>
+						<ul class="list-unstyled">
+							<li class="checkbox">
+								<label for="showCookieBar">{$chkShowCookieBar} {$msgShowCookieBar}</label>
+							</li>
 						</ul>
 					</div>
 				</div>
