@@ -49,19 +49,14 @@ class Message extends \Swift_Message
      *
      * @param  string $template
      * @param  array  $variables
-     * @param  bool   $isRawHTML
      * @param  bool   $addUTM
      * @return Message
      */
-    public function parseHtml($template, $variables, $isRawHTML, $addUTM)
+    public function parseHtml($template, $variables, $addUTM)
     {
-        $html = '';
-        if ($isRawHTML) {
-            $html = $template;
-        } else {
-            $html = $this->getTemplateContent($template, $variables);
-        }
+        $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
+
         if ($addUTM === true) {
             $html = $this->addUTM($html, $this->getSubject());
         }

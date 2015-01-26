@@ -78,7 +78,7 @@ class Mailer
             ->setFrom(array($fromEmail => $fromName))
             ->setTo(array($toEmail => $toName))
             ->setReplyTo(array($replyToEmail => $replyToName))
-            ->parseHtml($template, $variables, $isRawHTML, $addUTM)
+            ->parseHtml($template, $variables, $addUTM)
             ->setPlainText($plainText)
             ->addAttachments($attachments);
         ;
