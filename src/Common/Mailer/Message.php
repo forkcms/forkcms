@@ -2,7 +2,8 @@
 
 namespace Common\Mailer;
 
-use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
+use Frontend\Core\Engine\Model;
 use Frontend\Core\Engine\Template;
 use Backend\Core\Engine\Template as BackendTemplate;
 use Common\Uri;
@@ -47,15 +48,16 @@ class Message extends \Swift_Message
     /**
      * Parses a SpoonTemplate with the wanted variables
      *
-     * @param  string $template
-     * @param  array  $variables
-     * @param  bool   $addUTM
+     * @param  string  $template
+     * @param  array   $variables
+     * @param  bool    $addUTM
      * @return Message
      */
     public function parseHtml($template, $variables, $addUTM)
     {
         $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
+        $html = $this->cssToInlineStyles($html);
 
         if ($addUTM === true) {
             $html = $this->addUTM($html, $this->getSubject());
@@ -69,7 +71,7 @@ class Message extends \Swift_Message
     /**
      * Attach multiple attachments to this message
      *
-     * @param  array $attachments
+     * @param  array   $attachments
      * @return Message
      */
     public function addAttachments($attachments)
@@ -90,7 +92,7 @@ class Message extends \Swift_Message
     /**
      * Add plaintext content as fallback for the html
      *
-     * @param  string $content
+     * @param  string  $content
      * @return Message
      */
     public function setPlainText($content)
@@ -103,8 +105,8 @@ class Message extends \Swift_Message
     }
 
     /**
-     * @param string $html    The html to convert links in.
-     * @param string $subject The subject of the mail
+     * @param  string $html    The html to convert links in.
+     * @param  string $subject The subject of the mail
      * @return string
      */
     private function addUTM($html, $subject)
@@ -114,7 +116,11 @@ class Message extends \Swift_Message
         preg_match_all('/href="(http:\/\/(.*))"/iU', $html, $matches);
 
         // any links?
-        $utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => Uri::getUrl($subject));
+        $utm = array(
+            'utm_source' => 'mail',
+            'utm_medium' => 'email',
+            'utm_campaign' => Uri::getUrl($subject),
+        );
         if (isset($matches[0]) && !empty($matches[0])) {
             $searchLinks = array();
             $replaceLinks = array();
@@ -134,8 +140,8 @@ class Message extends \Swift_Message
     /**
      * Returns the content from a given template
      *
-     * @param string $template  The template to use.
-     * @param array  $variables The variables to assign.
+     * @param  string $template  The template to use.
+     * @param  array  $variables The variables to assign.
      * @return string
      */
     private function getTemplateContent($template, $variables = null)
@@ -157,49 +163,37 @@ class Message extends \Swift_Message
         }
 
         // grab the content
-        $content = $tpl->getContent($template);
+        return $tpl->getContent($template);
+    }
 
-        // replace internal links/images
-        $search = array('href="/', 'src="/');
-        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
-        $content = str_replace($search, $replace, $content);
-
-        // create instance
+    /**
+     * Converts all css to inline styles
+     *
+     * @param  string $html
+     * @return string
+     */
+    private function cssToInlineStyles($html)
+    {
         $cssToInlineStyles = new CssToInlineStyles();
-
-        // set some properties
-        $cssToInlineStyles->setHTML($content);
+        $cssToInlineStyles->setHTML($html);
         $cssToInlineStyles->setUseInlineStylesBlock(true);
         $cssToInlineStyles->setEncoding(SPOON_CHARSET);
 
-        // return the content
         return (string) $cssToInlineStyles->convert();
     }
 
     /**
-     * @param string $html  The html to convert links in.
+     * Replace internal links and images to absolute links
+     *
+     * @param  string $html The html to convert links in.
      * @return string
      */
     private function relativeToAbsolute($html)
     {
-        // get internal links
-        $matches = array();
-        preg_match_all('|href="/(.*)"|i', $html, $matches);
+        // replace internal links/images
+        $search = array('href="/', 'src="/');
+        $replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 
-        // any links?
-        if (!empty($matches[0])) {
-            $search = array();
-            $replace = array();
-
-            // loop the links
-            foreach ($matches[0] as $key => $link) {
-                $search[] = $link;
-                $replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
-            }
-
-            $html = str_replace($search, $replace, $html);
-        }
-
-        return $html;
+        return str_replace($search, $replace, $html);
     }
 }
