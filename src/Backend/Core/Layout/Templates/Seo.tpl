@@ -1,94 +1,110 @@
-<div id="seoMeta" class="subtleBox">
-	<div class="heading">
-		<h3>{$lblMetaInformation|ucfirst}</h3>
+<div class="row">
+	<div class="col-md-12">
+		<h3>{$lblSEO|ucfirst}</h3>
 	</div>
-	<div class="options">
-		<p>
-			<label for="pageTitleOverwrite">{$lblPageTitle|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpPageTitle}</span>
-		</p>
-		<ul class="inputList checkboxTextFieldCombo">
-			<li>
-				{$chkPageTitleOverwrite}
-				<label for="pageTitle" class="visuallyHidden">{$lblPageTitle|ucfirst}</label>
-				{$txtPageTitle} {$txtPageTitleError}
-			</li>
-		</ul>
-		<p>
-			<label for="metaDescriptionOverwrite">{$lblDescription|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpMetaDescription}</span>
-		</p>
-		<ul class="inputList checkboxTextFieldCombo">
-			<li>
-				{$chkMetaDescriptionOverwrite}
-				<label for="metaDescription" class="visuallyHidden">{$lblDescription|ucfirst}</label>
-				{$txtMetaDescription} {$txtMetaDescriptionError}
-			</li>
-		</ul>
-		<p>
-			<label for="metaKeywordsOverwrite">{$lblKeywords|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpMetaKeywords}</span>
-		</p>
-		<ul class="inputList checkboxTextFieldCombo">
-			<li>
-				{$chkMetaKeywordsOverwrite}
-				<label for="metaKeywords" class="visuallyHidden">{$lblKeywords|ucfirst}</label>
-				{$txtMetaKeywords} {$txtMetaKeywordsError}
-			</li>
-		</ul>
-		{option:txtMetaCustom}
-			<div class="textareaHolder">
-				<p>
-					<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-					<span class="helpTxt">{$msgHelpMetaCustom}</span>
-				</p>
-				{$txtMetaCustom} {$txtMetaCustomError}
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h4>{$lblTitles|ucfirst}</h4>
+		<div class="form-group">
+			<ul class="list-unstyled checkboxTextFieldCombo">
+				<li class="checkbox">
+					<label for="pageTitleOverwrite" class="visuallyHidden">{$chkPageTitleOverwrite} <b>{$lblPageTitle|ucfirst}</b></label>
+					<p class="text-info">{$msgHelpPageTitle}</p>
+					{$txtPageTitle} {$txtPageTitleError}
+				</li>
+			</ul>
+		</div>
+		{option:chkNavigationTitleOverwrite}
+		<div class="form-group">
+			<ul class="list-unstyled checkboxTextFieldCombo">
+				<li class="checkbox">
+					<label for="navigationTitleOverwrite" class="visuallyHidden">{$chkNavigationTitleOverwrite} <b>{$lblNavigationTitle|ucfirst}</b></label>
+					<p class="text-info">{$msgHelpNavigationTitle}</p>
+					{$txtNavigationTitle} {$txtNavigationTitleError}
+				</li>
+			</ul>
+		</div>
+		{/option:chkNavigationTitleOverwrite}
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h4>{$lblMetaInformation|ucfirst}</h4>
+		<div class="form-group">
+			<ul class="list-unstyled checkboxTextFieldCombo">
+				<li class="checkbox">
+					<label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaDescriptionOverwrite} <b>{$lblDescription|ucfirst}</b></label>
+					<p class="text-info">{$msgHelpMetaDescription}</p>
+					{$txtMetaDescription} {$txtMetaDescriptionError}
+				</li>
+			</ul>
+		</div>
+		<div class="form-group">
+			<ul class="list-unstyled checkboxTextFieldCombo">
+				<li class="checkbox">
+					<label for="metaDescriptionOverwrite" class="visuallyHidden">{$chkMetaKeywordsOverwrite} <b>{$lblKeywords|ucfirst}</b></label>
+					<p class="text-info">{$msgHelpMetaKeywords}</p>
+					{$txtMetaKeywords} {$txtMetaKeywordsError}
+				</li>
+			</ul>
+		</div>
+		<div class="form-group">
+			<label for="metaDescriptionOverwrite" class="visuallyHidden">{$lblExtraMetaTags|ucfirst}</label>
+			<p class="text-info">{$msgHelpMetaCustom}</p>
+			{$txtMetaCustom} {$txtMetaCustomError}
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h4>{$lblURL|ucfirst}</h4>
+		<div class="form-group">
+			<ul class="list-unstyled checkboxTextFieldCombo">
+				<li class="checkbox">
+					<label for="urlOverwrite" class="visuallyHidden">{$chkUrlOverwrite} <b>{$lblCustomURL|ucfirst}</b></label>
+					<p class="text-info">{$msgHelpMetaURL}</p>
+					<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
+				</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<h4>{$lblSEO|ucfirst}</h4>
+		<div class="form-inline">
+			<div class="form-group">
+				<p><b>{$lblIndex}</b></p>
+				{option:rbtSeoIndexError}
+				<div class="alert alert-danger">{$rbtSeoIndexError}</div>
+				{/option:rbtSeoIndexError}
+				<ul class="list-unstyled inputListHorizontal">
+					{iteration:seo_index}
+					<li class="radio">
+						<label for="{$seo_index.id}">{$seo_index.rbtSeoIndex} {$seo_index.label}</label>
+					</li>
+					{/iteration:seo_index}
+				</ul>
 			</div>
-		{/option:txtMetaCustom}
+		</div>
+		<div class="form-inline">
+			<div class="form-group">
+				<p><b>{$lblFollow}</b></p>
+				{option:rbtSeoFollowError}
+				<div class="alert alert-danger">{$rbtSeoFollowError}</div>
+				{/option:rbtSeoFollowError}
+				<ul class="list-unstyled inputListHorizontal">
+					{iteration:seo_follow}
+					<li class="radio">
+						<label for="{$seo_follow.id}">{$seo_follow.rbtSeoFollow} {$seo_follow.label}</label>
+					</li>
+					{/iteration:seo_follow}
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
-
-<div class="subtleBox">
-	<div class="heading">
-		<h3>{$lblURL|uppercase}</h3>
-	</div>
-	<div class="options">
-		<p>
-			<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpMetaURL}</span>
-		</p>
-		<ul class="inputList checkboxTextFieldCombo">
-			<li>
-				{$chkUrlOverwrite}
-				<label for="url" class="visuallyHidden">{$lblCustomURL|ucfirst}</label>
-				{option:detailURL}<span id="urlFirstPart">{$detailURL}/</span>{/option:detailURL}{$txtUrl} {$txtUrlError}
-			</li>
-		</ul>
-	</div>
-</div>
-
-<div class="subtleBox">
-	<div class="heading">
-		<h3>{$lblSEO|uppercase}</h3>
-	</div>
-	<div class="options">
-		<p class="label">{$lblIndex}</p>
-		{$rbtSeoIndexError}
-		<ul class="inputList inputListHorizontal">
-			{iteration:seo_index}
-				<li><label for="{$seo_index.id}">{$seo_index.rbtSeoIndex} {$seo_index.label}</label></li>
-			{/iteration:seo_index}
-		</ul>
-		<p class="label">{$lblFollow}</p>
-		{$rbtSeoFollowError}
-		<ul class="inputList inputListHorizontal">
-			{iteration:seo_follow}
-				<li><label for="{$seo_follow.id}">{$seo_follow.rbtSeoFollow} {$seo_follow.label}</label></li>
-			{/iteration:seo_follow}
-		</ul>
-	</div>
-</div>
-
 {* Hidden settings, used for the Ajax-call to verify the url *}
 {$hidMetaId}
 {$hidBaseFieldName}

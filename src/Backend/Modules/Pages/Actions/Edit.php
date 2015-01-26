@@ -245,7 +245,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'error title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(
@@ -419,8 +419,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->id),
             null,
-            'inputText tagBox',
-            'inputTextError tagBox'
+            'form-control tagBox',
+            'error tagBox'
         );
 
         // a specific action
