@@ -27,19 +27,6 @@ use Backend\Core\Engine\Template as BackendTemplate;
 class Mailer
 {
     /**
-     * @var \SpoonDatabase
-     */
-    private $database;
-
-    /**
-     * @param \SpoonDatabase $database
-     */
-    public function __construct($database)
-    {
-        $this->database = $database;
-    }
-
-    /**
      * Adds an email to the queue.
      *
      * @param string $subject      The subject for the email.
