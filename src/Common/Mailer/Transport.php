@@ -2,80 +2,56 @@
 
 namespace Common\Mailer;
 
-use Frontend\Core\Engine\Model;
-
 /**
- * This class will send mails
+ * This class will create the right mailer transport based on some parameters
  *
  * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class Transport implements \Swift_Transport
+class Transport
 {
-    private $transport;
-
     /**
-     * Create a new Transport instance
+     * Create The right transport instance based on some settings
+     *
+     * @param  string $type
+     * @param  string $server
+     * @param  string $port
+     * @param  string $user
+     * @param  string $pass
+     * @return \Swift_Transport
      */
-    public function __construct()
+    public static function newInstance($type = 'mail', $server = null, $port = 25, $user = null, $pass = null)
     {
-        $mailerType = Model::getModuleSetting('Core', 'mailer_type', 'mail');
-
-        if ($mailerType === 'smtp') {
-            $this->transport = $this->getSmtpTransport();
+        if ($type === 'smtp') {
+            return self::getSmtpTransport($server, $port, $user, $pass);
         } else {
-            $this->transport = $this->getMailTransport();
+            return self::getMailTransport();
         }
     }
 
     /**
-     * Create a new Fork Mailer Transport instance.
+     * Create a new Smtp Mailer Transport instance.
      *
-     * @return Common\Mailer\Transport
+     * @param  string $server
+     * @param  string $port
+     * @param  string $user
+     * @param  string $pass
+     * @return \Swift_SmtpTransport
      */
-    public static function newInstance()
+    private static function getSmtpTransport($server, $port, $user, $pass)
     {
-        return new self();
-    }
-
-    public function isStarted()
-    {
-        return $this->transport->isStarted();
-    }
-
-    public function start()
-    {
-        return $this->transport->start();
-    }
-
-    public function stop()
-    {
-        return $this->transport->stop();
-    }
-
-    public function send(\Swift_Mime_Message $message, &$failedRecipients = null)
-    {
-        return $this->transport->send($message, $failedRecipients);
-    }
-
-    public function registerPlugin(\Swift_Events_EventListener $plugin)
-    {
-        return $this->transport->registerPlugin($plugin);
-    }
-
-    private function getSmtpTransport()
-    {
-        $server = Model::getModuleSetting('Core', 'smtp_server');
-        $port = Model::getModuleSetting('Core', 'smtp_port', 25);
-        $username = Model::getModuleSetting('Core', 'smtp_username');
-        $password = Model::getModuleSetting('Core', 'smtp_password');
-
         return \Swift_SmtpTransport::newInstance($server, $port)
-            ->setUsername($username)
-            ->setPassword($password)
+            ->setUsername($user)
+            ->setPassword($pass)
         ;
     }
 
-    private function getMailTransport()
+
+    /**
+     * Create a new PHP Mailer Transport instance.
+     *
+     * @return \Swift_MailTransport
+     */
+    private static function getMailTransport()
     {
         return \Swift_MailTransport::newInstance();
     }
