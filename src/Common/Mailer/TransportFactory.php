@@ -7,7 +7,7 @@ namespace Common\Mailer;
  *
  * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class Transport
+class TransportFactory
 {
     /**
      * Create The right transport instance based on some settings
@@ -19,7 +19,7 @@ class Transport
      * @param  string $pass
      * @return \Swift_Transport
      */
-    public static function newInstance($type = 'mail', $server = null, $port = 25, $user = null, $pass = null)
+    public static function create($type = 'mail', $server = null, $port = 25, $user = null, $pass = null)
     {
         if ($type === 'smtp') {
             return self::getSmtpTransport($server, $port, $user, $pass);

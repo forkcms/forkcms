@@ -98,7 +98,7 @@ class Mailer
      */
     public function send(\Swift_Mime_Message $message)
     {
-        $transport = \Common\Mailer\Transport::newInstance(
+        $transport = \Common\Mailer\TransportFactory::create(
             Model::getModuleSetting('Core', 'mailer_type', 'mail'),
             Model::getModuleSetting('Core', 'smtp_server'),
             Model::getModuleSetting('Core', 'smtp_port', 25),
