@@ -53,7 +53,7 @@ class Message extends \Swift_Message
      * @param  bool    $addUTM
      * @return Message
      */
-    public function parseHtml($template, $variables, $addUTM)
+    public function parseHtml($template, $variables, $addUTM = false)
     {
         $html = $this->getTemplateContent($template, $variables);
         $html = $this->relativeToAbsolute($html);
