@@ -9,6 +9,8 @@ namespace Common;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\Log\LoggerInterface;
+
 use Frontend\Core\Engine\Model;
 
 /**
@@ -23,6 +25,16 @@ use Frontend\Core\Engine\Model;
  */
 class Mailer
 {
+    /**
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     /**
      * @deprecated build a message object and send it trough the send method
      *
@@ -106,6 +118,8 @@ class Mailer
             Model::getModuleSetting('Core', 'smtp_password')
         );
         $mailer = \Swift_Mailer::newInstance($transport);
+
+        $this->logger->info('Sending email: ' . $message->getSubject());
 
         return $mailer->send($message);
     }
