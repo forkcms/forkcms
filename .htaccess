@@ -17,6 +17,7 @@ FileETag MTime Size
 	RewriteRule composer\.json - [F]
 	RewriteRule composer\.lock - [F]
 	RewriteRule .*\.md - [F]
+	RewriteRule Capfile - [F]
 	RewriteRule src/Frontend/Cache/CachedTemplates - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Frontend/Cache/Config - [F]
