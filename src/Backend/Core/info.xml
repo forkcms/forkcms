@@ -34,6 +34,5 @@
 	</events>
 	<cronjobs>
 		<cronjob minute="*" hour="*" day-of-month="*" month="*" day-of-week="*" action="process_queued_hooks"><![CDATA[Processes queued hooks.]]></cronjob>
-		<cronjob minute="*" hour="*" day-of-month="*" month="*" day-of-week="*" action="send_queued_emails"><![CDATA[Sends queued emails.]]></cronjob>
 	</cronjobs>
 </module>
