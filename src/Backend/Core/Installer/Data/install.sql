@@ -33,14 +33,6 @@ CREATE TABLE IF NOT EXISTS `meta` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
 
 
-CREATE TABLE IF NOT EXISTS `modules` (
- `name` varchar(255) NOT NULL COMMENT 'unique module name',
- `installed_on` datetime NOT NULL,
- PRIMARY KEY (`name`),
- KEY `idx_name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 CREATE TABLE IF NOT EXISTS `modules_settings` (
  `module` varchar(255) NOT NULL COMMENT 'name of the module',
  `name` varchar(255) NOT NULL COMMENT 'name of the setting',
@@ -519,37 +511,6 @@ INSERT INTO `timezones` (`id`, `timezone`) VALUES
 (451, 'Pacific/Wake'),
 (452, 'Pacific/Wallis'),
 (453, 'Pacific/Yap');
-
-
-CREATE TABLE IF NOT EXISTS `groups` (
- `id` int(11) NOT NULL auto_increment,
- `name` varchar(255) NOT NULL,
- `parameters` text COMMENT 'serialized array containing default user module/action rights',
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
-
-INSERT INTO `groups` (`id`, `name`, `parameters`) VALUES
-(1, 'admin', NULL) ON DUPLICATE KEY UPDATE id=1;
-
-
-CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
- `id` int(11) NOT NULL auto_increment,
- `group_id` int(11) NOT NULL,
- `module` varchar(255) NOT NULL COMMENT 'name of the module',
- `action` varchar(255) NOT NULL COMMENT 'name of the action',
- `level` double NOT NULL default '1' COMMENT 'unix type levels 1, 3, 5 and 7',
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
-
-CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
- `id` int(11) NOT NULL auto_increment,
- `group_id` int(11) NOT NULL,
- `module` varchar(255) NOT NULL COMMENT 'name of the module',
- PRIMARY KEY (`id`),
- KEY `idx_group_id` (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE  TABLE IF NOT EXISTS `backend_navigation` (

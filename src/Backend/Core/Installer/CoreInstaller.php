@@ -47,7 +47,13 @@ class CoreInstaller extends ModuleInstaller
             throw new \SpoonException('Site title is not provided.');
         }
 
-        $this->addEntitiesInDatabase(array(Meta::ENTITY_CLASS));
+        $this->addEntitiesInDatabase(array(
+            Meta::ENTITY_CLASS,
+            '\Backend\Core\Entity\Module',
+            '\Backend\Modules\Groups\Entity\Group',
+            '\Backend\Modules\Groups\Entity\ActionRight',
+            '\Backend\Modules\Groups\Entity\ModuleRight'
+        ));
 
         // import SQL
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');

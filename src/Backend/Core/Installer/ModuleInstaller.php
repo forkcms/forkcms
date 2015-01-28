@@ -28,6 +28,7 @@ use Backend\Core\Entity\Meta;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Wouter Sioen <wouter@woutersioen.be>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class ModuleInstaller
 {
@@ -116,25 +117,25 @@ class ModuleInstaller
      * Inserts a new module.
      * The getModule method becomes available after using addModule and returns $module parameter.
      *
-     * @param string $module The name of the module.
+     * @param string $moduleName The name of the module.
      */
-    protected function addModule($module)
+    protected function addModule($moduleName)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        $moduleName = (string) $moduleName;
+        $module = $em->getRepository('\Backend\Core\Entity\Module')->findOneBy(array('name' => $moduleName));
+
+        // @todo assign the module object to the class attribute instead of the module name.
         $this->module = (string) $module;
 
         // module does not yet exists
-        if (!(bool) $this->getDB()->getVar('SELECT 1 FROM modules WHERE name = ? LIMIT 1', $this->module)) {
-            // build item
-            $item = array(
-                'name' => $this->module,
-                'installed_on' => gmdate('Y-m-d H:i:s')
-            );
+        if ($module === null) {
+            $module = new \Backend\Core\Entity\Module();
+            $module->setName($moduleName);
 
-            // insert module
-            $this->getDB()->insert('modules', $item);
-        } else {
-            // activate and update description
-            $this->getDB()->update('modules', array('installed_on' => gmdate('Y-m-d H:i:s')), 'name = ?', $this->module);
+            $em->persist($module);
+            $em->flush();
         }
     }
 
@@ -884,67 +885,75 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @param int    $groupId The group wherefor the rights will be set.
-     * @param string $module  The module wherin the action appears.
-     * @param string $action  The action wherefor the rights have to set.
-     * @param int    $level   The leve, default is 7 (max).
+     * @param int|Group     $group   The group wherefor the rights will be set.
+     * @param string|Module $module  The module wherin the action appears.
+     * @param string        $action  The action wherefor the rights have to set.
+     * @param int           $level   The level, default is 7 (max).
      */
-    protected function setActionRights($groupId, $module, $action, $level = 7)
+    protected function setActionRights($group, $module, $action, $level = 7)
     {
-        $groupId = (int) $groupId;
-        $module = (string) $module;
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        // @todo remove these fallbacks when doctrine is fully integrated
+        $group = (!is_object($group))
+            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->findOneBy(array('name' => $group))
+            : $group
+        ;
+        $module = (!is_object($module))
+            ? $em->getRepository('\Backend\Core\Entity\Module')->findOneBy(array('name' => $module))
+            : $module
+        ;
         $action = (string) $action;
         $level = (int) $level;
 
-        // check if the action already exists
-        $exists = (bool) $this->getDB()->getVar(
-            'SELECT 1
-             FROM groups_rights_actions
-             WHERE group_id = ? AND module = ? AND action = ?
-             LIMIT 1',
-            array($groupId, $module, $action)
-        );
-
-        // action doesn't exist
-        if (!$exists) {
-            // build item
-            $item = array(
-                'group_id' => $groupId,
-                'module' => $module,
-                'action' => $action,
-                'level' => $level
+        if ($group !== null && $module !== null) {
+            $actionRight = $em->getRepository('\Backend\Modules\Groups\Entity\ActionRight')->findOneBy(
+                array('group' => $group, 'module' => $module, 'action' => $action)
             );
 
-            $this->getDB()->insert('groups_rights_actions', $item);
+            if($actionRight === null) {
+                $actionRight = new \Backend\Modules\Groups\Entity\ActionRight();
+                $actionRight->setGroup($group);
+                $actionRight->setModule($module);
+                $actionRight->setAction($action);
+                $actionRight->setLevel($level);
+
+                $em->persist($actionRight);
+                $em->flush();
+            }
         }
     }
 
     /**
      * Sets the rights for a module
      *
-     * @param int    $groupId The group wherefor the rights will be set.
-     * @param string $module  The module too set the rights for.
+     * @param int|Group $group       The group wherefor the rights will be set.
+     * @param string    $moduleName  The module too set the rights for.
      */
-    protected function setModuleRights($groupId, $module)
+    protected function setModuleRights($group, $moduleName)
     {
-        $groupId = (int) $groupId;
-        $module = (string) $module;
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // module doesn't exist
-        if (!(bool) $this->getDB()->getVar(
-            'SELECT 1
-             FROM groups_rights_modules
-             WHERE group_id = ? AND module = ?
-             LIMIT 1',
-            array((int) $groupId, (string) $module)
-        )
-        ) {
-            $item = array(
-                'group_id' => $groupId,
-                'module' => $module
+        // @todo remove this fallback when doctrine is fully integrated
+        $group = (!is_object($group))
+            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->findOneBy(array('name' => $group))
+            : $group
+        ;
+        $moduleName = (string) $moduleName;
+
+        if ($group !== null) {
+            $moduleRight = $em->getRepository('\Backend\Modules\Groups\Entity\ModuleRight')->findOneBy(
+                array('group' => $group, 'module' => $module)
             );
 
-            $this->getDB()->insert('groups_rights_modules', $item);
+            if ($moduleRight === null) {
+                $moduleRight = new \Backend\Modules\Groups\Entity\ModuleRight();
+                $moduleRight->setGroup($group);
+                $moduleRight->setModule($module);
+
+                $em->persist($moduleRight);
+                $em->flush();
+            }
         }
     }
 

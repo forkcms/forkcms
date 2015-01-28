@@ -221,33 +221,39 @@ class Authentication
         if (empty(self::$allowedActions)) {
             // init var
             $db = BackendModel::get('database');
+            $em = BackendModel::get('doctrine.orm.entity_manager');
 
             // add always allowed
             foreach ($alwaysAllowed as $allowedModule => $actions) {
                 $modules[] = $allowedModule;
             }
 
-            // get allowed actions
-            $allowedActionsRows = (array) $db->getRecords(
-                'SELECT gra.module, gra.action, MAX(gra.level) AS level
+            // get the group id
+            $groupId = $db->getVar(
+                'SELECT ug.group_id
                  FROM users_sessions AS us
                  INNER JOIN users AS u ON us.user_id = u.id
                  INNER JOIN users_groups AS ug ON u.id = ug.user_id
-                 INNER JOIN groups_rights_actions AS gra ON ug.group_id = gra.group_id
-                 WHERE us.session_id = ? AND us.secret_key = ?
-                 GROUP BY gra.module, gra.action',
+                 WHERE us.session_id = ? AND us.secret_key = ?',
                 array(\SpoonSession::getSessionId(), \SpoonSession::get('backend_secret_key'))
             );
 
-            // add all actions and there level
-            foreach ($allowedActionsRows as $row) {
-                // add if the module is installed
-                if (in_array(
-                    $row['module'],
-                    $modules
-                )
-                ) {
-                    self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+            // get the group
+            $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($groupId);
+
+            if ($group !== null) {
+                $allowedActions = $group->getActionRights();
+
+                // add all actions and there level
+                foreach ($allowedActions as $action) {
+                    // add if the module is installed
+                    if (in_array(
+                        $action->getModule()->getName(),
+                        $modules
+                    )
+                    ) {
+                        self::$allowedActions[$action->getModule()->getName()][$action->getAction()] = (int) $action->getLevel();
+                    }
                 }
             }
         }

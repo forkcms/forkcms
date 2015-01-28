@@ -52,6 +52,10 @@ doctrine:
                 type: annotation
                 dir: %kernel.root_dir%/../src/Backend/Core/Entity
                 prefix: Backend\Core\Entity
+            Groups:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Modules/Groups/Entity
+                prefix: Backend\Modules\Groups\Entity
 
 twig:
     debug:            "%kernel.debug%"
