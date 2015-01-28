@@ -4,6 +4,10 @@
 3.8.6 (2015-xx-xx)
 >>>>>>> Merge master in swiftmailer.
 --
+Improvements:
+
+* Core: Refactor the mailer to use SwiftMailer
+
 Bugfixes:
 
 * Users: Fixed error in backend user edit, when updating your own account.
