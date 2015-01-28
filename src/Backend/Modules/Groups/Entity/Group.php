@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @author Mathias Dewelde <mathias@dewelde.be>
  *
  * @ORM\Entity
- * @ORM\Table(name="ForkGroup") //@todo Rename, but group is a reserved keyword
+ * @ORM\Table(name="Groups")
  */
 class Group
 {
@@ -27,16 +27,16 @@ class Group
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ModuleRight", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="GroupModuleRight", mappedBy="group", cascade={"persist", "remove"})
      */
-    private $moduleRights;
+    private $allowedModules;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="ActionRight", mappedBy="group")
+     * @ORM\OneToMany(targetEntity="GroupActionRight", mappedBy="group", cascade={"persist", "remove"})
      */
-    private $actionRights;
+    private $allowedActions;
 
     /**
      * @var string
@@ -64,8 +64,8 @@ class Group
      */
     public function __construct()
     {
-        $this->moduleRights = new ArrayCollection();
-        $this->actionRights = new ArrayCollection();
+        $this->allowedModules = new ArrayCollection();
+        $this->allowedActions = new ArrayCollection();
     }
 
     /**
@@ -148,68 +148,68 @@ class Group
     }
 
     /**
-     * Add moduleRights
+     * Add allowedModules
      *
-     * @param ModuleRight $moduleRights
+     * @param GroupModuleRight $allowedModules
      * @return Group
      */
-    public function addModuleRight(ModuleRight $moduleRights)
+    public function addAllowedModule(GroupModuleRight $allowedModules)
     {
-        $this->moduleRights[] = $moduleRights;
+        $this->allowedModules[] = $allowedModules;
 
         return $this;
     }
 
     /**
-     * Remove moduleRights
+     * Remove allowedModules
      *
-     * @param ModuleRight $moduleRights
+     * @param GroupModuleRight $allowedModules
      */
-    public function removeModuleRight(ModuleRight $moduleRights)
+    public function removeAllowedModule(GroupModuleRight $allowedModules)
     {
-        $this->moduleRights->removeElement($moduleRights);
+        $this->allowedModules->removeElement($allowedModules);
     }
 
     /**
-     * Get moduleRights
+     * Get allowedModules
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getModuleRights()
+    public function getAllowedModules()
     {
-        return $this->moduleRights;
+        return $this->allowedModules;
     }
 
     /**
-     * Add actionRights
+     * Add allowedActions
      *
-     * @param ActionRight $actionRights
+     * @param GroupActionRight $allowedActions
      * @return Group
      */
-    public function addActionRight(ActionRight $actionRights)
+    public function addAllowedAction(GroupActionRight $allowedActions)
     {
-        $this->actionRights[] = $actionRights;
+        $this->allowedActions[] = $allowedActions;
 
         return $this;
     }
 
     /**
-     * Remove actionRights
+     * Remove allowedActions
      *
-     * @param ActionRight $actionRights
+     * @param GroupActionRight $allowedActions
      */
-    public function removeActionRight(ActionRight $actionRights)
+    public function removeAllowedAction(GroupActionRight $allowedActions)
     {
-        $this->actionRights->removeElement($actionRights);
+        $this->allowedActions->removeElement($allowedActions);
     }
 
     /**
-     * Get actionRights
+     * Get allowedActions
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getActionRights()
+    public function getAllowedActions()
     {
-        return $this->actionRights;
+        return $this->allowedActions;
     }
 }

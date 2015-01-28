@@ -3,17 +3,16 @@
 namespace Backend\Modules\Groups\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Backend\Core\Entity\Module;
 
 /**
- * This is the ModuleRight Entity
+ * This is the GroupModuleRight Entity
  *
  * @author Mathias Dewelde <mathias@dewelde.be>
  *
  * @ORM\Entity
- * @ORM\Table(name="GroupRightModule") //@todo Rename
+ * @ORM\Table(name="GroupModuleRight")
  */
-class ModuleRight
+class GroupModuleRight
 {
     /**
      * @var int
@@ -27,16 +26,15 @@ class ModuleRight
     /**
      * @var Group
      *
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="moduleRights")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="allowedModules")
      * @ORM\JoinColumn(name="groupId", referencedColumnName="id")
      */
     private $group;
 
     /**
-     * @var Module
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Backend\Core\Entity\Module")
-     * @ORM\JoinColumn(name="moduleId", referencedColumnName="id")
+     * @ORM\Column(type="string", length=255)
      */
     private $module;
 
@@ -53,10 +51,10 @@ class ModuleRight
     /**
      * Set module
      *
-     * @param Module $module
-     * @return ActionRight
+     * @param string $module
+     * @return GroupModuleRight
      */
-    public function setModule(Module $module = null)
+    public function setModule($module)
     {
         $this->module = $module;
 
@@ -66,7 +64,7 @@ class ModuleRight
     /**
      * Get module
      *
-     * @return Module
+     * @return string 
      */
     public function getModule()
     {
@@ -77,7 +75,7 @@ class ModuleRight
      * Set group
      *
      * @param Group $group
-     * @return ModuleRight
+     * @return GroupModuleRight
      */
     public function setGroup(Group $group = null)
     {

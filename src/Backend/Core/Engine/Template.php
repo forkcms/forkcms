@@ -189,13 +189,13 @@ class Template extends \SpoonTemplate
         $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($groupId);
 
         if ($group !== null) {
-            $allowedActions = $group->getActionRights();
+            $allowedActions = $group->getAllowedActions();
 
             if ($allowedActions !== null) {
                 foreach ($allowedActions as $action) {
-                    if ($action->getLevel() > 7) {
+                    if ($action->getLevel() == 7) {
                         $this->assign(
-                            'show' . \SpoonFilter::toCamelCase($action->getModule()->getName(), '_') . \SpoonFilter::toCamelCase(
+                            'show' . \SpoonFilter::toCamelCase($action->getModule(), '_') . \SpoonFilter::toCamelCase(
                                 $action->getAction(),
                                 '_'
                             ),

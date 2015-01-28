@@ -885,36 +885,32 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @param int|Group     $group   The group wherefor the rights will be set.
-     * @param string|Module $module  The module wherin the action appears.
-     * @param string        $action  The action wherefor the rights have to set.
-     * @param int           $level   The level, default is 7 (max).
+     * @param int|Group     $group       The group wherefor the rights will be set.
+     * @param string        $moduleName  The module wherin the action appears.
+     * @param string        $action      The action wherefor the rights have to set.
+     * @param int           $level       The level, default is 7 (max).
      */
-    protected function setActionRights($group, $module, $action, $level = 7)
+    protected function setActionRights($group, $moduleName, $action, $level = 7)
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // @todo remove these fallbacks when doctrine is fully integrated
+        // @todo remove this fallback when doctrine is fully integrated
         $group = (!is_object($group))
-            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->findOneBy(array('name' => $group))
+            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($group)
             : $group
-        ;
-        $module = (!is_object($module))
-            ? $em->getRepository('\Backend\Core\Entity\Module')->findOneBy(array('name' => $module))
-            : $module
         ;
         $action = (string) $action;
         $level = (int) $level;
 
-        if ($group !== null && $module !== null) {
-            $actionRight = $em->getRepository('\Backend\Modules\Groups\Entity\ActionRight')->findOneBy(
-                array('group' => $group, 'module' => $module, 'action' => $action)
+        if ($group !== null) {
+            $actionRight = $em->getRepository('\Backend\Modules\Groups\Entity\GroupActionRight')->findOneBy(
+                array('group' => $group, 'module' => $moduleName, 'action' => $action)
             );
 
             if($actionRight === null) {
-                $actionRight = new \Backend\Modules\Groups\Entity\ActionRight();
+                $actionRight = new \Backend\Modules\Groups\Entity\GroupActionRight();
                 $actionRight->setGroup($group);
-                $actionRight->setModule($module);
+                $actionRight->setModule($moduleName);
                 $actionRight->setAction($action);
                 $actionRight->setLevel($level);
 
@@ -936,20 +932,19 @@ class ModuleInstaller
 
         // @todo remove this fallback when doctrine is fully integrated
         $group = (!is_object($group))
-            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->findOneBy(array('name' => $group))
+            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($group)
             : $group
         ;
-        $moduleName = (string) $moduleName;
 
         if ($group !== null) {
-            $moduleRight = $em->getRepository('\Backend\Modules\Groups\Entity\ModuleRight')->findOneBy(
-                array('group' => $group, 'module' => $module)
+            $moduleRight = $em->getRepository('\Backend\Modules\Groups\Entity\GroupModuleRight')->findOneBy(
+                array('group' => $group, 'module' => $moduleName)
             );
 
             if ($moduleRight === null) {
-                $moduleRight = new \Backend\Modules\Groups\Entity\ModuleRight();
+                $moduleRight = new \Backend\Modules\Groups\Entity\GroupModuleRight();
                 $moduleRight->setGroup($group);
-                $moduleRight->setModule($module);
+                $moduleRight->setModule($moduleName);
 
                 $em->persist($moduleRight);
                 $em->flush();

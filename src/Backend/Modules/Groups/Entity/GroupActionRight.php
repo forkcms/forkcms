@@ -3,17 +3,16 @@
 namespace Backend\Modules\Groups\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Backend\Core\Entity\Module;
 
 /**
- * This is the ActionRight Entity
+ * This is the GroupActionRight Entity
  *
  * @author Mathias Dewelde <mathias@dewelde.be>
  *
  * @ORM\Entity
- * @ORM\Table(name="GroupRightAction") //@todo Rename
+ * @ORM\Table(name="GroupActionRight")
  */
-class ActionRight
+class GroupActionRight
 {
     /**
      * @var int
@@ -27,16 +26,15 @@ class ActionRight
     /**
      * @var Group
      *
-     * @ORM\ManyToOne(targetEntity="Group", inversedBy="actionRights")
+     * @ORM\ManyToOne(targetEntity="Group", inversedBy="allowedActions")
      * @ORM\JoinColumn(name="groupId", referencedColumnName="id")
      */
     private $group;
 
     /**
-     * @var Module
+     * @var string
      *
-     * @ORM\ManyToOne(targetEntity="\Backend\Core\Entity\Module")
-     * @ORM\JoinColumn(name="moduleId", referencedColumnName="id")
+     * @ORM\Column(type="string", length=255)
      */
     private $module;
 
@@ -67,10 +65,10 @@ class ActionRight
     /**
      * Set module
      *
-     * @param Module $module
-     * @return ActionRight
+     * @param string $module
+     * @return GroupActionRight
      */
-    public function setModule(Module $module = null)
+    public function setModule($module)
     {
         $this->module = $module;
 
@@ -80,7 +78,7 @@ class ActionRight
     /**
      * Get module
      *
-     * @return Module
+     * @return string 
      */
     public function getModule()
     {
@@ -91,7 +89,7 @@ class ActionRight
      * Set action
      *
      * @param string $action
-     * @return ActionRight
+     * @return GroupActionRight
      */
     public function setAction($action)
     {
@@ -114,7 +112,7 @@ class ActionRight
      * Set level
      *
      * @param string $level
-     * @return ActionRight
+     * @return GroupActionRight
      */
     public function setLevel($level)
     {
@@ -137,7 +135,7 @@ class ActionRight
      * Set group
      *
      * @param Group $group
-     * @return ActionRight
+     * @return GroupActionRight
      */
     public function setGroup(Group $group = null)
     {

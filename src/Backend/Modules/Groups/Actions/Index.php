@@ -39,6 +39,7 @@ class Index extends BackendBaseActionIndex
      */
     public function loadDataGrid()
     {
+        // @todo integrate doctrine datagrid source
         $this->dataGrid = new BackendDataGridDB(BackendGroupsModel::QRY_BROWSE);
 
         // check if this action is allowed

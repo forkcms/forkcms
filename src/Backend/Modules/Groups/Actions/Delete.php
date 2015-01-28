@@ -17,6 +17,7 @@ use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
  * This is the delete-action, it will delete an item.
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@gmail.com>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Delete extends BackendBaseActionDelete
 {
@@ -27,24 +28,26 @@ class Delete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
 
-        // group exists and id is not null?
-        if ($this->id !== null && BackendGroupsModel::exists($this->id)) {
-            parent::execute();
+        parent::execute();
+        $this->record = BackendGroupsModel::get($this->id);
 
-            // get record
-            $this->record = BackendGroupsModel::get($this->id);
+        if ($this->id !== null && !empty($this->record)) {
+            // delete item
+            BackendGroupsModel::delete($this->record);
+            BackendModel::triggerEvent(
+                $this->getModule(),
+                'after_delete',
+                array('item' => $this->record)
+            );
 
-            // delete group
-            BackendGroupsModel::delete($this->id);
-
-            // trigger event
-            BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
-
-            // item was deleted, so redirect
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=deleted&var=' . urlencode($this->record['name']));
+            $this->redirect(
+                BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
+                urlencode($this->record->getName())
+            );
+        } else {
+            $this->redirect(
+                BackendModel::createURLForAction('Index') . '&error=non-existing'
+            );
         }
-
-        // no item found, redirect to the overview with an error
-        else $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
     }
 }

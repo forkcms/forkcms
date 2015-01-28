@@ -18,11 +18,13 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Groups\Engine\Model as BackendGroupsModel;
+use Backend\Modules\Groups\Entity\Group;
 
 /**
  * This is the add-action, it will display a form to create a new group
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -248,10 +250,11 @@ class Add extends BackendBaseActionAdd
     /**
      * Insert the permissions
      *
+     * @param Group $group
      * @param array $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
-    private function insertPermissions($actionPermissions, $bundledActionPermissions)
+    private function insertPermissions(Group $group, $actionPermissions, $bundledActionPermissions)
     {
         // init vars
         $modulesDenied = array();
@@ -296,7 +299,7 @@ class Add extends BackendBaseActionAdd
 
             // convert camelcasing to underscore notation
             $module = $bits[1];
-            $group = $bits[3];
+            $groupId = $bits[3];
 
             // create new item
             $moduleItem = array('group_id' => $this->id, 'module' => $module);
@@ -306,7 +309,7 @@ class Add extends BackendBaseActionAdd
                 // permission checked?
                 if ($permission->getChecked()) {
                     // add to granted if in the right group
-                    if (in_array($group, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($groupId, $moduleAction)) $actionsGranted[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
 
                     // if not yet present, add to checked modules
                     if (!in_array($module, $checkedModules)) $checkedModules[] = $module;
@@ -315,7 +318,7 @@ class Add extends BackendBaseActionAdd
                 // permission not checked?
                 else {
                     // add to denied
-                    if (in_array($group, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
+                    if (in_array($groupId, $moduleAction)) $actionsDenied[] = array('group_id' => $this->id, 'module' => $module, 'action' => $moduleAction['value'], 'level' => ACTION_RIGHTS_LEVEL);
 
                     // if not yet present add to unchecked modules
                     if (!in_array($module, $uncheckedModules)) $uncheckedModules[] = $module;
@@ -330,12 +333,12 @@ class Add extends BackendBaseActionAdd
         foreach (array_diff($uncheckedModules, $checkedModules) as $module) $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
 
         // add granted permissions
-        BackendGroupsModel::addModulePermissions($modulesGranted);
-        BackendGroupsModel::addActionPermissions($actionsGranted);
+        BackendGroupsModel::addModulePermissions($group, $modulesGranted);
+        BackendGroupsModel::addActionPermissions($group, $actionsGranted);
 
         // delete denied permissions
-        BackendGroupsModel::deleteModulePermissions($modulesDenied);
-        BackendGroupsModel::deleteActionPermissions($actionsDenied);
+        BackendGroupsModel::deleteModulePermissions($group, $modulesDenied);
+        BackendGroupsModel::deleteActionPermissions($group, $actionsDenied);
     }
 
     /**
@@ -378,14 +381,15 @@ class Add extends BackendBaseActionAdd
         }
 
         // build group
-        $group['name'] = $this->frm->getField('name')->getValue();
+        $group = new Group();
+        $group->setName($this->frm->getField('name')->getValue());
 
         // build setting
         $setting['name'] = 'dashboard_sequence';
         $setting['value'] = serialize($this->dashboardSequence);
 
         // insert group and settings
-        $group['id'] = BackendGroupsModel::insert($group, $setting);
+        $group = BackendGroupsModel::insert($group, $setting);
 
         return $group;
     }
@@ -523,7 +527,7 @@ class Add extends BackendBaseActionAdd
             $nameField->isFilled(BL::err('NameIsRequired'));
 
             // group already exists?
-            if (BackendGroupsModel::alreadyExists($nameField->getValue())) $nameField->setError(BL::err('GroupAlreadyExists'));
+            if (BackendGroupsModel::getByName($nameField->getValue()) !== null) $nameField->setError(BL::err('GroupAlreadyExists'));
 
             // no errors?
             if ($this->frm->isCorrect()) {
@@ -531,16 +535,16 @@ class Add extends BackendBaseActionAdd
                 $group = $this->insertWidgets($widgetPresets);
 
                 // assign id
-                $this->id = $group['id'];
+                $this->id = $group->getId();
 
                 // insert permissions
-                $this->insertPermissions($actionPermissions, $bundledActionPermissions);
+                $this->insertPermissions($group, $actionPermissions, $bundledActionPermissions);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=added&var=' . urlencode($group->getName()) . '&highlight=row-' . $group->getId());
             }
         }
     }
