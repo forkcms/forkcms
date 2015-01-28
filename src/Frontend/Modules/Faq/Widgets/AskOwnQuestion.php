@@ -126,7 +126,7 @@ class AskOwnQuestion extends FrontendBaseWidget
                     ->setTo(array($variables['email'] => $variables['name']))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
                     ->parseHtml(
-                        FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/own_question.tpl',
+                        FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/OwnQuestion.tpl',
                         $variables,
                         true
                     )
