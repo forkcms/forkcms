@@ -75,7 +75,7 @@ class Groups extends BackendBaseActionIndex
         $this->dataGrid->setAttributes(array('id' => 'dgGroups'));
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]', BackendMailmotorModel::getDefaultGroupIds());
+        $this->dataGrid->setMassActionCheckboxes('mass_checkbox', '[id]', BackendMailmotorModel::getDefaultGroupIds());
         $this->dataGrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
 
         // add mass action dropdown

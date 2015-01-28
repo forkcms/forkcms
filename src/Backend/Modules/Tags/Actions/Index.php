@@ -58,7 +58,7 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('checkbox', '[id]');
+        $this->dataGrid->setMassActionCheckboxes('mass_checkbox', '[id]');
 
         // add mass action dropdown
         $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');

@@ -502,7 +502,7 @@
 					// clear other timers
 					clearTimeout(timer);
 
-					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+					// we need the timeout otherwise the error is show every time the user presses enter in the keyvaluebox
 					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
 				}
 
@@ -510,11 +510,20 @@
 			});
 
 			// build replace html
-			var html = '<div class="tagsWrapper">' + '	<div class="form-inline">' + '		<input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
-
-			if(options.showIconOnly) html += ' iconOnly';
-
-			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '</div>';
+			var html =
+				'<div class="form-inline form-group keyValueWrapper">' +
+				'	<div class="form-group">' +
+				'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+				'   </div>' +
+				'	<a href="#" id="addButton-' + id + '" class="btn btn-primary">' +
+				'       <span class="glyphicon glyphicon-plus"></span>' +
+				(options.showIconOnly?'':'	    <span>' + options.addLabel + '</span>') +
+				'	</a>' +
+				'</div>' +
+				'<div class="form-inline form-group">' +
+				'    <div id="elementList-' + id + '" class="form-group keyValueList">' +
+				'    </div>' +
+				'</div>';
 
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
@@ -1317,11 +1326,20 @@
 			}
 
 			// build replace html
-			var html = '<div class="multipleTextWrapper">' + '	<div id="elementList-' + id + '" class="multipleTextList">' + '	</div>' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
-
-			if(options.showIconOnly) html += ' iconOnly';
-
-			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
+			var html =
+				'<div class="multipleTextWrapper">' +
+				'	<div id="elementList-' + id + '" class="form-group multipleTextList">' +
+				'	</div>' +
+				'	<div class="form-group form-inline">' +
+				'		<div class="form-group">' +
+				'			<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
+				'		</div>' +
+				'		<a href="#" id="addButton-' + id + '" class="btn btn-primary">' +
+				'       	<span class="glyphicon glyphicon-plus"></span>' +
+				(options.showIconOnly?'':'	    	<span>' + options.addLabel + '</span>') +
+				'		</a>' +
+				'	</div>' +
+				'</div>';
 
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
@@ -1514,16 +1532,19 @@
 				else
 				{
 					// start html
-					html = '<ul>';
+					html = '<ul class="list-unstyled">';
 
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' +
-								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' +
-								'		<div class="buttonHolder">' +
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' +
+						html += '	<li class="form-group form-inline">' +
+								'		<div class="form-group">' +
+								'			<input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
 								'		</div>' +
+								'		<a href="#" class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+								'       	<span class="glyphicon glyphicon-trash"></span>' +
+								'			<span>' + options.removeLabel + '</span>' +
+								'		</a>' +
 								'	</li>';
 					}
 

@@ -4,14 +4,14 @@
     <div class="col-md-12">
         <h2>{$lblAdd|ucfirst}</h2>
         {option:showPagesIndex}
-            <div class="btn-toolbar pull-right">
-                <div class="btn-group" role="group">
-                    <a href="{$var|geturl:'index'}" class="btn btn-primary" title="{$lblOverview|ucfirst}">
-                        <span class="glyphicon glyphicon-chevron-left"></span>
-                        {$lblOverview|ucfirst}
-                    </a>
-                </div>
+        <div class="btn-toolbar pull-right">
+            <div class="btn-group" role="group">
+                <a href="{$var|geturl:'index'}" class="btn btn-primary" title="{$lblOverview|ucfirst}">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                    {$lblOverview|ucfirst}
+                </a>
             </div>
+        </div>
         {/option:showPagesIndex}
     </div>
 </div>

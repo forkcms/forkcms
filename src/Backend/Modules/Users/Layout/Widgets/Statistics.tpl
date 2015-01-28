@@ -35,7 +35,7 @@
 	<div class="panel-footer">
 		<div class="btn-toolbar">
 			<div class="btn-group">
-				<a href="{$authenticatedUserEditUrl}" class="button">
+				<a href="{$authenticatedUserEditUrl}" class="btn">
 					<span>{$lblEditProfile|ucfirst}</span>
 				</a>
 			</div>

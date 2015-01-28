@@ -20,9 +20,9 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">
+					<h3 class="panel-title">
 						{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>
-					</h2>
+					</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -36,7 +36,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblScripts|ucfirst}</h2>
+					<h3 class="panel-title">{$lblScripts|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -59,12 +59,12 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblLanguages|ucfirst}</h2>
+					<h3 class="panel-title">{$lblLanguages|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<p>{$msgHelpLanguages}</p>
-						<ul id="activeLanguages">
+						<ul id="activeLanguages" class="list-unstyled">
 							{iteration:activeLanguages}
 							<li class="checkbox">
 								<label for="{$activeLanguages.id}">
@@ -78,7 +78,7 @@
 				<div class="panel-body">
 					<div class="form-group">
 						<p>{$msgHelpRedirectLanguages}</p>
-						<ul id="redirectLanguages">
+						<ul id="redirectLanguages" class="list-unstyled">
 							{iteration:redirectLanguages}
 							<li class="checkbox">
 								<label for="{$redirectLanguages.id}">
@@ -96,7 +96,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblDateAndTime|ucfirst}</h2>
+					<h3 class="panel-title">{$lblDateAndTime|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -122,7 +122,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblNumbers|ucfirst}</h2>
+					<h3 class="panel-title">{$lblNumbers|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -138,7 +138,7 @@
 		<div class="col-md-12">
 			<div id="settingsApiKeys" class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblAPIKeys|ucfirst}</h2>
+					<h3 class="panel-title">{$lblAPIKeys|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<p>{$msgHelpAPIKeys}</p>
@@ -185,7 +185,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">CKFinder</h2>
+					<h3 class="panel-title">CKFinder</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -214,7 +214,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">Facebook</h2>
+					<h3 class="panel-title">Facebook</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
@@ -240,13 +240,13 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">Twitter</h2>
+					<h3 class="panel-title">Twitter</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
 						<label for="twitterSiteName">{$lblTwitterSiteName|ucfirst}</label>
 						<div class="form-inline">
-							@ {$txtTwitterSiteName} {$txtTwitterSiteNameError}
+							@ <div class="form-group">{$txtTwitterSiteName} {$txtTwitterSiteNameError}</div>
 						</div>
 					</div>
 				</div>
@@ -257,7 +257,7 @@
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h2 class="panel-title">{$lblCookies|ucfirst}</h2>
+					<h3 class="panel-title">{$lblCookies|ucfirst}</h3>
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
