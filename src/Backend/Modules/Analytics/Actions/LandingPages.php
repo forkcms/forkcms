@@ -45,7 +45,7 @@ class LandingPages extends BackendAnalyticsBase
         if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
-            $dataGrid->setMassActionCheckboxes('checkbox', '[id]');
+            $dataGrid->setMassActionCheckboxes('mass_check', '[id]');
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {

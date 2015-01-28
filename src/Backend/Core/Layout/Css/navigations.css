@@ -2,7 +2,12 @@
 
 }
 
-.fork-nav-sidebar li > ul > li {
+.fork-nav-sidebar li li.active > a {
+    text-decoration: none;
+    background-color: #EEE;
+}
+
+.fork-nav-sidebar li li {
     margin-top: 2px;
     margin-left: 0px;
 }

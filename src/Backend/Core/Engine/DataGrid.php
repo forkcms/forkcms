@@ -475,8 +475,7 @@ class DataGrid extends \SpoonDataGrid
     public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
     {
         // build label and value
-        $label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />' .
-                 '</span>';
+        $label = '<input type="checkbox" name="toggleChecks" value="toggleChecks" />';
         $value = '<input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" />';
 
         // add the column

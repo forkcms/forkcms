@@ -119,7 +119,7 @@ class Index extends BackendBaseActionIndex
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
             // add the multicheckbox column
-            $dataGrid->setMassActionCheckboxes('checkbox', '[name]');
+            $dataGrid->setMassActionCheckboxes('mass_checkbox', '[name]');
 
             // hide the application when only one application is shown
             if ($this->filter['application'] != '') {
