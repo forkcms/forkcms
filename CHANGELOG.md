@@ -1,3 +1,10 @@
+3.8.6 (2015-xx-xx)
+--
+Bugfixes:
+
+* Users: Fixed error in backend user edit, when updating your own account.
+
+
 3.8.5 (2015-01-14)
 --
 Improvements:
@@ -9,6 +16,7 @@ Bugfixes:
 
 * Core: Make sure logs aren't publically accessible
 * Core: Make sure PHP 5.5+'s opcode cache is now cleared after updating code
+
 
 3.8.4 (2014-12-26)
 --
