@@ -71,9 +71,12 @@ class Index extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-        $this->setFilter();
-        $this->loadForm();
         $this->loadDataGrid();
+        if ($this->dataGrid->getNumResults() > $this->dataGrid->getPagingLimit())
+        {
+            $this->setFilter();
+            $this->loadForm();
+        }
         $this->parse();
         $this->display();
     }
@@ -131,8 +134,11 @@ class Index extends BackendBaseActionIndex
         // parse data grid
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 
-        // parse filter
-        $this->tpl->assign($this->filter);
+        if ($this->dataGrid->getNumResults() > $this->dataGrid->getPagingLimit())
+        {
+            // parse filter
+            $this->tpl->assign($this->filter);
+        }
     }
 
     /**
