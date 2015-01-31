@@ -1,60 +1,52 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row">
+	<div class="col-md-12">
+		<h2>{$msgEditTranslation|ucfirst|sprintf:{$name}}</h2>
+	</div>
+</div>
 {form:edit}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblTranslations|ucfirst}: {$msgEditTranslation|sprintf:{$name}}</h3>
-		</div>
-		<div class="options">
-			<div class="horizontal">
-				<p>
-					<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtName} {$txtNameError}
-					<span class="helpTxt">{$msgHelpEditName}</span>
-				</p>
-				<p>
-					<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtValue} {$txtValueError}
-					<span class="helpTxt">{$msgHelpEditValue}</span>
-				</p>
-				<p>
-					<label for="language">{$lblLanguage|ucfirst}</label>
-					{$ddmLanguage} {$ddmLanguageError}
-				</p>
-				<p>
-					<label for="application">{$lblApplication|ucfirst}</label>
-					{$ddmApplication} {$ddmApplicationError}
-				</p>
-				<p>
-					<label for="module">{$lblModule|ucfirst}</label>
-					{$ddmModule} {$ddmModuleError}
-				</p>
-				<p>
-					<label for="type">{$lblType|ucfirst}</label>
-					{$ddmType} {$ddmTypeError}
-				</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<p class="text-info">{$msgHelpAddName}</p>
+						{$txtName} {$txtNameError}
+					</div>
+					<div class="form-group">
+						<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<p class="text-info">{$msgHelpAddValue}</p>
+						{$txtValue} {$txtValueError}
+					</div>
+					<div class="form-group">
+						<label for="language">{$lblLanguage|ucfirst}</label>
+						{$ddmLanguage} {$ddmLanguageError}
+					</div>
+					<div class="form-group">
+						<label for="application">{$lblApplication|ucfirst}</label>
+						{$ddmApplication} {$ddmApplicationError}
+					</div>
+					<div class="form-group">
+						<label for="module">{$lblModule|ucfirst}</label>
+						{$ddmModule} {$ddmModuleError}
+					</div>
+					<div class="form-group">
+						<label for="type">{$lblType|ucfirst}</label>
+						{$ddmType} {$ddmTypeError}
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<div class="fullwidthOptions">
-			{option:showLocaleDelete}
-			<a href="{$var|geturl:'delete'}&amp;id={$id}{$filterQuery}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-				<span>{$lblDelete|ucfirst}</span>
-			</a>
-			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-				<p>
-					{$msgConfirmDelete}
-				</p>
-			</div>
-			{/option:showLocaleDelete}
-
-			<div class="buttonHolderRight">
-				<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group pull-right" role="group">
+				<button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblSave|ucfirst}</button>
 			</div>
 		</div>
 	</div>
 {/form:edit}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

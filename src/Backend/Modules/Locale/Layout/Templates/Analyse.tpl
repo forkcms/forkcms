@@ -1,44 +1,40 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblTranslations|ucfirst}</h2>
-
-	{option:showLocaleExportAnalyse}
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'ExportAnalyse'}&amp;language={$language}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+<div class="row">
+	<div class="col-md-12">
+		<h2>{$lblTranslations|ucfirst}</h2>
+		{option:showLocaleExportAnalyse}
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				<a href="{$var|geturl:'ExportAnalyse'}&amp;language={$language}" class="btn btn-primary" title="{$lblExport|ucfirst}">
+					<span class="glyphicon glyphicon-plus-sign"></span>
+					{$lblExport|ucfirst}
+				</a>
+			</div>
+		</div>
+		{/option:showLocaleExportAnalyse}
 	</div>
-	{/option:showLocaleExportAnalyse}
 </div>
-
-{option:dgFrontend}
-<div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>{$lblFrontend|ucfirst}</h3>
+<div class="row">
+	<div class="col-md-12">
+		{option:dgFrontend}
+		<h4>{$lblFrontend|ucfirst}</h4>
+		{$dgFrontend}
+		{/option:dgFrontend}
+		{option:!dgFrontend}
+		<h4>{$lblFrontend|ucfirst}</h4>
+		<p>{$msgNoItemsAnalyse}</p>
+		{/option:!dgFrontend}
+		{option:dgBackend}
+		<h4>{$lblBackend|ucfirst}</h4>
+		{$dgBackend}
+		{/option:dgBackend}
+		{option:!dgBackend}
+		<h4>{$lblBackend|ucfirst}</h4>
+		<p>{$msgNoItemsAnalyse}</p>
+		{/option:!dgBackend}
 	</div>
-	{$dgFrontend}
 </div>
-{/option:dgFrontend}
-
-{option:!dgFrontend}
-<h3>{$lblFrontend|ucfirst}</h3>
-<p>{$msgNoItemsAnalyse}</p>
-{/option:!dgFrontend}
-
-
-{option:dgBackend}
-<div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>{$lblBackend|ucfirst}</h3>
-	</div>
-	{$dgBackend}
-</div>
-{/option:dgBackend}
-
-{option:!dgBackend}
-<h3>{$lblBackend|ucfirst}</h3>
-<p>{$msgNoItemsAnalyse}</p>
-{/option:!dgBackend}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

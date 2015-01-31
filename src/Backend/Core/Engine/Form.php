@@ -313,7 +313,7 @@ class Form extends \SpoonForm
     public function addFile($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-file';
+        $class = ($class !== null) ? (string) $class : 'fork-form-file';
         $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
@@ -333,7 +333,7 @@ class Form extends \SpoonForm
     public function addImage($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'form-control fork-form-image';
+        $class = ($class !== null) ? (string) $class : 'fork-form-image';
         $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element

@@ -34,16 +34,13 @@
             <div role="tabpanel">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#tabContent" aria-controls="home" role="tab"
-                           data-toggle="tab">{$lblContent|ucfirst}</a>
+                        <a href="#tabContent" aria-controls="home" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
                     </li>
                     <li role="presentation">
-                        <a href="#tabSettings" aria-controls="profile" role="tab"
-                           data-toggle="tab">{$lblSettings|ucfirst}</a>
+                        <a href="#tabSettings" aria-controls="profile" role="tab" data-toggle="tab">{$lblSettings|ucfirst}</a>
                     </li>
                     <li role="presentation">
-                        <a href="#tabRedirect" aria-controls="messages" role="tab"
-                           data-toggle="tab">{$lblRedirect|ucfirst}</a>
+                        <a href="#tabRedirect" aria-controls="messages" role="tab" data-toggle="tab">{$lblRedirect|ucfirst}</a>
                     </li>
                     <li role="presentation">
                         <a href="#tabTags" aria-controls="settings" role="tab" data-toggle="tab">{$lblTags|ucfirst}</a>
