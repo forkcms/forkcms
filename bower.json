@@ -14,12 +14,12 @@
     "bower_components"
   ],
   "dependencies": {
-    "bootstrap": "~3.0",
+    "bootstrap": "~3.*",
     "modernizr": "2.*",
     "jquery": "1.11.*",
     "jquery-migrate": "1.2.*",
     "jquery-ui": "1.11.*",
-    "jstree": "~3.0.4",
-    "jstree-bootstrap-theme": "1.0.*"
+    "jstree": "~3.*",
+    "jstree-bootstrap-theme": "~1.*"
   }
 }

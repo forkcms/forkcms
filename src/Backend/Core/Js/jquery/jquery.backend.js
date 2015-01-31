@@ -159,7 +159,11 @@
 			var id = $(this).attr('id');
 
 			// append the button
-			$(this).parent().after('<div class="buttonHolder"><a href="#" data-id="' + id + '" class="generatePasswordButton button"><span>' + options.generateLabel + '</span></a></div>');
+			$(this).closest('.form-group').after(
+
+				'	<div class="btn-group">' +
+				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default"><span>' + options.generateLabel + '</span></a>' +
+				'	</div>');
 
 			$('.generatePasswordButton').live('click', generatePassword);
 

@@ -1,49 +1,52 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row">
+	<div class="col-md-12">
+		<h2>{$lblAdd|ucfirst}</h2>
+	</div>
+</div>
 {form:add}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblTranslations|ucfirst}: {$lblAdd}</h3>
-		</div>
-		<div class="options">
-			<div class="horizontal">
-				<p>
-					<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtName} {$txtNameError}
-					<span class="helpTxt">{$msgHelpAddName}</span>
-				</p>
-				<p>
-					<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtValue} {$txtValueError}
-					<span class="helpTxt">{$msgHelpAddValue}</span>
-				</p>
-				<p>
-					<label for="language">{$lblLanguage|ucfirst}</label>
-					{$ddmLanguage} {$ddmLanguageError}
-				</p>
-				<p>
-					<label for="application">{$lblApplication|ucfirst}</label>
-					{$ddmApplication} {$ddmApplicationError}
-				</p>
-				<p>
-					<label for="module">{$lblModule|ucfirst}</label>
-					{$ddmModule} {$ddmModuleError}
-				</p>
-				<p>
-					<label for="type">{$lblType|ucfirst}</label>
-					{$ddmType} {$ddmTypeError}
-				</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<p class="text-info">{$msgHelpAddName}</p>
+						{$txtName} {$txtNameError}
+					</div>
+					<div class="form-group">
+						<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<p class="text-info">{$msgHelpAddValue}</p>
+						{$txtValue} {$txtValueError}
+					</div>
+					<div class="form-group">
+						<label for="language">{$lblLanguage|ucfirst}</label>
+						{$ddmLanguage} {$ddmLanguageError}
+					</div>
+					<div class="form-group">
+						<label for="application">{$lblApplication|ucfirst}</label>
+						{$ddmApplication} {$ddmApplicationError}
+					</div>
+					<div class="form-group">
+						<label for="module">{$lblModule|ucfirst}</label>
+						{$ddmModule} {$ddmModuleError}
+					</div>
+					<div class="form-group">
+						<label for="type">{$lblType|ucfirst}</label>
+						{$ddmType} {$ddmTypeError}
+					</div>
+				</div>
 			</div>
 		</div>
-
-		<div class="fullwidthOptions">
-			<div class="buttonHolderRight">
-				<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group pull-right" role="group">
+				<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAdd|ucfirst}</button>
 			</div>
 		</div>
 	</div>
 {/form:add}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
