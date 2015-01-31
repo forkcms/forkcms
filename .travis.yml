@@ -39,6 +39,7 @@ before_script:
   - chmod ugo+x ./build/run-tests
 
 after_script:
+  - mysql -e "DROP DATABASE test_fork_cms;"
   - vendor/bin/coveralls -v
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover tests/_log/coverage.xml
