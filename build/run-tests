@@ -17,15 +17,24 @@ if [ "$PHP_GREATER_THAN_53" ]
         fi
 
         # We keep a safe copu of index file before we modify it
-        cp index.php orignal_index.php
+        cp index.php backup.index.php
         sudo sed -i "2i\include_once 'c3.php';" index.php
+
+        # We backup parameters.yml before starting tests
+        if [ -f ./app/config/parameters.yml ]; then
+            mv ./app/config/parameters.yml ./app/config/backup.parameters.yml
+        fi
 
         ./$CODECEPT build
         ./$CODECEPT run --steps --coverage --xml
 
         # Reset the old index file
         rm index.php
-        mv orignal_index.php index.php
+        mv backup.index.php index.php
+
+        if [ -f app/config/backup.parameters.yml ]; then
+            mv ./app/config/backup.parameters.yml ./app/config/parameters.yml
+        fi
     else
         PHP_VERSION=$(php -r 'echo PHP_VERSION;')
         echo "Cannot run codeception integration tests, because the installed PHP version ($PHP_VERSION) does not support the built-in web server."
