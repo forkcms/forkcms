@@ -1,8 +1,12 @@
-3.8.6 (2015-xx-xx)
+3.8.6 (2015-02-03)
 --
 Bugfixes:
 
 * Users: Fixed error in backend user edit, when updating your own account.
+* Core: Fix some wrong template names
+* Dashboard: Fix casing issue in alter sequence
+* Pages: Redirects are now available in the pages cache file
+* Translations: Fix an SQL Injection vulnerability
 
 
 3.8.5 (2015-01-14)
