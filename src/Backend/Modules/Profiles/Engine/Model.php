@@ -782,9 +782,10 @@ class Model
 	 * Notify profile - after adding profile to profiles module
 	 *
 	 * @param array $values
+	 * @param bool $forUpdate
 	 * @param string $templatePath
 	 */
-	public static function notifyProfile($values, $templatePath = null)
+	public static function notifyProfile($values, $forUpdate = false, $templatePath = null)
 	{
 	    // set variables
 		$variables['message'] = vsprintf(
@@ -797,7 +798,8 @@ class Model
 		);
 
 		// define subject
-		$subject = BL::lbl('NotificationNewProfileToProfile', 'Profiles');
+	    $notificationSubject = ($forUpdate) ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
+		$subject = BL::lbl($notificationSubject, 'Profiles');
 
 		self::sendMail(
 		    $subject,
