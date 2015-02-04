@@ -325,12 +325,13 @@ class Index extends BackendBaseActionIndex
         );
 
         // only allow languages from our language checkboxes to be set
+        $isGod = $this->isGod;
         $this->filter['language'] = array_filter(
             $this->filter['language'],
-            function ($language) {
+            function ($language) use ($isGod) {
                 return array_key_exists(
                     $language,
-                    BackendLocaleModel::getLanguagesForMultiCheckbox($this->isGod)
+                    BackendLocaleModel::getLanguagesForMultiCheckbox($isGod)
                 );
             }
         );
