@@ -774,8 +774,7 @@ class Model
 		    $subject,
 		    $templatePath,
 		    $variables,
-		    $toEmail,
-		    null
+		    $toEmail
 		);
 	}
 
