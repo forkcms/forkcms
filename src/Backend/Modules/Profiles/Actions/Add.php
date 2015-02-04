@@ -78,7 +78,7 @@ class Add extends BackendBaseActionAdd
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -176,7 +176,7 @@ class Add extends BackendBaseActionAdd
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
-                    'last_login' => BackendModel::getUTCDate(null, 0)
+                    'last_login' => BackendModel::getUTCDate(null, 0),
                 );
 
                 $this->id = BackendProfilesModel::insert($values);
@@ -200,8 +200,8 @@ class Add extends BackendBaseActionAdd
                 // bday is filled in
                 if ($ddmYear->isFilled()) {
                     // mysql format
-                    $birthDate = $ddmYear->getValue() . '-';
-                    $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
+                    $birthDate = $ddmYear->getValue().'-';
+                    $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT).'-';
                     $birthDate .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
                 } else {
                     // not filled in
@@ -223,13 +223,13 @@ class Add extends BackendBaseActionAdd
                         'id' => $this->id,
                         'first_name' => $txtFirstName->getValue(),
                         'last_name' => $txtLastName->getValue(),
-                        'unencrypted_password' => $password
+                        'unencrypted_password' => $password,
                     )
                 );
 
-                $redirectUrl = BackendModel::createURLForAction('Edit') .
-                    '&id=' . $this->id .
-                    '&var=' . urlencode($values['display_name']) .
+                $redirectUrl = BackendModel::createURLForAction('Edit').
+                    '&id='.$this->id.
+                    '&var='.urlencode($values['display_name']).
                     '&report='
                 ;
 
