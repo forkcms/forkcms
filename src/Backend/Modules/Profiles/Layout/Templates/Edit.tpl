@@ -26,13 +26,17 @@
 				<fieldset>
 					<p>
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-						{$txtEmail} {$txtEmailError}
+						{$profile.email}
 					</p>
 					<p>
 						<label for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtDisplayName} {$txtDisplayNameError}
 					</p>
 					<p>
+						<label>{$chkNewEmail} {$lblUpdateEmail|ucfirst}</label>
+						<span id="newEmailBox">
+						    {$txtEmail} {$txtEmailError}
+						</span>
 						<label>{$chkNewPassword} {$lblNewPassword|ucfirst}</label>
 						<span id="newPasswordBox">
 						    {$txtPassword}{option:!notifyProfile}<abbr title="{$lblRequiredField|ucfirst}">*</abbr>{/option:!notifyProfile} {$txtPasswordError}
