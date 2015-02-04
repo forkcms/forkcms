@@ -115,6 +115,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // create elements
+        $this->frm->addCheckbox('new_email');
         $this->frm->addText('email', $this->profile['email']);
         $this->frm->addCheckbox('new_password');
         $this->frm->addPassword('password');
@@ -221,8 +222,10 @@ class Edit extends BackendBaseActionEdit
             $this->frm->cleanupFields();
 
             // get fields
+            $chkNewEmail = $this->frm->getField('new_email');
             $txtEmail = $this->frm->getField('email');
             $txtDisplayName = $this->frm->getField('display_name');
+            $chkNewPassword = $this->frm->getField('new_password');
             $txtPassword = $this->frm->getField('password');
             $txtFirstName = $this->frm->getField('first_name');
             $txtLastName = $this->frm->getField('last_name');
@@ -234,7 +237,12 @@ class Edit extends BackendBaseActionEdit
             $ddmCountry = $this->frm->getField('country');
 
             // email filled in?
-            if ($txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+            if ($chkNewEmail->isChecked() && $txtEmail->isFilled(BL::getError('EmailIsRequired'))) {
+                // email must not be the same as previous one
+                if ($txtEmail->getValue() == $this->profile['email']) {
+                    $txtEmail->addError(BL::getError('EmailMatchesPrevious'));
+                }
+
                 // valid email?
                 if ($txtEmail->isEmail(BL::getError('EmailIsInvalid'))) {
                     // email already exists?
@@ -256,7 +264,7 @@ class Edit extends BackendBaseActionEdit
 
             // new_password is checked, so verify new password (only if profile should not be notified)
             // because then if the password field is empty, it will generate a new password
-            if ($this->frm->getField('new_password')->isChecked() && !$this->notifyProfile) {
+            if ($chkNewPassword->isChecked() && !$this->notifyProfile) {
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
             }
 
@@ -272,16 +280,20 @@ class Edit extends BackendBaseActionEdit
             // no errors?
             if ($this->frm->isCorrect()) {
                 // build item
-                $values['email'] = $txtEmail->getValue();
+                $values['email'] = ($chkNewEmail->isChecked()) ?
+                    $txtEmail->getValue() : $this->profile['email'];
 
                 // only update if display name changed
                 if ($txtDisplayName->getValue() != $this->profile['display_name']) {
                     $values['display_name'] = $txtDisplayName->getValue();
-                    $values['url'] = BackendProfilesModel::getUrl($txtDisplayName->getValue(), $this->id);
+                    $values['url'] = BackendProfilesModel::getUrl(
+                        $txtDisplayName->getValue(),
+                        $this->id
+                    );
                 }
 
                 // new password filled in?
-                if ($this->frm->getField('new_password')->isChecked()) {
+                if ($chkNewPassword->isChecked()) {
                     // get new salt
                     $salt = BackendProfilesModel::getRandomString();
 
@@ -293,7 +305,10 @@ class Edit extends BackendBaseActionEdit
                         $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                     // build password
-                    $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
+                    $values['password'] = BackendProfilesModel::getEncryptedString(
+                        $password,
+                        $salt
+                    );
                 }
 
                 // update values
@@ -317,7 +332,8 @@ class Edit extends BackendBaseActionEdit
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
-                $displayName = (isset($values['display_name'])) ? $values['display_name'] : $this->profile['display_name'];
+                $displayName = (isset($values['display_name'])) ?
+                    $values['display_name'] : $this->profile['display_name'];
 
                 $redirectUrl = BackendModel::createURLForAction('Index') .
                     '&var=' . urlencode($values['email']) .
@@ -326,7 +342,14 @@ class Edit extends BackendBaseActionEdit
                     '&report=saved'
                 ;
 
-                if ($this->notifyProfile && $this->frm->getField('new_password')->isChecked()) {
+                if ($this->notifyProfile &&
+                    ($chkNewEmail->isChecked() || $chkNewPassword->isChecked())
+                ) {
+                    // no new password
+                    if (!$chkNewPassword->isChecked()) {
+                        $password = BL::lbl('YourExistingPassword');
+                    }
+
                     // notify values
                     $notifyValues = array_merge(
                         $values,

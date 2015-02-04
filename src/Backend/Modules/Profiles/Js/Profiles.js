@@ -10,7 +10,8 @@ jsBackend.profiles =
 	{
 		jsBackend.profiles.addToGroup.init();
 		jsBackend.profiles.settings.init();
-		jsBackend.profiles.edit.init();
+		jsBackend.profiles.editEmail.init();
+		jsBackend.profiles.editPassword.init();
 	},
 
 	addToGroup:
@@ -39,21 +40,43 @@ jsBackend.profiles =
 			);
 		}
 	},
-	
-	edit:
+
+	editEmail:
+	{
+		init: function()
+		{
+			if ($('#newEmailBox').length == 0) return false;
+
+			$('#newEmail').on('change', function() {
+				jsBackend.profiles.editEmail.toggleBox();
+			});
+
+			jsBackend.profiles.editEmail.toggleBox();
+		},
+
+		toggleBox: function()
+		{
+			var $item = $('#newEmail');
+			var checked = ($item.attr('checked') == 'checked');
+
+			$('#newEmailBox').toggle(checked);
+		}
+	},
+
+	editPassword:
 	{
 		init: function()
 		{
 			if ($('#newPasswordBox').length == 0) return false;
 
 			$('#newPassword').on('change', function() {
-				jsBackend.profiles.edit.toggleNewPasswordBox();
+				jsBackend.profiles.editPassword.toggleBox();
 			});
 
-			jsBackend.profiles.edit.toggleNewPasswordBox();
+			jsBackend.profiles.editPassword.toggleBox();
 		},
 
-		toggleNewPasswordBox: function()
+		toggleBox: function()
 		{
 			var $item = $('#newPassword');
 			var checked = ($item.attr('checked') == 'checked');
