@@ -64,7 +64,7 @@ class Edit extends BackendBaseActionEdit
             $this->parse();
             $this->display();
         } else {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index').'&error=non-existing');
         }
     }
 
@@ -91,7 +91,7 @@ class Edit extends BackendBaseActionEdit
         // gender dropdown values
         $genderValues = array(
             'male' => \SpoonFilter::ucfirst(BL::getLabel('Male')),
-            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female'))
+            'female' => \SpoonFilter::ucfirst(BL::getLabel('Female')),
         );
 
         // birthdate dropdown values
@@ -172,7 +172,7 @@ class Edit extends BackendBaseActionEdit
             // set column URLs
             $this->dgGroups->setColumnURL(
                 'group_name',
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id
+                BackendModel::createURLForAction('EditProfileGroup').'&amp;id=[id]&amp;profile_id='.$this->id
             );
 
             // edit column
@@ -180,7 +180,7 @@ class Edit extends BackendBaseActionEdit
                 'edit',
                 null,
                 BL::getLabel('Edit'),
-                BackendModel::createURLForAction('EditProfileGroup') . '&amp;id=[id]&amp;profile_id=' . $this->id,
+                BackendModel::createURLForAction('EditProfileGroup').'&amp;id=[id]&amp;profile_id='.$this->id,
                 BL::getLabel('Edit')
             );
         }
@@ -318,8 +318,8 @@ class Edit extends BackendBaseActionEdit
                 // birthday is filled in
                 if ($ddmYear->isFilled()) {
                     // mysql format
-                    $birthDate = $ddmYear->getValue() . '-';
-                    $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT) . '-';
+                    $birthDate = $ddmYear->getValue().'-';
+                    $birthDate .= str_pad($ddmMonth->getValue(), 2, '0', STR_PAD_LEFT).'-';
                     $birthDate .= str_pad($ddmDay->getValue(), 2, '0', STR_PAD_LEFT);
                 } else {
                     $birthDate = null;
@@ -336,10 +336,10 @@ class Edit extends BackendBaseActionEdit
                 $displayName = (isset($values['display_name'])) ?
                     $values['display_name'] : $this->profile['display_name'];
 
-                $redirectUrl = BackendModel::createURLForAction('Index') .
-                    '&var=' . urlencode($values['email']) .
-                    '&highlight=row-' . $this->id .
-                    '&var=' . urlencode($displayName) .
+                $redirectUrl = BackendModel::createURLForAction('Index').
+                    '&var='.urlencode($values['email']).
+                    '&highlight=row-'.$this->id.
+                    '&var='.urlencode($displayName).
                     '&report=saved'
                 ;
 
@@ -358,7 +358,7 @@ class Edit extends BackendBaseActionEdit
                             'id' => $this->id,
                             'first_name' => $txtFirstName->getValue(),
                             'last_name' => $txtLastName->getValue(),
-                            'unencrypted_password' => $password
+                            'unencrypted_password' => $password,
                         )
                     );
 
