@@ -798,7 +798,8 @@ class Model
 		);
 
 		// define subject
-	    $notificationSubject = ($forUpdate) ? 'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
+	    $notificationSubject = ($forUpdate) ?
+	        'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
 		$subject = BL::lbl($notificationSubject, 'Profiles');
 
 		self::sendMail(
