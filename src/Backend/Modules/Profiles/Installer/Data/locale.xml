@@ -371,8 +371,8 @@
         <translation language="en"><![CDATA[Send mail to administrator on new profile.]]></translation>
       </item>
       <item type="label" name="SendNewProfileMail">
-        <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel wanneer het aangemaakt is.]]></translation>
-        <translation language="en"><![CDATA[Send mail to new profile on creation.]]></translation>
+        <translation language="nl"><![CDATA[Verzend mail naar het nieuwe profiel bij aanmaking of wanneer e-mail of wachtwoord gewijzigd wordt.]]></translation>
+        <translation language="en"><![CDATA[Send mail to new profile on creation or when e-mail or password has been changed.]]></translation>
       </item>
       <item type="label" name="Unblock">
         <translation language="nl"><![CDATA[activeer]]></translation>
