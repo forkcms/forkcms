@@ -36,6 +36,11 @@ class Edit extends BackendBaseActionEdit
     private $dgGroups;
 
     /**
+     * @var bool
+     */
+    private $notifyProfile;
+
+    /**
      * Info about the current profile.
      *
      * @var array
@@ -70,6 +75,12 @@ class Edit extends BackendBaseActionEdit
     {
         // get general info
         $this->profile = BackendProfilesModel::get($this->id);
+
+        $this->notifyProfile = BackendModel::getModuleSetting(
+            $this->URL->getModule(),
+            'send_new_profile_mail',
+            false
+        );
     }
 
     /**
@@ -181,6 +192,8 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
+        $this->tpl->assign('notifyProfile', $this->notifyProfile);
+
         // assign the active record and additional variables
         $this->tpl->assign('profile', $this->profile);
 
@@ -242,7 +255,9 @@ class Edit extends BackendBaseActionEdit
                 }
             }
 
-            if ($this->frm->getField('new_password')->isChecked()) {
+            // new_password is checked, so verify new password (only if profile should not be notified)
+            // because then if the password field is empty, it will generate a new password
+            if ($this->frm->getField('new_password')->isChecked() && !$this->notifyProfile) {
                 $txtPassword->isFilled(BL::err('FieldIsRequired'));
             }
 
@@ -274,7 +289,9 @@ class Edit extends BackendBaseActionEdit
                     // update salt
                     BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
-                    $password = $txtPassword->getValue();
+                    // new password filled in? otherwise generate a password
+                    $password = ($txtPassword->isFilled()) ?
+                        $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                     // build password
                     $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
@@ -309,6 +326,29 @@ class Edit extends BackendBaseActionEdit
                     '&var=' . urlencode($displayName) .
                     '&report=saved'
                 ;
+
+                if ($this->notifyProfile && $this->frm->getField('new_password')->isChecked()) {
+                    // notify values
+                    $notifyValues = array_merge(
+                        $values,
+                        array(
+                            'id' => $this->id,
+                            'first_name' => $txtFirstName->getValue(),
+                            'last_name' => $txtLastName->getValue(),
+                            'unencrypted_password' => $password
+                        )
+                    );
+
+                    if (!isset($notifyValues['display_name'])) {
+                        $notifyValues['display_name'] = $this->profile['display_name'];
+                    }
+
+                    BackendProfilesModel::notifyProfile($notifyValues, true);
+
+                    $redirectUrl .= 'saved-and-notified';
+                } else {
+                    $redirectUrl .= 'saved';
+                }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $values));
