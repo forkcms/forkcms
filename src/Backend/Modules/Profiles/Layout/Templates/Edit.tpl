@@ -25,7 +25,7 @@
 			<div class="options">
 				<fieldset>
 					<p>
-						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+						<label>{$lblEmail|ucfirst}</label>
 						{$profile.email}
 					</p>
 					<p>
@@ -35,7 +35,7 @@
 					<p>
 						<label>{$chkNewEmail} {$lblUpdateEmail|ucfirst}</label>
 						<span id="newEmailBox">
-						    {$txtEmail} {$txtEmailError}
+						    {$txtEmail}<abbr title="{$lblRequiredField|ucfirst}">*</abbr> {$txtEmailError}
 						</span>
 						<label>{$chkNewPassword} {$lblNewPassword|ucfirst}</label>
 						<span id="newPasswordBox">
