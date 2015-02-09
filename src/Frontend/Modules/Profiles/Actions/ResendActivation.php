@@ -123,7 +123,7 @@ class ResendActivation extends FrontendBaseBlock
                 // send email
                 $this->get('mailer')->addEmail(
                     FL::getMessage('RegisterSubject'),
-                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
+                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
                     $mailValues,
                     $profile->getEmail(),
                     '',

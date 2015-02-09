@@ -124,7 +124,7 @@ class ForgotPassword extends FrontendBaseBlock
                 // send email
                 $this->get('mailer')->addEmail(
                     FL::getMessage('ForgotPasswordSubject'),
-                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/forgot_password.tpl',
+                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.tpl',
                     $mailValues,
                     $txtEmail->getValue(),
                     '',
