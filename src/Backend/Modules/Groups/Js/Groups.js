@@ -10,22 +10,24 @@ jsBackend.groups =
 	// init, constructor-alike
 	init: function()
 	{
+		//@todo needs total refactoring
+
 		// variables
-		$hide = $('.hide');
+		/*$hide = $('.hide');
 		$container = $('.container');
 		$containerLabel = $('.container span label');
 		$moduleDataGridBody = $('.module .datagridHolder .dataGrid tbody');
 		$groupHolderDataGridBody = $('.groupHolder .dataGrid tbody');
 		$dataGridTd = $('.dataGrid tbody tr td');
-		$selectAll = $('.selectAll');
+		$selectAll = $('.selectAll');*/
 
-		$hide.each(jsBackend.groups.hide);
+		/*$hide.each(jsBackend.groups.hide);
 		$container.click(jsBackend.groups.clickHandler);
 		$containerLabel.each(jsBackend.groups.mouseHandler);
 		$moduleDataGridBody.each(jsBackend.groups.selectionPermissions);
 		$groupHolderDataGridBody.each(jsBackend.groups.selectionWidgets);
 		$dataGridTd.click(jsBackend.groups.selectHandler);
-		$selectAll.click(jsBackend.groups.selectAll);
+		$selectAll.click(jsBackend.groups.selectAll);*/
 	},
 
 	// hide an item
@@ -42,10 +44,12 @@ jsBackend.groups =
 	clickHandler: function(e)
 	{
 		// prevent default
-		e.preventDefault();
+		//e.preventDefault();
 
 		// init vars
 		$this = $(this);
+
+		console.log(e, this);
 
 		// the action is currently closed, open it
 		if($this.hasClass('iconCollapsed'))

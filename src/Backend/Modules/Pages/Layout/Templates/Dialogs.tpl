@@ -180,3 +180,25 @@ Text editor block
         </div>
     </div>
 </div>
+
+{*
+Page delete confirm block
+*}
+<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h4">{$lblDelete|ucfirst}</span>
+            </div>
+            <div class="modal-body">
+                <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+                <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
+                    {$lblOK|ucfirst}
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

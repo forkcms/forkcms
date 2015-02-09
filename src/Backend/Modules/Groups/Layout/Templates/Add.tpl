@@ -64,23 +64,22 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="form-group">
-									<label>{$lblSetPermissions|ucfirst}</label>
-									<ul id="moduleList" class="list-unstyled">
-										{iteration:permissions}
-										<li class="module checkbox">
-											{$permissions.chk}
-											<a href="#" class="icon iconCollapsed container" title="open">
-												<span>
+								<div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
+									{iteration:permissions}
+									<div class="panel panel-default">
+										<div class="panel-heading" role="tab" id="permissions-heading-{$permissions.id}">
+											<h4 class="panel-title">
+												{$permissions.chk}
+												<a data-toggle="collapse" data-parent="#permissions" href="#permissions-list-{$permissions.id}" aria-expanded="false" aria-controls="collapseOne">
 													<label for="{$permissions.id}">{$permissions.label}</label>
-												</span>
-											</a>
-											<div class="hide clearfix">
-												{$permissions.actions.dataGrid}
-											</div>
-										</li>
-										{/iteration:permissions}
-									</ul>
+												</a>
+											</h4>
+										</div>
+										<div id="permissions-list-{$permissions.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="permissions-heading-{$permissions.id}">
+											{$permissions.actions.dataGrid}
+										</div>
+									</div>
+									{/iteration:permissions}
 								</div>
 							</div>
 						</div>

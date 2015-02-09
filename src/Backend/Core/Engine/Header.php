@@ -324,9 +324,11 @@ class Header extends Base\Object
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/src/Backend/Core/Js/jquery/jquery.js',
-                '/src/Backend/Core/Js/jquery/jquery.ui.js',
-                '/src/Backend/Core/Js/ckeditor/jquery.ui.dialog.patch.js',
+                '/bower_components/jquery/dist/jquery.min.js',
+                '/bower_components/jquery-migrate/jquery-migrate.min.js',
+                '/bower_components/jquery-ui/jquery-ui.min.js',
+                '/bower_components/bootstrap/dist/js/bootstrap.min.js',
+                '/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js',
                 '/src/Backend/Core/Js/jquery/jquery.tools.js',
                 '/src/Backend/Core/Js/jquery/jquery.backend.js',
                 '/src/Backend/Core/Js/ckeditor/ckeditor.js',

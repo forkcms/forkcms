@@ -89,7 +89,7 @@ class Comments extends BackendBaseActionIndex
         ));
 
         // add the multicheckbox column
-        $this->dgPublished->setMassActionCheckboxes('mass_checkbox', '[id]');
+        $this->dgPublished->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgPublished->setColumnFunction(
@@ -180,7 +180,7 @@ class Comments extends BackendBaseActionIndex
         ));
 
         // add the multicheckbox column
-        $this->dgModeration->setMassActionCheckboxes('mass_checkbox', '[id]');
+        $this->dgModeration->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgModeration->setColumnFunction(
@@ -269,7 +269,7 @@ class Comments extends BackendBaseActionIndex
         ));
 
         // add the multicheckbox column
-        $this->dgSpam->setMassActionCheckboxes('mass_checkbox', '[id]');
+        $this->dgSpam->setMassActionCheckboxes('check', '[id]');
 
         // assign column functions
         $this->dgSpam->setColumnFunction(

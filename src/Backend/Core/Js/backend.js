@@ -972,7 +972,7 @@ jsBackend.controls =
 	bindMassCheckbox: function()
 	{
 		// mass checkbox changed
-		$('th.mass_checkbox input:checkbox').on('change', function(e)
+		$('th.check input:checkbox').on('change', function(e)
 		{
 			// variables
 			$this = $(this);
@@ -986,7 +986,7 @@ jsBackend.controls =
 		});
 
 		// single checkbox changed
-		$('td.mass_checkbox input:checkbox').on('change', function(e)
+		$('td.check input:checkbox').on('change', function(e)
 		{
 			// variables
 			$this = $(this);
