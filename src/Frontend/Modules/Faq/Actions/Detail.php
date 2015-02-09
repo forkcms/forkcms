@@ -270,7 +270,7 @@ class Detail extends FrontendBaseBlock
                         // add the email
                         $this->get('mailer')->addEmail(
                             sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question']),
-                            FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/feedback.tpl',
+                            FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/Feedback.tpl',
                             $variables,
                             null, null, null, null, null, null, null, null, null, null, null, true
                         );
