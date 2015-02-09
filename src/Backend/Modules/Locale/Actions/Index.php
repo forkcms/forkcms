@@ -34,7 +34,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Filter variables
      *
-     * @var	array
+     * @var array
      */
     private $filter;
 
@@ -46,7 +46,7 @@ class Index extends BackendBaseActionIndex
     /**
      * Is God?
      *
-     * @var	bool
+     * @var bool
      */
     private $isGod;
 
@@ -145,14 +145,15 @@ class Index extends BackendBaseActionIndex
                 $dataGrid->setColumnFunction(
                     array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true
                 );
-                if ($type == 'act') $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                if ($type == 'act') {
+                    $dataGrid->setColumnFunction('urldecode', array('[' . $lang . ']'), $lang, true);
+                }
 
                 // set header labels
                 $dataGrid->setHeaderLabels(array($lang => \SpoonFilter::ucfirst(BL::lbl(strtoupper($lang)))));
 
                 // only 1 language selected?
                 if (count($this->filter['language']) == 1) {
-
                     $dataGrid->setColumnAttributes($lang, array('style' => 'width: ' . $langWidth . '%'));
 
                     // add id of translation for the export
@@ -264,7 +265,9 @@ class Index extends BackendBaseActionIndex
         );
 
         // is filtered?
-        if ($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
+        if ($this->getParameter('form', 'string', '') == 'filter') {
+            $this->tpl->assign('filter', true);
+        }
 
         // parse filter as query
         $this->tpl->assign('filter', $this->filterQuery);
@@ -309,6 +312,29 @@ class Index extends BackendBaseActionIndex
         $this->filter['language'] = $this->getParameter('language', 'array');
         $this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
         $this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
+
+        // only allow values from our types checkboxes to be set
+        $this->filter['type'] = array_filter(
+            $this->filter['type'],
+            function ($type) {
+                return array_key_exists(
+                    $type,
+                    BackendLocaleModel::getTypesForMultiCheckbox()
+                );
+            }
+        );
+
+        // only allow languages from our language checkboxes to be set
+        $isGod = $this->isGod;
+        $this->filter['language'] = array_filter(
+            $this->filter['language'],
+            function ($language) use ($isGod) {
+                return array_key_exists(
+                    $language,
+                    BackendLocaleModel::getLanguagesForMultiCheckbox($isGod)
+                );
+            }
+        );
 
         // build query for filter
         $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
