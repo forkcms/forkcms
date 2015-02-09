@@ -191,7 +191,7 @@ class Data extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction('ucfirst', '[sent_on]', 'sent_on', false);
 
         // add the multicheckbox column
-        $this->dataGrid->setMassActionCheckboxes('mass_checkbox', '[id]');
+        $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // mass action
         $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');

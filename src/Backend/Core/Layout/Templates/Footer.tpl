@@ -1,5 +1,5 @@
 	<footer id="footer">
-		<div id="content" class="container">
+		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
 					{include:{$BACKEND_CORE_PATH}/Layout/Templates/Messaging.tpl}

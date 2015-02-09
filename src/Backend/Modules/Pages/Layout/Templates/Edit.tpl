@@ -234,6 +234,14 @@
 	<div id="pageButtons" class="row fork-page-actions">
 		<div class="col-md-12">
 			<div class="btn-toolbar">
+				<div class="btn-group pull-left" role="group">
+					{option:showPagesDelete}
+					<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+						<span class="glyphicon glyphicon-trash"></span>
+						{$lblDelete|ucfirst}
+					</button>
+					{/option:showPagesDelete}
+				</div>
 				<div class="btn-group pull-right" role="group">
 					<a href="#" id="saveAsDraft" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span>&nbsp;{$lblSaveDraft|ucfirst}</a>
 					<button id="editButton" type="submit" name="edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}</button>
