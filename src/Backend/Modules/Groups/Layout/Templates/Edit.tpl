@@ -111,8 +111,8 @@
 	<div id="pageButtons" class="row fork-page-actions">
 		<div class="col-md-12">
 			<div class="btn-toolbar">
-				{option:showGroupsDelete}
 				<div class="btn-group pull-left" role="group">
+					{option:showGroupsDelete}
 					<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						<span class="glyphicon glyphicon-trash"></span>
 						{$lblDelete|ucfirst}
@@ -135,8 +135,8 @@
 							</div>
 						</div>
 					</div>
+					{/option:showGroupsDelete}
 				</div>
-				{/option:showGroupsDelete}
 				<div class="btn-group pull-right" role="group">
 					<button id="editButton" type="submit" name="edit" class="btn btn-primary">
 						<span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}

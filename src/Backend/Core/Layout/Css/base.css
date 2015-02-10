@@ -10,6 +10,11 @@ textarea {
     margin: 20px 0px 20px 0px;
 }
 
+.align-middle {
+    display: table-cell;
+    vertical-align: middle !important;
+}
+
 .fork-module-header,
 .fork-module-content,
 .fork-module-actions {
