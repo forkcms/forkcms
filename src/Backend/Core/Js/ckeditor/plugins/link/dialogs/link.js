@@ -49,18 +49,35 @@ CKEDITOR.dialog.add( 'link', function( editor )
             uploadTab = dialog.definition.getContents( 'upload' ),
             uploadInitiallyHidden = uploadTab && uploadTab.hidden;
 
+        // @mark: 001 Check if the localPage element exists and get it
+        //  The localpage element was added to allow the use of "internal links".
+        //  However, when the dialog starts it is in "anchor-mode" (linktype anchor) and this conflicts with
+        //  the assignment of a link through this dropdown IF the link already contains a #-symbol.
+        //  The functionality should not be available to the user in "anchor-mode".
+        if ( this.getDialog().getContentElement( 'info', 'localPage' ) )
+        {
+            var contentElement = this.getDialog().getContentElement( 'info', 'localPage' );
+            var localPageElement = contentElement.getElement().getParent().getParent();
+        }
+
         if ( typeValue == 'url' )
         {
             if ( editor.config.linkShowTargetTab )
                 dialog.showPage( 'target' );
             if ( !uploadInitiallyHidden )
                 dialog.showPage( 'upload' );
+
+            // @mark: 001 show the page element when type is URL
+            localPageElement.show();
         }
         else
         {
             dialog.hidePage( 'target' );
             if ( !uploadInitiallyHidden )
                 dialog.hidePage( 'upload' );
+
+            // @mark: 001 hide the page element when type is not URL
+            localPageElement.hide();
         }
 
         for ( var i = 0 ; i < partIds.length ; i++ )
