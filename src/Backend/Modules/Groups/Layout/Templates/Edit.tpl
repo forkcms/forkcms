@@ -111,7 +111,7 @@
 			</div>
 		</div>
 	</div>
-	<div id="pageButtons" class="row fork-page-actions">
+	<div class="row fork-page-actions">
 		<div class="col-md-12">
 			<div class="btn-toolbar">
 				<div class="btn-group pull-left" role="group">
