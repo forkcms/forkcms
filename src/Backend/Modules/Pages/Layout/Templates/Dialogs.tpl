@@ -184,6 +184,7 @@ Text editor block
 {*
 Page delete confirm block
 *}
+{option:item}
 <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -202,3 +203,4 @@ Page delete confirm block
         </div>
     </div>
 </div>
+{/option:item}

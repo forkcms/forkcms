@@ -31,10 +31,10 @@ jsBackend.extensions.themeSelection =
 			if(radiobutton.is(':checked'))
 			{
 				// remove the selected state from all other templates
-				listItems.removeClass('selected');
+				listItems.removeClass('active');
 
 				// add a selected state to the parent
-				radiobutton.parent('li').addClass('selected');
+				radiobutton.closest('li').addClass('active');
 			}
 		});
 	}
