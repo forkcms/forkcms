@@ -33,7 +33,10 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="name">{$lblName|ucfirst}&nbsp;<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr></label>
+									<label for="name">
+										{$lblName|ucfirst}&nbsp;
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									{$txtName} {$txtNameError}
 								</div>
 							</div>
@@ -113,28 +116,10 @@
 			<div class="btn-toolbar">
 				<div class="btn-group pull-left" role="group">
 					{option:showGroupsDelete}
-					<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
-						<span class="glyphicon glyphicon-trash"></span>
+					<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete">
+						<span class="glyphicon glyphicon-trash"></span>&nbsp;
 						{$lblDelete|ucfirst}
 					</button>
-					<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<span class="modal-title h4">{$lblDelete|ucfirst}</span>
-								</div>
-								<div class="modal-body">
-									<p>{$msgConfirmDelete|sprintf:{$item.name}}</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-									<a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
-										{$lblOK|ucfirst}
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
 					{/option:showGroupsDelete}
 				</div>
 				<div class="btn-group pull-right" role="group">
@@ -143,6 +128,26 @@
 					</button>
 				</div>
 			</div>
+			{option:showGroupsDelete}
+			<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title h4">{$lblDelete|ucfirst}</span>
+						</div>
+						<div class="modal-body">
+							<p>{$msgConfirmDelete|sprintf:{$item.name}}</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+							<a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
+								{$lblOK|ucfirst}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/option:showGroupsDelete}
 		</div>
 	</div>
 {/form:edit}

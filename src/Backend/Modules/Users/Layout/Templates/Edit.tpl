@@ -267,24 +267,6 @@
 						<span class="glyphicon glyphicon-trash"></span>
 						{$lblDelete|ucfirst}
 					</button>
-					<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<span class="modal-title h4">{$lblDelete|ucfirst}</span>
-								</div>
-								<div class="modal-body">
-									<p>{$msgConfirmDelete|sprintf:{$record.settings.nickname}}</p>
-								</div>
-								<div class="modal-footer">
-									<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-									<a href="{$var|geturl:'delete'}&amp;id={$record.id}" class="btn btn-primary">
-										{$lblOK|ucfirst}
-									</a>
-								</div>
-							</div>
-						</div>
-					</div>
 					{/option:showUsersDelete}
 				</div>
 				<div class="btn-group pull-right" role="group">
@@ -293,6 +275,26 @@
 					</button>
 				</div>
 			</div>
+			{option:showUsersDelete}
+			<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title h4">{$lblDelete|ucfirst}</span>
+						</div>
+						<div class="modal-body">
+							<p>{$msgConfirmDelete|sprintf:{$record.settings.nickname}}</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+							<a href="{$var|geturl:'delete'}&amp;id={$record.id}" class="btn btn-primary">
+								{$lblOK|ucfirst}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			{/option:showUsersDelete}
 		</div>
 	</div>
 {/form:edit}

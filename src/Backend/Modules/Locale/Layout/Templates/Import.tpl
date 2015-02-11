@@ -30,8 +30,10 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="btn-group pull-right" role="group">
-				<button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblImport|ucfirst}</button>
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblImport|ucfirst}</button>
+				</div>
 			</div>
 		</div>
 	</div>
