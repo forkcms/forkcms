@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        save_path: %kernel.root_dir%/cache/sessions
 
 # Assetic Configuration
 assetic:
@@ -19,6 +20,10 @@ assetic:
     bundles:        [ 'ForkCMSInstallerBundle' ]
     filters:
         cssrewrite: ~
+
+twig:
+    debug:            "%kernel.debug%"
+    strict_variables: "%kernel.debug%"
 
 monolog:
     handlers:

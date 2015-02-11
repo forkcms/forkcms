@@ -10,7 +10,8 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        save_path: %kernel.root_dir%/cache/sessions
 
 # Assetic Configuration
 assetic:
@@ -20,10 +21,41 @@ assetic:
     filters:
         cssrewrite: ~
 
+# Doctrine Configuration
+doctrine:
+    dbal:
+        # This pdo_ prefix should be cleaned up in the future, when completely moved to doctrine
+        driver:   "pdo_%database.driver%"
+        host:     "%database.host%"
+        port:     "%database.port%"
+        dbname:   "%database.name%"
+        user:     "%database.user%"
+        password: "%database.password%"
+        charset:  UTF8
+
+        # Remove when we don't have legacy tables anymore
+        mapping_types:
+            enum:       string
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true
+        mappings:
+            ContentBlocks:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Modules/ContentBlocks/Entity
+                prefix: Backend\Modules\ContentBlocks\Entity
+            Faq:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Modules/Faq/Entity
+                prefix: Backend\Modules\Faq\Entity
+            Core:
+                type: annotation
+                dir: %kernel.root_dir%/../src/Backend/Core/Entity
+                prefix: Backend\Core\Entity
+
 twig:
     debug:            "%kernel.debug%"
     strict_variables: "%kernel.debug%"
-
 
 monolog:
     handlers:

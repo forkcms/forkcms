@@ -10,6 +10,7 @@ namespace Backend\Core\Installer;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
+use Backend\Core\Engine\Meta;
 
 
 /**
@@ -45,6 +46,8 @@ class CoreInstaller extends ModuleInstaller
         if ($this->getVariable('site_title') === null) {
             throw new \SpoonException('Site title is not provided.');
         }
+
+        $this->addEntitiesInDatabase(array(Meta::ENTITY_CLASS));
 
         // import SQL
         $this->importSQL(dirname(__FILE__) . '/Data/install.sql');

@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * This is the add-action, it will display a form to create a new item
@@ -53,7 +54,7 @@ class Add extends BackendBaseActionAdd
         $this->frm = new BackendForm('add');
         $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
         $this->frm->addEditor('text');
-        $this->frm->addCheckbox('hidden', true);
+        $this->frm->addCheckbox('visible', true);
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {
@@ -75,27 +76,28 @@ class Add extends BackendBaseActionAdd
 
             if ($this->frm->isCorrect()) {
                 // build item
-                $item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = BL::getWorkingLanguage();
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getValue() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate();
-                $item['edited_on'] = BackendModel::getUTCDate();
+                $contentBlock = new ContentBlock();
+                $contentBlock
+                    ->setId(BackendContentBlocksModel::getMaximumId() + 1)
+                    ->setUserId(BackendAuthentication::getUser()->getUserId())
+                    ->setTemplate(count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0])
+                    ->setLanguage(BL::getWorkingLanguage())
+                    ->setTitle($fields['title']->getValue())
+                    ->setText($fields['text']->getValue())
+                    ->setIsHidden(!$fields['visible']->isChecked())
+                    ->setstatus(ContentBlock::STATUS_ACTIVE)
+                ;
 
                 // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::insert($item);
+                BackendContentBlocksModel::insert($contentBlock);
 
                 // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));
+                BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $contentBlock));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=added&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    urlencode($contentBlock->getTitle()) . '&highlight=row-' . $contentBlock->getId()
                 );
             }
         }

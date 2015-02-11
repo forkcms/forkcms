@@ -14,6 +14,8 @@ use Common\Uri as CommonUri;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Faq\Entity\Category;
+use Backend\Modules\Faq\Entity\Question;
 
 /**
  * In this file we store all generic functions that we will be using in the faq module
@@ -23,67 +25,54 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
-        'SELECT i.id, i.category_id, i.question, i.hidden, i.sequence
-         FROM faq_questions AS i
-         WHERE i.language = ? AND i.category_id = ?
-         ORDER BY i.sequence ASC';
-
-    const QRY_DATAGRID_BROWSE_CATEGORIES =
-        'SELECT i.id, i.title, COUNT(p.id) AS num_items, i.sequence
-         FROM faq_categories AS i
-         LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND p.language = i.language
-         WHERE i.language = ?
-         GROUP BY i.id
-         ORDER BY i.sequence ASC';
+    const CATEGORY_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Category';
+    const QUESTION_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Question';
+    const FEEDBACK_ENTITY_CLASS = 'Backend\Modules\Faq\Entity\Feedback';
 
     /**
      * Delete a question
      *
-     * @param int $id
+     * @param Question $question
      */
-    public static function delete($id)
+    public static function delete(Question $question)
     {
-        $question = self::get($id);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->remove($question);
+        $em->flush();
 
-        /** @var $db \SpoonDatabase */
-        $db = BackendModel::getContainer()->get('database');
-        $db->delete('faq_questions', 'id = ?', array((int) $id));
-        $db->delete('meta', 'id = ?', array((int) $question['meta_id']));
-
-        BackendTagsModel::saveTags($id, '', 'Faq');
+        BackendTagsModel::saveTags($question->getId(), '', 'Faq');
     }
 
     /**
      * Delete a specific category
      *
-     * @param int $id
+     * @param Category $category
      */
-    public static function deleteCategory($id)
+    public static function deleteCategory(Category $category)
     {
-        $db = BackendModel::getContainer()->get('database');
-        $item = self::getCategory($id);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        if (!empty($item)) {
-            $db->delete('meta', 'id = ?', array($item['meta_id']));
-            $db->delete('faq_categories', 'id = ?', array((int) $id));
-            $db->update('faq_questions', array('category_id' => null), 'category_id = ?', array((int) $id));
+        if (!empty($category)) {
+            BackendModel::deleteExtraById($category->getExtraId());
 
-            BackendModel::deleteExtraById($item['extra_id']);
-            BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+            $em->remove($category);
+            $em->flush();
+
+            BackendModel::invalidateFrontendCache('Faq', $category->getLanguage());
         }
     }
 
     /**
      * Is the deletion of a category allowed?
      *
-     * @param int $id
+     * @param  Category $category
      * @return bool
      */
-    public static function deleteCategoryAllowed($id)
+    public static function deleteCategoryAllowed(Category $category)
     {
         if (
             !BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true) &&
@@ -92,13 +81,7 @@ class Model
             return false;
         } else {
             // check if the category does not contain questions
-            return !(bool) BackendModel::get('database')->getVar(
-                'SELECT 1
-                 FROM faq_questions AS i
-                 WHERE i.category_id = ? AND i.language = ?
-                 LIMIT 1',
-                array((int) $id, BL::getWorkingLanguage())
-            );
+            return count($category->getQuestions()) === 0;
         }
     }
 
@@ -118,40 +101,6 @@ class Model
     }
 
     /**
-     * Does the question exist?
-     *
-     * @param int $id
-     * @return bool
-     */
-    public static function exists($id)
-    {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM faq_questions AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
-        );
-    }
-
-    /**
-     * Does the category exist?
-     *
-     * @param int $id
-     * @return bool
-     */
-    public static function existsCategory($id)
-    {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT 1
-             FROM faq_categories AS i
-             WHERE i.id = ? AND i.language = ?
-             LIMIT 1',
-            array((int) $id, BL::getWorkingLanguage())
-        );
-    }
-
-    /**
      * Fetch a question
      *
      * @param int $id
@@ -159,13 +108,16 @@ class Model
      */
     public static function get($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*, m.url
-             FROM faq_questions AS i
-             INNER JOIN meta AS m ON m.id = i.meta_id
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::QUESTION_ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => $id,
+                    'language' => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -233,25 +185,22 @@ class Model
      */
     public static function getCategories($includeCount = false)
     {
-        $db = BackendModel::getContainer()->get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $categories = $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findByLanguage(BL::getWorkingLanguage())
+        ;
 
-        if ($includeCount) {
-            return (array) $db->getPairs(
-                'SELECT i.id, CONCAT(i.title, " (",  COUNT(p.category_id) ,")") AS title
-                 FROM faq_categories AS i
-                 LEFT OUTER JOIN faq_questions AS p ON i.id = p.category_id AND i.language = p.language
-                 WHERE i.language = ?
-                 GROUP BY i.id',
-                array(BL::getWorkingLanguage())
-            );
+        $pairs = array();
+        foreach ($categories as $category) {
+            $pairs[$category->getId()] = $category->getTitle();
+
+            if ($includeCount) {
+                $pairs[$category->getId()] .= ' (' . count($category->getQuestions()) . ')';
+            }
         }
 
-        return (array) $db->getPairs(
-            'SELECT i.id, i.title
-             FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
-        );
+        return $pairs;
     }
 
     /**
@@ -262,12 +211,16 @@ class Model
      */
     public static function getCategory($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM faq_categories AS i
-             WHERE i.id = ? AND i.language = ?',
-            array((int) $id, BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => $id,
+                    'language' => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -277,12 +230,16 @@ class Model
      */
     public static function getCategoryCount()
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT COUNT(i.id)
-             FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return (int) $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->select('COUNT(i)')
+            ->where('i.language = :language')
+            ->setParameter('language', BL::getWorkingLanguage())
+            ->getQuery()
+            ->getSingleScalarResult()
+        ;
     }
 
     /**
@@ -308,12 +265,16 @@ class Model
      */
     public static function getMaximumCategorySequence()
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.sequence)
-             FROM faq_categories AS i
-             WHERE i.language = ?',
-            array(BL::getWorkingLanguage())
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $maxCategory = $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findOneBy(
+                array('language' => BL::getWorkingLanguage()),
+                array('sequence' => 'DESC')
+            )
+        ;
+
+        return empty($maxCategory) ? 0 : $maxCategory->getSequence();
     }
 
     /**
@@ -324,12 +285,16 @@ class Model
      */
     public static function getMaximumSequence($id)
     {
-        return (int) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT MAX(i.sequence)
-             FROM faq_questions AS i
-             WHERE i.category_id = ?',
-            array((int) $id)
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $maxQuestion = $em
+            ->getRepository(self::QUESTION_ENTITY_CLASS)
+            ->findOneBy(
+                array('category' => self::getCategory($id)),
+                array('sequence' => 'DESC')
+            )
+        ;
+
+        return empty($maxQuestion) ? 0 : $maxQuestion->getSequence();
     }
 
     /**
@@ -342,38 +307,16 @@ class Model
     public static function getURL($url, $id = null)
     {
         $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // new item
-        if ($id === null) {
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
+        $questionWithUrl = $em
+            ->getRepository(self::QUESTION_ENTITY_CLASS)
+            ->findByUrl($url, BL::getWorkingLanguage(), $id)
+        ;
+        if (!empty($questionWithUrl)) {
+            $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM faq_questions AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getURL($url, $id);
-            }
+            return self::getURL($url);
         }
 
         return $url;
@@ -382,6 +325,7 @@ class Model
     /**
      * Retrieve the unique URL for a category
      *
+     * @todo  Rework this method to use doctrine
      * @param string $url
      * @param int    $id The id of the category to ignore.
      * @return string
@@ -389,38 +333,16 @@ class Model
     public static function getURLForCategory($url, $id = null)
     {
         $url = CommonUri::getUrl((string) $url);
-        $db = BackendModel::get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // new category
-        if ($id === null) {
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM faq_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
+        $categoryWithUrl = $em
+            ->getRepository(self::CATEGORY_ENTITY_CLASS)
+            ->findByUrl($url, BL::getWorkingLanguage(), $id)
+        ;
+        if (!empty($categoryWithUrl)) {
+            $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
-            }
-        } else {
-            // current category should be excluded
-            if ((bool) $db->getVar(
-                'SELECT 1
-                 FROM faq_categories AS i
-                 INNER JOIN meta AS m ON i.meta_id = m.id
-                 WHERE i.language = ? AND m.url = ? AND i.id != ?
-                 LIMIT 1',
-                array(BL::getWorkingLanguage(), $url, $id)
-            )
-            ) {
-                $url = BackendModel::addNumber($url);
-
-                return self::getURLForCategory($url, $id);
-            }
+            return self::getURL($url);
         }
 
         return $url;
@@ -429,77 +351,70 @@ class Model
     /**
      * Insert a question in the database
      *
-     * @param array $item
+     * @param Question $question
      * @return int
      */
-    public static function insert(array $item)
+    public static function insert(Question $question)
     {
-        $insertId = BackendModel::getContainer()->get('database')->insert('faq_questions', $item);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($question);
+        $em->flush();
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', $question->getLanguage());
 
-        return $insertId;
+        return $question->getid();
     }
 
     /**
      * Insert a category in the database
      *
-     * @param array $item
-     * @param array $meta The metadata for the category to insert.
+     * @param array $category
      * @return int
      */
-    public static function insertCategory(array $item, $meta = null)
+    public static function insertCategory(Category $category)
     {
-        $db = BackendModel::get('database');
-
-        // insert the meta if possible
-        if ($meta !== null) {
-            $item['meta_id'] = $db->insert('meta', $meta);
-        }
-
         // insert extra
-        $item['extra_id'] = BackendModel::insertExtra(
+        $category->setExtraId(BackendModel::insertExtra(
             'widget',
             'Faq',
             'CategoryList'
-        );
+        ));
 
-        $item['id'] = $db->insert('faq_categories', $item);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($category);
+        $em->flush();
 
         // update extra (item id is now known)
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $category->getExtraId(),
             'data',
             array(
-                'id' => $item['id'],
-                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $item['title'],
-                'language' => $item['language'],
+                'id' => $category->getId(),
+                'extra_label' => \SpoonFilter::ucfirst(BL::lbl('Category', 'Faq')) . ': ' . $category->getTitle(),
+                'language' => $category->getLanguage(),
                 'edit_url' => BackendModel::createURLForAction(
                     'EditCategory',
                     'Faq',
-                    $item['language']
-                ) . '&id=' . $item['id']
+                    $category->getLanguage()
+                ) . '&id=' . $category->getId()
             )
         );
 
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', $category->getLanguage());
 
-        return $item['id'];
+        return $category->getId();
     }
 
     /**
      * Update a certain question
      *
-     * @param array $item
+     * @param Question $question
      */
-    public static function update(array $item)
+    public static function update(Question $question)
     {
-        BackendModel::getContainer()->get('database')->update(
-            'faq_questions',
-            $item,
-            'id = ?',
-            array((int) $item['id'])
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->flush();
+
         BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
     }
 
@@ -508,24 +423,24 @@ class Model
      *
      * @param array $item
      */
-    public static function updateCategory(array $item)
+    public static function updateCategory(Category $category)
     {
-        // update faq category
-        BackendModel::getContainer()->get('database')->update('faq_categories', $item, 'id = ?', array($item['id']));
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->flush();
 
         // update extra
         BackendModel::updateExtra(
-            $item['extra_id'],
+            $category->getExtraId(),
             'data',
             array(
-                'id' => $item['id'],
-                'extra_label' => 'Category: ' . $item['title'],
-                'language' => $item['language'],
-                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $item['id']
+                'id' => $category->getId(),
+                'extra_label' => 'Category: ' . $category->getTitle(),
+                'language' => $category->getLanguage(),
+                'edit_url' => BackendModel::createURLForAction('EditCategory') . '&id=' . $category->getId()
             )
         );
 
         // invalidate faq
-        BackendModel::invalidateFrontendCache('Faq', BL::getWorkingLanguage());
+        BackendModel::invalidateFrontendCache('Faq', $category->getLanguage());
     }
 }

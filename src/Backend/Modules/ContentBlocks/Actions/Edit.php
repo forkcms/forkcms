@@ -14,9 +14,10 @@ use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
 use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
+use Backend\Modules\ContentBlocks\Entity\ContentBlock;
 
 /**
  * This is the edit-action, it will display a form to edit an existing item
@@ -25,6 +26,7 @@ use Backend\Modules\ContentBlocks\Engine\Model as BackendContentBlocksModel;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -40,21 +42,13 @@ class Edit extends BackendBaseActionEdit
      */
     public function execute()
     {
-        $this->id = $this->getParameter('id', 'int');
-
-        // does the item exist
-        if ($this->id !== null && BackendContentBlocksModel::exists($this->id)) {
-            parent::execute();
-            $this->getData();
-            $this->loadRevisions();
-            $this->loadForm();
-            $this->validateForm();
-            $this->parse();
-            $this->display();
-        } else {
-            // no item found, throw an exceptions, because somebody is fucking with our url
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
-        }
+        parent::execute();
+        $this->getData();
+        $this->loadRevisions();
+        $this->loadForm();
+        $this->validateForm();
+        $this->parse();
+        $this->display();
     }
 
     /**
@@ -63,6 +57,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function getData()
     {
+        $this->id = $this->getParameter('id', 'int');
         $this->record = BackendContentBlocksModel::get($this->id);
 
         // specific revision?
@@ -77,13 +72,18 @@ class Edit extends BackendBaseActionEdit
             $this->tpl->assign('usingRevision', true);
         }
 
+        if ($this->id == null || empty($this->record)) {
+            // no item found, throw an exceptions, because somebody is fucking with our url
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
+
         // get the templates
         // @todo why is $this->templates loaded twice?
         $this->templates = BackendContentBlocksModel::getTemplates();
 
         // check if selected template is still available
-        if ($this->record['template'] && !in_array($this->record['template'], $this->templates)) {
-            $this->record['template'] = '';
+        if ($this->record->getTemplate() && !in_array($this->record->getTemplate(), $this->templates)) {
+            $this->record->setTemplate('');
         }
     }
 
@@ -93,13 +93,13 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
-        $this->frm->addEditor('text', $this->record['text']);
-        $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
+        $this->frm->addText('title', $this->record->getTitle(), null, 'inputText title', 'inputTextError title');
+        $this->frm->addEditor('text', $this->record->getText());
+        $this->frm->addCheckbox('visible', !$this->record->getIsHidden());
 
         // if we have multiple templates, add a dropdown to select them
         if (count($this->templates) > 1) {
-            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record['template']);
+            $this->frm->addDropdown('template', array_combine($this->templates, $this->templates), $this->record->getTemplate());
         }
     }
 
@@ -108,10 +108,20 @@ class Edit extends BackendBaseActionEdit
      */
     private function loadRevisions()
     {
-        // create datagrid
-        $this->dgRevisions = new BackendDataGridDB(
-            BackendContentBlocksModel::QRY_BROWSE_REVISIONS,
-            array('archived', $this->record['id'], BL::getWorkingLanguage())
+        $this->dgRevisions = new DataGridDoctrine(
+            BackendContentBlocksModel::ENTITY_CLASS,
+            array(
+                'status'   => ContentBlock::STATUS_ARCHIVED,
+                'id'       => $this->record->getId(),
+                'language' => BL::getWorkingLanguage(),
+            ),
+            array(
+                'id',
+                'revisionId' => 'revision_id',
+                'title',
+                'editedOn'   => 'edited_on',
+                'userId'     => 'user_id',
+            )
         );
 
         // hide columns
@@ -166,9 +176,7 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
-        $this->tpl->assign('id', $this->record['id']);
-        $this->tpl->assign('title', $this->record['title']);
-        $this->tpl->assign('revision_id', $this->record['revision_id']);
+        $this->tpl->assign('item', $this->record);
 
         // assign revisions-datagrid
         $this->tpl->assign('revisions', (string) $this->dgRevisions->getContent());
@@ -187,28 +195,29 @@ class Edit extends BackendBaseActionEdit
             $fields['title']->isFilled(BL::err('TitleIsRequired'));
 
             if ($this->frm->isCorrect()) {
-                $item['id'] = $this->id;
-                $item['user_id'] = BackendAuthentication::getUser()->getUserId();
-                $item['template'] = count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0];
-                $item['language'] = $this->record['language'];
-                $item['extra_id'] = $this->record['extra_id'];
-                $item['title'] = $fields['title']->getValue();
-                $item['text'] = $fields['text']->getValue();
-                $item['hidden'] = $fields['hidden']->getChecked() ? 'N' : 'Y';
-                $item['status'] = 'active';
-                $item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
-                $item['edited_on'] = BackendModel::getUTCDate();
+                $contentBlock = new ContentBlock();
+                $contentBlock
+                    ->setId($this->id)
+                    ->setExtraId($this->record->getExtraId())
+                    ->setUserId(BackendAuthentication::getUser()->getUserId())
+                    ->setTemplate(count($this->templates) > 1 ? $fields['template']->getValue() : $this->templates[0])
+                    ->setLanguage(BL::getWorkingLanguage())
+                    ->setTitle($fields['title']->getValue())
+                    ->setText($fields['text']->getValue())
+                    ->setIsHidden(!$fields['visible']->isChecked())
+                    ->setstatus(ContentBlock::STATUS_ACTIVE)
+                ;
 
                 // insert the item
-                $item['revision_id'] = BackendContentBlocksModel::update($item);
+                BackendContentBlocksModel::update($contentBlock);
 
                 // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $contentBlock));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=edited&var=' .
-                    urlencode($item['title']) . '&highlight=row-' . $item['id']
+                    urlencode($contentBlock->getTitle()) . '&highlight=row-' . $contentBlock->getId()
                 );
             }
         }

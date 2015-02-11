@@ -28,46 +28,43 @@ class SequenceQuestions extends BackendBaseAJAXAction
         $toCategorySequence = \SpoonFilter::getPostValue('toCategorySequence', null, '', 'string');
 
         // invalid question id
-        if (!BackendFaqModel::exists($questionId)) {
-            $this->output(self::BAD_REQUEST, null, 'question does not exist');
-        } else {
+        $question = BackendFaqModel::get($questionId);
+        if (!empty($questionId)) {
             // list ids
             $fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
             $toCategorySequence = (array) explode(',', ltrim($toCategorySequence, ','));
 
             // is the question moved to a new category?
             if ($fromCategoryId != $toCategoryId) {
-                $item['id'] = $questionId;
-                $item['category_id'] = $toCategoryId;
+                $question->setCategory(BackendFaqModel::getCategory($toCategoryId));
 
-                BackendFaqModel::update($item);
-
-                // loop id's and set new sequence
-                foreach ($toCategorySequence as $i => $id) {
-                    $item = array();
-                    $item['id'] = (int) $id;
-                    $item['sequence'] = $i + 1;
-
-                    // update sequence if the item exists
-                    if (BackendFaqModel::exists($item['id'])) {
-                        BackendFaqModel::update($item);
-                    }
-                }
+                BackendFaqModel::update($question);
+                $this->resequenceQuestionIds($toCategorySequence);
             }
 
-            // loop id's and set new sequence
-            foreach ($fromCategorySequence as $i => $id) {
-                $item['id'] = (int) $id;
-                $item['sequence'] = $i + 1;
-
-                // update sequence if the item exists
-                if (BackendFaqModel::exists($item['id'])) {
-                    BackendFaqModel::update($item);
-                }
-            }
+            $this->resequenceQuestionIds($fromCategorySequence);
 
             // success output
             $this->output(self::OK, null, 'sequence updated');
+        } else {
+            $this->output(self::BAD_REQUEST, null, 'question does not exist');
+        }
+    }
+
+    /**
+     * Set an ascending sequence on a list of question Id's
+     *
+     * @param  array  $questionIds The id's of the questions to sequence
+     */
+    protected function resequenceQuestionIds(array $questionIds)
+    {
+        foreach ($questionIds as $i => $id) {
+            $questionToSequence = BackendFaqModel::get((int) $id);
+
+            if (!empty($questionToSequence)) {
+                $questionToSequence->setSequence($i + 1);
+                BackendFaqModel::update($questionToSequence);
+            }
         }
     }
 }

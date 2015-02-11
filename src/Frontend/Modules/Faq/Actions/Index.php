@@ -19,13 +19,14 @@ use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
  * @author Lester Lievens <lester.lievens@netlash.com>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Index extends FrontendBaseBlock
 {
     /**
      * @var    array
      */
-    private $items = array();
+    private $categories = array();
 
     /**
      * Execute the extra
@@ -44,19 +45,14 @@ class Index extends FrontendBaseBlock
      */
     private function getData()
     {
-        $categories = FrontendFaqModel::getCategories();
+        $this->categories = FrontendFaqModel::getCategories();
         $limit = FrontendModel::getModuleSetting('Faq', 'overview_num_items_per_category', 10);
 
-        foreach ($categories as $item) {
-            $item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
-
-            // no questions? next!
-            if (empty($item['questions'])) {
-                continue;
+        // Remove all categories without questions
+        foreach ($this->categories as $key => $category) {
+            if ($category->getQuestions()->count() === 0) {
+                unset($this->categories[$key]);
             }
-
-            // add the category item including the questions
-            $this->items[] = $item;
         }
     }
 
@@ -65,7 +61,7 @@ class Index extends FrontendBaseBlock
      */
     private function parse()
     {
-        $this->tpl->assign('faqCategories', (array) $this->items);
+        $this->tpl->assign('faqCategories', (array) $this->categories);
         $this->tpl->assign(
             'allowMultipleCategories',
             FrontendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)

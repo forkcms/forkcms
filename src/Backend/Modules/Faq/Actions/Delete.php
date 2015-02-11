@@ -28,12 +28,12 @@ class Delete extends BackendBaseActionDelete
     {
         $this->id = $this->getParameter('id', 'int');
 
-        if ($this->id !== null && BackendFaqModel::exists($this->id)) {
-            parent::execute();
-            $this->record = BackendFaqModel::get($this->id);
+        parent::execute();
+        $this->record = BackendFaqModel::get($this->id);
 
+        if ($this->id !== null && !empty($this->record)) {
             // delete item
-            BackendFaqModel::delete($this->id);
+            BackendFaqModel::delete($this->record);
             BackendModel::triggerEvent(
                 $this->getModule(),
                 'after_delete',
@@ -42,7 +42,7 @@ class Delete extends BackendBaseActionDelete
 
             $this->redirect(
                 BackendModel::createURLForAction('Index') . '&report=deleted&var=' .
-                urlencode($this->record['question'])
+                urlencode($this->record->getQuestion())
             );
         } else {
             $this->redirect(

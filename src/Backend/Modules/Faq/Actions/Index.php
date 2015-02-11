@@ -12,7 +12,7 @@ namespace Backend\Modules\Faq\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
@@ -24,6 +24,7 @@ use Backend\Modules\Faq\Engine\Model as BackendFaqModel;
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
  * @author Davy Van Vooren <davy.vanvooren@netlash.com>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Wouter Sioen <wouter@woutersioen.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -63,12 +64,18 @@ class Index extends BackendBaseActionIndex
 
         // loop categories and create a dataGrid for each one
         foreach ($categories as $categoryId => $categoryTitle) {
-            $dataGrid = new BackendDataGridDB(
-                BackendFaqModel::QRY_DATAGRID_BROWSE,
-                array(BL::getWorkingLanguage(), $categoryId)
+            $dataGrid = new DataGridDoctrine(
+                BackendFaqModel::QUESTION_ENTITY_CLASS,
+                array(
+                    'language' => BL::getWorkingLanguage(),
+                    'category' => BackendFaqModel::getCategory($categoryId),
+                ),
+                array(
+                    'id', 'categoryId', 'question', 'isHidden' => 'hidden', 'sequence'
+                )
             );
             $dataGrid->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
-            $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
+            $dataGrid->setColumnsHidden(array('categoryId', 'sequence'));
             $dataGrid->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
             $dataGrid->setColumnsSequence('dragAndDropHandle');
             $dataGrid->setColumnAttributes('question', array('class' => 'title'));
