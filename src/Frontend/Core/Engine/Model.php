@@ -332,7 +332,7 @@ class Model extends \BaseModel
             $settings = (array) self::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
                  FROM modules_settings AS ms
-                 INNER JOIN modules AS m ON ms.module = m.name'
+                 INNER JOIN Module AS m ON ms.module = m.name'
             );
 
             // loop settings and cache them, also unserialize the values

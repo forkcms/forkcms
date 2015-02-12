@@ -10,17 +10,26 @@ namespace Backend\Modules\Groups\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Modules\Groups\Entity\Group;
+use Backend\Modules\Groups\Entity\GroupActionRight;
+use Backend\Modules\Groups\Entity\GroupModuleRight;
 
 /**
  * In this file we store all generic functions that we will be using in the groups module.
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Model
 {
+    const GROUP_ENTITY_CLASS = 'Backend\Modules\Groups\Entity\Group';
+    const ACTION_RIGHT_ENTITY_CLASS = 'Backend\Modules\Groups\Entity\GroupActionRight';
+    const MODULE_RIGHT_ENTITY_CLASS = 'Backend\Modules\Groups\Entity\GroupModuleRight';
+
+    // @todo integrate with doctrine
     const QRY_BROWSE =
         'SELECT g.id, g.name, COUNT(u.id) AS num_users
-         FROM groups AS g
+         FROM Groups AS g
          LEFT OUTER JOIN users_groups AS ug ON g.id = ug.group_id
          LEFT OUTER JOIN users AS u ON u.id = ug.user_id
          GROUP BY g.id';
@@ -31,94 +40,120 @@ class Model
          INNER JOIN users_groups AS ug ON u.id = ug.user_id
          WHERE ug.group_id = ? AND u.deleted = ?';
 
+
     /**
      * Add action permissions
      *
+     * @param Group $group
      * @param array $actionPermissions
      */
-    public static function addActionPermissions($actionPermissions)
+    public static function addActionPermissions(Group $group, $actionPermissions)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         foreach ((array) $actionPermissions as $permission) {
-            if (!self::existsActionPermission($permission)) {
-                BackendModel::getContainer()->get('database')->insert('groups_rights_actions', $permission);
+            if (!self::existsActionPermission($group, $permission)) {
+                $actionRight = new GroupActionRight();
+                $actionRight->setAction($permission['action']);
+                $actionRight->setModule($permission['module']);
+                $actionRight->setGroup($group);
+
+                $em->persist($actionRight);
             }
         }
+
+        $em->flush();
     }
 
     /**
      * Add module permissions
      *
+     * @param Group $group
      * @param array $modulePermissions
      */
-    public static function addModulePermissions($modulePermissions)
+    public static function addModulePermissions(Group $group, $modulePermissions)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         foreach ((array) $modulePermissions as $permission) {
-            if (!self::existsModulePermission($permission)) {
-                BackendModel::getContainer()->get('database')->insert('groups_rights_modules', $permission);
+            if (!self::existsModulePermission($group, $permission)) {
+                $moduleRight = new GroupModuleRight();
+                $moduleRight->setModule($permission['module']);
+                $moduleRight->setGroup($group);
+
+                $em->persist($moduleRight);
             }
         }
+
+        $em->flush();
     }
 
     /**
-     * Check if a group already exists
+     * Get a group by name
      *
      * @param string $name
-     * @return bool
+     * @return Group
      */
-    public static function alreadyExists($name)
+    public static function getByName($name)
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.*
-             FROM groups AS i
-             WHERE i.name = ?',
-            array((string) $name)
-            );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        return $em->getRepository(self::GROUP_ENTITY_CLASS)->findOneBy(array('name' => $name));
     }
 
     /**
      * Delete a group
      *
-     * @param int $id The id of the group to delete.
+     * @param Group $group
      */
-    public static function delete($id)
+    public static function delete(Group $group)
     {
-        BackendModel::getContainer()->get('database')->delete('groups', 'id = ?', array((int) $id));
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        $em->remove($group);
+        $em->flush();
     }
 
     /**
      * Delete action permissions
      *
+     * @param Group $group
      * @param array $actionPermissions The action permissions to delete.
      */
-    public static function deleteActionPermissions($actionPermissions)
+    public static function deleteActionPermissions(Group $group, $actionPermissions)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         foreach ((array) $actionPermissions as $permission) {
-            if (self::existsActionPermission($permission)) {
-                BackendModel::getContainer()->get('database')->delete(
-                    'groups_rights_actions',
-                    'group_id = ? AND module = ? AND action = ?',
-                    array($permission['group_id'], $permission['module'], $permission['action'])
-                );
+            foreach ($group->getAllowedActions() as $allowedAction) {
+                if ($permission['module'] == $allowedAction->getModule() && $permission['action'] == $allowedAction->getAction()) {
+                    $em->remove($allowedAction);
+                }
             }
         }
+
+        $em->flush();
     }
 
     /**
      * Delete module permissions
      *
+     * @param Group $group
      * @param array $modulePermissions The module permissions to delete.
      */
-    public static function deleteModulePermissions($modulePermissions)
+    public static function deleteModulePermissions(Group $group, $modulePermissions)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         foreach ((array) $modulePermissions as $permission) {
-            if (self::existsModulePermission($permission)) {
-                BackendModel::getContainer()->get('database')->delete(
-                    'groups_rights_modules',
-                    'group_id = ? AND module = ?',
-                    array($permission['group_id'], $permission['module'])
-                );
+            foreach ($group->getAllowedModules() as $allowedModule) {
+                if ($permission['module'] == $allowedModule->getModule()) {
+                    $em->remove($allowedModule);
+                }
             }
         }
+
+        $em->flush();
     }
 
     /**
@@ -128,6 +163,7 @@ class Model
      */
     public static function deleteMultipleGroups($userId)
     {
+        // @todo Integrate doctrine
         BackendModel::getContainer()->get('database')->delete('users_groups', 'user_id = ?', array($userId));
     }
 
@@ -136,6 +172,8 @@ class Model
      *
      * @param int $id The id to check upon.
      * @return bool
+     * @deprecated
+     * // @todo Remove this function
      */
     public static function exists($id)
     {
@@ -150,33 +188,35 @@ class Model
     /**
      * Check if a action permission exists
      *
+     * @param Group $group
      * @param array $permission The permission to check upon.
      * @return bool
      */
-    public static function existsActionPermission($permission)
+    public static function existsActionPermission(Group $group, $permission)
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.*
-             FROM groups_rights_actions AS i
-             WHERE i.module = ? AND i.group_id = ? AND i.action = ?',
-            array($permission['module'], $permission['group_id'], $permission['action'])
-        );
+        foreach ($group->getAllowedActions() as $allowedAction) {
+            if ($permission['module'] == $allowedAction->getModule()
+                && $permission['action'] == $allowedAction->getAction()
+            ) return true;
+        }
+
+        return false;
     }
 
     /**
      * Check if a module permission exists
      *
+     * @param Group $group
      * @param array $permission The permission to check upon.
      * @return bool
      */
-    public static function existsModulePermission($permission)
+    public static function existsModulePermission(Group $group, $permission)
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.*
-             FROM groups_rights_modules AS i
-             WHERE i.module = ? AND i.group_id = ?',
-            array($permission['module'], $permission['group_id'])
-        );
+        foreach ($group->getAllowedModules() as $allowedModule) {
+            if ($permission['module'] == $allowedModule->getModule()) return true;
+        }
+
+        return false;
     }
 
     /**
@@ -187,12 +227,9 @@ class Model
      */
     public static function get($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
-             FROM groups AS i
-             WHERE i.id = ?',
-            array((int) $id)
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        return $em->getRepository(self::GROUP_ENTITY_CLASS)->find($id);
     }
 
     /**
@@ -200,6 +237,8 @@ class Model
      *
      * @param int $id The id of the group.
      * @return array
+     * @deprecated
+     * // @todo Remove this function
      */
     public static function getActionPermissions($id)
     {
@@ -212,15 +251,25 @@ class Model
     }
 
     /**
-     * Get all groups
+     * Get all groups to populate a dropdown
      *
+     * // @todo Rename this function
      * @return array
      */
     public static function getAll()
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.id AS value, i.name AS label FROM groups AS i'
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        $groups = $em->getRepository(self::GROUP_ENTITY_CLASS)->findAll();
+
+        foreach ($groups as &$group) {
+            $group = array(
+                'label' => $group->getName(),
+                'value' => $group->getId()
+            );
+        }
+
+        return $groups;
     }
 
     /**
@@ -231,9 +280,10 @@ class Model
      */
     public static function getGroupsByUser($id)
     {
+        // @todo Integrate doctrine
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, i.name
-             FROM groups AS i
+             FROM ForkGroup AS i
              INNER JOIN users_groups AS ug ON i.id = ug.group_id
              WHERE ug.user_id = ?',
             array((int) $id)
@@ -269,9 +319,12 @@ class Model
      *
      * @param int $id The id of the group.
      * @return array
+     * @deprecated
      */
     public static function getModulePermissions($id)
     {
+        // @todo Integrate doctrine
+        $em = BackendModel::get('doctrine.orm.entity_manager');
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM groups_rights_modules AS i
@@ -289,6 +342,7 @@ class Model
      */
     public static function getSetting($groupId, $name)
     {
+        // @todo Integrate doctrine
         $setting = (array) BackendModel::getContainer()->get('database')->getRecord(
             'SELECT i.*
              FROM groups_settings AS i
@@ -309,6 +363,7 @@ class Model
      */
     public static function getUsers($groupId)
     {
+        // @todo use doctrine when the user module supports doctrine too.
         return (array) BackendModel::getContainer()->get('database')->getRecords(
             'SELECT i.*
              FROM users AS i
@@ -321,22 +376,24 @@ class Model
     /**
      * Insert a group and a setting
      *
-     * @param array $group The group to insert.
+     * @param Group $group The group to insert.
      * @param array $setting The setting to insert.
      */
     public static function insert($group, $setting)
     {
-        // insert group
-        $id = BackendModel::getContainer()->get('database')->insert('groups', $group);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        $em->persist($group);
+        $em->flush();
 
         // build setting
-        $setting['group_id'] = $id;
+        $setting['group_id'] = $group->getId();
 
         // insert setting
         self::insertSetting($setting);
 
         // return the id
-        return $id;
+        return $group;
     }
 
     /**
@@ -347,6 +404,7 @@ class Model
      */
     public static function insertMultipleGroups($userId, array $groups)
     {
+        // @todo Integrate doctrine
         $userId = (int) $userId;
         $groups = (array) $groups;
 
@@ -372,6 +430,7 @@ class Model
      */
     public static function insertSetting($setting)
     {
+        // @todo Integrate doctrine
         return BackendModel::getContainer()->get('database')->insert('groups_settings', $setting);
     }
 
@@ -383,8 +442,10 @@ class Model
      */
     public static function update($group, $setting)
     {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         // update group
-        BackendModel::getContainer()->get('database')->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
+        $em->persist($group);
 
         // update setting
         self::updateSetting($setting);
@@ -397,6 +458,7 @@ class Model
      */
     public static function updateSetting($setting)
     {
+        // @todo Integrate doctrine
         BackendModel::getContainer()->get('database')->update('groups_settings', array('value' => $setting['value']), 'group_id = ? AND name = ?', array($setting['group_id'], $setting['name']));
     }
 }

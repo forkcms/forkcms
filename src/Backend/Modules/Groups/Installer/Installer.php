@@ -36,7 +36,7 @@ class Installer extends ModuleInstaller
         $userSetting['value'] = serialize(array());
 
         // insert settings
-        $db->insert('groups_settings', $groupSetting);
+        $db->insert('groups_settings', $groupSetting); // @todo use doctrine
         $db->insert('users_settings', $userSetting);
 
         // create default dashboard widget
@@ -68,7 +68,7 @@ class Installer extends ModuleInstaller
     public function install()
     {
         // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
+        $this->importSQL(dirname(__FILE__) . '/Data/install.sql'); // @todo Use schema create tool
 
         // add 'settings' as a module
         $this->addModule('Groups');

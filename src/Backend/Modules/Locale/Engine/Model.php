@@ -1207,6 +1207,8 @@ class Model
         $userId = null,
         $date = null
     ) {
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
         $overwriteConflicts = (bool) $overwriteConflicts;
         $statistics = array(
             'total' => 0,
@@ -1226,7 +1228,11 @@ class Model
 
         // possible values
         $possibleApplications = array('Frontend', 'Backend');
-        $possibleModules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+        $possibleModules = $em->getRepository('\Backend\Core\Entity\Module')->findAll();
+        $possibleModulesName = array();
+        foreach ($possibleModules as $possibleModule) {
+            $possibleModulesName[] = $possibleModule->getName();
+        }
 
         // types
         $typesShort = (array) $db->getEnumValues('locale', 'type');
@@ -1252,7 +1258,7 @@ class Model
             // modules
             foreach ($modules as $module => $items) {
                 // module does not exist
-                if (!in_array($module, $possibleModules)) continue;
+                if (!in_array($module, $possibleModulesName)) continue;
 
                 // items
                 foreach ($items as $item) {

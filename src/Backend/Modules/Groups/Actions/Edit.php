@@ -27,6 +27,7 @@ use Backend\Modules\Users\Engine\Model as BackendUsersModel;
  *
  * @author Jeroen Van den Bossche <jeroenvandenbossche@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Edit extends BackendBaseActionEdit
 {
@@ -295,12 +296,8 @@ class Edit extends BackendBaseActionEdit
     {
         $this->frm = new BackendForm('edit');
 
-        // get selected permissions
-        $modulePermissions = BackendGroupsModel::getModulePermissions($this->id);
-        $actionPermissions = BackendGroupsModel::getActionPermissions($this->id);
-
         // add selected modules to array
-        foreach ($modulePermissions as $permission) $selectedModules[] = $permission['module'];
+        foreach ($this->record->getAllowedModules() as $permission) $selectedModules[] = $permission->getModule();
 
         // loop through modules
         foreach ($this->modules as $key => $module) {
@@ -324,9 +321,9 @@ class Edit extends BackendBaseActionEdit
             $selectedActions = array();
 
             // loop through action permissions
-            foreach ($actionPermissions as $permission) {
+            foreach ($this->record->getAllowedActions() as $permission) {
                 // add to selected actions
-                if ($permission['module'] == $module['value']) $selectedActions[] = $permission['action'];
+                if ($permission->getModule() == $module['value']) $selectedActions[] = $permission->getAction();
             }
 
             // add module labels
@@ -384,7 +381,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // create elements
-        $this->frm->addText('name', $this->record['name']);
+        $this->frm->addText('name', $this->record->getName());
         $this->frm->addDropdown('manage_users', array('Deny', 'Allow'));
         $this->frm->addDropdown('manage_groups', array('Deny', 'Allow'));
         $this->tpl->assign('permissions', $permissionBoxes);
@@ -400,7 +397,7 @@ class Edit extends BackendBaseActionEdit
 
         $this->tpl->assign('dataGridUsers', ($this->dataGridUsers->getNumResults() != 0) ? $this->dataGridUsers->getContent() : false);
         $this->tpl->assign('item', $this->record);
-        $this->tpl->assign('groupName', $this->record['name']);
+        $this->tpl->assign('groupName', $this->record->getName());
 
         // only allow deletion of empty groups
         $this->tpl->assign('showGroupsDelete', $this->dataGridUsers->getNumResults() == 0 && BackendAuthentication::isAllowedAction('Delete'));
@@ -490,12 +487,12 @@ class Edit extends BackendBaseActionEdit
         foreach (array_diff($uncheckedModules, $checkedModules) as $module) $modulesDenied[] = array('group_id' => $this->id, 'module' => $module);
 
         // add granted permissions
-        BackendGroupsModel::addModulePermissions($modulesGranted);
-        BackendGroupsModel::addActionPermissions($actionsGranted);
+        BackendGroupsModel::addModulePermissions($this->record, $modulesGranted);
+        BackendGroupsModel::addActionPermissions($this->record, $actionsGranted);
 
         // delete denied permissions
-        BackendGroupsModel::deleteModulePermissions($modulesDenied);
-        BackendGroupsModel::deleteActionPermissions($actionsDenied);
+        BackendGroupsModel::deleteModulePermissions($this->record, $modulesDenied);
+        BackendGroupsModel::deleteActionPermissions($this->record, $actionsDenied);
     }
 
     /**
@@ -556,8 +553,8 @@ class Edit extends BackendBaseActionEdit
         }
 
         // build group
-        $userGroup['name'] = $this->frm->getField('name')->getValue();
-        $userGroup['id'] = $this->id;
+        $userGroup = BackendGroupsModel::get($this->id);
+        $userGroup->setName($this->frm->getField('name')->getValue());
 
         // build setting
         $setting['group_id'] = $this->id;
@@ -679,9 +676,9 @@ class Edit extends BackendBaseActionEdit
             $nameField->isFilled(BL::err('NameIsRequired'));
 
             // new name given?
-            if ($nameField->getValue() !== $this->record['name']) {
+            if ($nameField->getValue() !== $this->record->getName()) {
                 // group already exists?
-                if (BackendGroupsModel::alreadyExists($nameField->getValue())) $nameField->setError(BL::err('GroupAlreadyExists'));
+                if (BackendGroupsModel::getByName($nameField->getValue()) !== null) $nameField->setError(BL::err('GroupAlreadyExists'));
             }
 
             // no errors?
@@ -696,7 +693,7 @@ class Edit extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $group));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($group['name']) . '&highlight=row-' . $group['id']);
+                $this->redirect(BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode($group->getName()) . '&highlight=row-' . $group->getId());
             }
         }
     }

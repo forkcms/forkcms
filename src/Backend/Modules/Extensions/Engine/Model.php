@@ -505,11 +505,12 @@ class Model
      */
     public static function getModules()
     {
-        $installedModules = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT name FROM modules',
-            null,
-            'name'
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        $allInstalledModules = $em->getRepository('\Backend\Core\Entity\Module')->findAll();
+        $installedModules = array();
+        foreach ($allInstalledModules as $module) $installedModules[$module->getName()] = $module->getName();
+
         $modules = BackendModel::getModulesOnFilesystem(false);
         $manageableModules = array();
 

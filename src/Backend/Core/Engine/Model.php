@@ -662,9 +662,11 @@ class Model extends \BaseModel
     public static function getModules()
     {
         if (empty(self::$modules)) {
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
+            $em = self::get('doctrine.orm.entity_manager');
+            $modules = $em->getRepository('\Backend\Core\Entity\Module')->findAll();
+
             foreach ($modules as $module) {
-                self::$modules[] = $module;
+                self::$modules[] = $module->getName(); // @todo store objects instead of name
             }
         }
 
