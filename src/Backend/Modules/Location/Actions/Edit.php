@@ -106,7 +106,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control error title');
         $this->frm->addText('street', $this->record['street']);
         $this->frm->addText('number', $this->record['number']);
         $this->frm->addText('zip', $this->record['zip']);
