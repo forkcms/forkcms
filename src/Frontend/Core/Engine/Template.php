@@ -237,6 +237,8 @@ class Template extends \SpoonTemplate
         $this->mapModifier('stripnewlines', array('Frontend\Core\Engine\TemplateModifiers', 'stripNewlines'));
 
         // dates
+        $this->mapModifier('date', array('Frontend\Core\Engine\TemplateModifiers', 'date'));
+        $this->mapModifier('formatdatetime', array('Frontend\Core\Engine\TemplateModifiers', 'formatDateTime'));
         $this->mapModifier('timeago', array('Frontend\Core\Engine\TemplateModifiers', 'timeAgo'));
 
         // users
