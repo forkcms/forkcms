@@ -198,6 +198,17 @@ class Header extends Base\Object
      */
     public function addJsData($module, $key, $value)
     {
+        if (is_array($value)) {
+            foreach ($value as $k => $arrayValue) {
+                if (is_object($arrayValue) && method_exists($arrayValue, 'getJSData')) {
+                    $value[$k] = $arrayValue->getJSData();
+                }
+            }
+        } else {
+            if (is_object($value) && method_exists($value, 'getJSData')) {
+                $value = $value->getJSData();
+            }
+        }
         $this->jsData[$module][$key] = $value;
     }
 
