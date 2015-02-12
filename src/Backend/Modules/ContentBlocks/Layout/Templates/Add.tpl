@@ -1,40 +1,50 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblContentBlocks|ucfirst}: {$lblAdd}</h2>
+<div class="row fork-module-header">
+	<div class="col-md-12">
+		<h2>{$lblAdd|ucfirst}</h2>
+	</div>
 </div>
-
 {form:add}
-	<p>
-		<label for="title">{$lblTitle|ucfirst}</label>
-		{$txtTitle} {$txtTitleError}
-	</p>
-
-	<div class="content">
-		<fieldset>
-			<div class="box">
-				<div class="heading">
-					<h3>
-						<label for="text">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="title">{$lblTitle|ucfirst}</label>
+				{$txtTitle} {$txtTitleError}
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						<label for="text">
+							{$lblContent|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 					</h3>
 				</div>
-				<div class="optionsRTE">
-					{$txtText} {$txtTextError}
+				<div class="panel-body">
+					<div class="form-group">
+						{$txtText} {$txtTextError}
+					</div>
+					{option:ddmTemplate}
+					<div class="form-group">
+						<label for="template">{$lblTemplate|ucfirst}</label>
+						{$ddmTemplate} {$ddmTemplateError}
+					</div>
+					{/option:ddmTemplate}
+					<div class="form-group">
+						<label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label>
+					</div>
 				</div>
 			</div>
-
-			{option:ddmTemplate}<p>{$lblTemplate|ucfirst} <label for="template">{$ddmTemplate} {$ddmTemplateError}</label></p>{/option:ddmTemplate}
-			<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label></p>
-		</fieldset>
+		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+	<div class="row fork-module-actions">
+		<div class="col-md-12">
+			<div class="btn-group pull-right" role="group">
+				<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAdd|ucfirst}</button>
+			</div>
 		</div>
 	</div>
 {/form:add}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

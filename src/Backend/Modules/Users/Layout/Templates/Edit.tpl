@@ -263,7 +263,7 @@
 			<div class="btn-toolbar">
 				<div class="btn-group pull-left" role="group">
 					{option:showUsersDelete}
-					<button class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						<span class="glyphicon glyphicon-trash"></span>
 						{$lblDelete|ucfirst}
 					</button>

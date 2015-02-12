@@ -166,7 +166,7 @@
 			<div class="btn-toolbar">
 				<div class="btn-group pull-left" role="group">
 					{option:showExtensionsDeleteThemeTemplate}
-					<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#confirmDelete">
+					<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
 						<span class="glyphicon glyphicon-trash"></span>&nbsp;
 						{$lblDelete|ucfirst}
 					</button>
