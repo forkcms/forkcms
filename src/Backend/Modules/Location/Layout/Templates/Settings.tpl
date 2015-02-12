@@ -1,53 +1,51 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblModuleSettings|ucfirst}: {$lblLocation}</h2>
+<div class="row fork-module-header">
+	<div class="col-md-12">
+		<h2>{$lblLocation|ucfirst}</h2>
+	</div>
 </div>
-
 {form:settings}
-	<div class="box horizontal">
-		<div class="heading">
-			<h3>{$lblIndividualMap|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p>
-				<label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
-				{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
-			</p>
-		</div>
-		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
-			<p>
-				<label for="widthWidget">{$lblWidth|ucfirst}</label>
-				{$txtWidthWidget} {$txtWidthWidgetError}
-				<span class="helpTxt">
-					{$msgWidthHelp|sprintf:300:800}
-				</span>
-			</p>
-		</div>
-		<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
-			<p>
-				<label for="heightWidget">{$lblHeight|ucfirst}</label>
-				{$txtHeightWidget} {$txtHeightWidgetError}
-				<span class="helpTxt">
-					{$msgHeightHelp|sprintf:150}
-				</span>
-			</p>
-		</div>
-		<div class="options">
-			<p>
-				<label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
-				{$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
-			</p>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						{$lblIndividualMap|ucfirst}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="zoomLevelWidget">{$lblZoomLevel|ucfirst}</label>
+						{$ddmZoomLevelWidget} {$ddmZoomLevelWidgetError}
+					</div>
+					<div class="form-group">
+						<label for="widthWidget">{$lblWidth|ucfirst}</label>
+						<p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+						{$txtWidthWidget} {$txtWidthWidgetError}
+					</div>
+					<div class="form-group">
+						<label for="heightWidget">{$lblHeight|ucfirst}</label>
+						<p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+						{$txtHeightWidget} {$txtHeightWidgetError}
+					</div>
+					<div class="form-group">
+						<label for="mapTypeWidget">{$lblMapType|ucfirst}</label>
+						{$ddmMapTypeWidget} {$ddmMapTypeWidgetError}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+				</div>
+			</div>
 		</div>
 	</div>
 {/form:settings}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
