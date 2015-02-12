@@ -3,7 +3,7 @@
 <section class="mod">
 	<div class="inner">
 		<div class="bd">
-			{option:successMessage}<div class="message success">{$successMessage}</div>{/option:successMessage}
+			{option:successMessage}<div id="{$formName}" class="message success">{$successMessage}</div>{/option:successMessage}
 			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
 
 			{option:fields}

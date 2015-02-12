@@ -1,0 +1,8 @@
+CKFinder
+========
+http://cksource.com/ckfinder
+Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
+
+The full documentation, including installation instructions, is available at:
+
+	http://docs.cksource.com/CKFinder

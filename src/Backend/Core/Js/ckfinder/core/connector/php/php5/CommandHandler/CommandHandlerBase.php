@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -55,7 +55,7 @@ class CKFinder_Connector_CommandHandler_CommandHandlerBase
     {
         $this->_currentFolder =& CKFinder_Connector_Core_Factory::getInstance("Core_FolderHandler");
         $this->_connector =& CKFinder_Connector_Core_Factory::getInstance("Core_Connector");
-        $this->_errorHandler =& $this->_connector->getErrorHandler();
+        $this->_errorHandler =&  $this->_connector->getErrorHandler();
     }
 
     /**

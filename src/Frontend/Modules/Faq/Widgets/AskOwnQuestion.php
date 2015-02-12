@@ -117,15 +117,22 @@ class AskOwnQuestion extends FrontendBaseWidget
                     }
                 }
 
+                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $message = \Common\Mailer\Message::newInstance(
+                        sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name'])
+                    )
+                    ->setFrom(array($from['email'] => $from['name']))
+                    ->setTo(array($variables['email'] => $variables['name']))
+                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->parseHtml(
+                        FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/OwnQuestion.tpl',
+                        $variables,
+                        true
+                    )
+                ;
+                $this->get('mailer')->send($message);
                 $this->status = 'success';
-                $this->get('mailer')->addEmail(
-                    sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name']),
-                    FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/OwnQuestion.tpl',
-                    $variables,
-                    $variables['email'],
-                    $variables['name'],
-                    null, null, null, null, null, null, null, null, null, true
-                );
             }
         }
     }
