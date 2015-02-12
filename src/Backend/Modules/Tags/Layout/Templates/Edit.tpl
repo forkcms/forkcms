@@ -11,7 +11,10 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<p>
-						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="name">
+							{$lblName|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtName} {$txtNameError}
 					</p>
 				</div>

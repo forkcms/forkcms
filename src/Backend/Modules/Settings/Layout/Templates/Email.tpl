@@ -37,11 +37,17 @@
 					<h4>{$lblFrom|ucfirst}</h4>
 					<p>{$msgHelpEmailFrom}</p>
 					<div class="form-group">
-						<label for="mailerFromName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerFromName">
+							{$lblName|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerFromName} {$txtMailerFromNameError}
 					</div>
 					<div class="form-group">
-						<label for="mailerFromEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerFromEmail">
+							{$lblEmail|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerFromEmail} {$txtMailerFromEmailError}
 					</div>
 				</div>
@@ -49,22 +55,34 @@
 					<h4>{$lblTo|ucfirst}</h4>
 					<p>{$msgHelpEmailTo}</p>
 					<div class="form-group">
-						<label for="mailerToName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerToName">
+							{$lblName|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerToName} {$txtMailerToNameError}
 					</div>
 					<div class="form-group">
-						<label for="mailerToEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerToEmail">
+							{$lblEmail|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerToEmail} {$txtMailerToEmailError}
 					</div>
 				</div>
 				<div class="panel-body">
 					<h4>{$lblReplyTo|ucfirst}</h4>
 					<div class="form-group">
-						<label for="mailerReplyToName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerReplyToName">
+							{$lblName|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerReplyToName} {$txtMailerReplyToNameError}
 					</div>
 					<div class="form-group">
-						<label for="mailerReplyToEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailerReplyToEmail">
+							{$lblEmail|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						{$txtMailerReplyToEmail} {$txtMailerReplyToEmailError}
 					</div>
 				</div>
