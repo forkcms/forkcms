@@ -165,7 +165,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="confirmPassword">{$lblConfirmPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="confirmPassword">
+										{$lblConfirmPassword|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									<div class="form-group form-inline">
 										<div class="form-group">
 											{$txtConfirmPassword} {$txtConfirmPasswordError}

@@ -1,28 +1,46 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row fork-module-header">
+	<div class="col-md-12">
+		<h2>{$lblAddSynonym|ucfirst}</h2>
+	</div>
+</div>
 {form:addItem}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblSearch|ucfirst}: {$lblAddSynonym}</h3>
-		</div>
-		<div class="options horizontal">
-			<p>
-				<label for="term">{$lblTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				{$txtTerm} {$txtTermError}
-			</p>
-			<div class="fakeP">
-				<label for="addValue-synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<div class="itemAdder">
-					{$txtSynonym} {$txtSynonymError}
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="term">
+							{$lblTerm|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
+						{$txtTerm} {$txtTermError}
+					</div>
+					<div class="form-group">
+						<div class="fakeP">
+							<label for="addValue-synonym">
+								{$lblSynonyms|ucfirst}
+								<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							</label>
+							<div class="itemAdder">
+								{$txtSynonym} {$txtSynonymError}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddSynonym|ucfirst}" />
+	<div class="row fork-page-actions">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;{$lblAddSynonym|ucfirst}
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 {/form:addItem}

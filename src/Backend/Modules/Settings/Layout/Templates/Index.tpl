@@ -21,7 +21,8 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						{$lblWebsiteTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr>
+						{$lblWebsiteTitle|ucfirst}
+						<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
 					</h3>
 				</div>
 				<div class="panel-body">
@@ -163,7 +164,11 @@
 							</tr>
 							{option:needsGoogleMaps}
 							<tr>
-								<th><label for="googleMapsKey">Google maps key<abbr title="{$lblRequiredField}">*</abbr></label></td>
+								<th>
+									<label for="googleMapsKey">
+										Google maps key<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
+								</td>
 								<td>{$txtGoogleMapsKey} {$txtGoogleMapsKeyError}</td>
 								<td><a href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a></td>
 							</tr>

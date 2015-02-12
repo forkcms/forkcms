@@ -58,7 +58,10 @@
 									</div>
 								</div>
 								<div class="form-group">
-									<label for="confirmPassword">{$lblConfirmPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="confirmPassword">
+										{$lblConfirmPassword|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									<div class="form-group form-inline">
 										<div class="form-group">
 											{$txtConfirmPassword} {$txtConfirmPasswordError}
@@ -75,15 +78,24 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="name">
+										{$lblName|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									{$txtName} {$txtNameError}
 								</div>
 								<div class="form-group">
-									<label for="surname">{$lblSurname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="surname">
+										{$lblSurname|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									{$txtSurname} {$txtSurnameError}
 								</div>
 								<div class="form-group">
-									<label for="nickname">{$lblNickname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="nickname">
+										{$lblNickname|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									<p class="text-info">{$msgHelpNickname}</p>
 									{$txtNickname} {$txtNicknameError}
 								</div>

@@ -11,12 +11,18 @@
 			<div class="panel panel-default">
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="name">
+							{$lblReferenceCode|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						<p class="text-info">{$msgHelpAddName}</p>
 						{$txtName} {$txtNameError}
 					</div>
 					<div class="form-group">
-						<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="value">
+							{$lblTranslation|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						</label>
 						<p class="text-info">{$msgHelpAddValue}</p>
 						{$txtValue} {$txtValueError}
 					</div>
