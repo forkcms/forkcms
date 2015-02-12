@@ -1,6 +1,6 @@
 ﻿/*
- * Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- * For licensing, see LICENSE.html or http://cksource.com/ckfinder/license
+ * Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see license.txt or http://cksource.com/ckfinder/license
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -346,7 +346,7 @@ CKFinder.addPlugin( 'imageresize', {
 								width : width,
 								height : height,
 								fileName : file.name,
-								newFileName : fileName + '.' + file.ext,
+								newFileName : fileName + (createNew ? '.' + file.ext : ''),
 								overwrite : createNew ? 0 : 1,
 								small : small ? 1 : 0,
 								medium : medium ? 1 : 0,
@@ -594,7 +594,7 @@ CKFinder.addPlugin( 'imageresize', {
 														onChange : function()
 														{
 															var dialog = this.getDialog();
-															var filenameInput = dialog.getContentElement( 'tab1', 'fileName' );
+															var filenameInput = dialog.getContentElement( 'tab1', 'fileNameWithExt' );
 															if ( filenameInput )
 															{
 																if ( !this.getValue() )
@@ -608,6 +608,7 @@ CKFinder.addPlugin( 'imageresize', {
 														type : 'hbox',
 														widths : [ '90%', '10%' ],
 														padding : 0,
+														id : 'fileNameWithExt',
 														children :
 														[
 															{

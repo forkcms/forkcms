@@ -1,21 +1,3 @@
-CREATE TABLE IF NOT EXISTS `emails` (
- `id` int(11) NOT NULL auto_increment,
- `to_email` varchar(255) NOT NULL,
- `to_name` varchar(255) default NULL,
- `from_email` varchar(255) NOT NULL,
- `from_name` varchar(255) default NULL,
- `reply_to_email` varchar(255) default NULL,
- `reply_to_name` varchar(255) default NULL,
- `subject` varchar(255) NOT NULL,
- `html` text NOT NULL,
- `plain_text` text NULL,
- `attachments` text,
- `send_on` datetime default NULL,
- `created_on` datetime NOT NULL,
- PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
-
-
 CREATE TABLE IF NOT EXISTS `meta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `keywords` varchar(255) NOT NULL,

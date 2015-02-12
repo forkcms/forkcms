@@ -953,24 +953,20 @@ class Model implements FrontendTagsInterface
                 );
             }
 
-            // send the mail
-            FrontendModel::get('mailer')->addEmail(
-                FL::msg('NotificationSubject'),
-                FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
-                $variables,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                true
-            );
+            $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
+            $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+            $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+                ->setFrom(array($from['email'] => $from['name']))
+                ->setTo(array($to['email'] => $to['name']))
+                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->parseHtml(
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    $variables,
+                    true
+                )
+            ;
+            FrontendModel::get('mailer')->send($message);
         } elseif ($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation') {
             // only notify on new comments to moderate and if the comment is one to moderate
             // set variables
@@ -979,24 +975,20 @@ class Model implements FrontendTagsInterface
                 array($comment['author'], $URL, $comment['post_title'], $backendURL)
             );
 
-            // send the mail
-            FrontendModel::get('mailer')->addEmail(
-                FL::msg('NotificationSubject'),
-                FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
-                $variables,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                true
-            );
+            $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
+            $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+            $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+            $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
+                ->setFrom(array($from['email'] => $from['name']))
+                ->setTo(array($to['email'] => $to['name']))
+                ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                ->parseHtml(
+                    FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl',
+                    $variables,
+                    true
+                )
+            ;
+            FrontendModel::get('mailer')->send($message);
         }
     }
 
