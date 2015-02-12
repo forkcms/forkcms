@@ -1,3 +1,14 @@
+3.8.7 (2015-02-xx)
+--
+Improvements:
+
+* Mailer: use SwiftMailer to send messages (see <UPGRADE_3.9.md>)
+* FormBuilder: jump to location of form after submission.
+
+BugFixes:
+
+* Locale: Avoid "Using $this when not in object context" when using php 5.3.
+
 3.8.6 (2015-02-03)
 --
 Improvements:
