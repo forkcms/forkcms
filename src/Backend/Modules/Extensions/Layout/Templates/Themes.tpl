@@ -151,6 +151,5 @@
 		</div>
 	</div>
 {/form:settingsThemes}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
