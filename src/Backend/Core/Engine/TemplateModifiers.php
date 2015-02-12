@@ -34,7 +34,7 @@ class TemplateModifiers
      * Format a UNIX-timestamp or DateTime-object as a date
      * syntax: {$var|formatdate}
      *
-     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
+     * @param  int|\DateTime $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatDate($var)
@@ -54,7 +54,7 @@ class TemplateModifiers
      * Format a UNIX-timestamp or DateTime-object as a datetime
      * syntax: {$var|formatdatetime}
      *
-     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
+     * @param  int|\DateTime $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatDateTime($var)
@@ -135,7 +135,7 @@ class TemplateModifiers
      * Format a UNIX-timestamp or DateTime-object as a time
      * syntax: {$var|formatdate}
      *
-     * @param mixed $var The UNIX-timestamp or DateTime-object to format.
+     * @param  int|\DateTime $var The UNIX-timestamp or DateTime-object to format.
      * @return string
      */
     public static function formatTime($var)
