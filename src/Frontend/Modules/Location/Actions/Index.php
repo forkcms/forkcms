@@ -31,6 +31,11 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
+    protected $jsItems = array();
+
+    /**
+     * @var array
+     */
     protected $settings = array();
 
     /**
@@ -60,6 +65,10 @@ class Index extends FrontendBaseBlock
             $this->settings['center']['lat'] = $firstMarker->getLat();
             $this->settings['center']['lng'] = $firstMarker->getLng();
         }
+
+        foreach ($this->items as $item) {
+            $this->jsItems[] = $item->getJSData();
+        }
     }
 
     /**
@@ -70,7 +79,7 @@ class Index extends FrontendBaseBlock
         $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
         $this->addJSData('settings', $this->settings);
-        $this->addJSData('items', $this->items);
+        $this->addJSData('items', $this->jsItems);
 
         $this->tpl->assign('locationItems', $this->items);
         $this->tpl->assign('locationSettings', $this->settings);

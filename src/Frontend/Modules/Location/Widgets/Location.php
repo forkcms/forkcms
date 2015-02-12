@@ -82,7 +82,7 @@ class Location extends FrontendBaseWidget
         $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
 
         $this->addJSData('settings_' . $this->item->getId(), $this->settings);
-        $this->addJSData('items_' . $this->item->getId(), array($this->item));
+        $this->addJSData('items_' . $this->item->getId(), array($this->item->getJsData()));
 
         $this->tpl->assign('widgetLocationItem', $this->item);
         $this->tpl->assign('widgetLocationSettings', $this->settings);
