@@ -19,6 +19,7 @@ use Frontend\Modules\Location\Engine\Model as FrontendLocationModel;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Index extends FrontendBaseBlock
 {
@@ -30,6 +31,11 @@ class Index extends FrontendBaseBlock
     /**
      * @var array
      */
+    protected $jsItems = array();
+
+    /**
+     * @var array
+     */
     protected $settings = array();
 
     /**
@@ -37,8 +43,6 @@ class Index extends FrontendBaseBlock
      */
     public function execute()
     {
-        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
-
         parent::execute();
 
         $this->loadTemplate();
@@ -53,18 +57,17 @@ class Index extends FrontendBaseBlock
     protected function loadData()
     {
         $this->items = FrontendLocationModel::getAll();
-        $this->settings = FrontendLocationModel::getMapSettings(0);
+        $this->settings = FrontendModel::getModuleSettings('Location');
         $firstMarker = current($this->items);
-        if (empty($this->settings)) {
-            $this->settings = FrontendModel::getModuleSettings('Location');
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
-        }
 
         // no center point given yet, use the first occurrence
         if (!isset($this->settings['center'])) {
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
+            $this->settings['center']['lat'] = $firstMarker->getLat();
+            $this->settings['center']['lng'] = $firstMarker->getLng();
+        }
+
+        foreach ($this->items as $item) {
+            $this->jsItems[] = $item->getJSData();
         }
     }
 
@@ -73,8 +76,10 @@ class Index extends FrontendBaseBlock
      */
     private function parse()
     {
+        $this->addJS('http://maps.google.com/maps/api/js?sensor=true', true, false);
+
         $this->addJSData('settings', $this->settings);
-        $this->addJSData('items', $this->items);
+        $this->addJSData('items', $this->jsItems);
 
         $this->tpl->assign('locationItems', $this->items);
         $this->tpl->assign('locationSettings', $this->settings);

@@ -109,16 +109,16 @@
 	};
 	var markers = [];
 	{iteration:items}
-		{option:items.lat}
-			{option:items.lng}
+		{*{option:items.lat}
+			{option:items.lng}*}
 				markers.push({
 					lat: {$items.lat},
 					lng: {$items.lng},
 					title: '{$items.title}',
 					text: '<p>{$items.street} {$items.number}</p><p>{$items.zip} {$items.city}</p>'
 				});
-			{/option:items.lng}
-		{/option:items.lat}
+			{*{/option:items.lng}
+		{/option:items.lat}*}
 	{/iteration:items}
 </script>
 

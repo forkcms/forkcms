@@ -16,12 +16,14 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Location\Engine\Model as BackendLocationModel;
+use Backend\Modules\Location\Entity\Location;
 
 /**
  * This is the index-action (default), it will display the overview of location items
  *
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Jelmer Snoeck <jelmer@siphoc.com>
+ * @author Mathias Dewelde <mathias@dewelde.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -44,9 +46,6 @@ class Index extends BackendBaseActionIndex
     {
         parent::execute();
 
-        // add js
-        $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
-
         $this->loadData();
 
         $this->loadDataGrid();
@@ -62,24 +61,25 @@ class Index extends BackendBaseActionIndex
     protected function loadData()
     {
         $this->items = BackendLocationModel::getAll();
-        $this->settings = BackendLocationModel::getMapSettings(0);
+        $this->settings = BackendModel::getModuleSettings('Location');
         $firstMarker = current($this->items);
 
         // if there are no markers we reset it to the birthplace of Fork
-        if ($firstMarker === false) $firstMarker = array('lat' => '51.052146', 'lng' => '3.720491');
-
-        // load the settings from the general settings
-        if (empty($this->settings)) {
-            $this->settings = BackendModel::getModuleSettings('Location');
-
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
+        if ($firstMarker === false) {
+            $firstMarker = new Location();
+            $firstMarker->setLat('51.052146');
+            $firstMarker->setLng('3.720491');
         }
+
+        $this->settings = BackendModel::getModuleSettings('Location');
+
+        $this->settings['center']['lat'] = $firstMarker->getLat();
+        $this->settings['center']['lng'] = $firstMarker->getLng();
 
         // no center point given yet, use the first occurrence
         if (!isset($this->settings['center'])) {
-            $this->settings['center']['lat'] = $firstMarker['lat'];
-            $this->settings['center']['lng'] = $firstMarker['lng'];
+            $this->settings['center']['lat'] = $firstMarker->getLat();
+            $this->settings['center']['lng'] = $firstMarker->getLng();
         }
     }
 
@@ -139,7 +139,7 @@ class Index extends BackendBaseActionIndex
      */
     protected function parse()
     {
-        parent::parse();
+        $this->header->addJS('http://maps.google.com/maps/api/js?sensor=false', null, false, true, false);
 
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
         $this->tpl->assign('godUser', BackendAuthentication::getUser()->isGod());
