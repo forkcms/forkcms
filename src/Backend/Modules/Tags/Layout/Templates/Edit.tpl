@@ -1,35 +1,39 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row">
+	<div class="col-md-12">
+		<h2>{$msgEditTag|sprintf:{$name}|ucfirst}</h2>
+	</div>
+</div>
 {form:edit}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblTags|ucfirst}: {$msgEditTag|sprintf:{$name}}</h3>
-		</div>
-		<div class="options horizontal">
-
-			<p>
-				<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				{$txtName} {$txtNameError}
-			</p>
-
-			<div class="fakeP">
-				<label>{$lblUsedIn|ucfirst}</label>
-
+	<div class="row">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<p>
+						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						{$txtName} {$txtNameError}
+					</p>
+				</div>
+				<div class="panel-heading">
+					<label class="panel-title">{$lblUsedIn|ucfirst}</label>
+				</div>
 				{option:usage}
-					<div class="dataGridHolder dataGridInHorizontalForm">
-						{$usage}
-					</div>
+				{$usage}
 				{/option:usage}
-				{option:!usage}<p>{$msgNoUsage}</p>{/option:!usage}
+				{option:!usage}
+				<div class="panel-body">
+					<p>{$msgNoUsage}</p>
+				</div>
+				{/option:!usage}
 			</div>
-
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+	<div class="row">
+		<div class="col-md-12">
+			<div class="btn-group pull-right" role="group">
+				<button id="editButton" type="submit" name="edit" class="btn btn-primary">{$lblSave|ucfirst}</button>
+			</div>
 		</div>
 	</div>
 {/form:edit}

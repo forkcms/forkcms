@@ -59,7 +59,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(array('class' => 'table table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
+        $this->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
         // id gets special treatment
         if (in_array('id', $this->getColumns())) {
@@ -449,16 +449,14 @@ class DataGrid extends \SpoonDataGrid
     public function setMassAction(\SpoonFormDropdown $actionDropDown)
     {
         // build HTML
-        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' .
-                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) . '</label></p>
-                <p>
-                    ' . $actionDropDown->parse() . '
-                </p>
-                <div class="buttonHolder">
-                    <a href="#" class="submitButton button">
-                        <span>' . \SpoonFilter::ucfirst(Language::lbl('Execute')) . '</span>
-                    </a>
-                </div>';
+        $HTML =
+            '<label for="' . $actionDropDown->getAttribute('id') . '">' .
+                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) .
+            '</label>' .
+            $actionDropDown->parse() .
+            '<button type="button" class="btn btn-default jsMassActionSubmit">' .
+            '   <span>' . \SpoonFilter::ucfirst(Language::lbl('Execute')) . '</span>' .
+            '</button>';
 
         // assign parsed html
         $this->tpl->assign('massAction', $HTML);

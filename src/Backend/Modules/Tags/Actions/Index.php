@@ -61,8 +61,18 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setMassActionCheckboxes('check', '[id]');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control error'
+        );
+        $ddmMassAction->setOptionAttributes('delete', array(
+            'data-toggle' => 'modal',
+            'data-target' => '#confirmDelete'
+        ));
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add attributes, so the inline editing has all the needed data

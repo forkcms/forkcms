@@ -551,7 +551,7 @@ jsBackend.controls =
 	bindCheckboxDropdownCombo: function()
 	{
 		// variables
-		$checkboxDropdownCombo = $('.checkboxDropdownCombo');
+		$checkboxDropdownCombo = $('.jsCheckboxDropdownCombo');
 
 		$checkboxDropdownCombo.each(function()
 		{
@@ -857,113 +857,65 @@ jsBackend.controls =
 	bindMassAction: function()
 	{
 		// set disabled
-		$('.tableOptions .massAction select').addClass('disabled').prop('disabled', true);
-		$('.tableOptions .massAction .submitButton').addClass('disabledButton').prop('disabled', true);
+		$('.jsMassAction select').prop('disabled', true);
+		$('.jsMassAction .jsMassActionSubmit').prop('disabled', true);
 
 		// hook change events
-		$('table input:checkbox').on('change', function(e)
+		// @todo BUG: buttons are disabled if page is refreshed and checkboxes are left checked
+		$('table.jsDataGrid input:checkbox').on('change', function(e)
 		{
 			// get parent table
-			var table = $(this).parents('table.dataGrid').eq(0);
+			var table = $(this).parents('table.jsDataGrid').eq(0);
 
 			// any item checked?
 			if(table.find('input:checkbox:checked').length > 0)
 			{
-				table.find('.massAction select').removeClass('disabled').prop('disabled', false);
-				table.find('.massAction .submitButton').removeClass('disabledButton').prop('disabled', false);
+				table.find('.jsMassAction select').prop('disabled', false);
+				table.find('.jsMassAction .jsMassActionSubmit').prop('disabled', false);
 			}
 
 			// nothing checked
 			else
 			{
-				table.find('.massAction select').addClass('disabled').prop('disabled', true);
-				table.find('.massAction .submitButton').addClass('disabledButton').prop('disabled', true);
-			}
-		});
-
-		// initialize
-		$('.tableOptions .massAction option').each(function()
-		{
-			// variables
-			$this = $(this);
-
-			// get id
-			var id = $(this).data('messageId');
-
-			if(typeof id != 'undefined')
-			{
-				// initialize
-				$('#'+ id).dialog(
-				{
-					autoOpen: false,
-					draggable: false,
-					resizable: false,
-					modal: true,
-					buttons:
-					[
-						{
-							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-							click: function()
-							{
-								// close dialog
-								$(this).dialog('close');
-
-								// submit the form
-								$('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form').eq(0).submit();
-							}
-						},
-						{
-							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-							click: function()
-							{
-								$(this).dialog('close');
-							}
-						}
-					],
-					open: function(e)
-					{
-						// set focus on first button
-						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
-					}
-				});
+				table.find('.jsMassAction select').prop('disabled', true);
+				table.find('.jsMassAction .jsMassActionSubmit').prop('disabled', true);
 			}
 		});
 
 		// hijack the form
-		$(document).on('click', '.tableOptions .massAction .submitButton', function(e)
+		$('.jsMassAction .jsMassActionSubmit').on('click', function(e)
 		{
 			// prevent default action
 			e.preventDefault();
 
 			// variables
 			$this = $(this);
-			$parentForm = $this.parents('form');
+			$closestForm = $this.closest('form');
 
 			// not disabled
-			if(!$this.is('.disabledButton'))
+			if(!$this.prop('disabled'))
 			{
 				// get the selected element
-				if($this.parents('.massAction').find('select[name=action] option:selected').length > 0)
+				if($this.closest('.jsMassAction').find('select[name=action] option:selected').length > 0)
 				{
 					// get action element
-					var element = $this.parents('.massAction').find('select[name=action] option:selected');
+					var element = $this.closest('.jsMassAction').find('select[name=action] option:selected');
 
 					// if the rel-attribute exists we should show the dialog
-					if(typeof element.data('messageId') != 'undefined')
+					if(typeof element.data('target') != 'undefined')
 					{
 						// get id
-						var id = element.data('messageId');
+						var id = element.data('target');
 
-						// open dialog
-						$('#'+ id).dialog('open');
+						$(id).modal('show');
 					}
 
 					// no confirm
-					else $parentForm.submit();
+					else $closestForm.submit();
 				}
 
 				// no confirm
-				else $parentForm.submit();
+				else $closestForm.submit();
 			}
 		});
 	},
