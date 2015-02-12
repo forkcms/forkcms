@@ -527,4 +527,17 @@ class Location
 
         return $this;
     }
+
+    /**
+     * Get the JS data
+     */
+    public function getJSData()
+    {
+        return array(
+            'id' => $this->id,
+            'lat' => $this->lat,
+            'lng' => $this->lng,
+            'title' => $this->title
+        );
+    }
 }
