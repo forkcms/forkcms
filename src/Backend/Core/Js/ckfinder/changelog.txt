@@ -1,7 +1,42 @@
 CKFinder Changelog
 ==================
 http://cksource.com/ckfinder
-Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
+
+### Version 2.4.2
+- Updated syntax highlighting component used in the fileeditor plugin. Added languages support: markdown, restructured text, java, less, sass, scss, perl, python, ruby and sql.
+- Changed default thumbnail delay to 100ms.
+- Fixed: Loading thumbnails is terribly slow when there are many files in a folder.
+- Fixed: Using "Search" while the folder was loading could result in a JavaScript error.
+- Fixed: External script loading in popup does not work in Internet Explorer.
+- Fixed: Editing of text files broken in Chrome 31 and higher.
+- Fixed: Too early thumb render on uploading multiple files.
+- Fixed: Issues with HTML5 upload in IE11 "tile mode" when in popup.
+- Fixed: Issues when calling CKFinder popup twice.
+- Fixed: CKFinder with thumbs disabled - icons are not shown.
+- Fixed: IE9: SCRIPT1002: Syntax error.
+- Updated translations: Italian, Turkish.
+
+### Version 2.4.1
+Updated copyrights, fixed URLs inside source code, other minor fixes.
+[PHP] - Fixed: Empty filename when non-UTF-8 character is found on nginx with PHP 5.4
+
+### Version 2.4
+- Added Search box in the toolbar that performs search of those files matching the searched string in the current folder.
+- Fixed: Images can be overwritten on resizing.
+- Fixed: File extension is now hidden when "Create new image" checkbox is unselected in Image Resize dialog.
+- Fixed: When the file name was too long it overlapped the image in Lightbox preview.
+- Fixed: Display issues in Internet Explorer 10 and Internet Explorer 11.
+- Fixed: It was impossible to upload files in IE10/IE11 when CKFinder was running in a popup.
+- Fixed: Classic upload for popup sample did not work in IE9.
+- Fixed: Dialog windows could not be opened after opening CKFinder twice in a popup.
+- Fixed: Various "access denied" errors appeared from time to time in IE when CKFinder was running in a popup.
+- Fixed: CKFinderAPI.disableFolderContextMenuOption() did not work for "createSubFolder"/"renameFolder" items.
+- Fixed: In some cases, and empty (undefined) error message was shown to the user when an error occured.
+- Updated colorbox library used by the gallery plugin to the latest version, compatible with latest versions of jQuery.
+[PHP] - Fixed paths resolving by resolveUrl() function.
+
+### Version 2.3.1.1
 
 ### Version 2.3.1
 Security Release:
