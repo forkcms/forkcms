@@ -1,5 +1,9 @@
 3.8.6 (2015-02-03)
 --
+Improvements:
+
+* Core: Refactor the mailer to use SwiftMailer
+
 Bugfixes:
 
 * Users: Fixed error in backend user edit, when updating your own account.
