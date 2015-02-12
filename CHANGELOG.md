@@ -4,6 +4,7 @@ Improvements:
 
 * Mailer: use SwiftMailer to send messages (see <UPGRADE_3.9.md>)
 * FormBuilder: jump to location of form after submission.
+* Core: Update CKFinder to version 2.4
 
 BugFixes:
 
