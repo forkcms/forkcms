@@ -93,8 +93,10 @@
 	</div>
 	<div class="row">
 		<div class="col-md-12">
-			<div class="btn-group pull-right" role="group">
-				<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+				</div>
 			</div>
 		</div>
 	</div>

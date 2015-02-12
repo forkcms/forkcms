@@ -16,7 +16,7 @@
 				</div>
 				{option:isGod}
 				<div class="panel-body">
-					<h4><label for="mailerType">{$lblSendingEmails|ucfirst}</label></h4>
+					<h4>{$lblSendingEmails|ucfirst}</h4>
 					<p class="text-info">{$msgHelpSendingEmails}</p>
 					<div class="form-inline">
 						<div class="form-group">
@@ -100,7 +100,8 @@
 				</div>
 				<div class="panel-body">
 					<div class="form-group">
-						<label for="smtpServer" style="float: left;">{$lblServer|ucfirst}</label><label for="smtpPort">&#160;&amp; {$lblPort}</label>
+						<label for="smtpServer" style="float: left;">{$lblServer|ucfirst}</label>
+						<label for="smtpPort">&#160;&amp; {$lblPort}</label>
 						<p class="text-info">{$msgHelpSMTPServer}</p>
 						<div class="form-inline">
 							<div class="form-group">
@@ -134,8 +135,10 @@
 	{/option:isGod}
 	<div class="row">
 		<div class="col-md-12">
-			<div class="btn-group pull-right" role="group">
-				<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+				</div>
 			</div>
 		</div>
 	</div>
