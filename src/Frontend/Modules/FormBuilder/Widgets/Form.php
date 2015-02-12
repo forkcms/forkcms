@@ -330,6 +330,9 @@ class Form extends FrontendBaseWidget
      */
     private function parseSuccessMessage()
     {
+        // form name
+        $formName = 'form' . $this->item['id'];
+        $this->tpl->assign('formName', $formName);
         $this->tpl->assign('successMessage', $this->item['success_message']);
     }
 
@@ -454,39 +457,41 @@ class Form extends FrontendBaseWidget
 
                 // need to send mail
                 if ($this->item['method'] == 'database_email') {
-                    // build variables
-                    $variables['sentOn'] = time();
-                    $variables['name'] = $this->item['name'];
-                    $variables['fields'] = $emailFields;
+                    // build our message
+                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                    $message = \Common\Mailer\Message::newInstance(
+                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
+                        )
+                        ->parseHtml(
+                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
+                            array(
+                                'sentOn' => time(),
+                                'name' => $this->item['name'],
+                                'fields' => $emailFields,
+                            ),
+                            true
+                        )
+                        ->setTo($this->item['email'])
+                        ->setFrom(array($from['email'] => $from['name']))
+                    ;
 
                     // check if we have a replyTo email set
-                    $replyTo = null;
                     foreach ($this->item['fields'] as $field) {
                         if (array_key_exists('reply_to', $field['settings']) &&
                             $field['settings']['reply_to'] === true
                         ) {
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
                             if (\SpoonFilter::isEmail($email)) {
-                                $replyTo = $email;
+                                $message->setReplyTo(array($email => $email));
                             }
                         }
                     }
-
-                    // loop recipients
-                    foreach ($this->item['email'] as $address) {
-                        // add email
-                        $this->get('mailer')->addEmail(
-                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
-                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
-                            $variables,
-                            $address,
-                            $this->item['name'],
-                            null,
-                            null,
-                            $replyTo,
-                            null, null, null, null, null, null, true
-                        );
+                    if ($message->getReplyTo() === null) {
+                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                        $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
                     }
+
+                    $this->get('mailer')->send($message);
                 }
 
                 // trigger event

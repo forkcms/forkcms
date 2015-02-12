@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -221,7 +221,7 @@ class CKFinder_Connector_Core_ResourceTypeConfig
      * If allowed extensions are defined, return false if extension isn't on allowed list.
      *
      * @access public
-     * @param string $fileName extension
+     * @param string $extension extension
      * @param boolean $renameIfRequired whether try to rename file or not
      * @return boolean
      */
@@ -312,7 +312,7 @@ class CKFinder_Connector_Core_ResourceTypeConfig
      * Check given path
      * Return true if path contains folder name that matches hidden folder names list
      *
-     * @param string $path
+     * @param string $folderName
      * @access public
      * @return boolean
      */

@@ -1,5 +1,21 @@
+3.8.7 (2015-02-xx)
+--
+Improvements:
+
+* Mailer: use SwiftMailer to send messages (see <UPGRADE_3.9.md>)
+* FormBuilder: jump to location of form after submission.
+* Core: Update CKFinder to version 2.4
+
+BugFixes:
+
+* Locale: Avoid "Using $this when not in object context" when using php 5.3.
+
 3.8.6 (2015-02-03)
 --
+Improvements:
+
+* Core: Refactor the mailer to use SwiftMailer
+
 Bugfixes:
 
 * Users: Fixed error in backend user edit, when updating your own account.

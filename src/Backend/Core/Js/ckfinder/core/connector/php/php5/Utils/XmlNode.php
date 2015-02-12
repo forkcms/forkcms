@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -107,6 +107,7 @@ class Ckfinder_Connector_Utils_XmlNode
     /**
      * Set element value
      *
+     * @param string $name
      * @param string $value
      * @access public
      */
@@ -118,6 +119,8 @@ class Ckfinder_Connector_Utils_XmlNode
     /**
      * Get element value
      *
+     * @param string $name
+     * @param string $value
      * @access public
      */
     public function getValue()
@@ -148,7 +151,7 @@ class Ckfinder_Connector_Utils_XmlNode
 
         $ret = "";
         for ($i = 0; $i < strlen($string); $i++) {
-            $ret .= CKFinder_Connector_Utils_Misc::isValidUTF8($string[$i]) ? $string[$i] : "?";
+            $ret .= CKFinder_Connector_Utils_Misc::isValidUTF8($string[$i]) ? $string[$i] : "\xEF\xBF\xBD";
         }
 
         return $ret;
@@ -167,7 +170,7 @@ class Ckfinder_Connector_Utils_XmlNode
         //print Attributes
         if (sizeof($this->_attributes)>0) {
             foreach ($this->_attributes as $_name => $_value) {
-                $ret .= " " . $_name . '="' . $this->asUTF8(htmlspecialchars($_value)) . '"';
+                $ret .= " " . $_name . '="' . htmlspecialchars($this->asUTF8($_value)) . '"';
             }
         }
 
@@ -182,7 +185,7 @@ class Ckfinder_Connector_Utils_XmlNode
 
         //print value
         if (!is_null($this->_value)) {
-            $ret .= $this->asUTF8(htmlspecialchars($this->_value));
+            $ret .= htmlspecialchars($this->asUTF8($this->_value));
         }
 
         //print child nodes

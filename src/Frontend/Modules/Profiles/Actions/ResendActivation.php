@@ -121,14 +121,21 @@ class ResendActivation extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_resend_activation', array('id' => $profileId));
 
                 // send email
-                $this->get('mailer')->addEmail(
-                    FL::getMessage('RegisterSubject'),
-                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
-                    $mailValues,
-                    $profile->getEmail(),
-                    '',
-                    null, null, null, null, null, null, null, null, null, true
-                );
+                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $message = \Common\Mailer\Message::newInstance(
+                        FL::getMessage('RegisterSubject')
+                    )
+                    ->setFrom(array($from['email'] => $from['name']))
+                    ->setTo(array($profile->getEmail() => ''))
+                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->parseHtml(
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                        $mailValues,
+                        true
+                    )
+                ;
+                $this->get('mailer')->send($message);
 
                 // redirect
                 $this->redirect(SELF . '?sent=true');
