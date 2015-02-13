@@ -68,6 +68,7 @@ class Index extends BackendBaseActionIndex
                 array(BL::getWorkingLanguage(), $categoryId)
             );
             $dataGrid->enableSequenceByDragAndDrop();
+            $dataGrid->setColumnsHidden(array('category_id', 'sequence'));
             $dataGrid->setColumnAttributes('question', array('class' => 'title'));
             $dataGrid->setRowAttributes(array('id' => '[id]'));
 
