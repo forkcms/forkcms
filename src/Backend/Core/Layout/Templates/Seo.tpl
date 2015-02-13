@@ -64,7 +64,10 @@
 				<li class="checkbox">
 					<label for="urlOverwrite" class="visuallyHidden">{$chkUrlOverwrite} <b>{$lblCustomURL|ucfirst}</b></label>
 					<p class="text-info">{$msgHelpMetaURL}</p>
-					<span id="urlFirstPart">{$SITE_URL}{$prefixURL}/</span>{$txtUrl} {$txtUrlError}
+					<span id="urlFirstPart">
+						{option:detailUrl}{$detailUrl}{/option:detailUrl}
+						{option:!detailUrl}{$SITE_URL}{$prefixURL}/{/option:!detailUrl}
+					</span>{$txtUrl} {$txtUrlError}
 				</li>
 			</ul>
 		</div>
