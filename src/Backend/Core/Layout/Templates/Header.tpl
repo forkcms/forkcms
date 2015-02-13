@@ -1,7 +1,7 @@
 <header id="header">
 	<nav class="navbar navbar-default">
 		<div class="container">
-			<div class="navbar-header text-center">
+			<div class="navbar-header visible-lg text-center">
 				<a class="navbar-brand fork-inline-block" href="/{option:SITE_MULTILANGUAGE}{$LANGUAGE}{/option:SITE_MULTILANGUAGE}" title="{$lblVisitWebsite|ucfirst}">
 					{$SITE_TITLE}
 				</a>
