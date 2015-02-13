@@ -218,8 +218,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
             null,
-            'inputText tagBox',
-            'inputTextError tagBox'
+            'inputText jsTagsBox',
+            'inputTextError jsTagsBox'
         );
         $this->frm->addDate('publish_on_date', $this->record['publish_on']);
         $this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));

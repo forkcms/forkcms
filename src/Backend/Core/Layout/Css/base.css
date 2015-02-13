@@ -95,3 +95,11 @@ h3 + .btn-toolbar {
     display: inline-block;
     line-height: 24px;
 }
+
+.clickToEdit {
+    position: absolute;
+    width: 100%;
+    height: 0px;
+    bottom: 50%;
+    text-align: center;
+}
