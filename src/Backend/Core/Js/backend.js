@@ -1253,7 +1253,7 @@ jsBackend.forms =
 		jsBackend.forms.focusFirstField();
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
-		jsBackend.forms.tagsBoxes();
+		jsBackend.forms.tagBoxes();
 	},
 
 	datefields: function()
@@ -1473,7 +1473,7 @@ jsBackend.forms =
 	},
 
 	// add tag box to the correct input fields
-	tagsBoxes: function()
+	tagBoxes: function()
 	{
 		if($('.jsTagsBox').length > 0)
 		{
@@ -1563,7 +1563,7 @@ jsBackend.layout =
 	{
 		// hovers
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
-		$('.dataGrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+		$('.jsDataGrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.dataGrid();
@@ -1600,13 +1600,13 @@ jsBackend.layout =
 	{
 		if(jQuery.browser.msie)
 		{
-			$('.dataGrid tr td:last-child').addClass('lastChild');
-			$('.dataGrid tr td:first-child').addClass('firstChild');
+			$('.jsDataGrid tr td:last-child').addClass('lastChild');
+			$('.jsDataGrid tr td:first-child').addClass('firstChild');
 		}
 
 		// dynamic striping
-		$('.dynamicStriping.dataGrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.dataGrid tr:nth-child(2n+1)').addClass('odd');
+		$('.dynamicStriping.jsDataGrid tr:nth-child(2n)').addClass('even');
+		$('.dynamicStriping.jsDataGrid tr:nth-child(2n+1)').addClass('odd');
 	},
 
 	// if the browser isn't supported, show a warning
@@ -1960,11 +1960,11 @@ jsBackend.tableSequenceByDragAndDrop =
 				{
 					// the table
 					$table = $(this);
-					var action = (typeof $table.parents('table.dataGrid').data('action') == 'undefined') ? 'Sequence' : $table.parents('table.dataGrid').data('action').toString();
-					var module = (typeof $table.parents('table.dataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.dataGrid').data('module').toString();
+					var action = (typeof $table.parents('table.jsDataGrid').data('action') == 'undefined') ? 'Sequence' : $table.parents('table.jsDataGrid').data('action').toString();
+					var module = (typeof $table.parents('table.jsDataGrid').data('module') == 'undefined') ? jsBackend.current.module : $table.parents('table.jsDataGrid').data('module').toString();
 
 					// fetch extra params
-					if(typeof $table.parents('table.dataGrid').data('extra-params') != 'undefined') extraParams = $table.parents('table.dataGrid').data('extra-params');
+					if(typeof $table.parents('table.jsDataGrid').data('extra-params') != 'undefined') extraParams = $table.parents('table.jsDataGrid').data('extra-params');
 					else extraParams = {};
 
 					// init var

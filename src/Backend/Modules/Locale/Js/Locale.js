@@ -24,10 +24,10 @@ jsBackend.translations.controls =
 			jsBackend.translations.controls.enableDisableModules();
 		}
 
-		if($('.dataGrid td.translationValue').length > 0)
+		if($('.jsDataGrid td.translationValue').length > 0)
 		{
 			// bind
-			$('.dataGrid td.translationValue').inlineTextEdit(
+			$('.jsDataGrid td.translationValue').inlineTextEdit(
 			{
 				params: { fork: { action: 'SaveTranslation' } },
 				tooltip: jsBackend.locale.msg('ClickToEdit'),
@@ -39,17 +39,17 @@ jsBackend.translations.controls =
 			});
 
 			// highlight all empty items
-			$('.dataGrid td.translationValue span:empty').parents('td.translationValue').addClass('highlighted');
+			$('.jsDataGrid td.translationValue span:empty').parents('td.translationValue').addClass('highlighted');
 		}
 
 		// when clicking on the export-button which checkboxes are checked, add the id's of the translations to the querystring
-		$('.iconExport').click(function(e){
+		$('.jsButtonExport').click(function(e){
 
 			e.preventDefault();
 
 			var labels = new Array();
 
-			$('.dataGridHolder .dataGridHolder input[type="checkbox"]:checked').closest('tr').find('.translationValue').each(function(e){
+			$('.jsDataGrid input[type="checkbox"]:checked').closest('tr').find('.translationValue').each(function(e){
 				labels.push($(this).attr('data-numeric-id'));
 			});
 
@@ -61,7 +61,7 @@ jsBackend.translations.controls =
 		// When clicking on a sort-button (in the header of the table)
 		// add the current filter to the url so we don't have to re-search everything,
 		// and in the process loose the sorting.
-		$('.dataGrid th a').click(function(e){
+		$('.jsDataGrid th a').click(function(e){
 
 			e.preventDefault();
 

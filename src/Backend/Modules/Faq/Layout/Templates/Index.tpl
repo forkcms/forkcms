@@ -17,9 +17,9 @@
 </div>
 <div class="row fork-module-content">
 	<div class="col-md-12">
-		<div class="panel panel-default">
-			{option:dataGrids}
-			{iteration:dataGrids}
+		{option:dataGrids}
+		{iteration:dataGrids}
+		<div id="dataGrid-{$dataGrids.id}" class="panel panel-default jsDataGridQuestionsHolder">
 			<div class="panel-heading">
 				<h3 class="panel-title">{$dataGrids.title}</h3>
 			</div>
@@ -31,14 +31,14 @@
 				{$emptyDatagrid}
 			</div>
 			{/option:!dataGrids.content}
-			{/iteration:dataGrids}
-			{/option:dataGrids}
-			{option:!dataGrids}
-			<div class="panel-body">
-				<p>{$msgNoItems}</p>
-			</div>
-			{/option:!dataGrids}
 		</div>
+		{/iteration:dataGrids}
+		{/option:dataGrids}
+		{option:!dataGrids}
+		<div class="panel-body">
+			<p>{$msgNoItems}</p>
+		</div>
+		{/option:!dataGrids}
 	</div>
 </div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
