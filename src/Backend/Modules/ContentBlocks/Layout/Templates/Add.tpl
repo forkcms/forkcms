@@ -40,8 +40,10 @@
 	</div>
 	<div class="row fork-module-actions">
 		<div class="col-md-12">
-			<div class="btn-group pull-right" role="group">
-				<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAdd|ucfirst}</button>
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAdd|ucfirst}</button>
+				</div>
 			</div>
 		</div>
 	</div>

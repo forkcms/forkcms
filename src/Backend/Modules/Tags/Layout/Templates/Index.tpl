@@ -17,7 +17,7 @@
 							<span class="modal-title h4">{$lblDelete|ucfirst}</span>
 						</div>
 						<div class="modal-body">
-							<p>{$msgConfirmMassDelete|sprintf:{$title}}</p>
+							<p>{$msgConfirmMassDelete}</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>

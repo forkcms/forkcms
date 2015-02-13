@@ -151,11 +151,19 @@ class Index extends BackendBaseActionIndex
             array(
                 'addToGroup' => BL::getLabel('AddToGroup'),
                 'delete' => BL::getLabel('Delete')
-            ), 'addToGroup'
+            ),
+            'addToGroup',
+            false,
+            'form-control',
+            'form-control error'
         );
         $ddmMassAction->setAttribute('id', 'massAction');
-        $ddmMassAction->setOptionAttributes('addToGroup', array('data-message-id' => 'confirmAddToGroup'));
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
+        $ddmMassAction->setOptionAttributes('addToGroup', array(
+            'data-target' => '#confirmAddToGroup'
+        ));
+        $ddmMassAction->setOptionAttributes('delete', array(
+            'data-target' => '#confirmDelete'
+        ));
         $this->dgProfiles->setMassAction($ddmMassAction);
 
         // check if this action is allowed

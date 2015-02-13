@@ -198,10 +198,8 @@
             </div>
         </div>
     </div>
-{/form:add}
-<div>
     {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/Dialogs.tpl}
-</div>
+{/form:add}
 <div class="hidden">
     <script type="text/javascript">
         //<![CDATA[

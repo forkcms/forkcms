@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-header">
 	<div class="col-md-12">
-		<h2>{$lblLocation|ucfirst}</h2>
+		<h2>{$lblSettings|ucfirst}</h2>
 	</div>
 </div>
 {form:settings}

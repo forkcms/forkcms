@@ -70,7 +70,6 @@ class Index extends BackendBaseActionIndex
             'form-control error'
         );
         $ddmMassAction->setOptionAttributes('delete', array(
-            'data-toggle' => 'modal',
             'data-target' => '#confirmDelete'
         ));
         $this->dataGrid->setMassAction($ddmMassAction);

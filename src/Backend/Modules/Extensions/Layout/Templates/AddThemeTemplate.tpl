@@ -8,19 +8,15 @@
 {form:add}
 	<div class="row fork-module-content">
 		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="form-inline form-group">
-						<p class="text-info">{$msgHelpTemplateLocation}</p>
-						<label for="file">{$msgPathToTemplate|ucfirst}</label>
-						<label for="theme" class="hide">{$lblTheme|ucfirst}</label>
-						{$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
-					</div>
-					<div class="form-group">
-						<label for="label">{$lblLabel|ucfirst}</label>
-						{$txtLabel} {$txtLabelError}
-					</div>
-				</div>
+			<div class="form-inline form-group">
+				<p class="text-info">{$msgHelpTemplateLocation}</p>
+				<label for="file">{$msgPathToTemplate|ucfirst}</label>
+				<label for="theme" class="hide">{$lblTheme|ucfirst}</label>
+				{$ddmTheme}<small><code>/Core/Layout/Templates/</code></small>{$txtFile} {$ddmThemeError} {$txtFileError}
+			</div>
+			<div class="form-group">
+				<label for="label">{$lblLabel|ucfirst}</label>
+				{$txtLabel} {$txtLabelError}
 			</div>
 		</div>
 	</div>

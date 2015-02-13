@@ -16,9 +16,13 @@ textarea {
 }
 
 .fork-module-header,
-.fork-module-content,
+.fork-module-messages,
+.fork-module-content {
+    margin-bottom: 20px;
+}
+
 .fork-module-actions {
-    margin-bottom: 15px;
+    margin-bottom: 40px;
 }
 
 .fork-tabs .nav-tabs {
