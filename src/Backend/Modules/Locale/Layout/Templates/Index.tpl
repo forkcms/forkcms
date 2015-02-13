@@ -1,6 +1,6 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-<div class="row fork-module-header">
+<div class="row fork-module-heading">
 	<div class="col-md-12">
 		<h2>{$lblTranslations|ucfirst}</h2>
 		<div class="btn-toolbar pull-right">
@@ -27,75 +27,79 @@
 		</div>
 	</div>
 </div>
-{form:filter}
-	<div class="panel panel-default">
-		<div class="panel-body">
-			<div class="row">
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="application">{$lblApplication|ucfirst}</label>
-						{$ddmApplication} {$ddmApplicationError}
-					</div>
-					<div class="form-group">
-						<label for="module">{$lblModule|ucfirst}</label>
-						{$ddmModule} {$ddmModuleError}
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{form:filter}
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="application">{$lblApplication|ucfirst}</label>
+								{$ddmApplication} {$ddmApplicationError}
+							</div>
+							<div class="form-group">
+								<label for="module">{$lblModule|ucfirst}</label>
+								{$ddmModule} {$ddmModuleError}
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>{$lblTypes|ucfirst}</label>
+								{option:type}
+									<ul class="list-unstyled">
+										{iteration:type}
+											<li class="checkbox">
+												<label for="{$type.id}">{$type.chkType} {$type.label|ucfirst}</label>
+											</li>
+										{/iteration:type}
+									</ul>
+								{/option:type}
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label>{$lblLanguages|ucfirst}</label>
+								{option:language}
+									<ul class="list-unstyled">
+										{iteration:language}
+											<li class="checkbox">
+												<label for="{$language.id}">{$language.chkLanguage} {$language.label|ucfirst}</label>
+											</li>
+										{/iteration:language}
+									</ul>
+								{/option:language}
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div class="form-group">
+								<label for="name">
+									{$lblReferenceCode|ucfirst}&nbsp;
+									<abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpName}"></abbr>
+								</label>
+								{$txtName} {$txtNameError}
+							</div>
+							<div class="form-group">
+								<label for="value">
+									{$lblValue|ucfirst}&nbsp;
+									<abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpValue}"></abbr>
+								</label>
+								{$txtValue} {$txtValueError}
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label>{$lblTypes|ucfirst}</label>
-						{option:type}
-							<ul class="list-unstyled">
-								{iteration:type}
-									<li class="checkbox">
-										<label for="{$type.id}">{$type.chkType} {$type.label|ucfirst}</label>
-									</li>
-								{/iteration:type}
-							</ul>
-						{/option:type}
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label>{$lblLanguages|ucfirst}</label>
-						{option:language}
-							<ul class="list-unstyled">
-								{iteration:language}
-									<li class="checkbox">
-										<label for="{$language.id}">{$language.chkLanguage} {$language.label|ucfirst}</label>
-									</li>
-								{/iteration:language}
-							</ul>
-						{/option:language}
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<label for="name">
-							{$lblReferenceCode|ucfirst}&nbsp;
-							<abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpName}"></abbr>
-						</label>
-						{$txtName} {$txtNameError}
-					</div>
-					<div class="form-group">
-						<label for="value">
-							{$lblValue|ucfirst}&nbsp;
-							<abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpValue}"></abbr>
-						</label>
-						{$txtValue} {$txtValueError}
+				<div class="panel-footer">
+					<div class="btn-toolbar">
+						<div class="btn-group pull-right">
+							<button id="search" class="btn btn-primary" type="submit" name="search">{$lblUpdateFilter|ucfirst}</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-		<div class="panel-footer">
-			<div class="btn-toolbar">
-				<div class="btn-group pull-right">
-					<button id="search" class="btn btn-primary" type="submit" name="search">{$lblUpdateFilter|ucfirst}</button>
-				</div>
-			</div>
-		</div>
+		{/form:filter}
 	</div>
-{/form:filter}
+</div>
 {option:dgLabels}
 <div class="row fork-module-content">
 	<div class="col-md-12">

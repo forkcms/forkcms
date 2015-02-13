@@ -59,7 +59,10 @@ class DataGrid extends \SpoonDataGrid
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(array('class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
+        $this->setAttributes(array(
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0,
+            'cellpadding' => 0, 'border' => 0
+        ));
 
         // id gets special treatment
         if (in_array('id', $this->getColumns())) {
@@ -258,7 +261,9 @@ class DataGrid extends \SpoonDataGrid
     public function enableSequenceByDragAndDrop()
     {
         // add drag and drop-class
-        $this->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+        $this->setAttributes(array(
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop'
+        ));
 
         // disable paging
         $this->setPaging(false);
@@ -267,13 +272,15 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnHidden('sequence');
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span>' . Language::lbl('Move') . '</span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="glyphicon glyphicon-sort"></span>');
 
         // make sure the column with the handler is the first one
         $this->setColumnsSequence('dragAndDropHandle');
 
         // add a class on the handler column, so JS knows this is just a handler
-        $this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+        $this->setColumnAttributes('dragAndDropHandle', array(
+            'class' => 'dragAndDropHandle fork-data-grid-sortable'
+        ));
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(array('data-id' => '[id]'));

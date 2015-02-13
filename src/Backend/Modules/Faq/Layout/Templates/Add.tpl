@@ -1,21 +1,25 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblFaq|ucfirst}: {$lblAdd}</h2>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblAdd|ucfirst}</h2>
+	</div>
 </div>
-
 {form:add}
-	<label for="title">{$lblQuestion|ucfirst}</label>
-	{$txtTitle} {$txtTitleError}
-
-	<div id="pageUrl">
-		<div class="oneLiner">
-			{option:detailURL}<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>{/option:detailURL}
-			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="title">{$lblQuestion|ucfirst}</label>
+				{$txtTitle} {$txtTitleError}
+			</div>
+			{option:detailURL}
+			<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>
+			{/option:detailURL}
+			{option:!detailURL}
+			<p class="infoMessage">{$errNoModuleLinked}</p>
+			{/option:!detailURL}
 		</div>
 	</div>
-
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>

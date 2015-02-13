@@ -1,6 +1,6 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
-<div class="row fork-module-header">
+<div class="row fork-module-heading">
     <div class="col-md-12">
         <h2>{$lblAdd|ucfirst}</h2>
         {option:showPagesIndex}
@@ -23,10 +23,11 @@
                 <label for="title">{$lblTitle|ucfirst}</label>
                 {$txtTitle} {$txtTitleError}
             </div>
-        </div>
-        <div class="col-md-12">
-            <a id="generatedUrl" data-url="{$SITE_URL}{$prefixURL}/"
-               href="{$SITE_URL}{$prefixURL}/">{$SITE_URL}{$prefixURL}/</a>
+            <p>
+                <a id="generatedUrl" data-url="{$SITE_URL}{$prefixURL}/" href="{$SITE_URL}{$prefixURL}/">
+                    {$SITE_URL}{$prefixURL}/
+                </a>
+            </p>
         </div>
     </div>
     <div class="row fork-module-content">

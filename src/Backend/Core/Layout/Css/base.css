@@ -15,7 +15,7 @@ textarea {
     vertical-align: middle !important;
 }
 
-.fork-module-header,
+.fork-module-heading,
 .fork-module-messages,
 .fork-module-content {
     margin-bottom: 20px;
@@ -67,6 +67,11 @@ h3 + .btn-toolbar {
 
 .fork-data-grid {
 
+}
+
+.fork-data-grid-sortable {
+    text-align: center;
+    cursor: move;
 }
 
 .fork-data-grid-avatar {
