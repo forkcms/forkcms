@@ -8,25 +8,21 @@
 {form:addItem}
 	<div class="row fork-module-content">
 		<div class="col-md-12">
-			<div class="panel panel-default">
-				<div class="panel-body">
-					<div class="form-group">
-						<label for="term">
-							{$lblTerm|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
-						</label>
-						{$txtTerm} {$txtTermError}
-					</div>
-					<div class="form-group">
-						<div class="fakeP">
-							<label for="addValue-synonym">
-								{$lblSynonyms|ucfirst}
-								<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
-							</label>
-							<div class="itemAdder">
-								{$txtSynonym} {$txtSynonymError}
-							</div>
-						</div>
+			<div class="form-group">
+				<label for="term">
+					{$lblTerm|ucfirst}
+					<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+				</label>
+				{$txtTerm} {$txtTermError}
+			</div>
+			<div class="form-group">
+				<div class="fakeP">
+					<label for="addValue-synonym">
+						{$lblSynonyms|ucfirst}
+						<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+					</label>
+					<div class="itemAdder">
+						{$txtSynonym} {$txtSynonymError}
 					</div>
 				</div>
 			</div>
@@ -44,6 +40,5 @@
 		</div>
 	</div>
 {/form:addItem}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

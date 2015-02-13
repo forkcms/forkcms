@@ -1,7 +1,6 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Dashboard/Layout/Templates/StructureStart.tpl}
-
-<div id="dashboardWidgets" class="row">
+<div id="dashboardWidgets" class="row fork-dashboard">
 	<div class="col-md-12">
 		<div class="page-header">
 			<h1>{$lblDashboard|ucfirst}</h1>
@@ -11,7 +10,6 @@
 			<a href="#" id="doneEditingDashboard">{$lblDone|ucfirst}</a>
 		</div>
 	</div>
-
 	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:leftColumn}
 		<div class="fork-widget sortableWidget{option:leftColumn.hidden} isRemoved{/option:leftColumn.hidden}" data-module="{$leftColumn.module}" data-widget="{$leftColumn.widget}" data-title="{$leftColumn.title}"{option:leftColumn.hidden} style="display: none;"{/option:leftColumn.hidden}>
@@ -33,7 +31,6 @@
 		{/iteration:leftColumn}
 		&#160;
 	</div>
-
 	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:middleColumn}
 		<div class="fork-widget sortableWidget{option:middleColumn.hidden} isRemoved{/option:middleColumn.hidden}" data-module="{$middleColumn.module}" data-widget="{$middleColumn.widget}" data-title="{$middleColumn.title}"{option:middleColumn.hidden} style="display: none;"{/option:middleColumn.hidden}>
@@ -55,7 +52,6 @@
 		{/iteration:middleColumn}
 		&#160;
 	</div>
-
 	<div class="col-md-4 fork-dashboard-column column">
 		{iteration:rightColumn}
 		<div class="fork-widget sortableWidget{option:rightColumn.hidden} isRemoved{/option:rightColumn.hidden}" data-module="{$rightColumn.module}" data-widget="{$rightColumn.widget}" data-title="{$rightColumn.title}"{option:rightColumn.hidden} style="display: none;"{/option:rightColumn.hidden}>
@@ -78,14 +74,12 @@
 		&#160;
 	</div>
 </div>
-
-<div class="row">
+<div class="row fork-dashboard-actions">
 	<div class="col-md-4 col-md-offset-4 text-center">
 		<a href="#" id="editDashboard">
 			{$msgEditYourDashboard}
 		</a>
 	</div>
 </div>
-
 {include:{$BACKEND_MODULES_PATH}/Dashboard/Layout/Templates/StructureEnd.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

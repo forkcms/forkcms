@@ -1,27 +1,31 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row fork-module-header">
+	<div class="col-md-12">
+		<h2>{$lblAddGroup|ucfirst}</h2>
+	</div>
+</div>
 {form:addGroup}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblProfiles|ucfirst}: {$lblAddGroup}</h3>
-		</div>
-		<div class="content">
-			<fieldset>
-				<p>
-					<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtName} {$txtNameError}
-				</p>
-			</fieldset>
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="name">
+					{$lblName|ucfirst}
+					<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+				</label>
+				{$txtName} {$txtNameError}
+			</div>
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddGroup|ucfirst}" />
+	<div class="row fork-module-actions">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAddGroup|ucfirst}</button>
+				</div>
+			</div>
 		</div>
 	</div>
 {/form:addGroup}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

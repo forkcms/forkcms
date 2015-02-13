@@ -1,6 +1,6 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-<div class="row">
+<div class="row fork-module-header">
 	<div class="col-md-12">
 		<h2>{$lblTranslations|ucfirst}</h2>
 		{option:showLocaleExportAnalyse}
@@ -15,7 +15,7 @@
 		{/option:showLocaleExportAnalyse}
 	</div>
 </div>
-<div class="row">
+<div class="row fork-module-content">
 	<div class="col-md-12">
 		{option:dgFrontend}
 		<h4>{$lblFrontend|ucfirst}</h4>
@@ -35,6 +35,5 @@
 		{/option:!dgBackend}
 	</div>
 </div>
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

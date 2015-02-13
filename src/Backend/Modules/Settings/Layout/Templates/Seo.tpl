@@ -1,12 +1,12 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-<div class="row">
+<div class="row fork-module-header">
 	<div class="col-md-12">
 		<h2>{$lblSEOSettings|ucfirst}</h2>
 	</div>
 </div>
 {form:settingsSeo}
-	<div class="row">
+	<div class="row fork-module-content">
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -34,10 +34,12 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row fork-module-actions">
 		<div class="col-md-12">
-			<div class="btn-group pull-right" role="group">
-				<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+				</div>
 			</div>
 		</div>
 	</div>

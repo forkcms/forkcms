@@ -1,12 +1,12 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-<div class="row">
+<div class="row fork-module-header">
 	<div class="col-md-12">
 		<h2>{$lblEmailSettings|ucfirst}</h2>
 	</div>
 </div>
 {form:settingsEmail}
-	<div class="row">
+	<div class="row fork-module-content">
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -90,7 +90,7 @@
 		</div>
 	</div>
 	{option:isGod}
-	<div class="row">
+	<div class="row fork-module-content">
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -133,7 +133,7 @@
 		</div>
 	</div>
 	{/option:isGod}
-	<div class="row">
+	<div class="row fork-module-actions">
 		<div class="col-md-12">
 			<div class="btn-toolbar">
 				<div class="btn-group pull-right" role="group">

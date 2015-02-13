@@ -1,68 +1,92 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row fork-module-header">
+	<div class="col-md-12">
+		<h2>{$lblAdd|ucfirst}</h2>
+	</div>
+</div>
 {form:add}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblProfile|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<fieldset>
-				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtEmail} {$txtEmailError}
-				</p>
-				<p>
-					<label for="displayName">{$lblDisplayName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtDisplayName} {$txtDisplayNameError}
-				</p>
-				<p>
-					<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-					{$txtPassword} {$txtPasswordError}
-				</p>
-			</fieldset>
-		</div>
-
-		<div class="heading">
-			<h3>{$lblSettings|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<fieldset>
-				<p>
-					<label for="firstName">{$lblFirstName|ucfirst}</label>
-					{$txtFirstName} {$txtFirstNameError}
-				</p>
-				<p>
-					<label for="lastName">{$lblLastName|ucfirst}</label>
-					{$txtLastName} {$txtLastNameError}
-				</p>
-				<p>
-					<label for="gender">{$lblGender|ucfirst}</label>
-					{$ddmGender} {$ddmGenderError}
-				</p>
-				<p>
-					<label for="day">{$lblBirthDate|ucfirst}</label>
-					<span class="tinyInput">{$ddmDay}</span> <span class="smallInput">{$ddmMonth}</span> <span class="tinyInput">{$ddmYear}</span> {$ddmYearError}
-				</p>
-				<p>
-					<label for="city">{$lblCity|ucfirst}</label>
-					{$txtCity} {$txtCityError}
-				</p>
-				<p>
-					<label for="country">{$lblCountry|ucfirst}</label>
-					{$ddmCountry} {$ddmCountryError}
-				</p>
-			</fieldset>
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{$lblProfile|ucfirst}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="email">
+							{$lblEmail|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+						</label>
+						{$txtEmail} {$txtEmailError}
+					</div>
+					<div class="form-group">
+						<label for="displayName">
+							{$lblDisplayName|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+						</label>
+						{$txtDisplayName} {$txtDisplayNameError}
+					</div>
+					<div class="form-group">
+						<label for="password">
+							{$lblPassword|ucfirst}
+							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+						</label>
+						{$txtPassword} {$txtPasswordError}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">{$lblSettings|ucfirst}</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<label for="firstName">{$lblFirstName|ucfirst}</label>
+						{$txtFirstName} {$txtFirstNameError}
+					</div>
+					<div class="form-group">
+						<label for="lastName">{$lblLastName|ucfirst}</label>
+						{$txtLastName} {$txtLastNameError}
+					</div>
+					<div class="form-group">
+						<label for="gender">{$lblGender|ucfirst}</label>
+						{$ddmGender} {$ddmGenderError}
+					</div>
+					<div class="form-group">
+						<label for="day">{$lblBirthDate|ucfirst}</label>
+						<div class="form-inline">
+							<div class="form-group">{$ddmDay}</div>
+							<div class="form-group">{$ddmMonth}</div>
+							<div class="form-group">{$ddmYear}</div>
+							{$ddmYearError}
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="city">{$lblCity|ucfirst}</label>
+						{$txtCity} {$txtCityError}
+					</div>
+					<div class="form-group">
+						<label for="country">{$lblCountry|ucfirst}</label>
+						{$ddmCountry} {$ddmCountryError}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
+	<div class="row fork-module-actions">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAdd|ucfirst}</button>
+				</div>
+			</div>
+		</div>
+	</div>
 {/form:add}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
