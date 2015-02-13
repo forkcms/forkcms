@@ -1253,7 +1253,7 @@ jsBackend.forms =
 		jsBackend.forms.focusFirstField();
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
-		jsBackend.forms.tagBoxes();
+		jsBackend.forms.tagsBoxes();
 	},
 
 	datefields: function()
@@ -1473,29 +1473,18 @@ jsBackend.forms =
 	},
 
 	// add tag box to the correct input fields
-	tagBoxes: function()
+	tagsBoxes: function()
 	{
-		if($('#sidebar input.tagBox').length > 0)
+		if($('.jsTagsBox').length > 0)
 		{
-			$('#sidebar input.tagBox').tagBox(
-			{
-				emptyMessage: jsBackend.locale.msg('NoTags'),
-				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
-				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('AddTag')),
-				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
-				params: { fork: { module: 'Tags', action: 'Autocomplete' } }
-			});
-		}
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0)
-		{
-			$('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox(
+			$('.jsTagsBox').tagsBox(
 			{
 				emptyMessage: jsBackend.locale.msg('NoTags'),
 				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
 				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('AddTag')),
 				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
 				params: { fork: { module: 'Tags', action: 'Autocomplete' } },
-				showIconOnly: false
+				showIconOnly: true
 			});
 		}
 	},

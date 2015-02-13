@@ -761,7 +761,7 @@
  */
 (function($)
 {
-	$.fn.tagBox = function(options)
+	$.fn.tagsBox = function(options)
 	{
 		// define defaults
 		var defaults =
@@ -818,7 +818,7 @@
 						'	<div class="form-group">' +
 						'		<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
 						'   </div>' +
-						'	<a href="#" id="addButton-' + id + '" class="btn btn-primary">' +
+						'	<a href="#" id="addButton-' + id + '" class="btn btn-success btn-xs">' +
 						'       <span class="glyphicon glyphicon-plus"></span>' +
 						(options.showIconOnly?'':'	    <span>' + options.addLabel + '</span>') +
 						'	</a>' +

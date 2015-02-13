@@ -40,44 +40,43 @@
 						</div>
 						<div class="row">
 							<div class="col-md-8">
-								<div class="heading">
-									<h3>
-										<label for="answer">{$lblAnswer|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-									</h3>
-								</div>
-								<div class="optionsRTE">
+								<div class="form-group optionsRTE">
+									<label for="answer">{$lblAnswer|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
 									{$txtAnswer} {$txtAnswerError}
 								</div>
 							</div>
 							<div class="col-md-4">
-								<div id="publishOptions" class="box">
-									<div class="heading">
-										<h3>{$lblStatus|ucfirst}</h3>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">{$lblStatus|ucfirst}</h3>
 									</div>
-
-									<div class="options">
-										<ul class="inputList">
-											{iteration:hidden}
-												<li>
-													{$hidden.rbtHidden}
-													<label for="{$hidden.id}">{$hidden.label}</label>
+									<div class="panel-body">
+										<div class="form-group">
+											<ul class="list-unstyled">
+												{iteration:hidden}
+												<li class="radio">
+													<label for="{$hidden.id}">{$hidden.rbtHidden} {$hidden.label}</label>
 												</li>
-											{/iteration:hidden}
-										</ul>
+												{/iteration:hidden}
+											</ul>
+										</div>
 									</div>
 								</div>
-
-								<div class="box" id="articleMeta">
-									<div class="heading">
-										<h3>{$lblMetaData|ucfirst}</h3>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">{$lblMetaData|ucfirst}</h3>
 									</div>
-									<div class="options">
-										<label for="categoryId">{$lblCategory|ucfirst}</label>
-										{$ddmCategoryId} {$ddmCategoryIdError}
-									</div>
-									<div class="options">
-										<label for="tags">{$lblTags|ucfirst}</label>
-										{$txtTags} {$txtTagsError}
+									<div class="panel-body">
+										<div class="form-group">
+											<label for="categoryId">{$lblCategory|ucfirst}</label>
+											{$ddmCategoryId} {$ddmCategoryIdError}
+										</div>
+										<div class="form-group">
+											<label for="tags">{$lblTags|ucfirst}</label>
+											{$txtTags} {$txtTagsError}
+										</div>
 									</div>
 								</div>
 							</div>

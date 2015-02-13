@@ -30,29 +30,21 @@
 									<label for="title">{$lblTitle|ucfirst}</label>
 									{$txtTitle} {$txtTitleError}
 								</div>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h3 class="panel-title">
-											<label for="text">
-												{$lblContent|ucfirst}
-												<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
-											</label>
-										</h3>
-									</div>
-									<div class="panel-body">
-										<div class="form-group">
-											{$txtText} {$txtTextError}
-										</div>
-										{option:ddmTemplate}
-										<div class="form-group">
-											<label for="template">{$lblTemplate|ucfirst}</label>
-											{$ddmTemplate} {$ddmTemplateError}
-										</div>
-										{/option:ddmTemplate}
-										<div class="form-group">
-											<label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label>
-										</div>
-									</div>
+								<div class="form-group">
+									<label for="text">
+										{$lblContent|ucfirst}
+										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+									</label>
+									{$txtText} {$txtTextError}
+								</div>
+								{option:ddmTemplate}
+								<div class="form-group">
+									<label for="template">{$lblTemplate|ucfirst}</label>
+									{$ddmTemplate} {$ddmTemplateError}
+								</div>
+								{/option:ddmTemplate}
+								<div class="form-group">
+									<label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite|ucfirst}</label>
 								</div>
 							</div>
 						</div>

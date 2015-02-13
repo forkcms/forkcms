@@ -66,7 +66,7 @@
 					<p class="text-info">{$msgHelpMetaURL}</p>
 					<span id="urlFirstPart">
 						{option:detailUrl}{$detailUrl}{/option:detailUrl}
-						{option:!detailUrl}{$SITE_URL}{$prefixURL}/{/option:!detailUrl}
+						{option:!detailUrl}{$SITE_URL}{option:prefixURL}{$prefixURL}{/option:prefixURL}/{/option:!detailUrl}
 					</span>{$txtUrl} {$txtUrlError}
 				</li>
 			</ul>

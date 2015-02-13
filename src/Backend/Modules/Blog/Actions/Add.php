@@ -80,7 +80,7 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('category_id')->setDefaultElement('');
         }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'inputText jsTagsBox', 'inputTextError jsTagsBox');
         $this->frm->addDate('publish_on_date');
         $this->frm->addTime('publish_on_time');
         if ($this->imageIsAllowed) {

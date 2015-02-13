@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
 	<div class="col-md-12">
-		<h2>{$lblFaq|ucfirst}</h2>
+		<h2>{$lblQuestions|ucfirst}</h2>
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group" role="group">
 				{option:showFaqAdd}
