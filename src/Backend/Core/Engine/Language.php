@@ -312,10 +312,10 @@ class Language
         $language = (string) $language;
 
         // validate file, generate it if needed
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.php')) {
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/en.json')) {
             BackendLocaleModel::buildCache('en', APPLICATION);
         }
-        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
+        if (!is_file(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             BackendLocaleModel::buildCache($language, APPLICATION);
         }
 
@@ -329,19 +329,23 @@ class Language
             // settings cookies isn't allowed, because this isn't a real problem we ignore the exception
         }
 
-        // init vars
-        $err = array();
-        $lbl = array();
-        $msg = array();
-
         // set English translations, they'll be the fallback
-        require BACKEND_CACHE_PATH . '/Locale/en.php';
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+        $translations = json_decode(
+            file_get_contents(BACKEND_CACHE_PATH . '/Locale/en.json'),
+            true
+        );
+        self::$err = (array) $translations['err'];
+        self::$lbl = (array) $translations['lbl'];
+        self::$msg = (array) $translations['msg'];
 
         // overwrite with the requested language's translations
-        require BACKEND_CACHE_PATH . '/Locale/' . $language . '.php';
+        $translations = json_decode(
+            file_get_contents(BACKEND_CACHE_PATH . '/Locale/' . $language . '.json'),
+            true
+        );
+        $err = (array) $translations['err'];
+        $lbl = (array) $translations['lbl'];
+        $msg = (array) $translations['msg'];
         foreach ($err as $module => $translations) {
             if (!isset(self::$err[$module])) {
                 self::$err[$module] = array();
