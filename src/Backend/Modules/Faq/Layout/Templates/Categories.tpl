@@ -1,22 +1,29 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblFaq|ucfirst}: {$lblCategories}</h2>
-
-	{option:showFaqAddCategory}
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_category'}" class="button icon iconAdd"><span>{$lblAddCategory|ucfirst}</span></a>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblCategories|ucfirst}</h2>
+		{option:showFaqAddCategory}
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				<a href="{$var|geturl:'add_category'}" class="btn btn-primary" title="{$lblAddCategory|ucfirst}">
+					<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+					{$lblAddCategory|ucfirst}
+				</a>
+			</div>
+		</div>
+		{/option:showFaqAddCategory}
 	</div>
-	{/option:showFaqAddCategory}
 </div>
-
-{option:dataGrid}
-	<div class="dataGridHolder">
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{option:dataGrid}
 		{$dataGrid}
+		{/option:dataGrid}
+		{option:!dataGrid}
+		<p>{$msgNoCategories}</p>
+		{/option:!dataGrid}
 	</div>
-{/option:dataGrid}
-{option:!dataGrid}{$msgNoCategories}{/option:!dataGrid}
-
+</div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

@@ -1,6 +1,6 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_MODULES_PATH}/Pages/Layout/Templates/StructureStart.tpl}
-<div class="row fork-module-header">
+<div class="row fork-module-heading">
 	<div class="col-md-12">
 		<h2>
 			{option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
