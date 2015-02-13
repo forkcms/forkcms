@@ -87,7 +87,7 @@ jsBackend.groups =
 		$this = $(this);
 
 		// editing permissions? check permissions
-		if($this.parent('tr').parent('tbody').parent('.dataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
+		if($this.parent('tr').parent('tbody').parent('.jsDataGrid').parent('.datagridHolder').parent('.module').html() !== null) $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionPermissions);
 
 		// editing widgets? check widgets
 		else $this.parent('tr').parent('tbody').each(jsBackend.groups.selectionWidgets);

@@ -6,19 +6,19 @@
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group" role="group">
 				{option:showLocaleAdd}
-				<a href="{$var|geturl:'add'}{$filter}" class="btn btn-primary">
+				<a href="{$var|geturl:'add'}{$filter}" class="btn btn-primary jsButtonAdd">
 					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					<span>{$lblAdd|ucfirst}</span>
 				</a>
 				{/option:showLocaleAdd}
 				{option:showLocaleExport}
-				<a href="{$var|geturl:'export'}{$filter}" class="btn btn-default">
+				<a href="{$var|geturl:'export'}{$filter}" class="btn btn-default jsButtonExport">
 					<span class="glyphicon glyphicon-export"></span>&nbsp;
 					<span>{$lblExport|ucfirst}</span>
 				</a>
 				{/option:showLocaleExport}
 				{option:showLocaleImport}
-				<a href="{$var|geturl:'import'}{$filter}" class="btn btn-default">
+				<a href="{$var|geturl:'import'}{$filter}" class="btn btn-default jsButtonImport">
 					<span class="glyphicon glyphicon-import"></span>&nbsp;
 					<span>{$lblImport|ucfirst}</span>
 				</a>
