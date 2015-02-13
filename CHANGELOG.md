@@ -1,4 +1,4 @@
-3.8.7 (2015-02-xx)
+3.8.7 (2015-02-13)
 --
 Improvements:
 
@@ -9,6 +9,7 @@ Improvements:
 BugFixes:
 
 * Locale: Avoid "Using $this when not in object context" when using php 5.3.
+
 
 3.8.6 (2015-02-03)
 --
