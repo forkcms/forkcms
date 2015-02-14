@@ -31,17 +31,17 @@
 			<div class="horizontal">
 				<div class="options">
 					<p>
-						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtName} {$txtNameError}
 					</p>
 				</div>
 				<div class="options">
 					<p class="p0">
-						<label for="method">{$lblMethod|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="method">{$lblMethod|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$ddmMethod} {$ddmMethodError}
 					</p>
 					<p id="emailWrapper" class="hidden">
-						<label for="addValue-email">{$lblRecipient|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="addValue-email">{$lblRecipient|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
 				</div>
@@ -49,7 +49,7 @@
 			<div class="options">
 				<div class="heading">
 					<h3>
-						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					</h3>
 				</div>
 				<div class="optionsRTE">
@@ -164,7 +164,7 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="textboxLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textboxLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextboxLabel}
 							<span id="textboxLabelError" class="formError" style="display: none;"></span>
 						</p>
@@ -193,7 +193,7 @@
 							{$chkTextboxRequired}
 						</p>
 						<p class="validationRequiredErrorMessage hidden">
-							<label for="textboxRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textboxRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextboxRequiredErrorMessage}
 							<span id="textboxRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -204,11 +204,11 @@
 							{$ddmTextboxValidation}
 						</p>
 						<p class="validationParameter" style="display: none;">
-							<label for="textboxValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textboxValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextboxValidationParameter}
 						</p>
 						<p class="validationErrorMessage" style="display: none;">
-							<label for="textboxErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textboxErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextboxErrorMessage}
 							<span id="textboxErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -233,7 +233,7 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="textareaLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textareaLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextareaLabel}
 							<span id="textareaLabelError" class="formError" style="display: none;"></span>
 						</p>
@@ -255,7 +255,7 @@
 							{$chkTextareaRequired}
 						</p>
 						<p class="validationRequiredErrorMessage hidden">
-							<label for="textareaRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textareaRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextareaRequiredErrorMessage}
 							<span id="textareaRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -266,11 +266,11 @@
 							{$ddmTextareaValidation}
 						</p>
 						<p class="validationParameter" style="display: none;">
-							<label for="textareaValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textareaValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextareaValidationParameter}
 						</p>
 						<p class="validationErrorMessage" style="display: none;">
-							<label for="textareaErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="textareaErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTextareaErrorMessage}
 							<span id="textareaErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -294,7 +294,7 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="dropdownLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="dropdownLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtDropdownLabel}
 							<span id="dropdownLabelError" class="formError" style="display: none;"></span>
 						</p>
@@ -321,7 +321,7 @@
 							{$chkDropdownRequired}
 						</p>
 						<p class="validationRequiredErrorMessage hidden">
-							<label for="dropdownRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="dropdownRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtDropdownRequiredErrorMessage}
 							<span id="dropdownRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -345,7 +345,7 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="radiobuttonLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="radiobuttonLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtRadiobuttonLabel}
 							<span id="radiobuttonLabelError" class="formError" style="display: none;"></span>
 						</p>
@@ -372,7 +372,7 @@
 							{$chkRadiobuttonRequired}
 						</p>
 						<p class="validationRequiredErrorMessage hidden">
-							<label for="radiobuttonRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="radiobuttonRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtRadiobuttonRequiredErrorMessage}
 							<span id="radiobuttonRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -396,7 +396,7 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="checkboxLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="checkboxLabel">{$lblLabel|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtCheckboxLabel}
 							<span id="checkboxLabelError" class="formError" style="display: none;"></span>
 						</p>
@@ -422,7 +422,7 @@
 							{$chkCheckboxRequired}
 						</p>
 						<p class="validationRequiredErrorMessage hidden">
-							<label for="checkboxRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="checkboxRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtCheckboxRequiredErrorMessage}
 							<span id="checkboxRequiredErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
@@ -438,7 +438,7 @@
 			<div class="options">
 				<input type="hidden" name="submit_id" id="submitId" value="" />
 				<p>
-					<label for="submit">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					<label for="submit">{$lblContent|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtSubmit}
 				</p>
 				<div class="validation">
@@ -454,7 +454,7 @@
 			<div class="options">
 				<input type="hidden" name="heading_id" id="headingId" value="" />
 				<p>
-					<label for="heading">{$lblContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					<label for="heading">{$lblContent|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtHeading}
 					<span id="headingError" class="formError" style="display: none;"></span>
 				</p>

@@ -26,7 +26,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						{$lblWebsiteTitle|ucfirst}
-						<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 					</h3>
 				</div>
 				<div class="panel-body">
@@ -170,7 +170,7 @@
 							<tr>
 								<th>
 									<label for="googleMapsKey">
-										Google maps key<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+										Google maps key<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 									</label>
 								</td>
 								<td>{$txtGoogleMapsKey} {$txtGoogleMapsKeyError}</td>

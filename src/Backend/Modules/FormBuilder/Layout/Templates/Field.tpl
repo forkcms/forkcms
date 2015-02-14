@@ -10,7 +10,7 @@
 	{option:simple}
 		<div class="fieldWrapper horizontal">
 			<label for="field{$id}">
-				{$label}{option:required}<abbr title="{$lblRequiredField}">*</abbr>{/option:required}
+				{$label}{option:required}<abbr title="{$lblRequiredField|ucfirst}">*</abbr>{/option:required}
 			</label>
 			{$field}
 		</div>
@@ -19,7 +19,7 @@
 	{* Radio button, checkbox *}
 	{option:multiple}
 		<div class="fieldWrapper horizontal">
-			<p class="label">{$label}{option:required}<abbr title="{$lblRequiredField}">*</abbr>{/option:required}</p>
+			<p class="label">{$label}{option:required}<abbr title="{$lblRequiredField|ucfirst}">*</abbr>{/option:required}</p>
 			<ul class="inputList">
 			{iteration:items}
 				<li><label for="{$items.id}">{$items.field} {$items.label}</label></li>

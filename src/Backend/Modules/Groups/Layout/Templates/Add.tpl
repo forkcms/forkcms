@@ -30,7 +30,7 @@
 						<div class="row">
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="name">{$lblName|ucfirst}&nbsp;<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr></label>
+									<label for="name">{$lblName|ucfirst}&nbsp;<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr></label>
 									{$txtName} {$txtNameError}
 								</div>
 							</div>

@@ -22,7 +22,7 @@
 	<div class="horizontal">
 		<div class="options">
 			<p>
-				<label for="name">{$lblName|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="name">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtName} {$txtNameError}
 				<span class="helpTxt">{$msgNameInternalUseOnly}</span>
 			</p>
@@ -30,7 +30,7 @@
 		{option:ddmCampaign}
 		<div class="options">
 			<p>
-				<label for="campaign">{$lblCampaign|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="campaign">{$lblCampaign|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$ddmCampaign} {$ddmCampaignError}
 			</p>
 		</div>
@@ -46,13 +46,13 @@
 	<div class="horizontal">
 		<div class="options">
 			<p>
-				<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtFromName} {$txtFromNameError}
 			</p>
 		</div>
 		<div class="options">
 			<p>
-				<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtFromEmail} {$txtFromEmailError}
 			</p>
 		</div>
@@ -66,7 +66,7 @@
 	<div class="horizontal">
 		<div class="options">
 			<p>
-				<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtReplyToEmail} {$txtReplyToEmailError}
 			</p>
 		</div>

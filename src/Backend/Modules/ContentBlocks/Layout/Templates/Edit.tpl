@@ -33,7 +33,7 @@
 								<div class="form-group">
 									<label for="text">
 										{$lblContent|ucfirst}
-										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+										<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 									</label>
 									{$txtText} {$txtTextError}
 								</div>

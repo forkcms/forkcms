@@ -11,7 +11,7 @@
 			<div class="form-group">
 				<label for="term">
 					{$lblTerm|ucfirst}
-					<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+					<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 				</label>
 				{$txtTerm} {$txtTermError}
 			</div>
@@ -19,7 +19,7 @@
 				<div class="fakeP">
 					<label for="addValue-synonym">
 						{$lblSynonyms|ucfirst}
-						<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 					</label>
 					<div class="itemAdder">
 						{$txtSynonym} {$txtSynonymError}

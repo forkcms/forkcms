@@ -22,7 +22,7 @@
 			<div class="horizontal">
 				<div class="options">
 					<p>
-						<label for="name">{$lblName|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="name">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtName} {$txtNameError}
 						<span class="helpTxt">{$msgNameInternalUseOnly}</span>
 					</p>
@@ -30,7 +30,7 @@
 				{option:ddmCampaign}
 				<div class="options">
 					<p>
-						<label for="campaign">{$lblCampaign|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="campaign">{$lblCampaign|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$ddmCampaign} {$ddmCampaignError}
 					</p>
 				</div>
@@ -45,14 +45,14 @@
 			<div class="horizontal">
 				<div class="options">
 					<p>
-						<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtFromName} {$txtFromNameError}
 					</p>
 				</div>
 
 				<div class="options">
 					<p>
-						<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtFromEmail} {$txtFromEmailError}
 					</p>
 				</div>
@@ -66,7 +66,7 @@
 			<div class="horizontal">
 				<div class="options">
 					<p>
-						<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 						{$txtReplyToEmail} {$txtReplyToEmailError}
 					</p>
 				</div>
@@ -75,7 +75,7 @@
 
 		<div class="box">
 			<div class="heading ">
-				<h3>{$lblRecipients|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+				<h3>{$lblRecipients|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></h3>
 			</div>
 			<div class="options">
 				<ul class="inputList">
@@ -91,7 +91,7 @@
 
 		<div class="box">
 			<div class="heading ">
-				<h3>{$msgTemplateLanguage|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+				<h3>{$msgTemplateLanguage|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></h3>
 			</div>
 			<div class="options">
 				<ul class="inputList">
@@ -115,7 +115,7 @@
 	{form:step2}
 		<div class="box">
 			<div class="heading ">
-				<h3>{$lblChooseTemplate|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+				<h3>{$lblChooseTemplate|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></h3>
 			</div>
 			<div class="options">
 				<ul id="templateSelection" class="selectThumbList clearfix">
@@ -145,7 +145,7 @@
 	{form:step3}
 		<div class="box">
 			<div class="heading ">
-				<h3>{$lblSubject|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+				<h3>{$lblSubject|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></h3>
 			</div>
 			<div class="options bigInput">
 				{$txtSubject} {$txtSubjectError}
@@ -154,7 +154,7 @@
 
 		<div class="box">
 			<div class="heading ">
-				<h3>{$lblContent|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
+				<h3>{$lblContent|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></h3>
 			</div>
 			<div id="iframeBox">
 				<iframe id="contentBox" src="{$var|geturl:'edit_mailing_iframe'}&amp;id={$mailing.id}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
