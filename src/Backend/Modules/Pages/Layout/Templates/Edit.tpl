@@ -7,19 +7,19 @@
 			<div class="btn-group" role="group">
 				{option:showPagesAdd}
 				<a href="{$var|geturl:'add'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
-					<span class="glyphicon glyphicon-plus"></span>
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					<span>{$lblAdd|ucfirst}</span>
 				</a>
 				{/option:showPagesAdd}
 				{option:!item.is_hidden}
 				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" class="btn btn-default" target="_blank">
-					<span class="glyphicon glyphicon-search"></span>
+					<span class="glyphicon glyphicon-search"></span>&nbsp;
 					<span>{$lblView|ucfirst}</span>
 				</a>
 				{/option:!item.is_hidden}
 				{option:showPagesIndex}
 				<a href="{$var|geturl:'index'}" class="btn btn-primary" title="{$lblOverview|ucfirst}">
-					<span class="glyphicon glyphicon-chevron-left"></span>
+					<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
 					{$lblOverview|ucfirst}
 				</a>
 				{/option:showPagesIndex}

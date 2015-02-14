@@ -257,7 +257,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-					<button type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+					<button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
 				</div>
 			</div>
 		</div>
