@@ -13,10 +13,10 @@
 				{$txtTitle} {$txtTitleError}
 			</div>
 			{option:detailURL}
-			<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>
+			<p><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></p>
 			{/option:detailURL}
 			{option:!detailURL}
-			<p class="infoMessage">{$errNoModuleLinked}</p>
+			<p class="text-warning">{$errNoModuleLinked}</p>
 			{/option:!detailURL}
 		</div>
 	</div>
