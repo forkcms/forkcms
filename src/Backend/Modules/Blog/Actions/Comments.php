@@ -126,11 +126,14 @@ class Comments extends BackendBaseActionIndex
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'spam'
+            'spam',
+            false,
+            'form-control',
+            'form-control error'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeletePublished'));
+        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmPublishedToSpam'));
         $this->dgPublished->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -217,11 +220,14 @@ class Comments extends BackendBaseActionIndex
                 'spam' => BL::lbl('MoveToSpam'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'published'
+            'published',
+            false,
+            'form-control',
+            'form-control error'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
-        $ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteModeration'));
+        $ddmMassAction->setOptionAttributes('spam', array('data-target' => '#confirmModerationToSpam'));
         $this->dgModeration->setMassAction($ddmMassAction);
 
         // check if this action is allowed
@@ -306,10 +312,13 @@ class Comments extends BackendBaseActionIndex
                 'moderation' => BL::lbl('MoveToModeration'),
                 'delete' => BL::lbl('Delete'),
             ),
-            'published'
+            'published',
+            false,
+            'form-control',
+            'form-control error'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteSpam'));
         $this->dgSpam->setMassAction($ddmMassAction);
 
         // check if this action is allowed

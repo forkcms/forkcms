@@ -195,7 +195,7 @@ class Data extends BackendBaseActionIndex
 
         // mass action
         $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
-        $ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
+        $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDelete'));
         $this->dataGrid->setMassAction($ddmMassAction);
     }
 

@@ -59,7 +59,7 @@ class Add extends BackendBaseActionAdd
             null,
             75,
             'form-control passwordGenerator',
-            'error passwordGenerator'
+            'form-control error passwordGenerator'
         )->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addPassword('confirm_password', null, 75)->setAttributes(array('autocomplete' => 'off'));
         $this->frm->addText('name', null, 255);

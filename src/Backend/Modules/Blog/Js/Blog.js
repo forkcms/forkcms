@@ -28,8 +28,6 @@ jsBackend.blog.controls =
 	{
 		// variables
 		$saveAsDraft = $('#saveAsDraft');
-		$filter = $('#filter');
-		$filterCategory = $('#filter #category');
 		$addCategoryDialog = $('#addCategoryDialog');
 		$categoryTitle = $('#categoryTitle');
 		$categoryTitleError = $('#categoryTitleError');
@@ -38,11 +36,6 @@ jsBackend.blog.controls =
 		$saveAsDraft.on('click', function(e)
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />').submit();
-		});
-
-		$filterCategory.on('change', function(e)
-		{
-			$filter.submit();
 		});
 
 		if($addCategoryDialog.length > 0)

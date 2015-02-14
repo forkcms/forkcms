@@ -245,8 +245,14 @@
 					{/option:showPagesDelete}
 				</div>
 				<div class="btn-group pull-right" role="group">
-					<a href="#" id="saveAsDraft" class="btn btn-primary"><span class="glyphicon glyphicon-save"></span>&nbsp;{$lblSaveDraft|ucfirst}</a>
-					<button id="editButton" type="submit" name="edit" class="btn btn-primary"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{$lblSave|ucfirst}</button>
+					<a href="#" id="saveAsDraft" class="btn btn-primary">
+						<span class="glyphicon glyphicon-save"></span>&nbsp;
+						{$lblSaveDraft|ucfirst}
+					</a>
+					<button id="editButton" type="submit" name="edit" class="btn btn-primary">
+						<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+						{$lblSave|ucfirst}
+					</button>
 				</div>
 			</div>
 		</div>
