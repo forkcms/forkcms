@@ -84,8 +84,8 @@ class Edit extends BackendBaseActionEdit
             'tags',
             BackendTagsModel::getTags($this->URL->getModule(), $this->record['id']),
             null,
-            'inputText jsTagsBox',
-            'inputTextError jsTagsBox'
+            'form-control jsTagsBox',
+            'form-control error jsTagsBox'
         );
 
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

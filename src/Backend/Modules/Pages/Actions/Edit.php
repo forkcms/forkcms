@@ -245,7 +245,7 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'error title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control error title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $this->record['template_id']);
         $this->frm->addRadiobutton(

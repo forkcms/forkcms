@@ -78,6 +78,7 @@
 								<label for="sendEmailOnNewFeedback">
 									{$chkSendEmailOnNewFeedback} {$lblSendEmailOnNewFeedback|ucfirst}
 								</label>
+							</li>
 							<li class="checkbox">
 								<label for="spamfilter">
 									{$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}

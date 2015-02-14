@@ -125,7 +125,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', null, null, 'form-control title', 'error title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control error title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
@@ -269,7 +269,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('navigation_title');
 
         // tags
-        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'error jsTagsBox');
+        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control error jsTagsBox');
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);
