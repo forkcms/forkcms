@@ -76,7 +76,7 @@ class Edit extends BackendBaseActionEdit
 
         // create form
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['question'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['question'], null, 'form-control title', 'form-control error title');
         $this->frm->addEditor('answer', $this->record['answer']);
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
