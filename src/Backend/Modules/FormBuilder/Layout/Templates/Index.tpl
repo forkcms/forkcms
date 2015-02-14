@@ -1,24 +1,29 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblFormBuilder|ucfirst}</h2>
-
-    {option:showFormBuilderAdd}
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
-			<span>{$lblAdd|ucfirst}</span>
-		</a>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblFormBuilder|ucfirst}</h2>
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				{option:showFormBuilderAdd}
+				<a href="{$var|geturl:'add'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
+					<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+					{$lblAdd|ucfirst}
+				</a>
+				{/option:showFormBuilderAdd}
+			</div>
+		</div>
 	</div>
-    {/option:showFormBuilderAdd}
 </div>
-
-{option:dataGrid}
-	<div class="dataGridHolder">
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{option:dataGrid}
 		{$dataGrid}
+		{/option:dataGrid}
+		{option:!dataGrid}
+		<p>{$msgNoItems}</p>
+		{/option:!dataGrid}
 	</div>
-{/option:dataGrid}
-{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
-
+</div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

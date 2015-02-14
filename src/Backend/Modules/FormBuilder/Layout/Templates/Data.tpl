@@ -1,71 +1,86 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblFormBuilder|ucfirst}: {$lblFormData|sprintf:{$name}}</h2>
-
-	<div class="buttonHolderRight">
-		{option:showFormBuilderIndex}<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>{/option:showFormBuilderIndex}
-		{option:showFormBuilderExportData}<a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>{/option:showFormBuilderExportData}
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblFormData|sprintf:{$name}|ucfirst}</h2>
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				{option:showFormBuilderIndex}
+				<a href="{$var|geturl:'index'}" class="btn btn-default">
+					<span class="glyphicon glyphicon-chevron-left"></span>&nbsp;
+					{$lblOverview|ucfirst}
+				</a>
+				{/option:showFormBuilderIndex}
+				{option:showFormBuilderExportData}
+				<a href="{$var|geturl:'export_data'}&id={$id}&amp;start_date={$start_date}&amp;end_date={$end_date}" class="btn btn-default">
+					<span class="glyphicon glyphicon-export"></span>&nbsp;
+					{$lblExport|ucfirst}
+				</a>
+				{/option:showFormBuilderExportData}
+			</div>
+		</div>
 	</div>
 </div>
-
-<div class="dataGridHolder">
-	{form:filter}
-		<div class="dataFilter">
-
-			<input type="hidden" name="id" value="{$id}" />
-
-			<table>
-				<tbody>
-					<tr>
-						<td>
-							<div class="options">
-								<p>
-									<label for="startDate">{$lblStartDate|ucfirst}</label>
-									{$txtStartDate} {$txtStartDateError}
-								</p>
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{form:filter}
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="startDate">{$lblStartDate|ucfirst}</label>
+								{$txtStartDate} {$txtStartDateError}
 							</div>
-						</td>
-						<td>
-							<div class="options">
-								<p>
-									<label for="endDate">{$lblEndDate|ucfirst}</label>
-									{$txtEndDate} {$txtEndDateError}
-								</p>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group">
+								<label for="endDate">{$lblEndDate|ucfirst}</label>
+								{$txtEndDate} {$txtEndDateError}
 							</div>
-						</td>
-					</tr>
-				</tbody>
-				<tfoot>
-					<tr>
-						<td colspan="2">
-							<div class="options">
-								<div class="buttonHolder">
-									<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblUpdateFilter|ucfirst}" />
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tfoot>
-			</table>
-		</div>
-	{/form:filter}
-
-	{option:dataGrid}
+						</div>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="btn-toolbar">
+						<div class="btn-group pull-right">
+							<button id="search" type="submit" class="btn btn-primary" name="search">
+								{$lblUpdateFilter|ucfirst}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/form:filter}
+	</div>
+</div>
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{option:dataGrid}
 		<form action="{$var|geturl:'mass_data_action'}" method="get" class="forkForms">
-			<div class="dataGridHolder">
-				<input type="hidden" name="form_id" value="{$id}" />
-				{$dataGrid}
+			{$dataGrid}
+			<div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title h4">{$lblDelete|ucfirst}</span>
+						</div>
+						<div class="modal-body">
+							<p>{$msgConfirmMassDelete}</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+							<button type="submit" class="btn btn-primary">{$lblOK|ucfirst}</button>
+						</div>
+					</div>
+				</div>
 			</div>
 		</form>
-	{/option:dataGrid}
-	{option:!dataGrid}<p>{$msgNoData}</p>{/option:!dataGrid}
+		{/option:dataGrid}
+		{option:!dataGrid}
+		<p>{$msgNoData}</p>
+		{/option:!dataGrid}
+	</div>
 </div>
-
-<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-	<p>{$msgConfirmMassDelete}</p>
-</div>
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

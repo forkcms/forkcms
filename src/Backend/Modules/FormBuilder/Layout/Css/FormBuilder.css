@@ -225,10 +225,6 @@
 		border-bottom: 0;
 	}
 
-	.multipleTextWrapper {
-		float: left;
-	}
-
 	#tabTextareaProperties textarea {
 		width: 240px;
 	}
