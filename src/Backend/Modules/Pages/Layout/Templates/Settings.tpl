@@ -6,7 +6,7 @@
 	</div>
 </div>
 {form:settings}
-	<div class="row">
+	<div class="row fork-module-content">
 		<div class="col-md-12">
 			<div class="panel panel-default">
 				<div class="panel-heading">
@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="row">
+	<div class="row fork-module-actions">
 		<div class="col-md-12">
 			<div class="btn-toolbar">
 				<div class="btn-group pull-right" role="group">

@@ -49,7 +49,7 @@
 							<div class="col-md-8">
 								<div class="form-group optionsRTE">
 									<label for="answer">{$lblAnswer|ucfirst}
-										<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+										<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 									</label>
 									{$txtAnswer} {$txtAnswerError}
 								</div>
@@ -98,39 +98,45 @@
 								<h3>{$lblFeedback|ucfirst}</h3>
 							</div>
 						</div>
-						{option:feedback}
-						<p>
-							{$msgFeedbackInfo}
-						</p>
-						{iteration:feedback}
-						<div class="box feedback">
-							<div class="heading shortFeedback container">
-								<a href="#" class="icon iconCollapsed" title="open">
-									<span>
-										<label for="modules{$modules.label}">{$feedback.text|truncate:150}</label>
-									</span>
-								</a>
-							</div>
-							<div class="longFeedback options">
-								<p>
-									{$feedback.text}
-								</p>
-
-								{option:showFaqDeleteFeedback}
-								<p>
-									<a href="{$var|geturl:'delete_feedback'}&amp;id={$feedback.id}" class="button linkButton icon iconDelete">
-										<span>{$lblDelete|ucfirst}</span>
-									</a>
-								</p>
-								{/option:showFaqDeleteFeedback}
+						<div class="row">
+							<div class="col-md-12">
+								{option:feedback}
+								<p class="text-info">{$msgFeedbackInfo}</p>
+								<div class="panel-group" id="feedback" role="tablist" aria-multiselectable="false">
+									{iteration:feedback}
+									<div class="panel panel-default">
+										<div class="panel-heading" role="tab" id="feedback-heading-{$feedback.id}">
+											<h4 class="panel-title">
+												<a data-toggle="collapse" data-parent="#feedback" href="#feedback-collapse-{$feedback.id}" aria-expanded="true" aria-controls="feedback-collapse-{$feedback.id}">
+													{$feedback.text|truncate:150}
+												</a>
+											</h4>
+										</div>
+										<div id="feedback-collapse-{$feedback.id}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="feedback-heading-{$feedback.id}">
+											<div class="panel-body">
+												{$feedback.text}
+											</div>
+											{option:showFaqDeleteFeedback}
+											<div class="panel-footer">
+												<div class="btn-toolbar">
+													<div class="btn-group pull-left" role="group">
+														<a href="{$var|geturl:'delete_feedback'}&amp;id={$feedback.id}" class="btn btn-danger">
+															<span class="glyphicon glyphicon-trash"></span>
+															{$lblDelete|ucfirst}
+														</a>
+													</div>
+												</div>
+											</div>
+											{/option:showFaqDeleteFeedback}
+										</div>
+									</div>
+									{/iteration:feedback}
+								</div>
 							</div>
 						</div>
-						{/iteration:feedback}
 						{/option:feedback}
 						{option:!feedback}
-						<p>
-							{$msgNoFeedbackItems}
-						</p>
+						<p>{$msgNoFeedbackItems}</p>
 						{/option:!feedback}
 					</div>
 				</div>

@@ -17,7 +17,7 @@
 				<tr>
 					<td id="leftColumn">
 						<p>
-							<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 							{$txtTitle} {$txtTitleError}
 						</p>
 					</td>

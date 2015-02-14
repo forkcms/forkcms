@@ -16,21 +16,21 @@
 					<div class="form-group">
 						<label for="email">
 							{$lblEmail|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtEmail} {$txtEmailError}
 					</div>
 					<div class="form-group">
 						<label for="displayName">
 							{$lblDisplayName|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtDisplayName} {$txtDisplayNameError}
 					</div>
 					<div class="form-group">
 						<label for="password">
 							{$lblPassword|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField|ucfirst}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtPassword} {$txtPasswordError}
 					</div>

@@ -32,7 +32,7 @@
 						<div class="box">
 							<div class="heading">
 								<h3>
-									<label for="text">{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+									<label for="text">{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 								</h3>
 							</div>
 							<div class="optionsRTE">
@@ -158,7 +158,7 @@
 	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">
 		<div id="templateList">
 			<p>
-				<label for="categoryTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="categoryTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				<input type="text" name="categoryTitle" id="categoryTitle" class="inputText" maxlength="255" />
 				<span class="formError" id="categoryTitleError" style="display: none;">{$errFieldIsRequired|ucfirst}</span>
 			</p>

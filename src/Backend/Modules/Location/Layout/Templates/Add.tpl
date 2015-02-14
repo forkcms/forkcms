@@ -22,35 +22,35 @@
 					<div class="form-group">
 						<label for="street">
 							{$lblStreet|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtStreet} {$txtStreetError}
 					</div>
 					<div class="form-group">
 						<label for="number">
 							{$lblNumber|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtNumber} {$txtNumberError}
 					</div>
 					<div class="form-group">
 						<label for="zip">
 							{$lblZip|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtZip} {$txtZipError}
 					</div>
 					<div class="form-group">
 						<label for="city">
 							{$lblCity|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$txtCity} {$txtCityError}
 					</div>
 					<div class="form-group">
 						<label for="country">
 							{$lblCountry|ucfirst}
-							<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+							<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 						</label>
 						{$ddmCountry} {$ddmCountryError}
 					</div>

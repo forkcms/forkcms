@@ -1,3 +1,7 @@
+body {
+    overflow-y: scroll;
+}
+
 #content {
     padding-bottom: 50px;
 }

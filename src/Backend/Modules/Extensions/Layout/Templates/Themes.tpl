@@ -98,7 +98,7 @@
 				<div class="panel-heading">
 					<h3 class="panel-title">
 						{$lblInstalledThemes|ucfirst}&nbsp;
-						<abbr class="glyphicon glyphicon-info-sign" title="{$lblRequiredField}"></abbr>
+						<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
 					</h3>
 				</div>
 				<div class="panel-body">

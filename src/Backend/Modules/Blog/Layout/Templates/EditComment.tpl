@@ -17,11 +17,11 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="author">{$lblAuthor|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="author">{$lblAuthor|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtAuthor} {$txtAuthorError}
 			</p>
 			<p>
-				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
 			</p>
 			<p>
@@ -29,7 +29,7 @@
 				{$txtWebsite} {$txtWebsiteError}
 			</p>
 			<p>
-				<label for="text">{$lblText|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="text">{$lblText|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtText} {$txtTextError}
 			</p>
 		</div>
