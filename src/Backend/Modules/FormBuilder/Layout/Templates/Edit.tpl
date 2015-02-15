@@ -121,18 +121,18 @@
 											<div class="options">
 												<h3>{$lblFormElements|ucfirst}</h3>
 												<ul>
-													<li id="textboxSelector"><a href="#textbox" rel="textboxDialog" class="openFieldDialog">{$lblTextbox|ucfirst}</a></li>
-													<li id="textareaSelector"><a href="#textarea" rel="textareaDialog" class="openFieldDialog">{$lblTextarea|ucfirst}</a></li>
-													<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
-													<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="openFieldDialog">{$lblCheckbox|ucfirst}</a></li>
-													<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="openFieldDialog">{$lblRadiobutton|ucfirst}</a></li>
+													<li id="textboxSelector"><a href="#textbox" rel="textboxDialog" class="jsFieldDialogTrigger">{$lblTextbox|ucfirst}</a></li>
+													<li id="textareaSelector"><a href="#textarea" rel="textareaDialog" class="jsFieldDialogTrigger">{$lblTextarea|ucfirst}</a></li>
+													<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">{$lblDropdown|ucfirst}</a></li>
+													<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="jsFieldDialogTrigger">{$lblCheckbox|ucfirst}</a></li>
+													<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="jsFieldDialogTrigger">{$lblRadiobutton|ucfirst}</a></li>
 												</ul>
 											</div>
 											<div class="options">
 												<h3>{$lblTextElements|ucfirst}</h3>
 												<ul>
-													<li id="headingSelector"><a href="#heading" rel="headingDialog" class="openFieldDialog">{$lblHeading|ucfirst}</a></li>
-													<li id="paragraphSelector"><a href="#paragraph" rel="paragraphDialog" class="openFieldDialog">{$lblParagraph|ucfirst}</a></li>
+													<li id="headingSelector"><a href="#heading" rel="headingDialog" class="jsFieldDialogTrigger">{$lblHeading|ucfirst}</a></li>
+													<li id="paragraphSelector"><a href="#paragraph" rel="paragraphDialog" class="jsFieldDialogTrigger">{$lblParagraph|ucfirst}</a></li>
 												</ul>
 											</div>
 										</div>

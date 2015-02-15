@@ -1,5 +1,5 @@
 {* Dialog for a textbox *}
-<div class="modal fade jsDialog" id="textboxDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblTextbox|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="textboxDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblTextbox|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -102,14 +102,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="textboxDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="textboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a textarea *}
-<div class="modal fade jsDialog" id="textareaDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblTextarea|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="textareaDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblTextarea|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -202,14 +202,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a dropdown *}
-<div class="modal fade jsDialog" id="dropdownDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblDropdown|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="dropdownDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblDropdown|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -286,14 +286,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="dropdownDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="dropdownDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a radiobutton *}
-<div class="modal fade jsDialog" id="radiobuttonDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblRadiobutton|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="radiobuttonDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblRadiobutton|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -369,14 +369,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="radiobuttonDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="radiobuttonDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a checkbox *}
-<div class="modal fade jsDialog" id="checkboxDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblCheckbox|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="checkboxDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblCheckbox|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -452,14 +452,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="checkboxDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="checkboxDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for the submit button *}
-<div class="modal fade jsDialog" id="submitDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblSubmitButton|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="submitDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblSubmitButton|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -479,14 +479,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="submitDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="submitDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a heading *}
-<div class="modal fade jsDialog" id="headingDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblHeading|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="headingDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblHeading|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -504,14 +504,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="headingDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="headingDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
 </div>
 
 {* Dialog for a paragraph *}
-<div class="modal fade jsDialog" id="paragraphDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblContent|ucfirst}" aria-hidden="true">
+<div class="modal fade jsFieldDialog" id="paragraphDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblContent|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -525,7 +525,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-                <button id="paragraphDialogSubmit" type="button" class="btn btn-primary jsDialogSubmit">{$lblOK|ucfirst}</button>
+                <button id="paragraphDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
             </div>
         </div>
     </div>
