@@ -9,6 +9,7 @@ class InstallerControllerTest extends WebTestCase
 {
     public function testnoStepActionAction()
     {
+        var_dump(static::getPhpUnitXmlDir());
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/install');
