@@ -20,8 +20,8 @@ class InstallerControllerTest extends WebTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertRegExp(
-            '/\/install\/1(\/|)$/',
+        $this->assertStringEndsWith(
+            '/install/1',
             $client->getHistory()->current()->getUri()
         );
     }
@@ -29,6 +29,8 @@ class InstallerControllerTest extends WebTestCase
     public function testInstallationProcess()
     {
         $client = static::createClient();
+
+        // make sure we have a clean slate and our parametersfile is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
         $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
 
@@ -38,6 +40,7 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $this->runTroughStep4($crawler, $client);
         $crawler = $this->runTroughStep5($crawler, $client);
 
+        // put back our parameters file
         $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
     }
 
@@ -62,8 +65,8 @@ class InstallerControllerTest extends WebTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertRegExp(
-            '/\/install\/3(\/|)$/',
+        $this->assertStringEndsWith(
+            '/install/3',
             $client->getHistory()->current()->getUri()
         );
 
@@ -81,8 +84,8 @@ class InstallerControllerTest extends WebTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertRegExp(
-            '/\/install\/4(\/|)$/',
+        $this->assertStringEndsWith(
+            '/install/4',
             $client->getHistory()->current()->getUri()
         );
 
@@ -119,8 +122,8 @@ class InstallerControllerTest extends WebTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertRegExp(
-            '/\/install\/5(\/|)$/',
+        $this->assertStringEndsWith(
+            '/install/5',
             $client->getHistory()->current()->getUri()
         );
 
@@ -146,8 +149,8 @@ class InstallerControllerTest extends WebTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertRegExp(
-            '/\/install\/6(\/|)$/',
+        $this->assertStringEndsWith(
+            '/install/6',
             $client->getHistory()->current()->getUri()
         );
         $this->assertGreaterThan(
