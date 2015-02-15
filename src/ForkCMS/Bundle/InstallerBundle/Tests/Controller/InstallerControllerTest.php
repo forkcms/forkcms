@@ -4,6 +4,7 @@ namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\FileSystem\FileSystem;
 
 class InstallerControllerTest extends WebTestCase
 {
@@ -29,18 +30,15 @@ class InstallerControllerTest extends WebTestCase
     {
         $client = static::createClient();
         $this->emptyTestDatabase($client->getContainer()->get('database'));
+        $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
         $crawler = $this->runTroughStep3($crawler, $client);
         $crawler = $this->runTroughStep4($crawler, $client);
-    }
+        $crawler = $this->runTroughStep5($crawler, $client);
 
-    private function emptyTestDatabase($database)
-    {
-        foreach ($database->getTables() as $table) {
-            $database->drop($table);
-        }
+        $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
     }
 
     private function runTroughStep2($crawler, $client)
@@ -127,5 +125,63 @@ class InstallerControllerTest extends WebTestCase
         );
 
         return $crawler;
+    }
+
+    private function runTroughStep5($crawler, $client)
+    {
+        $form = $crawler->selectButton('Finish installation')->form();
+        $container = $client->getContainer();
+        $crawler = $client->submit(
+            $form,
+            array(
+                'install_login[email]' => 'test@test.com',
+                'install_login[password][first]' => 'password',
+                'install_login[password][second]' => 'password',
+            )
+        );
+        $crawler = $client->followRedirect();
+
+        // we should be redirected to step 6
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertRegExp(
+            '/\/install\/6(\/|)$/',
+            $client->getHistory()->current()->getUri()
+        );
+
+        return $crawler;
+    }
+
+    private function emptyTestDatabase($database)
+    {
+        foreach ($database->getTables() as $table) {
+            $database->drop($table);
+        }
+    }
+
+    private function backupParametersFile($kernelDir)
+    {
+        $fs = new FileSystem();
+        if ($fs->exists($kernelDir . '/config/parameters.yml')) {
+            $fs->copy(
+                $kernelDir . '/config/parameters.yml',
+                $kernelDir . '/config/parameters.yml~backup'
+            );
+        }
+    }
+
+    private function putParametersFileBack($kernelDir)
+    {
+        $fs = new FileSystem();
+        if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
+            $fs->copy(
+                $kernelDir . '/config/parameters.yml~backup',
+                $kernelDir . '/config/parameters.yml',
+                true
+            );
+            $fs->remove($kernelDir . '/config/parameters.yml~backup');
+        }
     }
 }
