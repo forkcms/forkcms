@@ -8,10 +8,19 @@
          bootstrap="../autoload.php"
 >
     <testsuites>
-        <testsuite name="Project Test Suite">
+        <testsuite name="unit">
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
+            <exclude>../src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
+        </testsuite>
+    </testsuites>
+
+    <testsuites>
+        <testsuite name="functional">
+            <directory>../src/*/*Bundle/Tests/Controller</directory>
+            <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
+            <directory>../src/*Bundle/Tests/Controller</directory>
         </testsuite>
     </testsuites>
 
