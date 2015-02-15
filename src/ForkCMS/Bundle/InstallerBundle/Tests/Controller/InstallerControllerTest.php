@@ -32,6 +32,7 @@ class InstallerControllerTest extends WebTestCase
 
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
+        $crawler = $this->runTroughStep3($crawler, $client);
     }
 
     private function emptyTestDatabase($database)
@@ -64,6 +65,25 @@ class InstallerControllerTest extends WebTestCase
         );
         $this->assertRegExp(
             '/\/install\/3(\/|)$/',
+            $client->getHistory()->current()->getUri()
+        );
+
+        return $crawler;
+    }
+
+    private function runTroughStep3($crawler, $client)
+    {
+        $form = $crawler->selectButton('Next')->form();
+        $crawler = $client->submit($form, array());
+        $crawler = $client->followRedirect();
+
+        // we should still be on the index page
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertRegExp(
+            '/\/install\/4(\/|)$/',
             $client->getHistory()->current()->getUri()
         );
 
