@@ -1,5 +1,7 @@
 # README
 
+[![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
+
 ## Installation
 
 1. Upload all of the content into your document root
