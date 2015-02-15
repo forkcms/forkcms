@@ -13,7 +13,7 @@ matrix:
         - php: hhvm-nightly
 
 script:
-    - vendor/bin/phpunit -c app/
+    - phpunit -c app/
 
 before_script:
     - composer install
