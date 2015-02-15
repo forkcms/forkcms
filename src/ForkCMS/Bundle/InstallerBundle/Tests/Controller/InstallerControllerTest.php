@@ -33,6 +33,7 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->request('GET', '/install/2');
         $crawler = $this->runTroughStep2($crawler, $client);
         $crawler = $this->runTroughStep3($crawler, $client);
+        $crawler = $this->runTroughStep4($crawler, $client);
     }
 
     private function emptyTestDatabase($database)
@@ -58,7 +59,7 @@ class InstallerControllerTest extends WebTestCase
 
         $crawler = $client->followRedirect();
 
-        // we should still be on the index page
+        // we should be redirected to step 3
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
@@ -77,13 +78,51 @@ class InstallerControllerTest extends WebTestCase
         $crawler = $client->submit($form, array());
         $crawler = $client->followRedirect();
 
-        // we should still be on the index page
+        // we should be redirected to step 4
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
         $this->assertRegExp(
             '/\/install\/4(\/|)$/',
+            $client->getHistory()->current()->getUri()
+        );
+
+        return $crawler;
+    }
+
+    private function runTroughStep4($crawler, $client)
+    {
+        // first submit with incorrect data
+        $form = $crawler->selectButton('Next')->form();
+        $crawler = $client->submit($form, array());
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('div.errorMessage:contains("Problem with database credentials")')->count()
+        );
+
+        // submit with correct database credentials
+        $form = $crawler->selectButton('Next')->form();
+        $container = $client->getContainer();
+        $crawler = $client->submit(
+            $form,
+            array(
+                'install_database[dbHostname]' => $container->getParameter('database.host'),
+                'install_database[dbPort]' => $container->getParameter('database.port'),
+                'install_database[dbDatabase]' => $container->getParameter('database.name') . '_test',
+                'install_database[dbUsername]' => $container->getParameter('database.user'),
+                'install_database[dbPassword]' => $container->getParameter('database.password'),
+            )
+        );
+        $crawler = $client->followRedirect();
+
+        // we should be redirected to step 5
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertRegExp(
+            '/\/install\/5(\/|)$/',
             $client->getHistory()->current()->getUri()
         );
 
