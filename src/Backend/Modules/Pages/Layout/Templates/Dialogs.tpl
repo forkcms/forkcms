@@ -1,6 +1,4 @@
-{*
-This is the HTML content, hidden
-*}
+{* This is the HTML content, hidden *}
 <div class="modal fade" id="editContent" tabindex="-1" role="dialog" aria-labelledby="{$lblEditor|ucfirst}"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -43,10 +41,7 @@ This is the HTML content, hidden
     </div>
 </div>
 
-{*
-Dialog to select the content (editor, module or widget).
-Do not change the ID!
-*}
+{* Dialog to select the content (editor, module or widget). Do not change the ID! *}
 <div class="modal fade" id="addBlock" tabindex="-1" role="dialog" aria-labelledby="{$lblChooseContent|ucfirst}"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -87,10 +82,7 @@ Do not change the ID!
     </div>
 </div>
 
-{*
-Dialog to select another template.
-Do not change the ID!
-*}
+{* Dialog to select another template. Do not change the ID! *}
 <div class="modal fade" id="changeTemplate" tabindex="-1" role="dialog"
      aria-labelledby="{$lblChooseATemplate|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
@@ -131,10 +123,7 @@ Do not change the ID!
     </div>
 </div>
 
-{*
-Dialog to confirm block removal.
-Do not change the ID!
-*}
+{* Dialog to confirm block removal. Do not change the ID! *}
 <div class="modal fade" id="confirmDeleteBlock" tabindex="-1" role="dialog" aria-labelledby="{$lblDeleteBlock|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -152,9 +141,7 @@ Do not change the ID!
     </div>
 </div>
 
-{*
-Text editor block
-*}
+{* Text editor block *}
 <div class="modal fork-modal-ckeditor fade" id="blockHtml" tabindex="-1" role="dialog" aria-labelledby="{$lblEditor|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -181,9 +168,7 @@ Text editor block
     </div>
 </div>
 
-{*
-Page delete confirm block
-*}
+{* Page delete confirm block *}
 {option:item}
 <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
     <div class="modal-dialog">
