@@ -144,13 +144,15 @@ jsBackend.formBuilder.fields =
      */
     bindDialogs: function () {
         // initialize
-        $('.jsDialog').each(function () {
+        $('.jsFieldDialog').each(function () {
             // get id
             var id = $(this).attr('id');
 
             // only when set
             if (id !== '') {
-                $('#' + id).find('.jsDialogSubmit').on('click', function (e) {
+                $dialog = $('#' + id);
+
+                $dialog.find('.jsFieldDialogSubmit').on('click', function (e) {
                     e.preventDefault();
 
                     // save/validate by type
@@ -183,7 +185,7 @@ jsBackend.formBuilder.fields =
                     }
                 });
 
-                $('#' + id).on('shown.bs.modal', function (e) {
+                $dialog.on('shown.bs.modal', function (e) {
                     // bind special boxes
                     if (id == 'dropdownDialog') {
                         $('input#dropdownValues').multipleTextbox({
@@ -223,7 +225,7 @@ jsBackend.formBuilder.fields =
                     jsBackend.formBuilder.fields.toggleValidationErrors(id);
                 });
 
-                $('#' + id).on('hide.bs.modal', function (e) {
+                $dialog.on('hide.bs.modal', function (e) {
                     // no items message
                     jsBackend.formBuilder.fields.toggleNoItems();
 
@@ -237,7 +239,7 @@ jsBackend.formBuilder.fields =
         });
 
         // bind clicks
-        $('.openFieldDialog').on('click', function (e) {
+        $('.jsFieldDialogTrigger').on('click', function (e) {
             // prevent default
             e.preventDefault();
 
