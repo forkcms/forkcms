@@ -2,14 +2,13 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use ForkCMS\Bundle\InstallerBundle\Test\WebTestCase;
 use Symfony\Component\FileSystem\FileSystem;
 
 class InstallerControllerTest extends WebTestCase
 {
     public function testnoStepActionAction()
     {
-        var_dump(static::getPhpUnitXmlDir());
         $client = static::createClient();
 
         $crawler = $client->request('GET', '/install');
