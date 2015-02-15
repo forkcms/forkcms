@@ -150,6 +150,10 @@ class InstallerControllerTest extends WebTestCase
             '/\/install\/6(\/|)$/',
             $client->getHistory()->current()->getUri()
         );
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('h2:contains("Installation complete")')->count()
+        );
 
         return $crawler;
     }
