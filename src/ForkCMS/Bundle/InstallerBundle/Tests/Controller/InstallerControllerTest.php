@@ -3,7 +3,6 @@
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\FileSystem\FileSystem;
 
 class InstallerControllerTest extends WebTestCase
