@@ -11,3 +11,31 @@ matrix:
     allow_failures:
         - php: hhvm
         - php: hhvm-nightly
+
+script:
+    - vendor/bin/phpunit -c app/
+
+before_script:
+    - composer install
+    - mysql -e 'create database fork_test'
+    - touch app/config/parameters.yml
+    - cat "parameters:" >> app/config/parameters.yml
+    - cat "  database.driver:        mysql" >> app/config/parameters.yml
+    - cat "  database.host:          localhost" >> app/config/parameters.yml
+    - cat "  database.port:          3306" >> app/config/parameters.yml
+    - cat "  database.name:          fork" >> app/config/parameters.yml
+    - cat "  database.user:          travis" >> app/config/parameters.yml
+    - cat "  database.password:      ''" >> app/config/parameters.yml
+    - cat "  kernel.secret:          hJkHiixy9xOd2fc8ovoSjNHjPlSZl8E0" >> app/config/parameters.yml
+    - cat "  fork.debug_email:       ''" >> app/config/parameters.yml
+    - cat "  fork.debug_message:     'Internal error.'" >> app/config/parameters.yml
+    - cat "  fork.version:           '3.8.7'" >> app/config/parameters.yml
+    - cat "  site.protocol:          http" >> app/config/parameters.yml
+    - cat "  site.domain:            fork.local" >> app/config/parameters.yml
+    - cat "  site.default_title:     Fork CMS" >> app/config/parameters.yml
+    - cat "  site.multilanguage:     true" >> app/config/parameters.yml
+    - cat "  site.default_language:  en" >> app/config/parameters.yml
+    - cat "  site.path_www:          %kernel.root_dir%/.." >> app/config/parameters.yml
+    - cat "  site.path_library:      %site.path_www%/library" >> app/config/parameters.yml
+    - cat "  action.group_tag:       \@actiongroup" >> app/config/parameters.yml
+    - cat "  action.rights_level:    7" >> app/config/parameters.yml
