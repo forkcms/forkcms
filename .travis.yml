@@ -25,11 +25,11 @@ before_script:
     - cat "  database.port:          3306" >> app/config/parameters.yml
     - cat "  database.name:          fork" >> app/config/parameters.yml
     - cat "  database.user:          travis" >> app/config/parameters.yml
-    - cat "  database.password:      ''" >> app/config/parameters.yml
+    - cat "  database.password:      " >> app/config/parameters.yml
     - cat "  kernel.secret:          hJkHiixy9xOd2fc8ovoSjNHjPlSZl8E0" >> app/config/parameters.yml
-    - cat "  fork.debug_email:       ''" >> app/config/parameters.yml
-    - cat "  fork.debug_message:     'Internal error.'" >> app/config/parameters.yml
-    - cat "  fork.version:           '3.8.7'" >> app/config/parameters.yml
+    - cat "  fork.debug_email:       " >> app/config/parameters.yml
+    - cat "  fork.debug_message:     Internal error." >> app/config/parameters.yml
+    - cat "  fork.version:           3.8.7" >> app/config/parameters.yml
     - cat "  site.protocol:          http" >> app/config/parameters.yml
     - cat "  site.domain:            fork.local" >> app/config/parameters.yml
     - cat "  site.default_title:     Fork CMS" >> app/config/parameters.yml
