@@ -501,8 +501,6 @@ jsBackend.FormBuilder.Fields =
 
                             // submit edit
                             else if (data.data.field.type == 'submit') {
-                                console.log($('#submitId'));
-
                                 // fill in form
                                 $('#submitId').val(data.data.field.id);
                                 $('#submit').val(utils.string.htmlDecode(data.data.field.settings.values));
