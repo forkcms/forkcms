@@ -2,7 +2,7 @@
 	<div class="row">
 		{option:plaintext}
 		<div class="col-md-8">
-			<p>{$content}</p>
+			{$content}
 		</div>
 		{/option:plaintext}
 		{option:simple}
@@ -40,15 +40,17 @@
 		<div class="col-md-4">
 			<div class="btn-toolbar">
 				<div class="btn-group pull-right" role="group">
-					<a class="btn btn-danger jsDeleteField" href="#delete-{$id}" rel="{$id}" title="{$lblDelete}">
-						<span class="glyphicon glyphicon-trash"></span>
-					</a>
-					<a class="btn btn-default jsEditField" href="#edit-{$id}" rel="{$id}" title="{$lblEdit}">
-						<span class="glyphicon glyphicon-pencil"></span>
-					</a>
+					<span class="btn dragAndDropHandle">
+						<span class="glyphicon glyphicon-sort"></span>
+					</span>
 				</div>
 				<div class="btn-group pull-right" role="group">
-					<span class="dragAndDropHandle"></span>
+					<a class="btn btn-danger jsFieldDelete" href="#delete-{$id}" rel="{$id}" title="{$lblDelete}">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
+					<a class="btn btn-default jsFieldEdit" href="#edit-{$id}" rel="{$id}" title="{$lblEdit}">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</a>
 				</div>
 			</div>
 		</div>

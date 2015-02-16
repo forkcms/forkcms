@@ -1,19 +1,6 @@
-#tabFields span.dragAndDropHandle {
-    width: 22px;
-    height: 22px;
-    float: right;
-    border: 1px solid #ddd;
-    margin-left: 12px;
-    background: #fafafa url(../images/fork_icons.png) no-repeat 4px -22px;
-    cursor: move;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-}
-
-#fieldsHolder input.inputText[disabled="disabled"], #fieldsHolder input.inputPassword[disabled="disabled"] {
-    background: url(../../../../Core/Layout/images/ds.png) repeat-x #fff;
-    color: #666;
+#fieldsHolder h3 {
+    margin: 0;
+    line-height: 1.42;
 }
 
 #formElements li a {

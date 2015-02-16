@@ -16,7 +16,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tabTextboxBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -29,8 +29,8 @@
                                         {$lblLabel|ucfirst}
                                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                     </label>
+                                    <p id="textboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextboxLabel}
-                                    <p id="textboxLabelError" class="text-danger" style="display: none;"></p>
                                 </div>
                             </div>
                         </div>
@@ -70,8 +70,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="textboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextboxRequiredErrorMessage}
-                                        <p id="textboxRequiredErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                                 <div class="jsValidation" style="display: none;">
@@ -91,8 +91,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="textboxErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextboxErrorMessage}
-                                        <p id="textboxErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +117,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="textarea_id" id="textareaId" value="" />
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#tabTextareaBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
                     </li>
@@ -126,7 +126,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tabTextareaBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -139,8 +139,8 @@
                                         {$lblLabel|ucfirst}
                                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                     </label>
+                                    <p id="textareaLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextareaLabel}
-                                    <p id="textareaLabelError" class="text-danger" style="display: none;"></p>
                                 </div>
                             </div>
                         </div>
@@ -170,8 +170,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="textareaRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaRequiredErrorMessage}
-                                        <p id="textareaRequiredErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                                 <div class="jsValidation" style="display: none;">
@@ -191,8 +191,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaErrorMessage}
-                                        <p id="textareaErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +217,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="dropdown_id" id="dropdownId" value="" />
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#tabDropdownBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
                     </li>
@@ -226,7 +226,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tabDropdownBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDropdownBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -239,13 +239,13 @@
                                         {$lblLabel|ucfirst}
                                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                     </label>
+                                    <p id="dropdownLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtDropdownLabel}
-                                    <p id="dropdownLabelError" class="text-danger" style="display: none;"></p>
                                 </div>
                                 <div class="form-group">
                                     <label for="checkboxValues">{$lblValues|ucfirst}</label>
+                                    <p id="dropdownValuesError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtDropdownValues} {$txtDropdownValuesError}
-                                    <p id="dropdownValuesError" class="text-danger" style="display: none;"></p>
                                 </div>
                             </div>
                         </div>
@@ -275,8 +275,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="dropdownRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtDropdownRequiredErrorMessage}
-                                        <p id="dropdownRequiredErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                             </div>
@@ -301,7 +301,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="radiobutton_id" id="radiobuttonId" value="" />
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#tabRadiobuttonBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
                     </li>
@@ -310,7 +310,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tabRadiobuttonBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabRadiobuttonBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -323,8 +323,8 @@
                                         {$lblLabel|ucfirst}
                                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                     </label>
+                                    <p id="radiobuttonLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtRadiobuttonLabel}
-                                    <p id="radiobuttonLabelError" class="text-danger" style="display: none;"></p>
                                 </div>
                                 <div class="form-group">
                                     <label for="checkboxValues">{$lblValues|ucfirst}</label>
@@ -358,8 +358,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="radiobuttonRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtRadiobuttonRequiredErrorMessage}
-                                        <p id="radiobuttonRequiredErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                             </div>
@@ -384,7 +384,7 @@
             </div>
             <div class="modal-body">
                 <input type="hidden" name="checkbox_id" id="checkboxId" value="" />
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
                     <li role="presentation" class="active">
                         <a href="#tabCheckboxBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
                     </li>
@@ -393,7 +393,7 @@
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="tabCheckboxBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabCheckboxBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -406,8 +406,8 @@
                                         {$lblLabel|ucfirst}
                                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                     </label>
+                                    <p id="checkboxLabelError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtCheckboxLabel}
-                                    <p id="checkboxLabelError" class="text-danger" style="display: none;"></p>
                                 </div>
                                 <div class="form-group">
                                     <label for="checkboxValues">{$lblValues|ucfirst}</label>
@@ -441,8 +441,8 @@
                                             {$lblErrorMessage|ucfirst}
                                             <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                                         </label>
+                                        <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtCheckboxRequiredErrorMessage}
-                                        <p id="checkboxRequiredErrorMessageError" class="text-danger" style="display: none;"></p>
                                     </div>
                                 </div>
                             </div>
@@ -466,15 +466,14 @@
                 <span class="modal-title h4">{$lblSubmitButton|ucfirst}</span>
             </div>
             <div class="modal-body">
+                <input type="hidden" name="submit_id" id="submitId" value="" />
                 <div class="form-group">
                     <label for="submit">
                         {$lblContent|ucfirst}
                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                     </label>
+                    <p id="submitError" class="text-danger jsFieldError" style="display: none;"></p>
                     {$txtSubmit}
-                    <div class="jsValidation">
-                        <p id="submitError" class="text-danger" style="display: none;"></p>
-                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -498,8 +497,8 @@
                         {$lblContent|ucfirst}
                         <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
                     </label>
+                    <p id="headingError" class="text-danger jsFieldError" style="display: none;"></p>
                     {$txtHeading}
-                    <p id="headingError" class="text-danger" style="display: none;"></p>
                 </div>
             </div>
             <div class="modal-footer">
@@ -519,8 +518,8 @@
             </div>
             <div class="modal-body">
                 <div class="form-group">
+                    <p id="paragraphError" class="text-danger jsFieldError" style="display: none;"></p>
                     {$txtParagraph}
-                    <p id="paragraphError" class="text-danger" style="display: none;"></p>
                 </div>
             </div>
             <div class="modal-footer">

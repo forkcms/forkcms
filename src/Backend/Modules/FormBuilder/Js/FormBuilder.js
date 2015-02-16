@@ -97,7 +97,7 @@ jsBackend.FormBuilder.Fields =
      */
     bindDelete: function () {
         // get all delete buttons
-        $(document).on('click', '.jsDeleteField', function (e) {
+        $(document).on('click', '.jsFieldDelete', function (e) {
             // prevent default
             e.preventDefault();
 
@@ -309,7 +309,7 @@ jsBackend.FormBuilder.Fields =
      */
     bindEdit: function () {
         // get all delete buttons
-        $(document).on('click', '.jsEditField', function (e) {
+        $(document).on('click', '.jsFieldEdit', function (e) {
             // prevent default
             e.preventDefault();
 
@@ -501,6 +501,8 @@ jsBackend.FormBuilder.Fields =
 
                             // submit edit
                             else if (data.data.field.type == 'submit') {
+                                console.log($('#submitId'));
+
                                 // fill in form
                                 $('#submitId').val(data.data.field.id);
                                 $('#submit').val(utils.string.htmlDecode(data.data.field.settings.values));
@@ -589,7 +591,7 @@ jsBackend.FormBuilder.Fields =
         var selectedValue = $(defaultElement).find(':selected').val();
 
         // clear values except the first empty one
-        $(defaultElement).find('option[value!=]').remove();
+        $(defaultElement).find('option[value!=""]').remove();
 
         // add items
         $(items).each(function (k, v) {
@@ -619,7 +621,7 @@ jsBackend.FormBuilder.Fields =
         jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation');
 
         // clear form errors
-        $('#' + id + ' .formError').html('');
+        $('#' + id + ' .jsFieldError').html('');
 
         // select first tab
         $('#' + id + ' .tabs').tabs('select', 0);
@@ -654,7 +656,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -722,7 +724,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -780,7 +782,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -835,7 +837,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -894,7 +896,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -1011,7 +1013,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -1079,7 +1081,7 @@ jsBackend.FormBuilder.Fields =
                 // success
                 if (data.code == 200) {
                     // clear errors
-                    $('.formError').html('');
+                    $('.jsFieldError').html('');
 
                     // form contains errors
                     if (typeof data.data.errors != 'undefined') {
@@ -1157,24 +1159,24 @@ jsBackend.FormBuilder.Fields =
      */
     toggleValidationErrors: function (id) {
         // remove highlights
-        $('#' + id + ' .ui-tabs-nav a').parent().removeClass('ui-state-error');
+        $('#' + id + ' .jsFieldTabsNav li').removeClass('danger');
 
         // loop tabs
-        $('#' + id + ' .tabs .ui-tabs-panel').each(function () {
+        $('#' + id + ' .jsFieldTab').each(function () {
             // tab
             var tabId = $(this).attr('id');
 
             // loop tab errors
-            $(this).find('.formError').each(function () {
+            $(this).find('.jsFieldError').each(function () {
                 // has a message so highlight tab
                 if ($(this).html() !== '') {
-                    $('#' + id + ' .ui-tabs-nav a[href="#' + tabId + '"]').parent().addClass('ui-state-error');
+                    $('#' + id + ' .jsFieldTabsNav a[href="#' + tabId + '"]').closest('li').addClass('danger');
                 }
             });
         });
 
         // loop error fields
-        $("#" + id).find('.formError').each(function () {
+        $("#" + id).find('.jsFieldError').each(function () {
             // has a message
             if ($(this).html() !== '') $(this).show();
 
