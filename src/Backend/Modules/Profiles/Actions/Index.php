@@ -155,7 +155,7 @@ class Index extends BackendBaseActionIndex
             'addToGroup',
             false,
             'form-control',
-            'form-control error'
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'massAction');
         $ddmMassAction->setOptionAttributes('addToGroup', array(

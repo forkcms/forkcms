@@ -129,7 +129,7 @@ class Comments extends BackendBaseActionIndex
             'spam',
             false,
             'form-control',
-            'form-control error'
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionPublished');
         $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeletePublished'));
@@ -223,7 +223,7 @@ class Comments extends BackendBaseActionIndex
             'published',
             false,
             'form-control',
-            'form-control error'
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionModeration');
         $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteModeration'));
@@ -315,7 +315,7 @@ class Comments extends BackendBaseActionIndex
             'published',
             false,
             'form-control',
-            'form-control error'
+            'form-control danger'
         );
         $ddmMassAction->setAttribute('id', 'actionSpam');
         $ddmMassAction->setOptionAttributes('delete', array('data-target' => '#confirmDeleteSpam'));
