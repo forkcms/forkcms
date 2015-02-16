@@ -68,7 +68,8 @@ class TestEmailConnection extends BackendBaseAJAXAction
                 \SpoonFilter::getPostValue('smtp_server', null, ''),
                 \SpoonFilter::getPostValue('smtp_port', null, ''),
                 \SpoonFilter::getPostValue('smtp_username', null, ''),
-                \SpoonFilter::getPostValue('smtp_password', null, '')
+                \SpoonFilter::getPostValue('smtp_password', null, ''),
+                \SpoonFilter::getPostValue('smtp_secure_layer', null, '')
             );
             $mailer = \Swift_Mailer::newInstance($transport);
 
