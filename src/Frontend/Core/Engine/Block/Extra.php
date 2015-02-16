@@ -128,7 +128,7 @@ class Extra extends FrontendBaseObject
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
             throw new FrontendException(
-                'The action file is present, but the class name should be: ' . $actionClassName . '.'
+                'The action file is present, but the class name should be: ' . $actionClass . '.'
             );
         }
 
