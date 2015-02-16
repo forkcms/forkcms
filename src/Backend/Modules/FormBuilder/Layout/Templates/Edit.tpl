@@ -109,7 +109,7 @@
 												{$btnSubmitField}
 											</div>
 											<div class="btn-group pull-right" role="group">
-												<a href="#edit-{$submitId}" class="btn btn-default" rel="{$submitId}" title="{$lblEdit}">
+												<a href="#edit-{$submitId}" class="btn btn-default jsFieldEdit" rel="{$submitId}" title="{$lblEdit}">
 													<span class="glyphicon glyphicon-pencil"></span>
 												</a>
 											</div>

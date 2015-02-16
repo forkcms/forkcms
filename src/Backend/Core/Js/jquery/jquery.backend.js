@@ -1342,7 +1342,7 @@
 				'		<div class="form-group">' +
 				'			<input class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" />' +
 				'		</div>' +
-				'		<a href="#" id="addButton-' + id + '" class="btn btn-primary">' +
+				'		<a href="#" id="addButton-' + id + '" class="btn btn-success btn-xs">' +
 				'       	<span class="glyphicon glyphicon-plus"></span>' +
 				(options.showIconOnly?'':'	    	<span>' + options.addLabel + '</span>') +
 				'		</a>' +
@@ -1549,7 +1549,7 @@
 								'		<div class="form-group">' +
 								'			<input class="form-control dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" />' +
 								'		</div>' +
-								'		<a href="#" class="btn btn-danger deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
 								'       	<span class="glyphicon glyphicon-trash"></span>' +
 								'			<span>' + options.removeLabel + '</span>' +
 								'		</a>' +
