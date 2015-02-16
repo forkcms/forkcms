@@ -1,3 +1,11 @@
+3.8.8 (2015-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+* Core: fix not correctly thrown exception
+
 3.8.7 (2015-02-13)
 --
 Improvements:
