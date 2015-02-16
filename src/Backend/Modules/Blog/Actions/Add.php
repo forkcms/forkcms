@@ -70,7 +70,7 @@ class Add extends BackendBaseActionAdd
         $categories['new_category'] = \SpoonFilter::ucfirst(BL::getLabel('AddCategory'));
 
         // create elements
-        $this->frm->addText('title', null, null, 'form-control title', 'form-control error title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('text');
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
@@ -80,7 +80,7 @@ class Add extends BackendBaseActionAdd
             $this->frm->getField('category_id')->setDefaultElement('');
         }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control error jsTagsBox');
+        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control danger jsTagsBox');
         $this->frm->addDate('publish_on_date');
         $this->frm->addTime('publish_on_time');
         if ($this->imageIsAllowed) {

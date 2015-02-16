@@ -67,7 +67,7 @@ class Index extends BackendBaseActionIndex
             'delete',
             false,
             'form-control',
-            'form-control error'
+            'form-control danger'
         );
         $ddmMassAction->setOptionAttributes('delete', array(
             'data-target' => '#confirmDelete'

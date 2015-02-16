@@ -66,7 +66,7 @@ class EditSynonym extends BackendBaseActionEdit
             $this->record['synonym'],
             null,
             'form-control synonymBox',
-            'form-control error synonymBox'
+            'form-control danger synonymBox'
         );
     }
 

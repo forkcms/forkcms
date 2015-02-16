@@ -3,7 +3,7 @@
  * @author    Thomas Deceuninck <thomas@fronto.be>
  * @author    Tijs Verkoyen <tijs@sumocoders.be>
  */
-jsBackend.formBuilder =
+jsBackend.FormBuilder =
 {
     /**
      * Current form
@@ -19,15 +19,15 @@ jsBackend.formBuilder =
         $formId = $('#formId');
 
         // fields handler
-        jsBackend.formBuilder.fields.init();
+        jsBackend.FormBuilder.Fields.init();
 
         // get form id
-        jsBackend.formBuilder.formId = $formId.val();
+        jsBackend.FormBuilder.formId = $formId.val();
 
         // hide or show the email based on the method
         if ($selectMethod.length > 0) {
-            jsBackend.formBuilder.handleMethodField();
-            $(document).on('change', 'select#method', jsBackend.formBuilder.handleMethodField);
+            jsBackend.FormBuilder.handleMethodField();
+            $(document).on('change', 'select#method', jsBackend.FormBuilder.handleMethodField);
         }
 
         $('#email').multipleTextbox({
@@ -54,7 +54,7 @@ jsBackend.formBuilder =
     }
 };
 
-jsBackend.formBuilder.fields =
+jsBackend.FormBuilder.Fields =
 {
     /**
      * Default error messages
@@ -74,22 +74,22 @@ jsBackend.formBuilder.fields =
      */
     init: function () {
         // set urls
-        jsBackend.formBuilder.fields.paramsDelete = {fork: {action: 'DeleteField'}};
-        jsBackend.formBuilder.fields.paramsGet = {fork: {action: 'GetField'}};
-        jsBackend.formBuilder.fields.paramsSave = {fork: {action: 'SaveField'}};
-        jsBackend.formBuilder.fields.paramsSequence = {fork: {action: 'Sequence'}};
+        jsBackend.FormBuilder.Fields.paramsDelete = {fork: {action: 'DeleteField'}};
+        jsBackend.FormBuilder.Fields.paramsGet = {fork: {action: 'GetField'}};
+        jsBackend.FormBuilder.Fields.paramsSave = {fork: {action: 'SaveField'}};
+        jsBackend.FormBuilder.Fields.paramsSequence = {fork: {action: 'Sequence'}};
 
         // init errors
         if (typeof defaultErrorMessages != 'undefined') {
-            jsBackend.formBuilder.fields.defaultErrorMessages = defaultErrorMessages;
+            jsBackend.FormBuilder.Fields.defaultErrorMessages = defaultErrorMessages;
         }
 
         // bind
-        jsBackend.formBuilder.fields.bindDialogs();
-        jsBackend.formBuilder.fields.bindValidation();
-        jsBackend.formBuilder.fields.bindEdit();
-        jsBackend.formBuilder.fields.bindDelete();
-        jsBackend.formBuilder.fields.bindDragAndDrop();
+        jsBackend.FormBuilder.Fields.bindDialogs();
+        jsBackend.FormBuilder.Fields.bindValidation();
+        jsBackend.FormBuilder.Fields.bindEdit();
+        jsBackend.FormBuilder.Fields.bindDelete();
+        jsBackend.FormBuilder.Fields.bindDragAndDrop();
     },
 
     /**
@@ -97,7 +97,7 @@ jsBackend.formBuilder.fields =
      */
     bindDelete: function () {
         // get all delete buttons
-        $(document).on('click', '.deleteField', function (e) {
+        $(document).on('click', '.jsDeleteField', function (e) {
             // prevent default
             e.preventDefault();
 
@@ -108,9 +108,9 @@ jsBackend.formBuilder.fields =
             if (id !== '') {
                 // make the call
                 $.ajax({
-                    data: $.extend({}, jsBackend.formBuilder.fields.paramsDelete,
+                    data: $.extend({}, jsBackend.FormBuilder.Fields.paramsDelete,
                         {
-                            form_id: jsBackend.formBuilder.formId,
+                            form_id: jsBackend.FormBuilder.formId,
                             field_id: id
                         }),
                     success: function (data, textStatus) {
@@ -122,7 +122,7 @@ jsBackend.formBuilder.fields =
                                 $(this).remove();
 
                                 // no items message
-                                jsBackend.formBuilder.fields.toggleNoItems();
+                                jsBackend.FormBuilder.Fields.toggleNoItems();
                             });
                         }
 
@@ -159,28 +159,28 @@ jsBackend.formBuilder.fields =
                     //@todo must be refactored
                     switch (id) {
                         case 'textboxDialog':
-                            jsBackend.formBuilder.fields.saveTextbox();
+                            jsBackend.FormBuilder.Fields.saveTextbox();
                             break;
                         case 'textareaDialog':
-                            jsBackend.formBuilder.fields.saveTextarea();
+                            jsBackend.FormBuilder.Fields.saveTextarea();
                             break;
                         case 'headingDialog':
-                            jsBackend.formBuilder.fields.saveHeading();
+                            jsBackend.FormBuilder.Fields.saveHeading();
                             break;
                         case 'paragraphDialog':
-                            jsBackend.formBuilder.fields.saveParagraph();
+                            jsBackend.FormBuilder.Fields.saveParagraph();
                             break;
                         case 'submitDialog':
-                            jsBackend.formBuilder.fields.saveSubmit();
+                            jsBackend.FormBuilder.Fields.saveSubmit();
                             break;
                         case 'dropdownDialog':
-                            jsBackend.formBuilder.fields.saveDropdown();
+                            jsBackend.FormBuilder.Fields.saveDropdown();
                             break;
                         case 'radiobuttonDialog':
-                            jsBackend.formBuilder.fields.saveRadiobutton();
+                            jsBackend.FormBuilder.Fields.saveRadiobutton();
                             break;
                         case 'checkboxDialog':
-                            jsBackend.formBuilder.fields.saveCheckbox();
+                            jsBackend.FormBuilder.Fields.saveCheckbox();
                             break;
                     }
                 });
@@ -194,7 +194,7 @@ jsBackend.formBuilder.fields =
                             addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
                             removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
                             showIconOnly: true,
-                            afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+                            afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
                     }
                     else if (id == 'radiobuttonDialog') {
@@ -204,7 +204,7 @@ jsBackend.formBuilder.fields =
                             addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
                             removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
                             showIconOnly: true,
-                            afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+                            afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
                     }
                     else if (id == 'checkboxDialog') {
@@ -214,7 +214,7 @@ jsBackend.formBuilder.fields =
                             addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
                             removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
                             showIconOnly: true,
-                            afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+                            afterBuild: jsBackend.FormBuilder.Fields.multipleTextboxCallback
                         });
                     }
 
@@ -222,18 +222,18 @@ jsBackend.formBuilder.fields =
                     if ($(this).find(':input:visible').length > 0) $(this).find(':input:visible')[0].focus();
 
                     // toggle error messages
-                    jsBackend.formBuilder.fields.toggleValidationErrors(id);
+                    jsBackend.FormBuilder.Fields.toggleValidationErrors(id);
                 });
 
                 $dialog.on('hide.bs.modal', function (e) {
                     // no items message
-                    jsBackend.formBuilder.fields.toggleNoItems();
+                    jsBackend.FormBuilder.Fields.toggleNoItems();
 
                     // reset
-                    jsBackend.formBuilder.fields.resetDialog(id);
+                    jsBackend.FormBuilder.Fields.resetDialog(id);
 
                     // toggle error messages
-                    jsBackend.formBuilder.fields.toggleValidationErrors(id);
+                    jsBackend.FormBuilder.Fields.toggleValidationErrors(id);
                 });
             }
         });
@@ -259,7 +259,7 @@ jsBackend.formBuilder.fields =
     bindDragAndDrop: function () {
         // bind sortable
         $('#fieldsHolder').sortable({
-            items: 'div.field',
+            items: 'div.jsField',
             handle: 'span.dragAndDropHandle',
             containment: '#fieldsHolder',
             stop: function (e, ui) {
@@ -272,11 +272,10 @@ jsBackend.formBuilder.fields =
 
                 // make ajax call
                 $.ajax({
-                    data: $.extend({}, jsBackend.formBuilder.fields.paramsSequence,
-                        {
-                            form_id: jsBackend.formBuilder.formId,
-                            new_id_sequence: newIdSequence.join('|')
-                        }),
+                    data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSequence, {
+                        form_id: jsBackend.FormBuilder.formId,
+                        new_id_sequence: newIdSequence.join('|')
+                    }),
                     success: function (data, textStatus) {
                         // not a success so revert the changes
                         if (data.code != 200) {
@@ -310,7 +309,7 @@ jsBackend.formBuilder.fields =
      */
     bindEdit: function () {
         // get all delete buttons
-        $(document).on('click', '.editField', function (e) {
+        $(document).on('click', '.jsEditField', function (e) {
             // prevent default
             e.preventDefault();
 
@@ -321,11 +320,10 @@ jsBackend.formBuilder.fields =
             if (id !== '') {
                 // make the call
                 $.ajax({
-                    data: $.extend({}, jsBackend.formBuilder.fields.paramsGet,
-                        {
-                            form_id: jsBackend.formBuilder.formId,
-                            field_id: id
-                        }),
+                    data: $.extend({}, jsBackend.FormBuilder.Fields.paramsGet, {
+                        form_id: jsBackend.FormBuilder.formId,
+                        field_id: id
+                    }),
                     success: function (data, textStatus) {
                         // success
                         if (data.code == 200) {
@@ -355,7 +353,7 @@ jsBackend.formBuilder.fields =
                                 });
 
                                 // show dialog
-                                $('#textboxDialog').dialog('open');
+                                $('#textboxDialog').modal('show');
                             }
 
                             // textarea edit
@@ -379,7 +377,7 @@ jsBackend.formBuilder.fields =
                                 });
 
                                 // show dialog
-                                $('#textareaDialog').dialog('open');
+                                $('#textareaDialog').modal('show');
                             }
 
                             // dropdown edit
@@ -412,7 +410,7 @@ jsBackend.formBuilder.fields =
                                 }
 
                                 // show dialog
-                                $('#dropdownDialog').dialog('open');
+                                $('#dropdownDialog').modal('show');
                             }
 
                             // radiobutton edit
@@ -445,7 +443,7 @@ jsBackend.formBuilder.fields =
                                 }
 
                                 // show dialog
-                                $('#radiobuttonDialog').dialog('open');
+                                $('#radiobuttonDialog').modal('show');
                             }
 
                             // checkbox edit
@@ -478,7 +476,7 @@ jsBackend.formBuilder.fields =
                                 }
 
                                 // show dialog
-                                $('#checkboxDialog').dialog('open');
+                                $('#checkboxDialog').modal('show');
                             }
 
                             // heading edit
@@ -488,7 +486,7 @@ jsBackend.formBuilder.fields =
                                 $('#heading').val(utils.string.htmlDecode(data.data.field.settings.values));
 
                                 // show dialog
-                                $('#headingDialog').dialog('open');
+                                $('#headingDialog').modal('show');
                             }
 
                             // paragraph edit
@@ -498,7 +496,7 @@ jsBackend.formBuilder.fields =
                                 $('#paragraph').val(data.data.field.settings.values);
 
                                 // show dialog
-                                $('#paragraphDialog').dialog('open');
+                                $('#paragraphDialog').modal('show');
                             }
 
                             // submit edit
@@ -508,18 +506,20 @@ jsBackend.formBuilder.fields =
                                 $('#submit').val(utils.string.htmlDecode(data.data.field.settings.values));
 
                                 // show dialog
-                                $('#submitDialog').dialog('open');
+                                $('#submitDialog').modal('show');
                             }
 
                             // validation form
-                            jsBackend.formBuilder.fields.handleValidation('.jsValidation');
+                            jsBackend.FormBuilder.Fields.handleValidation('.jsValidation');
                         }
 
                         // show error message
                         else jsBackend.messages.add('error', textStatus);
 
                         // alert the user
-                        if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        if (data.code != 200 && jsBackend.debug) {
+                            alert(data.message);
+                        }
                     }
                 });
             }
@@ -536,14 +536,14 @@ jsBackend.formBuilder.fields =
             var wrapper = this;
 
             // init
-            jsBackend.formBuilder.fields.handleValidation(wrapper);
+            jsBackend.FormBuilder.Fields.handleValidation(wrapper);
 
             // on change	@todo	test me plz.
             $(wrapper).find('select:first').on('change', function () {
-                jsBackend.formBuilder.fields.handleValidation(wrapper);
+                jsBackend.FormBuilder.Fields.handleValidation(wrapper);
             });
             $(wrapper).find('input:checkbox').on('change', function () {
-                jsBackend.formBuilder.fields.handleValidation(wrapper);
+                jsBackend.FormBuilder.Fields.handleValidation(wrapper);
             });
         });
     },
@@ -563,7 +563,7 @@ jsBackend.formBuilder.fields =
 
             // error message empty so add default
             if ($(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val() === '') {
-                $(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val(jsBackend.formBuilder.fields.defaultErrorMessages.required);
+                $(wrapper).find('.jsValidationRequiredErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages.required);
             }
         }
         else $(wrapper).find('.jsValidationRequiredErrorMessage').slideUp();
@@ -574,7 +574,7 @@ jsBackend.formBuilder.fields =
             $(wrapper).find('.jsValidationErrorMessage').slideDown();
 
             // default error message
-            $(wrapper).find('.jsValidationErrorMessage input:visible:first').val(jsBackend.formBuilder.fields.defaultErrorMessages[$(validation).val()]);
+            $(wrapper).find('.jsValidationErrorMessage input:visible:first').val(jsBackend.FormBuilder.Fields.defaultErrorMessages[$(validation).val()]);
         }
         else $(wrapper).find('.jsValidationErrorMessage').slideUp();
     },
@@ -616,7 +616,7 @@ jsBackend.formBuilder.fields =
         $('#' + id).find(':input').val('').removeAttr('checked').removeAttr('selected');
 
         // bind validation
-        jsBackend.formBuilder.fields.handleValidation('#' + id + ' .jsValidation');
+        jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation');
 
         // clear form errors
         $('#' + id + ' .formError').html('');
@@ -640,8 +640,8 @@ jsBackend.formBuilder.fields =
 
         // make the call
         $.ajax({
-            data: $.extend({}, jsBackend.formBuilder.fields.paramsSave, {
-                form_id: jsBackend.formBuilder.formId,
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
                 field_id: fieldId,
                 type: type,
                 label: label,
@@ -667,16 +667,16 @@ jsBackend.formBuilder.fields =
                         if (typeof data.data.errors.error_message != 'undefined') $('#checkboxErrorMessageError').html(data.data.errors.error_message);
 
                         // toggle error messages
-                        jsBackend.formBuilder.fields.toggleValidationErrors('checkboxDialog');
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('checkboxDialog');
                     }
 
                     // saved!
                     else {
                         // append field html
-                        jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
-                        $('#checkboxDialog').dialog('close');
+                        $('#checkboxDialog').modal('hide');
                     }
                 }
 
@@ -708,8 +708,8 @@ jsBackend.formBuilder.fields =
 
         // make the call
         $.ajax({
-            data: $.extend({}, jsBackend.formBuilder.fields.paramsSave, {
-                form_id: jsBackend.formBuilder.formId,
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
                 field_id: fieldId,
                 type: type,
                 label: label,
@@ -733,16 +733,16 @@ jsBackend.formBuilder.fields =
                         if (typeof data.data.errors.error_message != 'undefined') $('#dropdownErrorMessageError').html(data.data.errors.error_message);
 
                         // toggle error messages
-                        jsBackend.formBuilder.fields.toggleValidationErrors('dropdownDialog');
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('dropdownDialog');
                     }
 
                     // saved!
                     else {
                         // append field html
-                        jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                         // close console box
-                        $('#dropdownDialog').dialog('close');
+                        $('#dropdownDialog').modal('hide');
                     }
                 }
 
@@ -769,50 +769,49 @@ jsBackend.formBuilder.fields =
         var value = $('#heading').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave, {
-                    form_id: jsBackend.formBuilder.formId,
-                    field_id: fieldId,
-                    type: type,
-                    values: value
-                }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // clear errors
-                        $('.formError').html('');
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                values: value
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // clear errors
+                    $('.formError').html('');
 
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign errors
-                            if (typeof data.data.errors.values != 'undefined') $('#headingError').html(data.data.errors.values);
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign errors
+                        if (typeof data.data.errors.values != 'undefined') $('#headingError').html(data.data.errors.values);
 
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('headingDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // append field html
-                            jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
-
-                            // close console box
-                            $('#headingDialog').dialog('close');
-                        }
+                        // toggle error messages
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('headingDialog');
                     }
 
-                    // show error message
+                    // saved!
                     else {
-                        jsBackend.messages.add('error', textStatus);
-                    }
+                        // append field html
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) {
-                        alert(data.message);
+                        // close console box
+                        $('#headingDialog').modal('hide');
                     }
                 }
-            });
+
+                // show error message
+                else {
+                    jsBackend.messages.add('error', textStatus);
+                }
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) {
+                    alert(data.message);
+                }
+            }
+        });
     },
 
     /**
@@ -825,46 +824,45 @@ jsBackend.formBuilder.fields =
         var value = $('#paragraph').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave, {
-                    form_id: jsBackend.formBuilder.formId,
-                    field_id: fieldId,
-                    type: type,
-                    values: value
-                }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // clear errors
-                        $('.formError').html('');
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                values: value
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // clear errors
+                    $('.formError').html('');
 
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign error
-                            if (typeof data.data.errors.values != 'undefined') $('#paragraphError').html(data.data.errors.values);
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign error
+                        if (typeof data.data.errors.values != 'undefined') $('#paragraphError').html(data.data.errors.values);
 
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('paragraphDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // append field html
-                            jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
-
-                            // close console box
-                            $('#paragraphDialog').dialog('close');
-                        }
+                        // toggle error messages
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('paragraphDialog');
                     }
 
-                    // show error message
-                    else jsBackend.messages.add('error', textStatus);
+                    // saved!
+                    else {
+                        // append field html
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        // close console box
+                        $('#paragraphDialog').modal('hide');
+                    }
                 }
-            });
+
+                // show error message
+                else jsBackend.messages.add('error', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
     },
 
     /**
@@ -881,54 +879,52 @@ jsBackend.formBuilder.fields =
         var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
-                    {
-                        form_id: jsBackend.formBuilder.formId,
-                        field_id: fieldId,
-                        type: type,
-                        label: label,
-                        values: values,
-                        default_values: defaultValue,
-                        required: required,
-                        required_error_message: requiredErrorMessage
-                    }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // clear errors
-                        $('.formError').html('');
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                label: label,
+                values: values,
+                default_values: defaultValue,
+                required: required,
+                required_error_message: requiredErrorMessage
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // clear errors
+                    $('.formError').html('');
 
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign errors
-                            if (typeof data.data.errors.label != 'undefined') $('#radiobuttonLabelError').html(data.data.errors.label);
-                            if (typeof data.data.errors.values != 'undefined') $('#radiobuttonValuesError').html(data.data.errors.values);
-                            if (typeof data.data.errors.required_error_message != 'undefined') $('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
-                            if (typeof data.data.errors.error_message != 'undefined') $('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign errors
+                        if (typeof data.data.errors.label != 'undefined') $('#radiobuttonLabelError').html(data.data.errors.label);
+                        if (typeof data.data.errors.values != 'undefined') $('#radiobuttonValuesError').html(data.data.errors.values);
+                        if (typeof data.data.errors.required_error_message != 'undefined') $('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
+                        if (typeof data.data.errors.error_message != 'undefined') $('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
 
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('radiobuttonDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // append field html
-                            jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
-
-                            // close console box
-                            $('#radiobuttonDialog').dialog('close');
-                        }
+                        // toggle error messages
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('radiobuttonDialog');
                     }
 
-                    // show error message
-                    else jsBackend.messages.add('error', textStatus);
+                    // saved!
+                    else {
+                        // append field html
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        // close console box
+                        $('#radiobuttonDialog').modal('hide');
+                    }
                 }
-            });
+
+                // show error message
+                else jsBackend.messages.add('error', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
     },
 
     /**
@@ -941,47 +937,45 @@ jsBackend.formBuilder.fields =
         var value = $('#submit').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
-                    {
-                        form_id: jsBackend.formBuilder.formId,
-                        field_id: fieldId,
-                        type: type,
-                        values: value
-                    }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign errors
-                            if (typeof data.data.errors.values != 'undefined') $('#submitError').html(data.data.errors.values);
-
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('submitDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // set value
-                            $('#submitField').val(value);
-
-                            // close console box
-                            $('#submitDialog').dialog('close');
-                        }
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                values: value
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign errors
+                        if (typeof data.data.errors.values != 'undefined') $('#submitError').html(data.data.errors.values);
 
                         // toggle error messages
-                        jsBackend.formBuilder.fields.toggleValidationErrors('submitDialog');
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog');
                     }
 
-                    // show error message
-                    else jsBackend.messages.add('error', textStatus);
+                    // saved!
+                    else {
+                        // set value
+                        $('#submitField').val(value);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        // close console box
+                        $('#submitDialog').modal('hide');
+                    }
+
+                    // toggle error messages
+                    jsBackend.FormBuilder.Fields.toggleValidationErrors('submitDialog');
                 }
-            });
+
+                // show error message
+                else jsBackend.messages.add('error', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
     },
 
     /**
@@ -1000,56 +994,54 @@ jsBackend.formBuilder.fields =
         var errorMessage = $('#textareaErrorMessage').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
-                    {
-                        form_id: jsBackend.formBuilder.formId,
-                        field_id: fieldId,
-                        type: type,
-                        label: label,
-                        default_values: value,
-                        required: required,
-                        required_error_message: requiredErrorMessage,
-                        validation: validation,
-                        validation_parameter: validationParameter,
-                        error_message: errorMessage
-                    }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // clear errors
-                        $('.formError').html('');
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                label: label,
+                default_values: value,
+                required: required,
+                required_error_message: requiredErrorMessage,
+                validation: validation,
+                validation_parameter: validationParameter,
+                error_message: errorMessage
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // clear errors
+                    $('.formError').html('');
 
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign errors
-                            if (typeof data.data.errors.label != 'undefined') $('#textareaLabelError').html(data.data.errors.label);
-                            if (typeof data.data.errors.required_error_message != 'undefined') $('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
-                            if (typeof data.data.errors.error_message != 'undefined') $('#textareaErrorMessageError').html(data.data.errors.error_message);
-                            if (typeof data.data.errors.validation_parameter != 'undefined') $('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign errors
+                        if (typeof data.data.errors.label != 'undefined') $('#textareaLabelError').html(data.data.errors.label);
+                        if (typeof data.data.errors.required_error_message != 'undefined') $('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
+                        if (typeof data.data.errors.error_message != 'undefined') $('#textareaErrorMessageError').html(data.data.errors.error_message);
+                        if (typeof data.data.errors.validation_parameter != 'undefined') $('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
 
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('textareaDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // append field html
-                            jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
-
-                            // close console box
-                            $('#textareaDialog').dialog('close');
-                        }
+                        // toggle error messages
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('textareaDialog');
                     }
 
-                    // show error message
-                    else jsBackend.messages.add('error', textStatus);
+                    // saved!
+                    else {
+                        // append field html
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        // close console box
+                        $('#textareaDialog').modal('hide');
+                    }
                 }
-            });
+
+                // show error message
+                else jsBackend.messages.add('error', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
     },
 
     /**
@@ -1069,57 +1061,55 @@ jsBackend.formBuilder.fields =
         var errorMessage = $('#textboxErrorMessage').val();
 
         // make the call
-        $.ajax(
-            {
-                data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
-                    {
-                        form_id: jsBackend.formBuilder.formId,
-                        field_id: fieldId,
-                        type: type,
-                        label: label,
-                        default_values: value,
-                        reply_to: replyTo,
-                        required: required,
-                        required_error_message: requiredErrorMessage,
-                        validation: validation,
-                        validation_parameter: validationParameter,
-                        error_message: errorMessage
-                    }),
-                success: function (data, textStatus) {
-                    // success
-                    if (data.code == 200) {
-                        // clear errors
-                        $('.formError').html('');
+        $.ajax({
+            data: $.extend({}, jsBackend.FormBuilder.Fields.paramsSave, {
+                form_id: jsBackend.FormBuilder.formId,
+                field_id: fieldId,
+                type: type,
+                label: label,
+                default_values: value,
+                reply_to: replyTo,
+                required: required,
+                required_error_message: requiredErrorMessage,
+                validation: validation,
+                validation_parameter: validationParameter,
+                error_message: errorMessage
+            }),
+            success: function (data, textStatus) {
+                // success
+                if (data.code == 200) {
+                    // clear errors
+                    $('.formError').html('');
 
-                        // form contains errors
-                        if (typeof data.data.errors != 'undefined') {
-                            // assign errors
-                            if (typeof data.data.errors.label != 'undefined') $('#textboxLabelError').html(data.data.errors.label);
-                            if (typeof data.data.errors.required_error_message != 'undefined') $('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
-                            if (typeof data.data.errors.error_message != 'undefined') $('#textboxErrorMessageError').html(data.data.errors.error_message);
-                            if (typeof data.data.errors.validation_parameter != 'undefined') $('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
+                    // form contains errors
+                    if (typeof data.data.errors != 'undefined') {
+                        // assign errors
+                        if (typeof data.data.errors.label != 'undefined') $('#textboxLabelError').html(data.data.errors.label);
+                        if (typeof data.data.errors.required_error_message != 'undefined') $('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
+                        if (typeof data.data.errors.error_message != 'undefined') $('#textboxErrorMessageError').html(data.data.errors.error_message);
+                        if (typeof data.data.errors.validation_parameter != 'undefined') $('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
 
-                            // toggle error messages
-                            jsBackend.formBuilder.fields.toggleValidationErrors('textboxDialog');
-                        }
-
-                        // saved!
-                        else {
-                            // append field html
-                            jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
-
-                            // close console box
-                            $('#textboxDialog').dialog('close');
-                        }
+                        // toggle error messages
+                        jsBackend.FormBuilder.Fields.toggleValidationErrors('textboxDialog');
                     }
 
-                    // show error message
-                    else jsBackend.messages.add('error', textStatus);
+                    // saved!
+                    else {
+                        // append field html
+                        jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
-                    // alert the user
-                    if (data.code != 200 && jsBackend.debug) alert(data.message);
+                        // close console box
+                        $('#textboxDialog').modal('hide');
+                    }
                 }
-            });
+
+                // show error message
+                else jsBackend.messages.add('error', textStatus);
+
+                // alert the user
+                if (data.code != 200 && jsBackend.debug) alert(data.message);
+            }
+        });
     },
 
     /**
@@ -1153,7 +1143,7 @@ jsBackend.formBuilder.fields =
      */
     toggleNoItems: function () {
         // count the rows
-        var rowCount = $('#fieldsHolder .field').length;
+        var rowCount = $('#fieldsHolder .jsField').length;
 
         // got items (always 1 item in it)
         if (rowCount >= 1) $('#noFields').hide();
@@ -1177,7 +1167,9 @@ jsBackend.formBuilder.fields =
             // loop tab errors
             $(this).find('.formError').each(function () {
                 // has a message so highlight tab
-                if ($(this).html() !== '') $('#' + id + ' .ui-tabs-nav a[href="#' + tabId + '"]').parent().addClass('ui-state-error');
+                if ($(this).html() !== '') {
+                    $('#' + id + ' .ui-tabs-nav a[href="#' + tabId + '"]').parent().addClass('ui-state-error');
+                }
             });
         });
 
@@ -1192,4 +1184,4 @@ jsBackend.formBuilder.fields =
     }
 };
 
-$(jsBackend.formBuilder.init);
+$(jsBackend.FormBuilder.init);

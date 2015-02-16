@@ -82,21 +82,21 @@ class Index extends BackendBaseActionIndex
             'site_html_header',
             BackendModel::getModuleSetting('Core', 'site_html_header', null),
             'form-control code',
-            'form-control error code',
+            'form-control danger code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
             BackendModel::getModuleSetting('Core', 'site_html_footer', null),
             'form-control code',
-            'form-control error code',
+            'form-control danger code',
             true
         );
         $this->frm->addTextarea(
             'site_domains',
             implode("\n", (array) BackendModel::getModuleSetting('Core', 'site_domains', $defaultDomains)),
             'form-control code',
-            'form-control error code'
+            'form-control danger code'
         );
 
         // facebook settings

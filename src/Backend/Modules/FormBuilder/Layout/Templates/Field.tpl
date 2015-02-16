@@ -1,36 +1,56 @@
-<div id="fieldHolder-{$id}" class="field options">
-	{* Headings, paragraph *}
-	{option:plaintext}
-		<div class="fieldWrapper content">
-			{$content}
+<div id="fieldHolder-{$id}" class="form-group jsField">
+	<div class="row">
+		{option:plaintext}
+		<div class="col-md-8">
+			<p>{$content}</p>
 		</div>
-	{/option:plaintext}
-
-	{* Text box, textarea, dropdown *}
-	{option:simple}
-		<div class="fieldWrapper horizontal">
+		{/option:plaintext}
+		{option:simple}
+		<div class="col-md-3">
 			<label for="field{$id}">
-				{$label}{option:required}<abbr title="{$lblRequiredField|ucfirst}">*</abbr>{/option:required}
+				{$label}
+				{option:required}
+				<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+				{/option:required}
 			</label>
+		</div>
+		<div class="col-md-5">
 			{$field}
 		</div>
-	{/option:simple}
-
-	{* Radio button, checkbox *}
-	{option:multiple}
-		<div class="fieldWrapper horizontal">
-			<p class="label">{$label}{option:required}<abbr title="{$lblRequiredField|ucfirst}">*</abbr>{/option:required}</p>
-			<ul class="inputList">
-			{iteration:items}
-				<li><label for="{$items.id}">{$items.field} {$items.label}</label></li>
-			{/iteration:items}
+		{/option:simple}
+		{option:multiple}
+		<div class="col-md-3">
+			<label for="field{$id}">
+				{$label}
+				{option:required}
+				<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+				{/option:required}
+			</label>
+		</div>
+		<div class="col-md-5">
+			<ul class="list-unstyled">
+				{iteration:items}
+				<li class="checkbox">
+					<label for="{$items.id}">{$items.field} {$items.label}</label>
+				</li>
+				{/iteration:items}
 			</ul>
 		</div>
-	{/option:multiple}
-
-	<p class="buttonHolderRight">
-		<span class="dragAndDropHandle"></span>
-		<a class="button icon iconOnly iconDelete deleteField" href="#delete-{$id}" rel="{$id}"><span>{$lblDelete}</span></a>
-		<a class="button icon iconOnly iconEdit editField" href="#edit-{$id}" rel="{$id}"><span>{$lblEdit}</span></a>
-	</p>
+		{/option:multiple}
+		<div class="col-md-4">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<a class="btn btn-danger jsDeleteField" href="#delete-{$id}" rel="{$id}" title="{$lblDelete}">
+						<span class="glyphicon glyphicon-trash"></span>
+					</a>
+					<a class="btn btn-default jsEditField" href="#edit-{$id}" rel="{$id}" title="{$lblEdit}">
+						<span class="glyphicon glyphicon-pencil"></span>
+					</a>
+				</div>
+				<div class="btn-group pull-right" role="group">
+					<span class="dragAndDropHandle"></span>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
