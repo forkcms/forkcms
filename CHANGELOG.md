@@ -2,6 +2,8 @@
 --
 Improvements:
 
+* Settings: test email connection with SwiftMailer
+
 Bugfixes:
 
 * Core: fix not correctly thrown exception
