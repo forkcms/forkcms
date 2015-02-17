@@ -50,6 +50,6 @@ class Form extends FrontendBaseWidget
      */
     private function parse()
     {
-        $this->frm->parse($this->tpl);
+        $this->frm->render($this->tpl);
     }
 }

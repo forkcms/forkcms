@@ -22,7 +22,95 @@ namespace Frontend\Core\Engine;
  * @author Matthias Mullie <forkcms@mullie.eu>
  * @author Frederik Heyninck <frederik@figure8.be>
  */
-class Template extends \SpoonTemplate
+
+use spoon\template\compiler as SpoonTemplateCompiler;
+
+Class TemplateEngine
+{
+    public $forms = array();
+    public $variables;
+
+    function __construct()
+    {
+        require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
+        \Twig_Autoloader::register();
+        $this->assign('CRLF', "\n");
+        $this->assign('TAB', "\t");
+        $this->assign('now', time());
+    }
+
+    function assign($key, $value = null)
+    {
+        if (is_array($key)) {
+            $this->assignArray($key);
+        } else {
+            $this->variables[$key] = $value;
+        }
+    }
+
+    function assignArray(array $variables)
+    {
+        $this->variables = array_merge($this->variables, $variables);
+    }
+
+    function render($path)
+    {
+        $path = str_replace('.tpl', '.twig', $path);
+        $fullPath = pathinfo($path);
+
+        $loader = new \Twig_Loader_Filesystem(PATH_WWW . '/src/Frontend/Themes/bootstrap2/');
+        $twig = new \Twig_Environment($loader, array(
+            'cache' => PATH_WWW . '/src/Frontend/Cache/Templates',
+            'debug' => true
+        ));
+         //var_dump($this->variables);exit;
+        $nav = Navigation::getNavigation();
+        //var_dump($nav);exit;
+        if ($this->forms)
+        {
+            foreach ($this->forms['name'] as $name)
+            {
+                $this->assign('form_' . $name, $this->compileForm($name));
+            }
+        }
+
+        $this->assign('navigation', $nav['page'][1]);
+        $this->template = $twig->loadTemplate($fullPath['basename']);
+        echo $this->template->render($this->variables);
+    }
+
+    function compileForm($name)
+    {
+        if(isset($this->forms['data'][$name]))
+        {
+            $form = $this->forms['data'][$name];
+            $compileForm ='<form accept-charset="UTF-8" action="' . $form->getAction() . '" method="'. $form->getMethod().'" '. $form->getParametersHTML() . '>';
+            $compileForm .= $form->getField('form')->parse();
+            if($form->getUseToken())
+            {
+                $compileForm .= '<input type="hidden" name="form_token" id="' . $form->getField('form_token')->getAttribute('id'). '" value="' . htmlspecialchars($form->getField('form_token')->getValue()). ' " />';
+            }
+        }
+        return $compileForm;
+    }
+
+    function addForm($form)
+    {
+        $this->forms['name'][] = $form->getName();
+        $this->forms['data'][$form->getName()] = $form;
+    }
+
+    function setCacheDirectory(){}
+    function getCompileName(){}
+    function setCompileDirectory(){}
+    function setForceCompile(){}
+    function mapModifier($name, $function){
+        // SpoonTemplateModifiers::mapModifier($name, $function);
+        // var_dump(SpoonTemplateModifiers::$modifiers;);exit;
+    }
+}
+
+class Template extends TemplateEngine//\SpoonTemplate//\TemplateEngine
 {
     /**
      * Should we add slashes to each value?
@@ -132,26 +220,30 @@ class Template extends \SpoonTemplate
             throw new \SpoonTemplateException('Please provide an existing template.');
         }
 
-        // compiled name
-        $compileName = $this->getCompileName((string) $template);
+        //var_dump($this->variables['navigation']);exit;
 
-        // compiled if needed
-        if ($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName)) {
-            // create compiler
-            $compiler = new TemplateCompiler((string) $template, $this->variables);
+        // // compiled name
+        // $compileName = $this->getCompileName((string) $template);
 
-            // set some options
-            $compiler->setCacheDirectory($this->cacheDirectory);
-            $compiler->setCompileDirectory($this->compileDirectory);
-            $compiler->setForceCompile($this->forceCompile);
-            $compiler->setForms($this->forms);
 
-            // compile & save
-            $compiler->parseToFile();
-        }
+        // // compiled if needed
+        // if ($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName)) {
+        // //     // create compiler
+        // //     $compiler = new TemplateCompiler((string) $template, $this->variables);
+
+        // //     // set some options
+        // //     $compiler->setCacheDirectory($this->cacheDirectory);
+        // //     $compiler->setCompileDirectory($this->compileDirectory);
+        // //     $compiler->setForceCompile($this->forceCompile);
+        // //     $compiler->setForms($this->forms);
+
+        // //     // compile & save
+        // //     $compiler->parseToFile();
+        // }
 
         // load template
-        require $this->compileDirectory . '/' . $compileName;
+        //require $this->compileDirectory . '/' . $compileName;
+        $this->render($template);
     }
 
     /**

@@ -1,0 +1,37 @@
+<div class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<!--@ToDo label Toggle Navigation -->
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">My website</a>
+		</div>
+		<div class="navbar-collapse collapse">
+
+			<nav id="headerNavigation">
+				<h4>Main navigation</h4>
+			{% if navigation %}
+				<ul class="nav navbar-nav">
+					{% for nav in navigation %}
+						{% if nav.has_children %}
+						<li class="dropdown{% if nav.selected %} active{% endif %}" id="dropdownNavigation">
+							<a href="{{ nav.full_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ nav.nav_title }} <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+								{{ nav.children | raw }}
+						</li>
+						{% else %}
+						<li{% if nav.selected %} class="active"{% endif %}>
+							<a href="{{ nav.full_url }}" title="{{ nav.nav_title }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title }}</a>
+						</li>
+						{% endif %}
+					{% endfor %}
+				</ul>
+			{% endif %}
+			</nav>
+		</div>
+	</div>
+</div>

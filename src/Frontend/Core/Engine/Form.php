@@ -590,10 +590,36 @@ class Form extends \SpoonForm
      *
      * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse(SpoonTemplate $tpl)
     {
         // parse the form
         parent::parse($tpl);
+
+        // validate the form
+        $this->validate();
+
+        // if the form is submitted but there was an error, assign a general error
+        if ($this->isSubmitted() && !$this->isCorrect()) {
+            $tpl->assign('formError', true);
+        }
+    }
+
+    /**
+     * Parse the form
+     *
+     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     */
+    public function render($tpl)
+    {
+        // loop objects
+        foreach($this->objects as $name => $object)
+        {
+            // not excluded
+            if(!in_array($name, array('form', 'form_token'))) $object->parse($tpl);
+        }
+
+        // parse form tag
+        $tpl->addForm($this);
 
         // validate the form
         $this->validate();

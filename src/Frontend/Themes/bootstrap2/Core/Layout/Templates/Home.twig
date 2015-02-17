@@ -1,0 +1,47 @@
+{% extends "Core/Layout/Templates/Base.twig" %}
+
+{% block body %}
+HOME
+	{% for position in positionMain %}
+		{% if position.blockIsHTML %}
+		<div class="container">
+			<div class="jumbotron">
+				{{ position.blockContent | raw }}
+				<p><a class="btn btn-lg btn-primary" href="#" role="button">{{ More|capitalize }} &raquo;</a></p>
+			</div>
+		</div>
+		{% endif %}
+		{% if position.blockIsHTML %}
+			<div class="container">
+				{{ position.blockContent | raw }}
+			</div>
+		{% endif %}
+	{% endfor %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				{# Left position #}
+				{% if plugin %}{% include plugin %}{% endif %}
+				{% for pleft in positionLeft %}
+					{{ pleft.blockContent | raw }}
+				{% endfor %}
+			</div>
+			<div class="col-md-4">
+				{# Middle position #}
+				{# {% if plugin.left.name %}{% include  ~ plugin.mid.name ~ %}{% endif %} #}
+				{% for pmid in positionMiddle %}
+					{{ pmid.blockContent | raw }}
+				{% endfor %}
+			</div>
+			<div class="col-md-4">
+				{# Right position #}
+				{# {% if plugin.left.name %}{% include  ~ plugin.right.name ~ %}{% endif %} #}
+				{% for pright in positionRight %}
+					{{ pright.blockContent | raw }}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% block body %}
+FORM WIDGET
+
+{{ form.search.form | raw }}
+{{ form.search.hid.Utf8 | raw }}
+{{ form.search.txt.QWidget | raw }}{{ form.search.txt.QWidgetError | raw }}
+{{ form.search.submit | raw }}
+{{ form.search.end | raw }}
+
+{% endblock %}
