@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<theme>
+	<name>bootstrap</name>
+	<version>1.1.0</version>
+	<requirements>
+		<minimum_version>3.7.0</minimum_version>
+	</requirements>
+	<thumbnail>thumbnail.png</thumbnail>
+	<description>
+		<![CDATA[
+			Bootstrap is a theme for Fork CMS. It's designed to take your first steps towards building your next Bootstrap application in Fork CMS.
+		]]>
+	</description>
+	<authors>
+		<author>
+			<name>Koen Vinken</name>
+			<url>https://twitter.com/ikoene</url>
+		</author>
+	</authors>
+	<metanavigation supported="false" />
+	<templates>
+		<template label="Default" path="Core/Layout/Templates/Default.tpl">
+			<positions>
+				<position name="main" />
+				<position name="search">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,search],[main,main,main]
+			</format>
+		</template>
+		<template label="Home" path="Core/Layout/Templates/Home.tpl">
+			<positions>
+				<position name="main" />
+				<position name="left" />
+				<position name="middle" />
+				<position name="right" />
+				<position name="search">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,search],[main,main,main],[left,middle,right]
+			</format>
+		</template>
+		<template label="2col" path="Core/Layout/Templates/2col.tpl">
+			<positions>
+				<position name="main"/>
+				<position name="right"/>
+				<position name="search">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,search],[main,main,right]
+			</format>
+		</template>
+		<template label="3col" path="Core/Layout/Templates/3col.tpl">
+			<positions>
+				<position name="left"/>
+				<position name="middle"/>
+				<position name="right"/>
+				<position name="search">
+					<defaults>
+						<widget module="search" action="form" />
+					</defaults>
+				</position>
+			</positions>
+			<format>
+				[/,/,search],[left,middle,right]
+			</format>
+		</template>		
+	</templates>
+</theme>

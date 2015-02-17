@@ -1,0 +1,193 @@
+/* Bootstrap */
+@import url("imports/bootstrap.min.css");
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+}
+
+/* Header navigation */
+
+#headerNavigation h4 {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	text-indent: -9999px;
+}
+
+	/* Subnavigation on hover */
+
+ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
+}
+
+/* Header language */
+
+#headerLanguage h4 {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	text-indent: -9999px;
+}
+
+/* Breadcrumb */
+
+#breadcrumb h4 {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	text-indent: -9999px;	
+}
+
+/* Search widget */
+
+#search {
+	padding: 10px 15px;
+	margin-top: 8px;
+	margin-right: -15px;
+	margin-bottom: 8px;
+	margin-left: -15px;
+	border-top: 1px solid transparent;
+	border-bottom: 1px solid transparent;
+	-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+			box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+	#search .form-group {
+		display: inline-block;
+		margin-bottom: 0;
+		vertical-align: middle;
+	}
+	#search .form-control {
+		display: inline-block;
+	}
+	#search select.form-control {
+		width: auto;
+	}
+	#search .radio,
+	#search .checkbox {
+		display: inline-block;
+		padding-left: 0;
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+	#search .radio input[type="radio"],
+	#search .checkbox input[type="checkbox"] {
+		float: none;
+		margin-left: 0;
+	}
+	.navbar #search {
+		float: right !important;
+	}
+}
+
+@media (max-width: 767px) {
+	.navbar #search .form-group {
+ 		margin-bottom: 5px;
+	}
+}
+
+@media (min-width: 768px) {
+	.navbar #search {
+		width: auto;
+		padding-top: 0;
+		padding-bottom: 0;
+		margin-right: 0;
+		margin-left: 0;
+		border: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
+	.navbar #search.navbar-right:last-child {
+		margin-right: -15px;
+	}
+}
+
+/* Footer navigation */
+
+#footerNavigation h4 {
+	position: absolute;
+	top: -9999px;
+	left: -9999px;
+	text-indent: -9999px;
+}
+
+	#footerLogo p {
+		float: left;
+		position: relative;
+		left: 0;
+	}
+
+		#footerNavigation ul {
+			float: right;
+		}
+
+		#footerNavigation ul li {
+			display: inline;
+		}
+
+			#footerNavigation ul li {
+				margin: 0 0 0 10px;
+			}
+
+		#footerNavigation a {
+			color: #000;
+		}
+
+		#footerNavigation a:hover {
+			color: #428bca;
+			text-decoration: none;
+		}
+
+@media (max-width: 767px) {
+	#footerLogo {
+		text-align:center;
+	}
+
+	#footerLogo p {
+		float: none;
+	}
+
+	#footerNavigation {
+		text-align: center;
+	}
+
+	#footerNavigation ul {
+		float: none;
+	}
+
+	#footerNavigation ul>li {
+		position: relative;
+    	left: -20px;
+		margin: 0 5px 0 5px;
+	}	
+}
+
+/* Share */
+
+.share {
+	position: relative;
+}
+
+	.share ul.shareMenu {
+		position: absolute;
+		top: 14px;
+		left: 0;
+		z-index: 99999;
+		background-color: #FFF;
+	}
+
+		.share ul.shareMenu li {
+			float: none !important;
+		}
+
+/* Fonts */
+
+@font-face {
+	font-family: 'Glyphicons Halflings';
+	src: url('../fonts/glyphicons-halflings-regular.eot');
+	src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/glyphicons-halflings-regular.svg#glyphicons-halflingsregular') format('svg');
+} 
