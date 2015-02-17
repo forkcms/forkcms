@@ -115,7 +115,8 @@ class Mailer
             Model::getModuleSetting('Core', 'smtp_server'),
             Model::getModuleSetting('Core', 'smtp_port', 25),
             Model::getModuleSetting('Core', 'smtp_username'),
-            Model::getModuleSetting('Core', 'smtp_password')
+            Model::getModuleSetting('Core', 'smtp_password'),
+            Model::getModuleSetting('Core', 'smtp_secure_layer')
         );
         $mailer = \Swift_Mailer::newInstance($transport);
 
