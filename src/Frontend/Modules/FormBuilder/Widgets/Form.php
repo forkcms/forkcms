@@ -235,7 +235,7 @@ class Form extends FrontendBaseWidget
                         if($type != '') {
                             switch($type) {
                                 case 'today':
-                                    $defaultValues = date('Y-m-d');
+                                    $defaultValues = date('Y-m-d'); // HTML5 input needs this format
                                     break;
                                 case 'day':
                                 case 'week':
@@ -246,12 +246,15 @@ class Form extends FrontendBaseWidget
                             }
                         }
 
+                        // Convert the php date format to a jquery date format
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery(FrontendModel::getModuleSetting('Core', 'date_format_short'));
+
                         $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
                             array(
-                                'data-mask' => 'dd/mm/yy',
+                                'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date("d/m/Y", strtotime($defaultValues)) : '')
+                                'default-date' => (!empty($defaultValues) ? date(FrontendModel::getModuleSetting('Core', 'date_format_short'), strtotime($defaultValues)) : '')
                             )
                         );
                     } else {
