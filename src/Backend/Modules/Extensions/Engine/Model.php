@@ -558,7 +558,7 @@ class Model
                         }
                     }
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // don't act upon error, we simply won't possess some info
             }
 
