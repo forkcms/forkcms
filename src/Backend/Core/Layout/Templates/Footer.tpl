@@ -11,6 +11,7 @@
 		</div>
 	</footer>
 	<div class="hidden">
+		{include:{$BACKEND_CORE_PATH}/Layout/Templates/Dialogs.tpl}
 		{* Scripts should be placed here *}
 	</div>
 </body>

@@ -672,74 +672,32 @@ jsBackend.controls =
 	// bind confirm message
 	bindConfirm: function()
 	{
-		// variables
-		$askConfirmation = $('.askConfirmation');
-
-		// initialize
-		$askConfirmation.each(function()
-		{
-			// get id
-			$this = $(this);
-			var id = $this.data('messageId');
-			var url = $this.attr('href');
-			if(typeof url == 'undefined') url = $this.find('a').attr('href');
-
-			if(id !== '' && url !== '')
-			{
-				// initialize
-				$('#'+ id).dialog(
-				{
-					autoOpen: false,
-					draggable: false,
-					resizable: false,
-					modal: true,
-					buttons:
-					[
-						{
-							text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-							click: function()
-							{
-								// unbind the beforeunload event
-								$(window).off('beforeunload');
-
-								// goto link
-								window.location = url;
-							}
-						},
-						{
-							text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-							click: function()
-							{
-								$(this).dialog('close');
-							}
-						}
-					],
-					open: function(e)
-					{
-						// set focus on first button
-						if($(this).next().find('button').length > 0) $(this).next().find('button')[0].focus();
-					}
-				});
-			}
-		});
-
-		// bind clicks
-		$(document).on('click', '.askConfirmation', function(e)
+		$('.jsConfirmationTrigger').on('click', function(e)
 		{
 			// prevent default
 			e.preventDefault();
 
-			// get id
-			var id = $(this).data('messageId');
+			// get data
+			var href = $(this).attr('href');
+			var message = $(this).data('message');
+
+			console.log(message);
+
+			if (typeof message == 'undefined') {
+				message = jsBackend.locale.msg('ConfirmDefault');
+			}
+
+			$confirmation = $('.jsConfirmation').clone();
 
 			// bind
-			if(id !== '')
+			if(href !== '')
 			{
-				// set target
-				$('#'+ id).data('messageId', $(this).attr('href'));
+				// set data
+				$confirmation.find('.jsConfirmationMessage').html(message);
+				$confirmation.find('.jsConfirmationSubmit').attr('href', $(this).attr('href'));
 
 				// open dialog
-				$('#'+ id).dialog('open');
+				$confirmation.modal('show');
 			}
 		});
 	},
