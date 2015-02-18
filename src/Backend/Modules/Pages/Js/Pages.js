@@ -882,7 +882,7 @@ jsBackend.pages.tree =
 					if(jsBackend.debug) alert(textStatus);
 
 					// show message
-					jsBackend.messages.add('error', jsBackend.locale.err('CantBeMoved'));
+					jsBackend.messages.add('danger', jsBackend.locale.err('CantBeMoved'));
 
 					// rollback
 					$.tree.rollback(rollback);

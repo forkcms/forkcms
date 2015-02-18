@@ -128,7 +128,7 @@ jsBackend.faq =
 								$(this).sortable('cancel');
 
 								// show message
-								jsBackend.messages.add('error', 'alter sequence failed.');
+								jsBackend.messages.add('danger', 'alter sequence failed.');
 							}
 
 							// alert the user
@@ -140,7 +140,7 @@ jsBackend.faq =
 							$(this).sortable('cancel');
 
 							// show message
-							jsBackend.messages.add('error', 'alter sequence failed.');
+							jsBackend.messages.add('danger', 'alter sequence failed.');
 
 							// alert the user
 							if(jsBackend.debug){ alert(textStatus); }

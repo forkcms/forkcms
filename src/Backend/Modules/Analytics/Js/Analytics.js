@@ -388,7 +388,7 @@ jsBackend.analytics.loading =
 					$loading.hide();
 
 					// show message
-					jsBackend.messages.add('error', textStatus);
+					jsBackend.messages.add('danger', jsBackend.locale.err(utils.string.ucfirst(textStatus)));
 
 					// alert the user
 					if (jsBackend.debug) alert(textStatus);
@@ -408,7 +408,7 @@ jsBackend.analytics.loading =
 				$longLoader.hide();
 
 				// show message
-				jsBackend.messages.add('error', textStatus);
+				jsBackend.messages.add('danger', jsBackend.locale.err(utils.string.ucfirst(textStatus)));
 
 				// alert the user
 				if (jsBackend.debug) alert(textStatus);

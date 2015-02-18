@@ -5,13 +5,13 @@
 		<span class="h2">{$lblLoading|ucfirst}</span>
 	</div>
 </div>
-<div class="row fork-module-heading">
+<div class="row fork-module-content">
 	<div class="col-md-12">
-		<div class="text-info text-center">
+		<div id="longLoader" class="text-info text-center">
 			<p>{$msgLoadingData}</p>
 			<p class="fork-loader lg"></p>
 		</div>
-		<div id="statusError" class="alert alert-danger hidden">
+		<div id="statusError" class="alert alert-danger" style="display: none;">
 			<p>{$msgGetDataError}</p>
 		</div>
 	</div>

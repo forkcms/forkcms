@@ -442,7 +442,7 @@
 							destroyElement();
 
 							// show message
-							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
+							jsBackend.messages.add('danger', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
 					});
 				}
