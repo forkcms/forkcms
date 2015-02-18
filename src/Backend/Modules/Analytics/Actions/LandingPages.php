@@ -58,7 +58,14 @@ class LandingPages extends BackendAnalyticsBase
             );
 
             // add mass action dropdown
-            $ddmMassAction = new \SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
+            $ddmMassAction = new \SpoonFormDropdown(
+                'action',
+                array('delete_landing_page' => BL::lbl('Delete')),
+                'delete',
+                false,
+                'form-control',
+                'form-control danger'
+            );
             $dataGrid->setMassAction($ddmMassAction);
 
             // parse the datagrid
