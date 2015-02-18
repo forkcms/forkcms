@@ -32,8 +32,14 @@
 </div>
 <div class="row fork-module-content">
 	<div class="col-md-4">
-		<p><strong>{$pageviews} </strong><a href="{$googlePageviewsURL}">{$lblPageviews|ucfirst}</a></p>
-		<p><strong>{$visitors} </strong><a href="{$googleVisitorsURL}">{$lblVisitors|ucfirst}</a></p>
+		<p>
+			<strong>{$pageviews} </strong>
+			<a href="{$googlePageviewsURL}">{$lblPageviews|ucfirst}</a>
+		</p>
+		<p>
+			<strong>{$visitors} </strong>
+			<a href="{$googleVisitorsURL}">{$lblVisitors|ucfirst}</a>
+		</p>
 	</div>
 	<div class="col-md-4">
 		<p>

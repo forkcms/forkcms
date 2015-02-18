@@ -40,9 +40,6 @@ class Visitors extends BackendBaseWidget
         $this->setColumn('right');
         $this->setPosition(0);
 
-        // add css
-        $this->header->addCSS('widgets.css', 'Analytics');
-
         // add highchart javascript
         $this->header->addJS('highcharts.js', 'Core', false);
         $this->header->addJS('Analytics.js', 'Analytics');
