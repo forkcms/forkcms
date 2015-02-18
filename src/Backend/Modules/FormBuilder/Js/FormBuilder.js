@@ -127,7 +127,7 @@ jsBackend.FormBuilder.Fields =
                         }
 
                         // show error message
-                        else jsBackend.messages.add('error', textStatus);
+                        else jsBackend.messages.add('danger', textStatus);
 
                         // alert the user
                         if (data.code != 200 && jsBackend.debug) {
@@ -283,7 +283,7 @@ jsBackend.FormBuilder.Fields =
                             $(this).sortable('cancel');
 
                             // show message
-                            jsBackend.messages.add('error', 'alter sequence failed.');
+                            jsBackend.messages.add('danger', 'alter sequence failed.');
                         }
 
                         // alert the user
@@ -294,7 +294,7 @@ jsBackend.FormBuilder.Fields =
                         $(this).sortable('cancel');
 
                         // show message
-                        jsBackend.messages.add('error', 'alter sequence failed.');
+                        jsBackend.messages.add('danger', 'alter sequence failed.');
 
                         // alert the user
                         if (jsBackend.debug) alert(textStatus);
@@ -514,7 +514,7 @@ jsBackend.FormBuilder.Fields =
                         }
 
                         // show error message
-                        else jsBackend.messages.add('error', textStatus);
+                        else jsBackend.messages.add('danger', textStatus);
 
                         // alert the user
                         if (data.code != 200 && jsBackend.debug) {
@@ -682,7 +682,7 @@ jsBackend.FormBuilder.Fields =
 
                 // show error message
                 else {
-                    jsBackend.messages.add('error', textStatus);
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
                 // alert the user
@@ -748,7 +748,7 @@ jsBackend.FormBuilder.Fields =
 
                 // show error message
                 else {
-                    jsBackend.messages.add('error', textStatus);
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
                 // alert the user
@@ -803,7 +803,7 @@ jsBackend.FormBuilder.Fields =
 
                 // show error message
                 else {
-                    jsBackend.messages.add('error', textStatus);
+                    jsBackend.messages.add('danger', textStatus);
                 }
 
                 // alert the user
@@ -857,7 +857,7 @@ jsBackend.FormBuilder.Fields =
                 }
 
                 // show error message
-                else jsBackend.messages.add('error', textStatus);
+                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);
@@ -919,7 +919,7 @@ jsBackend.FormBuilder.Fields =
                 }
 
                 // show error message
-                else jsBackend.messages.add('error', textStatus);
+                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);
@@ -970,7 +970,7 @@ jsBackend.FormBuilder.Fields =
                 }
 
                 // show error message
-                else jsBackend.messages.add('error', textStatus);
+                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);
@@ -1036,7 +1036,7 @@ jsBackend.FormBuilder.Fields =
                 }
 
                 // show error message
-                else jsBackend.messages.add('error', textStatus);
+                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);
@@ -1104,7 +1104,7 @@ jsBackend.FormBuilder.Fields =
                 }
 
                 // show error message
-                else jsBackend.messages.add('error', textStatus);
+                else jsBackend.messages.add('danger', textStatus);
 
                 // alert the user
                 if (data.code != 200 && jsBackend.debug) alert(data.message);

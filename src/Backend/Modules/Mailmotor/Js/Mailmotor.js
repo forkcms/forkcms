@@ -475,7 +475,7 @@ jsBackend.mailmotor.step4 =
 					$confirmBox.dialog('close');
 
 					// show message
-					jsBackend.messages.add('error', data.message);
+					jsBackend.messages.add('danger', data.message);
 				}
 				else
 				{

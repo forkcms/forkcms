@@ -186,7 +186,7 @@ jsBackend.dashboard =
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				// show message
-				jsBackend.messages.add('error', 'alter sequence failed.');
+				jsBackend.messages.add('danger', 'alter sequence failed.');
 
 				// refresh page
 				// window.location.reload(true);

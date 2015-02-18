@@ -23,11 +23,11 @@
 			// reports
 			$(function()
 			{
-				{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}
+				{option:formError}jsBackend.messages.add('danger', "{$errFormError|addslashes}");{/option:formError}
 				{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision|addslashes}");{/option:usingRevision}
 				{option:usingDraft}jsBackend.messages.add('notice', "{$msgUsingADraft|addslashes}");{/option:usingDraft}
 				{option:report}jsBackend.messages.add('success', "{$reportMessage|addslashes}");{/option:report}
-				{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage|addslashes}");{/option:errorMessage}
+				{option:errorMessage}jsBackend.messages.add('danger', "{$errorMessage|addslashes}");{/option:errorMessage}
 			});
 		//]]>
 	</script>

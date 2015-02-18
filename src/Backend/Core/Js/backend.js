@@ -90,7 +90,7 @@ var jsBackend =
 				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
 
 				// show message
-				jsBackend.messages.add('error', textStatus);
+				jsBackend.messages.add('danger', textStatus);
 			}
 		});
 
@@ -1991,7 +1991,7 @@ jsBackend.tableSequenceByDragAndDrop =
 								$table.sortable('cancel');
 
 								// show message
-								jsBackend.messages.add('error', jsBackend.locale.err('AlterSequenceFailed'));
+								jsBackend.messages.add('danger', jsBackend.locale.err('AlterSequenceFailed'));
 							}
 
 							// redo odd-even
@@ -2014,7 +2014,7 @@ jsBackend.tableSequenceByDragAndDrop =
 							if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
 
 							// show message
-							jsBackend.messages.add('error', textStatus);
+							jsBackend.messages.add('danger', textStatus);
 
 							// revert
 							$table.sortable('cancel');
