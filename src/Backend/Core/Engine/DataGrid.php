@@ -380,13 +380,13 @@ class DataGrid extends \SpoonDataGrid
                     if (substr_count($value, 'class="') > 0) {
                         $value = str_replace(
                             'class="',
-                            'data-message-id="' . $id . '" class="askConfirmation ',
+                            'data-message-id="' . $id . '" class="jsConfirmationTrigger ',
                             $value
                         );
                     } else {
                         $value = str_replace(
                             '<a ',
-                            '<a data-message-id="' . $id . '" class="askConfirmation" ',
+                            '<a data-message-id="' . $id . '" class="jsConfirmationTrigger" ',
                             $value
                         );
                     }

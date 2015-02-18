@@ -119,9 +119,9 @@
 					{$txtPassword} {$txtPasswordError}
 				</p>
 				<div class="buttonHolder">
-					{option:!account}<a id="linkAccount" href="#" class="askConfirmation button inputButton"><span>{$msgLinkCMAccount}</span></a>{/option:!account}
+					{option:!account}<a id="linkAccount" href="#" class="jsConfirmationTrigger button inputButton"><span>{$msgLinkCMAccount}</span></a>{/option:!account}
 					{option:account}
-					<a id="unlinkAccount" href="#" class="askConfirmation submitButton button inputButton"><span>{$msgUnlinkCMAccount}</span></a>
+					<a id="unlinkAccount" href="#" class="jsConfirmationTrigger submitButton button inputButton"><span>{$msgUnlinkCMAccount}</span></a>
 					{option:clientId}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$msgViewMailings}</span></a>{/option:clientId}
 					{/option:account}
 				</div>
