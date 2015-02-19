@@ -90,7 +90,7 @@ class Block extends Object
      *
      * @var    FrontendTemplate
      */
-    public $tpl;
+    //public $tpl;
 
     /**
      * A reference to the URL-instance
@@ -110,7 +110,7 @@ class Block extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        $this->tpl = new FrontendTemplate(false);
+        //$this->tpl = new FrontendTemplate(false);
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
         $this->breadcrumb = $this->getContainer()->get('breadcrumb');

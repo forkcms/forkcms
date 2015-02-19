@@ -23,9 +23,7 @@ namespace Frontend\Core\Engine;
  * @author Frederik Heyninck <frederik@figure8.be>
  */
 
-use spoon\template\compiler as SpoonTemplateCompiler;
-
-Class TemplateEngine
+Class SpoonTemplate
 {
     public $forms = array();
     public $variables;
@@ -34,38 +32,96 @@ Class TemplateEngine
     {
         require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
+
+        // some old globals
         $this->assign('CRLF', "\n");
         $this->assign('TAB', "\t");
         $this->assign('now', time());
     }
 
-    function assign($key, $value = null)
+    function assign($key, $values = null)
     {
+        // bad code
+        // key == array in this case
         if (is_array($key)) {
-            $this->assignArray($key);
-        } else {
-            $this->variables[$key] = $value;
+            $this->assignArray($key, $values);
+            return;
+        }
+
+        switch (true)
+        {
+            case ($key == 'THEME_PATH'):
+                $this->themePath = $values;
+                break;
+            case ($key == 'page'):
+            // var_dump($values);exit;
+                $this->baseFile = $this->convertToTwig($values['template_path']);
+                $templateData = $values['template_data'];
+                $this->blocks($values['positions']);
+                break;
+            case (substr($key, 3) == 'hid'):
+                var_dump($key);exit;
+                break;
+            case (substr($key, 3) == 'chk'):
+                var_dump($key);exit;
+                break;
+            case (substr($key, 3) == 'ddm'):
+                var_dump($key);exit;
+                break;
+            case (substr($key, 3) == 'txt'):
+                var_dump($key);exit;
+                break;
+            default:
+                $this->variables[$key] = $values;
+                break;
         }
     }
 
-    function assignArray(array $variables)
+    function blocks($positions)
     {
+        foreach ($positions as &$blocks)
+        {
+            foreach ($blocks as &$block)
+            {
+                if ($block['extra_type'] == 'widget') {
+                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.twig';
+                }
+                elseif ($block['extra_type'] == 'block') {
+                    $block['extra_action'] = ($block['extra_action']) ?: 'Index';
+                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Templates/' . $block['extra_action'] . '.twig';
+                }
+            }
+        }
+        $this->assign('positions', $positions);
+    }
+
+    function convertToTwig($path)
+    {
+        return str_replace('.tpl', '.twig', $path);
+    }
+
+    function assignArray(array $variables, $index = null)
+    {
+        if ($index)
+        {
+            unset($variables['Core']);
+            $tmp[$index] = $variables;
+            $variables = $tmp;
+        }
         $this->variables = array_merge($this->variables, $variables);
     }
 
     function render($path)
     {
-        $path = str_replace('.tpl', '.twig', $path);
+        $this->themePath = Theme::getPath($path);
+        $path = $this->convertToTwig($path);
+        $path = str_replace($this->themePath . '/', '', $this->convertToTwig($path));
         $fullPath = pathinfo($path);
 
-        $loader = new \Twig_Loader_Filesystem(PATH_WWW . '/src/Frontend/Themes/bootstrap2/');
-        $twig = new \Twig_Environment($loader, array(
-            'cache' => PATH_WWW . '/src/Frontend/Cache/Templates',
-            'debug' => true
-        ));
-         //var_dump($this->variables);exit;
-        $nav = Navigation::getNavigation();
-        //var_dump($nav);exit;
+        //var_dump($path, $fullPath);exit;
+        // force main nav
+        //var_dump($this->variables['positions']);exit;
+
         if ($this->forms)
         {
             foreach ($this->forms['name'] as $name)
@@ -74,9 +130,36 @@ Class TemplateEngine
             }
         }
 
+        // render at the end
+        if ($this->baseFile == $path)
+        {
+            exit;
+            $this->setNav();
+            //echo $path . '  ';
+            //var_dump($this->variables['positions']);exit;
+            $loader = new \Twig_Loader_Filesystem($this->themePath);
+            $twig = new \Twig_Environment($loader, array(
+                'cache' => $this->cacheDirectory,
+                'debug' => true
+            ));
+            $this->template = $twig->loadTemplate($path);
+            echo $this->template->render($this->variables);
+        }
+    }
+
+    function setNav()
+    {
+        $nav = Navigation::getNavigation();
+        // foreach ($nav[1] as $key => $navBlock)
+        // {
+        //     if ($navBlock['has_children'])
+        //     {
+        //         $navBlock['has_children']
+        //     }
+        //     var_dump();exit;
+        // }
+        // var_dump($nav['page']);exit;
         $this->assign('navigation', $nav['page'][1]);
-        $this->template = $twig->loadTemplate($fullPath['basename']);
-        echo $this->template->render($this->variables);
     }
 
     function compileForm($name)
@@ -100,7 +183,14 @@ Class TemplateEngine
         $this->forms['data'][$form->getName()] = $form;
     }
 
-    function setCacheDirectory(){}
+    function setPlugin($pluginPath)
+    {
+        //var_dump($pluginPath);exit;
+    }
+
+    function setCacheDirectory($dir){
+        $this->cacheDirectory = $dir;
+    }
     function getCompileName(){}
     function setCompileDirectory(){}
     function setForceCompile(){}
@@ -110,7 +200,7 @@ Class TemplateEngine
     }
 }
 
-class Template extends TemplateEngine//\SpoonTemplate//\TemplateEngine
+class Template extends SpoonTemplate
 {
     /**
      * Should we add slashes to each value?
@@ -266,10 +356,10 @@ class Template extends TemplateEngine//\SpoonTemplate//\TemplateEngine
      */
     public function getContent($template, $customHeaders = false, $parseCustom = false)
     {
-        ob_start();
-        $this->display($template, $customHeaders, $parseCustom);
+        //ob_start();
+        $this->render($template, $customHeaders, $parseCustom);
 
-        return ob_get_clean();
+        //return ob_get_clean();
     }
 
     /**
