@@ -1,4 +1,5 @@
-@import url("const.css");
-@import url("navigations.css");
+@import url("constants.css");
 @import url("media.css");
 @import url("base.css");
+@import url("main.css");
+@import url("extensions.css");

@@ -8,9 +8,9 @@
 	<title>{option:page_title}{$page_title|ucfirst} - {/option:page_title}{$SITE_TITLE} - Fork CMS</title>
 	<link rel="shortcut icon" href="/src/Backend/favicon.ico" />
 
-	{iteration:cssFiles}<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}{/iteration:cssFiles}
-	<!--[if IE 7]><link rel="stylesheet" href="/src/Backend/Core/Layout/Css/conditionals/ie7.css" /><![endif]-->
-	<!--[if IE 8]><link rel="stylesheet" href="/src/Backend/Core/Layout/Css/conditionals/ie8.css" /><![endif]-->
+	{iteration:cssFiles}
+	<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}
+	{/iteration:cssFiles}
 
 	{iteration:jsFiles}
 	<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}
