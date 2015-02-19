@@ -36,3 +36,8 @@ textarea {
     -webkit-border-radius: 4px;
     border-radius: 4px;
 }
+
+iframe {
+    border: 1px solid #CCCCCC;
+    border-radius: 4px 4px 4px 4px;
+}

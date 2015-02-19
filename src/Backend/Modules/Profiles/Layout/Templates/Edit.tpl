@@ -105,7 +105,7 @@
 								<div class="btn-toolbar pull-right">
 									<div class="btn-group" role="group">
 										<a href="{$var|geturl:'add_profile_group'}&amp;id={$profile.id}" class="btn btn-primary" title="{$lblAddGroup|ucfirst}">
-											<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+											<span class="glyphicon glyphicon-plus"></span>&nbsp;
 											{$lblAddGroup|ucfirst}
 										</a>
 									</div>

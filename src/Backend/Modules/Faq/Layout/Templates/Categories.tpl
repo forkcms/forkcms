@@ -7,7 +7,7 @@
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group" role="group">
 				<a href="{$var|geturl:'add_category'}" class="btn btn-primary" title="{$lblAddCategory|ucfirst}">
-					<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{$lblAddCategory|ucfirst}
 				</a>
 			</div>

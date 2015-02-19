@@ -14,7 +14,6 @@ jsBackend.mailmotor =
 		jsBackend.mailmotor.resizing.init();
 		jsBackend.mailmotor.step3.init();
 		jsBackend.mailmotor.step4.init();
-		jsBackend.mailmotor.templateSelection.init();
 
 		// multiple text box for adding multiple emailaddresses
 		if($('form#add #email').length > 0)
@@ -264,9 +263,6 @@ jsBackend.mailmotor.resizing =
 	{
 		$iframe = $('#contentBox');
 		$iframeBox = $('#iframeBox');
-
-		// make the plain content textarea resizable
-		$('#contentPlain').resizable({ handles: 's' });
 
 		// make the iframe resizable
 		$iframeBox.resizable(
@@ -529,38 +525,6 @@ jsBackend.mailmotor.step4 =
 					window.location = '/private/'+ jsBackend.current.language +'/'+ jsBackend.current.module +'/index?report=mailing-sent';
 				}
 				// we do not need to handle errors here. These are catched by jsBackend and displayed.
-			}
-		});
-	}
-};
-
-jsBackend.mailmotor.templateSelection =
-{
-	init: function()
-	{
-		// store the list items
-		$listItems = $('#templateSelection li');
-
-		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		$listItems.on('click', function(e)
-		{
-			// prevent default
-			e.preventDefault();
-
-			// store the object
-			var radiobutton = $(this).find('input:radio:first');
-
-			// set checked
-			radiobutton.prop('checked', true);
-
-			// if the radiobutton is checked
-			if(radiobutton.is(':checked'))
-			{
-				// remove the selected state from all other templates
-				$listItems.removeClass('selected');
-
-				// add a selected state to the parent
-				radiobutton.parent('li').addClass('selected');
 			}
 		});
 	}

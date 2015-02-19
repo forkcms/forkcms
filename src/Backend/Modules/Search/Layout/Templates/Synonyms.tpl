@@ -7,7 +7,7 @@
 		<div class="btn-toolbar pull-right">
 			<div class="btn-group" role="group">
 				<a href="{$var|geturl:'add_synonym'}" class="btn btn-primary" title="{$lblAddSynonym|ucfirst}">
-					<span class="glyphicon glyphicon-plus-sign"></span>
+					<span class="glyphicon glyphicon-plus"></span>
 					{$lblAddSynonym|ucfirst}
 				</a>
 			</div>

@@ -48,69 +48,103 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<h4>{$lblSender|ucfirst}</h4>
-								<div class="form-group">
-									<label for="fromName">
-										{$lblName|ucfirst}
-										<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-									</label>
-									{$txtFromName} {$txtFromNameError}
-								</div>
-								<div class="form-group">
-									<label for="fromEmail">
-										{$lblEmailAddress|ucfirst}
-										<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-									</label>
-									{$txtFromEmail} {$txtFromEmailError}
-								</div>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<h4>{$lblReplyTo|ucfirst}</h4>
-								<div class="form-group">
-									<label for="replyToEmail">
-										{$lblEmailAddress|ucfirst}
-										<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-									</label>
-									{$txtReplyToEmail} {$txtReplyToEmailError}
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											{$lblSender|ucfirst}
+										</h4>
+									</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<label for="fromName">
+												{$lblName|ucfirst}
+												<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+											</label>
+											{$txtFromName} {$txtFromNameError}
+										</div>
+										<div class="form-group">
+											<label for="fromEmail">
+												{$lblEmailAddress|ucfirst}
+												<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+											</label>
+											{$txtFromEmail} {$txtFromEmailError}
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<h4>{$lblPlainTextVersion|ucfirst}</h4>
-								<div class="form-group">
-									<ul class="list-unstyled">
-										<li class="checkbox">
-											<label for="plainTextEditable">{$chkPlainTextEditable} {$msgPlainTextEditable|ucfirst}</label>
-										</li>
-									</ul>
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											{$lblReplyTo|ucfirst}
+										</h4>
+									</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<label for="replyToEmail">
+												{$lblEmailAddress|ucfirst}
+												<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+											</label>
+											{$txtReplyToEmail} {$txtReplyToEmailError}
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-12">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											{$lblPlainTextVersion|ucfirst}
+										</h4>
+									</div>
+									<div class="panel-body">
+										<div class="form-group">
+											<ul class="list-unstyled">
+												<li class="checkbox">
+													<label for="plainTextEditable">
+														{$chkPlainTextEditable} {$msgPlainTextEditable|ucfirst}
+													</label>
+												</li>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 						{option:userIsGod}
 						<div class="row">
 							<div class="col-md-12">
-								<h4>{$lblPrices|ucfirst}</h4>
-								<div class="form-group">
-									<label for="pricePerEmail">
-										{$lblPerSentMailing|ucfirst}
-										<abbr title="{$lblRequiredField|ucfirst}"></abbr>
-									</label>
-									<p class="text-info">{$msgHelpPrice}</p>
-									<div class="form-inline">
-										€ {$txtPricePerEmail} {$txtPricePerEmailError}
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h4 class="panel-title">
+											{$lblPrices|ucfirst}
+										</h4>
 									</div>
-								</div>
-								<div class="form-group">
-									<label for="pricePerEmail">
-										{$lblPerCampaign|ucfirst}
-										<abbr title="{$lblRequiredField|ucfirst}"></abbr>
-									</label>
-									<p class="text-info">{$msgHelpPrice}</p>
-									<div class="form-inline">
-										€ {$txtPricePerCampaign} {$txtPricePerCampaignError}
+									<div class="panel-body">
+										<div class="form-group">
+											<label for="pricePerEmail">
+												{$lblPerSentMailing|ucfirst}
+												<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+											</label>
+											<p class="text-info">{$msgHelpPrice}</p>
+											<div class="form-inline">
+												€ {$txtPricePerEmail} {$txtPricePerEmailError}
+											</div>
+										</div>
+										<div class="form-group">
+											<label for="pricePerEmail">
+												{$lblPerCampaign|ucfirst}
+												<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+											</label>
+											<p class="text-info">{$msgHelpPrice}</p>
+											<div class="form-inline">
+												€ {$txtPricePerCampaign} {$txtPricePerCampaignError}
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>

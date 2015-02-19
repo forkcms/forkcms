@@ -45,6 +45,7 @@
 					<div class="btn-toolbar">
 						<div class="btn-group pull-right">
 							<button id="search" type="submit" class="btn btn-primary" name="search">
+								<span class="glyphicon glyphicon-refresh"></span>&nbsp;
 								{$lblUpdateFilter|ucfirst}
 							</button>
 						</div>

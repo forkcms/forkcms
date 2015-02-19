@@ -92,7 +92,10 @@
 				<div class="panel-footer">
 					<div class="btn-toolbar">
 						<div class="btn-group pull-right">
-							<button id="search" class="btn btn-primary" type="submit" name="search">{$lblUpdateFilter|ucfirst}</button>
+							<button id="search" class="btn btn-primary" type="submit" name="search">
+								<span class="glyphicon glyphicon-refresh"></span>&nbsp;
+								{$lblUpdateFilter|ucfirst}
+							</button>
 						</div>
 					</div>
 				</div>

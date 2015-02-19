@@ -1,26 +1,31 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblCampaigns|ucfirst}</h2>
-
-	{option:showMailmotorAddCampaign}
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_campaign'}" class="button icon iconFolderAdd" title="{$lblAddCampaign|ucfirst}">
-			<span>{$lblAddCampaign|ucfirst}</span>
-		</a>
-	</div>
-	{/option:showMailmotorAddCampaign}
-</div>
-
-<form action="{$var|geturl:'mass_campaign_action'}" method="get" class="forkForms submitWithLink" id="campaigns">
-	{option:dataGrid}
-		<div class="dataGridHolder">
-			{$dataGrid}
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblCampaigns|ucfirst}</h2>
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				{option:showMailmotorAddCampaign}
+				<a href="{$var|geturl:'add_campaign'}" class="btn btn-primary" title="{$lblAddCampaign|ucfirst}">
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
+					{$lblAddCampaign|ucfirst}
+				</a>
+				{/option:showMailmotorAddCampaign}
+			</div>
 		</div>
-	{/option:dataGrid}
-	{option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
-</form>
-
+	</div>
+</div>
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{option:dataGrid}
+		<form action="{$var|geturl:'mass_campaign_action'}" method="get" class="forkForms submitWithLink" id="campaigns">
+			{$dataGrid}
+		</form>
+		{/option:dataGrid}
+		{option:!dataGrid}
+		<p>{$msgNoItems}</p>
+		{/option:!dataGrid}
+	</div>
+</div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

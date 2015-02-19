@@ -6,24 +6,16 @@
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
 	<title>Fork CMS - mailing</title>
-	<link rel="shortcut icon" href="/backend/favicon.ico" />
+	<link rel="shortcut icon" href="/Backend/favicon.ico" />
 
-	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Core/Layout/Css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="/src/Backend/Modules/Mailmotor/Layout/Css/iframe.css" />
+	{iteration:cssFiles}
+	<link rel="stylesheet" href="{$cssFiles.file}" />{$CRLF}{$TAB}
+	{/iteration:cssFiles}
 
-	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.ui.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.ui.dialog.patch.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.tools.js"></script>
+	{iteration:jsFiles}
+	<script src="{$jsFiles.file}"></script>{$CRLF}{$TAB}
+	{/iteration:jsFiles}
 
-	<script type="text/javascript" src="/src/Backend/Core/Js/jquery/jquery.backend.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/backend.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/utils.js"></script>
-	<script type="text/javascript" src="/src/Backend/Modules/Mailmotor/Js/mailmotor.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/ckeditor.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/ckeditor/adapters/jquery.js"></script>
-	<script type="text/javascript" src="/src/Backend/Core/Js/ckfinder/ckfinder.js"></script>
-	<script type="text/javascript" src="/src/Frontend/Cache/Navigation/editor_link_list_{$LANGUAGE}.js"></script>
 	<script type="text/javascript">
 		//<![CDATA[
 			{$jsData}
