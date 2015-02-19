@@ -1,0 +1,43 @@
+{% include "Core/Layout/Templates/Head.twig" %}
+
+<body class="{{ LANGUAGE }}" itemscope itemtype="http://schema.org/WebPage">
+
+	{% include "Core/Layout/Templates/Header.twig" %}
+
+    <div class="container">
+		<div class="row">
+            <div class="col-lg-12">
+				{# Main position #}
+ 				{% for main in positions.main %}
+ 					{% if main.include_path %}
+ 						{% include main.include_path %}
+ 					{% else %}
+ 						{{ main.html | raw }}
+ 					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+	{% include "Core/Layout/Templates/Footer.twig" %}
+
+	<noscript>
+		<div class="message notice">
+			<h4>{{ lbl.EnableJavascript|capitalize }}</h4>
+			<p>{{ msg.EnableJavascript }}</p>
+		</div>
+	</noscript>
+
+	{# General Javascript #}
+	{% for js in jsFiles %}
+		<script src="{{ js.file }}"></script>
+	{% endfor %}
+
+	{# Theme specific Javascript #}
+	<script src="{{ THEME_URL }}/Core/Js/boots.js"></script>
+	<script src="{{ THEME_URL }}/Core/Js/bootstrap.min.js"></script>
+
+	{# Site wide HTML #}
+	{{ siteHTMLFooter | raw }}
+</body>
+</html>

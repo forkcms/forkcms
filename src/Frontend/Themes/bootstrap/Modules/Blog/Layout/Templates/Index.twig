@@ -1,0 +1,64 @@
+{#
+	variables that are available:
+	- {$items}: contains an array with all posts, each element contains data about the post
+#}
+
+{% if not items %}
+	<div id="blogIndex">
+		<p>{$msgBlogNoItems}</p>
+	</div>
+{% else %}
+	<div id="blogIndex">
+		{% for item in items %}
+			<article>
+					<header>
+						<h1><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h1>
+						<p class="lead">
+							{# Written by #}
+							{# {{ msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}} #}
+
+							{# Category #}
+							{{ lbl.In }} {{ lbl.The }} {{ lbl.Category }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+						</p>
+						<hr>
+						<p class="pull-left"><span class="glyphicon glyphicon-time"></span>
+							{# Written on #}
+							{{ item.publish_on|date }}
+						</p>
+							{# Comments #}
+							{% if item.allow_comments %}
+							<div class="text-right">
+								{% if not item.comments %}<a href="{{ item.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>
+								{% else %}
+									{% if item.comments_multiple %}
+										<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments }}</a> {# |sprintf:{$item.comments_count}} #}
+									{% else %}
+										<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>
+									{% endif %}
+								{% endif %}
+							</div>
+							{% endif %}
+						<hr>
+							{# Tags #}
+							{% if item.tags %}
+							<p>
+								{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
+								{% for tag in item.tags %}
+									<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if not tag.last %}.{% endif %}
+								{% endfor %}
+							</p>
+							<hr>
+							{% endif %}
+					</header>
+
+					{% if item.image %}<img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+					{% if not item.introduction %}{{ item.text }}
+					{% else %}{{ item.introduction | raw  }}{% endif %}
+
+	                <a class="btn btn-primary" href="{{ item.full_url }}">{{ lbl.More|capitalize }} <span class="glyphicon glyphicon-chevron-right"></span></a>
+					<hr>
+			</article>
+		{% endfor %}
+	</div>
+	{include:Core/Layout/Templates/Pagination.tpl}
+{% endif %}

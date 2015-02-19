@@ -17,17 +17,16 @@
 			{% if navigation %}
 				<ul class="nav navbar-nav">
 					{% for nav in navigation %}
-						{% if nav.has_children %}
+{# 						{% if nav.has_children %}
 						<li class="dropdown{% if nav.selected %} active{% endif %}" id="dropdownNavigation">
 							<a href="{{ nav.full_url }}" class="dropdown-toggle" data-toggle="dropdown">{{ nav.nav_title }} <b class="caret"></b></a>
 								<ul class="dropdown-menu">
 								{{ nav.children | raw }}
 						</li>
-						{% else %}
+						{% endif %} #}
 						<li{% if nav.selected %} class="active"{% endif %}>
 							<a href="{{ nav.full_url }}" title="{{ nav.nav_title }}"{% if nav.nofollow %} rel="nofollow"{% endif %}>{{ nav.navigation_title }}</a>
 						</li>
-						{% endif %}
 					{% endfor %}
 				</ul>
 			{% endif %}

@@ -1,0 +1,7 @@
+<p itemprop="breadcrumb">
+	<ol class="breadcrumb">
+	{% for step in breadcrumb %}
+		<li {% if not step.last %}class="active"{% endif %}>{% if step.url %}<a href="{{ step.url }}" title="{{ step.title }}">{% endif %}{{ step.title }}{% if step.url %}</a>{% endif %}</li>
+	{% endfor %}
+	</ol>
+</p>
