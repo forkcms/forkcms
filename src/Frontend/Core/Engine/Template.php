@@ -25,8 +25,11 @@ Class Template
      */
     private $addSlashes = false;
 
-    public $forms = array();
-    public $variables;
+    private $forms = array();
+    private $variables = array();
+    private $actions = array();
+    private $themePath;
+    private $baseFile;
 
     function __construct($addToReference = true)
     {
@@ -38,18 +41,16 @@ Class Template
         $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
     }
 
-    function startGlobals()
+    private function startGlobals()
     {
-        // assign a placeholder var
-        $this->assign('var', '');
-
-        // assign current timestamp
-        $this->assign('timestamp', time());
-
         // some old globals
-        $this->assign('CRLF', "\n");
-        $this->assign('TAB', "\t");
-        $this->assign('now', time());
+        $this->variables['var'] = '';
+        $this->variables['timestamp'] = time();
+        $this->variables['CRLF'] = "\n";
+        $this->variables['TAB'] = "\t";
+        $this->variables['now'] = time();
+        $this->variables['LANGUAGE'] = FRONTEND_LANGUAGE;
+        $this->variables['is' . strtoupper(FRONTEND_LANGUAGE)] = true;
 
         // old theme checker
         if (Model::getModuleSetting('Core', 'theme') !== null) {
@@ -80,10 +81,6 @@ Class Template
         if (!empty($realConstants)) {
             $this->assign($realConstants);
         }
-
-        // aliases
-        $this->assign('LANGUAGE', FRONTEND_LANGUAGE);
-        $this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
 
         // settings
         $this->assign(
@@ -124,7 +121,7 @@ Class Template
     /**
      * Assign the labels
      */
-    function parseLabels()
+    private function parseLabels()
     {
         $actions = Language::getActions();
         $errors = Language::getErrors();
@@ -168,7 +165,7 @@ Class Template
         $this->assignArray($messages, 'msg');
     }
 
-    function assign($key, $values = null)
+    public function assign($key, $values = null)
     {
         // bad code
         // key == array in this case
@@ -177,31 +174,25 @@ Class Template
             return;
         }
 
-        switch (true)
-        {
-            case ($key == 'page'):
-                $this->baseFile = $this->convertToTwig($values['template_path']);
-                $this->setPositions($values['positions']);
-                break;
-            case (substr($key, 3) == 'hid'):
-                var_dump($key);exit;
-                break;
-            case (substr($key, 3) == 'chk'):
-                var_dump($key);exit;
-                break;
-            case (substr($key, 3) == 'ddm'):
-                var_dump($key);exit;
-                break;
-            case (substr($key, 3) == 'txt'):
-                var_dump($key);exit;
-                break;
-            default:
-                $this->variables[$key] = $values;
-                break;
+        // page hook
+        if ($key == 'page') {
+            $this->baseFile = $this->convertToTwig($values['template_path']);
+            $this->setPositions($values['positions']);
+            return;
         }
+
+        // form hook
+        $field = substr($key, 0, 3);
+        if (in_array($field, array('hid', 'chk', 'ddm', 'txt'))) {
+            $this->fields[$field][substr($key, 3)] = $values;
+            return;
+        }
+
+        // all other cases
+        $this->variables[$key] = $values;
     }
 
-    function setPositions($positions)
+    private function setPositions($positions)
     {
         foreach ($positions as &$blocks)
         {
@@ -222,15 +213,15 @@ Class Template
         $this->variables['positions'] = $positions;
     }
 
-    function convertToTwig($path)
+    private function convertToTwig($path)
     {
         return str_replace('.tpl', '.twig', $path);
     }
 
-    function assignArray(array $variables, $index = null)
+    public function assignArray(array $variables, $index = null)
     {
-        if ($index)
-        {
+        if ($index) {
+            // artifacts?
             unset($variables['Core']);
             $tmp[$index] = $variables;
             $variables = $tmp;
@@ -238,83 +229,74 @@ Class Template
         $this->variables = array_merge($this->variables, $variables);
     }
 
-    function getContent($template, $customHeaders = false, $parseCustom = false)
+    public function getContent($template, $customHeaders = false, $parseCustom = false)
     {
+        if (!$template) {
+            return;
+        }
         $template = Theme::getPath($template);
+        // the theme file is located
+        // if (strpos($template, $this->themePath) !== false) {
         $template = str_replace($this->themePath . '/', '', $this->convertToTwig($template));
+        // }
 
         // block actions/widgets from rendering
         if(in_array($template, $this->actions)) return;
 
         // render at the end
-        if ($this->baseFile == $template)
-        {
-            if ($this->forms)
-            {
-                foreach ($this->forms['name'] as $name)
-                {
-                    $this->assign('form_' . $name, $this->compileForm($name));
-                }
-            }
-            //var_dump($this->actions);exit;
-            //var_dump($this->variables['positions']);exit;
-            $this->end($template);
-            exit;
-        }
+        $this->end($template);
     }
 
-    function end($template)
+    private function end($template)
     {
         $this->startGlobals();
         $this->parseLabels();
         $this->setNav();
+
+        if ($this->forms) {
+            $this->assign('form', $this->forms);
+        }
+
         $loader = new \Twig_Loader_Filesystem($this->themePath);
         $twig = new \Twig_Environment($loader, array(
             'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates',
-            //'debug' => (SPOON_DEBUG === true)
+            'debug' => (SPOON_DEBUG === true)
         ));
+
+        // debug options
         if (SPOON_DEBUG) {
             // $twig->addExtension(new Twig_Extension_Debug());
             $this->assign('debug', true);
         }
+
+        // template
         $this->template = $twig->loadTemplate($template);
         echo $this->template->render($this->variables);
     }
 
-    function setNav()
+    private function setNav()
     {
         // force main nav
         $nav = Navigation::getNavigation();
         $this->assign('navigation', $nav['page'][1]);
     }
 
-    function compileForm($name)
+    public function addForm($form)
     {
-        if(isset($this->forms['data'][$name]))
-        {
-            $form = $this->forms['data'][$name];
-            $compileForm ='<form accept-charset="UTF-8" action="' . $form->getAction() . '" method="'. $form->getMethod().'" '. $form->getParametersHTML() . '>';
-            $compileForm .= $form->getField('form')->parse();
-            if($form->getUseToken())
-            {
-                $compileForm .= '<input type="hidden" name="form_token" id="' . $form->getField('form_token')->getAttribute('id'). '" value="' . htmlspecialchars($form->getField('form_token')->getValue()). ' " />';
-            }
+        $compileForm ='<form accept-charset="UTF-8" action="' . $form->getAction() . '" method="'. $form->getMethod().'" '. $form->getParametersHTML() . '>';
+        $compileForm .= $form->getField('form')->parse();
+        if($form->getUseToken()) {
+            $compileForm .= '<input type="hidden" name="form_token" id="' . $form->getField('form_token')->getAttribute('id'). '" value="' . htmlspecialchars($form->getField('form_token')->getValue()). ' " />';
         }
-        return $compileForm;
+        $this->forms[$form->getName()] = $this->fields;
+        $this->forms[$form->getName()]['form'] = $compileForm;
+        $this->forms[$form->getName()]['end'] = "</form>";
     }
 
-    function addForm($form)
-    {
-        $this->forms['name'][] = $form->getName();
-        $this->forms['data'][$form->getName()] = $form;
-    }
+    public function setPlugin(){}
+    public function setForceCompile(){}
 
-    function setPlugin($pluginPath)
-    {
-        //var_dump($pluginPath);exit;
-    }
-
-    function getAssignedVariables()
+    public function getAssignedVariables()
     {
         return $this->variables;
     }

@@ -1,10 +1,13 @@
 {% block body %}
 FORM WIDGET
 
+
 {{ form.search.form | raw }}
 {{ form.search.hid.Utf8 | raw }}
-{{ form.search.txt.QWidget | raw }}{{ form.search.txt.QWidgetError | raw }}
-{{ form.search.submit | raw }}
+<div class="form-group">
+	{{ form.search.txt.QWidget | raw }}{{ form.search.txt.QWidgetError | raw }}
+</div>
+<input type="submit" class="btn btn-success" name="submit" value="{{ lbl.Search|capitalize }}">
 {{ form.search.end | raw }}
 
 {% endblock %}

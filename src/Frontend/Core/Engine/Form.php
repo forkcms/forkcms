@@ -611,7 +611,7 @@ class Form extends \SpoonForm
      */
     public function render($tpl)
     {
-        // loop objects
+        // loop objects matching parent::parse
         foreach($this->objects as $name => $object)
         {
             // not excluded

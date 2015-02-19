@@ -262,7 +262,7 @@ class Form extends FrontendBaseWidget
      */
     protected function loadTemplate($path = null)
     {
-        $this->tpl = new FrontendTemplate(false);
+        //$this->tpl = new FrontendTemplate(false);
     }
 
     /**
@@ -317,7 +317,7 @@ class Form extends FrontendBaseWidget
             $this->tpl->assign('fields', $this->fieldsHTML);
 
             // parse form
-            $this->frm->parse($this->tpl);
+            $this->frm->render($this->tpl);
             $this->tpl->assign('formToken', $this->frm->getToken());
 
             // assign form error
