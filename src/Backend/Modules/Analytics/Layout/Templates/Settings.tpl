@@ -68,13 +68,13 @@
 					<div class="btn-toolbar">
 						<div class="btn-group pull-left">
 							<button type="button" data-toggle="modal" data-target="#confirmDeleteSessionToken" class="btn btn-danger">
-								<span class="glyphicon glyphicon-trash"></span>&nbsp;
+								<span class="glyphicon glyphicon-log-out"></span>&nbsp;
 								{$msgRemoveAccountLink}
 							</button>
 						</div>
 						<div class="btn-group pull-right">
 							<button id="submitForm" class="btn btn-primary" type="submit" name="submitForm">
-								<span class="glyphicon glyphicon-pencil"></span>&nbsp;
+								<span class="glyphicon glyphicon-log-in"></span>&nbsp;
 								{$lblLinkThisProfile|ucfirst}
 							</button>
 						</div>
