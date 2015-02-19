@@ -21,7 +21,10 @@
 		<div class="col-md-12">
 			<div class="btn-toolbar">
 				<div class="btn-group pull-right" role="group">
-					<button id="addButton" type="submit" name="add" class="btn btn-primary">{$lblAddGroup|ucfirst}</button>
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;
+						{$lblAddGroup|ucfirst}
+					</button>
 				</div>
 			</div>
 		</div>

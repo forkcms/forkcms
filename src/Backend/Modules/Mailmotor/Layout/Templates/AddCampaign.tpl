@@ -1,27 +1,34 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblCampaigns|ucfirst}</h2>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblAddCampaign|ucfirst}</h2>
+	</div>
 </div>
-
 {form:add}
-	<div class="box">
-		<div class="heading ">
-			<h3>{$lblAddCampaign|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<label for="name">{$lblName|ucfirst}</label>
-			{$txtName} {$txtNameError}
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="name">
+					{$lblName|ucfirst}
+					<abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+				</label>
+				{$txtName} {$txtNameError}
+			</div>
 		</div>
 	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+	<div class="row fork-module-actions">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="addButton" type="submit" name="add" class="btn btn-primary">
+						<span class="glyphicon glyphicon-plus"></span>&nbsp;
+						{$lblAdd|ucfirst}
+					</button>
+				</div>
+			</div>
 		</div>
 	</div>
 {/form:add}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
