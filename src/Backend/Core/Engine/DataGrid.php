@@ -35,6 +35,8 @@ class DataGrid extends \SpoonDataGrid
         'add' => 'glyphicon-plus',
         'copy' => 'glyphicon-plus',
         'edit' => 'glyphicon-pencil',
+        'import' => 'glyphicon-import',
+        'export' => 'glyphicon-export',
         'delete' => 'glyphicon-trash',
         'detail' => 'glyphicon-cog',
         'details' => 'glyphicon-cog',
@@ -42,7 +44,8 @@ class DataGrid extends \SpoonDataGrid
         'mark_as_spam' => 'glyphicon-ban-circle',
         'install' => 'glyphicon-save',
         'use_revision' => 'glyphicon-open',
-        'use_draft' => 'glyphicon-open'
+        'use_draft' => 'glyphicon-open',
+        'custom_fields' => 'glyphicon-blackboard'
     );
 
     /**

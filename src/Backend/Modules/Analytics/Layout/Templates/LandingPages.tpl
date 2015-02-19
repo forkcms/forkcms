@@ -9,7 +9,7 @@
 			<div class="btn-group" role="group">
 				{option:showAnalyticsAddLandingPage}
 				<a href="{$var|geturl:'add_landing_page'}" class="btn btn-primary" title="{$lblAddLandingPage|ucfirst}">
-					<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;
+					<span class="glyphicon glyphicon-plus"></span>&nbsp;
 					{$lblAddLandingPage|ucfirst}
 				</a>
 				{/option:showAnalyticsAddLandingPage}

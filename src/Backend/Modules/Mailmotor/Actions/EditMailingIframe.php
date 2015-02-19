@@ -14,6 +14,7 @@ use \TijsVerkoyen\CssToInlineStyles\CssToInlineStyles;
 
 use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BackendLanguage;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 
 /**
@@ -39,12 +40,42 @@ class EditMailingIframe extends BackendBaseActionEdit
 
         // does the item exist
         if (BackendMailmotorModel::existsMailing($this->id)) {
+            $this->addAssets();
             parent::execute();
             $this->getData();
             $this->parse();
             $this->display(BACKEND_MODULES_PATH . '/Mailmotor/Layout/Templates/EditMailingIframe.tpl');
         } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+        }
+    }
+
+    /**
+     * Adds required assets
+     */
+    private function addAssets()
+    {
+        // we add iframe css
+        $this->header->addCSS('Iframe.css', 'Mailmotor');
+
+        // we add JS because we need CKEditor
+        $this->header->addJS('ckeditor/ckeditor.js', 'Core', false);
+        $this->header->addJS('ckeditor/adapters/jquery.js', 'Core', false);
+        $this->header->addJS('ckfinder/ckfinder.js', 'Core', false);
+
+        // add the internal link lists-file
+        if (is_file(FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js')) {
+            $timestamp = @filemtime(
+                FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage() . '.js'
+            );
+            $this->header->addJS(
+                '/src/Frontend/Cache/Navigation/editor_link_list_' . BackendLanguage::getWorkingLanguage(
+                ) . '.js?m=' . $timestamp,
+                null,
+                false,
+                true,
+                false
+            );
         }
     }
 
