@@ -273,109 +273,130 @@
 			</div>
 		{/form:step3}
 		{/option:step3}
-
 		{option:step4}
-			{form:step4}
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblPreview|ucfirst}</h3>
-					</div>
-					{option:previewURL}
-					<div id="iframeBox">
-						<iframe id="contentBox" src="{$previewURL}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
-					</div>
-					{/option:previewURL}
-					{option:!previewURL}
-					<div class="options">
-						<p><span class="infoMessage">{$errNoModuleLinked}</span></p>
-					</div>
-					{/option:!previewURL}
-				</div>
-
-				<div class="box oneLiner">
-					<div class="heading ">
-						<h3>{$lblSendPreview|ucfirst}</h3>
-					</div>
-					<div class="options clearfix">
-						<p class="oneLineWrapper">
-							<label for="email">{$lblEmailAddress|ucfirst}</label>
-							{$txtEmail} {$txtEmailError}
-						</p>
-						<p>
-							<input id="sendPreview" class="inputButton button sendPreview" type="submit" name="send_preview" value="{$lblSendPreview|ucfirst}" />
-						</p>
-					</div>
-				</div>
-
-				<div class="box">
-					<div class="heading ">
-						<h3>{$lblSendOn|ucfirst}</h3>
-					</div>
-					<div class="options oneLiner">
-						<p class="oneLineWrapper">
-							<label for="sendOnDate">{$lblSendDate|ucfirst}</label>
-							{$txtSendOnDate}
-						</p>
-						<p class="oneLineWrapper">
-							<label for="sendOnTime">{$lblAt}</label>
-							{$txtSendOnTime}
-						</p>
-					</div>
-				</div>
-
-				<div class="fullwidthOptions">
-					<div class="buttonHolderRight">
-						<a id="sendMailing" href="#" class="button mainButton" title="{$lblSendMailing|ucfirst}">
-							<span>{$lblSendMailing|ucfirst}</span>
-						</a>
-					</div>
-				</div>
-
-				<div id="sendMailingConfirmationModal" title="{$msgMailingConfirmTitle}">
-					<div class="ui-tabs">
-						<div class="ui-tabs-panel">
-							<div class="subtleBox">
-								<div class="heading ">
-									<h3>{$msgMailingConfirmSend}</h3>
-								</div>
-								<div class="options">
-									<p>{$recipientStatistics} <span id="sendOn" style="display: none;">{$msgSendOn}</span></p>
-									<p>{$msgPeopleGroups}</p>
-									<p>
-										{iteration:groups}{$groups.name} {option:groups.comma}, {/option:groups.comma}{/iteration:groups}
-									</p>
-								</div>
+		{form:step4}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								{$lblPreview|ucfirst}
+							</h4>
+						</div>
+						<div class="panel-body">
+							{option:previewURL}
+							<div id="iframeBox">
+								<iframe id="contentBox" src="{$previewURL}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
 							</div>
-							<div class="subtleBox">
-								<div class="heading ">
-									<h3>{$lblTemplateLanguage|ucfirst}</h3>
-								</div>
-								<div class="options">
-									<p>{$templateLanguage}</p>
-								</div>
+							{/option:previewURL}
+							{option:!previewURL}
+							<div class="options">
+								<p><span class="infoMessage">{$errNoModuleLinked}</span></p>
 							</div>
-							<div class="subtleBox">
-								<div class="heading ">
-									<h3>{$lblPrice|ucfirst}</h3>
-								</div>
-								<div class="options">
-									<p>&euro; {$price}</p>
+							{/option:!previewURL}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								{$lblSendPreview|ucfirst}
+							</h4>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="email">{$lblEmailAddress|ucfirst}</label>
+								{$txtEmail} {$txtEmailError}
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="btn-toolbar">
+								<div class="btn-group pull-right">
+									<button id="sendPreview" type="submit" class="btn btn-default" name="send_preview">
+										<span class="glyphicon glyphicon-search"></span>&nbsp;
+										{$lblSendPreview|ucfirst}
+									</button>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			{/form:step4}
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h4 class="panel-title">
+								{$lblSendOn|ucfirst}
+							</h4>
+						</div>
+						<div class="panel-body">
+							<div class="form-group">
+								<label for="sendOnDate">{$lblSendDate|ucfirst}</label>
+								{$txtSendOnDate}
+							</div>
+							<div class="form-group">
+								<label for="sendOnTime">{$lblAt}</label>
+								{$txtSendOnTime}
+							</div>
+						</div>
+						<div class="panel-footer">
+							<div class="btn-toolbar">
+								<div class="btn-group pull-right">
+									<a id="sendMailing" href="#" class="btn btn-primary" title="{$lblSendMailing|ucfirst}">
+										<span class="glyphicon glyphicon-envelope"></span>&nbsp;
+										{$lblSendMailing|ucfirst}
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="sendMailingConfirmationModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{$msgMailingConfirmTitle|ucfirst}" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<span class="modal-title h4">{$msgMailingConfirmSend|ucfirst}</span>
+						</div>
+						<div class="modal-body">
+							<p>{$recipientStatistics} <span id="sendOn" style="display: none;">{$msgSendOn}</span></p>
+							<p>{$msgPeopleGroups}</p>
+							<p>
+								{iteration:groups}{$groups.name} {option:groups.comma}, {/option:groups.comma}{/iteration:groups}
+							</p>
+							<table class="table">
+								<tr>
+									<th>{$lblTemplateLanguage|ucfirst}</th>
+									<td>{$templateLanguage}</td>
+								</tr>
+								<tr>
+									<th>{$lblPrice|ucfirst}</th>
+									<td>&euro; {$price}</td>
+								</tr>
+							</table>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+							<a id="sendMailingConfirmationSubmit" href="#" class="btn btn-primary">
+								{$lblSendMailing|ucfirst}
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/form:step4}
 		{/option:step4}
 	</div>
 </div>
-
 <script type="text/javascript">
 	//<![CDATA[
 		var variables = [];
 		variables = { mailingId: '{$mailing.id}' };
 	//]]>
 </script>
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
