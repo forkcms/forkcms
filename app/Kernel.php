@@ -68,16 +68,16 @@ abstract class Kernel extends BaseKernel implements KernelInterface
             define('PATH_LIBRARY', $container->getParameter('site.path_library'));
         }
 
-        define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
-        define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
-        define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
-        define('SITE_DOMAIN', $container->getParameter('site.domain'));
-        define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
-        define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
+        defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
+        defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
+        defined('SITE_MULTILANGUAGE') || define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
+        defined('SITE_DOMAIN') || define('SITE_DOMAIN', $container->getParameter('site.domain'));
+        defined('SITE_PROTOCOL') || define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
+        defined('SITE_URL') || define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 
-        define('FORK_VERSION', $container->getParameter('fork.version'));
+        defined('FORK_VERSION') || define('FORK_VERSION', $container->getParameter('fork.version'));
 
-        define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
-        define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+        defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
+        defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
     }
 }

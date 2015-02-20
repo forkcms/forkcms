@@ -62,7 +62,7 @@ class DatabaseType extends AbstractType
                 $data = $event->getData();
 
                 $dbHostname = $data->getDbHostname();
-                if (empty($dbHostname)) {
+                if (empty($dbHostname) && isset($_SERVER['HTTP_HOST'])) {
                     // guess db & username
                     $host = $_SERVER['HTTP_HOST'];
                     $chunks = explode('.', $host);

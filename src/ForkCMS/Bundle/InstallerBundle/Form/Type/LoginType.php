@@ -42,7 +42,7 @@ class LoginType extends AbstractType
                 $data = $event->getData();
 
                 $email = $data->getEmail();
-                if (empty($email)) {
+                if (empty($email) && isset($_SERVER['HTTP_HOST'])) {
                     $data->setEmail('info@' . $_SERVER['HTTP_HOST']);
                     $event->setData($data);
                 }
