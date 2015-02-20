@@ -1,55 +1,64 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblImportAddresses|ucfirst}</h2>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$lblImportAddresses|ucfirst}</h2>
+	</div>
 </div>
-
 {form:import}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblAddressList|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<p class="p0">
-				{$fileCsv} {$fileCsvError}
-
-				{option:showMailmotorImportAddresses}<label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>{/option:showMailmotorImportAddresses}
-			</p>
-		</div>
-	</div>
-	{*
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblLanguage|ucfirst}</h3>
-		</div>
-		<div class="options">
-			{$ddmLanguages} {$ddmLanguagesError}
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						{$lblAddressList|ucfirst}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						{option:showMailmotorImportAddresses}
+						<label for="download">Download <a href="{$var|geturl:'import_addresses'}&amp;example=1">{$lblExampleFile}</a>.</label>
+						{/option:showMailmotorImportAddresses}
+						{$fileCsv} {$fileCsvError}
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-	*}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblGroup|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<ul class="inputList">
-				{iteration:groups}
-					<li>{$groups.rbtGroups} <label for="{$groups.id}">{$groups.label|ucfirst}</label></li>
-				{/iteration:groups}
-			</ul>
-			{option:chkGroupsError}<p class="error">{$chkGroupsError}</p>{/option:chkGroupsError}
+	<div class="row fork-module-content">
+		<div class="col-md-12">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">
+						{$lblGroup|ucfirst}
+					</h3>
+				</div>
+				<div class="panel-body">
+					<div class="form-group">
+						{option:chkGroupsError}
+						<p class="text-danger">{$chkGroupsError}</p>
+						{/option:chkGroupsError}
+						<ul class="list-unstyled">
+							{iteration:groups}
+							<li class="radio">
+								<label for="{$groups.id}">{$groups.rbtGroups} {$groups.label|ucfirst}</label>
+							</li>
+							{/iteration:groups}
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
-
-	{option:showMailmotorImportAddresses}
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'import_addresses'}" class="submitButton button inputButton button mainButton"><span>{$lblImportAddresses|ucfirst}</span></a>
+	<div class="row fork-module-actions">
+		<div class="col-md-12">
+			<div class="btn-toolbar">
+				<div class="btn-group pull-right" role="group">
+					<button id="importButton" type="submit" name="add" class="btn btn-primary">{$lblImport|ucfirst}</button>
+				</div>
+			</div>
 		</div>
 	</div>
-	{/option:showMailmotorImportAddresses}
 {/form:import}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}
