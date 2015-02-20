@@ -18,7 +18,11 @@
         "swiftmailer/swiftmailer": ">=4.2.0,~5.0"
     },
     "require-dev": {
-        "jdorn/sql-formatter": "1.2.17"
+        "jdorn/sql-formatter": "1.2.17",
+        "phpunit/phpunit": "~4.5"
+    },
+    "config": {
+        "bin-dir": "bin"
     },
     "support": {
         "irc": "irc://irc.freenode.org/forkcms",
