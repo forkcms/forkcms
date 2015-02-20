@@ -1,53 +1,57 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$url}</h2>
+<div class="row fork-module-heading">
+	<div class="col-md-12">
+		<h2>{$url}</h2>
+		<div class="btn-toolbar pull-right">
+			<div class="btn-group" role="group">
+				{option:showMailmotorStatistics}
+				<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="btn btn-default" title="{$msgBackToStatistics|sprintf:{$mailing.name}}">
+					<span class="glyphicon glyphicon-chevron-left"></span>
+					{$msgBackToStatistics|sprintf:{$mailing.name}}
+				</a>
+				{/option:showMailmotorStatistics}
+			</div>
+		</div>
+	</div>
 </div>
-
-{form:add}
-	<div class="dataFilter">
-		<table>
-			<tbody>
-				<tr>
-					<td>
-						<div class="options">
-							<p>
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{form:add}
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group">
 								<label for="group">{$lblGroup|ucfirst}</label>
 								{$txtGroup} {$txtGroupError}
-							</p>
-						</div>
-					</td>
-				</tr>
-			</tbody>
-			<tfoot>
-				<tr>
-					<td colspan="99">
-						<div class="options">
-							<div class="buttonHolder">
-								<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$msgCreateGroupByAddresses|ucfirst}" />
 							</div>
 						</div>
-					</td>
-				</tr>
-			</tfoot>
-		</table>
+					</div>
+				</div>
+				<div class="panel-footer">
+					<div class="btn-toolbar">
+						<div class="btn-group pull-right">
+							<button id="search" type="submit" class="btn btn-primary" name="search">
+								<span class="glyphicon glyphicon-refresh"></span>&nbsp;
+								{$lblUpdateFilter|ucfirst}
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/form:add}
 	</div>
-{/form:add}
-
-{option:dataGrid}
-<div class="dataGridHolder">
-	{$dataGrid}
 </div>
-{/option:dataGrid}
-
-{option:showMailmotorStatistics}
-<div class="buttonHolderLeft">
-	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">
-		<span>{$msgBackToStatistics|sprintf:{$mailing.name}}</span>
-	</a>
+<div class="row fork-module-content">
+	<div class="col-md-12">
+		{option:dataGrid}
+		{$dataGrid}
+		{/option:dataGrid}
+		{option:!dataGrid}
+		<p>{$msgNoItems}</p>
+		{/option:!dataGrid}
+	</div>
 </div>
-{/option:showMailmotorStatistics}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

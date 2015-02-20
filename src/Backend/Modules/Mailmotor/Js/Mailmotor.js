@@ -365,6 +365,7 @@ jsBackend.mailmotor.step4 =
 		// cache objects
 		$form = $('#step4');
 		$confirmBox = $('#sendMailingConfirmationModal');
+		$confirmBoxSubmit = $('#sendMailingConfirmationSubmit');
 		$sendMailing = $('#sendMailing');
 		oSendDate = $('#sendOnDate');
 		oSendTime = $('#sendOnTime');
@@ -372,35 +373,6 @@ jsBackend.mailmotor.step4 =
 		// store data
 		var sendDate = oSendDate.val();
 		var sendTime = oSendTime.val();
-
-		// initialize the confirmation modal
-		$confirmBox.dialog(
-		{
-			autoOpen: false,
-			draggable: false,
-			width: 500,
-			modal: true,
-			resizable: false,
-			buttons:
-			[
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('SendMailing')),
-					click: function()
-					{
-						// send the mailing
-						jsBackend.mailmotor.step4.sendMail();
-					}
-				},
-				{
-					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-					click: function()
-					{
-						// close the dialog
-						$(this).dialog('close');
-					}
-				}
-			]
-		});
 
 		// value of date/time has changed
 		$(oSendDate.selector +', '+ oSendTime.selector).on('change', function(e)
@@ -440,7 +412,13 @@ jsBackend.mailmotor.step4 =
 			e.preventDefault();
 
 			// open the dialog
-			$confirmBox.dialog('open');
+			$confirmBox.modal('show');
+		});
+
+		// sendMailing is confirmed
+		$confirmBoxSubmit.on('click', function () {
+			jsBackend.mailmotor.step4.sendMail();
+			$confirmBox.modal('hide');
 		});
 	},
 

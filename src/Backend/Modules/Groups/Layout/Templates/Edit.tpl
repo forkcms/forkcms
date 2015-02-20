@@ -50,7 +50,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12">
-								<div class="form-group">
+								<div class="form-group jsGroupsWidgets">
 									<label for="toggleChecksWidgets">{$lblDisplayWidgets|ucfirst}</label>
 									{option:widgets}
 									{$widgets}
@@ -72,7 +72,7 @@
 							<div class="col-md-12">
 								<div class="panel-group" id="permissions" role="tablist" aria-multiselectable="true">
 									{iteration:permissions}
-									<div class="panel panel-default">
+									<div class="panel panel-default jsGroupsPermissionsModule">
 										<div class="panel-heading" role="tab" id="permissions-heading-{$permissions.id}">
 											<h4 class="panel-title">
 												{$permissions.chk}
