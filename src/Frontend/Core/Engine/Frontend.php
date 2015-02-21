@@ -46,7 +46,10 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     {
         $this->initializeFacebook();
         new Url($this->getKernel());
-        new Template();
+        $templateType = (string) $this->getContainer()->getParameter('fork.template');
+
+        // choose your destiny!
+        ($templateType == 'twig') ? new TwigTemplate() : new Template();
 
         // Load the rest of the page.
         $this->page = new Page($this->getKernel());

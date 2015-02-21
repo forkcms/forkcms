@@ -317,7 +317,7 @@ class Form extends FrontendBaseWidget
             $this->tpl->assign('fields', $this->fieldsHTML);
 
             // parse form
-            $this->frm->render($this->tpl);
+            $this->frm->parse($this->tpl);
             $this->tpl->assign('formToken', $this->frm->getToken());
 
             // assign form error

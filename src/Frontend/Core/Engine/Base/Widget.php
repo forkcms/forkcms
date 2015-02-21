@@ -61,13 +61,6 @@ class Widget extends Object
     protected $templatePath;
 
     /**
-     * A reference to the current template
-     *
-     * @var    FrontendTemplate
-     */
-    // public $tpl;
-
-    /**
      * A reference to the URL-instance
      *
      * @var    Url
@@ -85,7 +78,10 @@ class Widget extends Object
         parent::__construct($kernel);
 
         // get objects from the reference so they are accessible
-        //$this->tpl = new FrontendTemplate(false);
+        //$this->setNewTemplate();
+         if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
 
@@ -234,7 +230,6 @@ class Widget extends Object
 
         // set template
         $this->setTemplatePath($path);
-        $this->tpl->setPlugin($path);
     }
 
     /**

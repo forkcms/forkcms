@@ -10,13 +10,19 @@ namespace Frontend\Core\Engine;
  */
 
 /**
- * This is a twig template wrapper
- * that glues spoon libraries and code standards with twig
+ * This is our extended version of SpoonTemplate
+ * This class will handle a lot of stuff for you, for example:
+ *    - it will assign all labels
+ *    - it will map some modifiers
+ *    - it will assign a lot of constants
+ *    - ...
  *
- * @author <thijs@wijs.be>
+ * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author Matthias Mullie <forkcms@mullie.eu>
+ * @author Frederik Heyninck <frederik@figure8.be>
  */
-
-Class Template
+class Template extends \SpoonTemplate
 {
     /**
      * Should we add slashes to each value?
@@ -25,42 +31,255 @@ Class Template
      */
     private $addSlashes = false;
 
-    private $forms = array();
-    private $variables = array();
-    private $actions = array();
-    private $themePath;
-    private $baseFile;
+    /**
+     * Type of Template Engine
+     *
+     * @var string
+     */
+    private $tplEngine = 'spoon';
 
-    function __construct($addToReference = true)
+    /**
+     * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
+     *
+     * @param bool $addToReference Should the instance be added into the reference.
+     */
+    public function __construct($addToReference = true)
     {
+        parent::__construct();
+
         if ($addToReference) {
             Model::getContainer()->set('template', $this);
         }
-        require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
-        \Twig_Autoloader::register();
-        $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
+
+        $this->setCacheDirectory(FRONTEND_CACHE_PATH . '/CachedTemplates');
+        $this->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
+        $this->setForceCompile(SPOON_DEBUG);
+        $this->mapCustomModifiers();
     }
 
-    private function startGlobals()
+    /**
+     * Compile a given template.
+     *
+     * @param string  $path     The path to the template, excluding the template filename.
+     * @param string $template The filename of the template within the path.
+     * @return bool
+     */
+    public function compile($path, $template)
     {
-        // some old globals
-        $this->variables['var'] = '';
-        $this->variables['timestamp'] = time();
-        $this->variables['CRLF'] = "\n";
-        $this->variables['TAB'] = "\t";
-        $this->variables['now'] = time();
-        $this->variables['LANGUAGE'] = FRONTEND_LANGUAGE;
-        $this->variables['is' . strtoupper(FRONTEND_LANGUAGE)] = true;
-
-        // old theme checker
-        if (Model::getModuleSetting('Core', 'theme') !== null) {
-            $this->assign('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
-            $this->assign(
-                'THEME_URL',
-                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
-            );
+        // redefine template
+        if (realpath($template) === false) {
+            $template = $path . '/' . $template;
         }
 
+        // source file does not exist
+        if (!is_file($template)) {
+            return false;
+        }
+
+        // create object
+        $compiler = new TemplateCompiler($template, $this->variables);
+
+        // set some options
+        $compiler->setCacheDirectory($this->cacheDirectory);
+        $compiler->setCompileDirectory($this->compileDirectory);
+        $compiler->setForceCompile($this->forceCompile);
+        $compiler->setForms($this->forms);
+
+        // compile & save
+        $compiler->parseToFile();
+
+        // status
+        return true;
+    }
+
+    /**
+     * Output the template into the browser
+     * Will also assign the labels and all user-defined constants.
+     * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
+     *
+     * @param string $template      The path of the template to use.
+     * @param bool   $customHeaders Deprecated variable.
+     * @param bool   $parseCustom   Parse custom template.
+     */
+    public function display($template, $customHeaders = false, $parseCustom = false)
+    {
+        // do custom stuff
+        if ($parseCustom) {
+            new TemplateCustom($this);
+        }
+
+        // parse constants
+        $this->parseConstants();
+
+        // check debug
+        $this->parseDebug();
+
+        // parse the label
+        $this->parseLabels();
+
+        // parse date/time formats
+        $this->parseDateTimeFormats();
+
+        // parse vars
+        $this->parseVars();
+
+        // get template path
+        $template = Theme::getPath($template);
+
+        /*
+         * Code below is exactly the same as from our parent (SpoonTemplate::display), except
+         * for the compiler being used. We want our own compiler extension here.
+         */
+
+        // redefine
+        $template = (string) $template;
+
+        // validate name
+        if (trim($template) == '' || !is_file($template)) {
+            throw new \SpoonTemplateException('Please provide an existing template.');
+        }
+
+        // compiled name
+        $compileName = $this->getCompileName((string) $template);
+
+        // compiled if needed
+        if ($this->forceCompile || !is_file($this->compileDirectory . '/' . $compileName)) {
+            // create compiler
+            $compiler = new TemplateCompiler((string) $template, $this->variables);
+
+            // set some options
+            $compiler->setCacheDirectory($this->cacheDirectory);
+            $compiler->setCompileDirectory($this->compileDirectory);
+            $compiler->setForceCompile($this->forceCompile);
+            $compiler->setForms($this->forms);
+
+            // compile & save
+            $compiler->parseToFile();
+        }
+
+        // load template
+        require $this->compileDirectory . '/' . $compileName;
+    }
+
+    /**
+     * Retrieves the already assigned variables.
+     *
+     * @return array
+     */
+    public function getAssignedVariables()
+    {
+        return $this->variables;
+    }
+
+    /**
+     * Fetch the parsed content from this template.
+     *
+     * @param string $template      The location of the template file, used to display this template.
+     * @param bool   $customHeaders Are custom headers already set?
+     * @param bool   $parseCustom   Parse custom template.
+     * @return string The actual parsed content after executing this template.
+     */
+    public function getContent($template, $customHeaders = false, $parseCustom = false)
+    {
+        ob_start();
+        $this->display($template, $customHeaders, $parseCustom);
+
+        return ob_get_clean();
+    }
+
+    /**
+     * Returns the template type
+     *
+     * @return string Returns the template type
+     */
+    public function getTemplateType()
+    {
+        return $this->tplEngine;
+    }
+
+    /**
+     * Is the cache for this item still valid.
+     *
+     * @param string $name The name of the cached block.
+     * @return bool
+     */
+    public function isCached($name)
+    {
+        // never cached in debug
+        if (SPOON_DEBUG) {
+            return false;
+        } else {
+            // let parent do the actual check
+            return parent::isCached($name);
+        }
+    }
+
+    /**
+     * Map the frontend-specific modifiers
+     */
+    private function mapCustomModifiers()
+    {
+        // fetch the path for an include (theme file if available, core file otherwise)
+        $this->mapModifier('getpath', array('Frontend\Core\Engine\TemplateModifiers', 'getPath'));
+
+        // formatting
+        $this->mapModifier('formatcurrency', array('Frontend\Core\Engine\TemplateModifiers', 'formatCurrency'));
+
+        // URL for a specific pageId
+        $this->mapModifier('geturl', array('Frontend\Core\Engine\TemplateModifiers', 'getURL'));
+
+        // URL for a specific block/extra
+        $this->mapModifier('geturlforblock', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForBlock'));
+        $this->mapModifier('geturlforextraid', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForExtraId'));
+
+        // page related
+        $this->mapModifier('getpageinfo', array('Frontend\Core\Engine\TemplateModifiers', 'getPageInfo'));
+
+        // convert var into navigation
+        $this->mapModifier('getnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getNavigation'));
+        $this->mapModifier('getsubnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getSubNavigation'));
+
+        // parse a widget
+        $this->mapModifier('parsewidget', array('Frontend\Core\Engine\TemplateModifiers', 'parseWidget'));
+
+        // rand
+        $this->mapModifier('rand', array('Frontend\Core\Engine\TemplateModifiers', 'random'));
+
+        // string
+        $this->mapModifier('formatfloat', array('Frontend\Core\Engine\TemplateModifiers', 'formatFloat'));
+        $this->mapModifier('formatnumber', array('Frontend\Core\Engine\TemplateModifiers', 'formatNumber'));
+        $this->mapModifier('truncate', array('Frontend\Core\Engine\TemplateModifiers', 'truncate'));
+        $this->mapModifier('cleanupplaintext', array('Frontend\Core\Engine\TemplateModifiers', 'cleanupPlainText'));
+        $this->mapModifier('camelcase', array('\SpoonFilter', 'toCamelCase'));
+        $this->mapModifier('stripnewlines', array('Frontend\Core\Engine\TemplateModifiers', 'stripNewlines'));
+
+        // dates
+        $this->mapModifier('timeago', array('Frontend\Core\Engine\TemplateModifiers', 'timeAgo'));
+
+        // users
+        $this->mapModifier('usersetting', array('Frontend\Core\Engine\TemplateModifiers', 'userSetting'));
+
+        // highlight
+        $this->mapModifier('highlight', array('Frontend\Core\Engine\TemplateModifiers', 'highlightCode'));
+
+        // urlencode
+        $this->mapModifier('urlencode', 'urlencode');
+
+        // strip tags
+        $this->mapModifier('striptags', 'strip_tags');
+
+        // debug stuff
+        $this->mapModifier('dump', array('Frontend\Core\Engine\TemplateModifiers', 'dump'));
+
+        // profiles
+        $this->mapModifier('profilesetting', array('Frontend\Core\Engine\TemplateModifiers', 'profileSetting'));
+    }
+
+    /**
+     * Parse all user-defined constants
+     */
+    private function parseConstants()
+    {
         // constants that should be protected from usage in the template
         $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
 
@@ -81,6 +300,10 @@ Class Template
         if (!empty($realConstants)) {
             $this->assign($realConstants);
         }
+
+        // aliases
+        $this->assign('LANGUAGE', FRONTEND_LANGUAGE);
+        $this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
 
         // settings
         $this->assign(
@@ -115,6 +338,42 @@ Class Template
                 'TWITTER_SITE_NAME',
                 ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
             );
+        }
+
+        // theme
+        if (Model::getModuleSetting('Core', 'theme') !== null) {
+            $this->assign('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
+            $this->assign(
+                'THEME_PATH',
+                FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+            );
+            $this->assign(
+                'THEME_URL',
+                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+            );
+        }
+    }
+
+    /**
+     * Parses the general date and time formats
+     */
+    private function parseDateTimeFormats()
+    {
+        // time format
+        $this->assign('timeFormat', Model::getModuleSetting('Core', 'time_format'));
+
+        // date formats (short & long)
+        $this->assign('dateFormatShort', Model::getModuleSetting('Core', 'date_format_short'));
+        $this->assign('dateFormatLong', Model::getModuleSetting('Core', 'date_format_long'));
+    }
+
+    /**
+     * Assigns an option if we are in debug-mode
+     */
+    private function parseDebug()
+    {
+        if (SPOON_DEBUG) {
+            $this->assign('debug', true);
         }
     }
 
@@ -165,202 +424,17 @@ Class Template
         $this->assignArray($messages, 'msg');
     }
 
-    public function assign($key, $values = null)
+    /**
+     * Assign some default vars
+     */
+    private function parseVars()
     {
-        // bad code
-        // key == array in this case
-        if (is_array($key)) {
-            $this->assignArray($key, $values);
-            return;
-        }
+        // assign a placeholder var
+        $this->assign('var', '');
 
-        // page hook
-        if ($key == 'page') {
-            $this->baseFile = $this->convertToTwig($values['template_path']);
-            $this->setPositions($values['positions']);
-            return;
-        }
-
-        // form hook
-        $field = substr($key, 0, 3);
-        if (in_array($field, array('hid', 'chk', 'ddm', 'txt'))) {
-            $this->fields[$field][substr($key, 3)] = $values;
-            return;
-        }
-
-        // all other cases
-        $this->variables[$key] = $values;
+        // assign current timestamp
+        $this->assign('timestamp', time());
     }
-
-    private function setPositions($positions)
-    {
-        foreach ($positions as &$blocks)
-        {
-            foreach ($blocks as &$block)
-            {
-                if ($block['extra_type'] == 'widget') {
-                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.twig';
-                    $this->actions[] = $block['include_path'];
-                }
-                elseif ($block['extra_type'] == 'block') {
-                    $block['extra_action'] = ($block['extra_action']) ?: 'Index';
-                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Templates/' . $block['extra_action'] . '.twig';
-                    $this->actions[] = $block['include_path'];
-                }
-
-            }
-        }
-        $this->variables['positions'] = $positions;
-    }
-
-    private function convertToTwig($path)
-    {
-        return str_replace('.tpl', '.twig', $path);
-    }
-
-    public function assignArray(array $variables, $index = null)
-    {
-        if ($index) {
-            // artifacts?
-            unset($variables['Core']);
-            $tmp[$index] = $variables;
-            $variables = $tmp;
-        }
-        $this->variables = array_merge($this->variables, $variables);
-    }
-
-    public function getContent($template, $customHeaders = false, $parseCustom = false)
-    {
-        if (!$template) {
-            return;
-        }
-        $template = Theme::getPath($template);
-        // the theme file is located
-        // if (strpos($template, $this->themePath) !== false) {
-        $template = str_replace($this->themePath . '/', '', $this->convertToTwig($template));
-        // }
-
-        // block actions/widgets from rendering
-        if(in_array($template, $this->actions)) return;
-
-        // render at the end
-        $this->end($template);
-    }
-
-    private function end($template)
-    {
-        $this->startGlobals();
-        $this->parseLabels();
-        $this->setNav();
-
-        if ($this->forms) {
-            $this->assign('form', $this->forms);
-        }
-
-        $loader = new \Twig_Loader_Filesystem($this->themePath);
-        $twig = new \Twig_Environment($loader, array(
-            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates',
-            'debug' => (SPOON_DEBUG === true)
-        ));
-
-        // debug options
-        if (SPOON_DEBUG) {
-            // $twig->addExtension(new Twig_Extension_Debug());
-            $this->assign('debug', true);
-        }
-
-        // template
-        $this->template = $twig->loadTemplate($template);
-        echo $this->template->render($this->variables);
-    }
-
-    private function setNav()
-    {
-        // force main nav
-        $nav = Navigation::getNavigation();
-        $this->assign('navigation', $nav['page'][1]);
-    }
-
-    public function addForm($form)
-    {
-        $compileForm ='<form accept-charset="UTF-8" action="' . $form->getAction() . '" method="'. $form->getMethod().'" '. $form->getParametersHTML() . '>';
-        $compileForm .= $form->getField('form')->parse();
-        if($form->getUseToken()) {
-            $compileForm .= '<input type="hidden" name="form_token" id="' . $form->getField('form_token')->getAttribute('id'). '" value="' . htmlspecialchars($form->getField('form_token')->getValue()). ' " />';
-        }
-        $this->forms[$form->getName()] = $this->fields;
-        $this->forms[$form->getName()]['form'] = $compileForm;
-        $this->forms[$form->getName()]['end'] = "</form>";
-    }
-
-    public function setPlugin(){}
-    public function setForceCompile(){}
-
-    public function getAssignedVariables()
-    {
-        return $this->variables;
-    }
-
-    // /**
-    //  * Map the frontend-specific modifiers
-    //  */
-    // private function mapCustomModifiers()
-    // {
-    //     // fetch the path for an include (theme file if available, core file otherwise)
-    //     $this->mapModifier('getpath', array('Frontend\Core\Engine\TemplateModifiers', 'getPath'));
-
-    //     // formatting
-    //     $this->mapModifier('formatcurrency', array('Frontend\Core\Engine\TemplateModifiers', 'formatCurrency'));
-
-    //     // URL for a specific pageId
-    //     $this->mapModifier('geturl', array('Frontend\Core\Engine\TemplateModifiers', 'getURL'));
-
-    //     // URL for a specific block/extra
-    //     $this->mapModifier('geturlforblock', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForBlock'));
-    //     $this->mapModifier('geturlforextraid', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForExtraId'));
-
-    //     // page related
-    //     $this->mapModifier('getpageinfo', array('Frontend\Core\Engine\TemplateModifiers', 'getPageInfo'));
-
-    //     // convert var into navigation
-    //     $this->mapModifier('getnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getNavigation'));
-    //     $this->mapModifier('getsubnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getSubNavigation'));
-
-    //     // parse a widget
-    //     $this->mapModifier('parsewidget', array('Frontend\Core\Engine\TemplateModifiers', 'parseWidget'));
-
-    //     // rand
-    //     $this->mapModifier('rand', array('Frontend\Core\Engine\TemplateModifiers', 'random'));
-
-    //     // string
-    //     $this->mapModifier('formatfloat', array('Frontend\Core\Engine\TemplateModifiers', 'formatFloat'));
-    //     $this->mapModifier('formatnumber', array('Frontend\Core\Engine\TemplateModifiers', 'formatNumber'));
-    //     $this->mapModifier('truncate', array('Frontend\Core\Engine\TemplateModifiers', 'truncate'));
-    //     $this->mapModifier('cleanupplaintext', array('Frontend\Core\Engine\TemplateModifiers', 'cleanupPlainText'));
-    //     $this->mapModifier('camelcase', array('\SpoonFilter', 'toCamelCase'));
-    //     $this->mapModifier('stripnewlines', array('Frontend\Core\Engine\TemplateModifiers', 'stripNewlines'));
-
-    //     // dates
-    //     $this->mapModifier('timeago', array('Frontend\Core\Engine\TemplateModifiers', 'timeAgo'));
-
-    //     // users
-    //     $this->mapModifier('usersetting', array('Frontend\Core\Engine\TemplateModifiers', 'userSetting'));
-
-    //     // highlight
-    //     $this->mapModifier('highlight', array('Frontend\Core\Engine\TemplateModifiers', 'highlightCode'));
-
-    //     // urlencode
-    //     $this->mapModifier('urlencode', 'urlencode');
-
-    //     // strip tags
-    //     $this->mapModifier('striptags', 'strip_tags');
-
-    //     // debug stuff
-    //     $this->mapModifier('dump', array('Frontend\Core\Engine\TemplateModifiers', 'dump'));
-
-    //     // profiles
-    //     $this->mapModifier('profilesetting', array('Frontend\Core\Engine\TemplateModifiers', 'profileSetting'));
-    // }
 
     /**
      * Should we execute addSlashed on the locale?
@@ -371,4 +445,9 @@ Class Template
     {
         $this->addSlashes = (bool) $on;
     }
+
+    /**
+     * Dummy method, important for Twig
+     */
+    public function setPlugin(){}
 }
