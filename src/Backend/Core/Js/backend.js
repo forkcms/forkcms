@@ -681,8 +681,6 @@ jsBackend.controls =
 			var href = $(this).attr('href');
 			var message = $(this).data('message');
 
-			console.log(message);
-
 			if (typeof message == 'undefined') {
 				message = jsBackend.locale.msg('ConfirmDefault');
 			}
