@@ -128,8 +128,6 @@ jsBackend.dashboard =
 		// hide close buttons
 		$editDashboardClose.hide();
 
-		console.log($sortableWidget);
-
 		// unbind
 		$column.sortable('destroy');
 		$sortableWidget.draggable('destroy');
@@ -147,8 +145,6 @@ jsBackend.dashboard =
 				// add item
 				items.push({ module: $(this).data('module'), widget: $(this).data('widget'), hidden: $(this).hasClass('isRemoved'), present: true });
 			});
-
-			console.log(items);
 
 			// add to all
 			newSequence.push(items);

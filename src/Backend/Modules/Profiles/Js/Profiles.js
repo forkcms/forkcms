@@ -17,7 +17,6 @@ jsBackend.Profiles =
 			var $txtNewGroup = $('input[name="newGroup"]').val();
 
 			// clone the groups SELECT into the "add to group" mass action dialog
-			console.log($('select[name="group"]'));
 			$('.jsMassActionAddToGroupSelectGroup').replaceWith(
 				$('select[name="group"]')
 					.clone(true)
