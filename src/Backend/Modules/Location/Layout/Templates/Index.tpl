@@ -6,7 +6,7 @@
     {option:showLocationAdd}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        <a href="{$var|geturl:'add'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
+        <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>
           {$lblAdd|ucfirst}
         </a>

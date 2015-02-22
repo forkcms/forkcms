@@ -6,7 +6,7 @@
     {option:showSearchAddSynonym}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        <a href="{$var|geturl:'add_synonym'}" class="btn btn-primary" title="{$lblAddSynonym|ucfirst}">
+        <a href="{$var|geturl:'add_synonym'}" class="btn btn-default" title="{$lblAddSynonym|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>
           {$lblAddSynonym|ucfirst}
         </a>

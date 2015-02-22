@@ -14,10 +14,10 @@
       <div class="btn-group" role="group">
         {option:showBlogAdd}
         {option:filterCategory}
-        <a href="{$var|geturl:'add':null:'&category={$filterCategory.id}'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
+        <a href="{$var|geturl:'add':null:'&category={$filterCategory.id}'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
         {/option:filterCategory}
         {option:!filterCategory}
-        <a href="{$var|geturl:'add'}" class="btn btn-primary" title="{$lblAdd|ucfirst}">
+        <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
         {/option:!filterCategory}
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAdd|ucfirst}
