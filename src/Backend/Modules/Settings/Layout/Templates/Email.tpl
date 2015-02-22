@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
 <div class="row fork-module-heading">
   <div class="col-md-12">
-    <h2>{$lblEmailSettings|ucfirst}</h2>
+    <h2>{$lblGeneralSettings|ucfirst}</h2>
   </div>
 </div>
 {form:settingsEmail}
