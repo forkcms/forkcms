@@ -1,5 +1,11 @@
+html {
+    min-height: 100%;
+    background-color: #EBF3F9;
+}
+
 body {
     overflow-y: scroll;
+    background-color: transparent;
 }
 
 #content {
