@@ -22,7 +22,7 @@
         </a>
         {/option:showMailmotorExportAddresses}
         {option:showMailmotorAddAddress}
-        <a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="btn btn-primary">
+        <a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="btn btn-default">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAddEmail|ucfirst}
         </a>

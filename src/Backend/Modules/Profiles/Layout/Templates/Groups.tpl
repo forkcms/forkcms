@@ -6,7 +6,7 @@
     {option:showProfilesAddGroup}
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
-        <a href="{$var|geturl:'add_group'}" class="btn btn-primary" title="{$lblAddGroup|ucfirst}">
+        <a href="{$var|geturl:'add_group'}" class="btn btn-default" title="{$lblAddGroup|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAddGroup|ucfirst}
         </a>

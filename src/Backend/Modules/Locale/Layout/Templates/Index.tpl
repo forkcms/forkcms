@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showLocaleAdd}
-        <a href="{$var|geturl:'add'}{$filter}" class="btn btn-primary jsButtonAdd">
+        <a href="{$var|geturl:'add'}{$filter}" class="btn btn-default jsButtonAdd">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           <span>{$lblAdd|ucfirst}</span>
         </a>

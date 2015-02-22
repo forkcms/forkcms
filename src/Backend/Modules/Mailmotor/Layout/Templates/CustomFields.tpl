@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorAddCustomField}
-        <a href="{$var|geturl:'add_custom_field'}&amp;group_id={$group.id}" class="btn btn-primary" title="{$lblAddCustomField|ucfirst}">
+        <a href="{$var|geturl:'add_custom_field'}&amp;group_id={$group.id}" class="btn btn-default" title="{$lblAddCustomField|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAddCustomField|ucfirst}
         </a>

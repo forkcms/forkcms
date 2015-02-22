@@ -12,7 +12,7 @@
         </a>
         {/option:showMailmotorImportGroups}
         {option:showMailmotorAddGroup}
-        <a href="{$var|geturl:'add_group'}" class="btn btn-primary" title="{$lblAddGroup|ucfirst}">
+        <a href="{$var|geturl:'add_group'}" class="btn btn-default" title="{$lblAddGroup|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAddGroup|ucfirst}
         </a>

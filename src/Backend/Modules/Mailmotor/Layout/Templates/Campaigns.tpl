@@ -6,7 +6,7 @@
     <div class="btn-toolbar pull-right">
       <div class="btn-group" role="group">
         {option:showMailmotorAddCampaign}
-        <a href="{$var|geturl:'add_campaign'}" class="btn btn-primary" title="{$lblAddCampaign|ucfirst}">
+        <a href="{$var|geturl:'add_campaign'}" class="btn btn-default" title="{$lblAddCampaign|ucfirst}">
           <span class="glyphicon glyphicon-plus"></span>&nbsp;
           {$lblAddCampaign|ucfirst}
         </a>

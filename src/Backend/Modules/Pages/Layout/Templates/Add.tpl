@@ -6,7 +6,7 @@
         {option:showPagesIndex}
         <div class="btn-toolbar pull-right">
             <div class="btn-group" role="group">
-                <a href="{$var|geturl:'index'}" class="btn btn-primary" title="{$lblOverview|ucfirst}">
+                <a href="{$var|geturl:'index'}" class="btn btn-default" title="{$lblOverview|ucfirst}">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                     {$lblOverview|ucfirst}
                 </a>
