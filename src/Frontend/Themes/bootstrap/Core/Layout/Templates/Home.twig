@@ -29,11 +29,11 @@
 			</div>
 			<div class="col-md-4">
 				{# Middle position #}
- 				{% for main in positions.main %}
- 					{% if main.include_path %}
- 						{% include main.include_path %}
+ 				{% for main in positions.middle %}
+ 					{% if middle.include_path %}
+ 						{% include middle.include_path %}
  					{% else %}
- 						{{ main.html | raw }}
+ 						{{ middle.html | raw }}
  					{% endif %}
 				{% endfor %}
 			</div>

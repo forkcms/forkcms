@@ -58,7 +58,7 @@ class Widget extends Object
      *
      * @var    string
      */
-    protected $templatePath;
+    public $templatePath;
 
     /**
      * A reference to the URL-instance
@@ -77,11 +77,12 @@ class Widget extends Object
     {
         parent::__construct($kernel);
 
-        // get objects from the reference so they are accessible
-        //$this->setNewTemplate();
-         if ($this->tpl->getTemplateType() == 'spoon') {
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
             $this->tpl = new FrontendTemplate(false);
         }
+
+        // get objects from the reference so they are accessible
         $this->header = $this->getContainer()->get('header');
         $this->URL = $this->getContainer()->get('url');
 

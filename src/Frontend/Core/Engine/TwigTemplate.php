@@ -24,19 +24,11 @@ Class TwigTemplate
      * @var bool
      */
     private $addSlashes = false;
-
     private $forms = array();
     private $variables = array();
-    private $actions = array();
     private $themePath;
     private $baseFile;
-
-    /**
-     * Type of Template Engine
-     *
-     * @var string
-     */
-    private $tplEngine = 'twig';
+    private $templates = array();
 
     function __construct($addToReference = true)
     {
@@ -132,7 +124,7 @@ Class TwigTemplate
      */
     public function getTemplateType()
     {
-        return $this->tplEngine;
+        return 'twig';
     }
 
     /**
@@ -190,15 +182,18 @@ Class TwigTemplate
             $this->assignArray($key, $values);
             return;
         }
+
         // form hook
         $field = substr($key, 0, 3);
         if (in_array($field, array('hid', 'chk', 'ddm', 'txt'))) {
             $this->fields[$field][substr($key, 3)] = $values;
             return;
         }
+
         // page hook
-        else if ($key == 'page') {
-            $this->baseFile = $this->convertToTwig($values['template_path']);
+        // end call
+        if ($key == 'page') {
+            $this->baseFile = str_replace('.tpl', '.twig', $values['template_path']);
             $this->setPositions($values['positions']);
             return;
         }
@@ -214,86 +209,87 @@ Class TwigTemplate
             foreach ($blocks as &$block)
             {
                 if ($block['extra_type'] == 'widget') {
-                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.twig';
-                    $this->actions[] = $block['include_path'];
+                    $block['include_path'] = $this->convertToTwig(
+                        $this->themePath . '/Modules/' .
+                        $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.twig'
+                    );
                 }
                 elseif ($block['extra_type'] == 'block') {
                     $block['extra_action'] = ($block['extra_action']) ?: 'Index';
-                    $block['include_path'] = 'Modules/' . $block['extra_module'] . '/Layout/Templates/' . $block['extra_action'] . '.twig';
-                    $this->actions[] = $block['include_path'];
+                    $block['include_path'] = $this->convertToTwig(
+                        $this->themePath . '/Modules/' .
+                        $block['extra_module'] . '/Layout/Templates/' . $block['extra_action'] . '.twig'
+                    );
                 }
-
             }
         }
         $this->variables['positions'] = $positions;
     }
 
-    private function convertToTwig($path)
+    public function convertToTwig($template)
     {
-        return str_replace('.tpl', '.twig', $path);
+        return str_replace(
+            $this->themePath . '/', '',
+            Theme::getPath(str_replace('.tpl', '.twig', $template))
+        );
     }
 
     public function assignArray(array $variables, $index = null)
     {
-        if ($index) {
-            // artifacts?
+        // artifacts?
+        if ($index && isset($variables['Core'])) {
             unset($variables['Core']);
             $tmp[$index] = $variables;
             $variables = $tmp;
         }
+
+        // store the variables
         $this->variables = array_merge($this->variables, $variables);
     }
 
     public function getContent($template, $customHeaders = false, $parseCustom = false)
     {
-        if (!$template) {
+        // bounce back trick because Pages calls getContent Method
+        // 2 times on every action
+        if (!$template || in_array($template, $this->templates)) {
             return;
         }
-        $template = Theme::getPath($template);
-        // the theme file is located
-        // if (strpos($template, $this->themePath) !== false) {
-        $template = str_replace($this->themePath . '/', '', $this->convertToTwig($template));
-        // }
+        $this->templates[] = $template;
 
-        // block actions/widgets from rendering
-        if(in_array($template, $this->actions)) return;
-
-        // render at the end
-        $this->end($template);
+        // only baseFile can render
+        $template = $this->convertToTwig($template);
+        if ($this->baseFile === $template) {
+            $this->end($template);
+        }
     }
 
     private function end($template)
     {
         $this->startGlobals();
         $this->parseLabels();
-        $this->setNav();
 
         if ($this->forms) {
             $this->assign('form', $this->forms);
         }
 
         $loader = new \Twig_Loader_Filesystem($this->themePath);
-        $twig = new \Twig_Environment($loader, array(
+        $this->twig = new \Twig_Environment($loader, array(
             'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig',
             'debug' => (SPOON_DEBUG === true)
         ));
 
+        // start the filters
+        $this->twigFrontendFilters();
+
         // debug options
         if (SPOON_DEBUG) {
-            // $twig->addExtension(new Twig_Extension_Debug());
+            $this->twig->addExtension(new \Twig_Extension_Debug());
             $this->assign('debug', true);
         }
 
         // template
-        $this->template = $twig->loadTemplate($template);
+        $this->template = $this->twig->loadTemplate($template);
         echo $this->template->render($this->variables);
-    }
-
-    private function setNav()
-    {
-        // force main nav
-        $nav = Navigation::getNavigation();
-        $this->assign('navigation', $nav['page'][1]);
     }
 
     public function addForm($form)
@@ -315,6 +311,49 @@ Class TwigTemplate
     {
         return $this->variables;
     }
+
+    /**
+     * Setup filters for the Twig environment.
+     */
+    private function twigFrontendFilters()
+    {
+        $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getmainnavigation', 'Frontend\Core\Engine\TemplateModifiers::getMainNavigation'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('rand', 'Frontend\Core\Engine\TemplateModifiers::random'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatfloat', 'Frontend\Core\Engine\TemplateModifiers::formatFloat'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('truncate', 'Frontend\Core\Engine\TemplateModifiers::truncate'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('camelcase', '\SpoonFilter::toCamelCase'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('stripnewlines', 'Frontend\Core\Engine\TemplateModifiers::stripNewlines'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatdate', 'Frontend\Core\Engine\TemplateModifiers::formatDate'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formattime', 'Frontend\Core\Engine\TemplateModifiers::formatTime'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+    }
+
+    // private function twigGlobals()
+    // {
+    //     $this->twig->addGlobal('CRLF', "\n");
+    //     $this->twig->addGlobal('TAB', "\t");
+    //     $this->twig->addGlobal('now', time());
+    //     $this->twig->addGlobal('LANGUAGE', BL::getWorkingLanguage());
+    //     $this->twig->addGlobal('SITE_MULTILANGUAGE', SITE_MULTILANGUAGE);
+    //     $this->twig->addGlobal(
+    //         'SITE_TITLE',
+    //         BackendModel::getModuleSetting(
+    //             'core',
+    //             'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE
+    //         )
+    //     );
+    //     // TODO goes up, here we assume the current user is authenticated already.
+    //     $this->twig->addGlobal('user', BackendAuthentication::getUser());
+    //     $languages = BackendLanguage::getWorkingLanguages();
+    //     $workingLanguages = array();
+    //     foreach($languages as $abbreviation => $label) $workingLanguages[] = array('abbr' => $abbreviation, 'label' => $label, 'selected' => ($abbreviation == BackendLanguage::getWorkingLanguage()));
+    //     $this->twig->addGlobal('workingLanguages', $workingLanguages);
+    // }
 
     // /**
     //  * Map the frontend-specific modifiers

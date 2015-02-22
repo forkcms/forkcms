@@ -32,13 +32,6 @@ class Template extends \SpoonTemplate
     private $addSlashes = false;
 
     /**
-     * Type of Template Engine
-     *
-     * @var string
-     */
-    private $tplEngine = 'spoon';
-
-    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
      * @param bool $addToReference Should the instance be added into the reference.
@@ -194,7 +187,7 @@ class Template extends \SpoonTemplate
      */
     public function getTemplateType()
     {
-        return $this->tplEngine;
+        return 'spoon';
     }
 
     /**

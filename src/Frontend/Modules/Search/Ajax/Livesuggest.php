@@ -224,8 +224,10 @@ class Livesuggest extends FrontendBaseAJAXAction
      */
     protected function loadTemplate()
     {
-        // create template
-        $this->tpl = new FrontendTemplate(false);
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
     }
 
     /**
