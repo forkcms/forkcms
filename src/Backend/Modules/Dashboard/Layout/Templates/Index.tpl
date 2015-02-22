@@ -2,9 +2,6 @@
 {include:{$BACKEND_MODULES_PATH}/Dashboard/Layout/Templates/StructureStart.tpl}
 <div id="dashboardWidgets" class="row fork-dashboard">
 	<div class="col-md-12">
-		<div class="page-header">
-			<h1>{$lblDashboard|ucfirst}</h1>
-		</div>
 		<div id="editDashboardMessage" class="alert alert-info" role="alert" style="display:none;">
 			{$msgHelpEditDashboard}
 			<a href="#" id="doneEditingDashboard">{$lblDone|ucfirst}</a>
