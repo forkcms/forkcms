@@ -2,8 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
-use ForkCMS\Bundle\InstallerBundle\Test\WebTestCase;
-use Symfony\Component\FileSystem\FileSystem;
+use Common\WebTestCase;
 
 class InstallerControllerTest extends WebTestCase
 {
@@ -158,36 +157,5 @@ class InstallerControllerTest extends WebTestCase
         );
 
         return $crawler;
-    }
-
-    private function emptyTestDatabase($database)
-    {
-        foreach ($database->getTables() as $table) {
-            $database->drop($table);
-        }
-    }
-
-    private function backupParametersFile($kernelDir)
-    {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml')) {
-            $fs->copy(
-                $kernelDir . '/config/parameters.yml',
-                $kernelDir . '/config/parameters.yml~backup'
-            );
-        }
-    }
-
-    private function putParametersFileBack($kernelDir)
-    {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
-            $fs->copy(
-                $kernelDir . '/config/parameters.yml~backup',
-                $kernelDir . '/config/parameters.yml',
-                true
-            );
-            $fs->remove($kernelDir . '/config/parameters.yml~backup');
-        }
     }
 }
