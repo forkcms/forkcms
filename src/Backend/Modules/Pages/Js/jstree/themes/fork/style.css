@@ -155,7 +155,9 @@
 	background-position: 0 -16px;
 }
 
-.tree-fork li a { width: 200px; }
+@media (min-width: 1200px) {
+	.tree-fork li a { width: 200px; }
+}
 
 /* DEFAULT, HOVER, CLICKED, LOADING STATES */
 .tree-fork li a:hover,
