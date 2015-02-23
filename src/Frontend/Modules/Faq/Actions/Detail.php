@@ -267,13 +267,21 @@ class Detail extends FrontendBaseBlock
                         // add the question
                         $variables['question'] = $this->record['question'];
 
-                        // add the email
-                        $this->get('mailer')->addEmail(
-                            sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question']),
-                            FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/feedback.tpl',
-                            $variables,
-                            null, null, null, null, null, null, null, null, null, null, null, true
-                        );
+                        $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
+                        $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                        $message = \Common\Mailer\Message::newInstance(
+                                sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question'])
+                            )
+                            ->setFrom(array($from['email'] => $from['name']))
+                            ->setTo(array($to['email'] => $to['name']))
+                            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                            ->parseHtml(
+                                FRONTEND_MODULES_PATH . '/Faq/Layout/Templates/Mails/Feedback.tpl',
+                                $variables,
+                                true
+                            )
+                        ;
                     }
                 }
 

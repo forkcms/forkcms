@@ -3,7 +3,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -19,10 +19,13 @@
  * @copyright CKSource - Frederico Knabben
  */
 
+// dirname(__FILE__) instead of __DIR__ because of PHP backward compatibility
+$basedir = dirname(__FILE__);
+
 /**
  * No errors
  */
-define('IN_CKFINDER', true);
+define('IN_CKFINDER',true);
 define('CKFINDER_CONNECTOR_ERROR_NONE',0);
 define('CKFINDER_CONNECTOR_ERROR_CUSTOM_ERROR',1);
 define('CKFINDER_CONNECTOR_ERROR_INVALID_COMMAND',10);
@@ -53,20 +56,20 @@ define('CKFINDER_CONNECTOR_ERROR_ZIP_FAILED',303);
 define('CKFINDER_CONNECTOR_ERROR_CONNECTOR_DISABLED',500);
 define('CKFINDER_CONNECTOR_ERROR_THUMBNAILS_DISABLED',501);
 
-define('CKFINDER_CONNECTOR_DEFAULT_USER_FILES_PATH',"/userfiles/");
-define('CKFINDER_CONNECTOR_LANG_PATH',"./lang");
-define('CKFINDER_CONNECTOR_CONFIG_FILE_PATH',"./../../../config.php");
+define('CKFINDER_CONNECTOR_DEFAULT_USER_FILES_PATH','/userfiles/');
+define('CKFINDER_CONNECTOR_LANG_PATH',$basedir . '/lang');
+define('CKFINDER_CONNECTOR_CONFIG_FILE_PATH',$basedir . '/../../../config.php');
 
-if (version_compare(phpversion(), '6', '>=')) {
-    define('CKFINDER_CONNECTOR_PHP_MODE', 6);
+if (version_compare(phpversion(),'6','>=')) {
+    define('CKFINDER_CONNECTOR_PHP_MODE',6);
 }
 else {
-    define('CKFINDER_CONNECTOR_PHP_MODE', 5);
+    define('CKFINDER_CONNECTOR_PHP_MODE',5);
 }
 
-define('CKFINDER_CONNECTOR_LIB_DIR', "./php5");
+define('CKFINDER_CONNECTOR_LIB_DIR',$basedir . '/php5');
 
-define('CKFINDER_CHARS', '123456789ABCDEFGHJKLMNPQRSTUVWXYZ');
-define('CKFINDER_REGEX_IMAGES_EXT', '/\.(jpg|gif|png|bmp|jpeg)$/i');
-define('CKFINDER_REGEX_INVALID_PATH', ",(/\.)|[[:cntrl:]]|(//)|(\\\\)|([\\:\*\?\"\<\>\|]),");
-define('CKFINDER_REGEX_INVALID_FILE', ",[[:cntrl:]]|[/\\:\*\?\"\<\>\|],");
+define('CKFINDER_CHARS','123456789ABCDEFGHJKLMNPQRSTUVWXYZ');
+define('CKFINDER_REGEX_IMAGES_EXT','/\.(jpg|gif|png|bmp|jpeg)$/i');
+define('CKFINDER_REGEX_INVALID_PATH',",(/\.)|[[:cntrl:]]|(//)|(\\\\)|([\\:\*\?\"\<\>\|]),");
+define('CKFINDER_REGEX_INVALID_FILE',",[[:cntrl:]]|[/\\:\*\?\"\<\>\|],");

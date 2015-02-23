@@ -122,14 +122,21 @@ class ForgotPassword extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_forgot_password', array('id' => $profileId));
 
                 // send email
-                $this->get('mailer')->addEmail(
-                    FL::getMessage('ForgotPasswordSubject'),
-                    FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/forgot_password.tpl',
-                    $mailValues,
-                    $txtEmail->getValue(),
-                    '',
-                    null, null, null, null, null, null, null, null, null, true
-                );
+                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $message = \Common\Mailer\Message::newInstance(
+                        FL::getMessage('ForgotPasswordSubject')
+                    )
+                    ->setFrom(array($from['email'] => $from['name']))
+                    ->setTo(array($txtEmail->getValue() => ''))
+                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->parseHtml(
+                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/ForgotPassword.tpl',
+                        $mailValues,
+                        true
+                    )
+                ;
+                $this->get('mailer')->send($message);
 
                 // redirect
                 $this->redirect(SELF . '?sent=true');

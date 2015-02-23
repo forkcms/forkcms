@@ -17,6 +17,7 @@ use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Profiles\Engine\Authentication as FrontendProfilesAuthentication;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 use Frontend\Modules\Profiles\Engine\Profile;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * Change the settings for the current logged in profile.
@@ -115,7 +116,7 @@ class Settings extends FrontendBaseBlock
         $this->frm->addText('city', $this->profile->getSetting('city'));
         $this->frm->addDropdown(
             'country',
-            \SpoonLocale::getCountries(FRONTEND_LANGUAGE),
+            Intl::getRegionBundle()->getCountryNames(FRONTEND_LANGUAGE),
             $this->profile->getSetting('country')
         );
         $this->frm->addDropdown('gender', $genderValues, $this->profile->getSetting('gender'));

@@ -1,8 +1,52 @@
-3.8.5 (xxxx-xx-xx)
+3.8.8 (2015-xx-xx)
 --
 Improvements:
 
+* Settings: test email connection with SwiftMailer
+
 Bugfixes:
+
+* Core: fix not correctly thrown exception
+
+3.8.7 (2015-02-13)
+--
+Improvements:
+
+* Mailer: use SwiftMailer to send messages (see <UPGRADE_3.9.md>)
+* FormBuilder: jump to location of form after submission.
+* Core: Update CKFinder to version 2.4
+
+BugFixes:
+
+* Locale: Avoid "Using $this when not in object context" when using php 5.3.
+
+
+3.8.6 (2015-02-03)
+--
+Improvements:
+
+* Core: Refactor the mailer to use SwiftMailer
+
+Bugfixes:
+
+* Users: Fixed error in backend user edit, when updating your own account.
+* Core: Fix some wrong template names
+* Dashboard: Fix casing issue in alter sequence
+* Pages: Redirects are now available in the pages cache file
+* Translations: Fix an SQL Injection vulnerability
+
+
+3.8.5 (2015-01-14)
+--
+Improvements:
+
+* Core: use Symfony Intl component instead of Spoon to fetch countries.
+* Core: implement Google's sitelinks searchbox
+
+Bugfixes:
+
+* Core: Make sure logs aren't publically accessible
+* Core: Make sure PHP 5.5+'s opcode cache is now cleared after updating code
 
 
 3.8.4 (2014-12-26)

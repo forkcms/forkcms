@@ -307,7 +307,7 @@ class Edit extends BackendBaseActionEdit
                 }
 
                 // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
-                if ($user['active'] === 'N' && $this->record['active'] !== $user['active']) {
+                if (isset($user['active']) && $user['active'] === 'N' && $this->record['active'] !== $user['active']) {
                     // delete all sessions for user
                     BackendModel::get('database')->delete(
                         'users_sessions',

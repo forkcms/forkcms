@@ -169,14 +169,21 @@ class Register extends FrontendBaseBlock
                                                    . '/' . $settings['activation_key'];
 
                     // send email
-                    $this->get('mailer')->addEmail(
-                        FL::getMessage('RegisterSubject'),
-                        FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/register.tpl',
-                        $mailValues,
-                        $values['email'],
-                        '',
-                        null, null, null, null, null, null, null, null, null, true
-                    );
+                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+                    $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                    $message = \Common\Mailer\Message::newInstance(
+                            FL::getMessage('RegisterSubject')
+                        )
+                        ->setFrom(array($from['email'] => $from['name']))
+                        ->setTo(array($txtEmail->getValue() => ''))
+                        ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                        ->parseHtml(
+                            FRONTEND_MODULES_PATH . '/Profiles/Layout/Templates/Mails/Register.tpl',
+                            $mailValues,
+                            true
+                        )
+                    ;
+                    $this->get('mailer')->send($message);
 
                     // redirect
                     $this->redirect(SELF . '?sent=true');

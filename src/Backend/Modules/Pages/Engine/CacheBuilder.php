@@ -44,18 +44,23 @@ class CacheBuilder
         list($keys, $navigation) = $this->getData($language);
 
         $fs = new Filesystem();
+        $cachePath = FRONTEND_CACHE_PATH . '/Navigation/';
+        $keysFile = $cachePath . 'keys_' . $language . '.php';
+        $fs->dumpFile($keysFile, $this->dumpKeys($keys, $language));
+
+        $phpFile = $cachePath . 'navigation_' . $language . '.php';
+        $fs->dumpFile($phpFile, $this->dumpNavigation($navigation, $language));
+
         $fs->dumpFile(
-            FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php',
-           $this->dumpKeys($keys, $language)
-        );
-        $fs->dumpFile(
-            FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php',
-            $this->dumpNavigation($navigation, $language)
-        );
-        $fs->dumpFile(
-            FRONTEND_CACHE_PATH . '/Navigation/editor_link_list_' . $language . '.js',
+            $cachePath . 'editor_link_list_' . $language . '.js',
             $this->dumpEditorLinkList($navigation, $keys, $language)
         );
+
+        // clear the php5.5+ opcode cache
+        if (function_exists('opcache_invalidate')) {
+            opcache_invalidate($keysFile);
+            opcache_invalidate($phpFile);
+        }
     }
 
     /**
@@ -142,7 +147,7 @@ class CacheBuilder
         return $pageData;
     }
 
-    protected function getPageTreeType($page, $pageData)
+    protected function getPageTreeType($page, &$pageData)
     {
         // calculate tree-type
         $treeType = 'page';

@@ -160,7 +160,7 @@ jsBackend.dashboard =
 		{
 			data:
 			{
-				fork: { action: 'alter_sequence' },
+				fork: { action: 'AlterSequence' },
 				new_sequence: JSON.stringify(newSequence)
 			},
 			success: function(data, textStatus)

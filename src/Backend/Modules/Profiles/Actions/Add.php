@@ -14,6 +14,7 @@ use Backend\Core\Engine\Form as BackendForm;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Profiles\Engine\Model as BackendProfilesModel;
+use Symfony\Component\Intl\Intl as Intl;
 
 /**
  * This is the add-action, it will display a form to add a new profile.
@@ -69,7 +70,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown('day', array_combine($days, $days));
         $this->frm->addDropdown('month', $months);
         $this->frm->addDropdown('year', array_combine($years, $years));
-        $this->frm->addDropdown('country', \SpoonLocale::getCountries(BL::getInterfaceLanguage()));
+        $this->frm->addDropdown('country', Intl::getRegionBundle()->getCountryNames(BL::getInterfaceLanguage()));
 
         // set default elements dropdowns
         $this->frm->getField('gender')->setDefaultElement('');

@@ -239,7 +239,20 @@ class Index extends BackendBaseActionIndex
                 $variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('ResetPassword') . '&email=' . $email . '&key=' . $key;
 
                 // send e-mail to user
-                $this->get('mailer')->addEmail(\SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH . '/Layout/Templates/Mails/ResetPassword.tpl', $variables, $email);
+                $from = BackendModel::getModuleSetting('Core', 'mailer_from');
+                $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $message = \Common\Mailer\Message::newInstance(
+                        \SpoonFilter::ucfirst(BL::msg('ResetYourPasswordMailSubject'))
+                    )
+                    ->setFrom(array($from['email'] => $from['name']))
+                    ->setTo(array($email))
+                    ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+                    ->parseHtml(
+                        BACKEND_MODULE_PATH . '/Layout/Templates/Mails/ResetPassword.tpl',
+                        $variables
+                    )
+                ;
+                $this->get('mailer')->send($message);
 
                 // clear post-values
                 $_POST['backend_email_forgot'] = '';

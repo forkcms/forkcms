@@ -24,6 +24,8 @@ FileETag MTime Size
 	RewriteRule Gruntfile\.coffee - [F]
 	RewriteRule Sumofile - [F]
 	RewriteRule package\.json - [F]
+	RewriteRule app/logs - [F]
+	RewriteRule app/config - [F]
 	RewriteRule src/Frontend/Cache/CachedTemplates - [F]
 	RewriteRule src/Frontend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Frontend/Cache/Config - [F]

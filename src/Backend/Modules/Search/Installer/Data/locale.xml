@@ -75,6 +75,10 @@
         <translation language="es"><![CDATA[Define la importancia de cada módulo en los resultados de búsqueda aquí.]]></translation>
         <translation language="el"><![CDATA[Ορίσατε τη σπουδαιότητα κάθε ενότητας στα αποτελέσματα αναζήτησης εδώ.]]></translation>
       </item>
+      <item type="message" name="HelpSitelinksSearchBox">
+        <translation language="nl"><![CDATA[Je kan meer informatie vinden in <a href="https://developers.google.com/webmasters/richsnippets/sitelinkssearch">Googles officiële documentatie</a>.]]></translation>
+        <translation language="en"><![CDATA[You can find more info in <a href="https://developers.google.com/webmasters/richsnippets/sitelinkssearch">Googles official documentation</a>.]]></translation>
+      </item>
       <item type="message" name="IncludeInSearch">
         <translation language="nl"><![CDATA[Opnemen in de zoekresultaten?]]></translation>
         <translation language="en"><![CDATA[Include in search results?]]></translation>
@@ -215,6 +219,10 @@
         <translation language="es"><![CDATA[búsqueda en]]></translation>
         <translation language="uk"><![CDATA[Пошук по]]></translation>
         <translation language="el"><![CDATA[αναζητήθηκε στις]]></translation>
+      </item>
+      <item type="label" name="UseSitelinksSearchBox">
+        <translation language="nl"><![CDATA[Schakel Googles Sitelinks Search Box in.]]></translation>
+        <translation language="en"><![CDATA[Enable Googles Sitelinks Search Box.]]></translation>
       </item>
       <item type="error" name="SynonymIsRequired">
         <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>

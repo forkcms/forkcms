@@ -47,5 +47,4 @@ services:
             - [ setDebug, [ %kernel.debug% ]]
     mailer:
         class: Common\Mailer
-        arguments:
-            - @database
+        arguments: [ @logger ]

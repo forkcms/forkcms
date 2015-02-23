@@ -172,6 +172,11 @@ class Model
         foreach ($finder->files()->in(FRONTEND_CACHE_PATH . '/Search/') as $file) {
             $fs->remove($file->getRealPath());
         }
+
+        // clear the php5.5+ opcode cache
+        if (function_exists('opcache_reset')) {
+            opcache_reset();
+        }
     }
 
     /**
