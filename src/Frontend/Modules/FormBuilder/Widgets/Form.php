@@ -461,6 +461,7 @@ class Form extends FrontendBaseWidget
 
                     // check if we have a replyTo email set
                     $replyTo = null;
+                    $mailCopyTo = null;
                     foreach ($this->item['fields'] as $field) {
                         if (array_key_exists('reply_to', $field['settings']) &&
                             $field['settings']['reply_to'] === true
