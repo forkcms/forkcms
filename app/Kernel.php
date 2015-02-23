@@ -43,7 +43,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      * This will disappear in time in favour of container-driven parameters.
      * @deprecated
      */
-    protected function defineForkConstants()
+    public function defineForkConstants()
     {
         $container = $this->getContainer();
 
