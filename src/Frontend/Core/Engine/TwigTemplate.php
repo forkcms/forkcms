@@ -259,11 +259,11 @@ Class TwigTemplate
         // only baseFile can render
         $template = $this->convertToTwig($template);
         if ($this->baseFile === $template) {
-            $this->end($template);
+            $this->render($template);
         }
     }
 
-    private function end($template)
+    private function render($template)
     {
         $this->startGlobals();
         $this->parseLabels();
@@ -275,7 +275,7 @@ Class TwigTemplate
         $loader = new \Twig_Loader_Filesystem($this->themePath);
         $this->twig = new \Twig_Environment($loader, array(
             'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig',
-            'debug' => (SPOON_DEBUG === true)
+            'debug' => SPOON_DEBUG
         ));
 
         // start the filters
@@ -317,6 +317,11 @@ Class TwigTemplate
      */
     private function twigFrontendFilters()
     {
+        // Filters list allready converted to twif filters
+        // - ucfirst
+        // -
+
+        // global filters
         $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
         $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
         $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
@@ -331,7 +336,23 @@ Class TwigTemplate
         $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
         $this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
         $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+
+        // Frontend Specific
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforextraid', 'Frontend\Core\Engine\TemplateModifiers::getURLForExtraId'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getpageinfo', 'Frontend\Core\Engine\TemplateModifiers::getPageInfo'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getsubnavigation', 'Frontend\Core\Engine\TemplateModifiers::getSubNavigation'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('parsewidget', 'Frontend\Core\Engine\TemplateModifiers::parseWidget'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('highlight', 'Frontend\Core\Engine\TemplateModifiers::highlightCode'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('urlencode', 'urlencode'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('profilesetting', 'Frontend\Core\Engine\TemplateModifiers::profileSetting'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
+
+        // Backend Specific
     }
+
 
     // private function twigGlobals()
     // {
@@ -353,67 +374,6 @@ Class TwigTemplate
     //     $workingLanguages = array();
     //     foreach($languages as $abbreviation => $label) $workingLanguages[] = array('abbr' => $abbreviation, 'label' => $label, 'selected' => ($abbreviation == BackendLanguage::getWorkingLanguage()));
     //     $this->twig->addGlobal('workingLanguages', $workingLanguages);
-    // }
-
-    // /**
-    //  * Map the frontend-specific modifiers
-    //  */
-    // private function mapCustomModifiers()
-    // {
-    //     // fetch the path for an include (theme file if available, core file otherwise)
-    //     $this->mapModifier('getpath', array('Frontend\Core\Engine\TemplateModifiers', 'getPath'));
-
-    //     // formatting
-    //     $this->mapModifier('formatcurrency', array('Frontend\Core\Engine\TemplateModifiers', 'formatCurrency'));
-
-    //     // URL for a specific pageId
-    //     $this->mapModifier('geturl', array('Frontend\Core\Engine\TemplateModifiers', 'getURL'));
-
-    //     // URL for a specific block/extra
-    //     $this->mapModifier('geturlforblock', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForBlock'));
-    //     $this->mapModifier('geturlforextraid', array('Frontend\Core\Engine\TemplateModifiers', 'getURLForExtraId'));
-
-    //     // page related
-    //     $this->mapModifier('getpageinfo', array('Frontend\Core\Engine\TemplateModifiers', 'getPageInfo'));
-
-    //     // convert var into navigation
-    //     $this->mapModifier('getnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getNavigation'));
-    //     $this->mapModifier('getsubnavigation', array('Frontend\Core\Engine\TemplateModifiers', 'getSubNavigation'));
-
-    //     // parse a widget
-    //     $this->mapModifier('parsewidget', array('Frontend\Core\Engine\TemplateModifiers', 'parseWidget'));
-
-    //     // rand
-    //     $this->mapModifier('rand', array('Frontend\Core\Engine\TemplateModifiers', 'random'));
-
-    //     // string
-    //     $this->mapModifier('formatfloat', array('Frontend\Core\Engine\TemplateModifiers', 'formatFloat'));
-    //     $this->mapModifier('formatnumber', array('Frontend\Core\Engine\TemplateModifiers', 'formatNumber'));
-    //     $this->mapModifier('truncate', array('Frontend\Core\Engine\TemplateModifiers', 'truncate'));
-    //     $this->mapModifier('cleanupplaintext', array('Frontend\Core\Engine\TemplateModifiers', 'cleanupPlainText'));
-    //     $this->mapModifier('camelcase', array('\SpoonFilter', 'toCamelCase'));
-    //     $this->mapModifier('stripnewlines', array('Frontend\Core\Engine\TemplateModifiers', 'stripNewlines'));
-
-    //     // dates
-    //     $this->mapModifier('timeago', array('Frontend\Core\Engine\TemplateModifiers', 'timeAgo'));
-
-    //     // users
-    //     $this->mapModifier('usersetting', array('Frontend\Core\Engine\TemplateModifiers', 'userSetting'));
-
-    //     // highlight
-    //     $this->mapModifier('highlight', array('Frontend\Core\Engine\TemplateModifiers', 'highlightCode'));
-
-    //     // urlencode
-    //     $this->mapModifier('urlencode', 'urlencode');
-
-    //     // strip tags
-    //     $this->mapModifier('striptags', 'strip_tags');
-
-    //     // debug stuff
-    //     $this->mapModifier('dump', array('Frontend\Core\Engine\TemplateModifiers', 'dump'));
-
-    //     // profiles
-    //     $this->mapModifier('profilesetting', array('Frontend\Core\Engine\TemplateModifiers', 'profileSetting'));
     // }
 
     /**
