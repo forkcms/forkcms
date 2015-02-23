@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="../autoload.php"
+         stderr="true"
 >
     <testsuites>
         <testsuite name="unit">
@@ -21,6 +22,7 @@
             <directory>../src/*/*Bundle/Tests/Controller</directory>
             <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>../src/*Bundle/Tests/Controller</directory>
+            <directory>../src/Frontend/Modules/*/Tests/Action</directory>
         </testsuite>
     </testsuites>
 

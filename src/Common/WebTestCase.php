@@ -43,6 +43,30 @@ abstract class WebTestCase extends BaseWebTestCase
     }
 
     /**
+     * Creates a Client.
+     *
+     * @param array $options An array of options to pass to the createKernel class
+     * @param array $server  An array of server parameters
+     *
+     * @return Client A Client instance
+     */
+    protected static function createClient(array $options = array(), array $server = array())
+    {
+        if (null !== static::$kernel) {
+            static::$kernel->shutdown();
+        }
+
+        static::$kernel = static::createKernel($options);
+        static::$kernel->boot();
+        static::$kernel->defineForkConstants();
+
+        $client = static::$kernel->getContainer()->get('test.client');
+        $client->setServerParameters($server);
+
+        return $client;
+    }
+
+    /**
      * Fully empties the test database
      *
      * @param \SpoonDatabase $database
@@ -51,6 +75,33 @@ abstract class WebTestCase extends BaseWebTestCase
     {
         foreach ($database->getTables() as $table) {
             $database->drop($table);
+        }
+    }
+
+    /**
+     * Executes sql in the database
+     */
+    protected function importSQL($database, $sql)
+    {
+        $database->execute(trim($sql));
+    }
+
+    protected function loadFixtures($client, $fixtureClasses)
+    {
+        $database = $client->getContainer()->get('database');
+
+        // make sure our database has a clean state (freshly installed Fork)
+        $this->emptyTestDatabase($database);
+        $kernelDir = $client->getContainer()->getParameter('kernel.root_dir');
+        $this->importSQL(
+            $client->getContainer()->get('database'),
+            file_get_contents($kernelDir . '/../tools/test_db.sql')
+        );
+
+        // load all the fixtures
+        foreach ($fixtureClasses as $class) {
+            $fixture = new $class();
+            $fixture->load($database);
         }
     }
 
