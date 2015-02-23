@@ -14,6 +14,7 @@
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
             <exclude>../src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
+            <exclude>../src/Frontend/Modules/Blog/Tests/Action</exclude>
         </testsuite>
     </testsuites>
 
