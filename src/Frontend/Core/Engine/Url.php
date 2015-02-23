@@ -68,9 +68,6 @@ class Url extends \KernelLoader
 
         // process URL
         $this->processQueryString();
-
-        // set constant
-        define('SELF', SITE_URL . '/' . $this->getQueryString());
     }
 
     /**

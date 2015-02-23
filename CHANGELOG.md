@@ -3,6 +3,7 @@
 Improvements:
 
 * Settings: test email connection with SwiftMailer
+* Core: refactor out SELF constant
 
 Bugfixes:
 
