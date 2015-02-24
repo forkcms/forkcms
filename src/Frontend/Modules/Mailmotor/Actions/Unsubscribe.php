@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Form as FrontendForm;
@@ -50,7 +52,10 @@ class Unsubscribe extends FrontendBaseBlock
 
         $this->loadTemplate();
         $this->loadForm();
-        $this->validateForm();
+        $response = $this->validateForm();
+        if ($response instanceof Response) {
+            return $response;
+        }
         $this->parse();
     }
 
@@ -142,7 +147,7 @@ class Unsubscribe extends FrontendBaseBlock
                     FrontendModel::triggerEvent('Mailmotor', 'after_unsubscribe', array('email' => $email->getValue()));
 
                     // redirect
-                    $this->redirect(
+                    return $this->redirect(
                         FrontendNavigation::getURLForBlock('Mailmotor', 'Unsubscribe') . '?sent=true#unsubscribeForm'
                     );
                 } catch (\Exception $e) {
