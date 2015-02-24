@@ -24,11 +24,19 @@
     body {
         padding-top: 70px;
     }
+
+    body#installer {
+        padding-top: 0px;
+    }
 }
 
 /* Bootstrap large (lg) screen */
 @media (min-width: 1200px) {
     body {
         padding-top: 70px;
+    }
+
+    body#installer {
+        padding-top: 0px;
     }
 }
