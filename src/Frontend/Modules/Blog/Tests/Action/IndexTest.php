@@ -34,14 +34,6 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/en/blog', array('page' => 34));
-        $client->followRedirect();
-        $this->assertEquals(
-            404,
-            $client->getResponse()->getStatusCode()
-        );
-        $this->assertStringEndsWith(
-            '404',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertIs404($client);
     }
 }

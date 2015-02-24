@@ -45,14 +45,6 @@ class DetailTest extends WebTestCase
         $client = static::createClient();
 
         $client->request('GET', '/en/blog/detail/non-existing');
-        $client->followRedirect();
-        $this->assertEquals(
-            404,
-            $client->getResponse()->getStatusCode()
-        );
-        $this->assertStringEndsWith(
-            '404',
-            $client->getHistory()->current()->getUri()
-        );
+        $this->assertIs404($client);
     }
 }
