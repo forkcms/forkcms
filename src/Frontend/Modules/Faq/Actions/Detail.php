@@ -9,6 +9,8 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -64,10 +66,16 @@ class Detail extends FrontendBaseBlock
         $this->tpl->assign('hideContentTitle', true);
 
         $this->loadTemplate();
-        $this->getData();
+        $response = $this->getData();
+        if ($response instanceOf Response) {
+            return $response;
+        }
         $this->updateStatistics();
         $this->loadForm();
-        $this->validateForm();
+        $response = $this->validateForm();
+        if ($response instanceOf Response) {
+            return $response;
+        }
         $this->parse();
     }
 
@@ -78,7 +86,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get by URL
@@ -86,7 +94,7 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // overwrite URLs
@@ -255,7 +263,7 @@ class Detail extends FrontendBaseBlock
                         // the comment is spam
                         if (FrontendModel::isSpam($text, $variables['question_link'])) {
                             // set the status to spam
-                            $this->redirect($this->record['full_url'] . '/' . FL::getAction('Spam'));
+                            return $this->redirect($this->record['full_url'] . '/' . FL::getAction('Spam'));
                         }
                     }
 
@@ -289,7 +297,7 @@ class Detail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Faq', 'after_add_feedback', array('comment' => $text));
 
                 // save status
-                $this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
+                return $this->redirect($this->record['full_url'] . '/' . FL::getAction('Success'));
             }
         } else {
             // form hasn't been sent
