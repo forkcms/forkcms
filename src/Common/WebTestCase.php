@@ -138,4 +138,17 @@ abstract class WebTestCase extends BaseWebTestCase
             $fs->remove($kernelDir . '/config/parameters.yml~backup');
         }
     }
+
+    protected function assertIs404($client)
+    {
+        $client->followRedirect();
+        $this->assertEquals(
+            404,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertStringEndsWith(
+            '404',
+            $client->getHistory()->current()->getUri()
+        );
+    }
 }
