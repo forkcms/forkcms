@@ -58,4 +58,12 @@ class CategoryTest extends WebTestCase
             $crawler->filter('title')->text()
         );
     }
+
+    public function testNonExistingPageGives404()
+    {
+        $client = static::createClient();
+
+        $client->request('GET', '/en/blog/category/default', array('page' => 34));
+        $this->assertIs404($client);
+    }
 }
