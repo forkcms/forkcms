@@ -9,6 +9,8 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -57,15 +59,18 @@ class ResetPassword extends FrontendBaseBlock
                 $this->loadForm();
 
                 // validate
-                $this->validateForm();
+                $response = $this->validateForm();
+                if ($response instanceof Response) {
+                    return $response;
+                }
             } elseif ($this->URL->getParameter('sent') != 'true') {
-                $this->redirect(FrontendNavigation::getURL(404));
+                return $this->redirect(FrontendNavigation::getURL(404));
             }
 
             // parse
             $this->parse();
         } else {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
     }
 
@@ -134,7 +139,7 @@ class ResetPassword extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_reset_password', array('id' => $profileId));
 
                 // redirect
-                $this->redirect(
+                return $this->redirect(
                     FrontendNavigation::getURLForBlock('Profiles', 'ResetPassword') . '/' . $this->URL->getParameter(
                         0
                     ) . '?sent=true'

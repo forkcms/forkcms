@@ -57,10 +57,10 @@ class Activate extends FrontendBaseBlock
                 $this->tpl->assign('activationSuccess', true);
             } else {
                 // failure
-                $this->redirect(FrontendNavigation::getURL(404));
+                return $this->redirect(FrontendNavigation::getURL(404));
             }
         } else {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
     }
 }
