@@ -366,6 +366,9 @@ class TemplateModifiers
 
     /**
      * Parse a widget straight from the template, rather than adding it through pages.
+     * WARNING: if your widget outputs random data you should cache it inside the widget
+     * Fork checks the output and if the output of the widget is random it will loop until the random data
+     * is the same as in the previous iteration
      *
      * @param string $var    The variable.
      * @param string $module The module whose module we want to execute.
