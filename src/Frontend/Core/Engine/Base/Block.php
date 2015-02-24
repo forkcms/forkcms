@@ -10,6 +10,7 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Frontend\Core\Engine\Breadcrumb;
@@ -492,20 +493,7 @@ class Block extends Object
      */
     public function redirect($URL, $code = 302)
     {
-        $response = new RedirectResponse($URL, $code);
-
-        /*
-         * Since we've got some nested action structure, we'll send this
-         * response directly after creating.
-         */
-        $response->send();
-
-        /*
-         * Stop code executing here
-         * I know this is ugly as hell, but if we don't do this the code after
-         * this call is executed and possibly will trigger errors.
-         */
-        exit;
+        return new RedirectResponse($URL, $code);
     }
 
     /**

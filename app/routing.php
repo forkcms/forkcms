@@ -8,6 +8,7 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Backend\Init as BackendInit;
@@ -161,7 +162,10 @@ class ApplicationRouting extends Controller
     protected function handleApplication(\ApplicationInterface $application)
     {
         $application->passContainerToModels();
-        $application->initialize();
+        $response = $application->initialize();
+        if ($response instanceOf Response) {
+            return $response;
+        }
 
         return $application->display();
     }
