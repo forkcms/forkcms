@@ -16,9 +16,9 @@ class RequirementsChecker
     /**
      * Requirements error statuses
      */
-    const STATUS_OK = 'ok';
+    const STATUS_OK = 'success';
     const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    const STATUS_ERROR = 'danger';
 
     /**
      * The root dir of our project

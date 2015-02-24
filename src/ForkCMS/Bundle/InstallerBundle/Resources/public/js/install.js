@@ -143,6 +143,8 @@ jsInstall.step3 =
 
     toggleDebugEmail: function()
     {
+        $('#debugEmailHolder').hide();
+
         if ($('#install_modules_different_debug_email').is(':checked')) {
             $('#debugEmailHolder').show();
         }
