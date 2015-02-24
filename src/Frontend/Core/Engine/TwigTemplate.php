@@ -279,6 +279,7 @@ Class TwigTemplate
         ));
 
         // start the filters
+        $this->twigFilters();
         $this->twigFrontendFilters();
 
         // debug options
@@ -313,29 +314,14 @@ Class TwigTemplate
     }
 
     /**
-     * Setup filters for the Twig environment.
+     * Setup Frontend filters for the Twig environment.
      */
     private function twigFrontendFilters()
     {
-        // Filters list allready converted to twif filters
-        // - ucfirst
-        // -
-
-        // global filters
-        $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getmainnavigation', 'Frontend\Core\Engine\TemplateModifiers::getMainNavigation'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('rand', 'Frontend\Core\Engine\TemplateModifiers::random'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatfloat', 'Frontend\Core\Engine\TemplateModifiers::formatFloat'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('truncate', 'Frontend\Core\Engine\TemplateModifiers::truncate'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('camelcase', '\SpoonFilter::toCamelCase'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('stripnewlines', 'Frontend\Core\Engine\TemplateModifiers::stripNewlines'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatdate', 'Frontend\Core\Engine\TemplateModifiers::formatDate'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formattime', 'Frontend\Core\Engine\TemplateModifiers::formatTime'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+        /** Filters list converted to twig filters
+         - ucfirst -> capitalize
+         -
+        */
 
         // Frontend Specific
         $this->twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
@@ -349,8 +335,31 @@ Class TwigTemplate
         $this->twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
         $this->twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
         $this->twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
+    }
 
-        // Backend Specific
+    /**
+     * Setup Global filters for the Twig environment.
+     */
+    private function twigFilters()
+    {
+        /** Filters list converted to twig filters
+         - ucfirst -> capitalize
+        **/
+
+        $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getmainnavigation', 'Frontend\Core\Engine\TemplateModifiers::getMainNavigation'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('rand', 'Frontend\Core\Engine\TemplateModifiers::random'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('formatfloat', 'Frontend\Core\Engine\TemplateModifiers::formatFloat'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('truncate', 'Frontend\Core\Engine\TemplateModifiers::truncate'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('camelcase', '\SpoonFilter::toCamelCase'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('stripnewlines', 'Frontend\Core\Engine\TemplateModifiers::stripNewlines'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatdate', 'Frontend\Core\Engine\TemplateModifiers::formatDate'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('formattime', 'Frontend\Core\Engine\TemplateModifiers::formatTime'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
+        //$this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
     }
 
 
