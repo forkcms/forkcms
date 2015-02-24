@@ -9,6 +9,8 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -51,11 +53,14 @@ class ChangeEmail extends FrontendBaseBlock
             $this->getData();
             $this->loadTemplate();
             $this->loadForm();
-            $this->validateForm();
+            $response = $this->validateForm();
+            if ($response instanceof Response) {
+                return $response;
+            }
             $this->parse();
         } else {
             // profile not logged in
-            $this->redirect(
+            return $this->redirect(
                 FrontendNavigation::getURLForBlock(
                     'Profiles',
                     'Login'
@@ -142,7 +147,7 @@ class ChangeEmail extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_change_email', array('id' => $this->profile->getId()));
 
                 // redirect
-                $this->redirect(
+                return $this->redirect(
                     SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangeEmail') . '?sent=true'
                 );
             } else {
