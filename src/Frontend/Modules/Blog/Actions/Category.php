@@ -9,6 +9,8 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -58,7 +60,10 @@ class Category extends FrontendBaseBlock
     {
         parent::execute();
         $this->loadTemplate();
-        $this->getData();
+        $response = $this->getData();
+        if ($response instanceOf Response) {
+            return $response;
+        }
         $this->parse();
     }
 
@@ -86,7 +91,7 @@ class Category extends FrontendBaseBlock
 
         // validate category
         if ($requestedCategory == 'false') {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // set category
@@ -102,9 +107,7 @@ class Category extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // populate calculated fields in pagination

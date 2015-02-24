@@ -9,6 +9,8 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -39,11 +41,14 @@ class ResendActivation extends FrontendBaseBlock
             parent::execute();
             $this->loadTemplate();
             $this->loadForm();
-            $this->validateForm();
+            $response = $this->validateForm();
+            if ($response instanceof Response) {
+                return $response;
+            }
             $this->parse();
         } else {
             // profile logged in
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
     }
 
@@ -138,7 +143,7 @@ class ResendActivation extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SELF . '?sent=true');
+                return $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('resendActivationHasError', true);
             }

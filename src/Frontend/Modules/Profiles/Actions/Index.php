@@ -39,7 +39,7 @@ class Index extends FrontendBaseBlock
             $this->loadTemplate();
         } else {
             // profile not logged in
-            $this->redirect(
+            return $this->redirect(
                 FrontendNavigation::getURLForBlock(
                     'Profiles',
                     'Login'

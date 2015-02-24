@@ -2,6 +2,8 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Mailmotor\Engine\Model as FrontendMailmotorModel;
@@ -51,7 +53,10 @@ class Detail extends FrontendBaseBlock
         $this->setOverwrite(true);
         $this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Layout/Templates/Detail.tpl');
 
-        $this->loadData();
+        $response = $this->loadData();
+        if ($response instanceOf Response) {
+            return $response;
+        }
         $this->parse();
     }
 
@@ -134,7 +139,7 @@ class Detail extends FrontendBaseBlock
 
         // no point continuing if the mailing record is not set
         if (empty($this->mailing)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
     }
 

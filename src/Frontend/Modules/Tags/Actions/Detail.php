@@ -9,6 +9,8 @@ namespace Frontend\Modules\Tags\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
@@ -46,7 +48,10 @@ class Detail extends FrontendBaseBlock
 
         $this->tpl->assign('hideContentTitle', true);
         $this->loadTemplate();
-        $this->getData();
+        $response = $this->getData();
+        if ($response instanceof Response) {
+            return $response;
+        }
         $this->parse();
     }
 
@@ -57,7 +62,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // fetch record
@@ -65,7 +70,7 @@ class Detail extends FrontendBaseBlock
 
         // validate record
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // fetch modules
