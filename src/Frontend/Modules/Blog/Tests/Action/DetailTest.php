@@ -1,15 +1,14 @@
 <?php
 
-namespace Frontend\Modules\Blog\Tests\Action;
+namespace Frontend\Modules\Blog\Action;
 
 use Common\WebTestCase;
 
-class IndexTest extends WebTestCase
+class DetailTest extends WebTestCase
 {
-    public function testIndexContainsBlogPosts()
+    public function testBlogPostHasDetailPage()
     {
         $client = static::createClient();
-
         $this->loadFixtures(
             $client,
             array(
@@ -18,22 +17,34 @@ class IndexTest extends WebTestCase
             )
         );
 
-        $client->request('GET', '/en/blog');
+        $crawler = $client->request('GET', '/en/blog');
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertContains(
+
+        $link = $crawler->selectLink('Lorem ipsum')->link();
+        $crawler = $client->click($link);
+
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertStringEndsWith(
+            '/en/blog/detail/lorem-ipsum',
+            $client->getHistory()->current()->getUri()
+        );
+        $this->assertStringStartsWith(
             'Lorem ipsum',
-            $client->getResponse()->getContent()
+            $crawler->filter('title')->text()
         );
     }
 
-    public function testNonExistingPageGives404()
+    public function testNonExistingBlogPostGives404()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog', array('page' => 34));
+        $client->request('GET', '/en/blog/detail/non-existing');
         $client->followRedirect();
         $this->assertEquals(
             404,
