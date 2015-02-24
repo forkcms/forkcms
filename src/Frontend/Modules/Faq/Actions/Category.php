@@ -9,6 +9,8 @@ namespace Frontend\Modules\Faq\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\Response;
+
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Faq\Engine\Model as FrontendFaqModel;
@@ -39,7 +41,10 @@ class Category extends FrontendBaseBlock
         parent::execute();
 
         $this->tpl->assign('hideContentTitle', true);
-        $this->getData();
+        $response = $this->getData();
+        if ($response instanceOf Response) {
+            return $response;
+        }
         $this->loadTemplate();
         $this->parse();
     }
@@ -51,7 +56,7 @@ class Category extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get by URL
@@ -59,7 +64,7 @@ class Category extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            return $this->redirect(FrontendNavigation::getURL(404));
         }
 
         $this->record['full_url'] = FrontendNavigation::getURLForBlock('Faq', 'Category') . '/' . $this->record['url'];
