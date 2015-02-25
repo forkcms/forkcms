@@ -5,7 +5,11 @@
 {% block content %}
 
 {{ form_start(form) }}
-  {{ form_errors(form) }}
+  <div class="row fork-module-messages">
+    <div class="col-md-12">
+      {{ form_errors(form) }}
+    </div>
+  </div>
   <div class="row fork-module-content">
     <div class="col-md-12">
       <div class="panel panel-default">
