@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Base;
  */
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Frontend\Core\Engine\Breadcrumb;
@@ -18,6 +17,7 @@ use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Engine\Template as FrontendTemplate;
+use Frontend\Core\Exception\RedirectException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
@@ -493,7 +493,9 @@ class Block extends Object
      */
     public function redirect($URL, $code = 302)
     {
-        return new RedirectResponse($URL, $code);
+        $response = new RedirectResponse($URL, $code);
+
+        throw new RedirectException('Redirect', $response);
     }
 
     /**

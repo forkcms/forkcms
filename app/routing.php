@@ -8,11 +8,11 @@
  */
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
+use Frontend\Core\Exception\RedirectException;
 
 /**
  * Application routing
@@ -162,9 +162,11 @@ class ApplicationRouting extends Controller
     protected function handleApplication(\ApplicationInterface $application)
     {
         $application->passContainerToModels();
-        $response = $application->initialize();
-        if ($response instanceOf Response) {
-            return $response;
+
+        try {
+            $application->initialize();
+        } catch (RedirectException $ex) {
+            return $ex->getResponse();
         }
 
         return $application->display();

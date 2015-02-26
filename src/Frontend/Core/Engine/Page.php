@@ -129,10 +129,7 @@ class Page extends FrontendBaseObject
         $this->processPage();
 
         // execute all extras linked to the page
-        $response = $this->processExtras();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->processExtras();
 
         // store statistics
         $this->storeStatistics();
@@ -404,10 +401,7 @@ class Page extends FrontendBaseObject
 
             // all extras extend FrontendBaseObject, which extends KernelLoader
             $extra->setKernel($this->getKernel());
-            $response = $extra->execute();
-            if ($response instanceOf Response) {
-                return $response;
-            }
+            $extra->execute();
 
             // overwrite the template
             if (is_callable(array($extra, 'getOverwrite')) && $extra->getOverwrite()

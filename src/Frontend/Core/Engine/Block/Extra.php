@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
@@ -145,10 +144,7 @@ class Extra extends FrontendBaseObject
         }
 
         // call the execute method of the real action (defined in the module)
-        $response = $this->object->execute();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->object->execute();
 
         // set some properties
         $this->setOverwrite($this->object->getOverwrite());

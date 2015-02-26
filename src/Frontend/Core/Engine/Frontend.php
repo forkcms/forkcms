@@ -50,10 +50,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
 
         // Load the rest of the page.
         $this->page = new Page($this->getKernel());
-        $response = $this->page->load();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->page->load();
     }
 
     /**
