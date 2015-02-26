@@ -30,6 +30,7 @@ class LoadBlogPosts
         $database->insert(
             'blog_posts',
             array(
+                'id' => 1,
                 'meta_id' => $metaId,
                 'category_id' => $categoryId,
                 'user_id' => 1,
@@ -41,6 +42,18 @@ class LoadBlogPosts
                 'publish_on' => '2015-02-23 00:00:00',
                 'created_on' => '2015-02-23 00:00:00',
                 'edited_on' => '2015-02-23 00:00:00',
+            )
+        );
+
+        $database->insert(
+            'search_index',
+            array(
+                'module' => 'Blog',
+                'other_id' => 1,
+                'field' => 'title',
+                'value' => 'Blogpost for functional tests',
+                'language' => 'en',
+                'active' => 'Y',
             )
         );
     }

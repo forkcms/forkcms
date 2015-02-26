@@ -104,10 +104,7 @@ class Index extends FrontendBaseBlock
         // load the cached data
         if (!$this->getCachedData()) {
             // ... or load the real data
-            $response = $this->getRealData();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->getRealData();
         }
 
         // parse
