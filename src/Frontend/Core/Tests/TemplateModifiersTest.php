@@ -37,6 +37,24 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    function test_format_float()
+    {
+        $this->assertEquals(
+            '1.2344',
+            TemplateModifiers::formatFloat(1.2344, 4)
+        );
+
+        $this->assertEquals(
+            '1.234',
+            TemplateModifiers::formatFloat(1.2344, 3)
+        );
+
+        $this->assertEquals(
+            '1',
+            TemplateModifiers::formatFloat(1.2344, 0)
+        );
+    }
+
     function test_stripnewlines()
     {
         $this->assertEquals(
