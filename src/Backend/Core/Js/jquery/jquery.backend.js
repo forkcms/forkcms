@@ -935,9 +935,6 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
-				// ugly hack to escape entities and quotes
-				// value = $('<div />').text(value).html().replace('"', '&quot;');
-
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
