@@ -24,7 +24,7 @@ class IndexTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertContains(
-            'Lorem ipsum',
+            'Blogpost for functional tests',
             $client->getResponse()->getContent()
         );
     }

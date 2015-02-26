@@ -9,10 +9,10 @@ class LoadBlogCategories
         $metaId = $database->insert(
             'meta',
             array(
-                'keywords' => 'Default',
-                'description' => 'Default',
-                'title' => 'Default',
-                'url' => 'default',
+                'keywords' => 'BlogCategory for tests',
+                'description' => 'BlogCategory for tests',
+                'title' => 'BlogCategory for tests',
+                'url' => 'blogcategory-for-tests',
             )
         );
 
@@ -21,7 +21,7 @@ class LoadBlogCategories
             array(
                 'meta_id' => $metaId,
                 'language' => 'en',
-                'title' => 'Default',
+                'title' => 'BlogCategory for tests',
             )
         );
     }

@@ -17,13 +17,13 @@ class CategoryTest extends WebTestCase
             )
         );
 
-        $crawler = $client->request('GET', '/en/blog/category/default');
+        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringStartsWith(
-            'Default',
+            'BlogCategory for tests',
             $crawler->filter('title')->text()
         );
     }
@@ -39,10 +39,10 @@ class CategoryTest extends WebTestCase
     public function testCategoryPageContainsBlogPost()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/en/blog/category/default');
+        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
 
-        $this->assertContains('Lorem ipsum', $client->getResponse()->getContent());
-        $link = $crawler->selectLink('Lorem ipsum')->link();
+        $this->assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
+        $link = $crawler->selectLink('Blogpost for functional tests')->link();
         $crawler = $client->click($link);
 
         $this->assertEquals(
@@ -50,11 +50,11 @@ class CategoryTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringEndsWith(
-            '/en/blog/detail/lorem-ipsum',
+            '/en/blog/detail/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
-            'Lorem ipsum',
+            'Blogpost for functional tests',
             $crawler->filter('title')->text()
         );
     }
@@ -63,7 +63,7 @@ class CategoryTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/default', array('page' => 34));
+        $client->request('GET', '/en/blog/category/blogcategory-for-tests', array('page' => 34));
         $this->assertIs404($client);
     }
 }

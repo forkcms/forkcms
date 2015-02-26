@@ -23,7 +23,7 @@ class DetailTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
 
-        $link = $crawler->selectLink('Lorem ipsum')->link();
+        $link = $crawler->selectLink('Blogpost for functional tests')->link();
         $crawler = $client->click($link);
 
         $this->assertEquals(
@@ -31,11 +31,11 @@ class DetailTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringEndsWith(
-            '/en/blog/detail/lorem-ipsum',
+            '/en/blog/detail/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
-            'Lorem ipsum',
+            'Blogpost for functional tests',
             $crawler->filter('title')->text()
         );
     }

@@ -9,10 +9,10 @@ class LoadBlogPosts
         $metaId = $database->insert(
             'meta',
             array(
-                'keywords' => 'Lorem ipsum',
-                'description' => 'Lorem ipsum',
-                'title' => 'Lorem ipsum',
-                'url' => 'lorem-ipsum',
+                'keywords' => 'Blogpost for functional tests',
+                'description' => 'Blogpost for functional tests',
+                'title' => 'Blogpost for functional tests',
+                'url' => 'blogpost-for-functional-tests',
             )
         );
 
@@ -22,7 +22,7 @@ class LoadBlogPosts
              WHERE title = :title AND language = :language
              LIMIT 1',
             array(
-                'title' => 'Default',
+                'title' => 'BlogCategory for tests',
                 'language' => 'en',
             )
         );
@@ -34,7 +34,7 @@ class LoadBlogPosts
                 'category_id' => $categoryId,
                 'user_id' => 1,
                 'language' => 'en',
-                'title' => 'Lorem ipsum',
+                'title' => 'Blogpost for functional tests',
                 'introduction' => '<p>Lorem ipsum dolor sit amet</p>',
                 'text' => '<p>Lorem ipsum dolor sit amet</p>',
                 'status' => 'active',
