@@ -41,6 +41,18 @@ class GetField extends BackendBaseAJAXAction
                 // get field
                 $field = BackendFormBuilderModel::getField($fieldId);
 
+
+                if ($field['type'] == 'radiobutton') {
+                    $values = array();
+
+                    foreach ($field['settings']['values'] as $value) {
+                        $values[] = $value['label'];
+                    }
+
+                    $field['settings']['values'] = $values;
+                }
+
+
                 // success output
                 $this->output(self::OK, array('field' => $field));
             }
