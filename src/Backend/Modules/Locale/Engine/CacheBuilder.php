@@ -94,6 +94,8 @@ class CacheBuilder
             }
         }
 
+        $this->addSpoonLocale($json, $language);
+
         return $json;
     }
 
