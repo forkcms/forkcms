@@ -165,11 +165,10 @@ class ApplicationRouting extends Controller
 
         try {
             $application->initialize();
+            return $application->display();
         } catch (RedirectException $ex) {
             return $ex->getResponse();
         }
-
-        return $application->display();
     }
 
     /**
