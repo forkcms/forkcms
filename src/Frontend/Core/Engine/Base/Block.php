@@ -17,6 +17,7 @@ use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Engine\Template as FrontendTemplate;
+use InvalidArgumentException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
