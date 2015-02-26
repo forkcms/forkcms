@@ -40,6 +40,10 @@ class SaveField extends BackendBaseAJAXAction
         );
         $label = trim(\SpoonFilter::getPostValue('label', null, '', 'string'));
         $values = trim(\SpoonFilter::getPostValue('values', null, '', 'string'));
+
+        // this is somewhat a nasty hack, but it makes special chars work.
+        $values = \SpoonFilter::htmlspecialcharsDecode($values);
+
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
         $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
