@@ -1390,6 +1390,9 @@ jsBackend.formBuilder.fields =
 						if(typeof data.data.errors.validation_parameter != 'undefined') {
 							$('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
 						}
+						if(typeof data.data.errors.reply_to_error_message != 'undefined') {
+							$('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textboxDialog');

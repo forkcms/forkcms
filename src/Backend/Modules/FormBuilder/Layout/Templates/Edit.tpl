@@ -206,6 +206,7 @@
 							<label for="textboxValidation">{$lblValidation|ucfirst}</label>
 							{$ddmTextboxValidation}
 						</p>
+						<span id="textboxReplyToErrorMessageError" class="formError" style="display: none;"></span>
 						<p class="validationParameter" style="display: none;">
 							<label for="textboxValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtTextboxValidationParameter}

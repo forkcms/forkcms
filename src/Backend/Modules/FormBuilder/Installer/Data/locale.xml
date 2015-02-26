@@ -1020,6 +1020,9 @@
         <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
       </item>
+      <item type="error" name="EmailValidationIsRequired">
+        <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
+      </item>
     </FormBuilder>
   </Backend>
   <Frontend>
