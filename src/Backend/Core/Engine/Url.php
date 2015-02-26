@@ -117,7 +117,7 @@ class Url extends Base\Object
             array_shift($chunks);
 
             // redirect to login
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
             );
         }
@@ -176,7 +176,7 @@ class Url extends Base\Object
                     $errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
 
                     // redirect to the error page
-                    \SpoonHTTP::redirect($errorUrl, 307);
+                    $this->redirect($errorUrl, 307);
                 }
             }
         }
@@ -210,7 +210,7 @@ class Url extends Base\Object
         // the person isn't logged in? or the module doesn't require authentication
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
                     '/' . $this->getQueryString()
                 )
@@ -231,12 +231,12 @@ class Url extends Base\Object
                         // user allowed?
                         if (Authentication::isAllowedModule($module)) {
                             // redirect to the page
-                            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+                            $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
                         }
                     }
                 }
                 // the user doesn't have access, redirect to error page
-                \SpoonHTTP::redirect(
+                $this->redirect(
                     '/' . NAMED_APPLICATION . '/' . $language .
                     '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
                     307
@@ -245,7 +245,7 @@ class Url extends Base\Object
                 // can our user execute the requested action?
                 if (!Authentication::isAllowedAction($action, $module)) {
                     // the user hasn't access, redirect to error page
-                    \SpoonHTTP::redirect(
+                    $this->redirect(
                         '/' . NAMED_APPLICATION . '/' . $language .
                         '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
                         307

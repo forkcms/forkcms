@@ -9,7 +9,6 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Header;
@@ -235,28 +234,5 @@ class Action extends Object
      */
     protected function parse()
     {
-    }
-
-    /**
-     * Redirect to a given URL
-     *
-     * @param string $URL The URL to redirect to.
-     */
-    public function redirect($URL)
-    {
-        $response = new RedirectResponse($URL, 302);
-
-        /*
-         * Since we've got some nested action structure, we'll send this
-         * response directly after creating.
-         */
-        $response->send();
-
-        /*
-         * Stop code executing here
-         * I know this is ugly as hell, but if we don't do this the code after
-         * this call is executed and possibly will trigger errors.
-         */
-        exit;
     }
 }
