@@ -1061,6 +1061,9 @@ class Model
         // an id that is used for in the datagrid, this is not the id of the translation!
         $id = 0;
 
+        // save the number of languages so this has not to be executed x number of times
+        $numberOfLanguages = count($languages);
+
         // loop the sorted translations
         foreach ($sortedTranslations as $type => $references) {
             // create array for each type
@@ -1080,7 +1083,6 @@ class Model
 
                     // reset this var for every language
                     $edited_on = '';
-                    $numberOfLanguages = count($languages);
 
                     foreach ($languages as $lang) {
                         // if the translation exists the for this language, fill it up
