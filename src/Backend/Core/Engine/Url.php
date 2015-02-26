@@ -215,50 +215,45 @@ class Url extends Base\Object
                     '/' . $this->getQueryString()
                 )
             );
-        } else {
-            // the person is logged in, does our user has access to this module?
-            if (!Authentication::isAllowedModule($module)) {
-                // if the module is the dashboard redirect to the first allowed module
-                if ($module == 'Dashboard') {
-                    // require navigation-file
-                    require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+        } elseif (Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
+            // the person is logged in, but doesn't have access to our action
+            // if the module is the dashboard redirect to the first allowed module
+            if ($module == 'Dashboard') {
+                // require navigation-file
+                require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
-                    // loop the navigation to find the first allowed module
-                    foreach ($navigation as $value) {
-                        // split up chunks
-                        list($module, $action) = explode('/', $value['url']);
+                // loop the navigation to find the first allowed module
+                foreach ($navigation as $value) {
+                    // split up chunks
+                    list($module, $action) = explode('/', $value['url']);
 
-                        // user allowed?
-                        if (Authentication::isAllowedModule($module)) {
-                            // redirect to the page
-                            $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
-                        }
+                    // user allowed?
+                    if (Authentication::isAllowedModule($module)) {
+                        // redirect to the page
+                        $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
                     }
                 }
-                // the user doesn't have access, redirect to error page
-                $this->redirect(
-                    '/' . NAMED_APPLICATION . '/' . $language .
-                    '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
-                    307
-                );
-            } else {
-                // can our user execute the requested action?
-                if (!Authentication::isAllowedAction($action, $module)) {
-                    // the user hasn't access, redirect to error page
-                    $this->redirect(
-                        '/' . NAMED_APPLICATION . '/' . $language .
-                        '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
-                        307
-                    );
-                } else {
-                    // set the working language, this is not the interface language
-                    Language::setWorkingLanguage($language);
-
-                    $this->setLocale();
-                    $this->setModule($module);
-                    $this->setAction($action);
-                }
             }
+            // the user doesn't have access, redirect to error page
+            $this->redirect(
+                '/' . NAMED_APPLICATION . '/' . $language .
+                '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                307
+            );
+        } elseif (!Authentication::isAllowedAction($action, $module)) {
+            // the user hasn't access, redirect to error page
+            $this->redirect(
+                '/' . NAMED_APPLICATION . '/' . $language .
+                '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                307
+            );
+        } else {
+            // set the working language, this is not the interface language
+            Language::setWorkingLanguage($language);
+
+            $this->setLocale();
+            $this->setModule($module);
+            $this->setAction($action);
         }
     }
 
