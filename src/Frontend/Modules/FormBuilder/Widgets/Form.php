@@ -531,9 +531,7 @@ class Form extends FrontendBaseWidget
                             $field['settings']['reply_to'] === true
                         ) {
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            if (\SpoonFilter::isEmail($email)) {
-                                $message->setReplyTo(array($email => $email));
-                            }
+                            $message->setReplyTo(array($email => $email));
                         }
                     }
                     if ($message->getReplyTo() === null) {
