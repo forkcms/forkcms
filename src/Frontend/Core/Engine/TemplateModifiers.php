@@ -75,15 +75,17 @@ class TemplateModifiers
      */
     public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
     {
+        $decimals = ($decimals === null) ? 2 : (int) $decimals;
+
         // @later get settings from backend
         switch ($currency) {
             case 'EUR':
-                $decimals = ($decimals === null) ? 2 : (int) $decimals;
-
-                // format as Euro
-                return '€ ' . number_format((float) $var, $decimals, ',', ' ');
+                $currency = '€';
                 break;
+            default:
         }
+
+        return $currency . ' ' . number_format((float) $var, $decimals, ',', ' ');
     }
 
     /**
