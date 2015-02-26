@@ -265,6 +265,14 @@ jsBackend.formBuilder.fields =
 									$('#datetimeDialog').find('.defaultValue').show();
 								}
 							});
+
+							$('#datetimeValueType').change(function() {
+								if($(this).val() === 'today') {
+									$('#datetimeValueAmount').prop('disabled', true).val('');
+								} else {
+									$('#datetimeValueAmount').prop('disabled', false);
+								}
+							});
 						}
 
 						// focus on first input element
