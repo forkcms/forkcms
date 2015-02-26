@@ -75,7 +75,7 @@ class Model
         }
 
         // get all default groups
-        $defaults = self::getDefaultGroups();
+        $defaults = static::getDefaultGroups();
 
         // if the total amount of working languages do not add up to
         // the total amount of default groups not all default groups were set.
@@ -417,10 +417,10 @@ class Model
         $path = BACKEND_CACHE_PATH . '/Mailmotor/' . $filename;
 
         // fetch the addresses by group
-        $records = self::getAddressesByGroupID(array($id));
+        $records = static::getAddressesByGroupID(array($id));
 
         // fetch the group fields
-        $groupFields = array_flip(self::getCustomFields($id));
+        $groupFields = array_flip(static::getCustomFields($id));
 
         // group custom fields found
         if (!empty($groupFields)) {
@@ -442,7 +442,7 @@ class Model
                 );
 
                 // fetch custom fields for this e-mail
-                $customFields = self::getCustomFieldsByAddress($record['email']);
+                $customFields = static::getCustomFieldsByAddress($record['email']);
                 $customFields = !empty($customFields[$id]) ? $customFields[$id] : $groupFields;
 
                 // loop custom fields
@@ -554,7 +554,7 @@ class Model
 
         // fetch all mailings in this campaign
         $mailings = BackendModel::getContainer()->get('database')->getRecords(
-            self::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN,
+            static::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN,
             array('sent', $id)
         );
 
@@ -625,13 +625,13 @@ class Model
         }
 
         // fetch groups for this address
-        $record['groups'] = (array) self::getGroupIDsByEmail($email);
+        $record['groups'] = (array) static::getGroupIDsByEmail($email);
         $record['custom_fields'] = array();
 
         // user is subscribed to groups
         if (!empty($record['groups'])) {
             // reserve custom fields array
-            $record['custom_fields'] = self::getCustomFieldsByAddress($email);
+            $record['custom_fields'] = static::getCustomFieldsByAddress($email);
         }
 
         return $record;
@@ -805,7 +805,7 @@ class Model
     public static function getCustomFields($groupId)
     {
         // get the group record
-        $group = self::getGroup($groupId);
+        $group = static::getGroup($groupId);
 
         // return the custom fields for this group
         return (array) $group['custom_fields'];
@@ -825,7 +825,7 @@ class Model
         }
 
         // fetch all group IDs
-        $groupIds = self::getGroupIDs();
+        $groupIds = static::getGroupIDs();
 
         // no groups found = stop here
         if (empty($groupIds)) {
@@ -1188,8 +1188,8 @@ class Model
         }
 
         // get groups for this mailing ID
-        $record['groups'] = self::getGroupIDsByMailingID($id);
-        $record['recipients'] = self::getAddressesByGroupID($record['groups']);
+        $record['groups'] = static::getGroupIDsByMailingID($id);
+        $record['recipients'] = static::getAddressesByGroupID($record['groups']);
 
         // fetch CM id for this mailing
         $record['cm_id'] = BackendMailmotorCMHelper::getCampaignMonitorID('campaign', $record['id']);
@@ -1323,7 +1323,7 @@ class Model
      */
     public static function getSentMailings($limit = null)
     {
-        $query = self::QRY_DATAGRID_BROWSE_SENT . ' ORDER BY send_on DESC';
+        $query = static::QRY_DATAGRID_BROWSE_SENT . ' ORDER BY send_on DESC';
         $parameters = array('sent');
 
         if (!empty($limit)) {
@@ -1654,7 +1654,7 @@ class Model
      */
     public static function isSubscribed($email, $groupId = null)
     {
-        $groupId = (int) (empty($groupId) ? self::getDefaultGroupID() : $groupId);
+        $groupId = (int) (empty($groupId) ? static::getDefaultGroupID() : $groupId);
 
         return (bool) BackendModel::getContainer()->get('database')->getVar(
             'SELECT 1
@@ -1882,7 +1882,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // fetch all mailings that aren't sent
-        $records = $db->getRecords(self::QRY_DATAGRID_BROWSE_SENT, array('queued'));
+        $records = $db->getRecords(static::QRY_DATAGRID_BROWSE_SENT, array('queued'));
 
         // no records found, so stop here
         if (empty($records)) {

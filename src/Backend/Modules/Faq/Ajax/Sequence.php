@@ -47,6 +47,6 @@ class Sequence extends BackendBaseAJAXAction
         }
 
         // success output
-        $this->output(self::OK, null, 'sequence updated');
+        $this->output(static::OK, null, 'sequence updated');
     }
 }

@@ -103,7 +103,7 @@ class Statistics extends BackendBaseWidget
     private function loadSubscriptions()
     {
         // get results
-        $results = BackendMailmotorModel::getRecentSubscriptions(self::PAGING_LIMIT);
+        $results = BackendMailmotorModel::getRecentSubscriptions(static::PAGING_LIMIT);
 
         // there are some results
         if (!empty($results)) {
@@ -141,7 +141,7 @@ class Statistics extends BackendBaseWidget
     private function loadUnsubscriptions()
     {
         // get results
-        $results = BackendMailmotorModel::getRecentUnsubscriptions(self::PAGING_LIMIT);
+        $results = BackendMailmotorModel::getRecentUnsubscriptions(static::PAGING_LIMIT);
 
         // there are some results
         if (!empty($results)) {

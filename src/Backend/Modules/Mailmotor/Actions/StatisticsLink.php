@@ -127,7 +127,7 @@ class StatisticsLink extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('email'), 'email');
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
     }
 
     /**

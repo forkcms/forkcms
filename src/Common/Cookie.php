@@ -87,7 +87,7 @@ class Cookie extends \SpoonCookie
      */
     public static function hasAllowedCookies()
     {
-        return (self::exists('cookie_bar_agree') && self::get('cookie_bar_agree'));
+        return (static::exists('cookie_bar_agree') && static::get('cookie_bar_agree'));
     }
 
     /**
@@ -97,6 +97,6 @@ class Cookie extends \SpoonCookie
      */
     public static function hasHiddenCookieBar()
     {
-        return (self::exists('cookie_bar_hide') && self::get('cookie_bar_hide'));
+        return (static::exists('cookie_bar_hide') && static::get('cookie_bar_hide'));
     }
 }

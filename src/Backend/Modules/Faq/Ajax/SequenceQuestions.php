@@ -29,7 +29,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
 
         // invalid question id
         if (!BackendFaqModel::exists($questionId)) {
-            $this->output(self::BAD_REQUEST, null, 'question does not exist');
+            $this->output(static::BAD_REQUEST, null, 'question does not exist');
         } else {
             // list ids
             $fromCategorySequence = (array) explode(',', ltrim($fromCategorySequence, ','));
@@ -67,7 +67,7 @@ class SequenceQuestions extends BackendBaseAJAXAction
             }
 
             // success output
-            $this->output(self::OK, null, 'sequence updated');
+            $this->output(static::OK, null, 'sequence updated');
         }
     }
 }

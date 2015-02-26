@@ -103,7 +103,7 @@ class StatisticsBounces extends BackendBaseActionIndex
         $this->dataGrid->setSortingColumns(array('email', 'bounce_type'), 'email');
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
     }
 
     /**

@@ -33,7 +33,7 @@ class UpdateMarker extends BackendBaseAJAXAction
         $lng = \SpoonFilter::getPostValue('lng', null, null, 'float');
 
         // validate id
-        if ($itemId == 0) $this->output(self::BAD_REQUEST, null, BL::err('NonExisting'));
+        if ($itemId == 0) $this->output(static::BAD_REQUEST, null, BL::err('NonExisting'));
 
         // validated
         else {
@@ -48,7 +48,7 @@ class UpdateMarker extends BackendBaseAJAXAction
             BackendLocationModel::update($updateData);
 
             // output
-            $this->output(self::OK);
+            $this->output(static::OK);
         }
     }
 }

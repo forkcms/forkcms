@@ -34,7 +34,7 @@ class CheckStatus extends BackendBaseAJAXAction
 
         // validate
         if ($page == '' || $identifier == '') {
-            $this->output(self::BAD_REQUEST, null, 'No page provided.');
+            $this->output(static::BAD_REQUEST, null, 'No page provided.');
         } else {
             // validated
             $filename = BACKEND_CACHE_PATH . '/Analytics/' . $page . '_' . $identifier . '.txt';
@@ -51,7 +51,7 @@ class CheckStatus extends BackendBaseAJAXAction
                 $fs->dumpFile($filename, 'missing1');
 
                 // return status
-                $this->output(self::OK, array('status' => false), 'Temporary file was missing. We created one.');
+                $this->output(static::OK, array('status' => false), 'Temporary file was missing. We created one.');
             } elseif (strpos($status, 'busy') !== false) {
                 // busy status: get counter
                 $counter = (int) substr($status, 4) + 1;
@@ -63,7 +63,7 @@ class CheckStatus extends BackendBaseAJAXAction
 
                     // return status
                     $this->output(
-                        self::ERROR,
+                        static::ERROR,
                         array('status' => 'timeout'),
                         'Error while retrieving data - the script took too long to retrieve data.'
                     );
@@ -75,7 +75,7 @@ class CheckStatus extends BackendBaseAJAXAction
 
                 // return status
                 $this->output(
-                    self::OK,
+                    static::OK,
                     array('status' => 'busy', 'temp' => $status),
                     'Data is being retrieved. (' . $counter . ')'
                 );
@@ -95,7 +95,7 @@ class CheckStatus extends BackendBaseAJAXAction
                 BackendAnalyticsModel::removeCacheFiles();
                 BackendAnalyticsModel::clearTables();
 
-                $this->output(self::OK, array('status' => 'unauthorized'), 'No longer authorized.');
+                $this->output(static::OK, array('status' => 'unauthorized'), 'No longer authorized.');
             } elseif ($status == 'done') {
                 // done status: remove file
                 if (is_file($filename)) {
@@ -103,7 +103,7 @@ class CheckStatus extends BackendBaseAJAXAction
                 }
 
                 // return status
-                $this->output(self::OK, array('status' => 'done'), 'Data retrieved.');
+                $this->output(static::OK, array('status' => 'done'), 'Data retrieved.');
             } elseif (strpos($status, 'missing') !== false) {
                 // missing status: get counter
                 $counter = (int) substr($status, 7) + 1;
@@ -114,7 +114,7 @@ class CheckStatus extends BackendBaseAJAXAction
                         $fs->remove($filename);
                     }
                     $this->output(
-                        self::ERROR,
+                        static::ERROR,
                         array('status' => 'missing'),
                         'Error while retrieving data - file was never created.'
                     );
@@ -125,7 +125,7 @@ class CheckStatus extends BackendBaseAJAXAction
 
                 // return status
                 $this->output(
-                    self::OK,
+                    static::OK,
                     array('status' => 'busy'),
                     'Temporary file was still in status missing. (' . $counter . ')'
                 );
@@ -135,7 +135,7 @@ class CheckStatus extends BackendBaseAJAXAction
                     $fs->remove($filename);
                 }
                 $this->output(
-                    self::ERROR,
+                    static::ERROR,
                     array('status' => 'error', 'a' => ($status == 'done')),
                     'Error while retrieving data.'
                 );

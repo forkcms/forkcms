@@ -133,7 +133,7 @@ class Statistics extends BackendBaseActionIndex
         $this->dataGrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('StatisticsLink')) {

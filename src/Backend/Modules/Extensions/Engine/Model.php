@@ -60,7 +60,7 @@ class Model
     public static function buildTemplateHTML($format, $large = false)
     {
         // cleanup
-        $table = self::templateSyntaxToArray($format);
+        $table = static::templateSyntaxToArray($format);
 
         // add start html
         $html = '<table cellspacing="10">' . "\n";
@@ -180,8 +180,8 @@ class Model
     public static function checkSettings()
     {
         $warnings = array();
-        $akismetModules = self::getModulesThatRequireAkismet();
-        $googleMapsModules = self::getModulesThatRequireGoogleMaps();
+        $akismetModules = static::getModulesThatRequireAkismet();
+        $googleMapsModules = static::getModulesThatRequireGoogleMaps();
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Index', 'Settings')) {
@@ -211,7 +211,7 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Modules', 'Extensions')) {
             // check if there are cronjobs that are not yet set
-            $modules = self::getModules();
+            $modules = static::getModules();
             foreach ($modules as $module) {
                 if (isset($module['cronjobs_active']) && !$module['cronjobs_active']) {
                     // add warning
@@ -261,7 +261,7 @@ class Model
     public static function deleteTemplate($id)
     {
         $id = (int) $id;
-        $templates = self::getTemplates();
+        $templates = static::getTemplates();
 
         // we can't delete a template that doesn't exist
         if (!isset($templates[$id])) {
@@ -277,7 +277,7 @@ class Model
         if ($id == BackendModel::getModuleSetting('Pages', 'default_template')) {
             return false;
         }
-        if (self::isTemplateInUse($id)) {
+        if (static::isTemplateInUse($id)) {
             return false;
         }
 
@@ -464,7 +464,7 @@ class Model
         if (is_file($pathInfoXml)) {
             try {
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
-                $information['data'] = self::processModuleXml($infoXml);
+                $information['data'] = static::processModuleXml($infoXml);
                 if (empty($information['data'])) {
                     $information['warnings'][] = array(
                         'message' => BL::getMessage('InformationFileIsEmpty')
@@ -515,7 +515,7 @@ class Model
 
         // get more information for each module
         foreach ($modules as $moduleName) {
-            if (in_array($moduleName, self::$ignoredModules)) {
+            if (in_array($moduleName, static::$ignoredModules)) {
                 continue;
             }
 
@@ -539,7 +539,7 @@ class Model
                     true
                 );
 
-                $info = self::processModuleXml($infoXml);
+                $info = static::processModuleXml($infoXml);
 
                 // set fields if they were found in the XML
                 if (isset($info['description'])) {
@@ -642,7 +642,7 @@ class Model
             'id'
         );
 
-        $extras = (array) self::getExtras();
+        $extras = (array) static::getExtras();
         $half = (int) ceil(count($templates) / 2);
         $i = 0;
 
@@ -672,8 +672,8 @@ class Model
                 throw new Exception('Invalid template-format.');
             }
 
-            $row['html'] = self::buildTemplateHTML($row['data']['format']);
-            $row['htmlLarge'] = self::buildTemplateHTML($row['data']['format'], true);
+            $row['html'] = static::buildTemplateHTML($row['data']['format']);
+            $row['htmlLarge'] = static::buildTemplateHTML($row['data']['format'], true);
             $row['json'] = json_encode($row);
             if ($i == $half) {
                 $row['break'] = true;
@@ -696,7 +696,7 @@ class Model
             'value' => 'Core',
             'label' => BL::lbl('NoTheme'),
             'thumbnail' => '/src/Frontend/Core/Layout/images/thumbnail.png',
-            'installed' => self::isThemeInstalled('Core'),
+            'installed' => static::isThemeInstalled('Core'),
             'installable' => false,
         );
 
@@ -705,7 +705,7 @@ class Model
             try {
                 $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
-                $information = self::processThemeXml($infoXml);
+                $information = static::processThemeXml($infoXml);
                 if (!$information) {
                     throw new Exception('Invalid info.xml');
                 }
@@ -717,7 +717,7 @@ class Model
             $item['value'] = $directory->getBasename();
             $item['label'] = $directory->getBasename();
             $item['thumbnail'] = '/src/Frontend/Themes/' . $item['value'] . '/' . $information['thumbnail'];
-            $item['installed'] = self::isThemeInstalled($item['value']);
+            $item['installed'] = static::isThemeInstalled($item['value']);
             $item['installable'] = isset($information['templates']);
 
             $records[$item['value']] = $item;
@@ -743,10 +743,10 @@ class Model
 
         $db = BackendModel::getContainer()->get('database');
 
-        $records = $db->getRecords(self::QRY_BROWSE_TEMPLATES, array($theme));
+        $records = $db->getRecords(static::QRY_BROWSE_TEMPLATES, array($theme));
 
         foreach ($records as $row) {
-            $template = self::getTemplate($row['id']);
+            $template = static::getTemplate($row['id']);
             $data = unserialize($template['data']);
 
             $templateElement = $xml->createElement('template');
@@ -779,7 +779,7 @@ class Model
      */
     public static function hasModuleWarnings($module)
     {
-        $moduleInformation = self::getModuleInformation($module);
+        $moduleInformation = static::getModuleInformation($module);
 
         return (empty($moduleInformation['warnings'])) ? 'N' : 'Y';
     }
@@ -817,7 +817,7 @@ class Model
         $installer->install();
 
         // clear the cache so locale (and so much more) gets rebuilt
-        self::clearCache();
+        static::clearCache();
     }
 
     /**
@@ -830,7 +830,7 @@ class Model
         $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
-        $information = self::processThemeXml($infoXml);
+        $information = static::processThemeXml($infoXml);
         if (!$information) {
             throw new Exception('Invalid info.xml');
         }
@@ -873,7 +873,7 @@ class Model
             }
 
             $item['data'] = serialize($item['data']);
-            $item['id'] = self::insertTemplate($item);
+            $item['id'] = static::insertTemplate($item);
         }
     }
 
@@ -1088,7 +1088,7 @@ class Model
             $information['templates'][] = $template;
         }
 
-        return self::validateThemeInformation($information);
+        return static::validateThemeInformation($information);
     }
 
     /**

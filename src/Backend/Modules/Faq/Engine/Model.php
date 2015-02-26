@@ -47,7 +47,7 @@ class Model
      */
     public static function delete($id)
     {
-        $question = self::get($id);
+        $question = static::get($id);
 
         /** @var $db \SpoonDatabase */
         $db = BackendModel::getContainer()->get('database');
@@ -65,7 +65,7 @@ class Model
     public static function deleteCategory($id)
     {
         $db = BackendModel::getContainer()->get('database');
-        $item = self::getCategory($id);
+        $item = static::getCategory($id);
 
         if (!empty($item)) {
             $db->delete('meta', 'id = ?', array($item['meta_id']));
@@ -87,7 +87,7 @@ class Model
     {
         if (
             !BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true) &&
-            self::getCategoryCount() == 1
+            static::getCategoryCount() == 1
         ) {
             return false;
         } else {
@@ -357,7 +357,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url);
+                return static::getURL($url);
             }
         } else {
             // current category should be excluded
@@ -372,7 +372,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURL($url, $id);
+                return static::getURL($url, $id);
             }
         }
 
@@ -404,7 +404,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url);
+                return static::getURLForCategory($url);
             }
         } else {
             // current category should be excluded
@@ -419,7 +419,7 @@ class Model
             ) {
                 $url = BackendModel::addNumber($url);
 
-                return self::getURLForCategory($url, $id);
+                return static::getURLForCategory($url, $id);
             }
         }
 

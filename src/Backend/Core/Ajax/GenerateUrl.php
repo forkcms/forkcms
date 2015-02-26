@@ -59,6 +59,6 @@ class GenerateUrl extends BackendBaseAJAXAction
         $URL = urldecode($this->meta->generateURL($URL));
 
         // output
-        $this->output(self::OK, $URL);
+        $this->output(static::OK, $URL);
     }
 }

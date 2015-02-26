@@ -188,7 +188,7 @@ class Index extends BackendBaseActionIndex
         $this->dgQueuedMailings->setColumnAttributes('name', array('class' => 'title'));
 
         // set paging limit
-        $this->dgQueuedMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
+        $this->dgQueuedMailings->setPagingLimit(static::SENT_MAILINGS_PAGING_LIMIT);
     }
 
     /**
@@ -301,7 +301,7 @@ class Index extends BackendBaseActionIndex
         $this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
 
         // set paging limit
-        $this->dgSentMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
+        $this->dgSentMailings->setPagingLimit(static::SENT_MAILINGS_PAGING_LIMIT);
     }
 
     /**
@@ -381,7 +381,7 @@ class Index extends BackendBaseActionIndex
         $this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
 
         // set paging limit
-        $this->dgUnsentMailings->setPagingLimit(self::UNSENT_MAILINGS_PAGING_LIMIT);
+        $this->dgUnsentMailings->setPagingLimit(static::UNSENT_MAILINGS_PAGING_LIMIT);
     }
 
     /**

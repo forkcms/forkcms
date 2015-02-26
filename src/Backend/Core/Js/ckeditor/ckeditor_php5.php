@@ -460,7 +460,7 @@ class CKEditor
 		$out .= "<script type=\"text/javascript\" src=\"" . $ckeditorPath . 'ckeditor.js' . $args . "\"></script>\n";
 
 		$extraCode = "";
-		if ($this->timestamp != self::timestamp) {
+		if ($this->timestamp != static::timestamp) {
 			$extraCode .= ($extraCode ? "\n" : "") . "CKEDITOR.timestamp = '". $this->timestamp ."';";
 		}
 		if ($extraCode) {

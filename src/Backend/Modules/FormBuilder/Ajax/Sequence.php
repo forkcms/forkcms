@@ -32,7 +32,7 @@ class Sequence extends BackendBaseAJAXAction
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
-            $this->output(self::BAD_REQUEST, null, 'form does not exist');
+            $this->output(static::BAD_REQUEST, null, 'form does not exist');
         } else {
             // list id
             $ids = (array) explode('|', rtrim($newIdSequence, '|'));
@@ -50,7 +50,7 @@ class Sequence extends BackendBaseAJAXAction
                 }
             }
 
-            $this->output(self::OK, null, 'sequence updated');
+            $this->output(static::OK, null, 'sequence updated');
         }
     }
 }

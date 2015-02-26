@@ -35,15 +35,15 @@ class Edit extends BackendBaseAJAXAction
 
         // validate id
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
+            $this->output(static::BAD_REQUEST, null, 'no id provided');
         } else {
             // validate tag name
             if ($tag === '') {
-                $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
+                $this->output(static::BAD_REQUEST, null, BL::err('NameIsRequired'));
             } else {
                 // check if tag exists
                 if (BackendTagsModel::existsTag($tag)) {
-                    $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
+                    $this->output(static::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
                     $item['id'] = $id;
                     $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
@@ -53,7 +53,7 @@ class Edit extends BackendBaseAJAXAction
                     );
 
                     BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+                    $this->output(static::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
                 }
             }
         }

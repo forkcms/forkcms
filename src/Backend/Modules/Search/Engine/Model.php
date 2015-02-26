@@ -44,7 +44,7 @@ class Model
         BackendModel::getContainer()->get('database')->delete('search_synonyms', 'id = ?', array((int) $id));
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
     }
 
     /**
@@ -141,7 +141,7 @@ class Model
         );
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
     }
 
     /**
@@ -156,7 +156,7 @@ class Model
         $id = BackendModel::getContainer()->get('database')->insert('search_synonyms', $item);
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
 
         // return insert id
         return $id;
@@ -206,7 +206,7 @@ class Model
         );
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
     }
 
     /**
@@ -252,7 +252,7 @@ class Model
         }
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
     }
 
     /**
@@ -266,6 +266,6 @@ class Model
         BackendModel::getContainer()->get('database')->update('search_synonyms', $item, 'id = ?', array($item['id']));
 
         // invalidate the cache for search
-        self::invalidateCache();
+        static::invalidateCache();
     }
 }

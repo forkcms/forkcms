@@ -70,7 +70,7 @@ class Model
             $newBlock = array();
 
             // build new block
-            $newBlock['id'] = self::getMaximumId() + $i;
+            $newBlock['id'] = static::getMaximumId() + $i;
             $newBlock['language'] = $to;
             $newBlock['created_on'] = BackendModel::getUTCDate();
             $newBlock['edited_on'] = BackendModel::getUTCDate();
@@ -82,7 +82,7 @@ class Model
             $newBlock['hidden'] = $contentBlock['hidden'];
 
             // inset content block
-            $newId = self::insert($newBlock);
+            $newId = static::insert($newBlock);
 
             // save ids for later
             $oldIds[] = $oldId;
@@ -124,7 +124,7 @@ class Model
         $id = (int) $id;
 
         // get item
-        $item = self::get($id);
+        $item = static::get($id);
 
         // delete extra and pages_blocks
         BackendModel::deleteExtraById($item['extra_id']);

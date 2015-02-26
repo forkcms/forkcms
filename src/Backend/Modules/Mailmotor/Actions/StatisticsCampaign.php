@@ -124,7 +124,7 @@ class StatisticsCampaign extends BackendBaseActionIndex
         );
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Statistics')) {

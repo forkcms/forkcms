@@ -39,7 +39,7 @@ class Model
     public static function addActionPermissions($actionPermissions)
     {
         foreach ((array) $actionPermissions as $permission) {
-            if (!self::existsActionPermission($permission)) {
+            if (!static::existsActionPermission($permission)) {
                 BackendModel::getContainer()->get('database')->insert('groups_rights_actions', $permission);
             }
         }
@@ -53,7 +53,7 @@ class Model
     public static function addModulePermissions($modulePermissions)
     {
         foreach ((array) $modulePermissions as $permission) {
-            if (!self::existsModulePermission($permission)) {
+            if (!static::existsModulePermission($permission)) {
                 BackendModel::getContainer()->get('database')->insert('groups_rights_modules', $permission);
             }
         }
@@ -93,7 +93,7 @@ class Model
     public static function deleteActionPermissions($actionPermissions)
     {
         foreach ((array) $actionPermissions as $permission) {
-            if (self::existsActionPermission($permission)) {
+            if (static::existsActionPermission($permission)) {
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_actions',
                     'group_id = ? AND module = ? AND action = ?',
@@ -111,7 +111,7 @@ class Model
     public static function deleteModulePermissions($modulePermissions)
     {
         foreach ((array) $modulePermissions as $permission) {
-            if (self::existsModulePermission($permission)) {
+            if (static::existsModulePermission($permission)) {
                 BackendModel::getContainer()->get('database')->delete(
                     'groups_rights_modules',
                     'group_id = ? AND module = ?',
@@ -333,7 +333,7 @@ class Model
         $setting['group_id'] = $id;
 
         // insert setting
-        self::insertSetting($setting);
+        static::insertSetting($setting);
 
         // return the id
         return $id;
@@ -351,7 +351,7 @@ class Model
         $groups = (array) $groups;
 
         // delete all previous user groups
-        self::deleteMultipleGroups($userId);
+        static::deleteMultipleGroups($userId);
 
         // loop through groups
         foreach ($groups as $group) {
@@ -387,7 +387,7 @@ class Model
         BackendModel::getContainer()->get('database')->update('groups', array('name' => $group['name']), 'id = ?', array($group['id']));
 
         // update setting
-        self::updateSetting($setting);
+        static::updateSetting($setting);
     }
 
     /**

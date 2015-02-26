@@ -70,6 +70,6 @@ class SaveLiveLocation extends BackendBaseAJAXAction
         BackendLocationModel::update($item);
 
         // output
-        $this->output(self::OK, null, BL::msg('Success'));
+        $this->output(static::OK, null, BL::msg('Success'));
     }
 }

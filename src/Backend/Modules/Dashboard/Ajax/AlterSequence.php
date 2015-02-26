@@ -32,14 +32,14 @@ class AlterSequence extends BackendBaseAjaxAction
 
         // validate
         if ($newSequence == '') {
-            $this->output(self::BAD_REQUEST, null, 'no new_sequence provided');
+            $this->output(static::BAD_REQUEST, null, 'no new_sequence provided');
         } else {
             // convert into array
             $json = @json_decode($newSequence, true);
 
             // validate
             if ($json === false) {
-                $this->output(self::BAD_REQUEST, null, 'invalid new_sequence provided');
+                $this->output(static::BAD_REQUEST, null, 'invalid new_sequence provided');
             } else {
                 // initialize
                 $userSequence = array();
@@ -86,7 +86,7 @@ class AlterSequence extends BackendBaseAjaxAction
                 BackendAuthentication::getUser()->setSetting('dashboard_sequence', $userSequence);
 
                 // output
-                $this->output(self::OK, $data, BL::msg('Saved'));
+                $this->output(static::OK, $data, BL::msg('Saved'));
             }
         }
     }

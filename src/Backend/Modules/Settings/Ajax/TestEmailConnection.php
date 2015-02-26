@@ -50,7 +50,7 @@ class TestEmailConnection extends BackendBaseAJAXAction
         // got errors?
         if (!empty($errors)) {
             $this->output(
-                self::BAD_REQUEST,
+                static::BAD_REQUEST,
                 array('errors' => $errors),
                 'invalid fields'
             );
@@ -75,12 +75,12 @@ class TestEmailConnection extends BackendBaseAJAXAction
 
             try {
                 if ($mailer->send($message)) {
-                    $this->output(self::OK, null, '');
+                    $this->output(static::OK, null, '');
                 } else {
-                    $this->output(self::ERROR, null, 'unknown');
+                    $this->output(static::ERROR, null, 'unknown');
                 }
             } catch (\Exception $e) {
-                $this->output(self::ERROR, null, $e->getMessage());
+                $this->output(static::ERROR, null, $e->getMessage());
             }
         }
     }

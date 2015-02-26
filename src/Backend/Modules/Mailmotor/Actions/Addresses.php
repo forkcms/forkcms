@@ -204,7 +204,7 @@ class Addresses extends BackendBaseActionIndex
         $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
     }
 
     /**

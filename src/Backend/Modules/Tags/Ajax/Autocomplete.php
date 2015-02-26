@@ -33,13 +33,13 @@ class Autocomplete extends BackendBaseAJAXAction
 
         // validate
         if ($term == '') {
-            $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
+            $this->output(static::BAD_REQUEST, null, 'term-parameter is missing.');
         } else {
             // get tags
             $tags = BackendTagsModel::getStartsWith($term);
 
             // output
-            $this->output(self::OK, $tags);
+            $this->output(static::OK, $tags);
         }
     }
 }

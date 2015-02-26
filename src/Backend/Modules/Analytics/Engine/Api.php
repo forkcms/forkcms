@@ -49,7 +49,7 @@ class Api
     public static function keywordsGetData()
     {
         // authorize
-        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && static::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentKeywords();
 
             $return = array('data' => null);
@@ -74,7 +74,7 @@ class Api
     public static function referrersGetData()
     {
         // authorize
-        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && static::checkSettings()) {
             $data = BackendAnalyticsModel::getRecentReferrers();
 
             $return = array('data' => null);
@@ -100,7 +100,7 @@ class Api
     public static function visitorsGetData()
     {
         // authorize
-        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && self::checkSettings()) {
+        if (BaseAPI::isAuthorized() && BaseAPI::isValidRequestMethod('GET') && static::checkSettings()) {
             $startTimestamp = strtotime('-1 week -1 days', mktime(0, 0, 0));
             $endTimestamp = mktime(0, 0, 0);
 

@@ -32,13 +32,13 @@ class GetInfo extends BackendBaseAJAXAction
 
         // validate
         if ($id === 0) {
-            $this->output(self::BAD_REQUEST, null, 'no id provided');
+            $this->output(static::BAD_REQUEST, null, 'no id provided');
         } else {
             // get page
             $page = BackendPagesModel::get($id);
 
             // output
-            $this->output(self::OK, $page);
+            $this->output(static::OK, $page);
         }
     }
 }

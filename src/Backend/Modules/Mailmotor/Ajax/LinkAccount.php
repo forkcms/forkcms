@@ -56,7 +56,7 @@ class LinkAccount extends BackendBaseAJAXAction
 
         // got errors
         if (!empty($errors)) {
-            $this->output(self::OK, array('errors' => $errors), 'form contains errors');
+            $this->output(static::OK, array('errors' => $errors), 'form contains errors');
         } else {
             try {
                 // check if the CampaignMonitor class exists
@@ -85,7 +85,7 @@ class LinkAccount extends BackendBaseAJAXAction
 
                 // CM was successfully initialized
                 $this->output(
-                    self::OK,
+                    static::OK,
                     array('message' => 'account-linked'),
                     BL::msg('AccountLinked', $this->getModule())
                 );
@@ -93,7 +93,7 @@ class LinkAccount extends BackendBaseAJAXAction
                 // timeout occurred
                 if ($e->getMessage() == 'Error Fetching http headers') {
                     $this->output(
-                        self::BAD_REQUEST,
+                        static::BAD_REQUEST,
                         null,
                         BL::err('CmTimeout', $this->getModule())
                     );
@@ -101,7 +101,7 @@ class LinkAccount extends BackendBaseAJAXAction
 
                 // other error
                 $this->output(
-                    self::ERROR,
+                    static::ERROR,
                     array('field' => 'url'),
                     sprintf(BL::err('CampaignMonitorError', $this->getModule()), $e->getMessage())
                 );
