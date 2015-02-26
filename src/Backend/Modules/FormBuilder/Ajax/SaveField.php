@@ -13,6 +13,7 @@ use Backend\Core\Engine\Base\AjaxAction as BackendBaseAJAXAction;
 use Backend\Core\Engine\Language as BL;
 use Backend\Modules\FormBuilder\Engine\Helper as FormBuilderHelper;
 use Backend\Modules\FormBuilder\Engine\Model as BackendFormBuilderModel;
+use Common\Uri as CommonUri;
 
 /**
  * Save a field via ajax.
@@ -39,6 +40,10 @@ class SaveField extends BackendBaseAJAXAction
         );
         $label = trim(\SpoonFilter::getPostValue('label', null, '', 'string'));
         $values = trim(\SpoonFilter::getPostValue('values', null, '', 'string'));
+
+        // this is somewhat a nasty hack, but it makes special chars work.
+        $values = \SpoonFilter::htmlspecialcharsDecode($values);
+
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
         $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
@@ -171,8 +176,18 @@ class SaveField extends BackendBaseAJAXAction
                         }
 
                         // split
-                        if ($type == 'dropdown' || $type == 'radiobutton' || $type == 'checkbox') {
+                        if ($type == 'dropdown' || $type == 'checkbox') {
                             $values = (array) explode('|', $values);
+                        } elseif ($type == 'radiobutton') {
+                            $postedValues = (array) explode('|', $values);
+                            $values = array();
+
+                            foreach ($postedValues as $postedValue) {
+                                $values[] = array(
+                                    'value' => CommonUri::getUrl($postedValue),
+                                    'label' => $postedValue
+                                );
+                            }
                         }
 
                         /**
@@ -183,7 +198,7 @@ class SaveField extends BackendBaseAJAXAction
                         if ($label != '') {
                             $settings['label'] = \SpoonFilter::htmlspecialchars($label);
                         }
-                        if ($values != '') {
+                        if (isset($values)) {
                             $settings['values'] = $values;
                         }
                         if ($defaultValues != '') {

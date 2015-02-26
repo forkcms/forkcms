@@ -184,16 +184,8 @@ class Form extends FrontendBaseWidget
                     // get content
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
-                    // reset
-                    $newValues = array();
-
-                    // rebuild values
-                    foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
-                    }
-
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $newValues, $defaultValues);
+                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues);
 
                     // get content
                     $item['html'] = $rbt->parse();
@@ -465,6 +457,16 @@ class Form extends FrontendBaseWidget
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
+
+                    if ($field['type'] == 'radiobutton') {
+                        $values = array();
+
+                        foreach ($field['settings']['values'] as $value) {
+                            $values[$value['value']] = $value['label'];
+                        }
+
+                        $fieldData['value'] = $values[$fieldData['value']];
+                    }
 
                     // prepare fields for email
                     if ($this->item['method'] == 'database_email') {
