@@ -150,6 +150,14 @@ class Url extends Base\Object
             }
 
             try {
+                // when loading a backend url for a module that doesn't exist, without
+                // providing an action, a FatalErrorException occurs, because the config
+                // class we're trying to load doesn't exist. Let's just throw instead,
+                // and catch it immediately.
+                if (!class_exists($configClass)) {
+                    throw new Exception('The config class does not exist');
+                }
+
                 /** @var BackendBaseConfig $config */
                 $config = new $configClass($this->getKernel(), $module);
 
