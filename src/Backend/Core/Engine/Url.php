@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Common\Cookie as CommonCookie;
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class will handle the incoming URL.
@@ -76,7 +77,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return trim((string)$this->request->getRequestUri(), '/');
     }
 
     /**
@@ -100,7 +101,7 @@ class Url extends Base\Object
         }
 
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
-        $chunks = (array) explode('/', trim($processedQueryString, '/'));
+        $chunks = (array)explode('/', trim($processedQueryString, '/'));
 
         // check if this is a request for a AJAX-file
         $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');
@@ -193,8 +194,8 @@ class Url extends Base\Object
     /**
      * Process a regular request
      *
-     * @param string $module   The requested module.
-     * @param string $action   The requested action.
+     * @param string $module The requested module.
+     * @param string $action The requested action.
      * @param string $language The requested language.
      */
     private function processRegularRequest($module, $action, $language)
@@ -220,10 +221,25 @@ class Url extends Base\Object
                         // split up chunks
                         list($module, $action) = explode('/', $value['url']);
 
-                        // user allowed?
-                        if (Authentication::isAllowedModule($module)) {
-                            // redirect to the page
-                            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+                        if (array_key_exists('children', $value)) {
+
+                            foreach ($value['children'] as $subItem) {
+                                // split up chunks
+                                list($module, $action) = explode('/', $subItem['url']);
+                                // user allowed?
+
+                                if (Authentication::isAllowedModule($module)) {
+                                    $finder = new Finder();
+                                    $files = $finder->files()->name('*.php')->in(BACKEND_MODULES_PATH . '/' . \SpoonFilter::toCamelCase($module) . '/Actions');
+                                    foreach ($files as $file) {
+                                        $moduleAction = substr($file->getFilename(), 0, -4);
+                                        if (Authentication::isAllowedAction($moduleAction, $module)) {
+                                            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' .
+                                                $module . '/' . $moduleAction);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
