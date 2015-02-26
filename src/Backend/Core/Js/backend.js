@@ -1530,7 +1530,7 @@ jsBackend.forms =
 				emptyMessage: jsBackend.locale.msg('NoTags'),
 				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
 				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 				params: { fork: { module: 'Tags', action: 'Autocomplete' } }
 			});
 		}
@@ -1541,7 +1541,7 @@ jsBackend.forms =
 				emptyMessage: jsBackend.locale.msg('NoTags'),
 				errorMessage: jsBackend.locale.err('AddTagBeforeSubmitting'),
 				addLabel: utils.string.ucfirst(jsBackend.locale.lbl('Add')),
-				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('DeleteThisTag')),
+				removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 				params: { fork: { module: 'Tags', action: 'Autocomplete' } },
 				showIconOnly: false
 			});
