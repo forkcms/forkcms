@@ -969,7 +969,9 @@ jsBackend.controls =
                 message = jsBackend.locale.msg('ConfirmDefault');
             }
 
-            $confirmation = $('.jsConfirmation').clone();
+            // the first is necessary to prevent multiple popups showing after a previous modal is dismissed without
+            // refreshing the page
+            $confirmation = $('.jsConfirmation').clone().first();
 
             // bind
             if (href !== '') {
