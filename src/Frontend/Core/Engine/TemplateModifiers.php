@@ -515,7 +515,7 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length), ' '), SPOON_CHARSET);
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), SPOON_CHARSET);
             } else {
                 $var = mb_substr($var, 0, $length, SPOON_CHARSET);
             }
