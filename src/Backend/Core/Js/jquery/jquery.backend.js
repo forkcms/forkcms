@@ -991,7 +991,7 @@
 					for(var i in elements)
 					{
 						html += '	<li><span><strong>' + elements[i] + '</strong>' +
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + ' ' + elements[i] + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 

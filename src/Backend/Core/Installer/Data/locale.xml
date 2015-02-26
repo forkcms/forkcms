@@ -5101,22 +5101,6 @@
         <translation language="el"><![CDATA[διαγραφή]]></translation>
         <translation language="pl"><![CDATA[usuń]]></translation>
       </item>
-      <item type="label" name="DeleteThisTag">
-        <translation language="nl"><![CDATA[verwijder deze tag]]></translation>
-        <translation language="en"><![CDATA[delete this tag]]></translation>
-        <translation language="hu"><![CDATA[címke törlése]]></translation>
-        <translation language="it"><![CDATA[elimina questo tag]]></translation>
-        <translation language="ru"><![CDATA[Удалить Тэг]]></translation>
-        <translation language="zh"><![CDATA[删除这个标签]]></translation>
-        <translation language="de"><![CDATA[Schlagwort löschen]]></translation>
-        <translation language="fr"><![CDATA[effacer ce tag]]></translation>
-        <translation language="es"><![CDATA[eliminar esta etiqueta]]></translation>
-        <translation language="lt"><![CDATA[pašalinti žymę]]></translation>
-        <translation language="uk"><![CDATA[Видалити тег]]></translation>
-        <translation language="sv"><![CDATA[ta bort denna tagg]]></translation>
-        <translation language="el"><![CDATA[διαγραφή ετικέτας]]></translation>
-        <translation language="pl"><![CDATA[usuń ten tag]]></translation>
-      </item>
       <item type="label" name="Description">
         <translation language="nl"><![CDATA[beschrijving]]></translation>
         <translation language="en"><![CDATA[description]]></translation>
