@@ -9,8 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Common\Cookie as CommonCookie;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
