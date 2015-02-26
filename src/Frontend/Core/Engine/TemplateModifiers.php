@@ -457,7 +457,7 @@ class TemplateModifiers
      */
     public static function stripNewlines($var)
     {
-        return str_replace(array("\n", "\r"), '', $var);
+        return str_replace(array("\r\n", "\n", "\r"), ' ', $var);
     }
 
     /**

@@ -37,6 +37,24 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    function test_stripnewlines()
+    {
+        $this->assertEquals(
+            'Foo Bar',
+            TemplateModifiers::stripNewlines("Foo\nBar")
+        );
+
+        $this->assertEquals(
+            'Foo Bar',
+            TemplateModifiers::stripNewlines("Foo\rBar")
+        );
+
+        $this->assertEquals(
+            'Foo Bar',
+            TemplateModifiers::stripNewlines("Foo\r\nBar")
+        );
+    }
+
     function test_truncate()
     {
         $this->assertEquals(
