@@ -13,7 +13,8 @@ class IndexTest extends WebTestCase
         $this->loadFixtures($client);
         $this->markTestIncomplete(
             'Running this test makes the client anonymously logged in the backend.
-            This should be looked after and fixed'
+It\'s caused by the BACKEND_MODULE_PATH global being set to Dashboard.
+After refactoring away this global, this test could be ran again.'
         );
 
         $client->request('GET', '/private');
