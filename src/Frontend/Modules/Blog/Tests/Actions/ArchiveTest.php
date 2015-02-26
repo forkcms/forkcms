@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Blog\Tests\Action;
+namespace Frontend\Modules\Blog\Tests\Actions;
 
 use Common\WebTestCase;
 

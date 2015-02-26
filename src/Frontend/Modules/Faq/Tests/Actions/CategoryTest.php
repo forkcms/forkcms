@@ -1,6 +1,6 @@
 <?php
 
-namespace Frontend\Modules\Blog\Action;
+namespace Frontend\Modules\Faq\Actions;
 
 use Common\WebTestCase;
 
@@ -12,18 +12,18 @@ class CategoryTest extends WebTestCase
         $this->loadFixtures(
             $client,
             array(
-                'Backend\Modules\Blog\DataFixtures\LoadBlogCategories',
-                'Backend\Modules\Blog\DataFixtures\LoadBlogPosts',
+                'Backend\Modules\Faq\DataFixtures\LoadFaqCategories',
+                'Backend\Modules\Faq\DataFixtures\LoadFaqQuestions',
             )
         );
 
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
+        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringStartsWith(
-            'BlogCategory for tests',
+            'Faq for tests',
             $crawler->filter('title')->text()
         );
     }
@@ -32,17 +32,17 @@ class CategoryTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/non-existing');
+        $client->request('GET', '/en/faq/category/non-existing');
         $this->assertIs404($client);
     }
 
     public function testCategoryPageContainsBlogPost()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
+        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
 
-        $this->assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
-        $link = $crawler->selectLink('Blogpost for functional tests')->link();
+        $this->assertContains('Is this a working test?', $client->getResponse()->getContent());
+        $link = $crawler->selectLink('Is this a working test?')->link();
         $crawler = $client->click($link);
 
         $this->assertEquals(
@@ -50,11 +50,11 @@ class CategoryTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringEndsWith(
-            '/en/blog/detail/blogpost-for-functional-tests',
+            '/en/faq/detail/is-this-a-working-test',
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
-            'Blogpost for functional tests',
+            'Is this a working test?',
             $crawler->filter('title')->text()
         );
     }

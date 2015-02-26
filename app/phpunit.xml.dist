@@ -15,8 +15,9 @@
             <directory>../src/*Bundle/Tests</directory>
             <exclude>../src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
             <exclude>../src/Frontend/Modules/*/Tests</exclude>
-            <exclude>../src/Frontend/Modules/Blog/Tests/Action</exclude>
-            <exclude>../src/Frontend/Modules/Faq/Tests/Action</exclude>
+            <exclude>../src/Frontend/Modules/Blog/Tests/Actions</exclude>
+            <exclude>../src/Frontend/Modules/Faq/Tests/Actions</exclude>
+            <exclude>../src/Frontend/Modules/Search/Tests/Actions</exclude>
         </testsuite>
     </testsuites>
 
@@ -25,7 +26,7 @@
             <directory>../src/*/*Bundle/Tests/Controller</directory>
             <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>../src/*Bundle/Tests/Controller</directory>
-            <directory>../src/Frontend/Modules/*/Tests/Action</directory>
+            <directory>../src/Frontend/Modules/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 

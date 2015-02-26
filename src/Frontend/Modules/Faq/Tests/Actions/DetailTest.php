@@ -1,12 +1,12 @@
 <?php
 
-namespace Frontend\Modules\Faq\Action;
+namespace Frontend\Modules\Faq\Actions;
 
 use Common\WebTestCase;
 
-class CategoryTest extends WebTestCase
+class DetailTest extends WebTestCase
 {
-    public function testCategoryHasPage()
+    public function testBlogPostHasDetailPage()
     {
         $client = static::createClient();
         $this->loadFixtures(
@@ -17,31 +17,12 @@ class CategoryTest extends WebTestCase
             )
         );
 
-        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
+        $crawler = $client->request('GET', '/en/faq');
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
         );
-        $this->assertStringStartsWith(
-            'Faq for tests',
-            $crawler->filter('title')->text()
-        );
-    }
 
-    public function testNonExistingCategoryPostGives404()
-    {
-        $client = static::createClient();
-
-        $client->request('GET', '/en/faq/category/non-existing');
-        $this->assertIs404($client);
-    }
-
-    public function testCategoryPageContainsBlogPost()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/en/faq/category/faqcategory-for-tests');
-
-        $this->assertContains('Is this a working test?', $client->getResponse()->getContent());
         $link = $crawler->selectLink('Is this a working test?')->link();
         $crawler = $client->click($link);
 
@@ -59,11 +40,11 @@ class CategoryTest extends WebTestCase
         );
     }
 
-    public function testNonExistingPageGives404()
+    public function testNonExistingBlogPostGives404()
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', array('page' => 34));
+        $client->request('GET', '/en/faq/detail/non-existing');
         $this->assertIs404($client);
     }
 }
