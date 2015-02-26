@@ -79,6 +79,7 @@ class Archive extends FrontendBaseBlock
         parent::execute();
         $this->loadTemplate();
         $this->getData();
+
         $this->parse();
     }
 
@@ -146,9 +147,7 @@ class Archive extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // populate calculated fields in pagination
