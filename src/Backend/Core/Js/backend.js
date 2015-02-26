@@ -424,6 +424,7 @@ jsBackend.ckeditor =
 							domain = domain.replace(/\/$/, '');
 
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+							CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url');
 							CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
 						}
 					}
