@@ -26,6 +26,7 @@
             <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>../src/*Bundle/Tests/Controller</directory>
             <directory>../src/Frontend/Modules/*/Tests/Action</directory>
+            <directory>../src/Api/*/Tests/Action</directory>
         </testsuite>
     </testsuites>
 
