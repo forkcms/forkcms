@@ -225,6 +225,49 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
+                } elseif ($field['type'] == 'datetime') {
+                    // create element
+                    if($field['settings']['input_type'] == 'date') {
+                        // calculate default value
+                        $amount = $field['settings']['value_amount'];
+                        $type = $field['settings']['value_type'];
+
+                        if($type != '') {
+                            switch($type) {
+                                case 'today':
+                                    $defaultValues = date('Y-m-d'); // HTML5 input needs this format
+                                    break;
+                                case 'day':
+                                case 'week':
+                                case 'month':
+                                case 'year':
+                                    if($amount != '') $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    break;
+                            }
+                        }
+
+                        // Convert the php date format to a jquery date format
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery(FrontendModel::getModuleSetting('Core', 'date_format_short'));
+
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                            array(
+                                'data-mask' => $dateFormatShortJS,
+                                'data-firstday' => '1',
+                                'type' => 'date',
+                                'default-date' => (!empty($defaultValues) ? date(FrontendModel::getModuleSetting('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                            )
+                        );
+                    } else {
+                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
+                    }
+
+                    // add required attribute
+                    if ($item['required']) {
+                        $datetime->setAttribute('required', null);
+                    }
+
+                    // get content
+                    $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
@@ -387,6 +430,11 @@ class Form extends FrontendBaseWidget
                             $this->frm->getField($fieldName)->isNumeric(
                                 $settings['error_message']
                             );
+                        }
+                    } elseif ($rule == 'time') {
+                        $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
+                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
+                            $this->frm->getField($fieldName)->setError($settings['error_message']);
                         }
                     }
                 }
