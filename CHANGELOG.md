@@ -1,3 +1,14 @@
+3.9.0 (2015-xx-xx)
+--
+Improvements
+
+* Core: use the swiftmailerbundle instead of our custom implementation
+
+Bugfixes:
+
+* Core: make sure bugemails work again
+
+
 3.8.8 (2015-xx-xx)
 --
 Improvements:
@@ -8,6 +19,7 @@ Improvements:
 Bugfixes:
 
 * Core: fix not correctly thrown exception
+
 
 3.8.7 (2015-02-13)
 --
