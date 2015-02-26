@@ -31,6 +31,12 @@ monolog:
             type:  stream
             path:  %site.path_www%/app/logs/logs.log
             level: debug
+        swift:
+            type:       swift_mailer
+            from_email: %fork.debug_email%
+            to_email:   %fork.debug_email%
+            subject:    %site.default_title% %fork.debug_message%
+            level:      critical
 
 swiftmailer:
     transport: "mail"
