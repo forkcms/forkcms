@@ -5,6 +5,8 @@ namespace Common;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseWebTestCase;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\FileSystem\FileSystem;
+use Symfony\Bundle\FrameworkBundle\Client;
+use Symfony\Component\DomCrawler\Form;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -150,5 +152,28 @@ abstract class WebTestCase extends BaseWebTestCase
             '404',
             $client->getHistory()->current()->getUri()
         );
+    }
+
+    /**
+     * Submits the form and mimics the GET parameters, since they aren't added
+     * by default in the functional tests
+     *
+     * @param  Client $client
+     * @param  Form   $form
+     * @param  array  $data
+     */
+    protected function submitForm(Client $client, Form $form, array $data = array())
+    {
+        // Get parameters should be set manually. Symfony uses the request object,
+        // but spoon still checks the $_GET parameters
+        foreach ($data as $key => $value) {
+            $_GET[$key] = $value;
+        }
+
+        $client->submit($form);
+
+        foreach ($data as $key => $value) {
+            unset($_GET[$key]);
+        }
     }
 }

@@ -55,9 +55,7 @@ class IndexTest extends WebTestCase
         $form = $crawler->selectButton('Search')->form();
 
         // $_GET parameters should be set manually, since Fork uses them.
-        $_GET['form'] = 'search';
-        $client->submit($form);
-        unset($_GET['form']);
+        $this->submitForm($client, $form, array('form' => 'search'));
 
         // result should not yet be found
         $this->assertContains(
@@ -78,15 +76,11 @@ class IndexTest extends WebTestCase
 
         $form = $crawler->selectButton('Search')->form();
 
-        // Get parameters should be set manually. Symfony uses the request object,
-        // but spoon still checks the $_GET parameters
-        $_GET['q'] = 'Blogpost';
-        $_GET['submit'] = 'Search';
-        $_GET['form'] = 'search';
-        $client->submit($form, array(
+        $this->submitForm($client, $form, array(
             'q' => 'Blogpost',
+            'submit' => 'Search',
+            'form' => 'search',
         ));
-        unset($_GET['form'], $_GET['submit'], $_GET['q']);
 
         // result should not yet be found
         $this->assertContains(
