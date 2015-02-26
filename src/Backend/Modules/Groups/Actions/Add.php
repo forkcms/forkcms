@@ -234,6 +234,8 @@ class Add extends BackendBaseActionAdd
 
                     // add to array
                     $this->widgets[] = array(
+                        'module_name' => $module,
+                        'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
                         'description' => $description
@@ -366,13 +368,22 @@ class Add extends BackendBaseActionAdd
                 )
             );
 
+            // loop through selected widgets
             foreach ($widgetPresets as $preset) {
+                // if selected
                 if ($preset->getChecked()) {
-                    // remove widgets_ prefix
-                    $selected = str_replace('widgets_', '', $preset->getName());
+                    // get the preset module name
+                    $presetModule = str_replace('widgets_', '', str_replace($widget['widget'], '', $preset->getName()));
 
-                    // if right widget set visible
-                    if ($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    // if the preset module name matches the widget module name
+                    if($presetModule == $widget['module'])
+                    {
+                        // remove widgets_[modulename] prefix
+                        $selected = str_replace('widgets_' . $widget['module'], '', $preset->getName());
+
+                        // if right widget set visible
+                        if ($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    }
                 }
             }
         }
@@ -403,7 +414,8 @@ class Add extends BackendBaseActionAdd
             // loop through widgets
             foreach ($this->widgets as $j => $widget) {
                 // add widget checkboxes
-                $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'])->parse() . '</span>';
+                $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'])->parse() . '</span>';
+                $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
                 $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
                 $widgetBoxes[$j]['description'] = $widget['description'];
             }
@@ -517,7 +529,7 @@ class Add extends BackendBaseActionAdd
             }
 
             // loop through widgets and collect presets
-            foreach ($this->widgets as $widget) $widgetPresets[] = $this->frm->getField('widgets_' . $widget['label']);
+            foreach ($this->widgets as $widget) $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
 
             // validate fields
             $nameField->isFilled(BL::err('NameIsRequired'));
