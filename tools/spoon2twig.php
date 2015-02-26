@@ -48,9 +48,12 @@ function convert($filedata)
     $filedata = preg_replace_sprintf('/\|date:(.*?):(.*?)}}/', '|spoon_date(%1$s, %2$s}})', $filedata);
     $filedata = preg_replace_sprintf('/\|sprintf:(.*?)}}/', '|sprintf(%s}})', $filedata);
     $filedata = preg_replace_sprintf('/\|getnavigation:(.*?):(.*?):(.*?)}/', '|getnavigation(%1$s, %2$s, %3$s) | raw}', $filedata);
+    $filedata = preg_replace_sprintf('/\|getmainnavigation}/', '|getmainnavigation|raw}', $filedata);
     $filedata = preg_replace_sprintf('/|truncate:(.*?)}/', '|truncate(%1$s)}', $filedata);
     $filedata = preg_replace_sprintf('/|geturl:(.*?):(.*?)}/', '|geturl(%1$s, %2$s)}', $filedata);
     $filedata = preg_replace_sprintf('/|geturl:(.*?)}/', '|geturl(%1$s)}', $filedata);
+    $filedata = preg_replace_sprintf('/Grid}/', 'Grid|raw}', $filedata);
+
 
     // filter endfor
     $filedata = preg_replace_sprintf('/{\$(.*?)\)}/', '{{ %s ) }}', $filedata);

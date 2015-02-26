@@ -2,6 +2,9 @@
 
 namespace Frontend\Core\Engine;
 
+use Backend\Core\Engine\Language as BL;
+use Frontend\Core\Engine\Language as FL;
+
 /*
  * This file is part of Fork CMS.
  *
@@ -50,15 +53,16 @@ Class TwigTemplate
         $this->variables['now'] = time();
         $this->variables['LANGUAGE'] = FRONTEND_LANGUAGE;
         $this->variables['is' . strtoupper(FRONTEND_LANGUAGE)] = true;
+        $this->variables['debug'] = SPOON_DEBUG;
 
-        // old theme checker
-        if (Model::getModuleSetting('Core', 'theme') !== null) {
-            $this->assign('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
-            $this->assign(
-                'THEME_URL',
-                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
-            );
-        }
+        // // old theme checker
+        // if (Model::getModuleSetting('Core', 'theme') !== null) {
+        //     $this->assign('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
+        //     $this->assign(
+        //         'THEME_URL',
+        //         '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+        //     );
+        // }
 
         // constants that should be protected from usage in the template
         $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
@@ -80,41 +84,6 @@ Class TwigTemplate
         if (!empty($realConstants)) {
             $this->assign($realConstants);
         }
-
-        // settings
-        $this->assign(
-            'SITE_TITLE',
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
-        );
-
-        // facebook stuff
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
-            $this->assign(
-                'FACEBOOK_ADMIN_IDS',
-                Model::getModuleSetting('Core', 'facebook_admin_ids', null)
-            );
-        }
-        if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
-            $this->assign(
-                'FACEBOOK_APP_ID',
-                Model::getModuleSetting('Core', 'facebook_app_id', null)
-            );
-        }
-        if (Model::getModuleSetting('Core', 'facebook_app_secret', null) !== null) {
-            $this->assign(
-                'FACEBOOK_APP_SECRET',
-                Model::getModuleSetting('Core', 'facebook_app_secret', null)
-            );
-        }
-
-        // twitter stuff
-        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
-            // strip @ from twitter username
-            $this->assign(
-                'TWITTER_SITE_NAME',
-                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
-            );
-        }
     }
 
     /**
@@ -125,53 +94,6 @@ Class TwigTemplate
     public function getTemplateType()
     {
         return 'twig';
-    }
-
-    /**
-     * Assign the labels
-     */
-    private function parseLabels()
-    {
-        $actions = Language::getActions();
-        $errors = Language::getErrors();
-        $labels = Language::getLabels();
-        $messages = Language::getMessages();
-
-        // execute addslashes on the values for the locale, will be used in JS
-        if ($this->addSlashes) {
-            foreach ($actions as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($errors as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($labels as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($messages as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-        }
-
-        // assign actions
-        $this->assignArray($actions, 'act');
-
-        // assign errors
-        $this->assignArray($errors, 'err');
-
-        // assign labels
-        $this->assignArray($labels, 'lbl');
-
-        // assign messages
-        $this->assignArray($messages, 'msg');
     }
 
     public function assign($key, $values = null)
@@ -192,7 +114,7 @@ Class TwigTemplate
 
         // page hook
         // end call
-        if ($key == 'page') {
+        if ($key === 'page') {
             $this->baseFile = str_replace('.tpl', '.twig', $values['template_path']);
             $this->setPositions($values['positions']);
             return;
@@ -266,7 +188,6 @@ Class TwigTemplate
     private function render($template)
     {
         $this->startGlobals();
-        $this->parseLabels();
 
         if ($this->forms) {
             $this->assign('form', $this->forms);
@@ -280,12 +201,11 @@ Class TwigTemplate
 
         // start the filters
         $this->twigFilters();
-        $this->twigFrontendFilters();
+        $this->twigFrontend();
 
         // debug options
         if (SPOON_DEBUG) {
             $this->twig->addExtension(new \Twig_Extension_Debug());
-            $this->assign('debug', true);
         }
 
         // template
@@ -305,19 +225,54 @@ Class TwigTemplate
         $this->forms[$form->getName()]['end'] = "</form>";
     }
 
-    public function setPlugin(){}
-    public function setForceCompile(){}
-
     public function getAssignedVariables()
     {
         return $this->variables;
     }
 
     /**
-     * Setup Frontend filters for the Twig environment.
+     * Setup Frontend for the Twig environment.
      */
-    private function twigFrontendFilters()
+    private function twigFrontend()
     {
+        // locale object
+        $this->twig->addGlobal('lng', new FL());
+
+        // settings
+        $this->assign(
+            'SITE_TITLE',
+            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+        );
+
+        // facebook stuff
+        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
+            $this->assign(
+                'FACEBOOK_ADMIN_IDS',
+                Model::getModuleSetting('Core', 'facebook_admin_ids', null)
+            );
+        }
+        if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
+            $this->assign(
+                'FACEBOOK_APP_ID',
+                Model::getModuleSetting('Core', 'facebook_app_id', null)
+            );
+        }
+        if (Model::getModuleSetting('Core', 'facebook_app_secret', null) !== null) {
+            $this->assign(
+                'FACEBOOK_APP_SECRET',
+                Model::getModuleSetting('Core', 'facebook_app_secret', null)
+            );
+        }
+
+        // twitter stuff
+        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
+            // strip @ from twitter username
+            $this->assign(
+                'TWITTER_SITE_NAME',
+                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
+            );
+        }
+
         /** Filters list converted to twig filters
          - ucfirst -> capitalize
          -
@@ -394,4 +349,7 @@ Class TwigTemplate
     {
         $this->addSlashes = (bool) $on;
     }
+
+    public function setPlugin(){}
+    public function setForceCompile(){}
 }
