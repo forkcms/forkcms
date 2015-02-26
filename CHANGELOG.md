@@ -14,7 +14,9 @@ Bugfixes:
 Improvements:
 
 * Settings: test email connection with SwiftMailer.
-* Formbuilder: added the possibility to add date & time fields. 
+* Formbuilder: added the possibility to add date & time fields.
+* Settings: test email connection with SwiftMailer
+* Core: refactor out SELF constant
 
 Bugfixes:
 

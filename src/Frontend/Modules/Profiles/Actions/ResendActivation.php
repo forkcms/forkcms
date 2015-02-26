@@ -138,7 +138,7 @@ class ResendActivation extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                $this->redirect(SELF . '?sent=true');
+                $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('resendActivationHasError', true);
             }
