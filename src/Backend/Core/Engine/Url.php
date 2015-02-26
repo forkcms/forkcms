@@ -156,7 +156,7 @@ class Url extends Base\Object
                 // set action
                 $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
             } catch (Exception $ex) {
-                if (SPOON_DEBUG) {
+                if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                     throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
                 } else {
                     // @todo    don't use redirects for error, we should have something like an invoke method.

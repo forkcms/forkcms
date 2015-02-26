@@ -708,7 +708,7 @@ class Model extends \BaseModel
             return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
         } catch (\Exception $e) {
             // in debug mode we want to see exceptions, otherwise the fallback will be triggered
-            if (SPOON_DEBUG) {
+            if (self::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 
@@ -825,7 +825,7 @@ class Model extends \BaseModel
                 }
             }
         } catch (Exception $e) {
-            if (SPOON_DEBUG) {
+            if (self::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
         }

@@ -140,7 +140,7 @@ class Index extends FrontendBaseBlock
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -209,7 +209,7 @@ class Index extends FrontendBaseBlock
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(
