@@ -6,6 +6,7 @@
          backupGlobals="false"
          colors="true"
          bootstrap="../autoload.php"
+         stderr="true"
 >
     <testsuites>
         <testsuite name="unit">
@@ -13,6 +14,10 @@
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
             <exclude>../src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
+            <exclude>../src/Frontend/Modules/*/Tests</exclude>
+            <exclude>../src/Frontend/Modules/Blog/Tests/Actions</exclude>
+            <exclude>../src/Frontend/Modules/Faq/Tests/Actions</exclude>
+            <exclude>../src/Frontend/Modules/Search/Tests/Actions</exclude>
         </testsuite>
     </testsuites>
 
@@ -21,6 +26,7 @@
             <directory>../src/*/*Bundle/Tests/Controller</directory>
             <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>../src/*Bundle/Tests/Controller</directory>
+            <directory>../src/Frontend/Modules/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 

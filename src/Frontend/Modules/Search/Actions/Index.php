@@ -202,9 +202,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // debug mode = no cache
