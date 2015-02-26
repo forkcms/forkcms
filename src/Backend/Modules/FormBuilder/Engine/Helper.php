@@ -67,6 +67,35 @@ class Helper
 
                 // get content
                 $fieldHTML = $ddm->parse();
+            } elseif ($field['type'] == 'datetime') {
+                // create element
+                if($field['settings']['input_type'] == 'date') {
+                    // calculate default value
+                    $amount = $field['settings']['value_amount'];
+                    $type = $field['settings']['value_type'];
+
+                    if($type != '') {
+                        switch($type) {
+                            case 'today':
+                                $defaultValues = date('d/m/Y');
+                                break;
+                            case 'day':
+                            case 'week':
+                            case 'month':
+                            case 'year':
+                                if($amount != '') $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                break;
+                        }
+                    }
+
+                    $datetime = $frm->addText($fieldName, $defaultValues);
+                } else {
+                    $datetime = $frm->addTime($fieldName, $defaultValues);
+                }
+                $datetime->setAttribute('disabled', 'disabled');
+
+                // get content
+                $fieldHTML = $datetime->parse();
             } elseif ($field['type'] == 'radiobutton') {
                 // rebuild values
                 foreach ($values as $value) {
