@@ -9,8 +9,6 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -44,14 +42,11 @@ class ForgotPassword extends FrontendBaseBlock
             parent::execute();
             $this->loadTemplate();
             $this->loadForm();
-            $response = $this->validateForm();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->validateForm();
             $this->parse();
         } else {
             // already logged in, redirect to settings
-            return $this->redirect(FrontendNavigation::getURLForBlock('Profiles', 'Settings'));
+            $this->redirect(FrontendNavigation::getURLForBlock('Profiles', 'Settings'));
         }
     }
 
@@ -144,7 +139,7 @@ class ForgotPassword extends FrontendBaseBlock
                 $this->get('mailer')->send($message);
 
                 // redirect
-                return $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
             } else {
                 $this->tpl->assign('forgotPasswordHasError', true);
             }

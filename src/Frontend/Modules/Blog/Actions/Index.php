@@ -9,8 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -52,10 +50,7 @@ class Index extends FrontendBaseBlock
     {
         parent::execute();
         $this->loadTemplate();
-        $response = $this->getData();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->getData();
         $this->parse();
     }
 
@@ -82,7 +77,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // populate calculated fields in pagination

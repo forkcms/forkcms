@@ -2,8 +2,6 @@
 
 namespace Frontend\Modules\Mailmotor\Actions;
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Form as FrontendForm;
@@ -34,10 +32,7 @@ class Subscribe extends FrontendBaseBlock
     {
         $this->loadTemplate();
         $this->loadForm();
-        $response = $this->validateForm();
-        if ($response instanceof Response) {
-            return $response;
-        }
+        $this->validateForm();
         $this->parse();
     }
 
@@ -105,7 +100,7 @@ class Subscribe extends FrontendBaseBlock
                     FrontendModel::triggerEvent('Mailmotor', 'after_subscribe', array('email' => $email->getValue()));
 
                     // redirect
-                    return $this->redirect(
+                    $this->redirect(
                         FrontendNavigation::getURLForBlock('Mailmotor', 'Subscribe') . '?sent=true#subscribeForm'
                     );
                 } catch (\Exception $e) {

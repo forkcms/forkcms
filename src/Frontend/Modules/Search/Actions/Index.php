@@ -10,7 +10,6 @@ namespace Frontend\Modules\Search\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\Response;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
@@ -124,10 +123,7 @@ class Index extends FrontendBaseBlock
         $this->loadTemplate();
         $this->loadForm();
         $this->validateForm();
-        $response = $this->display();
-        if ($response instanceof Response) {
-            return $response;
-        }
+        $this->display();
         $this->saveStatistics();
     }
 
@@ -209,7 +205,7 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // debug mode = no cache

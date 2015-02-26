@@ -9,8 +9,6 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -45,10 +43,7 @@ class Login extends FrontendBaseBlock
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             $this->loadTemplate();
             $this->loadForm();
-            $response = $this->validateForm();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->validateForm();
             $this->parse();
         } else {
             // profile already logged in
@@ -56,7 +51,7 @@ class Login extends FrontendBaseBlock
             $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
             // redirect
-            return $this->redirect($queryString);
+            $this->redirect($queryString);
         }
     }
 
@@ -140,7 +135,7 @@ class Login extends FrontendBaseBlock
                 $queryString = urldecode(\SpoonFilter::getGetValue('queryString', null, SITE_URL));
 
                 // redirect
-                return $this->redirect($queryString);
+                $this->redirect($queryString);
             }
         }
     }

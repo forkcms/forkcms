@@ -9,8 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -80,11 +78,7 @@ class Archive extends FrontendBaseBlock
     {
         parent::execute();
         $this->loadTemplate();
-        $response = $this->getData();
-
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->getData();
 
         $this->parse();
     }
@@ -101,7 +95,7 @@ class Archive extends FrontendBaseBlock
         // redirect /2010/6 to /2010/06 to avoid duplicate content
         if ($this->month !== null && mb_strlen($this->month) != 2) {
             $queryString = isset($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
-            return $this->redirect(
+            $this->redirect(
                 FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $this->year . '/' . str_pad(
                     $this->month,
                     2,
@@ -112,7 +106,7 @@ class Archive extends FrontendBaseBlock
             );
         }
         if (mb_strlen($this->year) != 4) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // redefine
@@ -123,7 +117,7 @@ class Archive extends FrontendBaseBlock
 
         // validate parameters
         if ($this->year == 0 || $this->month === 0) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // requested page
@@ -153,7 +147,7 @@ class Archive extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // populate calculated fields in pagination

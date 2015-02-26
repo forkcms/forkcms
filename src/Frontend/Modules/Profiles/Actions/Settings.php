@@ -9,8 +9,6 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -54,14 +52,11 @@ class Settings extends FrontendBaseBlock
             $this->getData();
             $this->loadTemplate();
             $this->loadForm();
-            $response = $this->validateForm();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->validateForm();
             $this->parse();
         } else {
             // profile not logged in
-            return $this->redirect(
+            $this->redirect(
                 FrontendNavigation::getURLForBlock(
                     'Profiles',
                     'Login'
@@ -299,7 +294,7 @@ class Settings extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_saved_settings', array('id' => $this->profile->getId()));
 
                 // redirect
-                return $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Settings') . '?sent=true');
+                $this->redirect(SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'Settings') . '?sent=true');
             } else {
                 $this->tpl->assign('updateSettingsHasFormError', true);
             }

@@ -9,8 +9,6 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -52,13 +50,10 @@ class ChangePassword extends FrontendBaseBlock
             $this->getData();
             $this->loadTemplate();
             $this->loadForm();
-            $response = $this->validateForm();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->validateForm();
             $this->parse();
         } else {
-            return $this->redirect(
+            $this->redirect(
                 FrontendNavigation::getURLForBlock(
                     'Profiles',
                     'Login'
@@ -150,7 +145,7 @@ class ChangePassword extends FrontendBaseBlock
                 );
 
                 // redirect
-                return $this->redirect(
+                $this->redirect(
                     SITE_URL . FrontendNavigation::getURLForBlock('Profiles', 'ChangePassword') . '?sent=true'
                 );
             } else {

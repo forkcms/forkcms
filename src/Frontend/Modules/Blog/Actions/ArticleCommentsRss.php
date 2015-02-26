@@ -9,8 +9,6 @@ namespace Frontend\Modules\Blog\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Core\Engine\Language as FL;
@@ -46,10 +44,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     public function execute()
     {
         parent::execute();
-        $response = $this->getData();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->getData();
         $this->parse();
     }
 
@@ -60,7 +55,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get record
@@ -68,7 +63,7 @@ class ArticleCommentsRss extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get articles

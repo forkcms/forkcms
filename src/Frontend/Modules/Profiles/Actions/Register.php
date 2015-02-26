@@ -9,8 +9,6 @@ namespace Frontend\Modules\Profiles\Actions;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\Response;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -47,17 +45,14 @@ class Register extends FrontendBaseBlock
         // profile not logged in
         if (!FrontendProfilesAuthentication::isLoggedIn()) {
             $this->loadForm();
-            $response = $this->validateForm();
-            if ($response instanceof Response) {
-                return $response;
-            }
+            $this->validateForm();
             $this->parse();
         } elseif ($this->URL->getParameter('sent') == true) {
             // just registered so show success message
             $this->parse();
         } else {
             // already logged in, so you can not register
-            return $this->redirect(SITE_URL);
+            $this->redirect(SITE_URL);
         }
     }
 
@@ -191,7 +186,7 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    return $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
+                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
                     if (SPOON_DEBUG) {

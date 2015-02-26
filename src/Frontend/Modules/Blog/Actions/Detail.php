@@ -66,15 +66,9 @@ class Detail extends FrontendBaseBlock
         parent::execute();
         $this->tpl->assign('hideContentTitle', true);
         $this->loadTemplate();
-        $response = $this->getData();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->getData();
         $this->loadForm();
-        $response = $this->validateForm();
-        if ($response instanceOf Response) {
-            return $response;
-        }
+        $this->validateForm();
         $this->parse();
     }
 
@@ -85,7 +79,7 @@ class Detail extends FrontendBaseBlock
     {
         // validate incoming parameters
         if ($this->URL->getParameter(1) === null) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // load revision
@@ -105,7 +99,7 @@ class Detail extends FrontendBaseBlock
 
         // anything found?
         if (empty($this->record)) {
-            return $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // get comments
@@ -438,7 +432,7 @@ class Detail extends FrontendBaseBlock
                 }
 
                 // redirect
-                return $this->redirect($redirectLink);
+                $this->redirect($redirectLink);
             }
         }
     }
