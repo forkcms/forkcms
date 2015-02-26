@@ -293,12 +293,15 @@ class Model
                 }
             }
 
+            // don't do a regular implode, mysql injection might be possible
+            $placeholders = array_fill(0, count($tags), '?');
+
             // get tag ids
             $tagsAndIds = (array) $db->getPairs(
                 'SELECT i.tag, i.id
                  FROM tags AS i
-                 WHERE i.tag IN ("' . implode('", "', $tags) . '") AND i.language = ?',
-                array($language)
+                 WHERE i.tag IN (' . implode(',', $placeholders) . ') AND i.language = ?',
+                array_merge($tags, array($language))
             );
 
             // loop again and create tags that don't already exist
