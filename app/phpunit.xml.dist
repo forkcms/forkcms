@@ -18,6 +18,7 @@
             <exclude>../src/Frontend/Modules/Blog/Tests/Actions</exclude>
             <exclude>../src/Frontend/Modules/Faq/Tests/Actions</exclude>
             <exclude>../src/Frontend/Modules/Search/Tests/Actions</exclude>
+            <exclude>../src/Backend/Modules/Authentication/Tests/Actions</exclude>
         </testsuite>
     </testsuites>
 
@@ -27,6 +28,7 @@
             <directory>../src/*/Bundle/*Bundle/Tests/Controller</directory>
             <directory>../src/*Bundle/Tests/Controller</directory>
             <directory>../src/Frontend/Modules/*/Tests/Actions</directory>
+            <directory>../src/Backend/Modules/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 
