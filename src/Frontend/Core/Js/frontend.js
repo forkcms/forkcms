@@ -636,7 +636,7 @@ jsFrontend.search =
 			}
 		})
 		// and also: alter the autocomplete style: add description!
-		.data('autocomplete')._renderItem = function(ul, item)
+		.data('ui-autocomplete')._renderItem = function(ul, item)
 		{
 			return $('<li></li>')
 			.data('item.autocomplete', item)
