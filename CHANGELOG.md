@@ -8,6 +8,7 @@ Improvements:
 Bugfixes:
 
 * Core: fix not correctly thrown exception
+* Formbuilder: quotes and special chars are now allowed in values for radiobuttons.
 
 3.8.7 (2015-02-13)
 --
