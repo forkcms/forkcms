@@ -936,7 +936,7 @@
 				var inElements = false;
 
 				// ugly hack to escape entities and quotes
-				value = $('<div />').text(value).html().replace('"', '&quot;');
+				// value = $('<div />').text(value).html().replace('"', '&quot;');
 
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
@@ -961,7 +961,7 @@
 					if(!inElements)
 					{
 						// add elements
-						elements.push(value);
+						elements.push(utils.string.decodeForTag(value));
 
 						// set new value
 						$('#' + id).val(elements.join(options.splitChar));
@@ -990,8 +990,10 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' +
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + utils.string.htmlEncode(options.removeLabel + ' ' + elements[i]) + '">' + options.removeLabel + '</a></span>' +
+                        var value = utils.string.decodeForTag(elements[i]);
+
+						html += '	<li><span><strong>' + value + '</strong>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.decodeForTag(options.removeLabel) + ' ' + value + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 
