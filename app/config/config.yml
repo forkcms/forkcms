@@ -43,7 +43,6 @@ swiftmailer:
 
 swiftmailer:
     transport: "mail"
-    spool:     { type: memory }
 
 services:
     database:
