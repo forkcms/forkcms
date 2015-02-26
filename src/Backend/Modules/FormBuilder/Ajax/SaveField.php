@@ -92,6 +92,9 @@ class SaveField extends BackendBaseAJAXAction
                         if ($validation != '' && $errorMessage == '') {
                             $errors['error_message'] = BL::getError('ErrorMessageIsRequired');
                         }
+                        if ($replyTo == 'Y' && $validation != 'email') {
+                            $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+                        }
                     } elseif ($type == 'textarea') {
                         // validate textarea
                         if ($label == '') {
