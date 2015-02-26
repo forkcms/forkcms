@@ -1037,7 +1037,7 @@ class Model
             $query .= ' AND l.application = ?';
             $parameters[] = $application;
         }
-        
+
         // get the translations
         $translations = (array) $db->getRecords($query, $parameters);
 
@@ -1080,6 +1080,7 @@ class Model
 
                     // reset this var for every language
                     $edited_on = '';
+                    $numberOfLanguages = count($languages);
 
                     foreach ($languages as $lang) {
                         // if the translation exists the for this language, fill it up
@@ -1093,14 +1094,20 @@ class Model
                             if ($edited_on < $t[$lang]['edited_on']) {
                                 $edited_on = $t[$lang]['edited_on'];
                             }
+
+                            if ($numberOfLanguages == 1) {
+                                $trans['translation_id'] = $t[$lang]['id'];
+                            } else {
+                                $trans['translation_id_' . $lang] = $t[$lang]['id'];
+                            }
                         } else {
                             $trans[$lang] = '';
-                        }
 
-                        if (count($languages) == 1) {
-                            $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-                        } else {
-                            $trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+                            if ($numberOfLanguages == 1) {
+                                $trans['translation_id'] = '';
+                            } else {
+                                $trans['translation_id_' . $lang] = '';
+                            }
                         }
                     }
                     // at the end of the array, add the generated edited_on date
