@@ -258,6 +258,9 @@ class Model
         // make sure the list of tags is unique
         $tags = array_unique($tags);
 
+        // remove empty elements
+        $tags = array_filter($tags);
+
         // get db
         $db = BackendModel::getContainer()->get('database');
 
