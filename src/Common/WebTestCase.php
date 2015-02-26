@@ -33,7 +33,9 @@ abstract class WebTestCase extends BaseWebTestCase
         $finder->name('AppKernel.php')->depth(0)->in($dir);
         $results = iterator_to_array($finder);
         if (!count($results)) {
-            throw new \RuntimeException('Either set KERNEL_DIR in your phpunit.xml according to http://symfony.com/doc/current/book/testing.html#your-first-functional-test or override the WebTestCase::createKernel() method.');
+            throw new \RuntimeException(
+                'Either set KERNEL_DIR in your phpunit.xml according to http://symfony.com/doc/current/book/testing.html#your-first-functional-test or override the WebTestCase::createKernel() method.'
+            );
         }
 
         $file = current($results);
@@ -166,14 +168,57 @@ abstract class WebTestCase extends BaseWebTestCase
     {
         // Get parameters should be set manually. Symfony uses the request object,
         // but spoon still checks the $_GET parameters
-        foreach ($data as $key => $value) {
-            $_GET[$key] = $value;
-        }
+        $this->setGetParameters($data);
 
         $client->submit($form);
 
-        foreach ($data as $key => $value) {
-            unset($_GET[$key]);
+        $this->unsetGetParameters($data);
+    }
+
+    /**
+     * Do a request with the given GET parameters
+     *
+     * @param Client $client
+     * @param string $url
+     * @param array  $data
+     */
+    protected function requestWithGetParameters(
+        Client $client,
+        $url,
+        $data = array()
+    ) {
+        $this->setGetParameters($data);
+
+        $client->request('GET', $url);
+
+        $this->unsetGetParameters($data);
+    }
+
+    /**
+     * Set the GET parameters, as some of the old code relies on GET
+     *
+     * @param array $data
+     */
+    protected function setGetParameters($data = array())
+    {
+        foreach ((array) $data as $key => $value) {
+            $_GET[$key] = $value;
+        }
+    }
+
+    /**
+     * Unset the GET parameters, as some of the old code relies on GET
+     *
+     * @param array $data
+     */
+    protected function unsetGetParameters($data = array())
+    {
+        if (empty($data)) {
+            $_GET = array();
+        } else {
+            foreach ($data as $key => $value) {
+                unset($_GET[$key]);
+            }
         }
     }
 }
