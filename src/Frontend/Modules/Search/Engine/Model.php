@@ -238,11 +238,20 @@ class Model
              WHERE term = ?',
             array((string) $term)
         );
+        if (!$synonyms) {
+            $synonyms = (array) FrontendModel::getContainer()->get('database')->getColumn(
+                "SELECT term FROM search_synonyms
+                 WHERE synonym LIKE ? OR synonym LIKE ? OR synonym LIKE ? OR synonym = ?",
+                array("$term,%", "%,$term", "%,$term,%", $term)
+            );
+        } else {
+            $synonyms = explode(',', $synonyms);
+        }
 
         // found any? merge with original term
         if ($synonyms) {
             return array_unique(
-                array_merge(array($term), explode(',', $synonyms))
+                array_merge(array($term), $synonyms)
             );
         }
 
