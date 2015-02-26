@@ -357,16 +357,16 @@ utils.string =
 		return decodeURIComponent(value.replace(/\+/g, '%20').replace(/\%21/g, '!').replace(/\%27/g, "'").replace(/\%28/g, '(').replace(/\%29/g, ')').replace(/\%2A/g, '*').replace(/\%7E/g, '~'));
 	},
 
-    /**
-     * Tags cannot contain ", < and >
-     *
-     * @return	string
-     * @param	string value
-     */
-    decodeForTag: function(value)
-    {
-        return value.replace(/"/g, "'").replace(/(<|>)/g, '');
-    },
+	/**
+	 * Tags cannot contain ", < and >
+	 *
+	 * @return	string
+	 * @param	string value
+	 */
+	stripForTag: function(value)
+	{
+		return value.replace(/"/g, "'").replace(/(<|>)/g, '');
+	},
 
 	/**
 	 * Urlise a string (cfr. SpoonFilter::urlise)

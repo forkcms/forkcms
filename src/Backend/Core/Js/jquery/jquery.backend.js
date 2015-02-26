@@ -961,7 +961,7 @@
 					if(!inElements)
 					{
 						// add elements
-						elements.push(utils.string.decodeForTag(value));
+						elements.push(utils.string.stripForTag(value));
 
 						// set new value
 						$('#' + id).val(elements.join(options.splitChar));
@@ -990,10 +990,10 @@
 					// loop elements
 					for(var i in elements)
 					{
-                        var value = utils.string.decodeForTag(elements[i]);
+						var value = utils.string.stripForTag(elements[i]);
 
 						html += '	<li><span><strong>' + value + '</strong>' +
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.decodeForTag(options.removeLabel) + ' ' + value + '">' + options.removeLabel + '</a></span>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 
