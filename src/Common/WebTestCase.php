@@ -88,7 +88,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $database->execute(trim($sql));
     }
 
-    protected function loadFixtures($client, $fixtureClasses)
+    protected function loadFixtures($client, $fixtureClasses = array())
     {
         $database = $client->getContainer()->get('database');
 

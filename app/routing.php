@@ -12,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
-use Frontend\Core\Exception\RedirectException;
+use Common\Exception\RedirectException;
 
 /**
  * Application routing
