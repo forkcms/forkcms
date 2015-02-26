@@ -9,6 +9,8 @@ Bugfixes:
 
 * Core: fix not correctly thrown exception
 * Formbuilder: quotes and special chars are now allowed in values for radiobuttons.
+* Core: the hash is now included when it is used in a form, so on submit it 
+    should automagically go to the form.
 
 3.8.7 (2015-02-13)
 --
