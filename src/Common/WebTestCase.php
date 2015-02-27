@@ -7,6 +7,7 @@ use Symfony\Component\Finder\Finder;
 use Symfony\Component\FileSystem\FileSystem;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Component\DomCrawler\Form;
+use Symfony\Component\DomCrawler\Crawler;
 
 /**
  * WebTestCase is the base class for functional tests.
@@ -187,6 +188,7 @@ abstract class WebTestCase extends BaseWebTestCase
      * @param Client $client
      * @param string $url
      * @param array  $data
+     * @return Crawler
      */
     protected function requestWithGetParameters(
         Client $client,
@@ -194,8 +196,10 @@ abstract class WebTestCase extends BaseWebTestCase
         $data = array()
     ) {
         $this->setGetParameters($data);
-        $client->request('GET', $url, $data);
+        $request = $client->request('GET', $url, $data);
         $this->unsetGetParameters($data);
+
+        return $request;
     }
 
     /**
