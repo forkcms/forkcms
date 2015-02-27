@@ -1,31 +1,14 @@
 {include:Core/Layout/Templates/Head.tpl}
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
-{include:Core/Layout/Templates/Notifications.tpl}
 
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-      <span class="sr-only"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a href="/" class="navbar-brand">{$siteTitle}</a>
-  </div>
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
-    {$var|getnavigation:'page':0:1}
-    {iteration:positionTop}
-    {$positionTop.blockContent}
-    {/iteration:positionTop}
-    {include:Core/Layout/Templates/Languages.tpl}
-  </div>
-</nav>
+{include:Core/Layout/Templates/Components/Notifications.tpl}
+{include:Core/Layout/Templates/Components/Navbar.tpl}
 
 <section id="main">
   <div class="container">
 
-    {include:Core/Layout/Templates/Breadcrumb.tpl}
+    {include:Core/Layout/Templates/Components/Breadcrumb.tpl}
 
     <div class="row">
       <div class="col-md-9">
@@ -64,6 +47,6 @@
     </div>
   </div>
 </section>
-{include:Core/Layout/Templates/Footer.tpl}
+{include:Core/Layout/Templates/Components/Footer.tpl}
 </body>
 </html>
