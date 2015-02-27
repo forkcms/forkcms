@@ -150,6 +150,33 @@ class CoreTest extends ApiTestCase
             200,
             $client->getResponse()->getStatusCode()
         );
-        var_dump($client->getResponse()->getContent());
+        $this->assertCount(
+            1,
+            $request->filter('languages')
+        );
+
+        $this->assertGreaterThanOrEqual(
+            1,
+            $request->filter('languages > language')->count()
+        );
+
+        $request->filter('languages > language')->each(
+            function ($language) {
+                $this->assertNotEmpty(
+                    $language->attr('language')
+                );
+                $this->assertNotEmpty(
+                    $language->attr('is_default')
+                );
+
+                $this->assertEquals(
+                    'My website',
+                    $language->filter('title')->text()
+                );
+                $this->assertNotEmpty(
+                    $language->filter('url')->text()
+                );
+            }
+        );
     }
 }
