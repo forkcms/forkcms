@@ -105,13 +105,13 @@ class Model extends \BaseModel
         // check if this action is allowed
         if (Authentication::isAllowedAction('Index', 'Settings')) {
             // check if the fork API keys are available
-            if (self::getModuleSetting('Core', 'fork_api_private_key') == '' ||
-                self::getModuleSetting('Core', 'fork_api_public_key') == ''
+            if (static::getModuleSetting('Core', 'fork_api_private_key') == '' ||
+                static::getModuleSetting('Core', 'fork_api_public_key') == ''
             ) {
                 $warnings[] = array(
                     'message' => sprintf(
                         Language::err('ForkAPIKeys'),
-                        self::createURLForAction('Index', 'Settings')
+                        static::createURLForAction('Index', 'Settings')
                     )
                 );
             }
@@ -153,9 +153,9 @@ class Model extends \BaseModel
         $queryString = '';
 
         // checking if we have an url, because in a cronjob we don't have one
-        if (self::getContainer()->has('url')) {
+        if (static::getContainer()->has('url')) {
             // grab the URL from the reference
-            $URL = self::getContainer()->get('url');
+            $URL = static::getContainer()->get('url');
 
             // redefine
             if ($action === null) $action = $URL->getAction();
@@ -183,7 +183,7 @@ class Model extends \BaseModel
         }
 
         // add at least one parameter
-        $parameters['token'] = self::getToken();
+        $parameters['token'] = static::getToken();
 
         // add parameters
         $i = 1;
@@ -199,7 +199,7 @@ class Model extends \BaseModel
         }
 
         // build the URL and return it
-        return self::get('router')->generate(
+        return static::get('router')->generate(
             'backend',
             array(
                 '_locale' => $language,
@@ -237,7 +237,7 @@ class Model extends \BaseModel
         }
 
         // get extras
-        $extras = (array) self::getContainer()->get('database')->getRecords($query, $parameters);
+        $extras = (array) static::getContainer()->get('database')->getRecords($query, $parameters);
 
         // loop found extras
         foreach ($extras as $extra) {
@@ -252,7 +252,7 @@ class Model extends \BaseModel
             }
 
             // delete extra
-            self::deleteExtraById($extra['id']);
+            static::deleteExtraById($extra['id']);
         }
     }
 
@@ -269,9 +269,9 @@ class Model extends \BaseModel
 
         // delete the blocks
         if ($deleteBlock) {
-            self::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
+            static::getContainer()->get('database')->delete('pages_blocks', 'extra_id = ?', $id);
         } else {
-            self::getContainer()->get('database')->update(
+            static::getContainer()->get('database')->update(
                 'pages_blocks',
                 array('extra_id' => null),
                 'extra_id = ?',
@@ -280,7 +280,7 @@ class Model extends \BaseModel
         }
 
         // delete extra
-        self::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
+        static::getContainer()->get('database')->delete('modules_extras', 'id = ?', $id);
     }
 
     /**
@@ -293,15 +293,15 @@ class Model extends \BaseModel
      */
     public static function deleteExtrasForData($module, $field, $value, $action = null)
     {
-        $ids = self::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
+        $ids = static::getExtrasForData((string) $module, (string) $field, (string) $value, $action);
 
         // we have extras
         if (!empty($ids)) {
             // delete extras
-            self::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
+            static::getContainer()->get('database')->delete('modules_extras', 'id IN (' . implode(',', $ids) . ')');
 
             // invalidate the cache for the module
-            self::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
+            static::invalidateFrontendCache((string) $module, Language::getWorkingLanguage());
         }
     }
 
@@ -317,7 +317,7 @@ class Model extends \BaseModel
         $key = (string) $key;
 
         // delete
-        self::getContainer()->get('database')->delete(
+        static::getContainer()->get('database')->delete(
             'modules_settings',
             'module = ? and name = ?',
             array(
@@ -327,7 +327,7 @@ class Model extends \BaseModel
         );
 
         // unset from cache
-        unset(self::$moduleSettings[$module][$key]);
+        unset(static::$moduleSettings[$module][$key]);
     }
 
     /**
@@ -491,7 +491,7 @@ class Model extends \BaseModel
     public static function generateThumbnails($path, $sourceFile)
     {
         // get folder listing
-        $folders = self::getThumbnailFolders($path);
+        $folders = static::getThumbnailFolders($path);
         $filename = basename($sourceFile);
 
         // loop folders
@@ -518,7 +518,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) self::getModuleSetting('Core', 'date_formats_long') as $format) {
+        foreach ((array) static::getModuleSetting('Core', 'date_formats_long') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -540,7 +540,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) self::getModuleSetting('Core', 'date_formats_short') as $format) {
+        foreach ((array) static::getModuleSetting('Core', 'date_formats_short') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -561,7 +561,7 @@ class Model extends \BaseModel
     public static function getExtras($ids)
     {
         // get db
-        $db = self::getContainer()->get('database');
+        $db = static::getContainer()->get('database');
 
         // loop and cast to integers
         foreach ($ids as &$id) {
@@ -612,7 +612,7 @@ class Model extends \BaseModel
         }
 
         // get items
-        $items = (array) self::getContainer()->get('database')->getPairs($query, $parameters);
+        $items = (array) static::getContainer()->get('database')->getPairs($query, $parameters);
 
         // stop here when no items
         if (empty($items)) {
@@ -641,17 +641,17 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
+        if (!isset(static::$keys[$language]) || empty(static::$keys[$language])) {
             if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
                 BackendPagesModel::buildCache($language);
             }
 
             $keys = array();
             require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
+            static::$keys[$language] = $keys;
         }
 
-        return self::$keys[$language];
+        return static::$keys[$language];
     }
 
     /**
@@ -661,14 +661,14 @@ class Model extends \BaseModel
      */
     public static function getModules()
     {
-        if (empty(self::$modules)) {
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
+        if (empty(static::$modules)) {
+            $modules = (array) static::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
             foreach ($modules as $module) {
-                self::$modules[] = $module;
+                static::$modules[] = $module;
             }
         }
 
-        return self::$modules;
+        return static::$modules;
     }
 
     /**
@@ -707,7 +707,7 @@ class Model extends \BaseModel
         $key = (string) $key;
 
         // define settings
-        $settings = self::getModuleSettings($module);
+        $settings = static::getModuleSettings($module);
 
         // return if exists, otherwise return default value
         return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
@@ -726,9 +726,9 @@ class Model extends \BaseModel
         $module = ((bool) $module) ? (string) $module : false;
 
         // are the values available
-        if (empty(self::$moduleSettings)) {
+        if (empty(static::$moduleSettings)) {
             // get all settings
-            $moduleSettings = (array) self::getContainer()->get('database')->getRecords(
+            $moduleSettings = (array) static::getContainer()->get('database')->getRecords(
                 'SELECT ms.module, ms.name, ms.value
                  FROM modules_settings AS ms'
             );
@@ -747,16 +747,16 @@ class Model extends \BaseModel
                 }
 
                 // cache the setting
-                self::$moduleSettings[$setting['module']][$setting['name']] = $value;
+                static::$moduleSettings[$setting['module']][$setting['name']] = $value;
             }
         }
 
         if ($module) {
             // return module settings if there are some, if not return empty array
-            return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
+            return (isset(static::$moduleSettings[$module])) ? static::$moduleSettings[$module] : array();
         } else {
             // else return all settings
-            return self::$moduleSettings;
+            return static::$moduleSettings;
         }
     }
 
@@ -770,7 +770,7 @@ class Model extends \BaseModel
         $dropDown = array('Core' => 'Core');
 
         // fetch modules
-        $modules = self::getModules();
+        $modules = static::getModules();
 
         // loop and add into the return-array (with correct label)
         foreach ($modules as $module) {
@@ -791,7 +791,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
+        if (!isset(static::$navigation[$language]) || empty(static::$navigation[$language])) {
             if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
                 BackendPagesModel::buildCache($language);
             }
@@ -799,10 +799,10 @@ class Model extends \BaseModel
             $navigation = array();
             require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
 
-            self::$navigation[$language] = $navigation;
+            static::$navigation[$language] = $navigation;
         }
 
-        return self::$navigation[$language];
+        return static::$navigation[$language];
     }
 
     /**
@@ -814,7 +814,7 @@ class Model extends \BaseModel
     {
         $possibleFormats = array();
 
-        foreach ((array) self::getModuleSetting('Core', 'number_formats') as $format => $example) {
+        foreach ((array) static::getModuleSetting('Core', 'number_formats') as $format => $example) {
             $possibleFormats[$format] = $example;
         }
 
@@ -873,7 +873,7 @@ class Model extends \BaseModel
     {
         $possibleFormats = array();
 
-        foreach (self::getModuleSetting('Core', 'time_formats') as $format) {
+        foreach (static::getModuleSetting('Core', 'time_formats') as $format) {
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,
@@ -894,7 +894,7 @@ class Model extends \BaseModel
         if (\SpoonSession::exists('csrf_token') && \SpoonSession::get('csrf_token') != '') {
             $token = \SpoonSession::get('csrf_token');
         } else {
-            $token = self::generateRandomString(10, true, true, false, false);
+            $token = static::generateRandomString(10, true, true, false, false);
             \SpoonSession::set('csrf_token', $token);
         }
 
@@ -917,11 +917,11 @@ class Model extends \BaseModel
         $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
         // get the menuItems
-        $keys = self::getKeys($language);
+        $keys = static::getKeys($language);
 
         // get the URL, if it doesn't exist return 404
         if (!isset($keys[$pageId])) {
-            return self::getURL(404, $language);
+            return static::getURL(404, $language);
         } else {
             $URL .= $keys[$pageId];
         }
@@ -945,7 +945,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         $pageIdForURL = null;
-        $navigation = self::getNavigation($language);
+        $navigation = static::getNavigation($language);
 
         // loop types
         foreach ($navigation as $level) {
@@ -960,7 +960,7 @@ class Model extends \BaseModel
                     foreach ($properties['extra_blocks'] as $extra) {
                         if ($extra['module'] == $module && $extra['action'] == $action) {
                             // exact page was found, so return
-                            return self::getURL($properties['page_id'], $language);
+                            return static::getURL($properties['page_id'], $language);
                         } elseif ($extra['module'] == $module && $extra['action'] == null) {
                             $pageIdForURL = (int) $pageId;
                         }
@@ -971,10 +971,10 @@ class Model extends \BaseModel
 
         // still no page id?
         if ($pageIdForURL === null) {
-            return self::getURL(404);
+            return static::getURL(404);
         }
 
-        $URL = self::getURL($pageIdForURL, $language);
+        $URL = static::getURL($pageIdForURL, $language);
 
         // set locale with force
         FrontendLanguage::setLocale($language, true);
@@ -1090,14 +1090,14 @@ class Model extends \BaseModel
         $label = ($label == null) ? $module : (string) $label;
 
         // check if type is allowed
-        if (!in_array($type, self::$allowedExtras)) {
+        if (!in_array($type, static::$allowedExtras)) {
             throw new Exception(
-                'Type is not allowed, choose from "' . implode(', ', self::$allowedExtras) .'".'
+                'Type is not allowed, choose from "' . implode(', ', static::$allowedExtras) .'".'
             );
         }
 
         // get database
-        $db = self::get('database');
+        $db = static::get('database');
 
         // sequence not given
         if ($sequence == null) {
@@ -1185,7 +1185,7 @@ class Model extends \BaseModel
      */
     public static function isModuleInstalled($module)
     {
-        $modules = self::getModules();
+        $modules = static::getModules();
 
         return (in_array((string) $module, $modules));
     }
@@ -1199,19 +1199,19 @@ class Model extends \BaseModel
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = static::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;
 
         // get ping services
-        $pingServices = self::getModuleSetting('Core', 'ping_services', null);
+        $pingServices = static::getModuleSetting('Core', 'ping_services', null);
 
         // no ping services available or older than one month ago
         if ($pingServices === null || $pingServices['date'] < strtotime('-1 month')) {
             // get ForkAPI-keys
-            $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
-            $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
+            $publicKey = static::getModuleSetting('Core', 'fork_api_public_key', '');
+            $privateKey = static::getModuleSetting('Core', 'fork_api_private_key', '');
 
             // validate keys
             if ($publicKey == '' || $privateKey == '') {
@@ -1243,7 +1243,7 @@ class Model extends \BaseModel
             }
 
             // store the services
-            self::setModuleSetting('Core', 'ping_services', $pingServices);
+            static::setModuleSetting('Core', 'ping_services', $pingServices);
         }
 
         // make sure services array will not trigger an error (even if we couldn't load any)
@@ -1311,7 +1311,7 @@ class Model extends \BaseModel
         $valueToStore = serialize($value);
 
         // store
-        self::getContainer()->get('database')->execute(
+        static::getContainer()->get('database')->execute(
             'INSERT INTO modules_settings(module, name, value)
              VALUES(?, ?, ?)
              ON DUPLICATE KEY UPDATE value = ?',
@@ -1319,7 +1319,7 @@ class Model extends \BaseModel
         );
 
         // cache it
-        self::$moduleSettings[$module][$key] = $value;
+        static::$moduleSettings[$module][$key] = $value;
     }
 
     /**
@@ -1415,7 +1415,7 @@ class Model extends \BaseModel
         $referrer = null,
         $others = null
     ) {
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = static::getModuleSetting('Core', 'akismet_key');
 
         // no key, so we can't detect spam
         if ($akismetKey === '') {
@@ -1477,7 +1477,7 @@ class Model extends \BaseModel
         $referrer = null,
         $others = null
     ) {
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = static::getModuleSetting('Core', 'akismet_key');
 
         // no key, so we can't detect spam
         if ($akismetKey === '') {
@@ -1531,9 +1531,9 @@ class Model extends \BaseModel
         $item['event_name'] = (string) $eventName;
         $item['module'] = (string) $module;
         $item['callback'] = serialize($callback);
-        $item['created_on'] = self::getUTCDate();
+        $item['created_on'] = static::getUTCDate();
 
-        $db = self::getContainer()->get('database');
+        $db = static::getContainer()->get('database');
 
         // check if the subscription already exists
         $exists = (bool) $db->getVar(
@@ -1569,11 +1569,11 @@ class Model extends \BaseModel
         $eventName = (string) $eventName;
 
         // create log instance
-        $log = self::getContainer()->get('logger');
+        $log = static::getContainer()->get('logger');
         $log->info('Event (' . $module . '/' . $eventName . ') triggered.');
 
         // get all items that subscribe to this event
-        $subscriptions = (array) self::getContainer()->get('database')->getRecords(
+        $subscriptions = (array) static::getContainer()->get('database')->getRecords(
             'SELECT i.module, i.callback
              FROM hooks_subscriptions AS i
              WHERE i.event_module = ? AND i.event_name = ?',
@@ -1589,9 +1589,9 @@ class Model extends \BaseModel
                 $item['callback'] = $subscription['callback'];
                 $item['data'] = serialize($data);
                 $item['status'] = 'queued';
-                $item['created_on'] = self::getUTCDate();
+                $item['created_on'] = static::getUTCDate();
 
-                $queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
+                $queuedItems[] = static::getContainer()->get('database')->insert('hooks_queue', $item);
 
                 $log->info(
                     'Callback (' . $subscription['callback'] . ') is
@@ -1599,7 +1599,7 @@ class Model extends \BaseModel
                 );
             }
 
-            self::startProcessingHooks();
+            static::startProcessingHooks();
         }
     }
 
@@ -1616,7 +1616,7 @@ class Model extends \BaseModel
         $eventName = (string) $eventName;
         $module = (string) $module;
 
-        self::getContainer()->get('database')->delete(
+        static::getContainer()->get('database')->delete(
             'hooks_subscriptions',
             'event_module = ? AND event_name = ? AND module = ?',
             array($eventModule, $eventName, $module)
@@ -1652,7 +1652,7 @@ class Model extends \BaseModel
 
         $item = array();
         $item[(string) $key] = (string) $value;
-        self::getContainer()->get('database')->update('modules_extras', $item, 'id = ?', array((int) $id));
+        static::getContainer()->get('database')->update('modules_extras', $item, 'id = ?', array((int) $id));
     }
 
     /**
@@ -1664,7 +1664,7 @@ class Model extends \BaseModel
      */
     public static function updateExtraData($id, $key, $value)
     {
-        $db = self::getContainer()->get('database');
+        $db = static::getContainer()->get('database');
 
         $data = (string) $db->getVar(
             'SELECT i.data

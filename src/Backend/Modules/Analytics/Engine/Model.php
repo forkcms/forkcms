@@ -141,7 +141,7 @@ class Model
      */
     public static function getAggregate($name, $startTimestamp, $endTimestamp)
     {
-        $aggregates = self::getAggregates($startTimestamp, $endTimestamp);
+        $aggregates = static::getAggregates($startTimestamp, $endTimestamp);
 
         // aggregate exists
         if (isset($aggregates[$name])) {
@@ -162,14 +162,14 @@ class Model
     public static function getAggregates($startTimestamp, $endTimestamp)
     {
         // get data from cache
-        $aggregates = self::getDataFromCacheByType('aggregates', $startTimestamp, $endTimestamp);
+        $aggregates = static::getDataFromCacheByType('aggregates', $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($aggregates === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -189,12 +189,12 @@ class Model
     public static function getAggregatesFromCacheByType($type, $startTimestamp, $endTimestamp)
     {
         // doesnt exist in cache - load cache xml file
-        if (!isset(self::$data[$type]['aggregates'])) {
-            self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+        if (!isset(static::$data[$type]['aggregates'])) {
+            static::$data = static::getCacheFile($startTimestamp, $endTimestamp);
         }
 
         // return data is exists and false if not to get live data
-        return (isset(self::$data[$type]['aggregates']) ? self::$data[$type]['aggregates'] : false);
+        return (isset(static::$data[$type]['aggregates']) ? static::$data[$type]['aggregates'] : false);
     }
 
     /**
@@ -210,14 +210,14 @@ class Model
     public static function getAggregatesTotal($startTimestamp, $endTimestamp)
     {
         // get data from cache
-        $aggregates = self::getDataFromCacheByType('aggregates_total', $startTimestamp, $endTimestamp);
+        $aggregates = static::getDataFromCacheByType('aggregates_total', $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($aggregates === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -237,17 +237,17 @@ class Model
     private static function getAttributesFromCache($type, $startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache
-        if (!isset(self::$data[$type]['attributes'])) {
+        if (!isset(static::$data[$type]['attributes'])) {
             // load cache xml file
-            self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+            static::$data = static::getCacheFile($startTimestamp, $endTimestamp);
 
             // doesn't exist in cache after loading the xml file so set to empty
-            if (!isset(self::$data[$type]['attributes'])) {
-                self::$data[$type]['attributes'] = array();
+            if (!isset(static::$data[$type]['attributes'])) {
+                static::$data[$type]['attributes'] = array();
             }
         }
 
-        return self::$data[$type]['attributes'];
+        return static::$data[$type]['attributes'];
     }
 
     /**
@@ -271,7 +271,7 @@ class Model
             );
 
             // parse xml to array
-            return self::parseXMLToArray($xml);
+            return static::parseXMLToArray($xml);
         }
 
         // fallback (cache file doesn't exist)
@@ -289,7 +289,7 @@ class Model
      */
     public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
     {
-        return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
+        return static::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
     }
 
     /**
@@ -302,11 +302,11 @@ class Model
     public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache - load cache xml file
-        if (!isset(self::$dashboardData) || empty(self::$dashboardData)) {
-            self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
+        if (!isset(static::$dashboardData) || empty(static::$dashboardData)) {
+            static::$dashboardData = static::getCacheFile($startTimestamp, $endTimestamp);
         }
 
-        return self::$dashboardData;
+        return static::$dashboardData;
     }
 
     /**
@@ -336,15 +336,15 @@ class Model
 
         // get data from cache
         $items = array();
-        $items['aggregates'] = self::getAggregatesFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
-        $items['entries'] = self::getDataFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
+        $items['aggregates'] = static::getAggregatesFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
+        $items['entries'] = static::getDataFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($items['aggregates'] === false || $items['entries'] === false) {
-            self::redirectToLoadingPage(
+            static::redirectToLoadingPage(
                 $action,
                 array('page_id' => $id)
             );
@@ -354,7 +354,7 @@ class Model
         \SpoonSession::set($action . 'Loop', null);
 
         // update date_viewed for this page
-        self::updatePageDateViewed($id);
+        static::updatePageDateViewed($id);
 
         return $items;
     }
@@ -369,11 +369,11 @@ class Model
     public static function getDataFromCache($startTimestamp, $endTimestamp)
     {
         // doesnt exist in cache - load cache xml file
-        if (!isset(self::$data) || empty(self::$data)) {
-            self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+        if (!isset(static::$data) || empty(static::$data)) {
+            static::$data = static::getCacheFile($startTimestamp, $endTimestamp);
         }
 
-        return self::$data;
+        return static::$data;
     }
 
     /**
@@ -387,17 +387,17 @@ class Model
     public static function getDataFromCacheByType($type, $startTimestamp, $endTimestamp)
     {
         // doesn't exist in cache
-        if (!isset(self::$data[$type])) {
+        if (!isset(static::$data[$type])) {
             // load cache xml file
-            self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
+            static::$data = static::getCacheFile($startTimestamp, $endTimestamp);
 
             // doesn't exist in cache after loading the xml file so set to false to get live data
-            if (!isset(self::$data[$type])) {
+            if (!isset(static::$data[$type])) {
                 return false;
             }
         }
 
-        return (isset(self::$data[$type]['entries']) ? self::$data[$type]['entries'] : self::$data[$type]);
+        return (isset(static::$data[$type]['entries']) ? static::$data[$type]['entries'] : static::$data[$type]);
     }
 
     /**
@@ -410,14 +410,14 @@ class Model
     public static function getExitPages($startTimestamp, $endTimestamp)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('exit_pages', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('exit_pages', $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -603,7 +603,7 @@ class Model
     public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('metrics_per_day', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('metrics_per_day', $startTimestamp, $endTimestamp);
 
         // force retrieval from cache
         if ($forceCache) {
@@ -615,7 +615,7 @@ class Model
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -666,14 +666,14 @@ class Model
     public static function getPages($startTimestamp, $endTimestamp)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('pages', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('pages', $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -698,7 +698,7 @@ class Model
                     )
                 )
             ;
-            $results[$i]['time_on_site'] = self::getTimeFromSeconds(
+            $results[$i]['time_on_site'] = static::getTimeFromSeconds(
                 ($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2))
             );
             $results[$i]['new_visits_percentage'] = (
@@ -807,7 +807,7 @@ class Model
     public static function getTopExitPages($startTimestamp, $endTimestamp, $limit = 5)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('top_exit_pages', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('top_exit_pages', $startTimestamp, $endTimestamp);
 
         // limit data
         if (!empty($items)) {
@@ -819,7 +819,7 @@ class Model
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -852,7 +852,7 @@ class Model
     public static function getTopKeywords($startTimestamp, $endTimestamp, $limit = 5)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('top_keywords', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('top_keywords', $startTimestamp, $endTimestamp);
 
         // limit data
         if (!empty($items)) {
@@ -864,7 +864,7 @@ class Model
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -873,7 +873,7 @@ class Model
         $results = array();
 
         // get total pageviews
-        $totalPageviews = (int) self::getAggregate('keywordPageviews', $startTimestamp, $endTimestamp);
+        $totalPageviews = (int) static::getAggregate('keywordPageviews', $startTimestamp, $endTimestamp);
 
         // build top keywords
         foreach ($items as $i => $keywordData) {
@@ -911,7 +911,7 @@ class Model
     public static function getTopPages($startTimestamp, $endTimestamp, $limit = 5)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('top_pages', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('top_pages', $startTimestamp, $endTimestamp);
 
         // limit data
         if (!empty($items)) {
@@ -923,7 +923,7 @@ class Model
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -933,7 +933,7 @@ class Model
         $results = array();
 
         // get total pageviews
-        $totalPageviews = (int) self::getAggregate('pageviews', $startTimestamp, $endTimestamp);
+        $totalPageviews = (int) static::getAggregate('pageviews', $startTimestamp, $endTimestamp);
 
         // build top pages
         foreach ($items as $i => $pageData) {
@@ -967,7 +967,7 @@ class Model
     public static function getTopReferrals($startTimestamp, $endTimestamp, $limit = 5)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('top_referrals', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('top_referrals', $startTimestamp, $endTimestamp);
 
         // limit data
         if (!empty($items)) {
@@ -979,7 +979,7 @@ class Model
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache
@@ -989,7 +989,7 @@ class Model
         $results = array();
 
         // get total pageviews
-        $totalPageviews = (int) self::getAggregate('pageviews', $startTimestamp, $endTimestamp);
+        $totalPageviews = (int) static::getAggregate('pageviews', $startTimestamp, $endTimestamp);
 
         // build top keywords
         foreach ($items as $i => $referrerData) {
@@ -1027,14 +1027,14 @@ class Model
     public static function getTrafficSourcesGrouped($startTimestamp, $endTimestamp)
     {
         // get data from cache
-        $items = self::getDataFromCacheByType('traffic_sources', $startTimestamp, $endTimestamp);
+        $items = static::getDataFromCacheByType('traffic_sources', $startTimestamp, $endTimestamp);
 
         // get current action
         $action = BackendModel::getContainer()->get('url')->getAction();
 
         // nothing in cache
         if ($items === false) {
-            self::redirectToLoadingPage($action);
+            static::redirectToLoadingPage($action);
         }
 
         // reset loop counter for the current action if we got data from cache

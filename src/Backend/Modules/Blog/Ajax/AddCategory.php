@@ -32,7 +32,7 @@ class AddCategory extends BackendBaseAJAXAction
 
         // validate
         if ($categoryTitle === '') {
-            $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
+            $this->output(static::BAD_REQUEST, null, BL::err('TitleIsRequired'));
         } else {
             // get the data
             // build array
@@ -51,7 +51,7 @@ class AddCategory extends BackendBaseAJAXAction
             $item['id'] = BackendBlogModel::insertCategory($item, $meta);
 
             // output
-            $this->output(self::OK, $item, vsprintf(BL::msg('AddedCategory'), array($item['title'])));
+            $this->output(static::OK, $item, vsprintf(BL::msg('AddedCategory'), array($item['title'])));
         }
     }
 }

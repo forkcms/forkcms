@@ -203,7 +203,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // get item
-        $item = self::getCategory($id);
+        $item = static::getCategory($id);
 
         if (!empty($item)) {
             // delete meta
@@ -271,7 +271,7 @@ class Model
 
         // recalculate the comment count
         if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+            static::reCalculateCommentCount($itemIds);
         }
 
         // invalidate the cache for blog
@@ -298,7 +298,7 @@ class Model
 
         // recalculate the comment count
         if (!empty($itemIds)) {
-            self::reCalculateCommentCount($itemIds);
+            static::reCalculateCommentCount($itemIds);
         }
 
         // invalidate the cache for blog
@@ -647,7 +647,7 @@ class Model
             ) {
                 $URL = BackendModel::addNumber($URL);
 
-                return self::getURL($URL);
+                return static::getURL($URL);
             }
         } else {
             // current category should be excluded
@@ -663,7 +663,7 @@ class Model
 
                 $URL = BackendModel::addNumber($URL);
 
-                return self::getURL($URL, $id);
+                return static::getURL($URL, $id);
             }
         }
 
@@ -699,7 +699,7 @@ class Model
             ) {
                 $URL = BackendModel::addNumber($URL);
 
-                return self::getURLForCategory($URL);
+                return static::getURLForCategory($URL);
             }
         } else {
             // current category should be excluded
@@ -714,7 +714,7 @@ class Model
             ) {
                 $URL = BackendModel::addNumber($URL);
 
-                return self::getURLForCategory($URL, $id);
+                return static::getURLForCategory($URL, $id);
             }
         }
 
@@ -762,7 +762,7 @@ class Model
     {
         // Build item
         if (!isset($item['id'])) {
-            $item['id'] = (int) self::getMaximumId() + 1;
+            $item['id'] = (int) static::getMaximumId() + 1;
         }
         if (!isset($item['user_id'])) {
             $item['user_id'] = BackendAuthentication::getUser()->getUserId();
@@ -827,7 +827,7 @@ class Model
             $meta['title_overwrite'] = 'N';
         }
         if (!isset($meta['url'])) {
-            $meta['url'] = self::getURL($item['title']);
+            $meta['url'] = static::getURL($item['title']);
         }
         if (!isset($meta['url_overwrite'])) {
             $meta['url_overwrite'] = 'N';
@@ -840,7 +840,7 @@ class Model
         $item['meta_id'] = BackendModel::getContainer()->get('database')->insert('meta', $meta);
 
         // Write post to db
-        $item['revision_id'] = self::insert($item);
+        $item['revision_id'] = static::insert($item);
 
         // Any tags?
         if (!empty($tags)) {
@@ -875,7 +875,7 @@ class Model
             $comment['data'] = serialize(array('server' => $_SERVER));
 
             // Insert the comment
-            self::insertComment($comment);
+            static::insertComment($comment);
         }
 
         // Return
@@ -1006,7 +1006,7 @@ class Model
             );
 
             // get the record of the exact item we're editing
-            $revision = self::getRevision($item['id'], $item['revision_id']);
+            $revision = static::getRevision($item['id'], $item['revision_id']);
 
             // assign values
             $item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $revision['created_on']);
@@ -1078,7 +1078,7 @@ class Model
         // meta passed?
         if ($meta !== null) {
             // get current category
-            $category = self::getCategory($item['id']);
+            $category = static::getCategory($item['id']);
 
             // update the meta
             $db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
@@ -1152,7 +1152,7 @@ class Model
             );
 
             // recalculate the comment count
-            self::reCalculateCommentCount($itemIds);
+            static::reCalculateCommentCount($itemIds);
 
             // invalidate the cache for blog
             foreach ($languages as $language) {

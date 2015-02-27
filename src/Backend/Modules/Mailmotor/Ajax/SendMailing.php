@@ -35,7 +35,7 @@ class SendMailing extends BackendBaseAJAXAction
         // validate
         if ($id == '' || !BackendMailmotorModel::existsMailing($id)) {
             $this->output(
-                self::BAD_REQUEST,
+                static::BAD_REQUEST,
                 null,
                 'No mailing found.'
             );
@@ -88,7 +88,7 @@ class SendMailing extends BackendBaseAJAXAction
                 );
 
                 // we made it \o/
-                $this->output(self::OK, array('mailing_id' => $item['id']), BL::msg('MailingSent', $this->getModule()));
+                $this->output(static::OK, array('mailing_id' => $item['id']), BL::msg('MailingSent', $this->getModule()));
             }
         }
     }

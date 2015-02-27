@@ -60,16 +60,16 @@ class Language
     public static function getActiveLanguages()
     {
         // validate the cache
-        if (empty(self::$activeLanguages)) {
+        if (empty(static::$activeLanguages)) {
             // grab from settings
             $activeLanguages = (array) BackendModel::getModuleSetting('Core', 'active_languages');
 
             // store in cache
-            self::$activeLanguages = $activeLanguages;
+            static::$activeLanguages = $activeLanguages;
         }
 
         // return from cache
-        return self::$activeLanguages;
+        return static::$activeLanguages;
     }
 
     /**
@@ -79,7 +79,7 @@ class Language
      */
     public static function getCheckboxValues()
     {
-        $languages = self::getActiveLanguages();
+        $languages = static::getActiveLanguages();
         $results = array();
 
         // stop here if no languages are present
@@ -91,7 +91,7 @@ class Language
         foreach ($languages as $abbreviation) {
             $results[] = array(
                 'value' => $abbreviation,
-                'label' => self::lbl(strtoupper($abbreviation))
+                'label' => static::lbl(strtoupper($abbreviation))
             );
         }
 
@@ -122,13 +122,13 @@ class Language
         $module = (string) $module;
 
         // check if the error exists
-        if (isset(self::$err[$module][$key])) {
-            return self::$err[$module][$key];
+        if (isset(static::$err[$module][$key])) {
+            return static::$err[$module][$key];
         }
 
         // check if the error exists in the Core
-        if (isset(self::$err['Core'][$key])) {
-            return self::$err['Core'][$key];
+        if (isset(static::$err['Core'][$key])) {
+            return static::$err['Core'][$key];
         }
 
         // otherwise return the key in label-format
@@ -142,7 +142,7 @@ class Language
      */
     public static function getErrors()
     {
-        return (array) self::$err;
+        return (array) static::$err;
     }
 
     /**
@@ -152,7 +152,7 @@ class Language
      */
     public static function getInterfaceLanguage()
     {
-        return self::$currentInterfaceLanguage;
+        return static::$currentInterfaceLanguage;
     }
 
     /**
@@ -167,7 +167,7 @@ class Language
         // grab the languages from the settings & loop language to reset the label
         foreach ((array) BackendModel::getModuleSetting('Core', 'interface_languages', array('en')) as $key) {
             // fetch language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
+            $languages[$key] = static::getLabel(mb_strtoupper($key), 'Core');
         }
 
         // sort alphabetically
@@ -201,13 +201,13 @@ class Language
         $module = (string) $module;
 
         // check if the label exists
-        if (isset(self::$lbl[$module][$key])) {
-            return self::$lbl[$module][$key];
+        if (isset(static::$lbl[$module][$key])) {
+            return static::$lbl[$module][$key];
         }
 
         // check if the label exists in the Core
-        if (isset(self::$lbl['Core'][$key])) {
-            return self::$lbl['Core'][$key];
+        if (isset(static::$lbl['Core'][$key])) {
+            return static::$lbl['Core'][$key];
         }
 
         // otherwise return the key in label-format
@@ -221,7 +221,7 @@ class Language
      */
     public static function getLabels()
     {
-        return self::$lbl;
+        return static::$lbl;
     }
 
     /**
@@ -247,13 +247,13 @@ class Language
         $module = (string) $module;
 
         // check if the message exists
-        if (isset(self::$msg[$module][$key])) {
-            return self::$msg[$module][$key];
+        if (isset(static::$msg[$module][$key])) {
+            return static::$msg[$module][$key];
         }
 
         // check if the message exists in the Core
-        if (isset(self::$msg['Core'][$key])) {
-            return self::$msg['Core'][$key];
+        if (isset(static::$msg['Core'][$key])) {
+            return static::$msg['Core'][$key];
         }
 
         // otherwise return the key in label-format
@@ -267,7 +267,7 @@ class Language
      */
     public static function getMessages()
     {
-        return self::$msg;
+        return static::$msg;
     }
 
     /**
@@ -277,7 +277,7 @@ class Language
      */
     public static function getWorkingLanguage()
     {
-        return self::$currentWorkingLanguage;
+        return static::$currentWorkingLanguage;
     }
 
     /**
@@ -292,7 +292,7 @@ class Language
         // grab the languages from the settings & loop language to reset the label
         foreach ((array) BackendModel::getModuleSetting('Core', 'languages', array('en')) as $key) {
             // fetch the language's translation
-            $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
+            $languages[$key] = static::getLabel(mb_strtoupper($key), 'Core');
         }
 
         // sort alphabetically
@@ -320,7 +320,7 @@ class Language
         }
 
         // store
-        self::$currentInterfaceLanguage = $language;
+        static::$currentInterfaceLanguage = $language;
 
         // attempt to set a cookie
         try {
@@ -334,9 +334,9 @@ class Language
             file_get_contents(BACKEND_CACHE_PATH . '/Locale/en.json'),
             true
         );
-        self::$err = (array) $translations['err'];
-        self::$lbl = (array) $translations['lbl'];
-        self::$msg = (array) $translations['msg'];
+        static::$err = (array) $translations['err'];
+        static::$lbl = (array) $translations['lbl'];
+        static::$msg = (array) $translations['msg'];
 
         // overwrite with the requested language's translations
         $translations = json_decode(
@@ -347,22 +347,22 @@ class Language
         $lbl = (array) $translations['lbl'];
         $msg = (array) $translations['msg'];
         foreach ($err as $module => $translations) {
-            if (!isset(self::$err[$module])) {
-                self::$err[$module] = array();
+            if (!isset(static::$err[$module])) {
+                static::$err[$module] = array();
             }
-            self::$err[$module] = array_merge(self::$err[$module], $translations);
+            static::$err[$module] = array_merge(static::$err[$module], $translations);
         }
         foreach ($lbl as $module => $translations) {
-            if (!isset(self::$lbl[$module])) {
-                self::$lbl[$module] = array();
+            if (!isset(static::$lbl[$module])) {
+                static::$lbl[$module] = array();
             }
-            self::$lbl[$module] = array_merge(self::$lbl[$module], $translations);
+            static::$lbl[$module] = array_merge(static::$lbl[$module], $translations);
         }
         foreach ($msg as $module => $translations) {
-            if (!isset(self::$msg[$module])) {
-                self::$msg[$module] = array();
+            if (!isset(static::$msg[$module])) {
+                static::$msg[$module] = array();
             }
-            self::$msg[$module] = array_merge(self::$msg[$module], $translations);
+            static::$msg[$module] = array_merge(static::$msg[$module], $translations);
         }
     }
 
@@ -373,7 +373,7 @@ class Language
      */
     public static function setWorkingLanguage($language)
     {
-        self::$currentWorkingLanguage = (string) $language;
+        static::$currentWorkingLanguage = (string) $language;
     }
 
     /**
@@ -385,7 +385,7 @@ class Language
      */
     public static function err($key, $module = null)
     {
-        return self::getError($key, $module);
+        return static::getError($key, $module);
     }
 
     /**
@@ -397,7 +397,7 @@ class Language
      */
     public static function lbl($key, $module = null)
     {
-        return self::getLabel($key, $module);
+        return static::getLabel($key, $module);
     }
 
     /**
@@ -409,6 +409,6 @@ class Language
      */
     public static function msg($key, $module = null)
     {
-        return self::getMessage($key, $module);
+        return static::getMessage($key, $module);
     }
 }

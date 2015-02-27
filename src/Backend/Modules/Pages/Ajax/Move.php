@@ -53,7 +53,7 @@ class Move extends BackendBaseAJAXAction
 
         // got errors
         if (!empty($errors)) {
-            $this->output(self::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
+            $this->output(static::BAD_REQUEST, array('errors' => $errors), 'not all fields were filled');
         } else {
             // get page
             $success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop, $tree);
@@ -63,9 +63,9 @@ class Move extends BackendBaseAJAXAction
 
             // output
             if ($success) {
-                $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
+                $this->output(static::OK, BackendPagesModel::get($id), 'page moved');
             } else {
-                $this->output(self::ERROR, null, 'page not moved');
+                $this->output(static::ERROR, null, 'page not moved');
             }
         }
     }

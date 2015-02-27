@@ -149,13 +149,13 @@ class ModuleInstaller
         $db = $this->getDB();
 
         // validate cache
-        if (empty(self::$modules)) {
+        if (empty(static::$modules)) {
             // get all modules
-            self::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
+            static::$modules = (array) $db->getColumn('SELECT m.name FROM modules AS m');
         }
 
         // module exists?
-        if (!in_array('Search', self::$modules)) {
+        if (!in_array('Search', static::$modules)) {
             return;
         }
 

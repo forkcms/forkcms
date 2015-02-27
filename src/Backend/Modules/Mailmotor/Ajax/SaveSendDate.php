@@ -36,12 +36,12 @@ class SaveSendDate extends BackendBaseAJAXAction
 
         // validate mailing ID
         if ($mailingId == '') {
-            $this->output(self::BAD_REQUEST, null, 'Provide a valid mailing ID');
+            $this->output(static::BAD_REQUEST, null, 'Provide a valid mailing ID');
         } else {
             // validate date & time
             if ($sendOnDate == '' || $sendOnTime == '') {
                 $this->output(
-                    self::BAD_REQUEST,
+                    static::BAD_REQUEST,
                     null,
                     'Provide a valid send date date provided'
                 );
@@ -49,7 +49,7 @@ class SaveSendDate extends BackendBaseAJAXAction
                 // record is empty
                 if (!BackendMailmotorModel::existsMailing($mailingId)) {
                     $this->output(
-                        self::BAD_REQUEST,
+                        static::BAD_REQUEST,
                         null,
                         BL::err('MailingDoesNotExist', $this->getModule())
                     );
@@ -74,7 +74,7 @@ class SaveSendDate extends BackendBaseAJAXAction
 
                     // output
                     $this->output(
-                        self::OK,
+                        static::OK,
                         array('mailing_id' => $mailingId, 'timestamp' => $sendTimestamp),
                         sprintf(BL::msg('SendOn', $this->getModule()), $messageDate, $sendOnTime)
                     );

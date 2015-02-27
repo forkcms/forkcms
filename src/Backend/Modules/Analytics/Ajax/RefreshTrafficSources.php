@@ -42,7 +42,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
             BackendAnalyticsModel::clearTables();
 
             $this->output(
-                self::OK,
+                static::OK,
                 array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')),
                 'No longer authorized.'
             );
@@ -56,7 +56,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
 
             // return status
             $this->output(
-                self::OK,
+                static::OK,
                 array(
                     'status' => 'success',
                     'referrersHtml' => $referrersHtml,
@@ -78,7 +78,7 @@ class RefreshTrafficSources extends BackendBaseAJAXAction
             BackendAnalyticsHelper::getRecentReferrers();
             BackendAnalyticsHelper::getRecentKeywords();
         } catch (\Exception $e) {
-            $this->output(self::OK, array('status' => 'error'), 'Something went wrong while getting traffic sources.');
+            $this->output(static::OK, array('status' => 'error'), 'Something went wrong while getting traffic sources.');
         }
     }
 

@@ -45,7 +45,7 @@ class SaveContent extends BackendBaseAJAXAction
 
         // validate mailing ID
         if ($mailingId == '') {
-            $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
+            $this->output(static::BAD_REQUEST, null, 'No mailing ID provided');
         } else {
             // get mailing record
             $this->mailing = BackendMailmotorModel::getMailing($mailingId);
@@ -53,7 +53,7 @@ class SaveContent extends BackendBaseAJAXAction
             // check if record is empty
             if (empty($this->mailing)) {
                 $this->output(
-                    self::BAD_REQUEST,
+                    static::BAD_REQUEST,
                     null,
                     BL::err('MailingDoesNotExist', $this->getModule())
                 );
@@ -124,7 +124,7 @@ class SaveContent extends BackendBaseAJAXAction
 
                     // output
                     $this->output(
-                        self::OK,
+                        static::OK,
                         array('mailing_id' => $mailingId),
                         BL::msg('MailingEdited', $this->getModule())
                     );

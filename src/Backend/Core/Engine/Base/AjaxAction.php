@@ -61,7 +61,7 @@ class AjaxAction extends Object
      *
      * @param int    $statusCode The status code for the response, use the
      *                           available constants:
-     *                           self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR
+     *                           static::OK, static::BAD_REQUEST, static::FORBIDDEN, static::ERROR
      * @param mixed  $data       The data to output.
      * @param string $message    The text-message to send.
      */

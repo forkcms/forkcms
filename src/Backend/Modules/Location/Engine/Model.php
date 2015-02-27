@@ -38,7 +38,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // get item
-        $item = self::get($id);
+        $item = static::get($id);
 
         BackendModel::deleteExtraById($item['extra_id']);
 

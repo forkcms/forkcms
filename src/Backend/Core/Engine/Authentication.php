@@ -146,7 +146,7 @@ class Authentication
         $key = $user->getSetting('password_key');
 
         // return the encrypted string
-        return (string) self::getEncryptedString($password, $key);
+        return (string) static::getEncryptedString($password, $key);
     }
 
     /**
@@ -174,11 +174,11 @@ class Authentication
     public static function getUser()
     {
         // if the user-object doesn't exist create a new one
-        if (self::$user === null) {
-            self::$user = new User();
+        if (static::$user === null) {
+            static::$user = new User();
         }
 
-        return self::$user;
+        return static::$user;
     }
 
     /**
@@ -210,7 +210,7 @@ class Authentication
         }
 
         // users that aren't logged in can only access always allowed items
-        if (!self::isLoggedIn()) {
+        if (!static::isLoggedIn()) {
             return false;
         }
 
@@ -218,7 +218,7 @@ class Authentication
         $modules = BackendModel::getModules();
 
         // we will cache everything
-        if (empty(self::$allowedActions)) {
+        if (empty(static::$allowedActions)) {
             // init var
             $db = BackendModel::get('database');
 
@@ -247,20 +247,20 @@ class Authentication
                     $modules
                 )
                 ) {
-                    self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+                    static::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
                 }
             }
         }
 
         // module exists and God user is enough to be allowed
-        if (in_array($module, $modules) && self::getUser()->isGod()) {
+        if (in_array($module, $modules) && static::getUser()->isGod()) {
             return true;
         }
 
         // do we know a level for this action
-        if (isset(self::$allowedActions[$module][$action])) {
+        if (isset(static::$allowedActions[$module][$action])) {
             // is the level greater than zero? aka: do we have access?
-            if ((int) self::$allowedActions[$module][$action] > 0) {
+            if ((int) static::$allowedActions[$module][$action] > 0) {
                 return true;
             }
         }
@@ -287,17 +287,17 @@ class Authentication
         }
 
         // users that aren't logged in can only access always allowed items
-        if (!self::isLoggedIn()) {
+        if (!static::isLoggedIn()) {
             return false;
         }
 
         // module is active and God user, good enough
-        if (in_array($module, $modules) && self::getUser()->isGod()) {
+        if (in_array($module, $modules) && static::getUser()->isGod()) {
             return true;
         }
 
         // do we already know something?
-        if (empty(self::$allowedModules)) {
+        if (empty(static::$allowedModules)) {
             // init var
             $db = BackendModel::get('database');
 
@@ -314,16 +314,16 @@ class Authentication
 
             // add all modules
             foreach ($allowedModules as $row) {
-                self::$allowedModules[$row] = true;
+                static::$allowedModules[$row] = true;
             }
         }
 
         // not available in our cache
-        if (!isset(self::$allowedModules[$module])) {
+        if (!isset(static::$allowedModules[$module])) {
             return false;
         } else {
             // return value that was stored in cache
-            return self::$allowedModules[$module];
+            return static::$allowedModules[$module];
         }
     }
 
@@ -367,7 +367,7 @@ class Authentication
                 );
 
                 // create a user object, it will handle stuff related to the current authenticated user
-                self::$user = new User($sessionData['user_id']);
+                static::$user = new User($sessionData['user_id']);
 
                 // the user is logged on
                 BackendModel::getContainer()->set('logged_in', true);
@@ -413,7 +413,7 @@ class Authentication
         // not 0 = valid user!
         if ($userId !== 0) {
             // cleanup old sessions
-            self::cleanupOldSessions();
+            static::cleanupOldSessions();
 
             // build the session array (will be stored in the database)
             $session = array();

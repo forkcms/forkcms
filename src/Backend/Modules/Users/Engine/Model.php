@@ -495,6 +495,6 @@ class Model
         );
 
         // remove the user settings linked to the resetting of passwords
-        self::deleteResetPasswordSettings($userId);
+        static::deleteResetPasswordSettings($userId);
     }
 }

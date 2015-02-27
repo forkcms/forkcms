@@ -185,7 +185,7 @@ class Model
                 $URL = BackendModel::addNumber($URL);
 
                 // recall this method, but with a new url
-                $URL = self::getURL($URL, $id);
+                $URL = static::getURL($URL, $id);
             }
         } else {
             // specific id given
@@ -204,7 +204,7 @@ class Model
                 $URL = BackendModel::addNumber($URL);
 
                 // recall this method, but with a new url
-                $URL = self::getURL($URL, $id);
+                $URL = static::getURL($URL, $id);
             }
         }
 
@@ -228,7 +228,7 @@ class Model
         $item['language'] = $language;
         $item['tag'] = $tag;
         $item['number'] = 0;
-        $item['url'] = self::getURL($tag);
+        $item['url'] = static::getURL($tag);
 
         // insert and return id
         return (int) BackendModel::getContainer()->get('database')->insert('tags', $item);
@@ -309,7 +309,7 @@ class Model
                 // doesn' exist yet
                 if (!isset($tagsAndIds[$tag])) {
                     // insert tag
-                    $tagsAndIds[$tag] = self::insert($tag, $language);
+                    $tagsAndIds[$tag] = static::insert($tag, $language);
                 }
             }
 

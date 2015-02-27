@@ -49,7 +49,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // validate parameters
         if (!isset($parameters['method'])) {
-            return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+            return static::output(static::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }
 
         // check GET
@@ -57,7 +57,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // validate
         if ($method == '') {
-            return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
+            return static::output(static::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }
 
         // process method
@@ -65,7 +65,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // validate method
         if (!isset($chunks[1])) {
-            return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+            return static::output(static::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
         // camelcase module name
@@ -80,7 +80,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // check if the file is present? If it isn't present there is a problem
         if (!class_exists($class)) {
-            return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+            return static::output(static::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
         // build config-object-name
@@ -88,7 +88,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // validate if the method exists
         if (!is_callable(array($class, $methodName))) {
-            return self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
+            return static::output(static::BAD_REQUEST, array('message' => 'Invalid method.'));
         }
 
         // call the method
@@ -128,7 +128,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
                 // check if the parameter is available
                 if (!$parameter->isOptional() && !isset($parameters[$name])) {
-                    return self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
+                    return static::output(static::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
                 }
 
                 // add not-passed arguments
@@ -159,8 +159,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
             $data = (array) call_user_func_array(array($class, $methodName), (array) $arguments);
 
             // output
-            if (self::$content === null) {
-                self::output(self::OK, $data);
+            if (static::$content === null) {
+                static::output(static::OK, $data);
             }
         } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
@@ -173,7 +173,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
             }
 
             // output
-            return self::output(500, array('message' => $e->getMessage()));
+            return static::output(500, array('message' => $e->getMessage()));
         }
     }
 
@@ -310,8 +310,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // check if needed elements are available
         if ($email === '' || $nonce === '' || $secret === '') {
-            return self::output(
-                self::NOT_AUTHORIZED,
+            return static::output(
+                static::NOT_AUTHORIZED,
                 array('message' => 'Not authorized.')
             );
         }
@@ -320,7 +320,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         try {
             $user = new BackendUser(null, $email);
         } catch (\Exception $e) {
-            return self::output(self::FORBIDDEN, array('message' => 'This account does not exist.'));
+            return static::output(static::FORBIDDEN, array('message' => 'This account does not exist.'));
         }
 
         // user is god!
@@ -334,8 +334,8 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // no API-access
         if (!$apiAccess) {
-            return self::output(
-                self::FORBIDDEN,
+            return static::output(
+                static::FORBIDDEN,
                 array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.')
             );
         }
@@ -345,7 +345,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // output
         if ($secret != $hash) {
-            return self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
+            return static::output(static::FORBIDDEN, array('message' => 'Invalid secret.'));
         }
 
         // return
@@ -357,7 +357,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
      */
     public function display()
     {
-        return new Response(self::$content, 200);
+        return new Response(static::$content, 200);
     }
 
     /**
@@ -372,7 +372,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         if ($method !== $_SERVER['REQUEST_METHOD']) {
             $message = 'Illegal request method, only ' . $method . ' allowed for this method';
 
-            return self::output(self::BAD_REQUEST, array('message' => $message));
+            return static::output(static::BAD_REQUEST, array('message' => $message));
         }
 
         return true;
@@ -420,12 +420,12 @@ class Api extends \KernelLoader implements \ApplicationInterface
         switch ($output) {
             // json
             case 'json':
-                self::outputJSON($statusCode, $data);
+                static::outputJSON($statusCode, $data);
                 break;
 
             // xml
             default:
-                self::outputXML($statusCode, $data);
+                static::outputXML($statusCode, $data);
         }
 
         return ($statusCode === 200);
@@ -465,7 +465,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         \SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
 
         // output JSON
-        self::$content = json_encode($JSON);
+        static::$content = json_encode($JSON);
     }
 
     /**
@@ -512,6 +512,6 @@ class Api extends \KernelLoader implements \ApplicationInterface
         \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
 
         // output XML
-        self::$content = $XML->saveXML();
+        static::$content = $XML->saveXML();
     }
 }

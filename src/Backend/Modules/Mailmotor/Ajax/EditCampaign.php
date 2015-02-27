@@ -34,7 +34,7 @@ class EditCampaign extends BackendBaseAJAXAction
 
         // validate
         if ($name == '') {
-            $this->output(self::BAD_REQUEST, null, 'no name provided');
+            $this->output(static::BAD_REQUEST, null, 'no name provided');
         } else {
             // get existing id
             $existingId = BackendMailmotorModel::getCampaignId($name);
@@ -42,7 +42,7 @@ class EditCampaign extends BackendBaseAJAXAction
             // validate
             if ($existingId !== 0 && $id !== $existingId) {
                 $this->output(
-                    self::ERROR,
+                    static::ERROR,
                     array('id' => $existingId, 'error' => true),
                     BL::err('CampaignExists', $this->getModule())
                 );
@@ -62,12 +62,12 @@ class EditCampaign extends BackendBaseAJAXAction
                 // output
                 if ($rows !== 0) {
                     $this->output(
-                        self::OK,
+                        static::OK,
                         array('id' => $id),
                         BL::msg('CampaignEdited', $this->getModule())
                     );
                 } else {
-                    $this->output(self::ERROR, null, BL::err('CampaignNotEdited', $this->getModule()));
+                    $this->output(static::ERROR, null, BL::err('CampaignNotEdited', $this->getModule()));
                 }
             }
         }

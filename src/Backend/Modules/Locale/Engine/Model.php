@@ -98,7 +98,7 @@ class Model
                         $moduleElement->appendChild($itemElement);
 
                         // attributes
-                        $itemElement->setAttribute('type', self::getTypeName($type));
+                        $itemElement->setAttribute('type', static::getTypeName($type));
                         $itemElement->setAttribute('name', $name);
 
                         // loop translations
@@ -142,8 +142,8 @@ class Model
         );
 
         // rebuild cache
-        self::buildCache(BL::getWorkingLanguage(), 'Backend');
-        self::buildCache(BL::getWorkingLanguage(), 'Frontend');
+        static::buildCache(BL::getWorkingLanguage(), 'Backend');
+        static::buildCache(BL::getWorkingLanguage(), 'Frontend');
     }
 
     /**
@@ -306,7 +306,7 @@ class Model
         $used = array();
 
         // get labels from navigation
-        $lbl = self::getLabelsFromBackendNavigation();
+        $lbl = static::getLabelsFromBackendNavigation();
         foreach ((array) $lbl as $label) $used['lbl'][$label] = array(
             'files' => array('<small>used in navigation</small>'),
             'module_specific' => array()
@@ -1246,7 +1246,7 @@ class Model
 
         // types
         $typesShort = (array) $db->getEnumValues('locale', 'type');
-        foreach ($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
+        foreach ($typesShort as $type) $possibleTypes[$type] = static::getTypeName($type);
 
         // install English translations anyhow, they're fallback
         $possibleLanguages = array(
@@ -1347,7 +1347,7 @@ class Model
 
         // rebuild cache
         foreach ($possibleApplications as $application) {
-            foreach ($possibleLanguages[$application] as $language) self::buildCache($language, $application);
+            foreach ($possibleLanguages[$application] as $language) static::buildCache($language, $application);
         }
 
         return $statistics;
@@ -1370,7 +1370,7 @@ class Model
         $item['id'] = (int) BackendModel::getContainer()->get('database')->insert('locale', $item);
 
         // rebuild the cache
-        self::buildCache($item['language'], $item['application']);
+        static::buildCache($item['language'], $item['application']);
 
         // return the new id
         return $item['id'];
@@ -1392,7 +1392,7 @@ class Model
         $updated = BackendModel::getContainer()->get('database')->update('locale', $item, 'id = ?', array($item['id']));
 
         // rebuild the cache
-        self::buildCache($item['language'], $item['application']);
+        static::buildCache($item['language'], $item['application']);
 
         return $updated;
     }

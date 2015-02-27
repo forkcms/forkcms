@@ -65,7 +65,7 @@ class Model
             $db->delete('profiles_sessions', 'profile_id = ?', $id);
 
             // set profile status to deleted
-            self::update($id, array('status' => 'deleted'));
+            static::update($id, array('status' => 'deleted'));
         }
     }
 
@@ -240,20 +240,20 @@ class Model
         $id = (int) $id;
 
         // return avatar from cache
-        if (isset(self::$avatars[$id])) {
-            return self::$avatars[$id];
+        if (isset(static::$avatars[$id])) {
+            return static::$avatars[$id];
         }
 
         // define avatar path
         $avatarPath = FRONTEND_FILES_URL . '/Profiles/Avatars/32x32/';
 
         // get avatar for profile
-        $avatar = self::getSetting($id, 'avatar');
+        $avatar = static::getSetting($id, 'avatar');
 
         // if no email is given
         if (!$email) {
             // get user
-            $user = self::get($id);
+            $user = static::get($id);
 
             // redefine email
             $email = $user['email'];
@@ -278,7 +278,7 @@ class Model
         }
 
         // set avatar in cache
-        self::$avatars[$id] = $avatar;
+        static::$avatars[$id] = $avatar;
 
         // return avatar image path
         return $avatar;
@@ -535,7 +535,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url);
+                return static::getURL($url);
             }
         } else {
             // get number of profiles with this URL
@@ -553,7 +553,7 @@ class Model
                 $url = BackendModel::addNumber($url);
 
                 // try again
-                return self::getURL($url, $id);
+                return static::getURL($url, $id);
             }
         }
 
@@ -572,7 +572,7 @@ class Model
         $id = (int) $id;
 
         // create user instance
-        $user = self::get($id);
+        $user = static::get($id);
 
         // no user found, stop here
         if (empty($user)) {
@@ -584,7 +584,7 @@ class Model
         $allowed = BackendAuthentication::isAllowedAction('Edit', 'Profiles');
 
         // get avatar
-        $avatar = self::getAvatar($id, $user['email']);
+        $avatar = static::getAvatar($id, $user['email']);
 
         // build html
         $html = '<div class="dataGridAvatar">' . "\n";
@@ -635,7 +635,7 @@ class Model
             $values = array();
 
             // define exists
-            $exists = self::existsByEmail($item['email']);
+            $exists = static::existsByEmail($item['email']);
 
             // do not overwrite existing profiles
             if ($exists && !$overwriteExisting) {
@@ -651,20 +651,20 @@ class Model
                 'email' => $item['email'],
                 'registered_on' => BackendModel::getUTCDate(),
                 'display_name' => $item['display_name'],
-                'url' => self::getUrl($item['display_name'])
+                'url' => static::getUrl($item['display_name'])
             );
 
             // does not exists
             if (!$exists) {
                 // import
-                $id = self::insert($values);
+                $id = static::insert($values);
 
                 // update counter
                 $statistics['count']['inserted'] += 1;
             // already exists
             } else {
                 // get profile
-                $profile = self::getByEmail($item['email']);
+                $profile = static::getByEmail($item['email']);
                 $id = $profile['id'];
 
                 // exists
@@ -674,17 +674,17 @@ class Model
             // new password filled in?
             if ($item['password']) {
                 // get new salt
-                $salt = self::getRandomString();
+                $salt = static::getRandomString();
 
                 // update salt
-                self::setSetting($id, 'salt', $salt);
+                static::setSetting($id, 'salt', $salt);
 
                 // build password
-                $values['password'] = self::getEncryptedString($item['password'], $salt);
+                $values['password'] = static::getEncryptedString($item['password'], $salt);
             }
 
             // update values
-            self::update($id, $values);
+            static::update($id, $values);
 
             // we have a group id
             if ($groupId) {
@@ -697,7 +697,7 @@ class Model
                 $values['starts_on'] = BackendModel::getUTCDate();
 
                 // insert values
-                $id = self::insertProfileGroup($values);
+                $id = static::insertProfileGroup($values);
             }
         }
 

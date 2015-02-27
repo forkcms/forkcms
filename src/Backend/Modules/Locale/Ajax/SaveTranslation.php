@@ -79,10 +79,10 @@ class SaveTranslation extends BackendBaseAJAXAction
             }
 
             // output OK
-            $this->output(self::OK);
+            $this->output(static::OK);
         }
 
         // output the error
-        else $this->output(self::ERROR, null, $error);
+        else $this->output(static::ERROR, null, $error);
     }
 }

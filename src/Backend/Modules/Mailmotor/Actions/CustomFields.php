@@ -106,7 +106,7 @@ class CustomFields extends BackendBaseActionIndex
         $this->dataGrid->setColumnAttributes('name', array('class' => 'title'));
 
         // set paging limit
-        $this->dataGrid->setPagingLimit(self::PAGING_LIMIT);
+        $this->dataGrid->setPagingLimit(static::PAGING_LIMIT);
     }
 
     /**

@@ -130,7 +130,7 @@ class Model
 
         // we have items to be deleted
         if (!empty($dataIds)) {
-            self::deleteData($dataIds);
+            static::deleteData($dataIds);
         }
 
         // delete extra
@@ -163,7 +163,7 @@ class Model
         $id = (int) $id;
 
         // delete linked validation
-        self::deleteFieldValidation($id);
+        static::deleteFieldValidation($id);
 
         // delete field
         BackendModel::getContainer()->get('database')->delete('forms_fields', 'id = ?', $id);

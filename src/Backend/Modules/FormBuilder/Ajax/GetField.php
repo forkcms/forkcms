@@ -32,11 +32,11 @@ class GetField extends BackendBaseAJAXAction
 
         // invalid form id
         if (!BackendFormBuilderModel::exists($formId)) {
-            $this->output(self::BAD_REQUEST, null, 'form does not exist');
+            $this->output(static::BAD_REQUEST, null, 'form does not exist');
         } else {
             // invalid fieldId
             if (!BackendFormBuilderModel::existsField($fieldId, $formId)) {
-                $this->output(self::BAD_REQUEST, null, 'field does not exist');
+                $this->output(static::BAD_REQUEST, null, 'field does not exist');
             } else {
                 // get field
                 $field = BackendFormBuilderModel::getField($fieldId);
@@ -54,7 +54,7 @@ class GetField extends BackendBaseAJAXAction
 
 
                 // success output
-                $this->output(self::OK, array('field' => $field));
+                $this->output(static::OK, array('field' => $field));
             }
         }
     }

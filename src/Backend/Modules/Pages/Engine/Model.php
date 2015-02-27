@@ -167,7 +167,7 @@ class Model
         // loop
         foreach ($ids as $id) {
             // get data
-            $sourceData = self::get($id, null, $from);
+            $sourceData = static::get($id, null, $from);
 
             // get and build meta
             $meta = $db->getRecord(
@@ -207,14 +207,14 @@ class Model
             $page['data'] = ($sourceData['data'] !== null) ? serialize($sourceData['data']) : null;
 
             // insert page, store the id, we need it when building the blocks
-            $revisionId = self::insert($page);
+            $revisionId = static::insert($page);
 
             // init var
             $blocks = array();
             $hasBlock = ($sourceData['has_extra'] == 'Y');
 
             // get the blocks
-            $sourceBlocks = self::getBlocks($id, null, $from);
+            $sourceBlocks = static::getBlocks($id, null, $from);
 
             // loop blocks
             foreach ($sourceBlocks as $sourceBlock) {
@@ -233,7 +233,7 @@ class Model
             }
 
             // insert the blocks
-            self::insertBlocks($blocks, $hasBlock);
+            static::insertBlocks($blocks, $hasBlock);
 
             // init var
             $text = '';
@@ -270,7 +270,7 @@ class Model
         }
 
         // build cache
-        self::buildCache($to);
+        static::buildCache($to);
     }
 
     /**
@@ -302,7 +302,7 @@ class Model
 
                 // insert recursive here!
                 if (isset($navigation[$type][$depth + 1][$key])) {
-                    $html .= self::createHtml(
+                    $html .= static::createHtml(
                         $type,
                         $depth + 1,
                         $parentId,
@@ -341,7 +341,7 @@ class Model
         $db = BackendModel::getContainer()->get('database');
 
         // get record
-        $page = self::get($id, $revisionId, $language);
+        $page = static::get($id, $revisionId, $language);
 
         // validate
         if (empty($page)) {
@@ -423,7 +423,7 @@ class Model
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($id, $language);
+            $revisionId = static::getLatestRevision($id, $language);
         }
 
         // redefine
@@ -492,7 +492,7 @@ class Model
     {
         // fetch revision if not specified
         if ($revisionId === null) {
-            $revisionId = self::getLatestRevision($id, $language);
+            $revisionId = static::getLatestRevision($id, $language);
         }
 
         // redefine
@@ -586,7 +586,7 @@ class Model
     {
         // generate the cache files if needed
         if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
-            self::buildCache(BL::getWorkingLanguage());
+            static::buildCache(BL::getWorkingLanguage());
         }
 
         // init var
@@ -719,7 +719,7 @@ class Model
         $language = ($language !== null) ? (string) $language : BL::getWorkingLanguage();
 
         // get tree
-        $levels = self::getTree(array(0), null, 1, $language);
+        $levels = static::getTree(array(0), null, 1, $language);
 
         // init var
         $titles = array();
@@ -817,7 +817,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // get childs
-                $html .= self::getSubtree($navigation, $page['page_id'], $html);
+                $html .= static::getSubtree($navigation, $page['page_id'], $html);
 
                 // end
                 $html .= '</li>' . "\n";
@@ -873,7 +873,7 @@ class Model
 
         // build array
         if (!empty($data[$level])) {
-            return self::getTree($childIds, $data, ++$level, $language);
+            return static::getTree($childIds, $data, ++$level, $language);
         } else {
             // cleanup
             unset($data[$level]);
@@ -895,7 +895,7 @@ class Model
             FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
         )
         ) {
-            self::buildCache(BL::getWorkingLanguage());
+            static::buildCache(BL::getWorkingLanguage());
         }
 
         // init var
@@ -911,7 +911,7 @@ class Model
         $html .= '		<li id="page-1" rel="home">';
 
         // create homepage anchor from title
-        $homePage = self::get(1);
+        $homePage = static::get(1);
         $html .= '			<a href="' .
                  BackendModel::createURLForAction(
                      'Edit',
@@ -921,7 +921,7 @@ class Model
                  ) . '"><ins>&#160;</ins>' . $homePage['title'] . '</a>' . "\n";
 
         // add subpages
-        $html .= self::getSubTree($navigation, 1);
+        $html .= static::getSubTree($navigation, 1);
 
         // end
         $html .= '		</li>' . "\n";
@@ -952,7 +952,7 @@ class Model
                              ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                     // insert subtree
-                    $html .= self::getSubTree($navigation, $page['page_id']);
+                    $html .= static::getSubTree($navigation, $page['page_id']);
 
                     // end
                     $html .= '		</li>' . "\n";
@@ -989,7 +989,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= static::getSubTree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1024,7 +1024,7 @@ class Model
                          ) . '"><ins>&#160;</ins>' . $page['navigation_title'] . '</a>' . "\n";
 
                 // insert subtree
-                $html .= self::getSubTree($navigation, $page['page_id']);
+                $html .= static::getSubTree($navigation, $page['page_id']);
 
                 // end
                 $html .= '		</li>' . "\n";
@@ -1098,7 +1098,7 @@ class Model
                 $URL = BackendModel::addNumber($URL);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, null, $parentId, $isAction);
+                return static::getURL($URL, null, $parentId, $isAction);
             }
         } else {
             // one item should be ignored
@@ -1117,15 +1117,15 @@ class Model
                 $URL = BackendModel::addNumber($URL);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return static::getURL($URL, $id, $parentId, $isAction);
             }
         }
 
         // get full URL
-        $fullURL = self::getFullUrl($parentId) . '/' . $URL;
+        $fullURL = static::getFullUrl($parentId) . '/' . $URL;
 
         // get info about parent page
-        $parentPageInfo = self::get($parentId, null, BL::getWorkingLanguage());
+        $parentPageInfo = static::get($parentId, null, BL::getWorkingLanguage());
 
         // does the parent have extras?
         if ($parentPageInfo['has_extra'] == 'Y' && !$isAction) {
@@ -1141,7 +1141,7 @@ class Model
                 $URL = BackendModel::addNumber($URL);
 
                 // recall this method, but with a new URL
-                return self::getURL($URL, $id, $parentId, $isAction);
+                return static::getURL($URL, $id, $parentId, $isAction);
             }
         }
 
@@ -1151,7 +1151,7 @@ class Model
             $URL = BackendModel::addNumber($URL);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return static::getURL($URL, $id, $parentId, $isAction);
         }
 
         // check if it is an application
@@ -1160,7 +1160,7 @@ class Model
             $URL = BackendModel::addNumber($URL);
 
             // recall this method, but with a new URL
-            return self::getURL($URL, $id, $parentId, $isAction);
+            return static::getURL($URL, $id, $parentId, $isAction);
         }
 
         // return the unique URL!
@@ -1225,12 +1225,12 @@ class Model
         }
 
         // get data for pages
-        $page = self::get($id, null, $language);
-        $droppedOnPage = self::get($droppedOn, null, $language);
+        $page = static::get($id, null, $language);
+        $droppedOnPage = static::get($droppedOn, null, $language);
 
         // reset if the drop was on 0 (new meta)
         if ($droppedOn == 0) {
-            $droppedOnPage = self::get(1, null, $language);
+            $droppedOnPage = static::get(1, null, $language);
         }
 
         // validate
@@ -1349,7 +1349,7 @@ class Model
         );
 
         // rebuild url
-        $newURL = self::getURL(
+        $newURL = static::getURL(
             $currentURL,
             $id,
             $newParent,
@@ -1460,7 +1460,7 @@ class Model
         // loop pages
         foreach ($pages as $page) {
             // fetch blocks
-            $blocksContent = self::getBlocks($page['id'], $page['revision_id'], $page['language']);
+            $blocksContent = static::getBlocks($page['id'], $page['revision_id'], $page['language']);
 
             // unset revision id
             unset($page['revision_id']);
@@ -1469,7 +1469,7 @@ class Model
             $page['template_id'] = $newTemplateId;
 
             // save new page revision
-            $page['revision_id'] = self::update($page);
+            $page['revision_id'] = static::update($page);
 
             // overwrite all blocks with current defaults
             if ($overwrite) {
@@ -1514,7 +1514,7 @@ class Model
             }
 
             // insert the blocks
-            self::insertBlocks($blocksContent);
+            static::insertBlocks($blocksContent);
         }
     }
 }
