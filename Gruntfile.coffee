@@ -38,7 +38,7 @@ module.exports = (grunt) ->
           ]
         files: [
           src: '<%= theme_src %>/Layout/Templates/Components/Head.tpl'
-          dest: '<%= theme_build %>/Layout/Templates/'
+          dest: '<%= theme_build %>/Layout/Templates/Components/'
           flatten: true
           expand: true
         ]
