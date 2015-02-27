@@ -360,7 +360,7 @@ class Edit extends BackendBaseActionEdit
     {
         // check if this template path exists
         $templatePath = file_exists(
-            BACKEND_MODULE_PATH . '/Templates/' . $this->record['language'] . '/' . $this->record['template']
+            BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $this->record['language'] . '/' . $this->record['template']
         );
 
         // set wizard values
