@@ -130,20 +130,7 @@ class Url extends Base\Object
         if (isset($chunks[3]) && $chunks[3] != '') {
             $action = \SpoonFilter::toCamelCase($chunks[3]);
         } elseif (!$isAJAX) {
-            // check if module path is not yet defined
-            if (!defined('BACKEND_MODULE_PATH')) {
-                // build path for core
-                if ($module == 'Core') {
-                    define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
-                } else {
-                    // build path to the module and define it. This is a constant because we can use this in templates.
-                    define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
-                }
-            }
-
-            /**
-             * Check if we can load the config file
-             */
+            // Check if we can load the config file
             $configClass = 'Backend\\Modules\\' . $module . '\\Config';
             if ($module == 'Core') {
                 $configClass = 'Backend\\Core\\Config';

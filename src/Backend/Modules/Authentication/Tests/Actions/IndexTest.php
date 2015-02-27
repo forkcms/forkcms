@@ -11,14 +11,8 @@ class IndexTest extends WebTestCase
         $client = static::createClient();
         $client->followRedirects();
         $this->loadFixtures($client);
-        $this->markTestIncomplete(
-            'Running this test makes the client anonymously logged in the backend.
-It\'s caused by the BACKEND_MODULE_PATH global being set to Dashboard.
-After refactoring away this global, this test could be ran again.'
-        );
 
         $client->request('GET', '/private');
-
         $this->assertStringEndsWith(
             '/private/en/authentication?querystring=%2Fprivate%2Fen',
             $client->getHistory()->current()->getUri()

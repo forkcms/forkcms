@@ -1361,7 +1361,7 @@ class Model
     public static function getTemplate($language, $name)
     {
         // set the path to the template folders for this language
-        $path = BACKEND_MODULE_PATH . '/Templates/' . $language;
+        $path = BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language;
         $fs = new Filesystem();
 
         // load all templates in the 'templates' folder for this language
@@ -1411,7 +1411,7 @@ class Model
         $records = array();
         $finder = new Finder();
         $finder->depth(0);
-        foreach ($finder->directories()->in(BACKEND_MODULE_PATH . '/Templates/' . $language) as $directory) {
+        foreach ($finder->directories()->in(BACKEND_MODULES_PATH . '/Mailmotor/Templates/' . $language) as $directory) {
             $item = array();
             $item['language'] = $language;
             $item['value'] = $directory->getBaseName();
