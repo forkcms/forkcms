@@ -55,7 +55,7 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    function test_stripnewlines()
+    public function test_stripnewlines()
     {
         $this->assertEquals(
             'Foo Bar',
@@ -73,7 +73,7 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    function test_truncate()
+    public function test_truncate()
     {
         $this->assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 3, false, true),
