@@ -9,7 +9,7 @@ defined('SPOON_CHARSET') || define('SPOON_CHARSET', 'UTF-8');
 
 class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 {
-    function test_format_currency()
+    public function test_format_currency()
     {
         $this->assertEquals(
             '€ 1,23',
@@ -37,7 +37,7 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
         );
     }
 
-    function test_format_float()
+    public function test_format_float()
     {
         $this->assertEquals(
             '1.2344',
