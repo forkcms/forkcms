@@ -90,7 +90,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $database->execute(trim($sql));
     }
 
-    protected function loadFixtures($client, $fixtureClasses)
+    protected function loadFixtures($client, $fixtureClasses = array())
     {
         $database = $client->getContainer()->get('database');
 
@@ -167,12 +167,18 @@ abstract class WebTestCase extends BaseWebTestCase
     protected function submitForm(Client $client, Form $form, array $data = array())
     {
         // Get parameters should be set manually. Symfony uses the request object,
-        // but spoon still checks the $_GET parameters
-        $this->setGetParameters($data);
+        // but spoon still checks the $_GET and $_POST parameters
+        foreach ($data as $key => $value) {
+            $_GET[$key] = $value;
+            $_POST[$key] = $value;
+        }
 
         $client->submit($form);
 
-        $this->unsetGetParameters($data);
+        foreach ($data as $key => $value) {
+            unset($_GET[$key]);
+            unset($_POST[$key]);
+        }
     }
 
     /**
@@ -188,9 +194,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $data = array()
     ) {
         $this->setGetParameters($data);
-
         $client->request('GET', $url);
-
         $this->unsetGetParameters($data);
     }
 

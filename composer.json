@@ -6,7 +6,6 @@
     "license": "MIT",
     "require": {
         "php": ">=5.3.2",
-        "facebook/php-sdk": "3.2.*",
         "tijsverkoyen/akismet": "1.1.*",
         "tijsverkoyen/css-to-inline-styles": "1.5.*",
         "matthiasmullie/minify": "~1.3",

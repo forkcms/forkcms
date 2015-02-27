@@ -51,14 +51,6 @@ class CampaignMonitor
 
 
 	/**
-	 * Default campaign ID
-	 *
-	 * @var	string
-	 */
-	private $campaignId;
-
-
-	/**
 	 * Default client ID
 	 *
 	 * @var	string
@@ -104,14 +96,6 @@ class CampaignMonitor
 	 * @var	string
 	 */
 	private $siteURL;
-
-
-	/**
-	 * SOAP connection
-	 *
-	 * @var SoapClient
-	 */
-	private $soap;
 
 
 	/**

@@ -246,17 +246,16 @@ class Model
     public static function saveTags($otherId, $tags, $module, $language = null)
     {
         $otherId = (int) $otherId;
-        $tags = (is_array($tags)) ? (array) $tags : (string) $tags;
         $module = (string) $module;
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
         // redefine the tags as an array
         if (!is_array($tags)) {
-            $tags = (array) explode(',', $tags);
+            $tags = (array) explode(',', (string) $tags);
         }
 
-        // make sure the list of tags is unique
-        $tags = array_unique($tags);
+        // make sure the list of tags contains only unique and non-empty elements
+        $tags = array_filter(array_unique($tags));
 
         // get db
         $db = BackendModel::getContainer()->get('database');

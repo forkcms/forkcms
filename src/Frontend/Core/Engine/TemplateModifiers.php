@@ -75,15 +75,17 @@ class TemplateModifiers
      */
     public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
     {
+        $decimals = ($decimals === null) ? 2 : (int) $decimals;
+
         // @later get settings from backend
         switch ($currency) {
             case 'EUR':
-                $decimals = ($decimals === null) ? 2 : (int) $decimals;
-
-                // format as Euro
-                return '€ ' . number_format((float) $var, $decimals, ',', ' ');
+                $currency = '€';
                 break;
+            default:
         }
+
+        return $currency . ' ' . number_format((float) $var, $decimals, ',', ' ');
     }
 
     /**
@@ -455,7 +457,7 @@ class TemplateModifiers
      */
     public static function stripNewlines($var)
     {
-        return str_replace(array("\n", "\r"), '', $var);
+        return str_replace(array("\r\n", "\n", "\r"), ' ', $var);
     }
 
     /**
@@ -487,14 +489,15 @@ class TemplateModifiers
 
     /**
      * Truncate a string
-     *    syntax: {$var|truncate:max-length[:append-hellip]}
+     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var       The string passed from the template.
-     * @param int    $length    The maximum length of the truncated string.
-     * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param string $var         The string passed from the template.
+     * @param int    $length      The maximum length of the truncated string.
+     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
+     * @param bool   $closestWord Truncate on exact length or on closest word?
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true)
+    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
         // remove special chars, all of them, also the ones that shouldn't be there.
         $var = \SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
@@ -512,8 +515,12 @@ class TemplateModifiers
                 $length = $length - 1;
             }
 
-            // get the amount of requested characters
-            $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+            // truncate
+            if ($closestWord) {
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), SPOON_CHARSET);
+            } else {
+                $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+            }
 
             // add hellip
             if ($useHellip) {
