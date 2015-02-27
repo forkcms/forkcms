@@ -179,4 +179,58 @@ class CoreTest extends ApiTestCase
             }
         );
     }
+
+    public function testCoreAppleAddDevice()
+    {
+        $client = static::createClient();
+        $this->loadFixtures($client);
+        $data = array_merge(
+            array(
+                'method' => 'core.apple.addDevice',
+                'token' => 'fo:ef:fo:ef:fo:ef',
+            ),
+            $this->getAuthorizationParameters()
+        );
+        $request = $this->requestWithGetParameters(
+            $client,
+            '/api',
+            $data
+        );
+
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertEquals(
+            'ok',
+            $request->filter('fork')->attr('status')
+        );
+    }
+
+    public function testCoreAppleRemoveDevice()
+    {
+        $client = static::createClient();
+        $this->loadFixtures($client);
+        $data = array_merge(
+            array(
+                'method' => 'core.apple.removeDevice',
+                'token' => 'fo:ef:fo:ef:fo:ef',
+            ),
+            $this->getAuthorizationParameters()
+        );
+        $request = $this->requestWithGetParameters(
+            $client,
+            '/api',
+            $data
+        );
+
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        $this->assertEquals(
+            'ok',
+            $request->filter('fork')->attr('status')
+        );
+    }
 }
