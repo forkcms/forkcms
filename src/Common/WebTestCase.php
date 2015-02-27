@@ -194,7 +194,7 @@ abstract class WebTestCase extends BaseWebTestCase
         $data = array()
     ) {
         $this->setGetParameters($data);
-        $client->request('GET', $url);
+        $client->request('GET', $url, $data);
         $this->unsetGetParameters($data);
     }
 
