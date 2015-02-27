@@ -160,20 +160,21 @@ class CoreTest extends ApiTestCase
             $request->filter('languages > language')->count()
         );
 
+        $that = $this;
+
         $request->filter('languages > language')->each(
-            function ($language) {
-                $this->assertNotEmpty(
+            function ($language) use ($that) {
+                $that->assertNotEmpty(
                     $language->attr('language')
                 );
-                $this->assertNotEmpty(
+                $that->assertNotEmpty(
                     $language->attr('is_default')
                 );
-
-                $this->assertEquals(
+                $that->assertEquals(
                     'My website',
                     $language->filter('title')->text()
                 );
-                $this->assertNotEmpty(
+                $that->assertNotEmpty(
                     $language->filter('url')->text()
                 );
             }
