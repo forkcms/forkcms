@@ -6,6 +6,7 @@ Improvements:
 * Formbuilder: added the possibility to add date & time fields.
 * Settings: test email connection with SwiftMailer
 * Core: refactor out SELF constant
+* Core: removed the Facebook-class-dependency
 
 Bugfixes:
 
