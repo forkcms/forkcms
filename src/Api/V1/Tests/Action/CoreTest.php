@@ -2,9 +2,9 @@
 
 namespace Api\V1\Tests\Action;
 
-use Common\WebTestCase;
+use Common\ApiTestCase;
 
-class CoreTest extends WebTestCase
+class CoreTest extends ApiTestCase
 {
     public function testErrorOutput()
     {
@@ -128,5 +128,28 @@ class CoreTest extends WebTestCase
             '54f0fb1222403',
             $request->filter('api_key')->text()
         );
+    }
+
+    public function testCoreGetInfo()
+    {
+        $client = static::createClient();
+        $this->loadFixtures($client);
+        $data = array_merge(
+            array(
+                'method' => 'core.getInfo',
+            ),
+            $this->getAuthorizationParameters()
+        );
+        $request = $this->requestWithGetParameters(
+            $client,
+            '/api',
+            $data
+        );
+
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+        var_dump($client->getResponse()->getContent());
     }
 }
