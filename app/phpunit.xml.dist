@@ -13,6 +13,7 @@
             <directory>../src/*/*Bundle/Tests</directory>
             <directory>../src/*/Bundle/*Bundle/Tests</directory>
             <directory>../src/*Bundle/Tests</directory>
+            <directory>../src/Backend/Core/Tests</directory>
             <directory>../src/Frontend/Core/Tests</directory>
             <exclude>../src/ForkCMS/Bundle/InstallerBundle/Tests/Controller</exclude>
             <exclude>../src/Frontend/Modules/*/Tests</exclude>
