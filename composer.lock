@@ -4,11 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "23e63b0e1eda77ee34e0f83b49bd81aa",
-=======
-    "hash": "d5d3de70155f80de89ee30ee3ee3d71c",
->>>>>>> remove the deprecated facebook sdk
+    "hash": "669c6c8ce3692a8d238f41efc3e30948",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -531,26 +527,31 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.18",
+            "version": "1.3.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "5d1886a2ef0c48a9aa51695082fd2c0fbd32a4b5"
+                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/5d1886a2ef0c48a9aa51695082fd2c0fbd32a4b5",
-                "reference": "5d1886a2ef0c48a9aa51695082fd2c0fbd32a4b5",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
+                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
                 "shasum": ""
             },
             "require": {
                 "ext-pcre": "*",
+                "matthiasmullie/path-converter": "~1.0",
                 "php": ">=5.3.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "4.3.*",
                 "satooshi/php-coveralls": "dev-master"
             },
+            "bin": [
+                "bin/minifycss",
+                "bin/minifyjs"
+            ],
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -571,7 +572,64 @@
             ],
             "description": "CSS & JS minifier",
             "homepage": "http://www.minifier.org",
-            "time": "2015-02-06 10:14:06"
+            "keywords": [
+                "JS",
+                "css",
+                "javascript",
+                "minifier",
+                "minify"
+            ],
+            "time": "2015-02-26 08:07:21"
+        },
+        {
+            "name": "matthiasmullie/path-converter",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/matthiasmullie/path-converter.git",
+                "reference": "c9feee12fce2656bf437396e543ab03d192f497f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/matthiasmullie/path-converter/zipball/c9feee12fce2656bf437396e543ab03d192f497f",
+                "reference": "c9feee12fce2656bf437396e543ab03d192f497f",
+                "shasum": ""
+            },
+            "require": {
+                "ext-pcre": "*",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.3.*",
+                "satooshi/php-coveralls": "dev-master"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MatthiasMullie\\PathConverter\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Matthias Mullie",
+                    "email": "pathconverter@mullie.eu",
+                    "homepage": "http://www.mullie.eu",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Relative path converter",
+            "homepage": "http://github.com/matthiasmullie/path-converter",
+            "keywords": [
+                "converter",
+                "path",
+                "paths",
+                "relative"
+            ],
+            "time": "2015-02-21 12:51:32"
         },
         {
             "name": "monolog/monolog",
