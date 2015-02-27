@@ -394,11 +394,11 @@ class Navigation extends FrontendBaseObject
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
 
                 // set link
-                $navigation[$type][$parentId][$id]['link'] = Navigation::getURL($page['page_id']);
+                $navigation[$type][$parentId][$id]['link'] = static::getURL($page['page_id']);
 
                 // is this an internal redirect?
                 if (isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') {
-                    $navigation[$type][$parentId][$id]['link'] = Navigation::getURL(
+                    $navigation[$type][$parentId][$id]['link'] = static::getURL(
                         (int) $page['redirect_page_id']
                     );
                 }
