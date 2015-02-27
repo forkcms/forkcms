@@ -45,6 +45,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
      */
     public function initialize()
     {
+        self::$content = null;
 
         /**
          * @var Request
