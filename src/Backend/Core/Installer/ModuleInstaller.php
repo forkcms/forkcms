@@ -270,7 +270,7 @@ class ModuleInstaller
      * @param string $language The language abbreviation.
      * @param string $type     The type of locale.
      * @param string $application
-     * @return mixed
+     * @return string
      */
     protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
     {
@@ -400,8 +400,8 @@ class ModuleInstaller
     /**
      * Insert a dashboard widget
      *
-     * @param array $module
-     * @param array $widget
+     * @param string $module
+     * @param string $widget
      * @param array $data
      */
     protected function insertDashboardWidget($module, $widget, $data)

@@ -42,6 +42,10 @@ class InstallerControllerTest extends WebTestCase
         $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
     }
 
+    /**
+     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep2($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
@@ -71,6 +75,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep3($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
@@ -90,6 +97,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep4($crawler, $client)
     {
         // first submit with incorrect data
@@ -128,6 +138,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep5($crawler, $client)
     {
         $form = $crawler->selectButton('Finish installation')->form();

@@ -125,7 +125,7 @@ class Config extends BackendBaseConfig
     /**
      * Checks for external groups, and parses a message to import them.
      *
-     * @return mixed Returns false if the user already made groups.
+     * @return boolean Returns false if the user already made groups.
      */
     private function checkForExternalGroups()
     {

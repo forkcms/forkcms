@@ -414,7 +414,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Update the permissions
      *
-     * @param array $actionPermissions The action permissions.
+     * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
     private function updatePermissions($actionPermissions, $bundledActionPermissions)
@@ -506,7 +506,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Update the widgets
      *
-     * @param array $widgetPresets The widgets presets.
+     * @param \SpoonFormElement[] $widgetPresets The widgets presets.
      * @return array
      */
     private function updateWidgets($widgetPresets)

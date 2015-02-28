@@ -1319,7 +1319,7 @@ class Model
      * Get all sent mailings
      *
      * @param int $limit The maximum number of items to retrieve.
-     * @return array
+     * @return integer|null
      */
     public static function getSentMailings($limit = null)
     {
@@ -1517,7 +1517,7 @@ class Model
      * @param string $email             The email you want to insert the custom fields for.
      * @param int    $customFieldsGroup If this is set it will only update the custom fields for this group.
      * @param bool   $import            This method is called through the import action.
-     * @return bool
+     * @return boolean|null
      */
     public static function insertCustomFields(
         array $fields,
@@ -1672,7 +1672,7 @@ class Model
      * @param array $item    The data to update for the e-mail address.
      * @param int   $groupId The group to subscribe the address to.
      * @param array $fields  The custom fields for the address in the given group.
-     * @return bool
+     * @return boolean|null
      */
     public static function saveAddress(array $item, $groupId, $fields = array())
     {
@@ -1797,7 +1797,7 @@ class Model
      *
      * @param string $email    The email address to update.
      * @param mixed  $groupIds The ids of the groups.
-     * @return null|bool
+     * @return false|null
      */
     public static function updateGroups($email, $groupIds)
     {
@@ -1830,7 +1830,7 @@ class Model
      *
      * @param int   $mailingId The id of the mailing.
      * @param array $groupIds  A list of group-ids.
-     * @return null|bool
+     * @return false|null
      */
     public static function updateGroupsForMailing($mailingId, $groupIds)
     {

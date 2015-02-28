@@ -390,7 +390,7 @@ class CampaignMonitor
 	/**
 	 * Creates a template. Returns the template ID when succesful
 	 *
-	 * @return	mixed
+	 * @return	string
 	 * @param	string $name						The name of the template. Maximum of 30 characters (will be truncated to 30 characters if longer).
 	 * @param	string $HTMLPageURL					The URL of the HTML page you have created for the template.
 	 * @param	string[optional] $zipFileURL		Optional URL of a zip file containing any other files required by the template.
@@ -500,8 +500,7 @@ class CampaignMonitor
 	 * @return	string
 	 * @param	string $url						The url to call.
 	 * @param	array[optiona] $parameters		Optional parameters.
-	 * @param	bool[optional] $method			The method to use. Possible values are GET, POST.
-	 * @param	string[optional] $filePath		The path to the file to upload.
+	 * @param	string|boolean $method			The method to use. Possible values are GET, POST.
 	 * @param	bool[optional] $secure			Do a secure call over https with basic HTTP auth
 	 * @param	bool[optional] $expectJSON		Do we expect JSON.
 	 * @param	bool[optional] $returnHeaders	Should the headers be returned?
@@ -1360,7 +1359,7 @@ class CampaignMonitor
 	/**
 	 * Get response format
 	 *
-	 * @return	void
+	 * @return	string
 	 */
 	public function getResponseFormat()
 	{
@@ -1442,7 +1441,7 @@ class CampaignMonitor
 	/**
 	 * Set the site URL
 	 *
-	 * @return	void
+	 * @return	string
 	 */
 	private function getSiteURL()
 	{
@@ -1818,7 +1817,7 @@ class CampaignMonitor
 	/**
 	 * Schedules an existing campaign for sending. The campaign must be imported with defined recipients. For campaigns with more than 5 recipients the user must have sufficient credits or their credit card details saved within the application for the campaign to be sent via the API. For campaigns with 5 recipients or less the user must have enough test campaigns remaining in their API account.
 	 *
-	 * @return	bool
+	 * @return	string
 	 * @param	string $campaignId	The ID of the campaign to send.
 	 * @param	string $confirmationEmail		The email address where the confirmation email will be sent to.
 	 * @param	string[optional] $deliveryDate	The date the campaign should be scheduled to be sent. (YYYY-MM-DD HH:MM:SS)
@@ -1837,9 +1836,9 @@ class CampaignMonitor
 	/**
 	 * This sends a preview campaign based for a given campaign ID.
 	 *
-	 * @return	bool
+	 * @return	string
 	 * @param	string $campaignId	The ID of the campaign to send.
-	 * @param	mixed $recipients This can be an e-mail address string, or an array of addresses.
+	 * @param	string $recipients This can be an e-mail address string, or an array of addresses.
 	 * @param	string[optional] $personalization This can be 'Fallback','Random', or a specific e-mail address.
 	 */
 	public function sendCampaignPreview($campaignId, $recipients, $personalization = 'Fallback')
@@ -1960,6 +1959,7 @@ class CampaignMonitor
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
 	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
 	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param string $listId
 	 */
 	public function subscribe($email, $name = null, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -1970,7 +1970,7 @@ class CampaignMonitor
 	/**
 	 * Changes the status of an Active Subscriber to an Unsubscribed Subscriber who will no longer receive campaigns sent to that Subscriber List.
 	 *
-	 * @return	bool
+	 * @return	string
 	 * @param	string $email				The emailaddress.
 	 * @param	string[optional] $listId	The list ID to unsubscribe from
 	 */
@@ -1993,7 +1993,7 @@ class CampaignMonitor
 	/**
 	 * Updates a client's basic settings.
 	 *
-	 * @return	bool
+	 * @return	string
 	 * @param	string $companyName			The client company name.
 	 * @param	string $country				This client's country.
 	 * @param	string $timezone			Client timezone for tracking and reporting data.
@@ -2027,7 +2027,7 @@ class CampaignMonitor
 	/**
 	 * Updates a subscriber list's details.
 	 *
-	 * @return	bool
+	 * @return	string
 	 * @param	string $title								The title of the list.
 	 * @param	string[optional] $unsubscribePage			The URL to which subscribers will be directed when unsubscribing from the list. If left blank or omitted a generic unsubscribe page is used.
 	 * @param	bool[optional] $confirmOptIn				Either true or false depending on whether the list requires email confirmation or not. Please see the help documentation for more details of what this means.

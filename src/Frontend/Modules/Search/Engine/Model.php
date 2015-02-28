@@ -276,7 +276,7 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param mixed $term The search term (simple search) or the fields to
+     * @param string $term The search term (simple search) or the fields to
      *                    search for (advanced search - please note that the
      *                    field names may not be consistent throughout several
      *                    modules).
@@ -401,7 +401,7 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param mixed $term   The search term (simple search) or the fields to
+     * @param string $term   The search term (simple search) or the fields to
      *                      search for (advanced search - please note that the
      *                      field names may not be consistent throughout
      *                      several modules).
