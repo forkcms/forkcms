@@ -23,7 +23,8 @@ class CoreTest extends ApiTestCase
             'error',
             $request->filter('fork')->attr('status')
         );
-        $this->assertNotEmpty(
+        $this->assertEquals(
+            trim(file_get_contents(__DIR__ . '/../../../../../VERSION.md')),
             $request->filter('fork')->attr('version')
         );
         $this->assertNotEmpty(
