@@ -21,6 +21,7 @@
             <exclude>../src/Frontend/Modules/Faq/Tests/Actions</exclude>
             <exclude>../src/Frontend/Modules/Search/Tests/Actions</exclude>
             <exclude>../src/Backend/Modules/Authentication/Tests/Actions</exclude>
+            <exclude>../src/Api/*/Tests/Actions</exclude>
         </testsuite>
     </testsuites>
 
