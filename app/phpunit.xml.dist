@@ -31,7 +31,7 @@
             <directory>../src/*Bundle/Tests/Controller</directory>
             <directory>../src/Frontend/Modules/*/Tests/Actions</directory>
             <directory>../src/Backend/Modules/*/Tests/Actions</directory>
-            <directory>../src/Api/*/Tests/Action</directory>
+            <directory>../src/Api/*/Tests/Actions</directory>
         </testsuite>
     </testsuites>
 
