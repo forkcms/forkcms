@@ -1,12 +1,12 @@
 <?php
 
-namespace Api\V1\Tests\Action;
+namespace Api\V1\Tests\Actions;
 
 use Common\ApiTestCase;
 
 class CoreTest extends ApiTestCase
 {
-    public function testErrorOutput()
+    public function testApiGivesErrorWithoutParameters()
     {
         $client = static::createClient();
         $request = $client->request('GET', '/api');
@@ -35,7 +35,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testOkOutput()
+    public function testApiGivesOkOutput()
     {
         $client = static::createClient();
         $this->loadFixtures($client);
@@ -70,22 +70,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testNoMethod()
-    {
-        $client = static::createClient();
-        $client->request('GET', '/api');
-
-        $this->assertEquals(
-            200,
-            $client->getResponse()->getStatusCode()
-        );
-        $this->assertContains(
-            'No method-parameter provided',
-            $client->getResponse()->getContent()
-        );
-    }
-
-    public function testInvalidMethod()
+    public function testApiGivesErrorWitAnInvalidMethod()
     {
         $client = static::createClient();
         $this->requestWithGetParameters(
@@ -106,7 +91,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testCoreGetAPIKey()
+    public function testApiGivesCorrectOutputForCoreGetAPIKey()
     {
         $client = static::createClient();
         $this->loadFixtures($client);
@@ -130,7 +115,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testCoreGetInfo()
+    public function testApiGivesCorrectOutputForCoreGetInfo()
     {
         $client = static::createClient();
         $this->loadFixtures($client);
@@ -181,7 +166,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testCoreAppleAddDevice()
+    public function testApiGivesCorrectOutputForCoreAppleAddDevice()
     {
         $client = static::createClient();
         $this->loadFixtures($client);
@@ -208,7 +193,7 @@ class CoreTest extends ApiTestCase
         );
     }
 
-    public function testCoreAppleRemoveDevice()
+    public function testApiGivesCorrectOutputForCoreAppleRemoveDevice()
     {
         $client = static::createClient();
         $this->loadFixtures($client);
