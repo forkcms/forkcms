@@ -173,6 +173,7 @@ class ApplicationRouting extends Controller
 
     /**
      * @param string $app The name of the application to load (ex. BackendAjax)
+     * @param Request $request
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeAPI($app, $request)

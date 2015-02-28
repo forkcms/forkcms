@@ -699,7 +699,7 @@ class CMHelper
      * Creates a campaign in campaignmonitor. Returns the campaign ID
      *
      * @param array $item The mailing record to insert.
-     * @return mixed
+     * @return string|false
      */
     public static function insertMailing(array $item)
     {
@@ -1047,7 +1047,7 @@ class CMHelper
      * to be able to use their sendCampaignPreview method.
      *
      * @param array $item The mailing record to update a campaign draft.
-     * @return mixed Returns the newly made campaign ID, or false if the method failed.
+     * @return string|null Returns the newly made campaign ID, or false if the method failed.
      */
     public static function updateMailingDraft(array $item)
     {

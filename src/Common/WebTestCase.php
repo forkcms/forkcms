@@ -82,12 +82,16 @@ abstract class WebTestCase extends BaseWebTestCase
 
     /**
      * Executes sql in the database
+     * @param string $sql
      */
     protected function importSQL($database, $sql)
     {
         $database->execute(trim($sql));
     }
 
+    /**
+     * @param Client $client
+     */
     protected function loadFixtures($client, $fixtureClasses = array())
     {
         $database = $client->getContainer()->get('database');
@@ -141,6 +145,9 @@ abstract class WebTestCase extends BaseWebTestCase
         }
     }
 
+    /**
+     * @param Client $client
+     */
     protected function assertIs404($client)
     {
         $client->followRedirect();

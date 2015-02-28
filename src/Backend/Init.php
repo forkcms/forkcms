@@ -98,7 +98,7 @@ class Init extends \KernelLoader
      *
      * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
-     * @return bool
+     * @return null|false
      */
     public static function errorHandler($errorNumber, $errorString)
     {

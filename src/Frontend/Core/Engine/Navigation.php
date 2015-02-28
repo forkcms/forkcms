@@ -115,7 +115,7 @@ class Navigation extends FrontendBaseObject
      * Get the first child for a given parent
      *
      * @param int $pageId The pageID wherefore we should retrieve the first child.
-     * @return mixed
+     * @return integer
      */
     public static function getFirstChildId($pageId)
     {
@@ -456,7 +456,7 @@ class Navigation extends FrontendBaseObject
      * Get more info about a page
      *
      * @param int $pageId The pageID wherefore you want more information.
-     * @return mixed
+     * @return string
      */
     public static function getPageInfo($pageId)
     {

@@ -90,7 +90,7 @@ class ForkInstaller
     /**
      * Fetches the required modules
      *
-     * @return array
+     * @return string[]
      */
     public static function getRequiredModules()
     {
@@ -110,7 +110,7 @@ class ForkInstaller
     /**
      * Fetches the hidden modules
      *
-     * @return array
+     * @return string[]
      */
     public static function getHiddenModules()
     {

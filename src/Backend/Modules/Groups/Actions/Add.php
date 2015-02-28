@@ -250,7 +250,7 @@ class Add extends BackendBaseActionAdd
     /**
      * Insert the permissions
      *
-     * @param array $actionPermissions The action permissions.
+     * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
     private function insertPermissions($actionPermissions, $bundledActionPermissions)
@@ -343,7 +343,7 @@ class Add extends BackendBaseActionAdd
     /**
      * Insert the widgets
      *
-     * @param array $widgetPresets The widgets presets.
+     * @param \SpoonFormElement[] $widgetPresets The widgets presets.
      */
     private function insertWidgets($widgetPresets)
     {
