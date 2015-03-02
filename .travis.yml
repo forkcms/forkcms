@@ -20,6 +20,6 @@ before_script:
     - mysql -e 'create database fork_test'
     - cp app/config/parameters.yml.travis app/config/parameters.yml
 
-after_script:
+after_success:
   - wget https://scrutinizer-ci.com/ocular.phar
   - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
