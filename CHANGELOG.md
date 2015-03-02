@@ -23,7 +23,6 @@ Improvements:
 * Core: update the included Facebook SDK to v4
 * Core: refactor out BACKEND_MODULE_PATH constant
 
-
 Bugfixes:
 
 * Core: fix not correctly thrown exception
@@ -33,6 +32,7 @@ Bugfixes:
 * Core: make sure mails with encryption can be send trough SMTP
 * Core: add a .htaccess in the app dir to block all access
 * Locale: fix updating locale trough ajax when no application is set
+
 
 3.8.7 (2015-02-13)
 --
