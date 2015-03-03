@@ -160,7 +160,6 @@
 
 			// append the button
 			$(this).closest('.form-group').after(
-
 				'	<div class="btn-group">' +
 				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default"><span>' + options.generateLabel + '</span></a>' +
 				'	</div>');
@@ -945,9 +944,6 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
-				// ugly hack to escape entities and quotes
-				value = $('<div />').text(value).html().replace('"', '&quot;');
-
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -971,7 +967,7 @@
 					if(!inElements)
 					{
 						// add elements
-						elements.push(value);
+						elements.push(utils.string.stripForTag(value));
 
 						// set new value
 						$('#' + id).val(elements.join(options.splitChar));
@@ -1000,9 +996,11 @@
 					// loop elements
 					for(var i in elements)
 					{
+                        var value = utils.string.stripForTag(elements[i]);
+                        
 						html += '	<li class="list-group-item">' +
-								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span class="glyphicon glyphicon-trash"></span></a></span>' +
-								'       <span><strong>' + elements[i] + '</strong>' +
+								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="glyphicon glyphicon-trash"></span></a></span>' +
+								'       <span><strong>' + value + '</strong>' +
 								'	</li>';
 					}
 

@@ -156,7 +156,7 @@ class Meta
     /**
      * Should the description overwrite the default
      *
-     * @return mixed
+     * @return null|boolean
      */
     public function getDescriptionOverwrite()
     {
@@ -172,7 +172,7 @@ class Meta
     /**
      * Get the current value for the metaId;
      *
-     * @return mixed
+     * @return null|integer
      */
     public function getId()
     {
@@ -204,7 +204,7 @@ class Meta
     /**
      * Should the keywords overwrite the default
      *
-     * @return mixed
+     * @return null|boolean
      */
     public function getKeywordsOverwrite()
     {
@@ -236,7 +236,7 @@ class Meta
     /**
      * Should the title overwrite the default
      *
-     * @return mixed
+     * @return null|boolean
      */
     public function getTitleOverwrite()
     {
@@ -252,7 +252,7 @@ class Meta
     /**
      * Return the current value for an URL
      *
-     * @return mixed
+     * @return null|string
      */
     public function getURL()
     {
@@ -268,7 +268,7 @@ class Meta
     /**
      * Should the URL overwrite the default
      *
-     * @return mixed
+     * @return null|boolean
      */
     public function getURLOverwrite()
     {

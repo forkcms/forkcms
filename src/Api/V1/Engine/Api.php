@@ -10,6 +10,7 @@ namespace Api\V1\Engine;
  */
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\User as BackendUser;
@@ -44,18 +45,20 @@ class Api extends \KernelLoader implements \ApplicationInterface
      */
     public function initialize()
     {
+        self::$content = null;
+
+        /**
+         * @var Request
+         */
+        $request = $this->getContainer()->get('request');
+
         // simulate $_REQUEST
-        $parameters = array_merge($_GET, $_POST);
+        $parameters = array_merge(
+            (array) $request->query->all(),
+            (array) $request->request->all()
+        );
 
-        // validate parameters
-        if (!isset($parameters['method'])) {
-            return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
-        }
-
-        // check GET
-        $method = \SpoonFilter::getValue($parameters['method'], null, '');
-
-        // validate
+        $method = $request->get('method');
         if ($method == '') {
             return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }

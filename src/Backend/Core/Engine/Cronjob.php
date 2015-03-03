@@ -163,17 +163,6 @@ class Cronjob extends Object implements \ApplicationInterface
      */
     public function loadConfig()
     {
-        // check if module path is not yet defined
-        if (!defined('BACKEND_MODULE_PATH')) {
-            // build path for core
-            if ($this->getModule() == 'Core') {
-                define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $this->getModule());
-            } else {
-                // build path to the module and define it. This is a constant because we can use this in templates.
-                define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $this->getModule());
-            }
-        }
-
         // check if we can load the config file
         $configClass = 'Backend\\Modules\\' . $this->getModule() . '\\Config';
 

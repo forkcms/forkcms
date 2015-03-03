@@ -399,7 +399,7 @@ class Authentication
         $db = BackendModel::get('database');
 
         // fetch the encrypted password
-        $passwordEncrypted = Authentication::getEncryptedPassword($login, $password);
+        $passwordEncrypted = static::getEncryptedPassword($login, $password);
 
         // check in database (is the user active and not deleted, are the email and password correct?)
         $userId = (int) $db->getVar(
@@ -418,7 +418,7 @@ class Authentication
             // build the session array (will be stored in the database)
             $session = array();
             $session['user_id'] = $userId;
-            $session['secret_key'] = Authentication::getEncryptedString(\SpoonSession::getSessionId(), $userId);
+            $session['secret_key'] = static::getEncryptedString(\SpoonSession::getSessionId(), $userId);
             $session['session_id'] = \SpoonSession::getSessionId();
             $session['date'] = BackendModel::getUTCDate();
 

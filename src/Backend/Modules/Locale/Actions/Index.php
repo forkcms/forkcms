@@ -98,9 +98,7 @@ class Index extends BackendBaseActionIndex
 
         // loop the datagrids (as references)
         foreach ($dataGrids as $type => &$dataGrid) {
-            // set sorting
             /** @var $dataGrid BackendDataGridArray */
-
             $dataGrid->setSortingColumns(array('module', 'name', 'edited_on', 'application'), 'name');
 
             $dataGrid->setColumnFunction(
@@ -118,7 +116,7 @@ class Index extends BackendBaseActionIndex
             // set header label for reference code
             $dataGrid->setHeaderLabels(array('name' => \SpoonFilter::ucfirst(BL::lbl('ReferenceCode'))));
 
-            // add the multicheckbox column
+            // add the multi checkbox column
             $dataGrid->setMassActionCheckboxes('check', '[name]');
 
             // hide the application when only one application is shown

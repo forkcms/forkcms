@@ -38,7 +38,7 @@ class Message extends \Swift_Message
      * @param string $contentType
      * @param string $charset
      *
-     * @return Swift_Message
+     * @return Message
      */
     public static function newInstance($subject = null, $body = null, $contentType = null, $charset = null)
     {

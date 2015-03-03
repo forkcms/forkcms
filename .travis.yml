@@ -13,10 +13,14 @@ matrix:
         - php: hhvm-nightly
 
 script:
-    - phpunit -c app/
+    - phpunit -c app/ --coverage-clover=coverage.clover
 
 before_script:
     - npm install -g bower
     - composer install
     - mysql -e 'create database fork_test'
     - cp app/config/parameters.yml.travis app/config/parameters.yml
+
+after_success:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

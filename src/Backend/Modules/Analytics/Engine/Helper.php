@@ -311,7 +311,7 @@ class Helper
     /**
      * Get the exit pages for some metrics
      *
-     * @param mixed $metrics The metrics to get for the exit pages.
+     * @param string[] $metrics The metrics to get for the exit pages.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
      * @param string $sort The metric to sort on.
@@ -371,7 +371,7 @@ class Helper
     /**
      * Get the keywords for certain dates
      *
-     * @param mixed $metrics The metrics to get for the keywords.
+     * @param string $metrics The metrics to get for the keywords.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
      * @param string $sort The metric to sort on.
@@ -620,7 +620,7 @@ class Helper
     /**
      * Get the referrers for certain dates
      *
-     * @param mixed $metrics The metrics to get for the referrals.
+     * @param string $metrics The metrics to get for the referrals.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
      * @param string $sort The metric to sort on.
@@ -710,7 +710,7 @@ class Helper
     /**
      * Get the referrers for certain dates
      *
-     * @param mixed $metrics The metrics to get for the traffic sources.
+     * @param string[] $metrics The metrics to get for the traffic sources.
      * @param int $startTimestamp The start timestamp for the google call.
      * @param int $endTimestamp The end timestamp for the google call.
      * @param string $sort The metric to sort on.

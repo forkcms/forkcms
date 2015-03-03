@@ -53,7 +53,7 @@ class Init extends \KernelLoader
         }
 
         // define as a constant
-        define('LAST_MODIFIED_TIME', $lastModifiedTime);
+        defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
 
         $this->definePaths();
         $this->defineURLs();
@@ -72,11 +72,11 @@ class Init extends \KernelLoader
     private function definePaths()
     {
         // general paths
-        define('FRONTEND_PATH', PATH_WWW . '/src/' . APPLICATION);
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
+        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/' . APPLICATION);
+        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -84,9 +84,9 @@ class Init extends \KernelLoader
      */
     private function defineURLs()
     {
-        define('FRONTEND_CORE_URL', '/src/' . APPLICATION . '/Core');
-        define('FRONTEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
-        define('FRONTEND_FILES_URL', '/src/' . APPLICATION . '/Files');
+        defined('FRONTEND_CORE_URL') || define('FRONTEND_CORE_URL', '/src/' . APPLICATION . '/Core');
+        defined('FRONTEND_CACHE_URL') || define('FRONTEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
+        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/' . APPLICATION . '/Files');
     }
 
     /**
@@ -94,7 +94,7 @@ class Init extends \KernelLoader
      *
      * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
-     * @return bool
+     * @return null|false
      */
     public static function errorHandler($errorNumber, $errorString)
     {
