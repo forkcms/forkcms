@@ -804,15 +804,15 @@ jsBackend.FormBuilder.Fields =
                             }
 
                             // toggle error messages
-                            jsBackend.FormBuilder.fields.toggleValidationErrors('datetimeDialog');
+                            jsBackend.FormBuilder.Fields.toggleValidationErrors('datetimeDialog');
                         }
                         // saved!
                         else {
                             // append field html
-                            jsBackend.FormBuilder.fields.setField(data.data.field_id, data.data.field_html);
+                            jsBackend.FormBuilder.Fields.setField(data.data.field_id, data.data.field_html);
 
                             // close console box
-                            $('#datetimeDialog').dialog('close');
+                            $('#datetimeDialog').modal('hide');
                         }
                     }
 

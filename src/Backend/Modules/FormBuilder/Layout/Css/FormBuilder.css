@@ -19,6 +19,10 @@
     background-position: 10px -70px;
 }
 
+#formElements li#datetimeSelector a {
+    background-position: 10px -249px;
+}
+
 #formElements li#dropdownSelector a {
     background-position: 10px -100px;
 }
