@@ -137,6 +137,11 @@
                           {$lblTextarea|ucfirst}
                         </a>
                       </li>
+                      <li id="datetimeSelector" class="list-group-item">
+                        <a href="#datetime" rel="datetimeDialog" class="jsFieldDialogTrigger">
+                          {$lblDatetime|ucfirst}
+                        </a>
+                      </li>
                       <li id="dropdownSelector" class="list-group-item">
                         <a href="#dropdown" rel="dropdownDialog" class="jsFieldDialogTrigger">
                           {$lblDropdown|ucfirst}
