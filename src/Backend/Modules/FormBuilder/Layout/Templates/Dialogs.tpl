@@ -220,14 +220,14 @@
                 <input type="hidden" name="datetime_id" id="datetimeId" value="" />
                 <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#tabTextareaBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
+                        <a href="#tabDatetimeBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
                     </li>
                     <li role="presentation">
-                        <a href="#tabTextareaProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                        <a href="#tabDatetimeProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabDatetimeBasic">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblBasic|ucfirst}</h3>
@@ -246,7 +246,7 @@
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
+                    <div role="tabpanel" class="tab-pane" id="tabDatetimeProperties">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblProperties|ucfirst}</h3>
@@ -281,13 +281,6 @@
                                     <div class="form-group">
                                         <label for="datetimeType">{$lblType|ucfirst}</label>
                                         {$ddmDatetimeType}
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="datetimeTypeParameter">
-                                            {$lblParameter|ucfirst}
-                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                                        </label>
-                                        {$txtDatetimeTypeParameter}
                                     </div>
                                 </div>
                                 <div class="jsValidation" style="display: none;">
