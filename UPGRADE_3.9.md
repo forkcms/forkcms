@@ -25,3 +25,10 @@ use it like this:
 
 All occurences of sending emails in the core are replaced by this, so you can use
 this as a reference.
+
+
+## SPOON_DEBUG
+
+SPOON_DEBUG is removed. From now on you need to check if DEBUG is on by using the kernel.debug parameter, f.e.
+
+	if ($this->getContainer()->getParameter('kernel.debug')) { ...
