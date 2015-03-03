@@ -79,6 +79,7 @@
                                         <label for="textboxValidation">{$lblValidation|ucfirst}</label>
                                         {$ddmTextboxValidation}
                                     </div>
+                                    <p id="textboxReplyToErrorMessageError" class="text-danger" style="display: none;"></p>
                                     <div class="form-group jsValidationParameter" style="display: none;">
                                         <label for="textboxValidationParameter">
                                             {$lblParameter|ucfirst}
@@ -193,6 +194,114 @@
                                         </label>
                                         <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaErrorMessage}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+                <button id="textareaDialogSubmit" type="button" class="btn btn-primary jsFieldDialogSubmit">{$lblOK|ucfirst}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{* Dialog for a datetime *}
+<div class="modal fade jsFieldDialog" id="datetimeDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblDatetime|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title h4">{$lblTextarea|ucfirst}</span>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" name="datetime_id" id="datetimeId" value="" />
+                <ul class="nav nav-tabs jsFieldTabsNav" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#tabTextareaBasic" aria-controls="basic" role="tab" data-toggle="tab">{$lblBasic|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabTextareaProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextareaBasic">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblBasic|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="datetimeLabel">
+                                        {$lblLabel|ucfirst}
+                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    </label>
+                                    <p id="datetimeLabelError" class="text-danger jsFieldError" style="display: none;"></p>
+                                    {$txtDatetimeLabel}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tabTextareaProperties">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblProperties|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group jsDefaultValue">
+                                    <label for="datetimeValue">{$lblDefaultValue|ucfirst}</label>
+                                    <div class="form-inline">
+                                        {$ddmDatetimeValueAmount} {$ddmDatetimeValueType}
+                                    </div>
+                                </div>
+                                <div class="jsValidation">
+                                    <div class="form-group">
+                                        <ul class="list-unstyled">
+                                            <li class="checkbox">
+                                                <label for="datetimeRequired">{$chkDatetimeRequired} {$lblRequiredField|ucfirst}</label>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="form-group jsValidationRequiredErrorMessage" style="display: none;">
+                                        <label for="datetimeRequiredErrorMessage">
+                                            {$lblErrorMessage|ucfirst}
+                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        </label>
+                                        <p id="datetimeRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                                        {$txtDatetimeRequiredErrorMessage}
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="form-group">
+                                        <label for="datetimeType">{$lblType|ucfirst}</label>
+                                        {$ddmDatetimeType}
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datetimeTypeParameter">
+                                            {$lblParameter|ucfirst}
+                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        </label>
+                                        {$txtDatetimeTypeParameter}
+                                    </div>
+                                </div>
+                                <div class="jsValidation" style="display: none;">
+                                    <div class="form-group">
+                                        <label for="datetimeValidation">{$lblValidation|ucfirst}</label>
+                                        {$ddmDatetimeValidation}
+                                    </div>
+                                    <div class="form-group jsValidationErrorMessage" style="display: none;">
+                                        <label for="datetimeErrorMessage">
+                                            {$lblErrorMessage|ucfirst}
+                                            <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                        </label>
+                                        <p id="datetimeErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
+                                        {$txtDatetimeErrorMessage}
                                     </div>
                                 </div>
                             </div>
