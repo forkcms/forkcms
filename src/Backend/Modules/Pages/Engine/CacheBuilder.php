@@ -66,7 +66,7 @@ class CacheBuilder
     /**
      * Fetches all data from the database
      *
-     * @param $language
+     * @param string $language
      * @return array tupple containing keys and navigation
      */
     protected function getData($language)
@@ -249,7 +249,7 @@ class CacheBuilder
     /**
      * Returns an array containing all widgets
      *
-     * @return array
+     * @return string
      */
     protected function getSitemapId()
     {

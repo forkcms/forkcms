@@ -358,6 +358,17 @@ utils.string =
 	},
 
 	/**
+	 * Tags cannot contain ", < and >
+	 *
+	 * @return	string
+	 * @param	string value
+	 */
+	stripForTag: function(value)
+	{
+		return value.replace(/"/g, "'").replace(/(<|>)/g, '');
+	},
+
+	/**
 	 * Urlise a string (cfr. SpoonFilter::urlise)
 	 *
 	 * @return	string

@@ -105,8 +105,8 @@ class Mailer
     /**
      * send a Swift_Message like message
      *
-     * @param  Swift_mime_message $message
-     * @return boolean
+     * @param  \Swift_Mime_Message $message
+     * @return integer
      */
     public function send(\Swift_Mime_Message $message)
     {
