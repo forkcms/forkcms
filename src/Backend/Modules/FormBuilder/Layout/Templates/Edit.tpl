@@ -181,6 +181,10 @@
 							<label for="textboxValue">{$lblDefaultValue|ucfirst}</label>
 							{$txtTextboxValue}
 						</p>
+                        <p>
+                            <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                            {$txtTextboxPlaceholder}
+                        </p>
 					</div>
 					<div class="options">
 						<p class="p0">
@@ -252,6 +256,10 @@
 							<label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
 							{$txtTextareaValue}
 						</p>
+                        <p>
+                            <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                            {$txtTextareaPlaceholder}
+                        </p>
 					</div>
 					<div class="validation options">
 						<p class="p0">
