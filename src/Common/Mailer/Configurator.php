@@ -20,18 +20,22 @@ class Configurator implements EventSubscriberInterface
 
     public function onKernelRequest(GetResponseEvent $event)
     {
-        $transport = \Common\Mailer\TransportFactory::create(
-            $this->getMailSetting('mailer_type', 'mail'),
-            $this->getMailSetting('smtp_server'),
-            $this->getMailSetting('smtp_port', 25),
-            $this->getMailSetting('smtp_username'),
-            $this->getMailSetting('smtp_password'),
-            $this->getMailSetting('smtp_secure_layer')
-        );
-        $this->container->set(
-            'mailer',
-            \Swift_Mailer::newInstance($transport)
-        );
+        try {
+            $transport = \Common\Mailer\TransportFactory::create(
+                $this->getMailSetting('mailer_type', 'mail'),
+                $this->getMailSetting('smtp_server'),
+                $this->getMailSetting('smtp_port', 25),
+                $this->getMailSetting('smtp_username'),
+                $this->getMailSetting('smtp_password'),
+                $this->getMailSetting('smtp_secure_layer')
+            );
+            $this->container->set(
+                'mailer',
+                \Swift_Mailer::newInstance($transport)
+            );
+        } catch(\PDOException $e) {
+            // we'll just use the mail transport thats pre-configured
+        }
     }
 
     public static function getSubscribedEvents()
