@@ -101,7 +101,7 @@ class Url extends Base\Object
         }
 
         // split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
-        $chunks = (array)explode('/', trim($processedQueryString, '/'));
+        $chunks = (array) explode('/', trim($processedQueryString, '/'));
 
         // check if this is a request for a AJAX-file
         $isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax');

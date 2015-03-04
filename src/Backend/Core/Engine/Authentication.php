@@ -192,7 +192,6 @@ class Authentication
     {
         // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
         $alwaysAllowed = array(
-            //'Dashboard' => array('Index' => 7),
             'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
             'Error' => array('Index' => 7),
             'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)
@@ -202,8 +201,7 @@ class Authentication
         $URL = BackendModel::get('url');
 
         $action = ($action !== null) ? (string) $action : $URL->getAction();
-        $module = ($module !== null) ? (string) $module : $URL->getModule();
-        $module = \SpoonFilter::toCamelCase($module);
+        $module = \SpoonFilter::toCamelCase(($module !== null) ? (string) $module : $URL->getModule());
 
         // is this action an action that doesn't require authentication?
         if (isset($alwaysAllowed[$module][$action])) {
