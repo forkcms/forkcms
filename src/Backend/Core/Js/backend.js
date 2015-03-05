@@ -553,7 +553,7 @@ jsBackend.ckeditor =
         ],
 
         // skin by Kunstmaan (http://www.kunstmaan.be/blog/2012/01/03/bootstrapck-skin-for-ckeditor)
-        skin: 'BootstrapCK-Skin',
+        skin: 'bootstrapck',
 
         toolbar: 'Full',
         toolbarStartupExpanded: false,
@@ -567,7 +567,7 @@ jsBackend.ckeditor =
         extraPlugins: 'stylesheetparser,MediaEmbed',
 
         // remove useless plugins
-        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,indent,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
+        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
 
         // templates
         templates_files: [],
@@ -595,7 +595,6 @@ jsBackend.ckeditor =
             if (jsBackend.data.get('theme.has_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/screen.css');
             jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Core/Layout/Css/editor_content.css');
             if (jsBackend.data.get('theme.has_editor_css')) jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Frontend/Themes/' + jsBackend.data.get('theme.theme') + '/Core/Layout/Css/editor_content.css');
-            jsBackend.ckeditor.defaultConfig.contentsCss.push('/src/Backend/Core/Layout/Css/imports/editor.css');
 
             // bind on some global events
             CKEDITOR.on('dialogDefinition', jsBackend.ckeditor.onDialogDefinition);
