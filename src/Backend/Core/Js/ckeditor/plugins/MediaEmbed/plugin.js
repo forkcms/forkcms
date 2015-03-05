@@ -4,7 +4,7 @@
 ( function() {
     CKEDITOR.plugins.add( 'MediaEmbed',
     {
-        requires: [ 'iframedialog' ],
+        requires: [ 'iframe' ],
         init: function( editor )
         {
            var me = this;
