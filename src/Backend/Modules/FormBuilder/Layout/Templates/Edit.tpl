@@ -161,6 +161,7 @@
 			<ul>
 				<li><a href="#tabTextboxBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabTextboxProperties">{$lblProperties|ucfirst}</a></li>
+                <li><a href="#tabTextboxAdvanced">{$lblAdvanced|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabTextboxBasic" class="box">
@@ -181,10 +182,6 @@
 							<label for="textboxValue">{$lblDefaultValue|ucfirst}</label>
 							{$txtTextboxValue}
 						</p>
-                        <p>
-                            <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
-                            {$txtTextboxPlaceholder}
-                        </p>
 					</div>
 					<div class="options">
 						<p class="p0">
@@ -224,6 +221,17 @@
 				</div>
 
 			</div>
+
+            <div id="tabTextboxAdvanced" class="box">
+                <div class="horizontal">
+                    <div class="options">
+                        <p>
+                            <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                            {$txtTextboxPlaceholder}
+                        </p>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 
@@ -235,6 +243,7 @@
 			<ul>
 				<li><a href="#tabTextareaBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabTextareaProperties">{$lblProperties|ucfirst}</a></li>
+                <li><a href="#tabTextareaAdvanced">{$lblAdvanced|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabTextareaBasic" class="box">
@@ -256,10 +265,6 @@
 							<label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
 							{$txtTextareaValue}
 						</p>
-                        <p>
-                            <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
-                            {$txtTextareaPlaceholder}
-                        </p>
 					</div>
 					<div class="validation options">
 						<p class="p0">
@@ -289,6 +294,17 @@
 					</div>
 				</div>
 			</div>
+
+            <div id="tabTextareaAdvanced" class="box">
+                <div class="horizontal">
+                    <div class="options">
+                        <p>
+                            <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                            {$txtTextareaPlaceholder}
+                        </p>
+                    </div>
+                </div>
+            </div>
 		</div>
 	</div>
 
