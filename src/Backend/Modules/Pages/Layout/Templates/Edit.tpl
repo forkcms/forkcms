@@ -47,10 +47,10 @@
       <div role="tabpanel">
         <ul class="nav nav-tabs" role="tablist">
           <li role="presentation" class="active">
-            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{$lblVersions|ucfirst}</a>
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
           </li>
           <li role="presentation">
-            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
+            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{$lblVersions|ucfirst}</a>
           </li>
           <li role="presentation">
             <a href="#tabSettings" aria-controls="settings" role="tab" data-toggle="tab">{$lblSettings|ucfirst}</a>
@@ -66,36 +66,7 @@
           </li>
         </ul>
         <div class="tab-content">
-          <div role="tabpanel" class="tab-pane active" id="tabVersions">
-            {option:drafts}
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblDrafts|ucfirst} <abbr title="{$msgHelpDrafts}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                {$drafts}
-              </div>
-            </div>
-            {/option:drafts}
-            <div class="row">
-              <div class="col-md-12">
-                <h3>{$lblPreviousVersions|ucfirst} <abbr title="{$msgHelpRevisions}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12">
-                {option:revisions}
-                {$revisions}
-                {/option:revisions}
-                {option:!revisions}
-                <p>{$msgNoRevisions}</p>
-                {/option:!revisions}
-              </div>
-            </div>
-          </div>
-          <div role="tabpanel" class="tab-pane" id="tabContent">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
             <div id="editTemplate" class="row">
               <div class="col-md-12">
                 {* Do not change the ID! *}
@@ -123,14 +94,14 @@
                         </div>
                         <table cellspacing="2">
                           <tbody>
-                          <tr>
-                            <td data-position="fallback" id="templatePosition-fallback"
-                              colspan="1" class="box">
-                              <div class="heading linkedBlocksTitle">
-                                <h4>{$lblFallback|ucfirst}</h4></div>
-                              <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
-                            </td>
-                          </tr>
+                            <tr>
+                              <td data-position="fallback" id="templatePosition-fallback"
+                                colspan="1" class="box">
+                                <div class="heading linkedBlocksTitle">
+                                  <h4>{$lblFallback|ucfirst}</h4></div>
+                                <div class="linkedBlocks"><!-- linked blocks will be added here --></div>
+                              </td>
+                            </tr>
                           </tbody>
                         </table>
                       </div>
@@ -140,6 +111,35 @@
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabVersions">
+            {option:drafts}
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblDrafts|ucfirst} <abbr title="{$msgHelpDrafts}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                {$drafts}
+              </div>
+            </div>
+            {/option:drafts}
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblPreviousVersions|ucfirst} <abbr title="{$msgHelpRevisions}"><span class="glyphicon glyphicon-info-sign"></span></abbr></h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                {option:revisions}
+                {$revisions}
+                {/option:revisions}
+                {option:!revisions}
+                <p>{$msgNoRevisions}</p>
+                {/option:!revisions}
               </div>
             </div>
           </div>
