@@ -167,7 +167,6 @@ class Action extends Object
         // add core css files
         $this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'Core', false, false);
         $this->header->addCSS('/bower_components/bootstrap/dist/css/bootstrap.min.css', 'Core', true, false);
-        $this->header->addCSS('/bower_components/bootstrap/dist/css/bootstrap-theme.min.css', 'Core', true, false);
         $this->header->addCSS('screen.css', 'Core');
         $this->header->addCSS('debug.css', 'Core');
 
