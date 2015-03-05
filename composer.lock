@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "669c6c8ce3692a8d238f41efc3e30948",
+    "hash": "cb1056b45df4d78013c8a16854308b29",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -527,16 +527,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.19",
+            "version": "1.3.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a"
+                "reference": "0ada1eccaf2566b30f9021d613a2cae9e4e00f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
-                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/0ada1eccaf2566b30f9021d613a2cae9e4e00f4d",
+                "reference": "0ada1eccaf2566b30f9021d613a2cae9e4e00f4d",
                 "shasum": ""
             },
             "require": {
@@ -579,7 +579,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2015-02-26 08:07:21"
+            "time": "2015-03-02 16:59:12"
         },
         {
             "name": "matthiasmullie/path-converter",
@@ -952,6 +952,63 @@
                 "logging"
             ],
             "time": "2013-05-27 18:06:55"
+        },
+        {
+            "name": "symfony/swiftmailer-bundle",
+            "version": "v2.3.8",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/SwiftmailerBundle.git",
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/SwiftmailerBundle/zipball/970b13d01871207e81d17b17ddda025e7e21e797",
+                "reference": "970b13d01871207e81d17b17ddda025e7e21e797",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2",
+                "swiftmailer/swiftmailer": ">=4.2.0,~5.0",
+                "symfony/swiftmailer-bridge": "~2.1"
+            },
+            "require-dev": {
+                "symfony/config": "~2.1",
+                "symfony/dependency-injection": "~2.1",
+                "symfony/http-kernel": "~2.1",
+                "symfony/yaml": "~2.1"
+            },
+            "suggest": {
+                "psr/log": "Allows logging"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.3-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\SwiftmailerBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony SwiftmailerBundle",
+            "homepage": "http://symfony.com",
+            "time": "2014-12-01 17:44:50"
         },
         {
             "name": "symfony/symfony",

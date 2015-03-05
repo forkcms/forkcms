@@ -8,7 +8,7 @@ parameters:
 
     kernel.secret:          installation
 
-    fork.debug_email:       ~
+    fork.debug_email:       noreply@fork.com
     fork.debug_message:     'Internal error.'
     fork.version:           '3.9.0'
 
