@@ -53,7 +53,7 @@
 
 					{% if item.image %}<img class="img-responsive" src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
 					{% if not item.introduction %}{{ item.text }}
-					{% else %}{{ item.introduction | raw  }}{% endif %}
+					{% else %}{{ item.introduction|raw  }}{% endif %}
 
 	                <a class="btn btn-primary" href="{{ item.full_url }}">{{ lbl.More|capitalize }} <span class="glyphicon glyphicon-chevron-right"></span></a>
 					<hr>

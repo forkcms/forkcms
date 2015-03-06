@@ -8,7 +8,7 @@
 		{% if main.html %}
 		<div class="container">
 			<div class="jumbotron">
-				{{ main.html | raw }}
+				{{ main.html|raw }}
 				<p><a class="btn btn-lg btn-primary" href="#" role="button">{{ lbl.More|capitalize }} &raquo;</a></p>
 			</div>
 		</div>
@@ -23,7 +23,7 @@
  					{% if left.include_path %}
  						{% include left.include_path %}
  					{% else %}
- 						{{ left.html | raw }}
+ 						{{ left.html|raw }}
  					{% endif %}
 				{% endfor %}
 			</div>
@@ -33,7 +33,7 @@
  					{% if middle.include_path %}
  						{% include middle.include_path %}
  					{% else %}
- 						{{ middle.html | raw }}
+ 						{{ middle.html|raw }}
  					{% endif %}
 				{% endfor %}
 			</div>
@@ -43,7 +43,7 @@
  					{% if right.include_path %}
  						{% include right.include_path %}
  					{% else %}
- 						{{ right.html | raw }}
+ 						{{ right.html|raw }}
  					{% endif %}
 				{% endfor %}
 			</div>

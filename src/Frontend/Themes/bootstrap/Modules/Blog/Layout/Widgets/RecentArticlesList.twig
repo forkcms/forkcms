@@ -6,7 +6,7 @@
 {% if widgetBlogRecentArticlesList %}
 	<section id="blogRecentArticlesListWidget" class="well">
 			<header>
-				<h3>{{ lbl.RecentArticles|capitalize }}</h3>
+				<h3>{{ lng.lbl('RecentArticles')|capitalize }}</h3>
 			</header>
 				<ul>
 					{% for article in widgetBlogRecentArticlesList %}
@@ -15,8 +15,8 @@
 				</ul>
 			<footer class="ft">
 				<p>
-					<a href="{$var|geturlforblock:'blog'}">{{ lbl.BlogArchive|capitalize }}</a>
-					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ lbl.SubscribeToTheRSSFeed|capitalize }}</a>
+					<a href="{{ var|geturlforblock('blog') }}">{{ lng.lbl('BlogArchive')|capitalize }}</a>
+					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ lng.lbl('SubscribeToTheRSSFeed')|capitalize }}</a>
 				</p>
 			</footer>
 	</section>

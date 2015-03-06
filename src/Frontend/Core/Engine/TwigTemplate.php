@@ -26,6 +26,7 @@ Class TwigTemplate
      *
      * @var bool
      */
+    private $debugMode = false;
     private $addSlashes = false;
     private $forms = array();
     private $variables = array();
@@ -38,6 +39,7 @@ Class TwigTemplate
         if ($addToReference) {
             Model::getContainer()->set('template', $this);
         }
+        $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
         require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
         \Twig_Autoloader::register();
         $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
@@ -108,7 +110,7 @@ Class TwigTemplate
         // form hook
         $field = substr($key, 0, 3);
         if (in_array($field, array('hid', 'chk', 'ddm', 'txt'))) {
-            $this->fields[$field][substr($key, 3)] = $values;
+            $this->parsedFormFields[$field][substr($key, 3)] = $values;
             return;
         }
 
@@ -159,7 +161,7 @@ Class TwigTemplate
     public function assignArray(array $variables, $index = null)
     {
         // artifacts?
-        if ($index && isset($variables['Core'])) {
+        if (!empty($index) && isset($variables['Core'])) {
             unset($variables['Core']);
             $tmp[$index] = $variables;
             $variables = $tmp;
@@ -187,24 +189,28 @@ Class TwigTemplate
 
     private function render($template)
     {
-        $this->startGlobals();
-
-        if ($this->forms) {
-            $this->assign('form', $this->forms);
-        }
-
         $loader = new \Twig_Loader_Filesystem($this->themePath);
         $this->twig = new \Twig_Environment($loader, array(
             'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig',
-            'debug' => SPOON_DEBUG
+            'debug' => ($this->debugMode === true)
         ));
 
-        // start the filters
+        if (!empty($this->forms)) {
+            foreach ($this->forms as $form)
+            {
+                // using assign to pass the form as global
+                $this->assign('form_' . $form->getName(), $form);
+            }
+            new FormExtension($this->twig);
+        }
+
+        // start the filters / globals
         $this->twigFilters();
         $this->twigFrontend();
+        $this->startGlobals();
 
         // debug options
-        if (SPOON_DEBUG) {
+        if ($this->debugMode === true) {
             $this->twig->addExtension(new \Twig_Extension_Debug());
         }
 
@@ -215,14 +221,19 @@ Class TwigTemplate
 
     public function addForm($form)
     {
+        $this->forms[$form->getName()] = $form;
+        return;
+
         $compileForm ='<form accept-charset="UTF-8" action="' . $form->getAction() . '" method="'. $form->getMethod().'" '. $form->getParametersHTML() . '>';
         $compileForm .= $form->getField('form')->parse();
         if($form->getUseToken()) {
             $compileForm .= '<input type="hidden" name="form_token" id="' . $form->getField('form_token')->getAttribute('id'). '" value="' . htmlspecialchars($form->getField('form_token')->getValue()). ' " />';
         }
-        $this->forms[$form->getName()] = $this->fields;
+        $this->forms[$form->getName()] = $this->parsedFormFields;
         $this->forms[$form->getName()]['form'] = $compileForm;
         $this->forms[$form->getName()]['end'] = "</form>";
+        // clear for the next run
+        $this->parsedFormFields = array();
     }
 
     public function getAssignedVariables()
@@ -297,10 +308,6 @@ Class TwigTemplate
      */
     private function twigFilters()
     {
-        /** Filters list converted to twig filters
-         - ucfirst -> capitalize
-        **/
-
         $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
         $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
         $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
