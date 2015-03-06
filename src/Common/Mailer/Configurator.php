@@ -30,12 +30,11 @@ class Configurator implements EventSubscriberInterface
                 $this->getMailSetting('smtp_secure_layer')
             );
             $this->container->set(
-                'mailer',
-                \Swift_Mailer::newInstance($transport)
+                'swiftmailer.mailer.default.transport',
+                $transport
             );
-        } catch (\PDOException $ex) {
-            // the modules_settings probably doesn't exist yet. Let's just ignore
-            // this and use the mail protocol
+        } catch (\PDOException $e) {
+            // we'll just use the mail transport thats pre-configured
         }
     }
 

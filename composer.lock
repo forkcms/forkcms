@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "753aaccf98a055fd21b0ee3b2f097c33",
+    "hash": "cb1056b45df4d78013c8a16854308b29",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -527,16 +527,16 @@
         },
         {
             "name": "matthiasmullie/minify",
-            "version": "1.3.19",
+            "version": "1.3.20",
             "source": {
                 "type": "git",
                 "url": "https://github.com/matthiasmullie/minify.git",
-                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a"
+                "reference": "0ada1eccaf2566b30f9021d613a2cae9e4e00f4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
-                "reference": "22dbb726a04a35fd457ddbbf46276ae7d3d4fb9a",
+                "url": "https://api.github.com/repos/matthiasmullie/minify/zipball/0ada1eccaf2566b30f9021d613a2cae9e4e00f4d",
+                "reference": "0ada1eccaf2566b30f9021d613a2cae9e4e00f4d",
                 "shasum": ""
             },
             "require": {
@@ -579,7 +579,7 @@
                 "minifier",
                 "minify"
             ],
-            "time": "2015-02-26 08:07:21"
+            "time": "2015-03-02 16:59:12"
         },
         {
             "name": "matthiasmullie/path-converter",

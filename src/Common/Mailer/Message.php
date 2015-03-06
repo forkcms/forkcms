@@ -81,7 +81,7 @@ class Message extends \Swift_Message
             foreach ($attachments as $attachment) {
                 // only add existing files
                 if (is_file($attachment)) {
-                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                    $this->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
         }
@@ -98,7 +98,7 @@ class Message extends \Swift_Message
     public function setPlainText($content)
     {
         if ($content !== null) {
-            $message->addPart($content, 'text/plain');
+            $this->addPart($content, 'text/plain');
         }
 
         return $this;
