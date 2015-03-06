@@ -1,1 +1,1 @@
-set :branch, "master"
+set :branch, "staging"
