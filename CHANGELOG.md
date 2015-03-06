@@ -1,4 +1,4 @@
-3.9 (2015-03-xx)
+3.9 (2015-03-05)
 --
 Improvements:
 
@@ -22,6 +22,7 @@ Improvements:
 * Core: redirect using an exception instead of an exit statement
 * Core: update the included Facebook SDK to v4
 * Core: refactor out BACKEND_MODULE_PATH constant
+* Core: use the swiftmailerbundle instead of our custom implementation
 
 Bugfixes:
 
@@ -32,6 +33,7 @@ Bugfixes:
 * Core: make sure mails with encryption can be send trough SMTP
 * Core: add a .htaccess in the app dir to block all access
 * Locale: fix updating locale trough ajax when no application is set
+* Core: make sure bugemails work again
 
 
 3.8.7 (2015-02-13)
