@@ -89,14 +89,14 @@ Class TwigTemplate
         }
 
         $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
-        $this->modulePath = FRONTEND_MODULES_PATH . '/';
+        $this->modulePath = FRONTEND_MODULES_PATH;
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         // move to kernel parameter
         require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
 
         \Twig_Autoloader::register();
-        $loader = new \Twig_Loader_Filesystem($this->themePath);
+        $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath));
         $this->twig = new \Twig_Environment($loader, array(
             'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig',
             'debug' => ($this->debugMode === false)
@@ -130,8 +130,8 @@ Class TwigTemplate
         // page hook
         // last call
         if ($key === 'page') {
-            $this->baseFile = str_replace('.tpl', '.twig', $values['template_path']);
-            $this->setPositions($values['positions']);
+            $this->baseFile = $this->convertExtension($values['template_path']);
+            $this->positions = $values['positions'];
             return;
         }
 
@@ -154,14 +154,14 @@ Class TwigTemplate
             {
                 if ($block['extra_type'] == 'widget') {
                     $block['include_path'] = $this->getPath(
-                        $this->modulePath .
+                        $this->modulePath . '/' .
                         $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.twig'
                     );
                 }
                 elseif ($block['extra_type'] == 'block') {
                     $block['extra_action'] = ($block['extra_action']) ?: 'Index';
                     $block['include_path'] = $this->getPath(
-                        $this->modulePath .
+                        $this->modulePath . '/' .
                         $block['extra_module'] . '/Layout/Templates/' . $block['extra_action'] . '.twig'
                     );
                 }
@@ -187,7 +187,14 @@ Class TwigTemplate
     */
     public function getPath($template)
     {
-        return str_replace($this->themePath . '/', '', Theme::getPath($this->convertExtension($template)));
+        $template = Theme::getPath($this->convertExtension($template));
+
+        if (strpos($template, $this->modulePath) !== false) {
+            return str_replace($this->modulePath . '/', '', $template);
+        }
+
+        // remove theme Path
+        return str_replace($this->themePath . '/', '', $template);
     }
 
     /**
@@ -231,7 +238,8 @@ Class TwigTemplate
         // only baseFile can render
         $template = $this->getPath($template);
         if ($this->baseFile === $template) {
-            $this->render($template);
+            $this->setPositions($this->positions, $this->templates);
+            $this->render($this->baseFile);
         }
     }
 
