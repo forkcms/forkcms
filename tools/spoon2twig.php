@@ -143,34 +143,43 @@ if ($input === 'all')
             $source = '../src/';
             break;
 
+        case (strpos($version, '3.8.') !== false):
+            $source = '../src/';
+            break;
+
         default:
             $source = '../src/';
             break;
     }
 
     // collects template Paths
+    $excluded = array();
     $templatePaths = array();
+    $root = realpath(dirname(__FILE__)) . '/' ;
     foreach ($BasePath as $BPath)
     {
-        $possiblePath = realpath(dirname(__FILE__)) . '/' . $source . $BPath;
-        if (is_dir($possiblePath))
+        $possiblePath = $source . $BPath;
+        if (is_dir($root . $possiblePath))
         {
-            $tpls = array_diff(scandir($possiblePath), array('.', '..', '.DS_Store'));
+            $tpls = array_diff(scandir($root . $possiblePath), array('.', '..', '.DS_Store'));
 
             foreach ($tpls as $tpl)
             {
                 foreach ($templates as $template)
                 {
                     $possibletpl = $possiblePath . '/' . $tpl . $template;
-                    if (is_dir($possibletpl))
+                    if (is_dir($root . $possibletpl))
                     {
-                        $tplsz = array_diff(scandir($possibletpl), array('.', '..', '.DS_Store'));
+                        $tplsz = array_diff(scandir($root . $possibletpl), array('.', '..', '.DS_Store'));
                         if (!empty($tplsz))
                         {
                             // append full path
                             foreach ($tplsz as $tpl_Z)
                             {
-                                $templatePaths[] = $possibletpl . '/' . $tpl_Z;
+                                if (strpos($tpl_Z, '.tpl') !== false)
+                                {
+                                    $templatePaths[] = $possibletpl . '/' . $tpl_Z;
+                                }
                             }
                         }
                     }
@@ -180,23 +189,22 @@ if ($input === 'all')
     }
     if (!empty($templatePaths))
     {
-        $errors = array();
         foreach ($templatePaths as $templatePath)
         {
             if ($force === true) {
                 write($templatePath, convert(getFile($templatePath)));
             }
             else {
-                if (!isFile(str_replace('.tpl', '.twig', $templatePath)))
+                if (!file_exists(str_replace('.tpl', '.twig', $templatePath)))
                 {
                     write($templatePath, convert(getFile($templatePath)));
                 }
                 else {
-                    $errors[] = $templatePath;
+                    $excluded[] = $templatePath;
                 }
             }
         }
-        if (!empty($errors))
+        if (!empty($excluded))
         {
             exit('not all files are converted, use forced to overwrite' . PHP_EOL);
         }
