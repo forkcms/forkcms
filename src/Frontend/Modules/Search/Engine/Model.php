@@ -238,11 +238,20 @@ class Model
              WHERE term = ?',
             array((string) $term)
         );
+        if (!$synonyms) {
+            $synonyms = (array) FrontendModel::getContainer()->get('database')->getColumn(
+                "SELECT term FROM search_synonyms
+                 WHERE synonym LIKE ? OR synonym LIKE ? OR synonym LIKE ? OR synonym = ?",
+                array("$term,%", "%,$term", "%,$term,%", $term)
+            );
+        } else {
+            $synonyms = explode(',', $synonyms);
+        }
 
         // found any? merge with original term
         if ($synonyms) {
             return array_unique(
-                array_merge(array($term), explode(',', $synonyms))
+                array_merge(array($term), $synonyms)
             );
         }
 
@@ -267,7 +276,7 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param mixed $term The search term (simple search) or the fields to
+     * @param string $term The search term (simple search) or the fields to
      *                    search for (advanced search - please note that the
      *                    field names may not be consistent throughout several
      *                    modules).
@@ -392,7 +401,7 @@ class Model
      * Advanced search: only the given fields (keys in the array) will be
      * matched to the corresponding values (corresponding values in the array)
      *
-     * @param mixed $term   The search term (simple search) or the fields to
+     * @param string $term   The search term (simple search) or the fields to
      *                      search for (advanced search - please note that the
      *                      field names may not be consistent throughout
      *                      several modules).

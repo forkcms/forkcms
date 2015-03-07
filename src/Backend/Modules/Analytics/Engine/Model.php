@@ -281,7 +281,7 @@ class Model
     /**
      * Fetch dashboard data grouped by day
      *
-     * @param array $metrics        The metrics to collect.
+     * @param string[] $metrics        The metrics to collect.
      * @param int   $startTimestamp The start timestamp for the cache file.
      * @param int   $endTimestamp   The end timestamp for the cache file.
      * @param bool  $forceCache     Should the data be forced from cache.
@@ -594,7 +594,7 @@ class Model
     /**
      * Fetch metrics grouped by day
      *
-     * @param array   $metrics        The metrics to collect.
+     * @param string[]   $metrics        The metrics to collect.
      * @param int     $startTimestamp The start timestamp for the cache file.
      * @param int     $endTimestamp   The end timestamp for the cache file.
      * @param boolean $forceCache     Should the data be forced from cache.

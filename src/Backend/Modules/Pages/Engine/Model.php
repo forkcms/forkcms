@@ -834,7 +834,7 @@ class Model
     /**
      * Get all pages/level
      *
-     * @param array  $ids      The parentIds.
+     * @param integer[]  $ids      The parentIds.
      * @param array  $data     A holder for the generated data.
      * @param int    $level    The counter for the level.
      * @param string $language The language.

@@ -115,7 +115,7 @@ class Navigation extends FrontendBaseObject
      * Get the first child for a given parent
      *
      * @param int $pageId The pageID wherefore we should retrieve the first child.
-     * @return mixed
+     * @return integer
      */
     public static function getFirstChildId($pageId)
     {
@@ -394,11 +394,11 @@ class Navigation extends FrontendBaseObject
                 $navigation[$type][$parentId][$id]['depth'] = $depthCounter;
 
                 // set link
-                $navigation[$type][$parentId][$id]['link'] = Navigation::getURL($page['page_id']);
+                $navigation[$type][$parentId][$id]['link'] = static::getURL($page['page_id']);
 
                 // is this an internal redirect?
                 if (isset($page['redirect_page_id']) && $page['redirect_page_id'] != '') {
-                    $navigation[$type][$parentId][$id]['link'] = Navigation::getURL(
+                    $navigation[$type][$parentId][$id]['link'] = static::getURL(
                         (int) $page['redirect_page_id']
                     );
                 }
@@ -456,7 +456,7 @@ class Navigation extends FrontendBaseObject
      * Get more info about a page
      *
      * @param int $pageId The pageID wherefore you want more information.
-     * @return mixed
+     * @return string
      */
     public static function getPageInfo($pageId)
     {

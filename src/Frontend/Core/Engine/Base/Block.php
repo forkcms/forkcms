@@ -17,6 +17,7 @@ use Frontend\Core\Engine\Exception;
 use Frontend\Core\Engine\Header;
 use Frontend\Core\Engine\Url;
 use Frontend\Core\Engine\Template as FrontendTemplate;
+use Common\Exception\RedirectException;
 
 /**
  * This class implements a lot of functionality that can be extended by a specific block
@@ -491,18 +492,7 @@ class Block extends Object
     {
         $response = new RedirectResponse($URL, $code);
 
-        /*
-         * Since we've got some nested action structure, we'll send this
-         * response directly after creating.
-         */
-        $response->send();
-
-        /*
-         * Stop code executing here
-         * I know this is ugly as hell, but if we don't do this the code after
-         * this call is executed and possibly will trigger errors.
-         */
-        exit;
+        throw new RedirectException('Redirect', $response);
     }
 
     /**

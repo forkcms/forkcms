@@ -59,17 +59,17 @@ class Init extends \KernelLoader
      */
     private function definePaths()
     {
-        define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
-        define('BACKEND_PATH', PATH_WWW . '/src/Backend');
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
+        defined('API_CORE_PATH') || define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
+        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
+        defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
+        defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
+        defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
 
-        define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
+        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
+        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -77,7 +77,7 @@ class Init extends \KernelLoader
      *
      * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
-     * @return bool
+     * @return null|false
      */
     public static function errorHandler($errorNumber, $errorString)
     {

@@ -26,56 +26,6 @@ class TestEmailConnection extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        // mailer type
-        $mailerType = \SpoonFilter::getPostValue('mailer_type', array('smtp', 'mail'), 'mail');
-
-        // create new SpoonEmail-instance
-        $email = new \SpoonEmail();
-        $email->setTemplateCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
-
-        // send via SMTP
-        if ($mailerType == 'smtp') {
-            // get settings
-            $SMTPServer = \SpoonFilter::getPostValue('smtp_server', null, '');
-            $SMTPPort = \SpoonFilter::getPostValue('smtp_port', null, '');
-            $SMTPUsername = \SpoonFilter::getPostValue('smtp_username', null, '');
-            $SMTPPassword = \SpoonFilter::getPostValue('smtp_password', null, '');
-
-            // set security if needed
-            $secureLayer = \SpoonFilter::getPostValue('smtp_secure_layer', null, '');
-            if (in_array($secureLayer, array('ssl', 'tls'))) {
-                $email->setSMTPSecurity($secureLayer);
-            }
-
-            // validate server
-            if ($SMTPServer == '') {
-                $this->output(self::BAD_REQUEST, null, BL::err('ServerIsRequired'));
-
-                return;
-            }
-
-            // validate port
-            if ($SMTPPort == '') {
-                $this->output(self::BAD_REQUEST, null, BL::err('PortIsRequired'));
-
-                return;
-            }
-
-            try {
-                // set server and connect with SMTP
-                $email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-            } catch (\SpoonEmailException $e) {
-                $this->output(self::ERROR, null, $e->getMessage());
-
-                return;
-            }
-
-            // set authentication if needed
-            if ($SMTPUsername != '' && $SMTPPassword != '') {
-                $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-            }
-        }
-
         $fromEmail = \SpoonFilter::getPostValue('mailer_from_email', null, '');
         $fromName = \SpoonFilter::getPostValue('mailer_from_name', null, '');
         $toEmail = \SpoonFilter::getPostValue('mailer_to_email', null, '');
@@ -99,23 +49,37 @@ class TestEmailConnection extends BackendBaseAJAXAction
 
         // got errors?
         if (!empty($errors)) {
-            $this->output(self::BAD_REQUEST, array('errors' => $errors), 'invalid fields');
+            $this->output(
+                self::BAD_REQUEST,
+                array('errors' => $errors),
+                'invalid fields'
+            );
         } else {
-            // set some properties
-            $email->setFrom($fromEmail, $fromName);
-            $email->addRecipient($toEmail, $toName);
-            $email->setReplyTo($replyToEmail, $replyToName);
-            $email->setSubject('Test');
-            $email->setHTMLContent(BL::msg('TestMessage'));
-            $email->setCharset(SPOON_CHARSET);
+            $message = \Swift_Message::newInstance('Test')
+                ->setFrom(array($fromEmail => $fromName))
+                ->setTo(array($toEmail => $toName))
+                ->setReplyTo(array($replyToEmail => $replyToName))
+                ->setBody(BL::msg('TestMessage'), 'text/plain')
+            ;
+
+            $transport =
+                \Common\Mailer\TransportFactory::create(
+                \SpoonFilter::getPostValue('mailer_type', array('smtp', 'mail'), 'mail'),
+                \SpoonFilter::getPostValue('smtp_server', null, ''),
+                \SpoonFilter::getPostValue('smtp_port', null, ''),
+                \SpoonFilter::getPostValue('smtp_username', null, ''),
+                \SpoonFilter::getPostValue('smtp_password', null, ''),
+                \SpoonFilter::getPostValue('smtp_secure_layer', null, '')
+            );
+            $mailer = \Swift_Mailer::newInstance($transport);
 
             try {
-                if ($email->send()) {
+                if ($mailer->send($message)) {
                     $this->output(self::OK, null, '');
                 } else {
                     $this->output(self::ERROR, null, 'unknown');
                 }
-            } catch (\SpoonEmailException $e) {
+            } catch (\Exception $e) {
                 $this->output(self::ERROR, null, $e->getMessage());
             }
         }

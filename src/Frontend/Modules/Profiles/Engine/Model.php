@@ -419,7 +419,7 @@ class Model
      *
      * @param int    $id    Profile id.
      * @param string $name  Setting name.
-     * @param mixed  $value New setting value.
+     * @param string  $value New setting value.
      */
     public static function setSetting($id, $name, $value)
     {

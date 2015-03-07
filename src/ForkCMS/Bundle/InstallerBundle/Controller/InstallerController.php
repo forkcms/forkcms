@@ -31,7 +31,7 @@ class InstallerController extends Controller
             'ForkCMSInstallerBundle:Installer:step1.html.twig',
             array(
                 'checker' => $requirementsChecker,
-                'rootDir' => $this->container->getParameter('kernel.root_dir'),
+                'rootDir' => realpath($this->container->getParameter('site.path_www')),
             )
         );
     }

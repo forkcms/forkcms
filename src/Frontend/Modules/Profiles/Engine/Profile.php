@@ -193,7 +193,7 @@ class Profile
      * Does this user belong to the group with the given ID?
      *
      * @param  int $groupId Group id.
-     * @return int
+     * @return boolean
      */
     public function isInGroup($groupId)
     {
