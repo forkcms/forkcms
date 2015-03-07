@@ -373,7 +373,10 @@ Class TwigTemplate
         $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
     }
 
-
+    /** @todo Refactor out constants #1106
+     *
+     * We need to deprecate this asap
+    */
     private function startGlobals()
     {
         // some old globals
@@ -386,37 +389,35 @@ Class TwigTemplate
         $this->twig->addGlobal('is' . strtoupper(FRONTEND_LANGUAGE), true);
         $this->twig->addGlobal('debug', $this->debugMode);
 
-        // // old theme checker
-        // if (Model::getModuleSetting('Core', 'theme') !== null) {
-        //     $this->twig->addGlobal('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
-        //     $this->twig->addGlobal(
-        //         'THEME_URL',
-        //         '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
-        //     );
-        // }
-
-        // Refactor out constants #1106
+        // old theme checker
+        if (Model::getModuleSetting('Core', 'theme') !== null) {
+            $this->twig->addGlobal('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
+            $this->twig->addGlobal(
+                'THEME_URL',
+                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+            );
+        }
 
         // constants that should be protected from usage in the template
-        // $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+        $notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
 
-        // // get all defined constants
-        // $constants = get_defined_constants(true);
+        // get all defined constants
+        $constants = get_defined_constants(true);
 
-        // // init var
-        // $realConstants = array();
+        // init var
+        $realConstants = array();
 
-        // // remove protected constants aka constants that should not be used in the template
-        // foreach ($constants['user'] as $key => $value) {
-        //     if (!in_array($key, $notPublicConstants)) {
-        //         $realConstants[$key] = $value;
-        //     }
-        // }
+        // remove protected constants aka constants that should not be used in the template
+        foreach ($constants['user'] as $key => $value) {
+            if (!in_array($key, $notPublicConstants)) {
+                $realConstants[$key] = $value;
+            }
+        }
 
-        // // we should only assign constants if there are constants to assign
-        // if (!empty($realConstants)) {
-        //     $this->assignArray($realConstants);
-        // }
+        // we should only assign constants if there are constants to assign
+        if (!empty($realConstants)) {
+            $this->assignArray($realConstants);
+        }
     }
 
     /**
