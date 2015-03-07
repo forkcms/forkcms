@@ -558,7 +558,7 @@ class Model
                         }
                     }
                 }
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 // don't act upon error, we simply won't possess some info
             }
 
@@ -775,7 +775,7 @@ class Model
      * Checks if a specific module has errors or not
      *
      * @param string $module
-     * @return bool
+     * @return string
      */
     public static function hasModuleWarnings($module)
     {

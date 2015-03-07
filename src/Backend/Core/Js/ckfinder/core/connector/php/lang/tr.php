@@ -1,8 +1,8 @@
 <?php
-// Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
+// Copyright (c) 2003-2014, CKSource - Frederico Knabben. All rights reserved.
 // For licensing, see LICENSE.html or http://ckfinder.com/license
 
-//  Defines the object, for the Turkish language. Turkish translation by Abdullah M CEYLAN a.k.a. Kenan Balamir. Updated.
+//  Defines the object, for the Turkish language. Turkish translation by Abdullah M CEYLAN a.k.a. Kenan Balamir. Updated. Günce BEKTAŞ update tr.js file and translate help folder.
 
 $GLOBALS['CKFLang'] = array (
 	'ErrorUnknown' => 'İsteğinizi yerine getirmek mümkün değil. (Hata %1)',
@@ -16,7 +16,7 @@ $GLOBALS['CKFLang'] = array (
 		'105' => 'Geçersiz dosya uzantısı.',
 		'109' => 'Geçersiz istek.',
 		'110' => 'Bilinmeyen hata.',
-		'111' => 'It was not possible to complete the request due to resulting file size.',
+		'111' => 'Dosya boyutundan dolayı bu işlemin yapılması mümkün değil.',
 		'115' => 'Aynı isimde bir dosya ya da klasör zaten var.',
 		'116' => 'Klasör bulunamadı. Lütfen yenileyin ve tekrar deneyin.',
 		'117' => 'Dosya bulunamadı. Lütfen dosya listesini yenileyin ve tekrar deneyin.',

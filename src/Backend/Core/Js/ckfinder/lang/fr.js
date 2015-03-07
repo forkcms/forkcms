@@ -2,7 +2,7 @@
  * CKFinder
  * ========
  * http://cksource.com/ckfinder
- * Copyright (C) 2007-2013, CKSource - Frederico Knabben. All rights reserved.
+ * Copyright (C) 2007-2014, CKSource - Frederico Knabben. All rights reserved.
  *
  * The software, this file, and its contents are subject to the CKFinder
  * License. Please read the license.txt file before using, installing, copying,
@@ -303,5 +303,10 @@ CKFinder.lang['fr'] =
 		removeAndExtract	: 'Supprimer les fichiers existants et décompresser',
 		extractAndOverwrite	: 'Décompresser et remplacer les fichier existants',
 		extractSuccess		: 'Les fichiers ont été décompressés avec succès.'
+	},
+
+	Search :
+	{
+		searchPlaceholder : 'Rechercher'
 	}
 };

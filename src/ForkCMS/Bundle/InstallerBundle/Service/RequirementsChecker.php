@@ -186,11 +186,15 @@ class RequirementsChecker
      */
     protected function checkSubFolder()
     {
-        $this->checkRequirement(
-            'subfolder',
-            (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
-            self::STATUS_ERROR
-        );
+        if (array_key_exists('REQUEST_URI', $_SERVER)) {
+            $this->checkRequirement(
+                'subfolder',
+                (substr($_SERVER['REQUEST_URI'], 0, 8) == '/install'),
+                self::STATUS_ERROR
+            );
+        } else {
+            $this->checkRequirement('subfolder', true, self::STATUS_ERROR);
+        }
     }
 
     /**

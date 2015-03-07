@@ -184,16 +184,8 @@ class Form extends FrontendBaseWidget
                     // get content
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
-                    // reset
-                    $newValues = array();
-
-                    // rebuild values
-                    foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
-                    }
-
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $newValues, $defaultValues);
+                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues);
 
                     // get content
                     $item['html'] = $rbt->parse();
@@ -225,6 +217,49 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
+                } elseif ($field['type'] == 'datetime') {
+                    // create element
+                    if($field['settings']['input_type'] == 'date') {
+                        // calculate default value
+                        $amount = $field['settings']['value_amount'];
+                        $type = $field['settings']['value_type'];
+
+                        if($type != '') {
+                            switch($type) {
+                                case 'today':
+                                    $defaultValues = date('Y-m-d'); // HTML5 input needs this format
+                                    break;
+                                case 'day':
+                                case 'week':
+                                case 'month':
+                                case 'year':
+                                    if($amount != '') $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    break;
+                            }
+                        }
+
+                        // Convert the php date format to a jquery date format
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery(FrontendModel::getModuleSetting('Core', 'date_format_short'));
+
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                            array(
+                                'data-mask' => $dateFormatShortJS,
+                                'data-firstday' => '1',
+                                'type' => 'date',
+                                'default-date' => (!empty($defaultValues) ? date(FrontendModel::getModuleSetting('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                            )
+                        );
+                    } else {
+                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
+                    }
+
+                    // add required attribute
+                    if ($item['required']) {
+                        $datetime->setAttribute('required', null);
+                    }
+
+                    // get content
+                    $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
@@ -388,6 +423,11 @@ class Form extends FrontendBaseWidget
                                 $settings['error_message']
                             );
                         }
+                    } elseif ($rule == 'time') {
+                        $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
+                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
+                            $this->frm->getField($fieldName)->setError($settings['error_message']);
+                        }
                     }
                 }
             }
@@ -417,6 +457,16 @@ class Form extends FrontendBaseWidget
                     $fieldData['data_id'] = $dataId;
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
+
+                    if ($field['type'] == 'radiobutton') {
+                        $values = array();
+
+                        foreach ($field['settings']['values'] as $value) {
+                            $values[$value['value']] = $value['label'];
+                        }
+
+                        $fieldData['value'] = $values[$fieldData['value']];
+                    }
 
                     // prepare fields for email
                     if ($this->item['method'] == 'database_email') {
@@ -481,9 +531,7 @@ class Form extends FrontendBaseWidget
                             $field['settings']['reply_to'] === true
                         ) {
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            if (\SpoonFilter::isEmail($email)) {
-                                $message->setReplyTo(array($email => $email));
-                            }
+                            $message->setReplyTo(array($email => $email));
                         }
                     }
                     if ($message->getReplyTo() === null) {

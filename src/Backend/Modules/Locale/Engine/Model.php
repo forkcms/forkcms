@@ -1001,10 +1001,14 @@ class Model
 
         // create an array for the languages, surrounded by quotes (example: 'en')
         $aLanguages = array();
-        foreach ($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+        foreach ($languages as $key => $val) {
+            $aLanguages[$key] = '\'' . $val . '\'';
+        }
 
         // surround the types with quotes
-        foreach ($types as $key => $val) $types[$key] = '\'' . $val . '\'';
+        foreach ($types as $key => $val) {
+            $types[$key] = '\'' . $val . '\'';
+        }
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -1051,13 +1055,14 @@ class Model
             );
         }
 
-
-
         // create an array to use in the datagrid
         $dataGridTranslations = array();
 
         // an id that is used for in the datagrid, this is not the id of the translation!
         $id = 0;
+
+        // save the number of languages so this has not to be executed x number of times
+        $numberOfLanguages = count($languages);
 
         // loop the sorted translations
         foreach ($sortedTranslations as $type => $references) {
@@ -1068,36 +1073,47 @@ class Model
                 // loop modules
                 foreach ($translation as $module => $t) {
                     // create translation (and increase id)
+                    // we init the application here so it appears in front of the datagrid
+                    $trans = array(
+                        'application' => '',
+                        'module' => $module,
+                        'name' => $reference,
+                        'id' => $id++
+                    );
 
-                    $trans = array('application' => $application, 'module' => $module, 'module' => $module, 'name' => $reference, 'id' => $id++);
+                    // reset this var for every language
+                    $edited_on = '';
 
-                    if(isset($edited_on)) unset($edited_on);
-
-                    // is there a translation? else empty string
                     foreach ($languages as $lang) {
-
-                        $trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
-
-                        if (count($languages) == 1) {
-                            $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-                        } else {
-                            $trans['translation_id_' .$lang] = isset($t[$lang]) ? $t[$lang]['id'] : '';
-                        }
-
+                        // if the translation exists the for this language, fill it up
+                        // else leave a space for the empty field
                         if (isset($t[$lang])) {
-                            $application = $t[$lang]['application'];
-                            if (!isset($edited_on) || $edited_on < $t[$lang]['edited_on']) {
+                            $trans[$lang] = $t[$lang]['value'];
+                            $trans['application'] = $t[$lang]['application'];
+
+                            // only alter edited_on if the date of a previously added date of another
+                            // language is smaller
+                            if ($edited_on < $t[$lang]['edited_on']) {
                                 $edited_on = $t[$lang]['edited_on'];
                             }
+
+                            if ($numberOfLanguages == 1) {
+                                $trans['translation_id'] = $t[$lang]['id'];
+                            } else {
+                                $trans['translation_id_' . $lang] = $t[$lang]['id'];
+                            }
                         } else {
-                            $edited_on = '';
+                            $trans[$lang] = '';
+
+                            if ($numberOfLanguages == 1) {
+                                $trans['translation_id'] = '';
+                            } else {
+                                $trans['translation_id_' . $lang] = '';
+                            }
                         }
-
                     }
-                    // we add them here to keep the languages next to each other
+                    // at the end of the array, add the generated edited_on date
                     $trans['edited_on'] = $edited_on;
-
-
 
                     // add the translation to the array
                     $dataGridTranslations[$type][] = $trans;

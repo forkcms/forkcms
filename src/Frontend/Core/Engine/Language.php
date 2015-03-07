@@ -314,32 +314,33 @@ class Language
         }
 
         // validate file, generate it if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/en.php')) {
+        $fs = new Filesystem();
+        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/en.json')) {
             self::buildCache('en', 'Frontend');
         }
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
+        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             self::buildCache($language, 'Frontend');
         }
 
-        // init vars
-        $act = array();
-        $err = array();
-        $lbl = array();
-        $msg = array();
-
         // set English translations, they'll be the fallback
-        require FRONTEND_CACHE_PATH . '/Locale/en.php';
-        self::$fallbackAct = (array) $act;
-        self::$fallbackErr = (array) $err;
-        self::$fallbackLbl = (array) $lbl;
-        self::$fallbackMsg = (array) $msg;
+        $fallbackTranslations = json_decode(
+            file_get_contents(FRONTEND_CACHE_PATH . '/Locale/en.json'),
+            true
+        );
+        self::$fallbackAct = (array) $fallbackTranslations['act'];
+        self::$fallbackErr = (array) $fallbackTranslations['err'];
+        self::$fallbackLbl = (array) $fallbackTranslations['lbl'];
+        self::$fallbackMsg = (array) $fallbackTranslations['msg'];
 
         // We will overwrite with the requested language's translations upon request
-        require FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php';
-        self::$act = (array) $act;
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+        $translations = json_decode(
+            file_get_contents(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json'),
+            true
+        );
+        self::$act = (array) $translations['act'];
+        self::$err = (array) $translations['err'];
+        self::$lbl = (array) $translations['lbl'];
+        self::$msg = (array) $translations['msg'];
     }
 
     /**

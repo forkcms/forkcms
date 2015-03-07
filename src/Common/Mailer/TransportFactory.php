@@ -17,12 +17,13 @@ class TransportFactory
      * @param  string $port
      * @param  string $user
      * @param  string $pass
+     * @param  string $encryption
      * @return \Swift_Transport
      */
-    public static function create($type = 'mail', $server = null, $port = 25, $user = null, $pass = null)
+    public static function create($type = 'mail', $server = null, $port = 25, $user = null, $pass = null, $encryption = null)
     {
         if ($type === 'smtp') {
-            return self::getSmtpTransport($server, $port, $user, $pass);
+            return self::getSmtpTransport($server, $port, $user, $pass, $encryption);
         } else {
             return self::getMailTransport();
         }
@@ -35,14 +36,21 @@ class TransportFactory
      * @param  string $port
      * @param  string $user
      * @param  string $pass
+     * @param  string $encryption
      * @return \Swift_SmtpTransport
      */
-    private static function getSmtpTransport($server, $port, $user, $pass)
+    private static function getSmtpTransport($server, $port, $user, $pass, $encryption = null)
     {
-        return \Swift_SmtpTransport::newInstance($server, $port)
+        $transport = \Swift_SmtpTransport::newInstance($server, $port)
             ->setUsername($user)
             ->setPassword($pass)
         ;
+
+        if (in_array($encryption, array('ssl', 'tls'))) {
+            $transport->setEncryption('ssl');
+        }
+
+        return $transport;
     }
 
 

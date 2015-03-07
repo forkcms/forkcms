@@ -253,6 +253,18 @@ class Template extends \SpoonTemplate
             'SITE_TITLE',
             BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
+
+        if ($this->URL->getModule() == 'Core') {
+            $this->assign(
+                'BACKEND_MODULE_PATH',
+                BACKEND_PATH . '/' . $this->URL->getModule()
+            );
+        } else {
+            $this->assign(
+                'BACKEND_MODULE_PATH',
+                BACKEND_MODULES_PATH . '/' . $this->URL->getModule()
+            );
+        }
     }
 
     /**

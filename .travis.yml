@@ -1,0 +1,25 @@
+language: php
+
+matrix:
+    include:
+        - php: 5.3
+        - php: 5.4
+        - php: 5.5
+        - php: 5.6
+        - php: hhvm
+        - php: hhvm-nightly
+    allow_failures:
+        - php: hhvm
+        - php: hhvm-nightly
+
+script:
+    - phpunit -c app/ --coverage-clover=coverage.clover
+
+before_script:
+    - composer install
+    - mysql -e 'create database fork_test'
+    - cp app/config/parameters.yml.travis app/config/parameters.yml
+
+after_success:
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover

@@ -43,7 +43,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
      * This will disappear in time in favour of container-driven parameters.
      * @deprecated
      */
-    protected function defineForkConstants()
+    public function defineForkConstants()
     {
         $container = $this->getContainer();
 
@@ -56,28 +56,24 @@ abstract class Kernel extends BaseKernel implements KernelInterface
          * @deprecated SPOON_* constants are deprecated in favor of Spoon::set*().
          * Will be removed in the next major release.
          */
-        if (!defined('SPOON_DEBUG')) {
-            define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
-            define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
-            define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
-            define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
-        }
+        defined('SPOON_DEBUG') || define('SPOON_DEBUG', $container->getParameter('kernel.debug'));
+        defined('SPOON_DEBUG_EMAIL') || define('SPOON_DEBUG_EMAIL', $container->getParameter('fork.debug_email'));
+        defined('SPOON_DEBUG_MESSAGE') || define('SPOON_DEBUG_MESSAGE', $container->getParameter('fork.debug_message'));
+        defined('SPOON_CHARSET') || define('SPOON_CHARSET', $container->getParameter('kernel.charset'));
 
-        if (!defined('PATH_WWW')) {
-            define('PATH_WWW', $container->getParameter('site.path_www'));
-            define('PATH_LIBRARY', $container->getParameter('site.path_library'));
-        }
+        defined('PATH_WWW') || define('PATH_WWW', $container->getParameter('site.path_www'));
+        defined('PATH_LIBRARY') || define('PATH_LIBRARY', $container->getParameter('site.path_library'));
 
-        define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
-        define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
-        define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
-        define('SITE_DOMAIN', $container->getParameter('site.domain'));
-        define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
-        define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
+        defined('SITE_DEFAULT_LANGUAGE') || define('SITE_DEFAULT_LANGUAGE', $container->getParameter('site.default_language'));
+        defined('SITE_DEFAULT_TITLE') || define('SITE_DEFAULT_TITLE', $container->getParameter('site.default_title'));
+        defined('SITE_MULTILANGUAGE') || define('SITE_MULTILANGUAGE', $container->getParameter('site.multilanguage'));
+        defined('SITE_DOMAIN') || define('SITE_DOMAIN', $container->getParameter('site.domain'));
+        defined('SITE_PROTOCOL') || define('SITE_PROTOCOL', $container->getParameter('site.protocol'));
+        defined('SITE_URL') || define('SITE_URL', SITE_PROTOCOL . '://' . SITE_DOMAIN);
 
-        define('FORK_VERSION', $container->getParameter('fork.version'));
+        defined('FORK_VERSION') || define('FORK_VERSION', $container->getParameter('fork.version'));
 
-        define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
-        define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+        defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
+        defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
     }
 }

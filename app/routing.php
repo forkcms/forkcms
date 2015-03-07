@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Backend\Init as BackendInit;
 use Frontend\Init as FrontendInit;
+use Common\Exception\RedirectException;
 
 /**
  * Application routing
@@ -66,8 +67,8 @@ class ApplicationRouting extends Controller
      */
     public function backendController(Request $request, $module, $action)
     {
-        define('APPLICATION', 'Backend');
-        define('NAMED_APPLICATION', 'private');
+        defined('APPLICATION') || define('APPLICATION', 'Backend');
+        defined('NAMED_APPLICATION') || define('NAMED_APPLICATION', 'private');
 
         $applicationClass = $this->initializeBackend('Backend');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -82,7 +83,7 @@ class ApplicationRouting extends Controller
      */
     public function backendAjaxController(Request $request)
     {
-        define('APPLICATION', 'Backend');
+        defined('APPLICATION') || define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -97,7 +98,7 @@ class ApplicationRouting extends Controller
      */
     public function backendCronjobController(Request $request)
     {
-        define('APPLICATION', 'Backend');
+        defined('APPLICATION') || define('APPLICATION', 'Backend');
 
         $applicationClass = $this->initializeBackend('BackendCronjob');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -113,7 +114,7 @@ class ApplicationRouting extends Controller
      */
     public function frontendController(Request $request, $route)
     {
-        define('APPLICATION', 'Frontend');
+        defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('Frontend');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -128,7 +129,7 @@ class ApplicationRouting extends Controller
      */
     public function frontendAjaxController(Request $request)
     {
-        define('APPLICATION', 'Frontend');
+        defined('APPLICATION') || define('APPLICATION', 'Frontend');
 
         $applicationClass = $this->initializeFrontend('FrontendAjax');
         $application = new $applicationClass($this->container->get('kernel'));
@@ -145,7 +146,7 @@ class ApplicationRouting extends Controller
      */
     public function apiController(Request $request, $version, $client)
     {
-        define('APPLICATION', 'Api');
+        defined('APPLICATION') || define('APPLICATION', 'Api');
 
         $applicationClass = $this->initializeAPI('Api', $request);
         $application = new $applicationClass($this->container->get('kernel'));
@@ -161,13 +162,18 @@ class ApplicationRouting extends Controller
     protected function handleApplication(\ApplicationInterface $application)
     {
         $application->passContainerToModels();
-        $application->initialize();
 
-        return $application->display();
+        try {
+            $application->initialize();
+            return $application->display();
+        } catch (RedirectException $ex) {
+            return $ex->getResponse();
+        }
     }
 
     /**
      * @param string $app The name of the application to load (ex. BackendAjax)
+     * @param Request $request
      * @return string The name of the application class we need to instantiate.
      */
     protected function initializeAPI($app, $request)
