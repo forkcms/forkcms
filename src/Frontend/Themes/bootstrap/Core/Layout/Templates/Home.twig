@@ -22,7 +22,7 @@
  				{% for left in positions.left %}
  					{% if left.include_path %}
  						{% include left.include_path %}
- 					{% else %}
+ 					{% elseif left.html %}
  						{{ left.html|raw }}
  					{% endif %}
 				{% endfor %}
@@ -32,7 +32,7 @@
  				{% for main in positions.middle %}
  					{% if middle.include_path %}
  						{% include middle.include_path %}
- 					{% else %}
+ 					{% elseif middle.html %}
  						{{ middle.html|raw }}
  					{% endif %}
 				{% endfor %}
@@ -42,7 +42,7 @@
  				{% for right in positions.right %}
  					{% if right.include_path %}
  						{% include right.include_path %}
- 					{% else %}
+ 					{% elseif right.html %}
  						{{ right.html|raw }}
  					{% endif %}
 				{% endfor %}

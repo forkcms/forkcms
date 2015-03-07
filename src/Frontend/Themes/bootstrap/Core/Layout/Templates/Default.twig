@@ -11,8 +11,8 @@
  				{% for main in positions.main %}
  					{% if main.include_path %}
  						{% include main.include_path %}
- 					{% else %}
- 						{{ main.html | raw }}
+ 					{% elseif main.html %}
+ 						{{ main.html|raw }}
  					{% endif %}
 				{% endfor %}
 			</div>
@@ -38,6 +38,6 @@
 	<script src="{{ THEME_URL }}/Core/Js/bootstrap.min.js"></script>
 
 	{# Site wide HTML #}
-	{{ siteHTMLFooter | raw }}
+	{{ siteHTMLFooter|raw }}
 </body>
 </html>

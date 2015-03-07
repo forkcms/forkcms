@@ -47,13 +47,12 @@ function convert($filedata)
     // filters start
     $filedata = preg_replace_sprintf('/\|date:(.*?):(.*?)}}/', '|spoon_date(%1$s, %2$s}})', $filedata);
     $filedata = preg_replace_sprintf('/\|sprintf:(.*?)}}/', '|sprintf(%s}})', $filedata);
-    $filedata = preg_replace_sprintf('/\|getnavigation:(.*?):(.*?):(.*?)}/', '|getnavigation(%1$s, %2$s, %3$s) | raw}', $filedata);
+    $filedata = preg_replace_sprintf('/\|getnavigation:(.*?):(.*?):(.*?)}/', '|getnavigation(%1$s, %2$s, %3$s)|raw}', $filedata);
     $filedata = preg_replace_sprintf('/\|getmainnavigation}/', '|getmainnavigation|raw}', $filedata);
     $filedata = preg_replace_sprintf('/|truncate:(.*?)}/', '|truncate(%1$s)}', $filedata);
     $filedata = preg_replace_sprintf('/|geturl:(.*?):(.*?)}/', '|geturl(%1$s, %2$s)}', $filedata);
     $filedata = preg_replace_sprintf('/|geturl:(.*?)}/', '|geturl(%1$s)}', $filedata);
     $filedata = preg_replace_sprintf('/Grid}/', 'Grid|raw}', $filedata);
-
 
     // filter endfor
     $filedata = preg_replace_sprintf('/{\$(.*?)\)}/', '{{ %s ) }}', $filedata);
@@ -70,7 +69,7 @@ function convert($filedata)
     $filedata = str_replace('.tpl', '.twig', $filedata);
 
     // includes
-    $filedata = preg_replace_sprintf('/{include:(.*)}/i', '{%% include %s %%}', $filedata); // for includes
+    $filedata = preg_replace_sprintf('/{include:(.*)}/i', '{%% include "%s" %%}', $filedata); // for includes
 
     // operators
     $filedata = preg_replace_sprintf('/{option:!(.*?)}/i', '{%% if not %s %%}', $filedata);
@@ -81,19 +80,17 @@ function convert($filedata)
     //$filedata = preg_replace_sprintf('/{iteration:(.*?)}/', '{%% for xxx in %1$s %%}', $filedata);
 
     //form values
-    $filedata = preg_replace_sprintf('/{\/form:(.*?)}/i', '{{ form.%s.end | raw }}', $filedata); // for {form:add}
-    $filedata = preg_replace_sprintf('/{form:(.*?)}/i', '{{ form.%s.form | raw }}', $filedata);
-    $filedata = preg_replace_sprintf('/{{ txt(.*?) }}/i', '{{ form.xxx.txt.%s | raw }}', $filedata);
-    $filedata = preg_replace_sprintf('/{{ file(.*?) }}/i', '{{ form.xxx.file.%s | raw }}', $filedata);
-    $filedata = preg_replace_sprintf('/{{ ddm(.*?) }}/i', '{{ form.xxx.ddm.%s | raw }}', $filedata);
-    $filedata = preg_replace_sprintf('/{{ chk(.*?) }}/i', '{{ form.xxx.chk.%s | raw }}', $filedata);
+    $filedata = preg_replace_sprintf('/{\/form:(.*?)}/i', '{%% endform %%}', $filedata); // for {form:add}
+    $filedata = preg_replace_sprintf('/{form:(.*?)}/i', '{%% form %s %%}', $filedata);
+    $filedata = preg_replace_sprintf('/{{ txt(.*?) }}/i', '{%% form_field %s %%}', $filedata);
+    $filedata = preg_replace_sprintf('/{{ file(.*?) }}/i', '{%% form_field %s %%}', $filedata);
+    $filedata = preg_replace_sprintf('/{{ ddm(.*?) }}/i', '{%% form_field %s %%}', $filedata);
+    $filedata = preg_replace_sprintf('/{{ chk(.*?) }}/i', '{%% form_field %s %%}', $filedata);
 
     $filedata = preg_replace_sprintf('/{{ lbl(.*?) }}/i', '{{ lbl.%s }}', $filedata);
     $filedata = preg_replace_sprintf('/{{ msg(.*?) }}/i', '{{ msg.%s }}', $filedata);
     $filedata = preg_replace_sprintf('/{{ err(.*?) }}/i', '{{ err.%s }}', $filedata);
     $filedata = preg_replace_sprintf('/{{ act(.*?) }}/i', '{{ act.%s }}', $filedata);
-
-    // swap form.xxx to closest encounter of form.%s.form
 
     return $filedata;
 }
