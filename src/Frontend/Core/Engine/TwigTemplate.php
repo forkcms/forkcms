@@ -90,15 +90,16 @@ Class TwigTemplate
 
         $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
         $this->modulePath = FRONTEND_MODULES_PATH;
+        $frontendPath = FRONTEND_PATH;
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         // move to kernel parameter
         require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
 
         \Twig_Autoloader::register();
-        $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath));
+        $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath, $frontendPath));
         $this->twig = new \Twig_Environment($loader, array(
-            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig',
+            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig/' . ($this->debugMode ? 'dev': 'prod'),
             'debug' => ($this->debugMode === false)
         ));
 
@@ -357,6 +358,7 @@ Class TwigTemplate
      */
     private function twigFilters()
     {
+        $this->twig->addFilter(new \Twig_SimpleFilter('uppercase', 'uppercase'));
         $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
         $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
         $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
@@ -371,6 +373,17 @@ Class TwigTemplate
         $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
         //$this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
         $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+    }
+
+    /**
+     * Transform the string to uppercase.
+     *
+     * @return  string          The string, completly uppercased.
+     * @param   string $string  The string that you want to apply this method on.
+     */
+    public static function uppercase($string)
+    {
+        return mb_convert_case($string, MB_CASE_UPPER, Spoon::getCharset());
     }
 
     /** @todo Refactor out constants #1106
@@ -479,4 +492,6 @@ Class TwigTemplate
     /* BC placeholders */
     public function setPlugin(){}
     public function setForceCompile(){}
+    public function cache(){}
+    public function isCached(){}
 }

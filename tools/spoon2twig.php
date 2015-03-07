@@ -41,22 +41,24 @@ function preg_replace_sprintf($regex, $format, $filedata)
 /** STRING CONVERSIONS START HERE **/
 function convert($filedata)
 {
+    // 2x sometimes he skips an inner var in function
+
     // filters start
+    $filedata = preg_replace_sprintf('/{\$now\|date:(.*?)}/i', '{{ now|date(%1$s) }}', $filedata);
     $filedata = preg_replace_sprintf('/\|date:(.*?):(.*?)}}/', '|spoon_date(%1$s, %2$s}})', $filedata);
     $filedata = preg_replace_sprintf('/\|sprintf:(.*?)}}/', '|sprintf(%s}})', $filedata);
     $filedata = preg_replace_sprintf('/\|getnavigation:(.*?):(.*?):(.*?)}/', '|getnavigation(%1$s, %2$s, %3$s)|raw}', $filedata);
+    $filedata = preg_replace_sprintf('/\|getsubnavigation:(.*?):(.*?):(.*?)}/', '|getsubnavigation(%1$s, %2$s, %3$s)|raw }}', $filedata);
 
     $filedata = str_replace('/\|getmainnavigation}/', '|getmainnavigation|raw}', $filedata);
-    $filedata = preg_replace_sprintf('/|truncate:(.*?)}/', '|truncate(%1$s)}', $filedata);
-    $filedata = preg_replace_sprintf('/|geturl:(.*?):(.*?)}/', '|geturl(%1$s, %2$s)}', $filedata);
-    $filedata = preg_replace_sprintf('/|geturl:(.*?)}/', '|geturl(%1$s)}', $filedata);
+    $filedata = preg_replace_sprintf('/\|truncate:(.*?)}/', '|truncate(%1$s)}', $filedata);
+    $filedata = preg_replace_sprintf('/\|geturl:(.*?):(.*?)}/', '|geturl(%1$s, %2$s)}', $filedata);
+    $filedata = preg_replace_sprintf('/\|geturl:(.*?)}/', '|geturl(%1$s)}', $filedata);
     $filedata = str_replace('/Grid}/', 'Grid|raw}', $filedata);
 
     // filter endfor
     $filedata = preg_replace_sprintf('/{\$(.*?)\)}/', '{{ %s ) }}', $filedata);
-
-    $filedata = preg_replace_sprintf('/:{\$(.*?)}/', ':{{ %s }}', $filedata); // for variables {$variable }
-    // 2x sometimes he skips an inner var in function
+    $filedata = preg_replace_sprintf('/{\$(.*?)}/', '{{ %s }}', $filedata); // for variables {$variable }
 
     $filedata = preg_replace_sprintf('/{\$([a-zA-Z0-9_|.]+)}/i', '{{ %s }}', $filedata); // 2x sometimes he skips an inner var in function
 
@@ -65,6 +67,13 @@ function convert($filedata)
     $filedata = str_replace('*}', '#}', $filedata); // comments
     $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
     $filedata = str_replace('.tpl', '.twig', $filedata);
+
+    // raw
+    $filedata = str_replace('siteHTMLHeader', 'siteHTMLHeader|raw', $filedata);
+    $filedata = str_replace('siteHTMLFooter', 'siteHTMLFooter|raw', $filedata);
+    $filedata = str_replace(' metaCustom ', ' metaCustom|raw ', $filedata);
+    $filedata = str_replace(' meta ', ' meta|raw ', $filedata);
+    $filedata = str_replace('blockContent', 'blockContent|raw', $filedata);
 
     // includes
     $filedata = preg_replace_sprintf('/{include:(.*)}/i', '{%% include "%s" %%}', $filedata); // for includes
@@ -75,7 +84,7 @@ function convert($filedata)
     $filedata = preg_replace_sprintf('/{option:(.*?)}/i', '{%% if %s %%}', $filedata);
     $filedata = preg_replace_sprintf('/{\/iteration:(.*?)}/i', '{%% endfor %%}', $filedata); // for {option: variable }
     //$filedata = preg_replace_sprintf('/{iteration:(.*?)}/', '{%% set %sSpoonIter = %1$s %%}{%% for %1$s in %1$sSpoonIter %%}', $filedata);
-    $filedata = preg_replace_sprintf('/{iteration:(.*?)}/', '{%% for xxx in %1$s %%}', $filedata);
+    $filedata = preg_replace_sprintf('/{iteration:(.*?)}/', '{%% for %1$s in %1$s %%}', $filedata);
 
     //form values
     $filedata = preg_replace_sprintf('/{\/form:(.*?)}/i', '{%% endform %%}', $filedata); // for {form:add}
@@ -129,11 +138,10 @@ $force = (isset($argv[2]) && $argv[2] == 'forced');
 $input = (string) $argv[1];
 
 
-
 if ($input === 'all')
 {
-    $BasePath = array('Backend/Modules', 'Frontend/Themes', 'Frontend/Modules');
-    $templates = array('/Layout/Templates', '/Layout/Widgets');
+    $BasePath = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
+    $templates = array('/Layout/Templates', '/Layout/Widgets', '/Core/Layout/Templates');
 
     // checking what version
     $version = getFile('../VERSION.md');
@@ -154,6 +162,7 @@ if ($input === 'all')
 
     // collects template Paths
     $excluded = array();
+    $excludes = array('.', '..', '.DS_Store');
     $templatePaths = array();
     $root = realpath(dirname(__FILE__)) . '/' ;
     foreach ($BasePath as $BPath)
@@ -161,16 +170,30 @@ if ($input === 'all')
         $possiblePath = $source . $BPath;
         if (is_dir($root . $possiblePath))
         {
-            $tpls = array_diff(scandir($root . $possiblePath), array('.', '..', '.DS_Store'));
+            $tpls = array_diff(scandir($root . $possiblePath), $excludes);
 
             foreach ($tpls as $tpl)
             {
+                if ($BPath == 'Frontend/Themes')
+                {
+                    $themeModule = $possiblePath . '/' . $tpl . '/Modules';
+                    $tplsh = array_diff(scandir($themeModule), $excludes);
+                    if ($tplsh)
+                    {
+                        foreach ($tplsh as $themeModuleName)
+                        {
+                            $templates[] = '/Modules/' . $themeModuleName . '/Layout/Templates';
+                            $templates[] = '/Modules/' . $themeModuleName . '/Layout/Widgets';
+                        }
+                    }
+                }
                 foreach ($templates as $template)
                 {
+                    //var_dump($possiblePath, $template, $tpl);exit;
                     $possibletpl = $possiblePath . '/' . $tpl . $template;
                     if (is_dir($root . $possibletpl))
                     {
-                        $tplsz = array_diff(scandir($root . $possibletpl), array('.', '..', '.DS_Store'));
+                        $tplsz = array_diff(scandir($root . $possibletpl), $excludes);
                         if (!empty($tplsz))
                         {
                             // append full path
