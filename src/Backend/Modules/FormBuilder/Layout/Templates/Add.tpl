@@ -9,6 +9,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabGeneral">{$lblGeneral|ucfirst}</a></li>
+			<li><a href="#tabConfirmationMail">{$lblConfirmationMail|ucfirst}</a></li>
 			<li><a href="#tabExtra">{$lblExtra|ucfirst}</a></li>
 		</ul>
 
@@ -30,17 +31,44 @@
 						{$txtEmail} {$txtEmailError}
 					</p>
 				</div>
+				<div class="options">
+					<div class="heading">
+						<h3>
+							<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						</h3>
+					</div>
+					<div class="optionsRTE">
+						{$txtSuccessMessage} {$txtSuccessMessageError}
+					</div>
+				</div>
 			</div>
-			<div class="options">
-				<div class="heading">
+		</div>
+
+		<div id="tabConfirmationMail" class="box">
+			<div class="horizontal">
+				<p>
+					{$msgConfirmationMail}
+				</p>
+				<p>
+					{$chkMailSend} <label for="mail_send">{$lblMailSend|ucfirst}</label>
+				</p>
+				<p class="confirmationEmailContainer">
+					<label for="subject">
+						{$lblMailSubject|ucfirst}
+					</label>
+					{$txtMailSubject} {$txtMailSubjectError}
+				</p>
+
+				<div class="heading confirmationEmailContainer" >
 					<h3>
-						<label for="successMessage">{$lblSuccessMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailContent">{$lblMailContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					</h3>
 				</div>
-				<div class="optionsRTE">
-					{$txtSuccessMessage} {$txtSuccessMessageError}
+				<div class="optionsRTE confirmationEmailContainer">
+					{$txtMailContent} {$txtMailContentError}
 				</div>
-			</div>		</div>
+			</div>
+		</div>
 
 		<div id="tabExtra" class="box">
 			<div class="horizontal">
