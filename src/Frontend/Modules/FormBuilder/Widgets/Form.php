@@ -505,7 +505,7 @@ class Form extends FrontendBaseWidget
                     )
                 );
 
-                // need to send mail
+                // need to send mail to e-mail given in backend
                 if ($this->item['method'] == 'database_email') {
                     // build our message
                     $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
@@ -540,6 +540,34 @@ class Form extends FrontendBaseWidget
                     }
 
                     $this->get('mailer')->send($message);
+                }
+
+                // send confirmation e-mail to person who filled in the form
+                // double check for empty values and make sure the e-mail is allowed to be send
+                // also, make sure we have a valid reply to e-mail adres (which is checked above)
+                if (
+                    trim($this->item['mail_subject']) != '' &&
+                    strip_tags(trim($this->item['mail_content'])) != '' &&
+                    $this->item['mail_send'] == 'Y' &&
+                    isset($email)
+                ) {
+                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from')
+
+                    $message = \Common\Mailer\Message::newInstance($this->item['mail_subject'])
+                    ->parseHtml(
+                        FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Confirmation.tpl',
+                        array(
+                            'sentOn' => time(),
+                            'subject' => $this->item['mail_subject'],
+                            'content'  => $this->item['mail_content'],
+                            'fields' => $emailFields
+                        ),
+                        true
+                    )
+                    ->setTo($email)
+                    ->setFrom(array($from['name'] => $from['email']))
+                    ;
+                    
                 }
 
                 // trigger event
