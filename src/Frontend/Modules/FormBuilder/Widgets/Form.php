@@ -505,11 +505,12 @@ class Form extends FrontendBaseWidget
                     )
                 );
 
-                // get the possible reply to address already here, because we use it twice
+                // get the possible replyTo address here, because we use it twice
                 $replyToAddress = null;
 
                 foreach ($this->item['fields'] as $field) {
-                    if (array_key_exists('reply_to', $field['settings']) &&
+                    if (
+                        array_key_exists('reply_to', $field['settings']) &&
                         $field['settings']['reply_to'] === true &&
                         \SpoonFilter::isEmail($this->frm->getField('field' . $field['id'])->getValue())
                     ) {
@@ -522,13 +523,16 @@ class Form extends FrontendBaseWidget
                     $replyToSetting = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
                     $replyToAddress = $replyToSetting['email'];
                     $replyToName = $replyToSetting['email'];
+                    $replyToGiven = false;
                 } else {
                     $replyToName = $replyToAddress;
+                    $replyToGiven = true;
                 }
 
-                // need to send mail to e-mail adresses given in backend
+                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+
+                // Mail(s) to addresses behind the form
                 if ($this->item['method'] == 'database_email') {
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
                     $message = \Common\Mailer\Message::newInstance(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
                         )
@@ -548,17 +552,15 @@ class Form extends FrontendBaseWidget
                     $this->get('mailer')->send($message);
                 }
 
-                // send confirmation e-mail to person who filled in the form
-                // double check for empty values and make sure the e-mail is allowed to be send
-                // also, make sure we have a valid reply to e-mail adres (which is checked above)
+                // Confirmation e-mail to person who filled in the form
+                // Double check for empty subject or content and make sure the e-mail is allowed to be send.
+                // Also, make sure we have a valid reply to e-mail adres (which is checked above)
                 if (
                     trim($this->item['mail_subject']) != '' &&
                     strip_tags(trim($this->item['mail_content'])) != '' &&
                     $this->item['mail_send'] == 'Y' &&
-                    !empty($replyToAddress)
+                    $replyToGiven
                 ) {
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-
                     $message = \Common\Mailer\Message::newInstance($this->item['mail_subject'])
                     ->parseHtml(
                         FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Confirmation.tpl',
