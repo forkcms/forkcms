@@ -60,10 +60,10 @@
 		</div>
 		
 		<div id="tabConfirmationMail" class="box">
+			<div class="generalMessage infoMessage singleMessage">
+				<p class="lastChild">{$msgConfirmationMail}</p>
+			</div>
 			<div class="horizontal">
-				<p>
-					{$msgConfirmationMail}
-				</p>
 				<p>
 					{$chkMailSend} <label for="mail_send">{$lblMailSend|ucfirst}</label>
 				</p>
