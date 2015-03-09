@@ -505,9 +505,29 @@ class Form extends FrontendBaseWidget
                     )
                 );
 
-                // need to send mail to e-mail given in backend
+                // get the possible reply to address already here, because we use it twice
+                $replyToAddress = null;
+
+                foreach ($this->item['fields'] as $field) {
+                    if (array_key_exists('reply_to', $field['settings']) &&
+                        $field['settings']['reply_to'] === true &&
+                        \SpoonFilter::isEmail($this->frm->getField('field' . $field['id'])->getValue())
+                    ) {
+                        $replyToAddress = $this->frm->getField('field' . $field['id'])->getValue();
+                        break;
+                    }
+                }
+
+                if (empty($replyToAddress)) {
+                    $replyToSetting = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                    $replyToAddress = $replyToSetting['email'];
+                    $replyToName = $replyToSetting['email'];
+                } else {
+                    $replyToName = $replyToAddress;
+                }
+
+                // need to send mail to e-mail adresses given in backend
                 if ($this->item['method'] == 'database_email') {
-                    // build our message
                     $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
                     $message = \Common\Mailer\Message::newInstance(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
@@ -523,21 +543,7 @@ class Form extends FrontendBaseWidget
                         )
                         ->setTo($this->item['email'])
                         ->setFrom(array($from['email'] => $from['name']))
-                    ;
-
-                    // check if we have a replyTo email set
-                    foreach ($this->item['fields'] as $field) {
-                        if (array_key_exists('reply_to', $field['settings']) &&
-                            $field['settings']['reply_to'] === true
-                        ) {
-                            $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            $message->setReplyTo(array($email => $email));
-                        }
-                    }
-                    if ($message->getReplyTo() === null) {
-                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                        $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
-                    }
+                        ->setReplyTo(array($replyToAddress => $replyToName));
 
                     $this->get('mailer')->send($message);
                 }
@@ -549,9 +555,9 @@ class Form extends FrontendBaseWidget
                     trim($this->item['mail_subject']) != '' &&
                     strip_tags(trim($this->item['mail_content'])) != '' &&
                     $this->item['mail_send'] == 'Y' &&
-                    isset($email)
+                    !empty($replyToAddress)
                 ) {
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from')
+                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
 
                     $message = \Common\Mailer\Message::newInstance($this->item['mail_subject'])
                     ->parseHtml(
@@ -564,10 +570,10 @@ class Form extends FrontendBaseWidget
                         ),
                         true
                     )
-                    ->setTo($email)
-                    ->setFrom(array($from['name'] => $from['email']))
-                    ;
-                    
+                    ->setTo(array($replyToAddress => $replyToAddress))
+                    ->setFrom(array($from['email'] => $from['name']));
+
+                    $this->get('mailer')->send($message);
                 }
 
                 // trigger event
