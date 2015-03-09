@@ -1040,8 +1040,8 @@
         <translation language="nl"><![CDATA[onderwerp]]></translation>
       </item>
       <item type="label" name="MailContent">
-        <translation language="en"><![CDATA[content of confirmation e-mail]]></translation>
-        <translation language="nl"><![CDATA[inhoud van bevestigingse-mail]]></translation>
+        <translation language="en"><![CDATA[content]]></translation>
+        <translation language="nl"><![CDATA[inhoud]]></translation>
       </item>
       
     </FormBuilder>
