@@ -26,11 +26,6 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
-    const QRY_BROWSE =
-        'SELECT i.id, i.title, i.hidden
-         FROM content_blocks AS i
-         WHERE i.status = ? AND i.language = ?';
-
     const QRY_BROWSE_REVISIONS =
         'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
          FROM content_blocks AS i

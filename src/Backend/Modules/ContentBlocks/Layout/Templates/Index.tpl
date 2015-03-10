@@ -12,11 +12,46 @@
 	</div>
 	{/option:showContentBlocksAdd}
 </div>
+
 {option:dataGrid}
-<div class="dataGridHolder">
-	{$dataGrid}
-</div>
+	<div class="dataGridHolder">
+		{form:filter}
+		<div class="dataFilter">
+			<table>
+				<tbody>
+				<tr>
+					<td>
+						<div class="options">
+							<p>
+								<label for="title">{$lblTitle|ucfirst}</label>
+								{$txtTitle} {$txtTitleError}
+							</p>
+						</div>
+					</td>
+				</tr>
+				</tbody>
+				<tfoot>
+				<tr>
+					<td colspan="99">
+						<div class="options">
+							<div class="buttonHolder">
+								<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblUpdateFilter|ucfirst}" />
+							</div>
+						</div>
+					</td>
+				</tr>
+				</tfoot>
+			</table>
+		</div>
+		{/form:filter}
+
+		<div class="dataGridHolder">
+			{$dataGrid}
+		</div>
+
+	</div>
 {/option:dataGrid}
+
 {option:!dataGrid}<p>{$msgNoItems}</p>{/option:!dataGrid}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
