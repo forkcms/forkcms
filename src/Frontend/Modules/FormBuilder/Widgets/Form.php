@@ -492,10 +492,9 @@ class Form extends FrontendBaseWidget
                     FrontendFormBuilderModel::insertDataField($fieldData);
                 }
 
-                $event = new FormBuilderSubmittedEvent($this->item, $fields, $dataId);
                 $this->get('event_dispatcher')->dispatch(
                     FormBuilderEvents::FORM_SUBMITTED,
-                    $event
+                    new FormBuilderSubmittedEvent($this->item, $fields, $dataId)
                 );
 
                 // trigger event

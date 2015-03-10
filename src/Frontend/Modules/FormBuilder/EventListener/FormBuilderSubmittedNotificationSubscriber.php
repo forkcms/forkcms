@@ -2,15 +2,21 @@
 
 namespace Frontend\Modules\FormBuilder\EventListener;
 
-use Swift_Mailer;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 
+/**
+ * A Formbuilder submitted event subscriber that will send a notification
+ *
+ * @author Wouter Sioen <wouter@sumocoders.be>
+ */
 class FormBuilderSubmittedNotificationSubscriber
 {
+    /**
+     * @param FormBuilderSubmittedEvent $event
+     */
     public function onFormSubmitted(FormBuilderSubmittedEvent $event)
     {
-        // notify the admin
         $form = $event->getForm();
         FrontendFormBuilderModel::notifyAdmin(
             array(

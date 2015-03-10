@@ -7,15 +7,26 @@ use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
+/**
+ * A Formbuilder submitted event subscriber that will send an email if needed
+ *
+ * @author Wouter Sioen <wouter@sumocoders.be>
+ */
 class FormBuilderSubmittedMailSubscriber
 {
     protected $mailer;
 
+    /**
+     * @param Swift_Mailer $mailer
+     */
     public function __construct(Swift_Mailer $mailer)
     {
         $this->mailer = $mailer;
     }
 
+    /**
+     * @param FormBuilderSubmittedEvent $event
+     */
     public function onFormSubmitted(FormBuilderSubmittedEvent $event)
     {
         $form = $event->getForm();
@@ -59,6 +70,12 @@ class FormBuilderSubmittedMailSubscriber
         }
     }
 
+    /**
+     * Converts the data to make sure it is nicely usable in the email
+     *
+     * @param  array $data
+     * @return array
+     */
     protected function getEmailFields($data)
     {
         return array_map(
