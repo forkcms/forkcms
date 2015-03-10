@@ -388,27 +388,15 @@ class Edit extends BackendBaseActionEdit
                         $fs->mkdir($imagePath . '/128x128');
                     }
 
-                    // if the image should be deleted
+                    // If the image should be deleted, only the database entry is refreshed.
+                    // The revision should keep it's file.
                     if ($this->frm->getField('delete_image')->isChecked()) {
-                        $filename = $imagePath . '/source/' . $item['image'];
-                        if (is_file($filename)) {
-                            // delete the image
-                            $fs->remove($filename);
-                            BackendModel::deleteThumbnails($imagePath, $item['image']);
-                        }
-
                         // reset the name
                         $item['image'] = null;
                     }
 
                     // new image given?
                     if ($this->frm->getField('image')->isFilled()) {
-                        $filename = $imagePath . '/source/' . $this->record['image'];
-                        if (is_file($filename)) {
-                            $fs->remove($filename);
-                            BackendModel::deleteThumbnails($imagePath, $this->record['image']);
-                        }
-
                         // build the image name
                         $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
 
@@ -419,12 +407,13 @@ class Edit extends BackendBaseActionEdit
                         $image = new File($imagePath . '/source/' . $item['image']);
                         $newName = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $image->getExtension();
 
-                        // only change the name if there is a difference
+                        // only copy if the name is different.
+                        // we make a copy because the might be relevant for SEO-reasons
                         if ($newName != $item['image']) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
-                                // move the old file to the new name
-                                $fs->rename($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+                                // copy the old file with the new filename
+                                $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
                             // assign the new name to the database
