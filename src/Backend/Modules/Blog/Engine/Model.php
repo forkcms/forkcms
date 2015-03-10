@@ -995,10 +995,11 @@ class Model
      */
     public static function update(array $item)
     {
+        $db = BackendModel::getContainer()->get('database');
         // check if new version is active
         if ($item['status'] == 'active') {
             // archive all older active versions
-            BackendModel::getContainer()->get('database')->update(
+            $db->update(
                 'blog_posts',
                 array('status' => 'archived'),
                 'id = ? AND status = ?',
@@ -1014,7 +1015,7 @@ class Model
 
             // if it used to be a draft that we're now publishing, remove drafts
             if ($revision['status'] == 'draft') {
-                BackendModel::getContainer()->get('database')->delete(
+                $db->delete(
                     'blog_posts',
                     'id = ? AND status = ?',
                     array($item['id'], $revision['status'])
@@ -1032,7 +1033,7 @@ class Model
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) BackendModel::getContainer()->get('database')->getColumn(
+        $revisionIdsToKeep = (array) $db->getColumn(
             'SELECT i.revision_id
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -1043,7 +1044,28 @@ class Model
 
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
-            BackendModel::getContainer()->get('database')->delete(
+            // get all the images of the revisions that will NOT be deleted
+            $imagesToKeep = $db->getColumn(
+                'SELECT image FROM blog_posts
+                WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'])
+            );
+
+            // get the images of the revisions that will be deleted
+            $imagesOfDeletedRevisions = $db->getColumn(
+                'SELECT image FROM blog_posts
+                WHERE id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'], $archiveType)
+            );
+
+            // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
+            foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
+                if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
+                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $imageOfDeletedRevision);
+                }
+            }
+
+            $db->delete(
                 'blog_posts',
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 array($item['id'], $archiveType)
