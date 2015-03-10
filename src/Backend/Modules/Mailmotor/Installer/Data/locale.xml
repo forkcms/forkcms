@@ -5,6 +5,7 @@
       <item type="label" name="SubscribedOn">
         <translation language="en"><![CDATA[subscribed on]]></translation>
         <translation language="fr"><![CDATA[souscrit le]]></translation>
+        <translation language="nl"><![CDATA[ingeschreven op]]></translation>
       </item>
     </Core>
     <Mailmotor>
