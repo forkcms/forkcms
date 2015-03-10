@@ -71,12 +71,12 @@ class Index extends BackendBaseActionIndex
     public function execute()
     {
         parent::execute();
-        $this->loadDataGrid();
         if ($this->dataGrid->getNumResults() > $this->dataGrid->getPagingLimit())
         {
             $this->setFilter();
-            $this->loadForm();
         }
+        $this->loadForm();
+        $this->loadDataGrid();
         $this->parse();
         $this->display();
     }
