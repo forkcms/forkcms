@@ -20,15 +20,8 @@ use it like this:
         ->addAttachments($attachments)
     ;
 
-    // send it trough the mailer service
+    // send it through the mailer service
     $this->get('mailer')->send($message);
 
 All occurences of sending emails in the core are replaced by this, so you can use
 this as a reference.
-
-
-## SPOON_DEBUG
-
-SPOON_DEBUG is removed. From now on you need to check if DEBUG is on by using the kernel.debug parameter, f.e.
-
-	if ($this->getContainer()->getParameter('kernel.debug')) { ...
