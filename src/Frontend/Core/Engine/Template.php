@@ -46,7 +46,7 @@ class Template extends \SpoonTemplate
 
         $this->setCacheDirectory(FRONTEND_CACHE_PATH . '/CachedTemplates');
         $this->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
-        $this->setForceCompile(SPOON_DEBUG);
+        $this->setForceCompile(Model::getContainer()->getParameter('kernel.debug'));
         $this->mapCustomModifiers();
     }
 
@@ -189,7 +189,7 @@ class Template extends \SpoonTemplate
     public function isCached($name)
     {
         // never cached in debug
-        if (SPOON_DEBUG) {
+        if (Model::getContainer()->getParameter('kernel.debug')) {
             return false;
         } else {
             // let parent do the actual check
@@ -355,7 +355,7 @@ class Template extends \SpoonTemplate
      */
     private function parseDebug()
     {
-        if (SPOON_DEBUG) {
+        if (Model::getContainer()->getParameter('kernel.debug')) {
             $this->assign('debug', true);
         }
     }
