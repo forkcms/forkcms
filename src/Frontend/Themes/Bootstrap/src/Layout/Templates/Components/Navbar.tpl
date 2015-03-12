@@ -6,13 +6,21 @@
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
     </button>
-    <a href="/" class="navbar-brand">{$siteTitle}</a>
+
+    <h1>
+      <a href="/" class="navbar-brand">
+        {$siteTitle}
+      </a>
+    </h1>
   </div>
+
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     {$var|getnavigation:'page':0:1}
+
     {iteration:positionTop}
-    {$positionTop.blockContent}
+      {$positionTop.blockContent}
     {/iteration:positionTop}
+
     {include:Core/Layout/Templates/Components/Languages.tpl}
   </div>
 </nav>

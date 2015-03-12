@@ -3,6 +3,7 @@
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 
 {include:Core/Layout/Templates/Components/Notifications.tpl}
+
 {include:Core/Layout/Templates/Components/Navbar.tpl}
 
 <section id="main" class="container">
@@ -24,6 +25,8 @@
     </div>
   </div>
 </section>
+
 {include:Core/Layout/Templates/Components/Footer.tpl}
+
 </body>
 </html>

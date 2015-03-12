@@ -3,6 +3,7 @@
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 
 {include:Core/Layout/Templates/Components/Notifications.tpl}
+
 {include:Core/Layout/Templates/Components/Navbar.tpl}
 
 {option:positionSlideshow}
@@ -23,31 +24,29 @@
 
 <section id="main">
   <div class="container">
+
     {option:positionFeatures}
     <div class="row marketing">
       {iteration:positionFeatures}
-      {option:positionFeatures.blockIsHTML}
-      {$positionFeatures.blockContent}
-      {/option:positionFeatures.blockIsHTML}
-      {option:!positionFeatures.blockIsHTML}
-      {$positionFeatures.blockContent}
-      {/option:!positionFeatures.blockIsHTML}
+        {$positionFeatures.blockContent}
       {/iteration:positionFeatures}
     </div>
     {/option:positionFeatures}
 
-    {* Main position *}
     {iteration:positionMain}
-    {option:positionMain.blockIsHTML}
-    <hr class="featurette-divider">
-    {$positionMain.blockContent}
-    {/option:positionMain.blockIsHTML}
-    {option:!positionMain.blockIsHTML}
-    {$positionMain.blockContent}
-    {/option:!positionMain.blockIsHTML}
+      {option:positionMain.blockIsHTML}
+        <hr class="featurette-divider">
+        {$positionMain.blockContent}
+      {/option:positionMain.blockIsHTML}
+      {option:!positionMain.blockIsHTML}
+        {$positionMain.blockContent}
+      {/option:!positionMain.blockIsHTML}
     {/iteration:positionMain}
+
   </div>
 </section>
+
 {include:Core/Layout/Templates/Components/Footer.tpl}
+
 </body>
 </html>
