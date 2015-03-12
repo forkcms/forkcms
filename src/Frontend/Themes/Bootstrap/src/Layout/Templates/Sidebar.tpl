@@ -2,13 +2,13 @@
 
 <body class="{$LANGUAGE}" itemscope itemtype="http://schema.org/WebPage">
 
-{include:Core/Layout/Templates/Components/Notifications.tpl}
-{include:Core/Layout/Templates/Components/Navbar.tpl}
+{include:Core/Layout/Templates/Notifications.tpl}
+{include:Core/Layout/Templates/Navbar.tpl}
 
 <section id="main">
   <div class="container">
 
-    {include:Core/Layout/Templates/Components/Breadcrumb.tpl}
+    {include:Core/Layout/Templates/Breadcrumb.tpl}
 
     <div class="row">
       <div class="col-md-9">
@@ -47,6 +47,6 @@
     </div>
   </div>
 </section>
-{include:Core/Layout/Templates/Components/Footer.tpl}
+{include:Core/Layout/Templates/Footer.tpl}
 </body>
 </html>

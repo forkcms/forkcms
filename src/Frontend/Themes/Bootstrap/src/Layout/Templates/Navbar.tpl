@@ -21,7 +21,7 @@
       {$positionTop.blockContent}
     {/iteration:positionTop}
 
-    {include:Core/Layout/Templates/Components/Languages.tpl}
+    {include:Core/Layout/Templates/Languages.tpl}
   </div>
 </nav>
 
