@@ -6,30 +6,31 @@ module.exports = (grunt) ->
     theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/Src'
     theme_build: 'src/Frontend/Themes/<%= pkg.theme %>/Core'
     coffee:
-      compileJoined:
-        options:
-          bare: true
-        files:
-          '<%= theme_build %>/Js/theme.js': [
-            '<%= theme_src %>/Coffee/theme.coffee'
-          ]
+      compile:
+        expand: true
+        flatten: true
+        src: ['<%= theme_src %>/coffee/*']
+        dest: '<%= theme_build %>/js/'
+        ext: '.js'
     compass:
-      dist:
+      options:
+        config: '<%= theme_src %>/Layout/config.rb'
+        sassDir: '<%= theme_src %>/Layout/Sass'
+        cssDir: '<%= theme_build %>/Layout/Css'
+        imageDir: '<%= theme_build %>/Layout/Images'
+        fontsDir: '<%= theme_build %>/Layout/Fonts'
+        relativeAssets: true
+      dist: {}
+      build:
         options:
-          config: '<%= theme_src %>/Layout/config.rb'
-          sassDir: '<%= theme_src %>/Layout/sass'
-          cssDir: '<%= theme_build %>/Layout/Css'
-          imageDir: '<%= theme_build %>/Layout/images'
-          fontsDir: '<%= theme_build %>/Layout/fonts'
-          relativeAssets: true
-          bundleExec: true
+          outputStyle: 'compressed'
     replace:
       head:
         options:
           patterns: [
             {
-              match: /\<script\ src=\"\/src/g
-              replacement: '<script src="{$THEME_URL}/src'
+              match: /\<script\ src=\"\/src\/Js/g
+              replacement: '<script src="{$THEME_URL}/src/Js'
             }
             {
               match: /\<script\ src=\"\/Core\/Js/g
@@ -37,22 +38,18 @@ module.exports = (grunt) ->
             }
           ]
         files: [
-          src: '<%= theme_src %>/Layout/Templates/Components/Head.tpl'
-          dest: '<%= theme_build %>/Layout/Templates/Components/'
+          src: '<%= theme_src %>/Layout/Templates/Head.tpl'
+          dest: '<%= theme_build %>/Layout/Templates/'
           flatten: true
           expand: true
         ]
     useminPrepare:
       options:
-        root: '<%= theme_src %>/../'
-        dest: '<%= theme_src %>/../'
-      html: '<%= theme_src %>/Layout/Templates/Components/Head.tpl'
+        root: 'src/../'
+        dest: 'src/../'
+      html: '<%= theme_src %>/Layout/Templates/Head.tpl'
     usemin:
-      html: '<%= theme_build %>/Layout/Templates/Components/Head.tpl'
-      options:
-        blockReplacements:
-          js: (block) ->
-            '<script src="{$THEME_URL}' + block.dest + '"></script>'
+      html: '<%= theme_build %>/Layout/Templates/Head.tpl'
     clean:
       fontsCss: [
         '<%= theme_build %>/Layout/Fonts/*.css'
@@ -141,9 +138,14 @@ module.exports = (grunt) ->
           'replace:head'
         ]
       images:
-        files: ['<%= theme_src %>/Layout/Images/**']
+        files: ['<%= theme_src %>/Layout/Images/*.{jpg,gif,png}']
         tasks: [
           'imagemin'
+        ]
+      svg:
+        files: ['<%= theme_src %>/Layout/Images/*.svg']
+        tasks: [
+          'copy:svg'
         ]
       fonts:
         files: ['<%= theme_src %>/Layout/Fonts/**']
@@ -187,7 +189,7 @@ module.exports = (grunt) ->
   # Production task
   grunt.registerTask 'build', [
     'clean:iconfont'
-    'compass:dist'
+    'compass:build'
     'autoprefixer'
     'coffee'
     'copy:templates'
@@ -203,3 +205,4 @@ module.exports = (grunt) ->
     'clean:fontsCss'
     'clean:dist'
   ]
+
