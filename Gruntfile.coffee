@@ -29,8 +29,8 @@ module.exports = (grunt) ->
         options:
           patterns: [
             {
-              match: /\<script\ src=\"\/src\/Js/g
-              replacement: '<script src="{$THEME_URL}/src/Js'
+              match: /\<script\ src=\"\/src/g
+              replacement: '<script src="{$THEME_URL}/src'
             }
             {
               match: /\<script\ src=\"\/Core\/Js/g
@@ -45,11 +45,15 @@ module.exports = (grunt) ->
         ]
     useminPrepare:
       options:
-        root: 'src/../'
-        dest: 'src/../'
+        root: '<%= theme_src %>/../'
+        dest: '<%= theme_src %>/../'
       html: '<%= theme_src %>/Layout/Templates/Head.tpl'
     usemin:
       html: '<%= theme_build %>/Layout/Templates/Head.tpl'
+      options:
+        blockReplacements:
+          js: (block) ->
+            '<script src="{$THEME_URL}' + block.dest + '"></script>'
     clean:
       fontsCss: [
         '<%= theme_build %>/Layout/Fonts/*.css'
