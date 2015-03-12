@@ -21,12 +21,7 @@
 
         {* Main position *}
         {iteration:positionMain}
-        {option:positionMain.blockIsHTML}
-        {$positionMain.blockContent}
-        {/option:positionMain.blockIsHTML}
-        {option:!positionMain.blockIsHTML}
-        {$positionMain.blockContent}
-        {/option:!positionMain.blockIsHTML}
+          {$positionMain.blockContent}
         {/iteration:positionMain}
       </div>
       <div class="col-md-3">
@@ -34,12 +29,7 @@
           {* Right position *}
           {iteration:positionRight}
           <div class="col-md-12">
-            {option:positionRight.blockIsHTML}
             {$positionRight.blockContent}
-            {/option:positionRight.blockIsHTML}
-            {option:!positionRight.blockIsHTML}
-            {$positionRight.blockContent}
-            {/option:!positionRight.blockIsHTML}
           </div>
           {/iteration:positionRight}
         </div>
