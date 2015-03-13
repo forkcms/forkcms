@@ -1,0 +1,147 @@
+{#
+	variables that are available:
+	- {{ item }}: contains data about the post
+	- {{ comments }}: contains an array with the comments for the post, each element contains data about the comment.
+	- {{ commentsCount }}: contains a variable with the number of comments for this blog post.
+	- {{ navigation }}: contains an array with data for previous and next post
+#}
+<div id="blogDetail">
+	<article class="mod article" itemscope itemtype="http://schema.org/Blog">
+		<div class="inner">
+			<meta itemprop="interactionCount" content="UserComments:{{ commentsCount }}">
+			<meta itemprop="author" content="{{ item.user_id|usersetting:'nickname' }}">
+			<header class="hd">
+				<h1 itemprop="name">{{ item.title }}</h1>
+				<ul>
+					<li>
+						{# Written by #}
+						{{ msg.WrittenBy|capitalize|sprintf({$item.user_id|usersetting('nickname' }}}))
+
+						{# Written on #}
+						{{ lbl.On }} <time itemprop="datePublished" datetime="{{ item.publish_on|spoon_date('Y-m-d\TH, i:s' }}">{{ item.publish_on|date:{$dateFormatLong }}:{{ LANGUAGE }}})</time>
+
+						{# Category#}
+						{{ lbl.In }} {{ lbl.The }} {{ lbl.Category }} <a itemprop="articleSection" href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+
+						{# Tags #}
+						{% if item.tags %}
+							{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
+							<span itemprop="keywords">
+								{% for xXx in item.tags %}
+									<a href="{{ item.tags.full_url }}" rel="tag" title="{{ item.tags.name }}">{{ item.tags.name }}</a>{% if not item.tags.last %}, {% endif %}{% if item.tags.last %}.{% endif %}
+								{% endfor %}
+							</span>
+						{% endif %}
+					</li>
+					{# Comments #}
+					{% if item.allow_comments %}
+						<li>
+							{% if not comments %}<a href="{{ item.full_url }}#{{ act.Comment }}" itemprop="discussionUrl">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
+							{% if comments %}
+								{% if blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ act.Comments }}" itemprop="discussionUrl">{$msgBlogNumberOfComments|sprintf({{ commentsCount }}})</a>{% endif %}
+								{% if not blogCommentsMultiple %}<a href="{{ item.full_url }}#{{ act.Comments }}" itemprop="discussionUrl">{{ msg.BlogOneComment }}</a>{% endif %}
+							{% endif %}
+						</li>
+					{% endif %}
+					<li>
+						<a href="{{ item.full_url }}" class="share">{{ lbl.Share|capitalize }}</a>
+					</li>
+				</ul>
+			</header>
+			<div class="bd content" itemprop="articleBody">
+				{% if item.image %}<img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" itemprop="image" />{% endif %}
+				{{ item.text }}
+			</div>
+			<footer class="ft">
+				{% if navigation %}
+				<ul class="pageNavigation">
+					{% if navigation.previous %}
+						<li class="previousLink">
+							<a href="{{ navigation.previous.url }}" rel="prev">{{ lbl.PreviousArticle|capitalize }}: {{ navigation.previous.title }}</a>
+						</li>
+					{% endif %}
+					{% if navigation.next %}
+						<li class="nextLink">
+							<a href="{{ navigation.next.url }}" rel="next">{{ lbl.NextArticle|capitalize }}: {{ navigation.next.title }}</a>
+						</li>
+					{% endif %}
+				</ul>
+				{% endif %}
+			</footer>
+		</div>
+	</article>
+
+	{% if comments %}
+		{% if item.allow_comments %}
+			<section id="blogComments" class="mod" itemscope itemtype="http://schema.org/Article">
+				<div class="inner">
+					<header class="hd">
+						<h3 id="{{ act.Comments }}">{{ lbl.Comments|capitalize }}</h3>
+					</header>
+					<div class="bd content">
+						{% for xXx in comments %}
+							{# Do not alter the id! It is used as an anchor #}
+							<div id="comment-{{ comments.id }}" class="comment" itemprop="comment" itemscope itemtype="http://schema.org/UserComments">
+								<meta itemprop="discusses" content="{{ item.title }}" />
+								<div class="imageHolder">
+									{% if comments.website %}<a href="{{ comments.website }}">{% endif %}
+										<img src="{{ FRONTEND_CORE_URL }}/Layout/images/default_author_avatar.gif" width="48" height="48" alt="{{ comments.author }}" class="replaceWithGravatar" data-gravatar-id="{{ comments.gravatar_id }}" />
+									{% if comments.website %}</a>{% endif %}
+								</div>
+								<div class="commentContent">
+									<p class="commentAuthor" itemscope itemtype="http://schema.org/Person">
+										{% if comments.website %}<a href="{{ comments.website }}" itemprop="url">{% endif %}
+											<span itemprop="creator name">{{ comments.author }}</span>
+										{% if comments.website %}</a>{% endif %}
+										{{ lbl.Wrote }}
+										<time itemprop="commentTime" datetime="{{ comments.created_on|date:'Y-m-d\TH:i:s' }}">{{ comments.created_on|timeago }}</time>
+									</p>
+									<div class="commentText content" itemprop="commentText">
+										{{ comments.text|cleanupplaintext }}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				</div>
+			</section>
+		{% endif %}
+	{% endif %}
+	{% if item.allow_comments %}
+		<section id="blogCommentForm" class="mod">
+			<div class="inner">
+				<header class="hd">
+					<h3 id="{{ act.Comment }}">{{ msg.Comment|capitalize }}</h3>
+				</header>
+				<div class="bd">
+					{% if commentIsInModeration %}<div class="message warning"><p>{{ msg.BlogCommentInModeration }}</p></div>{% endif %}
+					{% if commentIsSpam %}<div class="message error"><p>{{ msg.BlogCommentIsSpam }}</p></div>{% endif %}
+					{% if commentIsAdded %}<div class="message success"><p>{{ msg.BlogCommentIsAdded }}</p></div>{% endif %}
+					{% form commentsForm %}
+						<div class="alignBlocks">
+							<p {% if txtAuthorError %}class="errorArea"{% endif %}>
+								<label for="author">{{ lbl.Name|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+								{% form_field_error Author %} {% form_field Author %}
+							</p>
+							<p {% if txtEmailError %}class="errorArea"{% endif %}>
+								<label for="email">{{ lbl.Email|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+								{% form_field_error Email %} {% form_field Email %}
+							</p>
+						</div>
+						<p class="bigInput{% if txtWebsiteError %} errorArea{% endif %}">
+							<label for="website">{{ lbl.Website|capitalize }}</label>
+							{% form_field_error Website %} {% form_field Website %}
+						</p>
+						<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
+							<label for="message">{{ lbl.Message|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+							{% form_field_error Message %} {% form_field Message %}
+						</p>
+						<p>
+							<input class="inputSubmit" type="submit" name="comment" value="{{ msg.Comment|capitalize }}" />
+						</p>
+					{% endform %}
+				</div>
+			</div>
+		</section>
+	{% endif %}
+</div>

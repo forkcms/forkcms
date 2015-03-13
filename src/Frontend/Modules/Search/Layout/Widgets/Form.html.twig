@@ -1,0 +1,18 @@
+<section id="searchFormWidget" class="mod">
+	<div class="inner">
+		<header class="hd">
+			<h3>{{ lbl.Search|capitalize }}</h3>
+		</header>
+		<div class="bd">
+			{% form search %}
+				<p>
+					<label for="q_widget">{{ lbl.SearchTerm|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+					{% form_field QWidget %}
+				</p>
+				<p>
+					<input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ lbl.Search|capitalize }}" />
+				</p>
+			{% endform %}
+		</div>
+	</div>
+</section>

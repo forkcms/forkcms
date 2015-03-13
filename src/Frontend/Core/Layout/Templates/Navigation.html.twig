@@ -1,0 +1,10 @@
+{% if navigation %}
+	<ul>
+		{% for xXx in navigation %}
+			<li{% if navigation.selected %} class="selected"{% endif %}>
+				<a href="{{ navigation.link }}" title="{{ navigation.navigation_title }}"{% if navigation.nofollow %} rel="nofollow"{% endif %}>{{ navigation.navigation_title }}</a>
+				{% if navigation.selected %}{{ navigation.children }}{% endif %}
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}

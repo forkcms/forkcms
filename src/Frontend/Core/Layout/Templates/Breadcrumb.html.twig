@@ -1,0 +1,7 @@
+<p itemprop="breadcrumb">
+	{{ lbl.YouAreHere|capitalize }}:
+	{% for xXx in breadcrumb %}
+		{% if breadcrumb.url %}<a href="{{ breadcrumb.url }}" title="{{ breadcrumb.title }}">{% endif %}{{ breadcrumb.title }}{% if breadcrumb.url %}</a>{% endif %}
+		{% if not breadcrumb.last %} › {% endif %}
+	{% endfor %}
+</p>

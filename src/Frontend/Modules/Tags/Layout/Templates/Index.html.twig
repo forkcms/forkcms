@@ -1,0 +1,19 @@
+{#
+	variables that are available:
+	- {{ tags }}: contains an array with all tags that are used on the site, each element contains data about the tag
+#}
+
+<section id="tagsIndex" class="mod">
+	<div class="inner">
+		<div class="bd content">
+			{% if not tags %}<p>{{ msg.TagsNoItems }}</p>{% endif %}
+			{% if tags %}
+				<ul>
+					{% for xXx in tags %}
+						<li><a href="{{ var|geturlforblock:'Tags':'Detail' }}/{{ tags.url }}">{{ tags.name }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		</div>
+	</div>
+</section>

@@ -1,0 +1,9 @@
+{% if languages %}
+	<ul>
+		{% for xXx in languages %}
+			<li{% if languages.current %} class="selected"{% endif %}>
+				<a href="{{ languages.url }}">{{ languages.label|uppercase }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
