@@ -46,7 +46,7 @@ class Template extends \SpoonTemplate
 
         $this->setCacheDirectory(FRONTEND_CACHE_PATH . '/CachedTemplates');
         $this->setCompileDirectory(FRONTEND_CACHE_PATH . '/CompiledTemplates');
-        $this->setForceCompile(Model::getContainer()->getParameter('kernel.debug'));
+        $this->setForceCompile(SPOON_DEBUG);
         $this->mapCustomModifiers();
     }
 
@@ -181,6 +181,16 @@ class Template extends \SpoonTemplate
     }
 
     /**
+     * Returns the template type
+     *
+     * @return string Returns the template type
+     */
+    public function getTemplateType()
+    {
+        return 'spoon';
+    }
+
+    /**
      * Is the cache for this item still valid.
      *
      * @param string $name The name of the cached block.
@@ -189,7 +199,7 @@ class Template extends \SpoonTemplate
     public function isCached($name)
     {
         // never cached in debug
-        if (Model::getContainer()->getParameter('kernel.debug')) {
+        if (SPOON_DEBUG) {
             return false;
         } else {
             // let parent do the actual check
@@ -355,7 +365,7 @@ class Template extends \SpoonTemplate
      */
     private function parseDebug()
     {
-        if (Model::getContainer()->getParameter('kernel.debug')) {
+        if (SPOON_DEBUG) {
             $this->assign('debug', true);
         }
     }
@@ -428,4 +438,9 @@ class Template extends \SpoonTemplate
     {
         $this->addSlashes = (bool) $on;
     }
+
+    /**
+     * Dummy method, important for Twig
+     */
+    public function setPlugin(){}
 }
