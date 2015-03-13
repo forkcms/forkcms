@@ -147,13 +147,19 @@ class Model
         // make sure $ids is an array
         $ids = (array) $ids;
 
+        // make sure we have elements
+        if (empty($ids)) {
+            return;
+        }
+
         // loop and cast to integers
         foreach ($ids as &$id) {
             $id = (int) $id;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
+        // create an string with an equal amount of questionmarks as ids provided
+        $idPlaceHolders = implode(', ', array_fill(0, count($ids), '?'));
+
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -162,7 +168,7 @@ class Model
         $metaIds = (array) $db->getColumn(
             'SELECT meta_id
              FROM blog_posts AS p
-             WHERE id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+             WHERE id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
 
@@ -171,15 +177,22 @@ class Model
             $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
         }
 
+        // delete image files
+        $images = $db->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
+
+        foreach ($images as $image) {
+            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $image);
+        }
+
         // delete records
         $db->delete(
             'blog_posts',
-            'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            'id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
         $db->delete(
             'blog_comments',
-            'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            'post_id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
 
@@ -1047,7 +1060,7 @@ class Model
             // get all the images of the revisions that will NOT be deleted
             $imagesToKeep = $db->getColumn(
                 'SELECT image FROM blog_posts
-                WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                 WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 array($item['id'])
             );
 
