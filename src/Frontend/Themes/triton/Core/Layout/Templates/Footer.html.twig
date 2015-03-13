@@ -6,10 +6,10 @@
 		<nav id="footerNavigation">
 			<h4>{{ lbl.FooterNavigation }}</h4>
 			<ul>
-				{% for xXx in footerLinks %}
-					<li{% if footerLinks.selected %} class="selected"{% endif %}>
-						<a href="{{ footerLinks.url }}" title="{{ footerLinks.title }}"{% if footerLinks.rel %} rel="{{ footerLinks.rel }}"{% endif %}>
-							{{ footerLinks.navigation_title }}
+				{% for footer in footerLinks %}
+					<li{% if footer.selected %} class="selected"{% endif %}>
+						<a href="{{ footer.url }}" title="{{ footer.title }}"{% if footer.rel %} rel="{{ footer.rel }}"{% endif %}>
+							{{ footer.navigation_title }}
 						</a>
 					</li>
 				{% endfor %}

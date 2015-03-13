@@ -181,6 +181,7 @@ Class TwigTemplate
                 }
             }
         }
+        // var_dump($positions);exit;
         $this->twig->addGlobal('positions', $positions);
     }
 

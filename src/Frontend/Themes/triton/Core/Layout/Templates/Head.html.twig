@@ -23,8 +23,8 @@
 	<meta name="msapplication-TileImage" content="{{ THEME_URL }}/tile.png"/>
 
 	{# Stylesheets #}
-	{% for xXx in cssFiles %}
-		<link rel="stylesheet" href="{{ cssFiles.file }}" />
+	{% for css in cssFiles %}
+		<link rel="stylesheet" href="{{ css.file }}" />
 	{% endfor %}
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

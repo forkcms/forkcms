@@ -29,9 +29,9 @@
 					{% include "Core/Layout/Templates/Languages.html.twig" %}
 				</nav>
 
-				{# Top position #}
-				{% for xXx in positionTop %}
-					{{ positionTop.blockContent|raw }}
+				{# Top positions #}
+				{% for top in positions.top %}
+					{{ top.html|raw }}
 				{% endfor %}
 
 				{# Breadcrumb #}
@@ -40,15 +40,14 @@
 					{% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
 				</div>
 
-				{# Advertisement position #}
-				{% for xXx in positionAdvertisement %}
-					{% if positionAdvertisement.blockIsHTML %}
+				{# Advertisement positions #}
+				{% for advertisement in positions.advertisement %}
+					{% if advertisement.html %}
 						<div id="headerAd">
-							{{ positionAdvertisement.blockContent|raw }}
+							{{ advertisement.html|raw }}
 						</div>
-					{% endif %}
-					{% if not positionAdvertisement.blockIsHTML %}
-						{{ positionAdvertisement.blockContent|raw }}
+					{% elseif advertisement.include_path %}
+						{% include advertisement.include_path %}
 					{% endif %}
 				{% endfor %}
 
@@ -68,19 +67,18 @@
 						</header>
 					{% endif %}
 
-					{# Main position #}
-					{% for xXx in positionMain %}
-						{% if positionMain.blockIsHTML %}
+					{# Main positions #}
+					{% for main in positions.main %}
+						{% if main.html %}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
-										{{ positionMain.blockContent|raw }}
+										{{ main.html|raw }}
 									</div>
 								</div>
 							</section>
-						{% endif %}
-						{% if not positionMain.blockIsHTML %}
-							{{ positionMain.blockContent|raw }}
+						{% elseif main.include_path %}
+							{% include main.include_path %}
 						{% endif %}
 					{% endfor %}
 
@@ -89,19 +87,18 @@
 				{# Left column #}
 				<div class="col col-6">
 
-				{# Left position #}
-				{% for xXx in positionLeft %}
-					{% if positionLeft.blockIsHTML %}
+				{# Left positions #}
+				{% for left in positionsLeft %}
+					{% if left.html %}
 						<section class="mod">
 							<div class="inner">
 								<div class="bd content">
-									{{ positionLeft.blockContent|raw }}
+									{{ left.html|raw }}
 								</div>
 							</div>
 						</section>
-					{% endif %}
-					{% if not positionLeft.blockIsHTML %}
-						{{ positionLeft.blockContent|raw }}
+					{% elseif left.include_path %}
+						{% include left.include_path %}
 					{% endif %}
 				{% endfor %}
 
@@ -110,19 +107,18 @@
 				{# Right column #}
 				<div class="col col-6 lastCol">
 
-				{# Right position #}
-				{% for xXx in positionRight %}
-					{% if positionRight.blockIsHTML %}
+				{# Right positions #}
+				{% for right in positions.right %}
+					{% if right.html %}
 						<section class="mod">
 							<div class="inner">
 								<div class="bd content">
-									{{ positionRight.blockContent|raw }}
+									{{ right.html|raw }}
 								</div>
 							</div>
 						</section>
-					{% endif %}
-					{% if not positionRight.blockIsHTML %}
-						{{ positionRight.blockContent|raw }}
+					{% elseif right.include_path %}
+						{% include right.include_path %}
 					{% endif %}
 				{% endfor %}
 
@@ -141,8 +137,8 @@
 	</div>
 
 	{# General Javascript #}
-	{% for xXx in jsFiles %}
-		<script src="{{ jsFiles.file }}"></script>
+	{% for js in jsFiles %}
+		<script src="{{ js.file }}"></script>
 	{% endfor %}
 
 	{# Theme specific Javascript #}
