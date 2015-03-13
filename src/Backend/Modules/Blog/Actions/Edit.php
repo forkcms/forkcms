@@ -398,21 +398,27 @@ class Edit extends BackendBaseActionEdit
                     // new image given?
                     if ($this->frm->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
+                        // we use the previous revision-id in the filename to make the filename unique between
+                        // the different revisions, to prevent that a new file would
+                        // overwrite images of previous revisions that have the same title, and thus, the same filename
+                        $item['image'] = $this->meta->getURL() .
+                                            '-' . BL::getWorkingLanguage() .
+                                            '-' . $item['revision_id'] .
+                                            '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
                     } elseif ($item['image'] != null) {
-                        // rename the old image
+                        // generate the new filename
                         $image = new File($imagePath . '/source/' . $item['image']);
-                        $newName = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $image->getExtension();
+                        $newName = $this->meta->getURL() .
+                                            '-' . BL::getWorkingLanguage() .
+                                            '.' . $image->getExtension();
 
-                        // only copy if the name is different.
-                        // we make a copy because the might be relevant for SEO-reasons
+                        // only copy if the new name differs from the old filename
                         if ($newName != $item['image']) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
-                                // copy the old file with the new filename
                                 $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
@@ -434,7 +440,11 @@ class Edit extends BackendBaseActionEdit
                 BackendBlogModel::reCalculateCommentCount(array($this->id));
 
                 // save the tags
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags(
+                    $item['id'],
+                    $this->frm->getField('tags')->getValue(),
+                    $this->URL->getModule()
+                );
 
                 // active
                 if ($item['status'] == 'active') {
