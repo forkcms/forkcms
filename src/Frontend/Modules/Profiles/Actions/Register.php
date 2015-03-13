@@ -189,7 +189,7 @@ class Register extends FrontendBaseBlock
                     $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     }
 
