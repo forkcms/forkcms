@@ -6,46 +6,46 @@
 
 {% if items %}
 	<section id="blogCategory">
-		{% for xXx in items %}
+		{% for item in items %}
 			<article class="mod article">
 				<div class="inner">
 					<header class="hd">
-						<h3><a href="{{ items.full_url }}" title="{{ items.title }}">{{ items.title }}</a></h3>
+						<h3><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></h3>
 						<ul>
 							<li>
 								{# Written by #}
-								{{ msg.WrittenBy|capitalize|sprintf({$items.user_id|usersetting('nickname' }}}))
+								{{ msg.WrittenBy|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
 
 								{# Written on #}
-								{{ lbl.On }} {{ items.publish_on|spoon_date({$dateFormatLong }}, {{ LANGUAGE }}})
+								{{ lbl.On }} {{ item.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}
 
 								{# Category#}
-								{{ lbl.In }} {{ lbl.The }} {{ lbl.Category }} <a href="{{ items.category_full_url }}" title="{{ items.category_title }}">{{ items.category_title }}</a>{% if not items.tags %}.{% endif %}
+								{{ lbl.In }} {{ lbl.The }} {{ lbl.Category }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
 
 								{# Tags#}
-								{% if items.tags %}
+								{% if item.tags %}
 									{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
-									{% for xXx in items.tags %}
-										<a href="{{ items.tags.full_url }}" rel="tag" title="{{ items.tags.name }}">{{ items.tags.name }}</a>{% if not items.tags.last %}, {% endif %}{% if items.tags.last %}.{% endif %}
+									{% for tag in item.tags %}
+										<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
 									{% endfor %}
 								{% endif %}
 							</li>
 							{# Comments #}
-							{% if items.allow_comments %}
+							{% if item.allow_comments %}
 							<li>
-								{% if not items.comments %}<a href="{{ items.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
-								{% if items.comments %}
-									{% if items.comments_multiple %}<a href="{{ items.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf({$items.comments_count }}})</a>{% endif %}
-									{% if not items.comments_multiple %}<a href="{{ items.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
+								{% if not item.comments %}<a href="{{ item.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
+								{% if item.comments %}
+									{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf(item.comments_count) }}</a>{% endif %}
+									{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
 								{% endif %}
 							</li>
 							{% endif %}
 						</ul>
 					</header>
 					<div class="bd content">
-						{% if items.image %}<img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ items.image }}" alt="{{ items.title }}" />{% endif %}
-						{% if not items.introduction %}{{ items.text }}{% endif %}
-						{% if items.introduction %}{{ items.introduction }}{% endif %}
+						{% if item.image %}<img src="{{ FRONTEND_FILES_URL }}/blog/images/source/{{ item.image }}" alt="{{ item.title }}" />{% endif %}
+						{% if not item.introduction %}{{ item.text }}{% endif %}
+						{% if item.introduction %}{{ item.introduction }}{% endif %}
 					</div>
 				</div>
 			</article>

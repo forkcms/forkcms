@@ -32,21 +32,20 @@
 				</header>
 			{% endif %}
 
-			{# Main position #}
-			{% for xXx in positionMain %}
-				{% if positionMain.blockIsHTML %}
-					<section class="mod">
-						<div class="inner">
-							<div class="bd content">
-								{{ positionMain.blockContent|raw }}
+				{# Main positions #}
+				{% for main in positions.main %}
+					{% if main.html %}
+						<section class="mod">
+							<div class="inner">
+								<div class="bd content">
+									{{ main.html|raw }}
+								</div>
 							</div>
-						</div>
-					</section>
-				{% endif %}
-				{% if not positionMain.blockIsHTML %}
-					{{ positionMain.blockContent|raw }}
-				{% endif %}
-			{% endfor %}
+						</section>
+					{% elseif main.include_path %}
+						{% include main.include_path %}
+					{% endif %}
+				{% endfor %}
 		</section>
 
 		<footer>
@@ -55,8 +54,8 @@
 	</div>
 
 	{# General Javascript #}
-	{% for xXx in jsFiles %}
-		<script src="{{ jsFiles.file }}"></script>
+	{% for js in jsFiles %}
+		<script src="{{ js.file }}"></script>
 	{% endfor %}
 
 	{# Site wide HTML #}

@@ -11,7 +11,7 @@
 			</header>
 			<div class="bd content">
 				<ul>
-					{% for xXx in widgetFaqCategoryList %}
+					{% for widgetFaqCategoryList in widgetFaqCategoryList %}
 						<li><a href="{{ widgetFaqCategoryList.full_url }}" title="{{ widgetFaqCategoryList.question }}">{{ widgetFaqCategoryList.question }}</a></li>
 					{% endfor %}
 				</ul>

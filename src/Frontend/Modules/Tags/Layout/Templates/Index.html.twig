@@ -9,8 +9,8 @@
 			{% if not tags %}<p>{{ msg.TagsNoItems }}</p>{% endif %}
 			{% if tags %}
 				<ul>
-					{% for xXx in tags %}
-						<li><a href="{{ var|geturlforblock:'Tags':'Detail' }}/{{ tags.url }}">{{ tags.name }}</a></li>
+					{% for tags in tags %}
+						<li><a href="{{ var|geturlforblock('Tags', 'Detail') }}/{{ tags.url }}">{{ tags.name }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}

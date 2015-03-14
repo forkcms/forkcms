@@ -14,37 +14,37 @@
 
 					<input type="hidden" name="form" value="{{ formName }}" />
 
-					{% for xXx in fields %}
+					{% for field in fields %}
 						{# Headings and paragraphs #}
-						{% if fields.plaintext %}
+						{% if field.plaintext %}
 							<div class="content">
-								{{ fields.html }}
+								{{ field.html|raw }}
 							</div>
 						{% endif %}
 
-						{# Input fields, textareas and drop downs #}
-						{% if fields.simple %}
-							<p{% if fields.error %} class="errorArea"{% endif %}>
-								<label for="{{ fields.name }}">
-									{{ fields.label }}{% if fields.required %}<abbr title="{{ lbl.RequiredField }}">#</abbr>{% endif %}
+						{# Input field, textareas and drop downs #}
+						{% if field.simple %}
+							<p{% if field.error %} class="errorArea"{% endif %}>
+								<label for="{{ field.name }}">
+									{{ field.label }}{% if field.required %}<abbr title="{{ lbl.RequiredField }}">#</abbr>{% endif %}
 								</label>
-								{{ fields.html }}
-								{% if fields.error %}<span class="formError inlineError">{{ fields.error }}</span>{% endif %}
+								{{ field.html|raw }}
+								{% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
 							</p>
 						{% endif %}
 
 						{# Radio buttons and checkboxes #}
-						{% if fields.multiple %}
-							<div class="inputList{% if fields.error %} errorArea{% endif %}">
+						{% if field.multiple %}
+							<div class="inputList{% if field.error %} errorArea{% endif %}">
 								<p class="label">
-									{{ fields.label }}{% if fields.required %}<abbr title="{{ lbl.RequiredField }}">#</abbr>{% endif %}
+									{{ field.label }}{% if field.required %}<abbr title="{{ lbl.RequiredField }}">#</abbr>{% endif %}
 								</p>
 								<ul>
-									{% for xXx in fields.html %}
-										<li><label for="{{ fields.html.id }}">{{ fields.html.field }} {{ fields.html.label }}</label></li>
+									{% for html in field.html %}
+										<li><label for="{{ html.id }}">{{ html.field|raw }} {{ html.label }}</label></li>
 									{% endfor %}
 								</ul>
-								{% if fields.error %}<span class="formError inlineError">{{ fields.error }}</span>{% endif %}
+								{% if field.error %}<span class="formError inlineError">{{ field.error }}</span>{% endif %}
 							</div>
 						{% endif %}
 					{% endfor %}

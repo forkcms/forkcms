@@ -12,7 +12,7 @@
 
 {% if widgetSubpages %}
 	<div id="subpagesBlocks">
-		{% for xXx in widgetSubpages %}
+		{% for widgetSubpages in widgetSubpages %}
 			<div class="subpagesBlock">
 				<h3><a href="{{ widgetSubpages.full_url }}" title="{{ widgetSubpages.title }}">{{ widgetSubpages.title }}</a></h3>
 				{{ widgetSubpages.description }}

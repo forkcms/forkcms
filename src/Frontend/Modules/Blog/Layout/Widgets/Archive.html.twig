@@ -3,7 +3,7 @@
 	- {{ widgetBlogArchive }}:
 #}
 
-{cache:{{ LANGUAGE }}_blogWidgetArchiveCache}
+{#% cache _blogWidgetArchiveCache %#}
 	{% if widgetBlogArchive %}
 		<section id="blogArchiveWidget" class="mod">
 			<div class="inner">
@@ -12,21 +12,21 @@
 				</header>
 				<div class="bd content">
 					<ul>
-						{% for xXx in widgetBlogArchive %}
+						{% for archive in widgetBlogArchive %}
 							<li>
-								{% if widgetBlogArchive.url %}<a href="{{ widgetBlogArchive.url }}">{% endif %}
-									{{ widgetBlogArchive.label }}
-									{% if widgetBlogArchive.url %}({{ widgetBlogArchive.total }}){% endif %}
-								{% if widgetBlogArchive.url %}</a>{% endif %}
+								{% if archive.url %}<a href="{{ archive.url }}">{% endif %}
+									{{ archive.label }}
+									{% if archive.url %}({{ archive.total }}){% endif %}
+								{% if archive.url %}</a>{% endif %}
 
-								{% if widgetBlogArchive.months %}
+								{% if archive.months %}
 									<ul>
-										{% for xXx in widgetBlogArchive.months %}
+										{% for months in archive.months %}
 											<li>
-												{% if widgetBlogArchive.months.url %}<a href="{{ widgetBlogArchive.months.url }}">{% endif %}
-													{$widgetBlogArchive.months.label|spoon_date('F', {{ LANGUAGE }}})
-													{% if widgetBlogArchive.months.url %}({{ widgetBlogArchive.months.total }}){% endif %}
-												{% if widgetBlogArchive.months.url %}</a>{% endif %}
+												{% if months.url %}<a href="{{ months.url }}">{% endif %}
+													{{ months.label|spoon_date('F', LANGUAGE) }}
+													{% if months.url %}({{ months.total }}){% endif %}
+												{% if months.url %}</a>{% endif %}
 											</li>
 										{% endfor %}
 									</ul>
@@ -38,4 +38,4 @@
 			</div>
 		</section>
 	{% endif %}
-{# endcache #}}_blogWidgetArchiveCache}
+{#% endcache %#}

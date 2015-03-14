@@ -6,11 +6,11 @@
 <section id="tagsDetail" class="mod">
 	<div class="inner">
 		<header class="hd">
-			<h1>{{ lbl.ItemsWithTag|sprintf:{$tag.name }}|capitalize}</h1>
+			<h1>{{ lbl.ItemsWithTag|sprintf(tag.name)|capitalize }}</h1>
 		</header>
 		<div class="bd">
 			{% if tagsModules %}
-				{% for xXx in tagsModules %}
+				{% for tagsModules in tagsModules %}
 					<section class="mod">
 						<div class="inner">
 							<header class="hd">
@@ -18,8 +18,8 @@
 							</header>
 							<div class="bd content">
 								<ul>
-									{% for xXx in tagsModules.items %}
-										<li><a href="{{ tagsModules.items.full_url }}">{{ tagsModules.items.title }}</a></li>
+									{% for item in tagsModules.items %}
+										<li><a href="{{ item.full_url }}">{{ item.title }}</a></li>
 									{% endfor %}
 								</ul>
 							</div>
@@ -27,8 +27,8 @@
 					</section>
 				{% endfor %}
 			{% endif %}
-			<p><a href="{{ var|geturlforblock:'Tags' }}" title="{{ lbl.ToTagsOverview|capitalize }}">{{ lbl.ToTagsOverview|capitalize }}</a></p>
-			
+			<p><a href="{{ var|geturlforblock('Tags') }}" title="{{ lbl.ToTagsOverview|capitalize }}">{{ lbl.ToTagsOverview|capitalize }}</a></p>
+
 		</div>
 	</div>
 </section>

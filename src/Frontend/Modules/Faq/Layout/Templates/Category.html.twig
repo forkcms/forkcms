@@ -14,8 +14,8 @@
 					<div class="inner">
 						<div class="bd">
 							<ul>
-								{% for xXx in questions %}
-									<li><a href="{{ questions.full_url }}">{{ questions.question }}</a></li>
+								{% for question in questions %}
+									<li><a href="{{ question.full_url }}">{{ question.question }}</a></li>
 								{% endfor %}
 							</ul>
 						</div>
@@ -27,7 +27,7 @@
 				<p>{{ msg.NoQuestionsInCategory|capitalize }}</p>
 			{% endif %}
 
-			<p><a href="{{ var|geturlforblock:'Faq' }}" title="{{ lbl.ToFaqOverview|capitalize }}">{{ lbl.ToFaqOverview|capitalize }}</a></p>
+			<p><a href="{{ var|geturlforblock('Faq') }}" title="{{ lbl.ToFaqOverview|capitalize }}">{{ lbl.ToFaqOverview|capitalize }}</a></p>
 		</div>
 	</div>
 </section>

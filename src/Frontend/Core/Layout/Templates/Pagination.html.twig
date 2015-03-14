@@ -13,11 +13,11 @@
 						</li>
 
 						{% if pagination.first %}
-							{% for xXx in pagination.first %}<li><a href="{{ pagination.first.url }}" rel="nofollow" title="{{ lbl.GoToPage|capitalize }} {{ pagination.first.label }}">{{ pagination.first.label }}</a></li>{% endfor %}
+							{% for pagination in pagination.first %}<li><a href="{{ pagination.first.url }}" rel="nofollow" title="{{ lbl.GoToPage|capitalize }} {{ pagination.first.label }}">{{ pagination.first.label }}</a></li>{% endfor %}
 							<li class="ellipsis"><span>&hellip;</span></li>
 						{% endif %}
 
-						{% for xXx in pagination.pages %}
+						{% for pagination in pagination.pages %}
 							<li{% if pagination.pages.current %} class="currentPage"{% endif %}>
 								{% if not pagination.pages.current %}<a href="{{ pagination.pages.url }}" rel="nofollow" title="{{ lbl.GoToPage|capitalize }} {{ pagination.pages.label }}">{% endif %}
 								{% if pagination.pages.current %}<span>{% endif %}
@@ -29,7 +29,7 @@
 
 						{% if pagination.last %}
 							<li class="ellipsis"><span>&hellip;</span></li>
-							{% for xXx in pagination.last %}<li><a href="{{ pagination.last.url }}" rel="nofollow" title="{{ lbl.GoToPage|capitalize }} {{ pagination.last.label }}">{{ pagination.last.label }}</a></li>{% endfor %}
+							{% for pagination in pagination.last %}<li><a href="{{ pagination.last.url }}" rel="nofollow" title="{{ lbl.GoToPage|capitalize }} {{ pagination.last.label }}">{{ pagination.last.label }}</a></li>{% endfor %}
 						{% endif %}
 
 						<li class="nextPage">

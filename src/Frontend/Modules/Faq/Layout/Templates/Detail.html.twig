@@ -18,8 +18,8 @@
 						{# Tags#}
 						{% if item.tags %}
 							{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
-							{% for xXx in item.tags %}
-								<a href="{{ item.tags.full_url }}" rel="tag" title="{{ item.tags.name }}">{{ item.tags.name }}</a>{% if not item.tags.last %}, {% endif %}{% if item.tags.last %}.{% endif %}
+							{% for tag in item.tags %}
+								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
 							{% endfor %}
 						{% endif %}
 					</li>
@@ -32,8 +32,8 @@
 					<ul>
 						<li>
 							{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
-							{% for xXx in item.tags %}
-								<a href="{{ item.tags.full_url }}" rel="tag" title="{{ item.tags.name }}">{{ item.tags.name }}</a>{% if not item.tags.last %}, {% endif %}{% if item.tags.last %}.{% endif %}
+							{% for tag in item.tags %}
+								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
 							{% endfor %}
 						</li>
 					</ul>
@@ -55,7 +55,7 @@
 				</header>
 				<div class="bd content">
 					<ul>
-						{% for xXx in inSameCategory %}
+						{% for inSameCategory in inSameCategory %}
 							<li><a href="{{ inSameCategory.full_url }}" title="{{ inSameCategory.question }}">{{ inSameCategory.question }}</a></li>
 						{% endfor %}
 					</ul>
@@ -72,7 +72,7 @@
 				</header>
 				<div class="bd content">
 					<ul>
-						{% for xXx in related %}
+						{% for related in related %}
 							<li><a href="{{ related.full_url }}" title="{{ related.question }}">{{ related.question }}</a></li>
 						{% endfor %}
 					</ul>
@@ -81,7 +81,7 @@
 		</section>
 	{% endif %}
 
-	<p><a href="{{ var|geturlforblock:'Faq' }}" title="{{ lbl.ToFaqOverview|capitalize }}">{{ lbl.ToFaqOverview|capitalize }}</a></p>
+	<p><a href="{{ var|geturlforblock('Faq') }}" title="{{ lbl.ToFaqOverview|capitalize }}">{{ lbl.ToFaqOverview|capitalize }}</a></p>
 
 	{% if settings.allow_feedback %}
 		<section id="faqFeedbackForm" class="mod">
@@ -97,7 +97,7 @@
 						{{ hidQuestionId }}
 						<div class="options">
 							<ul class="inputList">
-								{% for xXx in useful %}
+								{% for useful in useful %}
 									<li>
 										{{ useful.rbtUseful }}
 										<label for="{{ useful.id }}">{{ useful.label|capitalize }}</label>

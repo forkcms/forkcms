@@ -7,7 +7,7 @@
 	<section id="faqCategoriesWidget" class="mod">
 		<h3>{{ lbl.AllCategories|capitalize }}</h3>
 		<ul>
-			{% for xXx in widgetFaqCategories %}
+			{% for widgetFaqCategories in widgetFaqCategories %}
 				<li><a href="{{ widgetFaqCategories.full_url }}" title="{{ widgetFaqCategories.title }}">{{ widgetFaqCategories.title }}</a></li>
 			{% endfor %}
 		</ul>

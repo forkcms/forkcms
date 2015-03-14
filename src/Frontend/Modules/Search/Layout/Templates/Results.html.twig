@@ -11,22 +11,21 @@
 				<div class="bd content">
 					<p>{{ msg.SearchNoItems }}</p>
 				</div>
-			{% endif %}
-			{% if searchResults %}
-				{% for xXx in searchResults %}
+			{% else %}
+				{% for result in searchResults %}
 					<div class="bd">
 						<section class="mod">
 							<div class="inner">
 								<header class="hd">
 									<h3>
-										<a href="{{ searchResults.full_url }}" title="{{ searchResults.title }}">
-											{{ searchResults.title }}
+										<a href="{{ result.full_url }}" title="{{ result.title }}">
+											{{ result.title }}
 										</a>
 									</h3>
 								</header>
 								<div class="bd content">
-									{% if not searchResults.introduction %}{{ searchResults.text|truncate(200 ) }}{% endif %}
-									{% if searchResults.introduction %}{{ searchResults.introduction }}{% endif %}
+									{% if not result.introduction %}{{ result.text|truncate(200 ) }}{% endif %}
+									{% if result.introduction %}{{ result.introduction }}{% endif %}
 								</div>
 							</div>
 						</section>

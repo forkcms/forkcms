@@ -11,12 +11,12 @@
 			</header>
 			<div class="bd content">
 				<ul>
-					{% for xXx in widgetBlogRecentComments %}
+					{% for comment in widgetBlogRecentComments %}
 						<li>
-							{% if widgetBlogRecentComments.website %}<a href="{{ widgetBlogRecentComments.website }}" rel="nofollow">{% endif %}
-								{{ widgetBlogRecentComments.author }}
-							{% if widgetBlogRecentComments.website %}</a>{% endif %}
-							{{ lbl.CommentedOn }} <a href="{{ widgetBlogRecentComments.full_url }}">{{ widgetBlogRecentComments.post_title }}</a>
+							{% if comment.website %}<a href="{{ comment.website }}" rel="nofollow">{% endif %}
+								{{ comment.author }}
+							{% if comment.website %}</a>{% endif %}
+							{{ lbl.CommentedOn }} <a href="{{ comment.full_url }}">{{ comment.post_title }}</a>
 						</li>
 					{% endfor %}
 				</ul>
