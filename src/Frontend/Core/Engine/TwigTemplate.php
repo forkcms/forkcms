@@ -102,7 +102,7 @@ Class TwigTemplate
         \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath, $frontendPath));
         $this->twig = new \Twig_Environment($loader, array(
-            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig/' . ($this->debugMode ? 'dev': 'prod'),
+            //'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
             'debug' => ($this->debugMode === false)
         ));
 
@@ -136,7 +136,6 @@ Class TwigTemplate
         if ($key === 'page') {
             $this->baseFile = $this->convertExtension($values['template_path']);
             $this->positions = $values['positions'];
-            return;
         }
 
         // in all other cases
@@ -181,7 +180,6 @@ Class TwigTemplate
                 }
             }
         }
-        // var_dump($positions);exit;
         $this->twig->addGlobal('positions', $positions);
     }
 
