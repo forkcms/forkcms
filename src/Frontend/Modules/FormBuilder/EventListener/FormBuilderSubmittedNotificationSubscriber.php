@@ -10,7 +10,7 @@ use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
  *
  * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class FormBuilderSubmittedNotificationSubscriber
+final class FormBuilderSubmittedNotificationSubscriber
 {
     /**
      * @param FormBuilderSubmittedEvent $event

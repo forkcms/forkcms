@@ -12,7 +12,7 @@ use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
  *
  * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class FormBuilderSubmittedMailSubscriber
+final class FormBuilderSubmittedMailSubscriber
 {
     protected $mailer;
 
