@@ -12,7 +12,7 @@
       {* Main position *}
       <div class="row">
         <div id="errorIcon">
-          <img src="{$THEME_URL}/apple-touch-icon-precomposed.png" class="img-circle">
+          <img src="{$THEME_URL}/apple-touch-icon.png" class="img-circle">
         </div>
       </div>
       {iteration:positionMain}

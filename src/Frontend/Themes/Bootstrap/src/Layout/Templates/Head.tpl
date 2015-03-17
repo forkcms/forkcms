@@ -21,7 +21,7 @@
 	<link rel="author" href="/humans.txt" />
 
 	{* Apple touch icon *}
-	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" /> {* @todo create a 144x144 png file *}
+	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" /> {* @todo create a 180x180 png file *}
 
 	{* Favicon *}
 	<link rel="icon" href="{$THEME_URL}/favicon.png"> {* @todo create a 96x96 png file *}
