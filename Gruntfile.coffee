@@ -38,7 +38,7 @@ module.exports = (grunt) ->
             }
           ]
         files: [
-          src: '<%= theme_src %>/Layout/Templates/Head.tpl'
+          src: '<%= theme_src %>/Layout/Templates/Footer.tpl'
           dest: '<%= theme_build %>/Layout/Templates/'
           flatten: true
           expand: true
@@ -47,9 +47,9 @@ module.exports = (grunt) ->
       options:
         root: '<%= theme_src %>/../'
         dest: '<%= theme_src %>/../'
-      html: '<%= theme_src %>/Layout/Templates/Head.tpl'
+      html: '<%= theme_src %>/Layout/Templates/Footer.tpl'
     usemin:
-      html: '<%= theme_build %>/Layout/Templates/Head.tpl'
+      html: '<%= theme_build %>/Layout/Templates/Footer.tpl'
       options:
         blockReplacements:
           js: (block) ->

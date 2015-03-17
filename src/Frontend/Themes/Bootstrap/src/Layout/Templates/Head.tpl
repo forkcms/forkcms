@@ -40,19 +40,8 @@
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 
-	{* General Javascript *}
-	{iteration:jsFiles}
-		<script src="{$jsFiles.file}"></script>
-	{/iteration:jsFiles}
-
-	<!-- All files after this tag will be concatenated and minified when running grunt build -->
-	<!-- build:js /Core/Js/lib.js -->
-	<script src="/src/Js/lib/bootstrap.js"></script>
-	<script src="/src/Js/lib/respond.min.js"></script>
-	<!-- endbuild -->
-	
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-	
+
 	{option:SPOON_DEBUG}
 		<script src="http://localhost:35729/livereload.js?snipver=1"></script>
 	{/option:SPOON_DEBUG}
