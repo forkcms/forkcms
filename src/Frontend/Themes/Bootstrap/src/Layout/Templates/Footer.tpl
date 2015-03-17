@@ -28,7 +28,6 @@
 
 <!-- build:js /Core/Js/lib.js -->
 <script src="/src/Js/lib/bootstrap.js"></script>
-<script src="/src/Js/lib/respond.min.js"></script>
 <!-- endbuild -->
 
 {* @todo Remove when needed *}
