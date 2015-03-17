@@ -749,6 +749,11 @@ class Model
 	    // to email
 	    $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
 
+	    if ($toEmail === null) {
+	        $to = BackendModel::getModuleSetting('Core', 'mailer_to');
+	        $toEmail = $to['email'];
+	    }
+
 		// define backend url
 		$backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
 
