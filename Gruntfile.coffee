@@ -10,7 +10,7 @@ module.exports = (grunt) ->
         expand: true
         flatten: true
         src: ['<%= theme_src %>/coffee/*']
-        dest: '<%= theme_build %>/js/'
+        dest: '<%= theme_build %>/Js/'
         ext: '.js'
     compass:
       options:
