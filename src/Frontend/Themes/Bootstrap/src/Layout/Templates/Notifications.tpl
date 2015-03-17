@@ -17,13 +17,19 @@
 <a href="#main" class="muted hide">{$lblSkipToContent|ucfirst}</a>
 
 {option:!cookieBarHide}
-<div id="cookieBar" class="fullWidthAlert alert">
+<div id="cookieBar" class="cookiebar alert alert-fullwidth">
   <button type="button" class="close" data-dismiss="alert">×</button>
   <div class="container">
-    <strong>{$lblWarning|ucfirst}:</strong> {$msgCookies}
 
-    <a href="#" id="cookieBarAgree" class="btn btn-primary btn-xs">{$lblIAgree|ucfirst}</a>
-    <a href="#" id="cookieBarDisagree" class="btn btn-primary btn-xs">{$lblIDisagree|ucfirst}</a>
+    <div class="cookiebar-content">
+      <strong>{$lblWarning|ucfirst}:</strong> {$msgCookies}
+    </div>
+
+    <div class="cookiebar-buttons">
+      <a href="#" id="cookieBarAgree" class="btn btn-primary btn-xs">{$lblIAgree|ucfirst}</a>
+      <a href="#" id="cookieBarDisagree" class="btn btn-primary btn-xs">{$lblIDisagree|ucfirst}</a>
+    </div>
+
   </div>
 </div>
 {/option:!cookieBarHide}
