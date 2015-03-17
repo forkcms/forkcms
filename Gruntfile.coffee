@@ -78,14 +78,6 @@ module.exports = (grunt) ->
           src: '**'
           dest: '<%= theme_build %>/Layout/Templates/'
         ]
-      svg:
-        files: [
-          expand: true
-          cwd: '<%= theme_src %>/Layout/Images/'
-          src: '*.svg'
-          dest: '<%= theme_build %>/Layout/Images/'
-        ]
-        updateAndDelete: true
       fonts:
         files: [
           expand: true
@@ -98,7 +90,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: '<%= theme_src %>/Layout/Images/'
-          src: ['**/*.{png,jpg,gif,jpeg}']
+          src: ['{,*/}*.{jpg,jpeg,gif,png}']
           dest: '<%= theme_build %>/Layout/Images/'
         ]
     fontgen:
@@ -112,6 +104,14 @@ module.exports = (grunt) ->
           ]
           dest: '<%= theme_build %>/Layout/Fonts/'
         ]
+    svgmin:
+      dist:
+        files: [
+          expand: true
+          src: '<%= theme_src %>/Layout/Images/*.svg'
+          dest: '<%= theme_build %>/Layout/Images/'
+        ]
+        
     webfont:
       icons:
         src: '<%=theme_src %>/Layout/icon-sources/*.svg'
@@ -149,7 +149,7 @@ module.exports = (grunt) ->
       svg:
         files: ['<%= theme_src %>/Layout/Images/*.svg']
         tasks: [
-          'copy:svg'
+          'svgmin'
         ]
       fonts:
         files: ['<%= theme_src %>/Layout/Fonts/**']
@@ -201,7 +201,7 @@ module.exports = (grunt) ->
     'concat:generated'
     'uglify:generated'
     'usemin'
-    'copy:svg'
+    'svgmin'
     'imagemin'
     'iconfont'
     'fontgen'
