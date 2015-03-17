@@ -825,8 +825,13 @@ class Model
 	 * @param string $toEmail
 	 * @param string $toDisplayName
 	 */
-	protected static function sendMail($subject, $templatePath = null, $variables, $toEmail, $toDisplayName = null)
-	{
+	protected static function sendMail(
+	    $subject,
+	    $templatePath = null,
+	    $variables,
+	    $toEmail,
+	    $toDisplayName = null
+	) {
 	    if (empty($templatePath)) {
     		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
     	}
