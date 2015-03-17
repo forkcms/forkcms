@@ -340,7 +340,7 @@ class Edit extends BackendBaseActionEdit
                     '&var=' . urlencode($values['email']) .
                     '&highlight=row-' . $this->id .
                     '&var=' . urlencode($displayName) .
-                    '&report=saved'
+                    '&report='
                 ;
 
                 if ($this->notifyProfile &&
