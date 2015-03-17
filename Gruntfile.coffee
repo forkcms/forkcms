@@ -61,6 +61,9 @@ module.exports = (grunt) ->
       iconfont: [
         '<%= theme_build %>/Layout/Fonts/icons-*.*'
       ]
+      images: [
+        '<%= theme_build %>/Layout/Images/*'
+      ]
       aftericonfont: [
         '<%= theme_src %>/Layout/Fonts/icons-*.*'
       ]
@@ -193,6 +196,7 @@ module.exports = (grunt) ->
   # Production task
   grunt.registerTask 'build', [
     'clean:iconfont'
+    'clean:images'
     'compass:build'
     'autoprefixer'
     'coffee'
