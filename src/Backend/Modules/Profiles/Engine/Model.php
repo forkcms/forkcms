@@ -818,22 +818,28 @@ class Model
 	 * @param string $templatePath
 	 * @param array $variables
 	 * @param string $toEmail
-	 * @param string $displayName
+	 * @param string $toDisplayName
 	 */
-	protected static function sendMail($subject, $templatePath = null, $variables, $toEmail, $displayName = null)
+	protected static function sendMail($subject, $templatePath = null, $variables, $toEmail, $toDisplayName = null)
 	{
 	    if (empty($templatePath)) {
     		$templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
     	}
 
-		// send the mail
-		BackendModel::get('mailer')->addEmail(
-		    $subject,
-		    $templatePath,
-		    $variables,
-		    $toEmail,
-		    $displayName
-		);
+        // define variables
+    	$from = BackendModel::getModuleSetting('Core', 'mailer_from');
+    	$replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
+
+    	// create a message object and set all the needed properties
+        $message = \Common\Mailer\Message::newInstance($subject)
+            ->setFrom(array($from['email'] => $from['name']))
+            ->setTo(array($toEmail => $toDisplayName))
+            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+            ->parseHtml($templatePath, $variables, true)
+        ;
+
+        // send it through the mailer service
+        BackendModel::get('mailer')->send($message);
 	}
 
     /**
