@@ -252,7 +252,8 @@ class TemplateModifiers
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $chunks = (FrontendModel::getContainer()->getParameter('site.multilanguage')) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        $hasMultiLanguages = FrontendModel::getContainer()->getParameter('site.multilanguage');
+        $chunks = ($hasMultiLanguages) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
         if (count($chunks) == 0) {
             $chunks[0] = '';
         }
