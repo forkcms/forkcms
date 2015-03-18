@@ -473,7 +473,8 @@ class CacheBuilder
                     $urlChunks = explode('/', $url);
 
                     // remove the language chunk
-                    $urlChunks = (BackendModel::getContainer()->getParameter('site.multilanguage')) ? array_slice($urlChunks, 2) : array_slice($urlChunks, 1);
+                    $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
+                    $urlChunks = ($hasMultiLanguages) ? array_slice($urlChunks, 2) : array_slice($urlChunks, 1);
 
                     // subpage?
                     if (count($urlChunks) > 1) {
