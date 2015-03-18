@@ -915,7 +915,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         // init URL
-        $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
+        $URL = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);

@@ -603,7 +603,7 @@ class Model
             $URL = '/';
 
             // multilanguages?
-            if (SITE_MULTILANGUAGE) {
+            if (BackendModel::getContainer()->getParameter('site.multilanguage')) {
                 $URL = '/' . BL::getWorkingLanguage();
             }
 
@@ -615,7 +615,7 @@ class Model
         }
 
         // if the is available in multiple languages we should add the current lang
-        if (SITE_MULTILANGUAGE) {
+        if (BackendModel::getContainer()->getParameter('site.multilanguage')) {
             $URL = '/' . BL::getWorkingLanguage() . '/' . $URL;
         } else {
             // just prepend with slash

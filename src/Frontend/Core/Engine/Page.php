@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Common\Cookie as CommonCookie;
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -306,7 +307,7 @@ class Page extends FrontendBaseObject
     protected function parseLanguages()
     {
         // just execute if the site is multi-language
-        if (SITE_MULTILANGUAGE) {
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
             // get languages
             $activeLanguages = Language::getActiveLanguages();
 

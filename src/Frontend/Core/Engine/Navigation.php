@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This class will be used to build the navigation
@@ -501,7 +502,7 @@ class Navigation extends FrontendBaseObject
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         // init URL
-        $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
+        $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);

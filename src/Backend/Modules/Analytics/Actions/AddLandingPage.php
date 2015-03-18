@@ -101,7 +101,7 @@ class AddLandingPage extends BackendBaseActionAdd
             } elseif ($pageList == '0') {
                 $page = null;
             } else {
-                $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
+                $page = (BackendModel::getContainer()->getParameter('site.multilanguage') ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
             }
 
             // validate fields
