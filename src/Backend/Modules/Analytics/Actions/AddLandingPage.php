@@ -91,6 +91,7 @@ class AddLandingPage extends BackendBaseActionAdd
 
             // shorten values
             $pagePath = $this->frm->getField('page_path')->getValue();
+            $pageList = null;
             if (count($this->linkList) > 1) {
                 $pageList = $this->frm->getField('page_list')->getSelected();
             }
@@ -111,7 +112,10 @@ class AddLandingPage extends BackendBaseActionAdd
             if (!isset($page)) {
                 $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
             }
-            if (!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) {
+            if (!$this->frm->getField('page_path')->isFilled()
+                && !empty($this->linkList)
+                && !$this->frm->getfield('page_list')->isFilled()
+            ) {
                 $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
             }
 
