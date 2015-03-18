@@ -113,7 +113,7 @@ class AddLandingPage extends BackendBaseActionAdd
                 $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
             }
             if (!$this->frm->getField('page_path')->isFilled()
-                && !empty($this->linkList)
+                && $this->frm->existsField('page_list')
                 && !$this->frm->getfield('page_list')->isFilled()
             ) {
                 $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
