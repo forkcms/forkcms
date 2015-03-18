@@ -177,7 +177,9 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
         // validate
         if (!in_array($value, $possibleLanguages)) {
             // only 1 active language?
-            if (!Model::getContainer()->getParameter('site.multilanguage') && count($possibleLanguages) == 1) {
+            if (!Model::getContainer()->getParameter('site.multilanguage')
+                && count($possibleLanguages) == 1
+            ) {
                 $this->language = array_shift(
                     $possibleLanguages
                 );
