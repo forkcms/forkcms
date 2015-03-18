@@ -1,6 +1,7 @@
 3.9.2 (2015-xx-xx)
 --
 Improvements:
+* Core: Replace SITE_MULTILANGUAGE with $container->getParameter('site.multilanguage')
 
 Bugfixes:
 
