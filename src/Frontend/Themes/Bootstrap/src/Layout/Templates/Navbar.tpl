@@ -1,6 +1,6 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
   <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-page-collapse">
       <span class="sr-only"></span>
       <span class="icon-bar"></span>
       <span class="icon-bar"></span>
@@ -14,7 +14,7 @@
     </h1>
   </div>
 
-  <div class="collapse navbar-collapse navbar-ex1-collapse">
+  <div class="collapse navbar-collapse navbar-page-collapse">
     {$var|getnavigation:'page':0:1}
 
     {iteration:positionTop}
