@@ -232,7 +232,10 @@ class Template extends \SpoonTemplate
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
 
         // adding parameters
-        $this->assign('SITE_MULTILANGUAGE', BackendModel::getContainer()->getParameter('site.multilanguage'));
+        $this->assign(
+            'SITE_MULTILANGUAGE',
+            BackendModel::getContainer()->getParameter('site.multilanguage')
+        );
 
         if ($this->URL instanceof Url) {
             // assign the current module
