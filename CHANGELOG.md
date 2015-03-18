@@ -1,6 +1,7 @@
 3.9.2 (2015-xx-xx)
 --
 Improvements:
+* Core: every template can now check if it has a certain parent id with {option:isChildOfPage1}
 
 * Locale: improve performance of the index page
 * Core: reduced database queries in BackendDataGridFunctions::getUser().
