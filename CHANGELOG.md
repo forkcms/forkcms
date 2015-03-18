@@ -2,6 +2,8 @@
 --
 Improvements:
 
+* Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('fork.debug_email')
+
 Bugfixes:
 
 
