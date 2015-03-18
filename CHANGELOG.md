@@ -2,6 +2,8 @@
 --
 Improvements:
 
+* Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
+
 Bugfixes:
 
 
