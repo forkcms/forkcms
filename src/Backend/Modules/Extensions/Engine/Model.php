@@ -734,7 +734,10 @@ class Model
      */
     public static function createTemplateXmlForExport($theme)
     {
-        $xml = new \DOMDocument('1.0', SPOON_CHARSET);
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
+        // build xml
+        $xml = new \DOMDocument('1.0', $charset);
         $xml->preserveWhiteSpace = false;
         $xml->formatOutput = true;
 

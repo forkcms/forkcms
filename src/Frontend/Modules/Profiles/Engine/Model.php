@@ -218,6 +218,7 @@ class Model
         // init
         $characters = '';
         $string = '';
+        $charset = FrontendModel::getContainer()->getParameter('kernel.charset');
 
         // possible characters
         if ($numeric) {
@@ -239,7 +240,7 @@ class Model
             $index = mt_rand(0, strlen($characters));
 
             // add character to salt
-            $string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+            $string .= mb_substr($characters, $index, 1, $charset);
         }
 
         return $string;

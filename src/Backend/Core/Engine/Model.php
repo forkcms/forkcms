@@ -470,7 +470,7 @@ class Model extends \BaseModel
             $index = mt_rand(0, strlen($characters));
 
             // add character to salt
-            $string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+            $string .= mb_substr($characters, $index, 1, self::getContainer()->getParameter('kernel.charset'));
         }
 
         return $string;
