@@ -502,7 +502,10 @@ class Navigation extends FrontendBaseObject
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         // init URL
-        $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
+        $URL = (FrontendModel::getContainer()->getParameter('site.multilanguage'))
+            ? '/' . $language . '/'
+            : '/'
+        ;
 
         // get the menuItems
         $keys = self::getKeys($language);
