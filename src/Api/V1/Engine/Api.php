@@ -9,6 +9,7 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception;
 use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
@@ -448,7 +449,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
-        $charset = $this->getContainer()->getParameter('kernel.charset');
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
@@ -486,7 +487,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
-        $charset = $this->getContainer()->getParameter('kernel.charset');
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
