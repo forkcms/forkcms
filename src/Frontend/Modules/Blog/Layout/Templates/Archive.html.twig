@@ -31,13 +31,13 @@
 					<tbody>
 						{% for item in items %}
 							<tr>
-								<td class="date">{{ item.publish_on|spoon_date({$dateFormatShort }}, {{ LANGUAGE }}})</td>
+								<td class="date">{{ item.publish_on|spoon_date(dateFormatShort, LANGUAGE) }}</td>
 								<td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
 								{% if item.allow_comments %}
 									<td class="comments">
 										{% if not item.comments %}<a href="{{ item.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
 										{% if item.comments %}
-											{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf({$item.comments_count }}})</a>{% endif %}
+											{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf(item.comments_count) }}</a>{% endif %}
 											{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
 										{% endif %}
 									</td>

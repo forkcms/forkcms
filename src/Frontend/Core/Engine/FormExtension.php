@@ -176,7 +176,7 @@ class FormFieldErrorNode extends \Twig_Node
        $this->field = $field;
    }
 
-   public function compile(Twig_Compiler $compiler)
+   public function compile(\Twig_Compiler $compiler)
    {
        $writeErrorMessage = "echo "
            . "\$context['form_{$this->form}']->getField('{$this->field}')->getErrors() "
@@ -202,11 +202,11 @@ class FormFieldErrorTokenParser extends \Twig_TokenParser
     * @return Twig_Node
     * @throw Twig_Error_Syntax
     */
-   public function parse(Twig_Token $token)
+   public function parse(\Twig_Token $token)
    {
        $stream = $this->parser->getStream();
-       $field = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
-       $stream->expect(Twig_Token::BLOCK_END_TYPE);
+       $field = $stream->expect(\Twig_Token::NAME_TYPE)->getValue();
+       $stream->expect(\Twig_Token::BLOCK_END_TYPE);
        if(FormState::$current === null)
        {
            throw new \Twig_Error_Syntax(

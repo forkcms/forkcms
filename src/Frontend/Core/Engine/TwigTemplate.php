@@ -102,7 +102,7 @@ Class TwigTemplate
         \Twig_Autoloader::register();
         $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath, $frontendPath));
         $this->twig = new \Twig_Environment($loader, array(
-            //'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
+            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
             'debug' => ($this->debugMode === false)
         ));
 
@@ -135,6 +135,7 @@ Class TwigTemplate
         // last call
         if ($key === 'page') {
             $this->baseFile = $this->convertExtension($values['template_path']);
+            $this->baseSpoonFile = FRONTEND_PATH . '/' . $values['template_path'];
             $this->positions = $values['positions'];
         }
 
@@ -147,16 +148,35 @@ Class TwigTemplate
      * so we could rebuild the positions with included
      * module Path for widgets and actions
      *
-     * @param array postitions
+     * I must admit this the ugly
+     *
+     * @param array positions
      */
     private function setPositions(array $positions)
     {
+        $actions = array();
         foreach ($positions as &$blocks)
         {
-            foreach ($blocks as &$block)
+            foreach ($blocks as $key => &$block)
             {
-                $block['extra_action'] = ($block['extra_action']) ?: 'Index';
+                // find the missing action
+                if (empty($block['extra_action'])) {
+                    foreach ($actions as $action) {
+                        foreach($this->templates as $key => $template) {
+                            if (strpos($template, $action) !== false) {
+                                unset($this->templates[$key]);
+                            }
+                        }
+                    }
+                    $this->templates = array_values($this->templates);
+                    $block['include_path'] = $this->getPath($this->templates[0]);
+                    continue;
+                }
+
+                // required for the action search
+                $actions[] = $block['extra_action'];
                 $block['extra_action'] .= self::EXTENSION;
+
                 if (!empty($block['extra_data']))
                 {
                     $block['extra_data'] = unserialize($block['extra_data']);
@@ -201,13 +221,11 @@ Class TwigTemplate
     public function getPath($template)
     {
         $template = Theme::getPath($this->convertExtension($template));
-
         if (strpos($template, $this->modulePath) !== false) {
             return str_replace($this->modulePath . '/', '', $template);
+        } elseif (strpos($template, $this->themePath) !== false) {
+            return str_replace($this->themePath . '/', '', $template);
         }
-
-        // remove theme Path
-        return str_replace($this->themePath . '/', '', $template);
     }
 
     /**
@@ -246,12 +264,12 @@ Class TwigTemplate
         if (!$template || in_array($template, $this->templates)) {
             return;
         }
+        // collect the templates, we need them later
         $this->templates[] = $template;
 
         // only baseFile can render
-        $template = $this->getPath($template);
-        if ($this->baseFile === $template) {
-            $this->setPositions($this->positions, $this->templates);
+        if ($this->baseSpoonFile === $template) {
+            $this->setPositions($this->positions);
             $this->render($this->baseFile);
         }
     }
@@ -387,6 +405,8 @@ Class TwigTemplate
         $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
         //$this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
         $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('timeago', 'Frontend\Core\Engine\TemplateModifiers::timeAgo'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('cleanupplaintext', 'Frontend\Core\Engine\TemplateModifiers::cleanupPlainText'));
     }
 
     /**
@@ -427,13 +447,17 @@ Class TwigTemplate
     {
         // some old globals
         $this->twig->addGlobal('var', '');
-        $this->twig->addGlobal('timestamp', time());
         $this->twig->addGlobal('CRLF', "\n");
         $this->twig->addGlobal('TAB', "\t");
         $this->twig->addGlobal('now', time());
         $this->twig->addGlobal('LANGUAGE', FRONTEND_LANGUAGE);
         $this->twig->addGlobal('is' . strtoupper(FRONTEND_LANGUAGE), true);
         $this->twig->addGlobal('debug', $this->debugMode);
+
+        $this->twig->addGlobal('timestamp', time());
+        $this->twig->addGlobal('timeFormat', Model::getModuleSetting('Core', 'time_format'));
+        $this->twig->addGlobal('dateFormatShort', Model::getModuleSetting('Core', 'date_format_short'));
+        $this->twig->addGlobal('dateFormatLong', Model::getModuleSetting('Core', 'date_format_long'));
 
         // old theme checker
         if (Model::getModuleSetting('Core', 'theme') !== null) {
@@ -527,4 +551,6 @@ Class TwigTemplate
     public function setForceCompile(){}
     public function cache(){}
     public function isCached(){}
+    public function compile($n){echo $n;}
+    public function display($n){echo $n;}
 }
