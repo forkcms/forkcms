@@ -25,7 +25,7 @@ module.exports = (grunt) ->
         options:
           outputStyle: 'compressed'
     replace:
-      head:
+      scripts:
         options:
           patterns: [
             {
@@ -142,7 +142,7 @@ module.exports = (grunt) ->
         files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
           'copy:templates'
-          'replace:head'
+          'replace:scripts'
         ]
       images:
         files: ['<%= theme_src %>/Layout/Images/*.{jpg,gif,png}']
@@ -182,7 +182,7 @@ module.exports = (grunt) ->
 
   # Development tasks
   grunt.registerTask 'serve', [
-    'replace:head'
+    'replace:scripts'
     'watch'
   ]
 
