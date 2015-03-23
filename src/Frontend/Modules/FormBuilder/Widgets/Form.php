@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\FormBuilder\Widgets;
 
+use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -535,6 +536,12 @@ class Form extends FrontendBaseWidget
                         ) {
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
                             $message->setReplyTo(array($email => $email));
+                        }
+                        if (array_key_exists('copy_to', $field['settings']) &&
+                            $field['settings']['copy_to'] === true
+                        ) {
+                            $email = $this->frm->getField('field' . $field['id'])->getValue();
+                            $message->setCc(array($email => $email));
                         }
                     }
                     if ($message->getReplyTo() === null) {
