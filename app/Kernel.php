@@ -93,10 +93,13 @@ abstract class Kernel extends BaseKernel implements KernelInterface
             $installedModules = $container->get('database')->getColumn(
                 'SELECT name FROM modules'
             );
+        } catch (\SpoonDatabaseException $e) {
+            $installedModules = array();
         } catch (\PDOException $e) {
             // fork is probably not installed yet
             $installedModules = array();
         }
+
         $container->setParameter('installed_modules', $installedModules);
 
         $extensions = array();
