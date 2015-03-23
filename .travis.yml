@@ -18,6 +18,7 @@ script:
 before_script:
     - composer install
     - mysql -e 'create database fork_test'
+    - mysql -u travis fork_test < tools/test_db.sql
     - cp app/config/parameters.yml.travis app/config/parameters.yml
 
 after_success:
