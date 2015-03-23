@@ -111,7 +111,8 @@ module.exports = (grunt) ->
       dist:
         files: [
           expand: true
-          src: '<%= theme_src %>/Layout/Images/*.svg'
+          cwd: '<%= theme_src %>/Layout/Images/'
+          src: '*.svg'
           dest: '<%= theme_build %>/Layout/Images/'
         ]
         
