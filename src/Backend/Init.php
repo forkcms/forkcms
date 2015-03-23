@@ -71,7 +71,7 @@ class Init extends \KernelLoader
     private function definePaths()
     {
         // general paths
-        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/' . APPLICATION);
+        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
         defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
         defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
         defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
