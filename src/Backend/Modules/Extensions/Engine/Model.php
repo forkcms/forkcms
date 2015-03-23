@@ -505,11 +505,8 @@ class Model
      */
     public static function getModules()
     {
-        $installedModules = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT name FROM modules',
-            null,
-            'name'
-        );
+        $installedModules = (array) BackendModel::getContainer()
+            ->getParameter('installed_modules');
         $modules = BackendModel::getModulesOnFilesystem(false);
         $manageableModules = array();
 
@@ -528,7 +525,7 @@ class Model
             $module['installed'] = false;
             $module['cronjobs_active'] = true;
 
-            if (isset($installedModules[$moduleName])) {
+            if (in_array($moduleName, $installedModules)) {
                 $module['installed'] = true;
             }
 
