@@ -2,7 +2,6 @@
 
 namespace Frontend\Modules\FormBuilder\Widgets;
 
-use Common\Mailer\Message;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
