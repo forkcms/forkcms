@@ -11,9 +11,9 @@
   <div class="carousel-inner">
     {* Slideshow position *}
     {iteration:positionSlideshow}
-    <div class="item{option:positionSlideshow.first} active{/option:positionSlideshow.first}">
-      {$positionSlideshow.blockContent}
-    </div>
+      <div class="item{option:positionSlideshow.first} active{/option:positionSlideshow.first}">
+        {$positionSlideshow.blockContent}
+      </div>
     {/iteration:positionSlideshow}
   </div>
 
