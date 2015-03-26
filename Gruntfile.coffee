@@ -201,6 +201,12 @@ module.exports = (grunt) ->
   grunt.registerTask 'build', [
     'clean:iconfont'
     'clean:images'
+    'iconfont'
+    'fontgen'
+    'copy:fonts'
+    'clean:fontsCss'
+    'svgmin'
+    'imagemin'
     'compass:build'
     'autoprefixer'
     'coffee'
@@ -210,12 +216,6 @@ module.exports = (grunt) ->
     'concat:generated'
     'uglify:generated'
     'usemin'
-    'svgmin'
-    'imagemin'
-    'iconfont'
-    'fontgen'
-    'copy:fonts'
-    'clean:fontsCss'
     'clean:dist'
   ]
 
