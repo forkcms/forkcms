@@ -17,6 +17,7 @@
     "grunt-contrib-watch": "^0.6.1",
     "grunt-fontgen": "^0.2.2",
     "grunt-replace": "^0.8.0",
+    "grunt-svgmin": "^2.0.1",
     "grunt-sync": "^0.2.0",
     "grunt-usemin": "^2.6.2",
     "grunt-webfont": "^0.4.8",

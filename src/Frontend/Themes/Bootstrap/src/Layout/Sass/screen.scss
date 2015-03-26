@@ -1,35 +1,34 @@
-@charset "UTF-8";
+@charset 'UTF-8';
 
 // Bootstrap
-@import "bootstrap-variables";
-@import "bootstrap-imports";
-@import "bootstrap-compass";
+@import 'bootstrap-variables';
+@import 'bootstrap-imports';
+@import 'bootstrap-compass';
 
 // Compass
-@import "compass/css3";
-@import "compass/typography";
-@import "compass/utilities";
+@import 'compass/css3';
+@import 'compass/typography';
+@import 'compass/utilities';
 
 // Compass_sumo
-@import "compass_sumo";
+@import 'compass_sumo';
 
 // Icon font generated from icon-sources/ through grunt
-@import "icons";
+@import 'icons';
 
 // Plugin styling
-// @import "plugins/bxslider";
-// @import "plugins/fancybox";
-
-
+// @import 'plugins/bxslider';
+// @import 'plugins/fancybox';
 
 // Components
 // Insert components here. Put all components in the components/ directory
-// eg. @import "components/footer";
+// eg. @import 'components/footer';
 
 // Layout
-@import "layouts/navbar";
+@import 'layouts/cookiebar';
+@import 'layouts/navbar';
 
 // Custom page styling
 // Insert custom page styling here. Put all page styles in the pages/ directory
-// eg. @import "pages/footer";
+// eg. @import 'pages/footer';
 

@@ -21,7 +21,7 @@
 	<link rel="author" href="/humans.txt" />
 
 	{* Apple touch icon *}
-	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" /> {* @todo create a 144x144 png file *}
+	<link rel="apple-touch-icon" href="{$THEME_URL}/apple-touch-icon.png" /> {* @todo create a 180x180 png file *}
 
 	{* Favicon *}
 	<link rel="icon" href="{$THEME_URL}/favicon.png"> {* @todo create a 96x96 png file *}
@@ -38,21 +38,10 @@
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
 		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 	<![endif]-->
 
-	{* General Javascript *}
-	{iteration:jsFiles}
-		<script src="{$jsFiles.file}"></script>
-	{/iteration:jsFiles}
-
-	<!-- All files after this tag will be concatenated and minified when running grunt build -->
-	<!-- build:js /Core/Js/lib.js -->
-	<script src="/src/Js/lib/bootstrap.js"></script>
-	<script src="/src/Js/lib/respond.min.js"></script>
-	<!-- endbuild -->
-	
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
-	
 	{option:SPOON_DEBUG}
 		<script src="http://localhost:35729/livereload.js?snipver=1"></script>
 	{/option:SPOON_DEBUG}

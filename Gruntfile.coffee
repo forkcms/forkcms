@@ -6,25 +6,26 @@ module.exports = (grunt) ->
     theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/Src'
     theme_build: 'src/Frontend/Themes/<%= pkg.theme %>/Core'
     coffee:
-      compileJoined:
-        options:
-          bare: true
-        files:
-          '<%= theme_build %>/Js/theme.js': [
-            '<%= theme_src %>/Coffee/theme.coffee'
-          ]
+      compile:
+        expand: true
+        flatten: true
+        src: ['<%= theme_src %>/coffee/*']
+        dest: '<%= theme_build %>/Js/'
+        ext: '.js'
     compass:
-      dist:
+      options:
+        config: '<%= theme_src %>/Layout/config.rb'
+        sassDir: '<%= theme_src %>/Layout/Sass'
+        cssDir: '<%= theme_build %>/Layout/Css'
+        imageDir: '<%= theme_build %>/Layout/Images'
+        fontsDir: '<%= theme_build %>/Layout/Fonts'
+        relativeAssets: true
+      dist: {}
+      build:
         options:
-          config: '<%= theme_src %>/Layout/config.rb'
-          sassDir: '<%= theme_src %>/Layout/sass'
-          cssDir: '<%= theme_build %>/Layout/Css'
-          imageDir: '<%= theme_build %>/Layout/images'
-          fontsDir: '<%= theme_build %>/Layout/fonts'
-          relativeAssets: true
-          bundleExec: true
+          outputStyle: 'compressed'
     replace:
-      head:
+      scripts:
         options:
           patterns: [
             {
@@ -37,7 +38,7 @@ module.exports = (grunt) ->
             }
           ]
         files: [
-          src: '<%= theme_src %>/Layout/Templates/Head.tpl'
+          src: '<%= theme_src %>/Layout/Templates/Footer.tpl'
           dest: '<%= theme_build %>/Layout/Templates/'
           flatten: true
           expand: true
@@ -46,9 +47,9 @@ module.exports = (grunt) ->
       options:
         root: '<%= theme_src %>/../'
         dest: '<%= theme_src %>/../'
-      html: '<%= theme_src %>/Layout/Templates/Head.tpl'
+      html: '<%= theme_src %>/Layout/Templates/Footer.tpl'
     usemin:
-      html: '<%= theme_build %>/Layout/Templates/Head.tpl'
+      html: '<%= theme_build %>/Layout/Templates/Footer.tpl'
       options:
         blockReplacements:
           js: (block) ->
@@ -60,8 +61,14 @@ module.exports = (grunt) ->
       iconfont: [
         '<%= theme_build %>/Layout/Fonts/icons-*.*'
       ]
+      images: [
+        '<%= theme_build %>/Layout/Images/*'
+      ]
       aftericonfont: [
         '<%= theme_src %>/Layout/Fonts/icons-*.*'
+      ]
+      templates: [
+        '<%= theme_build %>/Layout/Templates/*'
       ]
       dist: [
         '.tmp'
@@ -77,14 +84,6 @@ module.exports = (grunt) ->
           src: '**'
           dest: '<%= theme_build %>/Layout/Templates/'
         ]
-      svg:
-        files: [
-          expand: true
-          cwd: '<%= theme_src %>/Layout/Images/'
-          src: '*.svg'
-          dest: '<%= theme_build %>/Layout/Images/'
-        ]
-        updateAndDelete: true
       fonts:
         files: [
           expand: true
@@ -97,7 +96,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: '<%= theme_src %>/Layout/Images/'
-          src: ['**/*.{png,jpg,gif,jpeg}']
+          src: ['{,*/}*.{jpg,jpeg,gif,png}']
           dest: '<%= theme_build %>/Layout/Images/'
         ]
     fontgen:
@@ -111,6 +110,15 @@ module.exports = (grunt) ->
           ]
           dest: '<%= theme_build %>/Layout/Fonts/'
         ]
+    svgmin:
+      dist:
+        files: [
+          expand: true
+          cwd: '<%= theme_src %>/Layout/Images/'
+          src: '*.svg'
+          dest: '<%= theme_build %>/Layout/Images/'
+        ]
+        
     webfont:
       icons:
         src: '<%=theme_src %>/Layout/icon-sources/*.svg'
@@ -138,12 +146,17 @@ module.exports = (grunt) ->
         files: ['<%= theme_src %>/Layout/Templates/**']
         tasks: [
           'copy:templates'
-          'replace:head'
+          'replace:scripts'
         ]
       images:
-        files: ['<%= theme_src %>/Layout/Images/**']
+        files: ['<%= theme_src %>/Layout/Images/*.{jpg,gif,png}']
         tasks: [
           'imagemin'
+        ]
+      svg:
+        files: ['<%= theme_src %>/Layout/Images/*.svg']
+        tasks: [
+          'svgmin'
         ]
       fonts:
         files: ['<%= theme_src %>/Layout/Fonts/**']
@@ -173,7 +186,7 @@ module.exports = (grunt) ->
 
   # Development tasks
   grunt.registerTask 'serve', [
-    'replace:head'
+    'replace:scripts'
     'watch'
   ]
 
@@ -187,19 +200,22 @@ module.exports = (grunt) ->
   # Production task
   grunt.registerTask 'build', [
     'clean:iconfont'
-    'compass:dist'
+    'clean:images'
+    'iconfont'
+    'fontgen'
+    'copy:fonts'
+    'clean:fontsCss'
+    'svgmin'
+    'imagemin'
+    'compass:build'
     'autoprefixer'
     'coffee'
+    'clean:templates'
     'copy:templates'
     'useminPrepare'
     'concat:generated'
     'uglify:generated'
     'usemin'
-    'copy:svg'
-    'imagemin'
-    'iconfont'
-    'fontgen'
-    'copy:fonts'
-    'clean:fontsCss'
     'clean:dist'
   ]
+
