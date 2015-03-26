@@ -67,6 +67,9 @@ module.exports = (grunt) ->
       aftericonfont: [
         '<%= theme_src %>/Layout/Fonts/icons-*.*'
       ]
+      templates: [
+        '<%= theme_build %>/Layout/Templates/*'
+      ]
       dist: [
         '.tmp'
       ]
@@ -201,6 +204,7 @@ module.exports = (grunt) ->
     'compass:build'
     'autoprefixer'
     'coffee'
+    'clean:templates'
     'copy:templates'
     'useminPrepare'
     'concat:generated'
