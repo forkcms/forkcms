@@ -14,9 +14,9 @@
       <div class="col-md-9">
         {* Page title *}
         {option:!hideContentTitle}
-        <header class="page-header" role="banner">
-          <h1 itemprop="name">{$page.title}</h1>
-        </header>
+          <header class="page-header" role="banner">
+            <h1 itemprop="name">{$page.title}</h1>
+          </header>
         {/option:!hideContentTitle}
 
         {* Main position *}
@@ -28,15 +28,17 @@
         <div class="row">
           {* Right position *}
           {iteration:positionRight}
-          <div class="col-md-12">
-            {$positionRight.blockContent}
-          </div>
+            <div class="col-md-12">
+              {$positionRight.blockContent}
+            </div>
           {/iteration:positionRight}
         </div>
       </div>
     </div>
   </div>
 </section>
+
 {include:Core/Layout/Templates/Footer.tpl}
+
 </body>
 </html>

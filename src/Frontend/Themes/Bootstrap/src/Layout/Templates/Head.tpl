@@ -42,7 +42,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js"></script>
 	<![endif]-->
 
-
 	{option:SPOON_DEBUG}
 		<script src="http://localhost:35729/livereload.js?snipver=1"></script>
 	{/option:SPOON_DEBUG}

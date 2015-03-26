@@ -25,7 +25,6 @@
   <script src="{$jsFiles.file}"></script>
 {/iteration:jsFiles}
 
-
 <!-- build:js /Core/Js/lib.js -->
 <script src="/src/Js/lib/bootstrap.js"></script>
 <!-- endbuild -->
