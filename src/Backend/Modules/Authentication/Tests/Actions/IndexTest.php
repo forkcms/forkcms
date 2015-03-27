@@ -74,7 +74,11 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'now editing:',
+            'My website',
+            $client->getResponse()->getContent()
+        );
+        $this->assertContains(
+            '<a class="navbar-brand" href="/en" title="Visit website">',
             $client->getResponse()->getContent()
         );
     }
