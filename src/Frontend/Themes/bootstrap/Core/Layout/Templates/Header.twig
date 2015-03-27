@@ -1,0 +1,46 @@
+{% include "Core/Layout/Templates/CookieBar.twig" %}
+
+<div class="navbar navbar-inverse" role="navigation">
+	<div class="container">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+			<!--@ToDo label Toggle Navigation -->
+			<span class="sr-only">Toggle navigation</span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/">{{ siteTitle }}</a>
+		</div>
+		<div class="navbar-collapse collapse">
+			{# Navigation #}
+			<nav id="headerNavigation">
+				<h4>{{ lbl.MainNavigation|capitalize }}</h4>
+				<ul class="nav navbar-nav">
+				{{ var|getnavigation('page', 0, 2) | raw }}
+			</nav>
+
+			{# Language #}
+			<nav id="headerLanguage">
+				<h4>{{ lbl.Language|capitalize }}</h4>
+				{% include "Core/Layout/Templates/Languages.twig" %}
+			</nav>
+
+			{# Search position #}
+			{% for search in positions.search %}
+				{% if search.include_path %}
+					{% include search.include_path %}
+				{% endif %}
+			{% endfor %}
+
+		</div>
+	</div>
+</div>
+
+{# Breadcrumb #}
+<div id="breadcrumb">
+	<div class="container">
+		<h4>{{ lbl.Breadcrumb|capitalize }}</h4>
+		{% include "Core/Layout/Templates/Breadcrumb.twig" %}
+	</div>
+</div>

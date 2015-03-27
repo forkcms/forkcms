@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="{{ LANGUAGE }}" class="ie6"> <![endif]-->
+<!--[if IE 7 ]> <html lang="{{ LANGUAGE }}" class="ie7"> <![endif]-->
+<!--[if IE 8 ]> <html lang="{{ LANGUAGE }}" class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html lang="{{ LANGUAGE }}" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{{ LANGUAGE }}"> <!--<![endif]-->
+
+<html>
+	<head>
+	{% include 'Core/Layout/Templates/Head.twig' %}
+	</head>
+	</body>
+		<nav>
+			{% include "Core/Layout/Templates/Navigation.twig" %}
+		</nav>
+	{% block body %}
+	{% endblock %}
+
+	{% include 'Core/Layout/Templates/Footer.twig' %}
+
+	<noscript>
+		<div class="message notice">
+			<h4>{{ lbl.EnableJavascript|capitalize}}</h4>
+			<p>{{ msg.EnableJavascript }}</p>
+		</div>
+	</noscript>
+
+	{# General Javascript #}
+	{% for js in jsFiles %}
+		<script src="{{ js.file }}"></script>
+	{% endfor %}
+
+	{# Theme specific Javascript #}
+	<script src="{{ THEME_URL }}/Core/Js/boots.js"></script>
+	<script src="{{ THEME_URL }}/Core/Js/bootstrap.min.js"></script>
+
+	{# Site wide HTML #}
+	{{ siteHTMLFooter|raw }}
+	</body>
+</html>

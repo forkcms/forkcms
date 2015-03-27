@@ -300,7 +300,10 @@ class Form extends FrontendBaseWidget
      */
     protected function loadTemplate($path = null)
     {
-        $this->tpl = new FrontendTemplate(false);
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
     }
 
     /**

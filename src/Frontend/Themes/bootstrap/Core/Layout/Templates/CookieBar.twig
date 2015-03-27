@@ -1,0 +1,13 @@
+{% if cookieBarHide %}
+	<div class="container">
+		<div class="row">
+			<div id="cookieBar" class="col-md-12 text-center">
+				<div class="alert-info alert">
+					{{ msg.CookiesWarning | raw}}
+					<a href="#" id="cookieBarAgree">{{ lbl.IAgree|capitalize }}</a>
+					<a href="#" id="cookieBarDisagree">{{ lbl.IDisagree|capitalize }}</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endif %}

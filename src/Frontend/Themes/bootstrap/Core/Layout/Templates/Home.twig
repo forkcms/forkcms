@@ -1,0 +1,53 @@
+{% extends "Core/Layout/Templates/Base.twig" %}
+
+{% block body %}
+
+	{% include "Core/Layout/Templates/Header.twig" %}
+
+	{% for main in positions.main %}
+		{% if main.html %}
+		<div class="container">
+			<div class="jumbotron">
+				{{ main.html|raw }}
+				<p><a class="btn btn-lg btn-primary" href="#" role="button">{{ lbl.More|capitalize }} &raquo;</a></p>
+			</div>
+		</div>
+		{% endif %}
+	{% endfor %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4">
+				{# Left position #}
+ 				{% for left in positions.left %}
+ 					{% if left.include_path %}
+ 						{% include left.include_path %}
+ 					{% elseif left.html %}
+ 						{{ left.html|raw }}
+ 					{% endif %}
+				{% endfor %}
+			</div>
+			<div class="col-md-4">
+				{# Middle position #}
+ 				{% for main in positions.middle %}
+ 					{% if middle.include_path %}
+ 						{% include middle.include_path %}
+ 					{% elseif middle.html %}
+ 						{{ middle.html|raw }}
+ 					{% endif %}
+				{% endfor %}
+			</div>
+			<div class="col-md-4">
+				{# Right position #}
+ 				{% for right in positions.right %}
+ 					{% if right.include_path %}
+ 						{% include right.include_path %}
+ 					{% elseif right.html %}
+ 						{{ right.html|raw }}
+ 					{% endif %}
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

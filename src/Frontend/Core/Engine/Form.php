@@ -598,9 +598,10 @@ class Form extends \SpoonForm
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     * @param \SpoonTemplate|TwigTemplate
+     *        $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse($tpl)
     {
         // parse the form
         parent::parse($tpl);

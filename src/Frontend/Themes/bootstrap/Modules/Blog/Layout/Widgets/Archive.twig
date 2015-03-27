@@ -1,0 +1,43 @@
+{#
+	variables that are available:
+	- {{ widgetBlogArchive }}:
+#}
+
+{cache:{{ LANGUAGE }}_blogWidgetArchiveCache}
+	{% if widgetBlogArchive %}
+		<section id="blogArchiveWidget" class="mod">
+			<div class="inner">
+				<header class="hd">
+					<h3>{{ lbl.Archive|capitalize }}</h3>
+				</header>
+				<div class="bd content">
+					<ul>
+						{% set widgetBlogArchiveCollection = widgetBlogArchive %}
+						{% for widgetBlogArchive in widgetBlogArchiveCollection %}
+							<li>
+								{% if widgetBlogArchive.url %}<a href="{{ widgetBlogArchive.url }}">{% endif %}
+									{{ widgetBlogArchive.label }}
+									{% if widgetBlogArchive.url %}{{ widgetBlogArchive.total }}{% endif %}
+								{% if widgetBlogArchive.url %}</a>{% endif %}
+
+								{% if widgetBlogArchive.months %}
+									<ul>
+										{% set widgetBlogArchive.monthsCollection = widgetBlogArchive.months %}
+										{% for widgetBlogArchive.months in widgetBlogArchive.monthsCollection %}
+											<li>
+												{% if widgetBlogArchive.months.url %}<a href="{{ widgetBlogArchive.months.url }}">{% endif %}
+													{{ widgetBlogArchive.months.label|spoon_date('F', {{ LANGUAGE }} ) }}
+													{% if widgetBlogArchive.months.url %}({{ widgetBlogArchive.months.total }}){% endif %}
+												{% if widgetBlogArchive.months.url %}</a>{% endif %}
+											</li>
+										{% endfor %}
+									</ul>
+								{% endif %}
+							</li>
+						{% endfor %}
+					</ul>
+				</div>
+			</div>
+		</section>
+	{% endif %}
+{/cache:{{ LANGUAGE }}_blogWidgetArchiveCache}

@@ -1,0 +1,16 @@
+{% if navigation %}
+		{% for nav in navigation %}
+			{% if not navigation.children %}
+			<li{% if nav.selected %} class="active"{% endif %}>
+				<a href="{{ navigation.link }}" title="{{ navigation.navigation_title }}"{% if navigation.nofollow %} rel="nofollow"{% endif %}>{{ navigation.navigation_title }}</a>
+			</li>
+			{% else %}
+			<li class="dropdown {% if nav.selected %}active{% endif %}>" id="dropdownNavigation">
+				<a href="{{ navigation.link }}" class="dropdown-toggle" data-toggle="dropdown">{{ navigation.navigation_title }} <b class="caret"></b></a>
+					<ul class="dropdown-menu">
+					{{ navigation.children }}
+			</li>
+			{% endif %}
+		{% endfor %}
+	</ul>
+{% endif %}
