@@ -58,7 +58,7 @@ class Navigation extends Base\Object
         $navigation = array();
 
         // require navigation-file
-        require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+        require BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
         // load it
         $this->navigation = (array) $navigation;
