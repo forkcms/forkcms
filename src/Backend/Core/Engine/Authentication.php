@@ -277,8 +277,7 @@ class Authentication
     {
         $modules = BackendModel::getModules();
         $alwaysAllowed = array('Core', 'Error', 'Authentication');
-        $module = (string) $module;
-        $module = \SpoonFilter::toCamelCase($module);
+        $module = \SpoonFilter::toCamelCase((string) $module);
 
         // is this module a module that doesn't require user level authentication?
         if (in_array($module, $alwaysAllowed)) {
