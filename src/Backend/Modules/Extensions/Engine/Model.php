@@ -27,6 +27,8 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class Model
 {
+    const MODULE_ENTITY_CLASS = 'Backend\Modules\Extensions\Entity\Module';
+
     /**
      * Overview of templates.
      *
@@ -507,9 +509,9 @@ class Model
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        $allInstalledModules = $em->getRepository('\Backend\Core\Entity\Module')->findAll();
+        $allInstalledModules = $em->getRepository(self::MODULE_ENTITY_CLASS)->getAllModuleNames();
         $installedModules = array();
-        foreach ($allInstalledModules as $module) $installedModules[$module->getName()] = $module->getName();
+        foreach ($allInstalledModules as $moduleName) $installedModules[$moduleName] = $moduleName;
 
         $modules = BackendModel::getModulesOnFilesystem(false);
         $manageableModules = array();

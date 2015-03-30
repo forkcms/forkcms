@@ -31,7 +31,7 @@ class Delete extends BackendBaseActionDelete
         parent::execute();
         $this->record = BackendGroupsModel::get($this->id);
 
-        if ($this->id !== null && !empty($this->record)) {
+        if ($this->record !== null) {
             // delete item
             BackendGroupsModel::delete($this->record);
             BackendModel::triggerEvent(

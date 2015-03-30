@@ -15,6 +15,7 @@ use Symfony\Component\Finder\Finder;
 use Common\Uri as CommonUri;
 
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
+use Backend\Modules\Extensions\Entity\Module;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Entity\Meta;
 
@@ -126,12 +127,11 @@ class ModuleInstaller
         $moduleName = (string) $moduleName;
         $module = $em->getRepository('\Backend\Core\Entity\Module')->findOneBy(array('name' => $moduleName));
 
-        // @todo assign the module object to the class attribute instead of the module name.
         $this->module = (string) $module;
 
         // module does not yet exists
         if ($module === null) {
-            $module = new \Backend\Core\Entity\Module();
+            $module = new Module();
             $module->setName($moduleName);
 
             $em->persist($module);
@@ -885,7 +885,7 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @param int|Group     $group       The group wherefor the rights will be set.
+     * @param Group         $group       The group wherefor the rights will be set.
      * @param string        $moduleName  The module wherin the action appears.
      * @param string        $action      The action wherefor the rights have to set.
      * @param int           $level       The level, default is 7 (max).
@@ -894,11 +894,6 @@ class ModuleInstaller
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // @todo remove this fallback when doctrine is fully integrated
-        $group = (!is_object($group))
-            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($group)
-            : $group
-        ;
         $action = (string) $action;
         $level = (int) $level;
 
@@ -929,12 +924,6 @@ class ModuleInstaller
     protected function setModuleRights($group, $moduleName)
     {
         $em = BackendModel::get('doctrine.orm.entity_manager');
-
-        // @todo remove this fallback when doctrine is fully integrated
-        $group = (!is_object($group))
-            ? $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($group)
-            : $group
-        ;
 
         if ($group !== null) {
             $moduleRight = $em->getRepository('\Backend\Modules\Groups\Entity\GroupModuleRight')->findOneBy(

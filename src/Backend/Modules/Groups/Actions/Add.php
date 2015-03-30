@@ -344,7 +344,8 @@ class Add extends BackendBaseActionAdd
     /**
      * Insert the widgets
      *
-     * @param array $widgetPresets The widgets presets.
+     * @param  array    $widgetPresets The widgets presets.
+     * @return Group    $group
      */
     private function insertWidgets($widgetPresets)
     {

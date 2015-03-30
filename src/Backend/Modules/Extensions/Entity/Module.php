@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Entity;
+namespace Backend\Modules\Extensions\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,14 +9,12 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @author Mathias Dewelde <mathias@dewelde.be>
  *
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Backend\Modules\Extensions\Entity\ModuleRepository")
  * @ORM\HasLifecycleCallbacks
  * @ORM\Table(name="Module")
  */
 class Module
 {
-    const ENTITY_CLASS = 'Backend\Core\Entity\Module';
-
     /**
      * @var int
      *

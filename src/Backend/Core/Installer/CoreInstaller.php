@@ -49,7 +49,7 @@ class CoreInstaller extends ModuleInstaller
 
         $this->addEntitiesInDatabase(array(
             Meta::ENTITY_CLASS,
-            '\Backend\Core\Entity\Module',
+            '\Backend\Modules\Extensions\Entity\Module',
             '\Backend\Modules\Groups\Entity\Group',
             '\Backend\Modules\Groups\Entity\GroupActionRight',
             '\Backend\Modules\Groups\Entity\GroupModuleRight'

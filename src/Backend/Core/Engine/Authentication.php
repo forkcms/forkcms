@@ -319,8 +319,6 @@ class Authentication
                  WHERE us.session_id = ? AND us.secret_key = ?',
                 array(\SpoonSession::getSessionId(), \SpoonSession::get('backend_secret_key'))
             );
-
-            // get the group
             $group = $em->getRepository('\Backend\Modules\Groups\Entity\Group')->find($groupId);
 
             if ($group !== null) {
