@@ -116,7 +116,7 @@ class Header extends FrontendBaseObject
         $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css');
         }
 
@@ -143,7 +143,7 @@ class Header extends FrontendBaseObject
         $file = Theme::getPath($file);
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -185,7 +185,7 @@ class Header extends FrontendBaseObject
         }
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -593,8 +593,11 @@ class Header extends FrontendBaseObject
         $this->parseSeo();
 
         // in debug mode we don't want our pages to be indexed.
-        if (SPOON_DEBUG) {
-            $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+        if ($this->getContainer()->getParameter('kernel.debug')) {
+            $this->addMetaData(
+                array('name' => 'robots', 'content' => 'noindex, nofollow'),
+                true
+            );
         }
 
         $this->parseMetaAndLinks();

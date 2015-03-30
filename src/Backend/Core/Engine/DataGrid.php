@@ -56,7 +56,7 @@ class DataGrid extends \SpoonDataGrid
         parent::__construct($source);
 
         // set debugmode, this will force the recompile for the used templates
-        $this->setDebug(\SPOON_DEBUG);
+        $this->setDebug(BackendModel::getContainer()->getParameter('kernel.debug'));
 
         // set the compile-directory, so compiled templates will be in a folder that is writable
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');

@@ -1,3 +1,27 @@
+3.9.2 (2015-xx-xx)
+--
+Improvements:
+
+* Locale: improve performance of the index page
+
+Bugfixes:
+
+
+3.9.1 (2015-03-12)
+--
+Improvements:
+
+* Core: Replace SPOON_DEBUG with $container->getParameter('kernel.debug')
+* Formbuilder: Add placeholders to textbox and textarea elements
+* Mailmotor: add missing "SubscribedOn" label
+
+Bugfixes:
+
+* Core: Fix undefined variable $message
+* Core: Fix the mailer transport to get instantiated correctly
+* Installer: Fix checked paths in first step
+
+
 3.9 (2015-03-05)
 --
 Improvements:

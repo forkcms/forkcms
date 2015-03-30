@@ -112,7 +112,7 @@ class Header extends Base\Object
         }
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -162,7 +162,7 @@ class Header extends Base\Object
         $addTimestamp = (bool) $addTimestamp;
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -370,7 +370,7 @@ class Header extends Base\Object
         }
 
         // some default stuff
-        $this->jsData['debug'] = SPOON_DEBUG;
+        $this->jsData['debug'] = $this->getContainer()->getParameter('kernel.debug');
         $this->jsData['site']['domain'] = SITE_DOMAIN;
         $this->jsData['editor']['language'] = $interfaceLanguage;
         $this->jsData['interface_language'] = $interfaceLanguage;
