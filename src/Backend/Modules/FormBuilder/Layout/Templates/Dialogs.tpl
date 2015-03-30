@@ -48,6 +48,10 @@
                                     {$txtTextboxValue}
                                 </div>
                                 <div class="form-group">
+                                    <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    {$txtTextboxPlaceholder}
+                                </div>
+                                <div class="form-group">
                                     <ul class="list-unstyled">
                                         <li class="checkbox">
                                             <label for="textboxReplyTo">
@@ -157,6 +161,10 @@
                                 <div class="form-group">
                                     <label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
                                     {$txtTextareaValue}
+                                </div>
+                                <div class="form-group">
+                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    {$txtTextareaPlaceholder}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
