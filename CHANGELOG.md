@@ -2,10 +2,12 @@
 --
 Improvements:
 
+* Locale: improve performance of the index page
+
 Bugfixes:
 
 
-3.9.1 (2015-03-xx)
+3.9.1 (2015-03-12)
 --
 Improvements:
 
