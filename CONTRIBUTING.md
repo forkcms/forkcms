@@ -34,11 +34,11 @@ To be able to submit pull requests, you should have (a little) knowledge of git.
 
 ### Creating your own Fork
 
-To start working on a pull request, you first need to create your own  version of our repository, which is called a "Fork" in github. You can do this by pushing the "Fork" button on the right top of the repository page.
+To start working on a pull request, you first need to create your own  version of our repository, which is called a "fork" in GitHub. You can do this by pushing the "Fork" button on the right top of the repository page.
 
 ### Getting a local Fork instance
 
-After creating your own *Fork* of Fork CMS, you should fetch the code to your computer. You can do this using these commands:
+After creating your own *fork* of Fork CMS, you should fetch the code to your computer. You can do this using these commands:
 
 ```bash
 # Go to the directory where you want to store Fork, for example ~/Sites/forkcms
@@ -112,15 +112,14 @@ git push origin <your-branch-name>
 
 We advise you to run the tests locally before creating a pull request.
 
-Creating a pull request is really easy on github. Just go to [our repository on github](https://github.com/forkcms/forkcms) after pushing your code and a yellow bar will appear with the question if you want to create a new pull request.
+Creating a pull request is really easy on GitHub. Just go to [our repository on GitHub](https://github.com/forkcms/forkcms) after pushing your code and a yellow bar will appear with the question if you want to create a new pull request.
 If this yellow bar isn't available, you can also go to "pull request", click on "New pull request", and select your branch to be used.
 
 Write some explanation of what has changed and why in the description. If it's related to an issue, it's nice to include the issue number.
 
 ### Waiting for approval
 
-After creating a pull request, we'll go trough your code, to make sure everything works as stated, and our quality norms are met.
-If necessary, we'll give you feedback on how you can improve your pull request.
+After creating a pull request, we'll go trough your code, to make sure everything works as stated, and our quality norms are met. If necessary, we'll give you feedback on how you can improve your pull request.
 
 After handling feedback, we'll thank you for your help, merge the changes to our master branch, and your change will be included in the next release!
 
@@ -130,6 +129,6 @@ If it's a security fix, we'll even create a new release right away.
 
 If you need some more help, or if you want to discuss about a feature, you can do this in multiple ways.
 
-* Create a github issue <https://github.com/forkcms/forkcms/issues>
+* Create a GitHub issue <https://github.com/forkcms/forkcms/issues>
 * Join us on IRC: #forkcms on irc.freenode.net
 * Create a WIP pull request. We can discuss how we can work further on it.
