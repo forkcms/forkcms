@@ -103,7 +103,7 @@ The `git commit` command will pop up your editor and ask you to write a message.
 
 All your commits are stored locally on your computer. To make sure you they are available on github, you have to push your code.
 
-```
+```bash
 # Push your code to the remote
 git push origin <your-branch-name>
 ```
