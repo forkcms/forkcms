@@ -508,10 +508,34 @@ class Form extends FrontendBaseWidget
                     )
                 );
 
-                // need to send mail
+                // get the possible replyTo address here, because we use it twice
+                $replyToAddress = null;
+
+                foreach ($this->item['fields'] as $field) {
+                    if (
+                        array_key_exists('reply_to', $field['settings']) &&
+                        $field['settings']['reply_to'] === true &&
+                        \SpoonFilter::isEmail($this->frm->getField('field' . $field['id'])->getValue())
+                    ) {
+                        $replyToAddress = $this->frm->getField('field' . $field['id'])->getValue();
+                        break;
+                    }
+                }
+
+                if (empty($replyToAddress)) {
+                    $replyToSetting = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                    $replyToAddress = $replyToSetting['email'];
+                    $replyToName = $replyToSetting['email'];
+                    $replyToGiven = false;
+                } else {
+                    $replyToName = $replyToAddress;
+                    $replyToGiven = true;
+                }
+
+                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+
+                // Mail(s) to addresses behind the form
                 if ($this->item['method'] == 'database_email') {
-                    // build our message
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
                     $message = \Common\Mailer\Message::newInstance(
                             sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
                         )
@@ -526,21 +550,33 @@ class Form extends FrontendBaseWidget
                         )
                         ->setTo($this->item['email'])
                         ->setFrom(array($from['email'] => $from['name']))
-                    ;
+                        ->setReplyTo(array($replyToAddress => $replyToName));
 
-                    // check if we have a replyTo email set
-                    foreach ($this->item['fields'] as $field) {
-                        if (array_key_exists('reply_to', $field['settings']) &&
-                            $field['settings']['reply_to'] === true
-                        ) {
-                            $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            $message->setReplyTo(array($email => $email));
-                        }
-                    }
-                    if ($message->getReplyTo() === null) {
-                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                        $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
-                    }
+                    $this->get('mailer')->send($message);
+                }
+
+                // Confirmation e-mail to person who filled in the form
+                // Double check for empty subject or content and make sure the e-mail is allowed to be send.
+                // Also, make sure we have a valid reply to e-mail adres (which is checked above)
+                if (
+                    trim($this->item['mail_subject']) != '' &&
+                    strip_tags(trim($this->item['mail_content'])) != '' &&
+                    $this->item['mail_send'] == 'Y' &&
+                    $replyToGiven
+                ) {
+                    $message = \Common\Mailer\Message::newInstance($this->item['mail_subject'])
+                    ->parseHtml(
+                        FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Confirmation.tpl',
+                        array(
+                            'sentOn' => time(),
+                            'subject' => $this->item['mail_subject'],
+                            'content'  => $this->item['mail_content'],
+                            'fields' => $emailFields
+                        ),
+                        true
+                    )
+                    ->setTo(array($replyToAddress => $replyToAddress))
+                    ->setFrom(array($from['email'] => $from['name']));
 
                     $this->get('mailer')->send($message);
                 }

@@ -19,6 +19,9 @@ jsBackend.formBuilder =
 		$selectMethod = $('select#method');
 		$formId = $('#formId');
 
+		// confirmation mail
+		jsBackend.formBuilder.confirmationEmail.init();
+		
 		// fields handler
 		jsBackend.formBuilder.fields.init();
 
@@ -40,7 +43,6 @@ jsBackend.formBuilder =
 			canAddNew: true
 		});
 	},
-
 	/**
 	 * Toggle email field based on the method value
 	 */
@@ -57,6 +59,26 @@ jsBackend.formBuilder =
 		else $emailWrapper.slideUp();
 	}
 };
+
+/**
+ * Toggle opacity of confirmation e-mailfields.
+ * We do not use 'disabled' because it should be possible to alter the content of the textfields anyway
+ */
+jsBackend.formBuilder.confirmationEmail = {
+	init: function()
+	{
+		jsBackend.formBuilder.confirmationEmail.disOrEnableFields();
+		$('#mailSend').change(jsBackend.formBuilder.confirmationEmail.disOrEnableFields);
+	},
+	disOrEnableFields: function()
+	{
+		if ($('#mailSend').is(':checked')) {
+			$('.confirmationEmailContainer').css('opacity', 1);
+		} else {
+			$('.confirmationEmailContainer').css('opacity', 0.6);
+		}
+	}
+}
 
 jsBackend.formBuilder.fields =
 {

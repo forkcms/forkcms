@@ -216,6 +216,12 @@
 		border-bottom: 0;
 	}
 
+	/* Confirmation Mail */
+
+	#mailSubject {
+		width: 80%;
+	}
+
 	/* Pop-ups */
 
 	#tabTextboxBasic, #tabTextboxProperties, #tabTextboxAdvanced, #tabTextareaBasic, #tabTextareaProperties, #tabTextareaAdvanced, #tabDropdownBasic, #tabDropdownProperties, #tabRadiobuttonBasic, #tabRadiobuttonProperties, #tabCheckboxBasic, #tabCheckboxProperties, #tabDatetimeBasic, #tabDatetimeProperties {

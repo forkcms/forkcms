@@ -1037,6 +1037,27 @@
       <item type="error" name="EmailValidationIsRequired">
         <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
       </item>
+      <item type="message" name="ConfirmationMail">
+        <translation language="en"><![CDATA[<strong>Important</strong>: When the 'send'-checkbox is checked, an e-mail is send to the person who filled in the form, but only if there is an e-mail field with the reply-to option set.]]></translation>
+        <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: Wanneer het 'verstuur'-vinkje aangevinkt is wordt er een bevestigingsmail naar de persoon die het formulier invulde verstuurd, als er een e-mailveld is met de 'reply-to' optie.]]></translation>
+      </item>
+      <item type="label" name="ConfirmationMail">
+        <translation language="en"><![CDATA[confirmation e-mail]]></translation>
+        <translation language="nl"><![CDATA[bevestigingsmail]]></translation>
+      </item>
+      <item type="label" name="MailSend">
+        <translation language="en"><![CDATA[send e-mail]]></translation>
+        <translation language="nl"><![CDATA[verstuur e-mail]]></translation>
+      </item>
+      <item type="label" name="MailSubject">
+        <translation language="en"><![CDATA[subject]]></translation>
+        <translation language="nl"><![CDATA[onderwerp]]></translation>
+      </item>
+      <item type="label" name="MailContent">
+        <translation language="en"><![CDATA[content]]></translation>
+        <translation language="nl"><![CDATA[inhoud]]></translation>
+      </item>
+      
     </FormBuilder>
   </Backend>
   <Frontend>

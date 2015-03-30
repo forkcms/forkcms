@@ -55,6 +55,11 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('email');
         $this->frm->addText('identifier', BackendFormBuilderModel::createIdentifier());
         $this->frm->addEditor('success_message');
+
+        // fields for optional confirmation mail
+        $this->frm->addCheckbox('mail_send');
+        $this->frm->addText('mail_subject');
+        $this->frm->addEditor('mail_content');
     }
 
     /**
@@ -71,11 +76,20 @@ class Add extends BackendBaseActionAdd
             $ddmMethod = $this->frm->getField('method');
             $txtSuccessMessage = $this->frm->getField('success_message');
             $txtIdentifier = $this->frm->getField('identifier');
+            $chkMailSend = $this->frm->getField('mail_send');
+            $txtMailSubject = $this->frm->getField('mail_subject');
+            $txtMailContent = $this->frm->getField('mail_content');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
+
+            if ($chkMailSend->getChecked()) {
+                $txtMailSubject->isFilled(BL::getError('FieldIsRequired'));
+                $txtMailContent->isFilled(BL::getError('FieldIsRequired'));                
+            }
+
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
             if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
@@ -119,6 +133,9 @@ class Add extends BackendBaseActionAdd
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );
+                $values['mail_send'] = $chkMailSend->getChecked() ? 'Y' : 'N';
+                $values['mail_subject'] = $txtMailSubject->getValue();
+                $values['mail_content'] = $txtMailContent->getValue();
                 $values['created_on'] = BackendModel::getUTCDate();
                 $values['edited_on'] = BackendModel::getUTCDate();
 
