@@ -64,7 +64,9 @@ class Template extends \SpoonTemplate
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // when debugging, the template should be recompiled every time
-        $this->setForceCompile(SPOON_DEBUG);
+        $this->setForceCompile(
+            BackendModel::getContainer()->getParameter('kernel.debug')
+        );
 
         // map custom modifiers
         $this->mapCustomModifiers();
@@ -272,7 +274,10 @@ class Template extends \SpoonTemplate
      */
     private function parseDebug()
     {
-        $this->assign('debug', SPOON_DEBUG);
+        $this->assign(
+            'debug',
+            BackendModel::getContainer()->getParameter('kernel.debug')
+        );
     }
 
     /**

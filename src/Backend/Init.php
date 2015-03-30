@@ -47,8 +47,8 @@ class Init extends \KernelLoader
         // get last modified time for globals
         $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
-        // reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-        if ($lastModifiedTime === false || SPOON_DEBUG) {
+        // reset lastmodified time if needed when invalid or debug is active
+        if ($lastModifiedTime === false || $this->getContainer()->getParameter('kernel.debug')) {
             $lastModifiedTime = time();
         }
 

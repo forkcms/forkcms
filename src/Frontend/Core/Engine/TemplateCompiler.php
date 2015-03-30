@@ -71,7 +71,7 @@ class TemplateCompiler extends \SpoonTemplateCompiler
                                realpath($this->template)
                            ) . '\');
                 }' . "\n";
-                if (SPOON_DEBUG) {
+                if (Model::getContainer()->getParameter('kernel.debug')) {
                     $replace .= 'if($return === false) {
                     ?>' . $match[0] . '<?php
                 }' . "\n";

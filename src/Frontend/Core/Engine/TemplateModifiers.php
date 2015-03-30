@@ -396,7 +396,7 @@ class TemplateModifiers
             return $content;
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if (SPOON_DEBUG) {
+            if (Model::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 

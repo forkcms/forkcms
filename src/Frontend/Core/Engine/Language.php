@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Modules\Locale\Engine\CacheBuilder;
 
+
 /**
  * This class will store the language-dependant content for the frontend.
  *
@@ -76,7 +77,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackAct[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackAct[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackAct[$key];
         }
 
@@ -91,7 +96,7 @@ class Language
      */
     public static function getActions()
     {
-        return (SPOON_DEBUG === true) ? self::$act : array_merge(self::$fallbackAct, self::$act);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$act : array_merge(self::$fallbackAct, self::$act);
     }
 
     /**
@@ -187,7 +192,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackErr[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackErr[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackErr[$key];
         }
 
@@ -202,7 +211,7 @@ class Language
      */
     public static function getErrors()
     {
-        return (SPOON_DEBUG === true) ? self::$err : array_merge(self::$fallbackErr, self::$err);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$err : array_merge(self::$fallbackErr, self::$err);
     }
 
     /**
@@ -223,7 +232,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackLbl[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackLbl[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackLbl[$key];
         }
 
@@ -238,7 +251,7 @@ class Language
      */
     public static function getLabels()
     {
-        return (SPOON_DEBUG === true) ? self::$lbl : array_merge(self::$fallbackLbl, self::$lbl);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(self::$fallbackLbl, self::$lbl);
     }
 
     /**
@@ -259,7 +272,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackMsg[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackMsg[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackMsg[$key];
         }
 
@@ -274,7 +291,7 @@ class Language
      */
     public static function getMessages()
     {
-        return (SPOON_DEBUG === true) ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
+        return (Model::getContainer()->getParameter('kernel.debug') === true) ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
     }
 
     /**

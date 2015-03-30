@@ -45,6 +45,7 @@ class SaveField extends BackendBaseAJAXAction
         $values = \SpoonFilter::htmlspecialcharsDecode($values);
 
         $defaultValues = trim(\SpoonFilter::getPostValue('default_values', null, '', 'string'));
+        $placeholder = trim(\SpoonFilter::getPostValue('placeholder', null, '', 'string'));
         $required = \SpoonFilter::getPostValue('required', array('Y','N'), 'N', 'string');
         $requiredErrorMessage = trim(\SpoonFilter::getPostValue('required_error_message', null, '', 'string'));
         $validation = \SpoonFilter::getPostValue('validation', array('email', 'numeric', 'time'), '', 'string');
@@ -206,6 +207,9 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($defaultValues != '') {
                             $settings['default_values'] = $defaultValues;
+                        }
+                        if($placeholder != '') {
+                            $settings['placeholder'] = \SpoonFilter::htmlspecialchars($placeholder);
                         }
 
                         // reply-to, only for textboxes
