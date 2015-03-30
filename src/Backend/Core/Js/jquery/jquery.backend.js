@@ -160,7 +160,6 @@
 
 			// append the button
 			$(this).closest('.form-group').after(
-
 				'	<div class="btn-group">' +
 				'		<a href="#" data-id="' + id + '" class="generatePasswordButton btn btn-default"><span>' + options.generateLabel + '</span></a>' +
 				'	</div>');
@@ -997,8 +996,11 @@
 					// loop elements
 					for(var i in elements)
 					{
+                        var value = utils.string.stripForTag(elements[i]);
+                        
 						html += '	<li class="list-group-item">' +
-								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span class="glyphicon glyphicon-trash"></span></a></span>' +
+								'		<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + id + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '"><span class="glyphicon glyphicon-trash"></span></a></span>' +
+								'       <span><strong>' + value + '</strong>' +
 								'	</li>';
 					}
 

@@ -406,13 +406,14 @@ jsBackend.ckeditor =
                                 domain = jsBackend.data.get('site.domain');
                                 domain = domain.replace(/\/$/, '');
 
-                                CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
-                                CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
-                            }
-                        }
-                    ]
-                });
-        }
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url');
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
+						}
+					}
+				]
+			});
+		}
 
         // specific stuff for the table-dialog
         if (evt.data.name == 'table') {

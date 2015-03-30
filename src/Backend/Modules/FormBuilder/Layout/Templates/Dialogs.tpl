@@ -14,6 +14,9 @@
                     <li role="presentation">
                         <a href="#tabTextboxProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
                     </li>
+                    <li role="presentation">
+                        <a href="#tabTextboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane jsFieldTab active" id="tabTextboxBasic">
@@ -99,6 +102,21 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane" id="tabTextboxAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    {$txtTextboxPlaceholder}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -124,6 +142,9 @@
                     </li>
                     <li role="presentation">
                         <a href="#tabTextareaProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabTextareaAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -157,6 +178,10 @@
                                 <div class="form-group">
                                     <label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
                                     {$txtTextareaValue}
+                                </div>
+                                <div class="form-group">
+                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    {$txtTextareaPlaceholder}
                                 </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
@@ -195,6 +220,21 @@
                                         <p id="textareaErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtTextareaErrorMessage}
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="tabTextareaAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    {$txtTextareaPlaceholder}
                                 </div>
                             </div>
                         </div>

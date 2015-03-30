@@ -358,6 +358,7 @@ jsBackend.FormBuilder.Fields =
                                 $('#textboxId').val(data.data.field.id);
                                 $('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+                                $('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
                                 if (data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
                                 $.each(data.data.field.validations, function (k, v) {
                                     // required checkbox
@@ -383,6 +384,7 @@ jsBackend.FormBuilder.Fields =
                                 $('#textareaId').val(data.data.field.id);
                                 $('#textareaLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
                                 $('#textareaValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+                                $('#textareaPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
                                 $.each(data.data.field.validations, function (k, v) {
                                     // required checkbox
                                     if (k == 'required') {
@@ -1139,6 +1141,7 @@ jsBackend.FormBuilder.Fields =
         var type = 'textarea';
         var label = $('#textareaLabel').val();
         var value = $('#textareaValue').val();
+        var placeholder = $('#textareaPlaceholder').val();
         var required = ($('#textareaRequired').is(':checked') ? 'Y' : 'N');
         var requiredErrorMessage = $('#textareaRequiredErrorMessage').val();
         var validation = $('#textareaValidation').val();
@@ -1153,6 +1156,7 @@ jsBackend.FormBuilder.Fields =
                 type: type,
                 label: label,
                 default_values: value,
+                placeholder: placeholder,
                 required: required,
                 required_error_message: requiredErrorMessage,
                 validation: validation,
@@ -1216,6 +1220,7 @@ jsBackend.FormBuilder.Fields =
         var type = 'textbox';
         var label = $('#textboxLabel').val();
         var value = $('#textboxValue').val();
+        var placeholder = $('#textareaPlaceholder').val();
         var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
         var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
         var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
@@ -1231,6 +1236,7 @@ jsBackend.FormBuilder.Fields =
                 type: type,
                 label: label,
                 default_values: value,
+                placeholder: placeholder,
                 reply_to: replyTo,
                 required: required,
                 required_error_message: requiredErrorMessage,
