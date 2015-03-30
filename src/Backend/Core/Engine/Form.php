@@ -80,7 +80,7 @@ class Form extends \SpoonForm
 
         // add default classes
         $this->setParameter('id', $name);
-        $this->setParameter('class', 'forkForms submitWithLink');
+        $this->setParameter('class', 'fork-form submitWithLink');
     }
 
     /**
@@ -97,7 +97,7 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = (string) $value;
         $type = (string) $type;
-        $class = ($class !== null) ? (string) $class : 'inputButton';
+        $class = ($class !== null) ? (string) $class : 'btn btn-primary';
 
         // do a check
         if ($type == 'submit' && $name == 'submit') {
@@ -124,8 +124,8 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $checked = (bool) $checked;
-        $class = ($class !== null) ? (string) $class : 'inputCheckbox';
-        $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-checkbox';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a checkbox
         return parent::addCheckbox($name, $checked, $class, $classError);
@@ -157,8 +157,8 @@ class Form extends \SpoonForm
         $type = \SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
         $date = ($date !== null) ? (int) $date : null;
         $date2 = ($date2 !== null) ? (int) $date2 : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputDate';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDateError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-date inputDate';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // validate
         if ($type == 'from' && ($date == 0 || $date == null)) {
@@ -187,21 +187,21 @@ class Form extends \SpoonForm
         switch ($type) {
             // start date
             case 'from':
-                $class .= ' inputDatefieldFrom inputText';
+                $class .= ' fork-form-date-from inputDatefieldFrom';
                 $classError .= ' inputDatefieldFrom';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 break;
 
             // end date
             case 'till':
-                $class .= ' inputDatefieldTill inputText';
+                $class .= ' fork-form-date-till inputDatefieldTill';
                 $classError .= ' inputDatefieldTill';
                 $attributes['data-enddate'] = date('Y-m-d', $date);
                 break;
 
             // date range
             case 'range':
-                $class .= ' inputDatefieldRange inputText';
+                $class .= ' fork-form-date-range inputDatefieldRange';
                 $classError .= ' inputDatefieldRange';
                 $attributes['data-startdate'] = date('Y-m-d', $date);
                 $attributes['data-enddate'] = date('Y-m-d', $date2);
@@ -209,7 +209,7 @@ class Form extends \SpoonForm
 
             // normal date field
             default:
-                $class .= ' inputDatefieldNormal inputText';
+                $class .= ' inputDatefieldNormal';
                 $classError .= ' inputDatefieldNormal';
                 break;
         }
@@ -247,8 +247,8 @@ class Form extends \SpoonForm
         $values = (array) $values;
         $selected = ($selected !== null) ? $selected : null;
         $multipleSelection = (bool) $multipleSelection;
-        $class = ($class !== null) ? (string) $class : 'select';
-        $classError = ($classError !== null) ? (string) $classError : 'selectError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-select';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // special classes for multiple
         if ($multipleSelection) {
@@ -313,8 +313,8 @@ class Form extends \SpoonForm
     public function addFile($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-file';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormFile($name, $class, $classError));
@@ -333,8 +333,8 @@ class Form extends \SpoonForm
     public function addImage($name, $class = null, $classError = null)
     {
         $name = (string) $name;
-        $class = ($class !== null) ? (string) $class : 'inputFile inputImage';
-        $classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-image';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // add element
         $this->add(new FormImage($name, $class, $classError));
@@ -357,8 +357,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (array) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'inputCheckbox';
-        $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-multi-checkbox';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a multi checkbox
         return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
@@ -386,8 +386,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputPassword';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-password inputPassword';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a password field
@@ -409,8 +409,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $values = (array) $values;
         $checked = ($checked !== null) ? (string) $checked : null;
-        $class = ($class !== null) ? (string) $class : 'inputRadio';
-        $classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
+        $class = ($class !== null) ? (string) $class : 'fork-form-radio';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a radio button
         return parent::addRadiobutton($name, $values, $checked, $class, $classError);
@@ -432,8 +432,8 @@ class Form extends \SpoonForm
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
         $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'inputText';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-text';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a textfield
@@ -454,8 +454,8 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'textarea';
-        $classError = ($classError !== null) ? (string) $classError : 'textareaError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-textarea';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
         $HTML = (bool) $HTML;
 
         // create and return a textarea
@@ -475,8 +475,8 @@ class Form extends \SpoonForm
     {
         $name = (string) $name;
         $value = ($value !== null) ? (string) $value : null;
-        $class = ($class !== null) ? (string) $class : 'inputText inputTime';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
+        $class = ($class !== null) ? (string) $class : 'form-control fork-form-time inputTime';
+        $classError = ($classError !== null) ? (string) $classError : 'error';
 
         // create and return a timefield
         return parent::addTime($name, $value, $class, $classError);

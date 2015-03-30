@@ -24,13 +24,8 @@
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		<link rel="stylesheet" href="{$cssFiles.file}" />
+	<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
-
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
 
 	{* Site wide HTML *}
 	{$siteHTMLHeader}

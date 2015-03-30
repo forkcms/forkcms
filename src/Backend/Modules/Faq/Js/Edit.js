@@ -14,7 +14,7 @@ jsBackend.faq.edit =
 		$('.longFeedback').hide();
 
 		// add the click handler
-		$(document).on('click', '.container', jsBackend.faq.edit.clickHandler);
+		//$(document).on('click', '.container', jsBackend.faq.edit.clickHandler);
 	},
 
 	clickHandler: function(e)

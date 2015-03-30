@@ -34,7 +34,8 @@ class Configurator implements EventSubscriberInterface
                 $transport
             );
         } catch (\PDOException $e) {
-            // we'll just use the mail transport thats pre-configured
+            // the modules_settings probably doesn't exist yet. Let's just ignore
+            // this and use the mail protocol
         }
     }
 

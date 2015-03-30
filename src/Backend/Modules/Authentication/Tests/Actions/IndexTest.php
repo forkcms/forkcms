@@ -74,7 +74,11 @@ class IndexTest extends WebTestCase
         ));
 
         $this->assertContains(
-            'now editing:',
+            'Dashboard',
+            $client->getResponse()->getContent()
+        );
+        $this->assertContains(
+            'Pages',
             $client->getResponse()->getContent()
         );
     }

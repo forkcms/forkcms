@@ -58,14 +58,21 @@ class Campaigns extends BackendBaseActionIndex
 
         // add the multicheckbox column
         $this->dataGrid->addColumn(
-            'checkbox',
+            'check',
             '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>',
             '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>'
         );
-        $this->dataGrid->setColumnsSequence('checkbox');
+        $this->dataGrid->setColumnsSequence('check');
 
         // add mass action dropdown
-        $ddmMassAction = new \SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
+        $ddmMassAction = new \SpoonFormDropdown(
+            'action',
+            array('delete' => BL::lbl('Delete')),
+            'delete',
+            false,
+            'form-control',
+            'form-control danger'
+        );
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // set column functions

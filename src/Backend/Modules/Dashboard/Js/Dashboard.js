@@ -29,8 +29,8 @@ jsBackend.dashboard =
 		// get widget
 		$widget = $(this).parents('.sortableWidget').eq(0);
 
-		if($widget.hasClass('isRemoved')) $widget.find('.options, .footer, .dataGridHolder').show().removeClass('isRemoved');
-		else $widget.find('.options, .footer, .dataGridHolder').hide().addClass('isRemoved');
+		if($widget.hasClass('isRemoved')) $widget.has('.panel').show().removeClass('isRemoved');
+		else $widget.has('.panel').hide().addClass('isRemoved');
 	},
 
 	load: function(e)
@@ -45,8 +45,7 @@ jsBackend.dashboard =
 		$column = $('.column');
 
 		// bind before unload event
-		$(window).on('beforeunload', function()
-		{
+		$(window).on('beforeunload', function() {
 			return jsBackend.locale.msg('ValuesAreChanged');
 		});
 
@@ -63,7 +62,7 @@ jsBackend.dashboard =
 		$('.sortableWidget.isRemoved').show();
 
 		$sortableWidget.each(function() {
-			if($(this).find('.box').length === 0) $(this).remove();
+			if($(this).find('.panel').length === 0) $(this).remove();
 		});
 
 		// make them sortable
@@ -76,7 +75,7 @@ jsBackend.dashboard =
 				stop: function(e, ui)
 				{
 					// remove the original item
-					jsBackend.dashboard.itemOnTheMove.hide();
+					//jsBackend.dashboard.itemOnTheMove.hide();
 				}
 			}
 		);
@@ -85,7 +84,6 @@ jsBackend.dashboard =
 			{
 				cursor: 'move',
 				connectToSortable: '.column',
-				helper: 'clone',
 				opacity: 0.50,
 				revert: 'invalid',
 				start: function(e, ui)
@@ -132,7 +130,7 @@ jsBackend.dashboard =
 
 		// unbind
 		$column.sortable('destroy');
-		$sortableWidget.draggable('destroy').off('mouseenter mouseleave');
+		$sortableWidget.draggable('destroy');
 
 		// build new array
 		var newSequence = [];
@@ -184,7 +182,7 @@ jsBackend.dashboard =
 			error: function(XMLHttpRequest, textStatus, errorThrown)
 			{
 				// show message
-				jsBackend.messages.add('error', 'alter sequence failed.');
+				jsBackend.messages.add('danger', 'alter sequence failed.');
 
 				// refresh page
 				// window.location.reload(true);

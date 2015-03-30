@@ -4,8 +4,10 @@
 .settings
 .*.swp
 .DS_Store
+/bower_components/
 /app/cache/*
 /app/logs/*
+/components/
 /backend/cache/navigation/
 /vendor/
 /app/config/parameters.yml
@@ -13,3 +15,4 @@
 /bundles/
 /js/
 /css/
+/bin

@@ -1,11 +1,7 @@
-<td id="pagesTree">
-	<table>
-		<tr>
-			<td id="treeHolder">
-				<div id="tree">
-					{$tree}
-				</div>
-			</td>
-		</tr>
-	</table>
-</td>
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div id="tree">
+      {$tree}
+    </div>
+  </div>
+</div>

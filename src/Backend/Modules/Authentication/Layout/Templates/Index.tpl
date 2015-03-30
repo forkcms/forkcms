@@ -1,87 +1,85 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 <body id="login">
-	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/Layout/Templates/Ie6.tpl}
-	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
-	<table id="loginHolder">
-		<tr>
-			<td>
-				{option:hasError}
-					<div id="loginError">
-						<div class="errorMessage singleMessage">
-							<p>{$errInvalidEmailPasswordCombination}</p>
-						</div>
-					</div>
-				{/option:hasError}
-
-				{option:hasTooManyAttemps}
-					<div id="loginError">
-						<div class="errorMessage singleMessage">
-							<p>{$errTooManyLoginAttempts}</p>
-						</div>
-					</div>
-				{/option:hasTooManyAttemps}
-
-				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
-					<div id="loginBoxTop">
-						<h2>{$SITE_TITLE}</h2>
-					</div>
-
-					{form:authenticationIndex}
-						<div class="horizontal">
-							<div id="loginFields">
-								<p>
-									<label for="backendEmail">{$lblEmail|ucfirst}</label>
-									{$txtBackendEmail} {$txtBackendEmailError}
-								</p>
-								<p>
-									<label for="backendPassword">{$lblPassword|ucfirst}</label>
-									{$txtBackendPassword} {$txtBackendPasswordError}
-								</p>
-							</div>
-							<p class="spacing">
-								<input name="login" type="submit" value="{$lblSignIn|ucfirst}" class="inputButton button mainButton" />
-							</p>
-						</div>
-					{/form:authenticationIndex}
-
-					<ul id="loginNav">
-						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" data-message-id="forgotPasswordHolder">{$msgForgotPassword}</a></li>
-					</ul>
-				</div>
-
-				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
-					<div id="forgotPasswordBox">
-
-						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" data-message-id="forgotPasswordHolder"><span>X</span></a>
-
-						<div class="balloonTop">&nbsp;</div>
-
-						<p>{$msgHelpForgotPassword}</p>
-						{form:forgotPassword}
-							<div class="oneLiner">
-								<p><label for="backendEmailForgot">{$lblEmail|ucfirst}</label></p>
-								<p>{$txtBackendEmailForgot}</p>
-								<p>
-									<input id="send" type="submit" name="send" value="{$lblSend|ucfirst}" />
-								</p>
-							</div>
-
-							{option:txtBackendEmailForgotError}
-								<div class="errorMessage singleMessage">
-									<p>{$txtBackendEmailForgotError}</p>
-								</div>
-							{/option:txtBackendEmailForgotError}
-
-							{option:isForgotPasswordSuccess}
-								<div class="successMessage singleMessage">
-									<p>{$msgLoginFormForgotPasswordSuccess}</p>
-								</div>
-							{/option:isForgotPasswordSuccess}
-						{/form:forgotPassword}
-					</div>
-				</div>
-
-			</td>
-		</tr>
-	</table>
+  {include:{$BACKEND_MODULES_PATH}/{$MODULE}/Layout/Templates/Ie6.tpl}
+  <div class="page-header text-center">
+    <h1>{$SITE_TITLE}</h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {option:hasError}
+        <div class="alert alert-danger">
+          <p>{$errInvalidEmailPasswordCombination}</p>
+        </div>
+        {/option:hasError}
+        {option:hasTooManyAttemps}
+        <div class="alert alert-danger">
+          <p>{$errTooManyLoginAttempts}</p>
+        </div>
+        {/option:hasTooManyAttemps}
+        {option:txtBackendEmailForgotError}
+        <div class="alert alert-danger">
+          <p>{$txtBackendEmailForgotError}</p>
+        </div>
+        {/option:txtBackendEmailForgotError}
+        {option:isForgotPasswordSuccess}
+        <div class="alert alert-success">
+          <p>{$msgLoginFormForgotPasswordSuccess}</p>
+        </div>
+        {/option:isForgotPasswordSuccess}
+        {form:authenticationIndex}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <div class="form-group">
+                <label for="backendEmail">{$lblEmail|ucfirst}</label>
+                {$txtBackendEmail} {$txtBackendEmailError}
+              </div>
+              <div class="form-group">
+                <label for="backendPassword">{$lblPassword|ucfirst}</label>
+                {$txtBackendPassword} {$txtBackendPasswordError}
+              </div>
+              <div class="form-group">
+                <div class="btn-toolbar pull-right">
+                  <div class="btn-group">
+                    <a href="#" id="forgotPasswordLink" class="btn" data-toggle="modal" data-target="#forgotPasswordHolder">{$msgForgotPassword}</a>
+                  </div>
+                  <div class="btn-group">
+                    <button name="login" type="submit" class="btn btn-primary">
+                      {$lblSignIn|ucfirst}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/form:authenticationIndex}
+        <div class="modal fade" id="forgotPasswordHolder" tabindex="-1" role="dialog" aria-labelledby="{$msgHelpForgotPassword}" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              {form:forgotPassword}
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">{$msgForgotPassword}</h4>
+                </div>
+                <div class="modal-body">
+                  <div class="form-group">
+                    <label for="backendEmailForgot">{$lblEmail|ucfirst}</label>
+                    {$txtBackendEmailForgot}
+                  </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">
+                    {$lblCancel|ucfirst}
+                  </button>
+                  <button id="send" name="send" type="submit" class="btn btn-primary">
+                    {$lblSend|ucfirst}
+                  </button>
+                </div>
+              {/form:forgotPassword}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

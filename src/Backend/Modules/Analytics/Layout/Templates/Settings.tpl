@@ -1,117 +1,198 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-
-<div class="pageTitle">
-	<h2>{$lblModuleSettings|ucfirst}: {$lblAnalytics|ucfirst}</h2>
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$lblSettings|ucfirst}</h2>
+  </div>
 </div>
-
 {option:Wizard}
-	<div class="generalMessage infoMessage content">
-		<p><strong>{$msgConfigurationError}</strong></p>
-		<ul class="pb0">
-			{option:NoSessionToken}<li>{$errNoSessionToken}</li>{/option:NoSessionToken}
-			{option:NoTableId}<li>{$errNoTableId}</li>{/option:NoTableId}
-		</ul>
-	</div>
-{/option:Wizard}
-
-<div class="box">
-	<div class="heading">
-		<h3>{$lblGoogleAnalyticsLink|ucfirst}</h3>
-	</div>
-
-	<div class="options">
-		{option:Wizard}
-			{option:NoSessionToken}
-				{form:apiKey}
-					<p>{$msgLinkGoogleAccount}</p>
-
-					<div class="inputList">
-						<label for="key">{$lblApiKey|ucfirst}</label>
-						{$txtKey} {$txtKeyError}
-					</div>
-
-					<div class="buttonHolder">
-						<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$msgAuthenticateAtGoogle}" />
-					</div>
-
-				{/form:apiKey}
-			{/option:NoSessionToken}
-
-			{option:NoTableId}
-				{option:accounts}
-					<p>{$msgLinkWebsiteProfile}</p>
-					{form:linkProfile}
-					<div class="oneLiner fakeP">
-						<p>
-							{$ddmTableId} {option:tableIdError}<br /><span class="formerror">{$tableIdError}</span>{/option:tableIdError}
-						</p>
-						<div class="buttonHolder">
-							<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />
-						</div>
-					</div>
-					{/form:linkProfile}
-				{/option:accounts}
-
-				{option:!accounts}
-					<p>{$msgNoAccounts}</p>
-				{/option:!accounts}
-
-				<div class="buttonHolder">
-					<a href="{$var|geturl:'settings'}&amp;remove=session_token" data-message-id="confirmDeleteSessionToken" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveAccountLink}</span></a>
-				</div>
-			{/option:NoTableId}
-		{/option:Wizard}
-
-		{option:EverythingIsPresent}
-			<p>
-				{$lblLinkedAccount|ucfirst}: <strong>{$accountName}</strong><br />
-				{$lblLinkedProfile|ucfirst}: <strong>{$profileTitle}</strong>
-			</p>
-			<div class="buttonHolder">
-				<a href="{$var|geturl:'settings'}&amp;remove=table_id" data-message-id="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
-				{option:showAnalyticsIndex}<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>{/option:showAnalyticsIndex}
-			</div>
-		{/option:EverythingIsPresent}
-
-		<div id="confirmDeleteSessionToken" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDeleteLinkGoogleAccount}
-			</p>
-		</div>
-
-		<div id="confirmDeleteTableId" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDeleteLinkAccount|sprintf:{$accountName}}
-			</p>
-		</div>
-	</div>
+<div class="row fork-module-messages">
+  <div class="col-md-12">
+    <div class="alert alert-warning" role="alert">
+      <p><strong>{$msgConfigurationError}</strong></p>
+      <ul>
+        {option:NoSessionToken}
+        <li>{$errNoSessionToken}</li>
+        {/option:NoSessionToken}
+        {option:NoTableId}
+        <li>{$errNoTableId}</li>
+        {/option:NoTableId}
+      </ul>
+    </div>
+  </div>
 </div>
-
+{/option:Wizard}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {$lblGoogleAnalyticsLink|ucfirst}
+        </h3>
+      </div>
+      {option:Wizard}
+      {option:NoSessionToken}
+      {form:apiKey}
+        <div class="panel-body">
+          <p>{$msgLinkGoogleAccount}</p>
+          <div class="form-group">
+            <label for="key">{$lblApiKey|ucfirst}</label>
+            {$txtKey} {$txtKeyError}
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <button id="submitForm" class="btn btn-primary" type="submit" name="submitForm">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                {$msgAuthenticateAtGoogle|ucfirst}
+              </button>
+            </div>
+          </div>
+        </div>
+      {/form:apiKey}
+      {/option:NoSessionToken}
+      {option:NoTableId}
+      {option:accounts}
+      {form:linkProfile}
+        <div class="panel-body">
+          <p>{$msgLinkWebsiteProfile}</p>
+          <div class="form-group">
+            {option:tableIdError}
+            <p class="text-danger">{$tableIdError}</p>
+            {/option:tableIdError}
+            {$ddmTableId}
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-left">
+              <button type="button" data-toggle="modal" data-target="#confirmDeleteSessionToken" class="btn btn-danger">
+                <span class="glyphicon glyphicon-log-out"></span>&nbsp;
+                {$msgRemoveAccountLink}
+              </button>
+            </div>
+            <div class="btn-group pull-right">
+              <button id="submitForm" class="btn btn-primary" type="submit" name="submitForm">
+                <span class="glyphicon glyphicon-log-in"></span>&nbsp;
+                {$lblLinkThisProfile|ucfirst}
+              </button>
+            </div>
+          </div>
+        </div>
+      {/form:linkProfile}
+      {/option:accounts}
+      {option:!accounts}
+      <div class="panel-body">
+        <p>{$msgNoAccounts}</p>
+      </div>
+      {/option:!accounts}
+      {/option:NoTableId}
+      {/option:Wizard}
+      {option:EverythingIsPresent}
+      <div class="panel-body">
+        <p>
+          {$lblLinkedAccount|ucfirst}: <strong>{$accountName}</strong><br />
+          {$lblLinkedProfile|ucfirst}: <strong>{$profileTitle}</strong>
+        </p>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-left">
+            <button type="button" data-toggle="modal" data-target="#confirmDeleteTableId" class="btn btn-danger">
+              <span class="glyphicon glyphicon-trash"></span>&nbsp;
+              {$msgRemoveProfileLink}
+            </button>
+          </div>
+          <div class="btn-group pull-right">
+            {option:showAnalyticsIndex}
+            <a href="{$var|geturl:'index'}" class="btn btn-default">
+              <span class="glyphicon glyphicon-search"></span>&nbsp;
+              {$lblViewStatistics|ucfirst}
+            </a>
+            {/option:showAnalyticsIndex}
+          </div>
+        </div>
+      </div>
+      {/option:EverythingIsPresent}
+    </div>
+    <div class="modal fade" id="confirmDeleteSessionToken" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{$lblDelete|ucfirst}</span>
+          </div>
+          <div class="modal-body">
+            <p>{$msgConfirmDeleteLinkGoogleAccount}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'settings'}&amp;remove=session_token" class="btn btn-primary">
+              {$lblOK|ucfirst}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="confirmDeleteTableId" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <span class="modal-title h4">{$lblDelete|ucfirst}</span>
+          </div>
+          <div class="modal-body">
+            <p>{$msgConfirmDeleteLinkAccount|sprintf:{$accountName}}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+            <a href="{$var|geturl:'settings'}&amp;remove=table_id" class="btn btn-primary">
+              {$lblOK|ucfirst}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {option:EverythingIsPresent}
-	{form:trackingType}
-		<div class="box">
-			<div class="heading">
-				<h3>{$lblTrackingType|ucfirst}</h3>
-			</div>
-
-			<div class="options">
-				<p>{$msgHelpTrackingType}</p>
-				{iteration:type}
-					<label for="{$type.id}">{$type.rbtType} {$type.label}</label><br />
-				{/iteration:type}
-				{$rbtTypeError}
-			</div>
-		</div>
-
-		<div class="fullwidthOptions">
-			<div class="buttonHolderRight">
-				<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
-			</div>
-		</div>
-	{/form:trackingType}
+{form:trackingType}
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {$lblTrackingType|ucfirst}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <p class="text-info">{$msgHelpTrackingType}</p>
+          {option:rbtTypeError}
+          <p class="text-danger">{$rbtTypeError}</p>
+          {/option:rbtTypeError}
+          <div class="form-group">
+            <ul class="list-unstyled">
+              {iteration:type}
+              <li class="radio">
+                <label for="{$type.id}">{$type.rbtType} {$type.label}</label>
+              </li>
+              {/iteration:type}
+            </ul>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <div class="btn-toolbar">
+            <div class="btn-group pull-right">
+              <button id="save" class="btn btn-primary" type="submit" name="save">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+                {$lblSave|ucfirst}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{/form:trackingType}
 {/option:EverythingIsPresent}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

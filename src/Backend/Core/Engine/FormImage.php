@@ -130,11 +130,11 @@ class FormImage extends \SpoonFormImage
 
         // add help txt if needed
         if (!$this->hideHelpTxt) {
-            $output .= '<span class="helpTxt">' .
+            $output .= '<p class="help-block">' .
                         sprintf(
                             Language::getMessage('HelpImageFieldWithMaxFileSize', 'core'),
                             $uploadMaxFilesize
-                        ) . '</span>';
+                        ) . '</p>';
         }
 
         // parse to template

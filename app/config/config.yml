@@ -41,6 +41,9 @@ monolog:
 swiftmailer:
     transport: "mail"
 
+swiftmailer:
+    transport: "mail"
+
 services:
     database:
         class: SpoonDatabase

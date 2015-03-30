@@ -93,7 +93,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('text', $this->record['text']);
         $this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 

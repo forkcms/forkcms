@@ -41,7 +41,7 @@ class Add extends BackendBaseActionAdd
     private function loadForm()
     {
         $this->frm = new BackendForm('add');
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addText('street');
         $this->frm->addText('number');
         $this->frm->addText('zip');

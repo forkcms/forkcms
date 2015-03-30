@@ -1,155 +1,190 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblContent|ucfirst}</h2>
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$lblContent|ucfirst}</h2>
+  </div>
 </div>
-
-{option:!dataAvailable}
-	<div class="generalMessage infoMessage content singleMessage">
-		<p><strong>{$msgNoData}</strong></p>
-	</div>
-{/option:!dataAvailable}
-
-<div class="box">
-	{include:{$BACKEND_MODULE_PATH}/Layout/Templates/Period.tpl}
-
-	<div class="options content">
-		<div class="analyticsColWrapper">
-			<div class="analyticsCol">
-				<p><strong>{$pageviews} </strong><a href="{$googleContentURL}">{$lblPageviews|ucfirst}</a></p>
-				<p><strong>{$uniquePageviews} </strong><a href="{$googleContentURL}">{$lblUniquePageviews|ucfirst}</a></p>
-			</div>
-			<div class="analyticsCol">
-				<p><strong>{$newVisits}% </strong><a href="{$googleContentURL}">{$lblNewVisitsPercentage|ucfirst}</a> <small>({$newVisitsDifference}%)</small></p>
-				<p><strong>{$bounces}% </strong><a href="{$googleContentURL}">{$lblBounceRate|ucfirst}</a> <small>({$bouncesDifference}%)</small></p>
-			</div>
-		</div>
-	</div>
-
-	<div class="options content">
-		<div class="analyticsGraphWrapper">
-			<div class="box boxLevel2">
-				<div class="heading">
-					<h3><a href="{$googleContentURL}">{$lblVisits|ucfirst}</a></h3>
-					<div class="buttonHolderRight">
-						<a class="button icon iconGoto linkButton" href="{$googleContentURL}"><span>{$lblViewReport|ucfirst}</span></a>
-					</div>
-				</div>
-				<div class="options">
-					{option:graphData}
-						<div id="dataChartDoubleMetricPerDay" class="hidden">
-							<span id="maxYAxis">{$maxYAxis}</span>
-							<span id="tickInterval">{$tickInterval}</span>
-							<span id="yAxisTitle">{$lblVisits|ucfirst}</span>
-							<ul class="series">
-								{iteration:graphData}
-									<li class="serie" id="metric{$graphData.i}serie">
-										<span class="name">{$graphData.label}</span>
-										<ul class="data">
-											{iteration:graphData.data}
-												<li>
-													<span class="fulldate">{$graphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-													<span class="date">{$graphData.data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-													<span class="value">{$graphData.data.value}</span>
-												</li>
-											{/iteration:graphData.data}
-										</ul>
-									</li>
-								{/iteration:graphData}
-							</ul>
-						</div>
-						<div id="chartDoubleMetricPerDay">&nbsp;</div>
-					{/option:graphData}
-					<div class="buttonHolderRight">
-						<a href="http://highcharts.com/" class="analyticsBacklink">Highcharts</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    {option:!dataAvailable}
+    <div class="alert alert-warning">
+      <p>{$msgNoData}</p>
+    </div>
+    {/option:!dataAvailable}
+    {include:{$BACKEND_MODULE_PATH}/Layout/Templates/Period.tpl}
+  </div>
 </div>
-
-{* Top pages *}
-<div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>
-			{option:showAnalyticsAllPages}<a href="{$var|geturl:'all_pages'}">{/option:showAnalyticsAllPages}
-				{$lblTopPages|ucfirst}
-			{option:showAnalyticsAllPages}</a>{/option:showAnalyticsAllPages}
-		</h3>
-
-		<div class="buttonHolderRight">
-			<a class="button icon iconGoto linkButton" href="{$googleTopContentURL}"><span>{$lblViewReport|ucfirst}</span></a>
-		</div>
-	</div>
-
-	{option:dgContent}
-		{$dgContent}
-	{/option:dgContent}
-
-	{option:!dgContent}
-		<table class="dataGrid">
-			<tr>
-				<td>{$msgNoContent}</td>
-			</tr>
-		</table>
-	{/option:!dgContent}
+<div class="row fork-module-content">
+  <div class="col-md-6">
+    <p>
+      <strong>{$pageviews} </strong>
+      <a href="{$googleContentURL}">{$lblPageviews|ucfirst}</a>
+    </p>
+    <p>
+      <strong>{$uniquePageviews} </strong>
+      <a href="{$googleContentURL}">{$lblUniquePageviews|ucfirst}</a>
+    </p>
+  </div>
+  <div class="col-md-6">
+    <p>
+      <strong>{$newVisits}% </strong>
+      <a href="{$googleContentURL}">{$lblNewVisitsPercentage|ucfirst}</a>
+      <small>({$newVisitsDifference}%)</small>
+    </p>
+    <p>
+      <strong>{$bounces}% </strong>
+      <a href="{$googleContentURL}">{$lblBounceRate|ucfirst}</a>
+      <small>({$bouncesDifference}%)</small>
+    </p>
+  </div>
 </div>
-
-{* Top exit pages *}
-<div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>
-			{option:showAnalyticsExitPages}<a href="{$var|geturl:'exit_pages'}">{/option:showAnalyticsExitPages}
-				{$lblTopExitPages|ucfirst}
-			{option:showAnalyticsExitPages}</a>{/option:showAnalyticsExitPages}
-		</h3>
-
-		<div class="buttonHolderRight">
-			<a class="button icon iconGoto linkButton" href="{$googleTopExitPagesURL}"><span>{$lblViewReport|ucfirst}</span></a>
-		</div>
-	</div>
-
-	{option:dgExitPages}
-		{$dgExitPages}
-	{/option:dgExitPages}
-
-	{option:!dgExitPages}
-		<table class="dataGrid">
-			<tr>
-				<td>{$msgNoExitPages}</td>
-			</tr>
-		</table>
-	{/option:!dgExitPages}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <a href="{$googleContentURL}" class="btn btn-default btn-xs" target="_blank" title="{$lblViewReport|ucfirst}">
+              <span class="glyphicon glyphicon-stats"></span>
+            </a>
+          </div>
+        </div>
+        <h3 class="panel-title">
+          <a href="{$googleContentURL}">{$lblVisits|ucfirst}</a>
+        </h3>
+      </div>
+      <div class="panel-body">
+        {option:graphData}
+        <div id="dataChartDoubleMetricPerDay" class="hidden">
+          <span id="maxYAxis">{$maxYAxis}</span>
+          <span id="tickInterval">{$tickInterval}</span>
+          <span id="yAxisTitle">{$lblVisits|ucfirst}</span>
+          <ul class="series">
+            {iteration:graphData}
+              <li class="serie" id="metric{$graphData.i}serie">
+                <span class="name">{$graphData.label}</span>
+                <ul class="data">
+                  {iteration:graphData.data}
+                    <li>
+                      <span class="fulldate">{$graphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                      <span class="date">{$graphData.data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                      <span class="value">{$graphData.data.value}</span>
+                    </li>
+                  {/iteration:graphData.data}
+                </ul>
+              </li>
+            {/iteration:graphData}
+          </ul>
+        </div>
+        <div id="chartDoubleMetricPerDay">&nbsp;</div>
+        {/option:graphData}
+      </div>
+      <div class="panel-footer">
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <a href="http://highcharts.com/" class="btn analyticsBacklink">{$lblHighcharts}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-
-{* Top entry pages *}
-<div class="dataGridHolder">
-	<div class="tableHeading">
-		<h3>
-			{option:showAnalyticsLandingPages}<a href="{$var|geturl:'landing_pages'}">{/option:showAnalyticsLandingPages}
-				{$lblTopLandingPages|ucfirst}
-			{option:showAnalyticsLandingPages}</a>{/option:showAnalyticsLandingPages}
-		</h3>
-
-		<div class="buttonHolderRight">
-			<a class="button icon iconGoto linkButton" href="{$googleTopLandingPagesURL}"><span>{$lblViewReport|ucfirst}</span></a>
-		</div>
-	</div>
-
-	{option:dgLandingPages}
-		{$dgLandingPages}
-	{/option:dgLandingPages}
-
-	{option:!dgLandingPages}
-		<table class="dataGrid">
-			<tr>
-				<td>{$msgNoLandingPages}</td>
-			</tr>
-		</table>
-	{/option:!dgLandingPages}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <a href="{$googleTopContentURL}" class="btn btn-default btn-xs" target="_blank" title="{$lblViewReport|ucfirst}">
+              <span class="glyphicon glyphicon-stats"></span>
+            </a>
+          </div>
+        </div>
+        <h3 class="panel-title">
+          {option:showAnalyticsAllPages}
+          <a href="{$var|geturl:'all_pages'}">
+          {/option:showAnalyticsAllPages}
+            {$lblTopPages|ucfirst}
+          {option:showAnalyticsAllPages}
+          </a>
+          {/option:showAnalyticsAllPages}
+        </h3>
+      </div>
+      {option:dgContent}
+      {$dgContent}
+      {/option:dgContent}
+      {option:!dgContent}
+      <div class="panel-body">
+        <p>{$msgNoContent}</p>
+      </div>
+      {/option:!dgContent}
+    </div>
+  </div>
 </div>
-
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <a href="{$googleTopExitPagesURL}" class="btn btn-default btn-xs" target="_blank" title="{$lblViewReport|ucfirst}">
+              <span class="glyphicon glyphicon-stats"></span>
+            </a>
+          </div>
+        </div>
+        <h3 class="panel-title">
+          {option:showAnalyticsExitPages}
+          <a href="{$var|geturl:'exit_pages'}">
+          {/option:showAnalyticsExitPages}
+            {$lblTopExitPages|ucfirst}
+          {option:showAnalyticsExitPages}
+          </a>
+          {/option:showAnalyticsExitPages}
+        </h3>
+      </div>
+      {option:dgExitPages}
+      {$dgExitPages}
+      {/option:dgExitPages}
+      {option:!dgExitPages}
+      <div class="panel-body">
+        <p>{$msgNoExitPages}</p>
+      </div>
+      {/option:!dgExitPages}
+    </div>
+  </div>
+</div>
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading clearfix">
+        <div class="btn-toolbar pull-right">
+          <div class="btn-group" role="group">
+            <a href="{$googleTopExitPagesURL}" class="btn btn-default btn-xs" target="_blank" title="{$lblViewReport|ucfirst}">
+              <span class="glyphicon glyphicon-stats"></span>
+            </a>
+          </div>
+        </div>
+        <h3 class="panel-title">
+          {option:showAnalyticsLandingPages}
+          <a href="{$var|geturl:'landing_pages'}">
+          {/option:showAnalyticsLandingPages}
+            {$lblTopLandingPages|ucfirst}
+          {option:showAnalyticsLandingPages}
+          </a>
+          {/option:showAnalyticsLandingPages}
+        </h3>
+      </div>
+      {option:dgLandingPages}
+      {$dgLandingPages}
+      {/option:dgLandingPages}
+      {option:!dgLandingPages}
+      <div class="panel-body">
+        <p>{$msgNoLandingPages}</p>
+      </div>
+      {/option:!dgLandingPages}
+    </div>
+  </div>
+</div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

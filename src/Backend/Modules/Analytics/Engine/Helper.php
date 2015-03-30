@@ -792,8 +792,24 @@ class Helper
         $frm = new BackendForm('periodPickerForm');
 
         // create datepickers
-        $frm->addDate('start_date', $startTimestamp, 'range', mktime(0, 0, 0, 1, 1, 2005), time(), 'noFocus');
-        $frm->addDate('end_date', $endTimestamp, 'range', mktime(0, 0, 0, 1, 1, 2005), time(), 'noFocus');
+        $frm->addDate(
+            'start_date',
+            $startTimestamp,
+            'range',
+            mktime(0, 0, 0, 1, 1, 2005),
+            time(),
+            'form-control noFocus',
+            'form-control danger noFocus'
+        );
+        $frm->addDate(
+            'end_date',
+            $endTimestamp,
+            'range',
+            mktime(0, 0, 0, 1, 1, 2005),
+            time(),
+            'form-control noFocus',
+            'form-control danger noFocus'
+        );
 
         // submitted
         if ($frm->isSubmitted()) {

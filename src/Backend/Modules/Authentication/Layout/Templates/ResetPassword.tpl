@@ -1,38 +1,42 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 <body id="login">
-
-	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/Layout/Templates/Ie6.tpl}
-
-	{option:debug}<div id="debugnotify">WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
-
-	<table id="loginHolder">
-		<tr>
-			<td>
-				<div id="loginBox">
-					<p>{$msgHelpResetPassword}</p>
-					{form:authenticationResetPassword}
-							{option:error}
-							<div class="errorMessage singleMessage">
-								<p>{$error}</p>
-							</div>
-							{/option:error}
-
-							<p>
-								<label for="backendNewPassword">{$lblNewPassword|ucfirst}</label>
-								{$txtBackendNewPassword} {$txtBackendNewPasswordError}
-							</p>
-
-							<p>
-								<label for="backendNewPasswordRepeated">{$lblRepeatPassword|ucfirst}</label>
-								{$txtBackendNewPasswordRepeated} {$txtBackendNewPasswordRepeatedError}
-							</p>
-							<p>
-								<input id="resetPassword" class="inputButton button mainButton" type="submit" name="reset" value="{$lblResetAndSignIn|ucfirst}" />
-							</p>
-					{/form:authenticationResetPassword}
-				</div>
-			</td>
-		</tr>
-	</table>
-
+  {include:{$BACKEND_MODULES_PATH}/{$MODULE}/Layout/Templates/Ie6.tpl}
+  <div class="page-header text-center">
+    <h1>{$SITE_TITLE}</h1>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 col-md-offset-3">
+        {option:debug}
+        <div class="alert alert-warning">
+          <p>{$msgWarningDebugMode}</p>
+        </div>
+        {/option:debug}
+        {form:authenticationResetPassword}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <p class="text-info">{$msgHelpResetPassword}</p>
+              <div class="form-group">
+                <label for="backendNewPassword">{$lblNewPassword|ucfirst}</label>
+                {$txtBackendNewPassword} {$txtBackendNewPasswordError}
+              </div>
+              <div class="form-group">
+                <label for="backendNewPasswordRepeated">{$lblRepeatPassword|ucfirst}</label>
+                {$txtBackendNewPasswordRepeated} {$txtBackendNewPasswordRepeatedError}
+              </div>
+              <div class="form-group">
+                <div class="btn-toolbar pull-right">
+                  <div class="btn-group">
+                    <button id="resetPassword" name="reset" type="submit" class="btn btn-primary">
+                      {$lblResetAndSignIn|ucfirst}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        {/form:authenticationResetPassword}
+      </div>
+    </div>
+  </div>
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

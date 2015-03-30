@@ -33,7 +33,7 @@ class Statistics extends BackendBaseWidget
      */
     public function execute()
     {
-        $this->header->addCSS('widgets.css', 'Mailmotor');
+        $this->header->addCSS('Widgets.css', 'Mailmotor');
         $this->setColumn('right');
         $this->setPosition(1);
         $this->parse();
