@@ -556,18 +556,18 @@ class Form extends FrontendBaseWidget
                 // Double check for empty subject or content and make sure the e-mail is allowed to be send.
                 // Also, make sure we have a valid reply to e-mail adres (which is checked above)
                 if (
-                    trim($this->item['mail_subject']) != '' &&
-                    strip_tags(trim($this->item['mail_content'])) != '' &&
-                    $this->item['mail_send'] == 'Y' &&
+                    trim($this->item['confirmation_mail_subject']) != '' &&
+                    strip_tags(trim($this->item['confirmation_mail_content'])) != '' &&
+                    $this->item['confirmation_mail_send'] == 'Y' &&
                     $replyToGiven
                 ) {
-                    $message = \Common\Mailer\Message::newInstance($this->item['mail_subject'])
+                    $message = \Common\Mailer\Message::newInstance($this->item['confirmation_mail_subject'])
                     ->parseHtml(
                         FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Confirmation.tpl',
                         array(
                             'sentOn' => time(),
-                            'subject' => $this->item['mail_subject'],
-                            'content'  => $this->item['mail_content'],
+                            'subject' => $this->item['confirmation_mail_subject'],
+                            'content'  => $this->item['confirmation_mail_content'],
                             'fields' => $emailFields
                         ),
                         true

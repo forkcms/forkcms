@@ -74,9 +74,9 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addEditor('success_message', $this->record['success_message']);
 
         // fields for optional confirmation mail
-        $this->frm->addCheckbox('mail_send', $this->record['mail_send'] == 'Y');
-        $this->frm->addText('mail_subject', $this->record['mail_subject']);
-        $this->frm->addEditor('mail_content', $this->record['mail_content']);
+        $this->frm->addCheckbox('send_confirmation_mail', $this->record['send_confirmation_mail'] == 'Y');
+        $this->frm->addText('confirmation_mail_subject', $this->record['confirmation_mail_subject']);
+        $this->frm->addEditor('confirmation_mail_content', $this->record['confirmation_mail_content']);
 
         // textfield dialog
         $this->frm->addText('textbox_label');
@@ -266,9 +266,9 @@ class Edit extends BackendBaseActionEdit
             $ddmMethod = $this->frm->getField('method');
             $txtSuccessMessage = $this->frm->getField('success_message');
             $txtIdentifier = $this->frm->getField('identifier');
-            $chkMailSend = $this->frm->getField('mail_send');
-            $txtMailSubject = $this->frm->getField('mail_subject');
-            $txtMailContent = $this->frm->getField('mail_content');
+            $chkMailSend = $this->frm->getField('send_confirmation_mail');
+            $txtMailSubject = $this->frm->getField('confirmation_mail_subject');
+            $txtMailContent = $this->frm->getField('confirmation_mail_content');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
@@ -316,9 +316,9 @@ class Edit extends BackendBaseActionEdit
                 $values['method'] = $ddmMethod->getValue();
                 $values['email'] = ($ddmMethod->getValue() == 'database_email') ? serialize($emailAddresses) : null;
                 $values['success_message'] = $txtSuccessMessage->getValue(true);
-                $values['mail_send'] = $chkMailSend->getChecked() ? 'Y' : 'N';
-                $values['mail_subject'] = $txtMailSubject->getValue();
-                $values['mail_content'] = $txtMailContent->getValue();
+                $values['send_confirmation_mail'] = $chkMailSend->getChecked() ? 'Y' : 'N';
+                $values['confirmation_mail_subject'] = $txtMailSubject->getValue();
+                $values['confirmation_mail_content'] = $txtMailContent->getValue();
                 $values['identifier'] = ($txtIdentifier->isFilled() ?
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
