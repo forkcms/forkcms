@@ -1,12 +1,40 @@
-3.8.8 (2015-xx-xx)
+3.9 (2015-03-05)
 --
 Improvements:
 
+* Settings: test email connection with SwiftMailer.
+* Formbuilder: added the possibility to add date & time fields.
 * Settings: test email connection with SwiftMailer
+* Core: refactor out SELF constant
+* Core: removed the Facebook-class-dependency
+* Core: added an option to truncate a string without breaking words
+* Blog: add functional tests for the frontend.
+* Faq: add functional tests for the frontend.
+* Search: add functional tests for the frontend.
+* Authentication: add functional tests for the backend.
+* API: add functional tests.
+* Core: add unit tests for some template modifiers
+* Core: build Fork using continious integration with Travis CI.
+* Core: upgrade jQuery to version 1.11.3
+* Locale: load all cache from json
+* FormBuilder: reply to email can now only be put on an email field
+* Tags: improve the alt text for the "remove tag" button by including the tag name
+* Core: redirect using an exception instead of an exit statement
+* Core: update the included Facebook SDK to v4
+* Core: refactor out BACKEND_MODULE_PATH constant
+* Core: use the swiftmailerbundle instead of our custom implementation
 
 Bugfixes:
 
 * Core: fix not correctly thrown exception
+* Formbuilder: quotes and special chars are now allowed in values for radiobuttons.
+* Core: the hash is now included when it is used in a form, so on submit it
+    should automagically go to the form.
+* Core: make sure mails with encryption can be send trough SMTP
+* Core: add a .htaccess in the app dir to block all access
+* Locale: fix updating locale trough ajax when no application is set
+* Core: make sure bugemails work again
+
 
 3.8.7 (2015-02-13)
 --

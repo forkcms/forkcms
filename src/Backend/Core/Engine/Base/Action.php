@@ -9,7 +9,6 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Header;
@@ -107,6 +106,15 @@ class Action extends Object
         );
     }
 
+    protected function getBackendModulePath()
+    {
+        if ($this->URL->getModule() == 'Core') {
+            return BACKEND_PATH . '/' . $this->URL->getModule();
+        } else {
+            return BACKEND_MODULES_PATH . '/' . $this->URL->getModule();
+        }
+    }
+
     /**
      * Display, this wil output the template to the browser
      * If no template is specified we build the path form the current module and action
@@ -123,7 +131,7 @@ class Action extends Object
          * based on the name of the current action
          */
         if ($template === null) {
-            $template = BACKEND_MODULE_PATH . '/Layout/Templates/' . $this->URL->getAction() . '.tpl';
+            $template = $this->getBackendModulePath() . '/Layout/Templates/' . $this->URL->getAction() . '.tpl';
         }
 
         $this->content = $this->tpl->getContent($template);
@@ -146,12 +154,12 @@ class Action extends Object
         $this->header->addJS('backend.js', 'Core');
 
         // add module js
-        if (is_file(BACKEND_MODULE_PATH . '/Js/' . $this->getModule() . '.js')) {
+        if (is_file($this->getBackendModulePath() . '/Js/' . $this->getModule() . '.js')) {
             $this->header->addJS($this->getModule() . '.js');
         }
 
         // add action js
-        if (is_file(BACKEND_MODULE_PATH . '/Js/' . $this->getAction() . '.js')) {
+        if (is_file($this->getBackendModulePath() . '/Js/' . $this->getAction() . '.js')) {
             $this->header->addJS($this->getAction() . '.js');
         }
 
@@ -162,7 +170,7 @@ class Action extends Object
         $this->header->addCSS('debug.css', 'Core');
 
         // add module specific css
-        if (is_file(BACKEND_MODULE_PATH . '/Layout/Css/' . $this->getModule() . '.css')) {
+        if (is_file($this->getBackendModulePath() . '/Layout/Css/' . $this->getModule() . '.css')) {
             $this->header->addCSS($this->getModule() . '.css');
         }
 
@@ -235,28 +243,5 @@ class Action extends Object
      */
     protected function parse()
     {
-    }
-
-    /**
-     * Redirect to a given URL
-     *
-     * @param string $URL The URL to redirect to.
-     */
-    public function redirect($URL)
-    {
-        $response = new RedirectResponse($URL, 302);
-
-        /*
-         * Since we've got some nested action structure, we'll send this
-         * response directly after creating.
-         */
-        $response->send();
-
-        /*
-         * Stop code executing here
-         * I know this is ugly as hell, but if we don't do this the code after
-         * this call is executed and possibly will trigger errors.
-         */
-        exit;
     }
 }

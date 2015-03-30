@@ -60,7 +60,7 @@ class GoogleAnalytics
 	/**
 	 * Creates an instance of GoogleAnalytics, setting the session token and table id.
 	 *
-	 * @return	void
+	 * @return	string
 	 * @param	string[optional] $sessionToken		The session token to make calls with.
 	 * @param	string[optional] $tableId			The table id to get data from.
 	 */

@@ -68,9 +68,6 @@ class Url extends \KernelLoader
 
         // process URL
         $this->processQueryString();
-
-        // set constant
-        define('SELF', SITE_URL . '/' . $this->getQueryString());
     }
 
     /**
@@ -274,7 +271,7 @@ class Url extends \KernelLoader
         }
 
         // define the language
-        define('FRONTEND_LANGUAGE', $language);
+        defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);

@@ -215,7 +215,7 @@ class Model
      * Get information about a profile.
      *
      * @param int $id The profile id to get the information for.
-     * @return array
+     * @return integer
      */
     public static function get($id)
     {

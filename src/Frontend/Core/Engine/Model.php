@@ -662,9 +662,9 @@ class Model extends \BaseModel
         }
 
         // get/init tracking identifier
-        self::$visitorId = CommonCookie::exists('track') ? (string) CommonCookie::get('track') : md5(
-            uniqid() . \SpoonSession::getSessionId()
-        );
+        self::$visitorId = CommonCookie::exists('track') && !empty($_COOKIE['track'])
+            ? (string) CommonCookie::get('track')
+            : md5(uniqid() . \SpoonSession::getSessionId());
 
         if (!self::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
