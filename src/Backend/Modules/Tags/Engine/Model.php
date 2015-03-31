@@ -29,6 +29,7 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 class Model
 {
     const ENTITY_CLASS = 'Backend\Modules\Tags\Entity\Tag';
+    const ENTITY_CONNECTION_CLASS = 'Backend\Modules\Tags\Entity\TagConnection';
 
     /**
      * Delete one or more tags.
@@ -266,14 +267,14 @@ class Model
         // get entity manager
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        /** @var Tag[] $oldConnectedTags Retrieve the old connected tags for the item */
-        $oldConnectedTags = $em
-            ->getRepository(self::ENTITY_CLASS)
+        /** @var Tag[] $oldConnections Retrieve the old connections for the item */
+        $oldConnections = $em
+            ->getRepository(self::ENTITY_CONNECTION_CLASS)
             ->createQueryBuilder('i')
-            ->leftJoin('i.connections', 'con')
-            ->where('con.module = :module')
-            ->andWhere('con.other_id = :other_id')
-            ->andWhere('i.language = :language')
+            ->leftJoin('i.tag', 't')
+            ->where('i.module = :module')
+            ->andWhere('i.other_id = :other_id')
+            ->andWhere('t.language = :language')
             ->setParameter('module', $module)
             ->setParameter('other_id', $otherId)
             ->setParameter('language', $language)
@@ -281,17 +282,14 @@ class Model
             ->getResult()
         ;
 
-        // we had connected tags, so we delete all these connections
-        if (!empty($oldConnectedTags)) {
-            foreach ($oldConnectedTags as $tag) {
-                // define tag connections
-                $connections = $tag->getConnections();
+        // we had connections, so we delete all these connections
+        if (!empty($oldConnections)) {
+            foreach ($oldConnections as $connection) {
+                // remove connection
+                $em->remove($connection);
 
-                // loop and remove all old tag connections
-                foreach ($connections as $connection) {
-                    $tag->removeConnection($connection);
-                    $em->remove($connection);
-                }
+                // define the connected tag
+                $tag = $connection->getTag();
 
                 // decrease number
                 $number = $tag->getNumber() - 1;
@@ -299,8 +297,9 @@ class Model
 
                 // update tag
                 $em->persist($tag);
-                $em->flush();
             }
+
+            $em->flush();
         }
 
         // redefine the tags as an array

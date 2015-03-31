@@ -22,17 +22,9 @@ use Doctrine\ORM\Mapping as ORM;
 class TagConnection
 {
     /**
-     * @var int
-     *
-     * @ORM\Id
-     * @ORM\Column(type="integer", length=11)
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var string
      *
+     * @ORM\Id
      * @ORM\Column(type="string", length=255)
      */
     private $module;
@@ -40,6 +32,7 @@ class TagConnection
     /**
      * @var int
      *
+     * @ORM\Id
      * @ORM\Column(type="integer", length=11)
      */
     private $other_id;
@@ -47,6 +40,7 @@ class TagConnection
     /**
      * @var string
      *
+     * @ORM\Id
      * @ORM\ManyToOne(targetEntity="Backend\Modules\Tags\Entity\Tag", inversedBy="connections")
      * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false)
      */
