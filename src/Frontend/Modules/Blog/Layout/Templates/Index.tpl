@@ -36,7 +36,7 @@
 								{option:items.tags}
 									{$lblWith} {$lblThe} {$lblTags}
 									{iteration:items.tags}
-										<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
+										<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.tag}">{$items.tags.tag}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
 									{/iteration:items.tags}
 								{/option:items.tags}
 							</li>

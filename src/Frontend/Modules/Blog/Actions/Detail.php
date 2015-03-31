@@ -57,6 +57,13 @@ class Detail extends FrontendBaseBlock
     private $settings;
 
     /**
+     * The tags
+     *
+     * @var    Tag[]
+     */
+    private $tags;
+
+    /**
      * Execute the extra
      */
     public function execute()
@@ -104,7 +111,7 @@ class Detail extends FrontendBaseBlock
         $this->comments = FrontendBlogModel::getComments($this->record['id']);
 
         // get tags
-        $this->record['tags'] = FrontendTagsModel::getForItem('Blog', $this->record['id']);
+        $this->tags = FrontendTagsModel::getForItem('Blog', $this->record['id']);
 
         // get settings
         $this->settings = FrontendModel::getModuleSettings('Blog');
@@ -231,6 +238,7 @@ class Detail extends FrontendBaseBlock
 
         // assign article
         $this->tpl->assign('item', $this->record);
+        $this->tpl->assign('tags', $this->tags);
 
         // count comments
         $commentCount = count($this->comments);
