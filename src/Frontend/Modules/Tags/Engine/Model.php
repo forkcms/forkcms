@@ -58,7 +58,8 @@ class Model
      */
     public static function get($URL, $language = null)
     {
-        // redefine language
+        // redefine variables
+        $URL = (string) $URL;
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         /** @var Tag[] Retrieve all tags */
@@ -66,7 +67,7 @@ class Model
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
                 array(
-                    'url'      => (string) $URL,
+                    'url'      => $URL,
                     'language' => $language,
                 )
             )
