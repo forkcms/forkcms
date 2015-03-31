@@ -69,7 +69,7 @@ class Detail extends FrontendBaseBlock
         }
 
         // fetch modules
-        $this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);
+        $this->modules = FrontendTagsModel::getModulesForTag($this->record->getId());
 
         // loop modules
         foreach ($this->modules as $module) {
@@ -78,7 +78,7 @@ class Detail extends FrontendBaseBlock
                 'SELECT other_id
                  FROM modules_tags
                  WHERE module = ? AND tag_id = ?',
-                array($module, $this->record['id'])
+                array($module, $this->record->getId())
             );
 
             // set module class
@@ -110,7 +110,7 @@ class Detail extends FrontendBaseBlock
         $this->tpl->assign('tagsModules', $this->results);
 
         // update breadcrumb
-        $this->breadcrumb->addElement($this->record['name']);
+        $this->breadcrumb->addElement($this->record->getTag());
 
         // tag-pages don't have any SEO-value, so don't index them
         $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
