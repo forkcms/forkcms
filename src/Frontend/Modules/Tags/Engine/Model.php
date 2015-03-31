@@ -58,8 +58,6 @@ class Model
      */
     public static function get($URL, $language = null)
     {
-        // redefine variables
-        $URL = (string) $URL;
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         /** @var Tag[] Retrieve all tags */
@@ -67,7 +65,7 @@ class Model
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
                 array(
-                    'url'      => $URL,
+                    'url'      => (string) $URL,
                     'language' => $language,
                 )
             )
@@ -82,7 +80,6 @@ class Model
      */
     public static function getAll($language = null)
     {
-        // redefine language
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         /** @var Tag[] Retrieve all tags */
@@ -105,9 +102,6 @@ class Model
      */
     public static function getForItem($module, $otherId, $language = null)
     {
-        // redefine variables
-        $module = (string) $module;
-        $otherId = (int) $otherId;
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
         /** $var Tag[] Retrieve all tags */
@@ -118,8 +112,8 @@ class Model
             ->where('con.module = :module')
             ->andWhere('con.other_id = :other_id')
             ->andWhere('i.language = :language')
-            ->setParameter('module', $module)
-            ->setParameter('other_id', $otherId)
+            ->setParameter('module', (string) $module)
+            ->setParameter('other_id', (int) $otherId)
             ->setParameter('language', $language)
             ->getQuery()
             ->getResult()
@@ -137,9 +131,7 @@ class Model
     public static function getForMultipleItems($module, array $otherIds, $language = null)
     {
         // redefine variables
-        $module = (string) $module;
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
         foreach ($otherIds as &$otherId) {
             $otherId = (int) $otherId;
         }
@@ -152,7 +144,7 @@ class Model
             ->where('con.module = :module')
             ->andWhere('con.other_id LIKE :other_id')
             ->andWhere('i.language = :language')
-            ->setParameter('module', $module)
+            ->setParameter('module', (string) $module)
             ->setParameter('other_id', $otherIds)
             ->setParameter('language', $language)
             ->getQuery()
@@ -168,12 +160,10 @@ class Model
      */
     public static function getIdByURL($URL)
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT id
-             FROM tags
-             WHERE url = ?',
-            array((string) $URL)
-        );
+        /** @var Tag $tag Retrieve the tag */
+        $tag = self::get($URL);
+
+        return $tag->getId();
     }
 
     /**
