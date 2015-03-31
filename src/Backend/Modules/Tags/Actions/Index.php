@@ -12,6 +12,7 @@ namespace Backend\Modules\Tags\Actions;
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\DataGridDB as BackendDataGridDB;
+use Backend\Core\Engine\DataGridDoctrine;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
@@ -22,6 +23,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Index extends BackendBaseActionIndex
 {
@@ -42,19 +44,22 @@ class Index extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridDB(
-            BackendTagsModel::QRY_DATAGRID_BROWSE,
-            BL::getWorkingLanguage()
+        $this->dataGrid = new DataGridDoctrine(
+            BackendTagsModel::ENTITY_CLASS,
+            array(
+                'language' => BL::getWorkingLanguage(),
+            ),
+            array('id', 'tag', 'number')
         );
 
         // header labels
         $this->dataGrid->setHeaderLabels(array(
             'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
-            'num_tags' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+            'number' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
         ));
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
+        $this->dataGrid->setSortingColumns(array('tag', 'number'), 'number');
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column

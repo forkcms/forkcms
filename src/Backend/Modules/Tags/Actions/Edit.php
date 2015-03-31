@@ -115,7 +115,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record['name']);
+        $this->frm->addText('name', $this->record->getTag());
     }
 
     /**
@@ -127,7 +127,7 @@ class Edit extends BackendBaseActionEdit
 
         // assign id, name
         $this->tpl->assign('id', $this->id);
-        $this->tpl->assign('name', $this->record['name']);
+        $this->tpl->assign('name', $this->record->getTag());
 
         // assign usage-datagrid
         $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
@@ -148,13 +148,13 @@ class Edit extends BackendBaseActionEdit
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                // build tag
-                $item['id'] = $this->id;
-                $item['tag'] = $this->frm->getField('name')->getValue();
-                $item['url'] = BackendTagsModel::getURL(
-                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                $item = $this->record;
+
+                $item->setTag($this->frm->getField('name')->getValue());
+                $item->setUrl(BackendTagsModel::getURL(
+                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item->getTag())),
                     $this->id
-                );
+                ));
 
                 // update the item
                 BackendTagsModel::update($item);
@@ -165,8 +165,8 @@ class Edit extends BackendBaseActionEdit
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
-                        $item['tag']
-                    ) . '&highlight=row-' . $item['id']
+                        $item->getTag()
+                    ) . '&highlight=row-' . $item->getId()
                 );
             }
         }

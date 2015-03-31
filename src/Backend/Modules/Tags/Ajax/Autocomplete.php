@@ -38,8 +38,17 @@ class Autocomplete extends BackendBaseAJAXAction
             // get tags
             $tags = BackendTagsModel::getStartsWith($term);
 
+            // @todo: let $this->output() convert doctrine objects to arrays
+            $results = array();
+            foreach ($tags as $tag) {
+                $results[] = array(
+                    'name' => $tag->getTag(),
+                    'value' => $tag->getTag()
+                );
+            }
+
             // output
-            $this->output(self::OK, $tags);
+            $this->output(self::OK, $results);
         }
     }
 }

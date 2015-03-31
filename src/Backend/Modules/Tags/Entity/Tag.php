@@ -59,7 +59,7 @@ class Tag
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="Backend\Modules\Tags\Entity\TagConnection", mappedBy="tag")
+     * @ORM\OneToMany(targetEntity="Backend\Modules\Tags\Entity\TagConnection", mappedBy="tag", cascade={"persist", "remove"})
      */
     private $connections;
 

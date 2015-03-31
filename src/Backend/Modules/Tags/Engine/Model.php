@@ -11,6 +11,8 @@ namespace Backend\Modules\Tags\Engine;
 
 use Common\Uri as CommonUri;
 
+use Backend\Modules\Tags\Entity\Tag;
+use Backend\Modules\Tags\Entity\TagConnection;
 use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
@@ -22,31 +24,24 @@ use Backend\Modules\Search\Engine\Model as BackendSearchModel;
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
-    const QRY_DATAGRID_BROWSE =
-        'SELECT i.id, i.tag, i.number AS num_tags
-         FROM tags AS i
-         WHERE i.language = ?
-         GROUP BY i.id';
+    const ENTITY_CLASS = 'Backend\Modules\Tags\Entity\Tag';
 
     /**
      * Delete one or more tags.
      *
      * @param mixed $ids The ids to delete.
      */
-    public static function delete($ids)
+    public static function delete(Tag $tag)
     {
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        // delete the content_block
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        // make sure $ids is an array
-        $ids = (array) $ids;
-
-        // delete tags
-        $db->delete('tags', 'id IN (' . implode(',', $ids) . ')');
-        $db->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
+        $em->remove($tag);
+        $em->flush();
     }
 
     /**
@@ -57,12 +52,7 @@ class Model
      */
     public static function exists($id)
     {
-        return (bool) BackendModel::getContainer()->get('database')->getVar(
-            'SELECT i.id
-             FROM tags AS i
-             WHERE i.id = ?',
-            array((int) $id)
-        );
+        return (bool) self::get($id);
     }
 
     /**
@@ -73,10 +63,16 @@ class Model
      */
     public static function existsTag($tag)
     {
-        return (BackendModel::getContainer()->get('database')->getVar(
-                    'SELECT i.tag FROM tags AS i  WHERE i.tag = ?',
-                    array((string) $tag)
-                ) != '');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'tag'       => (string) $tag,
+                    'language' => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -87,12 +83,16 @@ class Model
      */
     public static function get($id)
     {
-        return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.tag AS name
-             FROM tags AS i
-             WHERE i.id = ?',
-            array((int) $id)
-        );
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => $id,
+                    'language' => BL::getWorkingLanguage(),
+                )
+            )
+        ;
     }
 
     /**
@@ -109,13 +109,19 @@ class Model
             ? (string) $language
             : BL::getWorkingLanguage();
 
-        return (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT i.tag AS name, i.tag AS value
-             FROM tags AS i
-             WHERE i.language = ? AND i.tag LIKE ?
-             ORDER BY i.tag ASC',
-            array($language, (string) $term . '%')
-        );
+        /** $var Tag[] Retrieve one tag */
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        return $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->where('i.language = :language')
+            ->andWhere('i.tag LIKE :term')
+            ->setParameter('language', $language)
+            ->setParameter('term', (string) $term . '%')
+            ->orderBy('i.tag', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -134,23 +140,33 @@ class Model
         $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
-        // fetch tags
-        $tags = (array) BackendModel::getContainer()->get('database')->getColumn(
-            'SELECT i.tag
-             FROM tags AS i
-             INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-             WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
-             ORDER BY i.tag ASC',
-            array($module, $otherId, $language)
-        );
+        /** @var Array $items Retrieve the list of only the 'tag' field */
+        $items = BackendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(self::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.connections', 'con')
+            ->where('con.module = :module')
+            ->andWhere('con.other_id = :other_id')
+            ->andWhere('i.language = :language')
+            ->setParameter('module', $module)
+            ->setParameter('other_id', $otherId)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        $results = array();
+        foreach ($items as $item) {
+            $results[] = $item->getTag();
+        }
 
         // return as an imploded string
         if ($type == 'string') {
-            return implode(',', $tags);
+            return implode(',', $results);
         }
 
         // return as array
-        return $tags;
+        return $results;
     }
 
     /**
@@ -165,22 +181,20 @@ class Model
         $URL = CommonUri::getUrl((string) $URL);
         $language = BL::getWorkingLanguage();
 
-        // get db
-        $db = BackendModel::getContainer()->get('database');
+        $em = BackendModel::get('doctrine.orm.entity_manager');
 
         // no specific id
         if ($id === null) {
-            // get number of tags with the specified url
-            $number = (int) $db->getVar(
-                'SELECT 1
-                 FROM tags AS i
-                 WHERE i.url = ? AND i.language = ?
-                 LIMIT 1',
-                array($URL, $language)
-            );
+            $items = $em
+                ->getRepository(self::ENTITY_CLASS)
+                ->findBy(array(
+                     'url' => $URL,
+                     'language' => $language
+                ))
+            ;
 
             // there are items so, call this method again.
-            if ($number != 0) {
+            if (!empty($items)) {
                 // add a number
                 $URL = BackendModel::addNumber($URL);
 
@@ -188,18 +202,21 @@ class Model
                 $URL = self::getURL($URL, $id);
             }
         } else {
-            // specific id given
-            // get number of tags with the specified url
-            $number = (int) $db->getVar(
-                'SELECT 1
-                 FROM tags AS i
-                 WHERE i.url = ? AND i.language = ? AND i.id != ?
-                 LIMIT 1',
-                array($URL, $language, $id)
-            );
+            $items = $em
+                ->getRepository(self::ENTITY_CLASS)
+                ->createQueryBuilder('i')
+                ->where('i.url = :url')
+                ->andWhere('i.language = :language')
+                ->andWhere('i.id != :id')
+                ->setParameter('url', $URL)
+                ->setParameter('language', $language)
+                ->setParameter('id', $id)
+                ->getQuery()
+                ->getResult()
+            ;
 
             // there are items so, call this method again.
-            if ($number != 0) {
+            if (!empty($items)) {
                 // add a number
                 $URL = BackendModel::addNumber($URL);
 
@@ -219,19 +236,14 @@ class Model
      *                         if not provided the workinglanguage will be used.
      * @return int
      */
-    public static function insert($tag, $language = null)
+    public static function insert(Tag $item)
     {
-        $tag = (string) $tag;
-        $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
+        // insert tag
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+        $em->persist($item);
+        $em->flush();
 
-        // build record
-        $item['language'] = $language;
-        $item['tag'] = $tag;
-        $item['number'] = 0;
-        $item['url'] = self::getURL($tag);
-
-        // insert and return id
-        return (int) BackendModel::getContainer()->get('database')->insert('tags', $item);
+        return $item->getId();
     }
 
     /**
@@ -245,10 +257,51 @@ class Model
      */
     public static function saveTags($otherId, $tags, $module, $language = null)
     {
+        // redefine variables
         $otherId = (int) $otherId;
         $tags = (is_array($tags)) ? (array) $tags : (string) $tags;
         $module = (string) $module;
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
+
+        // get entity manager
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        /** @var Tag[] $oldConnectedTags Retrieve the old connected tags for the item */
+        $oldConnectedTags = $em
+            ->getRepository(self::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.connections', 'con')
+            ->where('con.module = :module')
+            ->andWhere('con.other_id = :other_id')
+            ->andWhere('i.language = :language')
+            ->setParameter('module', $module)
+            ->setParameter('other_id', $otherId)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        // we had connected tags, so we delete all these connections
+        if (!empty($oldConnectedTags)) {
+            foreach ($oldConnectedTags as $tag) {
+                // define tag connections
+                $connections = $tag->getConnections();
+
+                // loop and remove all old tag connections
+                foreach ($connections as $connection) {
+                    $tag->removeConnection($connection);
+                    $em->remove($connection);
+                }
+
+                // decrease number
+                $number = $tag->getNumber() - 1;
+                $tag->setNumber(($number > 0) ? $number : 0);
+
+                // update tag
+                $em->persist($tag);
+                $em->flush();
+            }
+        }
 
         // redefine the tags as an array
         if (!is_array($tags)) {
@@ -256,31 +309,10 @@ class Model
         }
 
         // make sure the list of tags is unique
-        $tags = array_unique($tags);
-
-        // get db
-        $db = BackendModel::getContainer()->get('database');
-
-        // get current tags for item
-        $currentTags = (array) $db->getPairs(
-            'SELECT i.tag, i.id
-             FROM tags AS i
-             INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-             WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
-            array($module, $otherId, $language)
-        );
-
-        // remove old links
-        if (!empty($currentTags)) {
-            $db->delete(
-                'modules_tags',
-                'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ? AND module = ?',
-                array($otherId, $module)
-            );
-        }
-
+        $tags = array_unique($tags); 
+        
+        // we have tags to save
         if (!empty($tags)) {
-            // loop tags
             foreach ($tags as $key => $tag) {
                 // cleanup
                 $tag = strtolower(trim($tag));
@@ -289,79 +321,100 @@ class Model
                 if ($tag == '') {
                     unset($tags[$key]);
                 } else {
-                    $tags[$key] = $tag;
+                    $tags[$key] = (string) $tag;
                 }
             }
 
-            // get tag ids
-            $tagsAndIds = (array) $db->getPairs(
-                'SELECT i.tag, i.id
-                 FROM tags AS i
-                 WHERE i.tag IN ("' . implode('", "', $tags) . '") AND i.language = ?',
-                array($language)
-            );
+            /** @var Tag[] $tagsToConnect Retrieve all tags which this item will connect to */
+            $tagsToConnect = $em
+                ->getRepository(self::ENTITY_CLASS)
+                ->findBy(array(
+                    'tag' => $tags,
+                    'language' => $language
+                ))
+            ;
 
-            // loop again and create tags that don't already exist
+            $existingTagIds = array();
+
+            // loop all tags to connect
+            foreach ($tagsToConnect as $tag) {
+                $existingTagIds[$tag->getTag()] = $tag->getId();
+            }
+
+            // loop again and insert tags that don't already exist
             foreach ($tags as $tag) {
-                // doesn' exist yet
-                if (!isset($tagsAndIds[$tag])) {
+                // tag doesn't exist yet
+                if (!isset($existingTagIds[$tag])) {            
+                    // build new tag
+                    $item = new Tag();
+                    $item
+                        ->setTag($tag)
+                        ->setNumber(0)
+                        ->setUrl(self::getURL($tag))
+                        ->setLanguage($language)
+                    ;
+
                     // insert tag
-                    $tagsAndIds[$tag] = self::insert($tag, $language);
+                    self::insert($item);
+
+                    // add to tags to connect
+                    $tagsToConnect[] = $item;
                 }
             }
 
-            // init items to insert
-            $rowsToInsert = array();
+            // loop all tags to connect
+            foreach ($tagsToConnect as $tag) {
+                // build new tag connection
+                $item = new TagConnection();
+                $item
+                    ->setTag($tag)
+                    ->setModule($module)
+                    ->setOtherId($otherId)
+                ;
 
-            // loop again
-            foreach ($tags as $tag) {
-                // get tagId
-                $tagId = (int) $tagsAndIds[$tag];
+                // add connection
+                $tag->addConnection($item);
 
-                // not linked before so increment the counter
-                if (!isset($currentTags[$tag])) {
-                    $db->execute(
-                        'UPDATE tags SET number = number + 1 WHERE id = ?',
-                        $tagId
-                    );
-                }
+                // bump number
+                $tag->setNumber($tag->getNumber() + 1);
 
-                // add to insert array
-                $rowsToInsert[] = array('module' => $module, 'tag_id' => $tagId, 'other_id' => $otherId);
+                // update
+                $em->persist($item);
+                $em->persist($tag);
             }
-
-            // insert the rows at once if there are items to insert
-            if (!empty($rowsToInsert)) {
-                $db->insert('modules_tags', $rowsToInsert);
-            }
+            $em->flush();
         }
 
         // add to search index
-        BackendSearchModel::saveIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
-
-        // decrement number
-        foreach ($currentTags as $tag => $tagId) {
-            // if the tag can't be found in the new tags we lower the number of tags by one
-            if (array_search($tag, $tags) === false) {
-                $db->execute(
-                    'UPDATE tags SET number = number - 1 WHERE id = ?',
-                    $tagId
-                );
-            }
-        }
+        BackendSearchModel::saveIndex(
+            $module,
+            $otherId,
+            array(
+                'tags' => implode(' ', (array) $tags)
+            ),
+            $language
+        );
 
         // remove all tags that don't have anything linked
-        $db->delete('tags', 'number = ?', 0);
+        $em
+            ->createQuery('delete from ' . self::ENTITY_CLASS . ' i where i.number = 0')
+            ->execute()
+        ;
     }
 
     /**
      * Update a tag
-     * Remark: $tag['id'] should be available.
      *
-     * @param array $item The new data for the tag.
+     * @param Tag $item The new data.
      */
-    public static function update($item)
+    public static function update(Tag $tag)
     {
-        return BackendModel::getContainer()->get('database')->update('tags', $item, 'id = ?', $item['id']);
+        $em = BackendModel::get('doctrine.orm.entity_manager');
+
+        // update tag
+        $em->persist($tag);
+        $em->flush();
+
+        return $tag->getId();
     }
 }

@@ -11,12 +11,14 @@ namespace Backend\Modules\Tags\Actions;
 
 use Backend\Core\Engine\Base\Action as BackendBaseAction;
 use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Language as BL;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * This action is used to perform mass actions on tags (delete, ...)
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class MassAction extends BackendBaseAction
 {
@@ -38,11 +40,32 @@ class MassAction extends BackendBaseAction
         } else {
             // at least one id
             // redefine id's
-            $aIds = (array) $_GET['id'];
+            $ids = (array) $_GET['id'];
 
-            // delete comment(s)
-            if ($action == 'delete') {
-                BackendTagsModel::delete($aIds);
+            // get all tags for id
+            $em = BackendModel::get('doctrine.orm.entity_manager');
+            $tags = $em
+                ->getRepository(BackendTagsModel::ENTITY_CLASS)
+                ->findBy(
+                    array(
+                        'id' => $ids,
+                        'language' => BL::getWorkingLanguage(),
+                    )
+                )
+            ;
+
+            foreach ($tags as $tag) {
+                // delete tag(s)
+                if ($action == 'delete') {
+                    BackendTagsModel::delete($tag);
+                }
+
+                // trigger event
+                BackendModel::triggerEvent(
+                    $this->getModule(),
+                    'after_' . strtolower($action),
+                    array('item' => $tag)
+                );
             }
         }
 
