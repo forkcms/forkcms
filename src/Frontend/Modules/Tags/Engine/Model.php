@@ -61,8 +61,6 @@ class Model
         // redefine language
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        $em = FrontendModel::get('doctrine.orm.entity_manager');
-        
         /** @var Tag[] Retrieve all tags */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
