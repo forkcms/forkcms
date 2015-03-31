@@ -163,7 +163,7 @@ class Model
         /** @var Tag $tag Retrieve the tag */
         $tag = self::get($URL);
 
-        return $tag->getId();
+        return ($tag) ? $tag->getId() : null;
     }
 
     /**
