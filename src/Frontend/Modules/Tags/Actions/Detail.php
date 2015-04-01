@@ -111,7 +111,7 @@ class Detail extends FrontendBaseBlock
         $this->tpl->assign('tagsModules', $this->results);
 
         // update breadcrumb
-        $this->breadcrumb->addElement($this->record->getTag());
+        $this->breadcrumb->addElement($this->record->getName());
 
         // tag-pages don't have any SEO-value, so don't index them
         $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);

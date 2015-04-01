@@ -201,7 +201,7 @@ class Model
             )
         ;
 
-        return ($item) ? $item->getTag() : null;
+        return ($item) ? $item->getName() : null;
     }
 
     /**
