@@ -291,8 +291,8 @@ class Model
                 $tag = $connection->getTag();
 
                 // decrease number
-                $number = $tag->getNumber() - 1;
-                $tag->setNumber(($number > 0) ? $number : 0);
+                $number = $tag->getNumberOfConnections() - 1;
+                $tag->setNumberOfConnections(($number > 0) ? $number : 0);
 
                 // update tag
                 $em->persist($tag);
@@ -347,7 +347,7 @@ class Model
                     $item = new Tag();
                     $item
                         ->setName($tag)
-                        ->setNumber(0)
+                        ->setNumberOfConnections(0)
                         ->setUrl(self::getURL($tag))
                         ->setLanguage($language)
                     ;
@@ -373,7 +373,7 @@ class Model
                 $tag->addConnection($item);
 
                 // bump number
-                $tag->setNumber($tag->getNumber() + 1);
+                $tag->setNumberOfConnections($tag->getNumberOfConnections() + 1);
 
                 // update
                 $em->persist($item);
@@ -394,7 +394,7 @@ class Model
 
         // remove all tags that don't have anything linked
         $em
-            ->createQuery('DELETE FROM ' . self::ENTITY_CLASS . ' i WHERE i.number = 0')
+            ->createQuery('DELETE FROM ' . self::ENTITY_CLASS . ' i WHERE i.number_of_connections = 0')
             ->execute()
         ;
     }

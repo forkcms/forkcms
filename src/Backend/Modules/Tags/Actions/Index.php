@@ -49,17 +49,17 @@ class Index extends BackendBaseActionIndex
             array(
                 'language' => BL::getWorkingLanguage(),
             ),
-            array('id', 'name', 'number')
+            array('id', 'name', 'number_of_connections')
         );
 
         // header labels
         $this->dataGrid->setHeaderLabels(array(
             'name' => \SpoonFilter::ucfirst(BL::lbl('Name')),
-            'number' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
+            'number_of_connections' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
         ));
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('name', 'number'), 'number');
+        $this->dataGrid->setSortingColumns(array('name', 'number_of_connections'), 'number_of_connections');
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column

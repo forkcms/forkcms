@@ -51,7 +51,7 @@ class Tag
      *
      * @ORM\Column(type="integer", length=11)
      */
-    private $number;
+    private $number_of_connections;
 
     /**
      * @var string
@@ -134,24 +134,24 @@ class Tag
     }
 
     /**
-     * Gets the value of number.
+     * Gets the value for number of connections.
      *
      * @return integer
      */
-    public function getNumber()
+    public function getNumberOfConnections()
     {
-        return $this->number;
+        return $this->number_of_connections;
     }
 
     /**
-     * Sets the value of number.
+     * Sets the value of number of connections.
      *
-     * @param string $number the number
+     * @param string $numberOfConnections the number of connections
      * @return Tag
      */
-    public function setNumber($number)
+    public function setNumberOfConnections($numberOfConnections)
     {
-        $this->number = $number;
+        $this->number_of_connections = $numberOfConnections;
 
         return $this;
     }
