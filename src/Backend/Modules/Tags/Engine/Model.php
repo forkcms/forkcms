@@ -155,18 +155,18 @@ class Model
             ->getResult()
         ;
 
-        $results = array();
+        $names = array();
         foreach ($tags as $tag) {
-            $results[] = $tag->getName();
+            $names[] = $tag->getName();
         }
 
         // return as an imploded string
         if ($type == 'string') {
-            return implode(',', $results);
+            return implode(',', $names);
         }
 
         // return as array
-        return $results;
+        return $names;
     }
 
     /**
