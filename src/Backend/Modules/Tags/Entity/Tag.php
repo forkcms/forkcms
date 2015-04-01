@@ -44,7 +44,7 @@ class Tag
      *
      * @ORM\Column(type="string", length=255)
      */
-    private $tag;
+    private $name;
 
     /**
      * @var int
@@ -111,24 +111,24 @@ class Tag
     }
 
     /**
-     * Gets the value of tag.
+     * Gets the value of name.
      *
      * @return string
      */
-    public function getTag()
+    public function getName()
     {
-        return $this->tag;
+        return $this->name;
     }
 
     /**
-     * Sets the value of tag.
+     * Sets the value of name.
      *
-     * @param string $tag the tag
+     * @param string $name the name
      * @return Tag
      */
-    public function setTag($tag)
+    public function setName($name)
     {
-        $this->tag = $tag;
+        $this->name = $name;
 
         return $this;
     }

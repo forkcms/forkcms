@@ -68,7 +68,7 @@ class Model
             ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
-                    'tag'       => (string) $tag,
+                    'name'       => (string) $tag,
                     'language' => BL::getWorkingLanguage(),
                 )
             )
@@ -139,7 +139,7 @@ class Model
         $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
-        /** @var Tag[] $items Retrieve the list of only the 'tag' field */
+        /** @var Tag[] $items Retrieve all tags for an item */
         $items = BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
@@ -156,7 +156,7 @@ class Model
 
         $results = array();
         foreach ($items as $item) {
-            $results[] = $item->getTag();
+            $results[] = $item->getName();
         }
 
         // return as an imploded string
@@ -326,7 +326,7 @@ class Model
             $tagsToConnect = $em
                 ->getRepository(self::ENTITY_CLASS)
                 ->findBy(array(
-                    'tag' => $tags,
+                    'name' => $tags,
                     'language' => $language
                 ))
             ;
@@ -335,7 +335,7 @@ class Model
 
             // loop all tags to connect
             foreach ($tagsToConnect as $tag) {
-                $existingTagIds[$tag->getTag()] = $tag->getId();
+                $existingTagIds[$tag->getName()] = $tag->getId();
             }
 
             // loop again and insert tags that don't already exist
@@ -345,7 +345,7 @@ class Model
                     // build new tag
                     $item = new Tag();
                     $item
-                        ->setTag($tag)
+                        ->setName($tag)
                         ->setNumber(0)
                         ->setUrl(self::getURL($tag))
                         ->setLanguage($language)

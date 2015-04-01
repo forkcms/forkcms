@@ -31,32 +31,32 @@ class Edit extends BackendBaseAJAXAction
 
         // get parameters
         $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
-        $tag = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
+        $name = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate id
         if ($id === 0) {
             $this->output(self::BAD_REQUEST, null, 'no id provided');
         } else {
             // validate tag name
-            if ($tag === '') {
+            if ($name === '') {
                 $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
             } else {
                 // check if tag exists
-                if (BackendTagsModel::existsTag($tag)) {
+                if (BackendTagsModel::existsTag($name)) {
                     $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
                     $item = BackendTagsModel::get($id);
 
                     $url = BackendTagsModel::getURL(
-                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item->getTag())),
+                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item->getName())),
                         $id
                     );
 
-                    $item->setTag(\SpoonFilter::htmlspecialchars($tag));
+                    $item->setName(\SpoonFilter::htmlspecialchars($name));
                     $item->setUrl($url);
 
                     BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item->getTag())));
+                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item->getName())));
                 }
             }
         }

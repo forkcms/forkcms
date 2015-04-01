@@ -42,8 +42,8 @@ class Autocomplete extends BackendBaseAJAXAction
             $results = array();
             foreach ($tags as $tag) {
                 $results[] = array(
-                    'name' => $tag->getTag(),
-                    'value' => $tag->getTag()
+                    'name' => $tag->getName(),
+                    'value' => $tag->getName()
                 );
             }
 

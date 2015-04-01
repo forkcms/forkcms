@@ -49,17 +49,17 @@ class Index extends BackendBaseActionIndex
             array(
                 'language' => BL::getWorkingLanguage(),
             ),
-            array('id', 'tag', 'number')
+            array('id', 'name', 'number')
         );
 
         // header labels
         $this->dataGrid->setHeaderLabels(array(
-            'tag' => \SpoonFilter::ucfirst(BL::lbl('Name')),
+            'name' => \SpoonFilter::ucfirst(BL::lbl('Name')),
             'number' => \SpoonFilter::ucfirst(BL::lbl('Amount'))
         ));
 
         // sorting columns
-        $this->dataGrid->setSortingColumns(array('tag', 'number'), 'number');
+        $this->dataGrid->setSortingColumns(array('name', 'number'), 'number');
         $this->dataGrid->setSortParameter('desc');
 
         // add the multicheckbox column
@@ -71,7 +71,7 @@ class Index extends BackendBaseActionIndex
         $this->dataGrid->setMassAction($ddmMassAction);
 
         // add attributes, so the inline editing has all the needed data
-        $this->dataGrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));
+        $this->dataGrid->setColumnAttributes('name', array('data-id' => '{id:[id]}'));
 
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Edit')) {
