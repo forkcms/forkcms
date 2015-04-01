@@ -50,22 +50,22 @@
 			</div>
 			<div class="horizontal">
 				<p>
-					{$chkMailSend} <label for="mail_send">{$lblMailSend|ucfirst}</label>
+					{$chkSendConfirmationMail} <label for="mail_send">{$lblSendConfirmationMail|ucfirst}</label>
 				</p>
 				<p class="confirmationEmailContainer">
 					<label for="subject">
-						{$lblMailSubject|ucfirst}
+						{$lblConfirmationMailSubject|ucfirst}
 					</label>
-					{$txtMailSubject} {$txtMailSubjectError}
+					{$txtConfirmationMailSubject} {$txtConfirmationMailSubjectError}
 				</p>
 
 				<div class="heading confirmationEmailContainer" >
 					<h3>
-						<label for="mailContent">{$lblMailContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="mailContent">{$lblConfirmationMailContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					</h3>
 				</div>
 				<div class="optionsRTE confirmationEmailContainer">
-					{$txtMailContent} {$txtMailContentError}
+					{$txtConfirmationMailContent} {$txtConfirmationMailContentError}
 				</div>
 			</div>
 		</div>

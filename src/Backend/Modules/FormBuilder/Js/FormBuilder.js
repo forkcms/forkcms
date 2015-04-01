@@ -68,11 +68,11 @@ jsBackend.formBuilder.confirmationEmail = {
 	init: function()
 	{
 		jsBackend.formBuilder.confirmationEmail.disOrEnableFields();
-		$('#mailSend').change(jsBackend.formBuilder.confirmationEmail.disOrEnableFields);
+		$('#sendConfirmationMail').change(jsBackend.formBuilder.confirmationEmail.disOrEnableFields);
 	},
 	disOrEnableFields: function()
 	{
-		if ($('#mailSend').is(':checked')) {
+		if ($('#sendConfirmationMail').is(':checked')) {
 			$('.confirmationEmailContainer').css('opacity', 1);
 		} else {
 			$('.confirmationEmailContainer').css('opacity', 0.6);

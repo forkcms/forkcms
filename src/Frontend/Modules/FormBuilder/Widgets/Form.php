@@ -558,7 +558,7 @@ class Form extends FrontendBaseWidget
                 if (
                     trim($this->item['confirmation_mail_subject']) != '' &&
                     strip_tags(trim($this->item['confirmation_mail_content'])) != '' &&
-                    $this->item['confirmation_mail_send'] == 'Y' &&
+                    $this->item['send_confirmation_mail'] == 'Y' &&
                     $replyToGiven
                 ) {
                     $message = \Common\Mailer\Message::newInstance($this->item['confirmation_mail_subject'])

@@ -1031,19 +1031,18 @@
         <translation language="en"><![CDATA[confirmation e-mail]]></translation>
         <translation language="nl"><![CDATA[bevestigingsmail]]></translation>
       </item>
-      <item type="label" name="MailSend">
+      <item type="label" name="SendConfirmationMail">
         <translation language="en"><![CDATA[send e-mail]]></translation>
         <translation language="nl"><![CDATA[verstuur e-mail]]></translation>
       </item>
-      <item type="label" name="MailSubject">
+      <item type="label" name="ConfirmationMailSubject">
         <translation language="en"><![CDATA[subject]]></translation>
         <translation language="nl"><![CDATA[onderwerp]]></translation>
       </item>
-      <item type="label" name="MailContent">
+      <item type="label" name="ConfirmationMailContent">
         <translation language="en"><![CDATA[content]]></translation>
         <translation language="nl"><![CDATA[inhoud]]></translation>
       </item>
-      
     </FormBuilder>
   </Backend>
   <Frontend>
