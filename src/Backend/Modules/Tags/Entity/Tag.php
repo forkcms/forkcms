@@ -199,7 +199,7 @@ class Tag
     /**
      * Get connections
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getConnections()
     {

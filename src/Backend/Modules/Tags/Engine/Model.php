@@ -267,7 +267,7 @@ class Model
         // get entity manager
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
-        /** @var Tag[] $oldConnections Retrieve the old connections for the item */
+        /** @var TagConnection[] $oldConnections Retrieve the old connections for the item */
         $oldConnections = $em
             ->getRepository(self::ENTITY_CONNECTION_CLASS)
             ->createQueryBuilder('i')
@@ -308,7 +308,7 @@ class Model
         }
 
         // make sure the list of tags is unique
-        $tags = array_unique($tags); 
+        $tags = array_unique($tags);
         
         // we have tags to save
         if (!empty($tags)) {
@@ -343,7 +343,7 @@ class Model
             // loop again and insert tags that don't already exist
             foreach ($tags as $tag) {
                 // tag doesn't exist yet
-                if (!isset($existingTagIds[$tag])) {            
+                if (!isset($existingTagIds[$tag])) {
                     // build new tag
                     $item = new Tag();
                     $item

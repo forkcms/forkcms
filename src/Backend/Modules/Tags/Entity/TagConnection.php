@@ -105,7 +105,7 @@ class TagConnection
     /**
      * Get tag
      *
-     * @return \Backend\Modules\Tags\Entity\Tag 
+     * @return \Backend\Modules\Tags\Entity\Tag
      */
     public function getTag()
     {
