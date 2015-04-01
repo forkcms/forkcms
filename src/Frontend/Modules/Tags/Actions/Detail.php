@@ -68,24 +68,25 @@ class Detail extends FrontendBaseBlock
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
-        // fetch modules
-        $this->modules = FrontendTagsModel::getModulesForTag($this->record->getId());
+        // init variables
+        $modules = $otherIds = array();
+
+        // fetch connections
+        $this->connections = FrontendTagsModel::getModulesForTag($this->record->getId());
+
+        // loop all connections and get the item for this tag
+        foreach ($this->connections as $connection) {
+            $modules[] = $connection->getModule();
+            $otherIds[$connection->getModule()][] = $connection->getOtherId();
+        }
 
         // loop modules
-        foreach ($this->modules as $module) {
-            // get the ids of the items linked to the tag
-            $otherIds = (array) $this->get('database')->getColumn(
-                'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
-                array($module, $this->record->getId())
-            );
-
+        foreach ($modules as $module) {
             // set module class
             $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
             // get the items that are linked to the tags
-            $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
+            $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds[$module]);
 
             // add into results array
             if (!empty($items)) {

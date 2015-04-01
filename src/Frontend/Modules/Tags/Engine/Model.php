@@ -142,7 +142,7 @@ class Model
             ->createQueryBuilder('i')
             ->leftJoin('i.connections', 'con')
             ->where('con.module = :module')
-            ->andWhere('con.other_id LIKE :other_id')
+            ->andWhere('con.other_id IN (:other_id)')
             ->andWhere('i.language = :language')
             ->setParameter('module', (string) $module)
             ->setParameter('other_id', $otherIds)
@@ -174,14 +174,17 @@ class Model
      */
     public static function getModulesForTag($id)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT module
-             FROM modules_tags
-             WHERE tag_id = ?
-             GROUP BY module
-             ORDER BY module ASC',
-            array((int) $id)
-        );
+        /** $var Tag[] Retrieve all tags for multiple items */
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.tag', 't')
+            ->andWhere('t.id = :tag_id')
+            ->setParameter('tag_id', (int) $id)
+            ->orderBy('i.module', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
