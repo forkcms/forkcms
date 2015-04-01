@@ -32,9 +32,9 @@ class Model
     const ENTITY_CONNECTION_CLASS = 'Backend\Modules\Tags\Entity\TagConnection';
 
     /**
-     * Delete one or more tags.
+     * Delete a tag.
      *
-     * @param mixed $ids The ids to delete.
+     * @param Tag $tag
      */
     public static function delete(Tag $tag)
     {
@@ -81,11 +81,10 @@ class Model
      * Get tag record.
      *
      * @param int $id The id of the record to get.
-     * @return array
+     * @return Tag
      */
     public static function get($id)
     {
-        /** @var Tag Retrieve the tag */
         return BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
@@ -103,7 +102,7 @@ class Model
      * @param string $term            The searchstring.
      * @param string $language        The language to use, if not provided
      *                                use the working language.
-     * @return array
+     * @return Tag
      */
     public static function getStartsWith($term, $language = null)
     {
@@ -111,7 +110,6 @@ class Model
             ? (string) $language
             : BL::getWorkingLanguage();
 
-        /** $var Tag[] Retrieve one tag */
         return BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
@@ -404,6 +402,7 @@ class Model
      * Update a tag
      *
      * @param Tag $item The new data.
+     * @return int $id
      */
     public static function update(Tag $tag)
     {

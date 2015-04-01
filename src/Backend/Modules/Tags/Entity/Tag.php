@@ -11,6 +11,7 @@ namespace Backend\Modules\Tags\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * This is the Tag Entity
@@ -207,7 +208,7 @@ class Tag
     /**
      * Get connections
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Collection
      */
     public function getConnections()
     {

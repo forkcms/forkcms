@@ -54,13 +54,12 @@ class Model
      *
      * @param string        $URL The URL to get the tag for.
      * @param string $language The language for the item.
-     * @return Tag
+     * @return Tag          A tag
      */
     public static function get($URL, $language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        /** @var Tag[] Retrieve a tag */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
@@ -76,13 +75,12 @@ class Model
      * Fetch the list of all tags, ordered by their occurrence
      *
      * @param string $language The language for the items.
-     * @return Tag[]
+     * @return Tag[] All tags
      */
     public static function getAll($language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        /** @var Tag[] Retrieve all tags */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->createQueryBuilder('i')
@@ -98,13 +96,12 @@ class Model
      * @param string $module  The module wherein the otherId occurs.
      * @param int    $otherId The id of the item.
      * @param string $language The language for the items.
-     * @return Tag[]
+     * @return Tag[] All tags for item
      */
     public static function getForItem($module, $otherId, $language = null)
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        /** $var Tag[] Retrieve all tags for item */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->createQueryBuilder('i')
@@ -126,7 +123,7 @@ class Model
      * @param string $module   The module wherefore you want to retrieve the tags.
      * @param array  $otherIds The ids for the items.
      * @param string $language The language for the items.
-     * @return Tag[]
+     * @return Tag[] All tags for multiple items
      */
     public static function getForMultipleItems($module, array $otherIds, $language = null)
     {
@@ -136,7 +133,6 @@ class Model
             $otherId = (int) $otherId;
         }
 
-        /** $var Tag[] Retrieve all tags for multiple items */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->createQueryBuilder('i')
@@ -170,11 +166,10 @@ class Model
      * Get the modules that used a tag.
      *
      * @param int $id The id of the tag.
-     * @return TagConnection[]
+     * @return TagConnection[] All connections for a tag
      */
     public static function getModulesForTag($id)
     {
-        /** $var TagConnection[] Retrieve all connections for a tag */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
             ->createQueryBuilder('i')
@@ -216,11 +211,10 @@ class Model
      * @param int     $module      The source module.
      * @param int     $otherModule The module wherein the related items should appear.
      * @param int $limit       The maximum of related items to grab.
-     * @return TagConnection[]
+     * @return TagConnection[] All connections for an item
      */
     public static function getRelatedItemsByTags($otherId, $module, $otherModule, $limit = 5)
     {
-        /** $var TagConnection[] Retrieve all connections for an item */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
             ->createQueryBuilder('i')
@@ -232,7 +226,7 @@ class Model
             ->setParameter('other_id', (int) $otherId)
             ->setParameter('module', (string) $module)
             ->setParameter('other_module', (string) $otherModule)
-            //->orderBy('COUNT(i2.tag_id)', 'DESC')
+            ->orderBy('COUNT(i.tag_id)', 'DESC')
             ->setMaxResults((int) $limit)
             ->getQuery()
             ->getResult()
