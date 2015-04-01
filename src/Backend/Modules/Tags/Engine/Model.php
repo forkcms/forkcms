@@ -115,10 +115,10 @@ class Model
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
             ->where('i.language = :language')
-            ->andWhere('i.tag LIKE :term')
+            ->andWhere('i.name LIKE :term')
             ->setParameter('language', $language)
             ->setParameter('term', (string) $term . '%')
-            ->orderBy('i.tag', 'ASC')
+            ->orderBy('i.name', 'ASC')
             ->getQuery()
             ->getResult()
         ;
