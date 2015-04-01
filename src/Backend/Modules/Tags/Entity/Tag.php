@@ -10,6 +10,7 @@ namespace Backend\Modules\Tags\Entity;
  */
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * This is the Tag Entity
@@ -33,7 +34,7 @@ class Tag
     /**
      * @var string
      *
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=5)
      */
     private $language;
 
@@ -59,7 +60,11 @@ class Tag
     private $url;
 
     /**
-     * @ORM\OneToMany(targetEntity="Backend\Modules\Tags\Entity\TagConnection", mappedBy="tag", cascade={"persist", "remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="Backend\Modules\Tags\Entity\TagConnection",
+     *     mappedBy="tag",
+     *     cascade={"persist", "remove"}
+     * )
      */
     private $connections;
 
@@ -68,7 +73,7 @@ class Tag
      */
     public function __construct()
     {
-        $this->connections = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->connections = new ArrayCollection();
     }
 
     /**
@@ -95,7 +100,7 @@ class Tag
      * Sets the value of language.
      *
      * @param string $language the language
-     * @return self
+     * @return string
      */
     public function setLanguage($language)
     {
@@ -118,7 +123,7 @@ class Tag
      * Sets the value of tag.
      *
      * @param string $tag the tag
-     * @return self
+     * @return Tag
      */
     public function setTag($tag)
     {
@@ -141,7 +146,7 @@ class Tag
      * Sets the value of number.
      *
      * @param string $number the number
-     * @return self
+     * @return Tag
      */
     public function setNumber($number)
     {
@@ -164,7 +169,7 @@ class Tag
      * Sets the value of url.
      *
      * @param string $number the url
-     * @return self
+     * @return Tag
      */
     public function setUrl($url)
     {
@@ -174,26 +179,27 @@ class Tag
     }
 
     /**
-     * Add connections
+     * Add a connection
      *
-     * @param \Backend\Modules\Tags\Entity\TagConnection $connections
-     * @return Category
+     * @param \Backend\Modules\Tags\Entity\TagConnection $connection
+     * @return Tag
      */
-    public function addConnection(\Backend\Modules\Tags\Entity\TagConnection $connections)
+    public function addConnection(TagConnection $connection)
     {
-        $this->connections[] = $connections;
+        $this->connections[] = $connection;
+        $connection->setTag($this);
 
         return $this;
     }
 
     /**
-     * Remove connections
+     * Remove connection
      *
-     * @param \Backend\Modules\Tags\Entity\TagConnection $connections
+     * @param \Backend\Modules\Tags\Entity\TagConnection $connection
      */
-    public function removeConnection(\Backend\Modules\Tags\Entity\TagConnection $connections)
+    public function removeConnection(TagConnection $connection)
     {
-        $this->connections->removeElement($connections);
+        $this->connections->removeElement($connection);
     }
 
     /**

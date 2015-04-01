@@ -70,7 +70,7 @@ class TagConnection
      * Sets the value of module.
      *
      * @param string $module the module
-     * @return self
+     * @return TagConnection
      */
     public function setModule($module)
     {
@@ -93,7 +93,7 @@ class TagConnection
      * Sets the value of otherId.
      *
      * @param string $otherId the otherId
-     * @return self
+     * @return TagConnection
      */
     public function setOtherId($otherId)
     {
