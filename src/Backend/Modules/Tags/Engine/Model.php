@@ -47,6 +47,7 @@ class Model
     /**
      * Check if a tag exists.
      *
+     * @deprecated
      * @param int $id The id to check for existence.
      * @return bool
      */
