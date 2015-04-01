@@ -60,7 +60,7 @@ class Model
     {
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        /** @var Tag[] Retrieve all tags */
+        /** @var Tag[] Retrieve a tag */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
