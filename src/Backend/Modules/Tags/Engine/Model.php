@@ -73,6 +73,8 @@ class Model
                 )
             )
         ;
+
+        return ($item);
     }
 
     /**
