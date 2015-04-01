@@ -195,7 +195,7 @@ class Model
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
                 array(
-                    'id'       => (string) $id,
+                    'id'       => (int) $id,
                     'language' => $language,
                 )
             )

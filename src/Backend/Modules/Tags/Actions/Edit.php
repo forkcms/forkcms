@@ -149,25 +149,23 @@ class Edit extends BackendBaseActionEdit
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                $item = $this->record;
-
-                $item->setName($this->frm->getField('name')->getValue());
-                $item->setUrl(BackendTagsModel::getURL(
-                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item->getName())),
+                $this->record->setName($this->frm->getField('name')->getValue());
+                $this->record->setUrl(BackendTagsModel::getURL(
+                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($this->record->getName())),
                     $this->id
                 ));
 
                 // update the item
-                BackendTagsModel::update($item);
+                BackendTagsModel::update($this->record);
 
                 // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $item));
+                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $this->record));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
-                        $item->getName()
-                    ) . '&highlight=row-' . $item->getId()
+                        $this->record->getName()
+                    ) . '&highlight=row-' . $this->record->getId()
                 );
             }
         }

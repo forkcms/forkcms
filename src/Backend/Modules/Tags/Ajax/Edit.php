@@ -45,18 +45,18 @@ class Edit extends BackendBaseAJAXAction
                 if (BackendTagsModel::existsTag($name)) {
                     $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
-                    $item = BackendTagsModel::get($id);
+                    $tag = BackendTagsModel::get($id);
 
                     $url = BackendTagsModel::getURL(
-                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item->getName())),
+                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($tag->getName())),
                         $id
                     );
 
-                    $item->setName(\SpoonFilter::htmlspecialchars($name));
-                    $item->setUrl($url);
+                    $tag->setName(\SpoonFilter::htmlspecialchars($name));
+                    $tag->setUrl($url);
 
-                    BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item->getName())));
+                    BackendTagsModel::update($tag);
+                    $this->output(self::OK, $tag, vsprintf(BL::msg('Edited'), array($tag->getName())));
                 }
             }
         }

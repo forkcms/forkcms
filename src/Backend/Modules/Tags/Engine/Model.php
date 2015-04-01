@@ -139,8 +139,8 @@ class Model
         $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
-        /** @var Tag[] $items Retrieve all tags for an item */
-        $items = BackendModel::get('doctrine.orm.entity_manager')
+        /** @var Tag[] $tags Retrieve all tags for an item */
+        $tags = BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
             ->leftJoin('i.connections', 'con')
@@ -155,8 +155,8 @@ class Model
         ;
 
         $results = array();
-        foreach ($items as $item) {
-            $results[] = $item->getName();
+        foreach ($tags as $tag) {
+            $results[] = $tag->getName();
         }
 
         // return as an imploded string
@@ -188,7 +188,7 @@ class Model
                 ->getRepository(self::ENTITY_CLASS)
                 ->findBy(array(
                      'url' => $URL,
-                     'language' => $language
+                     'language' => $language,
                 ))
             ;
 
@@ -318,7 +318,7 @@ class Model
                 if ($tag == '') {
                     unset($tags[$key]);
                 } else {
-                    $tags[$key] = (string) $tag;
+                    $tags[$key] = $tag;
                 }
             }
 
@@ -327,7 +327,7 @@ class Model
                 ->getRepository(self::ENTITY_CLASS)
                 ->findBy(array(
                     'name' => $tags,
-                    'language' => $language
+                    'language' => $language,
                 ))
             ;
 

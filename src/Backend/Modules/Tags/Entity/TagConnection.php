@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Jeroen Desloovere <info@jeroendesloovere.be>
  *
  * @ORM\Entity
- * @ORM\Table(name="modules_tags")
+ * @ORM\Table
  */
 class TagConnection
 {
@@ -105,7 +105,7 @@ class TagConnection
     /**
      * Get tag
      *
-     * @return \Backend\Modules\Tags\Entity\Tag
+     * @return Tag
      */
     public function getTag()
     {
