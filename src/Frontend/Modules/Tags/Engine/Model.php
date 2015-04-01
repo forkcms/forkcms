@@ -212,24 +212,30 @@ class Model
     /**
      * Get all related items
      *
-     * @param int     $id          The id of the item in the source-module.
+     * @param int     $otherId     The id of the item in the source-module.
      * @param int     $module      The source module.
      * @param int     $otherModule The module wherein the related items should appear.
      * @param int $limit       The maximum of related items to grab.
-     * @return array
+     * @return TagConnection[]
      */
-    public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
+    public static function getRelatedItemsByTags($otherId, $module, $otherModule, $limit = 5)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT t2.other_id
-             FROM modules_tags AS t
-             INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND
-                (t2.module != t.module OR t2.other_id != t.other_id)
-             GROUP BY t2.other_id
-             ORDER BY COUNT(t2.tag_id) DESC
-             LIMIT ?',
-            array((int) $id, (string) $module, (string) $otherModule, (int) $limit)
-        );
+        /** $var TagConnection[] Retrieve all connections for an item */
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
+            ->createQueryBuilder('i')
+            ->innerJoin(BackendTagsModel::ENTITY_CONNECTION_CLASS, 'i2', 'WITH', 'i.tag = i2.tag')
+            ->where('i2.other_id = :other_id')
+            ->andWhere('i2.module = :module')
+            ->andWhere('i.other_id != :other_id')
+            ->andWhere('i.module = :other_module')
+            ->setParameter('other_id', (int) $otherId)
+            ->setParameter('module', (string) $module)
+            ->setParameter('other_module', (string) $otherModule)
+            //->orderBy('COUNT(i2.tag_id)', 'DESC')
+            ->setMaxResults((int) $limit)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }
