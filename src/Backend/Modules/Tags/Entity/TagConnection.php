@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @author Jeroen Desloovere <info@jeroendesloovere.be>
  *
  * @ORM\Entity
- * @ORM\Table
+ * @ORM\Table(name="modules_tags")
  */
 class TagConnection
 {

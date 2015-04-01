@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\Collection;
  * @author Jeroen Desloovere <info@jeroendesloovere.be>
  *
  * @ORM\Entity
- * @ORM\Table
+ * @ORM\Table(name="tags")
  */
 class Tag
 {
