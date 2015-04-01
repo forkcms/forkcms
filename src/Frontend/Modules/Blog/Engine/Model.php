@@ -744,14 +744,22 @@ class Model implements FrontendTagsInterface
      */
     public static function getRelated($id, $limit = 5)
     {
-        $id = (int) $id;
         $limit = (int) $limit;
 
-        // get the related IDs
-        $relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'Blog', 'Blog', $limit);
+        // init other Ids
+        $otherIds = array();
+
+        // get the other connections
+        $otherConnections = FrontendTagsModel::getRelatedItemsByTags((int) $id, 'Blog', 'Blog', $limit);
+
+        // loop other connections
+        foreach ($otherConnections as $connection) {
+            // add other id
+            $otherIds[] = $connection->getOtherId();
+        }
 
         // no items
-        if (empty($relatedIDs)) {
+        if (empty($otherIds)) {
             return array();
         }
 
@@ -764,7 +772,7 @@ class Model implements FrontendTagsInterface
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
              WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' .
-            implode(',', $relatedIDs) . ')
+            implode(',', $otherIds) . ')
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT ?',
             array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit),
