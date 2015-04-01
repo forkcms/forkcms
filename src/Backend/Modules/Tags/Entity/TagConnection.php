@@ -115,10 +115,10 @@ class TagConnection
     /**
      * Set tag
      *
-     * @param \Backend\Modules\Tags\Entity\Tag $tag
+     * @param Tag $tag
      * @return TagConnection
      */
-    public function setTag(\Backend\Modules\Tags\Entity\Tag $tag)
+    public function setTag(Tag $tag)
     {
         $this->tag = $tag;
 

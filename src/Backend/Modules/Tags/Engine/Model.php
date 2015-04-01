@@ -366,7 +366,6 @@ class Model
                 // build new tag connection
                 $item = new TagConnection();
                 $item
-                    ->setTag($tag)
                     ->setModule($module)
                     ->setOtherId($otherId)
                 ;
@@ -396,7 +395,7 @@ class Model
 
         // remove all tags that don't have anything linked
         $em
-            ->createQuery('delete from ' . self::ENTITY_CLASS . ' i where i.number = 0')
+            ->createQuery('DELETE FROM ' . self::ENTITY_CLASS . ' i WHERE i.number = 0')
             ->execute()
         ;
     }

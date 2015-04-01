@@ -181,7 +181,7 @@ class Tag
     /**
      * Add a connection
      *
-     * @param \Backend\Modules\Tags\Entity\TagConnection $connection
+     * @param TagConnection $connection
      * @return Tag
      */
     public function addConnection(TagConnection $connection)
@@ -195,11 +195,13 @@ class Tag
     /**
      * Remove connection
      *
-     * @param \Backend\Modules\Tags\Entity\TagConnection $connection
+     * @param TagConnection $connection
      */
     public function removeConnection(TagConnection $connection)
     {
         $this->connections->removeElement($connection);
+
+        return $this;
     }
 
     /**
