@@ -38,7 +38,6 @@ class Model
      */
     public static function delete(Tag $tag)
     {
-        // delete the content_block
         $em = BackendModel::get('doctrine.orm.entity_manager');
 
         $em->remove($tag);
@@ -64,8 +63,8 @@ class Model
      */
     public static function existsTag($tag)
     {
-        $em = BackendModel::get('doctrine.orm.entity_manager');
-        return $em
+        /** @var Tag Retrieve the tag */
+        $item = BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
@@ -84,8 +83,8 @@ class Model
      */
     public static function get($id)
     {
-        $em = BackendModel::get('doctrine.orm.entity_manager');
-        return $em
+        /** @var Tag Retrieve the tag */
+        return BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
@@ -111,8 +110,7 @@ class Model
             : BL::getWorkingLanguage();
 
         /** $var Tag[] Retrieve one tag */
-        $em = BackendModel::get('doctrine.orm.entity_manager');
-        return $em
+        return BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
             ->where('i.language = :language')
@@ -141,7 +139,7 @@ class Model
         $type = (string) \SpoonFilter::getValue($type, array('string', 'array'), 'string');
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
-        /** @var Array $items Retrieve the list of only the 'tag' field */
+        /** @var Tag[] $items Retrieve the list of only the 'tag' field */
         $items = BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->createQueryBuilder('i')
