@@ -195,12 +195,18 @@ class Model
      */
     public static function getName($id)
     {
-        return FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT tag
-             FROM tags
-             WHERE id = ?',
-            array((int) $id)
-        );
+        /** @var Tag[] Retrieve a tag */
+        $item = FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => (string) $id,
+                    'language' => $language,
+                )
+            )
+        ;
+
+        return ($item) ? $item->getTag() : null;
     }
 
     /**
