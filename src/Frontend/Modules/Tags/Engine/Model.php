@@ -54,7 +54,7 @@ class Model
      *
      * @param string        $URL The URL to get the tag for.
      * @param string $language The language for the item.
-     * @return array
+     * @return Tag
      */
     public static function get($URL, $language = null)
     {
@@ -76,7 +76,7 @@ class Model
      * Fetch the list of all tags, ordered by their occurrence
      *
      * @param string $language The language for the items.
-     * @return array
+     * @return Tag[]
      */
     public static function getAll($language = null)
     {
@@ -98,7 +98,7 @@ class Model
      * @param string $module  The module wherein the otherId occurs.
      * @param int    $otherId The id of the item.
      * @param string $language The language for the items.
-     * @return array
+     * @return Tag[]
      */
     public static function getForItem($module, $otherId, $language = null)
     {
@@ -126,7 +126,7 @@ class Model
      * @param string $module   The module wherefore you want to retrieve the tags.
      * @param array  $otherIds The ids for the items.
      * @param string $language The language for the items.
-     * @return array
+     * @return Tag[]
      */
     public static function getForMultipleItems($module, array $otherIds, $language = null)
     {
@@ -170,11 +170,11 @@ class Model
      * Get the modules that used a tag.
      *
      * @param int $id The id of the tag.
-     * @return array
+     * @return TagConnection[]
      */
     public static function getModulesForTag($id)
     {
-        /** $var Tag[] Retrieve all tags for multiple items */
+        /** $var TagConnection[] Retrieve all connections for a tag */
         return FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
             ->createQueryBuilder('i')
