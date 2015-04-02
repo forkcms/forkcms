@@ -10,6 +10,7 @@ namespace Backend\Modules\Tags\Installer;
  */
 
 use Backend\Core\Installer\ModuleInstaller;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
 
 /**
  * Installer for the tags module
@@ -24,14 +25,15 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // load install.sql
-        $this->importSQL(dirname(__FILE__) . '/Data/install.sql');
-
         // add 'blog' as a module
         $this->addModule('Tags');
 
-        // import locale
+        // import locale and add DB
         $this->importLocale(dirname(__FILE__) . '/Data/locale.xml');
+        $this->addEntitiesInDatabase(array(
+            BackendTagsModel::ENTITY_CLASS,
+            BackendTagsModel::ENTITY_CONNECTION_CLASS
+        ));
 
         // module rights
         $this->setModuleRights(1, 'Tags');
