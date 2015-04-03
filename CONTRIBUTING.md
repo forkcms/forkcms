@@ -18,7 +18,7 @@ We accept contributions via Pull Requests on [Github](https://github.com/forkcms
 
 ## Running Tests
 
-You need a database with the same credentials as in your parameters.yml file, but the name suffixed with _test to be able to run the (functional tests)
+> You need a database with the same credentials as in your parameters.yml file, but the name suffixed with _test to be able to run the (functional tests)
 
 ``` bash
 # run all tests
