@@ -161,16 +161,21 @@ Class TwigTemplate
             {
                 // find the missing action
                 if (empty($block['extra_action'])) {
-                    foreach ($actions as $action) {
-                        foreach($this->templates as $key => $template) {
-                            if (strpos($template, $action) !== false) {
-                                unset($this->templates[$key]);
+                    if ($block['extra_type'] == 'block') {
+                        $block['extra_action'] = 'Index';
+                    } else {
+                        foreach ($actions as $action) {
+                            foreach($this->templates as $key => $template) {
+                                if (strpos($template, $action) !== false) {
+                                    unset($this->templates[$key]);
+                                }
                             }
                         }
+                        $this->templates = array_values($this->templates);
+                        $block['include_path'] = $this->getPath($this->templates[0]);
+                        continue;
                     }
-                    $this->templates = array_values($this->templates);
-                    $block['include_path'] = $this->getPath($this->templates[0]);
-                    continue;
+
                 }
 
                 // required for the action search
@@ -200,6 +205,7 @@ Class TwigTemplate
                 }
             }
         }
+        // var_dump($positions, $this->templates);exit;
         $this->twig->addGlobal('positions', $positions);
     }
 
