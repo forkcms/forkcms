@@ -9,6 +9,8 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Exception;
+use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -167,7 +169,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
             }
         } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
-            if (SPOON_DEBUG) {
+            if ($this->getContainer()->getParameter('kernel.debug')) {
                 if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
                     // do nothing
                 } else {

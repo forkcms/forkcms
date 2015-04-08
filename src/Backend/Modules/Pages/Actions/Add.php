@@ -79,6 +79,7 @@ class Add extends BackendBaseActionAdd
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
 
         // add css
+        $this->header->addCSS('pages.css');
         $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
 
         // get the templates
@@ -124,7 +125,7 @@ class Add extends BackendBaseActionAdd
         $this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
         // create elements
-        $this->frm->addText('title', null, null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', null, null, 'form-control title', 'form-control danger title');
         $this->frm->addEditor('html');
         $this->frm->addHidden('template_id', $defaultTemplateId);
         $this->frm->addRadiobutton(
@@ -268,7 +269,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('navigation_title');
 
         // tags
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+        $this->frm->addText('tags', null, null, 'form-control jsTagsBox', 'form-control danger jsTagsBox');
 
         // a specific action
         $this->frm->addCheckbox('is_action', false);

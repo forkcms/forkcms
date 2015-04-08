@@ -379,6 +379,20 @@
         <translation language="sv"><![CDATA[parameter]]></translation>
         <translation language="el"><![CDATA[Παράμετρος]]></translation>
       </item>
+      <item type="label" name="Placeholder">
+        <translation language="nl"><![CDATA[placeholder]]></translation>
+        <translation language="en"><![CDATA[placeholder]]></translation>
+        <translation language="it"><![CDATA[segnaposto]]></translation>
+        <translation language="ru"><![CDATA[заполнитель]]></translation>
+        <translation language="zh"><![CDATA[占位符]]></translation>
+        <translation language="fr"><![CDATA[espace réservé]]></translation>
+        <translation language="hu"><![CDATA[helyőrző]]></translation>
+        <translation language="de"><![CDATA[Platzhalter]]></translation>
+        <translation language="es"><![CDATA[marcador de posición]]></translation>
+        <translation language="uk"><![CDATA[заповнювач]]></translation>
+        <translation language="sv"><![CDATA[platshållare]]></translation>
+        <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
+      </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="en"><![CDATA[preview]]></translation>

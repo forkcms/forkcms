@@ -1,39 +1,42 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$lblAddMembership|ucfirst}</h2>
+  </div>
+</div>
 {form:addProfileGroup}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblProfiles|ucfirst}: {$lblAddMembership}</h3>
-		</div>
-		<div class="content">
-			<fieldset>
-				<p>
-					<label for="group">{$lblGroup|ucfirst}</label>
-					{$ddmGroup} {$ddmGroupError}
-				</p>
-				<p class="p0"><label for="expirationDate">{$lblExpiresOn|ucfirst}:</label></p>
-				<div class="oneLiner">
-					<p>
-						{$txtExpirationDate} {$txtExpirationDateError}
-					</p>
-					<p>
-						<label for="expirationTime">{$lblAt}</label>
-						{$txtExpirationTime} {$txtExpirationTimeError}
-					</p>
-				</div>
-			</fieldset>
-
-
-		</div>
-	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
-		</div>
-	</div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="group">{$lblGroup|ucfirst}</label>
+        {$ddmGroup} {$ddmGroupError}
+      </div>
+      <div class="form-group">
+        <label for="expirationDate">{$lblExpiresOn|ucfirst}:</label>
+        <div class="form-inline">
+          <div class="form-group">
+            {$txtExpirationDate} {$txtExpirationDateError}
+          </div>
+          <div class="form-group">
+            {$txtExpirationTime} {$txtExpirationTimeError}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-page-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="addButton" type="submit" name="add" class="btn btn-primary">
+            <span class="glyphicon glyphicon-pencil"></span>&nbsp;
+            {$lblAdd|ucfirst}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 {/form:addProfileGroup}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

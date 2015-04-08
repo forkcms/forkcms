@@ -63,7 +63,7 @@ class EditCategory extends BackendBaseActionEdit
         $this->frm = new BackendForm('editCategory');
 
         // create elements
-        $this->frm->addText('title', $this->record['title'], null, 'inputText title', 'inputTextError title');
+        $this->frm->addText('title', $this->record['title'], null, 'form-control title', 'form-control danger title');
 
         // meta object
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

@@ -1,126 +1,107 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblLocation|ucfirst}</h2>
-
-	{option:showLocationAdd}
-	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
-			<span>{$lblAdd|ucfirst}</span>
-		</a>
-	</div>
-	{/option:showLocationAdd}
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$lblLocation|ucfirst}</h2>
+    {option:showLocationAdd}
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        <a href="{$var|geturl:'add'}" class="btn btn-default" title="{$lblAdd|ucfirst}">
+          <span class="glyphicon glyphicon-plus"></span>
+          {$lblAdd|ucfirst}
+        </a>
+      </div>
+    </div>
+    {/option:showLocationAdd}
+  </div>
 </div>
-
 {option:dataGrid}
-	<table width="100%">
-		<tr>
-			<td id="leftColumn">
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblMap|ucfirst}</h3>
-					</div>
-
-					{* Map *}
-					<div class="options">
-						{option:items}
-							<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;">
-							</div>
-						{/option:items}
-					</div>
-				</div>
-			</td>
-
-			{form:settings}
-			<td id="rightColumn" style="width: 300px; padding-left: 10px;">
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblSettings|ucfirst}</h3>
-					</div>
-
-					{* Zoom level *}
-					<div class="options">
-						<p>
-							<label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
-							{$ddmZoomLevel} {$ddmZoomLevelError}
-						</p>
-					</div>
-
-					{* Map width *}
-					<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
-						<p>
-							<label for="width">{$lblWidth|ucfirst}</label>
-							{$txtWidth} {$txtWidthError}
-							<span class="helpTxt">
-								{$msgWidthHelp|sprintf:300:800}
-							</span>
-						</p>
-					</div>
-
-					{* Map height *}
-					<div class="options"{option:!godUser} style="display:none;"{/option:!godUser}>
-						<p>
-							<label for="height">{$lblHeight|ucfirst}</label>
-							{$txtHeight} {$txtHeightError}
-							<span class="helpTxt">
-								{$msgHeightHelp|sprintf:150}
-							</span>
-						</p>
-					</div>
-
-					{* Map type *}
-					<div class="options">
-						<p>
-							<label for="mapType">{$lblMapType|ucfirst}</label>
-							{$ddmMapType} {$ddmMapTypeError}
-						</p>
-					</div>
-
-					{* Save button *}
-					<div class="options">
-						<div class="buttonHolderRight">
-							<a href="#" id="saveLiveData" class="submitButton button inputButton button mainButton">
-								<span>{$lblSave|ucfirst}</span>
-							</a>
-						</div>
-					</div>
-				</div>
-			</td>
-			{/form:settings}
-		</tr>
-	</table>
-
-	<div class="dataGridHolder">
-		{$dataGrid}
-	</div>
+<div class="row fork-module-content">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {$lblMap|ucfirst}
+        </h3>
+      </div>
+      <div class="panel-body">
+        {option:items}
+        <div id="map" style="width: 100%; height: {$settings.height}px;"></div>
+        {/option:items}
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {$lblSettings|ucfirst}
+        </h3>
+      </div>
+      <div class="panel-body">
+        <div class="form-group">
+          <label for="zoomLevel">{$lblZoomLevel|ucfirst}</label>
+          {$ddmZoomLevel} {$ddmZoomLevelError}
+        </div>
+        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
+          <label for="width">{$lblWidth|ucfirst}</label>
+          <p class="text-info">{$msgWidthHelp|sprintf:300:800}</p>
+          {$txtWidth} {$txtWidthError}
+        </div>
+        <div class="form-group"{option:!godUser} style="display:none;"{/option:!godUser}>
+          <label for="height">{$lblHeight|ucfirst}</label>
+          <p class="text-info">{$msgHeightHelp|sprintf:150}</p>
+          {$txtHeight} {$txtHeightError}
+        </div>
+        <div class="form-group">
+          <label for="mapType">{$lblMapType|ucfirst}</label>
+          {$ddmMapType} {$ddmMapTypeError}
+        </div>
+        <div class="btn-toolbar">
+          <div class="btn-group pull-right" role="group">
+            <a href="#" id="saveLiveData" class="btn btn-primary">{$lblSave|ucfirst}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    {$dataGrid}
+  </div>
+</div>
 {/option:dataGrid}
-
-{option:!dataGrid}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!dataGrid}
-
+{option:!dataGrid}
+<div class="row fork-module-content">
+  <div class="col-md-12">
+    <p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>
+  </div>
+</div>
+{/option:!dataGrid}
 <script type="text/javascript">
-	var mapOptions = {
-		zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
-		type: '{$settings.map_type}',
-		center: {
-			lat: {$settings.center.lat},
-			lng: {$settings.center.lng}
-		}
-	};
-	var markers = [];
-	{iteration:items}
-		{option:items.lat}
-			{option:items.lng}
-				markers.push({
-					lat: {$items.lat},
-					lng: {$items.lng},
-					title: '{$items.title}',
-					text: '<p>{$items.street} {$items.number}</p><p>{$items.zip} {$items.city}</p>'
-				});
-			{/option:items.lng}
-		{/option:items.lat}
-	{/iteration:items}
+  //@todo BUG: data below should come from action
+  var mapOptions = {
+    zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
+    type: '{$settings.map_type}',
+    center: {
+      lat: {$settings.center.lat},
+      lng: {$settings.center.lng}
+    }
+  };
+  var markers = [];
+  {iteration:items}
+    {option:items.lat}
+      {option:items.lng}
+        markers.push({
+          lat: {$items.lat},
+          lng: {$items.lng},
+          title: '{$items.title}',
+          text: '<p>{$items.street} {$items.number}</p><p>{$items.zip} {$items.city}</p>'
+        });
+      {/option:items.lng}
+    {/option:items.lat}
+  {/iteration:items}
 </script>
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

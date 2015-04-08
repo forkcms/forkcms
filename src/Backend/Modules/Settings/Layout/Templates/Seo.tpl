@@ -1,38 +1,48 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblSEOSettings|ucfirst}</h2>
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$lblSEOSettings|ucfirst}</h2>
+  </div>
 </div>
-
 {form:settingsSeo}
-	<div class="box">
-		<div class="heading">
-			<h3>{$lblSEO|ucfirst}</h3>
-		</div>
-		<div class="options">
-			<ul class="inputList">
-				<li>
-					<label for="seoNoodp">{$chkSeoNoodp} NOODP</label>
-					<span class="helpTxt">{$msgHelpSEONoodp}</span>
-				</li>
-				<li>
-					<label for="seoNoydir">{$chkSeoNoydir} NOYDIR</label>
-					<span class="helpTxt">{$msgHelpSEONoydir}</span>
-				</li>
-				<li>
-					<label for="seoNofollowInComments">{$chkSeoNofollowInComments} {$msgSEONoFollowInComments}</label>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-	<div class="fullwidthOptions">
-		<div class="buttonHolderRight">
-			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
-		</div>
-	</div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {$lblSEO|ucfirst}
+          </h3>
+        </div>
+        <div class="panel-body">
+          <div class="form-group">
+            <ul class="list-unstyled">
+              <li class="checkbox">
+                <label for="seoNoodp">{$chkSeoNoodp} NOODP</label>
+                <p class="text-info">{$msgHelpSEONoodp}</p>
+              </li>
+              <li class="checkbox">
+                <label for="seoNoydir">{$chkSeoNoydir} NOYDIR</label>
+                <p class="text-info">{$msgHelpSEONoydir}</p>
+              </li>
+              <li class="checkbox">
+                <label for="seoNofollowInComments">{$chkSeoNofollowInComments} {$msgSEONoFollowInComments}</label>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-right" role="group">
+          <button id="save" type="submit" name="save" class="btn btn-primary">{$lblSave|ucfirst}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {/form:settingsSeo}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

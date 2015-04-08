@@ -1,9 +1,7 @@
-<td id="subnavigation">
-	<table>
-		<tr>
-			<td id="moduleHolder">
-				{$var|getnavigation}
-			</td>
-		</tr>
-	</table>
-</td>
+<div class="panel panel-default">
+    <div class="panel-body">
+        <nav id="content-subnavigation" class="fork-nav-sidebar">
+            {$var|getnavigation:null:null:'nav nav-pills nav-stacked'}
+        </nav>
+    </div>
+</div>

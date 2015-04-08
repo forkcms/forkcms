@@ -1,241 +1,267 @@
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Head.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureStartModule.tpl}
-
-<div class="pageTitle">
-	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
-	<div class="buttonHolderRight">
-		<a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="button icon iconZoom previewButton targetBlank">
-			<span>{$lblView|ucfirst}</span>
-		</a>
-	</div>
+<div class="row fork-module-heading">
+  <div class="col-md-12">
+    <h2>{$msgEditArticle|sprintf:{$item.title}|ucfirst}</h2>
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group" role="group">
+        <a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="btn btn-default" target="_blank">
+          <span class="glyphicon glyphicon-search"></span>
+          <span>{$lblView|ucfirst}</span>
+        </a>
+      </div>
+    </div>
+  </div>
 </div>
-
 {form:edit}
-	<label for="title">{$lblTitle|ucfirst}</label>
-	{$txtTitle} {$txtTitleError}
-
-	<div id="pageUrl">
-		<div class="oneLiner">
-			{option:detailURL}<p><span><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></span></p>{/option:detailURL}
-			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
-		</div>
-	</div>
-
-	<div class="tabs">
-		<ul>
-			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
-			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
-			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-		</ul>
-
-		<div id="tabContent">
-			<table width="100%">
-				<tr>
-					<td id="leftColumn">
-
-						{* Main content *}
-						<div class="box">
-							<div class="heading">
-								<h3>
-									<label for="text">{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-								</h3>
-							</div>
-							<div class="optionsRTE">
-								{$txtText} {$txtTextError}
-							</div>
-						</div>
-
-						{* Image *}
-						{option:imageIsAllowed}
-						<div class="box">
-							<div class="heading">
-								<h3>{$lblImage|ucfirst}</h3>
-							</div>
-							<div class="options clearfix">
-								{option:item.image}
-								<p class="imageHolder">
-									<img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" width="128" height="128" alt="{$lblImage|ucfirst}" />
-									<label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
-									{$chkDeleteImageError}
-								</p>
-								{/option:item.image}
-								<p>
-									<label for="image">{$lblImage|ucfirst}</label>
-									{$fileImage} {$fileImageError}
-								</p>
-							</div>
-						</div>
-						{/option:imageIsAllowed}
-
-						{* Summary *}
-						<div class="box">
-							<div class="heading">
-								<div class="oneLiner">
-									<h3>
-										<label for="introduction">{$lblSummary|ucfirst}</label>
-									</h3>
-									<abbr class="help">(?)</abbr>
-									<div class="tooltip" style="display: none;">
-										<p>{$msgHelpSummary}</p>
-									</div>
-								</div>
-							</div>
-							<div class="optionsRTE">
-								{$txtIntroduction} {$txtIntroductionError}
-							</div>
-						</div>
-
-					</td>
-
-					<td id="sidebar">
-						<div id="publishOptions" class="box">
-							<div class="heading">
-								<h3>{$lblStatus|ucfirst}</h3>
-							</div>
-
-							{option:usingDraft}
-							<div class="options">
-								<div class="buttonHolder">
-									<a href="{$detailURL}/{$item.url}?revision={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
-								</div>
-							</div>
-							{/option:usingDraft}
-
-							<div class="options">
-								<ul class="inputList">
-									{iteration:hidden}
-									<li>
-										{$hidden.rbtHidden}
-										<label for="{$hidden.id}">{$hidden.label}</label>
-									</li>
-									{/iteration:hidden}
-								</ul>
-							</div>
-
-							<div class="options">
-								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}</label></p>
-								<div class="oneLiner">
-									<p>
-										{$txtPublishOnDate} {$txtPublishOnDateError}
-									</p>
-									<p>
-										<label for="publishOnTime">{$lblAt}</label>
-									</p>
-									<p>
-										{$txtPublishOnTime} {$txtPublishOnTimeError}
-									</p>
-								</div>
-							</div>
-						</div>
-
-						<div class="box" id="articleMeta">
-							<div class="heading">
-								<h3>{$lblMetaData|ucfirst}</h3>
-							</div>
-							<div class="options">
-								<label for="categoryId">{$lblCategory|ucfirst}</label>
-								{$ddmCategoryId} {$ddmCategoryIdError}
-							</div>
-							<div class="options">
-								<label for="userId">{$lblAuthor|ucfirst}</label>
-								{$ddmUserId} {$ddmUserIdError}
-							</div>
-							{option:showTagsIndex}
-								<div class="options">
-									<label for="tags">{$lblTags|ucfirst}</label>
-									{$txtTags} {$txtTagsError}
-								</div>
-							{/option:showTagsIndex}
-						</div>
-
-					</td>
-				</tr>
-			</table>
-		</div>
-
-		<div id="tabPermissions">
-			<table width="100%">
-				<tr>
-					<td>
-						{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
-					</td>
-				</tr>
-			</table>
-		</div>
-
-		<div id="tabVersions">
-			{option:drafts}
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="oneLinerElement">{$lblDrafts|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpDrafts}</p>
-						</div>
-					</div>
-				</div>
-
-				<div class="dataGridHolder">
-					{$drafts}
-				</div>
-			{/option:drafts}
-
-			<div class="tableHeading">
-				<div class="oneLiner">
-					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-					<abbr class="help">(?)</abbr>
-					<div class="tooltip" style="display: none;">
-						<p>{$msgHelpRevisions}</p>
-					</div>
-				</div>
-			</div>
-
-			{option:revisions}
-			<div class="dataGridHolder">
-				{$revisions}
-			</div>
-			{/option:revisions}
-
-			{option:!revisions}
-				<p>{$msgNoRevisions}</p>
-			{/option:!revisions}
-		</div>
-
-		<div id="tabSEO">
-			{include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
-		</div>
-	</div>
-
-	<div class="fullwidthOptions">
-		{option:showBlogDelete}
-		<a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-			<span>{$lblDelete|ucfirst}</span>
-		</a>
-
-		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-			<p>
-				{$msgConfirmDelete|sprintf:{$item.title}}
-			</p>
-		</div>
-		{/option:showBlogDelete}
-
-		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
-			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
-		</div>
-	</div>
-
-	<div id="addCategoryDialog" class="forkForms" title="{$lblAddCategory|ucfirst}" style="display: none;">
-		<div id="templateList">
-			<p>
-				<label for="categoryTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				<input type="text" name="categoryTitle" id="categoryTitle" class="inputText" maxlength="255" />
-				<span class="formError" id="categoryTitleError" style="display: none;">{$errFieldIsRequired|ucfirst}</span>
-			</p>
-		</div>
-	</div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div class="form-group">
+        <label for="title">{$lblTitle|ucfirst}</label>
+        {$txtTitle} {$txtTitleError}
+      </div>
+      {option:detailURL}
+      <p><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></p>
+      {/option:detailURL}
+      {option:!detailURL}
+      <p class="text-warning">{$errNoModuleLinked}</p>
+      {/option:!detailURL}
+    </div>
+  </div>
+  <div class="row fork-module-content">
+    <div class="col-md-12">
+      <div role="tabpanel">
+        <ul class="nav nav-tabs" role="tablist">
+          <li role="presentation" class="active">
+            <a href="#tabContent" aria-controls="content" role="tab" data-toggle="tab">{$lblContent|ucfirst}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabVersions" aria-controls="versions" role="tab" data-toggle="tab">{$lblVersions|ucfirst}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabComments" aria-controls="comments" role="tab" data-toggle="tab">{$lblComments|ucfirst}</a>
+          </li>
+          <li role="presentation">
+            <a href="#tabSEO" aria-controls="seo" role="tab" data-toggle="tab">{$lblSEO|ucfirst}</a>
+          </li>
+        </ul>
+        <div class="tab-content">
+          <div role="tabpanel" class="tab-pane active" id="tabContent">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblContent|ucfirst}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <label for="text">
+                    {$lblMainContent|ucfirst}
+                    <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                  </label>
+                  {$txtText} {$txtTextError}
+                </div>
+                {option:imageIsAllowed}
+                <div class="form-group">
+                  <label for="image">{$lblImage|ucfirst}</label>
+                  {option:item.image}
+                  <div>
+                    <img src="{$FRONTEND_FILES_URL}/blog/images/128x128/{$item.image}" class="img-thumbnail" width="128" height="128" alt="{$lblImage|ucfirst}" />
+                  </div>
+                  <ul class="list-unstyled">
+                    <li class="checkbox">
+                      <label for="deleteImage">{$chkDeleteImage} {$lblDelete|ucfirst}</label>
+                      {$chkDeleteImageError}
+                    </li>
+                  </ul>
+                  {/option:item.image}
+                  {$fileImage} {$fileImageError}
+                </div>
+                {/option:imageIsAllowed}
+                <div class="form-group">
+                  <label for="introduction">
+                    {$lblSummary|ucfirst}
+                    <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpSummary}"></abbr>
+                  </label>
+                  {$txtIntroduction} {$txtIntroductionError}
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{$lblStatus|ucfirst}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <ul class="list-unstyled">
+                        {iteration:hidden}
+                        <li class="radio">
+                          <label for="{$hidden.id}">{$hidden.rbtHidden} {$hidden.label}</label>
+                        </li>
+                        {/iteration:hidden}
+                      </ul>
+                    </div>
+                    <div class="form-group">
+                      <label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
+                      {$txtPublishOnDate} {$txtPublishOnDateError}
+                      <label for="publishOnTime">{$lblAt}</label>
+                      {$txtPublishOnTime} {$txtPublishOnTimeError}
+                    </div>
+                  </div>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">{$lblMetaData|ucfirst}</h3>
+                  </div>
+                  <div class="panel-body">
+                    <div class="form-group">
+                      <label for="categoryId">{$lblCategory|ucfirst}</label>
+                      {$ddmCategoryId} {$ddmCategoryIdError}
+                    </div>
+                    <div class="form-group">
+                      <label for="userId">{$lblAuthor|ucfirst}</label>
+                      {$ddmUserId} {$ddmUserIdError}
+                    </div>
+                    {option:showTagsIndex}
+                    <div class="form-group">
+                      <label for="tags">{$lblTags|ucfirst}</label>
+                      {$txtTags} {$txtTagsError}
+                    </div>
+                    {/option:showTagsIndex}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabVersions">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblVersions|ucfirst}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                {option:drafts}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      {$lblDrafts|ucfirst}
+                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpDrafts}"></abbr>
+                    </h3>
+                  </div>
+                  {$drafts}
+                </div>
+                {/option:drafts}
+                <div class="panel panel-default">
+                  <div class="panel-heading">
+                    <h3 class="panel-title">
+                      {$lblPreviousVersions|ucfirst}
+                      <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpRevisions}"></abbr>
+                    </h3>
+                  </div>
+                  {option:revisions}
+                  {$revisions}
+                  {/option:revisions}
+                  {option:!revisions}
+                  <div class="panel-body">
+                    <p>{$msgNoRevisions}</p>
+                  </div>
+                  {/option:!revisions}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabComments">
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblComments|ucfirst}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <ul class="list-unstyled">
+                    <li class="checkbox">
+                      <label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabSEO">
+            {include:{$BACKEND_CORE_PATH}/Layout/Templates/Seo.tpl}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row fork-module-actions">
+    <div class="col-md-12">
+      <div class="btn-toolbar">
+        <div class="btn-group pull-left" role="group">
+          {option:showContentBlocksDelete}
+          <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirmDelete">
+            <span class="glyphicon glyphicon-trash"></span>
+            {$lblDelete|ucfirst}
+          </button>
+          {/option:showContentBlocksDelete}
+        </div>
+        <div class="btn-group pull-right" role="group">
+          <a href="#" id="saveAsDraft" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            {$lblSaveDraft|ucfirst}
+          </a>
+          <button id="editButton" type="submit" name="edit" class="btn btn-primary">
+            {$lblPublish|ucfirst}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  {option:showContentBlocksDelete}
+  <div class="modal fade" id="confirmDelete" tabindex="-1" role="dialog" aria-labelledby="{$lblDelete|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{$lblDelete|ucfirst}</span>
+        </div>
+        <div class="modal-body">
+          <p>{$msgConfirmDelete|sprintf:{$item.title}}</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+          <a href="{$var|geturl:'delete'}&amp;id={$item.id}{option:categoryId}&amp;category={$categoryId}{/option:categoryId}" class="btn btn-primary">
+            {$lblOK|ucfirst}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {/option:showContentBlocksDelete}
+  <div class="modal fade" id="addCategoryDialog" tabindex="-1" role="dialog" aria-labelledby="{$lblAddCategory|ucfirst}" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span class="modal-title h4">{$lblAddCategory|ucfirst}</span>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="categoryTitle">
+              {$lblTitle|ucfirst}
+              <abbr title="{$lblRequiredField|ucfirst}"></abbr>
+            </label>
+            <input type="text" name="categoryTitle" id="categoryTitle" class="form-control" maxlength="255" />
+            <p class="text-danger" id="categoryTitleError" style="display: none;">{$errFieldIsRequired|ucfirst}</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
+          <button id="addCategorySubmit" type="button" class="btn btn-primary">{$lblOK|ucfirst}</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {/form:edit}
-
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/Footer.tpl}

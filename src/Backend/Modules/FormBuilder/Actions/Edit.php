@@ -81,6 +81,7 @@ class Edit extends BackendBaseActionEdit
         // textfield dialog
         $this->frm->addText('textbox_label');
         $this->frm->addText('textbox_value');
+        $this->frm->addText('textbox_placeholder');
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
         $this->frm->addText('textbox_required_error_message');
@@ -99,6 +100,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textarea_label');
         $this->frm->addTextarea('textarea_value');
         $this->frm->getField('textarea_value')->setAttribute('cols', 30);
+        $this->frm->addText('textarea_placeholder');
         $this->frm->addCheckbox('textarea_required');
         $this->frm->addText('textarea_required_error_message');
         $this->frm->addDropdown('textarea_validation', array('' => ''));

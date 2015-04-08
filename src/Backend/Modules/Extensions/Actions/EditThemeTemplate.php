@@ -174,7 +174,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         // create default position field
         $position = array();
         $position['i'] = 0;
-        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'inputText positionName', 'inputTextError positionName');
+        $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], null, 255, 'form-control positionName', 'form-control danger positionName');
         $position['blocks'][]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $position['i'] . '_' . 0, $defaultExtras, null, false, 'positionBlock', 'positionBlockError');
         $positions[] = $position;
 
@@ -238,7 +238,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             // create default position field
             $position = array();
             $position['i'] = $i + 1;
-            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'inputText positionName', 'inputTextError positionName');
+            $position['formElements']['txtPosition'] = $this->frm->addText('position_' . $position['i'], $name, 255, 'form-control positionName', 'form-control danger positionName');
 
             if (isset($this->extras[$name])) {
                 foreach ($this->extras[$name] as $y => $extra) {

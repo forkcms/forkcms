@@ -26,6 +26,29 @@ use Backend\Core\Engine\Model as BackendModel;
 class DataGrid extends \SpoonDataGrid
 {
     /**
+     * Map of glyph icons by given action name
+     * @todo this map is not full
+     *
+     * @var array
+     */
+    private $mapGlyphIcons = array(
+        'add' => 'glyphicon-plus',
+        'copy' => 'glyphicon-plus',
+        'edit' => 'glyphicon-pencil',
+        'import' => 'glyphicon-import',
+        'export' => 'glyphicon-export',
+        'delete' => 'glyphicon-trash',
+        'detail' => 'glyphicon-cog',
+        'details' => 'glyphicon-cog',
+        'approve' => 'glyphicon-ok',
+        'mark_as_spam' => 'glyphicon-ban-circle',
+        'install' => 'glyphicon-save',
+        'use_revision' => 'glyphicon-open',
+        'use_draft' => 'glyphicon-open',
+        'custom_fields' => 'glyphicon-blackboard'
+    );
+
+    /**
      * @param \SpoonDataGridSource $source
      */
     public function __construct(\SpoonDataGridSource $source)
@@ -33,13 +56,16 @@ class DataGrid extends \SpoonDataGrid
         parent::__construct($source);
 
         // set debugmode, this will force the recompile for the used templates
-        $this->setDebug(\SPOON_DEBUG);
+        $this->setDebug(BackendModel::getContainer()->getParameter('kernel.debug'));
 
         // set the compile-directory, so compiled templates will be in a folder that is writable
         $this->setCompileDirectory(BACKEND_CACHE_PATH . '/CompiledTemplates');
 
         // set attributes for the datagrid
-        $this->setAttributes(array('class' => 'dataGrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
+        $this->setAttributes(array(
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid', 'cellspacing' => 0,
+            'cellpadding' => 0, 'border' => 0
+        ));
 
         // id gets special treatment
         if (in_array('id', $this->getColumns())) {
@@ -91,6 +117,8 @@ class DataGrid extends \SpoonDataGrid
         $image = null,
         $sequence = null
     ) {
+        $icon = $this->decideGlyphIcon($name);
+
         // known actions that should have a button
         if (in_array(
             $name,
@@ -98,8 +126,11 @@ class DataGrid extends \SpoonDataGrid
         )
         ) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button icon icon' .
-                     \SpoonFilter::toCamelCase($name) . ' linkButton"><span>' . $value . '</span></a>';
+            $value =
+                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                $value .
+                '</a>';
 
             // reset URL
             $URL = null;
@@ -107,10 +138,11 @@ class DataGrid extends \SpoonDataGrid
 
         if (in_array($name, array('use_revision', 'use_draft'))) {
             // rebuild value, it should have special markup
-            $value = '<a href="' . $URL . '" class="button linkButton icon iconEdit icon' .
-                     \SpoonFilter::toCamelCase($name) . '">
-                        <span>' . $value . '</span>
-                    </a>';
+            $value =
+                '<a href="' . $URL . '" class="btn btn-default btn-xs">' .
+                ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+                $value .
+                '</a>';
 
             // reset URL
             $URL = null;
@@ -137,7 +169,7 @@ class DataGrid extends \SpoonDataGrid
         )
         ) {
             // add special attributes for actions we know
-            $this->setColumnAttributes($name, array('class' => 'action action' . \SpoonFilter::toCamelCase($name)));
+            $this->setColumnAttributes($name, array('class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name)));
         }
 
         // set header attributes
@@ -169,10 +201,11 @@ class DataGrid extends \SpoonDataGrid
         // reserve var for attributes
         $attributes = '';
 
+        $icon = $this->decideGlyphIcon($name);
+
         // no anchorAttributes set means we set the default class attribute for the anchor
         if (empty($anchorAttributes)) {
-            $anchorAttributes['class'] = 'button icon icon' .
-                                         \SpoonFilter::toCamelCase($name) . ' linkButton';
+            $anchorAttributes['class'] = 'btn btn-default btn-xs';
         }
 
         // loop the attributes, build our attributes string
@@ -181,9 +214,11 @@ class DataGrid extends \SpoonDataGrid
         }
 
         // rebuild value
-        $value = '<a href="' . $URL . '"' . $attributes . '>
-                        <span>' . $value . '</span>
-                    </a>';
+        $value =
+            '<a href="' . $URL . '"' . $attributes . '>' .
+            ($icon?'<span class="glyphicon ' . $icon . '"></span>&nbsp;':'') .
+            $value .
+            '</a>';
 
         // add the column to the datagrid
         parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
@@ -192,7 +227,7 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnAttributes(
             $name,
             array(
-                'class' => 'action action' . \SpoonFilter::toCamelCase($name),
+                'class' => 'fork-data-grid-action action' . \SpoonFilter::toCamelCase($name),
                 'style' => 'width: 10%;'
             )
         );
@@ -229,7 +264,9 @@ class DataGrid extends \SpoonDataGrid
     public function enableSequenceByDragAndDrop()
     {
         // add drag and drop-class
-        $this->setAttributes(array('class' => 'dataGrid sequenceByDragAndDrop'));
+        $this->setAttributes(array(
+            'class' => 'table table-hover table-striped fork-data-grid jsDataGrid sequenceByDragAndDrop'
+        ));
 
         // disable paging
         $this->setPaging(false);
@@ -238,13 +275,15 @@ class DataGrid extends \SpoonDataGrid
         $this->setColumnHidden('sequence');
 
         // add a column for the handle, so users have something to hold while dragging
-        $this->addColumn('dragAndDropHandle', null, '<span>' . Language::lbl('Move') . '</span>');
+        $this->addColumn('dragAndDropHandle', null, '<span class="glyphicon glyphicon-sort"></span>');
 
         // make sure the column with the handler is the first one
         $this->setColumnsSequence('dragAndDropHandle');
 
         // add a class on the handler column, so JS knows this is just a handler
-        $this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+        $this->setColumnAttributes('dragAndDropHandle', array(
+            'class' => 'dragAndDropHandle fork-data-grid-sortable'
+        ));
 
         // our JS needs to know an id, so we can send the new order
         $this->setRowAttributes(array('data-id' => '[id]'));
@@ -344,13 +383,13 @@ class DataGrid extends \SpoonDataGrid
                     if (substr_count($value, 'class="') > 0) {
                         $value = str_replace(
                             'class="',
-                            'data-message-id="' . $id . '" class="askConfirmation ',
+                            'data-message-id="' . $id . '" class="jsConfirmationTrigger ',
                             $value
                         );
                     } else {
                         $value = str_replace(
                             '<a ',
-                            '<a data-message-id="' . $id . '" class="askConfirmation" ',
+                            '<a data-message-id="' . $id . '" class="jsConfirmationTrigger" ',
                             $value
                         );
                     }
@@ -420,16 +459,14 @@ class DataGrid extends \SpoonDataGrid
     public function setMassAction(\SpoonFormDropdown $actionDropDown)
     {
         // build HTML
-        $HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' .
-                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) . '</label></p>
-                <p>
-                    ' . $actionDropDown->parse() . '
-                </p>
-                <div class="buttonHolder">
-                    <a href="#" class="submitButton button">
-                        <span>' . \SpoonFilter::ucfirst(Language::lbl('Execute')) . '</span>
-                    </a>
-                </div>';
+        $HTML =
+            '<label for="' . $actionDropDown->getAttribute('id') . '">' .
+                \SpoonFilter::ucfirst(Language::lbl('WithSelected')) .
+            '</label>' .
+            $actionDropDown->parse() .
+            '<button type="button" class="btn btn-default jsMassActionSubmit">' .
+            '   <span>' . \SpoonFilter::ucfirst(Language::lbl('Execute')) . '</span>' .
+            '</button>';
 
         // assign parsed html
         $this->tpl->assign('massAction', $HTML);
@@ -446,8 +483,7 @@ class DataGrid extends \SpoonDataGrid
     public function setMassActionCheckboxes($column, $value, array $excludedValues = null, array $checkedValues = null)
     {
         // build label and value
-        $label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />' .
-                 '</span>';
+        $label = '<input type="checkbox" name="toggleChecks" value="toggleChecks" />';
         $value = '<input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" />';
 
         // add the column
@@ -560,5 +596,22 @@ class DataGrid extends \SpoonDataGrid
         } else {
             parent::setURL($URL);
         }
+    }
+
+    /**
+     * Decides what glyph icon to use by given name
+     *
+     * @param $name
+     * @return null|string
+     */
+    private function decideGlyphIcon($name)
+    {
+        $icon = null;
+
+        if (isset($this->mapGlyphIcons[$name])) {
+            $icon = $this->mapGlyphIcons[$name];
+        }
+
+        return $icon;
     }
 }

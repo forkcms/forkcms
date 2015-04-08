@@ -42,7 +42,7 @@ jsBackend.analyticsDashboard =
 					else
 					{
 						// show message
-						jsBackend.messages.add('error', textStatus);
+						jsBackend.messages.add('danger', textStatus);
 					}
 
 					// enable button

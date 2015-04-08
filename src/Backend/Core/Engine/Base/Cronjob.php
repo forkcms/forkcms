@@ -100,7 +100,7 @@ class Cronjob extends Object
     protected function setBusyFile()
     {
         // do not set busy file in debug mode
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return;
         }
 

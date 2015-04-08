@@ -16,6 +16,7 @@ use TijsVerkoyen\Akismet\Akismet;
 
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
+use Backend\Core\Engine\Model as BackendModel;
 
 use Frontend\Core\Engine\Language as FrontendLanguage;
 
@@ -98,7 +99,7 @@ class Model extends \BaseModel
         $warnings = array();
 
         // check if debug-mode is active
-        if (SPOON_DEBUG) {
+        if (BackendModel::getContainer()->getParameter('kernel.debug')) {
             $warnings[] = array('message' => Language::err('DebugModeIsActive'));
         }
 
@@ -1233,7 +1234,7 @@ class Model extends \BaseModel
                 if (strpos($e->getMessage(), 'Operation timed out') === false &&
                     strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
-                    if (SPOON_DEBUG) {
+                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     } else {
                         // stop, hammertime
@@ -1286,7 +1287,7 @@ class Model extends \BaseModel
                 if (strpos($e->getMessage(), 'Operation timed out') === false &&
                     strpos($e->getMessage(), 'Invalid headers') === false
                 ) {
-                    if (SPOON_DEBUG) {
+                    if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     }
                 }
@@ -1442,7 +1443,7 @@ class Model extends \BaseModel
                 $others
             );
         } catch (Exception $e) {
-            if (SPOON_DEBUG) {
+            if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
         }
@@ -1504,7 +1505,7 @@ class Model extends \BaseModel
                 $others
             );
         } catch (Exception $e) {
-            if (SPOON_DEBUG) {
+            if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
         }

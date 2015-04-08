@@ -44,6 +44,7 @@ class Helper
                 $field['settings']['default_values'] :
                 null
             );
+            $placeholder = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
 
             /**
              * Create form and parse to HTML
@@ -117,6 +118,7 @@ class Helper
                 // create element
                 $txt = $frm->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
+                $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();
@@ -125,6 +127,7 @@ class Helper
                 $txt = $frm->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
                 $txt->setAttribute('disabled', 'disabled');
+                $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();

@@ -45,7 +45,7 @@ class LandingPages extends BackendAnalyticsBase
         if (!empty($results)) {
             $dataGrid = new BackendDataGridArray($results);
             $dataGrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
-            $dataGrid->setMassActionCheckboxes('checkbox', '[id]');
+            $dataGrid->setMassActionCheckboxes('mass_check', '[id]');
 
             // check if this action is allowed
             if (BackendAuthentication::isAllowedAction('DetailPage', $this->getModule())) {
@@ -58,7 +58,14 @@ class LandingPages extends BackendAnalyticsBase
             );
 
             // add mass action dropdown
-            $ddmMassAction = new \SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
+            $ddmMassAction = new \SpoonFormDropdown(
+                'action',
+                array('delete_landing_page' => BL::lbl('Delete')),
+                'delete',
+                false,
+                'form-control',
+                'form-control danger'
+            );
             $dataGrid->setMassAction($ddmMassAction);
 
             // parse the datagrid
