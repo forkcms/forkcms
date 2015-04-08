@@ -3,6 +3,7 @@
 Improvements:
 
 * Locale: improve performance of the index page
+* Core: reduced database queries in BackendDataGridFunctions::getUser().
 
 Bugfixes:
 
