@@ -285,18 +285,18 @@ jsBackend.pages.extras =
 			$('#extraModuleHolder').show();
 		}
 
-        var userTemplates = jsBackend.pages.template.userTemplates;
+		var userTemplates = jsBackend.pages.template.userTemplates;
 
-        // show the defined user templates
-        if(selectedType == 'usertemplate')
-        {
-            for(var j in userTemplates)
-            {
-                // add option if needed
-                $('#userTemplate').append('<option value="'+ j +'">'+ userTemplates[j].title +'</option>');
-            }
-            $('#userTemplateHolder').show();
-        }
+		// show the defined user templates
+		if(selectedType == 'usertemplate')
+		{
+			for(var j in userTemplates)
+			{
+				// add option if needed
+				$('#userTemplate').append('<option value="'+ j +'">'+ userTemplates[j].title +'</option>');
+			}
+			$('#userTemplateHolder').show();
+		}
 	},
 
 	// populates the dropdown with the extra's
@@ -474,18 +474,17 @@ jsBackend.pages.extras =
 							$(this).dialog('close');
 
 							// if the added block was an editor, show the editor immediately
-							//if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
-							//{
-							//	$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
-							//}
+							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+							{
+								$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
+							}
 
-                            var userTemplateId = $('#userTemplate').val();
-
-                            // if the added block was a user template, show the template popup immediately
-                            if(userTemplateId)
-                            {
-                                jsBackend.pages.extras.showUserTemplateDialog(userTemplateId);
-                            }
+							userTemplateId = $('#userTemplate').val();
+							// if the added block was a user template, show the template popup immediately
+							if(userTemplateId)
+							{
+								jsBackend.pages.extras.showUserTemplateDialog(userTemplateId);
+							}
 						}
 					},
 					{
@@ -501,137 +500,138 @@ jsBackend.pages.extras =
 		}
 	},
 
-    showUserTemplateDialog: function(userTemplateId) {
-        var templateUrl, sourceHTML;
+	showUserTemplateDialog: function(userTemplateId)
+	{
+		var templateUrl, sourceHTML;
 
-        templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+		templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
 
-        console.log(templateUrl);
+		$.ajax({
+			url: '/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/test.html',
+			dataType: 'html',
+			success: function(data)
+			{
+				$('#userTemplateHiddenPlaceholder').html(data);
+					jsBackend.pages.extras.convertUserTemplateToForm();
+				}
+			}
+		);
 
-        $.ajax({
-            url: '/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/test.html',
-            dataType: 'html',
-            success: function(data) {
-                $('#userTemplateHiddenPlaceholder').html(data);
-                jsBackend.pages.extras.convertUserTemplateToForm();
-            }
-        });
+		if($('#addUserTemplate').length > 0)
+		{
+			$('#addUserTemplate').dialog({
+				draggable: false,
+				resizable: false,
+				modal: true,
+				width: 700,
+				buttons:
+				[
+					{
+						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+						click: function()
+						{
+							// fetch the selected extra id
+							var selectedExtraId = $('#extraExtraId').val();
 
-        if($('#addUserTemplate').length > 0)
-        {
-            $('#addUserTemplate').dialog({
-                draggable: false,
-                resizable: false,
-                modal: true,
-                width: 700,
-                buttons:
-                     [
-                         {
-                             text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-                             click: function()
-                             {
-                                 // fetch the selected extra id
-                                 var selectedExtraId = $('#extraExtraId').val();
+							// add the extra
+							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
 
-                                 // add the extra
-                                 var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+							// add a block = template is no longer original
+							jsBackend.pages.template.original = false;
 
-                                 // add a block = template is no longer original
-                                 jsBackend.pages.template.original = false;
+							// close dialog
+							$(this).dialog('close');
 
-                                 // close dialog
-                                 $(this).dialog('close');
+							// if the added block was an editor, show the editor immediately
+							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
 
-                                 // if the added block was an editor, show the editor immediately
-                                 if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
+							// if the added block was a user template, show the template popup immediately
+							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
+						}
+					},
+					{
+						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+						click: function()
+						{
+							// close the dialog
+							$(this).dialog('close');
+						}
+					}
+				]
+			});
+		}
+	},
 
-                                 // if the added block was a user template, show the template popup immediately
-                                 if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
-                               }
-                           },
-                           {
-                               text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-                               click: function()
-                               {
-                                   // close the dialog
-                                   $(this).dialog('close');
-                               }
-                           }
-                       ]
-            });
-        }
-    },
+	convertUserTemplateToForm: function()
+	{
+		var $hiddenPlaceholder, $placeholder;
 
-    convertUserTemplateToForm: function() {
+		$hiddenPlaceholder = $('#userTemplateHiddenPlaceholder');
+		$placeholder = $('#userTemplatePlaceholder');
 
-        var $hiddenPlaceholder, $placeholder;
+		// replace links
+		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
+			var $this, text, url, label, html;
 
-        $hiddenPlaceholder = $('#userTemplateHiddenPlaceholder');
-        $placeholder = $('#userTemplatePlaceholder');
+			$this = $(this);
+			text = $this.text();
+			url = $this.attr('href');
+			label = $this.data('ft-label');
 
-        // replace links
-        $hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
-            var $this, text, url, label, html;
+			html = '<div>';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
+			html += '<label>URL</label>';
+			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+			html += '</div>';
 
-            $this = $(this);
-            text = $this.text();
-            url = $this.attr('href');
-            label = $this.data('ft-label');
+			$placeholder.append(html);
+		});
 
-            html = '';
-            html += '<label>' + label + '</label>';
-            html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
-            html += '<label>URL</label>';
-            html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+		// replace text
+		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
+			var $this, text, label, html;
 
-            $placeholder.append(html);
-        });
+			$this = $(this);
+			text = $this.text();
+			label = $this.data('ft-label');
 
-        // replace text
-        $hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
-            var $this, text, label, html;
+			html = '<div>';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
+			html += '<div>';
 
-            $this = $(this);
-            text = $this.text();
-            label = $this.data('ft-label');
+			$placeholder.append(html);
+		});
 
-            html = '';
-            html += '<label>' + label + '</label>';
-            html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
+		jsBackend.pages.extras.liveEditUserTemplate();
+	},
 
-            $placeholder.append(html);
-        });
+	liveEditUserTemplate: function() {
+		// live edit example texts
+		$('#userTemplatePlaceholder').find('[data-ft-label]').on('input', function() {
+			var $this, label, content;
 
-        jsBackend.pages.extras.liveEditUserTemplate();
+			$this = $(this);
+			label = $this.data('ft-label');
+			content = $this.val();
 
-    },
+			// replace original
+			$('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').html(content);
+		});
 
-    liveEditUserTemplate: function() {
+		// live edit urls (special case)
+		$('#userTemplatePlaceholder').find('[data-ft-url]').on('input', function() {
+			var $this, label, url;
 
-        // live edit example texts
-        $('#userTemplatePlaceholder').find('[data-ft-label]').on('input', function() {
-            var $this, label, content;
+			$this = $(this);
+			label = $this.data('ft-url');
+			url = $this.val();
 
-            $this = $(this);
-            label = $this.data('ft-label');
-            content = $this.val();
-
-            // replace original
-            $('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').html(content);
-        });
-
-        // live edit urls (special case)
-        $('#userTemplatePlaceholder').find('[data-ft-url]').on('input', function() {
-            var $this, label, url;
-
-            $this = $(this);
-            label = $this.data('ft-url');
-            url = $this.val();
-
-            // replace original
-            $('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').attr('href', url);
-        });
-    },
+			// replace original
+			$('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').attr('href', url);
+		});
+	},
 
 	// delete a block
 	showDeleteDialog: function(e)
@@ -780,7 +780,7 @@ jsBackend.pages.template =
 {
 	// indicates whether or not the page content is original or has been altered already
 	original: true,
-    userTemplates: {},
+	userTemplates: {},
 
 	// init, something like a constructor
 	init: function()
@@ -791,10 +791,10 @@ jsBackend.pages.template =
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();
 
-        // get user templates
-        $.getJSON('/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/Templates.js', function(data) {
-            jsBackend.pages.template.userTemplates = data;
-        });
+		// get user templates
+		$.getJSON('/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/Templates.js', function(data) {
+			jsBackend.pages.template.userTemplates = data;
+		});
 	},
 
 	// method to change a template
