@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 
+* Core: Fixed encoding ampersand for action url
 
 3.9.1 (2015-03-12)
 --
