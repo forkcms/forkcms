@@ -463,6 +463,8 @@ jsBackend.pages.extras =
 						{
 							// fetch the selected extra id
 							var selectedExtraId = $('#extraExtraId').val();
+							// is user template?
+							var isUserTemplate = ($('#extraType').val() == 'usertemplate');
 
 							// add the extra
 							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
@@ -474,16 +476,15 @@ jsBackend.pages.extras =
 							$(this).dialog('close');
 
 							// if the added block was an editor, show the editor immediately
-							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
+							if(!isUserTemplate && index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined'))
 							{
 								$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();
 							}
 
-							userTemplateId = $('#userTemplate').val();
 							// if the added block was a user template, show the template popup immediately
-							if(userTemplateId)
+							if(isUserTemplate)
 							{
-								jsBackend.pages.extras.showUserTemplateDialog(userTemplateId);
+								jsBackend.pages.extras.showUserTemplateDialog($('#userTemplate').val());
 							}
 						}
 					},
