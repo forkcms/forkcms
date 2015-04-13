@@ -7,6 +7,7 @@ Improvements:
 
 Bugfixes:
 
+* Core: Fixed bug with decoding in truncate modifier
 
 3.9.1 (2015-03-12)
 --
