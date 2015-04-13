@@ -290,10 +290,12 @@ jsBackend.pages.extras =
 		// show the defined user templates
 		if(selectedType == 'usertemplate')
 		{
+			var $userTemplate = $('#userTemplate');
+			$userTemplate.find('option').not('[value=-1]').remove();
 			for(var j in userTemplates)
 			{
 				// add option if needed
-				$('#userTemplate').append('<option value="'+ j +'">'+ userTemplates[j].title +'</option>');
+				$userTemplate.append('<option value="'+ j +'">'+ userTemplates[j].title +'</option>');
 			}
 			$('#userTemplateHolder').show();
 		}
