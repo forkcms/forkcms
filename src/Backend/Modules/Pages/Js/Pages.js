@@ -268,6 +268,7 @@ jsBackend.pages.extras =
 		// hide
 		$('#extraModuleHolder').hide();
 		$('#extraExtraIdHolder').hide();
+		$('#userTemplateHolder').hide();
 		$('#extraModule').html('<option value="0">-</option>');
 		$('#extraExtraId').html('<option value="0">-</option>');
 
