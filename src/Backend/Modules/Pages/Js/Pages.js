@@ -60,8 +60,9 @@ jsBackend.pages.extras =
 	},
 
 	// store the extra for real
-	addBlock: function(selectedExtraId, selectedPosition)
+	addBlock: function(selectedExtraId, selectedPosition, selectedExtraType)
 	{
+		selectedExtraType = selectedExtraType || 'rich_text';
 		// clone prototype block
 		var block = $('.contentBlock:first').clone();
 
@@ -93,22 +94,22 @@ jsBackend.pages.extras =
 		var visible = blockVisibility.attr('checked');
 
 		// add visual representation of block to template visualisation
-		var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible);
+		var addedVisual = jsBackend.pages.extras.addBlockVisual(selectedPosition, index, selectedExtraId, visible, selectedExtraType);
 
 		// block/widget = don't show editor
 		if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') $('.blockContentHTML', block).hide();
 
-		// editor
+		// editor or user template
 		else $('.blockContentHTML', block).show();
 
 		// reset block indexes
-//		jsBackend.pages.extras.resetIndexes();
+		jsBackend.pages.extras.resetIndexes();
 
 		return addedVisual ? index : false;
 	},
 
 	// add block visual on template
-	addBlockVisual: function(position, index, extraId, visible)
+	addBlockVisual: function(position, index, extraId, visible, extraType)
 	{
 		// check if the extra is valid
 		if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
@@ -125,6 +126,16 @@ jsBackend.pages.extras =
 			// title, description & visibility
 			title = extrasById[extraId].human_name;
 			description = extrasById[extraId].path;
+		}
+
+		// user template
+		else if(extraType == 'usertemplate')
+		{
+			var template = jsBackend.pages.template.userTemplates[extraId];
+
+			editLink = '';
+			title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
+			description = template['title'];
 		}
 
 		// editor
@@ -464,13 +475,20 @@ jsBackend.pages.extras =
 						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
 						click: function()
 						{
+							// fetch the selected extra type
+							var selectedExtraType = $('#extraType').val();
 							// fetch the selected extra id
 							var selectedExtraId = $('#extraExtraId').val();
 							// is user template?
-							var isUserTemplate = ($('#extraType').val() == 'usertemplate');
+							var isUserTemplate = (selectedExtraType == 'usertemplate');
+							// fetch user template id
+							if (isUserTemplate)
+							{
+								selectedExtraId = $('#userTemplate').val();
+							}
 
 							// add the extra
-							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position, selectedExtraType);
 
 							// add a block = template is no longer original
 							jsBackend.pages.template.original = false;
@@ -485,7 +503,7 @@ jsBackend.pages.extras =
 							}
 
 							// if the added block was a user template, show the template popup immediately
-							if(isUserTemplate)
+							if(isUserTemplate && index)
 							{
 								jsBackend.pages.extras.showUserTemplateDialog($('#userTemplate').val());
 							}
