@@ -6,6 +6,8 @@ Improvements:
 
 Bugfixes:
 
+* Groups: Fix (in add/edit) for executing widgets for which the module doesn't exists.
+
 
 3.9.1 (2015-03-12)
 --
