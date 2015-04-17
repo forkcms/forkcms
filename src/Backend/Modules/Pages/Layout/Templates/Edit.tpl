@@ -105,6 +105,9 @@
 							{* this will store the selected extra *}
 							{$positions.blocks.hidExtraId}
 
+							{* this will store the extra type *}
+							{$positions.blocks.hidExtraType}
+
 							{* this will store the selected position *}
 							{$positions.blocks.hidPosition}
 

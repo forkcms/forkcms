@@ -75,12 +75,14 @@ jsBackend.pages.extras =
 		// update index occurences in the hidden data
 		var blockHtml = $('textarea[id^=blockHtml]', block);
 		var blockExtraId = $('input[id^=blockExtraId]', block);
+		var blockExtraType = $('input[id^=blockExtraType]', block);
 		var blockPosition = $('input[id^=blockPosition]', block);
 		var blockVisibility = $('input[id^=blockVisible]', block);
 
 		// update id & name to new index
 		blockHtml.prop('id', blockHtml.prop('id').replace('0', index)).prop('name', blockHtml.prop('name').replace('0', index));
 		blockExtraId.prop('id', blockExtraId.prop('id').replace('0', index)).prop('name', blockExtraId.prop('name').replace('0', index));
+		blockExtraType.prop('id', blockExtraType.prop('id').replace('0', index)).prop('name', blockExtraType.prop('name').replace('0', index));
 		blockPosition.prop('id', blockPosition.prop('id').replace('0', index)).prop('name', blockPosition.prop('name').replace('0', index));
 		blockVisibility.prop('id', blockVisibility.prop('id').replace('0', index)).prop('name', blockVisibility.prop('name').replace('0', index));
 
@@ -89,6 +91,9 @@ jsBackend.pages.extras =
 
 		// save extra id
 		blockExtraId.val(selectedExtraId);
+
+		// save extra type
+		blockExtraType.val(selectedExtraType);
 
 		// add block to dom
 		block.appendTo($('#editContent'));
@@ -150,12 +155,21 @@ jsBackend.pages.extras =
 			description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
+		var linkClass = '';
+		if(extraType == 'usertemplate')
+		{
+			linkClass = 'editUserTemplate ';
+		}
+		else if(extraId == 0) {
+			linkClass = 'showEditor ';
+		}
+
 		// create html to be appended in template-view
 		var blockHTML = '<div class="templatePositionCurrentType' + (visible ? ' ' : ' templateDisabled') + '" data-block-id="' + index + '">' +
 							'<span class="templateTitle">' + title + '</span>' +
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="buttonHolder">' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + linkClass + 'button icon iconOnly iconEdit' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span>' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</span></a>' +
 								'<a href="#" class="button icon iconOnly ' + (visible ? 'iconVisible ' : 'iconInvisible ') + 'toggleVisibility"><span>&nbsp;</span></a>' +
 								'<a href="#" class="deleteBlock button icon iconOnly iconDelete"><span>' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</span></a>' +
 							'</div>' +
@@ -905,6 +919,7 @@ jsBackend.pages.template =
 			// fetch variables
 			var index = $('input[id^=blockExtraId]', this).prop('id').replace('blockExtraId', '');
 			var extraId = parseInt($('input[id^=blockExtraId]', this).val());
+			var extraType = $('input[id^=blockExtraType]', this).val();
 			var position = $('input[id^=blockPosition]', this).val();
 			var visible = $('input[id^=blockVisible]', this).attr('checked');
 
@@ -925,7 +940,7 @@ jsBackend.pages.template =
 			}
 
 			// add visual representation of block to template visualisation
-			added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible);
+			added = jsBackend.pages.extras.addBlockVisual(position, index, extraId, visible, extraType);
 
 			// if the visual could be not added, remove the content entirely
 			if(!added) $(this).remove();
