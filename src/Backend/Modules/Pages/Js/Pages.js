@@ -56,6 +56,7 @@ jsBackend.pages.extras =
 		$(document).on('click', 'a.addBlock', jsBackend.pages.extras.showAddDialog);
 		$(document).on('click', 'a.deleteBlock', jsBackend.pages.extras.showDeleteDialog);
 		$(document).on('click', '.showEditor', jsBackend.pages.extras.editContent);
+		$(document).on('click', '.editUserTemplate', jsBackend.pages.extras.editUserTemplate);
 		$(document).on('click', '.toggleVisibility', jsBackend.pages.extras.toggleVisibility);
 
 		// make the default position sortable
@@ -522,7 +523,7 @@ jsBackend.pages.extras =
 							// if the added block was a user template, show the template popup immediately
 							if(isUserTemplate && index)
 							{
-								jsBackend.pages.extras.showUserTemplateDialog($('#userTemplate').val());
+								$('.templatePositionCurrentType[data-block-id=' + index + '] .editUserTemplate').click();
 							}
 						}
 					},
@@ -539,136 +540,134 @@ jsBackend.pages.extras =
 		}
 	},
 
-	showUserTemplateDialog: function(userTemplateId)
+	editUserTemplate: function(e)
 	{
-		var templateUrl, sourceHTML;
+		// prevent default event action
+		e.preventDefault();
 
-		templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+		// fetch block index
+		var index = $(this).parent().parent().attr('data-block-id');
 
-		$.ajax({
-			url: '/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/test.html',
-			dataType: 'html',
-			success: function(data)
-			{
-				$('#userTemplateHiddenPlaceholder').html(data);
-					jsBackend.pages.extras.convertUserTemplateToForm();
-				}
-			}
-		);
+		// fetch user template id
+		var userTemplateId = $('#blockExtraId' + index).val();
 
-		if($('#addUserTemplate').length > 0)
+		// placeholder for block node that will be moved by the jQuery dialog
+		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
+
+		$('#addUserTemplate').dialog(
 		{
-			$('#addUserTemplate').dialog({
-				draggable: false,
-				resizable: false,
-				modal: true,
-				width: 700,
-				buttons:
-				[
+			closeOnEscape: false,
+			draggable: false,
+			resizable: false,
+			modal: true,
+			width: 700,
+			title: utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate')),
+			position: 'center',
+			buttons:
+			[
+				{
+					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
+					click: function()
 					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
-						click: function()
-						{
-							// fetch the selected extra id
-							var selectedExtraId = $('#extraExtraId').val();
+						// grab content
+						var content = $('#userTemplateHiddenPlaceholder').html();
 
-							// add the extra
-							var index = jsBackend.pages.extras.addBlock(selectedExtraId, position);
+						//save content
+						jsBackend.pages.extras.setContent(index, content);
 
-							// add a block = template is no longer original
-							jsBackend.pages.template.original = false;
+						// edit content = template is no longer original
+						jsBackend.pages.template.original = false;
 
-							// close dialog
-							$(this).dialog('close');
-
-							// if the added block was an editor, show the editor immediately
-							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
-
-							// if the added block was a user template, show the template popup immediately
-							if(index && !(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')) {$('.templatePositionCurrentType[data-block-id=' + index + '] .showEditor').click();}
-						}
-					},
-					{
-						text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
-						click: function()
-						{
-							// close the dialog
-							$(this).dialog('close');
-						}
+						// close dialog
+						$(this).dialog('close');
 					}
-				]
-			});
-		}
-	},
+				},
+				{
+					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
+					click: function()
+					{
+						// reset content
+						// todo
+						//jsBackend.pages.extras.setContent(index, previousContent);
 
-	convertUserTemplateToForm: function()
-	{
-		var $hiddenPlaceholder, $placeholder;
+						// close the dialog
+						$(this).dialog('close');
+					}
+				}
+			],
+			// jQuery's dialog is so nice to move this node to display it well, but does not put it back where it belonged
+			close: function(e, ui)
+			{
+				// destroy dialog (to get rid of html order problems)
+				$(this).dialog('destroy');
 
-		$hiddenPlaceholder = $('#userTemplateHiddenPlaceholder');
-		$placeholder = $('#userTemplatePlaceholder');
+				// find block placeholder
+				var blockPlaceholder = $('#blockPlaceholder');
 
-		// replace links
-		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
-			var $this, text, url, label, html;
+				// move node back to the original position
+				$(this).insertBefore(blockPlaceholder);
 
-			$this = $(this);
-			text = $this.text();
-			url = $this.attr('href');
-			label = $this.data('ft-label');
+				// remove placeholder
+				blockPlaceholder.remove();
+			},
+			// Open dialog
+			open: function()
+			{
+				var templateUrl, sourceHTML;
 
-			html = '<div>';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
-			html += '<label>URL</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
-			html += '</div>';
+				templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
 
-			$placeholder.append(html);
-		});
+				$.ajax({
+							url: templateUrl,
+							dataType: 'html',
+							success: function(data)
+							{
+								$('#userTemplateHiddenPlaceholder').html(data);
 
-		// replace text
-		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
-			var $this, text, label, html;
+								var $hiddenPlaceholder, $placeholder;
 
-			$this = $(this);
-			text = $this.text();
-			label = $this.data('ft-label');
+								$hiddenPlaceholder = $('#userTemplateHiddenPlaceholder');
+								$placeholder = $('#userTemplatePlaceholder');
+								$placeholder.html('');
 
-			html = '<div>';
-			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
-			html += '<div>';
+								// replace links
+								$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
+									var $this, text, url, label, html;
 
-			$placeholder.append(html);
-		});
+									$this = $(this);
+									text = $this.text();
+									url = $this.attr('href');
+									label = $this.data('ft-label');
 
-		jsBackend.pages.extras.liveEditUserTemplate();
-	},
+									html = '<div>';
+									html += '<label>' + label + '</label>';
+									html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
+									html += '<label>URL</label>';
+									html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+									html += '</div>';
 
-	liveEditUserTemplate: function() {
-		// live edit example texts
-		$('#userTemplatePlaceholder').find('[data-ft-label]').on('input', function() {
-			var $this, label, content;
+									$placeholder.append(html);
+								});
 
-			$this = $(this);
-			label = $this.data('ft-label');
-			content = $this.val();
+								// replace text
+								$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
+									var $this, text, label, html;
 
-			// replace original
-			$('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').html(content);
-		});
+									$this = $(this);
+									text = $this.text();
+									label = $this.data('ft-label');
 
-		// live edit urls (special case)
-		$('#userTemplatePlaceholder').find('[data-ft-url]').on('input', function() {
-			var $this, label, url;
+									html = '<div>';
+									html += '<label>' + label + '</label>';
+									html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
+									html += '<div>';
 
-			$this = $(this);
-			label = $this.data('ft-url');
-			url = $this.val();
-
-			// replace original
-			$('#userTemplateHiddenPlaceholder').find('[data-ft-label="' + label + '"]').attr('href', url);
+									$placeholder.append(html);
+								});
+							}
+						}
+				);
+			}
 		});
 	},
 
