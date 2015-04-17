@@ -45,6 +45,9 @@ jsBackend.pages.extras =
 	// init, something like a constructor
 	init: function()
 	{
+		// get user templates
+		jsBackend.pages.template.userTemplates = jsData.pages.templates;
+
 		// bind events
 		$('#extraType').on('change', jsBackend.pages.extras.populateExtraModules);
 		$('#extraModule').on('change', jsBackend.pages.extras.populateExtraIds);
@@ -812,11 +815,6 @@ jsBackend.pages.template =
 
 		// load to initialize when adding a page
 		jsBackend.pages.template.changeTemplate();
-
-		// get user templates
-		$.getJSON('/src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/Templates.js', function(data) {
-			jsBackend.pages.template.userTemplates = data;
-		});
 	},
 
 	// method to change a template

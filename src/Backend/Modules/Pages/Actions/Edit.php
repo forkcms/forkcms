@@ -109,6 +109,10 @@ class Edit extends BackendBaseActionEdit
         // get the extras
         $this->extras = BackendExtensionsModel::getExtras();
 
+        // load user templates
+        $templates = json_decode(file_get_contents('src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/Templates.js'));
+        $this->header->addJsData('pages', 'templates', $templates);
+
         $this->loadForm();
         $this->loadDrafts();
         $this->loadRevisions();
