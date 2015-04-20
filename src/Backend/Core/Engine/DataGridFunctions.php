@@ -19,7 +19,7 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class DataGridFunctions
 {
-    protected static $dataGridUsers;
+    protected static $dataGridUsers = array();
 
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
