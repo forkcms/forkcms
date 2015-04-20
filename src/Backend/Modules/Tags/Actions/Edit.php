@@ -34,6 +34,11 @@ class Edit extends BackendBaseActionEdit
     protected $dgUsage;
 
     /**
+     * @var Tag
+     */
+    protected $tag;
+
+    /**
      * Execute the action
      */
     public function execute()
@@ -59,7 +64,7 @@ class Edit extends BackendBaseActionEdit
      */
     private function getData()
     {
-        $this->record = BackendTagsModel::get($this->id);
+        $this->tag = BackendTagsModel::get($this->id);
     }
 
     /**
@@ -116,7 +121,7 @@ class Edit extends BackendBaseActionEdit
     private function loadForm()
     {
         $this->frm = new BackendForm('edit');
-        $this->frm->addText('name', $this->record->getName());
+        $this->frm->addText('name', $this->tag->getName());
     }
 
     /**
@@ -128,7 +133,7 @@ class Edit extends BackendBaseActionEdit
 
         // assign id, name
         $this->tpl->assign('id', $this->id);
-        $this->tpl->assign('name', $this->record->getName());
+        $this->tpl->assign('name', $this->tag->getName());
 
         // assign usage-datagrid
         $this->tpl->assign('usage', (string) $this->dgUsage->getContent());
@@ -149,23 +154,23 @@ class Edit extends BackendBaseActionEdit
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                $this->record->setName($this->frm->getField('name')->getValue());
-                $this->record->setUrl(BackendTagsModel::getURL(
-                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($this->record->getName())),
+                $this->tag->setName($this->frm->getField('name')->getValue());
+                $this->tag->setUrl(BackendTagsModel::getURL(
+                    CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($this->tag->getName())),
                     $this->id
                 ));
 
                 // update the item
-                BackendTagsModel::update($this->record);
+                BackendTagsModel::update($this->tag);
 
                 // trigger event
-                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $this->record));
+                BackendModel::triggerEvent($this->getModule(), 'after_edit', array('item' => $this->tag));
 
                 // everything is saved, so redirect to the overview
                 $this->redirect(
                     BackendModel::createURLForAction('Index') . '&report=edited&var=' . urlencode(
-                        $this->record->getName()
-                    ) . '&highlight=row-' . $this->record->getId()
+                        $this->tag->getName()
+                    ) . '&highlight=row-' . $this->tag->getId()
                 );
             }
         }
