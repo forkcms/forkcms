@@ -191,7 +191,7 @@ class Model
     public static function getName($id)
     {
         /** @var Tag[] Retrieve a tag */
-        $item = FrontendModel::get('doctrine.orm.entity_manager')
+        $tag = FrontendModel::get('doctrine.orm.entity_manager')
             ->getRepository(BackendTagsModel::ENTITY_CLASS)
             ->findOneBy(
                 array(
@@ -201,7 +201,7 @@ class Model
             )
         ;
 
-        return ($item) ? $item->getName() : null;
+        return ($tag) ? $tag->getName() : null;
     }
 
     /**

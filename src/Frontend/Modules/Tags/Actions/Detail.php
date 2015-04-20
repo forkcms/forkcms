@@ -27,9 +27,9 @@ class Detail extends FrontendBaseBlock
     /**
      * The tag
      *
-     * @var    array
+     * @var Tag
      */
-    private $record = array();
+    private $tag;
 
     /**
      * The items per module with this tag
@@ -62,23 +62,23 @@ class Detail extends FrontendBaseBlock
         }
 
         // fetch record
-        $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
+        $this->tag = FrontendTagsModel::get($this->URL->getParameter(1));
 
         // validate record
-        if (empty($this->record)) {
+        if (empty($this->tag)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // init variables
         $modules = $otherIds = array();
 
-        // fetch connections
-        $this->connections = FrontendTagsModel::getModulesForTag($this->record->getId());
+        // fetch tag connections
+        $tagConnections = FrontendTagsModel::getModulesForTag($this->tag->getId());
 
-        // loop all connections and get the item for this tag
-        foreach ($this->connections as $connection) {
-            $modules[] = $connection->getModule();
-            $otherIds[$connection->getModule()][] = $connection->getOtherId();
+        // loop all tag connections and get the item for this tag
+        foreach ($tagConnections as $tagConnection) {
+            $modules[] = $tagConnection->getModule();
+            $otherIds[$tagConnection->getModule()][] = $tagConnection->getOtherId();
         }
 
         // loop modules
@@ -87,7 +87,12 @@ class Detail extends FrontendBaseBlock
             $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
             // get the items that are linked to the tags
-            $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds[$module]);
+            $items = (array) FrontendTagsModel::callFromInterface(
+                $module,
+                $class,
+                'getForTags',
+                $otherIds[$module]
+            );
 
             // add into results array
             if (!empty($items)) {
@@ -106,15 +111,21 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // assign tag
-        $this->tpl->assign('tag', $this->record);
+        $this->tpl->assign('tag', $this->tag);
 
         // assign tags
         $this->tpl->assign('tagsModules', $this->results);
 
         // update breadcrumb
-        $this->breadcrumb->addElement($this->record->getName());
+        $this->breadcrumb->addElement($this->tag->getName());
 
         // tag-pages don't have any SEO-value, so don't index them
-        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
+        $this->header->addMetaData(
+            array(
+                'name' => 'robots',
+                'content' => 'noindex, follow'
+            ),
+            true
+        );
     }
 }
