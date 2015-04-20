@@ -10,7 +10,7 @@ namespace Common\Core;
  */
 
 /**
- * This class will initiate the frontend-application
+ * This class will initiate the application
  *
  * @author Ghazi Triki <ghazi.triki@inhanx.com>
  */

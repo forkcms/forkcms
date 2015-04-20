@@ -29,7 +29,7 @@ class Init extends \Common\Core\Init
         $type = (string) $type;
 
         // check if this is a valid type
-        if (!in_array($type, $this->$allowedTypes)) {
+        if (!in_array($type, $this->allowedTypes)) {
             exit('Invalid init-type');
         }
 
