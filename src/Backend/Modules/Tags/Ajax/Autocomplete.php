@@ -18,6 +18,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Autocomplete extends BackendBaseAJAXAction
 {

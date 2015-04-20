@@ -23,6 +23,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  *
  * @author Dave Lens <dave.lens@netlash.com>
  * @author Davy Hellemans <davy.hellemans@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Edit extends BackendBaseActionEdit
 {
