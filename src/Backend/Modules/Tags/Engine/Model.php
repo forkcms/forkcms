@@ -64,8 +64,8 @@ class Model
      */
     public static function existsTag($tag)
     {
-        /** @var Tag Retrieve the tag */
-        $item = BackendModel::get('doctrine.orm.entity_manager')
+        /** @var Tag $tag Retrieve the tag */
+        $tag = BackendModel::get('doctrine.orm.entity_manager')
             ->getRepository(self::ENTITY_CLASS)
             ->findOneBy(
                 array(
@@ -75,7 +75,7 @@ class Model
             )
         ;
 
-        return ($item);
+        return ($tag);
     }
 
     /**
@@ -185,7 +185,7 @@ class Model
 
         // no specific id
         if ($id === null) {
-            $items = $em
+            $tags = $em
                 ->getRepository(self::ENTITY_CLASS)
                 ->findBy(array(
                      'url' => $URL,
@@ -194,7 +194,7 @@ class Model
             ;
 
             // there are items so, call this method again.
-            if (!empty($items)) {
+            if (!empty($tags)) {
                 // add a number
                 $URL = BackendModel::addNumber($URL);
 
@@ -202,7 +202,7 @@ class Model
                 $URL = self::getURL($URL, $id);
             }
         } else {
-            $items = $em
+            $tags = $em
                 ->getRepository(self::ENTITY_CLASS)
                 ->createQueryBuilder('i')
                 ->where('i.url = :url')
@@ -216,7 +216,7 @@ class Model
             ;
 
             // there are items so, call this method again.
-            if (!empty($items)) {
+            if (!empty($tags)) {
                 // add a number
                 $URL = BackendModel::addNumber($URL);
 
@@ -236,30 +236,30 @@ class Model
      *                         if not provided the workinglanguage will be used.
      * @return int
      */
-    public static function insert(Tag $item)
+    public static function insert(Tag $tag)
     {
         // insert tag
         $em = BackendModel::get('doctrine.orm.entity_manager');
-        $em->persist($item);
+        $em->persist($tag);
         $em->flush();
 
-        return $item->getId();
+        return $tag->getId();
     }
 
     /**
      * Save the tags
      *
      * @param int    $otherId  The id of the item to tag.
-     * @param mixed  $tags     The tags for the item.
+     * @param mixed  $tagNames The tag-names for the item.
      * @param string $module   The module wherein the item is located.
      * @param string $language The language wherein the tags will be inserted,
      *                         if not provided the workinglanguage will be used.
      */
-    public static function saveTags($otherId, $tags, $module, $language = null)
+    public static function saveTags($otherId, $tagNames, $module, $language = null)
     {
         // redefine variables
         $otherId = (int) $otherId;
-        $tags = (is_array($tags)) ? (array) $tags : (string) $tags;
+        $tagNames = (is_array($tagNames)) ? (array) $tagNames : (string) $tagNames;
         $module = (string) $module;
         $language = ($language != null) ? (string) $language : BL::getWorkingLanguage();
 
@@ -302,24 +302,24 @@ class Model
         }
 
         // redefine the tags as an array
-        if (!is_array($tags)) {
-            $tags = (array) explode(',', $tags);
+        if (!is_array($tagNames)) {
+            $tagNames = (array) explode(',', $tagNames);
         }
 
         // make sure the list of tags is unique
-        $tags = array_unique($tags);
+        $tagNames = array_unique($tagNames);
         
         // we have tags to save
-        if (!empty($tags)) {
-            foreach ($tags as $key => $tag) {
+        if (!empty($tagNames)) {
+            foreach ($tagNames as $key => $tagName) {
                 // cleanup
-                $tag = strtolower(trim($tag));
+                $tagName = strtolower(trim($tagName));
 
                 // unset if the tag is empty
-                if ($tag == '') {
-                    unset($tags[$key]);
+                if ($tagName == '') {
+                    unset($tagNames[$key]);
                 } else {
-                    $tags[$key] = $tag;
+                    $tagNames[$key] = $tagName;
                 }
             }
 
@@ -327,7 +327,7 @@ class Model
             $tagsToConnect = $em
                 ->getRepository(self::ENTITY_CLASS)
                 ->findBy(array(
-                    'name' => $tags,
+                    'name' => $tagNames,
                     'language' => $language,
                 ))
             ;
@@ -340,44 +340,46 @@ class Model
             }
 
             // loop again and insert tags that don't already exist
-            foreach ($tags as $tag) {
+            foreach ($tagNames as $tagName) {
                 // tag doesn't exist yet
-                if (!isset($existingTagIds[$tag])) {
-                    // build new tag
-                    $item = new Tag();
-                    $item
-                        ->setName($tag)
+                if (!isset($existingTagIds[$tagName])) {
+                    $tag = new Tag();
+
+                    // build tag
+                    $tag
+                        ->setName($tagName)
                         ->setNumberOfConnections(0)
-                        ->setUrl(self::getURL($tag))
+                        ->setUrl(self::getURL($tagName))
                         ->setLanguage($language)
                     ;
 
                     // insert tag
-                    self::insert($item);
+                    self::insert($tag);
 
                     // add to tags to connect
-                    $tagsToConnect[] = $item;
+                    $tagsToConnect[] = $tag;
                 }
             }
 
             // loop all tags to connect
             foreach ($tagsToConnect as $tag) {
-                // build new tag connection
-                $item = new TagConnection();
-                $item
+                $tagConnection = new TagConnection();
+
+                // build tag connection
+                $tagConnection
                     ->setModule($module)
                     ->setOtherId($otherId)
                 ;
 
                 // add connection
-                $tag->addConnection($item);
+                $tagConnection->addConnection($tag);
 
                 // bump number
                 $tag->setNumberOfConnections($tag->getNumberOfConnections() + 1);
 
                 // update
-                $em->persist($item);
                 $em->persist($tag);
+                $em->persist($tagConnection);
             }
             $em->flush();
         }
@@ -387,7 +389,7 @@ class Model
             $module,
             $otherId,
             array(
-                'tags' => implode(' ', (array) $tags)
+                'tags' => implode(' ', (array) $tagNames)
             ),
             $language
         );
@@ -402,7 +404,7 @@ class Model
     /**
      * Update a tag
      *
-     * @param Tag $item The new data.
+     * @param Tag $tag The Tag Entity to update.
      * @return int $id
      */
     public static function update(Tag $tag)
