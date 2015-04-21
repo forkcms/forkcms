@@ -13,6 +13,7 @@ use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Tags\Entity\Tag;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
