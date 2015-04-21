@@ -370,6 +370,7 @@ class Page extends FrontendBaseObject
                         $positions[$position][$i] = array(
                             'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
                             'blockIsHTML' => false,
+                            'blockIsEditor' => false,
                             'blockContent' => $block['extra']->getContent()
                         );
 
@@ -499,6 +500,7 @@ class Page extends FrontendBaseObject
                     // the block only contains HTML
                     $block = array(
                         'blockIsHTML' => true,
+                        'blockIsEditor' => true,
                         'blockContent' => $block['html']
                     );
                 }

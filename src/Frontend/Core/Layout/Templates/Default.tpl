@@ -34,7 +34,7 @@
 
 			{* Main position *}
 			{iteration:positionMain}
-				{option:positionMain.blockIsHTML}
+				{option:positionMain.blockIsEditor}
 					<section class="mod">
 						<div class="inner">
 							<div class="bd content">
@@ -42,10 +42,10 @@
 							</div>
 						</div>
 					</section>
-				{/option:positionMain.blockIsHTML}
-				{option:!positionMain.blockIsHTML}
+				{/option:positionMain.blockIsEditor}
+				{option:!positionMain.blockIsEditor}
 					{$positionMain.blockContent}
-				{/option:!positionMain.blockIsHTML}
+				{/option:!positionMain.blockIsEditor}
 			{/iteration:positionMain}
 		</section>
 
