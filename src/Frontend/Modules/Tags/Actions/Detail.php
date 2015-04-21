@@ -13,7 +13,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
-use Frontend\Modules\Tags\Entity\Tag;
+use Backend\Modules\Tags\Entity\Tag;
 
 /**
  * This is the detail-action
