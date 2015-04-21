@@ -72,7 +72,7 @@ class Init extends \Common\Core\Init
         $output = (string) $output;
 
         // mail it?
-        if (SPOON_DEBUG_EMAIL != '') {
+        if (self::getContainer()->getParameter('fork.debug_email') != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -80,7 +80,7 @@ class Init extends \Common\Core\Init
             $headers .= "X-Mailer: SpoonLibrary Webmail\n";
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail(self::getContainer()->getParameter('fork.debug_email'), 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
         }
 
         // build HTML for nice error

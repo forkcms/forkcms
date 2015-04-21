@@ -16,7 +16,6 @@ namespace Common\Core;
  */
 abstract class Init extends \KernelLoader
 {
-
     /**
      * Current type
      *
@@ -143,7 +142,7 @@ abstract class Init extends \KernelLoader
         $output = (string) $output;
 
         // mail it?
-        if (SPOON_DEBUG_EMAIL != '') {
+        if (self::getContainer()->getParameter('fork.debug_email') != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -152,7 +151,7 @@ abstract class Init extends \KernelLoader
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
             // send email
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail(self::getContainer()->getParameter('fork.debug_email'), 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
         }
 
         echo '<html><body>Something went wrong.</body></html>';
