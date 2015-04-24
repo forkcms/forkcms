@@ -415,6 +415,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
 								$('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
 								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
+								if(data.data.field.settings.copy_to && data.data.field.settings.copy_to == true) $('#textboxCopyTo').prop('checked', true);
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -1348,6 +1349,7 @@ jsBackend.formBuilder.fields =
 		var value = $('#textboxValue').val();
 		var placeholder = $('#textboxPlaceholder').val();
 		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
+		var copyTo = ($('#textboxCopyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
 		var validation = $('#textboxValidation').val();
@@ -1366,6 +1368,7 @@ jsBackend.formBuilder.fields =
 				default_values: value,
 				placeholder: placeholder,
 				reply_to: replyTo,
+				copy_to: copyTo,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,
@@ -1398,6 +1401,9 @@ jsBackend.formBuilder.fields =
 						}
 						if(typeof data.data.errors.reply_to_error_message != 'undefined') {
 							$('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
+						}
+						if(typeof data.data.errors.copy_to_error_message != 'undefined') {
+							$('#textboxCopyToErrorMessageError').html(data.data.errors.copy_to_error_message);
 						}
 
 						// toggle error messages

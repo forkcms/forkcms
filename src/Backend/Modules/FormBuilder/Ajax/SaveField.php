@@ -52,8 +52,9 @@ class SaveField extends BackendBaseAJAXAction
         $validationParameter = trim(\SpoonFilter::getPostValue('validation_parameter', null, '', 'string'));
         $errorMessage = trim(\SpoonFilter::getPostValue('error_message', null, '', 'string'));
 
-        // special field for textbox: reply to
+        // special fields for textbox: reply to, copy to
         $replyTo = \SpoonFilter::getPostValue('reply_to', array('Y','N'), 'N', 'string');
+        $copyTo = \SpoonFilter::getPostValue('copy_to', array('Y','N'), 'N', 'string');
 
         // special fields for datetime
         $inputType = \SpoonFilter::getPostValue('input_type', array('date','time'), 'date', 'string');
@@ -95,6 +96,9 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         if ($replyTo == 'Y' && $validation != 'email') {
                             $errors['reply_to_error_message'] = BL::getError('EmailValidationIsRequired');
+                        }
+                        if ($copyTo == 'Y' && $validation != 'email') {
+                            $errors['copy_to_error_message'] = BL::getError('EmailValidationIsRequired');
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea
@@ -212,9 +216,10 @@ class SaveField extends BackendBaseAJAXAction
                             $settings['placeholder'] = \SpoonFilter::htmlspecialchars($placeholder);
                         }
 
-                        // reply-to, only for textboxes
+                        // reply-to, copy-to, only for textboxes
                         if ($type == 'textbox') {
                             $settings['reply_to'] = ($replyTo == 'Y');
+                            $settings['copy_to'] = ($copyTo == 'Y');
                         }
 
                         // only for datetime input

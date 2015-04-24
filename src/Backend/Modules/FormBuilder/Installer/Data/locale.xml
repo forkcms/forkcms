@@ -456,6 +456,10 @@
         <translation language="zh"><![CDATA[回复给]]></translation>
         <translation language="de"><![CDATA[Antwort an]]></translation>
       </item>
+      <item type="label" name="CopyTo">
+        <translation language="nl"><![CDATA[copy to]]></translation>
+        <translation language="en"><![CDATA[copy to]]></translation>
+      </item>
       <item type="label" name="Required">
         <translation language="nl"><![CDATA[vereist]]></translation>
         <translation language="en"><![CDATA[required]]></translation>
@@ -824,6 +828,10 @@
         <translation language="zh"><![CDATA[使用这个字段里的值作为“回复给”email地址的对象]]></translation>
         <translation language="de"><![CDATA[Der Wert dieses Feldes wird als Antwort-Emailadresse verwendet (reply-to)]]></translation>
         <translation language="el"><![CDATA[Χρήση αυτού του πεδίου σαν διεύθυνση email απάντησης.]]></translation>
+      </item>
+      <item type="message" name="HelpCopyTo">
+        <translation language="nl"><![CDATA[Gebruik de ingevulde waarde als 'copy to' emailadres]]></translation>
+        <translation language="en"><![CDATA[Use the value in this field as 'copy to' emailaddress]]></translation>
       </item>
       <item type="message" name="ImportantImmediateUpdate">
         <translation language="nl"><![CDATA[<strong>Belangrijk</strong>: aanpassingen die je hier maakt worden onmiddelijk opgeslaan.]]></translation>

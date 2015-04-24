@@ -79,6 +79,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_placeholder');
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
+        $this->frm->addCheckbox('textbox_copy_to');
         $this->frm->addText('textbox_required_error_message');
         $this->frm->addDropdown(
             'textbox_validation',

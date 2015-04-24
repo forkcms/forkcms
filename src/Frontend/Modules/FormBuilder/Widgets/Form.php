@@ -536,6 +536,12 @@ class Form extends FrontendBaseWidget
                             $email = $this->frm->getField('field' . $field['id'])->getValue();
                             $message->setReplyTo(array($email => $email));
                         }
+                        if (array_key_exists('copy_to', $field['settings']) &&
+                            $field['settings']['copy_to'] === true
+                        ) {
+                            $email = $this->frm->getField('field' . $field['id'])->getValue();
+                            $message->setCc(array($email => $email));
+                        }
                     }
                     if ($message->getReplyTo() === null) {
                         $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');

@@ -190,6 +190,12 @@
 							<abbr class="help">(?)</abbr>
 							<span class="tooltip" style="display: none;">{$msgHelpReplyTo}</span>
 						</p>
+						<p class="p0">
+							<label for="textboxCopyTo">{$lblCopyTo|ucfirst}</label>
+							{$chkTextboxCopyTo}
+							<abbr class="help">(?)</abbr>
+							<span class="tooltip" style="display: none;">{$msgHelpCopyTo}</span>
+						</p>
 					</div>
 					<div class="validation options">
 						<p class="p0">
