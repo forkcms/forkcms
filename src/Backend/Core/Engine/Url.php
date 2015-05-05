@@ -224,7 +224,6 @@ class Url extends Base\Object
                             foreach ($value['children'] as $subItem) {
                                 // split up chunks
                                 list($module, $action) = explode('/', $subItem['url']);
-                                var_dump($module, $action);
 
                                 // user allowed?
                                 if (Authentication::isAllowedModule($module)) {
