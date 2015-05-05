@@ -6,7 +6,7 @@
 <section id="tagsDetail" class="mod">
 	<div class="inner">
 		<header class="hd">
-			<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
+			<h1>{$lblItemsWithTag|sprintf:{$tag.tag}|ucfirst}</h1>
 		</header>
 		<div class="bd">
 			{option:tagsModules}

@@ -18,6 +18,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Dave Lens <dave.lens@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Autocomplete extends BackendBaseAJAXAction
 {
@@ -38,8 +39,17 @@ class Autocomplete extends BackendBaseAJAXAction
             // get tags
             $tags = BackendTagsModel::getStartsWith($term);
 
+            // @todo: let $this->output() convert doctrine objects to arrays
+            $results = array();
+            foreach ($tags as $tag) {
+                $results[] = array(
+                    'name' => $tag->getName(),
+                    'value' => $tag->getName()
+                );
+            }
+
             // output
-            $this->output(self::OK, $tags);
+            $this->output(self::OK, $results);
         }
     }
 }

@@ -23,15 +23,15 @@
 						{* Category*}
 						{$lblIn} {$lblThe} {$lblCategory} <a itemprop="articleSection" href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
 
-						{* Tags *}
-						{option:item.tags}
+						{* Tags *}{*
+						{option:tags}
 							{$lblWith} {$lblThe} {$lblTags}
 							<span itemprop="keywords">
-								{iteration:item.tags}
-									<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
-								{/iteration:item.tags}
+								{iteration:tags}
+									<a href="{$var|geturlforblock:'Tags':'Detail'}/{$tags.url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{option:tags.last}.{/option:tags.last}
+								{/iteration:tags}
 							</span>
-						{/option:item.tags}
+						{/option:tags}*}
 					</li>
 					{* Comments *}
 					{option:item.allow_comments}

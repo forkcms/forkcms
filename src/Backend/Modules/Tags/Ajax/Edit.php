@@ -19,6 +19,7 @@ use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
  * This edit-action will update tags using Ajax
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Edit extends BackendBaseAJAXAction
 {
@@ -31,29 +32,32 @@ class Edit extends BackendBaseAJAXAction
 
         // get parameters
         $id = \SpoonFilter::getPostValue('id', null, 0, 'int');
-        $tag = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
+        $name = trim(\SpoonFilter::getPostValue('value', null, '', 'string'));
 
         // validate id
         if ($id === 0) {
             $this->output(self::BAD_REQUEST, null, 'no id provided');
         } else {
             // validate tag name
-            if ($tag === '') {
+            if ($name === '') {
                 $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
             } else {
                 // check if tag exists
-                if (BackendTagsModel::existsTag($tag)) {
+                if (BackendTagsModel::existsTag($name)) {
                     $this->output(self::BAD_REQUEST, null, BL::err('TagAlreadyExists'));
                 } else {
-                    $item['id'] = $id;
-                    $item['tag'] = \SpoonFilter::htmlspecialchars($tag);
-                    $item['url'] = BackendTagsModel::getURL(
-                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($item['tag'])),
+                    $tag = BackendTagsModel::get($id);
+
+                    $url = BackendTagsModel::getURL(
+                        CommonUri::getUrl(\SpoonFilter::htmlspecialcharsDecode($tag->getName())),
                         $id
                     );
 
-                    BackendTagsModel::update($item);
-                    $this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
+                    $tag->setName(\SpoonFilter::htmlspecialchars($name));
+                    $tag->setUrl($url);
+
+                    BackendTagsModel::update($tag);
+                    $this->output(self::OK, $tag, vsprintf(BL::msg('Edited'), array($tag->getName())));
                 }
             }
         }

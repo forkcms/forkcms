@@ -12,12 +12,15 @@ namespace Frontend\Modules\Tags\Engine;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Tags\Entity\Tag;
 
 /**
  * In this file we store all generic functions that we will be using in the tags module
  *
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Model
 {
@@ -51,37 +54,41 @@ class Model
      * Get the tag for a given URL
      *
      * @param string        $URL The URL to get the tag for.
-     * @param string $language
-     * @return array
+     * @param string $language The language for the item.
+     * @return Tag          A tag
      */
     public static function get($URL, $language = null)
     {
-        // redefine language
         $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        // exists
-        return (array) FrontendModel::getContainer()->get('database')->getRecord(
-            'SELECT id, language, tag AS name, number, url
-             FROM tags
-             WHERE url = ? AND language = ?',
-            array((string) $URL, $language)
-        );
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'url'      => (string) $URL,
+                    'language' => $language,
+                )
+            )
+        ;
     }
 
     /**
      * Fetch the list of all tags, ordered by their occurrence
      *
-     * @return array
+     * @param string $language The language for the items.
+     * @return Tag[] All tags
      */
-    public static function getAll()
+    public static function getAll($language = null)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url, t.number
-             FROM tags AS t
-             WHERE t.language = ? AND t.number > 0
-             ORDER BY t.tag',
-            array(FRONTEND_LANGUAGE)
-        );
+        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->orderBy('i.tag', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -89,44 +96,26 @@ class Model
      *
      * @param string $module  The module wherein the otherId occurs.
      * @param int    $otherId The id of the item.
-     * @return array
+     * @param string $language The language for the items.
+     * @return Tag[] All tags for item
      */
-    public static function getForItem($module, $otherId)
+    public static function getForItem($module, $otherId, $language = null)
     {
-        $module = (string) $module;
-        $otherId = (int) $otherId;
+        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-        // init var
-        $return = array();
-
-        // get tags
-        $linkedTags = (array) FrontendModel::getContainer()->get('database')->getRecords(
-            'SELECT t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id = ?',
-            array($module, $otherId)
-        );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
-        }
-
-        // create link
-        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
-
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
-
-            // add
-            $return[] = $row;
-        }
-
-        // return
-        return $return;
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.connections', 'con')
+            ->where('con.module = :module')
+            ->andWhere('con.other_id = :other_id')
+            ->andWhere('i.language = :language')
+            ->setParameter('module', (string) $module)
+            ->setParameter('other_id', (int) $otherId)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -134,45 +123,30 @@ class Model
      *
      * @param string $module   The module wherefore you want to retrieve the tags.
      * @param array  $otherIds The ids for the items.
-     * @return array
+     * @param string $language The language for the items.
+     * @return Tag[] All tags for multiple items
      */
-    public static function getForMultipleItems($module, array $otherIds)
+    public static function getForMultipleItems($module, array $otherIds, $language = null)
     {
-        $module = (string) $module;
-
-        // get db
-        $db = FrontendModel::getContainer()->get('database');
-
-        // init var
-        $return = array();
-
-        // get tags
-        $linkedTags = (array) $db->getRecords(
-            'SELECT mt.other_id, t.tag AS name, t.url
-             FROM modules_tags AS mt
-             INNER JOIN tags AS t ON mt.tag_id = t.id
-             WHERE mt.module = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
-            array($module)
-        );
-
-        // return
-        if (empty($linkedTags)) {
-            return $return;
+        // redefine variables
+        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        foreach ($otherIds as &$otherId) {
+            $otherId = (int) $otherId;
         }
 
-        // create link
-        $tagLink = FrontendNavigation::getURLForBlock('Tags', 'Detail');
-
-        // loop tags
-        foreach ($linkedTags as $row) {
-            // add full URL
-            $row['full_url'] = $tagLink . '/' . $row['url'];
-
-            // add
-            $return[$row['other_id']][] = $row;
-        }
-
-        return $return;
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.connections', 'con')
+            ->where('con.module = :module')
+            ->andWhere('con.other_id IN (:other_id)')
+            ->andWhere('i.language = :language')
+            ->setParameter('module', (string) $module)
+            ->setParameter('other_id', $otherIds)
+            ->setParameter('language', $language)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -183,30 +157,30 @@ class Model
      */
     public static function getIdByURL($URL)
     {
-        return (int) FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT id
-             FROM tags
-             WHERE url = ?',
-            array((string) $URL)
-        );
+        /** @var Tag $tag Retrieve the tag */
+        $tag = self::get($URL);
+
+        return ($tag) ? $tag->getId() : null;
     }
 
     /**
      * Get the modules that used a tag.
      *
      * @param int $id The id of the tag.
-     * @return array
+     * @return TagConnection[] All connections for a tag
      */
     public static function getModulesForTag($id)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT module
-             FROM modules_tags
-             WHERE tag_id = ?
-             GROUP BY module
-             ORDER BY module ASC',
-            array((int) $id)
-        );
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
+            ->createQueryBuilder('i')
+            ->leftJoin('i.tag', 't')
+            ->andWhere('t.id = :tag_id')
+            ->setParameter('tag_id', (int) $id)
+            ->orderBy('i.module', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
     /**
@@ -217,35 +191,46 @@ class Model
      */
     public static function getName($id)
     {
-        return FrontendModel::getContainer()->get('database')->getVar(
-            'SELECT tag
-             FROM tags
-             WHERE id = ?',
-            array((int) $id)
-        );
+        /** @var Tag[] Retrieve a tag */
+        $tag = FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CLASS)
+            ->findOneBy(
+                array(
+                    'id'       => (int) $id,
+                    'language' => $language,
+                )
+            )
+        ;
+
+        return ($tag) ? $tag->getName() : null;
     }
 
     /**
      * Get all related items
      *
-     * @param int     $id          The id of the item in the source-module.
+     * @param int     $otherId     The id of the item in the source-module.
      * @param int     $module      The source module.
      * @param int     $otherModule The module wherein the related items should appear.
      * @param int $limit       The maximum of related items to grab.
-     * @return array
+     * @return TagConnection[] All connections for an item
      */
-    public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
+    public static function getRelatedItemsByTags($otherId, $module, $otherModule, $limit = 5)
     {
-        return (array) FrontendModel::getContainer()->get('database')->getColumn(
-            'SELECT t2.other_id
-             FROM modules_tags AS t
-             INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-             WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND
-                (t2.module != t.module OR t2.other_id != t.other_id)
-             GROUP BY t2.other_id
-             ORDER BY COUNT(t2.tag_id) DESC
-             LIMIT ?',
-            array((int) $id, (string) $module, (string) $otherModule, (int) $limit)
-        );
+        return FrontendModel::get('doctrine.orm.entity_manager')
+            ->getRepository(BackendTagsModel::ENTITY_CONNECTION_CLASS)
+            ->createQueryBuilder('i')
+            ->innerJoin(BackendTagsModel::ENTITY_CONNECTION_CLASS, 'i2', 'WITH', 'i.tag = i2.tag')
+            ->where('i2.other_id = :other_id')
+            ->andWhere('i2.module = :module')
+            ->andWhere('i.other_id != :other_id')
+            ->andWhere('i.module = :other_module')
+            ->setParameter('other_id', (int) $otherId)
+            ->setParameter('module', (string) $module)
+            ->setParameter('other_module', (string) $otherModule)
+            ->orderBy('COUNT(i.tag_id)', 'DESC')
+            ->setMaxResults((int) $limit)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

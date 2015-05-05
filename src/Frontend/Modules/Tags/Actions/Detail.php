@@ -13,6 +13,7 @@ use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
+use Backend\Modules\Tags\Entity\Tag;
 
 /**
  * This is the detail-action
@@ -20,15 +21,16 @@ use Frontend\Modules\Tags\Engine\Model as FrontendTagsModel;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
+ * @author Jeroen Desloovere <info@jeroendesloovere.be>
  */
 class Detail extends FrontendBaseBlock
 {
     /**
      * The tag
      *
-     * @var    array
+     * @var Tag
      */
-    private $record = array();
+    private $tag;
 
     /**
      * The items per module with this tag
@@ -61,31 +63,37 @@ class Detail extends FrontendBaseBlock
         }
 
         // fetch record
-        $this->record = FrontendTagsModel::get($this->URL->getParameter(1));
+        $this->tag = FrontendTagsModel::get($this->URL->getParameter(1));
 
         // validate record
-        if (empty($this->record)) {
+        if (empty($this->tag)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
-        // fetch modules
-        $this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);
+        // init variables
+        $modules = $otherIds = array();
+
+        // fetch tag connections
+        $tagConnections = FrontendTagsModel::getModulesForTag($this->tag->getId());
+
+        // loop all tag connections and get the item for this tag
+        foreach ($tagConnections as $tagConnection) {
+            $modules[] = $tagConnection->getModule();
+            $otherIds[$tagConnection->getModule()][] = $tagConnection->getOtherId();
+        }
 
         // loop modules
-        foreach ($this->modules as $module) {
-            // get the ids of the items linked to the tag
-            $otherIds = (array) $this->get('database')->getColumn(
-                'SELECT other_id
-                 FROM modules_tags
-                 WHERE module = ? AND tag_id = ?',
-                array($module, $this->record['id'])
-            );
-
+        foreach ($modules as $module) {
             // set module class
             $class = 'Frontend\\Modules\\' . $module . '\\Engine\\Model';
 
             // get the items that are linked to the tags
-            $items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
+            $items = (array) FrontendTagsModel::callFromInterface(
+                $module,
+                $class,
+                'getForTags',
+                $otherIds[$module]
+            );
 
             // add into results array
             if (!empty($items)) {
@@ -104,15 +112,21 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // assign tag
-        $this->tpl->assign('tag', $this->record);
+        $this->tpl->assign('tag', $this->tag);
 
         // assign tags
         $this->tpl->assign('tagsModules', $this->results);
 
         // update breadcrumb
-        $this->breadcrumb->addElement($this->record['name']);
+        $this->breadcrumb->addElement($this->tag->getName());
 
         // tag-pages don't have any SEO-value, so don't index them
-        $this->header->addMetaData(array('name' => 'robots', 'content' => 'noindex, follow'), true);
+        $this->header->addMetaData(
+            array(
+                'name' => 'robots',
+                'content' => 'noindex, follow'
+            ),
+            true
+        );
     }
 }

@@ -49,14 +49,6 @@ CREATE TABLE IF NOT EXISTS `modules_settings` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-CREATE TABLE IF NOT EXISTS `modules_tags` (
- `module` varchar(255) NOT NULL,
- `tag_id` int(11) NOT NULL,
- `other_id` int(11) NOT NULL,
- PRIMARY KEY (`module`,`tag_id`,`other_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
 DROP TABLE IF EXISTS `timezones`;
 CREATE TABLE IF NOT EXISTS `timezones` (
  `id` int(11) NOT NULL auto_increment,
