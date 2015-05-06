@@ -6,6 +6,8 @@ Improvements:
 * Locale: improve performance of the index page
 * Core: reduced database queries in BackendDataGridFunctions::getUser().
 
+* Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
+
 Bugfixes:
 
 * Core: Fixed bug with decoding in truncate modifier

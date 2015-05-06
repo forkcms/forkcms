@@ -1239,7 +1239,10 @@ class Model
      */
     public static function writeCacheFile(array $data, $startTimestamp, $endTimestamp)
     {
-        $xml = "<?xml version='1.0' encoding='" . SPOON_CHARSET . "'?>\n";
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
+        // build xml
+        $xml = "<?xml version='1.0' encoding='" . $charset . "'?>\n";
         $xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
         // loop data
