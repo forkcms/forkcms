@@ -40,13 +40,6 @@ class Model extends \BaseModel
     private static $navigation = array();
 
     /**
-     * Cached modules
-     *
-     * @var    array
-     */
-    private static $modules = array();
-
-    /**
      * Cached module settings
      *
      * @var    array
@@ -662,14 +655,7 @@ class Model extends \BaseModel
      */
     public static function getModules()
     {
-        if (empty(self::$modules)) {
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
-            foreach ($modules as $module) {
-                self::$modules[] = $module;
-            }
-        }
-
-        return self::$modules;
+        return (array) self::getContainer()->getParameter('installed_modules');
     }
 
     /**

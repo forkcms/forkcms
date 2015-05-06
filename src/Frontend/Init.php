@@ -72,7 +72,7 @@ class Init extends \KernelLoader
     private function definePaths()
     {
         // general paths
-        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/' . APPLICATION);
+        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
         defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
         defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
         defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');

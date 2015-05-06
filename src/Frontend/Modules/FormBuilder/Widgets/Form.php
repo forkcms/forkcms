@@ -8,6 +8,8 @@ use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
+use Frontend\Modules\FormBuilder\FormBuilderEvents;
+use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**
  * This is the form widget.
@@ -221,13 +223,13 @@ class Form extends FrontendBaseWidget
                     $item['html'] = $txt->parse();
                 } elseif ($field['type'] == 'datetime') {
                     // create element
-                    if($field['settings']['input_type'] == 'date') {
+                    if ($field['settings']['input_type'] == 'date') {
                         // calculate default value
                         $amount = $field['settings']['value_amount'];
                         $type = $field['settings']['value_type'];
 
-                        if($type != '') {
-                            switch($type) {
+                        if ($type != '') {
+                            switch ($type) {
                                 case 'today':
                                     $defaultValues = date('Y-m-d'); // HTML5 input needs this format
                                     break;
@@ -235,7 +237,9 @@ class Form extends FrontendBaseWidget
                                 case 'week':
                                 case 'month':
                                 case 'year':
-                                    if($amount != '') $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    if ($amount != '') {
+                                        $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    }
                                     break;
                             }
                         }
@@ -471,18 +475,6 @@ class Form extends FrontendBaseWidget
                         $fieldData['value'] = $values[$fieldData['value']];
                     }
 
-                    // prepare fields for email
-                    if ($this->item['method'] == 'database_email') {
-                        // add field for email
-                        $emailFields[] = array(
-                            'label' => $field['settings']['label'],
-                            'value' => (is_array($fieldData['value']) ?
-                                implode(',', $fieldData['value']) :
-                                nl2br($fieldData['value'])
-                            )
-                        );
-                    }
-
                     // clean up
                     if (is_array($fieldData['value']) && empty($fieldData['value'])) {
                         $fieldData['value'] = null;
@@ -500,50 +492,10 @@ class Form extends FrontendBaseWidget
                     FrontendFormBuilderModel::insertDataField($fieldData);
                 }
 
-                // notify the admin
-                FrontendFormBuilderModel::notifyAdmin(
-                    array(
-                        'form_id' => $this->item['id'],
-                        'entry_id' => $dataId
-                    )
+                $this->get('event_dispatcher')->dispatch(
+                    FormBuilderEvents::FORM_SUBMITTED,
+                    new FormBuilderSubmittedEvent($this->item, $fields, $dataId)
                 );
-
-                // need to send mail
-                if ($this->item['method'] == 'database_email') {
-                    // build our message
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                    $message = \Common\Mailer\Message::newInstance(
-                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
-                        )
-                        ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
-                            array(
-                                'sentOn' => time(),
-                                'name' => $this->item['name'],
-                                'fields' => $emailFields,
-                            ),
-                            true
-                        )
-                        ->setTo($this->item['email'])
-                        ->setFrom(array($from['email'] => $from['name']))
-                    ;
-
-                    // check if we have a replyTo email set
-                    foreach ($this->item['fields'] as $field) {
-                        if (array_key_exists('reply_to', $field['settings']) &&
-                            $field['settings']['reply_to'] === true
-                        ) {
-                            $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            $message->setReplyTo(array($email => $email));
-                        }
-                    }
-                    if ($message->getReplyTo() === null) {
-                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                        $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
-                    }
-
-                    $this->get('mailer')->send($message);
-                }
 
                 // trigger event
                 FrontendModel::triggerEvent(
