@@ -186,7 +186,7 @@ class Model extends \BaseModel
             if ($i == 1) {
                 $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
             } else {
-                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
             }
 
             $i++;

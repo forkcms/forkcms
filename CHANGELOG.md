@@ -1,6 +1,7 @@
 3.9.2 (2015-xx-xx)
 --
 Improvements:
+
 * Core: every template can now check if it has a certain parent id with {option:isChildOfPageX}
 * Locale: improve performance of the index page
 * Core: reduced database queries in BackendDataGridFunctions::getUser().
@@ -11,6 +12,7 @@ Improvements:
 Bugfixes:
 
 * Core: Fixed bug with decoding in truncate modifier
+* Core: Fixed encoding ampersand for action url
 
 3.9.1 (2015-03-12)
 --
