@@ -172,7 +172,7 @@ class Page extends FrontendBaseObject
 
         // assign the id so we can use it as an option
         $this->tpl->assign('isPage' . $this->pageId, true);
-        $this->tpl->assign('isPage' . $this->record['parent_id'] . 'Child', true);
+        $this->tpl->assign('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
