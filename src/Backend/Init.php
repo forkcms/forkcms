@@ -142,9 +142,10 @@ class Init extends \KernelLoader
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
+        $debugEmail = $this->getContainer()->getParameter('fork.debug_email');
 
         // mail it?
-        if (SPOON_DEBUG_EMAIL != '') {
+        if ($debugEmail != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -152,7 +153,7 @@ class Init extends \KernelLoader
             $headers .= "X-Mailer: SpoonLibrary Webmail\n";
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail($debugEmail, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
         }
 
         // build HTML for nice error
