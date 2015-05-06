@@ -369,9 +369,12 @@ class Page extends FrontendBaseObject
                         // parse extra
                         $positions[$position][$i] = array(
                             'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
-                            'blockIsHTML' => false,
+                            'blockIsEditor' => false,
                             'blockContent' => $block['extra']->getContent()
                         );
+
+                        // Maintain backwards compatibility
+                        $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
 
                         if (empty($positions[$position][$i]['blockContent'])) {
                             unset($positions[$position][$i]);
@@ -498,9 +501,12 @@ class Page extends FrontendBaseObject
                 } else {
                     // the block only contains HTML
                     $block = array(
-                        'blockIsHTML' => true,
+                        'blockIsEditor' => true,
                         'blockContent' => $block['html']
                     );
+
+                    // Maintain backwards compatibility
+                    $block['blockIsHTML'] = $block['blockIsEditor'];
                 }
             }
         }
