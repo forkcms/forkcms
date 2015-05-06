@@ -5,6 +5,7 @@ Improvements:
 * Locale: improve performance of the index page
 
 Bugfixes:
+* Analytics: Fixed error when no page_list items were found.
 
 
 3.9.1 (2015-03-12)
