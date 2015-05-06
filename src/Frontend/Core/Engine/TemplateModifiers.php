@@ -501,6 +501,9 @@ class TemplateModifiers
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
+        // init vars
+        $charset = Model::getContainer()->getParameter('kernel.charset');
+
         // remove special chars, all of them, also the ones that shouldn't be there.
         $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
 
@@ -519,9 +522,9 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), SPOON_CHARSET);
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
             } else {
-                $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+                $var = mb_substr($var, 0, $length, $charset);
             }
 
             // add hellip

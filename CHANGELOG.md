@@ -6,6 +6,7 @@ Improvements:
 * Core: reduced database queries in BackendDataGridFunctions::getUser().
 * Core: Replace SITE_MULTILANGUAGE with $container->getParameter('site.multilanguage')
 * Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('fork.debug_email')
+* Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
 
 Bugfixes:
 

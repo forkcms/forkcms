@@ -15,3 +15,9 @@ SITE_MULTILANGUAGE is removed. From now on you need to check if the site is mult
 SPOON_DEBUG_EMAIL is removed. From now on you need to get the debug email address by using the fork.debug_email parameter, f.e.
 
 	if ($this->getContainer()->getParameter('fork.debug_email')) { ...
+
+## SPOON_CHARSET
+
+SPOON_CHARSET is removed. From now on you need to get the charset by using the kernel.charset parameter, f.e.
+
+	if ($this->getContainer()->getParameter('kernel.charset')) { ...

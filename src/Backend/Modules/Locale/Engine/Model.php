@@ -67,7 +67,8 @@ class Model
      */
     public static function createXMLForExport(array $items)
     {
-        $xml = new \DOMDocument('1.0', SPOON_CHARSET);
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+        $xml = new \DOMDocument('1.0', $charset);
 
         // set some properties
         $xml->preserveWhiteSpace = false;
