@@ -13,6 +13,8 @@ Bugfixes:
 
 * Core: Fixed bug with decoding in truncate modifier
 * Core: Fixed encoding ampersand for action url
+* Groups: Fix (in add/edit) for executing widgets for which the module doesn't exists.
+
 
 3.9.1 (2015-03-12)
 --
