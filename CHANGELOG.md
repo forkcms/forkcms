@@ -8,12 +8,18 @@ Improvements:
 * Core: Replace SITE_MULTILANGUAGE with $container->getParameter('site.multilanguage')
 * Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('fork.debug_email')
 * Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
+* FormBuilder: use the event dispatcher from Symfony to send the email
+* Core: allow installed modules to subscribe their own configuration/services
+* Core: enable gzip compression on svg files
+* Core: rename BlockIsHTML to BlockIsEditor
 
 Bugfixes:
 
 * Core: Fixed bug with decoding in truncate modifier
 * Core: Fixed encoding ampersand for action url
 * Groups: Fix (in add/edit) for executing widgets for which the module doesn't exists.
+* Mailmotor: Fix wrongly cased classname
+* Blog: make sure images can get reverted together with their revision
 
 
 3.9.1 (2015-03-12)
