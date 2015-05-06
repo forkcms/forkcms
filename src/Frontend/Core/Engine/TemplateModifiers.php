@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
@@ -251,7 +252,8 @@ class TemplateModifiers
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        $hasMultiLanguages = FrontendModel::getContainer()->getParameter('site.multilanguage');
+        $chunks = ($hasMultiLanguages) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
         if (count($chunks) == 0) {
             $chunks[0] = '';
         }
