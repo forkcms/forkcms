@@ -231,6 +231,12 @@ class Template extends \SpoonTemplate
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
 
+        // adding parameters
+        $this->assign(
+            'SITE_MULTILANGUAGE',
+            BackendModel::getContainer()->getParameter('site.multilanguage')
+        );
+
         if ($this->URL instanceof Url) {
             // assign the current module
             $this->assign('MODULE', $this->URL->getModule());

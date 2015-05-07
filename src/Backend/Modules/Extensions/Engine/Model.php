@@ -505,11 +505,8 @@ class Model
      */
     public static function getModules()
     {
-        $installedModules = (array) BackendModel::getContainer()->get('database')->getRecords(
-            'SELECT name FROM modules',
-            null,
-            'name'
-        );
+        $installedModules = (array) BackendModel::getContainer()
+            ->getParameter('installed_modules');
         $modules = BackendModel::getModulesOnFilesystem(false);
         $manageableModules = array();
 
@@ -528,7 +525,7 @@ class Model
             $module['installed'] = false;
             $module['cronjobs_active'] = true;
 
-            if (isset($installedModules[$moduleName])) {
+            if (in_array($moduleName, $installedModules)) {
                 $module['installed'] = true;
             }
 
@@ -734,7 +731,10 @@ class Model
      */
     public static function createTemplateXmlForExport($theme)
     {
-        $xml = new \DOMDocument('1.0', SPOON_CHARSET);
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
+        // build xml
+        $xml = new \DOMDocument('1.0', $charset);
         $xml->preserveWhiteSpace = false;
         $xml->formatOutput = true;
 

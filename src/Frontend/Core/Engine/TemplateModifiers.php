@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
@@ -251,7 +252,8 @@ class TemplateModifiers
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        $hasMultiLanguages = FrontendModel::getContainer()->getParameter('site.multilanguage');
+        $chunks = ($hasMultiLanguages) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
         if (count($chunks) == 0) {
             $chunks[0] = '';
         }
@@ -499,8 +501,11 @@ class TemplateModifiers
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
+        // init vars
+        $charset = Model::getContainer()->getParameter('kernel.charset');
+
         // remove special chars, all of them, also the ones that shouldn't be there.
-        $var = \SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
+        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
 
         // remove HTML
         $var = strip_tags($var);
@@ -517,9 +522,9 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), SPOON_CHARSET);
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
             } else {
-                $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+                $var = mb_substr($var, 0, $length, $charset);
             }
 
             // add hellip
