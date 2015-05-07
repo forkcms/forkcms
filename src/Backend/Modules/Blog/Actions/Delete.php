@@ -55,9 +55,6 @@ class Delete extends BackendBaseActionDelete
             // delete item
             BackendBlogModel::delete($this->id);
 
-            // delete the image
-            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $this->record['image']);
-
             // trigger event
             BackendModel::triggerEvent($this->getModule(), 'after_delete', array('id' => $this->id));
 

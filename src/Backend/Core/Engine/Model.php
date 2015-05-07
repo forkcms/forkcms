@@ -40,13 +40,6 @@ class Model extends \BaseModel
     private static $navigation = array();
 
     /**
-     * Cached modules
-     *
-     * @var    array
-     */
-    private static $modules = array();
-
-    /**
      * Cached module settings
      *
      * @var    array
@@ -193,7 +186,7 @@ class Model extends \BaseModel
             if ($i == 1) {
                 $queryString .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
             } else {
-                $queryString .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
+                $queryString .= '&' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
             }
 
             $i++;
@@ -470,7 +463,7 @@ class Model extends \BaseModel
             $index = mt_rand(0, strlen($characters));
 
             // add character to salt
-            $string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+            $string .= mb_substr($characters, $index, 1, self::getContainer()->getParameter('kernel.charset'));
         }
 
         return $string;
@@ -662,14 +655,7 @@ class Model extends \BaseModel
      */
     public static function getModules()
     {
-        if (empty(self::$modules)) {
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
-            foreach ($modules as $module) {
-                self::$modules[] = $module;
-            }
-        }
-
-        return self::$modules;
+        return (array) self::getContainer()->getParameter('installed_modules');
     }
 
     /**
@@ -915,7 +901,7 @@ class Model extends \BaseModel
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
         // init URL
-        $URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
+        $URL = (self::getContainer()->getParameter('site.multilanguage')) ? '/' . $language . '/' : '/';
 
         // get the menuItems
         $keys = self::getKeys($language);

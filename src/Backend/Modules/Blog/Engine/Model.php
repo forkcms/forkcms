@@ -147,13 +147,19 @@ class Model
         // make sure $ids is an array
         $ids = (array) $ids;
 
+        // make sure we have elements
+        if (empty($ids)) {
+            return;
+        }
+
         // loop and cast to integers
         foreach ($ids as &$id) {
             $id = (int) $id;
         }
 
-        // create an array with an equal amount of questionmarks as ids provided
-        $idPlaceHolders = array_fill(0, count($ids), '?');
+        // create an string with an equal amount of questionmarks as ids provided
+        $idPlaceHolders = implode(', ', array_fill(0, count($ids), '?'));
+
 
         // get db
         $db = BackendModel::getContainer()->get('database');
@@ -162,7 +168,7 @@ class Model
         $metaIds = (array) $db->getColumn(
             'SELECT meta_id
              FROM blog_posts AS p
-             WHERE id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+             WHERE id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
 
@@ -171,15 +177,22 @@ class Model
             $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
         }
 
+        // delete image files
+        $images = $db->getColumn('SELECT image FROM blog_posts WHERE id IN (' . $idPlaceHolders . ')', $ids);
+
+        foreach ($images as $image) {
+            BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $image);
+        }
+
         // delete records
         $db->delete(
             'blog_posts',
-            'id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            'id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
         $db->delete(
             'blog_comments',
-            'post_id IN (' . implode(', ', $idPlaceHolders) . ') AND language = ?',
+            'post_id IN (' . $idPlaceHolders . ') AND language = ?',
             array_merge($ids, array(BL::getWorkingLanguage()))
         );
 
@@ -995,10 +1008,11 @@ class Model
      */
     public static function update(array $item)
     {
+        $db = BackendModel::getContainer()->get('database');
         // check if new version is active
         if ($item['status'] == 'active') {
             // archive all older active versions
-            BackendModel::getContainer()->get('database')->update(
+            $db->update(
                 'blog_posts',
                 array('status' => 'archived'),
                 'id = ? AND status = ?',
@@ -1014,7 +1028,7 @@ class Model
 
             // if it used to be a draft that we're now publishing, remove drafts
             if ($revision['status'] == 'draft') {
-                BackendModel::getContainer()->get('database')->delete(
+                $db->delete(
                     'blog_posts',
                     'id = ? AND status = ?',
                     array($item['id'], $revision['status'])
@@ -1032,7 +1046,7 @@ class Model
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);
 
         // get revision-ids for items to keep
-        $revisionIdsToKeep = (array) BackendModel::getContainer()->get('database')->getColumn(
+        $revisionIdsToKeep = (array) $db->getColumn(
             'SELECT i.revision_id
              FROM blog_posts AS i
              WHERE i.id = ? AND i.status = ? AND i.language = ?
@@ -1043,7 +1057,28 @@ class Model
 
         // delete other revisions
         if (!empty($revisionIdsToKeep)) {
-            BackendModel::getContainer()->get('database')->delete(
+            // get all the images of the revisions that will NOT be deleted
+            $imagesToKeep = $db->getColumn(
+                'SELECT image FROM blog_posts
+                 WHERE id = ? AND revision_id IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'])
+            );
+
+            // get the images of the revisions that will be deleted
+            $imagesOfDeletedRevisions = $db->getColumn(
+                'SELECT image FROM blog_posts
+                WHERE id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
+                array($item['id'], $archiveType)
+            );
+
+            // make sure that an image that will be deleted, is not used by a revision that is not to be deleted
+            foreach ($imagesOfDeletedRevisions as $imageOfDeletedRevision) {
+                if (!in_array($imageOfDeletedRevision, $imagesToKeep)) {
+                    BackendModel::deleteThumbnails(FRONTEND_FILES_PATH . '/blog/images', $imageOfDeletedRevision);
+                }
+            }
+
+            $db->delete(
                 'blog_posts',
                 'id = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')',
                 array($item['id'], $archiveType)

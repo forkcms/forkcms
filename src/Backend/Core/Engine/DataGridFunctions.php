@@ -19,6 +19,8 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class DataGridFunctions
 {
+    protected static $dataGridUsers = array();
+
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
      *
@@ -160,33 +162,38 @@ class DataGridFunctions
     {
         $id = (int) $id;
 
-        // create user instance
-        $user = new User($id);
+        // nothing in cache
+        if (!isset(self::$dataGridUsers[$id])) {
+            // create user instance
+            $user = new User($id);
 
-        // get settings
-        $avatar = $user->getSetting('avatar', 'no-avatar.gif');
-        $nickname = $user->getSetting('nickname');
-        $allowed = Authentication::isAllowedAction('Edit', 'Users');
+            // get settings
+            $avatar = $user->getSetting('avatar', 'no-avatar.gif');
+            $nickname = $user->getSetting('nickname');
+            $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
-        // build html
-        $html = '<div class="fork-data-grid-avatar">' . "\n";
-        if ($allowed) {
-            $html .= '     <a href="' .
-                     BackendModel::createURLForAction(
-                         'Edit',
-                         'Users'
-                     ) . '&amp;id=' . $id . '">' . "\n";
+            // build html
+            $html = '<div class="fork-data-grid-avatar">' . "\n";
+            if ($allowed) {
+                $html .= '     <a href="' .
+                    BackendModel::createURLForAction(
+                        'Edit',
+                        'Users'
+                    ) . '&amp;id=' . $id . '">' . "\n";
+            }
+            $html .= '          <img class="img-rounded" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+                $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+
+            $html .= '<span>' . $nickname . '</span>';
+            if ($allowed) {
+                $html .= '</a>' . "\n";
+            }
+            $html .= '</div>';
+
+            self::$dataGridUsers[$id] = $html;
         }
-        $html .= '          <img class="img-rounded" src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
-                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
 
-        $html .= '<span>' . $nickname . '</span>';
-        if ($allowed) {
-            $html .= '</a>' . "\n";
-        }
-        $html .= '</div>';
-
-        return $html;
+        return self::$dataGridUsers[$id];
     }
 
     /**

@@ -591,6 +591,7 @@ class Model
 
         // init var
         $keys = array();
+        $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
 
         // require the file
         require FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
@@ -603,7 +604,7 @@ class Model
             $URL = '/';
 
             // multilanguages?
-            if (SITE_MULTILANGUAGE) {
+            if ($hasMultiLanguages) {
                 $URL = '/' . BL::getWorkingLanguage();
             }
 
@@ -615,7 +616,7 @@ class Model
         }
 
         // if the is available in multiple languages we should add the current lang
-        if (SITE_MULTILANGUAGE) {
+        if ($hasMultiLanguages) {
             $URL = '/' . BL::getWorkingLanguage() . '/' . $URL;
         } else {
             // just prepend with slash

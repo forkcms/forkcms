@@ -9,6 +9,7 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\Exception;
 use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
@@ -448,6 +449,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
@@ -467,7 +469,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . $charset);
 
         // output JSON
         self::$content = json_encode($JSON);
@@ -485,13 +487,14 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = strtolower($version);
 
         // init XML
-        $XML = new \DOMDocument('1.0', SPOON_CHARSET);
+        $XML = new \DOMDocument('1.0', $charset);
 
         // set some properties
         $XML->preserveWhiteSpace = false;
@@ -514,7 +517,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();
