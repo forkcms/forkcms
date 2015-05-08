@@ -3,7 +3,7 @@ module.exports = (grunt) ->
   # Project configuration
   grunt.initConfig
     pkg: grunt.file.readJSON 'package.json'
-    theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/Src'
+    theme_src: 'src/Frontend/Themes/<%= pkg.theme %>/src'
     theme_build: 'src/Frontend/Themes/<%= pkg.theme %>/Core'
     coffee:
       compile:
