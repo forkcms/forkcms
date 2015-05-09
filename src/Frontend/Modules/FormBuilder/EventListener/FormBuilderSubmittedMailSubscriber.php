@@ -35,6 +35,7 @@ final class FormBuilderSubmittedMailSubscriber
         if ($form['method'] == 'database_email') {
             // build our message
             $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+            $fieldData = $this->getEmailFields($event->getData());
             $message = \Common\Mailer\Message::newInstance(sprintf(
                     FL::getMessage('FormBuilderSubject'),
                     $form['name']
@@ -44,7 +45,7 @@ final class FormBuilderSubmittedMailSubscriber
                     array(
                         'sentOn' => time(),
                         'name' => $form['name'],
-                        'fields' => $this->getEmailFields($event->getData()),
+                        'fields' => $fieldData,
                     ),
                     true
                 )
@@ -57,7 +58,7 @@ final class FormBuilderSubmittedMailSubscriber
                 if (array_key_exists('reply_to', $field['settings']) &&
                     $field['settings']['reply_to'] === true
                 ) {
-                    $email = $this->frm->getField('field' . $field['id'])->getValue();
+                    $email = $fieldData[$field['id']];
                     $message->setReplyTo(array($email => $email));
                 }
             }

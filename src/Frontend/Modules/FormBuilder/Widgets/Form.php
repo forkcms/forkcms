@@ -486,7 +486,7 @@ class Form extends FrontendBaseWidget
                     }
 
                     // save fields data
-                    $fields[] = $fieldData;
+                    $fields[$field['id']] = $fieldData;
 
                     // insert
                     FrontendFormBuilderModel::insertDataField($fieldData);
