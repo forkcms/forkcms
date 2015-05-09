@@ -12,6 +12,7 @@ Improvements:
 * Core: allow installed modules to subscribe their own configuration/services
 * Core: enable gzip compression on svg files
 * Core: rename BlockIsHTML to BlockIsEditor
+* Formbuilder: Add copy to option
 
 Bugfixes:
 
