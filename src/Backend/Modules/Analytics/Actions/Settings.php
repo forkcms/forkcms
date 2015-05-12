@@ -14,7 +14,7 @@ use Backend\Modules\Analytics\GoogleClient\ClientFactory;
  *
  * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class Settings extends ActionIndex
+final class Settings extends ActionIndex
 {
     /**
      * The form instance

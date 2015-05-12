@@ -2,6 +2,21 @@
 <locale>
   <Backend>
     <Analytics>
+      <item type="label" name="ChangePeriod">
+        <translation language="nl"><![CDATA[periode aanpassen]]></translation>
+        <translation language="en"><![CDATA[change period]]></translation>
+        <translation language="it"><![CDATA[cambia periodo]]></translation>
+        <translation language="ru"><![CDATA[Период изменений]]></translation>
+        <translation language="zh"><![CDATA[更改时间段]]></translation>
+        <translation language="de"><![CDATA[Zeitraum ändern]]></translation>
+        <translation language="hu"><![CDATA[időszak változtatás]]></translation>
+        <translation language="fr"><![CDATA[changer de période]]></translation>
+        <translation language="es"><![CDATA[cambiar período]]></translation>
+        <translation language="uk"><![CDATA[Період змін]]></translation>
+        <translation language="sv"><![CDATA[ändra period]]></translation>
+        <translation language="lt"><![CDATA[keisti periodą]]></translation>
+        <translation language="el"><![CDATA[Αλλαγή περιόδου]]></translation>
+      </item>
       <item type="label" name="ChooseThisAccount">
         <translation language="nl"><![CDATA[kies deze account]]></translation>
         <translation language="en"><![CDATA[choose this account]]></translation>
