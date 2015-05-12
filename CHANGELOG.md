@@ -1,4 +1,11 @@
-3.9.2 (2015-xx-xx)
+3.9.3 (2015-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+
+3.9.2 (2015-05-12)
 --
 Improvements:
 
