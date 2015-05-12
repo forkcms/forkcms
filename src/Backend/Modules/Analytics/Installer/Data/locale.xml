@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <Backend>
+    <Analytics>
+      <item type="label" name="ChooseThisAccount">
+        <translation language="nl"><![CDATA[kies deze account]]></translation>
+        <translation language="en"><![CDATA[choose this account]]></translation>
+        <translation language="it"><![CDATA[scegli questo account]]></translation>
+        <translation language="ru"><![CDATA[Выбрать этот аккаунт]]></translation>
+        <translation language="zh"><![CDATA[选择这个帐户]]></translation>
+        <translation language="de"><![CDATA[diesen Account auswählen]]></translation>
+        <translation language="hu"><![CDATA[fiók választás]]></translation>
+        <translation language="fr"><![CDATA[choisir ce compte]]></translation>
+        <translation language="es"><![CDATA[elegir esta cuenta]]></translation>
+        <translation language="uk"><![CDATA[Обрати цей акаунт]]></translation>
+        <translation language="sv"><![CDATA[välj detta konto]]></translation>
+        <translation language="lt"><![CDATA[pasirinkite šįą sąskaitą]]></translation>
+        <translation language="el"><![CDATA[Επιλογή αυτού του λογαριασμού]]></translation>
+      </item>
+      <item type="label" name="LinkedProfile">
+        <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
+        <translation language="en"><![CDATA[linked profile]]></translation>
+        <translation language="it"><![CDATA[profilo collegato]]></translation>
+        <translation language="ru"><![CDATA[Связанные профили]]></translation>
+        <translation language="zh"><![CDATA[已连接的档案]]></translation>
+        <translation language="de"><![CDATA[verlinktes Profil]]></translation>
+        <translation language="hu"><![CDATA[összekötött profil]]></translation>
+        <translation language="fr"><![CDATA[profil lié]]></translation>
+        <translation language="es"><![CDATA[perfil vinculado]]></translation>
+        <translation language="uk"><![CDATA[Зв'язані профілі]]></translation>
+        <translation language="sv"><![CDATA[länkad profil]]></translation>
+        <translation language="el"><![CDATA[Συνδεδεμένο προφίλ]]></translation>
+      </item>
+      <item type="label" name="SecretFile">
+        <translation language="nl"><![CDATA[secret file]]></translation>
+        <translation language="en"><![CDATA[secret file]]></translation>
+      </item>
+      <item type="message" name="SecretFileHelp">
+        <translation language="nl"><![CDATA[
+          <h3>Hoe verkrijg je je secret file?</h3>
+          <br/>
+          <p>De Analytics API inschakelen</p>
+          <p>
+            <ol>
+              <li>Ga naar de <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Kies een project of maak een nieuw aan.</li>
+              <li>Klik in de zijbalk op <strong>APIs &amp; auth</strong>. Kies daaronder <strong>APIs</strong>. Kies <strong>Enabled APIs</strong> om te zien welke API's er ingeschakeld zijn. Controleer of the Analytics API tussen de ingeschakelde API's staat. Indien de Analytics API niet aanwezig is, klik dan op de <strong>Enable API</strong> knop voor deze API.</li>
+            </ol>
+          </p>
+          <p>Toegangsgegevens aanmaken voor Fork CMS.</p>
+          <p>
+            <ol>
+              <li>Kies in de zijbalk aan de linkerkant <strong>Credentials.</strong></li>
+              <li>Klik op deze pagina op Create new Client ID onder de titel OAuth.</li>
+              <li>Kies <strong>Web application</strong> als application type.</li>
+              <li>Geef een product naam in bvb Fork CMS</li>
+              <li>Klik op <strong>Save</strong>.</li>
+              <li>Laat Authorized JavaScript Origins leeg, dit zal Fork niet nodig hebben.</li>
+              <li>Stel <strong>%1$s</strong> in bij Authorized Redirect URIs.</li>
+              <li>Klik op Create Client id.</li>
+            </ol>
+          </p>
+          <p>Klik op <strong>Download JSON</strong> en sla het bestand op.</p>]]></translation>
+        <translation language="en"><![CDATA[
+          <h3>How to get your secret file?</h3>
+          <br/>
+          <p>Enable the Analytics API</p>
+          <p>
+            <ol>
+              <li>Go to the <a href="https://console.developers.google.com/" target="_blank">Google Developers Console</a>.</li>
+              <li>Select a project, or create a new one.</li>
+              <li>In the sidebar on the left, expand <strong>APIs &amp; auth</strong>. Next, click <strong>APIs</strong>. Select the <strong>Enabled APIs</strong> link in the API section to see a list of all your enabled APIs. Make sure that the Google Analytics API is on the list of enabled APIs. If you have not enabled it, select the API from the list of APIs, then select the <strong>Enable API</strong> button for the API.</li>
+            </ol>
+          </p>
+          <p>Creating credentials for Fork CMS.</p>
+          <p>
+            <ol>
+              <li>In the sidebar on the left, select <strong>Credentials.</strong></li>
+              <li>From the Credentials page, click Create new Client ID under the OAuth heading to create your OAuth 2.0 credentials.</li>
+              <li>For the APPLICATION TYPE select <strong>Web application</strong>.</li>
+              <li>Add a Product name for example Fork CMS.</li>
+              <li>Click on Save.</li>
+              <li>Leave the Authorized JavaScript Origins blank, it is not needed for Fork CMS.</li>
+              <li>Set the Authorized Redirect URIs to <strong>%1$s</strong></li>
+              <li>click <strong>Create Client ID</strong>.</li>
+            </ol>
+          </p>
+          <p>Click <strong>Download JSON</strong> and save it.</p>]]></translation>
+      </item>
+      <item type="message" name="ChooseWebsiteProfile">
+        <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
+        <translation language="en"><![CDATA[Choose an Analytics website profile...]]></translation>
+        <translation language="it"><![CDATA[Scegli un profilo Analytics]]></translation>
+        <translation language="ru"><![CDATA[Выберите профиль Аналитики.]]></translation>
+        <translation language="zh"><![CDATA[选择一个分析网站档案...]]></translation>
+        <translation language="hu"><![CDATA[Analytics weboldal profil választás...]]></translation>
+        <translation language="fr"><![CDATA[Choisissez un profil de site Analytics...]]></translation>
+        <translation language="de"><![CDATA[Wähle ein Analytics-Website-Profil ...]]></translation>
+        <translation language="es"><![CDATA[Elegir un perfil de sitio web Analytics...]]></translation>
+        <translation language="uk"><![CDATA[Виберіть профіль G.Analitycs]]></translation>
+        <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
+        <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
+      </item>
+    </Analytics>
+  </Backend>
+</locale>
