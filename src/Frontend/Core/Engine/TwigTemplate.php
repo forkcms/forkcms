@@ -257,6 +257,7 @@ Class TwigTemplate
             $this->templates[$path['filename']] = $template;
         }
 
+
         // only baseFile can render
         if ($this->baseSpoonFile === $template) {
 
@@ -271,9 +272,17 @@ Class TwigTemplate
                 }
             }
 
+            // turn on output buffering
+            ob_start();
+
             unset($this->templates['Default']);
+
             $this->setPositions($this->positions);
+
             echo $this->render($this->baseFile);
+
+            // return template content
+            return ob_get_clean();
         }
     }
 
