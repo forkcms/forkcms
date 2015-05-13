@@ -67,6 +67,13 @@ Class TwigTemplate
     private $widgets = array();
 
     /**
+     * main action block
+     *
+     * @var array
+     */
+    private $block = '';
+
+    /**
      * theme path location
      *
      * @var string
@@ -165,31 +172,45 @@ Class TwigTemplate
         {
             foreach ($blocks as &$block)
             {
-                // skip html
-                if (!empty($block['html'])) continue;
-
                 // convert extra_data
                 if (!empty($block['extra_data'])) {
                     $block['extra_data'] = unserialize($block['extra_data']);
                 }
 
-                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-                    $file = $this->modulePath . '/' . $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.tpl';
+                // skip html
+                if (!empty($block['html'])) continue;
 
-                    if (isset($extra_data['template'])) {
+                // legacy search the correct module path
+                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
+                    $file = $this->modulePath .
+                        '/' . $block['extra_module'] .
+                        '/Layout/Widgets/' . $block['extra_action'] . '.tpl';
+
+                    if (isset($block['extra_data']['template'])) {
                         $tpl = substr($block['extra_data']['template'], 0, -4);
                         $block['include_path'] = $this->widgets[$tpl];
-                    } elseif (file_exists($file)) {
+                    } else {
                         $block['include_path'] = $this->getPath($file);
-                    } elseif (isset($this->widgets[$block['extra_action']])) {
-                        $block['include_path'] = $this->widgets[$block['extra_action']];
                     }
+
+                // main action block
                 } elseif ($block['extra_type'] === 'block') {
-                    $block['include_path'] = reset($this->templates);
+
+                    // // we have a block file
+                    // if (!empty($this->block)) {
+                    //     $block['include_path'] = $this->block;
+
+                    // // empty extra_action
+                    // } elseif (empty($block['extra_action'])) {
+                    //     $file = $this->modulePath .
+                    //         '/' . $block['extra_module'] .
+                    //         '/Layout/Templates/' . 'Index.tpl';
+                    //     $block['include_path'] = $this->getPath($file);
+                    // }
                 }
             }
         }
-        //var_dump($positions);
+        var_dump($positions, $this->widgets, $this->block);
         $this->twig->addGlobal('positions', $positions);
     }
 
@@ -254,36 +275,32 @@ Class TwigTemplate
         if (!$template || in_array($template, $this->templates)) {
             return;
         }
+        $this->templates[] = $template;
+
         // collect the templates, we need them later
         $path = pathinfo($template);
         if (strpos($path['dirname'], 'Widgets') !== false) {
-            $this->widgets[$path['filename']] = $template;
-        } else {
-            $this->templates[$path['filename']] = $template;
+            $this->widgets[$path['filename']] = $this->getPath($template);
         }
-
+        else {
+            $blocks[$path['filename']] = $this->getPath($template);
+        }
 
         // only baseFile can render
         if ($this->baseSpoonFile === $template) {
+            var_dump($blocks);
 
-            foreach ($this->templates as &$template) {
-                $template = $this->getPath($template);
-            }
+            // we only have 2 options left 'default' and an 'action'
+            unset($blocks['Default']);
+            $this->block = (string) reset($blocks);
 
-            if ($this->widgets) {
-                foreach ($this->widgets as &$wiget)
-                {
-                    $wiget = $this->getPath($wiget);
-                }
-            }
+            // we attach the module_files to the positions
+            $this->setPositions($this->positions);
 
             // turn on output buffering
             ob_start();
 
-            unset($this->templates['Default']);
-
-            $this->setPositions($this->positions);
-
+            // echo render the compiled File
             echo $this->render($this->baseFile);
 
             // return template content
@@ -301,7 +318,6 @@ Class TwigTemplate
         if (!empty($this->forms)) {
             foreach ($this->forms as $form)
             {
-                var_dump($form->getName());
                 // using assign to pass the form as global
                 $this->twig->addGlobal('form_' . $form->getName(), $form);
             }
