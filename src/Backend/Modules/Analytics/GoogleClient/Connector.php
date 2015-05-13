@@ -3,6 +3,7 @@
 namespace Backend\Modules\Analytics\GoogleClient;
 
 use Backend\Core\Engine\Model;
+use Backend\Core\Engine\Cache\Cache;
 use Google_Service_Analytics;
 
 /**
@@ -12,12 +13,20 @@ use Google_Service_Analytics;
  */
 final class Connector
 {
+    /**
+     * @var Google_Service_Analytics
+     */
     private $analytics;
-    private $statistics = array();
 
-    public function __construct(Google_Service_Analytics $analytics)
+    /**
+     * @var Cache
+     */
+    private $cache;
+
+    public function __construct(Google_Service_Analytics $analytics, Cache $cache)
     {
         $this->analytics = $analytics;
+        $this->cache = $cache;
     }
 
     /**
@@ -132,7 +141,6 @@ final class Connector
         return $results['sourceGraphData'];
     }
 
-
     /**
      * Fetches all the needed data and caches it in our statistics array
      *
@@ -144,15 +152,20 @@ final class Connector
     {
         $dateRange = $startDate . '-' . $endDate;
 
-        if (!array_key_exists($dateRange, $this->statistics)) {
-            $this->statistics[$dateRange] = array(
-                'metrics' => $this->getMetrics($startDate, $endDate),
-                'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
-                'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
+        if (!$this->cache->isCached($dateRange)) {
+            $this->cache->cache(
+                $dateRange,
+                json_encode(
+                    array(
+                        'metrics' => $this->getMetrics($startDate, $endDate),
+                        'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
+                        'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
+                    )
+                )
             );
         }
 
-        return $this->statistics[$dateRange];
+        return json_decode($this->cache->getFromCache($dateRange), true);
     }
 
     /**

@@ -8,7 +8,13 @@ services:
         factory_class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         factory_method: createClient
 
+    analytics.cache:
+        class: Backend\Core\Engine\Cache\FileCache
+        arguments:
+            - %kernel.cache_dir%/Analytics
+
     analytics.connector:
         class: Backend\Modules\Analytics\GoogleClient\Connector
         arguments:
             - @analytics.google_analytics_service
+            - @analytics.cache
