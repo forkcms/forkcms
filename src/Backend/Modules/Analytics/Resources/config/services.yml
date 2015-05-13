@@ -1,0 +1,9 @@
+services:
+    analytics.google_analytics_service:
+        class: Google_Service_Analytics
+        factory_class: Backend\Modules\Analytics\GoogleClient\ClientFactory
+        factory_method: createAnalyticsService
+    analytics.google_client:
+        class: Google_Client
+        factory_class: Backend\Modules\Analytics\GoogleClient\ClientFactory
+        factory_method: createClient

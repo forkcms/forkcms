@@ -49,7 +49,7 @@ final class Settings extends ActionIndex
 
         // we don't have a token: redirect the user to Google to grant access
         if (Model::getModuleSetting($this->getModule(), 'token') === null) {
-            $client = ClientFactory::createClient();
+            $client = $this->get('analytics.google_client');
 
             if ($this->getParameter('code') === null) {
                 $this->redirect($client->createAuthUrl());
@@ -64,7 +64,7 @@ final class Settings extends ActionIndex
 
         // we are authenticated! Let's see which account the user wants to use
         if (Model::getModuleSetting($this->getModule(), 'account') === null) {
-            $analytics = ClientFactory::createAnalyticsService();
+            $analytics = $this->get('analytics.google_analytics_service');
             $accounts = $analytics->management_accounts->listManagementAccounts();
             $accountsForDropdown = array();
             foreach ($accounts->getItems() as $account) {
@@ -77,7 +77,7 @@ final class Settings extends ActionIndex
 
         // we have an account, but don't know which property to track
         if (Model::getModuleSetting($this->getModule(), 'web_property_id') === null) {
-            $analytics = ClientFactory::createAnalyticsService();
+            $analytics = $this->get('analytics.google_analytics_service');
             $properties = $analytics->management_webproperties
                 ->listManagementWebproperties(Model::getModuleSetting($this->getModule(), 'account'))
             ;
