@@ -237,8 +237,11 @@ class TemplateModifiers
      */
     public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
+        // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
         // remove special chars, all of them, also the ones that shouldn't be there.
-        $var = \SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
+        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
 
         // remove HTML
         $var = strip_tags($var);
@@ -255,9 +258,9 @@ class TemplateModifiers
 
             // truncate
             if ($closestWord) {
-                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), SPOON_CHARSET);
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
             } else {
-                $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+                $var = mb_substr($var, 0, $length, $charset);
             }
 
             // add hellip

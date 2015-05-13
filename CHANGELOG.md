@@ -1,11 +1,36 @@
-3.9.2 (2015-xx-xx)
+3.9.3 (2015-xx-xx)
 --
 Improvements:
 
 Bugfixes:
 
 
-3.9.1 (2015-03-xx)
+3.9.2 (2015-05-12)
+--
+Improvements:
+
+* Core: every template can now check if it has a certain parent id with {option:isChildOfPageX}
+* Locale: improve performance of the index page
+* Core: reduced database queries in BackendDataGridFunctions::getUser().
+* Core: Replace SITE_MULTILANGUAGE with $container->getParameter('site.multilanguage')
+* Core: Replace SPOON_DEBUG_EMAIL with $container->getParameter('fork.debug_email')
+* Core: Replace SPOON_CHARSET with $container->getParameter('kernel.charset')
+* FormBuilder: use the event dispatcher from Symfony to send the email
+* Core: allow installed modules to subscribe their own configuration/services
+* Core: enable gzip compression on svg files
+* Core: rename BlockIsHTML to BlockIsEditor
+
+Bugfixes:
+
+* Core: Fixed bug with decoding in truncate modifier
+* Core: Fixed encoding ampersand for action url
+* Groups: Fix (in add/edit) for executing widgets for which the module doesn't exists.
+* Mailmotor: Fix wrongly cased classname
+* Blog: make sure images can get reverted together with their revision
+* Formbuilder: Fix reply option
+
+
+3.9.1 (2015-03-12)
 --
 Improvements:
 

@@ -9,6 +9,8 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+
 /**
  * This is our extended version of SpoonFileCSV
  *
@@ -42,7 +44,8 @@ class Csv extends \SpoonFileCSV
         $csv = \SpoonFileCSV::arrayToString($array, $columns, $excludeColumns, $splitCharacter, '"', $lineEnding);
 
         // set headers for download
-        $headers[] = 'Content-type: application/csv; charset=' . SPOON_CHARSET;
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+        $headers[] = 'Content-type: application/csv; charset=' . $charset;
         $headers[] = 'Content-Disposition: attachment; filename="' . $filename;
         $headers[] = 'Content-Length: ' . strlen($csv);
         $headers[] = 'Pragma: no-cache';

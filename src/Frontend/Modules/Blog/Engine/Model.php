@@ -1016,8 +1016,9 @@ class Model implements FrontendTagsInterface
         );
 
         // prepare items for search
+        $detailUrl = FrontendNavigation::getURLForBlock('Blog', 'Detail');
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $item['url'];
+            $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
 
         // return

@@ -28,13 +28,6 @@ require_once __DIR__ . '/../../../../app/BaseModel.php';
 class Model extends \BaseModel
 {
     /**
-     * Cached modules
-     *
-     * @var    array
-     */
-    private static $modules = array();
-
-    /**
      * Cached module-settings
      *
      * @var    array
@@ -298,18 +291,7 @@ class Model extends \BaseModel
      */
     public static function getModules()
     {
-        // validate cache
-        if (empty(self::$modules)) {
-            // get all modules
-            $modules = (array) self::getContainer()->get('database')->getColumn('SELECT m.name FROM modules AS m');
-
-            // add modules to the cache
-            foreach ($modules as $module) {
-                self::$modules[] = $module;
-            }
-        }
-
-        return self::$modules;
+        return (array) self::getContainer()->getParameter('installed_modules');
     }
 
     /**

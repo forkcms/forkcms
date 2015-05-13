@@ -218,16 +218,18 @@ class Index extends BackendBaseActionIndex
             );
         }
 
+        $hasMultipleLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
+
         // create multilanguage checkbox
         $this->frm->addMultiCheckbox(
             'active_languages',
             $activeLanguages,
-            BackendModel::getModuleSetting('Core', 'active_languages', array(SITE_MULTILANGUAGE))
+            BackendModel::getModuleSetting('Core', 'active_languages', array($hasMultipleLanguages))
         );
         $this->frm->addMultiCheckbox(
             'redirect_languages',
             $redirectLanguages,
-            BackendModel::getModuleSetting('Core', 'redirect_languages', array(SITE_MULTILANGUAGE))
+            BackendModel::getModuleSetting('Core', 'redirect_languages', array($hasMultipleLanguages))
         );
 
         // api keys are not required for every module

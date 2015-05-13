@@ -933,7 +933,8 @@ class Header extends FrontendBaseObject
         }
 
         // prevent against xss
-        $url = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
+        $charset = $this->getContainer()->getParameter('kernel.charset');
+        $url = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
         if (Model::getModuleSetting('Core', 'seo_noodp', false)) {

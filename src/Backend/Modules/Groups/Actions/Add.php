@@ -349,6 +349,10 @@ class Add extends BackendBaseActionAdd
     {
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
+            if (!BackendModel::isModuleInstalled($widget['module'])) {
+                continue;
+            }
+
             // create instance
             $instance = new $widget['className']($this->getKernel());
 

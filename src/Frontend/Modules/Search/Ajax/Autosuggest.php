@@ -225,10 +225,18 @@ class Autosuggest extends FrontendBaseAJAXAction
             );
         }
 
+        $charset = $this->getContainer()->getParameter('kernel.charset');
+
         // format data
         foreach ($this->items as &$item) {
             // format description
-            $item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? mb_substr(strip_tags($item['text']), 0, $this->length, SPOON_CHARSET) . '…' : $item['text']) : '';
+            $item['text'] = !empty($item['text'])
+                ? (
+                    mb_strlen($item['text']) > $this->length
+                    ? mb_substr(strip_tags($item['text']), 0, $this->length, $charset) . '…'
+                    : $item['text']
+                )
+                : '';
         }
 
         // output
@@ -241,8 +249,9 @@ class Autosuggest extends FrontendBaseAJAXAction
     private function validateForm()
     {
         // set values
+        $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $this->term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
         $this->length = (int) \SpoonFilter::getPostValue('length', null, 50);
