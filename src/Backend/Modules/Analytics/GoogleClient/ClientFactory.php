@@ -33,14 +33,7 @@ class ClientFactory
 
         // set the access token if we have one
         if (Model::getModuleSetting('Analytics', 'token') !== null) {
-            $client->setAccessToken(Model::getModuleSetting('Analytics', 'token'));
-
-            // if our token is expired, refresh it
-            if ($client->isAccesstokenExpired()) {
-                $token = json_decode(Model::getModuleSetting('Analytics', 'token'));
-                $client->refreshToken($token->refresh_token);
-                Model::setModuleSetting('Analytics', 'token', $client->getAccessToken());
-            }
+            self::setAccessToken($client);
         }
 
         return $client;
@@ -49,5 +42,23 @@ class ClientFactory
     public static function createAnalyticsService()
     {
         return new Google_Service_Analytics(self::createClient());
+    }
+
+    private static function setAccessToken(Google_Client $client)
+    {
+        $client->setAccessToken(Model::getModuleSetting('Analytics', 'token'));
+
+        // if our token is expired, refresh it
+        if ($client->isAccesstokenExpired()) {
+            if ($client->getRefreshToken()) {
+                $client->refreshToken($client->getRefreshToken());
+                Model::setModuleSetting('Analytics', 'token', $client->getAccessToken());
+            } else {
+                // we don't have a refresh token? Let's revoke access.
+                // you only receive this refresh token the first time you request a token.
+                $client->revokeToken();
+                Model::setModuleSetting('Analytics', 'token', null);
+            }
+        }
     }
 }

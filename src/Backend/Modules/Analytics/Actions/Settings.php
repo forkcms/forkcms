@@ -52,6 +52,8 @@ final class Settings extends ActionIndex
             $client = $this->get('analytics.google_client');
 
             if ($this->getParameter('code') === null) {
+                // make sure we receive a refresh token
+                $client->setAccessType('offline');
                 $this->redirect($client->createAuthUrl());
             } else {
                 $client->authenticate($this->getParameter('code'));

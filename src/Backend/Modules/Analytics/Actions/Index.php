@@ -111,6 +111,12 @@ final class Index extends ActionIndex
         $this->tpl->assign('endTimestamp', $this->endDate);
 
         $analytics = $this->get('analytics.connector');
+
+        // if we don't have a token anymore, redirect to the settings page
+        if (Model::getModuleSetting('Analytics', 'token') === null) {
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
+
         $this->tpl->assign(
             'page_views',
             $analytics->getPageViews($this->startDate, $this->endDate)
