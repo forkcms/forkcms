@@ -89,6 +89,24 @@ final class Settings extends ActionIndex
 
             return;
         }
+
+        // we have an account, but don't know which property to track
+        if (Model::getModuleSetting($this->getModule(), 'view') === null) {
+            $analytics = $this->get('analytics.google_analytics_service');
+            $profiles = $analytics->management_profiles
+                ->listManagementProfiles(
+                    Model::getModuleSetting($this->getModule(), 'account'),
+                    Model::getModuleSetting($this->getModule(), 'web_property_id')
+                )
+            ;
+            $profilesForDropdown = array();
+            foreach ($profiles->getItems() as $property) {
+                $profilesForDropdown[$property->getId()] = $property->getName();
+            }
+            $this->form->addDropdown('profile', $profilesForDropdown);
+
+            return;
+        }
     }
 
     protected function parse()
@@ -96,10 +114,18 @@ final class Settings extends ActionIndex
         parent::parse();
 
         $this->form->parse($this->tpl);
-        $this->tpl->assign(
-            'web_property_id',
-            Model::getModuleSetting($this->getModule(), 'web_property_id')
-        );
+        if (Model::getModuleSetting($this->getModule(), 'web_property_id')) {
+            $this->tpl->assign(
+                'web_property_id',
+                Model::getModuleSetting($this->getModule(), 'web_property_id')
+            );
+        }
+        if (Model::getModuleSetting($this->getModule(), 'profile')) {
+            $this->tpl->assign(
+                'profile',
+                Model::getModuleSetting($this->getModule(), 'profile')
+            );
+        }
     }
 
     private function validateForm()
@@ -115,6 +141,10 @@ final class Settings extends ActionIndex
 
             if ($this->form->existsField('web_property_id')) {
                 $this->validatePropertyForm();
+            }
+
+            if ($this->form->existsField('profile')) {
+                $this->validateProfileForm();
             }
         }
     }
@@ -171,6 +201,22 @@ final class Settings extends ActionIndex
                 $this->getModule(),
                 'web_property_id',
                 $webPropertyField->getValue()
+            );
+
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
+    }
+
+    private function validateProfileForm()
+    {
+        $profileField = $this->form->getField('profile');
+        $profileField->isFilled(Language::err('FieldIsRequired'));
+
+        if ($this->form->isCorrect()) {
+            Model::setModuleSetting(
+                $this->getModule(),
+                'profile',
+                $profileField->getValue()
             );
 
             $this->redirect(Model::createURLForAction('Settings'));

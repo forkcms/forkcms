@@ -53,6 +53,17 @@
     </div>
   {/option:web_property_id}
 
+  {option:ddmProfile}
+    <div class="box">
+      <div class="heading">
+        <h3><label for="account">{$lblChooseWebsiteProfile|ucfirst}</label></h3>
+      </div>
+      <div class="options">
+        {$ddmProfile}
+      </div>
+    </div>
+  {/option:ddmProfile}
+
   <div class="fullwidthOptions">
     <div class="buttonHolderRight">
       <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

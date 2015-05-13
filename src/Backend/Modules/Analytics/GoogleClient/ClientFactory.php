@@ -34,6 +34,13 @@ class ClientFactory
         // set the access token if we have one
         if (Model::getModuleSetting('Analytics', 'token') !== null) {
             $client->setAccessToken(Model::getModuleSetting('Analytics', 'token'));
+
+            // if our token is expired, refresh it
+            if ($client->isAccesstokenExpired()) {
+                $token = json_decode(Model::getModuleSetting('Analytics', 'token'));
+                $client->refreshToken($token->refresh_token);
+                Model::setModuleSetting('Analytics', 'token', $client->getAccessToken());
+            }
         }
 
         return $client;
