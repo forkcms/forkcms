@@ -2,8 +2,6 @@
 
 namespace Backend\Core\Engine\Cache;
 
-use Symfony\Component\Filesystem\Filesystem;
-
 /**
  * This class can be used to cache properties in the php memory
  *
@@ -11,7 +9,7 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 final class InMemoryCache implements Cache
 {
-    private $data = array();
+    private $cachedData = array();
 
     /**
      * Checks if the data with a certain name is cached
@@ -21,7 +19,7 @@ final class InMemoryCache implements Cache
      */
     public function isCached($cacheName)
     {
-        return array_key_exists($cacheName, $data);
+        return array_key_exists($cacheName, $this->cachedData);
     }
 
     /**
@@ -33,7 +31,7 @@ final class InMemoryCache implements Cache
      */
     public function cache($cacheName, $data)
     {
-        $data[$cacheName] = $data;
+        $this->cachedData[$cacheName] = $data;
     }
 
     /**
@@ -44,6 +42,6 @@ final class InMemoryCache implements Cache
      */
     public function getFromCache($cacheName)
     {
-        return $data[$cacheName];
+        return $this->cachedData[$cacheName];
     }
 }
