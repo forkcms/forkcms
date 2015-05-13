@@ -28,6 +28,7 @@ class Installer extends ModuleInstaller
 
         // module navigation
         $navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);
+        $this->setNavigation($navigationMarketingId, 'Analytics', 'analytics/index');
 
         // settings navigation
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
