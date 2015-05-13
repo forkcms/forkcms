@@ -93,7 +93,7 @@ final class Settings extends ActionIndex
         }
 
         // we have an account, but don't know which property to track
-        if (Model::getModuleSetting($this->getModule(), 'view') === null) {
+        if (Model::getModuleSetting($this->getModule(), 'profile') === null) {
             $analytics = $this->get('analytics.google_analytics_service');
             $profiles = $analytics->management_profiles
                 ->listManagementProfiles(
