@@ -142,7 +142,7 @@ class Init extends \KernelLoader
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
-        $debugEmail = $this->getContainer()->getParameter('fork.debug_email');
+        $debugEmail = self::getContainer()->getParameter('fork.debug_email');
 
         // mail it?
         if ($debugEmail != '') {
