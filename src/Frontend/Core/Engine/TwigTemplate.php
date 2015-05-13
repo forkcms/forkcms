@@ -71,7 +71,7 @@ Class TwigTemplate
      *
      * @var array
      */
-    private $block = '';
+    private $block = array();
 
     /**
      * theme path location
@@ -182,15 +182,16 @@ Class TwigTemplate
 
                 // legacy search the correct module path
                 if ($block['extra_type'] === 'widget' && $block['extra_action']) {
-                    $file = $this->modulePath .
-                        '/' . $block['extra_module'] .
-                        '/Layout/Widgets/' . $block['extra_action'] . '.tpl';
 
                     if (isset($block['extra_data']['template'])) {
                         $tpl = substr($block['extra_data']['template'], 0, -4);
                         $block['include_path'] = $this->widgets[$tpl];
                     } else {
-                        $block['include_path'] = $this->getPath($file);
+                        $block['include_path'] = $this->getPath(
+                            $this->modulePath .
+                            '/' . $block['extra_module'] .
+                            '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
+                        );
                     }
 
                 // main action block
@@ -222,9 +223,9 @@ Class TwigTemplate
         $template = Theme::getPath($this->convertExtension($template));
         if (strpos($template, $this->modulePath) !== false) {
             return str_replace($this->modulePath . '/', '', $template);
-        } elseif (strpos($template, $this->themePath) !== false) {
-            return str_replace($this->themePath . '/', '', $template);
         }
+        // else it's in the theme folder
+        return str_replace($this->themePath . '/', '', $template);
     }
 
     /**
@@ -256,21 +257,20 @@ Class TwigTemplate
      *
      * @return string The actual parsed content after executing this template.
      */
-    public function getContent($template, $customHeaders = false, $parseCustom = false)
+    public function getContent($template)
     {
         // bounce back trick because Pages calls getContent Method
         // 2 times on every action
         if (!$template || in_array($template, $this->templates)) {
             return;
         }
+        $path = pathinfo($template);
         $this->templates[] = $template;
 
         // collect the templates, we need them later
-        $path = pathinfo($template);
         if (strpos($path['dirname'], 'Widgets') !== false) {
             $this->widgets[$path['filename']] = $this->getPath($template);
-        }
-        else {
+        } else {
             $this->block[$path['filename']] = $this->getPath($template);
         }
 
@@ -303,8 +303,7 @@ Class TwigTemplate
     private function render($template)
     {
         if (!empty($this->forms)) {
-            foreach ($this->forms as $form)
-            {
+            foreach ($this->forms as $form) {
                 // using assign to pass the form as global
                 $this->twig->addGlobal('form_' . $form->getName(), $form);
             }
@@ -374,24 +373,6 @@ Class TwigTemplate
                 ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
             );
         }
-
-        /** Filters list converted to twig filters
-         - ucfirst -> capitalize
-         -
-        */
-
-        // Frontend Specific
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforextraid', 'Frontend\Core\Engine\TemplateModifiers::getURLForExtraId'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getpageinfo', 'Frontend\Core\Engine\TemplateModifiers::getPageInfo'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getsubnavigation', 'Frontend\Core\Engine\TemplateModifiers::getSubNavigation'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('parsewidget', 'Frontend\Core\Engine\TemplateModifiers::parseWidget'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('highlight', 'Frontend\Core\Engine\TemplateModifiers::highlightCode'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('urlencode', 'urlencode'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('profilesetting', 'Frontend\Core\Engine\TemplateModifiers::profileSetting'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
     }
 
     /**
@@ -409,6 +390,22 @@ Class TwigTemplate
      */
     private function twigFilters()
     {
+        /** Filters list converted to twig filters
+         - ucfirst -> capitalize
+         -
+        */
+
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforextraid', 'Frontend\Core\Engine\TemplateModifiers::getURLForExtraId'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getpageinfo', 'Frontend\Core\Engine\TemplateModifiers::getPageInfo'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('getsubnavigation', 'Frontend\Core\Engine\TemplateModifiers::getSubNavigation'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('parsewidget', 'Frontend\Core\Engine\TemplateModifiers::parseWidget'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('highlight', 'Frontend\Core\Engine\TemplateModifiers::highlightCode'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('urlencode', 'urlencode'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('profilesetting', 'Frontend\Core\Engine\TemplateModifiers::profileSetting'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
+        $this->twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
         $this->twig->addFilter(new \Twig_SimpleFilter('uppercase', 'uppercase'));
         $this->twig->addFilter(new \Twig_SimpleFilter('sprintf', 'sprintf'));
         $this->twig->addFilter(new \Twig_SimpleFilter('spoon_date', 'Frontend\Core\Engine\TwigTemplate::spoonDate'));
@@ -456,7 +453,6 @@ Class TwigTemplate
             // use strptime if you want to restrict the input format
             $timestamp = strtotime($timestamp);
         }
-
         return \SpoonDate::getDate($format, $timestamp, $language);
     }
 
@@ -516,45 +512,22 @@ Class TwigTemplate
      */
     private function parseLabels()
     {
-        $actions = Language::getActions();
-        $errors = Language::getErrors();
-        $labels = Language::getLabels();
-        $messages = Language::getMessages();
+        $labels['act'] = Language::getActions();
+        $labels['err'] = Language::getErrors();
+        $labels['lbl'] = Language::getLabels();
+        $labels['msg'] = Language::getMessages();
 
         // execute addslashes on the values for the locale, will be used in JS
         if ($this->addSlashes) {
-            foreach ($actions as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($errors as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($labels as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
-                }
-            }
-            foreach ($messages as &$value) {
-                if (!is_array($value)) {
-                    $value = addslashes($value);
+            foreach ($labels as $label) {
+                foreach ($label as &$value) {
+                    if (!is_array($value)) {
+                        $value = addslashes($value);
+                    }
                 }
             }
         }
-
-        // assign actions errors labels messages
-        $this->twig->addGlobal('lbl', $labels);
-        $this->twig->addGlobal('err', $errors);
-        $this->twig->addGlobal('msg', $messages);
-        $this->twig->addGlobal('act', $actions);
-
-        // $this->assignArray($actions, 'act');
-        // $this->assignArray($errors, 'err');
-        // $this->assignArray($labels, 'lbl');
-        // $this->assignArray($messages, 'msg');
+        $this->assignArray($labels);
     }
 
     /**
@@ -562,9 +535,9 @@ Class TwigTemplate
      *
      * @param bool $on Enable addslashes.
      */
-    public function setAddSlashes($on = true)
+    public function setAddSlashes($enabled = true)
     {
-        $this->addSlashes = (bool) $on;
+        $this->addSlashes = (bool) $enabled;
     }
 
     /* BC placeholders */
@@ -572,6 +545,6 @@ Class TwigTemplate
     public function setForceCompile(){}
     public function cache(){}
     public function isCached(){}
-    public function compile($n){return $n;}
-    public function display($n){return $n;}
+    public function compile($dummy){return $dummy;}
+    public function display($dummy){return $dummy;}
 }
