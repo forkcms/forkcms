@@ -31,7 +31,11 @@
 
 				{# Top positions #}
 				{% for top in positions.top %}
-					{{ top.html|raw }}
+					{% if top.html %}
+						{{ top.html|raw }}
+					{% elseif top.include_path %}
+						{% include top.include_path %}
+					{% endif %}
 				{% endfor %}
 
 				{# Breadcrumb #}

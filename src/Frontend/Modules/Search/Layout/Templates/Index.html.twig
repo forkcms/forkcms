@@ -11,9 +11,9 @@
 		</header>
 		<div class="bd">
 			{% form search %}
-				<p{% if txtQError %} class="errorArea"{% endif %}>
+				<p{% if form_field_error %} class="errorArea"{% endif %}>
 					<label for="q">{{ lbl.SearchTerm|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
-					{% form_field_error Q %} {% form_field Q %}
+					{% form_field_error q %} {% form_field q %}
 				</p>
 				<p>
 					<input id="submit" class="inputSubmit" type="submit" name="submit" value="{{ lbl.Search|capitalize }}" />

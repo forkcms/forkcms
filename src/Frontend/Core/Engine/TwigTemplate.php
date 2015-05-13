@@ -165,26 +165,31 @@ Class TwigTemplate
         {
             foreach ($blocks as &$block)
             {
+                // skip html
                 if (!empty($block['html'])) continue;
 
-                if ($block['extra_type'] === 'widget') {
-                    if (isset($this->widgets[$block['extra_action']])) {
+                // convert extra_data
+                if (!empty($block['extra_data'])) {
+                    $block['extra_data'] = unserialize($block['extra_data']);
+                }
+
+                if ($block['extra_type'] === 'widget' && $block['extra_action']) {
+                    $file = $this->modulePath . '/' . $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.tpl';
+
+                    if (isset($extra_data['template'])) {
+                        $tpl = substr($block['extra_data']['template'], 0, -4);
+                        $block['include_path'] = $this->widgets[$tpl];
+                    } elseif (file_exists($file)) {
+                        $block['include_path'] = $this->getPath($file);
+                    } elseif (isset($this->widgets[$block['extra_action']])) {
                         $block['include_path'] = $this->widgets[$block['extra_action']];
-                    } elseif (!empty($block['extra_data'])) {
-                        $extra_data = unserialize($block['extra_data']);
-                        $extra_data = substr($extra_data['template'], 0, -4);
-                        $block['include_path'] = $this->widgets[$extra_data];
-                    } else {
-                        $block['include_path'] = $this->getPath(
-                            $this->modulePath . '/' .
-                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
-                        );
                     }
                 } elseif ($block['extra_type'] === 'block') {
                     $block['include_path'] = reset($this->templates);
                 }
             }
         }
+        //var_dump($positions);
         $this->twig->addGlobal('positions', $positions);
     }
 
@@ -296,6 +301,7 @@ Class TwigTemplate
         if (!empty($this->forms)) {
             foreach ($this->forms as $form)
             {
+                var_dump($form->getName());
                 // using assign to pass the form as global
                 $this->twig->addGlobal('form_' . $form->getName(), $form);
             }
