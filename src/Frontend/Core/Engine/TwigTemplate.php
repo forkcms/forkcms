@@ -251,22 +251,20 @@ Class TwigTemplate
         }
         // collect the templates, we need them later
         $path = pathinfo($template);
-        if (strpos($path['dirname'], 'Widgets') !== false)
-        {
+        if (strpos($path['dirname'], 'Widgets') !== false) {
             $this->widgets[$path['filename']] = $template;
+        } else {
+            $this->templates[$path['filename']] = $template;
         }
-        else $this->templates[$path['filename']] = $template;
-
 
         // only baseFile can render
         if ($this->baseSpoonFile === $template) {
 
-            foreach ($this->templates as &$template)
-            {
+            foreach ($this->templates as &$template) {
                 $template = $this->getPath($template);
             }
-            if ($this->widgets)
-            {
+
+            if ($this->widgets) {
                 foreach ($this->widgets as &$wiget)
                 {
                     $wiget = $this->getPath($wiget);
@@ -275,8 +273,7 @@ Class TwigTemplate
 
             unset($this->templates['Default']);
             $this->setPositions($this->positions);
-
-            $this->render($this->baseFile);
+            echo $this->render($this->baseFile);
         }
     }
 
@@ -304,7 +301,7 @@ Class TwigTemplate
 
         // template
         $this->template = $this->twig->loadTemplate($template);
-        echo $this->template->render($this->variables);
+        return $this->template->render($this->variables);
     }
 
     /**
@@ -557,6 +554,6 @@ Class TwigTemplate
     public function setForceCompile(){}
     public function cache(){}
     public function isCached(){}
-    public function compile($n){echo $n;}
-    public function display($n){echo $n;}
+    public function compile($n){return $n;}
+    public function display($n){return $n;}
 }
