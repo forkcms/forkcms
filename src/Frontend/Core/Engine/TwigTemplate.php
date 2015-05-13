@@ -60,6 +60,13 @@ Class TwigTemplate
     private $templates = array();
 
     /**
+     * List of passed widgets
+     *
+     * @var array
+     */
+    private $widgets = array();
+
+    /**
      * theme path location
      *
      * @var string
@@ -154,58 +161,30 @@ Class TwigTemplate
      */
     private function setPositions(array $positions)
     {
-        $actions = array();
         foreach ($positions as &$blocks)
         {
-            foreach ($blocks as $key => &$block)
+            foreach ($blocks as &$block)
             {
-                // find the missing action
-                if (empty($block['extra_action'])) {
-                    if ($block['extra_type'] == 'block') {
-                        $block['extra_action'] = 'Index';
+                if (!empty($block['html'])) continue;
+
+                if ($block['extra_type'] === 'widget') {
+                    if (isset($this->widgets[$block['extra_action']])) {
+                        $block['include_path'] = $this->widgets[$block['extra_action']];
+                    } elseif (!empty($block['extra_data'])) {
+                        $extra_data = unserialize($block['extra_data']);
+                        $extra_data = substr($extra_data['template'], 0, -4);
+                        $block['include_path'] = $this->widgets[$extra_data];
                     } else {
-                        foreach ($actions as $action) {
-                            foreach($this->templates as $key => $template) {
-                                if (strpos($template, $action) !== false) {
-                                    unset($this->templates[$key]);
-                                }
-                            }
-                        }
-                        $this->templates = array_values($this->templates);
-                        $block['include_path'] = $this->getPath($this->templates[0]);
-                        continue;
+                        $block['include_path'] = $this->getPath(
+                            $this->modulePath . '/' .
+                            $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
+                        );
                     }
-
-                }
-
-                // required for the action search
-                $actions[] = $block['extra_action'];
-                $block['extra_action'] .= self::EXTENSION;
-
-                if (!empty($block['extra_data']))
-                {
-                    $block['extra_data'] = unserialize($block['extra_data']);
-                    if (isset($block['extra_data']['template']))
-                    {
-                        // overwrite
-                        $block['extra_action'] = $block['extra_data']['template'];
-                    }
-                }
-                if ($block['extra_type'] == 'widget') {
-                    $block['include_path'] = $this->getPath(
-                        $this->modulePath . '/' .
-                        $block['extra_module'] . '/Layout/Widgets/' . $block['extra_action']
-                    );
-                }
-                elseif ($block['extra_type'] == 'block') {
-                    $block['include_path'] = $this->getPath(
-                        $this->modulePath . '/' .
-                        $block['extra_module'] . '/Layout/Templates/' . $block['extra_action']
-                    );
+                } elseif ($block['extra_type'] === 'block') {
+                    $block['include_path'] = reset($this->templates);
                 }
             }
         }
-        // var_dump($positions, $this->templates);exit;
         $this->twig->addGlobal('positions', $positions);
     }
 
@@ -271,11 +250,32 @@ Class TwigTemplate
             return;
         }
         // collect the templates, we need them later
-        $this->templates[] = $template;
+        $path = pathinfo($template);
+        if (strpos($path['dirname'], 'Widgets') !== false)
+        {
+            $this->widgets[$path['filename']] = $template;
+        }
+        else $this->templates[$path['filename']] = $template;
+
 
         // only baseFile can render
         if ($this->baseSpoonFile === $template) {
+
+            foreach ($this->templates as &$template)
+            {
+                $template = $this->getPath($template);
+            }
+            if ($this->widgets)
+            {
+                foreach ($this->widgets as &$wiget)
+                {
+                    $wiget = $this->getPath($wiget);
+                }
+            }
+
+            unset($this->templates['Default']);
             $this->setPositions($this->positions);
+
             $this->render($this->baseFile);
         }
     }
