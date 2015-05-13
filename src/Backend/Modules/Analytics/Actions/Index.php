@@ -107,5 +107,10 @@ final class Index extends ActionIndex
         $this->form->parse($this->tpl);
         $this->tpl->assign('startTimestamp', $this->startDate);
         $this->tpl->assign('endTimestamp', $this->endDate);
+
+        $this->tpl->assign(
+            'page_views',
+            $this->get('analytics.connector')->getPageViews($this->startDate, $this->endDate)
+        );
     }
 }

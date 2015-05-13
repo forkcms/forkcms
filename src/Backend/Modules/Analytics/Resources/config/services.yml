@@ -7,3 +7,8 @@ services:
         class: Google_Client
         factory_class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         factory_method: createClient
+
+    analytics.connector:
+        class: Backend\Modules\Analytics\GoogleClient\Connector
+        arguments:
+            - @analytics.google_analytics_service

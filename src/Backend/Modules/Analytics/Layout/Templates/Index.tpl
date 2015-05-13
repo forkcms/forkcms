@@ -28,7 +28,7 @@
     {/form:dates}
   </div>
   <div class="options">
-    STATISTICS YAY
+    {$page_views}
   </div>
 </div>
 
