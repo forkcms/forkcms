@@ -195,22 +195,10 @@ Class TwigTemplate
 
                 // main action block
                 } elseif ($block['extra_type'] === 'block') {
-
-                    // // we have a block file
-                    // if (!empty($this->block)) {
-                    //     $block['include_path'] = $this->block;
-
-                    // // empty extra_action
-                    // } elseif (empty($block['extra_action'])) {
-                    //     $file = $this->modulePath .
-                    //         '/' . $block['extra_module'] .
-                    //         '/Layout/Templates/' . 'Index.tpl';
-                    //     $block['include_path'] = $this->getPath($file);
-                    // }
+                    $block['include_path'] = $this->block;
                 }
             }
         }
-        var_dump($positions, $this->widgets, $this->block);
         $this->twig->addGlobal('positions', $positions);
     }
 
@@ -283,16 +271,15 @@ Class TwigTemplate
             $this->widgets[$path['filename']] = $this->getPath($template);
         }
         else {
-            $blocks[$path['filename']] = $this->getPath($template);
+            $this->block[$path['filename']] = $this->getPath($template);
         }
 
         // only baseFile can render
         if ($this->baseSpoonFile === $template) {
-            var_dump($blocks);
 
             // we only have 2 options left 'default' and an 'action'
-            unset($blocks['Default']);
-            $this->block = (string) reset($blocks);
+            unset($this->block['Default']);
+            $this->block = (string) reset($this->block);
 
             // we attach the module_files to the positions
             $this->setPositions($this->positions);
