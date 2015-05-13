@@ -32,7 +32,7 @@ final class Connector
     /**
      * Returns the amount of pageviews in a period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return int
      */
@@ -46,7 +46,7 @@ final class Connector
     /**
      * Returns the amount of visitors in a period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return int
      */
@@ -60,7 +60,7 @@ final class Connector
     /**
      * Returns the amount of pages per visit in a period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return float
      */
@@ -74,7 +74,7 @@ final class Connector
     /**
      * Returns the average time on the site in a certain period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return float
      */
@@ -88,7 +88,7 @@ final class Connector
     /**
      * Returns the percentage of new sessions in a certain period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return float
      */
@@ -102,7 +102,7 @@ final class Connector
     /**
      * Returns the bounce rate in a certain period
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return float
      */
@@ -144,7 +144,7 @@ final class Connector
     /**
      * Fetches all the needed data and caches it in our statistics array
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return array
      */
@@ -171,7 +171,7 @@ final class Connector
     /**
      * Fetches some metrics for a certain date range
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return array
      */
@@ -190,7 +190,7 @@ final class Connector
     /**
      * Fetches the data needed to build the visitors graph for a date range
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return array
      */
@@ -229,7 +229,7 @@ final class Connector
     /**
      * Fetches the data needed to build the source graph for a date range
      *
-     * @param  int $startData
+     * @param  int $startDate
      * @param  int $endDate
      * @return array
      */
