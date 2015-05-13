@@ -108,9 +108,30 @@ final class Index extends ActionIndex
         $this->tpl->assign('startTimestamp', $this->startDate);
         $this->tpl->assign('endTimestamp', $this->endDate);
 
+        $analytics = $this->get('analytics.connector');
         $this->tpl->assign(
             'page_views',
-            $this->get('analytics.connector')->getPageViews($this->startDate, $this->endDate)
+            $analytics->getPageViews($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'visitors',
+            $analytics->getVisitors($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'pages_per_visit',
+            $analytics->getPagesPerVisit($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'time_on_site',
+            $analytics->getTimeOnSite($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'new_sessions_percentage',
+            $analytics->getNewSessionsPercentage($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'bounce_rate',
+            $analytics->getBounceRate($this->startDate, $this->endDate)
         );
     }
 }

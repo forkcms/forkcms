@@ -2,6 +2,36 @@
 <locale>
   <Backend>
     <Analytics>
+      <item type="label" name="AverageTimeOnSite">
+        <translation language="nl"><![CDATA[gemiddelde tijd op site]]></translation>
+        <translation language="en"><![CDATA[average time on site]]></translation>
+        <translation language="it"><![CDATA[permanenza media sul sito]]></translation>
+        <translation language="ru"><![CDATA[Среднее время на сайте]]></translation>
+        <translation language="zh"><![CDATA[网站平均访问次数]]></translation>
+        <translation language="de"><![CDATA[durchschnittliche Verweildauer auf der Webseite]]></translation>
+        <translation language="hu"><![CDATA[átlagos idő a site-on]]></translation>
+        <translation language="fr"><![CDATA[temps moyen passé sur le site]]></translation>
+        <translation language="es"><![CDATA[tiempo promedio en el sitio]]></translation>
+        <translation language="uk"><![CDATA[Середній час на сайті]]></translation>
+        <translation language="lt"><![CDATA[vidutinis laikas tinklapyje]]></translation>
+        <translation language="sv"><![CDATA[genomsnitts tid på sajt]]></translation>
+        <translation language="el"><![CDATA[Μέσος χρόνος στον ιστοχώρο]]></translation>
+      </item>
+      <item type="label" name="BounceRate">
+        <translation language="nl"><![CDATA[weigeringspercentage]]></translation>
+        <translation language="en"><![CDATA[bounce rate]]></translation>
+        <translation language="it"><![CDATA[frequenza di rimbalzo]]></translation>
+        <translation language="zh"><![CDATA[跳出率]]></translation>
+        <translation language="ru"><![CDATA[Рейтинг отчетов]]></translation>
+        <translation language="de"><![CDATA[Bounce Rate]]></translation>
+        <translation language="hu"><![CDATA[bounce rate]]></translation>
+        <translation language="fr"><![CDATA[taux de rebond]]></translation>
+        <translation language="es"><![CDATA[porcentaje de rebote]]></translation>
+        <translation language="uk"><![CDATA[Показник відмов]]></translation>
+        <translation language="sv"><![CDATA[studs nivå]]></translation>
+        <translation language="lt"><![CDATA[atsisakymo lygis]]></translation>
+        <translation language="el"><![CDATA[Ρυθμός αναπηδήσεων]]></translation>
+      </item>
       <item type="label" name="ChangePeriod">
         <translation language="nl"><![CDATA[periode aanpassen]]></translation>
         <translation language="en"><![CDATA[change period]]></translation>
@@ -45,6 +75,48 @@
         <translation language="uk"><![CDATA[Зв'язані профілі]]></translation>
         <translation language="sv"><![CDATA[länkad profil]]></translation>
         <translation language="el"><![CDATA[Συνδεδεμένο προφίλ]]></translation>
+      </item>
+      <item type="label" name="NewVisitsPercentage">
+        <translation language="nl"><![CDATA[nieuw bezoekpercentage]]></translation>
+        <translation language="en"><![CDATA[new visits percentage]]></translation>
+        <translation language="it"><![CDATA[percentuale di nuove visite]]></translation>
+        <translation language="ru"><![CDATA[Новые посещения %]]></translation>
+        <translation language="zh"><![CDATA[新访问次数百分比]]></translation>
+        <translation language="hu"><![CDATA[új látogatók aránya]]></translation>
+        <translation language="fr"><![CDATA[pourcentage de nouvelles visites]]></translation>
+        <translation language="de"><![CDATA[Anteil neuer Besucher]]></translation>
+        <translation language="es"><![CDATA[porcertaje de nuevas visitas]]></translation>
+        <translation language="uk"><![CDATA[Нові відвідування %]]></translation>
+        <translation language="sv"><![CDATA[ny besökare procent]]></translation>
+        <translation language="el"><![CDATA[Ποσοστό νέων επισκέψεων]]></translation>
+      </item>
+      <item type="label" name="PagesPerVisit">
+        <translation language="nl"><![CDATA[pagina's per bezoek]]></translation>
+        <translation language="en"><![CDATA[pages per visit]]></translation>
+        <translation language="it"><![CDATA[pagine per visita]]></translation>
+        <translation language="ru"><![CDATA[Страниц за посещение]]></translation>
+        <translation language="zh"><![CDATA[每次访问页数]]></translation>
+        <translation language="de"><![CDATA[Seiten pro Besuch]]></translation>
+        <translation language="hu"><![CDATA[oldal per látogatás]]></translation>
+        <translation language="fr"><![CDATA[pages par visite]]></translation>
+        <translation language="es"><![CDATA[páginaes por visita]]></translation>
+        <translation language="uk"><![CDATA[Сторінок за візит]]></translation>
+        <translation language="sv"><![CDATA[sidor per besök]]></translation>
+        <translation language="el"><![CDATA[Σελίδες ανά επίσκεψη]]></translation>
+      </item>
+      <item type="label" name="Pageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagina]]></translation>
+        <translation language="ru"><![CDATA[Просмотров страниц]]></translation>
+        <translation language="zh"><![CDATA[页面访问量]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés]]></translation>
+        <translation language="fr"><![CDATA[vues de page]]></translation>
+        <translation language="es"><![CDATA[vista de páginas]]></translation>
+        <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
       </item>
       <item type="label" name="SecretFile">
         <translation language="nl"><![CDATA[secret file]]></translation>

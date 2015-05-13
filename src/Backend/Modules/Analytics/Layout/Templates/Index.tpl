@@ -28,7 +28,20 @@
     {/form:dates}
   </div>
   <div class="options">
-    {$page_views}
+    <div class="analyticsColWrapper clearfix">
+      <div class="analyticsCol">
+        <p><strong>{$page_views}</strong> {$lblPageviews|ucfirst}</p>
+        <p><strong>{$visitors}</strong> {$lblVisitors|ucfirst}</p>
+      </div>
+      <div class="analyticsCol">
+        <p><strong>{$pages_per_visit|formatfloat}</strong> {$lblPagesPerVisit|ucfirst}</a></p>
+        <p><strong>{$time_on_site|formattime}</strong> {$lblAverageTimeOnSite|ucfirst}</p>
+      </div>
+      <div class="analyticsCol">
+        <p><strong>{$new_sessions_percentage|formatfloat}%</strong> {$lblNewVisitsPercentage|ucfirst}</p>
+        <p><strong>{$bounce_rate|formatfloat}%</strong> {$lblBounceRate|ucfirst}</p>
+      </div>
+    </div>
   </div>
 </div>
 
