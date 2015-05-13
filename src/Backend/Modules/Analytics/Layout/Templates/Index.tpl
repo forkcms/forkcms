@@ -43,6 +43,73 @@
       </div>
     </div>
   </div>
+
+  <div class="options content">
+    <div class="analyticsGraphWrapper">
+      <div class="analyticsLeftCol">
+        <div class="box boxLevel2">
+          <div class="heading">
+            <h3>{$lblRecentVisits|ucfirst}</h3>
+          </div>
+          <div class="options">
+            {option:visitors_graph_data}
+              <div id="dataChartDoubleMetricPerDay" class="hidden">
+                <span id="maxYAxis">{$maxYAxis}</span>
+                <span id="tickInterval">{$tickInterval}</span>
+                <span id="yAxisTitle">{$lblVisits|ucfirst}</span>
+                <ul class="series">
+                  <li class="serie" id="metric1serie">
+                    <span class="name">Pageviews</span>
+                    <ul class="data">
+                      {iteration:visitors_graph_data}
+                        <li>
+                          <span class="fulldate">{$visitors_graph_data.ga_date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                          <span class="date">{$visitors_graph_data.ga_date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                          <span class="value">{$visitors_graph_data.ga_pageviews}</span>
+                        </li>
+                      {/iteration:visitors_graph_data}
+                    </ul>
+                  </li>
+                  <li class="serie" id="metric2serie">
+                    <span class="name">Visitors</span>
+                    <ul class="data">
+                      {iteration:visitors_graph_data}
+                        <li>
+                          <span class="fulldate">{$visitors_graph_data.ga_date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                          <span class="date">{$visitors_graph_data.ga_date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+                          <span class="value">{$visitors_graph_data.ga_users}</span>
+                        </li>
+                      {/iteration:visitors_graph_data}
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div id="chartDoubleMetricPerDay">&nbsp;</div>
+            {/option:visitors_graph_data}
+          </div>
+        </div>
+      </div>
+      <div class="analyticsRightCol">
+        <div class="box boxLevel2">
+          <div class="heading">
+            <h3><a href="{$googleTrafficSourcesURL}">{$lblPageviewsByTrafficSources|ucfirst}</a></h3>
+          </div>
+          <div class="options">
+            {option:source_graph_data}
+              <div id="dataChartPieChart" class="hidden">
+                <ul class="data">
+                  {iteration:source_graph_data}
+                    <li><span class="label">{$source_graph_data.ga_medium}</span><span class="value">{$source_graph_data.ga_pageviews}</span></li>
+                  {/iteration:source_graph_data}
+                </ul>
+              </div>
+              <div id="chartPieChart">&nbsp;</div>
+            {/option:source_graph_data}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}

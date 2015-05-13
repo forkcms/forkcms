@@ -31,7 +31,7 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:pageviews'];
+        return $results['metrics']['ga:pageviews'];
     }
 
     /**
@@ -45,7 +45,7 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:users'];
+        return $results['metrics']['ga:users'];
     }
 
     /**
@@ -59,7 +59,7 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:pageviewsPerSession'];
+        return $results['metrics']['ga:pageviewsPerSession'];
     }
 
     /**
@@ -73,7 +73,7 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:avgSessionDuration'];
+        return $results['metrics']['ga:avgSessionDuration'];
     }
 
     /**
@@ -87,7 +87,7 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:percentNewSessions'];
+        return $results['metrics']['ga:percentNewSessions'];
     }
 
     /**
@@ -101,8 +101,37 @@ final class Connector
     {
         $results = $this->getData($startDate, $endDate);
 
-        return $results['ga:bounceRate'];
+        return $results['metrics']['ga:bounceRate'];
     }
+
+    /**
+     * Returns the visitors graph data
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    public function getVisitorsGraphData($startDate, $endDate)
+    {
+        $results = $this->getData($startDate, $endDate);
+
+        return $results['visitGraphData'];
+    }
+
+    /**
+     * Returns the source graph data
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    public function getSourceGraphData($startDate, $endDate)
+    {
+        $results = $this->getData($startDate, $endDate);
+
+        return $results['sourceGraphData'];
+    }
+
 
     /**
      * Fetches all the needed data and caches it in our statistics array
@@ -116,16 +145,105 @@ final class Connector
         $dateRange = $startDate . '-' . $endDate;
 
         if (!array_key_exists($dateRange, $this->statistics)) {
-            $results = $this->analytics->data_ga->get(
-                'ga:' . Model::getModuleSetting('Analytics', 'profile'),
-                date('Y-m-d', $startDate),
-                date('Y-m-d', $endDate),
-                'ga:pageviews,ga:users,ga:pageviewsPerSession,ga:avgSessionDuration,ga:percentNewSessions,ga:bounceRate'
+            $this->statistics[$dateRange] = array(
+                'metrics' => $this->getMetrics($startDate, $endDate),
+                'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
+                'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
             );
-
-            $this->statistics[$dateRange] = $results['totalsForAllResults'];
         }
 
         return $this->statistics[$dateRange];
+    }
+
+    /**
+     * Fetches some metrics for a certain date range
+     *
+     * @param  int $startData
+     * @param  int $endDate
+     * @return array
+     */
+    private function getMetrics($startDate, $endDate)
+    {
+        $metrics = $this->analytics->data_ga->get(
+            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
+            date('Y-m-d', $startDate),
+            date('Y-m-d', $endDate),
+            'ga:pageviews,ga:users,ga:pageviewsPerSession,ga:avgSessionDuration,ga:percentNewSessions,ga:bounceRate'
+        );
+
+        return $metrics['totalsForAllResults'];
+    }
+
+    /**
+     * Fetches the data needed to build the visitors graph for a date range
+     *
+     * @param  int $startData
+     * @param  int $endDate
+     * @return array
+     */
+    private function collectVisitGraphData($startDate, $endDate)
+    {
+        $visitGraphData = $this->analytics->data_ga->get(
+            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
+            date('Y-m-d', $startDate),
+            date('Y-m-d', $endDate),
+            'ga:pageviews,ga:users',
+            array(
+                'dimensions' => 'ga:date',
+                'sort' =>'ga:date',
+            )
+        );
+
+        // make sure our column headers are the metric names, not just numbers
+        $namedRows = array();
+        foreach ($visitGraphData['rows'] as $dataRow) {
+            $namedRow = array();
+            foreach ($dataRow as $key => $value) {
+                $headerName = $visitGraphData['columnHeaders'][$key]->getName();
+
+                // convert the date to a timestamp
+                if ($headerName === 'ga:date') {
+                    $value = \DateTime::createFromFormat('Ymd', $value)->format('U');
+                }
+                $namedRow[str_replace(':', '_', $headerName)] = $value;
+            }
+            $namedRows[] = $namedRow;
+        }
+
+        return $namedRows;
+    }
+
+    /**
+     * Fetches the data needed to build the source graph for a date range
+     *
+     * @param  int $startData
+     * @param  int $endDate
+     * @return array
+     */
+    private function collectSourceGraphData($startDate, $endDate)
+    {
+        $sourceGraphData = $this->analytics->data_ga->get(
+            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
+            date('Y-m-d', $startDate),
+            date('Y-m-d', $endDate),
+            'ga:pageviews',
+            array(
+                'dimensions' => 'ga:medium',
+                'sort' =>'-ga:pageviews',
+            )
+        );
+
+        // make sure our column headers are the metric names, not just numbers
+        $namedRows = array();
+        foreach ($sourceGraphData['rows'] as $dataRow) {
+            $namedRow = array();
+            foreach ($dataRow as $key => $value) {
+                $headerName = $sourceGraphData['columnHeaders'][$key]->getName();
+                $namedRow[str_replace(':', '_', $headerName)] = $value;
+            }
+            $namedRows[] = $namedRow;
+        }
+
+        return $namedRows;
     }
 }

@@ -104,6 +104,8 @@ final class Index extends ActionIndex
     {
         parent::parse();
 
+        $this->header->addJS('highcharts.js', 'Core', false);
+
         $this->form->parse($this->tpl);
         $this->tpl->assign('startTimestamp', $this->startDate);
         $this->tpl->assign('endTimestamp', $this->endDate);
@@ -132,6 +134,14 @@ final class Index extends ActionIndex
         $this->tpl->assign(
             'bounce_rate',
             $analytics->getBounceRate($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'visitors_graph_data',
+            $analytics->getVisitorsGraphData($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'source_graph_data',
+            $analytics->getSourceGraphData($this->startDate, $this->endDate)
         );
     }
 }
