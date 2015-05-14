@@ -139,6 +139,7 @@ class RequirementsChecker
             'extensionGD2'       => extension_loaded('gd') && function_exists('gd_info'),
             'extensionJSON'      => extension_loaded('json'),
             'extensionPCRE'      => (extension_loaded('pcre') && (null !== $pcreVersion && $pcreVersion > 8.0)),
+            'extensionIntl'      => extension_loaded('Intl'),
         );
 
         // not installed extensions give an error
