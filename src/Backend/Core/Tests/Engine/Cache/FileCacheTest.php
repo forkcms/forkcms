@@ -34,4 +34,11 @@ class FileCacheTest extends PHPUnit_Framework_TestCase
 
         unlink(dirname(__FILE__) . '/test');
     }
+
+    public function testReturnsNullWhenNotCached()
+    {
+        $fileCache = new FileCache(dirname(__FILE__));
+
+        $this->assertNull($fileCache->getFromCache('test'));
+    }
 }

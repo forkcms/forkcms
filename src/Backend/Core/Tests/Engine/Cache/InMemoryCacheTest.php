@@ -30,4 +30,11 @@ class InMemoryCacheTest extends PHPUnit_Framework_TestCase
             $inMemoryCache->getFromCache('test')
         );
     }
+
+    public function testReturnsNullWhenNotCached()
+    {
+        $inMemoryCache = new InMemoryCache();
+
+        $this->assertNull($inMemoryCache->getFromCache('test'));
+    }
 }

@@ -26,7 +26,7 @@ final class InMemoryCache implements Cache
      * Caches data
      *
      * @param  string $cacheName
-     * @param  string $content
+     * @param  string $data
      * @return boolean
      */
     public function cache($cacheName, $data)
@@ -38,10 +38,12 @@ final class InMemoryCache implements Cache
      * Fetches data from the cache
      *
      * @param  string $cacheName
-     * @return string
+     * @return string|null
      */
     public function getFromCache($cacheName)
     {
-        return $this->cachedData[$cacheName];
+        if ($this->isCached($cacheName)) {
+            return $this->cachedData[$cacheName];
+        }
     }
 }

@@ -47,7 +47,7 @@ final class FileCache implements Cache
      * Caches a certain file
      *
      * @param  string $cacheName
-     * @param  string $content
+     * @param  string $data
      * @return boolean
      */
     public function cache($cacheName, $data)
@@ -62,7 +62,7 @@ final class FileCache implements Cache
      * Reads data from the cache
      *
      * @param  string $cacheName
-     * @return string
+     * @return string|null
      */
     public function getFromCache($cacheName)
     {
