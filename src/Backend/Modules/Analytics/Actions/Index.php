@@ -73,9 +73,7 @@ final class Index extends ActionIndex
             $newStartDate = Model::getUTCTimestamp($fields['start_date']);
             $newEndDate = Model::getUTCTimestamp($fields['end_date']);
 
-
             // startdate cannot be before 2005 (earliest valid google startdate)
-            $valid = true;
             if ($newStartDate < mktime(0, 0, 0, 1, 1, 2005)) {
                 $fields['start_date']->setError(BL::err('DateRangeIsInvalid'));
             }
