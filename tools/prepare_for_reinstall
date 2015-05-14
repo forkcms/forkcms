@@ -94,7 +94,7 @@ main() {
     return 1;
 }
 
-read -p "This will erase the current database, are you sure? (y/n) "
+read -p "This will erase the current database, are you sure? (y/N) "
 [[ $REPLY == [yY] ]] && main
 echo
 exit 1;
