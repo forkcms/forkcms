@@ -63,3 +63,10 @@ services:
         arguments:
             - @database
             - @service_container
+    modules_settings_cache:
+        class: Common\Cache\InMemoryCache
+    modules_settings:
+        class: Common\ModulesSettings
+        arguments:
+            - @database
+            - @modules_settings_cache

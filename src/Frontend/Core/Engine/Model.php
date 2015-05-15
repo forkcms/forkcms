@@ -298,42 +298,13 @@ class Model extends \BaseModel
      * Get a module setting
      *
      * @param string $module       The module wherefore a setting has to be retrieved.
-     * @param string $name         The name of the setting to be retrieved.
+     * @param string $key          The key of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
      * @return mixed
      */
-    public static function getModuleSetting($module, $name, $defaultValue = null)
+    public static function getModuleSetting($module, $key, $defaultValue = null)
     {
-        // redefine
-        $module = (string) $module;
-        $name = (string) $name;
-
-        // get them all
-        if (empty(self::$moduleSettings)) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms
-                 INNER JOIN modules AS m ON ms.module = m.name'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
-        }
-
-        // if the setting doesn't exists, store it (it will be available from te cache)
-        if (!array_key_exists($module, self::$moduleSettings) ||
-            !array_key_exists($name, self::$moduleSettings[$module])
-        ) {
-            self::setModuleSetting($module, $name, $defaultValue);
-        }
-
-        // return
-        return self::$moduleSettings[$module][$name];
+        return self::get('modules_settings')->get($module, $key, $defaultValue);
     }
 
     /**
@@ -344,31 +315,7 @@ class Model extends \BaseModel
      */
     public static function getModuleSettings($module)
     {
-        $module = (string) $module;
-
-        // get them all
-        if (empty(self::$moduleSettings[$module])) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
-        }
-
-        // validate again
-        if (!isset(self::$moduleSettings[$module])) {
-            return array();
-        }
-
-        // return
-        return self::$moduleSettings[$module];
+        return self::get('modules_settings')->getForModule($module);
     }
 
     /**
@@ -817,25 +764,12 @@ class Model extends \BaseModel
      * Store a module setting
      *
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name   The name of the setting.
+     * @param string $key    The key of the setting.
      * @param mixed  $value  The value (will be serialized so make sure the type is correct).
      */
-    public static function setModuleSetting($module, $name, $value)
+    public static function setModuleSetting($module, $key, $value)
     {
-        $module = (string) $module;
-        $name = (string) $name;
-        $value = serialize($value);
-
-        // store
-        self::getContainer()->get('database')->execute(
-            'INSERT INTO modules_settings (module, name, value)
-             VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $name, $value, $value)
-        );
-
-        // store in cache
-        self::$moduleSettings[$module][$name] = unserialize($value);
+        return self::get('modules_settings')->set($module, $key, $value);
     }
 
     /**

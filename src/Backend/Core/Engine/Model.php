@@ -307,21 +307,7 @@ class Model extends \BaseModel
      */
     public static function deleteModuleSetting($module, $key)
     {
-        $module = (string) $module;
-        $key = (string) $key;
-
-        // delete
-        self::getContainer()->get('database')->delete(
-            'modules_settings',
-            'module = ? and name = ?',
-            array(
-                $module,
-                $key
-            )
-        );
-
-        // unset from cache
-        unset(self::$moduleSettings[$module][$key]);
+        $this->get('modules_settings')->delete($module, $key);
     }
 
     /**
@@ -689,15 +675,7 @@ class Model extends \BaseModel
      */
     public static function getModuleSetting($module, $key, $defaultValue = null)
     {
-        // redefine
-        $module = (string) $module;
-        $key = (string) $key;
-
-        // define settings
-        $settings = self::getModuleSettings($module);
-
-        // return if exists, otherwise return default value
-        return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
+        return self::get('modules_settings')->get($module, $key, $defaultValue);
     }
 
     /**
@@ -709,42 +687,7 @@ class Model extends \BaseModel
      */
     public static function getModuleSettings($module = null)
     {
-        // redefine
-        $module = ((bool) $module) ? (string) $module : false;
-
-        // are the values available
-        if (empty(self::$moduleSettings)) {
-            // get all settings
-            $moduleSettings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
-            );
-
-            // loop and store settings in the cache
-            foreach ($moduleSettings as $setting) {
-                $value = @unserialize($setting['value']);
-
-                if ($value === false &&
-                    serialize(false) != $setting['value']
-                ) {
-                    throw new Exception(
-                        'The module setting (' . $setting['module'] . ': ' .
-                        $setting['name'] . ') wasn\'t saved properly.'
-                    );
-                }
-
-                // cache the setting
-                self::$moduleSettings[$setting['module']][$setting['name']] = $value;
-            }
-        }
-
-        if ($module) {
-            // return module settings if there are some, if not return empty array
-            return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
-        } else {
-            // else return all settings
-            return self::$moduleSettings;
-        }
+        return self::get('modules_settings')->getForModule($module);
     }
 
     /**
@@ -1293,20 +1236,7 @@ class Model extends \BaseModel
      */
     public static function setModuleSetting($module, $key, $value)
     {
-        $module = (string) $module;
-        $key = (string) $key;
-        $valueToStore = serialize($value);
-
-        // store
-        self::getContainer()->get('database')->execute(
-            'INSERT INTO modules_settings(module, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
-        );
-
-        // cache it
-        self::$moduleSettings[$module][$key] = $value;
+        return self::get('modules_settings')->set($module, $key, $value);
     }
 
     /**
