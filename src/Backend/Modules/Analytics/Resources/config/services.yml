@@ -9,7 +9,7 @@ services:
         factory_method: createClient
 
     analytics.cache:
-        class: Backend\Core\Engine\Cache\FileCache
+        class: Common\Cache\FileCache
         arguments:
             - %kernel.cache_dir%/Analytics
 

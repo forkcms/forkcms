@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Tests\Engine\Cache;
+namespace Common\Tests\Cache;
 
-use Backend\Core\Engine\Cache\FileCache;
+use Common\Cache\FileCache;
 use PHPUnit_Framework_TestCase;
 
 /**

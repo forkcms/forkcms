@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine\Cache;
+namespace Common\Cache;
 
 /**
  * This interface will provide a contract for needed method to cache stuff

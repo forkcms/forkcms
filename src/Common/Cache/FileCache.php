@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine\Cache;
+namespace Common\Cache;
 
 use Symfony\Component\Filesystem\Filesystem;
 

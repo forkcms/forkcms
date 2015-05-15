@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Engine\Cache;
+namespace Common\Cache;
 
 /**
  * This class can be used to cache properties in the php memory

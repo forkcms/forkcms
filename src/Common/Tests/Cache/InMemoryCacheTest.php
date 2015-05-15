@@ -1,8 +1,8 @@
 <?php
 
-namespace Backend\Core\Tests\Engine\Cache;
+namespace Common\Tests\Cache;
 
-use Backend\Core\Engine\Cache\InMemoryCache;
+use Common\Cache\InMemoryCache;
 use PHPUnit_Framework_TestCase;
 
 /**

@@ -3,7 +3,7 @@
 namespace Backend\Modules\Analytics\GoogleClient;
 
 use Backend\Core\Engine\Model;
-use Backend\Core\Engine\Cache\Cache;
+use Common\Cache\Cache;
 use Google_Service_Analytics;
 
 /**
