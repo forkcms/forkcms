@@ -4,6 +4,7 @@ namespace Backend\Modules\Analytics\GoogleClient;
 
 use Backend\Core\Engine\Model;
 use Common\Cache\Cache;
+use Common\ModulesSettings;
 use Google_Service_Analytics;
 
 /**
@@ -23,10 +24,19 @@ final class Connector
      */
     private $cache;
 
-    public function __construct(Google_Service_Analytics $analytics, Cache $cache)
-    {
+    /**
+     * @var ModulesSettings
+     */
+    private $settings;
+
+    public function __construct(
+        Google_Service_Analytics $analytics,
+        Cache $cache,
+        ModulesSettings $settings
+    ) {
         $this->analytics = $analytics;
         $this->cache = $cache;
+        $this->settings = $settings;
     }
 
     /**
@@ -210,11 +220,11 @@ final class Connector
         foreach ($visitGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
-                $headerName = $visitGraphData['columnHeaders'][$key]->getName();
+                $headerName = $visitGraphData['columnHeaders'][$key]['name'];
 
                 // convert the date to a timestamp
                 if ($headerName === 'ga:date') {
-                    $value = \DateTime::createFromFormat('Ymd', $value)->format('U');
+                    $value = \DateTime::createFromFormat('Ymd H:i:s', $value . ' 00:00:00')->format('U');
                 }
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
             }
@@ -248,7 +258,7 @@ final class Connector
         foreach ($sourceGraphData['rows'] as $dataRow) {
             $namedRow = array();
             foreach ($dataRow as $key => $value) {
-                $headerName = $sourceGraphData['columnHeaders'][$key]->getName();
+                $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
                 $namedRow[str_replace(':', '_', $headerName)] = $value;
             }
             $namedRows[] = $namedRow;
@@ -269,7 +279,7 @@ final class Connector
     private function getAnalyticsData($startDate, $endDate, $metrics, $optParams = array())
     {
         return $this->analytics->data_ga->get(
-            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
+            'ga:' . $this->settings->get('Analytics', 'profile'),
             date('Y-m-d', $startDate),
             date('Y-m-d', $endDate),
             $metrics,

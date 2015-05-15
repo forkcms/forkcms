@@ -48,7 +48,7 @@
         <h3>{$lblLinkedProfile|ucfirst}</h3>
       </div>
       <div class="options">
-        <strong>{$web_property_id}</strong>: ga:{$profile}
+        <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
       </div>
     </div>
   {/option:web_property_id}

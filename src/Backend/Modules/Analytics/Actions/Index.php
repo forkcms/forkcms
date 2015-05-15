@@ -104,8 +104,8 @@ final class Index extends ActionIndex
 
         // if we don't have a token anymore, redirect to the settings page
         if (
-            Model::getModuleSetting($this->getModule(), 'token') === null
-            || Model::getModuleSetting($this->getModule(), 'secret_file' == null)
+            $this->get('modules_settings')->get($this->getModule(), 'token') === null
+            || $this->get('modules_settings')->get($this->getModule(), 'secret_file' == null)
         ) {
             $this->redirect(Model::createURLForAction('Settings'));
         }
