@@ -120,11 +120,11 @@
 					{% form commentsForm %}
 						<div class="alignBlocks">
 							<p {% if txtAuthorError %}class="errorArea"{% endif %}>
-								<label for="author">{{ lbl.Name|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+								<label for="author">{{ lbl.Name|capitalize }}<abbr title="{{ lbl.RequiredField }}">*</abbr></label>
 								{% form_field_error author %} {% form_field author %}
 							</p>
 							<p {% if txtEmailError %}class="errorArea"{% endif %}>
-								<label for="email">{{ lbl.Email|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+								<label for="email">{{ lbl.Email|capitalize }}<abbr title="{{ lbl.RequiredField }}">*</abbr></label>
 								{% form_field_error email %} {% form_field email %}
 							</p>
 						</div>
@@ -133,7 +133,7 @@
 							{% form_field_error website %} {% form_field website %}
 						</p>
 						<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-							<label for="message">{{ lbl.Message|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+							<label for="message">{{ lbl.Message|capitalize }}<abbr title="{{ lbl.RequiredField }}">*</abbr></label>
 							{% form_field_error message %} {% form_field message %}
 						</p>
 						<p>
