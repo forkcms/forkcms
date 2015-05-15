@@ -27,7 +27,7 @@ class ClientFactory
             . Model::getModuleSetting('Analytics', 'secret_file')
         );
         $client->setRedirectUri(
-            'http://localhost' . strtok(Model::createURLForAction('Settings', 'Analytics'), '?')
+            SITE_URL . strtok(Model::createURLForAction('Settings', 'Analytics'), '?')
         );
         $client->addScope(Google_Service_Analytics::ANALYTICS_READONLY);
 
