@@ -28,13 +28,6 @@ require_once __DIR__ . '/../../../../app/BaseModel.php';
 class Model extends \BaseModel
 {
     /**
-     * Cached module-settings
-     *
-     * @var    array
-     */
-    private static $moduleSettings = array();
-
-    /**
      * Visitor id from tracking cookie
      *
      * @var    string

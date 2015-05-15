@@ -40,13 +40,6 @@ class Model extends \BaseModel
     private static $navigation = array();
 
     /**
-     * Cached module settings
-     *
-     * @var    array
-     */
-    private static $moduleSettings;
-
-    /**
      * Allowed module extras types
      *
      * @var    array
@@ -307,7 +300,7 @@ class Model extends \BaseModel
      */
     public static function deleteModuleSetting($module, $key)
     {
-        $this->get('modules_settings')->delete($module, $key);
+        return self::get('modules_settings')->delete($module, $key);
     }
 
     /**

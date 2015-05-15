@@ -36,7 +36,7 @@ class ModulesSettings
      * Get a module setting
      *
      * @param  string $module       The module wherefore a setting has to be retrieved.
-     * @param  string $name         The name of the setting to be retrieved.
+     * @param  string $key          The name of the setting to be retrieved.
      * @param  mixed  $defaultValue A fallback value
      * @return mixed
      */
@@ -55,7 +55,7 @@ class ModulesSettings
      * Store a module setting
      *
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name   The name of the setting.
+     * @param string $key    The name of the setting.
      * @param mixed  $value  The value to save
      */
     public function set($module, $key, $value)
