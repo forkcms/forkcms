@@ -118,6 +118,8 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
 
     public function testGetVisitorsGraphData()
     {
+        ini_set('date.timezone', 'Europe/Brussels');
+
         $connector = new Connector(
             $this->getAnalyticsServiceMock(),
             new InMemoryCache(),
