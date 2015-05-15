@@ -2,7 +2,6 @@
 
 namespace Frontend\Core\Engine;
 
-use Backend\Core\Engine\Language as BL;
 use Frontend\Core\Engine\Language as FL;
 
 /*
@@ -71,7 +70,7 @@ Class TwigTemplate
      *
      * @var array
      */
-    private $block = array();
+    private $block = '';
 
     /**
      * theme path location
@@ -79,13 +78,6 @@ Class TwigTemplate
      * @var string
      */
     private $themePath;
-
-    /**
-     * module path location
-     *
-     * @var string
-     */
-    private $modulePath;
 
     /**
      * Base file location
@@ -106,24 +98,10 @@ Class TwigTemplate
         }
 
         $this->themePath = FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default');
-        $this->modulePath = FRONTEND_MODULES_PATH;
-        $frontendPath = FRONTEND_PATH;
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         // move to kernel parameter
         require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
-
-        \Twig_Autoloader::register();
-        $loader = new \Twig_Loader_Filesystem(array($this->themePath, $this->modulePath, $frontendPath));
-        $this->twig = new \Twig_Environment($loader, array(
-            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
-            'debug' => ($this->debugMode === false)
-        ));
-
-        // debug options
-        if ($this->debugMode === true) {
-            $this->twig->addExtension(new \Twig_Extension_Debug());
-        }
     }
 
     /**
@@ -172,13 +150,10 @@ Class TwigTemplate
         {
             foreach ($blocks as &$block)
             {
-                // convert extra_data
-                if (!empty($block['extra_data'])) {
-                    $block['extra_data'] = unserialize($block['extra_data']);
-                }
-
                 // skip html
                 if (!empty($block['html'])) continue;
+
+                $block['extra_data'] = @unserialize($block['extra_data']);
 
                 // legacy search the correct module path
                 if ($block['extra_type'] === 'widget' && $block['extra_action']) {
@@ -188,19 +163,19 @@ Class TwigTemplate
                         $block['include_path'] = $this->widgets[$tpl];
                     } else {
                         $block['include_path'] = $this->getPath(
-                            $this->modulePath .
+                            FRONTEND_MODULES_PATH .
                             '/' . $block['extra_module'] .
                             '/Layout/Widgets/' . $block['extra_action'] . '.tpl'
                         );
                     }
 
                 // main action block
-                } elseif ($block['extra_type'] === 'block') {
+                } else {
                     $block['include_path'] = $this->block;
                 }
             }
         }
-        $this->twig->addGlobal('positions', $positions);
+        return $positions;
     }
 
     /**
@@ -221,8 +196,8 @@ Class TwigTemplate
     public function getPath($template)
     {
         $template = Theme::getPath($this->convertExtension($template));
-        if (strpos($template, $this->modulePath) !== false) {
-            return str_replace($this->modulePath . '/', '', $template);
+        if (strpos($template, FRONTEND_MODULES_PATH) !== false) {
+            return str_replace(FRONTEND_MODULES_PATH . '/', '', $template);
         }
         // else it's in the theme folder
         return str_replace($this->themePath . '/', '', $template);
@@ -244,8 +219,11 @@ Class TwigTemplate
             $variables = $tmp;
         }
 
-        // store the variables
-        $this->variables = array_merge($this->variables, $variables);
+        // merge the variables array_merge might be to slow for bigger sites
+        // as array_merge tend to slow down at +100 keys
+        foreach($variables as $key => $val) {
+            $this->variables[$key] = $val;
+        }
     }
 
     /**
@@ -267,28 +245,21 @@ Class TwigTemplate
         $path = pathinfo($template);
         $this->templates[] = $template;
 
-        // collect the templates, we need them later
+        // collect the Widgets and Actions, we need them later
         if (strpos($path['dirname'], 'Widgets') !== false) {
             $this->widgets[$path['filename']] = $this->getPath($template);
-        } else {
-            $this->block[$path['filename']] = $this->getPath($template);
+        } elseif (strpos($path['filename'], 'Default') === false) {
+            $this->block = $this->getPath($template);
         }
 
-        // only baseFile can render
+        // only baseFile can start the render
         if ($this->baseSpoonFile === $template) {
-
-            // we only have 2 options left 'default' and an 'action'
-            unset($this->block['Default']);
-            $this->block = (string) reset($this->block);
-
-            // we attach the module_files to the positions
-            $this->setPositions($this->positions);
 
             // turn on output buffering
             ob_start();
 
-            // echo render the compiled File
-            echo $this->render($this->baseFile);
+            // render the compiled File
+            echo $this->render();
 
             // return template content
             return ob_get_clean();
@@ -300,79 +271,56 @@ Class TwigTemplate
      *
      * @param  string $template path to render
      */
-    private function render($template)
+    private function render()
     {
+        \Twig_Autoloader::register();
+        $loader = new \Twig_Loader_Filesystem(array(
+            $this->themePath,
+            FRONTEND_MODULES_PATH,
+            FRONTEND_PATH
+        ));
+
+        $twig = new \Twig_Environment($loader, array(
+            'cache' => FRONTEND_CACHE_PATH . '/CachedTemplates/Twig_' . ($this->debugMode ? 'dev/': 'prod/'),
+            'debug' => $this->debugMode
+        ));
+
+        // debug options
+        if ($this->debugMode === true) {
+            $twig->addExtension(new \Twig_Extension_Debug());
+        }
+
         if (!empty($this->forms)) {
             foreach ($this->forms as $form) {
                 // using assign to pass the form as global
-                $this->twig->addGlobal('form_' . $form->getName(), $form);
+                $twig->addGlobal('form_' . $form->getName(), $form);
             }
-            new FormExtension($this->twig);
+            new FormExtension($twig);
         }
 
         // start the filters / globals
-        $this->twigFilters();
-        $this->twigFrontend();
-        $this->startGlobals();
-        $this->parseLabels();
+        $this->twigFilters($twig);
+        $this->startGlobals($twig);
+
+        // set the positions array
+        $twig->addGlobal('positions', $this->setPositions($this->positions));
+
+        // parse the Good old Spoon labels
+        $this->assignArray($this->parseLabels());
 
         // template
-        $this->template = $this->twig->loadTemplate($template);
-        return $this->template->render($this->variables);
+        $template = $twig->loadTemplate($this->baseFile);
+        return $template->render($this->variables);
     }
 
     /**
-     * Adds a form to this template.
+     * Adds a form to the template.
      *
      * @param   SpoonForm $form     The form-instance to add.
      */
     public function addForm($form)
     {
         $this->forms[$form->getName()] = $form;
-    }
-
-    /**
-     * Setup Frontend for the Twig environment.
-     */
-    private function twigFrontend()
-    {
-        // locale object
-        $this->twig->addGlobal('lng', new FL());
-
-        // settings
-        $this->twig->addGlobal(
-            'SITE_TITLE',
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
-        );
-
-        // facebook stuff
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
-            $this->twig->addGlobal(
-                'FACEBOOK_ADMIN_IDS',
-                Model::getModuleSetting('Core', 'facebook_admin_ids', null)
-            );
-        }
-        if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
-            $this->twig->addGlobal(
-                'FACEBOOK_APP_ID',
-                Model::getModuleSetting('Core', 'facebook_app_id', null)
-            );
-        }
-        if (Model::getModuleSetting('Core', 'facebook_app_secret', null) !== null) {
-            $this->twig->addGlobal(
-                'FACEBOOK_APP_SECRET',
-                Model::getModuleSetting('Core', 'facebook_app_secret', null)
-            );
-        }
-
-        // twitter stuff
-        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
-            // strip @ from twitter username
-            $this->twig->addGlobal(
-                'TWITTER_SITE_NAME',
-                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
-            );
-        }
     }
 
     /**
@@ -388,43 +336,42 @@ Class TwigTemplate
     /**
      * Setup Global filters for the Twig environment.
      */
-    private function twigFilters()
+    private function twigFilters(&$twig)
     {
         /** Filters list converted to twig filters
          - ucfirst -> capitalize
          -
         */
-
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturlforextraid', 'Frontend\Core\Engine\TemplateModifiers::getURLForExtraId'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getpageinfo', 'Frontend\Core\Engine\TemplateModifiers::getPageInfo'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getsubnavigation', 'Frontend\Core\Engine\TemplateModifiers::getSubNavigation'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('parsewidget', 'Frontend\Core\Engine\TemplateModifiers::parseWidget'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('highlight', 'Frontend\Core\Engine\TemplateModifiers::highlightCode'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('urlencode', 'urlencode'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('profilesetting', 'Frontend\Core\Engine\TemplateModifiers::profileSetting'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('uppercase', 'uppercase'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('sprintf', 'sprintf'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('spoon_date', 'Frontend\Core\Engine\TwigTemplate::spoonDate'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('getmainnavigation', 'Frontend\Core\Engine\TemplateModifiers::getMainNavigation'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('rand', 'Frontend\Core\Engine\TemplateModifiers::random'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('formatfloat', 'Frontend\Core\Engine\TemplateModifiers::formatFloat'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('truncate', 'Frontend\Core\Engine\TemplateModifiers::truncate'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('camelcase', '\SpoonFilter::toCamelCase'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('stripnewlines', 'Frontend\Core\Engine\TemplateModifiers::stripNewlines'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatdate', 'Frontend\Core\Engine\TemplateModifiers::formatDate'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('formattime', 'Frontend\Core\Engine\TemplateModifiers::formatTime'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
-        //$this->twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('timeago', 'Frontend\Core\Engine\TemplateModifiers::timeAgo'));
-        $this->twig->addFilter(new \Twig_SimpleFilter('cleanupplaintext', 'Frontend\Core\Engine\TemplateModifiers::cleanupPlainText'));
+        $twig->addFilter(new \Twig_SimpleFilter('geturlforblock', 'Frontend\Core\Engine\TemplateModifiers::getURLForBlock'));
+        $twig->addFilter(new \Twig_SimpleFilter('geturlforextraid', 'Frontend\Core\Engine\TemplateModifiers::getURLForExtraId'));
+        $twig->addFilter(new \Twig_SimpleFilter('getpageinfo', 'Frontend\Core\Engine\TemplateModifiers::getPageInfo'));
+        $twig->addFilter(new \Twig_SimpleFilter('getsubnavigation', 'Frontend\Core\Engine\TemplateModifiers::getSubNavigation'));
+        $twig->addFilter(new \Twig_SimpleFilter('parsewidget', 'Frontend\Core\Engine\TemplateModifiers::parseWidget'));
+        $twig->addFilter(new \Twig_SimpleFilter('highlight', 'Frontend\Core\Engine\TemplateModifiers::highlightCode'));
+        $twig->addFilter(new \Twig_SimpleFilter('urlencode', 'urlencode'));
+        $twig->addFilter(new \Twig_SimpleFilter('profilesetting', 'Frontend\Core\Engine\TemplateModifiers::profileSetting'));
+        $twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
+        $twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
+        $twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
+        $twig->addFilter(new \Twig_SimpleFilter('uppercase', 'uppercase'));
+        $twig->addFilter(new \Twig_SimpleFilter('sprintf', 'sprintf'));
+        $twig->addFilter(new \Twig_SimpleFilter('spoon_date', 'Frontend\Core\Engine\TwigTemplate::spoonDate'));
+        $twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
+        $twig->addFilter(new \Twig_SimpleFilter('geturl', 'Frontend\Core\Engine\TemplateModifiers::getURL'));
+        $twig->addFilter(new \Twig_SimpleFilter('getnavigation', 'Frontend\Core\Engine\TemplateModifiers::getNavigation'));
+        $twig->addFilter(new \Twig_SimpleFilter('getmainnavigation', 'Frontend\Core\Engine\TemplateModifiers::getMainNavigation'));
+        //$twig->addFilter(new \Twig_SimpleFilter('rand', 'Frontend\Core\Engine\TemplateModifiers::random'));
+        //$twig->addFilter(new \Twig_SimpleFilter('formatfloat', 'Frontend\Core\Engine\TemplateModifiers::formatFloat'));
+        $twig->addFilter(new \Twig_SimpleFilter('truncate', 'Frontend\Core\Engine\TemplateModifiers::truncate'));
+        //$twig->addFilter(new \Twig_SimpleFilter('camelcase', '\SpoonFilter::toCamelCase'));
+        //$twig->addFilter(new \Twig_SimpleFilter('stripnewlines', 'Frontend\Core\Engine\TemplateModifiers::stripNewlines'));
+        $twig->addFilter(new \Twig_SimpleFilter('formatdate', 'Frontend\Core\Engine\TemplateModifiers::formatDate'));
+        //$twig->addFilter(new \Twig_SimpleFilter('formattime', 'Frontend\Core\Engine\TemplateModifiers::formatTime'));
+        $twig->addFilter(new \Twig_SimpleFilter('formatdatetime', 'Frontend\Core\Engine\TemplateModifiers::formatDateTime'));
+        //$twig->addFilter(new \Twig_SimpleFilter('formatnumber', 'Frontend\Core\Engine\TemplateModifiers::formatNumber'));
+        $twig->addFilter(new \Twig_SimpleFilter('tolabel', 'Frontend\Core\Engine\TemplateModifiers::toLabel'));
+        $twig->addFilter(new \Twig_SimpleFilter('timeago', 'Frontend\Core\Engine\TemplateModifiers::timeAgo'));
+        $twig->addFilter(new \Twig_SimpleFilter('cleanupplaintext', 'Frontend\Core\Engine\TemplateModifiers::cleanupPlainText'));
     }
 
     /**
@@ -435,7 +382,7 @@ Class TwigTemplate
      */
     public static function uppercase($string)
     {
-        return mb_convert_case($string, MB_CASE_UPPER, Spoon::getCharset());
+        return mb_convert_case($string, MB_CASE_UPPER, \Spoon::getCharset());
     }
 
     /**
@@ -448,8 +395,7 @@ Class TwigTemplate
      */
     public static function spoonDate($timestamp, $format = 'Y-m-d H:i:s', $language = 'en')
     {
-        if(is_string($timestamp) && !is_numeric($timestamp))
-        {
+        if(is_string($timestamp) && !is_numeric($timestamp)) {
             // use strptime if you want to restrict the input format
             $timestamp = strtotime($timestamp);
         }
@@ -460,26 +406,26 @@ Class TwigTemplate
      *
      * We need to deprecate this asap
     */
-    private function startGlobals()
+    private function startGlobals(&$twig)
     {
         // some old globals
-        $this->twig->addGlobal('var', '');
-        $this->twig->addGlobal('CRLF', "\n");
-        $this->twig->addGlobal('TAB', "\t");
-        $this->twig->addGlobal('now', time());
-        $this->twig->addGlobal('LANGUAGE', FRONTEND_LANGUAGE);
-        $this->twig->addGlobal('is' . strtoupper(FRONTEND_LANGUAGE), true);
-        $this->twig->addGlobal('debug', $this->debugMode);
+        $twig->addGlobal('var', '');
+        $twig->addGlobal('CRLF', "\n");
+        $twig->addGlobal('TAB', "\t");
+        $twig->addGlobal('now', time());
+        $twig->addGlobal('LANGUAGE', FRONTEND_LANGUAGE);
+        $twig->addGlobal('is' . strtoupper(FRONTEND_LANGUAGE), true);
+        $twig->addGlobal('debug', $this->debugMode);
 
-        $this->twig->addGlobal('timestamp', time());
-        $this->twig->addGlobal('timeFormat', Model::getModuleSetting('Core', 'time_format'));
-        $this->twig->addGlobal('dateFormatShort', Model::getModuleSetting('Core', 'date_format_short'));
-        $this->twig->addGlobal('dateFormatLong', Model::getModuleSetting('Core', 'date_format_long'));
+        $twig->addGlobal('timestamp', time());
+        $twig->addGlobal('timeFormat', Model::getModuleSetting('Core', 'time_format'));
+        $twig->addGlobal('dateFormatShort', Model::getModuleSetting('Core', 'date_format_short'));
+        $twig->addGlobal('dateFormatLong', Model::getModuleSetting('Core', 'date_format_long'));
 
         // old theme checker
         if (Model::getModuleSetting('Core', 'theme') !== null) {
-            $this->twig->addGlobal('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
-            $this->twig->addGlobal(
+            $twig->addGlobal('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
+            $twig->addGlobal(
                 'THEME_URL',
                 '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
             );
@@ -505,6 +451,46 @@ Class TwigTemplate
         if (!empty($realConstants)) {
             $this->assignArray($realConstants);
         }
+
+        // Setup Frontend for the Twig environment.
+
+        // locale object
+        $twig->addGlobal('lng', new FL());
+
+        // settings
+        $twig->addGlobal(
+            'SITE_TITLE',
+            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+        );
+
+        // facebook stuff
+        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
+            $twig->addGlobal(
+                'FACEBOOK_ADMIN_IDS',
+                Model::getModuleSetting('Core', 'facebook_admin_ids', null)
+            );
+        }
+        if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
+            $twig->addGlobal(
+                'FACEBOOK_APP_ID',
+                Model::getModuleSetting('Core', 'facebook_app_id', null)
+            );
+        }
+        if (Model::getModuleSetting('Core', 'facebook_app_secret', null) !== null) {
+            $twig->addGlobal(
+                'FACEBOOK_APP_SECRET',
+                Model::getModuleSetting('Core', 'facebook_app_secret', null)
+            );
+        }
+
+        // twitter stuff
+        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
+            // strip @ from twitter username
+            $twig->addGlobal(
+                'TWITTER_SITE_NAME',
+                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
+            );
+        }
     }
 
     /**
@@ -512,14 +498,14 @@ Class TwigTemplate
      */
     private function parseLabels()
     {
-        $labels['act'] = Language::getActions();
-        $labels['err'] = Language::getErrors();
-        $labels['lbl'] = Language::getLabels();
-        $labels['msg'] = Language::getMessages();
+        $labels['act'] = FL::getActions();
+        $labels['err'] = FL::getErrors();
+        $labels['lbl'] = FL::getLabels();
+        $labels['msg'] = FL::getMessages();
 
         // execute addslashes on the values for the locale, will be used in JS
         if ($this->addSlashes) {
-            foreach ($labels as $label) {
+            foreach ($labels as &$label) {
                 foreach ($label as &$value) {
                     if (!is_array($value)) {
                         $value = addslashes($value);
@@ -527,7 +513,7 @@ Class TwigTemplate
                 }
             }
         }
-        $this->assignArray($labels);
+        return $labels;
     }
 
     /**
@@ -545,6 +531,6 @@ Class TwigTemplate
     public function setForceCompile(){}
     public function cache(){}
     public function isCached(){}
-    public function compile($dummy){return $dummy;}
-    public function display($dummy){return $dummy;}
+    public function compile(){}
+    public function display(){}
 }
