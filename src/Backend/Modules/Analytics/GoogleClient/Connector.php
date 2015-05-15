@@ -177,10 +177,9 @@ final class Connector
      */
     private function getMetrics($startDate, $endDate)
     {
-        $metrics = $this->analytics->data_ga->get(
-            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
-            date('Y-m-d', $startDate),
-            date('Y-m-d', $endDate),
+        $metrics = $this->getAnalyticsData(
+            $startDate,
+            $endDate,
             'ga:pageviews,ga:users,ga:pageviewsPerSession,ga:avgSessionDuration,ga:percentNewSessions,ga:bounceRate'
         );
 
@@ -196,10 +195,9 @@ final class Connector
      */
     private function collectVisitGraphData($startDate, $endDate)
     {
-        $visitGraphData = $this->analytics->data_ga->get(
-            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
-            date('Y-m-d', $startDate),
-            date('Y-m-d', $endDate),
+        $visitGraphData = $this->getAnalyticsData(
+            $startDate,
+            $endDate,
             'ga:pageviews,ga:users',
             array(
                 'dimensions' => 'ga:date',
@@ -235,10 +233,9 @@ final class Connector
      */
     private function collectSourceGraphData($startDate, $endDate)
     {
-        $sourceGraphData = $this->analytics->data_ga->get(
-            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
-            date('Y-m-d', $startDate),
-            date('Y-m-d', $endDate),
+        $sourceGraphData = $this->getAnalyticsData(
+            $startDate,
+            $endDate,
             'ga:pageviews',
             array(
                 'dimensions' => 'ga:medium',
@@ -258,5 +255,25 @@ final class Connector
         }
 
         return $namedRows;
+    }
+
+    /**
+     * Returns Analytics data for our coupled profile
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @param  string $metrics A comma-separated list of Analytics metrics.
+     * @param  array $optParams Optional parameters.
+     * @return Google_Service_Analytics_GaData
+     */
+    private function getAnalyticsData($startDate, $endDate, $metrics, $optParams = array())
+    {
+        return $this->analytics->data_ga->get(
+            'ga:' . Model::getModuleSetting('Analytics', 'profile'),
+            date('Y-m-d', $startDate),
+            date('Y-m-d', $endDate),
+            $metrics,
+            $optParams
+        );
     }
 }
