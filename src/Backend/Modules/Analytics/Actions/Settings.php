@@ -23,9 +23,6 @@ final class Settings extends ActionIndex
      */
     private $form;
 
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         parent::execute();

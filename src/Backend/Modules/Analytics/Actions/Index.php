@@ -27,9 +27,6 @@ final class Index extends ActionIndex
      */
     private $form;
 
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         parent::execute();
@@ -95,9 +92,6 @@ final class Index extends ActionIndex
         }
     }
 
-    /**
-     * Parse the datagrid and the reports
-     */
     protected function parse()
     {
         parent::parse();
