@@ -509,7 +509,7 @@ class Form extends \SpoonForm
      *
      * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse($tpl)
     {
         parent::parse($tpl);
         $this->validate();

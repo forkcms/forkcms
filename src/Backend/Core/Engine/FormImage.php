@@ -84,7 +84,7 @@ class FormImage extends \SpoonFormImage
      * @param \SpoonTemplate $template The template to parse the element in.
      * @return string
      */
-    public function parse(\SpoonTemplate $template = null)
+    public function parse($template = null)
     {
         // get upload_max_filesize
         $uploadMaxFilesize = ini_get('upload_max_filesize');

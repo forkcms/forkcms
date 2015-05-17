@@ -1145,18 +1145,18 @@ jsBackend.forms =
         $inputDatefieldTill = $('.inputDatefieldTill');
         $inputDatefieldRange = $('.inputDatefieldRange');
 
-        $($inputDatefieldNormal, $inputDatefieldFrom, $inputDatefieldTill, $inputDatefieldRange).datepicker(
-            {
-                dayNames: dayNames,
-                dayNamesMin: dayNamesMin,
-                dayNamesShort: dayNamesShort,
-                hideIfNoPrevNext: true,
-                monthNames: monthNames,
-                monthNamesShort: monthNamesShort,
-                nextText: jsBackend.locale.lbl('Next'),
-                prevText: jsBackend.locale.lbl('Previous'),
-                showAnim: 'slideDown'
-            });
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+		{
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: jsBackend.locale.lbl('Next'),
+			prevText: jsBackend.locale.lbl('Previous'),
+			showAnim: 'slideDown'
+		});
 
         // the default, nothing special
         $inputDatefieldNormal.each(function () {

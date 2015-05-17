@@ -1,4 +1,11 @@
-3.9.2 (2015-xx-xx)
+3.9.3 (2015-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+
+3.9.2 (2015-05-12)
 --
 Improvements:
 
@@ -20,6 +27,7 @@ Bugfixes:
 * Groups: Fix (in add/edit) for executing widgets for which the module doesn't exists.
 * Mailmotor: Fix wrongly cased classname
 * Blog: make sure images can get reverted together with their revision
+* Formbuilder: Fix reply option
 
 
 3.9.1 (2015-03-12)
