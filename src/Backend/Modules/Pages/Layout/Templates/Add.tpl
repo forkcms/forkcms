@@ -59,7 +59,7 @@
 
                                 <div class="btn-toolbar pull-right">
                                     <div class="btn-group" role="group">
-                                        <button class="btn" data-toggle="modal" data-target="#changeTemplate">
+                                        <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
                                             <span class="glyphicon glyphicon-th"></span>
                                             {$lblChangeTemplate|ucfirst}
                                         </button>
