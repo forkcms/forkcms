@@ -2,338 +2,223 @@
 
 namespace Backend\Modules\Analytics\Actions;
 
-/*
- * This file is part of Fork CMS.
- *
- * For the full copyright and license information, please view the license
- * file that was distributed with this source code.
- */
-
-use Backend\Core\Engine\Base\ActionEdit as BackendBaseActionEdit;
-use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Language as BL;
-use Backend\Modules\Analytics\Engine\Helper as BackendAnalyticsHelper;
-use Backend\Modules\Analytics\Engine\Model as BackendAnalyticsModel;
+use Backend\Core\Engine\Base\ActionIndex;
+use Backend\Core\Engine\Form;
+use Backend\Core\Engine\Language;
+use Backend\Core\Engine\Model;
+use Backend\Modules\Analytics\GoogleClient\ClientFactory;
 
 /**
- * This is the settings-action, it will display a form to set general analytics settings
+ * This is the settings-action (default), it will be used to couple your analytics
+ * account
  *
- * @author Annelies Van Extergem <annelies.vanextergem@netlash.com>
- * @author Dieter Vanden Eynde <dieter.vandeneynde@wijs.be>
+ * @author Wouter Sioen <wouter@sumocoders.be>
  */
-class Settings extends BackendBaseActionEdit
+final class Settings extends ActionIndex
 {
     /**
-     * The account name
+     * The form instance
      *
-     * @var    string
+     * @var Form
      */
-    private $accountName;
+    private $form;
 
-    /**
-     * API key needed by the API.
-     *
-     * @var string
-     */
-    private $apiKey;
-
-    /**
-     * The forms used on this page
-     *
-     * @var BackendForm
-     */
-    private $frmApiKey;
-    private $frmLinkProfile;
-    private $frmTrackingType;
-
-    /**
-     * All website profiles
-     *
-     * @var    array
-     */
-    private $profiles = array();
-
-    /**
-     * The title of the selected profile
-     *
-     * @var    string
-     */
-    private $profileTitle;
-
-    /**
-     * The session token
-     *
-     * @var    string
-     */
-    private $sessionToken;
-
-    /**
-     * The table id
-     *
-     * @var    int
-     */
-    private $tableId;
-
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         parent::execute();
-        $this->loadTrackingTypeForm();
-        $this->validateTrackingTypeForm();
-        $this->getAnalyticsParameters();
+
+        $this->loadForm();
+        $this->validateForm();
         $this->parse();
         $this->display();
     }
 
-    /**
-     * Gets all the needed parameters to link a google analytics account to fork
-     */
-    private function getAnalyticsParameters()
+    public function loadForm()
     {
-        $remove = \SpoonFilter::getGetValue('remove', array('session_token', 'table_id'), null);
+        $this->form = new Form('settings');
 
-        // something has to be removed before proceeding
-        if (!empty($remove)) {
-            // the session token has te be removed
-            if ($remove == 'session_token') {
-                BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
-            }
+        // we don't even have a secret file yet, let the user upload it
+        if (Model::getModuleSetting($this->getModule(), 'secret_file') === null) {
+            $this->form->addFile('secret_file');
 
-            // remove all profile parameters from the module settings
-            BackendModel::setModuleSetting($this->getModule(), 'account_name', null);
-            BackendModel::setModuleSetting($this->getModule(), 'table_id', null);
-            BackendModel::setModuleSetting($this->getModule(), 'profile_title', null);
-            BackendModel::setModuleSetting($this->getModule(), 'web_property_id', null);
-
-            BackendAnalyticsModel::removeCacheFiles();
-            BackendAnalyticsModel::clearTables();
+            return;
         }
 
-        // get session token, account name, the profile's table id, the profile's title
-        $this->sessionToken = BackendModel::getModuleSetting($this->getModule(), 'session_token', null);
-        $this->accountName = BackendModel::getModuleSetting($this->getModule(), 'account_name', null);
-        $this->tableId = BackendModel::getModuleSetting($this->getModule(), 'table_id', null);
-        $this->profileTitle = BackendModel::getModuleSetting($this->getModule(), 'profile_title', null);
-        $this->apiKey = BackendModel::getModuleSetting($this->getModule(), 'api_key', null);
+        // we don't have a token: redirect the user to Google to grant access
+        if (Model::getModuleSetting($this->getModule(), 'token') === null) {
+            $client = $this->get('analytics.google_client');
 
-        // no session token
-        if (!isset($this->sessionToken)) {
-            $token = \SpoonFilter::getGetValue('token', null, null);
-
-            /*
-             * Google's deprecated AuthSub authentication returns to this action with a
-             * GET "token" param which causes a collision with our CSRF "token" param. This
-             * is already resolved in an upcoming feature where we implement OAuth2.
-             *
-             * For now, and older releases, this is a work around. The token generated by Fork is
-             * always 10 characters. The token provided by Google is larger then 10 characters, however
-             * this is not documented and therefor cannot be trusted.
-             */
-            if (!empty($token) && strlen($token) > 10) {
-                $ga = BackendAnalyticsHelper::getGoogleAnalyticsInstance();
-                $this->sessionToken = $ga->getSessionToken($token);
-                BackendModel::setModuleSetting($this->getModule(), 'session_token', $this->sessionToken);
+            if ($this->getParameter('code') === null) {
+                // make sure we receive a refresh token
+                $client->setAccessType('offline');
+                $this->redirect($client->createAuthUrl());
+            } else {
+                $client->authenticate($this->getParameter('code'));
+                Model::setModuleSetting($this->getModule(), 'token', $client->getAccessToken());
+                $this->redirect(Model::createURLForAction('Settings'));
             }
+
+            return;
         }
 
-        // session id is present but there is no table_id
-        if (isset($this->sessionToken) && !isset($this->tableId)) {
-            $ga = BackendAnalyticsHelper::getGoogleAnalyticsInstance();
-
-            try {
-                $this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
-            } catch (\GoogleAnalyticsException $e) {
-                // bad request, probably means the API key is wrong
-                if ($e->getCode() == '400') {
-                    // reset token so we can alter the API key
-                    BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
-                    $this->redirect(BackendModel::createURLForAction('Settings') . '&error=invalid-api-key');
-                }
+        // we are authenticated! Let's see which account the user wants to use
+        if (Model::getModuleSetting($this->getModule(), 'account') === null) {
+            $analytics = $this->get('analytics.google_analytics_service');
+            $accounts = $analytics->management_accounts->listManagementAccounts();
+            $accountsForDropdown = array();
+            foreach ($accounts->getItems() as $account) {
+                $accountsForDropdown[$account->getId()] = $account->getName();
             }
+            $this->form->addDropdown('account', $accountsForDropdown);
 
-            if ($this->profiles == 'UNAUTHORIZED') {
-                // remove invalid session token
-                BackendModel::setModuleSetting($this->getModule(), 'session_token', null);
+            return;
+        }
 
-                // redirect to the settings page without parameters
-                $this->redirect(BackendModel::createURLForAction('Settings'));
-            } elseif (is_array($this->profiles)) {
-                $tableId = \SpoonFilter::getGetValue('table_id', null, null);
-
-                // a table id is given in the get parameters
-                if (!empty($tableId)) {
-                    $profiles = array();
-
-                    // set the table ids as keys
-                    foreach ($this->profiles as $profile) {
-                        $profiles[$profile['tableId']] = $profile;
-                    }
-
-                    // correct table id
-                    if (isset($profiles[$tableId])) {
-                        // save table id and account title
-                        $this->tableId = $tableId;
-                        $this->accountName = $profiles[$this->tableId]['profileName'];
-                        $this->profileTitle = $profiles[$this->tableId]['title'];
-                        $webPropertyId = $profiles[$this->tableId]['webPropertyId'];
-
-                        // store the table id and account title in the settings
-                        BackendModel::setModuleSetting($this->getModule(), 'account_name', $this->accountName);
-                        BackendModel::setModuleSetting($this->getModule(), 'table_id', $this->tableId);
-                        BackendModel::setModuleSetting($this->getModule(), 'profile_title', $this->profileTitle);
-                        BackendModel::setModuleSetting($this->getModule(), 'web_property_id', $webPropertyId);
-                    }
-                }
+        // we have an account, but don't know which property to track
+        if (Model::getModuleSetting($this->getModule(), 'web_property_id') === null) {
+            $analytics = $this->get('analytics.google_analytics_service');
+            $properties = $analytics->management_webproperties
+                ->listManagementWebproperties(Model::getModuleSetting($this->getModule(), 'account'))
+            ;
+            $propertiesForDropdown = array();
+            foreach ($properties->getItems() as $property) {
+                $propertiesForDropdown[$property->getId()] = $property->getName();
             }
+            $this->form->addDropdown('web_property_id', $propertiesForDropdown);
+
+            return;
+        }
+
+        // we have an account, but don't know which property to track
+        if (Model::getModuleSetting($this->getModule(), 'profile') === null) {
+            $analytics = $this->get('analytics.google_analytics_service');
+            $profiles = $analytics->management_profiles
+                ->listManagementProfiles(
+                    Model::getModuleSetting($this->getModule(), 'account'),
+                    Model::getModuleSetting($this->getModule(), 'web_property_id')
+                )
+            ;
+            $profilesForDropdown = array();
+            foreach ($profiles->getItems() as $property) {
+                $profilesForDropdown[$property->getId()] = $property->getName();
+            }
+            $this->form->addDropdown('profile', $profilesForDropdown);
+
+            return;
         }
     }
 
-    /**
-     * Load settings form
-     */
-    private function loadTrackingTypeForm()
-    {
-        $this->frmTrackingType = new BackendForm('trackingType');
-
-        $types = array();
-        $types[] = array('label' => 'Universal Analytics', 'value' => 'universal_analytics');
-        $types[] = array('label' => 'Classic Google Analytics', 'value' => 'classic_analytics');
-        $types[] = array(
-            'label' => 'Display Advertising (stats.g.doubleclick.net/dc.js)',
-            'value' => 'display_advertising'
-        );
-
-        $this->frmTrackingType->addRadiobutton(
-            'type',
-            $types,
-            BackendModel::getModuleSetting($this->URL->getModule(), 'tracking_type', 'universal_analytics')
-        );
-    }
-
-    /**
-     * Validates the tracking url form.
-     */
-    private function validateTrackingTypeForm()
-    {
-        if ($this->frmTrackingType->isSubmitted()) {
-            if ($this->frmTrackingType->isCorrect()) {
-                BackendModel::setModuleSetting(
-                    $this->getModule(),
-                    'tracking_type',
-                    $this->frmTrackingType->getField('type')->getValue()
-                );
-                BackendModel::triggerEvent($this->getModule(), 'after_saved_tracking_type_settings');
-                $this->redirect(BackendModel::createURLForAction('Settings') . '&report=saved');
-            }
-        }
-    }
-
-    /**
-     * Parse
-     */
     protected function parse()
     {
         parent::parse();
 
-        if (!isset($this->sessionToken)) {
-            // show the link to the google account authentication form
-            $this->tpl->assign('NoSessionToken', true);
-            $this->tpl->assign('Wizard', true);
-
-            // build the link to the google account authentication form
-            $redirectUrl = SITE_URL . '/' . (strpos($this->URL->getQueryString(), '?') === false ?
-                $this->URL->getQueryString() :
-                substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')))
-            ;
-            $googleAccountAuthenticationForm = sprintf(
-                BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL,
-                urlencode($redirectUrl),
-                urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE)
+        $this->form->parse($this->tpl);
+        if (Model::getModuleSetting($this->getModule(), 'web_property_id')) {
+            $this->tpl->assign(
+                'web_property_id',
+                Model::getModuleSetting($this->getModule(), 'web_property_id')
             );
-
-            // create form
-            $this->frmApiKey = new BackendForm('apiKey');
-            $this->frmApiKey->addText('key', $this->apiKey);
-
-            if ($this->frmApiKey->isSubmitted()) {
-                $this->frmApiKey->getField('key')->isFilled(BL::err('FieldIsRequired'));
-
-                if ($this->frmApiKey->isCorrect()) {
-                    BackendModel::setModuleSetting(
-                        $this->getModule(),
-                        'api_key',
-                        $this->frmApiKey->getField('key')->getValue()
-                    );
-                    $this->redirect($googleAccountAuthenticationForm);
-                }
-            }
-
-            $this->frmApiKey->parse($this->tpl);
-        } elseif (isset($this->sessionToken) && isset($this->profiles) && !isset($this->tableId)) {
-            // session token is present but no table id
-            $this->tpl->assign('NoTableId', true);
-            $this->tpl->assign('Wizard', true);
-
-            $accounts = array();
-
-            if (!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED') {
-                $accounts[''][0] = BL::msg('ChooseWebsiteProfile');
-
-                // prepare accounts array
-                foreach ((array) $this->profiles as $profile) {
-                    $accounts[$profile['accountName']][$profile['tableId']] = $profile['profileName'] . ' (' . $profile['webPropertyId'] . ')';
-                }
-
-                if (!empty($accounts)) {
-                    uksort($accounts, array(__CLASS__, 'sortAccounts'));
-
-                    // create form
-                    $this->frmLinkProfile = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
-                    $this->frmLinkProfile->addDropdown('table_id', $accounts);
-                    $this->frmLinkProfile->parse($this->tpl);
-
-                    if ($this->frmLinkProfile->isSubmitted()) {
-                        if ($this->frmLinkProfile->getField('table_id')->getValue() == '0') {
-                            $this->tpl->assign('ddmTableIdError', BL::err('FieldIsRequired'));
-                        }
-                    }
-
-                    // parse accounts
-                    $this->tpl->assign('accounts', true);
-                }
-            }
-        } elseif (isset($this->sessionToken) && isset($this->tableId) && isset($this->accountName)) {
-            // show the linked account
-            $this->tpl->assign('EverythingIsPresent', true);
-
-            // show the title of the linked account and profile
-            $this->tpl->assign('accountName', $this->accountName);
-            $this->tpl->assign('profileTitle', $this->profileTitle);
         }
-
-        // Parse tracking url form
-        $this->frmTrackingType->parse($this->tpl);
+        if (Model::getModuleSetting($this->getModule(), 'profile')) {
+            $this->tpl->assign(
+                'profile',
+                Model::getModuleSetting($this->getModule(), 'profile')
+            );
+        }
     }
 
-    /**
-     * Helper function to sort accounts
-     *
-     * @param array $account1 First account for comparison.
-     * @param array $account2 Second account for comparison.
-     * @return int
-     */
-    public static function sortAccounts($account1, $account2)
+    private function validateForm()
     {
-        if (strtolower($account1) > strtolower($account2)) {
-            return 1;
+        if ($this->form->isSubmitted()) {
+            if ($this->form->existsField('secret_file')) {
+                $this->validateSecretFileForm();
+            }
+
+            if ($this->form->existsField('account')) {
+                $this->validateAccountForm();
+            }
+
+            if ($this->form->existsField('web_property_id')) {
+                $this->validatePropertyForm();
+            }
+
+            if ($this->form->existsField('profile')) {
+                $this->validateProfileForm();
+            }
         }
-        if (strtolower($account1) < strtolower($account2)) {
-            return -1;
+    }
+
+    private function validateSecretFileForm()
+    {
+        $fileField = $this->form->getField('secret_file');
+
+        if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
+            $fileField->isAllowedExtension(
+                array('json'),
+                Language::err('JsonOnly')
+            );
         }
 
-        return 0;
+        if ($this->form->isCorrect()) {
+            $fileField->moveFile(
+                BACKEND_CACHE_PATH . '/' . $this->getModule() . '/'
+                . $fileField->getFileName()
+            );
+            Model::setModuleSetting(
+                $this->getModule(),
+                'secret_file',
+                $fileField->getFileName()
+            );
+
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
+    }
+
+    private function validateAccountForm()
+    {
+        $accountField = $this->form->getField('account');
+        $accountField->isFilled(Language::err('FieldIsRequired'));
+
+        if ($this->form->isCorrect()) {
+            Model::setModuleSetting(
+                $this->getModule(),
+                'account',
+                $accountField->getValue()
+            );
+
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
+    }
+
+    private function validatePropertyForm()
+    {
+        $webPropertyField = $this->form->getField('web_property_id');
+        $webPropertyField->isFilled(Language::err('FieldIsRequired'));
+
+        if ($this->form->isCorrect()) {
+            Model::setModuleSetting(
+                $this->getModule(),
+                'web_property_id',
+                $webPropertyField->getValue()
+            );
+
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
+    }
+
+    private function validateProfileForm()
+    {
+        $profileField = $this->form->getField('profile');
+        $profileField->isFilled(Language::err('FieldIsRequired'));
+
+        if ($this->form->isCorrect()) {
+            Model::setModuleSetting(
+                $this->getModule(),
+                'profile',
+                $profileField->getValue()
+            );
+
+            $this->redirect(Model::createURLForAction('Settings'));
+        }
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Tests\Engine;
+namespace Backend\Core\Tests;
 
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Core\Engine\TemplateModifiers;
