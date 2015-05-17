@@ -1,6 +1,5 @@
 <?php
 
-// My Time Stamps trick
 define('TIME', microtime(true));
 define('EXTENSION', '.html.twig');
 define('WEBROOT', __DIR__.'/../');
@@ -30,12 +29,12 @@ class Spoon2Twig
         }
 
         if ($this->isFile($input) && $force === true) {
-            $this->write($input, $this->start.$this->ruleParser($this->getFile($input)));
+            $this->write($input, $this->ruleParser($this->getFile($input)));
             return;
         }
 
         if (!file_exists(str_replace('.tpl', EXTENSION, $input))) {
-            $this->write($input, $this->start.$this->ruleParser($this->getFile($input)));
+            $this->write($input, $$this->ruleParser($this->getFile($input)));
         }
         exit('twig version of ' . $input . ' exists, use the "forced" parameter to overwrite' . PHP_EOL);
     }
@@ -130,19 +129,19 @@ class Spoon2Twig
     public function getCorrectSourceVersion()
     {
         // checking what version
-        $version = $this->getFile('../VERSION.md');
+        $version = $this->getFile('VERSION.md');
         switch (true)
         {
             case (strpos($version, '3.9.') !== false):
-                $source = '../src/';
+                $source = 'src/';
                 break;
 
             case (strpos($version, '3.8.') !== false):
-                $source = '../src/';
+                $source = 'src/';
                 break;
 
             default:
-                $source = '../src/';
+                $source = 'src/';
                 break;
         }
         return $source;
@@ -159,11 +158,12 @@ class Spoon2Twig
         // OUR OUTPUT CODE
         $input = str_replace('.tpl', EXTENSION, $input);
         $file = WEBROOT . $input;
+        $inputPath = pathinfo($input);
 
-        file_put_contents($file, $filedata);
+        file_put_contents($file, $this->start.$filedata);
         $time = $this->timestamp(2) - $this->previousTimeStamp;
-        echo 'done in ' . $time . ' milliseconds' . PHP_EOL;
-        $this->previousTimeStamp = $this->timestamp(2) + $this->previousTimeStamp;
+        $this->previousTimeStamp = $this->timestamp(2);
+        echo $inputPath['basename']. ' done in ' . $time . ' milliseconds' . PHP_EOL;
     }
 
     /**
@@ -209,32 +209,25 @@ class Spoon2Twig
      *
      * @return string           if successful returns file content with replaced data
      */
-    public function pregReplaceSprintf($regex, $format, $filedata)
+    public function pregReplaceSprintf($regex, $format, $filedata, $extra = null)
     {
         preg_match_all($regex, $filedata, $match);
-        if  (isset($match[3])) {
-            $values = array();
-            foreach ($match[1] as $key => $value) {
-                   $values[] = sprintf($format, $value, $match[2][$key], $match[3][$key]);
-            }
-            return str_replace($match[0], $values , $filedata);
-        } elseif (isset($match[2])) {
-            $values = array();
-            foreach ($match[1] as $key => $value) {
-                $values[] = sprintf($format, $value, $match[2][$key]);
-            }
-            return str_replace($match[0], $values , $filedata);
-        } elseif (isset($match[1])) {
+
+        if (count($match)) {
             $values = array();
             foreach ($match[1] as $value) {
+                if ($extra === 'snakeCase') {
+                    $value = $this->fromCamelToSnake($value);
+                }
+                elseif($extra === 'comma') {
+                    $value = $this->comma($value);
+                }
                 $values[] = sprintf($format, $value);
             }
             return str_replace($match[0], $values , $filedata);
         }
-        else {
-            echo ('no match found on the ' . $regex . ' line');
-            exit;
-        }
+        echo ('no match found on the ' . $regex . ' line');
+        exit;
     }
 
     /**
@@ -268,6 +261,21 @@ class Spoon2Twig
         return $noun;
     }
 
+    public function fromCamelToSnake($input)
+    {
+        preg_match_all('!([A-Z][A-Z0-9]*(?=$|[A-Z][a-z0-9])|[A-Za-z][a-z0-9]+)!', $input, $matches);
+        $ret = $matches[0];
+        foreach ($ret as &$match) {
+            $match = $match == strtoupper($match) ? strtolower($match) : lcfirst($match);
+        }
+        return implode('_', $ret);
+    }
+
+    public function comma($input)
+    {
+        return str_replace(':', ',', $input);
+    }
+
     /**
      * Iteration Converter
      *
@@ -281,6 +289,7 @@ class Spoon2Twig
         if ($match[1]) {
             foreach ($match[1] as $value) {
                 $new_val = $this->dePluralize($value);
+
                 $prev_match = $match[0];
                 $match[0] = str_replace('{iteration:'.$value.'}','{% for '. $new_val . ' in ' . $value . '_ %}', $match[0]);
                 $match[0] = str_replace('{/iteration:'.$value.'}','{% endfor %}', $match[0]);
@@ -299,27 +308,28 @@ class Spoon2Twig
         // Exceptions
         $filedata = $this->pregReplaceSprintf('/:{\$(.*?)}/ism', ':%s', $filedata);
 
+        // iterations
         $filedata = $this->pregReplaceIterations($filedata);
 
-        // filter endfor
-        // $filedata = $this->pregReplaceSprintf('/{\$(.*?)\)}/', '{{ %s ) }}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{\$(.*?)}/ims', '{{ %s }}', $filedata);
+        // variables
+        $filedata = $this->pregReplaceSprintf('/{\$(.*?)\)}/', '{{ %s ) }}', $filedata);
+        $filedata = $this->pregReplaceSprintf('/{\$(.*?)}/ism', '{{ %s }}', $filedata);
 
-        $filedata = $this->pregReplaceSprintf('/{\$now\|date:(.*?)}/i', '{{ now|date(%1$s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|date:(.*?):(.*?)}/', '|spoon_date(%1$s, %2$s})', $filedata);
+        // filters
+        $filedata = $this->pregReplaceSprintf('/\|date:(.*?)}/', '|spoon_date(%s) }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/\|date:(.*?)}/', '|date(%s) }', $filedata);
         $filedata = $this->pregReplaceSprintf('/\|sprintf:(.*?)}/', '|sprintf(%s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|usersetting:(.*?)}/', '|usersetting(%s})', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|geturlforblock:(.*?)}/', '|geturlforblock(%s})', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|getnavigation:(.*?):(.*?):(.*?)}/', '|getnavigation(%1$s, %2$s, %3$s)|raw }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|getsubnavigation:(.*?):(.*?):(.*?)}/', '|getsubnavigation(%1$s, %2$s, %3$s)|raw }', $filedata);
-
+        $filedata = $this->pregReplaceSprintf('/\|usersetting:(.*?)}/', '|usersetting(%s) }', $filedata);
+        $filedata = $this->pregReplaceSprintf('/\|geturlforblock:(.*?)}/', '|geturlforblock(%s) }', $filedata);
+        $filedata = $this->pregReplaceSprintf('/\|getnavigation:(.*?)}/', '|getnavigation(%s)|raw }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/\|getsubnavigation:(.*?)}/', '|getsubnavigation(%s)|raw }', $filedata, 'comma');
         $filedata = str_replace('/\|getmainnavigation}/', '|getmainnavigation|raw }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|truncate:(.*?)}/', '|truncate(%1$s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?):(.*?)}/', '|geturl(%1$s, %2$s) }', $filedata);
-        $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?)}/', '|geturl(%1$s) }', $filedata);
+        $filedata = $this->pregReplaceSprintf('/\|truncate:(.*?)}/', '|truncate(%s) }', $filedata);
+        $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?)}/', '|geturl(%s) }', $filedata, 'comma');
+        $filedata = $this->pregReplaceSprintf('/\|geturl:(.*?)}/', '|geturl(%s) }', $filedata);
         $filedata = str_replace('/Grid}/', 'Grid|raw }', $filedata);
 
-        // string replacers in the last part
+        // string replacers
         $filedata = str_replace('*}', '#}', $filedata); // comments
         $filedata = str_replace('{*', '{#', $filedata); // comments
         $filedata = str_replace('|ucfirst', '|capitalize', $filedata);
@@ -341,19 +351,21 @@ class Spoon2Twig
         $filedata = $this->pregReplaceSprintf('/{\/option:(.*?)}/i', '{%% endif %%}', $filedata); // for {option: variable }
         $filedata = $this->pregReplaceSprintf('/{option:(.*?)}/i', '{%% if %s %%}', $filedata);
 
-        //form values
+        //form values values are lowercase
         $filedata = $this->pregReplaceSprintf('/{\/form:(.*?)}/i', '{%% endform %%}', $filedata); // for {form:add}
         $filedata = $this->pregReplaceSprintf('/{form:(.*?)}/i', '{%% form %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{{ txt(.*?) }}/i', '{%% form_field %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{{ file(.*?) }}/i', '{%% form_field %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{{ ddm(.*?) }}/i', '{%% form_field %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{{ chk(.*?) }}/i', '{%% form_field %s %%}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/form_field (.*?)Error/i', 'form_field_error %s', $filedata);
+        $filedata = $this->pregReplaceSprintf('/{{ txt(.*?) }}/i', '{%% form_field %s %%}', $filedata, 'snakeCase');
+        $filedata = $this->pregReplaceSprintf('/{{ file(.*?) }}/i', '{%% form_field %s %%}', $filedata, 'snakeCase');
+        $filedata = $this->pregReplaceSprintf('/{{ ddm(.*?) }}/i', '{%% form_field %s %%}', $filedata, 'snakeCase');
+        $filedata = $this->pregReplaceSprintf('/{{ chk(.*?) }}/i', '{%% form_field %s %%}', $filedata, 'snakeCase');
+        $filedata = $this->pregReplaceSprintf('/form_field (.*?)_error/i', 'form_field_error %s', $filedata);
+        //$filedata = $this->pregReplaceSprintf('/{% if (.*?)Error %}/i', '{%% if form_field_error %s %%}', $filedata, 'snakeCase');
 
-        // caching
+        // caching // disabled
         $filedata = $this->pregReplaceSprintf('/{\/cache:(.*?)}/i', '{# endcache #}', $filedata);
-        $filedata = $this->pregReplaceSprintf('/{cache:(%s)}/i', '{# cache %s #}', $filedata);
+        $filedata = $this->pregReplaceSprintf('/{cache:(.*?)}/i', '{# cache(%s) #}', $filedata);
 
+        // labels
         $filedata = $this->pregReplaceSprintf('/{{ lbl(.*?) }}/i', '{{ lbl.%s }}', $filedata);
         $filedata = $this->pregReplaceSprintf('/{{ msg(.*?) }}/i', '{{ msg.%s }}', $filedata);
         $filedata = $this->pregReplaceSprintf('/{{ err(.*?) }}/i', '{{ err.%s }}', $filedata);
