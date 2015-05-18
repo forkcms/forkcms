@@ -300,7 +300,7 @@ class Model extends \BaseModel
      */
     public static function deleteModuleSetting($module, $key)
     {
-        return self::get('modules_settings')->delete($module, $key);
+        return self::get('fork.settings')->delete($module, $key);
     }
 
     /**
@@ -668,7 +668,7 @@ class Model extends \BaseModel
      */
     public static function getModuleSetting($module, $key, $defaultValue = null)
     {
-        return self::get('modules_settings')->get($module, $key, $defaultValue);
+        return self::get('fork.settings')->get($module, $key, $defaultValue);
     }
 
     /**
@@ -680,7 +680,7 @@ class Model extends \BaseModel
      */
     public static function getModuleSettings($module = null)
     {
-        return self::get('modules_settings')->getForModule($module);
+        return self::get('fork.settings')->getForModule($module);
     }
 
     /**
@@ -1229,7 +1229,7 @@ class Model extends \BaseModel
      */
     public static function setModuleSetting($module, $key, $value)
     {
-        return self::get('modules_settings')->set($module, $key, $value);
+        return self::get('fork.settings')->set($module, $key, $value);
     }
 
     /**

@@ -2,7 +2,7 @@ services:
     analytics.client_factory:
         class: Backend\Modules\Analytics\GoogleClient\ClientFactory
         arguments:
-            - @modules_settings
+            - @fork.settings
 
     analytics.google_analytics_service:
         class: Google_Service_Analytics
@@ -23,4 +23,4 @@ services:
         arguments:
             - @analytics.google_analytics_service
             - @analytics.cache
-            - @modules_settings
+            - @fork.settings

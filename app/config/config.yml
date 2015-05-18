@@ -63,10 +63,10 @@ services:
         arguments:
             - @database
             - @service_container
-    modules_settings_cache:
+    fork.settings_cache:
         class: Common\Cache\InMemoryCache
-    modules_settings:
+    fork.settings:
         class: Common\ModulesSettings
         arguments:
             - @database
-            - @modules_settings_cache
+            - @fork.settings_cache

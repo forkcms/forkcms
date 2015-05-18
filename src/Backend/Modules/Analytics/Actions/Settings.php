@@ -38,14 +38,14 @@ final class Settings extends ActionIndex
         $this->form = new Form('settings');
 
         // we don't even have a secret file yet, let the user upload it
-        if ($this->get('modules_settings')->get($this->getModule(), 'secret_file') === null) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'secret_file') === null) {
             $this->form->addFile('secret_file');
 
             return;
         }
 
         // we don't have a token: redirect the user to Google to grant access
-        if ($this->get('modules_settings')->get($this->getModule(), 'token') === null) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'token') === null) {
             $client = $this->get('analytics.google_client');
 
             if ($this->getParameter('code') === null) {
@@ -54,7 +54,7 @@ final class Settings extends ActionIndex
                 $this->redirect($client->createAuthUrl());
             } else {
                 $client->authenticate($this->getParameter('code'));
-                $this->get('modules_settings')->set($this->getModule(), 'token', $client->getAccessToken());
+                $this->get('fork.settings')->set($this->getModule(), 'token', $client->getAccessToken());
                 $this->redirect(Model::createURLForAction('Settings'));
             }
 
@@ -62,7 +62,7 @@ final class Settings extends ActionIndex
         }
 
         // we are authenticated! Let's see which account the user wants to use
-        if ($this->get('modules_settings')->get($this->getModule(), 'account') === null) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'account') === null) {
             $analytics = $this->get('analytics.google_analytics_service');
             $accounts = $analytics->management_accounts->listManagementAccounts();
             $accountsForDropdown = array();
@@ -75,10 +75,10 @@ final class Settings extends ActionIndex
         }
 
         // we have an account, but don't know which property to track
-        if ($this->get('modules_settings')->get($this->getModule(), 'web_property_id') === null) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'web_property_id') === null) {
             $analytics = $this->get('analytics.google_analytics_service');
             $properties = $analytics->management_webproperties
-                ->listManagementWebproperties($this->get('modules_settings')->get($this->getModule(), 'account'))
+                ->listManagementWebproperties($this->get('fork.settings')->get($this->getModule(), 'account'))
             ;
             $propertiesForDropdown = array();
             foreach ($properties->getItems() as $property) {
@@ -90,12 +90,12 @@ final class Settings extends ActionIndex
         }
 
         // we have an account, but don't know which property to track
-        if ($this->get('modules_settings')->get($this->getModule(), 'profile') === null) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'profile') === null) {
             $analytics = $this->get('analytics.google_analytics_service');
             $profiles = $analytics->management_profiles
                 ->listManagementProfiles(
-                    $this->get('modules_settings')->get($this->getModule(), 'account'),
-                    $this->get('modules_settings')->get($this->getModule(), 'web_property_id')
+                    $this->get('fork.settings')->get($this->getModule(), 'account'),
+                    $this->get('fork.settings')->get($this->getModule(), 'web_property_id')
                 )
             ;
             $profilesForDropdown = array();
@@ -113,16 +113,16 @@ final class Settings extends ActionIndex
         parent::parse();
 
         $this->form->parse($this->tpl);
-        if ($this->get('modules_settings')->get($this->getModule(), 'web_property_id')) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'web_property_id')) {
             $this->tpl->assign(
                 'web_property_id',
-                $this->get('modules_settings')->get($this->getModule(), 'web_property_id')
+                $this->get('fork.settings')->get($this->getModule(), 'web_property_id')
             );
         }
-        if ($this->get('modules_settings')->get($this->getModule(), 'profile')) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'profile')) {
             $this->tpl->assign(
                 'profile',
-                $this->get('modules_settings')->get($this->getModule(), 'profile')
+                $this->get('fork.settings')->get($this->getModule(), 'profile')
             );
         }
     }
@@ -164,7 +164,7 @@ final class Settings extends ActionIndex
                 BACKEND_CACHE_PATH . '/' . $this->getModule() . '/'
                 . $fileField->getFileName()
             );
-            $this->get('modules_settings')->set(
+            $this->get('fork.settings')->set(
                 $this->getModule(),
                 'secret_file',
                 $fileField->getFileName()
@@ -180,7 +180,7 @@ final class Settings extends ActionIndex
         $accountField->isFilled(Language::err('FieldIsRequired'));
 
         if ($this->form->isCorrect()) {
-            $this->get('modules_settings')->set(
+            $this->get('fork.settings')->set(
                 $this->getModule(),
                 'account',
                 $accountField->getValue()
@@ -196,7 +196,7 @@ final class Settings extends ActionIndex
         $webPropertyField->isFilled(Language::err('FieldIsRequired'));
 
         if ($this->form->isCorrect()) {
-            $this->get('modules_settings')->set(
+            $this->get('fork.settings')->set(
                 $this->getModule(),
                 'web_property_id',
                 $webPropertyField->getValue()
@@ -212,7 +212,7 @@ final class Settings extends ActionIndex
         $profileField->isFilled(Language::err('FieldIsRequired'));
 
         if ($this->form->isCorrect()) {
-            $this->get('modules_settings')->set(
+            $this->get('fork.settings')->set(
                 $this->getModule(),
                 'profile',
                 $profileField->getValue()
