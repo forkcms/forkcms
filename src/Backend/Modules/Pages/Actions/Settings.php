@@ -44,7 +44,7 @@ class Settings extends BackendBaseActionEdit
         // add fields for meta navigation
         $this->frm->addCheckbox(
             'meta_navigation',
-            BackendModel::getModuleSetting($this->getModule(), 'meta_navigation', false)
+            $this->get('fork.settings')->get($this->getModule(), 'meta_navigation', false)
         );
     }
 
@@ -58,7 +58,7 @@ class Settings extends BackendBaseActionEdit
             // form is validated
             if ($this->frm->isCorrect()) {
                 // set our settings
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     $this->getModule(),
                     'meta_navigation',
                     (bool) $this->frm->getField('meta_navigation')->getValue()

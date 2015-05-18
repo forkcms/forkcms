@@ -114,7 +114,7 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Blog')) {
             // rss title
-            if (BackendModel::getModuleSetting('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
+            if (BackendModel::get('fork.settings')->get('Blog', 'rss_title_' . BL::getWorkingLanguage(), null) == '') {
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('RSSTitle', 'Blog'),
@@ -124,7 +124,7 @@ class Model
             }
 
             // rss description
-            if (BackendModel::getModuleSetting('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
+            if (BackendModel::get('fork.settings')->get('Blog', 'rss_description_' . BL::getWorkingLanguage(), null) == '') {
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('RSSDescription', 'Blog'),
@@ -1040,7 +1040,7 @@ class Model
         unset($item['revision_id']);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('Blog', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Blog', 'max_num_revisions', 20);
 
         // set type of archive
         $archiveType = ($item['status'] == 'active' ? 'archived' : $item['status']);

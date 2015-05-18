@@ -83,7 +83,7 @@ class Themes extends BackendBaseActionIndex
         $themes = $this->installedThemes;
 
         // set selected theme
-        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : BackendModel::getModuleSetting('Core', 'theme', 'core');
+        $selected = isset($_POST['installedThemes']) ? $_POST['installedThemes'] : $this->get('fork.settings')->get('Core', 'theme', 'core');
 
         // no themes found
         if (empty($themes)) {
@@ -134,7 +134,7 @@ class Themes extends BackendBaseActionIndex
             if ($this->frm->isCorrect()) {
                 // determine themes
                 $newTheme = $this->frm->getField('installedThemes')->getValue();
-                $oldTheme = BackendModel::getModuleSetting('Core', 'theme', 'core');
+                $oldTheme = $this->get('fork.settings')->get('Core', 'theme', 'core');
 
                 // check if we actually switched themes
                 if ($newTheme != $oldTheme) {
@@ -150,7 +150,7 @@ class Themes extends BackendBaseActionIndex
                     }
 
                     // fetch current default template
-                    $oldDefaultTemplatePath = $oldTemplates[BackendModel::getModuleSetting('Pages', 'default_template')]['path'];
+                    $oldDefaultTemplatePath = $oldTemplates[$this->get('fork.settings')->get('Pages', 'default_template')]['path'];
 
                     // loop new templates
                     foreach ($newTemplates as $newTemplateId => $newTemplate) {
@@ -169,10 +169,10 @@ class Themes extends BackendBaseActionIndex
                     }
 
                     // update theme
-                    BackendModel::setModuleSetting('Core', 'theme', $newTheme);
+                    $this->get('fork.settings')->set('Core', 'theme', $newTheme);
 
                     // save new default template
-                    BackendModel::setModuleSetting('Pages', 'default_template', $newDefaultTemplateId);
+                    $this->get('fork.settings')->set('Pages', 'default_template', $newDefaultTemplateId);
 
                     // loop old templates
                     foreach ($oldTemplates as $oldTemplateId => $oldTemplate) {

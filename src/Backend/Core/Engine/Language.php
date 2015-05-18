@@ -11,7 +11,7 @@ namespace Backend\Core\Engine;
 
 use Common\Cookie as CommonCookie;
 
-use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Model;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -62,7 +62,7 @@ class Language
         // validate the cache
         if (empty(self::$activeLanguages)) {
             // grab from settings
-            $activeLanguages = (array) BackendModel::getModuleSetting('Core', 'active_languages');
+            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
 
             // store in cache
             self::$activeLanguages = $activeLanguages;
@@ -109,8 +109,8 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
+            if (Model::getContainer()->has('url')) {
+                $module = Model::get('url')->getModule();
             } elseif (isset($_GET['module']) && $_GET['module'] != '') {
                 $module = (string) $_GET['module'];
             } else {
@@ -165,7 +165,7 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) BackendModel::getModuleSetting('Core', 'interface_languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'interface_languages', array('en')) as $key) {
             // fetch language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }
@@ -188,8 +188,8 @@ class Language
     {
         // do we know the module
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
+            if (Model::getContainer()->has('url')) {
+                $module = Model::get('url')->getModule();
             } elseif (isset($_GET['module']) && $_GET['module'] != '') {
                 $module = (string) $_GET['module'];
             } else {
@@ -234,8 +234,8 @@ class Language
     public static function getMessage($key, $module = null)
     {
         if ($module === null) {
-            if (BackendModel::getContainer()->has('url')) {
-                $module = BackendModel::getContainer()->get('url')->getModule();
+            if (Model::getContainer()->has('url')) {
+                $module = Model::get('url')->getModule();
             } elseif (isset($_GET['module']) && $_GET['module'] != '') {
                 $module = (string) $_GET['module'];
             } else {
@@ -290,7 +290,7 @@ class Language
         $languages = array();
 
         // grab the languages from the settings & loop language to reset the label
-        foreach ((array) BackendModel::getModuleSetting('Core', 'languages', array('en')) as $key) {
+        foreach ((array) Model::get('fork.settings')->get('Core', 'languages', array('en')) as $key) {
             // fetch the language's translation
             $languages[$key] = self::getLabel(mb_strtoupper($key), 'Core');
         }

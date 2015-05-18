@@ -31,7 +31,7 @@ class Templates extends AjaxAction
 
         // init vars
         $templates = array();
-        $theme = BackendModel::getModuleSetting('Core', 'theme');
+        $theme = $this->get('fork.settings')->get('Core', 'theme');
         $files[] = BACKEND_PATH . '/Core/Layout/EditorTemplates/templates.js';
         $themePath = FRONTEND_PATH . '/Themes/' . $theme . '/Core/Layout/EditorTemplates/templates.js';
 

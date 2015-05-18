@@ -52,7 +52,7 @@ class Categories extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // are multiple categories allowed?
-        $this->multipleCategoriesAllowed = BackendModel::getModuleSetting('Faq', 'allow_multiple_categories', true);
+        $this->multipleCategoriesAllowed = $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true);
 
         // create dataGrid
         $this->dataGrid = new BackendDataGridDB(

@@ -11,9 +11,7 @@ namespace Backend\Core\Engine;
 
 use Api\V1\Engine\Api as BaseAPI;
 
-use Backend\Core\Engine\Model as BackendModel;
-
-use Frontend\Core\Engine\Model as FrontendModel;
+use Backend\Core\Engine\Model;
 
 /**
  * In this file we store all generic functions that we will be available through the API
@@ -42,8 +40,8 @@ class Api
             }
 
             // we should tell the ForkAPI that we registered a device
-            $publicKey = BackendModel::getModuleSetting('Core', 'fork_api_public_key', '');
-            $privateKey = FrontendModel::getModuleSetting('Core', 'fork_api_private_key', '');
+            $publicKey = Model::get('fork.settings')->get('Core', 'fork_api_public_key', '');
+            $privateKey = Model::get('fork.settings')->get('Core', 'fork_api_private_key', '');
 
             // validate keys
             if ($publicKey == '' || $privateKey == '') {
@@ -194,7 +192,7 @@ class Api
 
             // get all languages
             $languages = Language::getActiveLanguages();
-            $default = BackendModel::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $default = Model::get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
 
             // loop languages
             foreach ($languages as $language) {
@@ -208,7 +206,7 @@ class Api
                 }
 
                 // set attributes
-                $var['language']['title'] = BackendModel::getModuleSetting('Core', 'site_title_' . $language);
+                $var['language']['title'] = Model::get('fork.settings')->get('Core', 'site_title_' . $language);
                 $var['language']['url'] = SITE_URL . '/' . $language;
 
                 // add
@@ -240,8 +238,8 @@ class Api
             }
 
             // we should tell the ForkAPI that we registered a device
-            $publicKey = BackendModel::getModuleSetting('Core', 'fork_api_public_key', '');
-            $privateKey = FrontendModel::getModuleSetting('Core', 'fork_api_private_key', '');
+            $publicKey = Model::get('fork.settings')->get('Core', 'fork_api_public_key', '');
+            $privateKey = Model::get('fork.settings')->get('Core', 'fork_api_private_key', '');
 
             // validate keys
             if ($publicKey == '' || $privateKey == '') {
