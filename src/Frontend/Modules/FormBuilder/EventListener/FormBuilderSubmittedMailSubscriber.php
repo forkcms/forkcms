@@ -53,13 +53,19 @@ final class FormBuilderSubmittedMailSubscriber
                 ->setFrom(array($from['email'] => $from['name']))
             ;
 
-            // check if we have a replyTo email set
+            // check if we have a replyTo or copyTo email set
             foreach ($form['fields'] as $field) {
                 if (array_key_exists('reply_to', $field['settings']) &&
                     $field['settings']['reply_to'] === true
                 ) {
                     $email = $fieldData[$field['id']];
                     $message->setReplyTo(array($email => $email));
+                }
+                if (array_key_exists('copy_to', $field['settings']) &&
+                    $field['settings']['copy_to'] === true
+                ) {
+                    $email = $fieldData[$field['id']]['value'];
+                    $message->setCc(array($email => $email));
                 }
             }
             if ($message->getReplyTo() === null) {
