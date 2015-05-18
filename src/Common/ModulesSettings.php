@@ -129,7 +129,7 @@ class ModulesSettings
     private function getSettings()
     {
         if (!$this->cache->isCached('settings')) {
-            $this->cache->cache('settings', $this->getSettingsFromDatabase());
+            $this->cache->cache('settings', $this->getAllSettingsFromDatabase());
         }
 
         return $this->cache->getFromCache('settings');
@@ -140,7 +140,7 @@ class ModulesSettings
      *
      * @return array
      */
-    private function getSettingsFromDatabase()
+    private function getAllSettingsFromDatabase()
     {
         // fetch settings
         $settings = (array) $this->database->getRecords(
