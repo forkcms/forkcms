@@ -290,6 +290,7 @@ class Model extends \BaseModel
     /**
      * Get a module setting
      *
+     * @deprecated
      * @param string $module       The module wherefore a setting has to be retrieved.
      * @param string $key          The key of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
@@ -297,17 +298,30 @@ class Model extends \BaseModel
      */
     public static function getModuleSetting($module, $key, $defaultValue = null)
     {
+        trigger_error(
+            'FrontendModel::getModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->get instead',
+            E_USER_DEPRECATED
+        );
+
         return self::get('fork.settings')->get($module, $key, $defaultValue);
     }
 
     /**
      * Get all module settings at once
      *
+     * @deprecated
      * @param string $module The module wherefore all settings has to be retrieved.
      * @return array
      */
     public static function getModuleSettings($module)
     {
+        trigger_error(
+            'FrontendModel::getModuleSettings is deprecated.
+             Use $container->get(\'fork.settings\')->getForModule instead',
+            E_USER_DEPRECATED
+        );
+
         return self::get('fork.settings')->getForModule($module);
     }
 
@@ -588,7 +602,7 @@ class Model extends \BaseModel
             ? (string) CommonCookie::get('track')
             : md5(uniqid() . \SpoonSession::getSessionId());
 
-        if (!self::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
+        if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
@@ -610,7 +624,7 @@ class Model extends \BaseModel
     public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
     {
         // get some settings
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if ($akismetKey === '') {
@@ -650,8 +664,8 @@ class Model extends \BaseModel
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
         // get ForkAPI-keys
-        $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
-        $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
+        $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
+        $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
 
         // no keys, so stop here
         if ($publicKey == '' || $privateKey == '') {
@@ -756,12 +770,19 @@ class Model extends \BaseModel
     /**
      * Store a module setting
      *
+     * @deprecated
      * @param string $module The module wherefore a setting has to be stored.
      * @param string $key    The key of the setting.
      * @param mixed  $value  The value (will be serialized so make sure the type is correct).
      */
     public static function setModuleSetting($module, $key, $value)
     {
+        trigger_error(
+            'BackendModel::setModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->set instead',
+            E_USER_DEPRECATED
+        );
+
         return self::get('fork.settings')->set($module, $key, $value);
     }
 

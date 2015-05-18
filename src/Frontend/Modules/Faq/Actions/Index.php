@@ -45,7 +45,7 @@ class Index extends FrontendBaseBlock
     private function getData()
     {
         $categories = FrontendFaqModel::getCategories();
-        $limit = FrontendModel::getModuleSetting('Faq', 'overview_num_items_per_category', 10);
+        $limit = $this->get('fork.settings')->get('Faq', 'overview_num_items_per_category', 10);
 
         foreach ($categories as $item) {
             $item['questions'] = FrontendFaqModel::getAllForCategory($item['id'], $limit);
@@ -68,7 +68,7 @@ class Index extends FrontendBaseBlock
         $this->tpl->assign('faqCategories', (array) $this->items);
         $this->tpl->assign(
             'allowMultipleCategories',
-            FrontendModel::getModuleSetting('Faq', 'allow_multiple_categories', true)
+            $this->get('fork.settings')->get('Faq', 'allow_multiple_categories', true)
         );
     }
 }
