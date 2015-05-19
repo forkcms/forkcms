@@ -39,6 +39,10 @@ class Uri
      */
     public static function getUrl($value)
     {
+        // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
+        // so we must decode it again first!
+        $value = \SpoonFilter::htmlentitiesDecode($value);
+
         // convert cyrlic, greek or other caracters to ASCII characters
         $value = Transliterator::transliterate($value);
 

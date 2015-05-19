@@ -124,9 +124,7 @@ class Meta
         }
 
         // build parameters for use in the callback
-        $parameters[] = CommonUri::getUrl(
-            \SpoonFilter::htmlentitiesDecode($URL)
-        );
+        $parameters[] = CommonUri::getUrl($URL);
 
         // add parameters set by user
         if (!empty($this->callback['parameters'])) {
