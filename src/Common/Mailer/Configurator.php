@@ -2,19 +2,28 @@
 
 namespace Common\Mailer;
 
+use PDOException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Common\ModulesSettings;
 
 class Configurator implements EventSubscriberInterface
 {
-    private $database;
-    private $container;
-    private $settings;
+    /**
+     * @var ModulesSettings
+     */
+    private $modulesSettings;
 
-    public function __construct($database, $container)
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ModulesSettings $modulesSettings, ContainerInterface $container)
     {
-        $this->database = $database;
+        $this->modulesSettings = $modulesSettings;
         $this->container = $container;
     }
 
@@ -22,18 +31,18 @@ class Configurator implements EventSubscriberInterface
     {
         try {
             $transport = TransportFactory::create(
-                $this->getMailSetting('mailer_type', 'mail'),
-                $this->getMailSetting('smtp_server'),
-                $this->getMailSetting('smtp_port', 25),
-                $this->getMailSetting('smtp_username'),
-                $this->getMailSetting('smtp_password'),
-                $this->getMailSetting('smtp_secure_layer')
+                $this->modulesSettings->get('Core', 'mailer_type', 'mail'),
+                $this->modulesSettings->get('Core', 'smtp_server'),
+                $this->modulesSettings->get('Core', 'smtp_port', 25),
+                $this->modulesSettings->get('Core', 'smtp_username'),
+                $this->modulesSettings->get('Core', 'smtp_password'),
+                $this->modulesSettings->get('Core', 'smtp_secure_layer')
             );
             $this->container->set(
                 'swiftmailer.mailer.default.transport',
                 $transport
             );
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             // we'll just use the mail transport thats pre-configured
         }
     }
@@ -43,28 +52,5 @@ class Configurator implements EventSubscriberInterface
         return array(
             KernelEvents::REQUEST => array('onKernelRequest', 0)
         );
-    }
-
-    /**
-     * @param $name
-     * @param null $default
-     * @return mixed|null
-     */
-    private function getMailSetting($name, $default = null)
-    {
-        if (empty($this->settings)) {
-            $this->settings = $this->database->getPairs(
-                'SELECT name, value
-                 FROM modules_settings
-                 WHERE module = :core',
-                array('core' => 'Core')
-            );
-        }
-
-        if (isset($this->settings[$name])) {
-            return unserialize($this->settings[$name]);
-        }
-
-        return $default;
     }
 }
