@@ -76,94 +76,94 @@ class Index extends BackendBaseActionIndex
         // general settings
         $this->frm->addText(
             'site_title',
-            BackendModel::getModuleSetting('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            $this->get('fork.settings')->get('Core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
         $this->frm->addTextarea(
             'site_html_header',
-            BackendModel::getModuleSetting('Core', 'site_html_header', null),
+            $this->get('fork.settings')->get('Core', 'site_html_header', null),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_html_footer',
-            BackendModel::getModuleSetting('Core', 'site_html_footer', null),
+            $this->get('fork.settings')->get('Core', 'site_html_footer', null),
             'textarea code',
             'textareaError code',
             true
         );
         $this->frm->addTextarea(
             'site_domains',
-            implode("\n", (array) BackendModel::getModuleSetting('Core', 'site_domains', $defaultDomains)),
+            implode("\n", (array) $this->get('fork.settings')->get('Core', 'site_domains', $defaultDomains)),
             'textarea code',
             'textareaError code'
         );
 
         // facebook settings
-        $this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('Core', 'facebook_admin_ids', null));
-        $this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('Core', 'facebook_app_id', null));
+        $this->frm->addText('facebook_admin_ids', $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null));
+        $this->frm->addText('facebook_application_id', $this->get('fork.settings')->get('Core', 'facebook_app_id', null));
         $this->frm->addText(
             'facebook_application_secret',
-            BackendModel::getModuleSetting('Core', 'facebook_app_secret', null)
+            $this->get('fork.settings')->get('Core', 'facebook_app_secret', null)
         );
 
         // twitter settings
         $this->frm->addText(
             'twitter_site_name',
-            ltrim(BackendModel::getModuleSetting('Core', 'twitter_site_name', null), '@')
+            ltrim($this->get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
         );
 
         // ckfinder
         $this->frm->addText(
             'ckfinder_license_name',
-            BackendModel::getModuleSetting('Core', 'ckfinder_license_name', null)
+            $this->get('fork.settings')->get('Core', 'ckfinder_license_name', null)
         );
         $this->frm->addText(
             'ckfinder_license_key',
-            BackendModel::getModuleSetting('Core', 'ckfinder_license_key', null)
+            $this->get('fork.settings')->get('Core', 'ckfinder_license_key', null)
         );
         $this->frm->addText(
             'ckfinder_image_max_width',
-            BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width', 1600)
+            $this->get('fork.settings')->get('Core', 'ckfinder_image_max_width', 1600)
         );
         $this->frm->addText(
             'ckfinder_image_max_height',
-            BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height', 1200)
+            $this->get('fork.settings')->get('Core', 'ckfinder_image_max_height', 1200)
         );
 
         // api keys
-        $this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('Core', 'fork_api_public_key', null));
+        $this->frm->addText('fork_api_public_key', $this->get('fork.settings')->get('Core', 'fork_api_public_key', null));
         $this->frm->addText(
             'fork_api_private_key',
-            BackendModel::getModuleSetting('Core', 'fork_api_private_key', null)
+            $this->get('fork.settings')->get('Core', 'fork_api_private_key', null)
         );
 
         // date & time formats
         $this->frm->addDropdown(
             'time_format',
             BackendModel::getTimeFormats(),
-            BackendModel::getModuleSetting('Core', 'time_format')
+            $this->get('fork.settings')->get('Core', 'time_format')
         );
         $this->frm->addDropdown(
             'date_format_short',
             BackendModel::getDateFormatsShort(),
-            BackendModel::getModuleSetting('Core', 'date_format_short')
+            $this->get('fork.settings')->get('Core', 'date_format_short')
         );
         $this->frm->addDropdown(
             'date_format_long',
             BackendModel::getDateFormatsLong(),
-            BackendModel::getModuleSetting('Core', 'date_format_long')
+            $this->get('fork.settings')->get('Core', 'date_format_long')
         );
 
         // number formats
         $this->frm->addDropdown(
             'number_format',
             BackendModel::getNumberFormats(),
-            BackendModel::getModuleSetting('Core', 'number_format')
+            $this->get('fork.settings')->get('Core', 'number_format')
         );
 
         // create a list of the languages
-        foreach (BackendModel::getModuleSetting('Core', 'languages', array('en')) as $abbreviation) {
+        foreach ($this->get('fork.settings')->get('Core', 'languages', array('en')) as $abbreviation) {
             // is this the default language
             $defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
 
@@ -224,30 +224,30 @@ class Index extends BackendBaseActionIndex
         $this->frm->addMultiCheckbox(
             'active_languages',
             $activeLanguages,
-            BackendModel::getModuleSetting('Core', 'active_languages', array($hasMultipleLanguages))
+            $this->get('fork.settings')->get('Core', 'active_languages', array($hasMultipleLanguages))
         );
         $this->frm->addMultiCheckbox(
             'redirect_languages',
             $redirectLanguages,
-            BackendModel::getModuleSetting('Core', 'redirect_languages', array($hasMultipleLanguages))
+            $this->get('fork.settings')->get('Core', 'redirect_languages', array($hasMultipleLanguages))
         );
 
         // api keys are not required for every module
         if ($this->needsAkismet) {
             $this->frm->addText(
                 'akismet_key',
-                BackendModel::getModuleSetting('Core', 'akismet_key', null)
+                $this->get('fork.settings')->get('Core', 'akismet_key', null)
             );
         }
         if ($this->needsGoogleMaps) {
             $this->frm->addText(
                 'google_maps_key',
-                BackendModel::getModuleSetting('Core', 'google_maps_key', null)
+                $this->get('fork.settings')->get('Core', 'google_maps_key', null)
             );
         }
 
         // cookies
-        $this->frm->addCheckbox('show_cookie_bar', BackendModel::getModuleSetting('Core', 'show_cookie_bar', false));
+        $this->frm->addCheckbox('show_cookie_bar', $this->get('fork.settings')->get('Core', 'show_cookie_bar', false));
     }
 
     /**
@@ -305,7 +305,7 @@ class Index extends BackendBaseActionIndex
             // akismet key may be filled in
             if ($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled()) {
                 // key has changed
-                if ($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('Core', 'akismet_key', null)) {
+                if ($this->frm->getField('akismet_key')->getValue() != $this->get('fork.settings')->get('Core', 'akismet_key', null)) {
                     // create instance
                     $akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 
@@ -351,38 +351,38 @@ class Index extends BackendBaseActionIndex
             // no errors ?
             if ($this->frm->isCorrect()) {
                 // general settings
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'site_title_' . BL::getWorkingLanguage(),
                     $this->frm->getField('site_title')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'site_html_header',
                     $this->frm->getField('site_html_header')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'site_html_footer',
                     $this->frm->getField('site_html_footer')->getValue()
                 );
 
                 // facebook settings
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'facebook_admin_ids',
                     ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField(
                         'facebook_admin_ids'
                     )->getValue() : null
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'facebook_app_id',
                     ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField(
                         'facebook_application_id'
                     )->getValue() : null
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'facebook_app_secret',
                     ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField(
@@ -394,7 +394,7 @@ class Index extends BackendBaseActionIndex
                 /** @var \SpoonFormText $txtTwitterSiteName */
                 $txtTwitterSiteName = $this->frm->getField('twitter_site_name');
                 if ($txtTwitterSiteName->isFilled()) {
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         'Core',
                         'twitter_site_name',
                         '@' . ltrim($txtTwitterSiteName->getValue(), '@')
@@ -402,28 +402,28 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // ckfinder settings
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_license_name',
                     ($this->frm->getField('ckfinder_license_name')->isFilled()) ? $this->frm->getField(
                         'ckfinder_license_name'
                     )->getValue() : null
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_license_key',
                     ($this->frm->getField('ckfinder_license_key')->isFilled()) ? $this->frm->getField(
                         'ckfinder_license_key'
                     )->getValue() : null
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_image_max_width',
                     ($this->frm->getField('ckfinder_image_max_width')->isFilled()) ? $this->frm->getField(
                         'ckfinder_image_max_width'
                     )->getValue() : 1600
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'ckfinder_image_max_height',
                     ($this->frm->getField('ckfinder_image_max_height')->isFilled()) ? $this->frm->getField(
@@ -432,25 +432,25 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // api keys
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'fork_api_public_key',
                     $this->frm->getField('fork_api_public_key')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'fork_api_private_key',
                     $this->frm->getField('fork_api_private_key')->getValue()
                 );
                 if ($this->needsAkismet) {
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         'Core',
                         'akismet_key',
                         $this->frm->getField('akismet_key')->getValue()
                     );
                 }
                 if ($this->needsGoogleMaps) {
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         'Core',
                         'google_maps_key',
                         $this->frm->getField('google_maps_key')->getValue()
@@ -458,20 +458,20 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // date & time formats
-                BackendModel::setModuleSetting('Core', 'time_format', $this->frm->getField('time_format')->getValue());
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set('Core', 'time_format', $this->frm->getField('time_format')->getValue());
+                $this->get('fork.settings')->set(
                     'Core',
                     'date_format_short',
                     $this->frm->getField('date_format_short')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'date_format_long',
                     $this->frm->getField('date_format_long')->getValue()
                 );
 
                 // date & time formats
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'number_format',
                     $this->frm->getField('number_format')->getValue()
@@ -490,8 +490,8 @@ class Index extends BackendBaseActionIndex
                 $redirectLanguages = array_intersect($redirectLanguages, $activeLanguages);
 
                 // save active languages
-                BackendModel::setModuleSetting('Core', 'active_languages', $activeLanguages);
-                BackendModel::setModuleSetting('Core', 'redirect_languages', $redirectLanguages);
+                $this->get('fork.settings')->set('Core', 'active_languages', $activeLanguages);
+                $this->get('fork.settings')->set('Core', 'redirect_languages', $redirectLanguages);
 
                 // domains may not contain www, http or https. Therefor we must loop and create the list of domains.
                 $siteDomains = array();
@@ -509,9 +509,9 @@ class Index extends BackendBaseActionIndex
                 }
 
                 // save domains
-                BackendModel::setModuleSetting('Core', 'site_domains', $siteDomains);
+                $this->get('fork.settings')->set('Core', 'site_domains', $siteDomains);
 
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     'Core',
                     'show_cookie_bar',
                     $this->frm->getField('show_cookie_bar')->getChecked()

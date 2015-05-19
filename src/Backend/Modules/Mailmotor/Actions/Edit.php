@@ -150,8 +150,8 @@ class Edit extends BackendBaseActionEdit
         $this->tpl->assign('templateLanguage', \SpoonFilter::ucfirst(BL::lbl(strtoupper($template['language']))));
 
         // get the price settings
-        $pricePerEmail = BackendModel::getModuleSetting($this->getModule(), 'price_per_email');
-        $pricePerCampaign = BackendModel::getModuleSetting($this->getModule(), 'price_per_campaign');
+        $pricePerEmail = $this->get('fork.settings')->get($this->getModule(), 'price_per_email');
+        $pricePerCampaign = $this->get('fork.settings')->get($this->getModule(), 'price_per_campaign');
 
         // parse the price total
         $this->tpl->assign('price', ($stats['recipients'] * $pricePerEmail) + $pricePerCampaign);
@@ -253,7 +253,7 @@ class Edit extends BackendBaseActionEdit
         }
 
         // check if we should show the plain text box
-        $this->showPlainTextBox = BackendModel::getModuleSetting($this->getModule(), 'plain_text_editable');
+        $this->showPlainTextBox = $this->get('fork.settings')->get($this->getModule(), 'plain_text_editable');
 
         // create form
         $this->frm = new BackendForm('step3');

@@ -69,7 +69,7 @@ class ExportThemeTemplates extends ActionEdit
         $this->selectedTheme = \SpoonFilter::getValue(
             $this->selectedTheme,
             array_keys($this->availableThemes),
-            BackendModel::getModuleSetting('Core', 'theme', 'core')
+            $this->get('fork.settings')->get('Core', 'theme', 'core')
         );
     }
 

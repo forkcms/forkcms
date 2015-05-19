@@ -35,7 +35,7 @@ class TemplateModifiers
         // detect links
         $var = \SpoonFilter::replaceURLsWithAnchors(
             $var,
-            Model::getModuleSetting('Core', 'seo_nofollow_in_comments', false)
+            Model::get('fork.settings')->get('Core', 'seo_nofollow_in_comments', false)
         );
 
         // replace newlines
@@ -115,7 +115,7 @@ class TemplateModifiers
         $var = (float) $var;
 
         // get setting
-        $format = Model::getModuleSetting('Core', 'number_format');
+        $format = Model::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
         $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
@@ -480,7 +480,7 @@ class TemplateModifiers
 
         // return
         return '<abbr title="' . \SpoonDate::getDate(
-            Model::getModuleSetting('Core', 'date_format_long') . ', ' . Model::getModuleSetting(
+            Model::get('fork.settings')->get('Core', 'date_format_long') . ', ' . Model::get('fork.settings')->get(
                 'Core',
                 'time_format'
             ),

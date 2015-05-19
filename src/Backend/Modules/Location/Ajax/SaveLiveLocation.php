@@ -28,7 +28,7 @@ class SaveLiveLocation extends BackendBaseAJAXAction
     {
         parent::execute();
 
-        $generalSettings = BackendModel::getModuleSettings('Location');
+        $generalSettings = $this->get('fork.settings')->getForModule('Location');
 
         // get parameters
         $itemId = \SpoonFilter::getPostValue('id', null, null, 'int');

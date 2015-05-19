@@ -21,3 +21,14 @@ SPOON_DEBUG_EMAIL is removed. From now on you need to get the debug email addres
 SPOON_CHARSET is removed. From now on you need to get the charset by using the kernel.charset parameter, f.e.
 
 	if ($this->getContainer()->getParameter('kernel.charset')) { ...
+
+## Module settings
+
+The getModuleSetting, getModuleSettings, deleteModuleSetting and setModuleSettings on the Frontend and BackendModel are now deprecated. You should use the fork.settings service. You can use it this way:
+
+    $this->get('fork.settings')->set('Core', 'Theme', 'triton');
+    $this->get('fork.settings')->get('Core', 'Theme');
+    $this->get('fork.settings')->getForModule('Core');
+    $this->get('fork.settings')->delete('Core', 'Theme');
+
+This makes sure the modulesettings are more decoupled. They are now fully unit tested. We're also sure the Frontend and backend are consistent now and there is only one DB call to fetch all settings.
