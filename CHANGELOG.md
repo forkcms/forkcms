@@ -4,6 +4,8 @@ Improvements:
 
 Bugfixes:
 
+* Core: Fixes #1198, generating meta url with special characters.
+
 
 3.9.2 (2015-05-12)
 --
