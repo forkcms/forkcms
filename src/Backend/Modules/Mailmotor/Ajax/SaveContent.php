@@ -103,7 +103,7 @@ class SaveContent extends BackendBaseAJAXAction
                         } elseif (strpos($e->getMessage(), 'Payment details required')) {
                             // no payment details were set for the CM client yet
                             $error = BL::err('PaymentDetailsRequired', $this->getModule());
-                            $cmUsername = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
+                            $cmUsername = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
                             $message = sprintf($error, $cmUsername);
                         } elseif (strpos($e->getMessage(), 'Duplicate Campaign Name')) {
                             // the campaign name already exists in CM

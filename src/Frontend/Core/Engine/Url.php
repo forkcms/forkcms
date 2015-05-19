@@ -199,13 +199,13 @@ class Url extends \KernelLoader
 
         // split into chunks
         $chunks = (array) explode('/', $queryString);
-        
+
         $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
 
         // single language
         if (!$hasMultiLanguages) {
             // set language id
-            $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         } else {
             // multiple languages
             // default value

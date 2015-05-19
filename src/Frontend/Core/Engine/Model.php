@@ -28,13 +28,6 @@ require_once __DIR__ . '/../../../../app/BaseModel.php';
 class Model extends \BaseModel
 {
     /**
-     * Cached module-settings
-     *
-     * @var    array
-     */
-    private static $moduleSettings = array();
-
-    /**
      * Visitor id from tracking cookie
      *
      * @var    string
@@ -297,78 +290,39 @@ class Model extends \BaseModel
     /**
      * Get a module setting
      *
+     * @deprecated
      * @param string $module       The module wherefore a setting has to be retrieved.
-     * @param string $name         The name of the setting to be retrieved.
+     * @param string $key          The key of the setting to be retrieved.
      * @param mixed  $defaultValue A value that will be stored if the setting isn't present.
      * @return mixed
      */
-    public static function getModuleSetting($module, $name, $defaultValue = null)
+    public static function getModuleSetting($module, $key, $defaultValue = null)
     {
-        // redefine
-        $module = (string) $module;
-        $name = (string) $name;
+        trigger_error(
+            'FrontendModel::getModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->get instead',
+            E_USER_DEPRECATED
+        );
 
-        // get them all
-        if (empty(self::$moduleSettings)) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms
-                 INNER JOIN modules AS m ON ms.module = m.name'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
-        }
-
-        // if the setting doesn't exists, store it (it will be available from te cache)
-        if (!array_key_exists($module, self::$moduleSettings) ||
-            !array_key_exists($name, self::$moduleSettings[$module])
-        ) {
-            self::setModuleSetting($module, $name, $defaultValue);
-        }
-
-        // return
-        return self::$moduleSettings[$module][$name];
+        return self::get('fork.settings')->get($module, $key, $defaultValue);
     }
 
     /**
      * Get all module settings at once
      *
+     * @deprecated
      * @param string $module The module wherefore all settings has to be retrieved.
      * @return array
      */
     public static function getModuleSettings($module)
     {
-        $module = (string) $module;
+        trigger_error(
+            'FrontendModel::getModuleSettings is deprecated.
+             Use $container->get(\'fork.settings\')->getForModule instead',
+            E_USER_DEPRECATED
+        );
 
-        // get them all
-        if (empty(self::$moduleSettings[$module])) {
-            // fetch settings
-            $settings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
-            );
-
-            // loop settings and cache them, also unserialize the values
-            foreach ($settings as $row) {
-                self::$moduleSettings[$row['module']][$row['name']] = unserialize(
-                    $row['value']
-                );
-            }
-        }
-
-        // validate again
-        if (!isset(self::$moduleSettings[$module])) {
-            return array();
-        }
-
-        // return
-        return self::$moduleSettings[$module];
+        return self::get('fork.settings')->getForModule($module);
     }
 
     /**
@@ -648,7 +602,7 @@ class Model extends \BaseModel
             ? (string) CommonCookie::get('track')
             : md5(uniqid() . \SpoonSession::getSessionId());
 
-        if (!self::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
+        if (!self::get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasAllowedCookies()) {
             CommonCookie::set('track', self::$visitorId, 86400 * 365);
         }
 
@@ -670,7 +624,7 @@ class Model extends \BaseModel
     public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
     {
         // get some settings
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
 
         // invalid key, so we can't detect spam
         if ($akismetKey === '') {
@@ -710,8 +664,8 @@ class Model extends \BaseModel
     public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
     {
         // get ForkAPI-keys
-        $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
-        $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
+        $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
+        $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
 
         // no keys, so stop here
         if ($publicKey == '' || $privateKey == '') {
@@ -816,26 +770,20 @@ class Model extends \BaseModel
     /**
      * Store a module setting
      *
+     * @deprecated
      * @param string $module The module wherefore a setting has to be stored.
-     * @param string $name   The name of the setting.
+     * @param string $key    The key of the setting.
      * @param mixed  $value  The value (will be serialized so make sure the type is correct).
      */
-    public static function setModuleSetting($module, $name, $value)
+    public static function setModuleSetting($module, $key, $value)
     {
-        $module = (string) $module;
-        $name = (string) $name;
-        $value = serialize($value);
-
-        // store
-        self::getContainer()->get('database')->execute(
-            'INSERT INTO modules_settings (module, name, value)
-             VALUES (?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $name, $value, $value)
+        trigger_error(
+            'BackendModel::setModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->set instead',
+            E_USER_DEPRECATED
         );
 
-        // store in cache
-        self::$moduleSettings[$module][$name] = unserialize($value);
+        return self::get('fork.settings')->set($module, $key, $value);
     }
 
     /**

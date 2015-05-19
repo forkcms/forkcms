@@ -34,7 +34,7 @@ final class FormBuilderSubmittedMailSubscriber
         // need to send mail
         if ($form['method'] == 'database_email') {
             // build our message
-            $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
+            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
             $fieldData = $this->getEmailFields($event->getData());
             $message = \Common\Mailer\Message::newInstance(sprintf(
                     FL::getMessage('FormBuilderSubject'),
@@ -63,7 +63,7 @@ final class FormBuilderSubmittedMailSubscriber
                 }
             }
             if ($message->getReplyTo() === null) {
-                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
             }
 

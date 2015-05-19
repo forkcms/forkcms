@@ -271,7 +271,7 @@ class Url extends Base\Object
      */
     private function setLocale()
     {
-        $default = BackendModel::getModuleSetting('Core', 'default_interface_language');
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
         $locale = $default;
         $possibleLocale = array_keys(Language::getInterfaceLanguages());
 

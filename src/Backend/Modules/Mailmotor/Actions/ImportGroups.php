@@ -146,7 +146,7 @@ class ImportGroups extends BackendBaseActionAdd
                 }
 
                 // at this point, groups are set
-                BackendModel::setModuleSetting($this->getModule(), 'cm_groups_set', true);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_groups_set', true);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_import_groups');

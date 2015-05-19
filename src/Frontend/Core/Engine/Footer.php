@@ -39,10 +39,10 @@ class Footer extends FrontendBaseObject
         $footerLinks = (array) Navigation::getFooterLinks();
         $this->tpl->assign('footerLinks', $footerLinks);
 
-        $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
+        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
 
-        $facebookAdminIds = Model::getModuleSetting('Core', 'facebook_admin_ids', null);
-        $facebookAppId = Model::getModuleSetting('Core', 'facebook_app_id', null);
+        $facebookAdminIds = $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null);
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
         // facebook admins given?
         if ($facebookAdminIds !== null || $facebookAppId !== null) {
@@ -51,7 +51,7 @@ class Footer extends FrontendBaseObject
         }
 
         // add Google sitelinks search box code if wanted.
-        if (Model::getModuleSetting('Search', 'use_sitelinks_search_box', true)) {
+        if ($this->get('fork.settings')->get('Search', 'use_sitelinks_search_box', true)) {
             $searchUrl = FrontendNavigation::getURLForBlock('Search');
             $url404 = FrontendNavigation::getURL(404);
             if ($searchUrl !== $url404) {

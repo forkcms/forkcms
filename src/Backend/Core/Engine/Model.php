@@ -40,13 +40,6 @@ class Model extends \BaseModel
     private static $navigation = array();
 
     /**
-     * Cached module settings
-     *
-     * @var    array
-     */
-    private static $moduleSettings;
-
-    /**
      * Allowed module extras types
      *
      * @var    array
@@ -99,8 +92,8 @@ class Model extends \BaseModel
         // check if this action is allowed
         if (Authentication::isAllowedAction('Index', 'Settings')) {
             // check if the fork API keys are available
-            if (self::getModuleSetting('Core', 'fork_api_private_key') == '' ||
-                self::getModuleSetting('Core', 'fork_api_public_key') == ''
+            if (self::get('fork.settings')->get('Core', 'fork_api_private_key') == '' ||
+                self::get('fork.settings')->get('Core', 'fork_api_public_key') == ''
             ) {
                 $warnings[] = array(
                     'message' => sprintf(
@@ -302,26 +295,19 @@ class Model extends \BaseModel
     /**
      * Deletes a module-setting from the DB and the cached array
      *
+     * @deprecated
      * @param string $module The module to set the setting for.
      * @param string $key    The name of the setting.
      */
     public static function deleteModuleSetting($module, $key)
     {
-        $module = (string) $module;
-        $key = (string) $key;
-
-        // delete
-        self::getContainer()->get('database')->delete(
-            'modules_settings',
-            'module = ? and name = ?',
-            array(
-                $module,
-                $key
-            )
+        trigger_error(
+            'BackendModel::deleteModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->delete instead',
+            E_USER_DEPRECATED
         );
 
-        // unset from cache
-        unset(self::$moduleSettings[$module][$key]);
+        return self::get('fork.settings')->delete($module, $key);
     }
 
     /**
@@ -512,7 +498,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) self::getModuleSetting('Core', 'date_formats_long') as $format) {
+        foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_long') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -534,7 +520,7 @@ class Model extends \BaseModel
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) self::getModuleSetting('Core', 'date_formats_short') as $format) {
+        foreach ((array) self::get('fork.settings')->get('Core', 'date_formats_short') as $format) {
             // get date based on given format
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
@@ -682,6 +668,7 @@ class Model extends \BaseModel
     /**
      * Get a certain module-setting
      *
+     * @deprecated
      * @param string $module       The module in which the setting is stored.
      * @param string $key          The name of the setting.
      * @param mixed  $defaultValue The value to return if the setting isn't present.
@@ -689,62 +676,32 @@ class Model extends \BaseModel
      */
     public static function getModuleSetting($module, $key, $defaultValue = null)
     {
-        // redefine
-        $module = (string) $module;
-        $key = (string) $key;
+        trigger_error(
+            'BackendModel::getModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->get instead',
+            E_USER_DEPRECATED
+        );
 
-        // define settings
-        $settings = self::getModuleSettings($module);
-
-        // return if exists, otherwise return default value
-        return (isset($settings[$key])) ? $settings[$key] : $defaultValue;
+        return self::get('fork.settings')->get($module, $key, $defaultValue);
     }
 
     /**
      * Get all module settings at once
      *
+     * @deprecated
      * @param string $module You can get all settings for a module.
      * @return array
      * @throws Exception If the module settings were not saved in a correct format
      */
     public static function getModuleSettings($module = null)
     {
-        // redefine
-        $module = ((bool) $module) ? (string) $module : false;
+        trigger_error(
+            'BackendModel::getModuleSettings is deprecated.
+             Use $container->get(\'fork.settings\')->getForModule instead',
+            E_USER_DEPRECATED
+        );
 
-        // are the values available
-        if (empty(self::$moduleSettings)) {
-            // get all settings
-            $moduleSettings = (array) self::getContainer()->get('database')->getRecords(
-                'SELECT ms.module, ms.name, ms.value
-                 FROM modules_settings AS ms'
-            );
-
-            // loop and store settings in the cache
-            foreach ($moduleSettings as $setting) {
-                $value = @unserialize($setting['value']);
-
-                if ($value === false &&
-                    serialize(false) != $setting['value']
-                ) {
-                    throw new Exception(
-                        'The module setting (' . $setting['module'] . ': ' .
-                        $setting['name'] . ') wasn\'t saved properly.'
-                    );
-                }
-
-                // cache the setting
-                self::$moduleSettings[$setting['module']][$setting['name']] = $value;
-            }
-        }
-
-        if ($module) {
-            // return module settings if there are some, if not return empty array
-            return (isset(self::$moduleSettings[$module])) ? self::$moduleSettings[$module] : array();
-        } else {
-            // else return all settings
-            return self::$moduleSettings;
-        }
+        return self::get('fork.settings')->getForModule($module);
     }
 
     /**
@@ -801,7 +758,7 @@ class Model extends \BaseModel
     {
         $possibleFormats = array();
 
-        foreach ((array) self::getModuleSetting('Core', 'number_formats') as $format => $example) {
+        foreach ((array) self::get('fork.settings')->get('Core', 'number_formats') as $format => $example) {
             $possibleFormats[$format] = $example;
         }
 
@@ -860,7 +817,7 @@ class Model extends \BaseModel
     {
         $possibleFormats = array();
 
-        foreach (self::getModuleSetting('Core', 'time_formats') as $format) {
+        foreach (self::get('fork.settings')->get('Core', 'time_formats') as $format) {
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,
@@ -1186,19 +1143,19 @@ class Model extends \BaseModel
      */
     public static function ping($pageOrFeedURL = null, $category = null)
     {
-        $siteTitle = self::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+        $siteTitle = self::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE);
         $siteURL = SITE_URL;
         $pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
         $category = ($category !== null) ? (string) $category : null;
 
         // get ping services
-        $pingServices = self::getModuleSetting('Core', 'ping_services', null);
+        $pingServices = self::get('fork.settings')->get('Core', 'ping_services', null);
 
         // no ping services available or older than one month ago
         if ($pingServices === null || $pingServices['date'] < strtotime('-1 month')) {
             // get ForkAPI-keys
-            $publicKey = self::getModuleSetting('Core', 'fork_api_public_key', '');
-            $privateKey = self::getModuleSetting('Core', 'fork_api_private_key', '');
+            $publicKey = self::get('fork.settings')->get('Core', 'fork_api_public_key', '');
+            $privateKey = self::get('fork.settings')->get('Core', 'fork_api_private_key', '');
 
             // validate keys
             if ($publicKey == '' || $privateKey == '') {
@@ -1230,7 +1187,7 @@ class Model extends \BaseModel
             }
 
             // store the services
-            self::setModuleSetting('Core', 'ping_services', $pingServices);
+            self::get('fork.settings')->set('Core', 'ping_services', $pingServices);
         }
 
         // make sure services array will not trigger an error (even if we couldn't load any)
@@ -1287,26 +1244,20 @@ class Model extends \BaseModel
     /**
      * Saves a module-setting into the DB and the cached array
      *
+     * @deprecated
      * @param string $module The module to set the setting for.
      * @param string $key    The name of the setting.
      * @param string $value  The value to store.
      */
     public static function setModuleSetting($module, $key, $value)
     {
-        $module = (string) $module;
-        $key = (string) $key;
-        $valueToStore = serialize($value);
-
-        // store
-        self::getContainer()->get('database')->execute(
-            'INSERT INTO modules_settings(module, name, value)
-             VALUES(?, ?, ?)
-             ON DUPLICATE KEY UPDATE value = ?',
-            array($module, $key, $valueToStore, $valueToStore)
+        trigger_error(
+            'BackendModel::setModuleSetting is deprecated.
+             Use $container->get(\'fork.settings\')->set instead',
+            E_USER_DEPRECATED
         );
 
-        // cache it
-        self::$moduleSettings[$module][$key] = $value;
+        return self::get('fork.settings')->set($module, $key, $value);
     }
 
     /**
@@ -1402,7 +1353,7 @@ class Model extends \BaseModel
         $referrer = null,
         $others = null
     ) {
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
 
         // no key, so we can't detect spam
         if ($akismetKey === '') {
@@ -1464,7 +1415,7 @@ class Model extends \BaseModel
         $referrer = null,
         $others = null
     ) {
-        $akismetKey = self::getModuleSetting('Core', 'akismet_key');
+        $akismetKey = self::get('fork.settings')->get('Core', 'akismet_key');
 
         // no key, so we can't detect spam
         if ($akismetKey === '') {

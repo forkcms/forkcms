@@ -121,11 +121,9 @@ class ResendActivation extends FrontendBaseBlock
                 FrontendModel::triggerEvent('Profiles', 'after_resend_activation', array('id' => $profileId));
 
                 // send email
-                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                $message = \Common\Mailer\Message::newInstance(
-                        FL::getMessage('RegisterSubject')
-                    )
+                $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+                $message = \Common\Mailer\Message::newInstance(FL::getMessage('RegisterSubject'))
                     ->setFrom(array($from['email'] => $from['name']))
                     ->setTo(array($profile->getEmail() => ''))
                     ->setReplyTo(array($replyTo['email'] => $replyTo['name']))

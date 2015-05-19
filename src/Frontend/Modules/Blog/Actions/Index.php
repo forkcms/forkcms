@@ -64,7 +64,7 @@ class Index extends FrontendBaseBlock
 
         // set URL and limit
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog');
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
+        $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllCount();
@@ -101,7 +101,7 @@ class Index extends FrontendBaseBlock
             array(
                  'rel' => 'alternate',
                  'type' => 'application/rss+xml',
-                 'title' => FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
+                 'title' => $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE),
                  'href' => $rssLink
             ),
             true

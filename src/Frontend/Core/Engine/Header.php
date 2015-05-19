@@ -608,7 +608,7 @@ class Header extends FrontendBaseObject
         $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
         $this->tpl->assign(
             'siteTitle',
-            (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -642,9 +642,9 @@ class Header extends FrontendBaseObject
     private function parseCustomHeaderHTMLAndGoogleAnalytics()
     {
         // get the data
-        $siteHTMLHeader = (string) Model::getModuleSetting('Core', 'site_html_header', null);
-        $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
-        $webPropertyId = Model::getModuleSetting('Analytics', 'web_property_id', null);
+        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', null);
+        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
+        $webPropertyId = $this->get('fork.settings')->get('Analytics', 'web_property_id', null);
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if (
@@ -653,7 +653,7 @@ class Header extends FrontendBaseObject
             strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
             $anonymize = (
-                Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
+                $this->get('fork.settings')->get('Core', 'show_cookie_bar', false) &&
                 !CommonCookie::hasAllowedCookies()
             );
 
@@ -693,8 +693,8 @@ class Header extends FrontendBaseObject
     private function parseFacebook()
     {
         $parseFacebook = false;
-        $facebookAdminIds = Model::getModuleSetting('Core', 'facebook_admin_ids', null);
-        $facebookAppId = Model::getModuleSetting('Core', 'facebook_app_id', null);
+        $facebookAdminIds = $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null);
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
         // check if facebook admins are set
         if ($facebookAdminIds !== null) {
@@ -847,7 +847,7 @@ class Header extends FrontendBaseObject
     {
         // when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
         $queryString = trim($this->URL->getQueryString(), '/');
-        $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
         }
@@ -894,12 +894,12 @@ class Header extends FrontendBaseObject
         $url = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
-        if (Model::getModuleSetting('Core', 'seo_noodp', false)) {
+        if ($this->get('fork.settings')->get('Core', 'seo_noodp', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noodp')
             );
         }
-        if (Model::getModuleSetting('Core', 'seo_noydir', false)) {
+        if ($this->get('fork.settings')->get('Core', 'seo_noydir', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noydir')
             );
@@ -951,7 +951,7 @@ class Header extends FrontendBaseObject
         } else {
             // empty value given?
             if (empty($value)) {
-                $this->pageTitle = Model::getModuleSetting(
+                $this->pageTitle = $this->get('fork.settings')->get(
                     'Core',
                     'site_title_' . FRONTEND_LANGUAGE,
                     SITE_DEFAULT_TITLE
@@ -960,7 +960,7 @@ class Header extends FrontendBaseObject
                 // if the current page title is empty we should add the site title
                 if ($this->pageTitle == '') {
                     $this->pageTitle = $value . ' -  ' .
-                                       Model::getModuleSetting(
+                                       $this->get('fork.settings')->get(
                                            'Core',
                                            'site_title_' . FRONTEND_LANGUAGE,
                                            SITE_DEFAULT_TITLE
