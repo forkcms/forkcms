@@ -95,7 +95,7 @@ class Edit extends BackendBaseActionEdit
     private function getData()
     {
         $this->record = (array) BackendBlogModel::get($this->id);
-        $this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
         $revisionToLoad = $this->getParameter('revision', 'int');
@@ -457,7 +457,7 @@ class Edit extends BackendBaseActionEdit
                     );
 
                     // ping
-                    if (BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) {
+                    if ($this->get('fork.settings')->get($this->URL->getModule(), 'ping_services', false)) {
                         BackendModel::ping(
                             SITE_URL .
                             BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .

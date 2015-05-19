@@ -386,23 +386,23 @@ class Header extends Base\Object
         }
 
         // theme
-        if (BackendModel::getModuleSetting('Core', 'theme') !== null) {
-            $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('Core', 'theme');
+        if ($this->get('fork.settings')->get('Core', 'theme') !== null) {
+            $this->jsData['theme']['theme'] = $this->get('fork.settings')->get('Core', 'theme');
             $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' .
-                                             BackendModel::getModuleSetting(
+                                             $this->get('fork.settings')->get(
                                                  'Core',
                                                  'theme'
                                              );
             $this->jsData['theme']['has_css'] = (is_file(
                 FRONTEND_PATH . '/Themes/' .
-                BackendModel::getModuleSetting(
+                $this->get('fork.settings')->get(
                     'Core',
                     'theme'
                 ) . '/Core/Layout/Css/screen.css'
             ));
             $this->jsData['theme']['has_editor_css'] = (is_file(
                 FRONTEND_PATH . '/Themes/' .
-                BackendModel::getModuleSetting(
+                $this->get('fork.settings')->get(
                     'Core',
                     'theme'
                 ) . '/Core/Layout/Css/editor_content.css'

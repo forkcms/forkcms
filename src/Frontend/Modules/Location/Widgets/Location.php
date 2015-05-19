@@ -55,7 +55,7 @@ class Location extends FrontendBaseWidget
         $this->item = FrontendLocationModel::get($this->data['id']);
         $this->settings = FrontendLocationModel::getMapSettings($this->data['id']);
         if (empty($this->settings)) {
-            $settings = FrontendModel::getModuleSettings('Location');
+            $settings = $this->get('fork.settings')->getForModule('Location');
 
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];

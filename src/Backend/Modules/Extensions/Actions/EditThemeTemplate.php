@@ -88,7 +88,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
 
         // determine if deleting is allowed
         $deleteAllowed = true;
-        if ($this->record['id'] == BackendModel::getModuleSetting('Pages', 'default_template')) {
+        if ($this->record['id'] == $this->get('fork.settings')->get('Pages', 'default_template')) {
             $deleteAllowed = false;
         } elseif (count(BackendExtensionsModel::getTemplates()) == 1) {
             $deleteAllowed = false;
@@ -112,7 +112,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         $this->frm = new BackendForm('edit');
 
         // init var
-        $defaultId = BackendModel::getModuleSetting('Pages', 'default_template');
+        $defaultId = $this->get('fork.settings')->get('Pages', 'default_template');
 
         // build available themes
         $themes = array();
@@ -121,7 +121,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
         }
 
         // create elements
-        $this->frm->addDropdown('theme', $themes, BackendModel::getModuleSetting('Core', 'theme', 'core'));
+        $this->frm->addDropdown('theme', $themes, $this->get('fork.settings')->get('Core', 'theme', 'core'));
         $this->frm->addText('label', $this->record['label']);
         $this->frm->addText('file', str_replace('Core/Layout/Templates/', '', $this->record['path']));
         $this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
@@ -279,7 +279,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
             $this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
             $this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
-            // check if the template file exists           
+            // check if the template file exists
             if ($this->frm->getField('theme')->getValue() == 'Core') {
                 $templateFile = PATH_WWW.'/src/Frontend/Core/Layout/Templates/'. $this->frm->getField('file')->getValue();
             } else {
@@ -364,7 +364,7 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 $item['data'] = serialize($item['data']);
 
                 // if this is the default template make the template active
-                if (BackendModel::getModuleSetting('Pages', 'default_template') == $this->record['id']) {
+                if ($this->get('fork.settings')->get('Pages', 'default_template') == $this->record['id']) {
                     $item['active'] = 'Y';
                 }
 
@@ -380,8 +380,8 @@ class EditThemeTemplate extends BackendBaseActionEdit
                 BackendModel::triggerEvent($this->getModule(), 'after_edit_template', array('item' => $item));
 
                 // set default template
-                if ($this->frm->getField('default')->getChecked() && $item['theme'] == BackendModel::getModuleSetting('Core', 'theme', 'core')) {
-                    BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
+                if ($this->frm->getField('default')->getChecked() && $item['theme'] == $this->get('fork.settings')->get('Core', 'theme', 'core')) {
+                    $this->get('fork.settings')->set('pages', 'default_template', $item['id']);
                 }
 
                 // update all existing pages using this template to add the newly inserted block(s)

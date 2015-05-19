@@ -46,7 +46,7 @@ class Rss extends \SpoonFeedRSS
         );
 
         $siteTitle = \SpoonFilter::htmlspecialcharsDecode(
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE)
         );
 
         // set feed properties
@@ -56,9 +56,9 @@ class Rss extends \SpoonFeedRSS
         $this->setImage(SITE_URL . FRONTEND_CORE_URL . '/Layout/images/rss_image.png', $title, $link);
 
         // theme was set
-        if (Model::getModuleSetting('Core', 'theme', null) != null) {
+        if (Model::get('fork.settings')->get('Core', 'theme', null) != null) {
             // theme name
-            $theme = Model::getModuleSetting('Core', 'theme', null);
+            $theme = Model::get('fork.settings')->get('Core', 'theme', null);
 
             // theme rss image exists
             if (is_file(PATH_WWW . '/src/Frontend/Themes/' . $theme . '/Core/images/rss_image.png')) {

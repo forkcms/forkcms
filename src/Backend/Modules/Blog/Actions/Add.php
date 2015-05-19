@@ -57,7 +57,7 @@ class Add extends BackendBaseActionAdd
      */
     private function loadForm()
     {
-        $this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
 
         $this->frm = new BackendForm('add');
 
@@ -74,7 +74,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addEditor('text');
         $this->frm->addEditor('introduction');
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-        $this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting($this->getModule(), 'allow_comments', false));
+        $this->frm->addCheckbox('allow_comments', $this->get('fork.settings')->get($this->getModule(), 'allow_comments', false));
         $this->frm->addDropdown('category_id', $categories, \SpoonFilter::getGetValue('category', null, null, 'int'));
         if (count($categories) != 2) {
             $this->frm->getField('category_id')->setDefaultElement('');
@@ -200,7 +200,7 @@ class Add extends BackendBaseActionAdd
                     BackendSearchModel::saveIndex($this->getModule(), $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
                     // ping
-                    if (BackendModel::getModuleSetting($this->getModule(), 'ping_services', false)) {
+                    if ($this->get('fork.settings')->get($this->getModule(), 'ping_services', false)) {
                         BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('Blog', 'Detail') . '/' . $this->meta->getURL());
                     }
 

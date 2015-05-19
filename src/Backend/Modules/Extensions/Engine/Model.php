@@ -189,7 +189,7 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Index', 'Settings')) {
             // check if the akismet key is available if there are modules that require it
-            if (!empty($akismetModules) && BackendModel::getModuleSetting('Core', 'akismet_key', null) == '') {
+            if (!empty($akismetModules) && BackendModel::get('fork.settings')->get('Core', 'akismet_key', null) == '') {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
@@ -200,7 +200,7 @@ class Model
             }
 
             // check if the google maps key is available if there are modules that require it
-            if (!empty($googleMapsModules) && BackendModel::getModuleSetting('Core', 'google_maps_key', null) == '') {
+            if (!empty($googleMapsModules) && BackendModel::get('fork.settings')->get('Core', 'google_maps_key', null) == '') {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(
@@ -277,7 +277,7 @@ class Model
         }
 
         // we can't delete the default template
-        if ($id == BackendModel::getModuleSetting('Pages', 'default_template')) {
+        if ($id == BackendModel::get('fork.settings')->get('Pages', 'default_template')) {
             return false;
         }
         if (self::isTemplateInUse($id)) {
@@ -579,7 +579,7 @@ class Model
         $installedModules = BackendModel::getModules();
 
         foreach ($installedModules as $module) {
-            $setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
+            $setting = BackendModel::get('fork.settings')->get($module, 'requires_akismet', false);
             if ($setting) {
                 $modules[] = $module;
             }
@@ -599,7 +599,7 @@ class Model
         $installedModules = BackendModel::getModules();
 
         foreach ($installedModules as $module) {
-            $setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
+            $setting = BackendModel::get('fork.settings')->get($module, 'requires_google_maps', false);
             if ($setting) {
                 $modules[] = $module;
             }
@@ -631,7 +631,7 @@ class Model
     public static function getTemplates($theme = null)
     {
         $db = BackendModel::getContainer()->get('database');
-        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::getModuleSetting('Core', 'theme', 'Core'));
+        $theme = \SpoonFilter::getValue((string) $theme, null, BackendModel::get('fork.settings')->get('Core', 'theme', 'Core'));
 
         $templates = (array) $db->getRecords(
             'SELECT i.id, i.label, i.path, i.data
@@ -997,7 +997,7 @@ class Model
             $item['description'] = $cronjob[0];
 
             // check if cronjob has already been run
-            $cronjobs = (array) BackendModel::getModuleSetting('Core', 'cronjobs');
+            $cronjobs = (array) BackendModel::get('fork.settings')->get('Core', 'cronjobs');
             $item['active'] = in_array($information['name'] . '.' . $attributes['action'], $cronjobs);
 
             $information['cronjobs'][] = $item;

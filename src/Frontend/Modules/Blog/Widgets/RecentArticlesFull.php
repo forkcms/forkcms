@@ -37,7 +37,7 @@ class RecentArticlesFull extends FrontendBaseWidget
     private function parse()
     {
         // get RSS-link
-        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
@@ -46,7 +46,7 @@ class RecentArticlesFull extends FrontendBaseWidget
         // assign comments
         $this->tpl->assign(
             'widgetBlogRecentArticlesFull',
-            FrontendBlogModel::getAll(FrontendModel::getModuleSetting('Blog', 'recent_articles_full_num_items', 5))
+            FrontendBlogModel::getAll($this->get('fork.settings')->get('Blog', 'recent_articles_full_num_items', 5))
         );
         $this->tpl->assign('widgetBlogRecentArticlesFullRssLink', $rssLink);
     }

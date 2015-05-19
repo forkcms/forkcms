@@ -46,11 +46,11 @@ class Seo extends BackendBaseActionIndex
     private function loadForm()
     {
         $this->frm = new BackendForm('settingsSeo');
-        $this->frm->addCheckbox('seo_noodp', BackendModel::getModuleSetting('Core', 'seo_noodp', false));
-        $this->frm->addCheckbox('seo_noydir', BackendModel::getModuleSetting('Core', 'seo_noydir', false));
+        $this->frm->addCheckbox('seo_noodp', $this->get('fork.settings')->get('Core', 'seo_noodp', false));
+        $this->frm->addCheckbox('seo_noydir', $this->get('fork.settings')->get('Core', 'seo_noydir', false));
         $this->frm->addCheckbox(
             'seo_nofollow_in_comments',
-            BackendModel::getModuleSetting('Core', 'seo_nofollow_in_comments', false)
+            $this->get('fork.settings')->get('Core', 'seo_nofollow_in_comments', false)
         );
     }
 
@@ -74,9 +74,9 @@ class Seo extends BackendBaseActionIndex
             // no errors ?
             if ($this->frm->isCorrect()) {
                 // smtp settings
-                BackendModel::setModuleSetting('Core', 'seo_noodp', $this->frm->getField('seo_noodp')->getValue());
-                BackendModel::setModuleSetting('Core', 'seo_noydir', $this->frm->getField('seo_noydir')->getValue());
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set('Core', 'seo_noodp', $this->frm->getField('seo_noodp')->getValue());
+                $this->get('fork.settings')->set('Core', 'seo_noydir', $this->frm->getField('seo_noydir')->getValue());
+                $this->get('fork.settings')->set(
                     'Core',
                     'seo_nofollow_in_comments',
                     $this->frm->getField('seo_nofollow_in_comments')->getValue()

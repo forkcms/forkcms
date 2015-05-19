@@ -80,7 +80,7 @@ class Edit extends BackendBaseActionEdit
 
         // load the settings from the general settings
         if (empty($this->settings)) {
-            $settings = BackendModel::getModuleSettings('Location');
+            $settings = $this->get('fork.settings')->getForModule('Location');
 
             $this->settings['width'] = $settings['width_widget'];
             $this->settings['height'] = $settings['height_widget'];

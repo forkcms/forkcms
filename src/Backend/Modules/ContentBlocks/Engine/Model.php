@@ -230,7 +230,7 @@ class Model
         $finder->in(FRONTEND_MODULES_PATH . '/ContentBlocks/Layout/Widgets');
 
         // if there is a custom theme we should include the templates there also
-        $theme = BackendModel::getModuleSetting('Core', 'theme', 'core');
+        $theme = BackendModel::get('fork.settings')->get('Core', 'theme', 'core');
         if ($theme != 'core') {
             $path = FRONTEND_PATH . '/Themes/' . $theme . '/Modules/ContentBlocks/Layout/Widgets';
             if (is_dir($path)) {
@@ -317,7 +317,7 @@ class Model
         $item['revision_id'] = $db->insert('content_blocks', $item);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('ContentBlocks', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::get('fork.settings')->get('ContentBlocks', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $db->getColumn(

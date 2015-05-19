@@ -77,7 +77,7 @@
       </div>
       <div class="panel-body">
         <div class="form-group">
-          <strong>{$web_property_id}</strong>: ga:{$profile}
+          <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
         </div>
       </div>
     </div>
