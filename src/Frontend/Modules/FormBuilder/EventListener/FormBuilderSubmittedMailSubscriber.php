@@ -58,7 +58,7 @@ final class FormBuilderSubmittedMailSubscriber
                 if (array_key_exists('reply_to', $field['settings']) &&
                     $field['settings']['reply_to'] === true
                 ) {
-                    $email = $fieldData[$field['id']];
+                    $email = $fieldData[$field['id']]['value'];
                     $message->setReplyTo(array($email => $email));
                 }
             }
