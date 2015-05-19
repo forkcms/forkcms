@@ -3,13 +3,12 @@
 namespace Common\Mailer;
 
 use PDOException;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Common\ModulesSettings;
 
-class Configurator implements EventSubscriberInterface
+class Configurator
 {
     /**
      * @var ModulesSettings
@@ -45,12 +44,5 @@ class Configurator implements EventSubscriberInterface
         } catch (PDOException $e) {
             // we'll just use the mail transport thats pre-configured
         }
-    }
-
-    public static function getSubscribedEvents()
-    {
-        return array(
-            KernelEvents::REQUEST => array('onKernelRequest', 0)
-        );
     }
 }
