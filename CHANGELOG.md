@@ -4,6 +4,7 @@ Improvements:
 
 Bugfixes:
 
+* Analytics: Moved Secret file content to databse. Because capistrano deployments didn't worked with BACKEND_CACHE_PATH.
 
 3.9.2 (2015-05-12)
 --
