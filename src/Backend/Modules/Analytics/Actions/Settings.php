@@ -37,7 +37,7 @@ final class Settings extends ActionIndex
     {
         $this->form = new Form('settings');
 
-        // we don't even have a secret file yet, let the user upload it
+        // we don't even have a auth config file yet, let the user upload it
         if ($this->get('fork.settings')->get($this->getModule(), 'auth_config') === null) {
             $this->form->addFile('auth_config');
 
@@ -131,7 +131,7 @@ final class Settings extends ActionIndex
     {
         if ($this->form->isSubmitted()) {
             if ($this->form->existsField('auth_config')) {
-                $this->validateSecretFileForm();
+                $this->validateAuthConfigFileForm();
             }
 
             if ($this->form->existsField('account')) {
@@ -148,7 +148,7 @@ final class Settings extends ActionIndex
         }
     }
 
-    private function validateSecretFileForm()
+    private function validateAuthConfigFileForm()
     {
         $fileField = $this->form->getField('auth_config');
 
@@ -160,11 +160,11 @@ final class Settings extends ActionIndex
         }
 
         if ($this->form->isCorrect()) {
-            $secretFileContent = \SpoonFile::getContent($fileField->getTempFileName());
+            $authConfigFileContent = \SpoonFile::getContent($fileField->getTempFileName());
             $this->get('fork.settings')->set(
                 $this->getModule(),
                 'auth_config',
-                $secretFileContent
+                $authConfigFileContent
             );
 
             $this->redirect(Model::createURLForAction('Settings'));
