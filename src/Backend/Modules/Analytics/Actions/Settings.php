@@ -161,7 +161,7 @@ final class Settings extends ActionIndex
 
         if ($this->form->isCorrect()) {
             $fileField->moveFile(
-                BACKEND_CACHE_PATH . '/' . $this->getModule() . '/'
+                FRONTEND_FILES_PATH . '/' . $this->getModule() . '/'
                 . $fileField->getFileName()
             );
             $this->get('fork.settings')->set(
