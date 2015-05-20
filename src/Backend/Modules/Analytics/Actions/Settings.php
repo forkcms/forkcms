@@ -38,8 +38,8 @@ final class Settings extends ActionIndex
         $this->form = new Form('settings');
 
         // we don't even have a secret file yet, let the user upload it
-        if ($this->get('fork.settings')->get($this->getModule(), 'secret_file') === null) {
-            $this->form->addFile('secret_file');
+        if ($this->get('fork.settings')->get($this->getModule(), 'auth_config') === null) {
+            $this->form->addFile('auth_config');
 
             return;
         }
@@ -130,7 +130,7 @@ final class Settings extends ActionIndex
     private function validateForm()
     {
         if ($this->form->isSubmitted()) {
-            if ($this->form->existsField('secret_file')) {
+            if ($this->form->existsField('auth_config')) {
                 $this->validateSecretFileForm();
             }
 
@@ -150,7 +150,7 @@ final class Settings extends ActionIndex
 
     private function validateSecretFileForm()
     {
-        $fileField = $this->form->getField('secret_file');
+        $fileField = $this->form->getField('auth_config');
 
         if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
             $fileField->isAllowedExtension(
@@ -163,7 +163,7 @@ final class Settings extends ActionIndex
             $secretFileContent = \SpoonFile::getContent($fileField->getTempFileName());
             $this->get('fork.settings')->set(
                 $this->getModule(),
-                'secret_file',
+                'auth_config',
                 $secretFileContent
             );
 
