@@ -26,6 +26,7 @@ FileETag MTime Size
 	RewriteRule src/Frontend/Cache/Logs - [F]
 	RewriteRule src/Frontend/Cache/Navigation/.*\.php - [F]
 	RewriteRule src/Frontend/Cache/Search - [F]
+	RewriteRule src/Frontend/Files/Analytics - [F]
 	RewriteRule src/Backend/Cache/CompiledTemplates - [F]
 	RewriteRule src/Backend/Cache/Config - [F]
 	RewriteRule src/Backend/Cache/Cronjobs - [F]

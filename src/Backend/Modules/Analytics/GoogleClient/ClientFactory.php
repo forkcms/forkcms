@@ -34,7 +34,7 @@ class ClientFactory
         // create the instance
         $client = new Google_Client();
         $client->setAuthConfigFile(
-            BACKEND_CACHE_PATH . '/Analytics/'
+            FRONTEND_FILES_PATH . '/Analytics/'
             . $this->settings->get('Analytics', 'secret_file')
         );
         $client->setRedirectUri(
