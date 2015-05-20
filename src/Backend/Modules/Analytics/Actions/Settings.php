@@ -160,11 +160,10 @@ final class Settings extends ActionIndex
         }
 
         if ($this->form->isCorrect()) {
-            $authConfigFileContent = \SpoonFile::getContent($fileField->getTempFileName());
             $this->get('fork.settings')->set(
                 $this->getModule(),
                 'auth_config',
-                $authConfigFileContent
+                file_get_contents($fileField->getTempFileName())
             );
 
             $this->redirect(Model::createURLForAction('Settings'));
