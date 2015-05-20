@@ -6,19 +6,19 @@
 </div>
 
 {form:settings}
-  {option:fileSecretFile}
+  {option:fileAuthConfig}
     <div class="box">
       <div class="heading">
-        <h3><label for="secretFile">{$lblSecretFile|ucfirst}</label></h3>
+        <h3><label for="authConfig">{$lblSecretFile|ucfirst}</label></h3>
       </div>
       <div class="options">
-        {$fileSecretFile}
+        {$fileAuthConfig}
       </div>
       <div class="options longHelpTxt">
         {$msgSecretFileHelp|sprintf:'{$SITE_URL}/private/{$LANGUAGE}/analytics/settings'}
       </div>
     </div>
-  {/option:fileSecretFile}
+  {/option:fileAuthConfig}
 
   {option:ddmAccount}
     <div class="box">

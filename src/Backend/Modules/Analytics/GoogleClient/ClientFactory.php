@@ -33,9 +33,8 @@ class ClientFactory
     {
         // create the instance
         $client = new Google_Client();
-        $client->setAuthConfigFile(
-            BACKEND_CACHE_PATH . '/Analytics/'
-            . $this->settings->get('Analytics', 'secret_file')
+        $client->setAuthConfig(
+            $this->settings->get('Analytics', 'auth_config')
         );
         $client->setRedirectUri(
             SITE_URL . strtok(Model::createURLForAction('Settings', 'Analytics'), '?')
