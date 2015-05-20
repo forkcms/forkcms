@@ -4,6 +4,7 @@ Improvements:
 
 Bugfixes:
 
+* Analytics: changed storage path for secret file.
 
 3.9.2 (2015-05-12)
 --
