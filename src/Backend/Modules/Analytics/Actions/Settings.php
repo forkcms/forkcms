@@ -160,14 +160,11 @@ final class Settings extends ActionIndex
         }
 
         if ($this->form->isCorrect()) {
-            $fileField->moveFile(
-                BACKEND_CACHE_PATH . '/' . $this->getModule() . '/'
-                . $fileField->getFileName()
-            );
+            $secretFileContent = \SpoonFile::getContent($fileField->getTempFileName());
             $this->get('fork.settings')->set(
                 $this->getModule(),
                 'secret_file',
-                $fileField->getFileName()
+                $secretFileContent
             );
 
             $this->redirect(Model::createURLForAction('Settings'));
