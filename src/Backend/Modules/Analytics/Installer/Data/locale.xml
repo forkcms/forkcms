@@ -146,11 +146,31 @@
         <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
       </item>
-      <item type="label" name="SecretFile">
-        <translation language="nl"><![CDATA[secret file]]></translation>
-        <translation language="en"><![CDATA[secret file]]></translation>
+      <item type="label" name="Certificate">
+        <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
+        <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
       </item>
-      <item type="message" name="SecretFileHelp">
+      <item type="label" name="ClientId">
+        <translation language="nl"><![CDATA[client id]]></translation>
+        <translation language="en"><![CDATA[client id]]></translation>
+      </item>
+      <item type="error" name="P12Only">
+        <translation language="nl"><![CDATA[Enkel p12 bestanden zijn toegelaten.]]></translation>
+        <translation language="en"><![CDATA[Only p12 files are allowed.]]></translation>
+        <translation language="hu"><![CDATA[Csak az p12 fájlok megengedettek.]]></translation>
+        <translation language="it"><![CDATA[Solo i file p12 sono consentiti.]]></translation>
+        <translation language="ru"><![CDATA[Допускаются только p12 файлы.]]></translation>
+        <translation language="zh"><![CDATA[只允许使用p12文件。]]></translation>
+        <translation language="fr"><![CDATA[Seuls les fichiers p12 sont acceptés.]]></translation>
+        <translation language="de"><![CDATA[Nur p12-Dateien sind erlaubt.]]></translation>
+        <translation language="es"><![CDATA[Solo sólo se permiten archivos p12.]]></translation>
+        <translation language="lt"><![CDATA[Galimi tik p12 failai.]]></translation>
+        <translation language="uk"><![CDATA[Дозволені лише p12 файли]]></translation>
+        <translation language="sv"><![CDATA[Endast p12 filer är tillåtna.]]></translation>
+        <translation language="el"><![CDATA[Επιτρέπονται μόνον αρχεία τύπου p12.]]></translation>
+        <translation language="tr"><![CDATA[Sadece p12 dosyalarına izin verilir.]]></translation>
+      </item>
+      <item type="message" name="CertificateHelp">
         <translation language="nl"><![CDATA[
           <h3>Hoe verkrijg je je secret file?</h3>
           <br/>
@@ -167,15 +187,12 @@
             <ol>
               <li>Kies in de zijbalk aan de linkerkant <strong>Credentials.</strong></li>
               <li>Klik op deze pagina op Create new Client ID onder de titel OAuth.</li>
-              <li>Kies <strong>Web application</strong> als application type.</li>
-              <li>Kies je emailares en geef een product naam in bvb "Fork CMS."</li>
-              <li>Klik op <strong>Save</strong>.</li>
-              <li>Laat Authorized JavaScript Origins leeg, dit zal Fork niet nodig hebben.</li>
-              <li>Stel <strong>%1$s</strong> in bij Authorized Redirect URIs.</li>
-              <li>Klik op Create Client id.</li>
+              <li>Kies <strong>Service account</strong> als application type.</li>
+              <li>Download na het opslaan het gegenereerde certificaat (p12 file).</li>
+              <li>Log in in Google Analytics and voeg leesrechten toe voor het gegenereerde emailadres in de developer console.</li>
+              <li>Haal een kop koffie, en kom daarna terug. Het kan even duren voor de koppeling tot stand is gekomen.</li>
             </ol>
-          </p>
-          <p>Klik op <strong>Download JSON</strong> en sla het bestand op.</p>]]></translation>
+          </p>]]></translation>
         <translation language="en"><![CDATA[
           <h3>How to get your secret file?</h3>
           <br/>
@@ -192,15 +209,12 @@
             <ol>
               <li>In the sidebar on the left, select <strong>Credentials.</strong></li>
               <li>From the Credentials page, click Create new Client ID under the OAuth heading to create your OAuth 2.0 credentials.</li>
-              <li>For the APPLICATION TYPE select <strong>Web application</strong>.</li>
-              <li>Choose your emailadres and add a Product name, for example "Fork CMS".</li>
-              <li>Click on Save.</li>
-              <li>Leave the Authorized JavaScript Origins blank, it is not needed for Fork CMS.</li>
-              <li>Set the Authorized Redirect URIs to <strong>%1$s</strong></li>
-              <li>click <strong>Create Client ID</strong>.</li>
+              <li>For the APPLICATION TYPE select <strong>Service account</strong>.</li>
+              <li>Download the generated certificate (.p12 file).</li>
+              <li>Login to analytics and add read rights to the wanted analytics profile to the generated emailadress from the developer console.</li>
+              <li>Grab a cup of coffee, and come back to Fork in some minutes. It can take some time before the coupling is fully done.</li>
             </ol>
-          </p>
-          <p>Click <strong>Download JSON</strong> and save it.</p>]]></translation>
+          </p>]]></translation>
       </item>
     </Analytics>
   </Backend>

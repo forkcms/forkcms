@@ -38,25 +38,10 @@ final class Settings extends ActionIndex
         $this->form = new Form('settings');
 
         // we don't even have a auth config file yet, let the user upload it
-        if ($this->get('fork.settings')->get($this->getModule(), 'auth_config') === null) {
-            $this->form->addFile('auth_config');
-
-            return;
-        }
-
-        // we don't have a token: redirect the user to Google to grant access
-        if ($this->get('fork.settings')->get($this->getModule(), 'token') === null) {
-            $client = $this->get('analytics.google_client');
-
-            if ($this->getParameter('code') === null) {
-                // make sure we receive a refresh token
-                $client->setAccessType('offline');
-                $this->redirect($client->createAuthUrl());
-            } else {
-                $client->authenticate($this->getParameter('code'));
-                $this->get('fork.settings')->set($this->getModule(), 'token', $client->getAccessToken());
-                $this->redirect(Model::createURLForAction('Settings'));
-            }
+        if ($this->get('fork.settings')->get($this->getModule(), 'certificate') === null) {
+            $this->form->addFile('certificate');
+            $this->form->addText('client_id');
+            $this->form->addtext('email');
 
             return;
         }
@@ -130,7 +115,7 @@ final class Settings extends ActionIndex
     private function validateForm()
     {
         if ($this->form->isSubmitted()) {
-            if ($this->form->existsField('auth_config')) {
+            if ($this->form->existsField('certificate')) {
                 $this->validateAuthConfigFileForm();
             }
 
@@ -150,20 +135,35 @@ final class Settings extends ActionIndex
 
     private function validateAuthConfigFileForm()
     {
-        $fileField = $this->form->getField('auth_config');
+        $fileField = $this->form->getField('certificate');
+        $clientIdField = $this->form->getField('client_id');
+        $emailField = $this->form->getField('email');
 
         if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
             $fileField->isAllowedExtension(
-                array('json'),
-                Language::err('JsonOnly')
+                array('p12'),
+                Language::err('P12Only')
             );
         }
+        $clientIdField->isFilled(Language::err('FieldIsRequired'));
+        $emailField->isFilled(Language::err('FieldIsRequired'));
+        $emailField->isEmail(Language::err('EmailIsInvalid'));
 
         if ($this->form->isCorrect()) {
             $this->get('fork.settings')->set(
                 $this->getModule(),
-                'auth_config',
-                file_get_contents($fileField->getTempFileName())
+                'certificate',
+                base64_encode(file_get_contents($fileField->getTempFileName()))
+            );
+            $this->get('fork.settings')->set(
+                $this->getModule(),
+                'client_id',
+                $clientIdField->getValue()
+            );
+            $this->get('fork.settings')->set(
+                $this->getModule(),
+                'email',
+                $emailField->getValue()
             );
 
             $this->redirect(Model::createURLForAction('Settings'));
