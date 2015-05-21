@@ -297,7 +297,7 @@ class Edit extends BackendBaseActionEdit
         $this->frm = new BackendForm('step4');
 
         // subject
-        $this->frm->addTrimmedText('email');
+        $this->frm->addText('email');
         $this->frm->addDate('send_on_date', $this->record['send_on']);
         $this->frm->addTime('send_on_time', \SpoonDate::getDate('H:i', $this->record['send_on']));
 
