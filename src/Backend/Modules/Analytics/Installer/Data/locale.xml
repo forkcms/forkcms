@@ -168,7 +168,7 @@
               <li>Kies in de zijbalk aan de linkerkant <strong>Credentials.</strong></li>
               <li>Klik op deze pagina op Create new Client ID onder de titel OAuth.</li>
               <li>Kies <strong>Web application</strong> als application type.</li>
-              <li>Geef een product naam in bvb Fork CMS</li>
+              <li>Kies je emailares en geef een product naam in bvb "Fork CMS."</li>
               <li>Klik op <strong>Save</strong>.</li>
               <li>Laat Authorized JavaScript Origins leeg, dit zal Fork niet nodig hebben.</li>
               <li>Stel <strong>%1$s</strong> in bij Authorized Redirect URIs.</li>
@@ -193,7 +193,7 @@
               <li>In the sidebar on the left, select <strong>Credentials.</strong></li>
               <li>From the Credentials page, click Create new Client ID under the OAuth heading to create your OAuth 2.0 credentials.</li>
               <li>For the APPLICATION TYPE select <strong>Web application</strong>.</li>
-              <li>Add a Product name for example Fork CMS.</li>
+              <li>Choose your emailadres and add a Product name, for example "Fork CMS".</li>
               <li>Click on Save.</li>
               <li>Leave the Authorized JavaScript Origins blank, it is not needed for Fork CMS.</li>
               <li>Set the Authorized Redirect URIs to <strong>%1$s</strong></li>
