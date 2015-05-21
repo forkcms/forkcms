@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <locale>
   <Backend>
+    <Core>
+      <item type="label" name="SubscribedOn">
+        <translation language="en"><![CDATA[subscribed on]]></translation>
+        <translation language="fr"><![CDATA[souscrit le]]></translation>
+        <translation language="nl"><![CDATA[ingeschreven op]]></translation>
+      </item>
+    </Core>
     <Mailmotor>
       <item type="message" name="AccountLinked">
         <translation language="en"><![CDATA[Your CampaignMonitor account is now linked to Fork.]]></translation>

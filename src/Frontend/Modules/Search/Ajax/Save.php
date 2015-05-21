@@ -33,8 +33,9 @@ class Save extends FrontendBaseAJAXAction
         parent::execute();
 
         // get parameters
+        $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
+        $term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
             $searchTerm
         );
 

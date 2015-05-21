@@ -42,7 +42,7 @@ class EditMailingIframe extends BackendBaseActionEdit
             parent::execute();
             $this->getData();
             $this->parse();
-            $this->display(BACKEND_MODULE_PATH . '/Layout/Templates/EditMailingIframe.tpl');
+            $this->display(BACKEND_MODULES_PATH . '/Mailmotor/Layout/Templates/EditMailingIframe.tpl');
         } else {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }

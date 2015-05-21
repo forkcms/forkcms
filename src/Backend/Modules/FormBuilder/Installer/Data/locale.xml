@@ -379,6 +379,20 @@
         <translation language="sv"><![CDATA[parameter]]></translation>
         <translation language="el"><![CDATA[Παράμετρος]]></translation>
       </item>
+      <item type="label" name="Placeholder">
+        <translation language="nl"><![CDATA[placeholder]]></translation>
+        <translation language="en"><![CDATA[placeholder]]></translation>
+        <translation language="it"><![CDATA[segnaposto]]></translation>
+        <translation language="ru"><![CDATA[заполнитель]]></translation>
+        <translation language="zh"><![CDATA[占位符]]></translation>
+        <translation language="fr"><![CDATA[espace réservé]]></translation>
+        <translation language="hu"><![CDATA[helyőrző]]></translation>
+        <translation language="de"><![CDATA[Platzhalter]]></translation>
+        <translation language="es"><![CDATA[marcador de posición]]></translation>
+        <translation language="uk"><![CDATA[заповнювач]]></translation>
+        <translation language="sv"><![CDATA[platshållare]]></translation>
+        <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
+      </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="en"><![CDATA[preview]]></translation>
@@ -572,6 +586,34 @@
         <translation language="sv"><![CDATA[textbox]]></translation>
         <translation language="el"><![CDATA[Κουτί κειμένου]]></translation>
       </item>
+      <item type="label" name="Datetime">
+        <translation language="nl"><![CDATA[datum & tijd]]></translation>
+        <translation language="en"><![CDATA[date & time]]></translation>
+        <translation language="it"><![CDATA[data e oro]]></translation>
+        <translation language="ru"><![CDATA[Дата и время]]></translation>
+        <translation language="zh"><![CDATA[日期和時間]]></translation>
+        <translation language="fr"><![CDATA[date et l'heure]]></translation>
+        <translation language="hu"><![CDATA[dátum és idő]]></translation>
+        <translation language="de"><![CDATA[Datum und Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[fecha y hora]]></translation>
+        <translation language="uk"><![CDATA[Дата і час]]></translation>
+        <translation language="sv"><![CDATA[datum och tid]]></translation>
+        <translation language="el"><![CDATA[Ημερομηνία και ώρα]]></translation>
+      </item>
+      <item type="label" name="Time">
+        <translation language="nl"><![CDATA[tijd]]></translation>
+        <translation language="en"><![CDATA[time]]></translation>
+        <translation language="it"><![CDATA[oro]]></translation>
+        <translation language="ru"><![CDATA[время]]></translation>
+        <translation language="zh"><![CDATA[时间]]></translation>
+        <translation language="fr"><![CDATA[l'heure]]></translation>
+        <translation language="hu"><![CDATA[idő]]></translation>
+        <translation language="de"><![CDATA[Uhrzeit]]></translation>
+        <translation language="es"><![CDATA[hora]]></translation>
+        <translation language="uk"><![CDATA[час]]></translation>
+        <translation language="sv"><![CDATA[tid]]></translation>
+        <translation language="el"><![CDATA[ώρα]]></translation>
+      </item>
       <item type="label" name="TextElements">
         <translation language="nl"><![CDATA[tekst elementen]]></translation>
         <translation language="en"><![CDATA[text elements]]></translation>
@@ -641,6 +683,62 @@
         <translation language="uk"><![CDATA[Вчора]]></translation>
         <translation language="sv"><![CDATA[igår]]></translation>
         <translation language="el"><![CDATA[Χθές]]></translation>
+      </item>
+      <item type="label" name="Day">
+        <translation language="nl"><![CDATA[dag]]></translation>
+        <translation language="en"><![CDATA[day]]></translation>
+        <translation language="it"><![CDATA[giorno]]></translation>
+        <translation language="ru"><![CDATA[день]]></translation>
+        <translation language="zh"><![CDATA[一天]]></translation>
+        <translation language="fr"><![CDATA[journée]]></translation>
+        <translation language="hu"><![CDATA[nap]]></translation>
+        <translation language="de"><![CDATA[Tag]]></translation>
+        <translation language="es"><![CDATA[día]]></translation>
+        <translation language="uk"><![CDATA[день]]></translation>
+        <translation language="sv"><![CDATA[dag]]></translation>
+        <translation language="el"><![CDATA[ημέρα]]></translation>
+      </item>
+      <item type="label" name="Week">
+        <translation language="nl"><![CDATA[week]]></translation>
+        <translation language="en"><![CDATA[week]]></translation>
+        <translation language="it"><![CDATA[settimana]]></translation>
+        <translation language="ru"><![CDATA[Неделя]]></translation>
+        <translation language="zh"><![CDATA[周]]></translation>
+        <translation language="fr"><![CDATA[semaine]]></translation>
+        <translation language="hu"><![CDATA[a héten]]></translation>
+        <translation language="de"><![CDATA[Woche]]></translation>
+        <translation language="es"><![CDATA[semana]]></translation>
+        <translation language="uk"><![CDATA[тиждень]]></translation>
+        <translation language="sv"><![CDATA[vecka]]></translation>
+        <translation language="el"><![CDATA[εβδομάδα]]></translation>
+      </item>
+      <item type="label" name="Month">
+        <translation language="nl"><![CDATA[maand]]></translation>
+        <translation language="en"><![CDATA[month]]></translation>
+        <translation language="it"><![CDATA[mese]]></translation>
+        <translation language="ru"><![CDATA[месяц]]></translation>
+        <translation language="zh"><![CDATA[个月]]></translation>
+        <translation language="fr"><![CDATA[mois]]></translation>
+        <translation language="hu"><![CDATA[hónap]]></translation>
+        <translation language="de"><![CDATA[Monat]]></translation>
+        <translation language="es"><![CDATA[mes]]></translation>
+        <translation language="uk"><![CDATA[місяць]]></translation>
+        <translation language="sv"><![CDATA[månad]]></translation>
+        <translation language="el"><![CDATA[μήνα]]></translation>
+      </item>
+      <item type="label" name="Year">
+        <translation language="nl"><![CDATA[jaar]]></translation>
+        <translation language="en"><![CDATA[year]]></translation>
+        <translation language="it"><![CDATA[anno]]></translation>
+        <translation language="ru"><![CDATA[год]]></translation>
+        <translation language="zh"><![CDATA[一年]]></translation>
+        <translation language="fr"><![CDATA[année]]></translation>
+        <translation language="hu"><![CDATA[év]]></translation>
+        <translation language="de"><![CDATA[Jahr]]></translation>
+        <translation language="es"><![CDATA[año]]></translation>
+        <translation language="uk"><![CDATA[рік]]></translation>
+        <translation language="sv"><![CDATA[år]]></translation>
+        <translation language="el"><![CDATA[έτος]]></translation>
       </item>
       <item type="message" name="Added">
         <translation language="nl"><![CDATA[Het formulier "%1$s" werd toegevoegd.]]></translation>
@@ -935,14 +1033,13 @@
         <translation language="fr"><![CDATA[Veuillez fournir une valeur.]]></translation>
         <translation language="hu"><![CDATA[Kérlek add meg az értéket.]]></translation>
         <translation language="de"><![CDATA[Bitte gib einen Wert an.]]></translation>
-        <translation language="es"><![CDATA[Ppor favor introduce un valor.]]></translation>
+        <translation language="es"><![CDATA[Por favor introduce un valor.]]></translation>
         <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
         <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
       </item>
-      <item type="error" name="ValidationMustBeEmail">
-        <translation language="nl"><![CDATA[Validatie optie moet "email" zijn.]]></translation>
-        <translation language="en"><![CDATA[Validation option must be "email".]]></translation>
+      <item type="error" name="EmailValidationIsRequired">
+        <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
       </item>
     </FormBuilder>
   </Backend>
@@ -951,6 +1048,20 @@
       <item type="message" name="FormBuilderMailCopyTo">
         <translation language="nl">Dit is een kopie van het bericht dat u net verzond via %s</translation>
         <translation language="en">This is a copy of the message you've sent via %s</translation>
+      </item>
+      <item type="error" name="TimeIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige tijd]]></translation>
+        <translation language="en"><![CDATA[Invalid time]]></translation>
+        <translation language="it"><![CDATA[Tempo non valido]]></translation>
+        <translation language="ru"><![CDATA[Неверное время]]></translation>
+        <translation language="zh"><![CDATA[无效的时间]]></translation>
+        <translation language="fr"><![CDATA[Heure invalide]]></translation>
+        <translation language="hu"><![CDATA[Érvénytelen idő]]></translation>
+        <translation language="de"><![CDATA[Ungültige Zeit]]></translation>
+        <translation language="es"><![CDATA[Tiempo no válido]]></translation>
+        <translation language="uk"><![CDATA[Вкажіть значення]]></translation>
+        <translation language="sv"><![CDATA[невірний час]]></translation>
+        <translation language="el"><![CDATA[Μη έγκυρη ώρα]]></translation>
       </item>
     </Core>
   </Frontend>

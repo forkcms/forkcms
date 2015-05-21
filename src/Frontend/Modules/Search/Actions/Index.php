@@ -95,7 +95,7 @@ class Index extends FrontendBaseBlock
     {
         // set variables
         $this->requestedPage = $this->URL->getParameter('page', 'int', 1);
-        $this->limit = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
+        $this->limit = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -137,7 +137,7 @@ class Index extends FrontendBaseBlock
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -202,13 +202,11 @@ class Index extends FrontendBaseBlock
 
         // redirect if the request page doesn't exist
         if ($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(

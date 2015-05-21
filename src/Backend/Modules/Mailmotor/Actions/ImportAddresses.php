@@ -48,7 +48,7 @@ class ImportAddresses extends BackendBaseActionEdit
 
         // build the csv
         $csv = array();
-        $csv[] = array('email' => BackendModel::getModuleSetting($this->getModule(), 'from_email'));
+        $csv[] = array('email' => $this->get('fork.settings')->get($this->getModule(), 'from_email'));
 
         // download the file
         BackendCSV::arrayToFile(BACKEND_CACHE_PATH . '/Mailmotor/example.csv', $csv, null, null, ';', '"', true);

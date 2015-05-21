@@ -44,6 +44,7 @@ class Helper
                 $field['settings']['default_values'] :
                 null
             );
+            $placeholder = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
 
             /**
              * Create form and parse to HTML
@@ -67,14 +68,38 @@ class Helper
 
                 // get content
                 $fieldHTML = $ddm->parse();
-            } elseif ($field['type'] == 'radiobutton') {
-                // rebuild values
-                foreach ($values as $value) {
-                    $newValues[] = array('label' => $value, 'value' => $value);
-                }
-
+            } elseif ($field['type'] == 'datetime') {
                 // create element
-                $rbt = $frm->addRadiobutton($fieldName, $newValues, $defaultValues);
+                if($field['settings']['input_type'] == 'date') {
+                    // calculate default value
+                    $amount = $field['settings']['value_amount'];
+                    $type = $field['settings']['value_type'];
+
+                    if($type != '') {
+                        switch($type) {
+                            case 'today':
+                                $defaultValues = date('d/m/Y');
+                                break;
+                            case 'day':
+                            case 'week':
+                            case 'month':
+                            case 'year':
+                                if($amount != '') $defaultValues = date('d/m/Y', strtotime('+' . $amount . ' ' . $type));
+                                break;
+                        }
+                    }
+
+                    $datetime = $frm->addText($fieldName, $defaultValues);
+                } else {
+                    $datetime = $frm->addTime($fieldName, $defaultValues);
+                }
+                $datetime->setAttribute('disabled', 'disabled');
+
+                // get content
+                $fieldHTML = $datetime->parse();
+            } elseif ($field['type'] == 'radiobutton') {
+                // create element
+                $rbt = $frm->addRadiobutton($fieldName, $values, $defaultValues);
 
                 // get content
                 $fieldHTML = $rbt->parse();
@@ -93,6 +118,7 @@ class Helper
                 // create element
                 $txt = $frm->addText($fieldName, $defaultValues);
                 $txt->setAttribute('disabled', 'disabled');
+                $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();
@@ -101,6 +127,7 @@ class Helper
                 $txt = $frm->addTextarea($fieldName, $defaultValues);
                 $txt->setAttribute('cols', 30);
                 $txt->setAttribute('disabled', 'disabled');
+                $txt->setAttribute('placeholder', $placeholder);
 
                 // get content
                 $fieldHTML = $txt->parse();
@@ -148,7 +175,7 @@ class Helper
                 $tpl->assign('simple', true);
             }
 
-            return $tpl->getContent(BACKEND_MODULE_PATH . '/Layout/Templates/Field.tpl');
+            return $tpl->getContent(BACKEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Field.tpl');
         } else {
             // empty field so return empty string
             return '';

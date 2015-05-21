@@ -177,7 +177,9 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
         // validate
         if (!in_array($value, $possibleLanguages)) {
             // only 1 active language?
-            if (!SITE_MULTILANGUAGE && count($possibleLanguages) == 1) {
+            if (!Model::getContainer()->getParameter('site.multilanguage')
+                && count($possibleLanguages) == 1
+            ) {
                 $this->language = array_shift(
                     $possibleLanguages
                 );
@@ -191,7 +193,7 @@ class Ajax extends \KernelLoader implements \ApplicationInterface
         }
 
         // define constant
-        define('FRONTEND_LANGUAGE', $this->language);
+        defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $this->language);
 
         // set the locale (we need this for the labels)
         Language::setLocale($this->language);

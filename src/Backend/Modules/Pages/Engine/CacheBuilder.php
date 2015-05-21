@@ -9,6 +9,7 @@ namespace Backend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
@@ -66,7 +67,7 @@ class CacheBuilder
     /**
      * Fetches all data from the database
      *
-     * @param $language
+     * @param string $language
      * @return array tupple containing keys and navigation
      */
     protected function getData($language)
@@ -108,13 +109,14 @@ class CacheBuilder
         $parentID = (int) $page['parent_id'];
 
         // init URLs
-        $languageURL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
+        $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
+        $languageURL = ($hasMultiLanguages) ? '/' . $language . '/' : '/';
         $URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
         // home is special
         if ($page['id'] == 1) {
             $page['url'] = '';
-            if (SITE_MULTILANGUAGE) {
+            if ($hasMultiLanguages) {
                 $languageURL = rtrim($languageURL, '/');
             }
         }
@@ -249,7 +251,7 @@ class CacheBuilder
     /**
      * Returns an array containing all widgets
      *
-     * @return array
+     * @return string
      */
     protected function getSitemapId()
     {
@@ -471,7 +473,8 @@ class CacheBuilder
                     $urlChunks = explode('/', $url);
 
                     // remove the language chunk
-                    $urlChunks = (SITE_MULTILANGUAGE) ? array_slice($urlChunks, 2) : array_slice($urlChunks, 1);
+                    $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
+                    $urlChunks = ($hasMultiLanguages) ? array_slice($urlChunks, 2) : array_slice($urlChunks, 1);
 
                     // subpage?
                     if (count($urlChunks) > 1) {

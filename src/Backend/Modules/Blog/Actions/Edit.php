@@ -95,7 +95,7 @@ class Edit extends BackendBaseActionEdit
     private function getData()
     {
         $this->record = (array) BackendBlogModel::get($this->id);
-        $this->imageIsAllowed = BackendModel::getModuleSetting($this->URL->getModule(), 'show_image_form', true);
+        $this->imageIsAllowed = $this->get('fork.settings')->get($this->URL->getModule(), 'show_image_form', true);
 
         // is there a revision specified?
         $revisionToLoad = $this->getParameter('revision', 'int');
@@ -388,43 +388,38 @@ class Edit extends BackendBaseActionEdit
                         $fs->mkdir($imagePath . '/128x128');
                     }
 
-                    // if the image should be deleted
+                    // If the image should be deleted, only the database entry is refreshed.
+                    // The revision should keep it's file.
                     if ($this->frm->getField('delete_image')->isChecked()) {
-                        $filename = $imagePath . '/source/' . $item['image'];
-                        if (is_file($filename)) {
-                            // delete the image
-                            $fs->remove($filename);
-                            BackendModel::deleteThumbnails($imagePath, $item['image']);
-                        }
-
                         // reset the name
                         $item['image'] = null;
                     }
 
                     // new image given?
                     if ($this->frm->getField('image')->isFilled()) {
-                        $filename = $imagePath . '/source/' . $this->record['image'];
-                        if (is_file($filename)) {
-                            $fs->remove($filename);
-                            BackendModel::deleteThumbnails($imagePath, $this->record['image']);
-                        }
-
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
+                        // we use the previous revision-id in the filename to make the filename unique between
+                        // the different revisions, to prevent that a new file would
+                        // overwrite images of previous revisions that have the same title, and thus, the same filename
+                        $item['image'] = $this->meta->getURL() .
+                                            '-' . BL::getWorkingLanguage() .
+                                            '-' . $item['revision_id'] .
+                                            '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
                     } elseif ($item['image'] != null) {
-                        // rename the old image
+                        // generate the new filename
                         $image = new File($imagePath . '/source/' . $item['image']);
-                        $newName = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $image->getExtension();
+                        $newName = $this->meta->getURL() .
+                                            '-' . BL::getWorkingLanguage() .
+                                            '.' . $image->getExtension();
 
-                        // only change the name if there is a difference
+                        // only copy if the new name differs from the old filename
                         if ($newName != $item['image']) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
-                                // move the old file to the new name
-                                $fs->rename($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
+                                $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);
                             }
 
                             // assign the new name to the database
@@ -445,7 +440,11 @@ class Edit extends BackendBaseActionEdit
                 BackendBlogModel::reCalculateCommentCount(array($this->id));
 
                 // save the tags
-                BackendTagsModel::saveTags($item['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+                BackendTagsModel::saveTags(
+                    $item['id'],
+                    $this->frm->getField('tags')->getValue(),
+                    $this->URL->getModule()
+                );
 
                 // active
                 if ($item['status'] == 'active') {
@@ -458,7 +457,7 @@ class Edit extends BackendBaseActionEdit
                     );
 
                     // ping
-                    if (BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) {
+                    if ($this->get('fork.settings')->get($this->URL->getModule(), 'ping_services', false)) {
                         BackendModel::ping(
                             SITE_URL .
                             BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .

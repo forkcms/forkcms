@@ -116,7 +116,7 @@ class Header extends FrontendBaseObject
         $this->addCSS('/src/Frontend/Core/Layout/Css/screen.css');
 
         // debug stylesheet
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $this->addCSS('/src/Frontend/Core/Layout/Css/debug.css');
         }
 
@@ -143,7 +143,7 @@ class Header extends FrontendBaseObject
         $file = Theme::getPath($file);
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -185,7 +185,7 @@ class Header extends FrontendBaseObject
         }
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -590,12 +590,14 @@ class Header extends FrontendBaseObject
     public function parse()
     {
         $this->parseFacebook();
-        $this->parseTwitterCards();
         $this->parseSeo();
 
         // in debug mode we don't want our pages to be indexed.
-        if (SPOON_DEBUG) {
-            $this->addMetaData(array('name' => 'robots', 'content' => 'noindex, nofollow'), true);
+        if ($this->getContainer()->getParameter('kernel.debug')) {
+            $this->addMetaData(
+                array('name' => 'robots', 'content' => 'noindex, nofollow'),
+                true
+            );
         }
 
         $this->parseMetaAndLinks();
@@ -606,7 +608,7 @@ class Header extends FrontendBaseObject
         $this->tpl->assign('pageTitle', (string) $this->getPageTitle());
         $this->tpl->assign(
             'siteTitle',
-            (string) Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            (string) $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
     }
 
@@ -639,12 +641,13 @@ class Header extends FrontendBaseObject
      */
     private function parseCustomHeaderHTMLAndGoogleAnalytics()
     {
-        // get the data
-        $siteHTMLHeader = (string) Model::getModuleSetting('Core', 'site_html_header', null);
-        $siteHTMLFooter = (string) Model::getModuleSetting('Core', 'site_html_footer', null);
-        $webPropertyId = Model::getModuleSetting('Analytics', 'web_property_id', null);
-        $type = Model::getModuleSetting('Analytics', 'tracking_type', 'universal_analytics');
+        // @remark: custom for Sumocoders
         $this->tpl->assign('cookieBarHide', CommonCookie::hasHiddenCookieBar());
+
+        // get the data
+        $siteHTMLHeader = (string) $this->get('fork.settings')->get('Core', 'site_html_header', null);
+        $siteHTMLFooter = (string) $this->get('fork.settings')->get('Core', 'site_html_footer', null);
+        $webPropertyId = $this->get('fork.settings')->get('Analytics', 'web_property_id', null);
 
         // search for the webpropertyId in the header and footer, if not found we should build the GA-code
         if (
@@ -653,67 +656,25 @@ class Header extends FrontendBaseObject
             strpos($siteHTMLFooter, $webPropertyId) === false
         ) {
             $anonymize = (
-                Model::getModuleSetting('Core', 'show_cookie_bar', false) &&
+                $this->get('fork.settings')->get('Core', 'show_cookie_bar', false) &&
                 !CommonCookie::hasAllowedCookies()
             );
 
-            switch ($type) {
-                case 'classic_analytics':
-                    $trackingCode = '<script>
-                                        var _gaq = _gaq || [];
-                                        _gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
-                                        _gaq.push([\'_setDomainName\', \'none\']);
-                                        _gaq.push([\'_trackPageview\']);
-                                    ';
-                    if ($anonymize) {
-                        $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
-                    }
-                    $trackingCode .= '
-                                        (function() {
-                                            var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
-                                            ga.src = (\'https:\' == document.location.protocol ? \'https://ssl\' : \'http://www\') + \'.google-analytics.com/ga.js\';
-                                            var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
-                                        })();
-                                    </script>';
-                    break;
-                case 'display_advertising':
-                    $trackingCode = '<script>
-                                        var _gaq = _gaq || [];
-                                        _gaq.push([\'_setAccount\', \'' . $webPropertyId . '\']);
-                                        _gaq.push([\'_setDomainName\', \'none\']);
-                                        _gaq.push([\'_trackPageview\']);
-                                    ';
-                    if ($anonymize) {
-                        $trackingCode .= '_gaq.push([\'_gat._anonymizeIp\']);';
-                    }
-                    $trackingCode .= '
-                                        (function() {
-                                            var ga = document.createElement(\'script\'); ga.type = \'text/javascript\'; ga.async = true;
-                                            ga.src = (\'https:\' == document.location.protocol ? \'https://\' : \'http://\') + \'stats.g.doubleclick.net/dc.js\';
-                                            var s = document.getElementsByTagName(\'script\')[0]; s.parentNode.insertBefore(ga, s);
-                                        })();
-                                    </script>';
-                    break;
-                case 'universal_analytics':
-                    $request = $this->getContainer()->get('request');
-                    $trackingCode = '<script>
-                                      (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
-                                      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-                                      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-                                      })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
-                                      ga(\'create\', \'' . $webPropertyId . '\', \'' . $request->getHttpHost() . '\');
-                                    ';
+            $request = $this->getContainer()->get('request');
+            $trackingCode = '<script>
+                              (function(i,s,o,g,r,a,m){i[\'GoogleAnalyticsObject\']=r;i[r]=i[r]||function(){
+                              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                              })(window,document,\'script\',\'//www.google-analytics.com/analytics.js\',\'ga\');
+                              ga(\'create\', \'' . $webPropertyId . '\', \'' . $request->getHttpHost() . '\');
+                            ';
 
-                    if ($anonymize) {
-                        $trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
-                    } else {
-                        $trackingCode .= 'ga(\'send\', \'pageview\');';
-                    }
-                    $trackingCode .= '</script>';
-                    break;
-                default:
-                    throw new \Exception('Unknown type. (' . $type . ')');
+            if ($anonymize) {
+                $trackingCode .= 'ga(\'send\', \'pageview\', {\'anonymizeIp\': true});';
+            } else {
+                $trackingCode .= 'ga(\'send\', \'pageview\');';
             }
+            $trackingCode .= '</script>';
 
             $siteHTMLHeader .= "\n" . $trackingCode;
         }
@@ -735,8 +696,8 @@ class Header extends FrontendBaseObject
     private function parseFacebook()
     {
         $parseFacebook = false;
-        $facebookAdminIds = Model::getModuleSetting('Core', 'facebook_admin_ids', null);
-        $facebookAppId = Model::getModuleSetting('Core', 'facebook_app_id', null);
+        $facebookAdminIds = $this->get('fork.settings')->get('Core', 'facebook_admin_ids', null);
+        $facebookAppId = $this->get('fork.settings')->get('Core', 'facebook_app_id', null);
 
         // check if facebook admins are set
         if ($facebookAdminIds !== null) {
@@ -889,7 +850,7 @@ class Header extends FrontendBaseObject
     {
         // when on the homepage of the default language, set the clean site url as canonical, because of redirect fix
         $queryString = trim($this->URL->getQueryString(), '/');
-        $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+        $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         if ($queryString == $language) {
             $this->canonical = rtrim(SITE_URL, '/');
         }
@@ -932,15 +893,16 @@ class Header extends FrontendBaseObject
         }
 
         // prevent against xss
-        $url = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
+        $charset = $this->getContainer()->getParameter('kernel.charset');
+        $url = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($url) : \SpoonFilter::htmlentities($url);
         $this->addLink(array('rel' => 'canonical', 'href' => $url));
 
-        if (Model::getModuleSetting('Core', 'seo_noodp', false)) {
+        if ($this->get('fork.settings')->get('Core', 'seo_noodp', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noodp')
             );
         }
-        if (Model::getModuleSetting('Core', 'seo_noydir', false)) {
+        if ($this->get('fork.settings')->get('Core', 'seo_noydir', false)) {
             $this->addMetaData(
                 array('name' => 'robots', 'content' => 'noydir')
             );
@@ -992,7 +954,7 @@ class Header extends FrontendBaseObject
         } else {
             // empty value given?
             if (empty($value)) {
-                $this->pageTitle = Model::getModuleSetting(
+                $this->pageTitle = $this->get('fork.settings')->get(
                     'Core',
                     'site_title_' . FRONTEND_LANGUAGE,
                     SITE_DEFAULT_TITLE
@@ -1001,7 +963,7 @@ class Header extends FrontendBaseObject
                 // if the current page title is empty we should add the site title
                 if ($this->pageTitle == '') {
                     $this->pageTitle = $value . ' -  ' .
-                                       Model::getModuleSetting(
+                                       $this->get('fork.settings')->get(
                                            'Core',
                                            'site_title_' . FRONTEND_LANGUAGE,
                                            SITE_DEFAULT_TITLE
@@ -1011,310 +973,6 @@ class Header extends FrontendBaseObject
                     $this->pageTitle = $value . ' - ' . $this->pageTitle;
                 }
             }
-        }
-    }
-
-
-
-
-    #
-    # Twitter Cards
-    #
-
-    /** @var array */
-    protected $twitterCard = array();
-
-    /** @var array */
-    protected $twitterCardExtra = array();
-
-
-    /**
-     * Fix path to url
-     *
-     * @param string $path
-     * @return string
-     */
-    protected function fixPathToUrl($path)
-    {
-        # Already url
-        if(preg_match('`^https?://`', $path)) {
-            return $path;
-        }
-        # Protocol relative url
-        if(strpos($path, '//') === 0) {
-            return SITE_PROTOCOL . ':' . $path; # Expecting SITE_PROTOCOL to be "http" or "https"
-        }
-        # Absolute path
-        if(strpos($path, '/') === 0) {
-            return SITE_URL . $path;
-        }
-        # Relative path
-        $currentPath = rtrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH), '/');
-        $last = explode('/', $currentPath);
-        $last = end($last);
-        if($last && strpos($last, '.') !== false) {
-            $currentPath = dirname($currentPath);
-        }
-        return SITE_URL . $currentPath . '/' . $path;
-    }
-
-    /**
-     * Parse the Twitter cards
-     */
-    protected function parseTwitterCards()
-    {
-        foreach (array($this->twitterCard, $this->twitterCardExtra) as $twitterCard) {
-            foreach ($twitterCard as $name => $content) {
-                $name = "twitter:$name";
-                $this->addMetaData(array('name' => $name, 'content' => $content));
-            }
-        }
-    }
-
-    /**
-     * Set the twitter "@username" or ID of the website
-     * @link https://dev.twitter.com/docs/cards/markup-reference
-     *
-     * @param string | int $site
-     */
-    public function setTwitterCardSite($site)
-    {
-        if (is_numeric($site)) {
-            $this->twitterCardExtra['site:id'] = $site;
-        }
-        else {
-            if (strpos($site, '@') !== 0) {
-                $site = "@$site";
-            }
-            $this->twitterCardExtra['site'] = $site;
-        }
-    }
-
-    /**
-     * Set the twitter "@username" or ID of the content creator
-     * @link https://dev.twitter.com/docs/cards/markup-reference
-     *
-     * @param string | int $creator
-     */
-    public function setTwitterCardCreator($creator)
-    {
-        if (is_numeric($creator)) {
-            $this->twitterCardExtra['creator:id'] = $creator;
-        }
-        else {
-            if (strpos($creator, '@') !== 0) {
-                $creator = "@$creator";
-            }
-            $this->twitterCardExtra['creator'] = $creator;
-        }
-    }
-
-    /**
-     * Set a Summary Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/summary-card
-     *
-     * @param string $title            Max 70 chars
-     * @param string $description      Max 200 chars, must be different than title
-     * @param string $imageUrl = null  Minimum 120x120px, Max 1MB
-     */
-    public function setTwitterCardSummary($title, $description, $imageUrl = null)
-    {
-        $this->twitterCard = array(
-            'card' => 'summary',
-            'title' => $title,
-            'description' => $description,
-        );
-        if ($imageUrl) {
-            $imageUrl = $this->fixPathToUrl($imageUrl);
-            $this->twitterCard['image'] = $imageUrl;
-        }
-    }
-
-    /**
-     * Set a Summary with large image Twitter card
-     * @link https://dev.twitter.com/docs/cards/large-image-summary-card
-     *
-     * @param string $title        Max 70 chars
-     * @param string $description  Max 200 chars, must be different than title
-     * @param string $imageUrl     Minimum 280x150px, Max 1MB
-     */
-    public function setTwitterCardSummaryImage($title, $description, $imageUrl)
-    {
-        $imageUrl = $this->fixPathToUrl($imageUrl);
-        $this->twitterCard = array(
-            'card' => 'summary_large_image',
-            'title' => $title,
-            'description' => $description,
-            'image' => $imageUrl,
-        );
-    }
-
-
-    /**
-     * Set a Photo Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/photo-card
-     *
-     * @param string $imageUrl      Max 1MB
-     * @param string $title = null  Max 70 chars
-     */
-    public function setTwitterCardPhoto($imageUrl, $title = null)
-    {
-        $imageUrl = $this->fixPathToUrl($imageUrl);
-        $this->twitterCard = array(
-            'card' => 'photo',
-            'image' => $imageUrl,
-        );
-        if ($title) {
-            $this->twitterCard['title'] = $title;
-        }
-        $size = getimagesize($imageUrl);
-        if (!empty($size[0]) && !empty($size[1])) {
-            $this->twitterCard['image:width'] = $size[0];
-            $this->twitterCard['image:height'] = $size[1];
-        }
-    }
-
-
-    /**
-     * Set a Gallery Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/gallery-card
-     *
-     * @param array  $imageUrls           An array of up to 4 image urls, must be less than 1MB
-     * @param string $title       = null  Max 70 chars
-     * @param string $description = null  Max 200 chars, must be different than title
-     */
-    public function setTwitterCardGallery(array $imageUrls, $title = null, $description = null)
-    {
-        $this->twitterCard = array(
-            'card' => 'gallery',
-        );
-        for ($i = 0; $i < 4; ++$i) {
-            $this->twitterCard["image$i"] = (!empty($imageUrls[$i]) ? $this->fixPathToUrl($imageUrls[$i]) : '');
-        }
-        if ($title) {
-            $this->twitterCard['title'] = $title;
-        }
-        if ($description) {
-            $this->twitterCard['description'] = $description;
-        }
-    }
-
-
-    /**
-     * Set a Product Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/product-card
-     *
-     * @param string $title        Max 70 chars
-     * @param string $description  Max 200 chars, must be different than title
-     * @param string $imageUrl     Max 1MB
-     * @param string $label1
-     * @param string $data1
-     * @param string $label2
-     * @param string $data2
-     */
-    public function setTwitterCardProduct($title, $description, $imageUrl, $label1, $data1, $label2, $data2)
-    {
-        $imageUrl = $this->fixPathToUrl($imageUrl);
-        $this->twitterCard = array(
-            'card' => 'product',
-            'title' => $title,
-            'description' => $description,
-            'image' => $imageUrl,
-            'label1' => $label1,
-            'data1' => $data1,
-            'label2' => $label2,
-            'data2' => $data2,
-        );
-        $size = getimagesize($imageUrl);
-        if (!empty($size[0]) && !empty($size[1])) {
-            $this->twitterCard['image:width'] = $size[0];
-            $this->twitterCard['image:height'] = $size[1];
-        }
-    }
-
-    /**
-     * Set a Product Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/app-card
-     *
-     * @param int    $iphoneAppStoreId
-     * @param int    $ipadAppStoreId
-     * @param string $googlePlayId
-     * @param string $description         = null
-     * @param string $iphoneUrlScheme     = null
-     * @param string $ipadUrlScheme       = null
-     * @param string $googlePlayUrlScheme = null
-     * @param string $country             = null
-     */
-    public function setTwitterCardApp(
-        $iphoneAppStoreId,
-        $ipadAppStoreId,
-        $googlePlayId,
-        $description = null,
-        $iphoneUrlScheme = null,
-        $ipadUrlScheme = null,
-        $googlePlayUrlScheme = null,
-        $country = null
-    ) {
-        $this->twitterCard = array(
-            'card' => 'app',
-            'app:id:iphone' => $iphoneAppStoreId,
-            'app:id:ipad' => $ipadAppStoreId,
-            'app:id:googleplay' => $googlePlayId,
-        );
-        if ($description) {
-            $this->twitterCard['description'] = $description;
-        }
-        if ($iphoneUrlScheme) {
-            $this->twitterCard['app:url:iphone'] = $iphoneUrlScheme;
-        }
-        if ($ipadUrlScheme) {
-            $this->twitterCard['app:url:ipad'] = $ipadUrlScheme;
-        }
-        if ($googlePlayUrlScheme) {
-            $this->twitterCard['app:url:googleplay'] = $googlePlayUrlScheme;
-        }
-        if ($country) {
-            $this->twitterCard['app:country'] = $country;
-        }
-    }
-
-    /**
-     * Set a Product Twitter card
-     * @link https://dev.twitter.com/docs/cards/types/player-card
-     *
-     * @param string $title                     Max 70 chars
-     * @param string $description               Max 200 chars, must be different than title
-     * @param string $playerUrl
-     * @param int    $width
-     * @param int    $height
-     * @param string $imageUrl
-     * @param string $stream            = null
-     * @param string $streamContentType = null  Must be set if $stream is set
-     */
-    public function setTwitterCardPlayer(
-        $title,
-        $description,
-        $playerUrl,
-        $width,
-        $height,
-        $imageUrl,
-        $stream = null,
-        $streamContentType = null
-    ) {
-        $playerUrl = $this->fixPathToUrl($playerUrl);
-        $imageUrl = $this->fixPathToUrl($imageUrl);
-        $this->twitterCard = array(
-            'card' => 'player',
-            'title' => $title,
-            'description' => $description,
-            'player' => $playerUrl,
-            'player:width' => $width,
-            'player:height' => $height,
-            'image' => $imageUrl,
-        );
-        if($stream && $streamContentType) {
-            $this->twitterCard['player:stream'] = $stream;
-            $this->twitterCard['player:stream:content_type'] = $streamContentType;
         }
     }
 

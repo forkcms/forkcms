@@ -19,6 +19,8 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class DataGridFunctions
 {
+    protected static $dataGridUsers = array();
+
     /**
      * Formats plain text as HTML, links will be detected, paragraphs will be inserted
      *
@@ -160,38 +162,43 @@ class DataGridFunctions
     {
         $id = (int) $id;
 
-        // create user instance
-        $user = new User($id);
+        // nothing in cache
+        if (!isset(self::$dataGridUsers[$id])) {
+            // create user instance
+            $user = new User($id);
 
-        // get settings
-        $avatar = $user->getSetting('avatar', 'no-avatar.gif');
-        $nickname = $user->getSetting('nickname');
-        $allowed = Authentication::isAllowedAction('Edit', 'Users');
+            // get settings
+            $avatar = $user->getSetting('avatar', 'no-avatar.gif');
+            $nickname = $user->getSetting('nickname');
+            $allowed = Authentication::isAllowedAction('Edit', 'Users');
 
-        // build html
-        $html = '<div class="dataGridAvatar">' . "\n";
-        $html .= '  <div class="avatar av24">' . "\n";
-        if ($allowed) {
-            $html .= '     <a href="' .
+            // build html
+            $html = '<div class="dataGridAvatar">' . "\n";
+            $html .= '  <div class="avatar av24">' . "\n";
+            if ($allowed) {
+                $html .= '     <a href="' .
+                         BackendModel::createURLForAction(
+                             'Edit',
+                             'Users'
+                         ) . '&amp;id=' . $id . '">' . "\n";
+            }
+            $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
+                     $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+            if ($allowed) {
+                $html .= '     </a>' . "\n";
+            }
+            $html .= '  </div>';
+            $html .= '  <p><a href="' .
                      BackendModel::createURLForAction(
-                         'Edit',
-                         'Users'
-                     ) . '&amp;id=' . $id . '">' . "\n";
-        }
-        $html .= '          <img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' .
-                 $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
-        if ($allowed) {
-            $html .= '     </a>' . "\n";
-        }
-        $html .= '  </div>';
-        $html .= '  <p><a href="' .
-                 BackendModel::createURLForAction(
-                     'edit',
-                     'users'
-                 ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
-        $html .= '</div>';
+                         'edit',
+                         'users'
+                     ) . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
+            $html .= '</div>';
 
-        return $html;
+            self::$dataGridUsers[$id] = $html;
+        }
+
+        return self::$dataGridUsers[$id];
     }
 
     /**

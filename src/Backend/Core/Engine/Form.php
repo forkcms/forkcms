@@ -19,7 +19,7 @@ use Backend\Core\Engine\Model as BackendModel;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class Form extends \Common\Form
+class Form extends \SpoonForm
 {
     /**
      * The header instance
@@ -323,30 +323,6 @@ class Form extends \Common\Form
     }
 
     /**
-     * Adds a single trimmed text field.
-     *
-     * @param string $name The name of the element.
-     * @param string[optional] $value The value inside the element.
-     * @param int[optional] $maxLength The maximum length for the value.
-     * @param string[optional] $class Class(es) that will be applied on the element.
-     * @param string[optional] $classError Class(es) that will be applied on the element when an error occurs.
-     * @param bool[optional] $HTML Will this element contain HTML?
-     * @return SpoonFormText
-     */
-    public function addTrimmedText($name, $value = null, $maxLength = 255, $class = null, $classError = null, $HTML = false)
-    {
-        $name = (string) $name;
-        $value = ($value !== null) ? (string) $value : null;
-        $maxLength = ($maxLength !== null) ? (int) $maxLength : null;
-        $class = ($class !== null) ? (string) $class : 'inputText';
-        $classError = ($classError !== null) ? (string) $classError : 'inputTextError';
-        $HTML = (bool) $HTML;
-
-        // create and return a trimmed text field
-        return parent::addTrimmedText($name, $value, $maxLength, $class, $classError, $HTML);
-    }
-
-    /**
      * Adds a single image field.
      *
      * @param string $name       The name of the element.
@@ -533,7 +509,7 @@ class Form extends \Common\Form
      *
      * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse($tpl)
     {
         parent::parse($tpl);
         $this->validate();

@@ -25,7 +25,6 @@ clear_file_caches() {
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/Navigation/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Frontend/Cache/CompiledTemplates/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
 
-    rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Analytics/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Config/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Cronjobs/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
     rm -f `find ${SCRIPT_PATH}/../src/Backend/Cache/Locale/ ! -name ".gitignore" -type f ! -path *.svn/* -type f`
@@ -94,7 +93,7 @@ main() {
     return 1;
 }
 
-read -p "This will erase the current database, are you sure? (y/n) "
+read -p "This will erase the current database, are you sure? (y/N) "
 [[ $REPLY == [yY] ]] && main
 echo
 exit 1;

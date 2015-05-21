@@ -936,9 +936,6 @@
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
-				// ugly hack to escape entities and quotes
-				value = $('<div />').text(value).html().replace('"', '&quot;');
-
 				// if multiple arguments aren't allowed, clear before adding
 				if(!options.multiple) elements = [];
 
@@ -962,7 +959,7 @@
 					if(!inElements)
 					{
 						// add elements
-						elements.push(value);
+						elements.push(utils.string.stripForTag(value));
 
 						// set new value
 						$('#' + id).val(elements.join(options.splitChar));
@@ -991,8 +988,10 @@
 					// loop elements
 					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' +
-								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' +
+						var value = utils.string.stripForTag(elements[i]);
+
+						html += '	<li><span><strong>' + value + '</strong>' +
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + value + '" title="' + utils.string.stripForTag(options.removeLabel) + ' ' + value + '">' + options.removeLabel + '</a></span>' +
 								'	</li>';
 					}
 

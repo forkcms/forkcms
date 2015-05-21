@@ -97,12 +97,15 @@ class Addresses extends BackendBaseActionIndex
             throw new BackendException('The file ' . $path . ' doesn\'t exist.');
         }
 
+        // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
         // fetch the filename from the path string
         $explodedFilename = explode('/', $path);
         $filename = end($explodedFilename);
 
         // set headers for download
-        $headers[] = 'Content-type: application/csv; charset=' . SPOON_CHARSET;
+        $headers[] = 'Content-type: application/csv; charset=' . $charset;
         $headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
         $headers[] = 'Pragma: no-cache';
 

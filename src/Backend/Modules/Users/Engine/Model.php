@@ -227,7 +227,7 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) BackendModel::getModuleSetting('Users', 'date_formats') as $format) {
+        foreach ((array) BackendModel::get('fork.settings')->get('Users', 'date_formats') as $format) {
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,
@@ -283,7 +283,7 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach ((array) BackendModel::getModuleSetting('Core', 'number_formats') as $format => $example) {
+        foreach ((array) BackendModel::get('fork.settings')->get('Core', 'number_formats') as $format => $example) {
             $possibleFormats[$format] = $example;
         }
 
@@ -321,7 +321,7 @@ class Model
         $possibleFormats = array();
 
         // loop available formats
-        foreach (BackendModel::getModuleSetting('Users', 'time_formats') as $format) {
+        foreach (BackendModel::get('fork.settings')->get('Users', 'time_formats') as $format) {
             $possibleFormats[$format] = \SpoonDate::getDate(
                 $format,
                 null,

@@ -62,9 +62,9 @@ class Settings extends BackendBaseActionEdit
     private function createClient($record)
     {
         // get the account settings
-        $url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-        $username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-        $password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
+        $url = $this->get('fork.settings')->get($this->getModule(), 'cm_url');
+        $username = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
+        $password = $this->get('fork.settings')->get($this->getModule(), 'cm_password');
 
         // create a client
         try {
@@ -79,7 +79,7 @@ class Settings extends BackendBaseActionEdit
 
             // store ID in a setting
             if (!empty($clientID)) {
-                BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $clientID);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', $clientID);
             }
         } catch (\Exception $e) {
             // add an error to the email field
@@ -115,7 +115,7 @@ class Settings extends BackendBaseActionEdit
     private function getData()
     {
         // define mailmotor settings
-        $this->settings = BackendModel::getModuleSettings($this->getModule());
+        $this->settings = $this->get('fork.settings')->getForModule($this->getModule());
 
         // check if an account was linked already and/or client ID was set
         $this->accountLinked = BackendMailmotorCMHelper::checkAccount();
@@ -175,10 +175,10 @@ class Settings extends BackendBaseActionEdit
 
         // sender info
         $this->frmClient->addText('from_name', $this->settings['from_name']);
-        $this->frmClient->addTrimmedText('from_email', $this->settings['from_email']);
+        $this->frmClient->addText('from_email', $this->settings['from_email']);
 
         // reply to address
-        $this->frmClient->addTrimmedText('reply_to_email', $this->settings['reply_to_email']);
+        $this->frmClient->addText('reply_to_email', $this->settings['reply_to_email']);
 
         // add fields for comments
         $this->frmClient->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
@@ -194,10 +194,10 @@ class Settings extends BackendBaseActionEdit
 
         // sender info
         $this->frmGeneral->addText('from_name', $this->settings['from_name']);
-        $this->frmGeneral->addTrimmedText('from_email', $this->settings['from_email']);
+        $this->frmGeneral->addText('from_email', $this->settings['from_email']);
 
         // reply to address
-        $this->frmGeneral->addTrimmedText('reply_to_email', $this->settings['reply_to_email']);
+        $this->frmGeneral->addText('reply_to_email', $this->settings['reply_to_email']);
 
         // add fields for comments
         $this->frmGeneral->addCheckbox('plain_text_editable', $this->settings['plain_text_editable']);
@@ -248,9 +248,9 @@ class Settings extends BackendBaseActionEdit
     private function updateClient($record)
     {
         // get the account settings
-        $url = BackendModel::getModuleSetting($this->getModule(), 'cm_url');
-        $username = BackendModel::getModuleSetting($this->getModule(), 'cm_username');
-        $password = BackendModel::getModuleSetting($this->getModule(), 'cm_password');
+        $url = $this->get('fork.settings')->get($this->getModule(), 'cm_url');
+        $username = $this->get('fork.settings')->get($this->getModule(), 'cm_username');
+        $password = $this->get('fork.settings')->get($this->getModule(), 'cm_password');
 
         // try and update the client info
         try {
@@ -281,11 +281,11 @@ class Settings extends BackendBaseActionEdit
             // form is validated
             if ($this->frmAccount->isCorrect()) {
                 // unlink the account and client ID
-                BackendModel::setModuleSetting($this->getModule(), 'cm_account', false);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_url', null);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_username', null);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_password', null);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', null);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_account', false);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_url', null);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_username', null);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_password', null);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', null);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_saved_account_settings');
@@ -321,13 +321,13 @@ class Settings extends BackendBaseActionEdit
                     $this->createClient($client);
 
                     // store the client info in our database
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         $this->getModule(),
                         'cm_client_company_name',
                         $client['company_name']
                     );
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
+                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_country', $client['country']);
+                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
@@ -346,16 +346,16 @@ class Settings extends BackendBaseActionEdit
                     $this->updateClient($client);
 
                     // store the client info in our database
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         $this->getModule(),
                         'cm_client_company_name',
                         $client['company_name']
                     );
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_country', $client['country']);
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_timezone', $client['timezone']);
+                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_country', $client['country']);
+                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_timezone', $client['timezone']);
 
                     // update the client ID in settings
-                    BackendModel::setModuleSetting($this->getModule(), 'cm_client_id', $this->clientID);
+                    $this->get('fork.settings')->set($this->getModule(), 'cm_client_id', $this->clientID);
 
                     // trigger event
                     BackendModel::triggerEvent($this->getModule(), 'after_saved_client_settings');
@@ -393,22 +393,22 @@ class Settings extends BackendBaseActionEdit
             // form is validated
             if ($this->frmGeneral->isCorrect()) {
                 // set sender info
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     $this->getModule(),
                     'from_name',
                     $this->frmGeneral->getField('from_name')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     $this->getModule(),
                     'from_email',
                     $this->frmGeneral->getField('from_email')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     $this->getModule(),
                     'reply_to_email',
                     $this->frmGeneral->getField('reply_to_email')->getValue()
                 );
-                BackendModel::setModuleSetting(
+                $this->get('fork.settings')->set(
                     $this->getModule(),
                     'plain_text_editable',
                     $this->frmGeneral->getField('plain_text_editable')->getValue()
@@ -417,14 +417,14 @@ class Settings extends BackendBaseActionEdit
                 // user is god?
                 if (BackendAuthentication::getUser()->isGod()) {
                     // set price per email
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         $this->getModule(),
                         'price_per_email',
                         $this->frmGeneral->getField('price_per_email')->getValue()
                     );
 
                     // set price per campaign
-                    BackendModel::setModuleSetting(
+                    $this->get('fork.settings')->set(
                         $this->getModule(),
                         'price_per_campaign',
                         $this->frmGeneral->getField('price_per_campaign')->getValue()

@@ -94,7 +94,7 @@ class Category extends FrontendBaseBlock
 
         // set URL and limit
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
+        $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
@@ -102,9 +102,7 @@ class Category extends FrontendBaseBlock
 
         // redirect if the request page doesn't exists
         if ($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) {
-            $this->redirect(
-                FrontendNavigation::getURL(404)
-            );
+            $this->redirect(FrontendNavigation::getURL(404));
         }
 
         // populate calculated fields in pagination
@@ -125,7 +123,7 @@ class Category extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed

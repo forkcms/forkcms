@@ -105,7 +105,7 @@ class Edit extends BackendBaseActionEdit
 
         // create elements
         // profile
-        $this->frm->addTrimmedText('email', $this->record['email'], 255);
+        $this->frm->addText('email', $this->record['email'], 255);
         if ($this->user->isGod()) {
             $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
         }

@@ -9,7 +9,11 @@ namespace Api\V1\Engine;
  * file that was distributed with this source code.
  */
 
+use Backend\Core\Engine\Model as BackendModel;
+use Backend\Core\Engine\Exception;
+use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\User as BackendUser;
@@ -44,18 +48,20 @@ class Api extends \KernelLoader implements \ApplicationInterface
      */
     public function initialize()
     {
+        self::$content = null;
+
+        /**
+         * @var Request
+         */
+        $request = $this->getContainer()->get('request');
+
         // simulate $_REQUEST
-        $parameters = array_merge($_GET, $_POST);
+        $parameters = array_merge(
+            (array) $request->query->all(),
+            (array) $request->request->all()
+        );
 
-        // validate parameters
-        if (!isset($parameters['method'])) {
-            return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
-        }
-
-        // check GET
-        $method = \SpoonFilter::getValue($parameters['method'], null, '');
-
-        // validate
+        $method = $request->get('method');
         if ($method == '') {
             return self::output(self::BAD_REQUEST, array('message' => 'No method-parameter provided.'));
         }
@@ -164,7 +170,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
             }
         } catch (\Exception $e) {
             // if we are debugging we should see the exceptions
-            if (SPOON_DEBUG) {
+            if ($this->getContainer()->getParameter('kernel.debug')) {
                 if (isset($parameters['debug']) && $parameters['debug'] == 'false') {
                     // do nothing
                 } else {
@@ -443,6 +449,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
@@ -462,7 +469,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . $charset);
 
         // output JSON
         self::$content = json_encode($JSON);
@@ -480,13 +487,14 @@ class Api extends \KernelLoader implements \ApplicationInterface
         $statusCode = (int) $statusCode;
 
         // init vars
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         $pathChunks = explode(DIRECTORY_SEPARATOR, trim(dirname(__FILE__), DIRECTORY_SEPARATOR));
         $version = $pathChunks[count($pathChunks) - 2];
 
         $version = strtolower($version);
 
         // init XML
-        $XML = new \DOMDocument('1.0', SPOON_CHARSET);
+        $XML = new \DOMDocument('1.0', $charset);
 
         // set some properties
         $XML->preserveWhiteSpace = false;
@@ -509,7 +517,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . SPOON_CHARSET);
+        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();

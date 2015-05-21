@@ -45,7 +45,7 @@ class Subscribe extends FrontendBaseBlock
         $this->frm = new FrontendForm('subscribe', null, null, 'subscribeForm');
 
         // create & add elements
-        $this->frm->addTrimmedText('email')->setAttributes(array('required' => null, 'type' => 'email'));
+        $this->frm->addText('email')->setAttributes(array('required' => null, 'type' => 'email'));
     }
 
     /**
@@ -105,7 +105,7 @@ class Subscribe extends FrontendBaseBlock
                     );
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     }
 

@@ -9,11 +9,13 @@ namespace Backend\Core\Engine\Base;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Filesystem\Filesystem;
 
 use Backend\Core\Engine\Authentication;
 use Backend\Core\Engine\Exception;
+use Common\Exception\RedirectException;
 
 /**
  * This class will be the base of the objects used in the cms
@@ -134,5 +136,18 @@ class Object extends \KernelLoader
             $this->content,
             200
         );
+    }
+
+    /**
+     * Redirect to a given URL
+     *
+     * @param string $URL The URL to redirect to.
+     * @param int    $code The redirect code, default is 302 which means this is a temporary redirect.
+     */
+    public function redirect($URL, $code = 302)
+    {
+        $response = new RedirectResponse($URL, $code);
+
+        throw new RedirectException('Redirect', $response);
     }
 }

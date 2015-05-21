@@ -168,6 +168,10 @@
 			background-position: 10px -70px;
 		}
 
+		#formElements .options li#datetimeSelector a {
+			background-position: 10px -249px;
+		}
+
 		#formElements .options li#dropdownSelector a {
 			background-position: 10px -100px;
 		}
@@ -214,7 +218,7 @@
 
 	/* Pop-ups */
 
-	#tabTextboxBasic, #tabTextboxProperties, #tabTextareaBasic, #tabTextareaProperties, #tabDropdownBasic, #tabDropdownProperties, #tabRadiobuttonBasic, #tabRadiobuttonProperties, #tabCheckboxBasic, #tabCheckboxProperties {
+	#tabTextboxBasic, #tabTextboxProperties, #tabTextboxAdvanced, #tabTextareaBasic, #tabTextareaProperties, #tabTextareaAdvanced, #tabDropdownBasic, #tabDropdownProperties, #tabRadiobuttonBasic, #tabRadiobuttonProperties, #tabCheckboxBasic, #tabCheckboxProperties, #tabDatetimeBasic, #tabDatetimeProperties {
 		padding: 0;
 		border-left: 0;
 		border-right: 0;

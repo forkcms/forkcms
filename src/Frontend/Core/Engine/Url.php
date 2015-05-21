@@ -68,9 +68,6 @@ class Url extends \KernelLoader
 
         // process URL
         $this->processQueryString();
-
-        // set constant
-        define('SELF', SITE_URL . '/' . $this->getQueryString());
     }
 
     /**
@@ -203,10 +200,12 @@ class Url extends \KernelLoader
         // split into chunks
         $chunks = (array) explode('/', $queryString);
 
+        $hasMultiLanguages = $this->getContainer()->getParameter('site.multilanguage');
+
         // single language
-        if (!SITE_MULTILANGUAGE) {
+        if (!$hasMultiLanguages) {
             // set language id
-            $language = Model::getModuleSetting('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
+            $language = $this->get('fork.settings')->get('Core', 'default_language', SITE_DEFAULT_LANGUAGE);
         } else {
             // multiple languages
             // default value
@@ -274,7 +273,7 @@ class Url extends \KernelLoader
         }
 
         // define the language
-        define('FRONTEND_LANGUAGE', $language);
+        defined('FRONTEND_LANGUAGE') || define('FRONTEND_LANGUAGE', $language);
 
         // sets the locale file
         Language::setLocale($language);
@@ -296,7 +295,7 @@ class Url extends \KernelLoader
         }
 
         // remove language from query string
-        if (SITE_MULTILANGUAGE) {
+        if ($hasMultiLanguages) {
             $queryString = trim(substr($queryString, strlen($language)), '/');
         }
 
@@ -306,7 +305,7 @@ class Url extends \KernelLoader
             $URL = Navigation::getURL(404);
 
             // remove language
-            if (SITE_MULTILANGUAGE) {
+            if ($hasMultiLanguages) {
                 $URL = str_replace('/' . $language, '', $URL);
             }
         }
@@ -348,7 +347,7 @@ class Url extends \KernelLoader
             $URL = Navigation::getURL(404);
 
             // remove language
-            if (SITE_MULTILANGUAGE) {
+            if ($hasMultiLanguages) {
                 $URL = trim(str_replace('/' . $language, '', $URL), '/');
             }
 

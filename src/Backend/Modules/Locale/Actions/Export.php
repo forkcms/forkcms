@@ -116,12 +116,14 @@ class Export extends BackendBaseActionIndex
      */
     private function createXML()
     {
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
+
         // create XML
         $xmlOutput = BackendLocaleModel::createXMLForExport($this->locale);
 
         // xml headers
         $headers[] = 'Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"';
-        $headers[] = 'Content-Type: application/octet-stream;charset=' . SPOON_CHARSET;
+        $headers[] = 'Content-Type: application/octet-stream;charset=' . $charset;
         $headers[] = 'Content-Length: ' . strlen($xmlOutput);
 
         // set headers

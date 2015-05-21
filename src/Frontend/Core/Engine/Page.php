@@ -14,6 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Common\Cookie as CommonCookie;
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -172,11 +173,12 @@ class Page extends FrontendBaseObject
 
         // assign the id so we can use it as an option
         $this->tpl->assign('isPage' . $this->pageId, true);
+        $this->tpl->assign('isChildOfPage' . $this->record['parent_id'], true);
 
         // hide the cookiebar from within the code to prevent flickering
         $this->tpl->assign(
             'cookieBarHide',
-            (!Model::getModuleSetting('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
+            (!$this->get('fork.settings')->get('Core', 'show_cookie_bar', false) || CommonCookie::hasHiddenCookieBar())
         );
 
         // the the positions to the template
@@ -306,7 +308,7 @@ class Page extends FrontendBaseObject
     protected function parseLanguages()
     {
         // just execute if the site is multi-language
-        if (SITE_MULTILANGUAGE) {
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
             // get languages
             $activeLanguages = Language::getActiveLanguages();
 
@@ -369,9 +371,12 @@ class Page extends FrontendBaseObject
                         // parse extra
                         $positions[$position][$i] = array(
                             'variables' => $block['extra']->getTemplate()->getAssignedVariables(),
-                            'blockIsHTML' => false,
+                            'blockIsEditor' => false,
                             'blockContent' => $block['extra']->getContent()
                         );
+
+                        // Maintain backwards compatibility
+                        $positions[$position][$i]['blockIsHTML'] = $positions[$position][$i]['blockIsEditor'];
 
                         if (empty($positions[$position][$i]['blockContent'])) {
                             unset($positions[$position][$i]);
@@ -498,9 +503,12 @@ class Page extends FrontendBaseObject
                 } else {
                     // the block only contains HTML
                     $block = array(
-                        'blockIsHTML' => true,
+                        'blockIsEditor' => true,
                         'blockContent' => $block['html']
                     );
+
+                    // Maintain backwards compatibility
+                    $block['blockIsHTML'] = $block['blockIsEditor'];
                 }
             }
         }

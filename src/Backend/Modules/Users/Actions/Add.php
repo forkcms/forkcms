@@ -53,7 +53,7 @@ class Add extends BackendBaseActionAdd
 
         // create elements
         // profile
-        $this->frm->addTrimmedText('email', null, 255);
+        $this->frm->addText('email', null, 255);
         $this->frm->addPassword(
             'password',
             null,
@@ -70,7 +70,7 @@ class Add extends BackendBaseActionAdd
         $this->frm->addDropdown(
             'interface_language',
             BL::getInterfaceLanguages(),
-            BackendModel::getModuleSetting('Core', 'default_interface_language')
+            $this->get('fork.settings')->get('Core', 'default_interface_language')
         );
         $this->frm->addDropdown(
             'date_format',

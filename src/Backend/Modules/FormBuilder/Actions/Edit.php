@@ -76,9 +76,9 @@ class Edit extends BackendBaseActionEdit
         // textfield dialog
         $this->frm->addText('textbox_label');
         $this->frm->addText('textbox_value');
+        $this->frm->addText('textbox_placeholder');
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
-        $this->frm->addCheckbox('textbox_mail_copy_to');
         $this->frm->addText('textbox_required_error_message');
         $this->frm->addDropdown(
             'textbox_validation',
@@ -91,15 +91,69 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
 
+        // @remark: custom for Sumocoders
+        $this->frm->addCheckbox('textbox_mail_copy_to');
+
         // textarea dialog
         $this->frm->addText('textarea_label');
         $this->frm->addTextarea('textarea_value');
         $this->frm->getField('textarea_value')->setAttribute('cols', 30);
+        $this->frm->addText('textarea_placeholder');
         $this->frm->addCheckbox('textarea_required');
         $this->frm->addText('textarea_required_error_message');
         $this->frm->addDropdown('textarea_validation', array('' => ''));
         $this->frm->addText('textarea_validation_parameter');
         $this->frm->addText('textarea_error_message');
+
+        // datetime dialog
+        $this->frm->addText('datetime_label');
+        $this->frm->addDropdown(
+            'datetime_value_amount',
+            array(
+                '' => '',
+                '1' => '+1',
+                '2' => '+2',
+                '3' => '+3',
+                '4' => '+4',
+                '5' => '+5'
+            )
+        );
+        $this->frm->addDropdown(
+            'datetime_value_type',
+            array(
+                '' => '',
+                'today' => BL::getLabel('Today'),
+                'day' => BL::getLabel('Day'),
+                'week' => BL::getLabel('Week'),
+                'month' => BL::getLabel('Month'),
+                'year' => BL::getLabel('Year'),
+            )
+        );
+        $this->frm->addDropdown(
+            'datetime_type',
+            array(
+                'date' => BL::getLabel('Date'),
+                'time' => BL::getLabel('Time'),
+            )
+        );
+        $this->frm->addCheckbox('datetime_required');
+        $this->frm->addText('datetime_required_error_message');
+        $this->frm->addDropdown(
+            'datetime_type',
+            array(
+                'date' => BL::getLabel('Date'),
+                'time' => BL::getLabel('Time'),
+            )
+        );
+        $this->frm->addDropdown(
+            'datetime_validation',
+            array(
+                '' => '',
+                'time' => BL::getLabel('Time')
+            )
+        );
+        //$this->frm->addText('datetime_validation_parameter');
+        $this->frm->addText('datetime_error_message');
 
         // dropdown dialog
         $this->frm->addText('dropdown_label');

@@ -112,7 +112,7 @@ class Header extends Base\Object
         }
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -162,7 +162,7 @@ class Header extends Base\Object
         $addTimestamp = (bool) $addTimestamp;
 
         // no minifying when debugging
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             $minify = false;
         }
 
@@ -368,7 +368,7 @@ class Header extends Base\Object
         }
 
         // some default stuff
-        $this->jsData['debug'] = SPOON_DEBUG;
+        $this->jsData['debug'] = $this->getContainer()->getParameter('kernel.debug');
         $this->jsData['site']['domain'] = SITE_DOMAIN;
         $this->jsData['editor']['language'] = $interfaceLanguage;
         $this->jsData['interface_language'] = $interfaceLanguage;
@@ -384,23 +384,23 @@ class Header extends Base\Object
         }
 
         // theme
-        if (BackendModel::getModuleSetting('Core', 'theme') !== null) {
-            $this->jsData['theme']['theme'] = BackendModel::getModuleSetting('Core', 'theme');
+        if ($this->get('fork.settings')->get('Core', 'theme') !== null) {
+            $this->jsData['theme']['theme'] = $this->get('fork.settings')->get('Core', 'theme');
             $this->jsData['theme']['path'] = FRONTEND_PATH . '/Themes/' .
-                                             BackendModel::getModuleSetting(
+                                             $this->get('fork.settings')->get(
                                                  'Core',
                                                  'theme'
                                              );
             $this->jsData['theme']['has_css'] = (is_file(
                 FRONTEND_PATH . '/Themes/' .
-                BackendModel::getModuleSetting(
+                $this->get('fork.settings')->get(
                     'Core',
                     'theme'
                 ) . '/Core/Layout/Css/screen.css'
             ));
             $this->jsData['theme']['has_editor_css'] = (is_file(
                 FRONTEND_PATH . '/Themes/' .
-                BackendModel::getModuleSetting(
+                $this->get('fork.settings')->get(
                     'Core',
                     'theme'
                 ) . '/Core/Layout/Css/editor_content.css'

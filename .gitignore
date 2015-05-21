@@ -9,7 +9,10 @@
 /backend/cache/navigation/
 /vendor/
 /app/config/parameters.yml
+/bin/
 /bundles/
 /js/
 /css/
+
+# @remark: custom for Sumocoders
 /node_modules
