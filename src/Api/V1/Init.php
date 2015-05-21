@@ -1,6 +1,6 @@
 <?php
 
-namespace API\V1;
+namespace Api\V1;
 
 /*
  * This file is part of Fork CMS.
