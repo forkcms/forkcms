@@ -295,7 +295,8 @@ LOCK TABLES `groups` WRITE;
 
 INSERT INTO `groups` (`id`, `name`, `parameters`)
 VALUES
-  (1,'admin',NULL);
+  (1,'admin',NULL),
+  (2,'pages user',NULL);
 
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3277,7 +3278,7 @@ VALUES
   (2,'password_strength','s:4:\"weak\";'),
   (2,'current_password_change','i:1424720932;'),
   (2,'avatar','s:7:\"god.jpg\";'),
-  (1,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
+  (2,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
   (2,'api_access','b:0;');
 
 /*!40000 ALTER TABLE `users_settings` ENABLE KEYS */;
