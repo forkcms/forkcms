@@ -105,7 +105,7 @@ class SaveField extends BackendBaseAJAXAction
                         }
                         // @remark: custom for Sumocoders
                         if ($mailCopyTo === 'Y' && $validation !== 'email') {
-                            $errors['mail_copy_to'] = BL::getError('ValidationMustBeEmail');
+                            $errors['mail_copy_to'] = BL::getError('EmailValidationIsRequired');
                         }
                     } elseif ($type == 'textarea') {
                         // validate textarea

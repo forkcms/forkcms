@@ -1038,10 +1038,6 @@
         <translation language="sv"><![CDATA[Vänligen ange ett värde.]]></translation>
         <translation language="el"><![CDATA[Παρακαλώ δώστε μία τιμή.]]></translation>
       </item>
-      <item type="error" name="ValidationMustBeEmail">
-        <translation language="nl"><![CDATA[Validatie optie moet "email" zijn.]]></translation>
-        <translation language="en"><![CDATA[Validation option must be "email".]]></translation>
-        </item>
       <item type="error" name="EmailValidationIsRequired">
         <translation language="en"><![CDATA[Email validation is required when using this field as 'reply to' emailaddress.]]></translation>
       </item>
