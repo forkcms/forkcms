@@ -92,9 +92,8 @@ class Installer extends ModuleInstaller
         $this->getDB()->insert('themes_templates', $templates['triton']['default']);
         $this->getDB()->insert('themes_templates', $templates['triton']['home']);
 
-        /*
-         * Bootstrap templates
-         */
+        // @remark: custom for Sumocoders
+        // Bootstrap templates
 
         // search will be installed by default; already link it to this template
         $extras['search_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);

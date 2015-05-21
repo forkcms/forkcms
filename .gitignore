@@ -13,4 +13,6 @@
 /bundles/
 /js/
 /css/
+
+# @remark: custom for Sumocoders
 /node_modules

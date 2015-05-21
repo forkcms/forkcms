@@ -415,9 +415,12 @@ jsBackend.formBuilder.fields =
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
 								$('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
 								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
-                if (data.data.field.settings.mailCopyTo && data.data.field.settings.mailCopyTo === 'Y') {
-                  $('#textboxMailCopyTo').prop('checked', true);
-                }
+
+								// @remark: custom for Sumocoders
+								if (data.data.field.settings.mailCopyTo && data.data.field.settings.mailCopyTo === 'Y') {
+									$('#textboxMailCopyTo').prop('checked', true);
+								}
+
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -1351,12 +1354,14 @@ jsBackend.formBuilder.fields =
 		var value = $('#textboxValue').val();
 		var placeholder = $('#textboxPlaceholder').val();
 		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
-    var mailCopyTo = ($('#textboxMailCopyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
 		var validation = $('#textboxValidation').val();
 		var validationParameter = $('#textboxValidationParameter').val();
 		var errorMessage = $('#textboxErrorMessage').val();
+
+		// @remark: custom for Sumocoders
+		var mailCopyTo = ($('#textboxMailCopyTo').is(':checked') ? 'Y' : 'N');
 
 		// make the call
 		$.ajax(
@@ -1370,12 +1375,14 @@ jsBackend.formBuilder.fields =
 				default_values: value,
 				placeholder: placeholder,
 				reply_to: replyTo,
-        mail_copy_to: mailCopyTo,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,
 				validation_parameter: validationParameter,
-				error_message: errorMessage
+				error_message: errorMessage,
+
+				// @remark: custom for Sumocoders
+				mail_copy_to: mailCopyTo
 			}),
 			success: function(data, textStatus)
 			{

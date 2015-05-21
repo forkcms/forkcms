@@ -229,6 +229,8 @@
 		</div>
 	</div>
 
+
+    <!-- @remark: custom for Sumocoders -->
     <div class="box horizontal">
         <div class="heading"><h3>Twitter</h3></div>
         <div class="options labelWidthLong">

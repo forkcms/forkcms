@@ -190,6 +190,8 @@
 							<abbr class="help">(?)</abbr>
 							<span class="tooltip" style="display: none;">{$msgHelpReplyTo}</span>
 						</p>
+
+                        <!-- @remark: custom for Sumocoders -->
                         <p class="p0">
                             <label for="textboxMailCopyTo">{$lblMailCopyTo|ucfirst}</label>
                             {$chkTextboxMailCopyTo}

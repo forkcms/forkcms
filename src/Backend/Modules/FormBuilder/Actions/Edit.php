@@ -79,7 +79,6 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addText('textbox_placeholder');
         $this->frm->addCheckbox('textbox_required');
         $this->frm->addCheckbox('textbox_reply_to');
-        $this->frm->addCheckbox('textbox_mail_copy_to');
         $this->frm->addText('textbox_required_error_message');
         $this->frm->addDropdown(
             'textbox_validation',
@@ -91,6 +90,9 @@ class Edit extends BackendBaseActionEdit
         );
         $this->frm->addText('textbox_validation_parameter');
         $this->frm->addText('textbox_error_message');
+
+        // @remark: custom for Sumocoders
+        $this->frm->addCheckbox('textbox_mail_copy_to');
 
         // textarea dialog
         $this->frm->addText('textarea_label');

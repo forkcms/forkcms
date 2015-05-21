@@ -17,9 +17,8 @@
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
 
-
-        "sumocoders/sumo-fork-class": "dev-master",
-        "flippa-official/errbit-php": "@dev"
+        "flippa-official/errbit-php": "@dev",
+        "sumocoders/sumo-fork-class": "dev-master"
     },
     "require-dev": {
         "jdorn/sql-formatter": "1.2.17",
