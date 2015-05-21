@@ -8,6 +8,8 @@ use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
+use Frontend\Modules\FormBuilder\FormBuilderEvents;
+use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
 
 /**
  * This is the form widget.
@@ -78,7 +80,7 @@ class Form extends FrontendBaseWidget
         }
 
         // single language
-        if (SITE_MULTILANGUAGE) {
+        if ($this->getContainer()->getParameter('site.multilanguage')) {
             $action = FRONTEND_LANGUAGE . '/' . $action;
         }
 
@@ -150,6 +152,7 @@ class Form extends FrontendBaseWidget
                 $item['name'] = 'field' . $field['id'];
                 $item['type'] = $field['type'];
                 $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
+                $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
                 $item['required'] = isset($field['validations']['required']);
                 $item['html'] = '';
 
@@ -184,16 +187,8 @@ class Form extends FrontendBaseWidget
                     // get content
                     $item['html'] = $ddm->parse();
                 } elseif ($field['type'] == 'radiobutton') {
-                    // reset
-                    $newValues = array();
-
-                    // rebuild values
-                    foreach ($values as $value) {
-                        $newValues[] = array('label' => $value, 'value' => $value);
-                    }
-
                     // create element
-                    $rbt = $this->frm->addRadiobutton($item['name'], $newValues, $defaultValues);
+                    $rbt = $this->frm->addRadiobutton($item['name'], $values, $defaultValues);
 
                     // get content
                     $item['html'] = $rbt->parse();
@@ -214,6 +209,7 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'textbox') {
                     // create element
                     $txt = $this->frm->addText($item['name'], $defaultValues);
+                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -225,10 +221,56 @@ class Form extends FrontendBaseWidget
 
                     // get content
                     $item['html'] = $txt->parse();
+                } elseif ($field['type'] == 'datetime') {
+                    // create element
+                    if ($field['settings']['input_type'] == 'date') {
+                        // calculate default value
+                        $amount = $field['settings']['value_amount'];
+                        $type = $field['settings']['value_type'];
+
+                        if ($type != '') {
+                            switch ($type) {
+                                case 'today':
+                                    $defaultValues = date('Y-m-d'); // HTML5 input needs this format
+                                    break;
+                                case 'day':
+                                case 'week':
+                                case 'month':
+                                case 'year':
+                                    if ($amount != '') {
+                                        $defaultValues = date('Y-m-d', strtotime('+' . $amount . ' ' . $type));
+                                    }
+                                    break;
+                            }
+                        }
+
+                        // Convert the php date format to a jquery date format
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
+
+                        $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
+                            array(
+                                'data-mask' => $dateFormatShortJS,
+                                'data-firstday' => '1',
+                                'type' => 'date',
+                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                            )
+                        );
+                    } else {
+                        $datetime = $this->frm->addText($item['name'], $defaultValues)->setAttributes(array('type' => 'time'));
+                    }
+
+                    // add required attribute
+                    if ($item['required']) {
+                        $datetime->setAttribute('required', null);
+                    }
+
+                    // get content
+                    $item['html'] = $datetime->parse();
                 } elseif ($field['type'] == 'textarea') {
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
                     $txt->setAttribute('cols', 30);
+                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -387,6 +429,11 @@ class Form extends FrontendBaseWidget
                                 $settings['error_message']
                             );
                         }
+                    } elseif ($rule == 'time') {
+                        $regexTime = '/^(([0-1][0-9]|2[0-3]|[0-9])|([0-1][0-9]|2[0-3]|[0-9])(:|h)[0-5]?[0-9]?)$/';
+                        if (!\SpoonFilter::isValidAgainstRegexp($regexTime, $this->frm->getField($fieldName)->getValue())) {
+                            $this->frm->getField($fieldName)->setError($settings['error_message']);
+                        }
                     }
                 }
             }
@@ -417,16 +464,14 @@ class Form extends FrontendBaseWidget
                     $fieldData['label'] = $field['settings']['label'];
                     $fieldData['value'] = $this->frm->getField('field' . $field['id'])->getValue();
 
-                    // prepare fields for email
-                    if ($this->item['method'] == 'database_email') {
-                        // add field for email
-                        $emailFields[] = array(
-                            'label' => $field['settings']['label'],
-                            'value' => (is_array($fieldData['value']) ?
-                                implode(',', $fieldData['value']) :
-                                nl2br($fieldData['value'])
-                            )
-                        );
+                    if ($field['type'] == 'radiobutton') {
+                        $values = array();
+
+                        foreach ($field['settings']['values'] as $value) {
+                            $values[$value['value']] = $value['label'];
+                        }
+
+                        $fieldData['value'] = $values[$fieldData['value']];
                     }
 
                     // clean up
@@ -440,76 +485,16 @@ class Form extends FrontendBaseWidget
                     }
 
                     // save fields data
-                    $fields[] = $fieldData;
+                    $fields[$field['id']] = $fieldData;
 
                     // insert
                     FrontendFormBuilderModel::insertDataField($fieldData);
                 }
 
-                // notify the admin
-                FrontendFormBuilderModel::notifyAdmin(
-                    array(
-                        'form_id' => $this->item['id'],
-                        'entry_id' => $dataId
-                    )
+                $this->get('event_dispatcher')->dispatch(
+                    FormBuilderEvents::FORM_SUBMITTED,
+                    new FormBuilderSubmittedEvent($this->item, $fields, $dataId)
                 );
-
-                // need to send mail
-                if ($this->item['method'] == 'database_email') {
-                    // build our message
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                    $message = \Common\Mailer\Message::newInstance(
-                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name'])
-                        )
-                        ->parseHtml(
-                            FRONTEND_MODULES_PATH . '/FormBuilder/Layout/Templates/Mails/Form.tpl',
-                            array(
-                                'sentOn' => time(),
-                                'name' => $this->item['name'],
-                                'fields' => $emailFields,
-                            ),
-                            true
-                        )
-                        ->setTo($this->item['email'])
-                        ->setFrom(array($from['email'] => $from['name']))
-                    ;
-
-                    // check if we have a replyTo email set
-                    $replyTo = null;
-                    $mailCopyTo = null;
-                    foreach ($this->item['fields'] as $field) {
-                        if (array_key_exists('reply_to', $field['settings']) &&
-                            $field['settings']['reply_to'] === true
-                        ) {
-                            $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            if (\SpoonFilter::isEmail($email)) {
-                                $message->setReplyTo(array($email => $email));
-                            }
-                        }
-                        if (isset($field['settings']['mailCopyTo']) && $field['settings']['mailCopyTo'] == 'Y') {
-                            $email = $this->frm->getField('field' . $field['id'])->getValue();
-                            if (SpoonFilter::isEmail($email)) {
-                                $mailCopyTo = $email;
-                            }
-                        }
-                    }
-                    if ($message->getReplyTo() === null) {
-                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                        $message->setReplyTo(array($replyTo['email'] => $replyTo['name']));
-                    }
-
-                    # Mail copy
-                    if ($mailCopyTo) {
-                        $variables = array_replace($variables, array('mailCopyTo' => true));
-                        FrontendMailer::addEmail(
-                            sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
-                            FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
-                            $variables,
-                            $mailCopyTo,
-                            $this->item['name']
-                        );
-                    }
-                }
 
                 // trigger event
                 FrontendModel::triggerEvent(
@@ -523,6 +508,21 @@ class Form extends FrontendBaseWidget
                         'visitorId' => FrontendModel::getVisitorId()
                     )
                 );
+
+                // @remark: custom for Sumocoders
+                // @@todo: fix me!
+                $mailCopyTo = null;
+                if ($mailCopyTo) {
+                    $variables = array_replace($variables, array('mailCopyTo' => true));
+                    FrontendMailer::addEmail(
+                        sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']),
+                        FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl',
+                        $variables,
+                        $mailCopyTo,
+                        $this->item['name']
+                    );
+                }
+
 
                 // store timestamp in session so we can block excessive usage
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());

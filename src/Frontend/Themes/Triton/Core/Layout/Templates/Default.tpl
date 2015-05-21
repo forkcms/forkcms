@@ -42,14 +42,14 @@
 
 				{* Advertisement position *}
 				{iteration:positionAdvertisement}
-					{option:positionAdvertisement.blockIsHTML}
+					{option:positionAdvertisement.blockIsEditor}
 						<div id="headerAd">
 							{$positionAdvertisement.blockContent}
 						</div>
-					{/option:positionAdvertisement.blockIsHTML}
-					{option:!positionAdvertisement.blockIsHTML}
+					{/option:positionAdvertisement.blockIsEditor}
+					{option:!positionAdvertisement.blockIsEditor}
 						{$positionAdvertisement.blockContent}
-					{/option:!positionAdvertisement.blockIsHTML}
+					{/option:!positionAdvertisement.blockIsEditor}
 				{/iteration:positionAdvertisement}
 			</div>
 
@@ -68,7 +68,7 @@
 
 					{* Left position *}
 					{iteration:positionLeft}
-						{option:positionLeft.blockIsHTML}
+						{option:positionLeft.blockIsEditor}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
@@ -76,10 +76,10 @@
 									</div>
 								</div>
 							</section>
-						{/option:positionLeft.blockIsHTML}
-						{option:!positionLeft.blockIsHTML}
+						{/option:positionLeft.blockIsEditor}
+						{option:!positionLeft.blockIsEditor}
 							{$positionLeft.blockContent}
-						{/option:!positionLeft.blockIsHTML}
+						{/option:!positionLeft.blockIsEditor}
 					{/iteration:positionLeft}
 
 				</div>
@@ -96,7 +96,7 @@
 
 					{* Main position *}
 					{iteration:positionMain}
-						{option:positionMain.blockIsHTML}
+						{option:positionMain.blockIsEditor}
 							<section class="mod">
 								<div class="inner">
 									<div class="bd content">
@@ -104,10 +104,10 @@
 									</div>
 								</div>
 							</section>
-						{/option:positionMain.blockIsHTML}
-						{option:!positionMain.blockIsHTML}
+						{/option:positionMain.blockIsEditor}
+						{option:!positionMain.blockIsEditor}
 							{$positionMain.blockContent}
-						{/option:!positionMain.blockIsHTML}
+						{/option:!positionMain.blockIsEditor}
 					{/iteration:positionMain}
 
 				</div>

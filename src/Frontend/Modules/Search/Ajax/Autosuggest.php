@@ -87,7 +87,7 @@ class Autosuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'autosuggest_num_items', 10);
+        $this->limit = (int) $this->get('fork.settings')->get('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -126,7 +126,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -165,7 +165,7 @@ class Autosuggest extends FrontendBaseAJAXAction
 
         // set url
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
+        $this->pagination['limit'] = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
 
         // populate calculated fields in pagination
         $this->pagination['requested_page'] = $this->requestedPage;
@@ -197,7 +197,7 @@ class Autosuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(
@@ -225,10 +225,18 @@ class Autosuggest extends FrontendBaseAJAXAction
             );
         }
 
+        $charset = $this->getContainer()->getParameter('kernel.charset');
+
         // format data
         foreach ($this->items as &$item) {
             // format description
-            $item['text'] = !empty($item['text']) ? (mb_strlen($item['text']) > $this->length ? mb_substr(strip_tags($item['text']), 0, $this->length, SPOON_CHARSET) . '…' : $item['text']) : '';
+            $item['text'] = !empty($item['text'])
+                ? (
+                    mb_strlen($item['text']) > $this->length
+                    ? mb_substr(strip_tags($item['text']), 0, $this->length, $charset) . '…'
+                    : $item['text']
+                )
+                : '';
         }
 
         // output
@@ -241,8 +249,9 @@ class Autosuggest extends FrontendBaseAJAXAction
     private function validateForm()
     {
         // set values
+        $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $this->term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
         $this->length = (int) \SpoonFilter::getPostValue('length', null, 50);

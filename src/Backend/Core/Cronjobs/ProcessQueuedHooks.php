@@ -71,7 +71,7 @@ class ProcessQueuedHooks extends Cronjob
                 // check if the item is callable
                 if (!is_callable($item['callback'])) {
                     // in debug mode we want to know if there are errors
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw new Exception('Invalid callback!');
                     }
 
@@ -108,7 +108,7 @@ class ProcessQueuedHooks extends Cronjob
                     $processedSuccessfully = false;
 
                     // logging when we are in debugmode
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         $log->err('Callback (' . serialize($item['callback']) . ') failed.');
                     }
                 }
@@ -119,7 +119,7 @@ class ProcessQueuedHooks extends Cronjob
                 }
 
                 // logging when we are in debugmode
-                if (SPOON_DEBUG) {
+                if ($this->getContainer()->getParameter('kernel.debug')) {
                     $log->info('Callback (' . serialize($item['callback']) . ') finished.');
                 }
             } else {

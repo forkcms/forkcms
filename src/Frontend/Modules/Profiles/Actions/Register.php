@@ -169,11 +169,9 @@ class Register extends FrontendBaseBlock
                                                    . '/' . $settings['activation_key'];
 
                     // send email
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                    $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                    $message = \Common\Mailer\Message::newInstance(
-                            FL::getMessage('RegisterSubject')
-                        )
+                    $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                    $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+                    $message = \Common\Mailer\Message::newInstance(FL::getMessage('RegisterSubject'))
                         ->setFrom(array($from['email'] => $from['name']))
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
@@ -186,10 +184,10 @@ class Register extends FrontendBaseBlock
                     $this->get('mailer')->send($message);
 
                     // redirect
-                    $this->redirect(SELF . '?sent=true');
+                    $this->redirect(SITE_URL . '/' . $this->URL->getQueryString() . '?sent=true');
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     }
 

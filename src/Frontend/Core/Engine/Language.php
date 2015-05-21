@@ -12,6 +12,7 @@ namespace Frontend\Core\Engine;
 use Symfony\Component\Filesystem\Filesystem;
 use Backend\Modules\Locale\Engine\CacheBuilder;
 
+
 /**
  * This class will store the language-dependant content for the frontend.
  *
@@ -76,7 +77,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackAct[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackAct[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackAct[$key];
         }
 
@@ -91,7 +96,7 @@ class Language
      */
     public static function getActions()
     {
-        return (SPOON_DEBUG === true) ? self::$act : array_merge(self::$fallbackAct, self::$act);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$act : array_merge(self::$fallbackAct, self::$act);
     }
 
     /**
@@ -104,7 +109,7 @@ class Language
         // validate the cache
         if (empty(self::$languages['active'])) {
             // grab from settings
-            $activeLanguages = (array) Model::getModuleSetting('Core', 'active_languages');
+            $activeLanguages = (array) Model::get('fork.settings')->get('Core', 'active_languages');
 
             // store in cache
             self::$languages['active'] = $activeLanguages;
@@ -187,7 +192,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackErr[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackErr[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackErr[$key];
         }
 
@@ -202,7 +211,7 @@ class Language
      */
     public static function getErrors()
     {
-        return (SPOON_DEBUG === true) ? self::$err : array_merge(self::$fallbackErr, self::$err);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$err : array_merge(self::$fallbackErr, self::$err);
     }
 
     /**
@@ -223,7 +232,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackLbl[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackLbl[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackLbl[$key];
         }
 
@@ -238,7 +251,7 @@ class Language
      */
     public static function getLabels()
     {
-        return (SPOON_DEBUG === true) ? self::$lbl : array_merge(self::$fallbackLbl, self::$lbl);
+        return (Model::getContainer()->getParameter('kernel.debug')) ? self::$lbl : array_merge(self::$fallbackLbl, self::$lbl);
     }
 
     /**
@@ -259,7 +272,11 @@ class Language
         }
 
         // If we should fallback and the fallback label exists, return it
-        if (isset(self::$fallbackMsg[$key]) && $fallback === true && SPOON_DEBUG === false) {
+        if (
+            isset(self::$fallbackMsg[$key]) &&
+            $fallback === true &&
+            Model::getContainer()->getParameter('kernel.debug') === false
+        ) {
             return self::$fallbackMsg[$key];
         }
 
@@ -274,7 +291,7 @@ class Language
      */
     public static function getMessages()
     {
-        return (SPOON_DEBUG === true) ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
+        return (Model::getContainer()->getParameter('kernel.debug') === true) ? self::$msg : array_merge(self::$fallbackMsg, self::$msg);
     }
 
     /**
@@ -287,7 +304,7 @@ class Language
         // validate the cache
         if (empty(self::$languages['possible_redirect'])) {
             // grab from settings
-            $redirectLanguages = (array) Model::getModuleSetting('Core', 'redirect_languages');
+            $redirectLanguages = (array) Model::get('fork.settings')->get('Core', 'redirect_languages');
 
             // store in cache
             self::$languages['possible_redirect'] = $redirectLanguages;
@@ -314,32 +331,33 @@ class Language
         }
 
         // validate file, generate it if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/en.php')) {
+        $fs = new Filesystem();
+        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/en.json')) {
             self::buildCache('en', 'Frontend');
         }
-        if (!is_file(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php')) {
+        if (!$fs->exists(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json')) {
             self::buildCache($language, 'Frontend');
         }
 
-        // init vars
-        $act = array();
-        $err = array();
-        $lbl = array();
-        $msg = array();
-
         // set English translations, they'll be the fallback
-        require FRONTEND_CACHE_PATH . '/Locale/en.php';
-        self::$fallbackAct = (array) $act;
-        self::$fallbackErr = (array) $err;
-        self::$fallbackLbl = (array) $lbl;
-        self::$fallbackMsg = (array) $msg;
+        $fallbackTranslations = json_decode(
+            file_get_contents(FRONTEND_CACHE_PATH . '/Locale/en.json'),
+            true
+        );
+        self::$fallbackAct = (array) $fallbackTranslations['act'];
+        self::$fallbackErr = (array) $fallbackTranslations['err'];
+        self::$fallbackLbl = (array) $fallbackTranslations['lbl'];
+        self::$fallbackMsg = (array) $fallbackTranslations['msg'];
 
         // We will overwrite with the requested language's translations upon request
-        require FRONTEND_CACHE_PATH . '/Locale/' . $language . '.php';
-        self::$act = (array) $act;
-        self::$err = (array) $err;
-        self::$lbl = (array) $lbl;
-        self::$msg = (array) $msg;
+        $translations = json_decode(
+            file_get_contents(FRONTEND_CACHE_PATH . '/Locale/' . $language . '.json'),
+            true
+        );
+        self::$act = (array) $translations['act'];
+        self::$err = (array) $translations['err'];
+        self::$lbl = (array) $translations['lbl'];
+        self::$msg = (array) $translations['msg'];
     }
 
     /**

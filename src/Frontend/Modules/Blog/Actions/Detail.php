@@ -107,7 +107,7 @@ class Detail extends FrontendBaseBlock
         $this->record['tags'] = FrontendTagsModel::getForItem('Blog', $this->record['id']);
 
         // get settings
-        $this->settings = FrontendModel::getModuleSettings('Blog');
+        $this->settings = $this->get('fork.settings')->getForModule('Blog');
 
         // overwrite URLs
         $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') .
@@ -149,7 +149,7 @@ class Detail extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
@@ -179,7 +179,7 @@ class Detail extends FrontendBaseBlock
         $this->header->addOpenGraphData('url', SITE_URL . $this->record['full_url'], true);
         $this->header->addOpenGraphData(
             'site_name',
-            FrontendModel::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            $this->get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
             true
         );
         $this->header->addOpenGraphData(

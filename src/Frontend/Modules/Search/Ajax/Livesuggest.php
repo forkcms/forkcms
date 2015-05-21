@@ -88,7 +88,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
+        $this->limit = (int) $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -135,7 +135,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (SPOON_DEBUG) {
+        if ($this->getContainer()->getParameter('kernel.debug')) {
             return false;
         }
 
@@ -206,7 +206,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!SPOON_DEBUG) {
+        if (!$this->getContainer()->getParameter('kernel.debug')) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(
@@ -415,8 +415,9 @@ class Livesuggest extends FrontendBaseAJAXAction
     private function validateForm()
     {
         // set search term
+        $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $this->term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars(
+        $this->term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars(
             $searchTerm
         ) : \SpoonFilter::htmlentities($searchTerm);
 

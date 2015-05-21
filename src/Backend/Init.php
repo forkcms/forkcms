@@ -47,13 +47,13 @@ class Init extends \KernelLoader
         // get last modified time for globals
         $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
 
-        // reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
-        if ($lastModifiedTime === false || SPOON_DEBUG) {
+        // reset lastmodified time if needed when invalid or debug is active
+        if ($lastModifiedTime === false || $this->getContainer()->getParameter('kernel.debug')) {
             $lastModifiedTime = time();
         }
 
         // define as a constant
-        define('LAST_MODIFIED_TIME', $lastModifiedTime);
+        defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
 
         $this->definePaths();
         $this->defineURLs();
@@ -71,16 +71,16 @@ class Init extends \KernelLoader
     private function definePaths()
     {
         // general paths
-        define('BACKEND_PATH', PATH_WWW . '/src/' . APPLICATION);
-        define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
-        define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
-        define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
+        defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
+        defined('BACKEND_CACHE_PATH') || define('BACKEND_CACHE_PATH', BACKEND_PATH . '/Cache');
+        defined('BACKEND_CORE_PATH') || define('BACKEND_CORE_PATH', BACKEND_PATH . '/Core');
+        defined('BACKEND_MODULES_PATH') || define('BACKEND_MODULES_PATH', BACKEND_PATH . '/Modules');
 
-        define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
-        define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
-        define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
-        define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
-        define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
+        defined('FRONTEND_PATH') || define('FRONTEND_PATH', PATH_WWW . '/src/Frontend');
+        defined('FRONTEND_CACHE_PATH') || define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/Cache');
+        defined('FRONTEND_CORE_PATH') || define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/Core');
+        defined('FRONTEND_MODULES_PATH') || define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/Modules');
+        defined('FRONTEND_FILES_PATH') || define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/Files');
     }
 
     /**
@@ -88,9 +88,9 @@ class Init extends \KernelLoader
      */
     private function defineURLs()
     {
-        define('BACKEND_CORE_URL', '/src/' . APPLICATION . '/Core');
-        define('BACKEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
-        define('FRONTEND_FILES_URL', '/src/Frontend/Files');
+        defined('BACKEND_CORE_URL') || define('BACKEND_CORE_URL', '/src/' . APPLICATION . '/Core');
+        defined('BACKEND_CACHE_URL') || define('BACKEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
+        defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
     }
 
     /**
@@ -98,7 +98,7 @@ class Init extends \KernelLoader
      *
      * @param int    $errorNumber The level of the error raised, as an integer.
      * @param string $errorString The error message, as a string.
-     * @return bool
+     * @return null|false
      */
     public static function errorHandler($errorNumber, $errorString)
     {
@@ -142,9 +142,10 @@ class Init extends \KernelLoader
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
+        $debugEmail = self::getContainer()->getParameter('fork.debug_email');
 
         // mail it?
-        if (SPOON_DEBUG_EMAIL != '') {
+        if ($debugEmail != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -152,7 +153,7 @@ class Init extends \KernelLoader
             $headers .= "X-Mailer: SpoonLibrary Webmail\n";
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail($debugEmail, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
         }
 
         // build HTML for nice error

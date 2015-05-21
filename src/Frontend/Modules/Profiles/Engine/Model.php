@@ -131,7 +131,7 @@ class Model
         $avatar = $user->getSetting('avatar');
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && FrontendModel::getModuleSetting('Profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && FrontendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(strtolower(trim('d' . $email)));
 
@@ -218,6 +218,7 @@ class Model
         // init
         $characters = '';
         $string = '';
+        $charset = FrontendModel::getContainer()->getParameter('kernel.charset');
 
         // possible characters
         if ($numeric) {
@@ -239,7 +240,7 @@ class Model
             $index = mt_rand(0, strlen($characters));
 
             // add character to salt
-            $string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+            $string .= mb_substr($characters, $index, 1, $charset);
         }
 
         return $string;
@@ -419,7 +420,7 @@ class Model
      *
      * @param int    $id    Profile id.
      * @param string $name  Setting name.
-     * @param mixed  $value New setting value.
+     * @param string  $value New setting value.
      */
     public static function setSetting($id, $name, $value)
     {

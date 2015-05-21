@@ -10,7 +10,9 @@ framework:
     csrf_protection: ~
     templating:
         engines: ['twig']
-    session:         ~
+    session:
+        handler_id: session.handler.native_file
+        save_path: "%kernel.root_dir%/sessions"
 
 # Assetic Configuration
 assetic:
@@ -31,6 +33,15 @@ monolog:
             type:  stream
             path:  %site.path_www%/app/logs/logs.log
             level: debug
+        # swift:
+        #     type:       swift_mailer
+        #     from_email: %fork.debug_email%
+        #     to_email:   %fork.debug_email%
+        #     subject:    %site.default_title% %fork.debug_message%
+        #     level:      critical
+
+swiftmailer:
+    transport: "mail"
 
 services:
     database:
@@ -45,6 +56,17 @@ services:
         calls:
             - [ execute, [ 'SET CHARACTER SET :charset, NAMES :charset, time_zone = "+0:00"', { 'charset': 'utf8' } ] ]
             - [ setDebug, [ %kernel.debug% ]]
-    mailer:
-        class: Common\Mailer
-        arguments: [ @logger ]
+    mailer_configurator:
+        class: Common\Mailer\Configurator
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+        arguments:
+            - @database
+            - @service_container
+    fork.settings_cache:
+        class: Common\Cache\InMemoryCache
+    fork.settings:
+        class: Common\ModulesSettings
+        arguments:
+            - @database
+            - @fork.settings_cache

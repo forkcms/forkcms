@@ -250,6 +250,19 @@ class Installer extends ModuleInstaller
                 )
             );
 
+            // add Search index blogpost 1
+            $this->addSearchIndex(
+                'Blog',
+                1,
+                array(
+                    'title' => 'Nunc sediam est',
+                    'text' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    )
+                ),
+                $language
+            );
+
             // insert sample blogpost 2
             $db->insert(
                 'blog_posts',
@@ -274,6 +287,19 @@ class Installer extends ModuleInstaller
                     'allow_comments' => 'Y',
                     'num_comments' => '0'
                 )
+            );
+
+            // add Search index blogpost 2
+            $this->addSearchIndex(
+                'Blog',
+                2,
+                array(
+                    'title' => 'Lorem ipsum',
+                    'text' => file_get_contents(
+                        PATH_WWW . '/src/Backend/Modules/Blog/Installer/Data/' . $language . '/sample1.txt'
+                    )
+                ),
+                $language
             );
 
             // insert example comment 1

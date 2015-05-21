@@ -20,7 +20,7 @@ use it like this:
         ->addAttachments($attachments)
     ;
 
-    // send it trough the mailer service
+    // send it through the mailer service
     $this->get('mailer')->send($message);
 
 All occurences of sending emails in the core are replaced by this, so you can use

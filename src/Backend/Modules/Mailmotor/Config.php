@@ -108,7 +108,7 @@ class Config extends BackendBaseConfig
         }
 
         // get price per email
-        $pricePerEmail = BackendModel::getModuleSetting('Mailmotor', 'price_per_email');
+        $pricePerEmail = $this->get('fork.settings')->get('Mailmotor', 'price_per_email');
 
         // check if a price per e-mail is set
         if (empty($pricePerEmail) && $pricePerEmail != 0) {
@@ -125,7 +125,7 @@ class Config extends BackendBaseConfig
     /**
      * Checks for external groups, and parses a message to import them.
      *
-     * @return mixed Returns false if the user already made groups.
+     * @return boolean Returns false if the user already made groups.
      */
     private function checkForExternalGroups()
     {
@@ -144,7 +144,7 @@ class Config extends BackendBaseConfig
     private function checkForGroups()
     {
         // groups are already set
-        if (BackendModel::getModuleSetting('Mailmotor', 'cm_groups_set')) {
+        if ($this->get('fork.settings')->get('Mailmotor', 'cm_groups_set')) {
             return false;
         }
 
@@ -182,8 +182,8 @@ class Config extends BackendBaseConfig
         }
 
         // we have groups set, and default groups chosen
-        BackendModel::setModuleSetting('Mailmotor', 'cm_groups_set', true);
-        BackendModel::setModuleSetting('Mailmotor', 'cm_groups_defaults_set', true);
+        $this->get('fork.settings')->set('Mailmotor', 'cm_groups_set', true);
+        $this->get('fork.settings')->set('Mailmotor', 'cm_groups_defaults_set', true);
     }
 
     /**
@@ -191,10 +191,10 @@ class Config extends BackendBaseConfig
      */
     private function checkForSettings()
     {
-        $url = BackendModel::getModuleSetting('Mailmotor', 'cm_url');
-        $username = BackendModel::getModuleSetting('Mailmotor', 'cm_username');
-        $password = BackendModel::getModuleSetting('Mailmotor', 'cm_password');
-        $clientID = BackendModel::getModuleSetting('Mailmotor', 'cm_client_id');
+        $url = $this->get('fork.settings')->get('Mailmotor', 'cm_url');
+        $username = $this->get('fork.settings')->get('Mailmotor', 'cm_username');
+        $password = $this->get('fork.settings')->get('Mailmotor', 'cm_password');
+        $clientID = $this->get('fork.settings')->get('Mailmotor', 'cm_client_id');
 
         return (!empty($url) && !empty($username) && !empty($password) && !empty($clientID));
     }

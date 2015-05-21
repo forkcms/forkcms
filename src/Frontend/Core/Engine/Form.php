@@ -50,12 +50,22 @@ class Form extends \Common\Form
         $this->header = Model::getContainer()->get('header');
 
         $name = (string) $name;
-        $hash = ($hash !== null) ? (string) $hash : null;
+
+        if ($hash !== null && strlen($hash) > 0) {
+            $hash = (string) $hash;
+            // check if the # is present
+            if ($hash[0] !== '#') {
+                $hash = '#' . $hash;
+            }
+        } else {
+            $hash = null;
+        }
+
         $useToken = (bool) $useToken;
         $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
 
         // call the real form-class
-        parent::__construct((string) $name, $action, $method, (bool) $useToken);
+        parent::__construct((string) $name, $action . $hash, $method, (bool) $useToken);
 
         // add default classes
         $this->setParameter('id', $name);
@@ -614,7 +624,7 @@ class Form extends \Common\Form
      *
      * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse($tpl)
     {
         // parse the form
         parent::parse($tpl);

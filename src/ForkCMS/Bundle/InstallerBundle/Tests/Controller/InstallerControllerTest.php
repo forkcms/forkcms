@@ -2,8 +2,7 @@
 
 namespace ForkCMS\Bundle\InstallerBundle\Tests\Controller;
 
-use ForkCMS\Bundle\InstallerBundle\Test\WebTestCase;
-use Symfony\Component\FileSystem\FileSystem;
+use Common\WebTestCase;
 
 class InstallerControllerTest extends WebTestCase
 {
@@ -43,6 +42,10 @@ class InstallerControllerTest extends WebTestCase
         $this->putParametersFileBack($client->getContainer()->getParameter('kernel.root_dir'));
     }
 
+    /**
+     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep2($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
@@ -72,6 +75,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep3($crawler, $client)
     {
         $form = $crawler->selectButton('Next')->form();
@@ -91,6 +97,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep4($crawler, $client)
     {
         // first submit with incorrect data
@@ -129,6 +138,9 @@ class InstallerControllerTest extends WebTestCase
         return $crawler;
     }
 
+    /**
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     */
     private function runTroughStep5($crawler, $client)
     {
         $form = $crawler->selectButton('Finish installation')->form();
@@ -158,36 +170,5 @@ class InstallerControllerTest extends WebTestCase
         );
 
         return $crawler;
-    }
-
-    private function emptyTestDatabase($database)
-    {
-        foreach ($database->getTables() as $table) {
-            $database->drop($table);
-        }
-    }
-
-    private function backupParametersFile($kernelDir)
-    {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml')) {
-            $fs->copy(
-                $kernelDir . '/config/parameters.yml',
-                $kernelDir . '/config/parameters.yml~backup'
-            );
-        }
-    }
-
-    private function putParametersFileBack($kernelDir)
-    {
-        $fs = new FileSystem();
-        if ($fs->exists($kernelDir . '/config/parameters.yml~backup')) {
-            $fs->copy(
-                $kernelDir . '/config/parameters.yml~backup',
-                $kernelDir . '/config/parameters.yml',
-                true
-            );
-            $fs->remove($kernelDir . '/config/parameters.yml~backup');
-        }
     }
 }

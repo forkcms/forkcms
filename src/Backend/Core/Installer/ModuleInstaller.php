@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -155,7 +156,7 @@ class ModuleInstaller
         }
 
         // module exists?
-        if (!in_array('search', self::$modules)) {
+        if (!in_array('Search', self::$modules)) {
             return;
         }
 
@@ -270,7 +271,7 @@ class ModuleInstaller
      * @param string $language The language abbreviation.
      * @param string $type     The type of locale.
      * @param string $application
-     * @return mixed
+     * @return string
      */
     protected function getLocale($name, $module = 'Core', $language = 'en', $type = 'lbl', $application = 'Backend')
     {
@@ -400,8 +401,8 @@ class ModuleInstaller
     /**
      * Insert a dashboard widget
      *
-     * @param array $module
-     * @param array $widget
+     * @param string $module
+     * @param string $widget
      * @param array $data
      */
     protected function insertDashboardWidget($module, $widget, $data)
@@ -574,7 +575,7 @@ class ModuleInstaller
             'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
             'title' => (string) $title,
             'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-            'url' => CommonUri::getUrl((string) $url, SPOON_CHARSET),
+            'url' => CommonUri::getUrl((string) $url, BackendModel::getContainer()->getParameter('kernel.charset')),
             'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
             'custom' => (!is_null($custom) ? (string) $custom : null),
             'data' => (!is_null($data)) ? serialize($data) : null

@@ -1,6 +1,8 @@
 # README
 
 [![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
+[![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable.svg)](https://packagist.org/packages/forkcms/forkcms)
+[![License](https://poser.pugx.org/forkcms/forkcms/license.svg)](https://packagist.org/packages/forkcms/forkcms)
 
 ## Installation
 
@@ -31,12 +33,12 @@ your normal database and with the name suffixed with _test.
 
 Running the tests:
 
-    vender/bin/phpunit -c app/
+    ./bin/phpunit -c app/
 
 Running only the unit tests or the functional tests
 
-    vendor/bin/phpunit -c app --testsuite=functional
-    vendor/bin/phpunit -c app --testsuite=unit
+    ./bin/phpunit -c app --testsuite=functional
+    ./bin/phpunit -c app --testsuite=unit
 
 ## Discussion
 - IRC: irc.freenode.org #forkcms

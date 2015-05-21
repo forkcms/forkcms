@@ -184,6 +184,9 @@ jsBackend.formBuilder.fields =
 									case 'textareaDialog':
 										jsBackend.formBuilder.fields.saveTextarea();
 										break;
+									case 'datetimeDialog':
+										jsBackend.formBuilder.fields.saveDatetime();
+										break;
 									case 'headingDialog':
 										jsBackend.formBuilder.fields.saveHeading();
 										break;
@@ -251,6 +254,25 @@ jsBackend.formBuilder.fields =
 								removeLabel: utils.string.ucfirst(jsBackend.locale.lbl('Delete')),
 								showIconOnly: true,
 								afterBuild: jsBackend.formBuilder.fields.multipleTextboxCallback
+							});
+						}
+						else if(id == 'datetimeDialog')
+						{
+							$('#datetimeType').change(function() {
+								if($(this).val() === 'time') {
+									$('#datetimeDialog').find('.defaultValue').hide();
+									$('#datetimeValidation').val('time');
+								} else {
+									$('#datetimeDialog').find('.defaultValue').show();
+								}
+							});
+
+							$('#datetimeValueType').change(function() {
+								if($(this).val() === 'today') {
+									$('#datetimeValueAmount').prop('disabled', true).val('');
+								} else {
+									$('#datetimeValueAmount').prop('disabled', false);
+								}
 							});
 						}
 
@@ -391,6 +413,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxId').val(data.data.field.id);
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								$('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
 								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
                 if (data.data.field.settings.mailCopyTo && data.data.field.settings.mailCopyTo === 'Y') {
                   $('#textboxMailCopyTo').prop('checked', true);
@@ -423,6 +446,7 @@ jsBackend.formBuilder.fields =
 								$('#textareaId').val(data.data.field.id);
 								$('#textareaLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textareaValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
+								$('#textareaPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -442,6 +466,36 @@ jsBackend.formBuilder.fields =
 
 								// show dialog
 								$('#textareaDialog').dialog('open');
+							}
+
+							// datetime edit
+							else if(data.data.field.type == 'datetime')
+							{
+								// fill in form
+								$('#datetimeId').val(data.data.field.id);
+								$('#datetimeLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
+								$('#datetimeValueAmount').val(utils.string.htmlDecode(data.data.field.settings.value_amount));
+								$('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type));
+								$('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type));
+								$.each(data.data.field.validations, function(k, v)
+								{
+									// required checkbox
+									if(k == 'required')
+									{
+										$('#datetimeRequired').prop('checked', true);
+										$('#datetimeRequiredErrorMessage').val(utils.string.htmlDecode(v.error_message));
+									}
+
+									// dropdown
+									else
+									{
+										$('#datetimeValidation').val(v.type);
+										$('#datetimeErrorMessage').val(utils.string.htmlDecode(v.error_message));
+									}
+								});
+
+								// show dialog
+								$('#datetimeDialog').dialog('open');
 							}
 
 							// dropdown edit
@@ -707,6 +761,9 @@ jsBackend.formBuilder.fields =
 
 		// select first tab
 		$('#'+ id +' .tabs').tabs('select', 0);
+
+		// reset hidden fields
+		$('#datetimeDialog').find('.defaultValue').show();
 	},
 
 	/**
@@ -749,10 +806,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined'){ $('#checkboxLabelError').html(data.data.errors.label); }
-						if(typeof data.data.errors.values != 'undefined') $('#checkboxValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#checkboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#checkboxErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#checkboxLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#checkboxValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#checkboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#checkboxErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('checkboxDialog');
@@ -776,6 +841,91 @@ jsBackend.formBuilder.fields =
 				if(data.code != 200 && jsBackend.debug) alert(data.message);
 			}
 		});
+	},
+
+	/**
+	 * Handle text box save
+	 */
+	saveDatetime: function()
+	{
+		// init vars
+		var fieldId = $('#datetimeId').val();
+		var type = 'datetime';
+		var label = $('#datetimeLabel').val();
+		var value_amount = $('#datetimeValueAmount').val();
+		var value_type = $('#datetimeValueType').val();
+		var input_type = $('#datetimeType').val();
+		var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
+		var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
+		var validation = $('#datetimeValidation').val();
+		//var validationParameter = $('#datetimeValidationParameter').val();
+		var errorMessage = $('#datetimeErrorMessage').val();
+
+		// make the call
+		$.ajax(
+			{
+				data: $.extend({}, jsBackend.formBuilder.fields.paramsSave,
+					{
+						form_id: jsBackend.formBuilder.formId,
+						field_id: fieldId,
+						type: type,
+						label: label,
+						value_amount: value_amount,
+						value_type: value_type,
+						required: required,
+						required_error_message: requiredErrorMessage,
+						input_type: input_type,
+						validation: validation,
+						//validation_parameter: validationParameter,
+						error_message: errorMessage
+					}),
+				success: function(data, textStatus)
+				{
+					// success
+					if(data.code == 200)
+					{
+						// clear errors
+						$('.formError').html('');
+
+						// form contains errors
+						if(typeof data.data.errors != 'undefined')
+						{
+							// assign errors
+							if(typeof data.data.errors.label != 'undefined') {
+								$('#datetimeLabelError').html(data.data.errors.label);
+							}
+							if(typeof data.data.errors.default_value_error_message != 'undefined') {
+								$('#datetimeDefaultValueErrorMessageError').html(data.data.errors.default_value_error_message);
+							}
+							if(typeof data.data.errors.required_error_message != 'undefined') {
+								$('#datetimeRequiredErrorMessageError').html(data.data.errors.required_error_message);
+							}
+							if(typeof data.data.errors.error_message != 'undefined') {
+								$('#datetimeErrorMessageError').html(data.data.errors.error_message);
+							}
+
+							// toggle error messages
+							jsBackend.formBuilder.fields.toggleValidationErrors('datetimeDialog');
+						}
+
+						// saved!
+						else
+						{
+							// append field html
+							jsBackend.formBuilder.fields.setField(data.data.field_id, data.data.field_html);
+
+							// close console box
+							$('#datetimeDialog').dialog('close');
+						}
+					}
+
+					// show error message
+					else jsBackend.messages.add('error', textStatus);
+
+					// alert the user
+					if(data.code != 200 && jsBackend.debug) alert(data.message);
+				}
+			});
 	},
 
 	/**
@@ -818,10 +968,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#dropdownLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.values != 'undefined') $('#dropdownValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#dropdownRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#dropdownErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#dropdownLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#dropdownValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#dropdownRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#dropdownErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('dropdownDialog');
@@ -1003,10 +1161,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#radiobuttonLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.values != 'undefined') $('#radiobuttonValuesError').html(data.data.errors.values);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#radiobuttonLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.values != 'undefined') {
+							$('#radiobuttonValuesError').html(data.data.errors.values);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#radiobuttonRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#radiobuttonErrorMessageError').html(data.data.errors.error_message);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('radiobuttonDialog');
@@ -1100,6 +1266,7 @@ jsBackend.formBuilder.fields =
 		var type = 'textarea';
 		var label = $('#textareaLabel').val();
 		var value = $('#textareaValue').val();
+		var placeholder = $('#textareaPlaceholder').val();
 		var required = ($('#textareaRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textareaRequiredErrorMessage').val();
 		var validation = $('#textareaValidation').val();
@@ -1116,6 +1283,7 @@ jsBackend.formBuilder.fields =
 				type: type,
 				label: label,
 				default_values: value,
+				placeholder: placeholder,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,
@@ -1134,10 +1302,18 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#textareaLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#textareaErrorMessageError').html(data.data.errors.error_message);
-						if(typeof data.data.errors.validation_parameter != 'undefined') $('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#textareaLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#textareaRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#textareaErrorMessageError').html(data.data.errors.error_message);
+						}
+						if(typeof data.data.errors.validation_parameter != 'undefined') {
+							$('#textareaValidationParameterError').html(data.data.errors.validation_parameter);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textareaDialog');
@@ -1173,6 +1349,7 @@ jsBackend.formBuilder.fields =
 		var type = 'textbox';
 		var label = $('#textboxLabel').val();
 		var value = $('#textboxValue').val();
+		var placeholder = $('#textboxPlaceholder').val();
 		var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
     var mailCopyTo = ($('#textboxMailCopyTo').is(':checked') ? 'Y' : 'N');
 		var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
@@ -1191,6 +1368,7 @@ jsBackend.formBuilder.fields =
 				type: type,
 				label: label,
 				default_values: value,
+				placeholder: placeholder,
 				reply_to: replyTo,
         mail_copy_to: mailCopyTo,
 				required: required,
@@ -1211,13 +1389,26 @@ jsBackend.formBuilder.fields =
 					if(typeof data.data.errors != 'undefined')
 					{
 						// assign errors
-						if(typeof data.data.errors.label != 'undefined') $('#textboxLabelError').html(data.data.errors.label);
-						if(typeof data.data.errors.required_error_message != 'undefined') $('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
-						if(typeof data.data.errors.error_message != 'undefined') $('#textboxErrorMessageError').html(data.data.errors.error_message);
-						if(typeof data.data.errors.validation_parameter != 'undefined') $('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
-            if (typeof data.data.errors.mail_copy_to !== 'undefined') {
-              $('#textboxMailCopyToError').html(data.data.errors.mail_copy_to);
-            }
+						if(typeof data.data.errors.label != 'undefined') {
+							$('#textboxLabelError').html(data.data.errors.label);
+						}
+						if(typeof data.data.errors.required_error_message != 'undefined') {
+							$('#textboxRequiredErrorMessageError').html(data.data.errors.required_error_message);
+						}
+						if(typeof data.data.errors.error_message != 'undefined') {
+							$('#textboxErrorMessageError').html(data.data.errors.error_message);
+						}
+						if(typeof data.data.errors.validation_parameter != 'undefined') {
+							$('#textboxValidationParameterError').html(data.data.errors.validation_parameter);
+						}
+						if(typeof data.data.errors.reply_to_error_message != 'undefined') {
+							$('#textboxReplyToErrorMessageError').html(data.data.errors.reply_to_error_message);
+						}
+
+						// @remark: custom for Sumocoders
+						if (typeof data.data.errors.mail_copy_to !== 'undefined') {
+							$('#textboxMailCopyToError').html(data.data.errors.mail_copy_to);
+						}
 
 						// toggle error messages
 						jsBackend.formBuilder.fields.toggleValidationErrors('textboxDialog');

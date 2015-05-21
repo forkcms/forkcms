@@ -250,6 +250,8 @@ class Edit extends BackendBaseActionEdit
 
                     // add to array
                     $this->widgets[] = array(
+                        'checkbox_name' => \SpoonFilter::toCamelCase($module) . \SpoonFilter::toCamelCase($widgetName),
+                        'module_name' => $module,
                         'label' => \SpoonFilter::toCamelCase($widgetName),
                         'value' => $widgetName,
                         'description' => $description
@@ -306,16 +308,19 @@ class Edit extends BackendBaseActionEdit
         foreach ($this->modules as $key => $module) {
             // widgets available?
             if (isset($this->widgets)) {
+
                 // loop through widgets
                 foreach ($this->widgets as $j => $widget) {
                     // widget is present?
-                    if (isset($this->dashboardSequence[$module['value']][$widget['value']]['present']) && $this->dashboardSequence[$module['value']][$widget['value']]['present'] === true) {
-                        // add to array
-                        $selectedWidgets[$j] = $widget['value'];
+                    if (isset($this->dashboardSequence[$module['value']][$widget['value']]['present']) &&
+                        $this->dashboardSequence[$module['value']][$widget['value']]['present'] === true &&
+                        $widget['checkbox_name'] == $module['value'] . $widget['value']) {
+                        $selectedWidgets[$j] = $widget['checkbox_name'];
                     }
 
                     // add widget checkboxes
-                    $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['label'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
+                    $widgetBoxes[$j]['checkbox'] = '<span>' . $this->frm->addCheckbox('widgets_' . $widget['checkbox_name'], isset($selectedWidgets[$j]) ? $selectedWidgets[$j] : null)->parse() . '</span>';
+                    $widgetBoxes[$j]['module'] = \SpoonFilter::ucfirst(BL::lbl($widget['module_name']));
                     $widgetBoxes[$j]['widget'] = '<label for="widgets' . \SpoonFilter::toCamelCase($widget['label']) . '">' . $widget['label'] . '</label>';
                     $widgetBoxes[$j]['description'] = $widget['description'];
                 }
@@ -409,7 +414,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Update the permissions
      *
-     * @param array $actionPermissions The action permissions.
+     * @param \SpoonFormElement[] $actionPermissions The action permissions.
      * @param array $bundledActionPermissions The bundled action permissions.
      */
     private function updatePermissions($actionPermissions, $bundledActionPermissions)
@@ -501,7 +506,7 @@ class Edit extends BackendBaseActionEdit
     /**
      * Update the widgets
      *
-     * @param array $widgetPresets The widgets presets.
+     * @param \SpoonFormElement[] $widgetPresets The widgets presets.
      * @return array
      */
     private function updateWidgets($widgetPresets)
@@ -523,6 +528,10 @@ class Edit extends BackendBaseActionEdit
 
         // loop through all widgets
         foreach ($this->widgetInstances as $widget) {
+            if (!BackendModel::isModuleInstalled($widget['module'])) {
+                continue;
+            }
+
             // create instance
             $instance = new $widget['className']($this->getKernel());
 
@@ -546,11 +555,18 @@ class Edit extends BackendBaseActionEdit
             foreach ($widgetPresets as $preset) {
                 // if selected
                 if ($preset->getChecked()) {
-                    // remove widgets_ prefix
-                    $selected = str_replace('widgets_', '', $preset->getName());
+                    // get the preset module name
+                    $presetModule = str_replace('widgets_', '', str_replace($widget['widget'], '', $preset->getName()));
 
-                    // if selected is the right widget, set visible
-                    if ($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    // if the preset module name matches the widget module name
+                    if($presetModule == $widget['module'])
+                    {
+                        // remove widgets_[modulename] prefix
+                        $selected = str_replace('widgets_' . $widget['module'], '', $preset->getName());
+
+                        // if right widget set visible
+                        if ($selected == $widget['widget']) $this->dashboardSequence[$widget['module']][$widget['widget']]['present'] = true;
+                    }
                 }
             }
         }
@@ -673,7 +689,7 @@ class Edit extends BackendBaseActionEdit
             }
 
             // loop through widgets and collect presets
-            foreach ($this->widgets as $widget) $widgetPresets[] = $this->frm->getField('widgets_' . $widget['label']);
+            foreach ($this->widgets as $widget) $widgetPresets[] = $this->frm->getField('widgets_' . $widget['checkbox_name']);
 
             // validate fields
             $nameField->isFilled(BL::err('NameIsRequired'));

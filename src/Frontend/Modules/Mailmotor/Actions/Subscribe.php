@@ -105,7 +105,7 @@ class Subscribe extends FrontendBaseBlock
                     );
                 } catch (\Exception $e) {
                     // when debugging we need to see the exceptions
-                    if (SPOON_DEBUG) {
+                    if ($this->getContainer()->getParameter('kernel.debug')) {
                         throw $e;
                     }
 

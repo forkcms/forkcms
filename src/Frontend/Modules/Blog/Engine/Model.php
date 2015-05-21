@@ -133,7 +133,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -287,7 +287,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -397,7 +397,7 @@ class Model implements FrontendTagsInterface
             $items[$key]['allow_comments'] = ($row['allow_comments'] == 'Y');
 
             // reset allow comments
-            if (!FrontendModel::getModuleSetting('Blog', 'allow_comments')) {
+            if (!FrontendModel::get('fork.settings')->get('Blog', 'allow_comments')) {
                 $items[$key]['allow_comments'] = false;
             }
 
@@ -922,8 +922,8 @@ class Model implements FrontendTagsInterface
         FrontendModel::pushToAppleApp($alert, null, 'default', $data);
 
         // get settings
-        $notifyByMailOnComment = FrontendModel::getModuleSetting('Blog', 'notify_by_email_on_new_comment', false);
-        $notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting(
+        $notifyByMailOnComment = FrontendModel::get('fork.settings')->get('Blog', 'notify_by_email_on_new_comment', false);
+        $notifyByMailOnCommentToModerate = FrontendModel::get('fork.settings')->get(
             'Blog',
             'notify_by_email_on_new_comment_to_moderate',
             false
@@ -953,9 +953,9 @@ class Model implements FrontendTagsInterface
                 );
             }
 
-            $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
-            $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-            $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
                 ->setFrom(array($from['email'] => $from['name']))
                 ->setTo(array($to['email'] => $to['name']))
@@ -975,9 +975,9 @@ class Model implements FrontendTagsInterface
                 array($comment['author'], $URL, $comment['post_title'], $backendURL)
             );
 
-            $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
-            $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-            $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+            $to = FrontendModel::get('fork.settings')->get('Core', 'mailer_to');
+            $from = FrontendModel::get('fork.settings')->get('Core', 'mailer_from');
+            $replyTo = FrontendModel::get('fork.settings')->get('Core', 'mailer_reply_to');
             $message = \Common\Mailer\Message::newInstance(FL::msg('NotificationSubject'))
                 ->setFrom(array($from['email'] => $from['name']))
                 ->setTo(array($to['email'] => $to['name']))
@@ -1016,8 +1016,9 @@ class Model implements FrontendTagsInterface
         );
 
         // prepare items for search
+        $detailUrl = FrontendNavigation::getURLForBlock('Blog', 'Detail');
         foreach ($items as &$item) {
-            $item['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $item['url'];
+            $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
 
         // return

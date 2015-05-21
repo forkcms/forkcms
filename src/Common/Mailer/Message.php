@@ -38,7 +38,7 @@ class Message extends \Swift_Message
      * @param string $contentType
      * @param string $charset
      *
-     * @return Swift_Message
+     * @return Message
      */
     public static function newInstance($subject = null, $body = null, $contentType = null, $charset = null)
     {
@@ -81,7 +81,7 @@ class Message extends \Swift_Message
             foreach ($attachments as $attachment) {
                 // only add existing files
                 if (is_file($attachment)) {
-                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                    $this->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
         }
@@ -98,7 +98,7 @@ class Message extends \Swift_Message
     public function setPlainText($content)
     {
         if ($content !== null) {
-            $message->addPart($content, 'text/plain');
+            $this->addPart($content, 'text/plain');
         }
 
         return $this;
@@ -174,10 +174,12 @@ class Message extends \Swift_Message
      */
     private function cssToInlineStyles($html)
     {
+        $charset = Model::getContainer()->getParameter('kernel.charset');
+
         $cssToInlineStyles = new CssToInlineStyles();
         $cssToInlineStyles->setHTML($html);
         $cssToInlineStyles->setUseInlineStylesBlock(true);
-        $cssToInlineStyles->setEncoding(SPOON_CHARSET);
+        $cssToInlineStyles->setEncoding($charset);
 
         return (string) $cssToInlineStyles->convert();
     }

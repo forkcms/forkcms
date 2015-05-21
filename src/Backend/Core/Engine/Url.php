@@ -15,6 +15,7 @@ use Backend\Core\Engine\Model as BackendModel;
 use Common\Cookie as CommonCookie;
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Finder\Finder;
 
 /**
  * This class will handle the incoming URL.
@@ -76,7 +77,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return trim((string)$this->request->getRequestUri(), '/');
     }
 
     /**
@@ -117,7 +118,7 @@ class Url extends Base\Object
             array_shift($chunks);
 
             // redirect to login
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . (empty($chunks) ? '' : '/') . implode('/', $chunks) . $getParameters
             );
         }
@@ -130,33 +131,28 @@ class Url extends Base\Object
         if (isset($chunks[3]) && $chunks[3] != '') {
             $action = \SpoonFilter::toCamelCase($chunks[3]);
         } elseif (!$isAJAX) {
-            // check if module path is not yet defined
-            if (!defined('BACKEND_MODULE_PATH')) {
-                // build path for core
-                if ($module == 'Core') {
-                    define('BACKEND_MODULE_PATH', BACKEND_PATH . '/' . $module);
-                } else {
-                    // build path to the module and define it. This is a constant because we can use this in templates.
-                    define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
-                }
-            }
-
-            /**
-             * Check if we can load the config file
-             */
+            // Check if we can load the config file
             $configClass = 'Backend\\Modules\\' . $module . '\\Config';
             if ($module == 'Core') {
                 $configClass = 'Backend\\Core\\Config';
             }
 
             try {
+                // when loading a backend url for a module that doesn't exist, without
+                // providing an action, a FatalErrorException occurs, because the config
+                // class we're trying to load doesn't exist. Let's just throw instead,
+                // and catch it immediately.
+                if (!class_exists($configClass)) {
+                    throw new Exception('The config class does not exist');
+                }
+
                 /** @var BackendBaseConfig $config */
                 $config = new $configClass($this->getKernel(), $module);
 
                 // set action
                 $action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'Index';
             } catch (Exception $ex) {
-                if (SPOON_DEBUG) {
+                if (BackendModel::getContainer()->getParameter('kernel.debug')) {
                     throw new Exception('The config file for the module (' . $module . ') can\'t be found.');
                 } else {
                     // @todo    don't use redirects for error, we should have something like an invoke method.
@@ -168,7 +164,7 @@ class Url extends Base\Object
                     $errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
 
                     // redirect to the error page
-                    \SpoonHTTP::redirect($errorUrl, 307);
+                    $this->redirect($errorUrl, 307);
                 }
             }
         }
@@ -193,8 +189,8 @@ class Url extends Base\Object
     /**
      * Process a regular request
      *
-     * @param string $module   The requested module.
-     * @param string $action   The requested action.
+     * @param string $module The requested module.
+     * @param string $action The requested action.
      * @param string $language The requested language.
      */
     private function processRegularRequest($module, $action, $language)
@@ -202,55 +198,71 @@ class Url extends Base\Object
         // the person isn't logged in? or the module doesn't require authentication
         if (!Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
             // redirect to login
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
                     '/' . $this->getQueryString()
                 )
             );
-        } else {
-            // the person is logged in, does our user has access to this module?
-            if (!Authentication::isAllowedModule($module)) {
-                // if the module is the dashboard redirect to the first allowed module
-                if ($module == 'Dashboard') {
-                    // require navigation-file
-                    require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
+        } elseif (Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
+            // the person is logged in, but doesn't have access to our action
+            // if the module is the dashboard redirect to the first allowed module
+            if ($module == 'Dashboard') {
+                // require navigation-file
+                require_once BACKEND_CACHE_PATH . '/Navigation/navigation.php';
 
-                    // loop the navigation to find the first allowed module
-                    foreach ($navigation as $value) {
-                        // split up chunks
-                        list($module, $action) = explode('/', $value['url']);
+                // loop the navigation to find the first allowed module
+                foreach ($navigation as $value) {
+                    // split up chunks
+                    list($module, $action) = explode('/', $value['url']);
 
-                        // user allowed?
-                        if (Authentication::isAllowedModule($module)) {
-                            // redirect to the page
-                            \SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+                    // user allowed?
+                    if (Authentication::isAllowedModule($module)) {
+                        // redirect to the page
+                        $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' . $value['url']);
+                    } else {
+                        if (array_key_exists('children', $value)) {
+                            foreach ($value['children'] as $subItem) {
+                                // split up chunks
+                                list($module, $action) = explode('/', $subItem['url']);
+
+                                // user allowed?
+                                if (Authentication::isAllowedModule($module)) {
+                                    $finder = new Finder();
+                                    $files = $finder->files()->name('*.php')->in(BACKEND_MODULES_PATH . '/' . \SpoonFilter::toCamelCase($module) . '/Actions');
+                                    foreach ($files as $file) {
+                                        $moduleAction = substr($file->getFilename(), 0, -4);
+                                        if (Authentication::isAllowedAction($moduleAction, $module)) {
+                                            $this->redirect('/' . NAMED_APPLICATION . '/' . $language . '/' .
+                                                $module . '/' . $moduleAction);
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                // the user doesn't have access, redirect to error page
-                \SpoonHTTP::redirect(
-                    '/' . NAMED_APPLICATION . '/' . $language .
-                    '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
-                    307
-                );
-            } else {
-                // can our user execute the requested action?
-                if (!Authentication::isAllowedAction($action, $module)) {
-                    // the user hasn't access, redirect to error page
-                    \SpoonHTTP::redirect(
-                        '/' . NAMED_APPLICATION . '/' . $language .
-                        '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
-                        307
-                    );
-                } else {
-                    // set the working language, this is not the interface language
-                    Language::setWorkingLanguage($language);
-
-                    $this->setLocale();
-                    $this->setModule($module);
-                    $this->setAction($action);
-                }
             }
+
+            // the user doesn't have access, redirect to error page
+            $this->redirect(
+                '/' . NAMED_APPLICATION . '/' . $language .
+                '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                307
+            );
+        } elseif (!Authentication::isAllowedAction($action, $module)) {
+            // the user hasn't access, redirect to error page
+            $this->redirect(
+                '/' . NAMED_APPLICATION . '/' . $language .
+                '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                307
+            );
+        } else {
+            // set the working language, this is not the interface language
+            Language::setWorkingLanguage($language);
+
+            $this->setLocale();
+            $this->setModule($module);
+            $this->setAction($action);
         }
     }
 
@@ -259,7 +271,7 @@ class Url extends Base\Object
      */
     private function setLocale()
     {
-        $default = BackendModel::getModuleSetting('Core', 'default_interface_language');
+        $default = $this->get('fork.settings')->get('Core', 'default_interface_language');
         $locale = $default;
         $possibleLocale = array_keys(Language::getInterfaceLanguages());
 

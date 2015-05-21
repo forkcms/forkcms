@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
 use Frontend\Modules\Profiles\Engine\Model as FrontendProfilesModel;
 
@@ -34,7 +35,7 @@ class TemplateModifiers
         // detect links
         $var = \SpoonFilter::replaceURLsWithAnchors(
             $var,
-            Model::getModuleSetting('Core', 'seo_nofollow_in_comments', false)
+            Model::get('fork.settings')->get('Core', 'seo_nofollow_in_comments', false)
         );
 
         // replace newlines
@@ -75,15 +76,17 @@ class TemplateModifiers
      */
     public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
     {
+        $decimals = ($decimals === null) ? 2 : (int) $decimals;
+
         // @later get settings from backend
         switch ($currency) {
             case 'EUR':
-                $decimals = ($decimals === null) ? 2 : (int) $decimals;
-
-                // format as Euro
-                return '€ ' . number_format((float) $var, $decimals, ',', ' ');
+                $currency = '€';
                 break;
+            default:
         }
+
+        return $currency . ' ' . number_format((float) $var, $decimals, ',', ' ');
     }
 
     /**
@@ -112,7 +115,7 @@ class TemplateModifiers
         $var = (float) $var;
 
         // get setting
-        $format = Model::getModuleSetting('Core', 'number_format');
+        $format = Model::get('fork.settings')->get('Core', 'number_format');
 
         // get amount of decimals
         $decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
@@ -249,7 +252,8 @@ class TemplateModifiers
         $chunks = (array) explode('/', $pageInfo['full_url']);
 
         // remove language chunk
-        $chunks = (SITE_MULTILANGUAGE) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
+        $hasMultiLanguages = FrontendModel::getContainer()->getParameter('site.multilanguage');
+        $chunks = ($hasMultiLanguages) ? (array) array_slice($chunks, 2) : (array) array_slice($chunks, 1);
         if (count($chunks) == 0) {
             $chunks[0] = '';
         }
@@ -367,6 +371,9 @@ class TemplateModifiers
     /**
      * Parse a widget straight from the template, rather than adding it through pages.
      *
+     * @internal if your widget outputs random data you should cache it inside the widget
+     * Fork checks the output and if the output of the widget is random it will loop until the random data
+     * is the same as in the previous iteration
      * @param string $var    The variable.
      * @param string $module The module whose module we want to execute.
      * @param string $action The action to execute.
@@ -391,7 +398,7 @@ class TemplateModifiers
             return $content;
         } catch (Exception $e) {
             // if we are debugging, we want to see the exception
-            if (SPOON_DEBUG) {
+            if (Model::getContainer()->getParameter('kernel.debug')) {
                 throw $e;
             }
 
@@ -452,7 +459,7 @@ class TemplateModifiers
      */
     public static function stripNewlines($var)
     {
-        return str_replace(array("\n", "\r"), '', $var);
+        return str_replace(array("\r\n", "\n", "\r"), ' ', $var);
     }
 
     /**
@@ -473,7 +480,7 @@ class TemplateModifiers
 
         // return
         return '<abbr title="' . \SpoonDate::getDate(
-            Model::getModuleSetting('Core', 'date_format_long') . ', ' . Model::getModuleSetting(
+            Model::get('fork.settings')->get('Core', 'date_format_long') . ', ' . Model::get('fork.settings')->get(
                 'Core',
                 'time_format'
             ),
@@ -484,17 +491,21 @@ class TemplateModifiers
 
     /**
      * Truncate a string
-     *    syntax: {$var|truncate:max-length[:append-hellip]}
+     *    syntax: {$var|truncate:max-length[:append-hellip][:closest-word]}
      *
-     * @param string $var       The string passed from the template.
-     * @param int    $length    The maximum length of the truncated string.
-     * @param bool   $useHellip Should a hellip be appended if the length exceeds the requested length?
+     * @param string $var         The string passed from the template.
+     * @param int    $length      The maximum length of the truncated string.
+     * @param bool   $useHellip   Should a hellip be appended if the length exceeds the requested length?
+     * @param bool   $closestWord Truncate on exact length or on closest word?
      * @return string
      */
-    public static function truncate($var = null, $length, $useHellip = true)
+    public static function truncate($var = null, $length, $useHellip = true, $closestWord = false)
     {
+        // init vars
+        $charset = Model::getContainer()->getParameter('kernel.charset');
+
         // remove special chars, all of them, also the ones that shouldn't be there.
-        $var = \SpoonFilter::htmlentitiesDecode($var, ENT_QUOTES);
+        $var = \SpoonFilter::htmlentitiesDecode($var, null, ENT_QUOTES);
 
         // remove HTML
         $var = strip_tags($var);
@@ -509,8 +520,12 @@ class TemplateModifiers
                 $length = $length - 1;
             }
 
-            // get the amount of requested characters
-            $var = mb_substr($var, 0, $length, SPOON_CHARSET);
+            // truncate
+            if ($closestWord) {
+                $var = mb_substr($var, 0, strrpos(substr($var, 0, $length + 1), ' '), $charset);
+            } else {
+                $var = mb_substr($var, 0, $length, $charset);
+            }
 
             // add hellip
             if ($useHellip) {
