@@ -222,10 +222,12 @@ class SaveField extends BackendBaseAJAXAction
                         if($placeholder != '') {
                             $settings['placeholder'] = \SpoonFilter::htmlspecialchars($placeholder);
                         }
+
                         // reply-to, only for textboxes
                         if ($type == 'textbox') {
                             $settings['reply_to'] = ($replyTo == 'Y');
                         }
+
                         // only for datetime input
                         if ($type == 'datetime') {
                             $settings['input_type'] = $inputType;

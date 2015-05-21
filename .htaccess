@@ -43,7 +43,6 @@ FileETag MTime Size
 	# one url to rule them all
 	# RewriteCond %{HTTP_HOST} !^www\.<domain>\.be [NC]
 	# RewriteCond %{HTTP_HOST} !.*\.dev [NC]
-	# RewriteCond %{HTTP_HOST} !.*\.xip.io [NC]
 	# RewriteRule ^(.*)$ http://www.<domain>.be/$1 [R=301,L]
 
 	# src dir should pass via the front controller

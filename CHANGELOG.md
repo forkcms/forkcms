@@ -370,6 +370,9 @@ Improvements:
 * Analytics: Better event tracking
 * FAQ: Category questions widget added
 * Mailmotor: Subscribe widget uses form token
+
+Bugfixes:
+
 * Location: Creating a new location gave an exception
 
 
