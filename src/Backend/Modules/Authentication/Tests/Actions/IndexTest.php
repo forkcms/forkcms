@@ -78,4 +78,29 @@ class IndexTest extends WebTestCase
             $client->getResponse()->getContent()
         );
     }
+
+    public function testPagesUserWithCorrectCredentials()
+    {
+        $client = static::createClient();
+        $client->followRedirects();
+
+        $crawler = $client->request('GET', '/private/en/authentication');
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, array(
+            'form' => 'authenticationIndex',
+            'backend_email' => 'pages-user@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ));
+
+        $this->assertContains(
+            'Recently edited',
+            $client->getResponse()->getContent()
+        );
+    }
 }
