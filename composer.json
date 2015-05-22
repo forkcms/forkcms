@@ -13,7 +13,7 @@
         "symfony/assetic-bundle": "~2.3",
         "symfony/swiftmailer-bundle": "~2.3",
         "symfony/monolog-bundle": "2.3.*",
-        "spoon/library": "~1.3",
+        "spoon/library": "~2.0.0",
         "behat/transliterator": "~1.0",
         "google/apiclient": "~1.1.2",
 
