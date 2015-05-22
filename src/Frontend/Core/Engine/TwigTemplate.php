@@ -97,7 +97,7 @@ Class TwigTemplate
             Model::getContainer()->set('template', $this);
         }
 
-        $this->themePath = FRONTEND_PATH . '/Themes/' . get('fork.settings')->get('Core', 'theme', 'default');
+        $this->themePath = FRONTEND_PATH . '/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         // move to kernel parameter
@@ -418,16 +418,16 @@ Class TwigTemplate
         $twig->addGlobal('debug', $this->debugMode);
 
         $twig->addGlobal('timestamp', time());
-        $twig->addGlobal('timeFormat', get('fork.settings')->get('Core', 'time_format'));
-        $twig->addGlobal('dateFormatShort', get('fork.settings')->get('Core', 'date_format_short'));
-        $twig->addGlobal('dateFormatLong', get('fork.settings')->get('Core', 'date_format_long'));
+        $twig->addGlobal('timeFormat', Model::get('fork.settings')->get('Core', 'time_format'));
+        $twig->addGlobal('dateFormatShort', Model::get('fork.settings')->get('Core', 'date_format_short'));
+        $twig->addGlobal('dateFormatLong', Model::get('fork.settings')->get('Core', 'date_format_long'));
 
         // old theme checker
-        if (get('fork.settings')->get('Core', 'theme') !== null) {
-            $twig->addGlobal('THEME', get('fork.settings')->get('Core', 'theme', 'default'));
+        if (Model::get('fork.settings')->get('Core', 'theme') !== null) {
+            $twig->addGlobal('THEME', Model::get('fork.settings')->get('Core', 'theme', 'default'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Frontend/Themes/' . get('fork.settings')->get('Core', 'theme', 'default')
+                '/src/Frontend/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default')
             );
         }
 
@@ -460,35 +460,35 @@ Class TwigTemplate
         // settings
         $twig->addGlobal(
             'SITE_TITLE',
-            get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
 
         // facebook stuff
-        if (get('fork.settings')->get('Core', 'facebook_admin_ids', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_ADMIN_IDS',
-                get('fork.settings')->get('Core', 'facebook_admin_ids', null)
+                Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null)
             );
         }
-        if (get('fork.settings')->get('Core', 'facebook_app_id', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_app_id', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_APP_ID',
-                get('fork.settings')->get('Core', 'facebook_app_id', null)
+                Model::get('fork.settings')->get('Core', 'facebook_app_id', null)
             );
         }
-        if (get('fork.settings')->get('Core', 'facebook_app_secret', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_app_secret', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_APP_SECRET',
-                get('fork.settings')->get('Core', 'facebook_app_secret', null)
+                Model::get('fork.settings')->get('Core', 'facebook_app_secret', null)
             );
         }
 
         // twitter stuff
-        if (get('fork.settings')->get('Core', 'twitter_site_name', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'twitter_site_name', null) !== null) {
             // strip @ from twitter username
             $twig->addGlobal(
                 'TWITTER_SITE_NAME',
-                ltrim(get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
+                ltrim(Model::get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
             );
         }
     }
