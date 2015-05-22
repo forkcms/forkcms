@@ -427,6 +427,9 @@ class Authentication
             \SpoonSession::set('backend_logged_in', true);
             \SpoonSession::set('backend_secret_key', $session['secret_key']);
 
+            // Update/instantiate the value for the logged_in container.
+            BackendModel::getContainer()->set('logged_in', true);
+
             // return result
             return true;
         } else {
@@ -435,6 +438,9 @@ class Authentication
             // because session-data can be used on the site.
             \SpoonSession::set('backend_logged_in', false);
             \SpoonSession::set('backend_secret_key', '');
+
+            // Update/instantiate the value for the logged_in container.
+            BackendModel::getContainer()->set('logged_in', false);
 
             // return result
             return false;
