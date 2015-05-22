@@ -11,7 +11,6 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  *

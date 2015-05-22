@@ -9,8 +9,6 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model;
-
 /**
  * This is our extended version of \SpoonTemplate
  * This class will handle a lot of stuff for you, for example:

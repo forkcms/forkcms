@@ -14,7 +14,6 @@ use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Mailmotor\Engine\Model as BackendMailmotorModel;
 use Backend\Modules\Mailmotor\Engine\CMHelper as BackendMailmotorCMHelper;
 
-
 /**
  * This action will delete all bounces for a specified mailing
  *
