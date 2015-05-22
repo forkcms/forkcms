@@ -43,8 +43,8 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @param \Symfony\Component\DomCrawler\Crawler $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
      * @return mixed
      */
     private function runTroughStep2($crawler, $client)
@@ -77,8 +77,8 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @param \Symfony\Component\DomCrawler\Crawler $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
      * @return mixed
      */
     private function runTroughStep3($crawler, $client)
@@ -101,8 +101,8 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @param \Symfony\Component\DomCrawler\Crawler $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
      * @return mixed
      */
     private function runTroughStep4($crawler, $client)
@@ -144,8 +144,8 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @param \Symfony\Component\DomCrawler\Crawler $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client $client
      * @return mixed
      */
     private function runTroughStep5($crawler, $client)
