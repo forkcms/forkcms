@@ -75,6 +75,12 @@
     </div>
   {/option:ddmProfile}
 
+  {option:noAccounts}
+    <div class="generalMessage infoMessage content">
+      <p><strong>{$msgNoAccounts|sprintf:{$email}}</strong></p>
+    </div>
+  {/option:noAccounts}
+
   <div class="fullwidthOptions">
     <div class="buttonHolderRight">
       <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

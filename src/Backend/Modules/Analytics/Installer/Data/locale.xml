@@ -216,6 +216,11 @@
             </ol>
           </p>]]></translation>
       </item>
+
+      <item type="message" name="NoAccounts">
+        <translation language="nl"><![CDATA[Er zijn geen analytics accounts gekoppeld aan het opgegeven emailadres. Zorg dat het emailaddres %1$s zeker toegevoegd is aan de gewenste account. Het kan even duren voor de koppeling voltooid is.]]></translation>
+        <translation language="en"><![CDATA[There are no analytics accounts coupled to the given emailadres. Make sure you added the emailaddress %1$s to the wanted account. It can take a while before the coupling is completed.]]></translation>
+      </item>
     </Analytics>
   </Backend>
 </locale>
