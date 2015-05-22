@@ -7,6 +7,7 @@ use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
 use Backend\Modules\Analytics\GoogleClient\ClientFactory;
+use Google_Service_Exception;
 
 /**
  * This is the settings-action (default), it will be used to couple your analytics
@@ -49,7 +50,16 @@ final class Settings extends ActionIndex
         // we are authenticated! Let's see which account the user wants to use
         if ($this->get('fork.settings')->get($this->getModule(), 'account') === null) {
             $analytics = $this->get('analytics.google_analytics_service');
-            $accounts = $analytics->management_accounts->listManagementAccounts();
+            try {
+                $accounts = $analytics->management_accounts->listManagementAccounts();
+            } catch (Google_Service_Exception $e) {
+                $this->tpl->assign(
+                    'email',
+                    $this->get('fork.settings')->get($this->getModule(), 'email')
+                );
+                return $this->tpl->assign('noAccounts', true);
+            }
+
             $accountsForDropdown = array();
             foreach ($accounts->getItems() as $account) {
                 $accountsForDropdown[$account->getId()] = $account->getName();
