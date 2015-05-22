@@ -353,7 +353,7 @@ Class TwigTemplate
         $twig->addFilter(new \Twig_SimpleFilter('striptags', 'strip_tags'));
         $twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
         $twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
-        $twig->addFilter(new \Twig_SimpleFilter('uppercase', 'uppercase'));
+        $twig->addFilter(new \Twig_SimpleFilter('uppercase', 'Frontend\Core\Engine\TwigTemplate::uppercase'));
         $twig->addFilter(new \Twig_SimpleFilter('sprintf', 'sprintf'));
         $twig->addFilter(new \Twig_SimpleFilter('spoon_date', 'Frontend\Core\Engine\TwigTemplate::spoonDate'));
         $twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
@@ -452,7 +452,7 @@ Class TwigTemplate
             $this->assignArray($realConstants);
         }
 
-        // Setup Frontend for the Twig environment.
+        /* Setup Frontend for the Twig environment. */
 
         // locale object
         $twig->addGlobal('lng', new FL());
