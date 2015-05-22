@@ -72,7 +72,6 @@ class Header extends Base\Object
         // grab from the reference
         $this->URL = $this->getContainer()->get('url');
         $this->tpl = $this->getContainer()->get('template');
-
     }
 
     /**

@@ -9,7 +9,7 @@ namespace Frontend\Modules\Tags\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Url as FrontendURL;
 
 /**
  * In this file we specify the functions a class must implement to work with tags.
