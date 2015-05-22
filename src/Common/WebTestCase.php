@@ -85,6 +85,8 @@ abstract class WebTestCase extends BaseWebTestCase
 
     /**
      * Executes sql in the database
+     *
+     * @param \SpoonDatabase $database
      * @param string $sql
      */
     protected function importSQL($database, $sql)
@@ -94,6 +96,7 @@ abstract class WebTestCase extends BaseWebTestCase
 
     /**
      * @param Client $client
+     * @param array $fixtureClasses
      */
     protected function loadFixtures($client, $fixtureClasses = array())
     {

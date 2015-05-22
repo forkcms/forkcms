@@ -32,6 +32,7 @@ class AjaxAction extends Base\Object
      * We will build the classname, require the class and call the execute method.
      *
      * @return Response
+     * @throws Exception
      */
     public function execute()
     {
