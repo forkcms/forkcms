@@ -189,14 +189,16 @@ class Index extends BackendBaseActionIndex
 
                 // get all modules
                 $modules = array_diff(BackendModel::getModules(), $filter);
+                $allowedModule = false;
 
                 // redirect to the dashboard module if possible
                 if (BackendAuthentication::isAllowedModule('Dashboard')) {
-                    $module = 'Dashboard';
+                    $allowedModule = 'Dashboard';
                 } else {
                     // if not allowed in the dashboard, redirect to the first allowed module
                     foreach ($modules as $module) {
                         if (BackendAuthentication::isAllowedModule($module)) {
+                            $allowedModule = $module;
                             break;
                         }
                     }
@@ -207,7 +209,12 @@ class Index extends BackendBaseActionIndex
                 );
 
                 // redirect to the correct URL (URL the user was looking for or fallback)
-                $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
+                $this->redirect($this->getParameter('querystring', 'string',
+                    $allowedModule ?
+                        BackendModel::createUrlForAction(null, $allowedModule) :
+                        BackendModel::createUrlForAction('index', 'Authentication')
+                    )
+                );
             }
         }
 
