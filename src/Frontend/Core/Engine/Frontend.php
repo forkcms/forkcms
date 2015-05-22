@@ -43,7 +43,7 @@ class Frontend extends \KernelLoader implements \ApplicationInterface
     public function initialize()
     {
         new Url($this->getKernel());
-        $templateType = (string) $this->getContainer()->getParameter('fork.template');
+        $templateType = $this->getContainer()->getParameter('fork.template');
 
         // choose your destiny!
         ($templateType == 'twig') ? new TwigTemplate() : new Template();
