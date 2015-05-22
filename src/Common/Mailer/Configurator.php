@@ -4,7 +4,7 @@ namespace Common\Mailer;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Frontend\Core\Engine\Model;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class Configurator implements EventSubscriberInterface
 {
@@ -45,6 +45,11 @@ class Configurator implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param $name
+     * @param null $default
+     * @return mixed|null
+     */
     private function getMailSetting($name, $default = null)
     {
         if (empty($this->settings)) {

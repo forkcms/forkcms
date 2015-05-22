@@ -83,6 +83,7 @@ class FormImage extends \SpoonFormImage
      *
      * @param \SpoonTemplate $template The template to parse the element in.
      * @return string
+     * @throws \SpoonFormException
      */
     public function parse($template = null)
     {

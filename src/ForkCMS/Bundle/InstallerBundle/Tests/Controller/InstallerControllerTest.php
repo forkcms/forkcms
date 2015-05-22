@@ -28,7 +28,7 @@ class InstallerControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        // make sure we have a clean slate and our parametersfile is backed up
+        // make sure we have a clean slate and our parameters file is backed up
         $this->emptyTestDatabase($client->getContainer()->get('database'));
         $this->backupParametersFile($client->getContainer()->getParameter('kernel.root_dir'));
 
@@ -44,7 +44,8 @@ class InstallerControllerTest extends WebTestCase
 
     /**
      * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @return mixed
      */
     private function runTroughStep2($crawler, $client)
     {
@@ -76,7 +77,9 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @return mixed
      */
     private function runTroughStep3($crawler, $client)
     {
@@ -98,7 +101,9 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @return mixed
      */
     private function runTroughStep4($crawler, $client)
     {
@@ -139,7 +144,9 @@ class InstallerControllerTest extends WebTestCase
     }
 
     /**
-     * @param \Symfony\Bundle\FrameworkBundle\Client $client
+     * @param \Symfony\Component\DomCrawler\Crawler|null $crawler
+     * @param \Symfony\Bundle\FrameworkBundle\Client|null $client
+     * @return mixed
      */
     private function runTroughStep5($crawler, $client)
     {
