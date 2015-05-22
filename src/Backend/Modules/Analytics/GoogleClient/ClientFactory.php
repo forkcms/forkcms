@@ -29,7 +29,7 @@ class ClientFactory
      *
      * @return Google_Client
      */
-    public static function createClient()
+    public function createClient()
     {
         $client = new \Google_Client();
 
@@ -49,8 +49,8 @@ class ClientFactory
         return $client;
     }
 
-    public static function createAnalyticsService()
+    public function createAnalyticsService()
     {
-        return new Google_Service_Analytics(self::createClient());
+        return new Google_Service_Analytics($this->createClient());
     }
 }
