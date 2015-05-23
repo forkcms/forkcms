@@ -57,6 +57,26 @@ class Edit extends BackendBaseActionEdit
     public function execute()
     {
         $this->id = $this->getParameter('id', 'int');
+        $this->error = $this->getParameter('error', 'string');
+        $this->loadAuthenticatedUser();
+
+        // If id and error parameters are not set we'll assume the user logged in
+        // and has been redirected to this action by the authentication index action.
+        // When this is the case the user will be redirected to the index action of this module.
+        // An action to which he may not have any user rights.
+        // Redirect to the user's own profile instead to avoid unnessary words.
+        if(
+            $this->id === null &&
+            $this->error === null &&
+            $this->authenticatedUser->getUserId()
+        )
+        {
+            $this->redirect(
+                BackendModel::createURLForAction(
+                    'Edit'
+                ) . '&id=' . $this->authenticatedUser->getUserId()
+            );
+        }
 
         // does the user exists
         if ($this->id !== null && BackendUsersModel::exists($this->id)) {
@@ -71,6 +91,15 @@ class Edit extends BackendBaseActionEdit
         }
     }
 
+    /*
+     * Load the authenticated user in a seperate method
+     * so we can load it before the form starts loading.
+     */
+    private function loadAuthenticatedUser()
+    {
+        $this->authenticatedUser = BackendAuthentication::getUser();
+    }
+
     /**
      * Load the form
      */
@@ -78,7 +107,6 @@ class Edit extends BackendBaseActionEdit
     {
         // create user objects
         $this->user = new BackendUser($this->id);
-        $this->authenticatedUser = BackendAuthentication::getUser();
         $this->allowUserRights = (
             (BackendAuthentication::isAllowedAction('Add') || $this->authenticatedUser->getUserId() != $this->id) ||
             $this->authenticatedUser->isGod()
