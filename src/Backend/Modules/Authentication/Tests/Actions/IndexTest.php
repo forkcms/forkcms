@@ -3,6 +3,7 @@
 namespace Backend\Modules\Authentication\Tests\Action;
 
 use Common\WebTestCase;
+use Backend\Core\Engine\Authentication as Authentication;
 
 class IndexTest extends WebTestCase
 {
@@ -77,12 +78,26 @@ class IndexTest extends WebTestCase
             'now editing:',
             $client->getResponse()->getContent()
         );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
     }
 
     public function testPagesUserWithCorrectCredentials()
     {
-        $client = static::createClient();
+        // The authentication class persist the previous user.
+        // In practice this situation will almost never occur.
+        // Logging in one user only to log out and subsequently
+        // loggin in with another seems a bit much without
+        // a redirect in place to refresh the application.
+        // Another way to make this test, test. Would be to insulate
+        // the client in each test.
+        Authentication::tearDown();
+
+        $client = $this->createClient();
         $client->followRedirects();
+        $client->setMaxRedirects(10);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(

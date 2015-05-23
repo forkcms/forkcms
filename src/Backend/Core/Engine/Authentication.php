@@ -460,4 +460,17 @@ class Authentication
         \SpoonSession::set('backend_secret_key', '');
         \SpoonSession::set('csrf_token', '');
     }
+
+    /**
+     * Reset our class to make sure no contamination from previous
+     * authentications persists. This signifies a deeper issue with
+     * this class. Solving the issue would be preferable to introducting
+     * another method. This currently only exists to serve the test.
+     */
+    public static function tearDown()
+    {
+        self::$allowedActions = array();
+        self::$allowedModules = array();
+        self::$user = null;
+    }
 }
