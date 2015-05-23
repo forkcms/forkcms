@@ -117,5 +117,9 @@ class IndexTest extends WebTestCase
             'Recently edited',
             $client->getResponse()->getContent()
         );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
     }
 }
