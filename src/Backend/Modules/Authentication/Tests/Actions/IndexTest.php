@@ -95,7 +95,7 @@ class IndexTest extends WebTestCase
         // the client in each test.
         Authentication::tearDown();
 
-        $client = $this->createClient();
+        $client = static::createClient();
         $client->followRedirects();
         $client->setMaxRedirects(10);
 
