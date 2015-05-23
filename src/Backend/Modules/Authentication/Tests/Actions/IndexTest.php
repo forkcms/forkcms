@@ -122,4 +122,42 @@ class IndexTest extends WebTestCase
         $client->followRedirects(false);
         $client->request('GET', '/private/en/authentication/logout');
     }
+
+    public function testUsersUserWithCorrectCredentials()
+    {
+        // The authentication class persist the previous user.
+        // In practice this situation will almost never occur.
+        // Logging in one user only to log out and subsequently
+        // loggin in with another seems a bit much without
+        // a redirect in place to refresh the application.
+        // Another way to make this test, test. Would be to insulate
+        // the client in each test.
+        Authentication::tearDown();
+
+        $client = static::createClient();
+        $client->setMaxRedirects(2);
+
+        $crawler = $client->request('GET', '/private/en/authentication');
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, array(
+            'form' => 'authenticationIndex',
+            'backend_email' => 'users-edit-user@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ));
+
+        $this->assertContains(
+            'Users: edit user "Users User"',
+            $client->getResponse()->getContent()
+        );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
+    }
 }
