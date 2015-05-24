@@ -4,7 +4,7 @@ namespace Common\Mailer;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
-use Frontend\Core\Engine\Model;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 class Configurator implements EventSubscriberInterface
 {
@@ -21,7 +21,7 @@ class Configurator implements EventSubscriberInterface
     public function onKernelRequest(GetResponseEvent $event)
     {
         try {
-            $transport = \Common\Mailer\TransportFactory::create(
+            $transport = TransportFactory::create(
                 $this->getMailSetting('mailer_type', 'mail'),
                 $this->getMailSetting('smtp_server'),
                 $this->getMailSetting('smtp_port', 25),
@@ -45,6 +45,11 @@ class Configurator implements EventSubscriberInterface
         );
     }
 
+    /**
+     * @param $name
+     * @param null $default
+     * @return mixed|null
+     */
     private function getMailSetting($name, $default = null)
     {
         if (empty($this->settings)) {

@@ -14,7 +14,7 @@ class TransportFactory
      *
      * @param  string $type
      * @param  string $server
-     * @param  string $port
+     * @param  int $port
      * @param  string $user
      * @param  string $pass
      * @param  string $encryption

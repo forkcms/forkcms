@@ -10,8 +10,6 @@ namespace Api\V1\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Exception;
-use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 

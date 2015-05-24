@@ -79,7 +79,6 @@ class Location extends FrontendBaseWidget
      */
     private function parse()
     {
-
         $this->addJSData('settings_' . $this->item['id'], $this->settings);
         $this->addJSData('items_' . $this->item['id'], array($this->item));
 
