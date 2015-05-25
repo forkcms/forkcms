@@ -74,7 +74,7 @@
                                         {$txtTextboxRequiredErrorMessage}
                                     </div>
                                 </div>
-                                <div class="jsValidation" style="display: none;">
+                                <div class="jsValidation">
                                     <div class="form-group">
                                         <label for="textboxValidation">{$lblValidation|ucfirst}</label>
                                         {$ddmTextboxValidation}
