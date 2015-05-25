@@ -182,10 +182,7 @@ jsBackend.pages.extras =
 		var index = $(this).closest('*[data-block-id]').data('block-id');
 
 		// save unaltered content
-		var previousContent = $('#blockHtml' + index).val();
-
-		// placeholder for block node that will be moved by the jQuery dialog
-		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
+		var previousContent = $('#blockHtml').val();
 
 		// show dialog
 		$('#blockHtmlSubmit').unbind('click').on('click', function(e) {
