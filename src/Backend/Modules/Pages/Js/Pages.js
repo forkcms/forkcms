@@ -182,7 +182,10 @@ jsBackend.pages.extras =
 		var index = $(this).closest('*[data-block-id]').data('block-id');
 
 		// save unaltered content
-		var previousContent = $('#blockHtml').val();
+		var previousContent = $('#blockHtml' + index).val();
+
+		// placeholder for block node that will be moved by the jQuery dialog
+		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
 		// show dialog
 		$('#blockHtmlSubmit').unbind('click').on('click', function(e) {
@@ -211,10 +214,10 @@ jsBackend.pages.extras =
 			$('#blockHtml').modal('hide');
 		});
 
-		$('#blockHtml').modal('show').on('shown.bs.modal', function (e) {
+		$('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
 			// set content in editor
 			CKEDITOR.instances['html'].setData(previousContent);
-		});
+		}).modal('show');
 	},
 
 	// hide fallback
