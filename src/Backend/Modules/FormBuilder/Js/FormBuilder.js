@@ -1302,7 +1302,7 @@ jsBackend.FormBuilder.Fields =
         // new item
         else {
             // already field items so add after them
-            if ($('#fieldsHolder .field').length >= 1) $('#fieldsHolder .field:last').after(fieldHTML);
+            if ($('#fieldsHolder .jsField').length >= 1) $('#fieldsHolder .jsField:last').after(fieldHTML);
 
             // first field so add in beginning
             else $('#fieldsHolder').prepend(fieldHTML);
