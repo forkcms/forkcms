@@ -660,7 +660,7 @@ jsBackend.FormBuilder.Fields =
      */
     resetDialog: function (id) {
         // clear all form fields
-        $('#' + id).find(':input').val('').removeAttr('checked').removeAttr('selected');
+        $('#' + id).find(':input').removeAttr('checked').removeAttr('selected').val('');
 
         // bind validation
         jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation');
@@ -672,7 +672,7 @@ jsBackend.FormBuilder.Fields =
         $('#datetimeDialog').find('.defaultValue').show();
 
         // select first tab
-        $('#' + id + ' .tabs').tabs('select', 0);
+        $('#' + id + ' .nav-tabs a:first').tab('show');
     },
 
     /**
