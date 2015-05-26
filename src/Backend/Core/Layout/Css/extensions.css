@@ -82,3 +82,8 @@ h3 + .btn-toolbar {
 .nav-tabs > li.danger > a:hover {
     color: #A94442;
 }
+
+/* Show click-to-edit message in center of editor */
+.form-group.optionsRTE {
+	position: relative;
+}
