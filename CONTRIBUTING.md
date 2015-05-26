@@ -125,6 +125,51 @@ After handling feedback, we'll thank you for your help, merge the changes to our
 
 If it's a security fix, we'll even create a new release right away.
 
+### Squashing commits
+
+Sometimes, you can be asked to squash your commits. This is mostly the case when your pull request contains a lot of commits for smaller changes.
+Squashing commits will change your commit history to contain less commits (or do a lot of other funky stuff). It can be done this way:
+
+```bash
+# squash the last 5 commits
+git rebase -i HEAD~5
+```
+
+If your pull request contained another amount of commits, you can change the number in this command.
+
+An editor will open up containing the hashes and the commit messages of your last 5 commits. It should look like this:
+
+```
+pick c171aae Write tests for the new ModulesSettings class.
+pick f6cf11c Rename the modules_settings to fork.settings.
+pick 66a7f2b Refactor using rename method.
+pick 123491d Deprecate the module settings methods in the BackendModel
+pick cd64652 Deprecate the modulesettings methods in the frontend model.
+```
+
+If you want to put all changes in one commit, you can just leave "pick" on the first line, and change the word "pick" on the other lines to "squash".
+This way, git will know it has to merge all changes of the commits into the first one.
+
+```
+pick c171aae Write tests for the new ModulesSettings class.
+squash f6cf11c Rename the modules_settings to fork.settings.
+squash 66a7f2b Refactor using rename method.
+squash 123491d Deprecate the module settings methods in the BackendModel
+squash cd64652 Deprecate the modulesettings methods in the frontend model.
+```
+
+After saving and closing your editor, git will start rebasing it. A new editor will pop up, to enable you to change the commit message.
+After saving your new commit message, you'll need to force push your changes to your branch.
+
+```bash
+# overwrite the git history on the remote too
+git push -f origin <your-branch-name>
+```
+
+Et voila, your pull request has been changed!
+
+If you want to learn more about the possibilities of squashing, you can find a lot of info here: <http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html>.
+
 ## Support
 
 If you need some more help, or if you want to discuss about a feature, you can do this in multiple ways.
