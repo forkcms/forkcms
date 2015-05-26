@@ -47,7 +47,7 @@ class TransportFactory
         ;
 
         if (in_array($encryption, array('ssl', 'tls'))) {
-            $transport->setEncryption('ssl');
+            $transport->setEncryption($encryption);
         }
 
         return $transport;
