@@ -55,6 +55,11 @@ class Add extends BackendBaseActionAdd
         $this->frm->addText('email');
         $this->frm->addText('identifier', BackendFormBuilderModel::createIdentifier());
         $this->frm->addEditor('success_message');
+
+        // fields for optional confirmation mail
+        $this->frm->addCheckbox('send_confirmation_mail');
+        $this->frm->addText('confirmation_mail_subject');
+        $this->frm->addEditor('confirmation_mail_content');
     }
 
     /**
@@ -71,11 +76,20 @@ class Add extends BackendBaseActionAdd
             $ddmMethod = $this->frm->getField('method');
             $txtSuccessMessage = $this->frm->getField('success_message');
             $txtIdentifier = $this->frm->getField('identifier');
+            $chkMailSend = $this->frm->getField('send_confirmation_mail');
+            $txtMailSubject = $this->frm->getField('confirmation_mail_subject');
+            $txtMailContent = $this->frm->getField('confirmation_mail_content');
 
             $emailAddresses = (array) explode(',', $txtEmail->getValue());
 
             // validate fields
             $txtName->isFilled(BL::getError('NameIsRequired'));
+
+            if ($chkMailSend->getChecked()) {
+                $txtMailSubject->isFilled(BL::getError('FieldIsRequired'));
+                $txtMailContent->isFilled(BL::getError('FieldIsRequired'));                
+            }
+
             $txtSuccessMessage->isFilled(BL::getError('SuccessMessageIsRequired'));
             if ($ddmMethod->isFilled(BL::getError('NameIsRequired')) && $ddmMethod->getValue() == 'database_email') {
                 $error = false;
@@ -119,6 +133,9 @@ class Add extends BackendBaseActionAdd
                     $txtIdentifier->getValue() :
                     BackendFormBuilderModel::createIdentifier()
                 );
+                $values['send_confirmation_mail'] = $chkMailSend->getChecked() ? 'Y' : 'N';
+                $values['confirmation_mail_subject'] = $txtMailSubject->getValue();
+                $values['confirmation_mail_content'] = $txtMailContent->getValue();
                 $values['created_on'] = BackendModel::getUTCDate();
                 $values['edited_on'] = BackendModel::getUTCDate();
 

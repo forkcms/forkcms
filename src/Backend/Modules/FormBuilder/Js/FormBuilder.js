@@ -21,6 +21,9 @@ jsBackend.FormBuilder =
         // fields handler
         jsBackend.FormBuilder.Fields.init();
 
+        // hide and show the fields of the confirmation e-mail
+        jsBackend.FormBuilder.ConfirmationEmail.init();
+
         // get form id
         jsBackend.FormBuilder.formId = $formId.val();
 
@@ -1361,6 +1364,29 @@ jsBackend.FormBuilder.Fields =
             // no message
             else $(this).hide();
         });
+    }
+};
+
+/**
+ * Toggle opacity of confirmation confirmation fields.
+ */
+jsBackend.FormBuilder.ConfirmationEmail = {
+    /**
+     * Add the right event handlers for dis- or enabling the text fields
+     */
+    init: function() {
+        jsBackend.FormBuilder.ConfirmationEmail.disableOrEnableFields();
+        $('#sendConfirmationMail').change(jsBackend.FormBuilder.ConfirmationEmail.disableOrEnableFields);
+    },
+    /**
+     * We do not use 'disabled' because it should be possible to alter the content of the text fields anyway
+     */
+    disableOrEnableFields: function() {
+        if ($('#sendConfirmationMail').is(':checked')) {
+            $('.jsConfirmationEmailContainer').css('opacity', 1);
+        } else {
+            $('.jsConfirmationEmailContainer').css('opacity', 0.6);
+        }
     }
 };
 

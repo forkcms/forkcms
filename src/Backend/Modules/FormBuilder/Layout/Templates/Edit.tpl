@@ -31,6 +31,9 @@
           <li role="presentation">
             <a href="#tabExtra" aria-controls="extra" role="tab" data-toggle="tab">{$lblExtra|ucfirst}</a>
           </li>
+          <li role="presentation">
+            <a href="#tabConfirmationMail" aria-controls="confirmationMail" role="tab" data-toggle="tab">{$lblConfirmationMail|ucfirst}</a>
+          </li>
         </ul>
         <div class="tab-content">
           <div role="tabpanel" class="tab-pane active" id="tabGeneral">
@@ -189,6 +192,37 @@
                   <abbr class="glyphicon glyphicon-info-sign" title="{$msgHelpIdentifier}"></abbr>
                 </label>
                 {$txtIdentifier} {$txtIdentifierError}
+              </div>
+            </div>
+          </div>
+          <div role="tabpanel" class="tab-pane" id="tabConfirmationMail" >
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{$lblConfirmationMail|ucfirst}</h3>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <p>{$msgConfirmationMail}</p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  {$chkSendConfirmationMail} <label for="sendConfirmationMail">{$lblSendConfirmationMail|ucfirst}</label>
+                </div>
+                <div class="form-group jsConfirmationEmailContainer">
+                  <label for="confirmationMailSubject">
+                    {$lblConfirmationMailSubject|ucfirst}
+                  </label>
+                  {$txtConfirmationMailSubject} {$txtConfirmationMailSubjectError}
+                </div>
+                <div class="form-group jsConfirmationEmailContainer">
+                  <label for="confirmationMailContent">
+                    {$lblConfirmationMailContent|ucfirst}
+                  </label>
+                  {$txtConfirmationMailContent} {$txtConfirmationMailContentError}
+                </div>
               </div>
             </div>
           </div>
