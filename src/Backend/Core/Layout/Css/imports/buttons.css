@@ -131,9 +131,9 @@ a.icon span {
 	a.iconUsers span {
 		background-position: 0 -264px !important; }
 	a.iconExport span {
-		background-position: 0 -374px !important; }
-	a.iconImport span {
 		background-position: 0 -396px !important; }
+	a.iconImport span {
+		background-position: 0 -374px !important; }
 	a.iconStats span {
 		background-position: 0 -420px !important; }
 	a.iconGoto span {
