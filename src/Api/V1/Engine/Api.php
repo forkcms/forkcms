@@ -327,11 +327,6 @@ class Api extends \KernelLoader implements \ApplicationInterface
             return self::output(self::FORBIDDEN, array('message' => 'This account does not exist.'));
         }
 
-        // user is god!
-        if ($user->isGod()) {
-            return true;
-        }
-
         // get settings
         $apiAccess = $user->getSetting('api_access', false);
         $apiKey = $user->getSetting('api_key');
