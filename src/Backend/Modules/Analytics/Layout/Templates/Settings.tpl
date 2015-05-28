@@ -5,15 +5,16 @@
     <h2>{$lblSettings|ucfirst}</h2>
   </div>
 </div>
-{form:settings}
-
-
 {option:noAccounts}
-<div class="generalMessage infoMessage content">
-  <p><strong>{$msgNoAccounts|sprintf:{$email}}</strong></p>
+<div class="row fork-module-messages">
+  <div class="col-md-12">
+    <div class="alert alert-info" role="alert">
+      {$msgNoAccounts|sprintf:{$email}}
+    </div>
+  </div>
 </div>
 {/option:noAccounts}
-
+{form:settings}
 {option:fileCertificate}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -43,7 +44,6 @@
   </div>
 </div>
 {/option:fileCertificate}
-
 {option:ddmAccount}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -62,7 +62,6 @@
   </div>
 </div>
 {/option:ddmAccount}
-
 {option:ddmWebPropertyId}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -81,7 +80,6 @@
   </div>
 </div>
 {/option:ddmWebPropertyId}
-
 {option:web_property_id}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -100,7 +98,6 @@
   </div>
 </div>
 {/option:web_property_id}
-
 {option:ddmProfile}
 <div class="row fork-module-content">
   <div class="col-md-12">
@@ -119,7 +116,6 @@
   </div>
 </div>
 {/option:ddmProfile}
-
 <div class="row fork-module-actions">
   <div class="col-md-12">
     <div class="btn-toolbar">
