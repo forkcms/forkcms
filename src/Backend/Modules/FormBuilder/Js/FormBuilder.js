@@ -662,7 +662,7 @@ jsBackend.FormBuilder.Fields =
      */
     resetDialog: function (id) {
         // clear all form fields
-        $('#' + id).find(':input').val('').removeAttr('checked').removeAttr('selected');
+        $('#' + id).find(':input').removeAttr('checked').removeAttr('selected').val('');
 
         // bind validation
         jsBackend.FormBuilder.Fields.handleValidation('#' + id + ' .jsValidation');
@@ -674,7 +674,7 @@ jsBackend.FormBuilder.Fields =
         $('#datetimeDialog').find('.defaultValue').show();
 
         // select first tab
-        $('#' + id + ' .tabs').tabs('select', 0);
+        $('#' + id + ' .nav-tabs a:first').tab('show');
     },
 
     /**
@@ -1220,7 +1220,7 @@ jsBackend.FormBuilder.Fields =
         var type = 'textbox';
         var label = $('#textboxLabel').val();
         var value = $('#textboxValue').val();
-        var placeholder = $('#textareaPlaceholder').val();
+        var placeholder = $('#textboxPlaceholder').val();
         var replyTo = ($('#textboxReplyTo').is(':checked') ? 'Y' : 'N');
         var required = ($('#textboxRequired').is(':checked') ? 'Y' : 'N');
         var requiredErrorMessage = $('#textboxRequiredErrorMessage').val();
@@ -1308,7 +1308,7 @@ jsBackend.FormBuilder.Fields =
         // new item
         else {
             // already field items so add after them
-            if ($('#fieldsHolder .field').length >= 1) $('#fieldsHolder .field:last').after(fieldHTML);
+            if ($('#fieldsHolder .jsField').length >= 1) $('#fieldsHolder .jsField:last').after(fieldHTML);
 
             // first field so add in beginning
             else $('#fieldsHolder').prepend(fieldHTML);

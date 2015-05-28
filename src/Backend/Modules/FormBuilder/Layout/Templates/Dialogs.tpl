@@ -15,7 +15,7 @@
                         <a href="#tabTextboxProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
                     </li>
                     <li role="presentation">
-                        <a href="#tabTextboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
+                      <a href="#tabTextboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -77,7 +77,7 @@
                                         {$txtTextboxRequiredErrorMessage}
                                     </div>
                                 </div>
-                                <div class="jsValidation" style="display: none;">
+                                <div class="jsValidation">
                                     <div class="form-group">
                                         <label for="textboxValidation">{$lblValidation|ucfirst}</label>
                                         {$ddmTextboxValidation}
@@ -102,7 +102,7 @@
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="tabTextboxAdvanced">
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextboxAdvanced">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblAdvanced|ucfirst}</h3>
@@ -111,7 +111,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    <label for="textboxPlaceholder">
+                                        {$lblPlaceholder|ucfirst}
+                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    </label>
+                                    <p id="textboxPlaceholderError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextboxPlaceholder}
                                 </div>
                             </div>
@@ -179,10 +183,6 @@
                                     <label for="textareaValue">{$lblDefaultValue|ucfirst}</label>
                                     {$txtTextareaValue}
                                 </div>
-                                <div class="form-group">
-                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
-                                    {$txtTextareaPlaceholder}
-                                </div>
                                 <div class="jsValidation">
                                     <div class="form-group">
                                         <ul class="list-unstyled">
@@ -224,7 +224,7 @@
                             </div>
                         </div>
                     </div>
-                    <div role="tabpanel" class="tab-pane" id="tabTextareaAdvanced">
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabTextareaAdvanced">
                         <div class="row">
                             <div class="col-md-12">
                                 <h3>{$lblAdvanced|ucfirst}</h3>
@@ -233,7 +233,11 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+                                    <label for="textareaPlaceholder">
+                                        {$lblPlaceholder|ucfirst}
+                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
+                                    </label>
+                                    <p id="textareaPlaceholderError" class="text-danger jsFieldError" style="display: none;"></p>
                                     {$txtTextareaPlaceholder}
                                 </div>
                             </div>
