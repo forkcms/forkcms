@@ -24,9 +24,9 @@
                 {$txtTitle} {$txtTitleError}
             </div>
             <p>
-                <a id="generatedUrl" data-url="{$SITE_URL}{$prefixURL}/" href="{$SITE_URL}{$prefixURL}/">
-                    {$SITE_URL}{$prefixURL}/
-                </a>
+              <a href="{$detailURL}">
+                {$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span>
+              </a>
             </p>
         </div>
     </div>

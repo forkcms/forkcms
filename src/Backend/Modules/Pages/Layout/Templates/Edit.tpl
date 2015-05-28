@@ -36,8 +36,8 @@
         {$txtTitle} {$txtTitleError}
       </div>
       <p>
-        <a id="generatedUrl" data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
-          {$SITE_URL}{$prefixURL}/
+        <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
+          {$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span>
         </a>
       </p>
     </div>
