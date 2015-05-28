@@ -38,9 +38,9 @@
 .tree li a:visited,
 .tree li span {
 	display: inline-block;
-	line-height: 16px;
-	height: 16px;
-	padding: 1px 2px;
+	line-height: 20px;
+	height: 20px;
+	padding: 2px 4px 2px 2px;
 	color: #000;
 	white-space: nowrap;
 	text-decoration: none;
@@ -153,10 +153,6 @@
 
 #jstree-dragged.tree-fork li li.open {
 	background-position: 0 -16px;
-}
-
-@media (min-width: 1200px) {
-	.tree-fork li a { width: 200px; }
 }
 
 /* DEFAULT, HOVER, CLICKED, LOADING STATES */
