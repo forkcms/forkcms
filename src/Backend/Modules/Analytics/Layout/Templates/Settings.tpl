@@ -6,19 +6,30 @@
 </div>
 
 {form:settings}
-  {option:fileSecretFile}
+  {option:fileCertificate}
     <div class="box">
       <div class="heading">
-        <h3><label for="secretFile">{$lblSecretFile|ucfirst}</label></h3>
+        <h3><label for="jsonKey">{$lblCertificate|ucfirst}</label></h3>
       </div>
-      <div class="options">
-        {$fileSecretFile}
+      <div class="options horizontal">
+        <p>
+          <label for="certificate">{$lblCertificate|ucfirst}</label>
+          {$fileCertificate} {$fileCertificateError}
+        </p>
+        <p>
+          <label for="clientId">{$lblClientId|ucfirst}</label>
+          {$txtClientId} {$txtClientIdError}
+        </p>
+        <p>
+          <label for="email">{$lblEmail|ucfirst}</label>
+          {$txtEmail} {$txtEmailError}
+        </p>
       </div>
       <div class="options longHelpTxt">
-        {$msgSecretFileHelp|sprintf:'{$SITE_URL}/private/{$LANGUAGE}/analytics/settings'}
+        {$msgCertificateHelp}
       </div>
     </div>
-  {/option:fileSecretFile}
+  {/option:fileCertificate}
 
   {option:ddmAccount}
     <div class="box">
@@ -63,6 +74,12 @@
       </div>
     </div>
   {/option:ddmProfile}
+
+  {option:noAccounts}
+    <div class="generalMessage infoMessage content">
+      <p><strong>{$msgNoAccounts|sprintf:{$email}}</strong></p>
+    </div>
+  {/option:noAccounts}
 
   <div class="fullwidthOptions">
     <div class="buttonHolderRight">

@@ -9,9 +9,9 @@ namespace Frontend\Modules\Pages\Engine;
  * file that was distributed with this source code.
  */
 
-use Frontend\Core\Engine\Model AS FrontendModel;
-use Frontend\Core\Engine\Navigation AS FrontendNavigation;
-use Frontend\Core\Engine\Url AS FrontendURL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Url as FrontendURL;
 use Frontend\Modules\Tags\Engine\TagsInterface as FrontendTagsInterface;
 
 /**
