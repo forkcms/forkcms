@@ -22,6 +22,8 @@ class Spoon2Twig
     private $webroot;
     private $extension = '.html.twig';
     private $startTime;
+    private $errors;
+    private $type;
 
     function __construct()
     {
@@ -38,15 +40,44 @@ class Spoon2Twig
     {
         // OUR INPUT AND REPLACE CODE
         if (!isset($argv[1])) {
-            echo('no arguments given ' . PHP_EOL);
+            $this->error('no arguments given');
             return;
         }
 
-        $force = (isset($argv[2]) && $argv[2] === 'forced');
+        // bool
+        $force = (isset($argv[2]) && $argv[2] === '-f');
+        $this->type['module'] = (isset($argv[2]) && $argv[2] === '-m');
+        $this->type['theme'] = (isset($argv[2]) && $argv[2] === '-t');
         $input = (string) $argv[1];
+        $source = $this->getCorrectSourceVersion();
 
-        if ($input === 'all') {
-            $this->convertAllFiles($force);
+        $path['templates'] = array('/Layout/Templates', '/Layout/Widgets', '/Core/Layout/Templates');
+
+        if ($input === '-all') {
+            $path['base'] = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
+            $this->convertAllFiles($force, $path);
+            return;
+        }
+
+        if ($this->type['module']) {
+            $input = ucfirst($input);
+            $path['base'] = array('Backend/Modules', 'Frontend/Modules');
+            if (!is_dir($this->webroot.$source.'Frontend/Modules/'.$input)) {
+                $this->error('unknown module folder '.$input);
+                return;
+            }
+            $this->convertAllFiles($force, $path, $input);
+            return;
+        }
+
+        if ($this->type['theme']) {
+            $input = strtolower($input);
+            $path['base'] = array('Frontend/Themes');
+            if (!is_dir($this->webroot.$source.'Frontend/Themes/'.$input)) {
+                $this->error('unknown theme folder '.$input);
+                return;
+            }
+            $this->convertAllFiles($force, $path, $input);
             return;
         }
 
@@ -56,9 +87,36 @@ class Spoon2Twig
         }
 
         if (!file_exists(str_replace('.tpl', $this->extension, $input))) {
-            $this->write($input, $$this->ruleParser($this->getFile($input)));
+            $this->write($input, $this->ruleParser($this->getFile($input)));
+            return;
         }
-        echo('twig version of ' . $input . ' exists, use the "forced" parameter to overwrite' . PHP_EOL);
+
+        $this->error('twig version of ' . $input . ' exists, use the "-f" parameter to overwrite');
+    }
+
+    /**
+     * Error or notice collector
+     *
+     * @param  string $message
+     */
+    public function error($message)
+    {
+        $this->errors[] = $message;
+    }
+
+    /**
+     * Displays all Errors or notices
+     *
+     */
+    public function displayErrors()
+    {
+        if ($this->errors)
+        {
+            foreach ($this->errors as $error)
+            {
+                echo $error .  PHP_EOL;
+            }
+        }
     }
 
     /**
@@ -68,7 +126,7 @@ class Spoon2Twig
      */
     public function timestamp($int = null)
     {
-      return (float)substr(microtime(true) - $this->startTime, 0, (int)$int+5) * 1000;
+        return (float)substr(microtime(true) - $this->startTime, 0, (int)$int+5) * 1000;
     }
 
     /**
@@ -77,68 +135,99 @@ class Spoon2Twig
      *
      * @param  boolean $force allow forced overwrite
      */
-    public function convertAllFiles($force)
+    public function convertAllFiles($force, $path, $input = null)
     {
-        // collects template Paths
-        $excluded = array();
-        $excludes = array('.', '..', '.DS_Store');
+        foreach ($path['base'] as $BPath) {
+            $templatePaths = $this->findFiles($BPath, $path, $input);
+        }
 
-        // possible locations
-        $BasePath = array('Frontend/Themes', 'Backend/Modules', 'Frontend/Modules', 'Frontend');
-        $templates = array('/Layout/Templates', '/Layout/Widgets', '/Core/Layout/Templates');
+        if (!empty($templatePaths)) {
+            $this->buildFiles($templatePaths, $force);
+        }
+    }
 
-        $source = $this->getCorrectSourceVersion();
-
+    /**
+     * Find files in given paths
+     *
+     * @param  string $BPath  pas
+     * @param  array  $path   base & themeplate paths
+     * @param  string $input  argument
+     *
+     * @return array        found files
+     */
+    private function findFiles($BPath, array $path, $input = null)
+    {
         $templatePaths = array();
-        foreach ($BasePath as $BPath)
-        {
-            $possiblePath = $source . $BPath;
-            if (is_dir($this->webroot . $possiblePath)) {
-                $tpls = array_diff(scandir($this->webroot . $possiblePath), $excludes);
+        $source = $this->getCorrectSourceVersion();
+        $excludes = array('.', '..', '.DS_Store');
+        $possiblePath = $source . $BPath;
 
-                foreach ($tpls as $tpl) {
-                    if ($BPath == 'Frontend/Themes') {
-                        $themeModule = $possiblePath . '/' . $tpl . '/Modules';
-                        $tplsh = array_diff(scandir($themeModule), $excludes);
-                        if (is_array($tplsh)) {
-                            foreach ($tplsh as $themeModuleName) {
-                                $templates[] = '/Modules/' . $themeModuleName . '/Layout/Templates';
-                                $templates[] = '/Modules/' . $themeModuleName . '/Layout/Widgets';
-                            }
+        if (is_dir($this->webroot . $possiblePath)) {
+
+            // single module or theme?
+            if ($this->type['theme'] || $this->type['module']) {
+                $tpls[] = $input;
+            }
+            else {
+                $tpls = array_diff(scandir($this->webroot . $possiblePath), $excludes);
+            }
+
+            foreach ($tpls as $tpl) {
+
+                // theme exception
+                if ($BPath === 'Frontend/Themes') {
+                    $themeModule = $possiblePath . '/' . $tpl . '/Modules';
+                    $tplsh = array_diff(scandir($themeModule), $excludes);
+
+                    if (is_array($tplsh)) {
+                        foreach ($tplsh as $themeModuleName) {
+                            $path['templates'][] = '/Modules/' . $themeModuleName . '/Layout/Templates';
+                            $path['templates'][] = '/Modules/' . $themeModuleName . '/Layout/Widgets';
                         }
                     }
-                    foreach ($templates as $template) {
-                        $possibletpl = $possiblePath . '/' . $tpl . $template;
-                        if (is_dir($this->webroot . $possibletpl)) {
-                            $tplsz = array_diff(scandir($this->webroot . $possibletpl), $excludes);
-                            if (!empty($tplsz)) {
-                                // append full path
-                                foreach ($tplsz as $tpl_Z) {
-                                    if (strpos($tpl_Z, '.tpl') !== false) {
-                                        $templatePaths[] = $possibletpl . '/' . $tpl_Z;
-                                    }
+                }
+
+                foreach ($path['templates'] as $template) {
+                    $possibletpl = $possiblePath . '/' . $tpl . $template;
+                    if (is_dir($this->webroot . $possibletpl)) {
+                        $tplsz = array_diff(scandir($this->webroot . $possibletpl), $excludes);
+                        if (!empty($tplsz)) {
+                            // append full path
+                            foreach ($tplsz as $tpl_Z) {
+                                if (strpos($tpl_Z, '.tpl') !== false) {
+                                    $templatePaths[] = $possibletpl . '/' . $tpl_Z;
                                 }
                             }
                         }
                     }
                 }
             }
+            return $templatePaths;
         }
-        if (!empty($templatePaths)) {
-            foreach ($templatePaths as $templatePath) {
-                if ($force === true) {
+    }
+
+    /**
+     * Builds new Files from a paths array
+     *
+     * @param  array   $templatePaths paths array
+     * @param  boolean $force         forced
+     */
+    private function buildFiles(array $templatePaths, $force = false)
+    {
+        $excluded = array();
+        foreach ($templatePaths as $templatePath) {
+            if ($force === true) {
+                $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
+            } else {
+                if (!file_exists(str_replace('.tpl', $this->extension, $templatePath))) {
                     $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
                 } else {
-                    if (!file_exists(str_replace('.tpl', $this->extension, $templatePath))) {
-                        $this->write($templatePath, $this->ruleParser($this->getFile($templatePath)));
-                    } else {
-                        $excluded[] = $templatePath;
-                    }
+                    $excluded[] = $templatePath;
                 }
             }
-            if (!empty($excluded)) {
-                echo('not all files are converted, use forced to overwrite' . PHP_EOL);
-            }
+        }
+        if (!empty($excluded)) {
+            $this->error('not all files are converted, use "-f" to overwrite');
         }
     }
 
@@ -177,15 +266,17 @@ class Spoon2Twig
      */
     public function write($input, $filedata)
     {
-        // OUR OUTPUT CODE
-        $input = str_replace('.tpl', $this->extension, $input);
-        $file = $this->webroot . $input;
-        $inputPath = pathinfo($input);
+        if (empty($this->errors)) {
+            // OUR OUTPUT CODE
+            $input = str_replace('.tpl', $this->extension, $input);
+            $file = $this->webroot . $input;
+            $inputPath = pathinfo($input);
 
-        file_put_contents($file, $this->start.$filedata);
-        $time = $this->timestamp(2) - $this->previousTimeStamp;
-        $this->previousTimeStamp = $this->timestamp(2);
-        echo $inputPath['basename']. ' done in ' . $time . ' milliseconds' . PHP_EOL;
+            file_put_contents($file, $this->start.$filedata);
+            $time = $this->timestamp(2) - $this->previousTimeStamp;
+            $this->previousTimeStamp = $this->timestamp(2);
+            echo $inputPath['basename']. ' done in ' . $time . ' milliseconds' . PHP_EOL;
+        }
     }
 
     /**
@@ -217,7 +308,8 @@ class Spoon2Twig
         if (file_exists($file)) {
             return true;
         }
-        echo('Could not open input file: '. $this->webroot . $file . PHP_EOL);
+        $this->error('Could not open input file: ' . $this->webroot . $file);
+        return false;
     }
 
     /**
@@ -248,7 +340,7 @@ class Spoon2Twig
             }
             return str_replace($match[0], $values , $filedata);
         }
-        echo ('no match found on the ' . $regex . ' line');
+        $this->error('no match found on the ' . $regex . ' line');
     }
 
     /**
@@ -398,3 +490,4 @@ class Spoon2Twig
 
 $converter = New Spoon2Twig();
 $converter->start($argv);
+$converter->displayErrors();
