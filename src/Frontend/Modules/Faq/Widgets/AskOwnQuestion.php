@@ -45,7 +45,7 @@ class AskOwnQuestion extends FrontendBaseWidget
 
         $this->loadTemplate();
 
-        if (!FrontendModel::getModuleSetting('Faq', 'allow_own_question', false)) {
+        if (!$this->get('fork.settings')->get('Faq', 'allow_own_question', false)) {
             return;
         }
 
@@ -96,7 +96,7 @@ class AskOwnQuestion extends FrontendBaseWidget
             $this->frm->getField('message')->isFilled(FL::err('QuestionIsRequired'));
 
             if ($this->frm->isCorrect()) {
-                $spamFilterEnabled = FrontendModel::getModuleSetting('Faq', 'spamfilter');
+                $spamFilterEnabled = $this->get('fork.settings')->get('Faq', 'spamfilter');
                 $variables['sentOn'] = time();
                 $variables['name'] = $this->frm->getField('name')->getValue();
                 $variables['email'] = $this->frm->getField('email')->getValue();
@@ -117,8 +117,8 @@ class AskOwnQuestion extends FrontendBaseWidget
                     }
                 }
 
-                $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                 $message = \Common\Mailer\Message::newInstance(
                         sprintf(FL::getMessage('FaqOwnQuestionSubject'), $variables['name'])
                     )

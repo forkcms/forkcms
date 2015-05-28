@@ -15,7 +15,7 @@
                         <a href="#tabTextboxProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
                     </li>
                     <li role="presentation">
-                        <a href="#tabTextboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
+                      <a href="#tabTextboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">

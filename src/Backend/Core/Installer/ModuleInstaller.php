@@ -14,6 +14,7 @@ use Symfony\Component\Finder\Finder;
 
 use Common\Uri as CommonUri;
 
+use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\Locale\Engine\Model as BackendLocaleModel;
 
 /**
@@ -138,7 +139,7 @@ class ModuleInstaller
     /**
      * Add a search index
      *
-     * @param string $module   The module wherin will be searched.
+     * @param string $module   The module wherein will be searched.
      * @param int    $otherId  The id of the record.
      * @param array  $fields   A key/value pair of fields to index.
      * @param string $language The frontend language for this entry.
@@ -188,7 +189,7 @@ class ModuleInstaller
     }
 
     /**
-     * Method that will be overriden by the specific installers
+     * Method that will be overridden by the specific installers
      */
     protected function execute()
     {
@@ -549,7 +550,7 @@ class ModuleInstaller
      * @param string $url                  The unique URL.
      * @param bool   $keywordsOverwrite    Should the keywords be overwritten?
      * @param bool   $descriptionOverwrite Should the descriptions be overwritten?
-     * @param bool   $titleOverwrite       Should the pagetitle be overwritten?
+     * @param bool   $titleOverwrite       Should the page title be overwritten?
      * @param bool   $urlOverwrite         Should the URL be overwritten?
      * @param string $custom               Any custom meta-data.
      * @param array  $data                 Any custom meta-data.
@@ -574,7 +575,7 @@ class ModuleInstaller
             'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
             'title' => (string) $title,
             'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
-            'url' => CommonUri::getUrl((string) $url, SPOON_CHARSET),
+            'url' => CommonUri::getUrl((string) $url, BackendModel::getContainer()->getParameter('kernel.charset')),
             'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
             'custom' => (!is_null($custom) ? (string) $custom : null),
             'data' => (!is_null($data)) ? serialize($data) : null
@@ -590,6 +591,8 @@ class ModuleInstaller
      * @param array $meta     The meta-data.
      * @param array $block    The blocks.
      * @return int
+     * @throws \SpoonDatabaseException
+     * @throws \SpoonException
      */
     protected function insertPage(array $revision, array $meta = null, array $block = null)
     {
@@ -815,10 +818,10 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @param int    $groupId The group wherefor the rights will be set.
-     * @param string $module  The module wherin the action appears.
-     * @param string $action  The action wherefor the rights have to set.
-     * @param int    $level   The leve, default is 7 (max).
+     * @param int    $groupId The group wherefore the rights will be set.
+     * @param string $module  The module wherein the action appears.
+     * @param string $action  The action wherefore the rights have to set.
+     * @param int    $level   The level, default is 7 (max).
      */
     protected function setActionRights($groupId, $module, $action, $level = 7)
     {
@@ -853,7 +856,7 @@ class ModuleInstaller
     /**
      * Sets the rights for a module
      *
-     * @param int    $groupId The group wherefor the rights will be set.
+     * @param int    $groupId The group wherefore the rights will be set.
      * @param string $module  The module too set the rights for.
      */
     protected function setModuleRights($groupId, $module)
@@ -884,7 +887,7 @@ class ModuleInstaller
      *
      * @param int    $parentId    Id of the navigation item under we should add this.
      * @param string $label       Label for the item.
-     * @param string $url         Url for the item. If ommitted the first child is used.
+     * @param string $url         Url for the item. If omitted the first child is used.
      * @param array  $selectedFor Set selected when these actions are active.
      * @param int    $sequence    Sequence to use for this item.
      * @return int
@@ -985,11 +988,11 @@ class ModuleInstaller
     }
 
     /**
-     * Subscribe to an event, when the subsription already exists, the callback will be updated.
+     * Subscribe to an event, when the subscription already exists, the callback will be updated.
      *
      * @param string $eventModule The module that triggers the event.
      * @param string $eventName   The name of the event.
-     * @param string $module      The module that subsribes to the event.
+     * @param string $module      The module that subscribes to the event.
      * @param mixed  $callback    The callback that should be executed when the event is triggered.
      */
     public function subscribeToEvent($eventModule, $eventName, $module, $callback)

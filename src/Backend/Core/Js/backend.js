@@ -205,13 +205,16 @@ jsBackend.ckeditor =
 
         // buttons
         toolbar_Full: [
-            {name: 'basicstyles', items: ['Bold', 'Italic', 'Strike']},
-            {name: 'clipboard', items: ['Undo', 'Redo']},
-            {name: 'paragraph', items: ['NumberedList', 'BulletedList', 'Blockquote']},
-            {name: 'links', items: ['Link', 'Unlink', 'Anchor']},
-            {name: 'insert', items: ['Table', '-', 'Image', 'MediaEmbed', '-', 'SpecialChar']},
-            {name: 'document', items: ['Templates', 'Maximize', 'Source']},
-            {name: 'styles', items: ['Format', 'Styles']}
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', 'Templates' ] },
+            { name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Undo', 'Redo' ] },
+            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll' ] },
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock' ] },
+            { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+            { name: 'insert', items: [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
+            { name: 'styles', items: [ 'Format', 'Font', 'FontSize' ] },
+            { name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+            { name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] }
         ],
 
         // buttons specific for the newsletter
@@ -229,7 +232,7 @@ jsBackend.ckeditor =
         skin: 'bootstrapck',
 
         toolbar: 'Full',
-        toolbarStartupExpanded: false,
+        toolbarStartupExpanded: true,
 
         // entities
         entities: false,
@@ -240,7 +243,7 @@ jsBackend.ckeditor =
         extraPlugins: 'stylesheetparser,MediaEmbed',
 
         // remove useless plugins
-        removePlugins: 'a11yhelp,about,bidi,colorbutton,colordialog,elementspath,font,find,flash,forms,horizontalrule,newpage,pagebreak,preview,print,scayt,smiley,showblocks',
+        removePlugins: 'a11yhelp,bidi,about,elementspath,find,flash,forms,newpage,pagebreak,preview,print,scayt',
 
         // templates
         templates_files: [],
@@ -248,8 +251,8 @@ jsBackend.ckeditor =
 
         // custom vars
         editorType: 'default',
-        showClickToEdit: true,
-        toggleToolbar: true
+        showClickToEdit: false,
+        toggleToolbar: false
     },
 
     // initialize the editor
@@ -406,13 +409,14 @@ jsBackend.ckeditor =
                                 domain = jsBackend.data.get('site.domain');
                                 domain = domain.replace(/\/$/, '');
 
-                                CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
-                                CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
-                            }
-                        }
-                    ]
-                });
-        }
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'protocol').setValue('');
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'linkType').setValue('url');
+                            CKEDITOR.dialog.getCurrent().getContentElement('info', 'url').setValue(evt.data.value);
+						}
+					}
+				]
+			});
+		}
 
         // specific stuff for the table-dialog
         if (evt.data.name == 'table') {
@@ -1144,18 +1148,18 @@ jsBackend.forms =
         $inputDatefieldTill = $('.inputDatefieldTill');
         $inputDatefieldRange = $('.inputDatefieldRange');
 
-        $($inputDatefieldNormal, $inputDatefieldFrom, $inputDatefieldTill, $inputDatefieldRange).datepicker(
-            {
-                dayNames: dayNames,
-                dayNamesMin: dayNamesMin,
-                dayNamesShort: dayNamesShort,
-                hideIfNoPrevNext: true,
-                monthNames: monthNames,
-                monthNamesShort: monthNamesShort,
-                nextText: jsBackend.locale.lbl('Next'),
-                prevText: jsBackend.locale.lbl('Previous'),
-                showAnim: 'slideDown'
-            });
+		$('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+		{
+			dayNames: dayNames,
+			dayNamesMin: dayNamesMin,
+			dayNamesShort: dayNamesShort,
+			hideIfNoPrevNext: true,
+			monthNames: monthNames,
+			monthNamesShort: monthNamesShort,
+			nextText: jsBackend.locale.lbl('Next'),
+			prevText: jsBackend.locale.lbl('Previous'),
+			showAnim: 'slideDown'
+		});
 
         // the default, nothing special
         $inputDatefieldNormal.each(function () {

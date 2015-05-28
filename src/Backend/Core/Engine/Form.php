@@ -142,6 +142,8 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
      * @return FormDate
+     * @throws Exception
+     * @throws \SpoonFormException
      */
     public function addDate(
         $name,
@@ -509,7 +511,7 @@ class Form extends \SpoonForm
      *
      * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
      */
-    public function parse(\SpoonTemplate $tpl)
+    public function parse($tpl)
     {
         parent::parse($tpl);
         $this->validate();

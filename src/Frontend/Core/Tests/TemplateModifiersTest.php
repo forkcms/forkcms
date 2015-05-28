@@ -2,10 +2,9 @@
 
 namespace Frontend\Core\Tests;
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\TemplateModifiers;
 use PHPUnit_Framework_TestCase;
-
-defined('SPOON_CHARSET') || define('SPOON_CHARSET', 'UTF-8');
 
 class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 {
@@ -75,6 +74,20 @@ class TemplateModifiersTest extends PHPUnit_Framework_TestCase
 
     public function test_truncate()
     {
+        $containerMock = $this
+            ->getMockBuilder('Symfony\Component\DependencyInjection\ContainerInterface')
+            ->disableOriginalConstructor()
+            ->getMock()
+        ;
+
+        $containerMock->expects($this->any())
+            ->method('getParameter')
+            ->with('kernel.charset')
+            ->will($this->returnValue('UTF-8'))
+        ;
+
+        FrontendModel::setContainer($containerMock);
+
         $this->assertEquals(
             TemplateModifiers::truncate('foo bar baz qux', 3, false, true),
             'foo'

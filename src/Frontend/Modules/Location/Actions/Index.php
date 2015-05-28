@@ -56,7 +56,7 @@ class Index extends FrontendBaseBlock
         $this->settings = FrontendLocationModel::getMapSettings(0);
         $firstMarker = current($this->items);
         if (empty($this->settings)) {
-            $this->settings = FrontendModel::getModuleSettings('Location');
+            $this->settings = $this->get('fork.settings')->getForModule('Location');
             $this->settings['center']['lat'] = $firstMarker['lat'];
             $this->settings['center']['lng'] = $firstMarker['lng'];
         }

@@ -412,7 +412,7 @@ class Model
     public static function search($term, $limit = 20, $offset = 0)
     {
         // revalidate searches
-        if (FrontendModel::getModuleSetting('Search', 'validate_search', true) == true) {
+        if (FrontendModel::get('fork.settings')->get('Search', 'validate_search', true) == true) {
             self::validateSearch();
         }
         // @note: on heavy sites with a lot of inactive search indices better

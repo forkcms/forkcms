@@ -142,8 +142,8 @@ jsBackend.pages.extras =
 							'<span class="templateDescription">' + description + '</span>' +
 							'<div class="btn-group buttonHolder">' +
 								'<a href="#" class="btn btn-default btn-xs toggleVisibility"><span class="glyphicon glyphicon-' + (visible ? 'eye-open' : 'eye-close') + '"></span></a>' +
-								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="glyphicon glyphicon-pencil"></span>&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('Edit')) + '</a>' +
-								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>&nbsp;' + utils.string.ucfirst(jsBackend.locale.lbl('DeleteBlock')) + '</a>' +
+								'<a href="' + (editLink ? editLink : '#') + '" class="' + (extraId == 0 ? 'showEditor ' : '') + 'btn btn-primary btn-xs' + '"' + (extraId != 0 && editLink ? ' target="_blank"' : '') + (extraId != 0 && editLink ? '' : ' onclick="return false;"') + ((extraId != 0 && editLink) || extraId == 0 ? '' : 'style="display: none;" ') + '><span class="glyphicon glyphicon-pencil"></span></a>' +
+								'<a href="#" class="deleteBlock btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span></a>' +
 							'</div>' +
 						'</div>';
 
@@ -214,10 +214,10 @@ jsBackend.pages.extras =
 			$('#blockHtml').modal('hide');
 		});
 
-		$('#blockHtml').modal('show').on('shown.bs.modal', function (e) {
+		$('#blockHtml').unbind('show.bs.modal').on('show.bs.modal', function (e) {
 			// set content in editor
 			CKEDITOR.instances['html'].setData(previousContent);
-		});
+		}).modal('show');
 	},
 
 	// hide fallback

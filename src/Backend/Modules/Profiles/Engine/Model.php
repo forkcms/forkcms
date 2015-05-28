@@ -260,7 +260,7 @@ class Model
         }
 
         // no custom avatar defined, get gravatar if allowed
-        if (empty($avatar) && BackendModel::getModuleSetting('Profiles', 'allow_gravatar', true)) {
+        if (empty($avatar) && BackendModel::get('fork.settings')->get('Profiles', 'allow_gravatar', true)) {
             // define hash
             $hash = md5(strtolower(trim('d' . $email)));
 
@@ -431,6 +431,7 @@ class Model
         // init
         $characters = '';
         $string = '';
+        $charset = BackendModel::getContainer()->getParameter('kernel.charset');
 
         // possible characters
         if ($numeric) {
@@ -452,7 +453,7 @@ class Model
             $index = mt_rand(0, strlen($characters));
 
             // add character to salt
-            $string .= mb_substr($characters, $index, 1, SPOON_CHARSET);
+            $string .= mb_substr($characters, $index, 1, $charset);
         }
 
         // cough up

@@ -10,9 +10,9 @@ namespace Frontend\Modules\Pages\Widgets;
  */
 
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
-use Frontend\Core\Engine\Exception AS FrontendException;
-use Frontend\Core\Engine\Theme AS FrontendTheme;
-use Frontend\Core\Engine\Navigation AS FrontendNavigation;
+use Frontend\Core\Engine\Exception as FrontendException;
+use Frontend\Core\Engine\Theme as FrontendTheme;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
 /**
  * This is a widget which creates a previous/next navigation for pages on the same level.

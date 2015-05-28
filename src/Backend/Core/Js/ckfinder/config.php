@@ -32,7 +32,6 @@ $loader->passContainerToModels();
 // after registring autoloaders, let's add use statements for our needed classes
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Model as BackendModel;
-use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This function must check the user session to be sure that he/she is
@@ -46,8 +45,8 @@ function CheckAuthentication()
 }
 
 // LicenseKey : Paste your license key here. If left blank, CKFinder will be fully functional, in demo mode.
-$config['LicenseName'] = BackendModel::getModuleSetting('Core', 'ckfinder_license_name');
-$config['LicenseKey'] = BackendModel::getModuleSetting('Core', 'ckfinder_license_key');
+$config['LicenseName'] = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_name');
+$config['LicenseKey'] = BackendModel::get('fork.settings')->get('Core', 'ckfinder_license_key');
 
 
 /*
@@ -107,8 +106,8 @@ $config['Thumbnails'] = array(
 
 // set the maximum size of uploaded images. If an uploaded image is larger, it gets scaled down proportionally. Set to 0 to disable this feature.
 $config['Images'] = array(
-    'maxWidth' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_width'),
-    'maxHeight' => BackendModel::getModuleSetting('Core', 'ckfinder_image_max_height'),
+    'maxWidth' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_width'),
+    'maxHeight' => BackendModel::get('fork.settings')->get('Core', 'ckfinder_image_max_height'),
     'quality' => 100,
 );
 

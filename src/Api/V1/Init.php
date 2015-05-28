@@ -1,6 +1,6 @@
 <?php
 
-namespace API\V1;
+namespace Api\V1;
 
 /*
  * This file is part of Fork CMS.
@@ -128,9 +128,10 @@ class Init extends \KernelLoader
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
+        $debugMail = self::getContainer()->getParameter('fork.debug_email');
 
         // mail it?
-        if (SPOON_DEBUG_EMAIL != '') {
+        if ($debugMail != '') {
             $headers = "MIME-Version: 1.0\n";
             $headers .= "Content-type: text/html; charset=iso-8859-15\n";
             $headers .= "X-Priority: 3\n";
@@ -139,7 +140,7 @@ class Init extends \KernelLoader
             $headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
             // send email
-            @mail(SPOON_DEBUG_EMAIL, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
+            @mail($debugMail, 'Exception Occurred (' . SITE_DOMAIN . ')', $output, $headers);
         }
 
         echo '<html><body>Something went wrong.</body></html>';

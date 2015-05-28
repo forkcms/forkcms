@@ -37,6 +37,9 @@ class DatabaseDataCollector extends DataCollector
         return $this->data['queries'];
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'database';

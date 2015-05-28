@@ -36,8 +36,8 @@
         {$txtTitle} {$txtTitleError}
       </div>
       <p>
-        <a id="generatedUrl" data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
-          {$SITE_URL}{$prefixURL}/
+        <a data-url="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}" href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?page_revision={$item.revision_id}{/option:appendRevision}">
+          {$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span>
         </a>
       </p>
     </div>
@@ -74,7 +74,7 @@
 
                 <div class="btn-toolbar pull-right">
                   <div class="btn-group" role="group">
-                    <button class="btn" data-toggle="modal" data-target="#changeTemplate">
+                    <button type="button" class="btn" data-toggle="modal" data-target="#changeTemplate">
                       <span class="glyphicon glyphicon-th"></span>
                       {$lblChangeTemplate|ucfirst}
                     </button>

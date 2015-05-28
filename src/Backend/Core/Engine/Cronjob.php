@@ -138,9 +138,9 @@ class Cronjob extends Object implements \ApplicationInterface
         );
 
         // mark cronjob as run
-        $cronjobs = (array) BackendModel::getModuleSetting('Core', 'cronjobs');
+        $cronjobs = (array) $this->get('fork.settings')->get('Core', 'cronjobs');
         $cronjobs[] = $this->getModule() . '.' . $this->getAction();
-        BackendModel::setModuleSetting('Core', 'cronjobs', array_unique($cronjobs));
+        $this->get('fork.settings')->set('Core', 'cronjobs', array_unique($cronjobs));
 
         $this->execute();
     }

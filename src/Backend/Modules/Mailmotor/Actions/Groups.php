@@ -32,7 +32,7 @@ class Groups extends BackendBaseActionIndex
     private function checkForDefaultGroups()
     {
         // groups are already set
-        if (BackendModel::getModuleSetting($this->getModule(), 'cm_groups_defaults_set')) {
+        if ($this->get('fork.settings')->get($this->getModule(), 'cm_groups_defaults_set')) {
             return true;
         }
 

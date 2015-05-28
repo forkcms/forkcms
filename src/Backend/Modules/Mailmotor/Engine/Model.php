@@ -70,7 +70,7 @@ class Model
     public static function checkDefaultGroups()
     {
         // check if the defaults were set already, and return true if they were
-        if (BackendModel::getModuleSetting('Mailmotor', 'cm_groups_defaults_set')) {
+        if (BackendModel::get('fork.settings')->get('Mailmotor', 'cm_groups_defaults_set')) {
             return true;
         }
 
@@ -81,7 +81,7 @@ class Model
         // the total amount of default groups not all default groups were set.
         if (count(BL::getWorkingLanguages()) === count($defaults)) {
             // cm_groups_defaults_set status is now true
-            BackendModel::setModuleSetting('Mailmotor', 'cm_groups_defaults_set', true);
+            BackendModel::get('fork.settings')->set('Mailmotor', 'cm_groups_defaults_set', true);
 
             // return true
             return true;
@@ -103,14 +103,14 @@ class Model
         // check if this action is allowed
         if (BackendAuthentication::isAllowedAction('Settings', 'Mailmotor')) {
             // analytics session token
-            if (BackendModel::getModuleSetting('Mailmotor', 'cm_account') == false) {
+            if (BackendModel::get('fork.settings')->get('Mailmotor', 'cm_account') == false) {
                 $warnings[] = array(
                     'message' => sprintf(
                         BL::err('AnalysisNoCMAccount', 'Mailmotor'),
                         BackendModel::createURLForAction('Settings', 'Mailmotor')
                     )
                 );
-            } elseif (BackendModel::getModuleSetting('Mailmotor', 'cm_client_id') == '') {
+            } elseif (BackendModel::get('fork.settings')->get('Mailmotor', 'cm_client_id') == '') {
                 // add warning
                 $warnings[] = array(
                     'message' => sprintf(

@@ -9,8 +9,6 @@ namespace Backend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Backend\Core\Engine\Model as BackendModel;
-
 /**
  * This is our extended version of \SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
@@ -48,13 +46,13 @@ class Template extends \SpoonTemplate
         parent::__construct();
 
         // get URL instance
-        if (BackendModel::getContainer()->has('url')) {
-            $this->URL = BackendModel::getContainer()->get('url');
+        if (Model::getContainer()->has('url')) {
+            $this->URL = Model::get('url');
         }
 
         // store in reference so we can access it from everywhere
         if ($addToReference) {
-            BackendModel::getContainer()->set('template', $this);
+            Model::getContainer()->set('template', $this);
         }
 
         // set cache directory
@@ -65,7 +63,7 @@ class Template extends \SpoonTemplate
 
         // when debugging, the template should be recompiled every time
         $this->setForceCompile(
-            BackendModel::getContainer()->getParameter('kernel.debug')
+            Model::getContainer()->getParameter('kernel.debug')
         );
 
         // map custom modifiers
@@ -157,7 +155,7 @@ class Template extends \SpoonTemplate
                 // assign special vars
                 $this->assign(
                     'authenticatedUserEditUrl',
-                    BackendModel::createURLForAction(
+                    Model::createURLForAction(
                         'Edit',
                         'Users',
                         null,
@@ -173,11 +171,8 @@ class Template extends \SpoonTemplate
      */
     private function parseAuthentication()
     {
-        // init var
-        $db = BackendModel::getContainer()->get('database');
-
         // get allowed actions
-        $allowedActions = (array) $db->getRecords(
+        $allowedActions = (array) Model::get('database')->getRecords(
             'SELECT gra.module, gra.action, MAX(gra.level) AS level
              FROM users_sessions AS us
              INNER JOIN users AS u ON us.user_id = u.id
@@ -231,6 +226,12 @@ class Template extends \SpoonTemplate
         // we use some abbreviations and common terms, these should also be assigned
         $this->assign('LANGUAGE', Language::getWorkingLanguage());
 
+        // adding parameters
+        $this->assign(
+            'SITE_MULTILANGUAGE',
+            Model::getContainer()->getParameter('site.multilanguage')
+        );
+
         if ($this->URL instanceof Url) {
             // assign the current module
             $this->assign('MODULE', $this->URL->getModule());
@@ -253,7 +254,7 @@ class Template extends \SpoonTemplate
         // assign some variable constants (such as site-title)
         $this->assign(
             'SITE_TITLE',
-            BackendModel::getModuleSetting('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . Language::getWorkingLanguage(), SITE_DEFAULT_TITLE)
         );
 
         if ($this->URL->getModule() == 'Core') {
@@ -276,7 +277,7 @@ class Template extends \SpoonTemplate
     {
         $this->assign(
             'debug',
-            BackendModel::getContainer()->getParameter('kernel.debug')
+            Model::getContainer()->getParameter('kernel.debug')
         );
     }
 
@@ -286,10 +287,8 @@ class Template extends \SpoonTemplate
     private function parseLabels()
     {
         // grab the current module
-        if (BackendModel::getContainer()->has('url')) {
-            $currentModule = BackendModel::getContainer()->get(
-                'url'
-            )->getModule();
+        if (Model::getContainer()->has('url')) {
+            $currentModule = Model::get('url')->getModule();
         } elseif (isset($_GET['module']) && $_GET['module'] != '') {
             $currentModule = (string) $_GET['module'];
         } else {

@@ -30,11 +30,12 @@ class Autocomplete extends FrontendBaseAJAXAction
         parent::execute();
 
         // get parameters
+        $charset = $this->getContainer()->getParameter('kernel.charset');
         $searchTerm = \SpoonFilter::getPostValue('term', null, '');
-        $term = (SPOON_CHARSET == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
+        $term = ($charset == 'utf-8') ? \SpoonFilter::htmlspecialchars($searchTerm) : \SpoonFilter::htmlentities(
             $searchTerm
         );
-        $limit = (int) FrontendModel::getModuleSetting('Search', 'autocomplete_num_items', 10);
+        $limit = (int) $this->get('fork.settings')->get('Search', 'autocomplete_num_items', 10);
 
         // validate
         if ($term == '') {

@@ -7,6 +7,7 @@
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\DependencyInjection\MergeExtensionConfigurationPass;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
@@ -75,5 +76,46 @@ abstract class Kernel extends BaseKernel implements KernelInterface
 
         defined('ACTION_GROUP_TAG') || define('ACTION_GROUP_TAG', $container->getParameter('action.group_tag'));
         defined('ACTION_RIGHTS_LEVEL') || define('ACTION_RIGHTS_LEVEL', $container->getParameter('action.rights_level'));
+    }
+
+    /**
+     * Builds the service container.
+     *
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
+     *
+     * @throws \RuntimeException
+     */
+    protected function buildContainer()
+    {
+        $container = parent::buildContainer();
+
+        try {
+            $installedModules = $container->get('database')->getColumn(
+                'SELECT name FROM modules'
+            );
+        } catch (\SpoonDatabaseException $e) {
+            $installedModules = array();
+        } catch (\PDOException $e) {
+            // fork is probably not installed yet
+            $installedModules = array();
+        }
+
+        $container->setParameter('installed_modules', $installedModules);
+
+        $extensions = array();
+        foreach ($installedModules as $module) {
+            $class = 'Backend\\Modules\\' . $module . '\\DependencyInjection\\' . $module . 'Extension';
+
+            if (class_exists($class)) {
+                $extension = new $class();
+                $container->registerExtension($extension);
+                $extensions[] = $extension->getAlias();
+            }
+        }
+
+        // ensure these extensions are implicitly loaded
+        $container->getCompilerPassConfig()->setMergePass(new MergeExtensionConfigurationPass(array_keys($container->getExtensions())));
+
+        return $container;
     }
 }

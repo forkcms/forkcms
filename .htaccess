@@ -62,7 +62,7 @@ FileETag MTime Size
 
 # gzip on Apache 2
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript image/svg+xml
 
 	# these browsers do not support deflate
 	BrowserMatch ^Mozilla/4 gzip-only-text/html
