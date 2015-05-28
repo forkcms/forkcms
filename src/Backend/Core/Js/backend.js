@@ -232,7 +232,7 @@ jsBackend.ckeditor =
         skin: 'bootstrapck',
 
         toolbar: 'Full',
-        toolbarStartupExpanded: false,
+        toolbarStartupExpanded: true,
 
         // entities
         entities: false,
@@ -251,8 +251,8 @@ jsBackend.ckeditor =
 
         // custom vars
         editorType: 'default',
-        showClickToEdit: true,
-        toggleToolbar: true
+        showClickToEdit: false,
+        toggleToolbar: false
     },
 
     // initialize the editor
