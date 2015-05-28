@@ -2,7 +2,6 @@
 
 namespace Common;
 
-
 /**
  * ApiTestCase is the base class for functional tests.
  *

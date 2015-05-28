@@ -14,7 +14,7 @@ class TransportFactory
      *
      * @param  string $type
      * @param  string $server
-     * @param  string $port
+     * @param  int $port
      * @param  string $user
      * @param  string $pass
      * @param  string $encryption
@@ -47,7 +47,7 @@ class TransportFactory
         ;
 
         if (in_array($encryption, array('ssl', 'tls'))) {
-            $transport->setEncryption('ssl');
+            $transport->setEncryption($encryption);
         }
 
         return $transport;

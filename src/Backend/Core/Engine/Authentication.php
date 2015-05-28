@@ -37,7 +37,7 @@ class Authentication
     private static $allowedModules = array();
 
     /**
-     * A userobject for the current authenticated user
+     * A user object for the current authenticated user
      *
      * @var    User
      */

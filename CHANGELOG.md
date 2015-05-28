@@ -4,6 +4,9 @@ Improvements:
 
 Bugfixes:
 
+* Analytics: Auth config content saved in databse, because capistrano deployments didn't work with BACKEND_CACHE_PATH.
+* Api: increasing security when user is GOD.
+
 
 3.9.2 (2015-05-12)
 --

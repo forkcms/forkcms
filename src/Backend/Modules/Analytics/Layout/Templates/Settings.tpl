@@ -6,27 +6,43 @@
   </div>
 </div>
 {form:settings}
-{option:fileSecretFile}
+
+
+{option:noAccounts}
+<div class="generalMessage infoMessage content">
+  <p><strong>{$msgNoAccounts|sprintf:{$email}}</strong></p>
+</div>
+{/option:noAccounts}
+
+{option:fileCertificate}
 <div class="row fork-module-content">
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title">
-          {$lblSecretFile|ucfirst}
+          {$lblCertificate|ucfirst}
         </h3>
       </div>
       <div class="panel-body">
         <div class="form-group">
           <p class="text-info">
-            {$msgSecretFileHelp|sprintf:'{$SITE_URL}/private/{$LANGUAGE}/analytics/settings'}
+            {$msgCertificateHelp}
           </p>
-          {$fileSecretFile}
+          {$fileCertificate} {$fileCertificateError}
+        </div>
+        <div class="form-group">
+          <label for="clientId">{$lblClientId|ucfirst}</label>
+          {$txtClientId} {$txtClientIdError}
+        </div>
+        <div class="form-group">
+          <label for="email">{$lblEmail|ucfirst}</label>
+          {$txtEmail} {$txtEmailError}
         </div>
       </div>
     </div>
   </div>
 </div>
-{/option:fileSecretFile}
+{/option:fileCertificate}
 
 {option:ddmAccount}
 <div class="row fork-module-content">

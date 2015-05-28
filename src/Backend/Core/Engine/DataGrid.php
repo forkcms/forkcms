@@ -332,10 +332,12 @@ class DataGrid extends \SpoonDataGrid
      * Set a custom column confirm message.
      *
      * @param string $column   The name of the column to set the confirm for.
-     * @param string $message  The message to use as a confirmmessage.
+     * @param string $message  The message to use as a confirm message.
      * @param string $custom   Unused parameter.
      * @param string $title    The title for the column.
      * @param string $uniqueId A unique ID that will be uses.
+     * @throws Exception
+     * @throws \SpoonDataGridException
      */
     public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
     {

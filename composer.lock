@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "1a6db5b8a469ab9ad79d6e9d397abc66",
+    "hash": "c6f576302bc013702bbf02f128682352",
     "packages": [
         {
             "name": "behat/transliterator",
@@ -780,16 +780,16 @@
         },
         {
             "name": "spoon/library",
-            "version": "1.3.17",
+            "version": "2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/forkcms/library.git",
-                "reference": "d52abaa755bcfd8cb2cccc50f30b529fa6a14052"
+                "reference": "9a75960cc4d98686f6022d5ba33fbd6a12c93315"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/forkcms/library/zipball/d52abaa755bcfd8cb2cccc50f30b529fa6a14052",
-                "reference": "d52abaa755bcfd8cb2cccc50f30b529fa6a14052",
+                "url": "https://api.github.com/repos/forkcms/library/zipball/9a75960cc4d98686f6022d5ba33fbd6a12c93315",
+                "reference": "9a75960cc4d98686f6022d5ba33fbd6a12c93315",
                 "shasum": ""
             },
             "require": {
@@ -811,7 +811,7 @@
             ],
             "description": "A PHP5 library that is fast, easy to learn and fun!",
             "homepage": "http://www.spoon-library.com",
-            "time": "2015-05-13 07:06:00"
+            "time": "2015-05-19 13:42:32"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -1049,16 +1049,16 @@
         },
         {
             "name": "symfony/symfony",
-            "version": "v2.3.28",
+            "version": "v2.3.29",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/symfony.git",
-                "reference": "56bc4057e3849d38aeb5e9742bc800b0518fe1f0"
+                "reference": "c4da51ce0f2ef890d5ab77d91064f2f579076b24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/symfony/zipball/56bc4057e3849d38aeb5e9742bc800b0518fe1f0",
-                "reference": "56bc4057e3849d38aeb5e9742bc800b0518fe1f0",
+                "url": "https://api.github.com/repos/symfony/symfony/zipball/c4da51ce0f2ef890d5ab77d91064f2f579076b24",
+                "reference": "c4da51ce0f2ef890d5ab77d91064f2f579076b24",
                 "shasum": ""
             },
             "require": {
@@ -1140,20 +1140,20 @@
             ],
             "authors": [
                 {
-                    "name": "Symfony Community",
-                    "homepage": "http://symfony.com/contributors"
-                },
-                {
                     "name": "Fabien Potencier",
                     "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
                 }
             ],
             "description": "The Symfony PHP framework",
-            "homepage": "http://symfony.com",
+            "homepage": "https://symfony.com",
             "keywords": [
                 "framework"
             ],
-            "time": "2015-05-10 15:02:48"
+            "time": "2015-05-26 21:55:27"
         },
         {
             "name": "tijsverkoyen/akismet",
