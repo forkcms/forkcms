@@ -393,6 +393,11 @@
         <translation language="sv"><![CDATA[platshållare]]></translation>
         <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
       </item>
+      <item type="label" name="Classname">
+        <translation language="nl"><![CDATA[CSS klasse]]></translation>
+        <translation language="en"><![CDATA[CSS classname]]></translation>
+        <translation language="de"><![CDATA[CSS Klasse]]></translation>
+      </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="en"><![CDATA[preview]]></translation>

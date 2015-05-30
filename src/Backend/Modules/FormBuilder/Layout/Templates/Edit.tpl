@@ -226,8 +226,12 @@
 				<div class="horizontal">
 					<div class="options">
 						<p>
-							<label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
+							<label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
 							{$txtTextboxPlaceholder}
+						</p>
+						<p>
+							<label for="textboxClassname">{$lblClassname|ucfirst}</label>
+							{$txtTextboxClassname}
 						</p>
 					</div>
 				</div>
@@ -302,6 +306,10 @@
 							<label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
 							{$txtTextareaPlaceholder}
 						</p>
+						<p>
+							<label for="textareaClassname">{$lblClassname|ucfirst}</label>
+							{$txtTextareaClassname}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -316,6 +324,7 @@
 			<ul>
 				<li><a href="#tabDatetimeBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabDatetimeProperties">{$lblProperties|ucfirst}</a></li>
+				<li><a href="#tabDatetimeAdvanced">{$lblAdvanced|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabDatetimeBasic" class="box">
@@ -371,7 +380,16 @@
 						</p>
 					</div>
 				</div>
-
+			</div>
+			<div id="tabDatetimeAdvanced" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="datetimeClassname">{$lblClassname|ucfirst}</label>
+							{$txtDatetimeClassname}
+						</p>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -384,6 +402,7 @@
 			<ul>
 				<li><a href="#tabDropdownBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabDropdownProperties">{$lblProperties|ucfirst}</a></li>
+				<li><a href="#tabDropdownAdvanced">{$lblProperties|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabDropdownBasic" class="box">
@@ -424,6 +443,16 @@
 					</div>
 				</div>
 			</div>
+			<div id="tabDropdownAdvanced" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="dropdownClassname">{$lblClassname|ucfirst}</label>
+							{$txtDropdownClassname}
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -435,6 +464,7 @@
 			<ul>
 				<li><a href="#tabRadiobuttonBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabRadiobuttonProperties">{$lblProperties|ucfirst}</a></li>
+				<li><a href="#tabRadiobuttonAdvanced">{$lblAdvanced|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabRadiobuttonBasic" class="box">
@@ -475,6 +505,16 @@
 					</div>
 				</div>
 			</div>
+			<div id="tabRadiobuttonAdvanced" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="radiobuttonClassname">{$lblClassname|ucfirst}</label>
+							{$txtRadiobuttonClassname}
+						</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -486,6 +526,7 @@
 			<ul>
 				<li><a href="#tabCheckboxBasic">{$lblBasic|ucfirst}</a></li>
 				<li><a href="#tabCheckboxProperties">{$lblProperties|ucfirst}</a></li>
+				<li><a href="#tabCheckboxAdvanced">{$lblAdvanced|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabCheckboxBasic" class="box">
@@ -521,6 +562,17 @@
 							<label for="checkboxRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtCheckboxRequiredErrorMessage}
 							<span id="checkboxRequiredErrorMessageError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<div id="tabCheckboxAdvanced" class="box">
+				<div class="horizontal">
+					<div class="options">
+						<p>
+							<label for="checkboxClassname">{$lblClassname|ucfirst}</label>
+							{$txtCheckboxClassname}
 						</p>
 					</div>
 				</div>
