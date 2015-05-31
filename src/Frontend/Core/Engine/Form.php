@@ -725,6 +725,23 @@ class FrontendFormDate extends \SpoonFormDate
 class FrontendFormImage extends \SpoonFormImage
 {
     /**
+     * Constructor.
+     *
+     * @param    string            $name          The name.
+     * @param    string [optional] $class         The CSS-class to be used.
+     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @see      SpoonFormFile::__construct()
+     */
+    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+    {
+        // call the parent
+        parent::__construct($name, $class, $classError);
+
+        // mime type hinting
+        $this->setAttribute('accept', 'image/*');
+    }
+
+    /**
      * Generate thumbnails based on the folders in the path
      * Use
      *  - 128x128 as folder name to generate an image that where the width will be 128px and the height will be 128px
