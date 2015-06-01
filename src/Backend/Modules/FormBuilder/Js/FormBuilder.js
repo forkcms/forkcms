@@ -414,6 +414,7 @@ jsBackend.formBuilder.fields =
 								$('#textboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textboxValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
 								$('#textboxPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
+								$('#textboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								if(data.data.field.settings.reply_to && data.data.field.settings.reply_to == true) $('#textboxReplyTo').prop('checked', true);
 								$.each(data.data.field.validations, function(k, v)
 								{
@@ -444,6 +445,7 @@ jsBackend.formBuilder.fields =
 								$('#textareaLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#textareaValue').val(utils.string.htmlDecode(data.data.field.settings.default_values));
 								$('#textareaPlaceholder').val(utils.string.htmlDecode(data.data.field.settings.placeholder));
+								$('#textareaClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -474,6 +476,7 @@ jsBackend.formBuilder.fields =
 								$('#datetimeValueAmount').val(utils.string.htmlDecode(data.data.field.settings.value_amount));
 								$('#datetimeValueType').val(utils.string.htmlDecode(data.data.field.settings.value_type));
 								$('#datetimeType').val(utils.string.htmlDecode(data.data.field.settings.input_type));
+								$('#datetimeClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -502,6 +505,7 @@ jsBackend.formBuilder.fields =
 								$('#dropdownId').val(data.data.field.id);
 								$('#dropdownLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#dropdownValues').val(data.data.field.settings.values.join('|'));
+								$('#dropdownClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -540,6 +544,7 @@ jsBackend.formBuilder.fields =
 								$('#radiobuttonId').val(data.data.field.id);
 								$('#radiobuttonLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#radiobuttonValues').val(data.data.field.settings.values.join('|'));
+								$('#radiobuttonClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -578,6 +583,7 @@ jsBackend.formBuilder.fields =
 								$('#checkboxId').val(data.data.field.id);
 								$('#checkboxLabel').val(utils.string.htmlDecode(data.data.field.settings.label));
 								$('#checkboxValues').val(data.data.field.settings.values.join('|'));
+								$('#checkboxClassname').val(utils.string.htmlDecode(data.data.field.settings.classname));
 								$.each(data.data.field.validations, function(k, v)
 								{
 									// required checkbox
@@ -776,6 +782,7 @@ jsBackend.formBuilder.fields =
 		var defaultValue = $('#checkboxDefaultValue').val();
 		var required = ($('#checkboxRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#checkboxRequiredErrorMessage').val();
+		var classname = $('#checkboxClassname').val();
 
 		// make the call
 		$.ajax(
@@ -789,7 +796,8 @@ jsBackend.formBuilder.fields =
 				values: values,
 				default_values: defaultValue,
 				required: required,
-				required_error_message: requiredErrorMessage
+				required_error_message: requiredErrorMessage,
+				classname: classname
 			}),
 			success: function(data, textStatus)
 			{
@@ -855,8 +863,8 @@ jsBackend.formBuilder.fields =
 		var required = ($('#datetimeRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#datetimeRequiredErrorMessage').val();
 		var validation = $('#datetimeValidation').val();
-		//var validationParameter = $('#datetimeValidationParameter').val();
 		var errorMessage = $('#datetimeErrorMessage').val();
+		var classname = $('#datetimeClassname').val();
 
 		// make the call
 		$.ajax(
@@ -873,8 +881,8 @@ jsBackend.formBuilder.fields =
 						required_error_message: requiredErrorMessage,
 						input_type: input_type,
 						validation: validation,
-						//validation_parameter: validationParameter,
-						error_message: errorMessage
+						error_message: errorMessage,
+						classname: classname
 					}),
 				success: function(data, textStatus)
 				{
@@ -938,6 +946,7 @@ jsBackend.formBuilder.fields =
 		var defaultValue = $('#dropdownDefaultValue').val();
 		var required = ($('#dropdownRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#dropdownRequiredErrorMessage').val();
+		var classname = $('#dropdownClassname').val();
 
 		// make the call
 		$.ajax(
@@ -951,7 +960,8 @@ jsBackend.formBuilder.fields =
 				values: values,
 				default_values: defaultValue,
 				required: required,
-				required_error_message: requiredErrorMessage
+				required_error_message: requiredErrorMessage,
+				classname: classname
 			}),
 			success: function(data, textStatus)
 			{
@@ -1131,6 +1141,7 @@ jsBackend.formBuilder.fields =
 		var defaultValue = $('#radiobuttonDefaultValue').val();
 		var required = ($('#radiobuttonRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#radiobuttonRequiredErrorMessage').val();
+		var classname = $('#radiobuttonClassname').val();
 
 		// make the call
 		$.ajax(
@@ -1144,7 +1155,8 @@ jsBackend.formBuilder.fields =
 				values: values,
 				default_values: defaultValue,
 				required: required,
-				required_error_message: requiredErrorMessage
+				required_error_message: requiredErrorMessage,
+				classname: classname
 			}),
 			success: function(data, textStatus)
 			{
@@ -1263,12 +1275,13 @@ jsBackend.formBuilder.fields =
 		var type = 'textarea';
 		var label = $('#textareaLabel').val();
 		var value = $('#textareaValue').val();
-		var placeholder = $('#textareaPlaceholder').val();
 		var required = ($('#textareaRequired').is(':checked') ? 'Y' : 'N');
 		var requiredErrorMessage = $('#textareaRequiredErrorMessage').val();
 		var validation = $('#textareaValidation').val();
 		var validationParameter = $('#textareaValidationParameter').val();
 		var errorMessage = $('#textareaErrorMessage').val();
+		var placeholder = $('#textareaPlaceholder').val();
+		var classname = $('#textareaClassname').val();
 
 		// make the call
 		$.ajax(
@@ -1280,12 +1293,13 @@ jsBackend.formBuilder.fields =
 				type: type,
 				label: label,
 				default_values: value,
-				placeholder: placeholder,
 				required: required,
 				required_error_message: requiredErrorMessage,
 				validation: validation,
 				validation_parameter: validationParameter,
-				error_message: errorMessage
+				error_message: errorMessage,
+				placeholder: placeholder,
+				classname: classname
 			}),
 			success: function(data, textStatus)
 			{
@@ -1353,6 +1367,7 @@ jsBackend.formBuilder.fields =
 		var validation = $('#textboxValidation').val();
 		var validationParameter = $('#textboxValidationParameter').val();
 		var errorMessage = $('#textboxErrorMessage').val();
+		var classname = $('#textboxClassname').val();
 
 		// make the call
 		$.ajax(
@@ -1370,7 +1385,8 @@ jsBackend.formBuilder.fields =
 				required_error_message: requiredErrorMessage,
 				validation: validation,
 				validation_parameter: validationParameter,
-				error_message: errorMessage
+				error_message: errorMessage,
+				classname: classname,
 			}),
 			success: function(data, textStatus)
 			{

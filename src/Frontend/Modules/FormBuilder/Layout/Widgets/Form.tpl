@@ -24,7 +24,7 @@
 
 						{* Input fields, textareas and drop downs *}
 						{option:fields.simple}
-							<p{option:fields.error} class="errorArea"{/option:fields.error}>
+							<p class="{option:fields.error}errorArea {/option:fields.error}{option:fields.classname}{$fields.classname}{/option:fields.classname}">
 								<label for="{$fields.name}">
 									{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 								</label>
@@ -35,7 +35,7 @@
 
 						{* Radio buttons and checkboxes *}
 						{option:fields.multiple}
-							<div class="inputList{option:fields.error} errorArea{/option:fields.error}">
+							<div class="inputList {option:fields.error}errorArea {/option:fields.error}{option:fields.classname}{$fields.classname}{/option:fields.classname}">
 								<p class="label">
 									{$fields.label}{option:fields.required}<abbr title="{$lblRequiredField}">*</abbr>{/option:fields.required}
 								</p>
