@@ -7,6 +7,20 @@ use Backend\Core\Engine\Authentication as Authentication;
 
 class IndexTest extends WebTestCase
 {
+    /**
+     * The authentication class persist the previous user.
+     * In practice this situation will almost never occur:
+     * Login with one user, log out and subsequently log in
+     * with another user without a page reload to reinitialize
+     * the application.
+     * If the clients could be insulated from eachother, this
+     * would not be an issue.
+     */
+    protected function tearDown()
+    {
+        Authentication::tearDown();
+    }
+
     public function testPrivateRedirectsToAuthentication()
     {
         $client = static::createClient();
@@ -86,15 +100,6 @@ class IndexTest extends WebTestCase
 
     public function testPagesUserWithCorrectCredentials()
     {
-        // The authentication class persist the previous user.
-        // In practice this situation will almost never occur.
-        // Logging in one user only to log out and subsequently
-        // loggin in with another seems a bit much without
-        // a redirect in place to refresh the application.
-        // Another way to make this test, test. Would be to insulate
-        // the client in each test.
-        Authentication::tearDown();
-
         $client = static::createClient();
         $client->followRedirects();
         $client->setMaxRedirects(10);
@@ -125,15 +130,6 @@ class IndexTest extends WebTestCase
 
     public function testUsersUserWithCorrectCredentials()
     {
-        // The authentication class persist the previous user.
-        // In practice this situation will almost never occur.
-        // Logging in one user only to log out and subsequently
-        // loggin in with another seems a bit much without
-        // a redirect in place to refresh the application.
-        // Another way to make this test, test. Would be to insulate
-        // the client in each test.
-        Authentication::tearDown();
-
         $client = static::createClient();
         $client->setMaxRedirects(2);
 
