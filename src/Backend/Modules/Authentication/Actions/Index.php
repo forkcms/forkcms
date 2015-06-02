@@ -271,7 +271,7 @@ class Index extends BackendBaseActionIndex
         $this->redirect($this->getParameter('querystring', 'string',
             $allowedModule ?
                 BackendModel::createUrlForAction($allowedAction, $allowedModule) :
-                BackendModel::createUrlForAction('index', 'Authentication')
+                BackendModel::createUrlForAction('Index', 'Authentication')
             )
         );
     }
