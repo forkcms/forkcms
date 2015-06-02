@@ -427,7 +427,7 @@ class Authentication
             \SpoonSession::set('backend_logged_in', true);
             \SpoonSession::set('backend_secret_key', $session['secret_key']);
 
-            // Update/instantiate the value for the logged_in container.
+            // update/instantiate the value for the logged_in container.
             BackendModel::getContainer()->set('logged_in', true);
 
             // return result
@@ -439,7 +439,7 @@ class Authentication
             \SpoonSession::set('backend_logged_in', false);
             \SpoonSession::set('backend_secret_key', '');
 
-            // Update/instantiate the value for the logged_in container.
+            // update/instantiate the value for the logged_in container.
             BackendModel::getContainer()->set('logged_in', false);
 
             // return result
