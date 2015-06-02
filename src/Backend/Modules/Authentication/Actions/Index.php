@@ -43,8 +43,9 @@ class Index extends BackendBaseActionIndex
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated())
         {
+            $userEmail = BackendAuthentication::getUser()->getEmail();
             $this->getContainer()->get('logger')->info(
-                BackendAuthentication::getUser()->getEmail()
+                "User '{$userEmail}' is already authenticated."
             );
             $this->redirectToAllowedModuleAndAction();
         }
@@ -268,11 +269,17 @@ class Index extends BackendBaseActionIndex
     {
         $allowedModule = $this->getAllowedModule();
         $allowedAction = $this->getAllowedAction($allowedModule);
-        $this->redirect($this->getParameter('querystring', 'string',
-            $allowedModule ?
-                BackendModel::createUrlForAction($allowedAction, $allowedModule) :
-                BackendModel::createUrlForAction('Index', 'Authentication')
-            )
+        $allowedModuleActionUrl = $allowedModule ?
+            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
+            BackendModel::createUrlForAction('Index', 'Authentication');
+
+        $userEmail = BackendAuthentication::getUser()->getEmail();
+        $this->getContainer()->get('logger')->info(
+            "Redirecting user '{$userEmail}' to {$allowedModuleActionUrl}."
+        );
+
+        $this->redirect(
+            $this->getParameter('querystring', 'string', $allowedModuleActionUrl)
         );
     }
 
