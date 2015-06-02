@@ -98,6 +98,10 @@ class IndexTest extends WebTestCase
         $client->request('GET', '/private/en/authentication/logout');
     }
 
+    /**
+     * Login as a pages user.
+     * This user has the rights to access only the pages module.
+     */
     public function testPagesUserWithCorrectCredentials()
     {
         $client = static::createClient();
@@ -128,6 +132,11 @@ class IndexTest extends WebTestCase
         $client->request('GET', '/private/en/authentication/logout');
     }
 
+    /**
+     * Login as a users user.
+     * This user only has the rights to access the users edit action.
+     * It should enable the user to edit his own user-account.
+     */
     public function testUsersUserWithCorrectCredentials()
     {
         $client = static::createClient();
