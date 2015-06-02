@@ -296,6 +296,10 @@ class Model
             array((int) $groupId, (string) $name)
         );
 
+        if (!$setting) {
+            return array();
+        }
+
         if (isset($setting['value'])) {
             return unserialize($setting['value']);
         }
