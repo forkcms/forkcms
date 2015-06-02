@@ -296,7 +296,8 @@ LOCK TABLES `groups` WRITE;
 INSERT INTO `groups` (`id`, `name`, `parameters`)
 VALUES
   (1,'admin',NULL),
-  (2,'pages user',NULL);
+  (2,'pages user',NULL),
+  (3,'users user',NULL);
 
 /*!40000 ALTER TABLE `groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -494,7 +495,8 @@ VALUES
   (176,2,'Pages','Add',7),
   (177,2,'Pages','Delete',7),
   (178,2,'Pages','Edit',7),
-  (179,2,'Pages','Settings',7);
+  (179,2,'Pages','Settings',7),
+  (180,3,'Users','Edit',7);
 
 /*!40000 ALTER TABLE `groups_rights_actions` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -530,7 +532,8 @@ VALUES
   (15,1,'Location'),
   (16,1,'Mailmotor'),
   (17,1,'Profiles'),
-  (18,2,'Pages');
+  (18,2,'Pages'),
+  (19,3,'Users');
 
 /*!40000 ALTER TABLE `groups_rights_modules` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3202,7 +3205,8 @@ LOCK TABLES `users` WRITE;
 INSERT INTO `users` (`id`, `email`, `password`, `active`, `deleted`, `is_god`)
 VALUES
   (1,'noreply@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','Y'),
-  (2,'pages-user@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','N');
+  (2,'pages-user@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','N'),
+  (3,'users-edit-user@fork-cms.com','bdbadf67b9dcb8344f545e442f88b8dad343c926','Y','N','N');
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3221,7 +3225,8 @@ LOCK TABLES `users_groups` WRITE;
 INSERT INTO `users_groups` (`group_id`, `user_id`)
 VALUES
   (1,1),
-  (2,2);
+  (2,2),
+  (3,3);
 
 /*!40000 ALTER TABLE `users_groups` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -3279,7 +3284,20 @@ VALUES
   (2,'current_password_change','i:1424720932;'),
   (2,'avatar','s:7:\"god.jpg\";'),
   (2,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
-  (2,'api_access','b:0;');
+  (2,'api_access','b:0;'),
+  (3,'name','s:5:\"Users\";'),
+  (3,'surname','s:4:\"User\";'),
+  (3,'interface_language','s:2:\"en\";'),
+  (3,'date_format','s:5:\"j F Y\";'),
+  (3,'time_format','s:3:\"H:i\";'),
+  (3,'datetime_format','s:9:\"j F Y H:i\";'),
+  (3,'number_format','s:11:\"dot_nothing\";'),
+  (3,'password_key','s:13:\"54eb8424f2b6e\";'),
+  (3,'password_strength','s:4:\"weak\";'),
+  (3,'current_password_change','i:1424720932;'),
+  (3,'avatar','s:7:\"god.jpg\";'),
+  (3,'dashboard_sequence','a:3:{s:4:\"Blog\";a:1:{s:8:\"Comments\";a:4:{s:6:\"column\";s:6:\"middle\";s:8:\"position\";i:0;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:8:\"Settings\";a:1:{s:7:\"Analyse\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}s:5:\"Users\";a:1:{s:10:\"Statistics\";a:4:{s:6:\"column\";s:4:\"left\";s:8:\"position\";i:1;s:6:\"hidden\";b:0;s:7:\"present\";b:0;}}}'),
+  (3,'api_access','b:0;');
 
 /*!40000 ALTER TABLE `users_settings` ENABLE KEYS */;
 UNLOCK TABLES;
