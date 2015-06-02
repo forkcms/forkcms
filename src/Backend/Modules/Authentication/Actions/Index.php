@@ -294,14 +294,18 @@ class Index extends BackendBaseActionIndex
             return 'Index';
         }
         $allowedAction = false;
-        $finder = new Finder();
-        $finder->name('*.php')
-            ->in(BACKEND_MODULES_PATH . '/*/Actions')
-            ->in(BACKEND_MODULES_PATH . '/*/Ajax');
-        foreach ($finder->files() as $file) {
-            $actionName = $file->getBasename('.php');
-            if(BackendAuthentication::isAllowedAction($actionName, $module)) {
-                $allowedAction = $actionName;
+
+        $groupsRightsActions = BackendUsersModel::getModuleGroupsRightsActions(
+            $module
+        );
+
+        foreach ($groupsRightsActions as $groupsRightsAction) {
+            $isAllowedAction = BackendAuthentication::isAllowedAction(
+                $groupsRightsAction['action'],
+                $module
+            );
+            if($isAllowedAction) {
+                $allowedAction = $groupsRightsAction['action'];
                 break;
             }
         }
