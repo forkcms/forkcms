@@ -72,7 +72,7 @@ class IndexTest extends WebTestCase
     public function testAuthenticationWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->followRedirects();
+        $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(
@@ -105,7 +105,7 @@ class IndexTest extends WebTestCase
     public function testPagesUserWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->setMaxRedirects(10);
+        $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(
@@ -139,7 +139,7 @@ class IndexTest extends WebTestCase
     public function testUsersUserWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->setMaxRedirects(2);
+        $client->setMaxRedirects(3);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(
