@@ -105,7 +105,6 @@ class IndexTest extends WebTestCase
     public function testPagesUserWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->followRedirects();
         $client->setMaxRedirects(10);
 
         $crawler = $client->request('GET', '/private/en/authentication');
