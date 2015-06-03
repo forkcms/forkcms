@@ -161,8 +161,8 @@ class Form extends \SpoonForm
             throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
         }
 
-        // @later	get preferred mask & first day
-        $mask = 'd/m/Y';
+        // set mask and firstday
+        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
         $firstDay = 1;
 
         // build attributes
