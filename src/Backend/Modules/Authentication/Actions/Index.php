@@ -41,8 +41,7 @@ class Index extends BackendBaseActionIndex
     public function execute()
     {
         // check if the user is really logged on
-        if (BackendAuthentication::getUser()->isAuthenticated())
-        {
+        if (BackendAuthentication::getUser()->isAuthenticated()) {
             $userEmail = BackendAuthentication::getUser()->getEmail();
             $this->getContainer()->get('logger')->info(
                 "User '{$userEmail}' is already authenticated."

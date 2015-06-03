@@ -65,12 +65,11 @@ class Edit extends BackendBaseActionEdit
         // When this is the case the user will be redirected to the index action of this module.
         // An action to which he may not have any user rights.
         // Redirect to the user's own profile instead to avoid unnessary words.
-        if(
+        if (
             $this->id === null &&
             $this->error === null &&
             $this->authenticatedUser->getUserId()
-        )
-        {
+        ) {
             $this->redirect(
                 BackendModel::createURLForAction(
                     'Edit'
