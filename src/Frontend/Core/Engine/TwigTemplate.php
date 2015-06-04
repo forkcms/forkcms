@@ -140,7 +140,7 @@ Class TwigTemplate
      * so we could rebuild the positions with included
      * module Path for widgets and actions
      *
-     * I must admit this the ugly
+     * I must admit this is ugly
      *
      * @param array positions
      */
@@ -306,7 +306,7 @@ Class TwigTemplate
         $twig->addGlobal('positions', $this->setPositions($this->positions));
 
         // parse the Good old Spoon labels
-        $this->assignArray($this->parseLabels());
+        //$this->assignArray($this->parseLabels());
 
         // template
         $template = $twig->loadTemplate($this->baseFile);
@@ -354,6 +354,7 @@ Class TwigTemplate
         $twig->addFilter(new \Twig_SimpleFilter('formatcurrency', 'Frontend\Core\Engine\TemplateModifiers::formatCurrency'));
         $twig->addFilter(new \Twig_SimpleFilter('usersetting', 'Frontend\Core\Engine\TemplateModifiers::userSetting'));
         $twig->addFilter(new \Twig_SimpleFilter('uppercase', 'Frontend\Core\Engine\TwigTemplate::uppercase'));
+        $twig->addFilter(new \Twig_SimpleFilter('trans', 'Frontend\Core\Engine\TwigTemplate::trans'));
         $twig->addFilter(new \Twig_SimpleFilter('sprintf', 'sprintf'));
         $twig->addFilter(new \Twig_SimpleFilter('spoon_date', 'Frontend\Core\Engine\TwigTemplate::spoonDate'));
         $twig->addFilter(new \Twig_SimpleFilter('addslashes', 'addslashes'));
@@ -383,6 +384,18 @@ Class TwigTemplate
     public static function uppercase($string)
     {
         return mb_convert_case($string, MB_CASE_UPPER, \Spoon::getCharset());
+    }
+
+    /**
+     * Translate a string.
+     *
+     * @return  string          The string, to translate.
+     * @param   string $string  The string that you want to apply this method on.
+     */
+    public static function trans($string)
+    {
+        list($action, $string) = explode('.', $string);
+        return FL::{$action}($string);
     }
 
     /**
@@ -454,10 +467,7 @@ Class TwigTemplate
 
         /* Setup Frontend for the Twig environment. */
 
-        // locale object
-        $twig->addGlobal('lng', new FL());
-
-        // settings
+       // settings
         $twig->addGlobal(
             'SITE_TITLE',
             Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
@@ -491,29 +501,6 @@ Class TwigTemplate
                 ltrim(Model::get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
             );
         }
-    }
-
-    /**
-     * Assign the labels
-     */
-    private function parseLabels()
-    {
-        $labels['act'] = FL::getActions();
-        $labels['err'] = FL::getErrors();
-        $labels['lbl'] = FL::getLabels();
-        $labels['msg'] = FL::getMessages();
-
-        // execute addslashes on the values for the locale, will be used in JS
-        if ($this->addSlashes) {
-            foreach ($labels as &$label) {
-                foreach ($label as &$value) {
-                    if (!is_array($value)) {
-                        $value = addslashes($value);
-                    }
-                }
-            }
-        }
-        return $labels;
     }
 
     /**
