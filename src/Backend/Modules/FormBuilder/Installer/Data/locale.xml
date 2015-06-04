@@ -393,6 +393,20 @@
         <translation language="sv"><![CDATA[platshållare]]></translation>
         <translation language="el"><![CDATA[κράτησης θέσης]]></translation>
       </item>
+      <item type="label" name="Classname">
+        <translation language="nl"><![CDATA[CSS-klasse]]></translation>
+        <translation language="en"><![CDATA[CSS class]]></translation>
+        <translation language="it"><![CDATA[Classe CSS]]></translation>
+        <translation language="ru"><![CDATA[CSS-класс]]></translation>
+        <translation language="zh"><![CDATA[CSS类]]></translation>
+        <translation language="fr"><![CDATA[Classe CSS]]></translation>
+        <translation language="hu"><![CDATA[CSS osztály]]></translation>
+        <translation language="de"><![CDATA[CSS-Klasse]]></translation>
+        <translation language="es"><![CDATA[Clases CSS]]></translation>
+        <translation language="uk"><![CDATA[CSS клас]]></translation>
+        <translation language="sv"><![CDATA[CSS-klass]]></translation>
+        <translation language="el"><![CDATA[CSS Class]]></translation>
+      </item>
       <item type="label" name="Preview">
         <translation language="nl"><![CDATA[preview]]></translation>
         <translation language="en"><![CDATA[preview]]></translation>

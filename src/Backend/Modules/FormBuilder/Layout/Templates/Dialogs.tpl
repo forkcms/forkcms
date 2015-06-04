@@ -111,12 +111,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textboxPlaceholder">
-                                        {$lblPlaceholder|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                                    </label>
-                                    <p id="textboxPlaceholderError" class="text-danger jsFieldError" style="display: none;"></p>
+                                    <label for="textboxPlaceholder">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextboxPlaceholder}
+                                </div>
+                                <div class="form-group">
+                                    <label for="textboxClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtTextboxClassname}
                                 </div>
                             </div>
                         </div>
@@ -233,12 +233,12 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="textareaPlaceholder">
-                                        {$lblPlaceholder|ucfirst}
-                                        <abbr class="glyphicon glyphicon-asterisk" title="{$lblRequiredField|ucfirst}"></abbr>
-                                    </label>
-                                    <p id="textareaPlaceholderError" class="text-danger jsFieldError" style="display: none;"></p>
+                                    <label for="textareaPlaceholder">{$lblPlaceholder|ucfirst}</label>
                                     {$txtTextareaPlaceholder}
+                                </div>
+                                <div class="form-group">
+                                    <label for="textareaClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtTextareaClassname}
                                 </div>
                             </div>
                         </div>
@@ -268,6 +268,9 @@
                     </li>
                     <li role="presentation">
                         <a href="#tabDatetimeProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabDatetimeAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -344,6 +347,21 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDatetimeAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="datetimeClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtDatetimeClassname}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -369,6 +387,9 @@
                     </li>
                     <li role="presentation">
                         <a href="#tabDropdownProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabDropdownAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -428,6 +449,21 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabDropdownAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="dropdownClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtDropdownClassname}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -453,6 +489,9 @@
                     </li>
                     <li role="presentation">
                         <a href="#tabRadiobuttonProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabRadiobuttonAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -511,6 +550,21 @@
                             </div>
                         </div>
                     </div>
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabRadiobuttonAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="radiobuttonClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtRadiobuttonClassname}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">
@@ -536,6 +590,9 @@
                     </li>
                     <li role="presentation">
                         <a href="#tabCheckboxProperties" aria-controls="properties" role="tab" data-toggle="tab">{$lblProperties|ucfirst}</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#tabCheckboxAdvanced" aria-controls="advanced" role="tab" data-toggle="tab">{$lblAdvanced|ucfirst}</a>
                     </li>
                 </ul>
                 <div class="tab-content">
@@ -590,6 +647,21 @@
                                         <p id="checkboxRequiredErrorMessageError" class="text-danger jsFieldError" style="display: none;"></p>
                                         {$txtCheckboxRequiredErrorMessage}
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane jsFieldTab" id="tabCheckboxAdvanced">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>{$lblAdvanced|ucfirst}</h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="checkboxClassname">{$lblClassname|ucfirst}</label>
+                                    {$txtCheckboxClassname}
                                 </div>
                             </div>
                         </div>
