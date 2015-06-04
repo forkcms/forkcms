@@ -76,7 +76,7 @@ class Category extends FrontendBaseBlock
 
         // requested category
         $requestedCategory = \SpoonFilter::getValue(
-            $this->URL->getParameter(1, 'string'),
+            $this->URL->getParameter(0, 'string'),
             array_keys($possibleCategories),
             'false'
         );

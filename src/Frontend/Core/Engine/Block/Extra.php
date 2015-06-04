@@ -10,6 +10,13 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Config\FileLocator;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
@@ -17,6 +24,7 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Theme as FrontendTheme;
+use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * This class will handle all stuff related to blocks
@@ -164,13 +172,42 @@ class Extra extends FrontendBaseObject
     {
         // no action specified?
         if ($this->action === null) {
+            $routingFile = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Resources/config/routing.yml';
+
+            $fs = new Filesystem();
+
             // get first parameter
             $actionParameter = $this->URL->getParameter(0);
 
-            // unknown action and not provided in URL
-            if ($actionParameter === null) {
-                $this->setAction($this->config->getDefaultAction());
-            } else {
+            // set default action
+            $this->setAction($this->config->getDefaultAction());
+
+            // if we have module routing lets check it first
+            if ($fs->exists($routingFile)) {
+                $loader = new YamlFileLoader(new FileLocator());
+
+                $routes = new RouteCollection();
+                $routes->addCollection($loader->import($routingFile));
+
+                $context = new RequestContext();
+                $context->fromRequest(Request::createFromGlobals());
+
+                $matcher = new UrlMatcher($routes, $context);
+
+                try {
+                    $parameters = $matcher->match('/' . implode('/', $this->URL->getParameters()));
+                } catch (\Exception $e) {
+                    $parameters = array();
+                }
+
+                if (isset($parameters['_route'])) {
+                    $actionName = \SpoonFilter::toCamelCase($parameters['_route']);
+
+                    if (in_array($actionName, $this->config->getPossibleActions())) {
+                        $this->setAction($actionName);
+                    }
+                }
+            } elseif ($actionParameter !== null)  {
                 // action provided in the URL
                 // loop possible actions
                 $actionParameter = \SpoonFilter::toCamelCase($actionParameter);

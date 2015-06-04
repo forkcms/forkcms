@@ -1,0 +1,5 @@
+category:
+    path: /{category}
+
+detail:
+    path: /{category}/{detail}
