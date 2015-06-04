@@ -153,6 +153,7 @@ class Form extends FrontendBaseWidget
                 $item['type'] = $field['type'];
                 $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
                 $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
+	            $item['classname'] = (isset($field['settings']['classname']) ? $field['settings']['classname'] : null);
                 $item['required'] = isset($field['validations']['required']);
                 $item['html'] = '';
 
