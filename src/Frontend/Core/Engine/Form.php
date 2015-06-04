@@ -172,6 +172,9 @@ class Form extends \SpoonForm
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
+        $attributes['year'] = date('Y', $value);
+        $attributes['month'] = date('n', $value);
+        $attributes['day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
