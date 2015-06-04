@@ -8,7 +8,6 @@
  */
 
 use Symfony\Component\Config\Loader\LoaderInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;
 
 // hardcoded this for now, this should be autoloaded

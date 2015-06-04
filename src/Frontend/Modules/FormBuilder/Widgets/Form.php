@@ -243,14 +243,14 @@ class Form extends FrontendBaseWidget
                         }
 
                         // Convert the php date format to a jquery date format
-                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery(FrontendModel::getModuleSetting('Core', 'date_format_short'));
+                        $dateFormatShortJS = FrontendFormBuilderModel::convertPHPDateToJquery($this->get('fork.settings')->get('Core', 'date_format_short'));
 
                         $datetime = $this->frm->addText($item['name'], $defaultValues, 255, 'inputDatefield')->setAttributes(
                             array(
                                 'data-mask' => $dateFormatShortJS,
                                 'data-firstday' => '1',
                                 'type' => 'date',
-                                'default-date' => (!empty($defaultValues) ? date(FrontendModel::getModuleSetting('Core', 'date_format_short'), strtotime($defaultValues)) : '')
+                                'default-date' => (!empty($defaultValues) ? date($this->get('fork.settings')->get('Core', 'date_format_short'), strtotime($defaultValues)) : '')
                             )
                         );
                     } else {

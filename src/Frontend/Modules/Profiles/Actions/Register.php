@@ -169,11 +169,9 @@ class Register extends FrontendBaseBlock
                                                    . '/' . $settings['activation_key'];
 
                     // send email
-                    $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                    $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
-                    $message = \Common\Mailer\Message::newInstance(
-                            FL::getMessage('RegisterSubject')
-                        )
+                    $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                    $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
+                    $message = \Common\Mailer\Message::newInstance(FL::getMessage('RegisterSubject'))
                         ->setFrom(array($from['email'] => $from['name']))
                         ->setTo(array($txtEmail->getValue() => ''))
                         ->setReplyTo(array($replyTo['email'] => $replyTo['name']))

@@ -161,8 +161,8 @@ class Form extends \SpoonForm
             throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
         }
 
-        // @later	get preferred mask & first day
-        $mask = 'd/m/Y';
+        // set mask and firstday
+        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
         $firstDay = 1;
 
         // build attributes
@@ -725,6 +725,23 @@ class FrontendFormDate extends \SpoonFormDate
  */
 class FrontendFormImage extends \SpoonFormImage
 {
+    /**
+     * Constructor.
+     *
+     * @param    string            $name          The name.
+     * @param    string [optional] $class         The CSS-class to be used.
+     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @see      SpoonFormFile::__construct()
+     */
+    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+    {
+        // call the parent
+        parent::__construct($name, $class, $classError);
+
+        // mime type hinting
+        $this->setAttribute('accept', 'image/*');
+    }
+
     /**
      * Generate thumbnails based on the folders in the path
      * Use

@@ -21,6 +21,23 @@ use Symfony\Component\Filesystem\Filesystem;
 class FormImage extends \SpoonFormImage
 {
     /**
+     * Constructor.
+     *
+     * @param    string            $name          The name.
+     * @param    string [optional] $class         The CSS-class to be used.
+     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @see      SpoonFormFile::__construct()
+     */
+    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+    {
+        // call the parent
+        parent::__construct($name, $class, $classError);
+
+        // mime type hinting
+        $this->setAttribute('accept', 'image/*');
+    }
+
+    /**
      * Should the helpTxt span be hidden when parsing the field?
      *
      * @var    bool
@@ -83,6 +100,7 @@ class FormImage extends \SpoonFormImage
      *
      * @param \SpoonTemplate $template The template to parse the element in.
      * @return string
+     * @throws \SpoonFormException
      */
     public function parse($template = null)
     {

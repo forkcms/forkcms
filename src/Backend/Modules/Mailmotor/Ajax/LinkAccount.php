@@ -73,12 +73,12 @@ class LinkAccount extends BackendBaseAJAXAction
                 new \CampaignMonitor($url, $username, $password, 10);
 
                 // save the new data
-                BackendModel::setModuleSetting($this->getModule(), 'cm_url', $url);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_username', $username);
-                BackendModel::setModuleSetting($this->getModule(), 'cm_password', $password);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_url', $url);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_username', $username);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_password', $password);
 
                 // account was linked
-                BackendModel::setModuleSetting($this->getModule(), 'cm_account', true);
+                $this->get('fork.settings')->set($this->getModule(), 'cm_account', true);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_account_linked');

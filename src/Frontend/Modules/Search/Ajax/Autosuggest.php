@@ -87,7 +87,7 @@ class Autosuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'autosuggest_num_items', 10);
+        $this->limit = (int) $this->get('fork.settings')->get('Search', 'autosuggest_num_items', 10);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -165,7 +165,7 @@ class Autosuggest extends FrontendBaseAJAXAction
 
         // set url
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Search') . '?form=search&q=' . $this->term;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
+        $this->pagination['limit'] = $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
 
         // populate calculated fields in pagination
         $this->pagination['requested_page'] = $this->requestedPage;

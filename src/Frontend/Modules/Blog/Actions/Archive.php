@@ -139,7 +139,7 @@ class Archive extends FrontendBaseBlock
 
         // set URL and limit
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
-        $this->pagination['limit'] = FrontendModel::getModuleSetting('Blog', 'overview_num_items', 10);
+        $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination
         $this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);
@@ -169,7 +169,7 @@ class Archive extends FrontendBaseBlock
     private function parse()
     {
         // get RSS-link
-        $rssTitle = FrontendModel::getModuleSetting('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
+        $rssTitle = $this->get('fork.settings')->get('Blog', 'rss_title_' . FRONTEND_LANGUAGE);
         $rssLink = FrontendNavigation::getURLForBlock('Blog', 'Rss');
 
         // add RSS-feed
@@ -208,7 +208,7 @@ class Archive extends FrontendBaseBlock
         $this->tpl->assign('items', $this->items);
 
         // assign allowComments
-        $this->tpl->assign('allowComments', FrontendModel::getModuleSetting('Blog', 'allow_comments'));
+        $this->tpl->assign('allowComments', $this->get('fork.settings')->get('Blog', 'allow_comments'));
 
         // parse the pagination
         $this->parsePagination();

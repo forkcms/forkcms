@@ -115,7 +115,7 @@ class Model
      */
     public static function getClientID()
     {
-        return (string) FrontendModel::getModuleSetting('Mailmotor', 'cm_client_id');
+        return (string) FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_client_id');
     }
 
     /**

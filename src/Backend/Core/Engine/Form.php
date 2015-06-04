@@ -142,6 +142,8 @@ class Form extends \SpoonForm
      * @param string $class      Class(es) that have to be applied on the element.
      * @param string $classError Class(es) that have to be applied when an error occurs on the element.
      * @return FormDate
+     * @throws Exception
+     * @throws \SpoonFormException
      */
     public function addDate(
         $name,

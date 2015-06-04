@@ -287,7 +287,7 @@ class Navigation extends FrontendBaseObject
 
         // meta-navigation is requested but meta isn't enabled
         if ($type == 'meta' &&
-            (!Model::getModuleSetting('Pages', 'meta_navigation', true) ||
+            (!Model::get('fork.settings')->get('Pages', 'meta_navigation', true) ||
              !isset($navigation['meta']))
         ) {
             return '';

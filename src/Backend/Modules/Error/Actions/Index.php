@@ -42,7 +42,7 @@ class Index extends BackendBaseActionIndex
         $errorType = $this->getParameter('type');
 
         // set correct headers
-        switch($errorType) {
+        switch ($errorType) {
             case 'module-not-allowed':
             case 'action-not-allowed':
                 \SpoonHTTP::setHeadersByCode(403);

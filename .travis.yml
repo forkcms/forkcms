@@ -6,11 +6,11 @@ matrix:
         - php: 5.4
         - php: 5.5
         - php: 5.6
+        - php: 7
         - php: hhvm
-        - php: hhvm-nightly
     allow_failures:
+        - php: 7
         - php: hhvm
-        - php: hhvm-nightly
 
 script:
     - phpunit -c app/ --coverage-clover=coverage.clover
@@ -22,5 +22,5 @@ before_script:
     - cp app/config/parameters.yml.travis app/config/parameters.yml
 
 after_success:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then wget https://scrutinizer-ci.com/ocular.phar; fi
+  - if [[ "$TRAVIS_PHP_VERSION" != "hhvm" ]] && [[ "$TRAVIS_PHP_VERSION" != "7" ]]; then php ocular.phar code-coverage:upload --format=php-clover coverage.clover; fi

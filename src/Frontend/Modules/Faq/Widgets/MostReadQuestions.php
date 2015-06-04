@@ -39,7 +39,7 @@ class MostReadQuestions extends FrontendBaseWidget
     {
         $this->tpl->assign(
             'widgetFaqMostRead',
-            FrontendFaqModel::getMostRead(FrontendModel::getModuleSetting('Faq', 'most_read_num_items', 10))
+            FrontendFaqModel::getMostRead($this->get('fork.settings')->get('Faq', 'most_read_num_items', 10))
         );
     }
 }

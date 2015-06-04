@@ -88,7 +88,7 @@ class Livesuggest extends FrontendBaseAJAXAction
     {
         // set variables
         $this->requestedPage = 1;
-        $this->limit = (int) FrontendModel::getModuleSetting('Search', 'overview_num_items', 20);
+        $this->limit = (int) $this->get('fork.settings')->get('Search', 'overview_num_items', 20);
         $this->offset = ($this->requestedPage * $this->limit) - $this->limit;
         $this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' .
                            FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' .
@@ -280,7 +280,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // should we use a questionmark or an ampersand
-        if (mb_strpos($this->pagination['url'], '?') > 0) {
+        if (mb_strpos($this->pagination['url'], '?') !== false) {
             $useQuestionMark = false;
         }
 

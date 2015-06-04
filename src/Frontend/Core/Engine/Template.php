@@ -301,48 +301,48 @@ class Template extends \SpoonTemplate
         // settings
         $this->assign(
             'SITE_TITLE',
-            Model::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
 
         // facebook stuff
-        if (Model::getModuleSetting('Core', 'facebook_admin_ids', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null) !== null) {
             $this->assign(
                 'FACEBOOK_ADMIN_IDS',
-                Model::getModuleSetting('Core', 'facebook_admin_ids', null)
+                Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null)
             );
         }
-        if (Model::getModuleSetting('Core', 'facebook_app_id', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_app_id', null) !== null) {
             $this->assign(
                 'FACEBOOK_APP_ID',
-                Model::getModuleSetting('Core', 'facebook_app_id', null)
+                Model::get('fork.settings')->get('Core', 'facebook_app_id', null)
             );
         }
-        if (Model::getModuleSetting('Core', 'facebook_app_secret', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'facebook_app_secret', null) !== null) {
             $this->assign(
                 'FACEBOOK_APP_SECRET',
-                Model::getModuleSetting('Core', 'facebook_app_secret', null)
+                Model::get('fork.settings')->get('Core', 'facebook_app_secret', null)
             );
         }
 
         // twitter stuff
-        if (Model::getModuleSetting('Core', 'twitter_site_name', null) !== null) {
+        if (Model::get('fork.settings')->get('Core', 'twitter_site_name', null) !== null) {
             // strip @ from twitter username
             $this->assign(
                 'TWITTER_SITE_NAME',
-                ltrim(Model::getModuleSetting('Core', 'twitter_site_name', null), '@')
+                ltrim(Model::get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
             );
         }
 
         // theme
-        if (Model::getModuleSetting('Core', 'theme') !== null) {
-            $this->assign('THEME', Model::getModuleSetting('Core', 'theme', 'default'));
+        if (Model::get('fork.settings')->get('Core', 'theme') !== null) {
+            $this->assign('THEME', Model::get('fork.settings')->get('Core', 'theme', 'default'));
             $this->assign(
                 'THEME_PATH',
-                FRONTEND_PATH . '/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+                FRONTEND_PATH . '/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default')
             );
             $this->assign(
                 'THEME_URL',
-                '/src/Frontend/Themes/' . Model::getModuleSetting('Core', 'theme', 'default')
+                '/src/Frontend/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default')
             );
         }
     }
@@ -353,11 +353,11 @@ class Template extends \SpoonTemplate
     private function parseDateTimeFormats()
     {
         // time format
-        $this->assign('timeFormat', Model::getModuleSetting('Core', 'time_format'));
+        $this->assign('timeFormat', Model::get('fork.settings')->get('Core', 'time_format'));
 
         // date formats (short & long)
-        $this->assign('dateFormatShort', Model::getModuleSetting('Core', 'date_format_short'));
-        $this->assign('dateFormatLong', Model::getModuleSetting('Core', 'date_format_long'));
+        $this->assign('dateFormatShort', Model::get('fork.settings')->get('Core', 'date_format_short'));
+        $this->assign('dateFormatLong', Model::get('fork.settings')->get('Core', 'date_format_long'));
     }
 
     /**

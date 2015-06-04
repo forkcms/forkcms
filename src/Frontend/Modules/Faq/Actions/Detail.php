@@ -98,7 +98,7 @@ class Detail extends FrontendBaseBlock
         $this->record['tags'] = FrontendTagsModel::getForItem('Faq', $this->record['id']);
 
         // get settings
-        $this->settings = FrontendModel::getModuleSettings('Faq');
+        $this->settings = $this->get('fork.settings')->getForModule('Faq');
 
         // reset allow comments
         if (!$this->settings['allow_feedback']) {
@@ -263,13 +263,13 @@ class Detail extends FrontendBaseBlock
                     FrontendFaqModel::saveFeedback($variables);
 
                     // send email on new feedback?
-                    if (FrontendModel::getModuleSetting('Faq', 'send_email_on_new_feedback')) {
+                    if ($this->get('fork.settings')->get('Faq', 'send_email_on_new_feedback')) {
                         // add the question
                         $variables['question'] = $this->record['question'];
 
-                        $to = FrontendModel::getModuleSetting('Core', 'mailer_to');
-                        $from = FrontendModel::getModuleSetting('Core', 'mailer_from');
-                        $replyTo = FrontendModel::getModuleSetting('Core', 'mailer_reply_to');
+                        $to = $this->get('fork.settings')->get('Core', 'mailer_to');
+                        $from = $this->get('fork.settings')->get('Core', 'mailer_from');
+                        $replyTo = $this->get('fork.settings')->get('Core', 'mailer_reply_to');
                         $message = \Common\Mailer\Message::newInstance(
                                 sprintf(FL::getMessage('FaqFeedbackSubject'), $this->record['question'])
                             )

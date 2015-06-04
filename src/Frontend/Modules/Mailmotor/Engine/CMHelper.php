@@ -62,7 +62,7 @@ class CMHelper
      */
     public static function getClientID()
     {
-        return (string) FrontendModel::getModuleSetting('Mailmotor', 'cm_client_id');
+        return (string) FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_client_id');
     }
 
     /**
@@ -88,9 +88,9 @@ class CMHelper
             require_once PATH_LIBRARY . '/external/campaignmonitor.php';
 
             // set login data
-            $url = FrontendModel::getModuleSetting('Mailmotor', 'cm_url');
-            $username = FrontendModel::getModuleSetting('Mailmotor', 'cm_username');
-            $password = FrontendModel::getModuleSetting('Mailmotor', 'cm_password');
+            $url = FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_url');
+            $username = FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_username');
+            $password = FrontendModel::get('fork.settings')->get('Mailmotor', 'cm_password');
 
             // init CampaignMonitor object
             $cm = new \CampaignMonitor($url, $username, $password, 5, self::getClientId());

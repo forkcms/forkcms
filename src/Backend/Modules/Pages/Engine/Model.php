@@ -930,7 +930,7 @@ class Model
         $html .= '</div>' . "\n";
 
         // only show meta if needed
-        if (BackendModel::getModuleSetting('Pages', 'meta_navigation', false)) {
+        if (BackendModel::get('fork.settings')->get('Pages', 'meta_navigation', false)) {
             // meta pages
             $html .= '<h4>' . \SpoonFilter::ucfirst(BL::lbl('Meta')) . '</h4>' . "\n";
             $html .= '<div class="clearfix" data-tree="meta">' . "\n";
@@ -974,7 +974,6 @@ class Model
 
         // are there any footer pages
         if (isset($navigation['footer'][0]) && !empty($navigation['footer'][0])) {
-
             // loop the items
             foreach ($navigation['footer'][0] as $page) {
                 // start
@@ -1272,11 +1271,11 @@ class Model
         if ($typeOfDrop == 'inside') {
             // get highest sequence + 1
             $newSequence = (int) $db->getVar(
-                    'SELECT MAX(i.sequence)
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.status = ?',
-                    array($newParent, $language, 'active')
-                ) + 1;
+                'SELECT MAX(i.sequence)
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.status = ?',
+                array($newParent, $language, 'active')
+            ) + 1;
 
             // update
             $db->update(
@@ -1289,12 +1288,12 @@ class Model
             // calculate new sequence for items that should be moved before
             // get new sequence
             $newSequence = (int) $db->getVar(
-                    'SELECT i.sequence
-                     FROM pages AS i
-                     WHERE i.id = ? AND i.language = ? AND i.status = ?
-                     LIMIT 1',
-                    array($droppedOnPage['id'], $language, 'active')
-                ) - 1;
+                'SELECT i.sequence
+                 FROM pages AS i
+                 WHERE i.id = ? AND i.language = ? AND i.status = ?
+                 LIMIT 1',
+                array($droppedOnPage['id'], $language, 'active')
+            ) - 1;
 
             // increment all pages with a sequence that is higher or equal to the current sequence;
             $db->execute(
@@ -1315,12 +1314,12 @@ class Model
             // calculate new sequence for items that should be moved after
             // get new sequence
             $newSequence = (int) $db->getVar(
-                    'SELECT i.sequence
-                    FROM pages AS i
-                    WHERE i.id = ? AND i.language = ? AND i.status = ?
-                    LIMIT 1',
-                    array($droppedOnPage['id'], $language, 'active')
-                ) + 1;
+                'SELECT i.sequence
+                FROM pages AS i
+                WHERE i.id = ? AND i.language = ? AND i.status = ?
+                LIMIT 1',
+                array($droppedOnPage['id'], $language, 'active')
+            ) + 1;
 
             // increment all pages with a sequence that is higher then the current sequence;
             $db->execute(
@@ -1395,7 +1394,7 @@ class Model
         $page['revision_id'] = (int) $db->insert('pages', $page);
 
         // how many revisions should we keep
-        $rowsToKeep = (int) BackendModel::getModuleSetting('Pages', 'max_num_revisions', 20);
+        $rowsToKeep = (int) BackendModel::get('fork.settings')->get('Pages', 'max_num_revisions', 20);
 
         // get revision-ids for items to keep
         $revisionIdsToKeep = (array) $db->getColumn(

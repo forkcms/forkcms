@@ -11,7 +11,6 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * This class is the real code, it creates an action, loads the config file, ...
  *
@@ -32,6 +31,7 @@ class AjaxAction extends Base\Object
      * We will build the classname, require the class and call the execute method.
      *
      * @return Response
+     * @throws Exception
      */
     public function execute()
     {

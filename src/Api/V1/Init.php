@@ -1,6 +1,6 @@
 <?php
 
-namespace API\V1;
+namespace Api\V1;
 
 /*
  * This file is part of Fork CMS.
@@ -128,7 +128,7 @@ class Init extends \KernelLoader
     public static function exceptionHandler($exception, $output)
     {
         $output = (string) $output;
-        $debugMail = $this->getContainer()->getParameter('fork.debug_email');
+        $debugMail = self::getContainer()->getParameter('fork.debug_email');
 
         // mail it?
         if ($debugMail != '') {
