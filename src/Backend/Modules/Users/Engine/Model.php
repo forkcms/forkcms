@@ -253,25 +253,24 @@ class Model
     }
 
     /**
-     * Get all relevant actions for a certain module.
+     * Get all module action combinations a user has access to
      *
-     * @param string $module The module name.
+     * @param  int $userId The id of the user
      * @return array
      */
     public static function getModuleGroupsRightsActions($userId)
     {
-        return (array) BackendModel::getContainer()->get('database')
-            ->getRecords(
-                'SELECT a.module, a.action
-                FROM groups AS g
-                    INNER JOIN users_groups AS u ON u.group_id = g.id
-                    INNER JOIN groups_rights_modules AS m ON m.group_id = g.id
-                    INNER JOIN groups_rights_actions AS a ON a.group_id = g.id
-                        AND m.module = a.module
-                WHERE m.module = ?
-                GROUP BY a.module, a.action',
-                $userId
-            );
+        return (array) BackendModel::get('database')->getRecords(
+            'SELECT a.module, a.action
+            FROM groups AS g
+                INNER JOIN users_groups AS u ON u.group_id = g.id
+                INNER JOIN groups_rights_modules AS m ON m.group_id = g.id
+                INNER JOIN groups_rights_actions AS a ON a.group_id = g.id
+                    AND m.module = a.module
+            WHERE m.module = ?
+            GROUP BY a.module, a.action',
+            $userId
+        );
     }
 
     /**
