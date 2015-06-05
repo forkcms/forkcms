@@ -87,6 +87,11 @@ Class TwigTemplate
     private $baseFile;
 
     /**
+     * @var Fork settings
+     */
+    private $forkSettings;
+
+    /**
      * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
      *
      * @param bool $addToReference Should the instance be added into the reference.
@@ -97,7 +102,8 @@ Class TwigTemplate
             Model::getContainer()->set('template', $this);
         }
 
-        $this->themePath = FRONTEND_PATH . '/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default');
+        $this->forkSettings = Model::get('fork.settings');
+        $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
 
         // move to kernel parameter
@@ -123,8 +129,7 @@ Class TwigTemplate
      */
     public function assign($key, $values = null)
     {
-        // page hook
-        // last call
+        // page hook, last call
         if ($key === 'page') {
             $this->baseFile = $this->convertExtension($values['template_path']);
             $this->baseSpoonFile = FRONTEND_PATH . '/' . $values['template_path'];
@@ -428,16 +433,16 @@ Class TwigTemplate
         $twig->addGlobal('debug', $this->debugMode);
 
         $twig->addGlobal('timestamp', time());
-        $twig->addGlobal('timeFormat', Model::get('fork.settings')->get('Core', 'time_format'));
-        $twig->addGlobal('dateFormatShort', Model::get('fork.settings')->get('Core', 'date_format_short'));
-        $twig->addGlobal('dateFormatLong', Model::get('fork.settings')->get('Core', 'date_format_long'));
+        $twig->addGlobal('timeFormat', $this->forkSettings->get('Core', 'time_format'));
+        $twig->addGlobal('dateFormatShort', $this->forkSettings->get('Core', 'date_format_short'));
+        $twig->addGlobal('dateFormatLong', $this->forkSettings->get('Core', 'date_format_long'));
 
         // old theme checker
-        if (Model::get('fork.settings')->get('Core', 'theme') !== null) {
-            $twig->addGlobal('THEME', Model::get('fork.settings')->get('Core', 'theme', 'default'));
+        if ($this->forkSettings->get('Core', 'theme') !== null) {
+            $twig->addGlobal('THEME', $this->forkSettings->get('Core', 'theme', 'default'));
             $twig->addGlobal(
                 'THEME_URL',
-                '/src/Frontend/Themes/' . Model::get('fork.settings')->get('Core', 'theme', 'default')
+                '/src/Frontend/Themes/' . $this->forkSettings->get('Core', 'theme', 'default')
             );
         }
 
@@ -467,35 +472,35 @@ Class TwigTemplate
        // settings
         $twig->addGlobal(
             'SITE_TITLE',
-            Model::get('fork.settings')->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
+            $this->forkSettings->get('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE)
         );
 
         // facebook stuff
-        if (Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null) !== null) {
+        if ($this->forkSettings->get('Core', 'facebook_admin_ids', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_ADMIN_IDS',
-                Model::get('fork.settings')->get('Core', 'facebook_admin_ids', null)
+                $this->forkSettings->get('Core', 'facebook_admin_ids', null)
             );
         }
-        if (Model::get('fork.settings')->get('Core', 'facebook_app_id', null) !== null) {
+        if ($this->forkSettings->get('Core', 'facebook_app_id', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_APP_ID',
-                Model::get('fork.settings')->get('Core', 'facebook_app_id', null)
+                $this->forkSettings->get('Core', 'facebook_app_id', null)
             );
         }
-        if (Model::get('fork.settings')->get('Core', 'facebook_app_secret', null) !== null) {
+        if ($this->forkSettings->get('Core', 'facebook_app_secret', null) !== null) {
             $twig->addGlobal(
                 'FACEBOOK_APP_SECRET',
-                Model::get('fork.settings')->get('Core', 'facebook_app_secret', null)
+                $this->forkSettings->get('Core', 'facebook_app_secret', null)
             );
         }
 
         // twitter stuff
-        if (Model::get('fork.settings')->get('Core', 'twitter_site_name', null) !== null) {
+        if ($this->forkSettings->get('Core', 'twitter_site_name', null) !== null) {
             // strip @ from twitter username
             $twig->addGlobal(
                 'TWITTER_SITE_NAME',
-                ltrim(Model::get('fork.settings')->get('Core', 'twitter_site_name', null), '@')
+                ltrim($this->forkSettings->get('Core', 'twitter_site_name', null), '@')
             );
         }
     }
