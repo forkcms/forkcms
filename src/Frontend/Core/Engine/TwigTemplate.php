@@ -397,7 +397,7 @@ Class TwigTemplate
     public static function trans($string)
     {
         list($action, $string) = explode('.', $string);
-        return FL::{$action}($string);
+        return FL::$action($string);
     }
 
     /**
