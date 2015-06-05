@@ -305,9 +305,6 @@ Class TwigTemplate
         // set the positions array
         $twig->addGlobal('positions', $this->setPositions($this->positions));
 
-        // parse the Good old Spoon labels
-        //$this->assignArray($this->parseLabels());
-
         // template
         $template = $twig->loadTemplate($this->baseFile);
         return $template->render($this->variables);
