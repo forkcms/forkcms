@@ -342,15 +342,15 @@ class Model extends \BaseModel
         }
 
         $file = FRONTEND_MODULES_PATH . '/' . $module . '/Resources/config/routing.yml';
-
         $fs = new Filesystem();
 
         if ($fs->exists($file)) {
+            $actions = Language::getActions();
             $router = new Router(new YamlFileLoader(new FileLocator()), $file);
 
-            $actions = Language::getActions();
-
             /**
+             * replace {_action} with actual action translation based on route name
+             *
              * @var Route $route
              */
             foreach ($router->getRouteCollection()->getIterator() as $routeName => $route) {
