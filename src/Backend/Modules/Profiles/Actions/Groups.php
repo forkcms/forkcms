@@ -176,8 +176,8 @@ class Groups extends BackendBaseActionIndex
     /**
      * Parse amount of profiles for the datagrid.
      *
-     * @param int $groupId     Group id.
-     * @param int $numProfiles Number of profiles.
+     * @param  int    $groupId     Group id.
+     * @param  int    $numProfiles Number of profiles.
      * @return string
      */
     public static function parseNumProfiles($groupId, $numProfiles)
