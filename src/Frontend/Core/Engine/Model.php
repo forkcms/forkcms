@@ -347,8 +347,6 @@ class Model extends \BaseModel
         if ($fs->exists($file)) {
             return new Router(new YamlFileLoader(new FileLocator()), $file);
         }
-
-        return null;
     }
 
     /**
