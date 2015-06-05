@@ -10,6 +10,8 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Routing\Router;
+
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Model as FrontendModel;
@@ -524,13 +526,14 @@ class Navigation extends FrontendBaseObject
     /**
      * Get the URL for a give module & action combination
      *
-     * @param string $module   The module wherefore the URL should be build.
-     * @param string $action   The specific action wherefore the URL should be build.
-     * @param string $language The language wherein the URL should be retrieved,
-     *                         if not provided we will load the language that was provided in the URL.
+     * @param string $module    The module wherefore the URL should be build.
+     * @param string $action    The specific action wherefore the URL should be build.
+     * @param string $language  The language wherein the URL should be retrieved,
+     *                          if not provided we will load the language that was provided in the URL.
+     * @param array $parameters Router parameters for generating url
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, $parameters = array())
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
@@ -576,6 +579,20 @@ class Navigation extends FrontendBaseObject
 
         // build URL
         $URL = self::getURL($pageIdForURL, $language);
+
+        $router = FrontendModel::getModuleRouter($module);
+
+        if (null !== $router) {
+            $route = strtolower(preg_replace('/(?<=\\w)(?=[A-Z])/',"_$1", $action));
+
+            try {
+                $URL .= $router->generate($route, $parameters);
+            } catch (\Exception $e) {
+                $URL .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
+            }
+
+            return $URL;
+        }
 
         // append action
         $URL .= '/' . Language::act(\SpoonFilter::toCamelCase($action));

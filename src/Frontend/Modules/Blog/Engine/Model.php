@@ -111,15 +111,17 @@ class Model implements FrontendTagsInterface
         }
 
         // init var
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Detail');
-        $categoryLink = FrontendNavigation::getURLForBlock('Blog', 'Category');
         $folders = FrontendModel::getThumbnailFolders(FRONTEND_FILES_PATH . '/Blog/Images', true);
 
         // loop
         foreach ($items as $key => $row) {
             // URLs
-            $items[$key]['full_url'] = $link . '/' . $row['url'];
-            $items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+            $items[$key]['full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog', 'Detail', null, array('category' => $row['category_url'], 'detail' => $row['url'])
+            );
+            $items[$key]['category_full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog', 'Category', null, array('category' => $row['category_url'])
+            );
 
             // comments
             if ($row['comments_count'] > 0) {
@@ -272,8 +274,12 @@ class Model implements FrontendTagsInterface
         // loop
         foreach ($items as $key => $row) {
             // URLs
-            $items[$key]['full_url'] = $link . '/' . $row['url'];
-            $items[$key]['category_full_url'] = $categoryLink . '/' . $row['category_url'];
+            $items[$key]['full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog', 'Detail', null, array('category' => $row['category_url'], 'detail' => $row['url'])
+            );
+            $items[$key]['category_full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog', 'Category', null, array('category' => $row['category_url'])
+            );
 
             // comments
             if ($row['comments_count'] > 0) {

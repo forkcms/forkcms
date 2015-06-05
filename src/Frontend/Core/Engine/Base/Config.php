@@ -12,6 +12,9 @@ namespace Frontend\Core\Engine\Base;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\Router;
+
+use Frontend\Core\Engine\Model as FrontendModel;
 
 /**
  * This is the base-object for config-files.
@@ -50,6 +53,13 @@ class Config extends \KernelLoader
     protected $module;
 
     /**
+     * Module router
+     *
+     * @var Router
+     */
+    protected $router;
+
+    /**
      * All the possible actions
      *
      * @var    array
@@ -72,6 +82,9 @@ class Config extends \KernelLoader
         parent::__construct($kernel);
 
         $this->module = (string) $module;
+
+        // sets module router if routing file exists
+        $this->router = FrontendModel::getModuleRouter($this->module);
 
         // read the possible actions based on the files
         $this->setPossibleActions();
@@ -152,5 +165,21 @@ class Config extends \KernelLoader
                 }
             }
         }
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasRouter()
+    {
+        return (bool)$this->router;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 }

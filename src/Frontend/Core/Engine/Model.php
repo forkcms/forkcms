@@ -11,6 +11,10 @@ namespace Frontend\Core\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\RouteCollection;
+use Symfony\Component\Config\FileLocator;
 
 use TijsVerkoyen\Akismet\Akismet;
 
@@ -323,6 +327,31 @@ class Model extends \BaseModel
         );
 
         return self::get('fork.settings')->getForModule($module);
+    }
+
+    /**
+     * Creates router for module based on routing file
+     *
+     * @param $module
+     * @return null|Router
+     */
+    public static function getModuleRouter($module)
+    {
+        if (empty($module)) {
+            return null;
+        }
+
+        $router = null;
+
+        $file = FRONTEND_MODULES_PATH . '/' . $module . '/Resources/config/routing.yml';
+
+        $fs = new Filesystem();
+
+        if ($fs->exists($file)) {
+            $router = new Router(new YamlFileLoader(new FileLocator()), $file);
+        }
+
+        return $router;
     }
 
     /**

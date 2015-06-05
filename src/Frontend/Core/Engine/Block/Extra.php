@@ -10,13 +10,8 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Config\FileLocator;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Base\Config;
@@ -172,10 +167,6 @@ class Extra extends FrontendBaseObject
     {
         // no action specified?
         if ($this->action === null) {
-            $routingFile = FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/Resources/config/routing.yml';
-
-            $fs = new Filesystem();
-
             // get first parameter
             $actionParameter = $this->URL->getParameter(0);
 
@@ -183,19 +174,12 @@ class Extra extends FrontendBaseObject
             $this->setAction($this->config->getDefaultAction());
 
             // if we have module routing lets check it first
-            if ($fs->exists($routingFile)) {
-                $loader = new YamlFileLoader(new FileLocator());
-
-                $routes = new RouteCollection();
-                $routes->addCollection($loader->import($routingFile));
-
+            if ($this->config->hasRouter()) {
                 $context = new RequestContext();
-                $context->fromRequest(Request::createFromGlobals());
-
-                $matcher = new UrlMatcher($routes, $context);
+                $context->fromRequest($this->getContainer()->get('request'));
 
                 try {
-                    $parameters = $matcher->match('/' . implode('/', $this->URL->getParameters()));
+                    $parameters = $this->config->getRouter()->match('/' . implode('/', $this->URL->getParameters()));
                 } catch (\Exception $e) {
                     $parameters = array();
                 }
