@@ -2,6 +2,8 @@
 --
 Improvements:
 
+* Improve the inheritance of code and avoid duplicate code.
+
 Bugfixes:
 
 * Analytics: Auth config content saved in databse, because capistrano deployments didn't work with BACKEND_CACHE_PATH.
