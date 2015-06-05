@@ -28,7 +28,7 @@ class Add extends BackendBaseActionAdd
      * @var int
      */
     private $id;
-    
+
     /**
      * @var bool
      */
@@ -185,18 +185,18 @@ class Add extends BackendBaseActionAdd
 
                 $this->id = BackendProfilesModel::insert($values);
 
-				// get new salt
-				$salt = BackendProfilesModel::getRandomString();
+                // get new salt
+                $salt = BackendProfilesModel::getRandomString();
 
-				// update salt
-				BackendProfilesModel::setSetting($this->id, 'salt', $salt);
+                // update salt
+                BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
-				// new password filled in? otherwise generate a password
-				$password = ($txtPassword->isFilled()) ?
-				    $txtPassword->getValue() : BackendModel::generatePassword(8);
+                // new password filled in? otherwise generate a password
+                $password = ($txtPassword->isFilled()) ?
+                    $txtPassword->getValue() : BackendModel::generatePassword(8);
 
-				// build password
-				$values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
+                // build password
+                $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
 
                 // update values
                 BackendProfilesModel::update($this->id, $values);
@@ -220,26 +220,26 @@ class Add extends BackendBaseActionAdd
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
-				// notify values
-				$notifyValues = array_merge(
-				    $values,
-					array(
-						'id' => $this->id,
-						'first_name' => $txtFirstName->getValue(),
-						'last_name' => $txtLastName->getValue(),
-						'unencrypted_password' => $password
-					)					
-				);
+                // notify values
+                $notifyValues = array_merge(
+                    $values,
+                    array(
+                        'id' => $this->id,
+                        'first_name' => $txtFirstName->getValue(),
+                        'last_name' => $txtLastName->getValue(),
+                        'unencrypted_password' => $password
+                    )
+                );
 
-				// notify new profile user
-				if ($this->notifyProfile) {
-				    BackendProfilesModel::notifyNewProfile($notifyValues);
-				}
+                // notify new profile user
+                if ($this->notifyProfile) {
+                    BackendProfilesModel::notifyNewProfile($notifyValues);
+                }
 
-				// notify admin
-				if ($this->notifyAdmin) {
-				    BackendProfilesModel::notifyNewProfileToAdmin($notifyValues);
-				}
+                // notify admin
+                if ($this->notifyAdmin) {
+                    BackendProfilesModel::notifyNewProfileToAdmin($notifyValues);
+                }
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));

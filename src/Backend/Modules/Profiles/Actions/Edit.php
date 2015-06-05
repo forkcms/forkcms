@@ -290,9 +290,9 @@ class Edit extends BackendBaseActionEdit
                     // update salt
                     BackendProfilesModel::setSetting($this->id, 'salt', $salt);
 
-    				// new password filled in? otherwise generate a password
-    				$password = ($txtPassword->isFilled()) ?
-				        $txtPassword->getValue() : BackendModel::generatePassword(8);
+                    // new password filled in? otherwise generate a password
+                    $password = ($txtPassword->isFilled()) ?
+                        $txtPassword->getValue() : BackendModel::generatePassword(8);
 
                     // build password
                     $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
@@ -323,21 +323,21 @@ class Edit extends BackendBaseActionEdit
                     // new password
                     if ($this->frm->getField('new_password')->isChecked()) {
                         // notify values
-        				$notifyValues = array_merge(
-        				    $values,
-        					array(
-        						'id' => $this->id,
-        						'first_name' => $txtFirstName->getValue(),
-        						'last_name' => $txtLastName->getValue(),
-        						'unencrypted_password' => $password
-        					)					
-        				);
+                        $notifyValues = array_merge(
+                            $values,
+                            array(
+                                'id' => $this->id,
+                                'first_name' => $txtFirstName->getValue(),
+                                'last_name' => $txtLastName->getValue(),
+                                'unencrypted_password' => $password
+                            )
+                        );
 
-        				if (!isset($notifyValues['display_name'])) {
-        				    $notifyValues['display_name'] = $this->profile['display_name'];
-        				}
+                        if (!isset($notifyValues['display_name'])) {
+                            $notifyValues['display_name'] = $this->profile['display_name'];
+                        }
 
-				        BackendProfilesModel::notifyUpdatedProfile($notifyValues);
+                        BackendProfilesModel::notifyUpdatedProfile($notifyValues);
                     }
                 }
 
