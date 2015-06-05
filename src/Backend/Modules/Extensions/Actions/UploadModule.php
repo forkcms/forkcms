@@ -228,10 +228,9 @@ class UploadModule extends BackendBaseActionAdd
             }
         }
 
-        // If we ever get here, something odd has likely happened, so
-        // just return an empty prefix.  At least a correctly formatted
-        // zip would then work...
-        return "";
+        // If the zip has a top-level single directory, eg
+        // /myModuleName/, then we should just assume that is the prefix.
+        return $file['name'];
     }
 
     /**
