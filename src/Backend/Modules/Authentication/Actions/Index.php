@@ -9,6 +9,8 @@ namespace Backend\Modules\Authentication\Actions;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\Finder\Finder;
+
 use Backend\Core\Engine\Base\ActionIndex as BackendBaseActionIndex;
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\Form as BackendForm;
@@ -40,7 +42,11 @@ class Index extends BackendBaseActionIndex
     {
         // check if the user is really logged on
         if (BackendAuthentication::getUser()->isAuthenticated()) {
-            $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'Dashboard')));
+            $userEmail = BackendAuthentication::getUser()->getEmail();
+            $this->getContainer()->get('logger')->info(
+                "User '{$userEmail}' is already authenticated."
+            );
+            $this->redirectToAllowedModuleAndAction();
         }
 
         parent::execute();
@@ -184,30 +190,15 @@ class Index extends BackendBaseActionIndex
                     BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
                 }
 
-                // create filter with modules which may not be displayed
-                $filter = array('Authentication', 'Error', 'Core');
-
-                // get all modules
-                $modules = array_diff(BackendModel::getModules(), $filter);
-
-                // redirect to the dashboard module if possible
-                if (BackendAuthentication::isAllowedModule('Dashboard')) {
-                    $module = 'Dashboard';
-                } else {
-                    // if not allowed in the dashboard, redirect to the first allowed module
-                    foreach ($modules as $module) {
-                        if (BackendAuthentication::isAllowedModule($module)) {
-                            break;
-                        }
-                    }
-                }
+                $allowedModule = $this->getAllowedModule();
+                $allowedAction = $this->getAllowedAction($allowedModule);
 
                 $this->getContainer()->get('logger')->info(
                     "Successfully authenticated user '{$txtEmail->getValue()}'."
                 );
 
                 // redirect to the correct URL (URL the user was looking for or fallback)
-                $this->redirect($this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, $module)));
+                $this->redirectToAllowedModuleAndAction();
             }
         }
 
@@ -267,5 +258,84 @@ class Index extends BackendBaseActionIndex
                 $this->tpl->assign('showForm', true);
             }
         }
+    }
+
+    /*
+     * Find out which module and action are allowed
+     * and send the user on his way.
+     */
+    private function redirectToAllowedModuleAndAction()
+    {
+        $allowedModule = $this->getAllowedModule();
+        $allowedAction = $this->getAllowedAction($allowedModule);
+        $allowedModuleActionUrl = $allowedModule ?
+            BackendModel::createUrlForAction($allowedAction, $allowedModule) :
+            BackendModel::createUrlForAction('Index', 'Authentication');
+
+        $userEmail = BackendAuthentication::getUser()->getEmail();
+        $this->getContainer()->get('logger')->info(
+            "Redirecting user '{$userEmail}' to {$allowedModuleActionUrl}."
+        );
+
+        $this->redirect(
+            $this->getParameter('querystring', 'string', $allowedModuleActionUrl)
+        );
+    }
+
+    /*
+     * Run through the action of a certain module
+     * and find us an action(name) this user is
+     * allowed to access.
+     */
+    private function getAllowedAction($module)
+    {
+        if(BackendAuthentication::isAllowedAction('Index', $module)) {
+            return 'Index';
+        }
+        $allowedAction = false;
+
+        $groupsRightsActions = BackendUsersModel::getModuleGroupsRightsActions(
+            $module
+        );
+
+        foreach ($groupsRightsActions as $groupsRightsAction) {
+            $isAllowedAction = BackendAuthentication::isAllowedAction(
+                $groupsRightsAction['action'],
+                $module
+            );
+            if($isAllowedAction) {
+                $allowedAction = $groupsRightsAction['action'];
+                break;
+            }
+        }
+
+        return $allowedAction;
+    }
+
+    /*
+     * Run through the modules and find us a module(name)
+     * this user is allowed to access.
+     */
+    private function getAllowedModule()
+    {
+        // create filter with modules which may not be displayed
+        $filter = array('Authentication', 'Error', 'Core');
+
+        // get all modules
+        $modules = array_diff(BackendModel::getModules(), $filter);
+        $allowedModule = false;
+
+        if (BackendAuthentication::isAllowedModule('Dashboard')) {
+            $allowedModule = 'Dashboard';
+        } else {
+            foreach ($modules as $module) {
+                if (BackendAuthentication::isAllowedModule($module)) {
+                    $allowedModule = $module;
+                    break;
+                }
+            }
+        }
+
+        return $allowedModule;
     }
 }

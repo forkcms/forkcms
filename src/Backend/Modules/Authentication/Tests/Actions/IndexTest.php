@@ -3,9 +3,24 @@
 namespace Backend\Modules\Authentication\Tests\Action;
 
 use Common\WebTestCase;
+use Backend\Core\Engine\Authentication as Authentication;
 
 class IndexTest extends WebTestCase
 {
+    /**
+     * The authentication class persist the previous user.
+     * In practice this situation will almost never occur:
+     * Login with one user, log out and subsequently log in
+     * with another user without a page reload to reinitialize
+     * the application.
+     * If the clients could be insulated from eachother, this
+     * would not be an issue.
+     */
+    protected function tearDown()
+    {
+        Authentication::tearDown();
+    }
+
     public function testPrivateRedirectsToAuthentication()
     {
         $client = static::createClient();
@@ -57,7 +72,7 @@ class IndexTest extends WebTestCase
     public function testAuthenticationWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->followRedirects();
+        $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(
@@ -77,5 +92,76 @@ class IndexTest extends WebTestCase
             'now editing:',
             $client->getResponse()->getContent()
         );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
+    }
+
+    /**
+     * Login as a pages user.
+     * This user has the rights to access only the pages module.
+     */
+    public function testPagesUserWithCorrectCredentials()
+    {
+        $client = static::createClient();
+        $client->setMaxRedirects(2);
+
+        $crawler = $client->request('GET', '/private/en/authentication');
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, array(
+            'form' => 'authenticationIndex',
+            'backend_email' => 'pages-user@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ));
+
+        $this->assertContains(
+            'Recently edited',
+            $client->getResponse()->getContent()
+        );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
+    }
+
+    /**
+     * Login as a users user.
+     * This user only has the rights to access the users edit action.
+     * It should enable the user to edit his own user-account.
+     */
+    public function testUsersUserWithCorrectCredentials()
+    {
+        $client = static::createClient();
+        $client->setMaxRedirects(2);
+
+        $crawler = $client->request('GET', '/private/en/authentication');
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
+
+        $form = $crawler->selectButton('login')->form();
+        $this->submitForm($client, $form, array(
+            'form' => 'authenticationIndex',
+            'backend_email' => 'users-edit-user@fork-cms.com',
+            'backend_password' => 'fork',
+            'form_token' => $form['form_token']->getValue(),
+        ));
+
+        $this->assertContains(
+            'Users: edit user "Users User"',
+            $client->getResponse()->getContent()
+        );
+
+        // logout to get rid of this session
+        $client->followRedirects(false);
+        $client->request('GET', '/private/en/authentication/logout');
     }
 }

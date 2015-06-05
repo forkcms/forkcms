@@ -427,6 +427,9 @@ class Authentication
             \SpoonSession::set('backend_logged_in', true);
             \SpoonSession::set('backend_secret_key', $session['secret_key']);
 
+            // update/instantiate the value for the logged_in container.
+            BackendModel::getContainer()->set('logged_in', true);
+
             // return result
             return true;
         } else {
@@ -435,6 +438,9 @@ class Authentication
             // because session-data can be used on the site.
             \SpoonSession::set('backend_logged_in', false);
             \SpoonSession::set('backend_secret_key', '');
+
+            // update/instantiate the value for the logged_in container.
+            BackendModel::getContainer()->set('logged_in', false);
 
             // return result
             return false;
@@ -453,5 +459,18 @@ class Authentication
         \SpoonSession::set('backend_logged_in', false);
         \SpoonSession::set('backend_secret_key', '');
         \SpoonSession::set('csrf_token', '');
+    }
+
+    /**
+     * Reset our class to make sure no contamination from previous
+     * authentications persists. This signifies a deeper issue with
+     * this class. Solving the issue would be preferable to introducting
+     * another method. This currently only exists to serve the test.
+     */
+    public static function tearDown()
+    {
+        self::$allowedActions = array();
+        self::$allowedModules = array();
+        self::$user = null;
     }
 }
