@@ -1,5 +1,12 @@
-category:
-    path: /{category}
+archive:
+  path: /{_action}/{year}/{month}
+  defaults:  { month: null }
+
+rss:
+  path: /{_action}
 
 detail:
-    path: /{category}/{detail}
+  path: /{category}/{detail}
+
+category:
+  path: /{category}

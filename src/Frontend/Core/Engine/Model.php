@@ -13,6 +13,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Route;
 use Symfony\Component\Config\FileLocator;
 
 use TijsVerkoyen\Akismet\Akismet;
@@ -345,7 +346,23 @@ class Model extends \BaseModel
         $fs = new Filesystem();
 
         if ($fs->exists($file)) {
-            return new Router(new YamlFileLoader(new FileLocator()), $file);
+            $router = new Router(new YamlFileLoader(new FileLocator()), $file);
+
+            $actions = Language::getActions();
+
+            /**
+             * @var Route $route
+             */
+            foreach ($router->getRouteCollection()->getIterator() as $routeName => $route) {
+                $action = \SpoonFilter::toCamelCase($routeName);
+                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($routeName);
+
+                if (false !== strpos($route->getPath(), '{_action}')) {
+                    $route->setPath(str_replace('{_action}', $actionLocale, $route->getPath()));
+                }
+            }
+
+            return $router;
         }
     }
 
