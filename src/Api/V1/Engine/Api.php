@@ -462,7 +462,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: application/json;charset=' . $charset);
+        header('content-type: application/json;charset=' . $charset);
 
         // output JSON
         self::$content = json_encode($JSON);
@@ -510,7 +510,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
         // set correct headers
         \SpoonHTTP::setHeadersByCode($statusCode);
-        \SpoonHTTP::setHeaders('content-type: text/xml;charset=' . $charset);
+        header('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();
