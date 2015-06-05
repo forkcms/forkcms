@@ -23,6 +23,23 @@ file_get_content($url)
 
 > Remark: fopen wrapper should be enabled.
 
+### SpoonHTTP::redirect()
+
+Before:
+
+```php
+\SpoonHTTP::redirect($url);
+```
+
+After:
+
+```php
+throw new RedirectException(
+    'Redirect',
+    new RedirectResponse($url)
+);
+```
+
 ### SpoonHTTP::setHeaders()
 
 There are two use-cases that should be handled:

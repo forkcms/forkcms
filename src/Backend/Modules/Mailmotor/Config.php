@@ -9,6 +9,8 @@ namespace Backend\Modules\Mailmotor;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpKernel\KernelInterface;
 
 use Backend\Core\Engine\Base\Config as BackendBaseConfig;
@@ -72,22 +74,28 @@ class Config extends BackendBaseConfig
         if ($this->checkForSettings()) {
             // no connection to campaignmonitor could be made, so the service is probably unreachable at this point
             if (!BackendMailmotorCMHelper::checkAccount()) {
-                \SpoonHTTP::redirect(
-                    BackendModel::createURLForAction(
-                        'Index',
-                        'Mailmotor',
-                        BL::getWorkingLanguage()
-                    ) . '&error=could-not-connect'
+                throw new RedirectException(
+                    'Redirect',
+                    new RedirectResponse(
+                        BackendModel::createURLForAction(
+                            'Index',
+                            'Mailmotor',
+                            BL::getWorkingLanguage()
+                        ) . '&error=could-not-connect'
+                    )
                 );
             }
         } else {
             // no settings were set
-            \SpoonHTTP::redirect(
-                BackendModel::createURLForAction(
-                    'Settings',
-                    'Mailmotor',
-                    BL::getWorkingLanguage()
-                ) . '#tabSettingsAccount'
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    BackendModel::createURLForAction(
+                        'Settings',
+                        'Mailmotor',
+                        BL::getWorkingLanguage()
+                    ) . '#tabSettingsAccount'
+                )
             );
         }
     }
@@ -102,8 +110,15 @@ class Config extends BackendBaseConfig
 
         // no client ID set, so redirect to settings with an appropriate error message.
         if (empty($clientId)) {
-            \SpoonHTTP::redirect(
-                BackendModel::createURLForAction('Settings', 'Mailmotor', BL::getWorkingLanguage())
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    BackendModel::createURLForAction(
+                        'Settings',
+                        'Mailmotor',
+                        BL::getWorkingLanguage()
+                    )
+                )
             );
         }
 
@@ -112,12 +127,15 @@ class Config extends BackendBaseConfig
 
         // check if a price per e-mail is set
         if (empty($pricePerEmail) && $pricePerEmail != 0) {
-            \SpoonHTTP::redirect(
-                BackendModel::createURLForAction(
-                    'Settings',
-                    'Mailmotor',
-                    BL::getWorkingLanguage()
-                ) . '&error=no-price-per-email'
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    BackendModel::createURLForAction(
+                        'Settings',
+                        'Mailmotor',
+                        BL::getWorkingLanguage()
+                    ) . '&error=no-price-per-email'
+                )
             );
         }
     }
@@ -156,7 +174,12 @@ class Config extends BackendBaseConfig
         // check if there are external groups present in CampaignMonitor
         if ($this->checkForExternalGroups()) {
             // external groups were found, so redirect to the import_groups action
-            \SpoonHTTP::redirect(BackendModel::createURLForAction('ImportGroups', 'Mailmotor'));
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    BackendModel::createURLForAction('ImportGroups', 'Mailmotor')
+                )
+            );
         }
 
         // fetch the default groups, language abbreviation is the array key
