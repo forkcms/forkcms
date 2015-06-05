@@ -172,7 +172,7 @@ class Config extends \KernelLoader
      */
     public function hasRouter()
     {
-        return (bool)$this->router;
+        return null !== $this->router;
     }
 
     /**

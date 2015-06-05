@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine\Block;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
@@ -19,7 +18,6 @@ use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Exception as FrontendException;
 use Frontend\Core\Engine\Language as FL;
 use Frontend\Core\Engine\Theme as FrontendTheme;
-use Symfony\Component\Security\Acl\Exception\Exception;
 
 /**
  * This class will handle all stuff related to blocks

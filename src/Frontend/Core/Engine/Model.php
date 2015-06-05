@@ -13,7 +13,6 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
 use Symfony\Component\Routing\Router;
-use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Config\FileLocator;
 
 use TijsVerkoyen\Akismet\Akismet;
@@ -341,17 +340,15 @@ class Model extends \BaseModel
             return null;
         }
 
-        $router = null;
-
         $file = FRONTEND_MODULES_PATH . '/' . $module . '/Resources/config/routing.yml';
 
         $fs = new Filesystem();
 
         if ($fs->exists($file)) {
-            $router = new Router(new YamlFileLoader(new FileLocator()), $file);
+            return new Router(new YamlFileLoader(new FileLocator()), $file);
         }
 
-        return $router;
+        return null;
     }
 
     /**

@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-use Symfony\Component\Routing\Router;
 
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
