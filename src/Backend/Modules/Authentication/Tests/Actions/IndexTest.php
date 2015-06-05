@@ -139,7 +139,7 @@ class IndexTest extends WebTestCase
     public function testUsersUserWithCorrectCredentials()
     {
         $client = static::createClient();
-        $client->setMaxRedirects(3);
+        $client->setMaxRedirects(2);
 
         $crawler = $client->request('GET', '/private/en/authentication');
         $this->assertEquals(
