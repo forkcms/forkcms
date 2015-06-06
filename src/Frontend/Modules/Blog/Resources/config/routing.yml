@@ -1,12 +1,19 @@
+index:
+  path: /
+  defaults:  { _action: 'index' }
+
 archive:
   path: /{_action}/{year}/{month}
-  defaults:  { month: null }
+  defaults:  { _action: 'archive', month: null }
 
 rss:
   path: /{_action}
+  defaults:  { _action: 'rss' }
 
 detail:
   path: /{category}/{detail}
+  defaults:  { _action: 'detail' }
 
 category:
   path: /{category}
+  defaults:  { _action: 'category' }

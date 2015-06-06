@@ -164,41 +164,36 @@ class Extra extends FrontendBaseObject
     public function getAction()
     {
         // no action specified?
-        if ($this->action === null) {
+        if (null === $this->action) {
             // get first parameter
             $actionParameter = $this->URL->getParameter(0);
 
             // set default action
             $this->setAction($this->config->getDefaultAction());
 
-            // if we have module routing lets check it first
+            // if we have module routing lets check it first and set action parameter
             if ($this->config->hasRouter()) {
-                $context = new RequestContext();
-                $context->fromRequest($this->getContainer()->get('request'));
-
                 try {
                     $parameters = $this->config->getRouter()->match('/' . implode('/', $this->URL->getParameters()));
                 } catch (\Exception $e) {
                     $parameters = array();
                 }
 
-                if (isset($parameters['_route'])) {
-                    $actionName = \SpoonFilter::toCamelCase($parameters['_route']);
+                $actionParameter = isset($parameters['_action'])?$parameters['_action']:null;
+            }
 
-                    if (in_array($actionName, $this->config->getPossibleActions())) {
-                        $this->setAction($actionName);
-                    }
-                }
-            } elseif ($actionParameter !== null)  {
+            // if we were able to parse action parameter we can actually set an action
+            if ($actionParameter !== null)  {
                 // action provided in the URL
-                // loop possible actions
                 $actionParameter = \SpoonFilter::toCamelCase($actionParameter);
+
+                // loop possible actions
                 foreach ($this->config->getPossibleActions() as $actionName) {
                     // get action that should be passed as parameter
                     $actionURL = \SpoonFilter::toCamelCase(urlencode(FL::act(\SpoonFilter::toCamelCase($actionName))));
 
                     // the action is the requested one
-                    if ($actionURL == $actionParameter) {
+                    if (in_array($actionParameter, array($actionURL, $actionName))) {
                         // set action
                         $this->setAction($actionName);
 

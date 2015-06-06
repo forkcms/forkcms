@@ -349,17 +349,15 @@ class Model extends \BaseModel
             $router = new Router(new YamlFileLoader(new FileLocator()), $file);
 
             /**
-             * replace {_action} with actual action translation based on route name
+             * set a requirement for translated _action parameter
+             * @todo: this part should be somewhere in the extended s2 component
              *
              * @var Route $route
              */
             foreach ($router->getRouteCollection()->getIterator() as $routeName => $route) {
-                $action = \SpoonFilter::toCamelCase($routeName);
-                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($routeName);
-
-                if (false !== strpos($route->getPath(), '{_action}')) {
-                    $route->setPath(str_replace('{_action}', $actionLocale, $route->getPath()));
-                }
+                $action = \SpoonFilter::toCamelCase($route->getDefault('_action'));
+                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($action);
+                $route->setRequirement('_action', $actionLocale);
             }
 
             return $router;
