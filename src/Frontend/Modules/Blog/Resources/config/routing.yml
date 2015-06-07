@@ -1,19 +1,22 @@
 index:
-  path: /
-  defaults: { _action: 'index' }
+    path: /
+    defaults: { _action: 'index' }
 
 archive:
-  path: /{_action}/{year}/{month}
-  defaults: { _action: 'archive', month: null }
+    path: /{_action}/{year}/{month}
+    defaults: { _action: 'archive', month: null }
+    requirements:
+        year: \d+
+        month: null|\d+
 
 rss:
-  path: /{_action}
-  defaults: { _action: 'rss' }
+    path: /{_action}
+    defaults: { _action: 'rss' }
 
 detail:
-  path: /{category}/{detail}
-  defaults: { _action: 'detail' }
+    path: /{category}/{detail}
+    defaults: { _action: 'detail' }
 
 category:
-  path: /{category}
-  defaults: { _action: 'category' }
+    path: /{category}
+    defaults: { _action: 'category' }

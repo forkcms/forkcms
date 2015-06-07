@@ -11,10 +11,13 @@ namespace Frontend\Core\Engine\Base;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Routing\Loader\YamlFileLoader;
+use Symfony\Component\Config\FileLocator;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Router;
+use Symfony\Component\Routing\Route;
 
-use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is the base-object for config-files.
@@ -83,11 +86,11 @@ class Config extends \KernelLoader
 
         $this->module = (string) $module;
 
-        // sets module router if routing file exists
-        $this->router = FrontendModel::getModuleRouter($this->module);
-
         // read the possible actions based on the files
         $this->setPossibleActions();
+
+        // lets load specific module router
+        $this->loadRouter();
     }
 
     /**
@@ -181,5 +184,31 @@ class Config extends \KernelLoader
     public function getRouter()
     {
         return $this->router;
+    }
+
+    /**
+     * Load module router
+     */
+    public function loadRouter()
+    {
+        $file = FRONTEND_MODULES_PATH . '/' . $this->module . '/Resources/config/routing.yml';
+        $fs = new Filesystem();
+
+        // if there is no routing file we have nothing to set
+        if ($fs->exists($file)) {
+            $actions = FL::getActions();
+            $this->router = new Router(new YamlFileLoader(new FileLocator()), $file);
+
+            /**
+             * set a requirement for translated _action parameter
+             *
+             * @var Route $route
+             */
+            foreach ($this->router->getRouteCollection()->getIterator() as $routeName => $route) {
+                $action = \SpoonFilter::toCamelCase($route->getDefault('_action'));
+                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($action);
+                $route->setRequirement('_action', $actionLocale);
+            }
+        }
     }
 }

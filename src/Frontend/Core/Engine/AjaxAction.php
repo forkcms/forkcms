@@ -57,7 +57,7 @@ class AjaxAction extends FrontendBaseAJAXAction
         $this->setAction($action);
 
         // load the config file for the required module
-        $this->loadConfig();
+        $this->config = Model::getModuleConfig($kernel, $module);
     }
 
     /**
@@ -129,28 +129,6 @@ class AjaxAction extends FrontendBaseAJAXAction
     public function getModule()
     {
         return $this->module;
-    }
-
-    /**
-     * Load the config file for the requested module.
-     * In the config file we have to find disabled actions, the constructor
-     * will read the folder and set possible actions.
-     * Other configurations will also be stored in it.
-     */
-    public function loadConfig()
-    {
-        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new Exception(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
-            );
-        }
-
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
     /**

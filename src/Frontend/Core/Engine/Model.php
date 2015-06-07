@@ -9,6 +9,7 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Routing\Loader\YamlFileLoader;
@@ -20,6 +21,7 @@ use TijsVerkoyen\Akismet\Akismet;
 
 use Common\Cookie as CommonCookie;
 
+use Frontend\Core\Engine\Exception as FrontendException;
 
 require_once __DIR__ . '/../../../../app/BaseModel.php';
 
@@ -292,6 +294,44 @@ class Model extends \BaseModel
     }
 
     /**
+     * Gets module config instance and stores it into the container
+     *
+     * @param KernelInterface $kernel
+     * @param $module
+     * @return object
+     * @throws Exception
+     */
+    public static function getModuleConfig(KernelInterface $kernel, $module)
+    {
+        // make sure that $module is camelCase
+        $module = \SpoonFilter::toCamelCase($module);
+
+        // lets get service id, $module is converted into snake_case
+        $id = 'modules.' . ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $module)), '_') . '.config';
+
+        // if we do not have config stored we should create and store it
+        if (!self::getContainer()->has($id)) {
+            // generation of a class name
+            $configClass = 'Frontend\\Modules\\' . $module . '\\Config';
+            if ($module == 'Core') {
+                $configClass = 'Frontend\\Core\\Config';
+            }
+
+            // validate if class exists (aka has correct name)
+            if (!class_exists($configClass)) {
+                throw new FrontendException(
+                    'The config file is present, but the class name should be: ' . $configClass . '.'
+                );
+            }
+
+            // create config-object, the constructor will do some magic
+            self::getContainer()->set($id, new $configClass($kernel, $module));
+        }
+
+        return self::getContainer()->get($id);
+    }
+
+    /**
      * Get a module setting
      *
      * @deprecated
@@ -331,6 +371,7 @@ class Model extends \BaseModel
 
     /**
      * Creates router for module based on routing file
+     * @todo: this method should be removed, but we need this while FrontendNavigation is static
      *
      * @param $module
      * @return null|Router
@@ -350,7 +391,6 @@ class Model extends \BaseModel
 
             /**
              * set a requirement for translated _action parameter
-             * @todo: this part should be somewhere in the extended s2 component
              *
              * @var Route $route
              */

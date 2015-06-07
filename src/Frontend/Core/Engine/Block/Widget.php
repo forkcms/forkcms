@@ -11,6 +11,7 @@ namespace Frontend\Core\Engine\Block;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
+use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Config;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
@@ -85,7 +86,7 @@ class Widget extends FrontendBaseObject
         }
 
         // load the config file for the required module
-        $this->loadConfig();
+        $this->config = FrontendModel::getModuleConfig($kernel, $module);
     }
 
     /**
@@ -185,30 +186,6 @@ class Widget extends FrontendBaseObject
     public function getTemplate()
     {
         return $this->object->getTemplate();
-    }
-
-    /**
-     * Load the config file for the requested block.
-     * In the config file we have to find disabled actions,
-     * the constructor will read the folder and set possible actions
-     * Other configurations will be stored in it also.
-     */
-    public function loadConfig()
-    {
-        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if ($this->getModule() == 'Core') {
-            $configClass = 'Frontend\\Core\\Config';
-        }
-
-        // validate if class exists (aka has correct name)
-        if (!class_exists($configClass)) {
-            throw new FrontendException(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
-            );
-        }
-
-        // create config-object, the constructor will do some magic
-        $this->config = new $configClass($this->getKernel(), $this->getModule());
     }
 
     /**
