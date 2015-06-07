@@ -103,7 +103,7 @@ class Extra extends FrontendBaseObject
         }
 
         // load the config file for the required module
-        $this->config = FrontendModel::getModuleConfig($kernel, $module);
+        $this->config = FrontendModel::getModuleConfig($module);
 
         // is the requested action possible? If not we throw an exception.
         // We don't redirect because that could trigger a redirect loop

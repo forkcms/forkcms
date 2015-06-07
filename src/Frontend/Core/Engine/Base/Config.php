@@ -206,7 +206,8 @@ class Config extends \KernelLoader
              */
             foreach ($this->router->getRouteCollection()->getIterator() as $routeName => $route) {
                 $action = \SpoonFilter::toCamelCase($route->getDefault('_action'));
-                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($action);
+                $actionLocale = isset($actions[$action]) ? $actions[$action] : $action;
+                $actionLocale = ltrim(strtolower(preg_replace('/[A-Z]/', '-$0', $actionLocale)), '-');
                 $route->setRequirement('_action', $actionLocale);
             }
         }

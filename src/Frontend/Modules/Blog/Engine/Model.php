@@ -389,7 +389,9 @@ class Model implements FrontendTagsInterface
         // loop
         foreach ($items as $key => $row) {
             // URLs
-            $items[$key]['full_url'] = $link . '/' . $row['url'];
+            $items[$key]['full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog', 'Detail', null, array('category' => $row['category_url'], 'detail' => $row['url'])
+            );
 
             // comments
             if ($row['comments_count'] > 0) {

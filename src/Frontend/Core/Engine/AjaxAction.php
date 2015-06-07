@@ -57,7 +57,7 @@ class AjaxAction extends FrontendBaseAJAXAction
         $this->setAction($action);
 
         // load the config file for the required module
-        $this->config = Model::getModuleConfig($kernel, $module);
+        $this->config = Model::getModuleConfig($module);
     }
 
     /**

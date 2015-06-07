@@ -579,13 +579,13 @@ class Navigation extends FrontendBaseObject
         // build URL
         $URL = self::getURL($pageIdForURL, $language);
 
-        $router = FrontendModel::getModuleRouter($module);
-
-        if (null !== $router) {
-            $route = strtolower(preg_replace('/(?<=\\w)(?=[A-Z])/',"_$1", $action));
+        // lets try to generate URL based on module router
+        $config = FrontendModel::getModuleConfig($module);
+        if ($config->hasRouter()) {
+            $route = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $action)), '_');
 
             try {
-                $URL .= $router->generate($route, $parameters);
+                $URL .= $config->getRouter()->generate($route, $parameters);
             } catch (\Exception $e) {
                 $URL .= '/' . Language::act(\SpoonFilter::toCamelCase($action));
             }

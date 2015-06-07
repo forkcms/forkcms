@@ -9,13 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Routing\Loader\YamlFileLoader;
-use Symfony\Component\Routing\Router;
-use Symfony\Component\Routing\Route;
-use Symfony\Component\Config\FileLocator;
 
 use TijsVerkoyen\Akismet\Akismet;
 
@@ -296,18 +291,17 @@ class Model extends \BaseModel
     /**
      * Gets module config instance and stores it into the container
      *
-     * @param KernelInterface $kernel
      * @param $module
      * @return object
      * @throws Exception
      */
-    public static function getModuleConfig(KernelInterface $kernel, $module)
+    public static function getModuleConfig($module)
     {
         // make sure that $module is camelCase
         $module = \SpoonFilter::toCamelCase($module);
 
         // lets get service id, $module is converted into snake_case
-        $id = 'modules.' . ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $module)), '_') . '.config';
+        $id = 'services.' . ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $module)), '_') . '.config';
 
         // if we do not have config stored we should create and store it
         if (!self::getContainer()->has($id)) {
@@ -325,7 +319,7 @@ class Model extends \BaseModel
             }
 
             // create config-object, the constructor will do some magic
-            self::getContainer()->set($id, new $configClass($kernel, $module));
+            self::getContainer()->set($id, new $configClass(self::get('kernel'), $module));
         }
 
         return self::getContainer()->get($id);
@@ -367,41 +361,6 @@ class Model extends \BaseModel
         );
 
         return self::get('fork.settings')->getForModule($module);
-    }
-
-    /**
-     * Creates router for module based on routing file
-     * @todo: this method should be removed, but we need this while FrontendNavigation is static
-     *
-     * @param $module
-     * @return null|Router
-     */
-    public static function getModuleRouter($module)
-    {
-        if (empty($module)) {
-            return null;
-        }
-
-        $file = FRONTEND_MODULES_PATH . '/' . $module . '/Resources/config/routing.yml';
-        $fs = new Filesystem();
-
-        if ($fs->exists($file)) {
-            $actions = Language::getActions();
-            $router = new Router(new YamlFileLoader(new FileLocator()), $file);
-
-            /**
-             * set a requirement for translated _action parameter
-             *
-             * @var Route $route
-             */
-            foreach ($router->getRouteCollection()->getIterator() as $routeName => $route) {
-                $action = \SpoonFilter::toCamelCase($route->getDefault('_action'));
-                $actionLocale = isset($actions[$action])?$actions[$action]:strtolower($action);
-                $route->setRequirement('_action', $actionLocale);
-            }
-
-            return $router;
-        }
     }
 
     /**

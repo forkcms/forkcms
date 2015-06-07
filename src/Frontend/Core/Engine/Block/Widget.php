@@ -86,7 +86,7 @@ class Widget extends FrontendBaseObject
         }
 
         // load the config file for the required module
-        $this->config = FrontendModel::getModuleConfig($kernel, $module);
+        $this->config = FrontendModel::getModuleConfig($module);
     }
 
     /**
