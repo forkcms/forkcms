@@ -70,10 +70,6 @@ services:
         arguments:
             - @database
             - @fork.settings_cache
-    fork.frontend.navigation:
-        class: Frontend\Core\Engine\Navigation
-        arguments:
-            - @kernel
 
     fork.response_securer:
         class: Common\EventListener\ResponseSecurer
