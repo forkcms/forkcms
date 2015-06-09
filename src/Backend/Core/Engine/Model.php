@@ -11,16 +11,11 @@ namespace Backend\Core\Engine;
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-
 use TijsVerkoyen\Akismet\Akismet;
-
 use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Core\Engine\Model as BackendModel;
-
 use Frontend\Core\Engine\Language as FrontendLanguage;
-
-require_once __DIR__ . '/../../../../app/BaseModel.php';
 
 /**
  * In this file we store all generic functions that we will be using in the backend.
@@ -29,7 +24,7 @@ require_once __DIR__ . '/../../../../app/BaseModel.php';
  * @author Dieter Vanden Eynde <dieter.vandeneynde@netlash.com>
  * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
-class Model extends \BaseModel
+class Model extends \Common\Core\Model
 {
     /**
      * The keys and structural data for pages
@@ -45,35 +40,6 @@ class Model extends \BaseModel
      * @var    array
      */
     private static $allowedExtras = array('homepage', 'block', 'widget');
-
-    /**
-     * Add a number to the string
-     *
-     * @param string $string The string where the number will be appended to.
-     * @return string
-     */
-    public static function addNumber($string)
-    {
-        // split
-        $chunks = explode('-', $string);
-
-        // count the chunks
-        $count = count($chunks);
-
-        // get last chunk
-        $last = $chunks[$count - 1];
-
-        // is numeric
-        if (\SpoonFilter::isNumeric($last)) {
-            array_pop($chunks);
-            $string = implode('-', $chunks) . '-' . ((int) $last + 1);
-        } else {
-            // not numeric, so add -2
-            $string .= '-2';
-        }
-
-        return $string;
-    }
 
     /**
      * Checks the settings and optionally returns an array with warnings
@@ -145,8 +111,12 @@ class Model extends \BaseModel
             $URL = self::getContainer()->get('url');
 
             // redefine
-            if ($action === null) $action = $URL->getAction();
-            if ($module === null) $module = $URL->getModule();
+            if ($action === null) {
+                $action = $URL->getAction();
+            }
+            if ($module === null) {
+                $module = $URL->getModule();
+            }
         }
 
         // error checking
@@ -334,82 +304,6 @@ class Model extends \BaseModel
     }
 
     /**
-     * Generate a totally random but readable/speakable password
-     *
-     * @param int  $length           The maximum length for the password to generate.
-     * @param bool $uppercaseAllowed Are uppercase letters allowed?
-     * @param bool $lowercaseAllowed Are lowercase letters allowed?
-     * @return string
-     */
-    public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
-    {
-        // list of allowed vowels and vowel sounds
-        $vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
-
-        // list of allowed consonants and consonant sounds
-        $consonants = array(
-            'b',
-            'c',
-            'd',
-            'g',
-            'h',
-            'j',
-            'k',
-            'm',
-            'n',
-            'p',
-            'r',
-            's',
-            't',
-            'u',
-            'v',
-            'w',
-            'tr',
-            'cr',
-            'fr',
-            'dr',
-            'wr',
-            'pr',
-            'th',
-            'ch',
-            'ph',
-            'st'
-        );
-
-        // init vars
-        $consonantsCount = count($consonants);
-        $vowelsCount = count($vowels);
-        $pass = '';
-        $tmp = '';
-
-        // create temporary pass
-        for ($i = 0; $i < $length; $i++) {
-            $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
-        }
-
-        // reformat the pass
-        for ($i = 0; $i < $length; $i++) {
-            if (rand(0, 1) == 1) {
-                $pass .= strtoupper(substr($tmp, $i, 1));
-            } else {
-                $pass .= substr($tmp, $i, 1);
-            }
-        }
-
-        // reformat it again, if uppercase isn't allowed
-        if (!$uppercaseAllowed) {
-            $pass = strtolower($pass);
-        }
-
-        // reformat it again, if uppercase isn't allowed
-        if (!$lowercaseAllowed) {
-            $pass = strtoupper($pass);
-        }
-
-        return $pass;
-    }
-
-    /**
      * Generate a random string
      *
      * @param int  $length    Length of random string.
@@ -453,39 +347,6 @@ class Model extends \BaseModel
         }
 
         return $string;
-    }
-
-    /**
-     * Generate thumbnails based on the folders in the path
-     * Use
-     *  - 128x128 as foldername to generate an image where the width will be
-     *      128px and the height will be 128px
-     *  - 128x as foldername to generate an image where the width will be
-     *      128px, the height will be calculated based on the aspect ratio.
-     *  - x128 as foldername to generate an image where the height will be
-     *      128px, the width will be calculated based on the aspect ratio.
-     *
-     * @param string $path       The path wherein the thumbnail-folders will be stored.
-     * @param string $sourceFile The location of the source file.
-     */
-    public static function generateThumbnails($path, $sourceFile)
-    {
-        // get folder listing
-        $folders = self::getThumbnailFolders($path);
-        $filename = basename($sourceFile);
-
-        // loop folders
-        foreach ($folders as $folder) {
-            // generate the thumbnail
-            $thumbnail = new \SpoonThumbnail($sourceFile, $folder['width'], $folder['height']);
-            $thumbnail->setAllowEnlargement(true);
-
-            // if the width & height are specified we should ignore the aspect ratio
-            if ($folder['width'] !== null && $folder['height'] !== null) {
-                $thumbnail->setForceOriginalAspectRatio(false);
-            }
-            $thumbnail->parseToFile($folder['path'] . '/' . $filename);
-        }
     }
 
     /**
@@ -635,16 +496,6 @@ class Model extends \BaseModel
     }
 
     /**
-     * Get the modules
-     *
-     * @return array
-     */
-    public static function getModules()
-    {
-        return (array) self::getContainer()->getParameter('installed_modules');
-    }
-
-    /**
      * Get the modules that are available on the filesystem
      *
      * @param bool $includeCore Should core be included as a module?
@@ -763,49 +614,6 @@ class Model extends \BaseModel
         }
 
         return $possibleFormats;
-    }
-
-    /**
-     * Get the thumbnail folders
-     *
-     * @param string $path          The path
-     * @param bool   $includeSource Should the source-folder be included in the return-array.
-     * @return array
-     */
-    public static function getThumbnailFolders($path, $includeSource = false)
-    {
-        $return = array();
-        $finder = new Finder();
-        $finder->name('/^([0-9]*)x([0-9]*)$/');
-        if ($includeSource) {
-            $finder->name('source');
-        }
-
-        foreach ($finder->directories()->in($path) as $directory) {
-            $chunks = explode('x', $directory->getBasename(), 2);
-            if (count($chunks) != 2 && !$includeSource) {
-                continue;
-            }
-
-            $item = array();
-            $item['dirname'] = $directory->getBasename();
-            $item['path'] = $directory->getRealPath();
-            if (substr($path, 0, strlen(PATH_WWW)) == PATH_WWW) {
-                $item['url'] = substr($path, strlen(PATH_WWW));
-            }
-
-            if ($item['dirname'] == 'source') {
-                $item['width'] = null;
-                $item['height'] = null;
-            } else {
-                $item['width'] = ($chunks[0] != '') ? (int) $chunks[0] : null;
-                $item['height'] = ($chunks[1] != '') ? (int) $chunks[1] : null;
-            }
-
-            $return[] = $item;
-        }
-
-        return $return;
     }
 
     /**
@@ -928,57 +736,6 @@ class Model extends \BaseModel
 
         // return the unique URL!
         return $URL;
-    }
-
-    /**
-     * Get the UTC date in a specific format. Use this method when inserting dates in the database!
-     *
-     * @param string $format    The format to return the timestamp in. Default is MySQL datetime format.
-     * @param int    $timestamp The timestamp to use, if not provided the current time will be used.
-     * @return string
-     */
-    public static function getUTCDate($format = null, $timestamp = null)
-    {
-        $format = ($format !== null) ? (string) $format : 'Y-m-d H:i:s';
-        if ($timestamp === null) {
-            return gmdate($format);
-        }
-
-        return gmdate($format, (int) $timestamp);
-    }
-
-    /**
-     * Get the UTC timestamp for a date/time object combination.
-     *
-     * @param \SpoonFormDate $date An instance of \SpoonFormDate.
-     * @param \SpoonFormTime $time An instance of \SpoonFormTime.
-     * @return int
-     * @throws Exception If provided $date, $time or both are invalid
-     */
-    public static function getUTCTimestamp(\SpoonFormDate $date, \SpoonFormTime $time = null)
-    {
-        // validate date/time object
-        if (!$date->isValid() || ($time !== null && !$time->isValid())
-        ) {
-            throw new Exception('You need to provide two objects that actually contain valid data.');
-        }
-
-        // init vars
-        $year = gmdate('Y', $date->getTimestamp());
-        $month = gmdate('m', $date->getTimestamp());
-        $day = gmdate('j', $date->getTimestamp());
-
-        if ($time !== null) {
-            // time object was given
-            list($hour, $minute) = explode(':', $time->getValue());
-        } else {
-            // user default time
-            $hour = 0;
-            $minute = 0;
-        }
-
-        // make and return timestamp
-        return mktime($hour, $minute, 0, $month, $day, $year);
     }
 
     /**
@@ -1266,7 +1023,6 @@ class Model extends \BaseModel
     public static function startProcessingHooks()
     {
         $fs = new Filesystem();
-
         // is the queue already running?
         if ($fs->exists(BACKEND_CACHE_PATH . '/Hooks/pid')) {
             // get the pid
@@ -1448,117 +1204,6 @@ class Model extends \BaseModel
         }
 
         return false;
-    }
-
-    /**
-     * Subscribe to an event, when the subscription already exists, the callback will be updated.
-     *
-     * @param string $eventModule The module that triggers the event.
-     * @param string $eventName   The name of the event.
-     * @param string $module      The module that subscribes to the event.
-     * @param mixed  $callback    The callback that should be executed when the event is triggered.
-     * @throws Exception          When the callback is invalid
-     */
-    public static function subscribeToEvent($eventModule, $eventName, $module, $callback)
-    {
-        if (!is_callable($callback)) {
-            throw new Exception('Invalid callback!');
-        }
-
-        $item['event_module'] = (string) $eventModule;
-        $item['event_name'] = (string) $eventName;
-        $item['module'] = (string) $module;
-        $item['callback'] = serialize($callback);
-        $item['created_on'] = self::getUTCDate();
-
-        $db = self::getContainer()->get('database');
-
-        // check if the subscription already exists
-        $exists = (bool) $db->getVar(
-            'SELECT 1
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ? AND i.module = ?
-             LIMIT 1',
-            array($eventModule, $eventName, $module)
-        );
-
-        if ($exists) {
-            $db->update(
-                'hooks_subscriptions',
-                $item,
-                'event_module = ? AND event_name = ? AND module = ?',
-                array($eventModule, $eventName, $module)
-            );
-        } else {
-            $db->insert('hooks_subscriptions', $item);
-        }
-    }
-
-    /**
-     * Trigger an event
-     *
-     * @param string $module    The module that triggers the event.
-     * @param string $eventName The name of the event.
-     * @param mixed  $data      The data that should be send to subscribers.
-     */
-    public static function triggerEvent($module, $eventName, $data = null)
-    {
-        $module = (string) $module;
-        $eventName = (string) $eventName;
-
-        // create log instance
-        $log = self::getContainer()->get('logger');
-        $log->info('Event (' . $module . '/' . $eventName . ') triggered.');
-
-        // get all items that subscribe to this event
-        $subscriptions = (array) self::getContainer()->get('database')->getRecords(
-            'SELECT i.module, i.callback
-             FROM hooks_subscriptions AS i
-             WHERE i.event_module = ? AND i.event_name = ?',
-            array($module, $eventName)
-        );
-
-        // any subscriptions?
-        if (!empty($subscriptions)) {
-            $queuedItems = array();
-
-            foreach ($subscriptions as $subscription) {
-                $item['module'] = $subscription['module'];
-                $item['callback'] = $subscription['callback'];
-                $item['data'] = serialize($data);
-                $item['status'] = 'queued';
-                $item['created_on'] = self::getUTCDate();
-
-                $queuedItems[] = self::getContainer()->get('database')->insert('hooks_queue', $item);
-
-                $log->info(
-                    'Callback (' . $subscription['callback'] . ') is
-                    subscribed to event (' . $module . '/' . $eventName . ').'
-                );
-            }
-
-            self::startProcessingHooks();
-        }
-    }
-
-    /**
-     * Unsubscribe from an event
-     *
-     * @param string $eventModule The module that triggers the event.
-     * @param string $eventName   The name of the event.
-     * @param string $module      The module that subscribes to the event.
-     */
-    public static function unsubscribeFromEvent($eventModule, $eventName, $module)
-    {
-        $eventModule = (string) $eventModule;
-        $eventName = (string) $eventName;
-        $module = (string) $module;
-
-        self::getContainer()->get('database')->delete(
-            'hooks_subscriptions',
-            'event_module = ? AND event_name = ? AND module = ?',
-            array($eventModule, $eventName, $module)
-        );
     }
 
     /**
