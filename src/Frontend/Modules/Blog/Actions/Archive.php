@@ -138,6 +138,7 @@ class Archive extends FrontendBaseBlock
         }
 
         // set URL and limit
+        //@todo: Module routing
         $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Archive') . '/' . $url;
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 

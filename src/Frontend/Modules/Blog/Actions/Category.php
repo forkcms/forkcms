@@ -93,7 +93,9 @@ class Category extends FrontendBaseBlock
         $this->category = $categories[$possibleCategories[$requestedCategory]];
 
         // set URL and limit
-        $this->pagination['url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $requestedCategory;
+        $this->pagination['url'] = FrontendNavigation::getURLForBlock(
+            'Blog', 'Category', null, array('category' => $requestedCategory)
+        );
         $this->pagination['limit'] = $this->get('fork.settings')->get('Blog', 'overview_num_items', 10);
 
         // populate count fields in pagination

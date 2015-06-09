@@ -110,9 +110,12 @@ class Detail extends FrontendBaseBlock
         $this->settings = $this->get('fork.settings')->getForModule('Blog');
 
         // overwrite URLs
-        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Category') .
-                                             '/' . $this->record['category_url'];
-        $this->record['full_url'] = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' . $this->record['url'];
+        $this->record['category_full_url'] = FrontendNavigation::getURLForBlock(
+            'Blog', 'Category', null, array('category' => $this->record['category_url'])
+        );
+        $this->record['full_url'] = FrontendNavigation::getURLForBlock(
+            'Blog', 'Detail', null, array('category' => $this->record['category_url'], 'detail' => $this->record['url'])
+        );
         $this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
         $this->record['comments_count'] = count($this->comments);
 
@@ -157,8 +160,10 @@ class Detail extends FrontendBaseBlock
 
         // get RSS-link for the comments
         $rssCommentTitle = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
-        $rssCommentsLink = FrontendNavigation::getURLForBlock('Blog', 'ArticleCommentsRss') .
-                           '/' . $this->record['url'];
+
+        $rssCommentsLink = FrontendNavigation::getURLForBlock(
+            'Blog', 'ArticleCommentsRss', null, array('detail' => $this->record['url'])
+        );
 
         // add RSS-feed into the metaCustom
         $this->header->addRssLink($rssCommentTitle, $rssCommentsLink);
@@ -197,7 +202,9 @@ class Detail extends FrontendBaseBlock
         if (count(FrontendBlogModel::getAllCategories()) > 1) {
             $this->breadcrumb->addElement(
                 $this->record['category_title'],
-                FrontendNavigation::getURLForBlock('Blog', 'Category') . '/' . $this->record['category_url']
+                $link = FrontendNavigation::getURLForBlock(
+                    'Blog', 'Category', null, array('category' => $this->record['category_url'])
+                )
             );
         }
 

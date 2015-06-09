@@ -56,6 +56,7 @@ class CommentsRss extends FrontendBaseBlock
         // get vars
         $title = \SpoonFilter::ucfirst(FL::msg('BlogAllComments'));
         $link = SITE_URL . FrontendNavigation::getURLForBlock('Blog');
+        //@todo: Module routing
         $detailLink = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail');
         $description = null;
 

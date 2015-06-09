@@ -9,6 +9,14 @@ archive:
         year: \d+
         month: null|\d+
 
+article_comments_rss:
+    path: /{_action}/{detail}
+    defaults: { _action: 'article_comments_rss' }
+
+comments_rss:
+    path: /{_action}
+    defaults: { _action: 'comments_rss' }
+
 rss:
     path: /{_action}
     defaults: { _action: 'rss' }
