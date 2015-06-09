@@ -278,7 +278,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // should we use a questionmark or an ampersand
-        if (mb_strpos($this->pagination['url'], '?') > 0) {
+        if (mb_strpos($this->pagination['url'], '?') !== false) {
             $useQuestionMark = false;
         }
 
