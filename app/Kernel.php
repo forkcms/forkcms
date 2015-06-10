@@ -81,7 +81,7 @@ abstract class Kernel extends BaseKernel implements KernelInterface
     /**
      * Builds the service container.
      *
-     * @return ContainerBuilder The compiled service container
+     * @return \Symfony\Component\DependencyInjection\ContainerBuilder The compiled service container
      *
      * @throws \RuntimeException
      */

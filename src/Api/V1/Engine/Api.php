@@ -10,8 +10,6 @@ namespace Api\V1\Engine;
  */
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Exception;
-use Symfony\Component\CssSelector\Exception\ExpressionErrorException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -327,11 +325,6 @@ class Api extends \KernelLoader implements \ApplicationInterface
             $user = new BackendUser(null, $email);
         } catch (\Exception $e) {
             return self::output(self::FORBIDDEN, array('message' => 'This account does not exist.'));
-        }
-
-        // user is god!
-        if ($user->isGod()) {
-            return true;
         }
 
         // get settings

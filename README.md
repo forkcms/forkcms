@@ -3,17 +3,18 @@
 [![Build Status](https://travis-ci.org/forkcms/forkcms.svg?branch=testsuite)](https://travis-ci.org/forkcms/forkcms)
 [![Latest Stable Version](https://poser.pugx.org/forkcms/forkcms/v/stable.svg)](https://packagist.org/packages/forkcms/forkcms)
 [![License](https://poser.pugx.org/forkcms/forkcms/license.svg)](https://packagist.org/packages/forkcms/forkcms)
+[![Code Coverage](https://scrutinizer-ci.com/g/forkcms/forkcms/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/forkcms/forkcms/?branch=master)
 
 ## Installation
 
-1. Upload all of the content into your document root
-3. Browse to your website
-4. Follow the steps on-screen
-5. Have fun!
+1. Run `composer create-project forkcms/forkcms .` in your document root.
+2. Browse to your website
+3. Follow the steps on-screen
+4. Have fun!
 
 ### Dependencies
 
-**Remark**: If you are using GIT instead of the zip-file from [http://www.fork-cms.com](http://www.fork-cms.com), you
+**Remark**: If you are using GIT instead of composer create-project or the zip-file from [http://www.fork-cms.com](http://www.fork-cms.com), you
 should install our dependencies. The dependencies are handled by [composer](http://getcomposer.org/)
 
 To install the dependencies, you can run the command below in the document-root:

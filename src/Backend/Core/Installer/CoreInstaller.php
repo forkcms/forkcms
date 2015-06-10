@@ -11,7 +11,6 @@ namespace Backend\Core\Installer;
 
 use Symfony\Component\Filesystem\Filesystem;
 
-
 /**
  * Installer for the core
  *

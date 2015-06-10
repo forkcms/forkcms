@@ -10,9 +10,7 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
-use Frontend\Core\Engine\Language AS FL;
-
+use Frontend\Core\Engine\Language as FL;
 
 /**
  * This is our extended version of SpoonForm.
@@ -20,22 +18,8 @@ use Frontend\Core\Engine\Language AS FL;
  * @author Davy Hellemans <davy.hellemans@netlash.com>
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  */
-class Form extends \SpoonForm
+class Form extends \Common\Core\Form
 {
-    /**
-     * The header instance
-     *
-     * @var    Header
-     */
-    private $header;
-
-    /**
-     * The URL instance
-     *
-     * @var    Url
-     */
-    private $URL;
-
     /**
      * @param string $name     Name of the form.
      * @param string $action   The action (URL) whereto the form will be submitted, if not provided it will
@@ -102,26 +86,6 @@ class Form extends \SpoonForm
     }
 
     /**
-     * Adds a single checkbox.
-     *
-     * @param string $name       The name of the element.
-     * @param bool   $checked    Should the checkbox be checked?
-     * @param string $class      Class(es) that will be applied on the element.
-     * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @return \SpoonFormCheckbox
-     */
-    public function addCheckbox($name, $checked = false, $class = null, $classError = null)
-    {
-        $name = (string) $name;
-        $checked = (bool) $checked;
-        $class = ($class !== null) ? (string) $class : 'inputCheckbox';
-        $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
-
-        // create and return a checkbox
-        return parent::addCheckbox($name, $checked, $class, $classError);
-    }
-
-    /**
      * Adds a date field to the form
      *
      * @param string $name       Name of the element.
@@ -161,8 +125,8 @@ class Form extends \SpoonForm
             throw new Exception('A date field with type "range" should have 2 valid date-parameters.');
         }
 
-        // @later	get preferred mask & first day
-        $mask = 'd/m/Y';
+        // set mask and firstday
+        $mask = Model::get('fork.settings')->get('Core', 'date_format_short');
         $firstDay = 1;
 
         // build attributes
@@ -172,6 +136,9 @@ class Form extends \SpoonForm
             $mask
         );
         $attributes['data-firstday'] = $firstDay;
+        $attributes['year'] = date('Y', $value);
+        $attributes['month'] = date('n', $value);
+        $attributes['day'] = date('j', $value);
 
         // add extra classes based on type
         switch ($type) {
@@ -724,6 +691,23 @@ class FrontendFormDate extends \SpoonFormDate
  */
 class FrontendFormImage extends \SpoonFormImage
 {
+    /**
+     * Constructor.
+     *
+     * @param    string            $name          The name.
+     * @param    string [optional] $class         The CSS-class to be used.
+     * @param    string [optional] $classError    The CSS-class to be used when there is an error.
+     * @see      SpoonFormFile::__construct()
+     */
+    public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+    {
+        // call the parent
+        parent::__construct($name, $class, $classError);
+
+        // mime type hinting
+        $this->setAttribute('accept', 'image/*');
+    }
+
     /**
      * Generate thumbnails based on the folders in the path
      * Use

@@ -123,6 +123,10 @@ class Meta
             throw new Exception('The callback-method doesn\'t exist.');
         }
 
+        // when using ->getValue() in SpoonFormText fields the function is using htmlentities(),
+        // so we must decode it again first!
+        $URL = \SpoonFilter::htmlentitiesDecode($URL);
+
         // build parameters for use in the callback
         $parameters[] = CommonUri::getUrl($URL);
 
