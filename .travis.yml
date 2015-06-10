@@ -13,7 +13,7 @@ matrix:
         - php: hhvm
 
 script:
-    - phpunit -c app/ --coverage-clover=coverage.clover
+    - phpunit --coverage-clover=coverage.clover
 
 before_script:
     - composer install
