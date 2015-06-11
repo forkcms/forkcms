@@ -3,6 +3,7 @@
 Improvements:
 
 * Core: Moved startProcessingHooks from Backend/Frontend to Common/Core/Model.php
+* Core: Save logs in an environment specific log file.
 
 
 3.9.3 (2015-06-10)
