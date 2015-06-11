@@ -1,3 +1,9 @@
+3.9.4 (xxxx-xx-xx)
+--
+Improvements:
+
+* Core: Moved startProcessingHooks from Backend/Frontend to Common/Core/Model.php
+
 3.9.3 (2015-06-10)
 --
 Improvements:
