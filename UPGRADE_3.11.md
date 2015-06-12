@@ -18,7 +18,7 @@ SpoonHTTP::getContent($url)
 After:
 
 ```php
-file_get_content($url)
+file_get_contents($url)
 ```
 
 > Remark: fopen wrapper should be enabled.
@@ -32,6 +32,14 @@ Before:
 ```
 
 After:
+
+If you are in an action you should use:
+
+```php
+$this->redirect(...)
+```
+
+In other code parts you can use:
 
 ```php
 throw new RedirectException(
@@ -78,5 +86,5 @@ After:
 header('header');
 ```
 
-But you really should think about using this, as the correct way is to bubble 
-set the headers on the response object and bubble it up.
+But you really should think about using this, as the correct way is to set the 
+headers on the response object and bubble it up.
