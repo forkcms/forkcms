@@ -282,21 +282,23 @@ class TemplateModifiers
      */
     public static function showBool($status, $reverse = false)
     {
-        if (!$reverse) {
+        $showTrue = '<strong style="color:green">&#10003;</strong>';
+        $showFalse = '<strong style="color:red">&#10008;</strong>';
+
+        if ($reverse) {
             if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-                return '<strong style="color:green">&#10003;</strong>';
+                return $showFalse;
             } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-                return '<strong style="color:red">&#10008;</strong>';
-            } else {
-                return $status;
+                return $showTrue;
             }
-        }
-        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
-            return '<strong style="color:red">&#10008;</strong>';
-        } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
-            return '<strong style="color:green">&#10003;</strong>';
-        } else {
+
             return $status;
+        } elseif ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+            return $showTrue;
+        } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+            return $showFalse;
         }
+
+        return $status;
     }
 }
