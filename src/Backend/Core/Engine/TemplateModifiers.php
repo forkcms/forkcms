@@ -272,4 +272,31 @@ class TemplateModifiers
             return \SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
         }
     }
+
+    /**
+     * Shows a v or x to indicate the boolean state (Y|N, j|n, true|false)
+     *
+     * @param string|bool $status
+     * @param bool        $reverse show the opposite of the status
+     * @return string
+     */
+    public static function showBool($status, $reverse = false)
+    {
+        if (!$reverse) {
+            if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+                return '<strong style="color:green">&#10003;</strong>';
+            } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+                return '<strong style="color:red">&#10008;</strong>';
+            } else {
+                return $status;
+            }
+        }
+        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+            return '<strong style="color:red">&#10008;</strong>';
+        } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+            return '<strong style="color:green">&#10003;</strong>';
+        } else {
+            return $status;
+        }
+    }
 }
