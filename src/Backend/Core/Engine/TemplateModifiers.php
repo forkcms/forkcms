@@ -288,14 +288,20 @@ class TemplateModifiers
         if ($reverse) {
             if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
                 return $showFalse;
-            } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+            }
+
+            if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
                 return $showTrue;
             }
 
             return $status;
-        } elseif ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
+        }
+
+        if ($status === 'Y' || $status === 'y' || $status === 1 || $status === '1' || $status === true) {
             return $showTrue;
-        } elseif ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
+        }
+
+        if ($status === 'N' || $status === 'n' || $status === 0 || $status === '0' || $status === false) {
             return $showFalse;
         }
 
