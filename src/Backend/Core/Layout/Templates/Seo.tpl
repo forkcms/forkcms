@@ -64,10 +64,13 @@
         <li class="checkbox">
           <label for="urlOverwrite" class="visuallyHidden">{$chkUrlOverwrite} <b>{$lblCustomURL|ucfirst}</b></label>
           <p class="text-info">{$msgHelpMetaURL}</p>
-          <span id="urlFirstPart">
-            {option:detailUrl}{$detailUrl}{/option:detailUrl}
-            {option:!detailUrl}{$SITE_URL}{option:prefixURL}{$prefixURL}{/option:prefixURL}/{/option:!detailUrl}
-          </span>{$txtUrl} {$txtUrlError}
+          <div class="form-inline">
+            <span id="urlFirstPart">
+              {option:detailUrl}{$detailUrl}{/option:detailUrl}
+              {option:!detailUrl}{$SITE_URL}{option:prefixURL}{$prefixURL}{/option:prefixURL}/{/option:!detailUrl}
+            </span>
+            {$txtUrl} {$txtUrlError}
+          </div>
         </li>
       </ul>
     </div>

@@ -73,10 +73,8 @@ class Action extends Object
         $this->setModule($this->URL->getModule());
         $this->setAction($this->URL->getAction());
 
-        // populate the parameter array, we loop GET and urldecode the values for usage later on
-        foreach ((array) $_GET as $key => $value) {
-            $this->parameters[$key] = $value;
-        }
+        // populate the parameter array
+        $this->parameters = $this->get('request')->query->all();
     }
 
     /**
