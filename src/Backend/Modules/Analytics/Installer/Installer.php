@@ -25,6 +25,7 @@ class Installer extends ModuleInstaller
         $this->setModuleRights(1, $this->getModule());
         $this->setActionRights(1, $this->getModule(), 'Index');
         $this->setActionRights(1, $this->getModule(), 'Settings');
+        $this->setActionRights(1, $this->getModule(), 'Reset');
 
         // module navigation
         $navigationMarketingId = $this->setNavigation(null, 'Marketing', 'analytics/index', null, 4);

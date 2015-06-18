@@ -49,16 +49,6 @@
     </div>
   {/option:ddmWebPropertyId}
 
-  {option:web_property_id}
-    <div class="box">
-      <div class="heading">
-        <h3>{$lblLinkedProfile|ucfirst}</h3>
-      </div>
-      <div class="options">
-        <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
-      </div>
-    </div>
-  {/option:web_property_id}
 
   {option:ddmProfile}
     <div class="box">
@@ -77,11 +67,27 @@
     </div>
   {/option:noAccounts}
 
-  <div class="fullwidthOptions">
-    <div class="buttonHolderRight">
-      <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+  {option:web_property_id}
+    <div class="box">
+      <div class="heading">
+        <h3>{$lblLinkedProfile|ucfirst}</h3>
+      </div>
+      <div class="options">
+        <p>
+          <strong>{$web_property_id}</strong>{option:profile}: ga:{$profile}{/option:profile}
+        </p>
+        {option:showAnalyticsReset}<a href="{$var|geturl:'reset'}">{$msgRemoveAccountLink|ucfirst}</a>{/option:showAnalyticsReset}
+      </div>
     </div>
-  </div>
+  {/option:web_property_id}
+
+  {option:!web_property_id}
+    <div class="fullwidthOptions">
+      <div class="buttonHolderRight">
+        <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
+      </div>
+    </div>
+  {/option:!web_property_id}
 {/form:settings}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
