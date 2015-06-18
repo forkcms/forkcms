@@ -16,9 +16,6 @@ class TraficSources extends Widget
      */
     public function execute()
     {
-        $this->setColumn('middle');
-        $this->setPosition(0);
-
         $startDate = strtotime('-1 week', mktime(0, 0, 0));
         $endDate = mktime(0, 0, 0);
         $analytics = $this->get('analytics.connector');
