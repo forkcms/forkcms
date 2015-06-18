@@ -35,5 +35,21 @@ class Installer extends ModuleInstaller
         $navigationSettingsId = $this->setNavigation(null, 'Settings');
         $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
         $this->setNavigation($navigationModulesId, $this->getModule(), 'analytics/settings');
+
+        $this->insertWidgets();
+    }
+
+    private function insertWidgets()
+    {
+        $this->insertDashboardWidget(
+            'Analytics',
+            'RecentVisits',
+            array(
+                'column' => 'middle',
+                'position' => 1,
+                'hidden' => false,
+                'present' => true,
+            )
+        );
     }
 }
