@@ -76,6 +76,28 @@
         <translation language="sv"><![CDATA[Välj en Analytics webbplats profil...]]></translation>
         <translation language="el"><![CDATA[Επιλογή ενός προφίλ Analytics...]]></translation>
       </item>
+      <item type="label" name="GaPagePath">
+        <translation language="nl"><![CDATA[pagina]]></translation>
+        <translation language="en"><![CDATA[page]]></translation>
+        <translation language="it"><![CDATA[pagina]]></translation>
+        <translation language="ru"><![CDATA[страниц]]></translation>
+        <translation language="fr"><![CDATA[page]]></translation>
+        <translation language="es"><![CDATA[páginas]]></translation>
+      </item>
+      <item type="label" name="GaPageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagina]]></translation>
+        <translation language="ru"><![CDATA[Просмотров страниц]]></translation>
+        <translation language="zh"><![CDATA[页面访问量]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés]]></translation>
+        <translation language="fr"><![CDATA[vues de page]]></translation>
+        <translation language="es"><![CDATA[vista de páginas]]></translation>
+        <translation language="uk"><![CDATA[Пекреглядів сторінок]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
+      </item>
       <item type="label" name="LinkedProfile">
         <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
         <translation language="en"><![CDATA[linked profile]]></translation>
