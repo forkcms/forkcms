@@ -51,5 +51,15 @@ class Installer extends ModuleInstaller
                 'present' => true,
             )
         );
+        $this->insertDashboardWidget(
+            'Analytics',
+            'TraficSources',
+            array(
+                'column' => 'middle',
+                'position' => 2,
+                'hidden' => false,
+                'present' => true,
+            )
+        );
     }
 }

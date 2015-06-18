@@ -154,20 +154,6 @@
         <translation language="sv"><![CDATA[sidvisningar]]></translation>
         <translation language="el"><![CDATA[Εμφανίσεις σελίδας]]></translation>
       </item>
-      <item type="label" name="PageviewsByTrafficSources">
-        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
-        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
-        <translation language="it"><![CDATA[visualizzazioni di pagine per sorgenti di traffico]]></translation>
-        <translation language="ru"><![CDATA[Просмотров за одно посещение]]></translation>
-        <translation language="zh"><![CDATA[每个来源的访问量]]></translation>
-        <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
-        <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
-        <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
-        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
-        <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
-        <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
-        <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
-      </item>
       <item type="label" name="Certificate">
         <translation language="nl"><![CDATA[certificaat (.p12 bestand)]]></translation>
         <translation language="en"><![CDATA[certificate (.p12 file)]]></translation>
@@ -253,5 +239,21 @@
         <translation language="el"><![CDATA[Αφαιρέσατε το σύνδεσμο προς το λογαριασμό σας στο Google]]></translation>
       </item>
     </Analytics>
+    <Core>
+      <item type="label" name="PageviewsByTrafficSources">
+        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
+        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
+        <translation language="it"><![CDATA[visualizzazioni di pagine per sorgenti di traffico]]></translation>
+        <translation language="ru"><![CDATA[Просмотров за одно посещение]]></translation>
+        <translation language="zh"><![CDATA[每个来源的访问量]]></translation>
+        <translation language="hu"><![CDATA[oldalmegtekintés per forgalom forrás]]></translation>
+        <translation language="fr"><![CDATA[vues de page par source de traffic]]></translation>
+        <translation language="de"><![CDATA[Seitenaufrufe nach Traffic-Quelle]]></translation>
+        <translation language="es"><![CDATA[vista de páginas por origen de tráfico]]></translation>
+        <translation language="uk"><![CDATA[Переглядів за один візит]]></translation>
+        <translation language="sv"><![CDATA[sidvisningar per trafikkälla]]></translation>
+        <translation language="el"><![CDATA[Εμφανίσεις σελίδας ανά πηγή κυκλοφορίας]]></translation>
+      </item>
+    </Core>
   </Backend>
 </locale>
