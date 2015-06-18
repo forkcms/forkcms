@@ -123,22 +123,24 @@ final class Settings extends ActionIndex
 
     private function validateForm()
     {
-        if ($this->form->isSubmitted()) {
-            if ($this->form->existsField('certificate')) {
-                $this->validateAuthConfigFileForm();
-            }
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
 
-            if ($this->form->existsField('account')) {
-                $this->validateAccountForm();
-            }
+        if ($this->form->existsField('certificate')) {
+            return $this->validateAuthConfigFileForm();
+        }
 
-            if ($this->form->existsField('web_property_id')) {
-                $this->validatePropertyForm();
-            }
+        if ($this->form->existsField('account')) {
+            return $this->validateAccountForm();
+        }
 
-            if ($this->form->existsField('profile')) {
-                $this->validateProfileForm();
-            }
+        if ($this->form->existsField('web_property_id')) {
+            return $this->validatePropertyForm();
+        }
+
+        if ($this->form->existsField('profile')) {
+            return $this->validateProfileForm();
         }
     }
 
