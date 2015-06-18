@@ -67,7 +67,7 @@
     </div>
   {/option:noAccounts}
 
-  {option:web_property_id}
+  {option:profile}
     <div class="box">
       <div class="heading">
         <h3>{$lblLinkedProfile|ucfirst}</h3>
@@ -79,15 +79,15 @@
         {option:showAnalyticsReset}<a href="{$var|geturl:'reset'}">{$msgRemoveAccountLink|ucfirst}</a>{/option:showAnalyticsReset}
       </div>
     </div>
-  {/option:web_property_id}
+  {/option:profile}
 
-  {option:!web_property_id}
+  {option:!profile}
     <div class="fullwidthOptions">
       <div class="buttonHolderRight">
         <input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
       </div>
     </div>
-  {/option:!web_property_id}
+  {/option:!profile}
 {/form:settings}
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
