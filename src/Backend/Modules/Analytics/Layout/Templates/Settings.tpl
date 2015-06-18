@@ -17,10 +17,6 @@
           {$fileCertificate} {$fileCertificateError}
         </p>
         <p>
-          <label for="clientId">{$lblClientId|ucfirst}</label>
-          {$txtClientId} {$txtClientIdError}
-        </p>
-        <p>
           <label for="email">{$lblEmail|ucfirst}</label>
           {$txtEmail} {$txtEmailError}
         </p>
