@@ -12,13 +12,6 @@ use Backend\Core\Engine\Model;
  */
 final class Reset extends ActionDelete
 {
-    /**
-     * The form instance
-     *
-     * @var Form
-     */
-    private $form;
-
     public function execute()
     {
         $this->get('fork.settings')->delete($this->getModule(), 'certificate');
