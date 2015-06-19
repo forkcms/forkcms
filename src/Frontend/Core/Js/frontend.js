@@ -257,7 +257,7 @@ jsFrontend.forms =
 			{
 				// get data
 				var data = $(this).data();
-				var phpDate = new Date($(this).val()); // Get date from php in YYYY-MM-DD format
+				var phpDate = new Date(data.year, data.month, data.day, 0, 0, 0); // Get date from php in YYYY-MM-DD format
 				var value = $.datepicker.formatDate(data.mask, phpDate); // Convert the value to the data-mask to display it
 
 				// Create the datepicker with the desired display format and alt field

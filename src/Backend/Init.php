@@ -15,52 +15,20 @@ namespace Backend;
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Matthias Mullie <forkcms@mullie.eu>
  */
-class Init extends \KernelLoader
+class Init extends \Common\Core\Init
 {
-    /**
-     * Current type
-     *
-     * @var    string
-     */
-    private $type;
 
     /**
-     * @param string $type The type of init to load, possible values are:
-     *                     Backend, BackendAjax, BackendCronjob.
+     * @inheritdoc
+     */
+    protected $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob');
+
+    /**
+     * @inheritdoc
      */
     public function initialize($type)
     {
-        $allowedTypes = array('Backend', 'BackendAjax', 'BackendCronjob');
-        $type = (string) $type;
-
-        // check if this is a valid type
-        if (!in_array($type, $allowedTypes)) {
-            exit('Invalid init-type');
-        }
-        $this->type = $type;
-
-        // set a default timezone if no one was set by PHP.ini
-        if (ini_get('date.timezone') == '') {
-            date_default_timezone_set('Europe/Brussels');
-        }
-
-        // get last modified time for globals
-        $lastModifiedTime = @filemtime(PATH_WWW . '/app/config/parameters.yml');
-
-        // reset lastmodified time if needed when invalid or debug is active
-        if ($lastModifiedTime === false || $this->getContainer()->getParameter('kernel.debug')) {
-            $lastModifiedTime = time();
-        }
-
-        // define as a constant
-        defined('LAST_MODIFIED_TIME') || define('LAST_MODIFIED_TIME', $lastModifiedTime);
-
-        $this->definePaths();
-        $this->defineURLs();
-        $this->setDebugging();
-
-        // require spoon
-        require_once 'spoon/spoon.php';
+        parent::initialize($type);
 
         \SpoonFilter::disableMagicQuotes();
     }
@@ -68,7 +36,7 @@ class Init extends \KernelLoader
     /**
      * Define paths
      */
-    private function definePaths()
+    protected function definePaths()
     {
         // general paths
         defined('BACKEND_PATH') || define('BACKEND_PATH', PATH_WWW . '/src/Backend');
@@ -84,53 +52,13 @@ class Init extends \KernelLoader
     }
 
     /**
-     * Define URLs
+     * @inheritdoc
      */
-    private function defineURLs()
+    protected function defineURLs()
     {
         defined('BACKEND_CORE_URL') || define('BACKEND_CORE_URL', '/src/' . APPLICATION . '/Core');
         defined('BACKEND_CACHE_URL') || define('BACKEND_CACHE_URL', '/src/' . APPLICATION . '/Cache');
         defined('FRONTEND_FILES_URL') || define('FRONTEND_FILES_URL', '/src/Frontend/Files');
-    }
-
-    /**
-     * A custom error-handler so we can handle warnings about undefined labels
-     *
-     * @param int    $errorNumber The level of the error raised, as an integer.
-     * @param string $errorString The error message, as a string.
-     * @return null|false
-     */
-    public static function errorHandler($errorNumber, $errorString)
-    {
-        $errorString = (string) $errorString;
-        if (mb_substr_count($errorString, 'Undefined index:') > 0) {
-            $index = trim(str_replace('Undefined index:', '', $errorString));
-            $type = mb_substr($index, 0, 3);
-            if (in_array($type, array('act', 'err', 'lbl', 'msg'))) {
-                echo '{$' . $index . '}';
-            } else {
-                return false;
-            }
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
-     *
-     * @param object $exception The exception that was thrown.
-     * @param string $output    The output that should be mailed.
-     */
-    public static function exceptionAJAXHandler($exception, $output)
-    {
-        \SpoonHTTP::setHeaders('content-type: application/json');
-        $response = array(
-            'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
-            'message' => $exception->getMessage()
-        );
-        echo json_encode($response);
-        exit;
     }
 
     /**
@@ -199,29 +127,5 @@ class Init extends \KernelLoader
 
         echo $html;
         exit;
-    }
-
-    /**
-     * Set debugging
-     */
-    private function setDebugging()
-    {
-        if ($this->getContainer()->getParameter('kernel.debug') === false) {
-            // set error reporting as low as possible
-            error_reporting(0);
-
-            // don't show error on the screen
-            ini_set('display_errors', 'Off');
-
-            // add callback for the spoon exceptionhandler
-            switch ($this->type) {
-                case 'BackendAjax':
-                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionAJAXHandler');
-                    break;
-
-                default:
-                    \Spoon::setExceptionCallback(__CLASS__ . '::exceptionHandler');
-            }
-        }
     }
 }
