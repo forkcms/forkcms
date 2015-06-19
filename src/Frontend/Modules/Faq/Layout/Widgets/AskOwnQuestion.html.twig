@@ -1,0 +1,36 @@
+{#
+	variables that are available:
+	- {{ widgetFaqOwnQuestion }}: true or false depending on if the data can be shown
+#}
+
+{% if widgetFaqOwnQuestion %}
+<section id="faqOwnQuestionForm" class="mod">
+	<div class="inner">
+		<header class="hd">
+			<h3 id="{{ act.OwnQuestion }}">{{ msg.AskOwnQuestion|capitalize }}</h3>
+		</header>
+		<div class="bd">
+			{% if errorSpam %}<div class="message error"><p>{{ err.OwnQuestionSpam }}</p></div>{% endif %}
+			{% if success %}<div class="message success"><p>{{ msg.OwnQuestionSuccess }}</p></div>{% endif %}
+
+			{% form own_question %}
+				<p{% if txtNameError %} class="errorArea"{% endif %}>
+					<label for="name">{{ lbl.YourName|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+					{% form_field_error Name %} {% form_field Name %}
+				</p>
+				<p{% if txtEmailError %} class="errorArea"{% endif %}>
+					<label for="email">{{ lbl.YourEmail|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+					{% form_field_error Email %} {% form_field Email %}
+				</p>
+				<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
+					<label for="message">{{ lbl.YourQuestion|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+					{% form_field_error Message %} {% form_field Message %}
+				</p>
+				<p>
+					<input class="inputSubmit" type="submit" name="send" value="{{ lbl.Send|capitalize }}" />
+				</p>
+			{% endform %}
+		</div>
+	</div>
+</section>
+{% endif %}

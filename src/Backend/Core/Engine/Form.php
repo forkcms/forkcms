@@ -298,7 +298,7 @@ class Form extends \Common\Core\Form
     /**
      * Parse the form
      *
-     * @param \SpoonTemplate $tpl The template instance wherein the form will be parsed.
+     * @param $tpl The template instance wherein the form will be parsed.
      */
     public function parse($tpl)
     {

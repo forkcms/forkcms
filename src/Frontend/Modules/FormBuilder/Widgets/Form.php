@@ -152,7 +152,6 @@ class Form extends FrontendBaseWidget
                 $item['name'] = 'field' . $field['id'];
                 $item['type'] = $field['type'];
                 $item['label'] = (isset($field['settings']['label'])) ? $field['settings']['label'] : '';
-                $item['placeholder'] = (isset($field['settings']['placeholder']) ? $field['settings']['placeholder'] : null);
                 $item['required'] = isset($field['validations']['required']);
                 $item['html'] = '';
 
@@ -209,7 +208,6 @@ class Form extends FrontendBaseWidget
                 } elseif ($field['type'] == 'textbox') {
                     // create element
                     $txt = $this->frm->addText($item['name'], $defaultValues);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -270,7 +268,6 @@ class Form extends FrontendBaseWidget
                     // create element
                     $txt = $this->frm->addTextarea($item['name'], $defaultValues);
                     $txt->setAttribute('cols', 30);
-                    $txt->setAttribute('placeholder', $item['placeholder']);
 
                     // add required attribute
                     if ($item['required']) {
@@ -304,7 +301,10 @@ class Form extends FrontendBaseWidget
      */
     protected function loadTemplate($path = null)
     {
-        $this->tpl = new FrontendTemplate(false);
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
     }
 
     /**
