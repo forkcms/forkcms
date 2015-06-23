@@ -190,9 +190,6 @@ class Index extends BackendBaseActionIndex
                     BackendUsersModel::setSetting($userId, 'last_login', $lastLogin);
                 }
 
-                $allowedModule = $this->getAllowedModule();
-                $allowedAction = $this->getAllowedAction($allowedModule);
-
                 $this->getContainer()->get('logger')->info(
                     "Successfully authenticated user '{$txtEmail->getValue()}'."
                 );

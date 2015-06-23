@@ -57,7 +57,7 @@ class Edit extends BackendBaseActionEdit
     public function execute()
     {
         $this->id = $this->getParameter('id', 'int');
-        $this->error = $this->getParameter('error', 'string');
+        $error = $this->getParameter('error', 'string');
         $this->loadAuthenticatedUser();
 
         // If id and error parameters are not set we'll assume the user logged in
@@ -67,7 +67,7 @@ class Edit extends BackendBaseActionEdit
         // Redirect to the user's own profile instead to avoid unnessary words.
         if (
             $this->id === null &&
-            $this->error === null &&
+            $error === null &&
             $this->authenticatedUser->getUserId()
         ) {
             $this->redirect(
