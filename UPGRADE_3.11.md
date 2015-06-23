@@ -88,3 +88,43 @@ header('header');
 
 But you really should think about using this, as the correct way is to set the 
 headers on the response object and bubble it up.
+
+### SpoonHTTP::setHeadersByCode()
+
+This is a difficult one, as it will mostly be used to output a calculated value.
+So in some cases you will need to write some logic, but you can use the example
+below to output the correct header.
+
+Before:
+
+```php
+\SpoonHTTP::setHeadersByCode(200);
+\SpoonHTTP::setHeadersByCode(301);
+\SpoonHTTP::setHeadersByCode(302);
+\SpoonHTTP::setHeadersByCode(304);
+\SpoonHTTP::setHeadersByCode(307);
+\SpoonHTTP::setHeadersByCode(400);
+\SpoonHTTP::setHeadersByCode(401);
+\SpoonHTTP::setHeadersByCode(403);
+\SpoonHTTP::setHeadersByCode(404);
+\SpoonHTTP::setHeadersByCode(410);
+\SpoonHTTP::setHeadersByCode(500);
+\SpoonHTTP::setHeadersByCode(501);
+```
+
+After:
+
+```php
+header('HTTP/1.1 200 OK');
+header('HTTP/1.1 301 Moved Permanently');
+header('HTTP/1.1 302 Found');
+header('HTTP/1.1 304 Not Modified');
+header('HTTP/1.1 307 Temporary Redirect');
+header('HTTP/1.1 400 Bad Request');
+header('HTTP/1.1 401 Unauthorized');
+header('HTTP/1.1 403 Forbidden');
+header('HTTP/1.1 404 Not Found');
+header('HTTP/1.1 410 Gone');
+header('HTTP/1.1 500 Internal Server Error');
+header('HTTP/1.1 501 Not Implemented');
+```

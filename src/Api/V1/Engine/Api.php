@@ -461,7 +461,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         }
 
         // set correct headers
-        \SpoonHTTP::setHeadersByCode($statusCode);
+        header('HTTP/1.1 ' . self::getDecentHeaderMessage($statusCode));
         header('content-type: application/json;charset=' . $charset);
 
         // output JSON
@@ -509,10 +509,29 @@ class Api extends \KernelLoader implements \ApplicationInterface
         array_walk($data, array(__CLASS__, 'arrayToXML'), $root);
 
         // set correct headers
-        \SpoonHTTP::setHeadersByCode($statusCode);
+        header('HTTP/1.1 ' . self::getDecentHeaderMessage($statusCode));
         header('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();
+    }
+
+    private static function getDecentHeaderMessage($statusCode)
+    {
+        $possibleCodes = array(
+            200 => '200 OK',
+            400 => '400 Bad Request',
+            401 => '401 Unauthorized',
+            403 => '403 Forbidden',
+            404 => '404 Not Found',
+            500 => '500 Internal Server Error',
+            501 => '501 Not Implemented',
+        );
+
+        if (!isset($possibleCodes[$statusCode])) {
+            $statusCode = 500;
+        }
+
+        return $possibleCodes[$statusCode];
     }
 }

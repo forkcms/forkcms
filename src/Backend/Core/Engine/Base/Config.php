@@ -117,7 +117,7 @@ class Config extends Object
         $modules = BackendModel::getModulesOnFilesystem();
         if (!in_array($module, $modules)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new BackendException('Module not allowed.');
