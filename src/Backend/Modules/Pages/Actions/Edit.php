@@ -21,6 +21,7 @@ use Backend\Modules\Extensions\Engine\Model as BackendExtensionsModel;
 use Backend\Modules\Pages\Engine\Model as BackendPagesModel;
 use Backend\Modules\Search\Engine\Model as BackendSearchModel;
 use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Symfony\Component\Filesystem\Filesystem;
 
 /**
  * This is the edit-action, it will display a form to update an item
@@ -109,10 +110,7 @@ class Edit extends BackendBaseActionEdit
         // get the extras
         $this->extras = BackendExtensionsModel::getExtras();
 
-        // load user templates
-        $templates = json_decode(file_get_contents('src/Frontend/Themes/Bootstrap/Core/Layout/Templates/UserTemplates/Templates.js'));
-        $this->header->addJsData('pages', 'templates', $templates);
-
+        $this->loadUserTemplates();
         $this->loadForm();
         $this->loadDrafts();
         $this->loadRevisions();
@@ -176,6 +174,22 @@ class Edit extends BackendBaseActionEdit
         // reset some vars
         $this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
         $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
+    }
+
+    private function loadUserTemplates()
+    {
+        $themePath = FRONTEND_PATH . '/Themes/';
+        $themePath .= $this->get('fork.settings')->get('Core', 'theme', 'default');
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.js';
+
+        $userTemplates = array();
+
+        $fs = new Filesystem();
+        if ($fs->exists($filePath)) {
+            $userTemplates = json_decode(file_get_contents($filePath));
+        }
+
+        $this->header->addJsData('pages', 'templates', $userTemplates);
     }
 
     /**
