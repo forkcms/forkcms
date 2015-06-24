@@ -625,49 +625,53 @@ jsBackend.pages.extras =
 					{
 						$('#userTemplateHiddenPlaceholder').html(data);
 
-						var $hiddenPlaceholder, $placeholder;
-
-						$hiddenPlaceholder = $('#userTemplateHiddenPlaceholder');
-						$placeholder = $('#userTemplatePlaceholder');
-						$placeholder.html('');
-
-						// replace links
-						$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
-							var $this, text, url, label, html;
-
-							$this = $(this);
-							text = $this.text();
-							url = $this.attr('href');
-							label = $this.data('ft-label');
-
-							html = '<div>';
-							html += '<label>' + label + '</label>';
-							html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
-							html += '<label>URL</label>';
-							html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
-							html += '</div>';
-
-							$placeholder.append(html);
-						});
-
-						// replace text
-						$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
-							var $this, text, label, html;
-
-							$this = $(this);
-							text = $this.text();
-							label = $this.data('ft-label');
-
-							html = '<div>';
-							html += '<label>' + label + '</label>';
-							html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
-							html += '<div>';
-
-							$placeholder.append(html);
-						});
+						jsBackend.pages.extras.buildUserTemplateForm(
+							$('#userTemplateHiddenPlaceholder'),
+							$('#userTemplatePlaceholder')
+						);
 					}
 				});
 			}
+		});
+	},
+
+	buildUserTemplateForm($hiddenPlaceholder, $placeholder)
+	{
+		$placeholder.html('');
+
+		// replace links
+		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
+			var $this, text, url, label, html;
+
+			$this = $(this);
+			text = $this.text();
+			url = $this.attr('href');
+			label = $this.data('ft-label');
+
+			html = '<div>';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
+			html += '<label>URL</label>';
+			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+			html += '</div>';
+
+			$placeholder.append(html);
+		});
+
+		// replace text
+		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
+			var $this, text, label, html;
+
+			$this = $(this);
+			text = $this.text();
+			label = $this.data('ft-label');
+
+			html = '<div>';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
+			html += '<div>';
+
+			$placeholder.append(html);
 		});
 	},
 
