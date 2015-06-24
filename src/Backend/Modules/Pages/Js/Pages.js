@@ -625,7 +625,7 @@ jsBackend.pages.extras =
 				var templateUrl, sourceHTML;
 
 				// if there already was content, use this.
-				if (previousContent !== null) {
+				if (previousContent !== '') {
 					$('#userTemplateHiddenPlaceholder').html(previousContent);
 
 					jsBackend.pages.extras.buildUserTemplateForm(
