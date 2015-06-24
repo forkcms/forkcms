@@ -570,6 +570,11 @@ jsBackend.pages.extras =
 					text: utils.string.ucfirst(jsBackend.locale.lbl('OK')),
 					click: function()
 					{
+						jsBackend.pages.extras.saveUserTemplateForm(
+							$('#userTemplateHiddenPlaceholder'),
+							$('#userTemplatePlaceholder')
+						);
+
 						// grab content
 						var content = $('#userTemplateHiddenPlaceholder').html();
 
@@ -635,12 +640,16 @@ jsBackend.pages.extras =
 		});
 	},
 
+	/**
+	 * Builds a form containing all fields that should be replaced in the
+	 * hidden placeholder
+	 */
 	buildUserTemplateForm($hiddenPlaceholder, $placeholder)
 	{
 		$placeholder.html('');
 
 		// replace links
-		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function() {
+		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function(key) {
 			var $this, text, url, label, html;
 
 			$this = $(this);
@@ -648,7 +657,7 @@ jsBackend.pages.extras =
 			url = $this.attr('href');
 			label = $this.data('ft-label');
 
-			html = '<div>';
+			html = '<div id="user-template-link-' + key + '">';
 			html += '<label>' + label + '</label>';
 			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
 			html += '<label>URL</label>';
@@ -659,19 +668,40 @@ jsBackend.pages.extras =
 		});
 
 		// replace text
-		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function() {
+		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
 			var $this, text, label, html;
 
 			$this = $(this);
 			text = $this.text();
 			label = $this.data('ft-label');
 
-			html = '<div>';
+			html = '<div id="user-template-text-' + key + '">';
 			html += '<label>' + label + '</label>';
 			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
 			html += '<div>';
 
 			$placeholder.append(html);
+		});
+	},
+
+	/**
+	 * Takes all the data out of the user template form and injects it again in
+	 * the original template html
+	 */
+	saveUserTemplateForm($hiddenPlaceholder, $placeholder)
+	{
+		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function(key) {
+			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
+			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+
+			$(this).attr('href', $urlField.val());
+			$(this).text($labelField.val());
+		});
+
+		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
+			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
+
+			$(this).text($labelField.val());
 		});
 	},
 
