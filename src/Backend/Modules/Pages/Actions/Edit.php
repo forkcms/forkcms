@@ -189,7 +189,7 @@ class Edit extends BackendBaseActionEdit
             $userTemplates = json_decode(file_get_contents($filePath));
         }
 
-        $this->header->addJsData('pages', 'templates', $userTemplates);
+        $this->header->addJsData('pages', 'userTemplates', $userTemplates);
     }
 
     /**

@@ -46,7 +46,7 @@ jsBackend.pages.extras =
 	init: function()
 	{
 		// get user templates
-		jsBackend.pages.template.userTemplates = jsData.pages.templates;
+		jsBackend.pages.template.userTemplates = jsData.pages.userTemplates;
 
 		// bind events
 		$('#extraType').on('change', jsBackend.pages.extras.populateExtraModules);
