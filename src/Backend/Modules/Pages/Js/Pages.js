@@ -67,6 +67,7 @@ jsBackend.pages.extras =
 	addBlock: function(selectedExtraId, selectedPosition, selectedExtraType)
 	{
 		selectedExtraType = selectedExtraType || 'rich_text';
+
 		// clone prototype block
 		var block = $('.contentBlock:first').clone();
 
@@ -144,7 +145,7 @@ jsBackend.pages.extras =
 
 			editLink = '';
 			title = utils.string.ucfirst(jsBackend.locale.lbl('UserTemplate'));
-			description = template['title'];
+			description = utils.string.stripTags($('#blockHtml' + index).val()).substr(0, 200);
 		}
 
 		// editor
