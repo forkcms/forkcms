@@ -552,6 +552,9 @@ jsBackend.pages.extras =
 		// fetch user template id
 		var userTemplateId = $('#blockExtraId' + index).val();
 
+		// fetch the current content
+		var previousContent = $('#blockHtml' + index).val();
+
 		// placeholder for block node that will be moved by the jQuery dialog
 		$('#blockHtml' + index).parent().parent().parent().after('<div id="blockPlaceholder"></div>');
 
@@ -621,21 +624,32 @@ jsBackend.pages.extras =
 			{
 				var templateUrl, sourceHTML;
 
-				templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
+				// if there already was content, use this.
+				if (previousContent !== null) {
+					$('#userTemplateHiddenPlaceholder').html(previousContent);
 
-				$.ajax({
-					url: templateUrl,
-					dataType: 'html',
-					success: function(data)
-					{
-						$('#userTemplateHiddenPlaceholder').html(data);
+					jsBackend.pages.extras.buildUserTemplateForm(
+						$('#userTemplateHiddenPlaceholder'),
+						$('#userTemplatePlaceholder')
+					);
+				} else {
+					// if there was no content yet, take the default content
+					templateUrl = String(jsBackend.pages.template.userTemplates[userTemplateId].file);
 
-						jsBackend.pages.extras.buildUserTemplateForm(
-							$('#userTemplateHiddenPlaceholder'),
-							$('#userTemplatePlaceholder')
-						);
-					}
-				});
+					$.ajax({
+						url: templateUrl,
+						dataType: 'html',
+						success: function(data)
+						{
+							$('#userTemplateHiddenPlaceholder').html(data);
+
+							jsBackend.pages.extras.buildUserTemplateForm(
+								$('#userTemplateHiddenPlaceholder'),
+								$('#userTemplatePlaceholder')
+							);
+						}
+					});
+				}
 			}
 		});
 	},
