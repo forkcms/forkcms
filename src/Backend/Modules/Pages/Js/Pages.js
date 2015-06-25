@@ -696,6 +696,43 @@ jsBackend.pages.extras =
 
 			$placeholder.append(html);
 		});
+
+		// replace text
+		$hiddenPlaceholder.find('[data-ft-type="image"]').each(function(key) {
+			var $this, src, alt, label, html;
+
+			$this = $(this);
+			src = $this.attr('src');
+			alt = $this.attr('alt');
+			label = $this.data('ft-label');
+
+			html = '<div id="user-template-image-' + key + '">';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" /><br/>';
+			html += '<img src="' + src + '" style="max-width: 100%"/>'
+			html += '<div>';
+
+			$placeholder.append(html);
+
+			// attach an ajax uploader to the field
+			var uploader = new ss.SimpleUpload({
+				button: 'user-template-image-' + key,
+				url: '/backend/ajax?fork[module]=Core&fork[action]=UploadFile&type=UserTemplate',
+				name: 'file',
+				responseType: 'json',
+				onComplete: function(filename, response) {
+					if (!response) {
+						alert(filename + 'upload failed');
+						return false;
+					}
+
+					$('#user-template-image-' + key + ' img').attr(
+						'src',
+						'/src/Frontend/Files/UserTemplate/' + response.data
+					);
+				}
+			})
+		});
 	},
 
 	/**
@@ -716,6 +753,12 @@ jsBackend.pages.extras =
 			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
 			$(this).text($labelField.val());
+		});
+
+		$hiddenPlaceholder.find('[data-ft-type="image"]').each(function(key) {
+			$img = $placeholder.find('#user-template-image-' + key + ' img');
+
+			$(this).attr('src', $img.attr('src'));
 		});
 	},
 

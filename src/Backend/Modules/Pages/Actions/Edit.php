@@ -89,6 +89,7 @@ class Edit extends BackendBaseActionEdit
         $this->header->addJS('jstree/jquery.tree.js', null, false);
         $this->header->addJS('jstree/lib/jquery.cookie.js', null, false);
         $this->header->addJS('jstree/plugins/jquery.tree.cookie.js', null, false);
+        $this->header->addJS('SimpleAjaxUploader.min.js', 'Core', false);
 
         // add css
         $this->header->addCSS('/src/Backend/Modules/Pages/Js/jstree/themes/fork/style.css', null, true);
