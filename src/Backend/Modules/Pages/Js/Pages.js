@@ -681,6 +681,22 @@ jsBackend.pages.extras =
 			$placeholder.append(html);
 		});
 
+		// replace links without content
+		$hiddenPlaceholder.find('[data-ft-type="link-without-content"]').each(function(key) {
+			var $this, text, url, label, html;
+
+			$this = $(this);
+			url = $this.attr('href');
+			label = $this.data('ft-label');
+
+			html = '<div id="user-template-link-without-content-' + key + '">';
+			html += '<label>' + label + '</label>';
+			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+			html += '</div>';
+
+			$placeholder.append(html);
+		});
+
 		// replace text
 		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
 			var $this, text, label, html;
@@ -760,6 +776,12 @@ jsBackend.pages.extras =
 
 			$(this).attr('href', $urlField.val());
 			$(this).text($labelField.val());
+		});
+
+		$hiddenPlaceholder.find('[data-ft-type="link-without-content"]').each(function(key) {
+			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+
+			$(this).attr('href', $urlField.val());
 		});
 
 		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
