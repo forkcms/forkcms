@@ -181,7 +181,7 @@ class Edit extends BackendBaseActionEdit
     {
         $themePath = FRONTEND_PATH . '/Themes/';
         $themePath .= $this->get('fork.settings')->get('Core', 'theme', 'default');
-        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.js';
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
 
         $userTemplates = array();
 
