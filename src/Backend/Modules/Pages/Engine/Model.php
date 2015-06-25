@@ -1196,6 +1196,22 @@ class Model
         }
     }
 
+    public static function loadUserTemplates()
+    {
+        $themePath = FRONTEND_PATH . '/Themes/';
+        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'default');
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
+
+        $userTemplates = array();
+
+        $fs = new Filesystem();
+        if ($fs->exists($filePath)) {
+            $userTemplates = json_decode(file_get_contents($filePath));
+        }
+
+        return $userTemplates;
+    }
+
     /**
      * Move a page
      *

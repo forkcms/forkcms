@@ -111,7 +111,6 @@ class Edit extends BackendBaseActionEdit
         // get the extras
         $this->extras = BackendExtensionsModel::getExtras();
 
-        $this->loadUserTemplates();
         $this->loadForm();
         $this->loadDrafts();
         $this->loadRevisions();
@@ -175,22 +174,6 @@ class Edit extends BackendBaseActionEdit
         // reset some vars
         $this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
         $this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
-    }
-
-    private function loadUserTemplates()
-    {
-        $themePath = FRONTEND_PATH . '/Themes/';
-        $themePath .= $this->get('fork.settings')->get('Core', 'theme', 'default');
-        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
-
-        $userTemplates = array();
-
-        $fs = new Filesystem();
-        if ($fs->exists($filePath)) {
-            $userTemplates = json_decode(file_get_contents($filePath));
-        }
-
-        $this->header->addJsData('pages', 'userTemplates', $userTemplates);
     }
 
     /**
@@ -586,6 +569,12 @@ class Edit extends BackendBaseActionEdit
 
         // parse the tree
         $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+
+        $this->header->addJsData(
+            'pages',
+            'userTemplates',
+            BackendPagesModel::loadUserTemplates()
+        );
     }
 
     /**

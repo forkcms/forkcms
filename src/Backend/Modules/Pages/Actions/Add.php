@@ -310,6 +310,12 @@ class Add extends BackendBaseActionAdd
 
         // parse the tree
         $this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+
+        $this->header->addJsData(
+            'pages',
+            'userTemplates',
+            BackendPagesModel::loadUserTemplates()
+        );
     }
 
     /**
