@@ -662,14 +662,24 @@ jsBackend.pages.extras =
 	{
 		$placeholder.html('');
 
-		// replace links
-		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function(key) {
-			var $this, text, url, label, html;
+		$hiddenPlaceholder.find('*').each(function(key) {
+			jsBackend.pages.extras.addCustomFieldInPlaceholderFor($(this), key, $placeholder);
+		});
+	},
 
-			$this = $(this);
-			text = $this.text();
-			url = $this.attr('href');
-			label = $this.data('ft-label');
+	/**
+	 * Checks if an element is some kind of special field that should have form
+	 * fields and builds the html for it
+	 */
+	addCustomFieldInPlaceholderFor($element, key, $placeholder)
+	{
+		// replace links
+		if (($element).is('[data-ft-type="link"]')) {
+			var text, url, label, html;
+
+			text = $element.text();
+			url = $element.attr('href');
+			label = $element.data('ft-label');
 
 			html = '<div id="user-template-link-' + key + '">';
 			html += '<label>' + label + '</label>';
@@ -679,15 +689,14 @@ jsBackend.pages.extras =
 			html += '</div>';
 
 			$placeholder.append(html);
-		});
+		};
 
 		// replace links without content
-		$hiddenPlaceholder.find('[data-ft-type="link-without-content"]').each(function(key) {
-			var $this, text, url, label, html;
+		if ($element.is('[data-ft-type="link-without-content"]')) {
+			var text, url, label, html;
 
-			$this = $(this);
-			url = $this.attr('href');
-			label = $this.data('ft-label');
+			url = $element.attr('href');
+			label = $element.data('ft-label');
 
 			html = '<div id="user-template-link-without-content-' + key + '">';
 			html += '<label>' + label + '</label>';
@@ -695,15 +704,14 @@ jsBackend.pages.extras =
 			html += '</div>';
 
 			$placeholder.append(html);
-		});
+		};
 
 		// replace text
-		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
-			var $this, text, label, html;
+		if ($element.is('[data-ft-type="text"]')) {
+			var text, label, html;
 
-			$this = $(this);
-			text = $this.text();
-			label = $this.data('ft-label');
+			text = $element.text();
+			label = $element.data('ft-label');
 
 			html = '<div id="user-template-text-' + key + '">';
 			html += '<label>' + label + '</label>';
@@ -711,16 +719,15 @@ jsBackend.pages.extras =
 			html += '<div>';
 
 			$placeholder.append(html);
-		});
+		};
 
 		// replace text
-		$hiddenPlaceholder.find('[data-ft-type="image"]').each(function(key) {
-			var $this, src, alt, label, html;
+		if ($element.is('[data-ft-type="image"]')) {
+			var src, alt, label, html;
 
-			$this = $(this);
-			src = $this.attr('src');
-			alt = $this.attr('alt');
-			label = $this.data('ft-label');
+			src = $element.attr('src');
+			alt = $element.attr('alt');
+			label = $element.data('ft-label');
 
 			html = '<div id="user-template-image-' + key + '">';
 			html += '<label>' + label + '</label>';
@@ -761,7 +768,7 @@ jsBackend.pages.extras =
 					});
 				}
 			})
-		});
+		};
 	},
 
 	/**
@@ -770,31 +777,38 @@ jsBackend.pages.extras =
 	 */
 	saveUserTemplateForm($hiddenPlaceholder, $placeholder)
 	{
-		$hiddenPlaceholder.find('[data-ft-type="link"]').each(function(key) {
+		$hiddenPlaceholder.find('*').each(function(key) {
+			jsBackend.pages.extras.saveCustomField($(this), key, $placeholder);
+		});
+	},
+
+	saveCustomField($element, key, $placeholder)
+	{
+		if ($element.is('[data-ft-type="link"]')) {
 			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
 			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
 
-			$(this).attr('href', $urlField.val());
-			$(this).text($labelField.val());
-		});
+			$element.attr('href', $urlField.val());
+			$element.text($labelField.val());
+		};
 
-		$hiddenPlaceholder.find('[data-ft-type="link-without-content"]').each(function(key) {
-			$urlField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-url]');
+		if ($element.is('[data-ft-type="link-without-content"]')) {
+			$urlField = $placeholder.find('#user-template-link-without-content-' + key + ' input[data-ft-url]');
 
-			$(this).attr('href', $urlField.val());
-		});
+			$element.attr('href', $urlField.val());
+		};
 
-		$hiddenPlaceholder.find('[data-ft-type="text"]').each(function(key) {
+		if ($element.is('[data-ft-type="text"]')) {
 			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
-			$(this).text($labelField.val());
-		});
+			$element.text($labelField.val());
+		};
 
-		$hiddenPlaceholder.find('[data-ft-type="image"]').each(function(key) {
+		if ($element.is('[data-ft-type="image"]')) {
 			$img = $placeholder.find('#user-template-image-' + key + ' img');
 
-			$(this).attr('src', $img.attr('src'));
-		});
+			$element.attr('src', $img.attr('src'));
+		};
 	},
 
 	// delete a block
