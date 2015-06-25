@@ -43,12 +43,8 @@ class AjaxAction extends Base\Object
             $actionClass = 'Backend\\Core\\Ajax\\' . $this->getAction();
         }
 
-        // validate if class exists (aka has correct name)
-        if (!class_exists(
-            $actionClass
-        )
-        ) {
-            throw new Exception('The actionfile is present, but the classname should be: ' . $actionClass . '.');
+        if (!class_exists($actionClass)) {
+            throw new Exception('The class ' . $actionClass . ' could not be found.');
         }
 
         // create action-object
@@ -74,11 +70,8 @@ class AjaxAction extends Base\Object
         }
 
         // validate if class exists (aka has correct name)
-        if (!class_exists(
-            $configClass
-        )
-        ) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClassName . '.');
+        if (!class_exists($configClass)) {
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic

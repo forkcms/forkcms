@@ -68,7 +68,9 @@ class AjaxAction extends FrontendBaseAJAXAction
     {
         // build action-class-name
         $actionClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Ajax\\' . $this->getAction();
-        if($this->getModule() == 'Core') $actionClass = 'Frontend\\Core\\Ajax\\' . $this->getAction();
+        if ($this->getModule() == 'Core') {
+            $actionClass = 'Frontend\\Core\\Ajax\\' . $this->getAction();
+        }
 
         // build the path (core is a special case)
         if ($this->getModule() == 'Core') {
@@ -86,7 +88,7 @@ class AjaxAction extends FrontendBaseAJAXAction
         // validate if class exists
         if (!class_exists($actionClass)) {
             throw new Exception(
-                'The action file is present, but the class name should be: ' . $actionClass . '.'
+                'The action file ' . $actionClass . ' could not be found.'
             );
         }
 
@@ -140,12 +142,14 @@ class AjaxAction extends FrontendBaseAJAXAction
     public function loadConfig()
     {
         $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
-        if($this->getModule() == 'Core') $configClass = 'Frontend\\Core\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Frontend\\Core\\Config';
+        }
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
             throw new Exception(
-                'The config file is present, but the class name should be: ' . $configClass . '.'
+                'The config file ' . $configClass . ' could not be found.'
             );
         }
 
