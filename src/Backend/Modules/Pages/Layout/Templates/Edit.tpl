@@ -363,19 +363,19 @@
 					<option value="-1">-</option>
 				</select>
 			</p>
-      <p id="userTemplateHolder" style="display: none;">
-        <label for="userTemplate">{$lblWhichTemplate|ucfirst}</label>
-        <select id="userTemplate">
-          <option value="-1">-</option>
-        </select>
-      </p>
+			<p id="userTemplateHolder" style="display: none;">
+				<label for="userTemplate">{$lblWhichTemplate|ucfirst}</label>
+				<select id="userTemplate">
+					<option value="-1">-</option>
+				</select>
+			</p>
 		</div>
 	</div>
 
-  <div id="addUserTemplate" class="forkForms" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
-    <div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
-    <div id="userTemplatePlaceholder"></div>
-  </div>
+	<div id="addUserTemplate" class="forkForms" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
+		<div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
+		<div id="userTemplatePlaceholder"></div>
+	</div>
 
 	{*
 		Dialog to select another template.
