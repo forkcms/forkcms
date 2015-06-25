@@ -618,6 +618,9 @@ jsBackend.pages.extras =
 
 				// remove placeholder
 				blockPlaceholder.remove();
+
+				// the ajax file uploader inserts an input field in the body, remove it
+				$('body > div > input[name="file"]').parent().remove();
 			},
 			// Open dialog
 			open: function()
