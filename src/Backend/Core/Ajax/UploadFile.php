@@ -104,7 +104,7 @@ class UploadFile extends AjaxAction
         }
 
         // convert the filename to url friendly version
-        $baseName = Uri::getFilename(pathinfo($fileName, PATHINFO_BASENAME));
+        $baseName = Uri::getFilename(pathinfo($fileName, PATHINFO_FILENAME));
         $extension = pathinfo($fileName, PATHINFO_EXTENSION);
         $fileName = $baseName . '.' . $extension;
 

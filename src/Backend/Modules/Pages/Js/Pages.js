@@ -726,10 +726,23 @@ jsBackend.pages.extras =
 						return false;
 					}
 
+					// cache the old image variable, we'll want to remove it to keep our filesystem clean
+					var oldImage = $('#user-template-image-' + key + ' img').attr('src');
+
 					$('#user-template-image-' + key + ' img').attr(
 						'src',
 						'/src/Frontend/Files/UserTemplate/' + response.data
 					);
+
+					// send a request to remove the old image.
+					$.ajax({
+						data:
+						{
+							fork: { module: 'Core', action: 'RemoveUploadedFile' },
+							file: oldImage,
+							type: 'UserTemplate'
+						}
+					});
 				}
 			})
 		});
