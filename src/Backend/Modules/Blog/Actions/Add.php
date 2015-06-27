@@ -162,31 +162,32 @@ class Add extends BackendBaseActionAdd
                 $item['num_comments'] = 0;
                 $item['status'] = $status;
 
+                // insert the item
+                $item['revision_id'] = BackendBlogModel::insert($item);
+
                 if ($this->imageIsAllowed) {
                     // the image path
                     $imagePath = FRONTEND_FILES_PATH . '/blog/images';
 
                     // create folders if needed
                     $fs = new Filesystem();
-                    if (!$fs->exists($imagePath . '/source')) {
-                        $fs->mkdir($imagePath . '/source');
-                    }
-                    if (!$fs->exists($imagePath . '/128x128')) {
-                        $fs->mkdir($imagePath . '/128x128');
-                    }
+                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // image provided?
                     if ($this->frm->getField('image')->isFilled()) {
                         // build the image name
-                        $item['image'] = $this->meta->getURL() . '-' . BL::getWorkingLanguage() . '.' . $this->frm->getField('image')->getExtension();
+                        $item['image'] = $this->meta->getURL()
+                            . '-' . BL::getWorkingLanguage()
+                            . '-' . $item['revision_id']
+                            . '.' . $this->frm->getField('image')->getExtension();
 
                         // upload the image & generate thumbnails
                         $this->frm->getField('image')->generateThumbnails($imagePath, $item['image']);
+
+                        // add the image to the database without changing the revision id
+                        BackendBlogModel::updateRevision($item['revision_id'], array('image' => $item['image']));
                     }
                 }
-
-                // insert the item
-                $item['revision_id'] = BackendBlogModel::insert($item);
 
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $item));

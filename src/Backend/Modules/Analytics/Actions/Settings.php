@@ -41,7 +41,6 @@ final class Settings extends ActionIndex
         // we don't even have a auth config file yet, let the user upload it
         if ($this->get('fork.settings')->get($this->getModule(), 'certificate') === null) {
             $this->form->addFile('certificate');
-            $this->form->addText('client_id');
             $this->form->addtext('email');
 
             return;
@@ -124,29 +123,30 @@ final class Settings extends ActionIndex
 
     private function validateForm()
     {
-        if ($this->form->isSubmitted()) {
-            if ($this->form->existsField('certificate')) {
-                $this->validateAuthConfigFileForm();
-            }
+        if (!$this->form->isSubmitted()) {
+            return;
+        }
 
-            if ($this->form->existsField('account')) {
-                $this->validateAccountForm();
-            }
+        if ($this->form->existsField('certificate')) {
+            return $this->validateAuthConfigFileForm();
+        }
 
-            if ($this->form->existsField('web_property_id')) {
-                $this->validatePropertyForm();
-            }
+        if ($this->form->existsField('account')) {
+            return $this->validateAccountForm();
+        }
 
-            if ($this->form->existsField('profile')) {
-                $this->validateProfileForm();
-            }
+        if ($this->form->existsField('web_property_id')) {
+            return $this->validatePropertyForm();
+        }
+
+        if ($this->form->existsField('profile')) {
+            return $this->validateProfileForm();
         }
     }
 
     private function validateAuthConfigFileForm()
     {
         $fileField = $this->form->getField('certificate');
-        $clientIdField = $this->form->getField('client_id');
         $emailField = $this->form->getField('email');
 
         if ($fileField->isFilled(Language::err('FieldIsRequired'))) {
@@ -155,7 +155,6 @@ final class Settings extends ActionIndex
                 Language::err('P12Only')
             );
         }
-        $clientIdField->isFilled(Language::err('FieldIsRequired'));
         $emailField->isFilled(Language::err('FieldIsRequired'));
         $emailField->isEmail(Language::err('EmailIsInvalid'));
 
@@ -164,11 +163,6 @@ final class Settings extends ActionIndex
                 $this->getModule(),
                 'certificate',
                 base64_encode(file_get_contents($fileField->getTempFileName()))
-            );
-            $this->get('fork.settings')->set(
-                $this->getModule(),
-                'client_id',
-                $clientIdField->getValue()
             );
             $this->get('fork.settings')->set(
                 $this->getModule(),
