@@ -152,6 +152,20 @@ final class Connector
     }
 
     /**
+     * Returns the source graph data
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    public function getMostVisitedPagesData($startDate, $endDate)
+    {
+        $results = $this->getData($startDate, $endDate);
+
+        return $results['pageViews'];
+    }
+
+    /**
      * Fetches all the needed data and caches it in our statistics array
      *
      * @param  int $startDate
@@ -169,6 +183,7 @@ final class Connector
                     array(
                         'metrics' => $this->getMetrics($startDate, $endDate),
                         'visitGraphData' => $this->collectVisitGraphData($startDate, $endDate),
+                        'pageViews' => $this->collectMostVisitedPagesData($startDate, $endDate),
                         'sourceGraphData' => $this->collectSourceGraphData($startDate, $endDate),
                     )
                 )
@@ -211,7 +226,7 @@ final class Connector
             'ga:pageviews,ga:users',
             array(
                 'dimensions' => 'ga:date',
-                'sort' =>'ga:date',
+                'sort' => 'ga:date',
             )
         );
 
@@ -249,7 +264,41 @@ final class Connector
             'ga:pageviews',
             array(
                 'dimensions' => 'ga:medium',
-                'sort' =>'-ga:pageviews',
+                'sort' => '-ga:pageviews',
+            )
+        );
+
+        // make sure our column headers are the metric names, not just numbers
+        $namedRows = array();
+        foreach ($sourceGraphData['rows'] as $dataRow) {
+            $namedRow = array();
+            foreach ($dataRow as $key => $value) {
+                $headerName = $sourceGraphData['columnHeaders'][$key]['name'];
+                $namedRow[str_replace(':', '_', $headerName)] = $value;
+            }
+            $namedRows[] = $namedRow;
+        }
+
+        return $namedRows;
+    }
+
+    /**
+     * Fetches the data needed to build the list with most visited pages
+     *
+     * @param  int $startDate
+     * @param  int $endDate
+     * @return array
+     */
+    private function collectMostVisitedPagesData($startDate, $endDate)
+    {
+        $sourceGraphData = $this->getAnalyticsData(
+            $startDate,
+            $endDate,
+            'ga:pageviews',
+            array(
+                'dimensions' => 'ga:pagePath',
+                'sort' => '-ga:pageviews',
+                'max-results' => 20,
             )
         );
 

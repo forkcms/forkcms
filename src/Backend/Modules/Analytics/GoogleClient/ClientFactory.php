@@ -54,8 +54,6 @@ class ClientFactory
             )
         );
 
-        // other settings
-        $client->setClientId($this->settings->get('Analytics', 'client_id'));
         $client->setAccessType('offline_access');
 
         return $client;
