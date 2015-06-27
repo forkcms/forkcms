@@ -172,6 +172,32 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
         );
     }
 
+    public function testGetMostVisitedPagesData()
+    {
+        $connector = new Connector(
+            $this->getAnalyticsServiceMock(),
+            new InMemoryCache(),
+            $this->getModulesSettingsMock()
+        );
+
+        $this->assertEquals(
+            array(
+                array(
+                    'ga_pagePath' => '/en',
+                    'ga_pageviews' => '15',
+                ),
+                array(
+                    'ga_pagePath' => '/en/blog',
+                    'ga_pageviews' => '8',
+                ),
+            ),
+            $connector->getMostVisitedPagesData(
+                strtotime('-1 day', mktime(0, 0, 0)),
+                mktime(0, 0, 0)
+            )
+        );
+    }
+
     private function getModulesSettingsMock()
     {
         return $this->getMockBuilder('\Common\ModulesSettings')
@@ -223,10 +249,22 @@ class ConnectorTest extends PHPUnit_Framework_TestCase
             )
         );
 
+        $pageViewsDataMock = array(
+            'rows' => array(
+                array('/en', '15'),
+                array('/en/blog', '8'),
+            ),
+            'columnHeaders' => array(
+                array('name' => 'ga:pagePath'),
+                array('name' => 'ga:pageviews'),
+            )
+        );
+
         $dataGateway->method('get')
             ->will($this->onConsecutiveCalls(
                 $metricsReturnMock,
                 $visitGraphDataMock,
+                $pageViewsDataMock,
                 $sourceGraphDataMock
             ))
         ;
