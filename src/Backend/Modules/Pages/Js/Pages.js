@@ -719,12 +719,26 @@ jsBackend.pages.extras =
 			html = '<div id="user-template-text-' + key + '">';
 			html += '<label>' + label + '</label>';
 			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
-			html += '<div>';
+			html += '</div>';
 
 			$placeholder.append(html);
 		};
 
-		// replace text
+		if ($element.is('[data-ft-type="textarea"]')) {
+			var text, label, html;
+
+			text = $element.text();
+			label = $element.data('ft-label');
+
+			html = '<div id="user-template-textarea-' + key + '">';
+			html += '<label>' + label + '</label>';
+			html += '<textarea data-ft-label="' + label + '">' + text + '</textarea>';
+			html += '</div>';
+
+			$placeholder.append(html);
+		}
+
+		// replace image
 		if ($element.is('[data-ft-type="image"]')) {
 			var src, alt, label, html;
 
@@ -805,6 +819,12 @@ jsBackend.pages.extras =
 			$labelField = $placeholder.find('#user-template-text-' + key + ' input[data-ft-label]');
 
 			$element.text($labelField.val());
+		};
+
+		if ($element.is('[data-ft-type="textarea"]')) {
+			$textarea = $placeholder.find('#user-template-textarea-' + key + ' textarea[data-ft-label]');
+
+			$element.text($textarea.val());
 		};
 
 		if ($element.is('[data-ft-type="image"]')) {
