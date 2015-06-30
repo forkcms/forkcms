@@ -1,0 +1,20 @@
+/*
+
+    User templates
+
+    @package      backend
+    @subpackage   core
+
+    @author       Mathias Helin <mathias@sumocoders.be>
+    @since        2.0
+
+*/
+
+#userTemplatePlaceholder .imageHolder {
+  max-width: 200px;
+}
+
+#userTemplatePlaceholder .imageHolder img {
+  display: block;
+  max-width: 100%;
+}

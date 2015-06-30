@@ -684,15 +684,15 @@ jsBackend.pages.extras =
 			url = $element.attr('href');
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-link-' + key + '">';
+			html = '<div id="user-template-link-' + key + '" class="options">';
 			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '"/>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '"/>';
 			html += '<label>URL</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
 			html += '</div>';
 
 			$placeholder.append(html);
-		};
+		}
 
 		// replace links without content
 		if ($element.is('[data-ft-type="link-without-content"]')) {
@@ -701,13 +701,13 @@ jsBackend.pages.extras =
 			url = $element.attr('href');
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-link-without-content-' + key + '">';
+			html = '<div id="user-template-link-without-content-' + key + '" class="options">';
 			html += '<label>' + label + '</label>';
-			html += '<input data-ft-url="' + label + '" type="url" class="inputText" value="' + url + '"/>';
+			html += '<input data-ft-url="' + label + '" type="url" class="inputText title" value="' + url + '"/>';
 			html += '</div>';
 
 			$placeholder.append(html);
-		};
+		}
 
 		// replace text
 		if ($element.is('[data-ft-type="text"]')) {
@@ -716,13 +716,13 @@ jsBackend.pages.extras =
 			text = $element.text();
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-text-' + key + '">';
+			html = '<div id="user-template-text-' + key + '" class="options">';
 			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="text" class="inputText" value="' + text + '" />';
-			html += '</div>';
+			html += '<input data-ft-label="' + label + '" type="text" class="inputText title" value="' + text + '" />';
+			html += '<div>';
 
 			$placeholder.append(html);
-		};
+		}
 
 		if ($element.is('[data-ft-type="textarea"]')) {
 			var text, label, html;
@@ -730,9 +730,9 @@ jsBackend.pages.extras =
 			text = $element.text();
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-textarea-' + key + '">';
-			html += '<label>' + label + '</label>';
-			html += '<textarea data-ft-label="' + label + '">' + text + '</textarea>';
+			html = '<div id="user-template-textarea-' + key + '" class="options">';
+			html += '<p class="p0"><label>' + label + '</label></p>';
+			html += '<textarea data-ft-label="' + label + '" cols="90" rows="15">' + text + '</textarea>';
 			html += '</div>';
 
 			$placeholder.append(html);
@@ -746,10 +746,12 @@ jsBackend.pages.extras =
 			alt = $element.attr('alt');
 			label = $element.data('ft-label');
 
-			html = '<div id="user-template-image-' + key + '">';
+			html = '<div id="user-template-image-' + key + '" class="options clearfix">';
+			html += '<div class="imageHolder"><img src="' + src + '" /></div>';
+			html += '<p>';
 			html += '<label>' + label + '</label>';
-			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" /><br/>';
-			html += '<img src="' + src + '" style="max-width: 100%"/>'
+			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
+			html += '</p>'
 			html += '<div>';
 
 			$placeholder.append(html);
@@ -785,7 +787,7 @@ jsBackend.pages.extras =
 					});
 				}
 			})
-		};
+		}
 	},
 
 	/**
