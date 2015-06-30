@@ -333,7 +333,12 @@
 
 	<div id="addUserTemplate" class="forkForms" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
 		<div id="userTemplateHiddenPlaceholder" style="display:none;"></div>
-		<div id="userTemplatePlaceholder"></div>
+		<div class="box">
+			<div class="heading">
+				<h3>{$lblContent|ucfirst}</h3>
+			</div>
+			<div id="userTemplatePlaceholder"></div>
+		</div>
 	</div>
 
 	{*
