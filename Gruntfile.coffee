@@ -55,17 +55,14 @@ module.exports = (grunt) ->
           js: (block) ->
             '<script src="{$THEME_URL}' + block.dest + '"></script>'
     clean:
+      fonts: [
+        '<%= theme_build %>/Layout/Fonts/*'
+      ]
       fontsCss: [
         '<%= theme_build %>/Layout/Fonts/*.css'
       ]
-      iconfont: [
-        '<%= theme_build %>/Layout/Fonts/icons-*.*'
-      ]
       images: [
         '<%= theme_build %>/Layout/Images/*'
-      ]
-      aftericonfont: [
-        '<%= theme_src %>/Layout/Fonts/icons-*.*'
       ]
       templates: [
         '<%= theme_build %>/Layout/Templates/*'
@@ -118,14 +115,16 @@ module.exports = (grunt) ->
           src: '*.svg'
           dest: '<%= theme_build %>/Layout/Images/'
         ]
-        
+
     webfont:
       icons:
         src: '<%=theme_src %>/Layout/icon-sources/*.svg'
-        dest: '<%= theme_src %>/Layout/Fonts/'
+        dest: '<%= theme_build %>/Layout/Fonts/'
         destCss: '<%= theme_src %>/Layout/Sass/'
         classPrefix: 'icon-'
         options:
+          relativeFontPath: '../Fonts/'
+          hashes: false
           stylesheet: 'scss'
           htmlDemo: false
           template: '<%= theme_src %>/Layout/Sass/_icons-template.scss'
@@ -191,15 +190,12 @@ module.exports = (grunt) ->
   ]
 
   grunt.registerTask 'iconfont', [
-    'clean:iconfont'
     'webfont'
-    'copy:fonts'
-    'clean:aftericonfont'
   ]
 
   # Production task
   grunt.registerTask 'build', [
-    'clean:iconfont'
+    'clean:fonts'
     'clean:images'
     'iconfont'
     'fontgen'
@@ -218,4 +214,3 @@ module.exports = (grunt) ->
     'usemin'
     'clean:dist'
   ]
-
