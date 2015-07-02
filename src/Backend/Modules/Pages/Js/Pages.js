@@ -742,25 +742,29 @@ jsBackend.pages.extras =
 
 		// replace image
 		if ($element.is('[data-ft-type="image"]')) {
-			var src, alt, label, html;
+			var src, alt, label, html, isVisible;
 
 			src = $element.attr('src');
 			alt = $element.attr('alt');
 			label = $element.data('ft-label');
+			isVisible = $element.attr('style') !== 'display: none;';
 
 			html = '<div id="user-template-image-' + key + '" class="options clearfix">';
-			html += '<div class="imageHolder"><img src="' + src + '" /></div>';
+			html += '<div class="imageHolder"><img' + (isVisible ? '' : ' style="display: none;"') + ' src="' + src + '" /></div>';
+			html += '<div id="ajax-upload-' + key + '">';
 			html += '<p>';
 			html += '<label>' + label + '</label>';
 			html += '<input data-ft-label="' + label + '" type="file" accepts="image/*" />';
-			html += '</p>'
+			html += '</p>';
+			html += '</div>';
+			html += '<label><input type="checkbox"' + (isVisible ? 'checked' : '') + '/> ' + jsBackend.locale.lbl('ShowImage') + '</label>'
 			html += '<div>';
 
 			$placeholder.append(html);
 
 			// attach an ajax uploader to the field
 			var uploader = new ss.SimpleUpload({
-				button: 'user-template-image-' + key,
+				button: 'ajax-upload-' + key,
 				url: '/backend/ajax?fork[module]=Core&fork[action]=UploadFile&type=UserTemplate',
 				name: 'file',
 				responseType: 'json',
@@ -789,6 +793,11 @@ jsBackend.pages.extras =
 					});
 				}
 			})
+
+			// handle the "show image" checkbox
+			$('#user-template-image-' + key + ' input[type=checkbox]').on('click', function(e) {
+				$('#user-template-image-' + key + ' img').toggle($(this).is(':checked'));
+			});
 		}
 	},
 
@@ -833,8 +842,14 @@ jsBackend.pages.extras =
 
 		if ($element.is('[data-ft-type="image"]')) {
 			$img = $placeholder.find('#user-template-image-' + key + ' img');
+			$visible = $placeholder.find('#user-template-image-' + key + ' input[type=checkbox]');
 
 			$element.attr('src', $img.attr('src'));
+			if ($visible.is(':checked')) {
+				$element.attr('style', 'display: block;');
+			} else {
+				$element.attr('style', 'display: none;');
+			}
 		};
 	},
 

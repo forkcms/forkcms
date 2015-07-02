@@ -219,6 +219,10 @@
         <translation language="uk"><![CDATA[Надіслані розсилки]]></translation>
         <translation language="el"><![CDATA[απεσταλμένα μηνύματα]]></translation>
       </item>
+      <item type="label" name="ShowImage">
+        <translation language="en"><![CDATA[show the image]]></translation>
+        <translation language="nl"><![CDATA[toon de afbeelding]]></translation>
+      </item>
       <item type="label" name="SubscribeForm">
         <translation language="en"><![CDATA[subscribe form]]></translation>
         <translation language="nl"><![CDATA[inschrijvingsformulier]]></translation>
