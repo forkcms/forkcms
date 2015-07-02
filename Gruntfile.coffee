@@ -125,6 +125,7 @@ module.exports = (grunt) ->
         options:
           relativeFontPath: '../Fonts/'
           hashes: false
+          types: 'eot,woff,ttf,svg'
           stylesheet: 'scss'
           htmlDemo: false
           template: '<%= theme_src %>/Layout/Sass/_icons-template.scss'
