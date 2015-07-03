@@ -41,6 +41,9 @@ else
 
 // bootstrap Fork
 DEFINE('APPLICATION', 'Backend');
+if (!defined('PATH_WWW')) {
+    define('PATH_WWW', '__DIR__' . '/..');
+}
 $kernel = new AppKernel('prod', false);
 $kernel->boot();
 $loader = new BackendInit($kernel);
