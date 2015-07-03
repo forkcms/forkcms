@@ -110,7 +110,7 @@ class Statistics extends BackendBaseActionIndex
         );
 
         // create a new source-object
-        $source = new \SpoonDataGridSourceArray($this->statistics['clicked_links']);
+        $source = new \SpoonDatagridSourceArray($this->statistics['clicked_links']);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);

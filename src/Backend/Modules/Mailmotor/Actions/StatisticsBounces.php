@@ -86,7 +86,7 @@ class StatisticsBounces extends BackendBaseActionIndex
     private function loadDataGrid()
     {
         // create a new source-object
-        $source = new \SpoonDataGridSourceArray($this->bounces);
+        $source = new \SpoonDatagridSourceArray($this->bounces);
 
         // call the parent, as in create a new datagrid with the created source
         $this->dataGrid = new BackendDataGrid($source);
