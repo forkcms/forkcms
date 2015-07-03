@@ -663,7 +663,7 @@ jsBackend.pages.extras =
 	 * Builds a form containing all fields that should be replaced in the
 	 * hidden placeholder
 	 */
-	buildUserTemplateForm($hiddenPlaceholder, $placeholder)
+    buildUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$placeholder.html('');
 
@@ -676,7 +676,7 @@ jsBackend.pages.extras =
 	 * Checks if an element is some kind of special field that should have form
 	 * fields and builds the html for it
 	 */
-	addCustomFieldInPlaceholderFor($element, key, $placeholder)
+    addCustomFieldInPlaceholderFor: function($element, key, $placeholder)
 	{
 		// replace links
 		if (($element).is('[data-ft-type="link"]')) {
@@ -805,14 +805,14 @@ jsBackend.pages.extras =
 	 * Takes all the data out of the user template form and injects it again in
 	 * the original template html
 	 */
-	saveUserTemplateForm($hiddenPlaceholder, $placeholder)
+    saveUserTemplateForm: function($hiddenPlaceholder, $placeholder)
 	{
 		$hiddenPlaceholder.find('*').each(function(key) {
 			jsBackend.pages.extras.saveCustomField($(this), key, $placeholder);
 		});
 	},
 
-	saveCustomField($element, key, $placeholder)
+    saveCustomField: function($element, key, $placeholder)
 	{
 		if ($element.is('[data-ft-type="link"]')) {
 			$labelField = $placeholder.find('#user-template-link-' + key + ' input[data-ft-label]');
