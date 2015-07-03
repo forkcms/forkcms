@@ -1,0 +1,17 @@
+<aside id="userActions">
+	{% if isLoggedIn %}
+		<p>
+			<strong>{{ msg.WelcomeUserX|sprintf({$profileDisplayName }}})</strong>
+			<a href="{{ var|geturlforblock:'Profiles':'Settings' }}" title="{{ profileDisplayName }}">{{ lbl.ProfileSettings|capitalize }}</a>
+			<a href="{{ var|geturlforblock:'Profiles':'Logout' }}">{{ lbl.Logout|capitalize }}</a>
+		</p>
+	{% endif %}
+
+	{% if not isLoggedIn %}
+		<p>
+			<a href="{{ var|geturlforblock:'Profiles':'Register' }}"><span class="icon pencilIcon"></span><span class="iconWrapper">{{ lbl.Register|capitalize }}</span></a>
+			<small> {{ lbl.Or }} </small>
+			<a href="{{ loginUrl }}"><span class="icon userIcon"></span><span class="iconWrapper">{{ lbl.Login|capitalize }}</span></a>
+		</p>
+	{% endif %}
+</aside>

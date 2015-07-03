@@ -1,0 +1,13 @@
+{#
+	variables that are available:
+	- {{ isLoggedIn }}
+	- {{ profile }}: only available when logged in
+#}
+
+{% if isLoggedIn %}
+	{{ msg.ProfilesLoggedInAs|sprintf({$profile.display_name }}:{{ profile.url.dashboard }}})
+{% endif %}
+
+{% if not isLoggedIn %}
+    <a href="{{ var|geturlforblock:'Profiles':'Login' }}?queryString={{ var|geturlforblock:'Profiles' }}">{{ lbl.Login|capitalize }}</a>
+{% endif %}
