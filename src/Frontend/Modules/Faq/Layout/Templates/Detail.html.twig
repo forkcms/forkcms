@@ -12,12 +12,12 @@
 				<ul>
 					<li>
 						{# Category#}
-						{{ lbl.InTheCategory|capitalize }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
+						{{ 'lbl.InTheCategory'|trans|capitalize }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>
 						{% if not item.tags %}.{% endif %}
 
 						{# Tags#}
 						{% if item.tags %}
-							{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
+							{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
 							{% for tag in item.tags %}
 								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
 							{% endfor %}
@@ -31,7 +31,7 @@
 					{% if item.tags %}
 					<ul>
 						<li>
-							{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
+							{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
 							{% for tag in item.tags %}
 								<a href="{{ tag.full_url }}" rel="tag" title="{{ tag.name }}">{{ tag.name }}</a>{% if not tag.last %}, {% endif %}{% if tag.last %}.{% endif %}
 							{% endfor %}
@@ -50,8 +50,8 @@
 		<section id="faqRelatedItems" class="mod">
 			<div class="inner">
 				<header class="hd">
-					{% if settings.allow_multiple_categories %}<h3>{{ msg.QuestionsInSameCategory|capitalize }}</h3>{% endif %}
-					{% if not settings.allow_multiple_categories %}<h3>{{ msg.OtherQuestions|capitalize }}</h3>{% endif %}
+					{% if settings.allow_multiple_categories %}<h3>{{ 'msg.QuestionsInSameCategory'|trans|capitalize }}</h3>{% endif %}
+					{% if not settings.allow_multiple_categories %}<h3>{{ 'msg.OtherQuestions'|trans|capitalize }}</h3>{% endif %}
 				</header>
 				<div class="bd content">
 					<ul>
@@ -68,7 +68,7 @@
 		<section id="faqRelatedItems" class="mod">
 			<div class="inner">
 				<header class="hd">
-					<h3>{{ msg.RelatedQuestions|capitalize }}</h3>
+					<h3>{{ 'msg.RelatedQuestions'|trans|capitalize }}</h3>
 				</header>
 				<div class="bd content">
 					<ul>
@@ -81,17 +81,17 @@
 		</section>
 	{% endif %}
 
-	<p><a href="{{ var|geturlforblock('Faq') }}" title="{{ lbl.ToFaqOverview|capitalize }}">{{ lbl.ToFaqOverview|capitalize }}</a></p>
+	<p><a href="{{ var|geturlforblock('Faq') }}" title="{{ 'lbl.ToFaqOverview'|trans|capitalize }}">{{ 'lbl.ToFaqOverview'|trans|capitalize }}</a></p>
 
 	{% if settings.allow_feedback %}
 		<section id="faqFeedbackForm" class="mod">
 			<div class="inner">
 				<header class="hd">
-					<h3 id="{{ act.Feedback }}">{{ msg.Feedback|capitalize }}</h3>
+					<h3 id="{{ 'act.Feedback'|trans }}">{{ 'msg.Feedback'|trans|capitalize }}</h3>
 				</header>
 				<div class="bd">
-					{% if success %}<div class="message success"><p>{{ msg.FeedbackSuccess }}</p></div>{% endif %}
-					{% if spam %}<div class="message error"><p>{{ err.FeedbackSpam }}</p></div>{% endif %}
+					{% if success %}<div class="message success"><p>{{ 'msg.FeedbackSuccess'|trans }}</p></div>{% endif %}
+					{% if spam %}<div class="message error"><p>{{ 'err.FeedbackSpam'|trans }}</p></div>{% endif %}
 
 					{% form feedback %}
 						{{ hidQuestionId }}
@@ -108,11 +108,11 @@
 
 						<div id="feedbackNoInfo"{% if hideFeedbackNoInfo %} style="display: none;"{% endif %}>
 							<p class="bigInput{% if txtMessageError %} errorArea{% endif %}">
-								<label for="message">{{ msg.HowToImprove|capitalize }}<abbr title="{{ lbl.RequiredField }}">#</abbr></label>
+								<label for="message">{{ 'msg.HowToImprove'|trans|capitalize }}<abbr title="{{ 'lbl.RequiredField'|trans }}">#</abbr></label>
 								{% form_field_error Message %} {% form_field Message %}
 							</p>
 							<p>
-								<input class="inputSubmit" type="submit" name="comment" value="{{ lbl.Send|capitalize }}" />
+								<input class="inputSubmit" type="submit" name="comment" value="{{ 'lbl.Send'|trans|capitalize }}" />
 							</p>
 						</div>
 					{% endform %}

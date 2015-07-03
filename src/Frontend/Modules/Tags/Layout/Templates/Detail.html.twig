@@ -6,7 +6,7 @@
 <section id="tagsDetail" class="mod">
 	<div class="inner">
 		<header class="hd">
-			<h1>{{ lbl.ItemsWithTag|sprintf(tag.name)|capitalize }}</h1>
+			<h1>{{ 'lbl.ItemsWithTag'|trans|sprintf(tag.name)|capitalize }}</h1>
 		</header>
 		<div class="bd">
 			{% if tagsModules %}
@@ -27,7 +27,7 @@
 					</section>
 				{% endfor %}
 			{% endif %}
-			<p><a href="{{ var|geturlforblock('Tags') }}" title="{{ lbl.ToTagsOverview|capitalize }}">{{ lbl.ToTagsOverview|capitalize }}</a></p>
+			<p><a href="{{ var|geturlforblock('Tags') }}" title="{{ 'lbl.ToTagsOverview'|trans|capitalize }}">{{ 'lbl.ToTagsOverview'|trans|capitalize }}</a></p>
 
 		</div>
 	</div>

@@ -5,9 +5,9 @@
 #}
 
 {% if isLoggedIn %}
-	{{ msg.ProfilesLoggedInAs|sprintf({$profile.display_name }}:{{ profile.url.dashboard }}})
+	{{ 'msg.ProfilesLoggedInAs'|trans|sprintf({$profile.display_name }}:{{ profile.url.dashboard }}})
 {% endif %}
 
 {% if not isLoggedIn %}
-    <a href="{{ var|geturlforblock:'Profiles':'Login' }}?queryString={{ var|geturlforblock:'Profiles' }}">{{ lbl.Login|capitalize }}</a>
+    <a href="{{ var|geturlforblock:'Profiles':'Login' }}?queryString={{ var|geturlforblock:'Profiles' }}">{{ 'lbl.Login'|trans|capitalize }}</a>
 {% endif %}

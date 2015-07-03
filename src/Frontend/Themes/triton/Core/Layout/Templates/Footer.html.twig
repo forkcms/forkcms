@@ -4,7 +4,7 @@
 			<p>&copy; {{ now|date('Y') }} {{ siteTitle }}</p>
 		</div>
 		<nav id="footerNavigation">
-			<h4>{{ lbl.FooterNavigation }}</h4>
+			<h4>{{ 'lbl.FooterNavigation'|trans }}</h4>
 			<ul>
 				{% for footer in footerLinks %}
 					<li{% if footer.selected %} class="selected"{% endif %}>

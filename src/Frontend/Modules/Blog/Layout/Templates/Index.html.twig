@@ -8,7 +8,7 @@
 		<section class="mod">
 			<div class="inner">
 				<div class="bd content">
-					<p>{{ msg.BlogNoItems }}</p>
+					<p>{{ 'msg.BlogNoItems'|trans }}</p>
 				</div>
 			</div>
 		</section>
@@ -24,17 +24,17 @@
 						<ul>
 							<li>
 								{# Written by #}
-								{{ msg.WrittenBy|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
+								{{ 'msg.WrittenBy'|trans|capitalize|sprintf(item.user_id|usersetting('nickname')) }}
 
 								{# Written on #}
-								{{ lbl.On }} {{ item.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}
+								{{ 'lbl.On'|trans }} {{ item.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}
 
 								{# Category#}
-								{{ lbl.In }} {{ lbl.The }} {{ lbl.Category }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
+								{{ 'lbl.In'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Category'|trans }} <a href="{{ item.category_full_url }}" title="{{ item.category_title }}">{{ item.category_title }}</a>{% if not item.tags %}.{% endif %}
 
 								{# Tags #}
 								{% if item.tags %}
-									{{ lbl.With }} {{ lbl.The }} {{ lbl.Tags }}
+									{{ 'lbl.With'|trans }} {{ 'lbl.The'|trans }} {{ 'lbl.Tags'|trans }}
 									{% for tags in item.tags %}
 										<a href="{{ tags.full_url }}" rel="tag" title="{{ tags.name }}">{{ tags.name }}</a>{% if not tags.last %}, {% endif %}{% if tags.last %}.{% endif %}
 									{% endfor %}
@@ -43,10 +43,10 @@
 							{# Comments #}
 							{% if item.allow_comments %}
 								<li>
-									{% if not item.comments %}<a href="{{ item.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
+									{% if not item.comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
 									{% if item.comments %}
-										{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf(item.comments_count) }}</a>{% endif %}
-										{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
+										{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>{% endif %}
+										{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
 									{% endif %}
 								</li>
 							{% endif %}

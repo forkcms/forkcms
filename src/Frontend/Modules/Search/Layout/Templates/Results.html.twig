@@ -9,7 +9,7 @@
 		<div class="inner">
 			{% if not searchResults %}
 				<div class="bd content">
-					<p>{{ msg.SearchNoItems }}</p>
+					<p>{{ 'msg.SearchNoItems'|trans }}</p>
 				</div>
 			{% else %}
 				{% for result in searchResults %}

@@ -6,7 +6,7 @@
 <section id="tagsIndex" class="mod">
 	<div class="inner">
 		<div class="bd content">
-			{% if not tags %}<p>{{ msg.TagsNoItems }}</p>{% endif %}
+			{% if not tags %}<p>{{ 'msg.TagsNoItems'|trans }}</p>{% endif %}
 			{% if tags %}
 				<ul>
 					{% for tags in tags %}

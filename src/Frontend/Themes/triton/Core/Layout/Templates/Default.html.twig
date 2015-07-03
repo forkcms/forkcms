@@ -14,18 +14,18 @@
 
 				{# Skip link #}
 				<div id="skip">
-					<p><a href="#main">{{ lbl.SkipToContent|capitalize }}</a></p>
+					<p><a href="#main">{{ 'lbl.SkipToContent'|trans|capitalize }}</a></p>
 				</div>
 
 				{# Navigation #}
 				<nav id="headerNavigation">
-					<h4>{{ lbl.MainNavigation|capitalize }}</h4>
+					<h4>{{ 'lbl.MainNavigation'|trans|capitalize }}</h4>
 					{{ var|getnavigation('page', 0, 1)|raw }}
 				</nav>
 
 				{# Language #}
 				<nav id="headerLanguage">
-					<h4>{{ lbl.Language|capitalize }}</h4>
+					<h4>{{ 'lbl.Language'|trans|capitalize }}</h4>
 					{% include "Core/Layout/Templates/Languages.html.twig" %}
 				</nav>
 
@@ -40,7 +40,7 @@
 
 				{# Breadcrumb #}
 				<div id="breadcrumb">
-					<h4>{{ lbl.Breadcrumb|capitalize }}</h4>
+					<h4>{{ 'lbl.Breadcrumb'|trans|capitalize }}</h4>
 					{% include "Core/Layout/Templates/Breadcrumb.html.twig" %}
 				</div>
 
@@ -65,7 +65,7 @@
 
 					{# Subnavigation #}
 					<nav class="sideNavigation">
-						<h4>{{ lbl.Subnavigation|capitalize }}</h4>
+						<h4>{{ 'lbl.Subnavigation'|trans|capitalize }}</h4>
 						{{ var|getsubnavigation('page', page.id, 2)|raw }}
 					</nav>
 
@@ -115,8 +115,8 @@
 		</div>
 		<noscript>
 			<div class="message notice">
-				<h4>{{ lbl.EnableJavascript|capitalize }}</h4>
-				<p>{{ msg.EnableJavascript }}</p>
+				<h4>{{ 'lbl.EnableJavascript'|trans|capitalize }}</h4>
+				<p>{{ 'msg.EnableJavascript'|trans }}</p>
 			</div>
 		</noscript>
 	</div>

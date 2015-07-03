@@ -9,7 +9,7 @@
 	<section id="blogArchive" class="mod">
 		<div class="inner">
 			<div class="bd content">
-				<p>{{ msg.BlogNoItems }}</p>
+				<p>{{ 'msg.BlogNoItems'|trans }}</p>
 			</div>
 		</div>
 	</section>
@@ -21,10 +21,10 @@
 				<table class="dataGrid" width="100%">
 					<thead>
 						<tr>
-							<th class="date">{{ lbl.Date|capitalize }}</th>
-							<th class="title">{{ lbl.Title|capitalize }}</th>
+							<th class="date">{{ 'lbl.Date'|trans|capitalize }}</th>
+							<th class="title">{{ 'lbl.Title'|trans|capitalize }}</th>
 							{% if allowComments %}
-								<th class="comments">{{ lbl.Comments|capitalize }}</th>
+								<th class="comments">{{ 'lbl.Comments'|trans|capitalize }}</th>
 							{% endif %}
 						</tr>
 					</thead>
@@ -35,10 +35,10 @@
 								<td class="title"><a href="{{ item.full_url }}" title="{{ item.title }}">{{ item.title }}</a></td>
 								{% if item.allow_comments %}
 									<td class="comments">
-										{% if not item.comments %}<a href="{{ item.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
+										{% if not item.comments %}<a href="{{ item.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
 										{% if item.comments %}
-											{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf(item.comments_count) }}</a>{% endif %}
-											{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
+											{% if item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(item.comments_count) }}</a>{% endif %}
+											{% if not item.comments_multiple %}<a href="{{ item.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
 										{% endif %}
 									</td>
 								{% endif %}

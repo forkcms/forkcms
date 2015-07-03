@@ -7,7 +7,7 @@
 	<section id="blogRecentArticlesFullWidget" class="mod">
 		<div class="inner">
 			<header class="hd">
-				<h3>{{ lbl.RecentArticles|capitalize }}</h3>
+				<h3>{{ 'lbl.RecentArticles'|trans|capitalize }}</h3>
 			</header>
 			<div class="bd">
 				{% for article in widgetBlogRecentArticlesFull %}
@@ -16,13 +16,13 @@
 							<header class="hd">
 								<h4><a href="{{ article.full_url }}" title="{{ article.title }}">{{ article.title }}</a></h4>
 								<ul>
-									<li>{{ msg.WrittenBy|capitalize|sprintf(article.user_id|usersetting('nickname')) }} {{ lbl.On }} {{ article.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}</li>
+									<li>{{ 'msg.WrittenBy'|trans|capitalize|sprintf(article.user_id|usersetting('nickname')) }} {{ 'lbl.On'|trans }} {{ article.publish_on|spoon_date(dateFormatLong, LANGUAGE) }}</li>
 									{% if article.allow_comments %}
 										<li>
-											{% if not article.comments %}<a href="{{ article.full_url }}#{{ act.Comment }}">{{ msg.BlogNoComments|capitalize }}</a>{% endif %}
+											{% if not article.comments %}<a href="{{ article.full_url }}#{{ 'act.Comment'|trans }}">{{ 'msg.BlogNoComments'|trans|capitalize }}</a>{% endif %}
 											{% if article.comments %}
-												{% if article.comments_multiple %}<a href="{{ article.full_url }}#{{ act.Comments }}">{{ msg.BlogNumberOfComments|sprintf(article.comments_count) }}</a>{% endif %}
-												{% if not article.comments_multiple %}<a href="{{ article.full_url }}#{{ act.Comments }}">{{ msg.BlogOneComment }}</a>{% endif %}
+												{% if article.comments_multiple %}<a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogNumberOfComments'|trans|sprintf(article.comments_count) }}</a>{% endif %}
+												{% if not article.comments_multiple %}<a href="{{ article.full_url }}#{{ 'act.Comments'|trans }}">{{ 'msg.BlogOneComment'|trans }}</a>{% endif %}
 											{% endif %}
 										</li>
 									{% endif %}
@@ -39,8 +39,8 @@
 			</div>
 			<footer class="ft">
 				<p>
-					<a href="{{ var|geturlforblock('Blog') }}">{{ lbl.BlogArchive|capitalize }}</a>
-					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ lbl.SubscribeToTheRSSFeed|capitalize }}</a>
+					<a href="{{ var|geturlforblock('Blog') }}">{{ 'lbl.BlogArchive'|trans|capitalize }}</a>
+					<a id="RSSfeed" href="{{ widgetBlogRecentArticlesFullRssLink }}">{{ 'lbl.SubscribeToTheRSSFeed'|trans|capitalize }}</a>
 				</p>
 			</footer>
 		</div>
