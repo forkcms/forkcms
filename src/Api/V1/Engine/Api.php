@@ -461,7 +461,7 @@ class Api extends \KernelLoader implements \ApplicationInterface
         }
 
         // set correct headers
-        header('HTTP/1.1 ' . self::getDecentHeaderMessage($statusCode));
+        header('HTTP/1.1 ' . self::getHeaderMessage($statusCode));
         header('content-type: application/json;charset=' . $charset);
 
         // output JSON
@@ -509,14 +509,14 @@ class Api extends \KernelLoader implements \ApplicationInterface
         array_walk($data, array(__CLASS__, 'arrayToXML'), $root);
 
         // set correct headers
-        header('HTTP/1.1 ' . self::getDecentHeaderMessage($statusCode));
+        header('HTTP/1.1 ' . self::getHeaderMessage($statusCode));
         header('content-type: text/xml;charset=' . $charset);
 
         // output XML
         self::$content = $XML->saveXML();
     }
 
-    private static function getDecentHeaderMessage($statusCode)
+    private static function getHeaderMessage($statusCode)
     {
         if (!isset(Response::$statusTexts[$statusCode])) {
             $statusCode = 500;

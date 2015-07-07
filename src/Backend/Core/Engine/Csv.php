@@ -46,7 +46,7 @@ class Csv extends \SpoonFileCSV
         // set headers for download
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
         header('Content-type: application/csv; charset=' . $charset);
-        header('Content-Disposition: attachment; filename="' . $filename);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
         header('Content-Length: ' . strlen($csv));
         header('Pragma: no-cache');
 
