@@ -518,20 +518,10 @@ class Api extends \KernelLoader implements \ApplicationInterface
 
     private static function getDecentHeaderMessage($statusCode)
     {
-        $possibleCodes = array(
-            200 => '200 OK',
-            400 => '400 Bad Request',
-            401 => '401 Unauthorized',
-            403 => '403 Forbidden',
-            404 => '404 Not Found',
-            500 => '500 Internal Server Error',
-            501 => '501 Not Implemented',
-        );
-
-        if (!isset($possibleCodes[$statusCode])) {
+        if (!isset(Response::$statusTexts[$statusCode])) {
             $statusCode = 500;
         }
 
-        return $possibleCodes[$statusCode];
+        return $statusCode . ' ' . Response::$statusTexts[$statusCode];
     }
 }
