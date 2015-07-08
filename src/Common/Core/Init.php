@@ -62,9 +62,6 @@ abstract class Init extends \KernelLoader
         $this->definePaths();
         $this->defineURLs();
         $this->setDebugging();
-
-        // require spoon
-        require_once 'spoon/spoon.php';
     }
 
     /**
