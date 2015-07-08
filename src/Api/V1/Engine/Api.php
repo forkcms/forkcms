@@ -516,6 +516,12 @@ class Api extends \KernelLoader implements \ApplicationInterface
         self::$content = $XML->saveXML();
     }
 
+    /**
+     * Get the relevant HTTP status message
+     *
+     * @param $statusCode
+     * @return string
+     */
     private static function getHeaderMessage($statusCode)
     {
         if (!isset(Response::$statusTexts[$statusCode])) {
