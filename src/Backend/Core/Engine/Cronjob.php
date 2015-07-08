@@ -66,7 +66,7 @@ class Cronjob extends Object implements \ApplicationInterface
         // validate if class exists (aka has correct name)
         if (!class_exists($actionClass)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(500);
+            header('HTTP/1.1 500 Internal Server Error');
 
             // throw exception
             throw new Exception('The cronjobfile ' . $actionClass . ' could not be found.');
@@ -245,7 +245,7 @@ class Cronjob extends Object implements \ApplicationInterface
         $modules = BackendModel::getModulesOnFilesystem();
         if (!in_array($module, $modules)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Module not allowed.');

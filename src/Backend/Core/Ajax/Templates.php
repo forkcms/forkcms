@@ -46,7 +46,7 @@ class Templates extends AjaxAction
         }
 
         // set headers
-        \SpoonHTTP::setHeaders('Content-type: text/javascript');
+        header('Content-type: text/javascript');
 
         // output the templates
         if (!empty($templates)) {

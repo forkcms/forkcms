@@ -89,7 +89,7 @@ class Object extends \KernelLoader
         // is this action allowed?
         if (!Authentication::isAllowedAction($action, $this->getModule())) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Action not allowed.');
@@ -110,7 +110,7 @@ class Object extends \KernelLoader
         // is this module allowed?
         if (!Authentication::isAllowedModule($module)) {
             // set correct headers
-            \SpoonHTTP::setHeadersByCode(403);
+            header('HTTP/1.1 403 Forbidden');
 
             // throw exception
             throw new Exception('Module not allowed.');
