@@ -10,6 +10,8 @@ use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Exception;
 
 /**
+ * @remark This class is SumoCoders specific
+ *
  * This action will allow you to cleanup files that were previously uploaded.
  *
  * @author Wouter Sioen <wouter@sumocoders.be>

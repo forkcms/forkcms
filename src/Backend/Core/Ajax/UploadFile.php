@@ -10,6 +10,8 @@ use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Exception;
 
 /**
+ * @remark This class is SumoCoders specific
+ *
  * This action will enable you to upload files trough ajax.
  * It accepts both XmlHttp requests or file uploads using a form.
  *
