@@ -105,9 +105,6 @@ Class TwigTemplate
         $this->forkSettings = Model::get('fork.settings');
         $this->themePath = FRONTEND_PATH . '/Themes/' . $this->forkSettings->get('Core', 'theme', 'default');
         $this->debugMode = Model::getContainer()->getParameter('kernel.debug');
-
-        // move to kernel parameter
-        require_once PATH_WWW . '/vendor/twig/twig/lib/Twig/Autoloader.php';
     }
 
     /**
