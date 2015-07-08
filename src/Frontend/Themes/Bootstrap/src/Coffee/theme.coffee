@@ -29,80 +29,14 @@ class Theme
 
 class DefaultTheme extends Theme
   @events
-    '#cookieBar .close' : click : 'cookieBarHide'
-    '#cookieBarAgree' : click : 'cookieBarAgree'
-    '#cookieBarDisagree' : click : 'cookieBarDisagree'
     'input:submit' : click : 'hijackSubmit'
     'a.backToTop': click : 'scrollToTop'
     'a[href*="#"]': click : 'scrollTo'
 
   @onDomReady [
-    'cookieBar'
     'removeImageHeight'
     'initCarouselWithSwipe'
   ]
-
-  cookieBar: ->
-    if utils.cookies.readCookie('cookie_bar_hide') == 'b%3A1%3B'
-      $('#cookieBar').remove()
-
-  cookieBarAgree: ->
-    utils.cookies.setCookie('cookie_bar_agree', 'b:1;')
-    utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
-    $('#cookieBar').alert('close')
-    if ga?
-      ga(
-          'send',
-          'event',
-          'cookiebar',
-          'agree'
-      )
-
-    if _gaq?
-      _gaq.push([
-        '_trackEvent',
-        'cookiebar',
-        'agree'
-      ]);
-    false
-
-  cookieBarDisagree: ->
-    utils.cookies.setCookie('cookie_bar_agree', 'b:0;')
-    utils.cookies.setCookie('cookie_bar_hide', 'b:1;')
-    $('#cookieBar').alert('close')
-    if ga?
-      ga(
-          'send',
-          'event',
-          'cookiebar',
-          'disagree'
-      )
-
-    if _gaq?
-      _gaq.push([
-        '_trackEvent',
-        'cookiebar',
-        'disagree'
-      ]);
-
-    false
-
-  cookieBarHide: ->
-    if ga?
-      ga(
-        'send',
-        'event',
-        'cookiebar',
-        'hide'
-      )
-
-    if _gaq?
-      _gaq.push([
-        '_trackEvent',
-        'cookiebar',
-        'hide'
-      ]);
-    false
 
   hijackSubmit: (e) ->
     $(@).addClass('loading')
