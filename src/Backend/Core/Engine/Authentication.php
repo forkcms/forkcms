@@ -196,8 +196,6 @@ class Authentication
                 'GenerateUrl' => 7,
                 'ContentCss' => 7,
                 'Templates' => 7,
-                'UploadFile' => 7,
-                'RemoveUploadedFile' => 7,
             ),
             'Error' => array('Index' => 7),
             'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)

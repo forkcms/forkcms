@@ -1,6 +1,6 @@
 <?php
 
-namespace Backend\Core\Ajax;
+namespace Backend\Modules\Pages\Ajax;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Filesystem\Filesystem;

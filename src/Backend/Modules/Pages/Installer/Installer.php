@@ -337,6 +337,8 @@ class Installer extends ModuleInstaller
         $this->setActionRights(1, 'Pages', 'Add');
         $this->setActionRights(1, 'Pages', 'Delete');
         $this->setActionRights(1, 'Pages', 'Edit');
+        $this->setActionRights(1, 'Pages', 'UploadFile');
+        $this->setActionRights(1, 'Pages', 'RemoveUploadedFile');
 
         $this->setActionRights(1, 'Pages', 'Settings');
     }

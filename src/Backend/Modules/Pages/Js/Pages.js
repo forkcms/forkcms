@@ -765,7 +765,7 @@ jsBackend.pages.extras =
 			// attach an ajax uploader to the field
 			var uploader = new ss.SimpleUpload({
 				button: 'ajax-upload-' + key,
-				url: '/backend/ajax?fork[module]=Core&fork[action]=UploadFile&type=UserTemplate',
+				url: '/backend/ajax?fork[module]=Pages&fork[action]=UploadFile&type=UserTemplate',
 				name: 'file',
 				responseType: 'json',
 				onComplete: function(filename, response) {
@@ -786,7 +786,7 @@ jsBackend.pages.extras =
 					$.ajax({
 						data:
 						{
-							fork: { module: 'Core', action: 'RemoveUploadedFile' },
+							fork: { module: 'Pages', action: 'RemoveUploadedFile' },
 							file: oldImage,
 							type: 'UserTemplate'
 						}
