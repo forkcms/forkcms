@@ -9,6 +9,7 @@ Bugfixes:
 
 * Core: Fixed exporting .csv files.
 * Analytics: Don't let Google\_Client save files in the /tmp/Google_Client directory
+* Core: Fixed CamelCasing issues with Spoon classes SpoonDatagridSourceArray, SpoonDatagridPaging & iSpoonDatagridPaging.
 
 
 3.9.3 (2015-06-10)
