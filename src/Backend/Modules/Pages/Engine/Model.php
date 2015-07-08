@@ -1206,7 +1206,7 @@ class Model
 
         $fs = new Filesystem();
         if ($fs->exists($filePath)) {
-            $userTemplates = json_decode(file_get_contents($filePath));
+            $userTemplates = json_decode(file_get_contents($filePath), true);
         }
 
         return $userTemplates;
