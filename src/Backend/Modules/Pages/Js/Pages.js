@@ -597,10 +597,6 @@ jsBackend.pages.extras =
 					text: utils.string.ucfirst(jsBackend.locale.lbl('Cancel')),
 					click: function()
 					{
-						// reset content
-						// todo
-						//jsBackend.pages.extras.setContent(index, previousContent);
-
 						// close the dialog
 						$(this).dialog('close');
 					}
