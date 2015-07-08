@@ -651,6 +651,9 @@ jsBackend.pages.extras =
 						}
 					});
 				}
+
+				// recalculate the position, now the form is  build up
+				$("#addUserTemplate").dialog("option", "position", ['center', 'center']);
 			}
 		});
 	},
