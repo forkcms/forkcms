@@ -69,7 +69,7 @@ class Cronjob extends Object implements \ApplicationInterface
             \SpoonHTTP::setHeadersByCode(500);
 
             // throw exception
-            throw new Exception('The cronjobfile is present, but the classname should be: ' . $actionClass . '.');
+            throw new Exception('The cronjobfile ' . $actionClass . ' could not be found.');
         }
 
         // create action-object
@@ -173,7 +173,7 @@ class Cronjob extends Object implements \ApplicationInterface
 
         // validate if class exists (aka has correct name)
         if (!class_exists($configClass)) {
-            throw new Exception('The config file is present, but the classname should be: ' . $configClass . '.');
+            throw new Exception('The config file ' . $configClass . ' could not be found.');
         }
 
         // create config-object, the constructor will do some magic
