@@ -1,4 +1,11 @@
-3.9.4 (xxxx-xx-xx)
+3.9.5 (xxxx-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+
+3.9.4 (2015-07-09)
 --
 Improvements:
 
@@ -13,6 +20,7 @@ Improvements:
 * Core: remove the unused timezones table.
 * Core: remove unneeded require statements.
 * Core: add a datagrid modifier to display boolean types.
+* Core: bump minimum PHP version to 5.4
 
 Bugfixes:
 
