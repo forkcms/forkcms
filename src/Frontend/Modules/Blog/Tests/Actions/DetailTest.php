@@ -31,7 +31,7 @@ class DetailTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringEndsWith(
-            '/en/blog/detail/blogpost-for-functional-tests',
+            '/en/blog/blogcategory-for-tests/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
@@ -44,7 +44,7 @@ class DetailTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/detail/non-existing');
+        $client->request('GET', '/en/blog/blogcategory-for-tests/non-existing');
         $this->assertIs404($client);
     }
 }

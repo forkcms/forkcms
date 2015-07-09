@@ -17,7 +17,7 @@ class CategoryTest extends WebTestCase
             )
         );
 
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
+        $crawler = $client->request('GET', '/en/blog/blogcategory-for-tests');
         $this->assertEquals(
             200,
             $client->getResponse()->getStatusCode()
@@ -32,14 +32,14 @@ class CategoryTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/non-existing');
+        $client->request('GET', '/en/blog/non-existing');
         $this->assertIs404($client);
     }
 
     public function testCategoryPageContainsBlogPost()
     {
         $client = static::createClient();
-        $crawler = $client->request('GET', '/en/blog/category/blogcategory-for-tests');
+        $crawler = $client->request('GET', '/en/blog/blogcategory-for-tests');
 
         $this->assertContains('Blogpost for functional tests', $client->getResponse()->getContent());
         $link = $crawler->selectLink('Blogpost for functional tests')->link();
@@ -50,7 +50,7 @@ class CategoryTest extends WebTestCase
             $client->getResponse()->getStatusCode()
         );
         $this->assertStringEndsWith(
-            '/en/blog/detail/blogpost-for-functional-tests',
+            '/en/blog/blogcategory-for-tests/blogpost-for-functional-tests',
             $client->getHistory()->current()->getUri()
         );
         $this->assertStringStartsWith(
@@ -63,7 +63,7 @@ class CategoryTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $client->request('GET', '/en/blog/category/blogcategory-for-tests', array('page' => 34));
+        $client->request('GET', '/en/blog/blogcategory-for-tests', array('page' => 34));
         $this->assertIs404($client);
     }
 }
