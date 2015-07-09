@@ -1,14 +1,35 @@
-3.9.4 (xxxx-xx-xx)
+3.9.5 (xxxx-xx-xx)
+--
+Improvements:
+
+Bugfixes:
+
+
+3.9.4 (2015-07-09)
 --
 Improvements:
 
 * Core: Moved startProcessingHooks from Backend/Frontend to Common/Core/Model.php
 * Core: Save logs in an environment specific log file.
+* Extensions: allow more different zip formats for module uploads.
+* Locale: add a cli tool to import locale.
+* Core: move phpunit to the root of the project.
+* Core: save logs in environment specific files.
+* Analytics: improve usability + add functionality
+* Core: improve exception messages.
+* Core: remove the unused timezones table.
+* Core: remove unneeded require statements.
+* Core: add a datagrid modifier to display boolean types.
+* Core: bump minimum PHP version to 5.4
 
 Bugfixes:
 
 * Core: Fixed exporting .csv files.
-* Analytics: Don't let Google\_Client save files in the /tmp/Google_Client directory
+* Analytics: Don't let Google_Client save files in the /tmp/Google_Client directory
+* Core: Fixed CamelCasing issues with Spoon classes SpoonDatagridSourceArray, SpoonDatagridPaging & iSpoonDatagridPaging.
+* Core: fix composer install on windows.
+* Blog: fix image deletion for revisions.
+* Core: fix exporting csv files
 
 
 3.9.3 (2015-06-10)

@@ -44,9 +44,6 @@ class Init extends \Common\Core\Init
         $this->definePaths();
         $this->setDebugging();
 
-        // get spoon
-        require_once 'spoon/spoon.php';
-
         \SpoonFilter::disableMagicQuotes();
         $this->initSession();
     }

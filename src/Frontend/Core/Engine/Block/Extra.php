@@ -286,6 +286,30 @@ class Extra extends FrontendBaseObject
     }
 
     /**
+     * Load the config file for the requested block.
+     * In the config file we have to find disabled actions, the constructor
+     * will read the folder and set possible actions
+     * Other configurations will also be stored in it.
+     */
+    public function loadConfig()
+    {
+        $configClass = 'Frontend\\Modules\\' . $this->getModule() . '\\Config';
+        if ($this->getModule() == 'Core') {
+            $configClass = 'Frontend\\Core\\Config';
+        }
+
+        // validate if class exists (aka has correct name)
+        if (!class_exists($configClass)) {
+            throw new FrontendException(
+                'The config file is present, but the class name should be: ' . $configClass . '.'
+            );
+        }
+
+        // create config-object, the constructor will do some magic
+        $this->config = new $configClass($this->getKernel(), $this->getModule());
+    }
+
+    /**
      * Set the action
      *
      * @param string $action The action to load.
