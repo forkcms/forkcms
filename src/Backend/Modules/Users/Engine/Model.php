@@ -253,6 +253,27 @@ class Model
     }
 
     /**
+     * Get all module action combinations a user has access to
+     *
+     * @param  int $userId The id of the user
+     * @return array
+     */
+    public static function getModuleGroupsRightsActions($userId)
+    {
+        return (array) BackendModel::get('database')->getRecords(
+            'SELECT a.module, a.action
+            FROM groups AS g
+                INNER JOIN users_groups AS u ON u.group_id = g.id
+                INNER JOIN groups_rights_modules AS m ON m.group_id = g.id
+                INNER JOIN groups_rights_actions AS a ON a.group_id = g.id
+                    AND m.module = a.module
+            WHERE m.module = ?
+            GROUP BY a.module, a.action',
+            $userId
+        );
+    }
+
+    /**
      * Get the user ID linked to a given email
      *
      * @param string $email The email for the user.

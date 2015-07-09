@@ -6,6 +6,7 @@ use Backend\Core\Engine\Base\ActionIndex;
 use Backend\Core\Engine\Form;
 use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model;
+use Backend\Core\Engine\DataGridArray;
 
 /**
  * This is the index-action (default), it will display the overview of analytics data
@@ -145,6 +146,13 @@ final class Index extends ActionIndex
         $this->tpl->assign(
             'source_graph_data',
             $analytics->getSourceGraphData($this->startDate, $this->endDate)
+        );
+        $dataGrid = new DataGridArray(
+            $analytics->getMostVisitedPagesData($this->startDate, $this->endDate)
+        );
+        $this->tpl->assign(
+            'dataGridMostViewedPages',
+            (string) $dataGrid->getContent()
         );
     }
 }

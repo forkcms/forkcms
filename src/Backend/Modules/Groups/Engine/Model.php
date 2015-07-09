@@ -290,11 +290,15 @@ class Model
     public static function getSetting($groupId, $name)
     {
         $setting = (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
+            'SELECT i.value
              FROM groups_settings AS i
              WHERE i.group_id = ? AND i.name = ?',
             array((int) $groupId, (string) $name)
         );
+
+        if (!$setting) {
+            return array();
+        }
 
         if (isset($setting['value'])) {
             return unserialize($setting['value']);
