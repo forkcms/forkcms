@@ -154,7 +154,7 @@ class Model extends \Common\Core\Model
 
             // validate if class exists (aka has correct name)
             if (!class_exists($configClass)) {
-                throw new FrontendException(
+                throw new \Exception(
                     'The config file is present, but the class name should be: ' . $configClass . '.'
                 );
             }
