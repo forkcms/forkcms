@@ -9,6 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -239,7 +241,13 @@ class Page extends FrontendBaseObject
 
         // empty record (pageId doesn't exists, hope this line is never used)
         if (empty($this->record) && $this->pageId != 404) {
-            \SpoonHTTP::redirect(Navigation::getURL(404), 404);
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    Navigation::getURL(404),
+                    404
+                )
+            );
         }
 
         // init var
@@ -277,7 +285,13 @@ class Page extends FrontendBaseObject
                 $URL = Navigation::getURL($firstChildId);
 
                 // redirect
-                \SpoonHTTP::redirect($URL, 301);
+                throw new RedirectException(
+                    'Redirect',
+                    new RedirectResponse(
+                        $URL,
+                        301
+                    )
+                );
             }
         }
     }
