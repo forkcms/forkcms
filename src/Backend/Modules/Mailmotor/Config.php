@@ -72,7 +72,7 @@ class Config extends BackendBaseConfig
         if ($this->checkForSettings()) {
             // no connection to campaignmonitor could be made, so the service is probably unreachable at this point
             if (!BackendMailmotorCMHelper::checkAccount()) {
-                \SpoonHTTP::redirect(
+                $this->redirect(
                     BackendModel::createURLForAction(
                         'Index',
                         'Mailmotor',
@@ -81,8 +81,7 @@ class Config extends BackendBaseConfig
                 );
             }
         } else {
-            // no settings were set
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 BackendModel::createURLForAction(
                     'Settings',
                     'Mailmotor',
@@ -102,8 +101,12 @@ class Config extends BackendBaseConfig
 
         // no client ID set, so redirect to settings with an appropriate error message.
         if (empty($clientId)) {
-            \SpoonHTTP::redirect(
-                BackendModel::createURLForAction('Settings', 'Mailmotor', BL::getWorkingLanguage())
+            $this->redirect(
+                BackendModel::createURLForAction(
+                    'Settings',
+                    'Mailmotor',
+                    BL::getWorkingLanguage()
+                )
             );
         }
 
@@ -112,7 +115,7 @@ class Config extends BackendBaseConfig
 
         // check if a price per e-mail is set
         if (empty($pricePerEmail) && $pricePerEmail != 0) {
-            \SpoonHTTP::redirect(
+            $this->redirect(
                 BackendModel::createURLForAction(
                     'Settings',
                     'Mailmotor',
@@ -155,8 +158,9 @@ class Config extends BackendBaseConfig
 
         // check if there are external groups present in CampaignMonitor
         if ($this->checkForExternalGroups()) {
-            // external groups were found, so redirect to the import_groups action
-            \SpoonHTTP::redirect(BackendModel::createURLForAction('ImportGroups', 'Mailmotor'));
+            $this->redirect(
+                BackendModel::createURLForAction('ImportGroups', 'Mailmotor')
+            );
         }
 
         // fetch the default groups, language abbreviation is the array key

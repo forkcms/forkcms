@@ -187,7 +187,7 @@ class ApplicationRouting extends Controller
 
         // validate
         if (!class_exists($apiClass)) {
-            throw new Exception('This version of the API does not exists.');
+            throw new Exception('This version of the API does not exist.');
         }
 
         $init = new $apiClass($this->container->get('kernel'));

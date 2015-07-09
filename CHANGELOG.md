@@ -1,11 +1,63 @@
-3.9.3 (2015-xx-xx)
+3.9.5 (xxxx-xx-xx)
 --
 Improvements:
 
 Bugfixes:
 
+
+3.9.4 (2015-07-09)
+--
+Improvements:
+
+* Core: Moved startProcessingHooks from Backend/Frontend to Common/Core/Model.php
+* Core: Save logs in an environment specific log file.
+* Extensions: allow more different zip formats for module uploads.
+* Locale: add a cli tool to import locale.
+* Core: move phpunit to the root of the project.
+* Core: save logs in environment specific files.
+* Analytics: improve usability + add functionality
+* Core: improve exception messages.
+* Core: remove the unused timezones table.
+* Core: remove unneeded require statements.
+* Core: add a datagrid modifier to display boolean types.
+* Core: bump minimum PHP version to 5.4
+
+Bugfixes:
+
+* Core: Fixed exporting .csv files.
+* Analytics: Don't let Google_Client save files in the /tmp/Google_Client directory
+* Core: Fixed CamelCasing issues with Spoon classes SpoonDatagridSourceArray, SpoonDatagridPaging & iSpoonDatagridPaging.
+* Core: fix composer install on windows.
+* Blog: fix image deletion for revisions.
+* Core: fix exporting csv files
+
+
+3.9.3 (2015-06-10)
+--
+Improvements:
+
+* Improve the inheritance of code and avoid duplicate code.
+* FormImage has now mime type hinting so only images will be visible in the file-dialog.
+* `composer-create-project` is now the default way of installing fork.
+* Added some headers to increase the security.
+* Only inject the modulesSettings in the configurator.
+* Some minor updates on the PHP documentation.
+* Refactored the modules settings to live in a service.
+* Indicate the default action when doing a prepare to reinstall.
+
+Bugfixes:
+
 * Analytics: Auth config content saved in databse, because capistrano deployments didn't work with BACKEND_CACHE_PATH.
 * Api: increasing security when user is GOD.
+* Core: fix generating meta url with special characters.
+* Core: fix some authentication issues.
+* Core: year, month and day are now passed to the datepickers
+* Core: Frontend input date fields reformats date incorrect
+* Core: fix issue with the pagination-urls
+* Api: Fixed namespaces
+* Formbuilder: Fix "Illegal offset type" error on setReplyTo method
+* Core: Fixed parse method compatibility with Spoon library release 1.3.17
+* Core: Fix exception handlers by using "self" instead "this"
 
 
 3.9.2 (2015-05-12)

@@ -45,13 +45,10 @@ class Csv extends \SpoonFileCSV
 
         // set headers for download
         $charset = BackendModel::getContainer()->getParameter('kernel.charset');
-        $headers[] = 'Content-type: application/csv; charset=' . $charset;
-        $headers[] = 'Content-Disposition: attachment; filename="' . $filename;
-        $headers[] = 'Content-Length: ' . strlen($csv);
-        $headers[] = 'Pragma: no-cache';
-
-        // overwrite the headers
-        \SpoonHTTP::setHeaders($headers);
+        header('Content-type: application/csv; charset=' . $charset);
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        header('Content-Length: ' . strlen($csv));
+        header('Pragma: no-cache');
 
         // output the CSV
         echo $csv;
