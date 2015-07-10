@@ -192,7 +192,11 @@ class Authentication
     {
         // always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
         $alwaysAllowed = array(
-            'Core' => array('GenerateUrl' => 7, 'ContentCss' => 7, 'Templates' => 7),
+            'Core' => array(
+                'GenerateUrl' => 7,
+                'ContentCss' => 7,
+                'Templates' => 7,
+            ),
             'Error' => array('Index' => 7),
             'Authentication' => array('Index' => 7, 'ResetPassword' => 7, 'Logout' => 7)
         );

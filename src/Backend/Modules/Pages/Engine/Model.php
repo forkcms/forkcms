@@ -1049,7 +1049,8 @@ class Model
         return array(
             'rich_text' => BL::lbl('Editor'),
             'block' => BL::lbl('Module'),
-            'widget' => BL::lbl('Widget')
+            'widget' => BL::lbl('Widget'),
+            'usertemplate' => BL::lbl('UserTemplate')
         );
     }
 
@@ -1193,6 +1194,22 @@ class Model
             // insert blocks
             $db->insert('pages_blocks', $block);
         }
+    }
+
+    public static function loadUserTemplates()
+    {
+        $themePath = FRONTEND_PATH . '/Themes/';
+        $themePath .= BackendModel::get('fork.settings')->get('Core', 'theme', 'default');
+        $filePath = $themePath . '/Core/Layout/Templates/UserTemplates/Templates.json';
+
+        $userTemplates = array();
+
+        $fs = new Filesystem();
+        if ($fs->exists($filePath)) {
+            $userTemplates = json_decode(file_get_contents($filePath), true);
+        }
+
+        return $userTemplates;
     }
 
     /**
