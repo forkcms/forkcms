@@ -66,7 +66,7 @@ class Themes extends BackendBaseActionIndex
             if ($theme['installed']) {
                 $this->installedThemes[] = $theme;
             } elseif ($theme['installable']) {
-                // themes that are not yet installed, but contain valid info.xml installation data
+                // themes that are not yet installed, but contain valid Info.xml installation data
                 $this->installableThemes[] = $theme;
             }
         }

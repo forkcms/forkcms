@@ -31,7 +31,7 @@ class DetailTheme extends BackendBaseActionIndex
     private $dataGridTemplates;
 
     /**
-     * Information fetched from the info.xml.
+     * Information fetched from the Info.xml.
      *
      * @var    array
      */
@@ -77,12 +77,12 @@ class DetailTheme extends BackendBaseActionIndex
         }
 
         // path to information file
-        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml';
+        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/Info.xml';
 
         // information needs to exists
         if (is_file($pathInfoXml)) {
             try {
-                // load info.xml
+                // load Info.xml
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
                 // convert xml to useful array
