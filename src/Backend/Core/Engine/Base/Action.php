@@ -144,7 +144,12 @@ class Action extends Object
         $this->header->addJS('/bower_components/jquery/dist/jquery.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', 'Core', false, true);
         $this->header->addJS('/bower_components/jquery-ui/jquery-ui.min.js', 'Core', false, true);
-        $this->header->addJS('/bower_components/bootstrap/dist/js/bootstrap.min.js', 'Core', false, true);
+        $this->header->addJS(
+            '/bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+            'Core',
+            false,
+            true
+        );
         $this->header->addJS('jquery/jquery.tools.js', 'Core', false);
         $this->header->addJS('jquery/jquery.backend.js', 'Core');
 

@@ -106,7 +106,7 @@
           {option:rbtInstalledThemesError}
           <p class="text-danger">{$rbtThemesError}</p>
           {/option:rbtInstalledThemesError}
-          <ul id="installedThemes" class="selectThumbList list-unstyled list-inline">
+          <ul id="installedThemes" class="selectThumbList fork-choice-list list-unstyled list-inline">
             {iteration:installedThemes}
             <li class="{option:installedThemes.selected}active{/option:installedThemes.selected}">
               <div class="panel panel-default">

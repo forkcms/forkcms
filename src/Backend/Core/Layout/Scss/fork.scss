@@ -151,3 +151,22 @@
   transform: rotate(-135deg);
   background: #bbb;
 }
+
+.fork-choice-list {
+  > li {
+    cursor: pointer;
+
+    &.active {
+      .panel-default {
+        @extend .panel-primary;
+      }
+    }
+
+    .panel-title {
+      input[type="radio"],
+      input[type="checkbox"] {
+        @extend .hidden;
+      }
+    }
+  }
+}

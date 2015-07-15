@@ -6215,22 +6215,22 @@ button.list-group-item-danger.active:focus {
   border-bottom-color: #ddd;
 }
 
-.panel-primary {
+.panel-primary, .fork-choice-list > li.active .panel-default {
   border-color: #337ab7;
 }
-.panel-primary > .panel-heading {
+.panel-primary > .panel-heading, .fork-choice-list > li.active .panel-default > .panel-heading {
   color: #fff;
   background-color: #337ab7;
   border-color: #337ab7;
 }
-.panel-primary > .panel-heading + .panel-collapse > .panel-body {
+.panel-primary > .panel-heading + .panel-collapse > .panel-body, .fork-choice-list > li.active .panel-default > .panel-heading + .panel-collapse > .panel-body {
   border-top-color: #337ab7;
 }
-.panel-primary > .panel-heading .badge {
+.panel-primary > .panel-heading .badge, .fork-choice-list > li.active .panel-default > .panel-heading .badge {
   color: #337ab7;
   background-color: #fff;
 }
-.panel-primary > .panel-footer + .panel-collapse > .panel-body {
+.panel-primary > .panel-footer + .panel-collapse > .panel-body, .fork-choice-list > li.active .panel-default > .panel-footer + .panel-collapse > .panel-body {
   border-bottom-color: #337ab7;
 }
 
@@ -7060,7 +7060,8 @@ button.close {
   border: 0;
 }
 
-.hidden {
+.hidden, .fork-choice-list > li .panel-title input[type="radio"],
+.fork-choice-list > li .panel-title input[type="checkbox"] {
   display: none !important;
 }
 
@@ -7581,6 +7582,10 @@ iframe {
 .fork-loader > div:after {
   transform: rotate(-135deg);
   background: #bbb;
+}
+
+.fork-choice-list > li {
+  cursor: pointer;
 }
 
 /* Style that extends Bootstrap */
