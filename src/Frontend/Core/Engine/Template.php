@@ -181,6 +181,16 @@ class Template extends \SpoonTemplate
     }
 
     /**
+     * Returns the template type
+     *
+     * @return string Returns the template type
+     */
+    public function getTemplateType()
+    {
+        return 'spoon';
+    }
+
+    /**
      * Is the cache for this item still valid.
      *
      * @param string $name The name of the cached block.
@@ -428,4 +438,9 @@ class Template extends \SpoonTemplate
     {
         $this->addSlashes = (bool) $on;
     }
+
+    /**
+     * Dummy method, important for Twig
+     */
+    public function setPlugin(){}
 }

@@ -135,7 +135,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if ($this->getContainer()->getParameter('kernel.debug')) {
+        if (SPOON_DEBUG) {
             return false;
         }
 
@@ -206,7 +206,7 @@ class Livesuggest extends FrontendBaseAJAXAction
         }
 
         // debug mode = no cache
-        if (!$this->getContainer()->getParameter('kernel.debug')) {
+        if (!SPOON_DEBUG) {
             // set cache content
             $fs = new Filesystem();
             $fs->dumpFile(
@@ -224,8 +224,10 @@ class Livesuggest extends FrontendBaseAJAXAction
      */
     protected function loadTemplate()
     {
-        // create template
-        $this->tpl = new FrontendTemplate(false);
+        // spoon needs a new template Object
+        if ($this->tpl->getTemplateType() == 'spoon') {
+            $this->tpl = new FrontendTemplate(false);
+        }
     }
 
     /**

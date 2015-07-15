@@ -8,6 +8,12 @@ body {
     background-color: transparent;
 }
 
+@media (min-width: 992px) {
+    body {
+        padding-top: 70px;
+    }
+}
+
 #content {
     padding-bottom: 50px;
 }
