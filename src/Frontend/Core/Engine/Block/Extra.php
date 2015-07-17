@@ -174,7 +174,7 @@ class Extra extends FrontendBaseObject
             // if we have module routing lets check it first and set action parameter
             if ($this->config->hasRouter()) {
                 try {
-                    $parameters = $this->config->getRouter()->match('/' . implode('/', $this->URL->getParameters()));
+                    $parameters = $this->config->getRouter()->match('/' . implode('/', $this->URL->getParameters(false)));
                 } catch (\Exception $e) {
                     $parameters = array();
                 }

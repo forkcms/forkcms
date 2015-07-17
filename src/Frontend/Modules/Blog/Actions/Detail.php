@@ -278,7 +278,7 @@ class Detail extends FrontendBaseBlock
             $this->header->addLink(
                 array(
                      'rel' => 'prev',
-                     'href' => SITE_URL . $navigation['previous']['url'],
+                     'href' => SITE_URL . $navigation['previous']['full_url'],
                 )
             );
         }
@@ -286,7 +286,7 @@ class Detail extends FrontendBaseBlock
             $this->header->addLink(
                 array(
                      'rel' => 'next',
-                     'href' => SITE_URL . $navigation['next']['url'],
+                     'href' => SITE_URL . $navigation['next']['full_url'],
                 )
             );
         }
@@ -416,6 +416,9 @@ class Detail extends FrontendBaseBlock
                         $redirectLink .= '&comment=true#comment-' . $comment['id'];
                     }
                 }
+
+                // set category url
+                $comment['category_url'] = $this->record['category_url'];
 
                 // set title
                 $comment['post_title'] = $this->record['title'];

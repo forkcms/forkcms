@@ -200,10 +200,12 @@ class Model implements FrontendTagsInterface
     {
         return (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
-             p.id AS post_id, p.title AS post_title, m.url AS post_url
+             p.id AS post_id, p.title AS post_title, m.url AS post_url, mpc.url AS category_url
              FROM blog_comments AS i
              INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
              INNER JOIN meta AS m ON p.meta_id = m.id
+             INNER JOIN blog_categories AS pc ON i.category_id = pc.id
+             INNER JOIN meta AS mpc ON pc.meta_id = mpc.id
              WHERE i.status = ? AND i.language = ?
              GROUP BY i.id
              ORDER BY i.created_on DESC
@@ -473,8 +475,6 @@ class Model implements FrontendTagsInterface
 
         // init vars
         $stats = array();
-        //@todo: Module routing
-        $link = FrontendNavigation::getURLForBlock('Blog', 'Archive');
         $firstYear = (int) date('Y');
         $lastYear = 0;
 
@@ -498,7 +498,9 @@ class Model implements FrontendTagsInterface
             // initialize if needed
             if (!isset($stats[$year])) {
                 $stats[$year] = array(
-                    'url' => $link . '/' . $year,
+                    'url' => FrontendNavigation::getURLForBlock(
+                        'Blog', 'Archive', null, array('year' => $year)
+                    ),
                     'label' => $year,
                     'total' => 0,
                     'months' => null
@@ -508,7 +510,9 @@ class Model implements FrontendTagsInterface
             // increment the total
             $stats[$year]['total'] += (int) $count;
             $stats[$year]['months'][$key] = array(
-                'url' => $link . '/' . $year . '/' . $month,
+                'url' => FrontendNavigation::getURLForBlock(
+                    'Blog', 'Archive', null, array('year' => $year, 'month' => $month)
+                ),
                 'label' => $timestamp,
                 'total' => $count
             );
@@ -658,39 +662,65 @@ class Model implements FrontendTagsInterface
 
         // init var
         $navigation = array();
-        //@todo: Module routing
-        $detailLink = FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/';
 
         // get previous post
-        $navigation['previous'] = $db->getRecord(
-            'SELECT i.id, i.title, CONCAT(?, m.url) AS url
+        $navigationPrevious = $db->getRecord(
+            'SELECT i.id, i.title, m.url AS url, mic.url AS category_url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
+             INNER JOIN blog_categories AS ic ON i.category_id = ic.id
+             INNER JOIN meta AS mic ON ic.meta_id = mic.id
              WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND
                 ((i.publish_on = ? AND i.id < ?) OR i.publish_on < ?)
              ORDER BY i.publish_on DESC, i.id DESC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array($id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
         );
 
         // get next post
-        $navigation['next'] = $db->getRecord(
-            'SELECT i.id, i.title, CONCAT(?, m.url) AS url
+        $navigationNext = $db->getRecord(
+            'SELECT i.id, i.title, m.url AS url, mic.url AS category_url
              FROM blog_posts AS i
              INNER JOIN meta AS m ON i.meta_id = m.id
+             INNER JOIN blog_categories AS ic ON i.category_id = ic.id
+             INNER JOIN meta AS mic ON ic.meta_id = mic.id
              WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND
                 ((i.publish_on = ? AND i.id > ?) OR i.publish_on > ?)
              ORDER BY i.publish_on ASC, i.id ASC
              LIMIT 1',
-            array($detailLink, $id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
+            array($id, 'active', 'N', FRONTEND_LANGUAGE, $date, $id, $date)
         );
 
-        // if empty, unset it
-        if (empty($navigation['previous'])) {
-            unset($navigation['previous']);
+        // if not empty set navigatio
+        if (!empty($navigationPrevious)) {
+            // define prev full url
+            $navigationPrevious['full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog',
+                'Detail',
+                null,
+                array(
+                    'category' => $navigationPrevious['category_url'],
+                    'detail' => $navigationPrevious['url']
+                )
+            );
+
+            // set navigation previous
+            $navigation['previous'] = $navigationPrevious;
         }
-        if (empty($navigation['next'])) {
-            unset($navigation['next']);
+        if (!empty($navigationNext)) {
+            // define next full url
+            $navigationNext['full_url'] = FrontendNavigation::getURLForBlock(
+                'Blog',
+                'Detail',
+                null,
+                array(
+                    'category' => $navigationNext['category_url'],
+                    'detail' => $navigationNext['url']
+                )
+            );
+
+            // set navigation next
+            $navigation['next'] = $navigationNext;
         }
 
         // return
@@ -714,10 +744,13 @@ class Model implements FrontendTagsInterface
         $comments = (array) FrontendModel::getContainer()->get('database')->getRecords(
             'SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
              i.id AS post_id, i.title AS post_title,
-             m.url AS post_url
+             m.url AS post_url,
+             mic.url AS category_url
              FROM blog_comments AS c
              INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
              INNER JOIN meta AS m ON i.meta_id = m.id
+             INNER JOIN blog_categories AS ic ON i.category_id = ic.id
+             INNER JOIN meta AS mic ON ic.meta_id = mic.id
              WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
              ORDER BY c.id DESC
              LIMIT ?',
@@ -732,7 +765,7 @@ class Model implements FrontendTagsInterface
         // loop comments
         foreach ($comments as &$row) {
             $link = FrontendNavigation::getURLForBlock(
-                'Blog', 'Detail', null, array('detail' => $row['post_url'])
+                'Blog', 'Detail', null, array('category' => $row['category_url'], 'detail' => $row['post_url'])
             );
             // add some URLs
             $row['post_full_url'] = $link;
@@ -937,9 +970,11 @@ class Model implements FrontendTagsInterface
         );
 
         // create URLs
-        //@todo: Module routing
-        $URL = SITE_URL . FrontendNavigation::getURLForBlock('Blog', 'Detail') . '/' .
-               $comment['post_url'] . '#comment-' . $comment['id'];
+        $URL = SITE_URL
+            . FrontendNavigation::getURLForBlock(
+                'Blog', 'Detail', null, array('category' => $comment['category_url'], 'detail' => $comment['post_url'])
+            )
+            . '#comment-' . $comment['id'];
         $backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'Blog') . '#tabModeration';
 
         // notify on all comments
