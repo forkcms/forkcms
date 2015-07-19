@@ -11,6 +11,7 @@ parameters:
     fork.debug_email:       ''
     fork.debug_message:     'Internal error.'
     fork.version:           '3.9.4'
+    fork.template:          twig
 
     site.protocol:          http
     site.domain:            fork.local
