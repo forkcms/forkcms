@@ -62,9 +62,6 @@ abstract class Init extends \KernelLoader
         $this->definePaths();
         $this->defineURLs();
         $this->setDebugging();
-
-        // require spoon
-        require_once 'spoon/spoon.php';
     }
 
     /**
@@ -122,7 +119,7 @@ abstract class Init extends \KernelLoader
      */
     public static function exceptionAJAXHandler($exception, $output)
     {
-        \SpoonHTTP::setHeaders('content-type: application/json');
+        header('content-type: application/json');
         $response = array(
             'code' => ($exception->getCode() != 0) ? $exception->getCode() : 500,
             'message' => $exception->getMessage()

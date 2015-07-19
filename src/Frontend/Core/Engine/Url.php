@@ -9,6 +9,8 @@ namespace Frontend\Core\Engine;
  * file that was distributed with this source code.
  */
 
+use Common\Exception\RedirectException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 use Common\Cookie as CommonCookie;
@@ -60,7 +62,13 @@ class Url extends \KernelLoader
         if (mb_strlen($this->request->getRequestUri()) != 1 &&
             mb_substr($this->request->getRequestUri(), -1) == '/'
         ) {
-            \SpoonHTTP::redirect(mb_substr($this->request->getRequestUri(), 0, -1), 301);
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    mb_substr($this->request->getRequestUri(), 0, -1),
+                    301
+                )
+            );
         }
 
         // set query-string and parameters for later use
@@ -268,7 +276,12 @@ class Url extends \KernelLoader
                 $redirectCode = ($URL == '/' . $language ? 302 : 301);
 
                 // set header & redirect
-                \SpoonHTTP::redirect($URL, $redirectCode);
+                throw new RedirectException(
+                    'Redirect',
+                    new RedirectResponse(
+                        $URL, $redirectCode
+                    )
+                );
             }
         }
 
@@ -373,14 +386,26 @@ class Url extends \KernelLoader
             // not an error?
             if ($newPageURL != $errorURL) {
                 // redirect
-                \SpoonHTTP::redirect($newPageURL, $pageInfo['redirect_code']);
+                throw new RedirectException(
+                    'Redirect',
+                    new RedirectResponse(
+                        $newPageURL,
+                        $pageInfo['redirect_code']
+                    )
+                );
             }
         }
 
         // is this an external redirect?
         if (isset($pageInfo['redirect_url']) && $pageInfo['redirect_url'] != '') {
             // redirect
-            \SpoonHTTP::redirect($pageInfo['redirect_url'], $pageInfo['redirect_code']);
+            throw new RedirectException(
+                'Redirect',
+                new RedirectResponse(
+                    $pageInfo['redirect_url'],
+                    $pageInfo['redirect_code']
+                )
+            );
         }
     }
 
