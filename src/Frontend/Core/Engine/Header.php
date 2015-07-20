@@ -199,9 +199,9 @@ class Header extends FrontendBaseObject
             'priority_group' => $priorityGroup
         );
 
-        // already in array?
-        if (!in_array($jsFile, $this->jsFiles)) {
-            $this->jsFiles[] = $jsFile;
+        // only add when not already in array
+        if (!isset($this->jsFiles[$file])) {
+            $this->jsFiles[$file] = $jsFile;
         }
     }
 
