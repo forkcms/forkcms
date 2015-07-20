@@ -151,18 +151,14 @@ class Header extends FrontendBaseObject
             $file = $this->minifyCSS($file);
         }
 
-        $inArray = false;
-        foreach ($this->cssFiles as $row) {
-            if ($row['file'] == $file) {
-                $inArray = true;
-            }
-        }
+        $cssFile = array(
+            'file' => $file,
+            'add_timestamp' => $addTimestamp
+        );
 
-        // add to array if it isn't there already
-        if (!$inArray) {
-            $temp['file'] = (string) $file;
-            $temp['add_timestamp'] = $addTimestamp;
-            $this->cssFiles[] = $temp;
+        // only add when not already in array
+        if (!isset($this->cssFiles[$file])) {
+            $this->cssFiles[] = $cssFile;
         }
     }
 
