@@ -158,7 +158,7 @@ class Header extends FrontendBaseObject
 
         // only add when not already in array
         if (!isset($this->cssFiles[$file])) {
-            $this->cssFiles[] = $cssFile;
+            $this->cssFiles[$file] = $cssFile;
         }
     }
 
