@@ -3,6 +3,7 @@
 Improvements:
 
 Bugfixes:
+
 * Frontend: no more duplicate JS-files.
 
 

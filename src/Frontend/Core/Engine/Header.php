@@ -153,7 +153,7 @@ class Header extends FrontendBaseObject
 
         $cssFile = array(
             'file' => $file,
-            'add_timestamp' => $addTimestamp
+            'add_timestamp' => $addTimestamp,
         );
 
         // only add when not already in array
@@ -192,7 +192,7 @@ class Header extends FrontendBaseObject
         $jsFile = array(
             'file' => $file,
             'add_timestamp' => $addTimestamp,
-            'priority_group' => $priorityGroup
+            'priority_group' => $priorityGroup,
         );
 
         // only add when not already in array
