@@ -3,6 +3,7 @@
 Improvements:
 
 Bugfixes:
+* Frontend: no more duplicate JS-files.
 
 
 3.9.4 (2015-07-09)
