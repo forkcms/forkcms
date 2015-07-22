@@ -2,6 +2,8 @@
 --
 Improvements:
 
+* Extensions: fixed UX-error where "add-theme button" was not aligned on the right side.
+
 Bugfixes:
 
 
