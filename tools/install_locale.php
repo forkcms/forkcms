@@ -46,6 +46,7 @@ if (!defined('PATH_WWW')) {
 }
 $kernel = new AppKernel('prod', false);
 $kernel->boot();
+$kernel->defineForkConstants();
 $loader = new BackendInit($kernel);
 $loader->initialize('Backend');
 $loader->passContainerToModels();
