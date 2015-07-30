@@ -47,7 +47,10 @@ class Form extends \SpoonForm
         $classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
         // create and return a checkbox
-        return parent::addCheckbox($name, $checked, $class, $classError);
+        $this->add(new CommonFormCheckbox($name, $checked, $class, $classError));
+
+        // return element
+        return $this->getField($name);
     }
 
     /**
@@ -224,5 +227,25 @@ class Form extends \SpoonForm
 
         // create and return a time field
         return parent::addTime($name, $value, $class, $classError);
+    }
+}
+
+/**
+ * This is our extended version of \SpoonFormCheckbox
+ *
+ * @author Jelmer Prins <jelmer@sumocoders.be>
+ */
+class CommonFormCheckbox extends \SpoonFormCheckbox
+{
+    /**
+     * Gets enum values for easyer saving to the database
+     *
+     * @param string $checked the return value when checked
+     * @param string $notChecked the return value when not checked
+     * @return string
+     */
+    public function getEnum($checked = 'Y', $notChecked = 'N')
+    {
+        return $this->isChecked() ? $checked : $notChecked;
     }
 }
