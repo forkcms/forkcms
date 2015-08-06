@@ -1,3 +1,4 @@
+{option:source_graph_data}
 <div id="widgetAnalyticsTraficSources" class="panel panel-primary">
   <div class="panel-heading">
     <h2 class="panel-title">
@@ -5,7 +6,6 @@
     </h2>
   </div>
   <div class="panel-body">
-    {option:source_graph_data}
     <div id="dataChartPieChart" class="hidden">
       <ul class="data">
         {iteration:source_graph_data}
@@ -14,7 +14,6 @@
       </ul>
     </div>
     <div id="chartPieChart">&nbsp;</div>
-    {/option:source_graph_data}
   </div>
   <div class="panel-footer">
     <div class="btn-toolbar">
@@ -24,3 +23,4 @@
     </div>
   </div>
 </div>
+{/option:source_graph_data}

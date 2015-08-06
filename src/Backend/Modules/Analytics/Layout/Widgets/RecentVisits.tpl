@@ -1,3 +1,4 @@
+{option:visitors_graph_data}
 <div id="widgetAnalyticsRecentVisits" class="panel panel-primary">
   <div class="panel-heading">
     <h2 class="panel-title">
@@ -5,7 +6,6 @@
     </h2>
   </div>
   <div class="panel-body">
-    {option:visitors_graph_data}
     <div id="dataChartDoubleMetricPerDay" class="hidden">
       <span id="maxYAxis">{$maxYAxis}</span>
       <span id="tickInterval">{$tickInterval}</span>
@@ -38,7 +38,6 @@
       </ul>
     </div>
     <div id="chartDoubleMetricPerDay">&nbsp;</div>
-    {/option:visitors_graph_data}
   </div>
   <div class="panel-footer">
     <div class="btn-toolbar">
@@ -48,3 +47,4 @@
     </div>
   </div>
 </div>
+{/option:visitors_graph_data}
