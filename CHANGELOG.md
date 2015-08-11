@@ -5,6 +5,7 @@ Improvements:
 Bugfixes:
 
 * Analytics: Don't load dashboard widgets when not configured yet.
+* Core: Fix return types for addImage methods in forms.
 
 
 3.9.4 (2015-07-09)
