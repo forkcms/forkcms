@@ -600,6 +600,20 @@ class Header extends FrontendBaseObject
             );
         }
 
+        /**
+         * @remark only for SumoCoders
+         *
+         * Because ENV variables are not passed to CGI due to suExec.
+         * See http://wiki.dreamhost.com/Suexec#Apache_module_mod_env for more
+         * information.
+         */
+        if (isset($_SERVER['HTTP_HOST']) && substr_count($_SERVER['HTTP_HOST'], '.sumocoders.eu') >= 1) {
+            $this->addMetaData(
+                array('name' => 'robots', 'content' => 'noindex, nofollow'),
+                true
+            );
+        }
+
         $this->parseMetaAndLinks();
         $this->parseCSS();
         $this->parseJS();
