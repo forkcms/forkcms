@@ -9,11 +9,11 @@
 
 		{option:showExtensionsAddThemeTemplate}
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'export_theme_templates'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="button icon iconExport" title="{$lblExport|ucfirst}">
-				<span>{$lblExport|ucfirst}</span>
-			</a>
 			<a href="{$var|geturl:'add_theme_template'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="button icon iconAdd" title="{$lblAddTemplate|ucfirst}">
 				<span>{$lblAddTemplate|ucfirst}</span>
+			</a>
+			<a href="{$var|geturl:'export_theme_templates'}{option:selectedTheme}&amp;theme={$selectedTheme}{/option:selectedTheme}" class="button icon iconExport" title="{$lblExport|ucfirst}">
+				<span>{$lblExport|ucfirst}</span>
 			</a>
 		</div>
 		{/option:showExtensionsAddThemeTemplate}
