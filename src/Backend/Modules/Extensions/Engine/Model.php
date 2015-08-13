@@ -451,14 +451,14 @@ class Model
     }
 
     /**
-     * Fetch the module information from the info.xml file.
+     * Fetch the module information from the Info.xml file.
      *
      * @param string $module
      * @return array
      */
     public static function getModuleInformation($module)
     {
-        $pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/info.xml';
+        $pathInfoXml = BACKEND_MODULES_PATH . '/' . $module . '/Info.xml';
         $information = array('data' => array(), 'warnings' => array());
 
         if (is_file($pathInfoXml)) {
@@ -499,7 +499,7 @@ class Model
     /**
      * Get modules based on the directory listing in the backend application.
      *
-     * If a module contains a info.xml it will be parsed.
+     * If a module contains a Info.xml it will be parsed.
      *
      * @return array
      */
@@ -531,7 +531,7 @@ class Model
 
             try {
                 $infoXml = @new \SimpleXMLElement(
-                    BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/info.xml',
+                    BACKEND_MODULES_PATH . '/' . $module['raw_name'] . '/Info.xml',
                     LIBXML_NOCDATA,
                     true
                 );
@@ -700,11 +700,11 @@ class Model
         $finder = new Finder();
         foreach ($finder->directories()->in(FRONTEND_PATH . '/Themes')->depth(0) as $directory) {
             try {
-                $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/info.xml';
+                $pathInfoXml = PATH_WWW . '/src/Frontend/Themes/' . $directory->getBasename() . '/Info.xml';
                 $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
                 $information = self::processThemeXml($infoXml);
                 if (!$information) {
-                    throw new Exception('Invalid info.xml');
+                    throw new Exception('Invalid Info.xml');
                 }
             } catch (Exception $e) {
                 $information['thumbnail'] = 'thumbnail.png';
@@ -827,12 +827,12 @@ class Model
      */
     public static function installTheme($theme)
     {
-        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/info.xml';
+        $pathInfoXml = FRONTEND_PATH . '/Themes/' . $theme . '/Info.xml';
         $infoXml = @new \SimpleXMLElement($pathInfoXml, LIBXML_NOCDATA, true);
 
         $information = self::processThemeXml($infoXml);
         if (!$information) {
-            throw new Exception('Invalid info.xml');
+            throw new Exception('Invalid Info.xml');
         }
 
         foreach ($information['templates'] as $template) {
@@ -1144,7 +1144,7 @@ class Model
     /**
      * Make sure that we have an entirely valid theme information array
      *
-     * @param array $information Contains the parsed theme info.xml data.
+     * @param array $information Contains the parsed theme Info.xml data.
      * @return array
      */
     public static function validateThemeInformation($information)

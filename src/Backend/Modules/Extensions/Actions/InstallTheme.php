@@ -65,7 +65,7 @@ class InstallTheme extends BackendBaseActionIndex
         }
 
         // no information file present
-        if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/info.xml')) {
+        if (!is_file(FRONTEND_PATH . '/Themes/' . $this->currentTheme . '/Info.xml')) {
             $this->redirect(BackendModel::createURLForAction('Themes') . '&error=no-information-file&var=' . $this->currentTheme);
         }
     }

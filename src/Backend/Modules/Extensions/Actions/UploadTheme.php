@@ -102,16 +102,16 @@ class UploadTheme extends BackendBaseActionAdd
                             // name of the module we are trying to upload
                             $themeName = trim($file['name'], '/');
 
-                            // find info.xml
-                            $infoXml = $zip->getFromName($themeName . '/info.xml');
+                            // find Info.xml
+                            $infoXml = $zip->getFromName($themeName . '/Info.xml');
 
-                            // add error if info.xml is not found
+                            // add error if Info.xml is not found
                             if ($infoXml === false) {
                                 $fileFile->addError(sprintf(BL::getError('NoInformationFile'), $themeName));
                             } else {
                                 // parse xml
                                 try {
-                                    // load info.xml
+                                    // load Info.xml
                                     $infoXml = @new \SimpleXMLElement($infoXml, LIBXML_NOCDATA, false);
 
                                     // convert xml to useful array
@@ -122,7 +122,7 @@ class UploadTheme extends BackendBaseActionAdd
                                         $fileFile->addError(BL::getMessage('InformationFileIsEmpty'));
                                     }
 
-                                    // check if theme name in info.xml matches folder name
+                                    // check if theme name in Info.xml matches folder name
                                     if ($this->information['name'] != $themeName) {
                                         $fileFile->addError(BL::err('ThemeNameDoesntMatch'));
                                     }

@@ -172,25 +172,25 @@
         <translation language="el"><![CDATA[Επιλέξτε το θέμα που θέλετε να χρησιμοποιήσετε.]]></translation>
       </item>
       <item type="message" name="InformationFileCouldNotBeLoaded">
-        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
-        <translation language="en"><![CDATA[A info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
-        <translation language="ru"><![CDATA[Файл info.xml присутствует, но не может быть загружен. Проверьте содержимое файла XML.]]></translation>
-        <translation language="es"><![CDATA[Un archivo info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
-        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
-        <translation language="hu"><![CDATA[Az info.xml fájl létezik, de nem töltődött be. Ellenőrizd, hogy valid XML e a tartalom.]]></translation>
-        <translation language="sv"><![CDATA[info.xml fil är finns men den kan inte laddas. Verifiera om innehållet är giltig XML.]]></translation>
-        <translation language="zh"><![CDATA[info.xml文件已递交但它无法被加载。请确认它的内容是否是有效的XML。]]></translation>
-        <translation language="el"><![CDATA[Βρέθηκε ένα αρχείο info.xml, αλλά δεν έγινε δυνατό να φορτωθεί. Επιβεβαιώστε οτι το περιεχόμενο είναι έγκυρο τύπου XML.]]></translation>
+        <translation language="nl"><![CDATA[Er is een Info.xml bestand aanwezig maar we konden deze niet inladen. Controleer of deze een geldige XML syntax heeft.]]></translation>
+        <translation language="en"><![CDATA[A Info.xml file is present but it could not be loaded. Verify if the content is valid XML.]]></translation>
+        <translation language="ru"><![CDATA[Файл Info.xml присутствует, но не может быть загружен. Проверьте содержимое файла XML.]]></translation>
+        <translation language="es"><![CDATA[Un archivo Info.xml está presente pero no se ha podido cargar. Verifica si el contenido es XML válido.]]></translation>
+        <translation language="de"><![CDATA[Eine Info.xml Datei ist vorhanden, konnte aber nicht geladen werden. Überprüfe, dass es sich um eine gültige XML Datei handelt.]]></translation>
+        <translation language="hu"><![CDATA[Az Info.xml fájl létezik, de nem töltődött be. Ellenőrizd, hogy valid XML e a tartalom.]]></translation>
+        <translation language="sv"><![CDATA[Info.xml fil är finns men den kan inte laddas. Verifiera om innehållet är giltig XML.]]></translation>
+        <translation language="zh"><![CDATA[Info.xml文件已递交但它无法被加载。请确认它的内容是否是有效的XML。]]></translation>
+        <translation language="el"><![CDATA[Βρέθηκε ένα αρχείο Info.xml, αλλά δεν έγινε δυνατό να φορτωθεί. Επιβεβαιώστε οτι το περιεχόμενο είναι έγκυρο τύπου XML.]]></translation>
       </item>
       <item type="message" name="InformationFileIsEmpty">
-        <translation language="nl"><![CDATA[Er is een info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
-        <translation language="en"><![CDATA[A info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
-        <translation language="ru"><![CDATA[Файл info.xml присутствует, но либо пустой, либо содержит неправильную информацию.]]></translation>
-        <translation language="es"><![CDATA[Un archivo info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
-        <translation language="de"><![CDATA[Eine info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
-        <translation language="hu"><![CDATA[Az info.xml létezik, de nem üres vagy nem tartalmaz értékes információt.]]></translation>
-        <translation language="sv"><![CDATA[info.xml fil är men är antingen tom eller innehåller den inte värdefull information.]]></translation>
-        <translation language="zh"><![CDATA[info.xml文件已递交但它有可能是空的或它不包含有价值的信息。]]></translation>
+        <translation language="nl"><![CDATA[Er is een Info.xml bestand aanwezig maar deze is leeg of deze bevat geen nuttige informatie.]]></translation>
+        <translation language="en"><![CDATA[A Info.xml file is present but its either empty or it does not contain valuable information.]]></translation>
+        <translation language="ru"><![CDATA[Файл Info.xml присутствует, но либо пустой, либо содержит неправильную информацию.]]></translation>
+        <translation language="es"><![CDATA[Un archivo Info.xml está presente pero esta vacio o bien no contiene información valiosa.]]></translation>
+        <translation language="de"><![CDATA[Eine Info.xml Datei ist vorhanden, ist aber entweder leer oder enthält keine brauchbaren Informationen.]]></translation>
+        <translation language="hu"><![CDATA[Az Info.xml létezik, de nem üres vagy nem tartalmaz értékes információt.]]></translation>
+        <translation language="sv"><![CDATA[Info.xml fil är men är antingen tom eller innehåller den inte värdefull information.]]></translation>
+        <translation language="zh"><![CDATA[Info.xml文件已递交但它有可能是空的或它不包含有价值的信息。]]></translation>
         <translation language="el"><![CDATA[Το αρχείο info.xmp υπάρχει, αλλά είτε είναι άδειο είτε δεν περιέχει χρήσιμες πληροφορίες.]]></translation>
       </item>
       <item type="message" name="InformationFileIsMissing">
@@ -717,15 +717,15 @@
         <translation language="el"><![CDATA[Το όνομα της θέσης %s δεν είναι αλφαριθμητικό.]]></translation>
       </item>
       <item type="error" name="NoInformationFile">
-        <translation language="nl"><![CDATA[We konden geen info.xml bestanden vinden voor "%1$s".]]></translation>
-        <translation language="en"><![CDATA[We could not find an info.xml file for "%1$s".]]></translation>
-        <translation language="ru"><![CDATA[Мы не смогли найти info.xml в "%1$s".]]></translation>
-        <translation language="es"><![CDATA[No hemos podido encontrar un archivo info.xml para "%1$s".]]></translation>
-        <translation language="de"><![CDATA[Für "%1$s" konnte keine info.xml gefunden werden.]]></translation>
-        <translation language="hu"><![CDATA[Nem találtunk info.xml fájlt a(z) "%1$s"-nál/nél.]]></translation>
-        <translation language="sv"><![CDATA[Vi kan inte hitta en info.xml fil för "%1$s".]]></translation>
-        <translation language="zh"><![CDATA[我们无法为“%1$s”里找到info.xml]]></translation>
-        <translation language="el"><![CDATA[Δεν βρέθηκε το αρχείο info.xml γιά το "%1$s".]]></translation>
+        <translation language="nl"><![CDATA[We konden geen Info.xml bestanden vinden voor "%1$s".]]></translation>
+        <translation language="en"><![CDATA[We could not find an Info.xml file for "%1$s".]]></translation>
+        <translation language="ru"><![CDATA[Мы не смогли найти Info.xml в "%1$s".]]></translation>
+        <translation language="es"><![CDATA[No hemos podido encontrar un archivo Info.xml para "%1$s".]]></translation>
+        <translation language="de"><![CDATA[Für "%1$s" konnte keine Info.xml gefunden werden.]]></translation>
+        <translation language="hu"><![CDATA[Nem találtunk Info.xml fájlt a(z) "%1$s"-nál/nél.]]></translation>
+        <translation language="sv"><![CDATA[Vi kan inte hitta en Info.xml fil för "%1$s".]]></translation>
+        <translation language="zh"><![CDATA[我们无法为“%1$s”里找到Info.xml]]></translation>
+        <translation language="el"><![CDATA[Δεν βρέθηκε το αρχείο Info.xml γιά το "%1$s".]]></translation>
       </item>
       <item type="error" name="NoInstallerFile">
         <translation language="nl"><![CDATA[We konden geen installer voor de module "%1$s" vinden.]]></translation>
@@ -787,15 +787,15 @@
         <translation language="el"><![CDATA[Το θέμα "%1$s" υπάρχει ήδη, δεν μπορείτε να το ανεβάσετε πάλι.]]></translation>
       </item>
       <item type="error" name="ThemeNameDoesntMatch">
-        <translation language="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in info.xml.]]></translation>
-        <translation language="en"><![CDATA[The theme's folder name doesn't match the theme name in info.xml.]]></translation>
-        <translation language="ru"><![CDATA[Название каталога темы не совпадает с названием, определенным в файле info.xml.]]></translation>
-        <translation language="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en info.xml.]]></translation>
-        <translation language="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der info.xml stimmen nicht überein.]]></translation>
-        <translation language="hu"><![CDATA[A sablon neve nem egyezik az info.xml sablon névvel.]]></translation>
-        <translation language="sv"><![CDATA[temats mappnamn matchar inte temanamn i info.xml.]]></translation>
-        <translation language="zh"><![CDATA[主题文件名和info.xml里的主题名称不匹配。]]></translation>
-        <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο info.xml.]]></translation>
+        <translation language="nl"><![CDATA[De thema mapnaam komt niet overeen met de themanaam in Info.xml.]]></translation>
+        <translation language="en"><![CDATA[The theme's folder name doesn't match the theme name in Info.xml.]]></translation>
+        <translation language="ru"><![CDATA[Название каталога темы не совпадает с названием, определенным в файле Info.xml.]]></translation>
+        <translation language="es"><![CDATA[El nombre de la carpeta del tema no coincide con el nombre del tema en Info.xml.]]></translation>
+        <translation language="de"><![CDATA[Der Theme-Ordner-Name und Theme-Name in der Info.xml stimmen nicht überein.]]></translation>
+        <translation language="hu"><![CDATA[A sablon neve nem egyezik az Info.xml sablon névvel.]]></translation>
+        <translation language="sv"><![CDATA[temats mappnamn matchar inte temanamn i Info.xml.]]></translation>
+        <translation language="zh"><![CDATA[主题文件名和Info.xml里的主题名称不匹配。]]></translation>
+        <translation language="el"><![CDATA[Το όνομα φακέλου του θέματος δεν ταιριάζει με το όνομα του θέματος στο αρχείο Info.xml.]]></translation>
       </item>
     </Extensions>
   </Backend>

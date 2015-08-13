@@ -33,7 +33,7 @@ class DetailModule extends BackendBaseActionIndex
     private $dataGridEvents;
 
     /**
-     * Information fetched from the info.xml.
+     * Information fetched from the Info.xml.
      *
      * @var array
      */
@@ -42,7 +42,7 @@ class DetailModule extends BackendBaseActionIndex
     /**
      * List of warnings.
      *
-     * @var	array
+     * @var array
      */
     private $warnings = array();
 
