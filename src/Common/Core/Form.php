@@ -37,7 +37,7 @@ class Form extends \SpoonForm
      * @param bool   $checked    Should the checkbox be checked?
      * @param string $class      Class(es) that will be applied on the element.
      * @param string $classError Class(es) that will be applied on the element when an error occurs.
-     * @return \SpoonFormCheckbox
+     * @return CommonFormCheckbox
      */
     public function addCheckbox($name, $checked = false, $class = null, $classError = null)
     {
@@ -238,10 +238,10 @@ class Form extends \SpoonForm
 class CommonFormCheckbox extends \SpoonFormCheckbox
 {
     /**
-     * Gets enum values for easier saving to the database
+     * Returns the value corresponding with the state of the checkbox
      *
-     * @param string $checked the return value when checked
-     * @param string $notChecked the return value when not checked
+     * @param mixed $checked the return value when checked
+     * @param mixed $notChecked the return value when not checked
      * @return string
      */
     public function getActualValue($checked = 'Y', $notChecked = 'N')
