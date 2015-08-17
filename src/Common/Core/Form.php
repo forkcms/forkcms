@@ -244,7 +244,7 @@ class CommonFormCheckbox extends \SpoonFormCheckbox
      * @param string $notChecked the return value when not checked
      * @return string
      */
-    public function getEnum($checked = 'Y', $notChecked = 'N')
+    public function getActualValue($checked = 'Y', $notChecked = 'N')
     {
         return $this->isChecked() ? $checked : $notChecked;
     }
