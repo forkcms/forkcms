@@ -238,7 +238,7 @@ class Form extends \SpoonForm
 class CommonFormCheckbox extends \SpoonFormCheckbox
 {
     /**
-     * Gets enum values for easyer saving to the database
+     * Gets enum values for easier saving to the database
      *
      * @param string $checked the return value when checked
      * @param string $notChecked the return value when not checked
