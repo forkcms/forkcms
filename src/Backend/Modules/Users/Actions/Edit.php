@@ -330,7 +330,7 @@ class Edit extends BackendBaseActionEdit
                 }
                 if ($this->authenticatedUser->getUserId() != $this->record['id']
                 ) {
-                    $user['active'] = ($fields['active']->isChecked()) ? 'Y' : 'N';
+                    $user['active'] = $fields['active']->getActualValue();
                 }
 
                 // user is now de-activated, we now remove all sessions for this user so he is logged out immediately
