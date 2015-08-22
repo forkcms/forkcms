@@ -2,9 +2,12 @@
 --
 Improvements:
 
+* Extensions: fixed UX-error where "add-theme button" was not aligned on the right side.
+
 Bugfixes:
 
 * Analytics: Don't load dashboard widgets when not configured yet.
+* Core: Fix return types for addImage methods in forms.
 
 
 3.9.4 (2015-07-09)
