@@ -121,8 +121,9 @@ class Header extends FrontendBaseObject
         }
 
         // add default javascript-files
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.js', false, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/src/Frontend/Core/Js/jquery/jquery.ui.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/bower_components/jquery/jquery.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
+        $this->addJS('/bower_components/jquery-ui/jquery-ui.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
@@ -783,8 +784,8 @@ class Header extends FrontendBaseObject
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/src/Frontend/Core/Js/Jquery/jquery.js',
-                '/src/Frontend/Core/Js/Jquery/jquery.ui.js'
+                '/bower_components/jquery/jquery.min.js',
+                '/bower_components/jquery-ui/jquery-ui.min.js'
             );
 
             foreach ($existingJSFiles as $file) {
