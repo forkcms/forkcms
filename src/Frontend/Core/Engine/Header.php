@@ -783,8 +783,7 @@ class Header extends FrontendBaseObject
         if (!empty($existingJSFiles)) {
             // some files should be cached, even if we don't want cached (mostly libraries)
             $ignoreCache = array(
-                '/bower_components/jquery/dist/jquery.min.js',
-                '/bower_components/jquery-ui/jquery-ui.min.js'
+                '/bower_components/jquery/dist/jquery.min.js'
             );
 
             foreach ($existingJSFiles as $file) {
