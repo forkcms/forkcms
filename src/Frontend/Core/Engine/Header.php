@@ -123,7 +123,6 @@ class Header extends FrontendBaseObject
         // add default javascript-files
         $this->addJS('/bower_components/jquery/dist/jquery.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/bower_components/jquery-migrate/jquery-migrate.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
-        $this->addJS('/bower_components/jquery-ui/jquery-ui.min.js', false, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/jquery/jquery.frontend.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/utils.js', true, null, self::PRIORITY_GROUP_GLOBAL);
         $this->addJS('/src/Frontend/Core/Js/frontend.js', false, null, self::PRIORITY_GROUP_GLOBAL);
