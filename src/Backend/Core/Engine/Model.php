@@ -704,7 +704,7 @@ class Model extends \Common\Core\Model
             foreach ($level as $pages) {
                 foreach ($pages as $pageId => $properties) {
                     // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 
