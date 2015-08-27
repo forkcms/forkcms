@@ -126,7 +126,7 @@ jsBackend.pages.extras =
 
 		// block
 		var editLink, title, description;
-		if(extraId != 0)
+		if(extraType != 'usertemplate' && extraId != 0)
 		{
 			// link to edit this block/widget
 			editLink = '';
