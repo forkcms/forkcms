@@ -192,8 +192,8 @@ class DataGridFunctions
             if ($allowed) {
                 $html .= '<a href="' .
                 BackendModel::createURLForAction(
-                    'edit',
-                    'users'
+                    'Edit',
+                    'Users'
                 ) . '&amp;id=' . $id . '">';
             }
             $html .= $nickname;
