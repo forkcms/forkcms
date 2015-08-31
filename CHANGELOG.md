@@ -6,6 +6,7 @@ Improvements:
 
 Bugfixes:
 
+* Frontend: no more duplicate JS-files.
 * Analytics: Don't load dashboard widgets when not configured yet.
 * Core: Fix return types for addImage methods in forms.
 
