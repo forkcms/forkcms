@@ -1191,6 +1191,10 @@ class Model
 
         // loop blocks
         foreach ($blocks as $block) {
+            if ($block['extra_type'] === 'usertemplate') {
+                $block['extra_id'] = null;
+            }
+
             // insert blocks
             $db->insert('pages_blocks', $block);
         }
