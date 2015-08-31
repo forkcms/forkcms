@@ -381,12 +381,7 @@ class Edit extends BackendBaseActionEdit
 
                     // create folders if needed
                     $fs = new Filesystem();
-                    if (!$fs->exists($imagePath . '/source')) {
-                        $fs->mkdir($imagePath . '/source');
-                    }
-                    if (!$fs->exists($imagePath . '/128x128')) {
-                        $fs->mkdir($imagePath . '/128x128');
-                    }
+                    $fs->mkdir(array($imagePath . '/source', $imagePath . '/128x128'));
 
                     // If the image should be deleted, only the database entry is refreshed.
                     // The revision should keep it's file.
@@ -413,10 +408,15 @@ class Edit extends BackendBaseActionEdit
                         $image = new File($imagePath . '/source/' . $item['image']);
                         $newName = $this->meta->getURL() .
                                             '-' . BL::getWorkingLanguage() .
+                                            '-' . $item['revision_id'] .
                                             '.' . $image->getExtension();
 
+                        // extract the filenames excluding …-[language]-[revision-id].jpg
+                        // to properly compare them to eachother
+                        $regex = '/(.*)-[a-z]{2}-[0-9]+\.(.*)/';
+
                         // only copy if the new name differs from the old filename
-                        if ($newName != $item['image']) {
+                        if (preg_replace($regex, '$1', $newName) != preg_replace($regex, '$1', $item['image'])) {
                             // loop folders
                             foreach (BackendModel::getThumbnailFolders($imagePath, true) as $folder) {
                                 $fs->copy($folder['path'] . '/' . $item['image'], $folder['path'] . '/' . $newName);

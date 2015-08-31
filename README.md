@@ -34,12 +34,12 @@ your normal database and with the name suffixed with _test.
 
 Running the tests:
 
-    ./bin/phpunit -c app/
+    ./bin/phpunit
 
 Running only the unit tests or the functional tests
 
-    ./bin/phpunit -c app --testsuite=functional
-    ./bin/phpunit -c app --testsuite=unit
+    ./bin/phpunit --testsuite=functional
+    ./bin/phpunit --testsuite=unit
 
 ## Discussion
 - IRC: irc.freenode.org #forkcms

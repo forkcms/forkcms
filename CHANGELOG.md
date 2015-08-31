@@ -1,3 +1,47 @@
+3.9.5 (2015-08-31)
+--
+Improvements:
+
+* Extensions: fixed UX-error where "add-theme button" was not aligned on the right side.
+* Travis: run on new container based infrastructure
+
+Bugfixes:
+
+* Frontend: no more duplicate JS-files.
+* Analytics: Don't load dashboard widgets when not configured yet.
+* Core: Fix return types for addImage methods in forms.
+* Core: remove safe_mode directive.
+* Pages: only escape single quotes in the cache files
+* Core: check authentication before showing user links
+
+
+3.9.4 (2015-07-09)
+--
+Improvements:
+
+* Core: Moved startProcessingHooks from Backend/Frontend to Common/Core/Model.php
+* Core: Save logs in an environment specific log file.
+* Extensions: allow more different zip formats for module uploads.
+* Locale: add a cli tool to import locale.
+* Core: move phpunit to the root of the project.
+* Core: save logs in environment specific files.
+* Analytics: improve usability + add functionality
+* Core: improve exception messages.
+* Core: remove the unused timezones table.
+* Core: remove unneeded require statements.
+* Core: add a datagrid modifier to display boolean types.
+* Core: bump minimum PHP version to 5.4
+
+Bugfixes:
+
+* Core: Fixed exporting .csv files.
+* Analytics: Don't let Google_Client save files in the /tmp/Google_Client directory
+* Core: Fixed CamelCasing issues with Spoon classes SpoonDatagridSourceArray, SpoonDatagridPaging & iSpoonDatagridPaging.
+* Core: fix composer install on windows.
+* Blog: fix image deletion for revisions.
+* Core: fix exporting csv files
+
+
 3.9.3 (2015-06-10)
 --
 Improvements:

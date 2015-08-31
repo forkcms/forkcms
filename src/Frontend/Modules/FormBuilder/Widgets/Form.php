@@ -2,6 +2,7 @@
 
 namespace Frontend\Modules\FormBuilder\Widgets;
 
+use Common\Exception\RedirectException;
 use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;
@@ -10,6 +11,7 @@ use Frontend\Core\Engine\Template as FrontendTemplate;
 use Frontend\Modules\FormBuilder\Engine\Model as FrontendFormBuilderModel;
 use Frontend\Modules\FormBuilder\FormBuilderEvents;
 use Frontend\Modules\FormBuilder\Event\FormBuilderSubmittedEvent;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * This is the form widget.
@@ -566,8 +568,10 @@ class Form extends FrontendBaseWidget
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
 
-                // redirect with identifier
-                \SpoonHTTP::redirect($redirect);
+                throw new RedirectException(
+                    'Redirect',
+                    new RedirectResponse($redirect)
+                );
             } else {
                 // not correct, show errors
                 // global form errors set

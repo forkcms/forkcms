@@ -32,8 +32,8 @@
         "issues": "https://github.com/forkcms/forkcms/issues"
     },
     "scripts": {
-        "post-install-cmd": "app/console assetic:dump . && cd tools && ./remove_cache",
-        "post-update-cmd": "app/console assetic:dump . && cd tools && ./remove_cache"
+        "post-install-cmd": "php app/console assetic:dump . && cd tools && bash ./remove_cache",
+        "post-update-cmd": "php app/console assetic:dump . && cd tools && bash ./remove_cache"
     },
     "autoload": {
         "psr-0": {
