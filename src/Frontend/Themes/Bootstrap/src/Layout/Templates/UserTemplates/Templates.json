@@ -2,6 +2,6 @@
     {
         "title": "test",
         "description": "just a simple test",
-        "file": "/Core/Layout/Templates/UserTemplates/test.html"
+        "file": "test.html"
     }
 ]

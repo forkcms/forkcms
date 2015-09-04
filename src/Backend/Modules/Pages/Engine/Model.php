@@ -1216,6 +1216,7 @@ class Model
                 $userTemplate['file'] =
                     '/src/Frontend/Themes/'.
                     BackendModel::get('fork.settings')->get('Core', 'theme', 'default').
+                    '/Core/Layout/Templates/UserTemplates/'.
                     $userTemplate['file'];
             }
         }
