@@ -1211,6 +1211,14 @@ class Model
         $fs = new Filesystem();
         if ($fs->exists($filePath)) {
             $userTemplates = json_decode(file_get_contents($filePath), true);
+
+            foreach ($userTemplates as &$userTemplate) {
+                $userTemplate['file'] =
+                    '/src/Frontend/Themes/'.
+                    BackendModel::get('fork.settings')->get('Core', 'theme', 'default').
+                    '/Core/Layout/Templates/UserTemplates/'.
+                    $userTemplate['file'];
+            }
         }
 
         return $userTemplates;
