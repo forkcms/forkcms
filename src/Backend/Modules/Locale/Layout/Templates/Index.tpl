@@ -136,9 +136,14 @@
 	</div>
 	{/option:dgActions}
 
+	{option:hasSubmissions}
 	{option:noItems}
 		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
 	{/option:noItems}
+	{/option:hasSubmissions}
+	{option:!hasSubmissions}
+		<p>{$msgStartSearch}</p>
+	{/option:!hasSubmissions}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/Layout/Templates/StructureEndModule.tpl}
