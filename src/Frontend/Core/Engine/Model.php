@@ -184,7 +184,7 @@ class Model extends \Common\Core\Model
         // get data
         $record = (array) $db->getRecord(
             'SELECT p.id, p.parent_id, p.revision_id, p.template_id, p.title, p.navigation_title,
-                 p.navigation_title_overwrite, p.data,
+                 p.navigation_title_overwrite, p.data, p.hidden,
                  m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
                  m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
                  m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -195,14 +195,19 @@ class Model extends \Common\Core\Model
              FROM pages AS p
              INNER JOIN meta AS m ON p.meta_id = m.id
              INNER JOIN themes_templates AS t ON p.template_id = t.id
-             WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
+             WHERE p.id = ? AND p.status = ? AND p.language = ?
              LIMIT 1',
-            array($pageId, 'active', 'N', FRONTEND_LANGUAGE)
+            array($pageId, 'active', FRONTEND_LANGUAGE)
         );
 
         // validate
         if (empty($record)) {
             return array();
+        }
+
+        // if the page is hidden we need a 404 record
+        if ($record['hidden'] === 'Y' && $pageId !== 404) {
+            return self::getPage(404);
         }
 
         // unserialize page data and template data
