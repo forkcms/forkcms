@@ -34,14 +34,21 @@
 		</div>
 		<div class="options">
 			<div class="textareaHolder">
-				<p class="p0"><label for="siteHtmlHeader"><code>&lt;head&gt;</code> script(s)</label></p>
+				<p class="p0"><label for="siteHtmlHeader">{$msgHelpScriptsHeadLabel}</label></p>
 				{$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
 				<span class="helpTxt">{$msgHelpScriptsHead}</span>
 			</div>
 		</div>
 		<div class="options">
 			<div class="textareaHolder">
-				<p class="p0"><label for="siteHtmlFooter">End of <code>&lt;body&gt;</code> script(s)</label></p>
+				<p class="p0"><label for="siteStartOfBodyScripts">{$msgHelpScriptsStartOfBodyLabel}</label></p>
+				{$txtSiteStartOfBodyScripts} {$txtSiteStartOfBodyScriptsError}
+				<span class="helpTxt">{$msgHelpScriptsStartOfBody}</span>
+			</div>
+		</div>
+		<div class="options">
+			<div class="textareaHolder">
+				<p class="p0"><label for="siteHtmlFooter">{$msgHelpScriptsFootLabel}</label></p>
 				{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
 				<span class="helpTxt">{$msgHelpScriptsFoot}</span>
 			</div>

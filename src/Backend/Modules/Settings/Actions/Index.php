@@ -86,6 +86,13 @@ class Index extends BackendBaseActionIndex
             true
         );
         $this->frm->addTextarea(
+            'site_start_of_body_scripts',
+            $this->get('fork.settings')->get('Core', 'site_start_of_body_scripts', null),
+            'textarea code',
+            'textareaError code',
+            true
+        );
+        $this->frm->addTextarea(
             'site_html_footer',
             $this->get('fork.settings')->get('Core', 'site_html_footer', null),
             'textarea code',
@@ -360,6 +367,11 @@ class Index extends BackendBaseActionIndex
                     'Core',
                     'site_html_header',
                     $this->frm->getField('site_html_header')->getValue()
+                );
+                $this->get('fork.settings')->set(
+                    'Core',
+                    'site_start_of_body_scripts',
+                    $this->frm->getField('site_start_of_body_scripts')->getValue()
                 );
                 $this->get('fork.settings')->set(
                     'Core',

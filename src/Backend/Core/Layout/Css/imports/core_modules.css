@@ -458,13 +458,13 @@
 		/* Less important tabs go on the right side */
 
 		#pages.pagesAdd .ui-tabs-nav li,
-		#pages.pagesEdit .ui-tabs-nav li { 
-			float: right; 
+		#pages.pagesEdit .ui-tabs-nav li {
+			float: right;
 		}
 
 		#pages.pagesAdd .ui-tabs-nav li:first-child,
-		#pages.pagesEdit .ui-tabs-nav li:first-child { 
-			float: left; 
+		#pages.pagesEdit .ui-tabs-nav li:first-child {
+			float: left;
 		}
 
 		#pages.pagesAdd .ui-tabs-nav li:nth-child(2),
@@ -601,7 +601,8 @@
 	}
 
 	#settings.settingsIndex #siteHtmlFooter,
-	#settings.settingsIndex #siteHtmlHeader {
+	#settings.settingsIndex #siteHtmlHeader,
+	#settings.settingsIndex #siteStartOfBodyScripts {
 		width: 700px;
 		height: 200px;
 	}
