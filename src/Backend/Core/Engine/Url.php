@@ -77,7 +77,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return trim((string)$this->request->getRequestUri(), '/');
+        return (string) $this->request->getRequestUri();
     }
 
     /**

@@ -180,7 +180,7 @@ class Url extends \KernelLoader
      */
     public function getQueryString()
     {
-        return trim((string) $this->request->getRequestUri(), '/');
+        return (string) $this->request->getRequestUri();
     }
 
     /**
