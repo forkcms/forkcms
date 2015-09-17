@@ -64,6 +64,7 @@ class AnalyseModel extends Model
 
         // get install modules
         $modules = BackendModel::getModules();
+        $language = BL::getWorkingLanguage();
 
         // loop over the modules
         foreach ($backendModuleFiles as $moduleName => $module) {
@@ -127,19 +128,7 @@ class AnalyseModel extends Model
         }
 
         // getAllBackendDBLocale
-        $type = array(
-            0 => 'lbl',
-            1 => 'act',
-            2 => 'err',
-            3 => 'msg',
-        );
-        $language = BL::getWorkingLanguage();
-        $allBackendDBLocale = self::getTranslations('Backend', '', $type, $language, '', '');
-        foreach ($allBackendDBLocale as $localeRecord) {
-            foreach ($localeRecord as $record) {
-                $oldLocale[$record['module']][$record['name']] = $record['name'];
-            }
-        }
+        $oldLocale = self::getSortLocaleFrom('Backend', $language);
 
         // filter the Foundlocale
         $nonExisting = array();
@@ -175,6 +164,25 @@ class AnalyseModel extends Model
         ksort($nonExisting);
 
         return $nonExisting;
+    }
+
+    /**
+     * Get the locale that is used in a sorted manner
+     *
+     * @param string $application the application
+     * @return array
+     */
+    public static function getSortLocaleFrom($application, $language)
+    {
+        $oldLocale = array();
+        $type = array('lbl', 'act', 'err', 'msg');
+        $allBackendDBLocale = self::getTranslations($application, '', $type, $language, '', '');
+        foreach ($allBackendDBLocale as $localeRecord) {
+            foreach ($localeRecord as $record) {
+                $oldLocale[$record['module']][$record['name']] = $record['name'];
+            }
+        }
+        return $oldLocale;
     }
 
     /**
