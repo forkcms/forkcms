@@ -62,18 +62,38 @@ class AnalyseModel extends Model
             $backendModuleFiles[$module][$filename] = $file;
         }
 
+        // get install modules
+        $modules = BackendModel::getModules();
+
         // loop over the modules
         foreach ($backendModuleFiles as $moduleName => $module) {
             foreach ($module as $filename => $file) {
                 $extension = $file->getExtension();
                 $fileContent = $file->getContents();
 
+                // only installed modules
+                if (!in_array($moduleName, $modules)) {
+                    unset($backendModuleFiles[$moduleName]);
+                    continue;
+                }
+
                 // search / finding locale
+                $matches = array();
                 switch ($extension) {
+
+                    // PHP file
+                    case 'js':
+                        // get matches
+                        preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $fileContent, $matches);
+
+                        if (count($matches[0]) > 0) {
+                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$filename;
+                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
+                        }
+                        break;
+
                     // PHP file
                     case 'php':
-                        $matches = array();
-
                         // get matches
                         preg_match_all(
                             '/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
@@ -82,10 +102,26 @@ class AnalyseModel extends Model
                         );
 
                         if (count($matches[0]) > 0) {
-                            $locale[$moduleName]['locale'] = array_combine($matches[4], $matches[2]);
-                            $locale[$moduleName]['file'] = $file->getPath();
+                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$filename;
+                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[4], $matches[2]);
                         }
                         break;
+
+                    // TPL file
+                    case 'tpl':
+                        // get matches
+                        preg_match_all(
+                            '/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U',
+                            $fileContent,
+                            $matches
+                        );
+
+                        if (count($matches[0]) > 0) {
+                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$file->getFilename();
+                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
+                        }
+                        break;
+
                 }
             }
         }
@@ -106,28 +142,33 @@ class AnalyseModel extends Model
         }
 
         // filter the Foundlocale
+        $nonExisting = array();
         foreach ($locale as $moduleName => &$module) {
-            $localeFilter = $module['locale'];
-            if (isset($oldLocale[$moduleName])) {
-                $localeFilter = array_diff_key($locale, $oldLocale[$moduleName]);
-            }
-        }
+            foreach ($module as $filename => &$file) {
 
-        // output a converted array
-        foreach ($locale as $moduleName => $module) {
-            $localeFilter = $module['locale'];
-            $file = $module['file'];
-            foreach ($module['locale'] as $localeName => $localeType) {
-                $key = $localeName;
-                $type = $localeType;
-                $nonExisting['Backend' . $key . $type . $moduleName] = array(
-                    'language' => $language,
-                    'application' => 'Backend',
-                    'module' => $moduleName,
-                    'type' => $type,
-                    'name' => $key,
-                    'used_in' => serialize($file)
-                );
+                if (isset($oldLocale[$moduleName])) {
+                    $file['locale'] = array_diff_key($file['locale'], $oldLocale[$moduleName]);
+                }
+
+                // extra filter for Core
+                $file['locale'] = array_diff_key($file['locale'], $oldLocale['Core']);
+
+                // extra filter for Pages
+                $file['locale'] = array_diff_key($file['locale'], $oldLocale['Pages']);
+
+                // output a converted array
+                foreach ($file['locale'] as $localeName => $localeType) {
+                    $key = $localeName;
+                    $type = $localeType;
+                    $nonExisting['Backend' . $key . $type . $moduleName] = array(
+                        'language' => $language,
+                        'application' => 'Backend',
+                        'module' => $moduleName,
+                        'type' => $type,
+                        'name' => $key,
+                        'used_in' => serialize($file['file'])
+                    );
+                }
             }
         }
 
@@ -196,8 +237,6 @@ class AnalyseModel extends Model
                         foreach ($matches[2] as $key => $match) {
                             // set type
                             $type = $matches[1][$key];
-
-
 
                             // loop modules
                             foreach ($modules as $module) {
