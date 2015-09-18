@@ -21,6 +21,7 @@ use Backend\Modules\Locale\Engine\AnalyseModel as BackendLocaleModel;
  *
  * @author Tijs Verkoyen <tijs@sumocoders.be>
  * @author Lowie Benoot <lowie.benoot@netlash.com>
+ * @author <thijs@wijs.be>
  */
 class Analyse extends BackendBaseActionIndex
 {
