@@ -20,6 +20,7 @@ use Symfony\Component\Intl\Intl as Intl;
  * This is the add-action, it will display a form to add a new profile.
  *
  * @author Davy Van Vooren <davy.vanvooren@netlash.com>
+ * @author Jeroen Desloovere <jeroen@siesqo.be>
  */
 class Add extends BackendBaseActionAdd
 {
@@ -28,16 +29,45 @@ class Add extends BackendBaseActionAdd
      */
     private $id;
 
+     /**
+     * @var bool
+     */
+    private $notifyAdmin;
+
+    /**
+     * @var bool
+     */
+    private $notifyProfile;
+
     /**
      * Execute the action.
      */
     public function execute()
     {
         parent::execute();
+        $this->getData();
         $this->loadForm();
         $this->validateForm();
         $this->parse();
         $this->display();
+    }
+
+     /**
+     * Get data
+     */
+    public function getData()
+    {
+        $this->notifyAdmin = $this->get('fork.settings')->get(
+            $this->URL->getModule(),
+            'send_new_profile_admin_mail',
+            false
+        );
+
+        $this->notifyProfile = $this->get('fork.settings')->get(
+            $this->URL->getModule(),
+            'send_new_profile_mail',
+            false
+        );
     }
 
     /**
@@ -124,8 +154,10 @@ class Add extends BackendBaseActionAdd
                 }
             }
 
-            // password filled in?
-            $txtPassword->isFilled(BL::err('FieldIsRequired'));
+            // profile must not be notified, password must not be empty
+            if (!$this->notifyProfile) {
+                $txtPassword->isFilled(BL::err('FieldIsRequired'));
+            }
 
             // one of the birthday fields are filled in
             if ($ddmDay->isFilled() || $ddmMonth->isFilled() || $ddmYear->isFilled()) {
@@ -138,23 +170,29 @@ class Add extends BackendBaseActionAdd
 
             // no errors?
             if ($this->frm->isCorrect()) {
-                // get new salt
-                $salt = BackendProfilesModel::getRandomString();
-
                 // build item
                 $values = array(
                     'email' => $txtEmail->getValue(),
                     'registered_on' => BackendModel::getUTCDate(),
                     'display_name' => $txtDisplayName->getValue(),
                     'url' => BackendProfilesModel::getUrl($txtDisplayName->getValue()),
-                    'password' => BackendProfilesModel::getEncryptedString($txtPassword->getValue(), $salt),
                     'last_login' => BackendModel::getUTCDate(null, 0)
                 );
 
                 $this->id = BackendProfilesModel::insert($values);
 
+                // get new salt
+                $salt = BackendProfilesModel::getRandomString();
+
                 // update salt
                 BackendProfilesModel::setSetting($this->id, 'salt', $salt);
+
+                // new password filled in? otherwise generate a password
+                $password = ($txtPassword->isFilled()) ?
+                    $txtPassword->getValue() : BackendModel::generatePassword(8);
+
+                // build password
+                $values['password'] = BackendProfilesModel::getEncryptedString($password, $salt);
 
                 // update values
                 BackendProfilesModel::update($this->id, $values);
@@ -178,12 +216,53 @@ class Add extends BackendBaseActionAdd
                 BackendProfilesModel::setSetting($this->id, 'city', $txtCity->getValue());
                 BackendProfilesModel::setSetting($this->id, 'country', $ddmCountry->getValue());
 
+                // notify values
+                $notifyValues = array_merge(
+                    $values,
+                    array(
+                        'id' => $this->id,
+                        'first_name' => $txtFirstName->getValue(),
+                        'last_name' => $txtLastName->getValue(),
+                        'unencrypted_password' => $password
+                    )
+                );
+
+                $redirectUrl = BackendModel::createURLForAction('Edit') .
+                    '&id=' . $this->id .
+                    '&var=' . urlencode($values['display_name']) .
+                    '&report='
+                ;
+
+                // notify new profile user
+                if ($this->notifyProfile) {
+                    BackendProfilesModel::notifyProfile($notifyValues);
+
+                    $redirectUrl .= 'saved-and-notified';
+                } else {
+                    $redirectUrl .= 'saved';
+                }
+
+                // notify admin
+                if ($this->notifyAdmin) {
+                    BackendProfilesModel::notifyAdmin($notifyValues);
+                }
+
                 // trigger event
                 BackendModel::triggerEvent($this->getModule(), 'after_add', array('item' => $values));
 
                 // everything is saved, so redirect to the overview
-                $this->redirect(BackendModel::createURLForAction('Edit') . '&id=' . $this->id);
+                $this->redirect($redirectUrl);
             }
         }
+    }
+
+    /**
+     * Parse
+     */
+    protected function parse()
+    {
+        parent::parse();
+
+        $this->tpl->assign('notifyProfile', $this->notifyProfile);
     }
 }

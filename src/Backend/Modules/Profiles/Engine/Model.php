@@ -215,7 +215,7 @@ class Model
      * Get information about a profile.
      *
      * @param int $id The profile id to get the information for.
-     * @return integer
+     * @return array
      */
     public static function get($id)
     {
@@ -736,6 +736,123 @@ class Model
     public static function insertProfileGroup(array $values)
     {
         return (int) BackendModel::getContainer()->get('database')->insert('profiles_groups_rights', $values);
+    }
+
+    /**
+     * Notify admin - after adding profile to profiles module
+     *
+     * @param array $values
+     * @param string $templatePath
+     */
+    public static function notifyAdmin($values, $templatePath = null)
+    {
+        // to email
+        $toEmail = BackendModel::getModuleSetting('Profiles', 'profile_notification_email', null);
+
+        if ($toEmail === null) {
+            $to = BackendModel::getModuleSetting('Core', 'mailer_to');
+            $toEmail = $to['email'];
+        }
+
+        // define backend url
+        $backendURL = BackendModel::createURLForAction('Edit', 'Profiles') . '&id=' . $values['id'];
+
+        // set variables
+        $variables['message'] = vsprintf(
+            BL::msg('NotificationNewProfileToAdmin', 'Profiles'),
+            array(
+                $values['display_name'],
+                $values['email'],
+                $backendURL
+            )
+        );
+
+        // define subject
+        $subject = vsprintf(
+            BL::lbl('NotificationNewProfileToAdmin', 'Profiles'),
+            array(
+                $values['email']
+            )
+        );
+
+        self::sendMail(
+            $subject,
+            $templatePath,
+            $variables,
+            $toEmail
+        );
+    }
+
+    /**
+    * Notify profile - after adding profile to profiles module
+    *
+    * @param array $values
+    * @param bool $forUpdate
+    * @param string $templatePath
+    */
+    public static function notifyProfile(
+        $values,
+        $forUpdate = false,
+        $templatePath = null
+    ) {
+        // set variables
+        $variables['message'] = vsprintf(
+            BL::msg('NotificationNewProfileLoginCredentials', 'Profiles'),
+            array(
+                $values['email'],
+                $values['unencrypted_password'],
+                SITE_URL
+            )
+        );
+
+        // define subject
+        $notificationSubject = ($forUpdate) ?
+            'NotificationUpdatedProfileToProfile' : 'NotificationNewProfileToProfile';
+        $subject = BL::lbl($notificationSubject, 'Profiles');
+
+        self::sendMail(
+            $subject,
+            $templatePath,
+            $variables,
+            $values['email'],
+            $values['display_name']
+        );
+    }
+
+    /**
+    * Send mail
+    *
+    * @param string $subject
+    * @param string $templatePath
+    * @param array $variables
+    * @param string $toEmail
+    * @param string $toDisplayName
+    */
+    protected static function sendMail(
+        $subject,
+        $templatePath = null,
+        $variables,
+        $toEmail,
+        $toDisplayName = null
+    ) {
+        if (empty($templatePath)) {
+            $templatePath = FRONTEND_CORE_PATH . '/Layout/Templates/Mails/Notification.tpl';
+        }
+
+        // define variables
+        $from = BackendModel::getModuleSetting('Core', 'mailer_from');
+        $replyTo = BackendModel::getModuleSetting('Core', 'mailer_reply_to');
+
+        // create a message object and set all the needed properties
+        $message = \Common\Mailer\Message::newInstance($subject)
+            ->setFrom(array($from['email'] => $from['name']))
+            ->setTo(array($toEmail => $toDisplayName))
+            ->setReplyTo(array($replyTo['email'] => $replyTo['name']))
+            ->parseHtml($templatePath, $variables, true)
+        ;
+
+        // send it through the mailer service
+        BackendModel::get('mailer')->send($message);
     }
 
     /**
