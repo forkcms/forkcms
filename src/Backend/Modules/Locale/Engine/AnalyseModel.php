@@ -49,6 +49,7 @@ class AnalyseModel extends Model
             ->name('*.tpl')
             ->name('*.js');
 
+        $backendModuleFiles = array();
         foreach ($finder->files()->in(BACKEND_MODULES_PATH) as $file) {
             $module = self::getInbetweenStrings('Modules/', '/', $file->getPath());
             $filename = $file->getFilename();
@@ -59,6 +60,7 @@ class AnalyseModel extends Model
         $modules = BackendModel::getModules();
 
         // loop over the modules
+        $locale = array();
         foreach ($backendModuleFiles as $moduleName => $module) {
             foreach ($module as $filename => $file) {
                 $extension = $file->getExtension();
@@ -169,7 +171,7 @@ class AnalyseModel extends Model
     {
         $oldLocale = array();
         $type = array('lbl', 'act', 'err', 'msg');
-        $allBackendDBLocale = self::getTranslations($application, '', $type, $language, '', '');
+        $allBackendDBLocale = self::getTranslations($application, '', $type, array($language), '', '');
         foreach ($allBackendDBLocale as $localeRecord) {
             foreach ($localeRecord as $record) {
                 $oldLocale[$record['module']][$record['name']] = $record['name'];
@@ -193,6 +195,7 @@ class AnalyseModel extends Model
             ->name('*.tpl')
             ->name('*.js');
 
+        $frontendModuleFiles = array();
         foreach ($finder->files()->in(FRONTEND_PATH) as $file) {
             $filename = $file->getPath().'/'.$file->getFilename();
             $frontendModuleFiles['Core'][$filename] = $file;
@@ -202,11 +205,11 @@ class AnalyseModel extends Model
         $modules = BackendModel::getModules();
 
         // loop over the modules
+        $locale = array();
         foreach ($frontendModuleFiles as $moduleName => $module) {
             foreach ($module as $filename => $file) {
                 $extension = $file->getExtension();
                 $fileContent = $file->getContents();
-                $pathFile = $file->getPath();
 
                 // only installed modules
                 if (!in_array($moduleName, $modules)) {
