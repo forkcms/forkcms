@@ -1,3 +1,11 @@
+3.10 (xxxx-xx-xx)
+--
+Improvements:
+
+* Profiles: notify profile and/or admin when profile is added.
+* Profiles: notify profile when profile is edited.
+
+
 3.9.3 (2015-xx-xx)
 --
 Improvements:
