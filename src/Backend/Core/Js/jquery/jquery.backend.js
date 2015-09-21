@@ -1099,7 +1099,7 @@
 			var html =	'<div class="multipleSelectWrapper">' +
 						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' +
 						'	<div class="input-group">' +
-                    '			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
+                    '			<select class="form-control dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
 
 			for(var i = 0; i < possibleOptions.length; i++)
 			{
@@ -1214,7 +1214,7 @@
 					{
 						html += '	<li class="oneLiner">' +
 								'		<span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span>' +
-                            '			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
+                            '			<a href="#" class="btn btn-danger btn-xs deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' +
                             '				<span class="glyphicon glyphicon-trash"></span>' +
                             '           </a>' +
 								'	</li>';
