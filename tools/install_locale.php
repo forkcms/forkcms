@@ -40,13 +40,13 @@ else
 }
 
 // bootstrap Fork
-DEFINE('APPLICATION', 'Backend');
-if (!defined('PATH_WWW')) {
-    define('PATH_WWW', '__DIR__' . '/..');
-}
+define('APPLICATION', 'Backend');
 $kernel = new AppKernel('prod', false);
 $kernel->boot();
 $kernel->defineForkConstants();
+if (!defined('PATH_WWW')) {
+    define('PATH_WWW', __DIR__ . '/..');
+}
 $loader = new BackendInit($kernel);
 $loader->initialize('Backend');
 $loader->passContainerToModels();
