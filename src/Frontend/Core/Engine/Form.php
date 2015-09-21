@@ -46,7 +46,7 @@ class Form extends \Common\Core\Form
         }
 
         $useToken = (bool) $useToken;
-        $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? $this->URL->getQueryString() : (string) $action;
 
         // call the real form-class
         parent::__construct((string) $name, $action . $hash, $method, (bool) $useToken);

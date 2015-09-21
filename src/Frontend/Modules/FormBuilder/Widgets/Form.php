@@ -516,7 +516,7 @@ class Form extends FrontendBaseWidget
                 \SpoonSession::set('formbuilder_' . $this->item['id'], time());
 
                 // redirect
-                $redirect = SITE_URL . '/' . $this->URL->getQueryString();
+                $redirect = SITE_URL . $this->URL->getQueryString();
                 $redirect .= (stripos($redirect, '?') === false) ? '?' : '&';
                 $redirect .= 'identifier=' . $this->item['identifier'];
 

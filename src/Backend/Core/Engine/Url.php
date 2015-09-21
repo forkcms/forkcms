@@ -77,7 +77,7 @@ class Url extends Base\Object
      */
     public function getQueryString()
     {
-        return trim((string)$this->request->getRequestUri(), '/');
+        return (string) $this->request->getRequestUri();
     }
 
     /**
@@ -161,7 +161,7 @@ class Url extends Base\Object
                     $errorUrl = '/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed';
 
                     // add the querystring, it will be processed by the error-handler
-                    $errorUrl .= '&querystring=' . urlencode('/' . $this->getQueryString());
+                    $errorUrl .= '&querystring=' . urlencode($this->getQueryString());
 
                     // redirect to the error page
                     $this->redirect($errorUrl, 307);
@@ -200,7 +200,7 @@ class Url extends Base\Object
             // redirect to login
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language . '/authentication?querystring=' . urlencode(
-                    '/' . $this->getQueryString()
+                    $this->getQueryString()
                 )
             );
         } elseif (Authentication::isLoggedIn() && !Authentication::isAllowedModule($module)) {
@@ -246,14 +246,14 @@ class Url extends Base\Object
             // the user doesn't have access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=module-not-allowed&querystring=' . urlencode($this->getQueryString()),
                 307
             );
         } elseif (!Authentication::isAllowedAction($action, $module)) {
             // the user hasn't access, redirect to error page
             $this->redirect(
                 '/' . NAMED_APPLICATION . '/' . $language .
-                '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()),
+                '/error?type=action-not-allowed&querystring=' . urlencode($this->getQueryString()),
                 307
             );
         } else {

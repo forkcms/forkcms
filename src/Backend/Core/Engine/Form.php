@@ -58,7 +58,7 @@ class Form extends \Common\Core\Form
         ) : (string) $name;
 
         // build the action if it wasn't provided
-        $action = ($action === null) ? '/' . $this->URL->getQueryString() : (string) $action;
+        $action = ($action === null) ? $this->URL->getQueryString() : (string) $action;
 
         // call the real form-class
         parent::__construct($name, $action, $method, $useToken);
