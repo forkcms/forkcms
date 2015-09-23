@@ -69,7 +69,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">{$lblCancel|ucfirst}</button>
-              <a href="{$var|geturl:'delete'}&amp;id={$item.id}" class="btn btn-primary">
+              <a href="{$var|geturl:'delete'}&amp;id={$id}{$filterQuery}" class="btn btn-primary">
                 {$lblOK|ucfirst}
               </a>
             </div>
