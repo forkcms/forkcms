@@ -3,7 +3,8 @@
 namespace Common\Tests;
 
 use Common\ModulesSettings;
-use Common\Cache\InMemoryCache;
+use MatthiasMullie\Scrapbook\Adapters\MemoryStore;
+use MatthiasMullie\Scrapbook\Psr6\Pool;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -17,7 +18,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $modulesSettings->get('Core', 'theme', 'triton');
@@ -29,7 +30,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -46,7 +47,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -59,7 +60,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
     {
         $modulesSettings = new ModulesSettings(
             $this->getDatabaseMock(),
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -85,7 +86,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
 
         $modulesSettings = new ModulesSettings(
             $databaseMock,
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertEquals(
@@ -110,7 +111,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
 
         $modulesSettings = new ModulesSettings(
             $databaseMock,
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
 
         $this->assertNull(
@@ -134,7 +135,7 @@ class ModulesSettingsTest extends PHPUnit_Framework_TestCase
 
         $modulesSettings = new ModulesSettings(
             $databaseMock,
-            new InMemoryCache()
+            new Pool(new MemoryStore())
         );
         $this->assertEquals(
             'triton',
