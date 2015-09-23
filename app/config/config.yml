@@ -63,6 +63,20 @@ services:
         arguments:
             - @fork.settings
             - @service_container
+
+    cache.adapter:
+        class: MatthiasMullie\Scrapbook\Adapters\Filesystem
+        arguments:
+            - %kernel.cache_dir%
+    cache.buffer:
+        class: MatthiasMullie\Scrapbook\Buffered\BufferedStore
+        arguments:
+            - @cache.adapter
+    cache.pool:
+        class: MatthiasMullie\Scrapbook\Psr6\Pool
+        arguments:
+            - @cache.buffer
+
     fork.settings_cache:
         class: Common\Cache\InMemoryCache
     fork.settings:

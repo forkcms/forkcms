@@ -69,16 +69,29 @@ class Model
          ORDER BY i.label ASC';
 
     /**
+     * @return CacheBuilder
+     */
+    public static function getCacheBuilder()
+    {
+        static $cacheBuilder = null;
+        if ($cacheBuilder === null) {
+            $cacheBuilder = new CacheBuilder(BackendModel::get('database'), BackendModel::get('cache.pool'));
+        }
+
+        return $cacheBuilder;
+    }
+
+    /**
      * Build the cache
      *
-     * @param string $language The language to build the cache for, if not passes we use the working language.
+     * @param string $language The language to build the cache for, if not passed we use the working language.
      */
     public static function buildCache($language = null)
     {
         // redefine
         $language = ($language === null) ? BL::getWorkingLanguage() : (string) $language;
 
-        $cacheBuilder = new CacheBuilder(BackendModel::get('database'));
+        $cacheBuilder = static::getCacheBuilder();
         $cacheBuilder->buildCache($language);
 
         // trigger an event
@@ -284,11 +297,7 @@ class Model
      */
     public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
     {
-        // init var
-        $navigation = array();
-
-        // require
-        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // check if item exists
         if (isset($navigation[$type][$depth][$parentId])) {
@@ -584,17 +593,8 @@ class Model
      */
     public static function getFullURL($id)
     {
-        // generate the cache files if needed
-        if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php')) {
-            self::buildCache(BL::getWorkingLanguage());
-        }
-
-        // init var
-        $keys = array();
+        $keys = static::getCacheBuilder()->getKeys(BL::getWorkingLanguage());
         $hasMultiLanguages = BackendModel::getContainer()->getParameter('site.multilanguage');
-
-        // require the file
-        require FRONTEND_CACHE_PATH . '/Navigation/keys_' . BL::getWorkingLanguage() . '.php';
 
         // available in generated file?
         if (isset($keys[$id])) {
@@ -891,19 +891,7 @@ class Model
      */
     public static function getTreeHTML()
     {
-        // check if the cached file exists, if not we generated it
-        if (!is_file(
-            FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php'
-        )
-        ) {
-            self::buildCache(BL::getWorkingLanguage());
-        }
-
-        // init var
-        $navigation = array();
-
-        // require the file
-        require_once FRONTEND_CACHE_PATH . '/Navigation/navigation_' . BL::getWorkingLanguage() . '.php';
+        $navigation = static::getCacheBuilder()->getNavigation(BL::getWorkingLanguage());
 
         // start HTML
         $html = '<h4>' . \SpoonFilter::ucfirst(BL::lbl('MainNavigation')) . '</h4>' . "\n";
