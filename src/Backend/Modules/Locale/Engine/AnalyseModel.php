@@ -27,7 +27,15 @@ use Backend\Core\Engine\Model as BackendModel;
  */
 class AnalyseModel extends Model
 {
-    public static function getInbetweenStrings($start, $end, $str)
+    /**
+     * Get a string between two key strings
+     *
+     * @param string $start front key string
+     * @param string $end back key string
+     * @param string $str the string that needs to be checked
+     * @return array
+     */
+    private static function getInbetweenStrings($start, $end, $str)
     {
         $matches = array();
         preg_match_all("@$start([a-zA-Z0-9_]*)$end@", $str, $matches);
@@ -35,13 +43,16 @@ class AnalyseModel extends Model
     }
 
     /**
-     * Get the locale that is used in the backend but doesn't exists.
+     * Get the locale that is used in the Backend but doesn't exists.
      *
      * @param string $language The language to check.
      * @return array
      */
     public static function getNonExistingBackendLocale($language)
     {
+        // get installed modules
+        $installedModules = BackendModel::getModules();
+
         // pickup the Backend module files
         $finder = new Finder();
         $finder
@@ -52,15 +63,15 @@ class AnalyseModel extends Model
         $backendModuleFiles = array();
         foreach ($finder->files()->in(BACKEND_MODULES_PATH) as $file) {
             $module = self::getInbetweenStrings('Modules/', '/', $file->getPath());
+            if (!in_array($module, $installedModules)) {
+                continue;
+            }
             $filename = $file->getFilename();
             $backendModuleFiles[$module][$filename] = $file;
         }
 
-        // get installed modules
-        $installedModules = BackendModel::getModules();
-
         // Find the modules files an sort them
-        $locale = $this->findLocaleInFiles($backendModuleFiles, $installedModules);
+        $locale = self::findLocaleInFiles($backendModuleFiles);
 
         // getAllBackendDBLocale
         $oldLocale = self::getSortLocaleFrom('Backend', $language);
@@ -102,27 +113,6 @@ class AnalyseModel extends Model
     }
 
     /**
-     * Get the locale that is used in a sorted manner
-     *
-     * @param string $application the application
-     * @param string $language the required language
-     * @return array
-     */
-    public static function getSortLocaleFrom($application, $language)
-    {
-        $oldLocale = array();
-        $type = array('lbl', 'act', 'err', 'msg');
-        $allBackendDBLocale = self::getTranslations($application, '', $type, array($language), '', '');
-        foreach ($allBackendDBLocale as $localeRecord) {
-            foreach ($localeRecord as $record) {
-                $oldLocale[$record['module']][$record['name']] = $record['name'];
-            }
-        }
-
-        return $oldLocale;
-    }
-
-    /**
      * Get the locale that is used in the Frontend but doesn't exists.
      *
      * @param string $language The language to check.
@@ -143,11 +133,8 @@ class AnalyseModel extends Model
             $frontendModuleFiles['Core'][$filename] = $file;
         }
 
-        // get installed modules
-        $installedModules = BackendModel::getModules();
-
         // Find the modules files an sort them
-        $locale = $this->findLocaleInFiles($frontendModuleFiles, $installedModules);
+        $locale = self::findLocaleInFiles($frontendModuleFiles);
 
         // getAllFrontendDBLocale
         $oldLocale = self::getSortLocaleFrom('Frontend', $language);
@@ -182,13 +169,34 @@ class AnalyseModel extends Model
     }
 
     /**
-     * Find Locale in Files
+     * Get the locale that is used in a sorted manner
+     *
+     * @param string $application the application
+     * @param string $language the required language
+     * @return array
+     */
+    public static function getSortLocaleFrom($application, $language)
+    {
+        $oldLocale = array();
+        $type = array('lbl', 'act', 'err', 'msg');
+        $allBackendDBLocale = self::getTranslations($application, '', $type, array($language), '', '');
+        foreach ($allBackendDBLocale as $localeRecord) {
+            foreach ($localeRecord as $record) {
+                $oldLocale[$record['module']][$record['name']] = $record['name'];
+            }
+        }
+
+        return $oldLocale;
+    }
+
+    /**
+     * Find Locale in Files and return an array with of found files
      *
      * @param array $moduleFiles
      * @param array $installedModules
      * @return array found Locale Files
      */
-    private function findLocaleInFiles(array $moduleFiles, array $installedModules)
+    private static function findLocaleInFiles(array $moduleFiles)
     {
         $locale = array();
         foreach ($moduleFiles as $moduleName => $module) {
@@ -197,12 +205,6 @@ class AnalyseModel extends Model
 
                 $extension = $file->getExtension();
                 $fileContent = $file->getContents();
-
-                // only installed modules
-                if (!in_array($moduleName, $installedModules)) {
-                    unset($moduleFiles[$moduleName]);
-                    continue;
-                }
 
                 // search / finding locale
                 $matches = array();
@@ -223,7 +225,7 @@ class AnalyseModel extends Model
                     case 'php':
                         // get matches
                         preg_match_all(
-                            '/(FrontendLanguage|FL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
+                            '/(FrontendLanguage|FL|BL|BackendLanguage)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
                             $fileContent,
                             $matches
                         );
