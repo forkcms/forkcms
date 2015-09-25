@@ -33,7 +33,7 @@ class AnalyseModel extends Model
      * @param string $start front key string
      * @param string $end back key string
      * @param string $str the string that needs to be checked
-     * @return array
+     * @return mixed return string or false
      */
     private static function getInbetweenStrings($start, $end, $str)
     {
@@ -50,7 +50,8 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingBackendLocale($language)
     {
-        // get installed modules
+        $locale = array();
+        $backendModuleFiles = array();
         $installedModules = BackendModel::getModules();
 
         // pickup the Backend module files
@@ -60,7 +61,7 @@ class AnalyseModel extends Model
             ->name('*.tpl')
             ->name('*.js');
 
-        $backendModuleFiles = array();
+        // collect all files
         foreach ($finder->files()->in(BACKEND_MODULES_PATH) as $file) {
             $module = self::getInbetweenStrings('Modules/', '/', $file->getPath());
             if (!in_array($module, $installedModules)) {
@@ -70,8 +71,10 @@ class AnalyseModel extends Model
             $backendModuleFiles[$module][$filename] = $file;
         }
 
-        // Find the modules files an sort them
-        $locale = self::findLocaleInFiles($backendModuleFiles);
+        //Find the locale in files an sort them
+        foreach ($backendModuleFiles as $moduleName => $module) {
+            $locale[$moduleName] = self::findLocaleInFiles($module);
+        }
 
         // getAllBackendDBLocale
         $oldLocale = self::getSortLocaleFrom('Backend', $language);
@@ -108,7 +111,6 @@ class AnalyseModel extends Model
         }
 
         ksort($nonExisting);
-
         return $nonExisting;
     }
 
@@ -120,6 +122,10 @@ class AnalyseModel extends Model
      */
     public static function getNonExistingFrontendLocale($language)
     {
+        $locale = array();
+        $frontendModuleFiles = array();
+        $installedModules = BackendModel::getModules();
+
         // pickup the Frontend module files
         $finder = new Finder();
         $finder->notPath('Cache')
@@ -127,14 +133,21 @@ class AnalyseModel extends Model
             ->name('*.tpl')
             ->name('*.js');
 
-        $frontendModuleFiles = array();
+        // collect all files
         foreach ($finder->files()->in(FRONTEND_PATH) as $file) {
+            // returns false if nothing found
+            $module = self::getInbetweenStrings('Modules/', '/', $file->getPath());
+            if ($module && !in_array($module, $installedModules)) {
+                continue;
+            }
             $filename = $file->getPath().'/'.$file->getFilename();
             $frontendModuleFiles['Core'][$filename] = $file;
         }
 
-        // Find the modules files an sort them
-        $locale = self::findLocaleInFiles($frontendModuleFiles);
+        // Find the locale in files an sort them
+        foreach ($frontendModuleFiles as $moduleName => $module) {
+            $locale[$moduleName] = self::findLocaleInFiles($module);
+        }
 
         // getAllFrontendDBLocale
         $oldLocale = self::getSortLocaleFrom('Frontend', $language);
@@ -164,7 +177,6 @@ class AnalyseModel extends Model
         }
 
         ksort($nonExisting);
-
         return $nonExisting;
     }
 
@@ -192,65 +204,57 @@ class AnalyseModel extends Model
     /**
      * Find Locale in Files and return an array with of found files
      *
-     * @param array $moduleFiles
-     * @param array $installedModules
+     * @param array $module
      * @return array found Locale Files
      */
-    private static function findLocaleInFiles(array $moduleFiles)
+    private static function findLocaleInFiles(array $module)
     {
         $locale = array();
-        foreach ($moduleFiles as $moduleName => $module) {
+        foreach ($module as $filename => $file) {
 
-            foreach ($module as $filename => $file) {
+            $matches = array();
+            $extension = $file->getExtension();
+            $fileContent = $file->getContents();
 
-                $extension = $file->getExtension();
-                $fileContent = $file->getContents();
+            switch ($extension) {
 
-                // search / finding locale
-                $matches = array();
-                switch ($extension) {
+                // PHP file
+                case 'js':
+                    preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $fileContent, $matches);
 
-                    // PHP file
-                    case 'js':
-                        // get matches
-                        preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $fileContent, $matches);
+                    if (count($matches[0]) > 0) {
+                        $locale[$filename]['file'] = $filename;
+                        $locale[$filename]['locale'] = array_combine($matches[2], $matches[1]);
+                    }
+                    break;
 
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $filename;
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
-                        }
-                        break;
+                // PHP file
+                case 'php':
+                    preg_match_all(
+                        '/(FrontendLanguage|FL|BL|BackendLanguage)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
+                        $fileContent,
+                        $matches
+                    );
 
-                    // PHP file
-                    case 'php':
-                        // get matches
-                        preg_match_all(
-                            '/(FrontendLanguage|FL|BL|BackendLanguage)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
-                            $fileContent,
-                            $matches
-                        );
+                    if (count($matches[0]) > 0) {
+                        $locale[$filename]['file'] = $filename;
+                        $locale[$filename]['locale'] = array_combine($matches[4], $matches[2]);
+                    }
+                    break;
 
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $filename;
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[4], $matches[2]);
-                        }
-                        break;
+                // TPL file
+                case 'tpl':
+                    preg_match_all(
+                        '/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U',
+                        $fileContent,
+                        $matches
+                    );
 
-                    // TPL file
-                    case 'tpl':
-                        // get matches
-                        preg_match_all(
-                            '/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U',
-                            $fileContent,
-                            $matches
-                        );
-
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $filename;
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
-                        }
-                        break;
-                }
+                    if (count($matches[0]) > 0) {
+                        $locale[$filename]['file'] = $filename;
+                        $locale[$filename]['locale'] = array_combine($matches[2], $matches[1]);
+                    }
+                    break;
             }
         }
         return $locale;
