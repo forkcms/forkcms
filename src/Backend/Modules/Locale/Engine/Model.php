@@ -19,7 +19,6 @@ use Backend\Core\Engine\Language as BL;
 use Backend\Core\Engine\Model as BackendModel;
 
 use Frontend\Core\Engine\Language as FL;
-use Common\ProjectIntel;
 
 /**
  * In this file we store all generic functions that we will be using in the locale module
