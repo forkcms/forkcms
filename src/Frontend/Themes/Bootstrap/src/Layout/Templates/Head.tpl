@@ -33,7 +33,7 @@
 	<meta name="msapplication-TileImage" content="{$THEME_URL}/metro-tile.png"/> {* @todo create a white monochrome version (144x144) of the logo of the site *}
 
 	{* Facebook *}
-	<meta property="og:image" content="{$THEME_URL}/image_src.png" /> {* @todo create a 200x200 png file *}
+	<meta property="og:image" content="{$SITE_URL}{$THEME_URL}/image_src.png" /> {* @todo create a 200x200 png file *}
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
