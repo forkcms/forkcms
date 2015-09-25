@@ -57,69 +57,10 @@ class AnalyseModel extends Model
         }
 
         // get installed modules
-        $modules = BackendModel::getModules();
+        $installedModules = BackendModel::getModules();
 
-        // loop over the modules
-        $locale = array();
-        foreach ($backendModuleFiles as $moduleName => $module) {
-            foreach ($module as $filename => $file) {
-                $extension = $file->getExtension();
-                $fileContent = $file->getContents();
-
-                // only installed modules
-                if (!in_array($moduleName, $modules)) {
-                    unset($backendModuleFiles[$moduleName]);
-                    continue;
-                }
-
-                // search / finding locale
-                $matches = array();
-                switch ($extension) {
-
-                    // PHP file
-                    case 'js':
-                        // get matches
-                        preg_match_all('/\{\$(act|err|lbl|msg)(.*)(\|.*)?\}/iU', $fileContent, $matches);
-
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$filename;
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
-                        }
-                        break;
-
-                    // PHP file
-                    case 'php':
-                        // get matches
-                        preg_match_all(
-                            '/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU',
-                            $fileContent,
-                            $matches
-                        );
-
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$filename;
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[4], $matches[2]);
-                        }
-                        break;
-
-                    // TPL file
-                    case 'tpl':
-                        // get matches
-                        preg_match_all(
-                            '/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U',
-                            $fileContent,
-                            $matches
-                        );
-
-                        if (count($matches[0]) > 0) {
-                            $locale[$moduleName][$filename]['file'] = $file->getPath().'/'.$file->getFilename();
-                            $locale[$moduleName][$filename]['locale'] = array_combine($matches[2], $matches[1]);
-                        }
-                        break;
-
-                }
-            }
-        }
+        // Find the modules files an sort them
+        $locale = $this->findLocaleInFiles($backendModuleFiles, $installedModules);
 
         // getAllBackendDBLocale
         $oldLocale = self::getSortLocaleFrom('Backend', $language);
@@ -177,6 +118,7 @@ class AnalyseModel extends Model
                 $oldLocale[$record['module']][$record['name']] = $record['name'];
             }
         }
+
         return $oldLocale;
     }
 
@@ -202,18 +144,63 @@ class AnalyseModel extends Model
         }
 
         // get installed modules
-        $modules = BackendModel::getModules();
+        $installedModules = BackendModel::getModules();
 
-        // loop over the modules
+        // Find the modules files an sort them
+        $locale = $this->findLocaleInFiles($frontendModuleFiles, $installedModules);
+
+        // getAllFrontendDBLocale
+        $oldLocale = self::getSortLocaleFrom('Frontend', $language);
+
+        // filter the Foundlocale
+        $nonExisting = array();
+        foreach ($locale as $moduleName => &$module) {
+            foreach ($module as $filename => &$file) {
+
+                // extra filter for Core
+                $file['locale'] = array_diff_key($file['locale'], $oldLocale['Core']);
+
+                // output a converted array
+                foreach ($file['locale'] as $localeName => $localeType) {
+                    $key = $localeName;
+                    $type = $localeType;
+                    $nonExisting['Frontend' . $key . $type . $moduleName] = array(
+                        'language' => $language,
+                        'application' => 'Frontend',
+                        'module' => $moduleName,
+                        'type' => $type,
+                        'name' => $key,
+                        'used_in' => serialize($file['file'])
+                    );
+                }
+            }
+        }
+
+        ksort($nonExisting);
+
+        return $nonExisting;
+    }
+
+    /**
+     * Find Locale in Files
+     *
+     * @param array $moduleFiles
+     * @param array $installedModules
+     * @return array found Locale Files
+     */
+    private function findLocaleInFiles(array $moduleFiles, array $installedModules)
+    {
         $locale = array();
-        foreach ($frontendModuleFiles as $moduleName => $module) {
+        foreach ($moduleFiles as $moduleName => $module) {
+
             foreach ($module as $filename => $file) {
+
                 $extension = $file->getExtension();
                 $fileContent = $file->getContents();
 
                 // only installed modules
-                if (!in_array($moduleName, $modules)) {
-                    unset($frontendModuleFiles[$moduleName]);
+                if (!in_array($moduleName, $installedModules)) {
+                    unset($moduleFiles[$moduleName]);
                     continue;
                 }
 
@@ -264,36 +251,6 @@ class AnalyseModel extends Model
                 }
             }
         }
-
-        // getAllFrontendDBLocale
-        $oldLocale = self::getSortLocaleFrom('Frontend', $language);
-
-        // filter the Foundlocale
-        $nonExisting = array();
-        foreach ($locale as $moduleName => &$module) {
-            foreach ($module as $filename => &$file) {
-
-                // extra filter for Core
-                $file['locale'] = array_diff_key($file['locale'], $oldLocale['Core']);
-
-                // output a converted array
-                foreach ($file['locale'] as $localeName => $localeType) {
-                    $key = $localeName;
-                    $type = $localeType;
-                    $nonExisting['Frontend' . $key . $type . $moduleName] = array(
-                        'language' => $language,
-                        'application' => 'Frontend',
-                        'module' => $moduleName,
-                        'type' => $type,
-                        'name' => $key,
-                        'used_in' => serialize($file['file'])
-                    );
-                }
-            }
-        }
-
-        ksort($nonExisting);
-
-        return $nonExisting;
+        return $locale;
     }
 }
