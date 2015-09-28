@@ -198,22 +198,22 @@ class Model extends \Common\Core\Model
 
         // loop found extras
         foreach ($extras as $extra) {
-            $delete = true;
+            $deleteExtra = true;
 
             // match by parameters
             if ($data !== null && $extra['data'] !== null) {
                 $extraData = (array) unserialize($extra['data']);
 
-                // delete extra if parameters do not match
+                // do not delete extra if parameters do not match
                 foreach ($data as $dataKey => $dataValue) {
                     if (isset($extraData[$dataKey]) && $dataValue != $extraData[$dataKey]) {
-                        $delete = false;
+                        $deleteExtra = false;
                     }
                 }
             }
 
             // delete extra
-            if ($delete) {
+            if ($deleteExtra) {
                 self::deleteExtraById($extra['id']);
             }
         }
