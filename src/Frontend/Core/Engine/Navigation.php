@@ -548,8 +548,8 @@ class Navigation extends FrontendBaseObject
             foreach ($level as $pages) {
                 // loop pages
                 foreach ($pages as $pageId => $properties) {
-                    // only process pages with extra_blocks
-                    if (!isset($properties['extra_blocks'])) {
+                    // only process pages with extra_blocks that are visible
+                    if (!isset($properties['extra_blocks']) || $properties['hidden']) {
                         continue;
                     }
 
