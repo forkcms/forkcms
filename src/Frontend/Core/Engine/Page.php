@@ -16,7 +16,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 use Common\Cookie as CommonCookie;
 
-use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;
 use Frontend\Core\Engine\Block\Widget as FrontendBlockWidget;
@@ -239,13 +238,15 @@ class Page extends FrontendBaseObject
             $this->record = (array) Model::getPage($this->pageId);
         }
 
-        // empty record (pageId doesn't exists, hope this line is never used)
+        // empty record: this might be an exceptional case where the page ID doesn't
+        // exist anymore.  But it could also be that the page was set hidden, in
+        // which case Model::getPage() will also return an empty record.
         if (empty($this->record) && $this->pageId != 404) {
             throw new RedirectException(
                 'Redirect',
                 new RedirectResponse(
                     Navigation::getURL(404),
-                    404
+                    302 // we cannot put 404 in a RedirectResponse.
                 )
             );
         }
