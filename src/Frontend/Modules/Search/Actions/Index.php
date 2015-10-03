@@ -254,6 +254,9 @@ class Index extends FrontendBaseBlock
      */
     private function parse()
     {
+        $this->addJS('typeahead.bundle.js');
+        $this->addCSS('Search.css');
+
         // parse the form
         $this->frm->parse($this->tpl);
 
