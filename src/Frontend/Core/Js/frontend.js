@@ -225,93 +225,95 @@ jsFrontend.forms =
 			var monthNames = [jsFrontend.locale.loc('MonthLong1'), jsFrontend.locale.loc('MonthLong2'), jsFrontend.locale.loc('MonthLong3'), jsFrontend.locale.loc('MonthLong4'), jsFrontend.locale.loc('MonthLong5'), jsFrontend.locale.loc('MonthLong6'), jsFrontend.locale.loc('MonthLong7'), jsFrontend.locale.loc('MonthLong8'), jsFrontend.locale.loc('MonthLong9'), jsFrontend.locale.loc('MonthLong10'), jsFrontend.locale.loc('MonthLong11'), jsFrontend.locale.loc('MonthLong12')];
 			var monthNamesShort = [jsFrontend.locale.loc('MonthShort1'), jsFrontend.locale.loc('MonthShort2'), jsFrontend.locale.loc('MonthShort3'), jsFrontend.locale.loc('MonthShort4'), jsFrontend.locale.loc('MonthShort5'), jsFrontend.locale.loc('MonthShort6'), jsFrontend.locale.loc('MonthShort7'), jsFrontend.locale.loc('MonthShort8'), jsFrontend.locale.loc('MonthShort9'), jsFrontend.locale.loc('MonthShort10'), jsFrontend.locale.loc('MonthShort11'), jsFrontend.locale.loc('MonthShort12')];
 
-			$inputDatefieldNormal.each(function()
-			{
-				// Create a hidden clone (before datepicker init!), which will contain the actual value
-				var clone = $(this).clone();
-				clone.insertAfter(this);
-				clone.hide();
-
-				// Rename the original field, used to contain the display value
-				$(this).attr('id', $(this).attr('id') + '-display');
-				$(this).attr('name', $(this).attr('name') + '-display');
-			});
-
-			$inputDatefields.datepicker({
-				dayNames: dayNames,
-				dayNamesMin: dayNamesMin,
-				dayNamesShort: dayNamesShort,
-				hideIfNoPrevNext: true,
-				monthNames: monthNames,
-				monthNamesShort: monthNamesShort,
-				nextText: jsFrontend.locale.lbl('Next'),
-				prevText: jsFrontend.locale.lbl('Previous'),
-				showAnim: 'slideDown'
-			});
-
-			// the default, nothing special
-			$inputDatefieldNormal.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var phpDate = new Date(data.year, data.month, data.day, 0, 0, 0); // Get date from php in YYYY-MM-DD format
-				var value = $.datepicker.formatDate(data.mask, phpDate); // Convert the value to the data-mask to display it
-
-				// Create the datepicker with the desired display format and alt field
-				$(this).datepicker('option', {
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					altField: "#" + $(this).attr('id').replace('-display', ''),
-					altFormat: "yy-mm-dd"
-				}).datepicker('setDate', value);
-			});
-
-			// date fields that have a certain start date
-			$inputDatefieldFrom.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
-
-				// set options
-				$(this).datepicker('option', {
-					dateFormat: data.mask, firstDay: data.firstday,
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
-				}).datepicker('setDate', value);
-			});
-
-			// date fields that have a certain enddate
-			$inputDatefieldTill.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
-
-				// set options
-				$(this).datepicker('option',
+			if ($.isFunction($.fn.datepicker)) {
+				$inputDatefieldNormal.each(function()
 				{
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
-				}).datepicker('setDate', value);
-			});
+					// Create a hidden clone (before datepicker init!), which will contain the actual value
+					var clone = $(this).clone();
+					clone.insertAfter(this);
+					clone.hide();
 
-			// date fields that have a certain range
-			$inputDatefieldRange.each(function()
-			{
-				// get data
-				var data = $(this).data();
-				var value = $(this).val();
+					// Rename the original field, used to contain the display value
+					$(this).attr('id', $(this).attr('id') + '-display');
+					$(this).attr('name', $(this).attr('name') + '-display');
+				});
 
-				// set options
-				$(this).datepicker('option',
+				$inputDatefields.datepicker({
+					dayNames: dayNames,
+					dayNamesMin: dayNamesMin,
+					dayNamesShort: dayNamesShort,
+					hideIfNoPrevNext: true,
+					monthNames: monthNames,
+					monthNamesShort: monthNamesShort,
+					nextText: jsFrontend.locale.lbl('Next'),
+					prevText: jsFrontend.locale.lbl('Previous'),
+					showAnim: 'slideDown'
+				});
+
+				// the default, nothing special
+				$inputDatefieldNormal.each(function()
 				{
-					dateFormat: data.mask,
-					firstDay: data.firstday,
-					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
-				}).datepicker('setDate', value);
-			});
+					// get data
+					var data = $(this).data();
+					var phpDate = new Date(data.year, data.month, data.day, 0, 0, 0); // Get date from php in YYYY-MM-DD format
+					var value = $.datepicker.formatDate(data.mask, phpDate); // Convert the value to the data-mask to display it
+
+					// Create the datepicker with the desired display format and alt field
+					$(this).datepicker('option', {
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						altField: "#" + $(this).attr('id').replace('-display', ''),
+						altFormat: "yy-mm-dd"
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain start date
+				$inputDatefieldFrom.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option', {
+						dateFormat: data.mask, firstDay: data.firstday,
+						minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10))
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain enddate
+				$inputDatefieldTill.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option',
+					{
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10))
+					}).datepicker('setDate', value);
+				});
+
+				// date fields that have a certain range
+				$inputDatefieldRange.each(function()
+				{
+					// get data
+					var data = $(this).data();
+					var value = $(this).val();
+
+					// set options
+					$(this).datepicker('option',
+					{
+						dateFormat: data.mask,
+						firstDay: data.firstday,
+						minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+						maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59)
+					}).datepicker('setDate', value);
+				});
+			}
 		}
 	},
 
