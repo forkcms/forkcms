@@ -13,6 +13,8 @@ require_once __DIR__.'/AppKernel.php';
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArgvInput;
 use Symfony\Component\Debug\Debug;
+use Backend\Core\Engine\Model as BackendModel;
+use Frontend\Core\Engine\Model as FrontendModel;
 
 $input = new ArgvInput();
 $env = $input->getParameterOption(array('--env', '-e'), getenv('SYMFONY_ENV') ?: 'dev');
@@ -29,5 +31,11 @@ if ($debug) {
 }
 
 $kernel = new AppKernel($env, $debug);
+
+// make our container available statically. This is needed to make our static models work
+$kernel->boot();
+FrontendModel::setContainer($kernel->getContainer());
+BackendModel::setContainer($kernel->getContainer());
+
 $application = new Application($kernel);
 $application->run($input);
