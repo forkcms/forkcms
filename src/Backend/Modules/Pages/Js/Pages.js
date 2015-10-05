@@ -119,7 +119,7 @@ jsBackend.pages.extras =
 	addBlockVisual: function(position, index, extraId, visible, extraType)
 	{
 		// check if the extra is valid
-		if(extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
+		if(extraType != 'usertemplate' && extraId != 0 && typeof extrasById[extraId] == 'undefined') return false;
 
 		// block
 		var editLink, title, description;
