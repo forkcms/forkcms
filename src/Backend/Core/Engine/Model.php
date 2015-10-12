@@ -27,14 +27,6 @@ use Frontend\Core\Engine\Language as FrontendLanguage;
 class Model extends \Common\Core\Model
 {
     /**
-     * The keys and structural data for pages
-     *
-     * @var    array
-     */
-    private static $keys = array();
-    private static $navigation = array();
-
-    /**
      * Allowed module extras types
      *
      * @var    array
@@ -487,18 +479,8 @@ class Model extends \Common\Core\Model
     {
         $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$keys[$language]) || empty(self::$keys[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $keys = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/keys_' . $language . '.php';
-            self::$keys[$language] = $keys;
-        }
-
-        return self::$keys[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getKeys($language);
     }
 
     /**
@@ -589,21 +571,10 @@ class Model extends \Common\Core\Model
      */
     public static function getNavigation($language = null)
     {
-        $language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+        $language = ($language !== null) ? (string) $language : Language::getWorkingLanguage();
 
-        // does the keys exists in the cache?
-        if (!isset(self::$navigation[$language]) || empty(self::$navigation[$language])) {
-            if (!is_file(FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php')) {
-                BackendPagesModel::buildCache($language);
-            }
-
-            $navigation = array();
-            require FRONTEND_CACHE_PATH . '/Navigation/navigation_' . $language . '.php';
-
-            self::$navigation[$language] = $navigation;
-        }
-
-        return self::$navigation[$language];
+        $cacheBuilder = BackendPagesModel::getCacheBuilder();
+        return $cacheBuilder->getNavigation($language);
     }
 
     /**
