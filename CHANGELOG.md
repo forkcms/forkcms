@@ -1,8 +1,18 @@
-3.9.5 (xxxx-xx-xx)
+3.9.5 (2015-08-31)
 --
 Improvements:
 
+* Extensions: fixed UX-error where "add-theme button" was not aligned on the right side.
+* Travis: run on new container based infrastructure
+
 Bugfixes:
+
+* Frontend: no more duplicate JS-files.
+* Analytics: Don't load dashboard widgets when not configured yet.
+* Core: Fix return types for addImage methods in forms.
+* Core: remove safe_mode directive.
+* Pages: only escape single quotes in the cache files
+* Core: check authentication before showing user links
 
 
 3.9.4 (2015-07-09)

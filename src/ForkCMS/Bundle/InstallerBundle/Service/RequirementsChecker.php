@@ -158,7 +158,6 @@ class RequirementsChecker
      */
     protected function checkPhpIniSettings()
     {
-        $this->checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', self::STATUS_WARNING);
         $this->checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', self::STATUS_WARNING);
         $this->checkRequirement(
             'settingsDateTimezone',
