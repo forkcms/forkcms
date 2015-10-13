@@ -210,9 +210,6 @@ class Edit extends BackendBaseActionEdit
         $this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
         $this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
         $this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
-        if (count($categories) != 2) {
-            $this->frm->getField('category_id')->setDefaultElement('');
-        }
         $this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
         $this->frm->addText(
             'tags',
@@ -296,8 +293,16 @@ class Edit extends BackendBaseActionEdit
     {
         parent::parse();
 
+        // we need category info for generation of url
+        $category = BackendBlogModel::getCategory((int)$this->frm->getField('category_id')->getSelected());
+
         // get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock(
+            $this->URL->getModule(),
+            'category',
+            null,
+            array('category' => isset($category['url'])?$category['url']:'')
+        );
         $url404 = BackendModel::getURL(404);
 
         // parse additional variables

@@ -100,6 +100,11 @@ class Detail extends FrontendBaseBlock
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
+        // does category match?
+        if ($this->URL->getParameter(0) != $this->record['category_url']) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
+
         // get comments
         $this->comments = FrontendBlogModel::getComments($this->record['id']);
 

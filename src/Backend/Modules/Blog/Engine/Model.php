@@ -493,8 +493,9 @@ class Model
     public static function getCategory($id)
     {
         return (array) BackendModel::getContainer()->get('database')->getRecord(
-            'SELECT i.*
+            'SELECT i.*, m.url
              FROM blog_categories AS i
+             INNER JOIN meta AS m ON m.id = i.meta_id
              WHERE i.id = ? AND i.language = ?',
             array((int) $id, BL::getWorkingLanguage())
         );

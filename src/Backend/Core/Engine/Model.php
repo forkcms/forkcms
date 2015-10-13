@@ -517,6 +517,43 @@ class Model extends \Common\Core\Model
     }
 
     /**
+     * Gets frontend module config instance and stores it into the container
+     *
+     * @param $module
+     * @return object
+     * @throws Exception
+     */
+    public static function getFrontendModuleConfig($module)
+    {
+        // make sure that $module is camelCase
+        $module = \SpoonFilter::toCamelCase($module);
+
+        // lets get service id, $module is converted into snake_case
+        $id = 'services.' . ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $module)), '_') . '.config';
+
+        // if we do not have config stored we should create and store it
+        if (!self::getContainer()->has($id)) {
+            // generation of a class name
+            $configClass = 'Frontend\\Modules\\' . $module . '\\Config';
+            if ($module == 'Core') {
+                $configClass = 'Frontend\\Core\\Config';
+            }
+
+            // validate if class exists (aka has correct name)
+            if (!class_exists($configClass)) {
+                throw new \Exception(
+                    'The config file is present, but the class name should be: ' . $configClass . '.'
+                );
+            }
+
+            // create config-object, the constructor will do some magic
+            self::getContainer()->set($id, new $configClass(self::get('kernel'), $module));
+        }
+
+        return self::getContainer()->get($id);
+    }
+
+    /**
      * Get a certain module-setting
      *
      * @deprecated
@@ -688,9 +725,10 @@ class Model extends \Common\Core\Model
      * @param string $module   The module to get the URL for.
      * @param string $action   The action to get the URL for.
      * @param string $language The language to use, if not provided we will use the working language.
+     * @param array $parameters Router parameters for generating url
      * @return string
      */
-    public static function getURLForBlock($module, $action = null, $language = null)
+    public static function getURLForBlock($module, $action = null, $language = null, $parameters = array())
     {
         $module = (string) $module;
         $action = ($action !== null) ? (string) $action : null;
@@ -730,6 +768,20 @@ class Model extends \Common\Core\Model
 
         // set locale with force
         FrontendLanguage::setLocale($language, true);
+
+        // lets try to generate URL based on module router
+        $config = self::getFrontendModuleConfig($module);
+        if ($config->hasRouter()) {
+            $route = ltrim(strtolower(preg_replace('/[A-Z]/', '_$0', $action)), '_');
+
+            try {
+                $URL .= $config->getRouter()->generate($route, $parameters);
+            } catch (\Exception $e) {
+                $URL .= '/' . FrontendLanguage::act(\SpoonFilter::toCamelCase($action));
+            }
+
+            return $URL;
+        }
 
         // append action
         $URL .= '/' . urldecode(FrontendLanguage::act(\SpoonFilter::toCamelCase($action)));
