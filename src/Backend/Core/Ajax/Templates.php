@@ -10,7 +10,6 @@ namespace Backend\Core\Ajax;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Backend\Core\Engine\Base\AjaxAction;
 use Backend\Core\Engine\Model as BackendModel;
 

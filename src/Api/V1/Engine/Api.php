@@ -12,7 +12,6 @@ namespace Api\V1\Engine;
 use Backend\Core\Engine\Model as BackendModel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use Backend\Core\Engine\Authentication as BackendAuthentication;
 use Backend\Core\Engine\User as BackendUser;
 

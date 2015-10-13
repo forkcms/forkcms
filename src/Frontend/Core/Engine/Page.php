@@ -13,9 +13,7 @@ use Common\Exception\RedirectException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Common\Cookie as CommonCookie;
-
 use Frontend\Core\Engine\Model as FrontendModel;
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Block\Extra as FrontendBlockExtra;

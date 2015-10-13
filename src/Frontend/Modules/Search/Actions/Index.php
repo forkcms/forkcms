@@ -10,7 +10,6 @@ namespace Frontend\Modules\Search\Actions;
  */
 
 use Symfony\Component\Filesystem\Filesystem;
-
 use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
 use Frontend\Core\Engine\Form as FrontendForm;
 use Frontend\Core\Engine\Language as FL;

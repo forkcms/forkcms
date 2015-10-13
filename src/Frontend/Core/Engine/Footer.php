@@ -10,7 +10,6 @@ namespace Frontend\Core\Engine;
  */
 
 use Symfony\Component\HttpKernel\KernelInterface;
-
 use Frontend\Core\Engine\Base\Object as FrontendBaseObject;
 use Frontend\Core\Engine\Navigation as FrontendNavigation;
 
